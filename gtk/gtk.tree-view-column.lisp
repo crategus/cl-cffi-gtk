@@ -50,41 +50,41 @@
 ;;;     gtk_tree_view_column_set_attributes
 ;;;     gtk_tree_view_column_set_cell_data_func
 ;;;     gtk_tree_view_column_clear_attributes
-;;;     gtk_tree_view_column_set_spacing
-;;;     gtk_tree_view_column_get_spacing
-;;;     gtk_tree_view_column_set_visible
-;;;     gtk_tree_view_column_get_visible
-;;;     gtk_tree_view_column_set_resizable
-;;;     gtk_tree_view_column_get_resizable
-;;;     gtk_tree_view_column_set_sizing
-;;;     gtk_tree_view_column_get_sizing
-;;;     gtk_tree_view_column_get_width
-;;;     gtk_tree_view_column_get_fixed_width
-;;;     gtk_tree_view_column_set_fixed_width
-;;;     gtk_tree_view_column_set_min_width
-;;;     gtk_tree_view_column_get_min_width
-;;;     gtk_tree_view_column_set_max_width
-;;;     gtk_tree_view_column_get_max_width
+;;;     gtk_tree_view_column_set_spacing                   Accessor
+;;;     gtk_tree_view_column_get_spacing                   Accessor
+;;;     gtk_tree_view_column_set_visible                   Accessor
+;;;     gtk_tree_view_column_get_visible                   Accessor
+;;;     gtk_tree_view_column_set_resizable                 Accessor
+;;;     gtk_tree_view_column_get_resizable                 Accessor
+;;;     gtk_tree_view_column_set_sizing                    Accessor
+;;;     gtk_tree_view_column_get_sizing                    Accessor
+;;;     gtk_tree_view_column_get_width                     Accessor
+;;;     gtk_tree_view_column_get_fixed_width               Accessor
+;;;     gtk_tree_view_column_set_fixed_width               Accessor
+;;;     gtk_tree_view_column_set_min_width                 Accessor
+;;;     gtk_tree_view_column_get_min_width                 Accessor
+;;;     gtk_tree_view_column_set_max_width                 Accessor
+;;;     gtk_tree_view_column_get_max_width                 Accessor
 ;;;     gtk_tree_view_column_clicked
-;;;     gtk_tree_view_column_set_title
-;;;     gtk_tree_view_column_get_title
-;;;     gtk_tree_view_column_set_expand
-;;;     gtk_tree_view_column_get_expand
-;;;     gtk_tree_view_column_set_clickable
-;;;     gtk_tree_view_column_get_clickable
-;;;     gtk_tree_view_column_set_widget
-;;;     gtk_tree_view_column_get_widget
+;;;     gtk_tree_view_column_set_title                     Accessor
+;;;     gtk_tree_view_column_get_title                     Accessor
+;;;     gtk_tree_view_column_set_expand                    Accessor
+;;;     gtk_tree_view_column_get_expand                    Accessor
+;;;     gtk_tree_view_column_set_clickable                 Accessor
+;;;     gtk_tree_view_column_get_clickable                 Accessor
+;;;     gtk_tree_view_column_set_widget                    Accessor
+;;;     gtk_tree_view_column_get_widget                    Accessor
 ;;;     gtk_tree_view_column_get_button
-;;;     gtk_tree_view_column_set_alignment
-;;;     gtk_tree_view_column_get_alignment
-;;;     gtk_tree_view_column_set_reorderable
-;;;     gtk_tree_view_column_get_reorderable
-;;;     gtk_tree_view_column_set_sort_column_id
-;;;     gtk_tree_view_column_get_sort_column_id
-;;;     gtk_tree_view_column_set_sort_indicator
-;;;     gtk_tree_view_column_get_sort_indicator
-;;;     gtk_tree_view_column_set_sort_order
-;;;     gtk_tree_view_column_get_sort_order
+;;;     gtk_tree_view_column_set_alignment                 Accessor
+;;;     gtk_tree_view_column_get_alignment                 Accessor
+;;;     gtk_tree_view_column_set_reorderable               Accessor
+;;;     gtk_tree_view_column_get_reorderable               Accessor
+;;;     gtk_tree_view_column_set_sort_column_id            Accessor
+;;;     gtk_tree_view_column_get_sort_column_id            Accessor
+;;;     gtk_tree_view_column_set_sort_indicator            Accessor
+;;;     gtk_tree_view_column_get_sort_indicator            Accessor
+;;;     gtk_tree_view_column_set_sort_order                Accessor
+;;;     gtk_tree_view_column_get_sort_order                Accessor
 ;;;     gtk_tree_view_column_cell_set_cell_data
 ;;;     gtk_tree_view_column_cell_get_size
 ;;;     gtk_tree_view_column_cell_get_position
@@ -92,7 +92,7 @@
 ;;;     gtk_tree_view_column_focus_cell
 ;;;     gtk_tree_view_column_queue_resize
 ;;;     gtk_tree_view_column_get_tree_view
-;;;     gtk_tree_view_column_get_x_offset
+;;;     gtk_tree_view_column_get_x_offset                  Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -237,8 +237,6 @@
     gtk-tree-view-column-x-offset
     "x-offset" "gint" t nil)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-view-column 'type)
  "@version{2013-5-14}
@@ -296,9 +294,23 @@
 (setf (gethash 'gtk-tree-view-column-alignment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-alignment 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{alignment} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-alignment object) => xalign}
+  @syntax[]{(setf (gtk-tree-view-column-alignment object) xalign)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[xalign]{the alignment, which is between [0.0 and 1.0] inclusive}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{alignment} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-alignment} slot access function
+  returns the current x alignment of the tree column.
+
+  The @sym{(setf gtk-tree-view-column-alignment)} slot access function
+  sets the alignment of the title or custom widget inside the column header.
+  The alignment determines its location inside the button -0.0 for left,
+  0.5 for center, 1.0 for right.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-cell-area -----------------------------------------
@@ -310,7 +322,7 @@
   (Read / Write / Construct) @br{}
   The @class{gtk-cell-area} object used to layout cell renderers for this
   column. If no area is specified when creating the tree view column with the
-  function @fun{gtk-tree-view-column-new-with-area} a horizontally oriented
+  @fun{gtk-tree-view-column-new-with-area} function a horizontally oriented
   @class{gtk-cell-area-box} object will be used.")
 
 #+cl-cffi-gtk-documentation
@@ -318,7 +330,7 @@
       "Accessor"
       (documentation 'gtk-tree-view-column-cell-area 'function)
  "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{cell-area} of the
+  Accessor of the @slot[gtk-tree-view-column]{cell-area} slot of the
   @class{gtk-tree-view-column} class.
   @see-class{gtk-tree-view-column}")
 
@@ -335,9 +347,22 @@
 (setf (gethash 'gtk-tree-view-column-clickable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-clickable 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{clickable} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-clickable object) => clickable}
+  @syntax[]{(setf (gtk-tree-view-column-clickable object) clickable)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[clickable]{@em{true} if the header is active}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{clickable} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-clickable} slot access function
+  returns @em{true} if the user can click on the header for the column.
+
+  The @sym{(setf gtk-tree-view-column-clickable)} slot access function
+  sets the header to be active if clickable is @em{true}. When the header is
+  active, then it can take keyboard focus, and can be clicked.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-expand --------------------------------------------
@@ -353,9 +378,25 @@
 (setf (gethash 'gtk-tree-view-column-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-expand 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{expand} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-expand object) => expand}
+  @syntax[]{(setf (gtk-tree-view-column-expand object) expand)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[expand]{@em{true} if the column should take available extra space,
+    @code{nil} if not}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{expand} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-clickable} slot access function
+  returns @em{true} if the column expands to take any available space.
+
+  The @sym{(setf gtk-tree-view-column-clickable)} slot access function
+  sets the column to take available extra space. This space is shared equally
+  amongst all columns that have the expand set to @em{true}. If no column has
+  this option set, then the last column gets all extra space. By default,
+  every column is created with this @code{nil}.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-fixed-width ---------------------------------------
@@ -372,9 +413,26 @@
 (setf (gethash 'gtk-tree-view-column-fixed-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-fixed-width 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{fixed-width} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-fixed-width object) => fixed-width}
+  @syntax[]{(setf (gtk-tree-view-column-fixed-width object) fixed-width)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[fixed-width]{the size to set @arg{tree-column} to, must be greater
+    than 0}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{fixed-width} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-fixed-width} slot access function
+  gets the fixed width of the column.
+
+  The @sym{(setf gtk-tree-view-column-fixed-width)} slot access function
+  sets the size of the column in pixels. This is meaningful only if the sizing
+  type is @code{:fixed}. The size of the column is clamped to the min/max width
+  for the column. Please note that the min/max width of the column does not
+  actually affect the @code{fixed-width} property of the widget, just the actual
+  size when displayed.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-max-width -----------------------------------------
@@ -384,16 +442,32 @@
                                                'gtk-tree-view-column) 't)
  "The @code{max-width} property of type @code{:int} (Read / Write) @br{}
   Maximum allowed width of the column. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-max-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-max-width 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{max-width} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-max-width object) => max-width}
+  @syntax[]{(setf (gtk-tree-view-column-max-width object) max-width)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[max-width]{the maximum width of the column in pixels, or -1}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{max-width} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-max-width} slot access function
+  returns the maximum width in pixels of the tree column, or -1 if no
+  maximum width is set.
+
+  The @sym{(setf gtk-tree-view-column-max-width)} slot access function
+  sets the maximum width of the tree column. If @arg{max-width} is -1,
+  then the maximum width is unset. Note, the column can actually be wider than
+  max width if it is the last column in a view. In this case, the column expands
+  to fill any extra space.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-min-width -----------------------------------------
@@ -403,7 +477,7 @@
                                                'gtk-tree-view-column) 't)
  "The @code{min-width} property of type @code{:int} (Read / Write )@br{}
   Minimum allowed width of the column. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -411,8 +485,22 @@
       "Accessor"
       (documentation 'gtk-tree-view-column-min-width 'function)
  "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{min-width} of the
-  @class{gtk-tree-view-column} class.
+  @syntax[]{(gtk-tree-view-column-min-width object) => min-width}
+  @syntax[]{(setf (gtk-tree-view-column-min-width object) min-width)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[min-width]{the minimum width of the column in pixels, or -1}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{min-width} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-min-width} slot access function
+  returns the minimum width in pixels of the tree column, or -1 if no
+  minimum width is set.
+
+  The @sym{(setf gtk-tree-view-column-min-width)} slot access function
+  sets the minimum width of the tree column. If @arg{min-width} is -1,
+  then the minimum width is unset.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-reorderable ---------------------------------------
@@ -421,7 +509,7 @@
 (setf (documentation (atdoc:get-slot-from-name "reorderable"
                                                'gtk-tree-view-column) 't)
  "The @code{reorderable} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether the column can be reordered around the headers. @br{}
   Default value: @code{nil}")
 
@@ -429,9 +517,18 @@
 (setf (gethash 'gtk-tree-view-column-reorderable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-reorderable 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{reorderable} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-reorderable object) => reorderable}
+  @syntax[]{(setf (gtk-tree-view-column-reorderable object) reorderable)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[reorderable]{@em{true}, if the column can be reordered}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{reorderable} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  If @code{reorderable} is @em{true}, then the column can be reordered by the
+  end user dragging the header.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-resizable -----------------------------------------
@@ -447,9 +544,23 @@
 (setf (gethash 'gtk-tree-view-column-resizable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-resizable 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{resizable} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-resizable object) => resizable}
+  @syntax[]{(setf (gtk-tree-view-column-resizable object) resizable)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[resizable]{@em{true}, if the column can be resized}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{resizable} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-resizable} slot access function
+  returns @em{true} if the tree column can be resized by the end user.
+
+  If @code{resizable} is @em{true}, then the user can explicitly resize the
+  column by grabbing the outer edge of the column button. If @code{resizable} is
+  @em{true} and sizing mode of the column is @code{:autosize}, then the sizing
+  mode is changed to @code{:grow-only}.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-sizing --------------------------------------------
@@ -466,9 +577,22 @@
 (setf (gethash 'gtk-tree-view-column-sizing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sizing 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{sizing} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-sizing object) => type}
+  @syntax[]{(setf (gtk-tree-view-column-sizing object) type)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[type]{a value of the @class{gtk-tree-view-column-sizing}
+    enumeration}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{sizing} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-sizing} slot access function
+  returns the current type of the tree-column.
+
+  The @sym{(setf gtk-tree-view-column-sizing)} slot access function
+  sets the growth behavior of the tree column to type.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-sort-column-id ------------------------------------
@@ -480,7 +604,7 @@
   Logical sort column ID this column sorts on when selected for sorting.
   Setting the sort column ID makes the column header clickable. Set to -1 to
   make the column unsortable. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -488,8 +612,22 @@
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-column-id 'function)
  "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{sort-column-id} of the
-  @class{gtk-tree-view-column} class.
+  @syntax[]{(gtk-tree-view-column-sort-column-id object) => sort-column-id}
+  @syntax[]{(setf (gtk-tree-view-column-sort-column-id object) sort-column-id)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[sort-column-id]{the @code{sort-column-id} of the model to sort on}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{sort-column-id} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-sort-column-id} slot access function
+  gets the logical @code{sort-column-id} that the model sorts on when this
+  column is selected for sorting.
+
+  The @sym{(setf gtk-tree-view-column-sort-column-id)} slot access function
+  sets the logical @arg{sort-column-id} that this column sorts on when this
+  column is selected for sorting. Doing so makes the column header clickable.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-sort-indicator ------------------------------------
@@ -506,9 +644,21 @@
 (setf (gethash 'gtk-tree-view-column-sort-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-indicator 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{sort-indicator} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-sort-indicator object) => setting}
+  @syntax[]{(setf (gtk-tree-view-column-sort-indicator object) setting)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[setting]{@em{true} to display an indicator that the column is
+    sorted}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{sort-indicator} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  Call this function with a setting of @em{true} to display an arrow in the
+  header button indicating the column is sorted. Call the
+  @fun{gtk-tree-view-column-sort-order} function to change the direction of the
+  arrow.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-sort-order ----------------------------------------
@@ -525,10 +675,30 @@
 (setf (gethash 'gtk-tree-view-column-sort-order atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-order 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{sort-order} of the
-  @class{gtk-tree-view-column} class.
-  @see-class{gtk-tree-view-column}")
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-sort-order object) => order}
+  @syntax[]{(setf (gtk-tree-view-column-sort-order object) order)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[order]{sort order that the sort indicator should indicate}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{sort-order} sort of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  This does not actually sort the model. Use the function
+  @fun{gtk-tree-view-column-sort-column-id} if you want automatic sorting
+  support. This function is primarily for custom sorting behavior, and should
+  be used in conjunction with the @fun{gtk-tree-sortable-set-sort-column}
+  function to do that. For custom models, the mechanism will vary.
+
+  The sort indicator changes direction to indicate normal sort or reverse
+  sort. Note that you must have the sort indicator enabled to see anything
+  when calling this function; see the @fun{gtk-tree-view-column-sort-indicator}
+  function.
+  @see-class{gtk-tree-view-column}
+  @see-function{gtk-tree-view-column-sort-column-id}
+  @see-function{gtk-tree-view-column-sort-indicator}
+  @see-function{gtk-tree-sortable-set-sort-column}")
 
 ;;; --- gtk-tree-view-column-spacing -------------------------------------------
 
@@ -544,9 +714,22 @@
 (setf (gethash 'gtk-tree-view-column-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-spacing 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{spacing} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-spacing object) => spacing}
+  @syntax[]{(setf (gtk-tree-view-column-spacing object) spacing)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[spacing]{distance between cell renderers in pixels}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{spacing} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-spacing} slot access function
+  returns the spacing of the tree column.
+
+  The @sym{(setf gtk-tree-view-column-spacing)} slot access function
+  sets the spacing field of the tree column, which is the number of pixels to
+  place between cell renderers packed into it.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-title ---------------------------------------------
@@ -562,9 +745,22 @@
 (setf (gethash 'gtk-tree-view-column-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-title 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{title} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-title object) => title}
+  @syntax[]{(setf (gtk-tree-view-column-title object) title)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[title]{the title of the @arg{tree-column} object}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{title} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-spacing} slot access function
+  returns the title of the column.
+
+  The @sym{(setf gtk-tree-view-column-spacing)} slot access function
+  sets the title of the  tree column. If a custom widget has been set, then
+  this value is ignored.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-visible -------------------------------------------
@@ -581,8 +777,21 @@
       "Accessor"
       (documentation 'gtk-tree-view-column-visible 'function)
  "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{visible} of the
-  @class{gtk-tree-view-column} class.
+  @syntax[]{(gtk-tree-view-column-visible object) => visible}
+  @syntax[]{(setf (gtk-tree-view-column-visible object) visible)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[visible]{@em{true} if the @arg{tree-column} is visible}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{visible} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-visible} slot access function
+  returns whether the column is visible or not. If it is visible, then the tree
+  will show the column.
+
+  The @sym{(setf gtk-tree-view-column-spacing)} slot access function
+  sets the visibility of the tree column.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-widget --------------------------------------------
@@ -597,9 +806,24 @@
 (setf (gethash 'gtk-tree-view-column-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-widget 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{widget} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-widget object) => visible}
+  @syntax[]{(setf (gtk-tree-view-column-widget object) visible)}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[widget]{a child @class{gtk-widget}, or @code{nil}}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{widget} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-widget} slot access function
+  returns the @class{gtk-widget} in the button on the column header. If a
+  custom widget has not been set then @code{nil} is returned.
+
+  The @sym{(setf gtk-tree-view-column-widget)} slot access function
+  sets the widget in the header to be @arg{widget}. If widget is @code{nil},
+  then the header button is set with a @class{gtk-label} widget set to the
+  title of the tree column.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-width ---------------------------------------------
@@ -616,9 +840,17 @@
 (setf (gethash 'gtk-tree-view-column-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-width 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{width} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-widget object) => visible}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[width]{the current width of the tree column}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{width} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-width} slot access function
+  returns the current size of the tree column in pixels.
   @see-class{gtk-tree-view-column}")
 
 ;;; --- gtk-tree-view-column-x-offset ------------------------------------------
@@ -627,17 +859,24 @@
 (setf (documentation (atdoc:get-slot-from-name "x-offset"
                                                'gtk-tree-view-column) 't)
  "The @code{x-offset} property of type @code{:int} (Read) @br{}
-  Current X position of the column. @br{}
-  Allowed values: >= -2147483647 @br{}
+  Current x position of the column. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-x-offset atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-x-offset 'function)
- "@version{2013-3-26}
-  Accessor of the slot @slot[gtk-tree-view-column]{x-offset} of the
-  @class{gtk-tree-view-column} class.
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-column-x-offset object) => offset}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
+  @argument[offset]{the current x offset in pixels}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view-column]{x-offset} slot of the
+    @class{gtk-tree-view-column} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-column-width} slot access function
+  returns the current x offset of the tree column in pixels.
   @see-class{gtk-tree-view-column}")
 
 ;;; ----------------------------------------------------------------------------
@@ -937,267 +1176,6 @@
 (export 'gtk-tree-view-column-clear-attributes)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-spacing))
-
-(defun gtk-tree-view-column-set-spacing (tree-column spacing)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[spacing]{distance between cell renderers in pixels}
-  Sets the spacing field of @arg{tree-column}, which is the number of pixels to
-  place between cell renderers packed into it."
-  (setf (gtk-tree-view-column-spacing tree-column) spacing))
-
-(export 'gtk-tree-view-column-set-spacing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-spacing))
-
-(defun gtk-tree-view-column-get-spacing (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The spacing of @arg{tree-column}.}
-  Returns the spacing of @arg{tree-column}."
-  (gtk-tree-view-column-spacing tree-column))
-
-(export 'gtk-tree-view-column-get-spacing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-visible))
-
-(defun gtk-tree-view-column-set-visible (tree-column visible)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[visible]{@em{true} if the @arg{tree-column} is visible}
-  Sets the visibility of @arg{tree-column}."
-  (setf (gtk-tree-view-column-visible tree-column) visible))
-
-(export 'gtk-tree-view-column-set-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-visible))
-
-(defun gtk-tree-view-column-get-visible (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{Whether the column is visible or not. If it is visible, then the tree
-    will show the column.}
-  Returns @em{true} if @arg{tree-column} is visible."
-  (gtk-tree-view-column-visible tree-column))
-
-(export 'gtk-tree-view-column-get-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_resizable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-resizable))
-
-(defun gtk-tree-view-column-set-resizable (tree-column resizable)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[resizable]{@em{true}, if the column can be resized}
-  If resizable is @em{true}, then the user can explicitly resize the column by
-  grabbing the outer edge of the column button. If resizable is @em{true} and
-  sizing mode of the column is @code{:autosize}, then the sizing mode is changed
-  to @code{:grow-only}."
-  (setf (gtk-tree-view-column-resizable tree-column) resizable))
-
-(export 'gtk-tree-view-column-set-resizable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_resizable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-resizable))
-
-(defun gtk-tree-view-column-get-resizable (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{@em{True}, if the @arg{tree-column} can be resized.}
-  Returns @em{true} if the @arg{tree-column} can be resized by the end user."
-  (gtk-tree-view-column-resizable tree-column))
-
-(export 'gtk-tree-view-column-get-resizable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_sizing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-sizing))
-
-(defun gtk-tree-view-column-set-sizing (tree-column type)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[type]{the @class{gtk-tree-view-column-sizing} object}
-  Sets the growth behavior of @arg{tree-column} to type."
-  (setf (gtk-tree-view-column-sizing tree-column) type))
-
-(export 'gtk-tree-view-column-set-sizing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_sizing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-sizing))
-
-(defun gtk-tree-view-column-get-sizing (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The type of @arg{tree-column}.}
-  Returns the current type of @arg{tree-column}."
-  (gtk-tree-view-column-sizing tree-column))
-
-(export 'gtk-tree-view-column-get-sizing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-width))
-
-(defun gtk-tree-view-column-get-width (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The current width of @arg{tree-column}.}
-  Returns the current size of @arg{tree-column} in pixels."
-  (gtk-tree-view-column-width tree-column))
-
-(export 'gtk-tree-view-column-get-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_fixed_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-fixed-width))
-
-(defun gtk-tree-view-column-get-fixed-width (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The fixed width of the column.}
-  Gets the fixed width of the column. This value is only meaning may not be
-  the actual width of the column on the screen, just what is requested."
-  (gtk-tree-view-column-fixed-width tree-column))
-
-(export 'gtk-tree-view-column-get-fixed-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_fixed_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-fixed-width))
-
-(defun gtk-tree-view-column-set-fixed-width (tree-column fixed-width)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-20}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[fixed-width]{the size to set @arg{tree-column} to, must be greater
-    than 0}
-  @begin{short}
-    Sets the size of the column in pixels.
-  @end{short}
-  This is meaningful only if the sizing type is @code{:fixed}. The size of the
-  column is clamped to the min/max width for the column. Please note that the
-  min/max width of the column does not actually affect the
-  @slot[gtk-tree-view-column]{fixed-width} property of the widget, just the
-  actual size when displayed.
-  @see-class{gtk-tree-view-column}"
-  (setf (gtk-tree-view-column-fixed-width tree-column) fixed-width))
-
-(export 'gtk-tree-view-column-set-fixed-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_min_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-min-width))
-
-(defun gtk-tree-view-column-set-min-width (tree-column min-width)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[min-width]{the minimum width of the column in pixels, or -1}
-  Sets the minimum width of the @arg{tree-column}. If @arg{min-width} is -1,
-  then the minimum width is unset."
-  (setf (gtk-tree-view-column-min-width tree-column) min-width))
-
-(export 'gtk-tree-view-column-set-min-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_min_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-min-width))
-
-(defun gtk-tree-view-column-get-min-width (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The minimum width of the @arg{tree-column}.}
-  Returns the minimum width in pixels of the @arg{tree-column}, or -1 if no
-  minimum width is set."
-  (gtk-tree-view-column-min-width tree-column))
-
-(export 'gtk-tree-view-column-get-min-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_max_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-max-width))
-
-(defun gtk-tree-view-column-set-max-width (tree-column max-width)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[max-width]{the maximum width of the column in pixels, or -1}
-  Sets the maximum width of the @arg{tree-column}. If @arg{max-width} is -1,
-  then the maximum width is unset. Note, the column can actually be wider than
-  max width if it is the last column in a view. In this case, the column expands
-  to fill any extra space."
-  (setf (gtk-tree-view-column-max-width tree-column) max-width))
-
-(export 'gtk-tree-view-column-set-max-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_max_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-max-width))
-
-(defun gtk-tree-view-column-get-max-width (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The maximum width of the @arg{tree-column}.}
-  Returns the maximum width in pixels of the @arg{tree-column}, or -1 if no
-  maximum width is set."
-  (gtk-tree-view-column-max-width tree-column))
-
-(export 'gtk-tree-view-column-get-max-width)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_clicked ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1210,149 +1188,6 @@
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-clicked)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-title))
-
-(defun gtk-tree-view-column-set-title (tree-column title)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[title]{the title of the @arg{tree-column} object}
-  Sets the title of the @arg{tree-column}. If a custom widget has been set, then
-  this value is ignored."
-  (setf (gtk-tree-view-column-title tree-column) title))
-
-(export 'gtk-tree-view-column-set-title)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-title))
-
-(defun gtk-tree-view-column-get-title (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The title of the column.}
-  Returns the title of the widget."
-  (gtk-tree-view-column-title tree-column))
-
-(export 'gtk-tree-view-column-get-title)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_expand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-expand))
-
-(defun gtk-tree-view-column-set-expand (tree-column expand)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[expand]{@em{true} if the column should take available extra space,
-    @code{nil} if not}
-  @begin{short}
-    Sets the column to take available extra space. This space is shared equally
-    amongst all columns that have the expand set to @em{true}. If no column has
-    this option set, then the last column gets all extra space. By default,
-    every column is created with this @code{nil}.
-  @end{short}
-  @see-class{gtk-tree-view-column}"
-  (setf (gtk-tree-view-column-expand tree-column) expand))
-
-(export 'gtk-tree-view-column-set-expand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_expand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-expand))
-
-(defun gtk-tree-view-column-get-expand (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{@em{True}, if the column expands.}
-  @begin{short}
-    Return @em{true} if the column expands to take any available space.
-  @end{short}
-  @see-class{gtk-tree-view-column}"
-  (gtk-tree-view-column-expand tree-column))
-
-(export 'gtk-tree-view-column-get-expand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_clickable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-clickable))
-
-(defun gtk-tree-view-column-set-clickable (tree-column clickable)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[clickable]{@em{true} if the header is active}
-  Sets the header to be active if clickable is @em{true}. When the header is
-  active, then it can take keyboard focus, and can be clicked."
-  (setf (gtk-tree-view-column-clickable tree-column) clickable))
-
-(export 'gtk-tree-view-column-set-clickable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_clickable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-clickable))
-
-(defun gtk-tree-view-column-get-clickable (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{@em{True} if user can click the column header.}
-  Returns @em{true} if the user can click on the header for the column."
-  (gtk-tree-view-column-clickable tree-column))
-
-(export 'gtk-tree-view-column-get-clickable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_widget ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-widget))
-
-(defun gtk-tree-view-column-set-widget (tree-column widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[widget]{a child @class{gtk-widget}, or @code{nil}}
-  Sets the widget in the header to be @arg{widget}. If widget is @code{nil},
-  then the header button is set with a @class{gtk-label} set to the title of
-  @arg{tree-column}."
-  (setf (gtk-tree-view-column-widget tree-column) widget))
-
-(export 'gtk-tree-view-column-set-widget)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_widget ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-widget))
-
-(defun gtk-tree-view-column-get-widget (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{A @class{gtk-tree-view-column} object}
-  @return{The @class{gtk-widget} in the column header, or @code{nil}.}
-  Returns the @class{gtk-widget} in the button on the column header. If a custom
-    widget has not been set then @code{nil} is returned."
-  (gtk-tree-view-column-widget tree-column))
-
-(export 'gtk-tree-view-column-get-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_button ()
@@ -1371,199 +1206,6 @@
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-get-button)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_alignment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-alignment))
-
-(defun gtk-tree-view-column-set-alignment (tree-column xalign)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[xalign]{the alignment, which is between [0.0 and 1.0] inclusive}
-  Sets the alignment of the title or custom widget inside the column header.
-  The alignment determines its location inside the button -0.0 for left,
-  0.5 for center, 1.0 for right."
-  (setf (gtk-tree-view-column-alignment tree-column) xalign))
-
-(export 'gtk-tree-view-column-set-alignment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_alignment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-alignment))
-
-(defun gtk-tree-view-column-get-alignment (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The current alignent of @arg{tree-column}.}
-  Returns the current x alignment of @arg{tree-column}. This value can range
-  between 0.0 and 1.0."
-  (gtk-tree-view-column-alignment tree-column))
-
-(export 'gtk-tree-view-column-get-alignment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_reorderable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-reorderable))
-
-(defun gtk-tree-view-column-set-reorderable (tree-column reorderable)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[reorderable]{@em{true}, if the column can be reordered}
-  If reorderable is @em{true}, then the column can be reordered by the end user
-  dragging the header."
-  (setf (gtk-tree-view-column-reorderable tree-column) reorderable))
-
-(export 'gtk-tree-view-column-set-reorderable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_reorderable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-reorderable))
-
-(defun gtk-tree-view-column-get-reorderable (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{@em{True} if the @arg{tree-column} can be reordered by the user.}
-  Returns @em{true} if the @arg{tree-column} can be reordered by the user."
-  (gtk-tree-view-column-reorderable tree-column))
-
-(export 'gtk-tree-view-column-get-reorderable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_sort_column_id ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-sort-column-id))
-
-(defun gtk-tree-view-column-set-sort-column-id (tree-column sort-column-id)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[sort-column-id]{The @code{sort-column-id} of the model to sort on}
-  Sets the logical @arg{sort-column-id} that this column sorts on when this
-  column is selected for sorting. Doing so makes the column header clickable."
-  (setf (gtk-tree-view-column-sort-column-id tree-column) sort-column-id))
-
-(export 'gtk-tree-view-column-set-sort-column-id)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_sort_column_id ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-sort-column-id))
-
-(defun gtk-tree-view-column-get-sort-column-id (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @begin{return}
-    The current @code{sort-column-id} for this column, or -1 if this column
-    cannot be used for sorting.
-  @end{return}
-  Gets the logical @code{sort-column-id} that the model sorts on when this
-  column is selected for sorting. See the function
-  @fun{gtk-tree-view-column-set-sort-column-id}.
-  @see-function{gtk-tree-view-column-set-sort-column-id}"
-  (gtk-tree-view-column-sort-column-id tree-column))
-
-(export 'gtk-tree-view-column-get-sort-column-id)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_sort_indicator ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-sort-indicator))
-
-(defun gtk-tree-view-column-set-sort-indicator (tree-column setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[setting]{@em{true} to display an indicator that the column is
-    sorted}
-  Call this function with a setting of @em{true} to display an arrow in the
-  header button indicating the column is sorted. Call the function
-  @fun{gtk-tree-view-column-set-sort-order} to change the direction of the
-  arrow.
-  @see-function{gtk-tree-view-column-set-sort-order}"
-  (setf (gtk-tree-view-column-sort-indicator tree-column) setting))
-
-(export 'gtk-tree-view-column-set-sort-indicator)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_sort_indicator ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-sort-indicator))
-
-(defun gtk-tree-view-column-get-sort-indicator (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{Whether the sort indicator arrow is displayed.}
-  Gets the value set by the function
-  @fun{gtk-tree-view-column-set-sort-indicator}."
-  (gtk-tree-view-column-sort-indicator tree-column))
-
-(export 'gtk-tree-view-column-get-sort-indicator)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_set_sort_order ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-set-sort-order))
-
-(defun gtk-tree-view-column-set-sort-order (tree-column order)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[order]{sort order that the sort indicator should indicate}
-  @begin{short}
-    Changes the appearance of the sort indicator.
-  @end{short}
-
-  This does not actually sort the model. Use the function
-  @fun{gtk-tree-view-column-set-sort-column-id} if you want automatic sorting
-  support. This function is primarily for custom sorting behavior, and should
-  be used in conjunction with the function
-  @fun{gtk-tree-sortable-set-sort-column} to do that. For custom models, the
-  mechanism will vary.
-
-  The sort indicator changes direction to indicate normal sort or reverse
-  sort. Note that you must have the sort indicator enabled to see anything
-  when calling this function; see the function
-  @fun{gtk-tree-view-column-set-sort-indicator}.
-  @see-function{gtk-tree-view-column-set-sort-column-id}
-  @see-function{gtk-tree-sortable-set-sort-column}"
-  (setf (gtk-tree-view-column-sort-order tree-column) order))
-
-(export 'gtk-tree-view-column-set-sort-order)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_sort_order ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-sort-order))
-
-(defun gtk-tree-view-column-get-sort-order (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The sort order the sort indicator is indicating.}
-  Gets the value set by the function @fun{gtk-tree-view-column-set-sort-order}."
-  (gtk-tree-view-column-sort-order tree-column))
-
-(export 'gtk-tree-view-column-get-sort-order)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_cell_set_cell_data ()
@@ -1686,7 +1328,7 @@
   @end{return}
   Returns @em{true} if any of the cells packed into the @arg{tree-column} are
   visible. For this to be meaningful, you must first initialize the cells with
-  the function @fun{gtk-tree-view-column-cell-set-cell-data}."
+  the @fun{gtk-tree-view-column-cell-set-cell-data} function."
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-cell-is-visible)
@@ -1751,24 +1393,5 @@
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-get-tree-view)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_column_get_x_offset ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-column-get-x-offset))
-
-(defun gtk-tree-view-column-get-x-offset (tree-column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @return{The current X offset of @arg{tree-column}.}
-  @begin{short}
-    Returns the current X offset of @arg{tree-column} in pixels.
-  @end{short}
-  @see-class{gtk-tree-view-column}"
-  (gtk-tree-view-column-x-offset tree-column))
-
-(export 'gtk-tree-view-column-get-x-offset)
 
 ;;; --- End of file gtk.tree-view-column.lisp ----------------------------------
