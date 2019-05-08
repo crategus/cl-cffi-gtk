@@ -204,28 +204,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_sortable_get_sort_column_id ()
-;;;
-;;; gboolean gtk_tree_sortable_get_sort_column_id (GtkTreeSortable *sortable,
-;;;                                                gint *sort_column_id,
-;;;                                                GtkSortType *order);
-;;;
-;;; Fills in sort_column_id and order with the current sort column and the
-;;; order. It returns TRUE unless the sort_column_id is
-;;; GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
-;;; GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
-;;;
-;;; sortable :
-;;;     A GtkTreeSortable
-;;;
-;;; sort_column_id :
-;;;     The sort column id to be filled in.
-;;;
-;;; order :
-;;;     The GtkSortType to be filled in.
-;;;
-;;; Returns :
-;;;     TRUE if the sort column is not one of the special sort column ids.
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: The implementation does not look at the return value.
+;;
+;; See the documentation:
+;; It returns TRUE unless the sort_column_id is
+;; GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
+;; GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
+;;
+;; Returns : TRUE if the sort column is not one of the special sort column ids.
 
 (defcfun ("gtk_tree_sortable_get_sort_column_id"
           %gtk-tree-sortable-get-sort-column-id) :boolean
@@ -234,6 +222,18 @@
   (order (:pointer gtk-sort-type)))
 
 (defun gtk-tree-sortable-get-sort-column-id (sortable)
+
+ #+cl-cffi-gtk-documentation
+ "@version{2019-5-6}
+  @argument[sortable]{a @class{gtk-tree-sortable} object}
+  @begin{return}
+    @arg{sort-column-id} -- the sort column id @br{}
+    @arg{order} -- the @symbol{gtk-sort-type}
+  @end{return}
+  @begin{short}
+    Returns the current sort column and the order.
+  @end{short}
+  @see-class{gtk-tree-sortable}"
   (with-foreign-objects ((sort-column-id :int) (order 'gtk-sort-type))
     (%gtk-tree-sortable-get-sort-column-id sortable sort-column-id order)
     (values (mem-ref sort-column-id :int)
