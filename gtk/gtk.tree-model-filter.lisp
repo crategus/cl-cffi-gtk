@@ -303,7 +303,6 @@
    return visible;
  @}
   @end{pre}
-  Since 2.4
   @see-function{gtk-tree-model-filter-refilter}"
   (%gtk-tree-model-filter-set-visible-func
       tree-model-filter
@@ -402,8 +401,7 @@
   @end{short}
   @arg{column}s should be a column of type @code{G_TYPE_BOOLEAN}, where
   @em{true} means that a row is visible, and @code{nil} if not.
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (filter (g-object gtk-tree-model-filter))
   (column :int))
 
@@ -422,8 +420,6 @@
   @begin{short}
     Returns a pointer to the child model of @arg{filter}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-tree-model-filter}
   @see-class{gtk-tree-model}"
   (filter (g-object gtk-tree-model-filter)))
@@ -455,8 +451,7 @@
     the row pointed at by @arg{child-iter}. If @arg{filter-iter} was not set,
     @code{nil} is returned.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (let ((filter-iter (make-instance 'gtk-tree-iter)))
     (when (%gtk-tree-model-filter-convert-child-iter-to-iter filter
                                                              filter-iter
@@ -488,8 +483,7 @@
     Returns @arg{child-iter} to point to the row pointed to by
     @arg{filter-iter}.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (let ((child-iter (make-instance 'gtk-tree-iter)))
     (%gtk-tree-model-filter-convert-iter-to-child-iter filter
                                                        child-iter
@@ -517,8 +511,7 @@
   The returned path will point to the same row in the filtered model. If
   @arg{child-path} is not a valid path on the child model or points to a row
   which is not visible in filter, then @code{nil} is returned.
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (filter (g-object gtk-tree-model-sort))
   (child-path (g-boxed-foreign gtk-tree-path)))
 
@@ -543,8 +536,7 @@
   will point to the same location in the model not being filtered. If
   @arg{filter-path} does not point to a location in the child model, @code{nil}
   is returned.
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (filter (g-object gtk-tree-model-sort))
   (filter-path (g-boxed-foreign gtk-tree-path)))
 
@@ -562,8 +554,7 @@
     Emits the signal \"row_changed\" for each row in the child model, which
     causes the filter to re-evaluate whether a row is visible or not.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tree-model-filter}"
   (filter (g-object gtk-tree-model-filter)))
 
 (export 'gtk-tree-model-filter-refilter)
@@ -586,8 +577,7 @@
   This might be useful if the child model being filtered is static (and
   does not change often) and there has been a lot of unreffed access to nodes.
   As a side effect of this function, all unreffed iters will be invalid.
-
-  Since 2.4
+  @see-class{gtk-tree-model-filter}
   @see-function{gtk-tree-model-ref-node}"
   (filter (g-object gtk-tree-model-filter)))
 
