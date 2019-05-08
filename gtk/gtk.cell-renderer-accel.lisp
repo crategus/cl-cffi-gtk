@@ -105,8 +105,6 @@
         @entry[accel]{The object reveiving the signal.}
         @entry[path-string]{The path identifying the row of the edited cell.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"accel-edited\" signal}
       @begin{pre}
  lambda (accel path-string accel-key accel-mods hardware-keycode)   : Run Last
@@ -119,7 +117,6 @@
         @entry[accel-mods]{The new acclerator modifier mask.}
         @entry[hardware-keycode]{The keycode of the new accelerator.}
       @end{table}
-      Since 2.10
   @end{dictionary}
   @see-slot{gtk-cell-renderer-accel-accel-key}
   @see-slot{gtk-cell-renderer-accel-accel-mode}
@@ -127,88 +124,88 @@
   @see-slot{gtk-cell-renderer-accel-keycode}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-accel-accel-key --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-key"
                                                'gtk-cell-renderer-accel) 't)
- "The @code{\"accel-key\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{accel-key} property of type @code{:uint} (Read / Write) @br{}
   The keyval of the accelerator. @br{}
   Allowed values: <= @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "accel-mode"
-                                               'gtk-cell-renderer-accel) 't)
- "The @code{\"accel-mode\"} property of type
-  @symbol{gtk-cell-renderer-accel-mode} (Read / Write) @br{}
-  Determines if the edited accelerators are GTK+ accelerators. If they are,
-  consumed modifiers are suppressed, only accelerators accepted by GTK+ are
-  allowed, and the accelerators are rendered in the same way as they are in
-  menus. @br{}
-  Default value: @code{:gtk} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "accel-mods"
-                                               'gtk-cell-renderer-accel) 't)
- "The @code{\"accel-mods\"} property of type @symbol{gdk-modifier-type}
-  (Read / Write) @br{}
-  The modifier mask of the accelerator. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "keycode"
-                                               'gtk-cell-renderer-accel) 't)
- "The @code{\"keycode\"} property of type @code{:uint} (Read / Write) @br{}
-  The hardware keycode of the accelerator. Note that the hardware keycode is
-  only relevant if the key does not have a keyval. Normally, the keyboard
-  configuration should assign keyvals to all keys. @br{}
-  Allowed values: <= @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-accel-accel-key atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-accel-accel-key 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"accel-key\"} of the
-  @class{gtk-cell-renderer-accel} class.")
+  Accessor of the @slot[gtk-cell-renderer]{accel-key} slot of the
+  @class{gtk-cell-renderer-accel} class.
+  @see-class{gtk-cell-renderer-accel}")
+
+;;; --- gtk-cell-renderer-accel-accel-mode -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-mode"
+                                               'gtk-cell-renderer-accel) 't)
+ "The @code{accel-mode} property of type
+  @symbol{gtk-cell-renderer-accel-mode} (Read / Write) @br{}
+  Determines if the edited accelerators are GTK+ accelerators. If they are,
+  consumed modifiers are suppressed, only accelerators accepted by GTK+ are
+  allowed, and the accelerators are rendered in the same way as they are in
+  menus. @br{}
+  Default value: @code{:gtk}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-accel-accel-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-accel-accel-mode 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"accel-mode\"} of the
-  @class{gtk-cell-renderer-accel} class.")
+  Accessor of the @slot[gtk-cell-renderer-accel]{accel-mode} slot of the
+  @class{gtk-cell-renderer-accel} class.
+  @see-class{gtk-cell-renderer-accel}")
+
+;;; --- gtk-cell-renderer-accel-accel-mods -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-mods"
+                                               'gtk-cell-renderer-accel) 't)
+ "The @code{accel-mods} property of type @symbol{gdk-modifier-type}
+  (Read / Write) @br{}
+  The modifier mask of the accelerator.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-accel-accel-mods atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-accel-accel-mods 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"accel-mods\"} of the
-  @class{gtk-cell-renderer-accel} class.")
+  Accessor of the @slot[gtk-cell-renderer-accel]{accel-mods} slot of the
+  @class{gtk-cell-renderer-accel} class.
+  @see-class{gtk-cell-renderer-accel}")
+
+;;; --- gtk-cell-renderer-accel-keycode ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "keycode"
+                                               'gtk-cell-renderer-accel) 't)
+ "The @code{keycode} property of type @code{:uint} (Read / Write) @br{}
+  The hardware keycode of the accelerator. Note that the hardware keycode is
+  only relevant if the key does not have a keyval. Normally, the keyboard
+  configuration should assign keyvals to all keys. @br{}
+  Allowed values: <= @code{G_MAXINT} @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-accel-keycode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-accel-keycode 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"keycode\"} of the
-  @class{gtk-cell-renderer-accel} class.")
+  Accessor of the @slot[gtk-cell-renderer-accel]{keycode} slot of the
+  @class{gtk-cell-renderer-accel} class.
+  @see-class{gtk-cell-renderer-accel}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCellRendererAccelMode
@@ -244,8 +241,7 @@
  "@version{2013-6-22}
   @returns{The new cell renderer.}
   @short{Creates a new @class{gtk-cell-renderer-accel} object.}
-
-  Since 2.10"
+  @see-class{gtk-cell-renderer-accel}"
   (make-instance 'gtk-cell-renderer-accel))
 
 (export 'gtk-cell-renderer-accel-new)
