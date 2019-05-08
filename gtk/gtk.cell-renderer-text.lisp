@@ -93,7 +93,7 @@
 ;;; Signals
 ;;;
 ;;;                 void    edited                  Run Last
-;;; 
+;;;
 ;;; Object Hierarchy
 ;;;
 ;;;     GObject
@@ -537,9 +537,8 @@
   maximum reported width of the cell. The cell should not receive any greater
   allocation unless it is set to expand in its @class{gtk-cell-layout} and all
   of the cell's siblings have received their natural width. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 3.0")
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "placeholder-text"
@@ -722,9 +721,8 @@
   The desired width of the cell, in characters. If this property is set to -1,
   the width will be calculated automatically, otherwise the cell will request
   either 3 characters or the property value, whichever is greater. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-mode"
@@ -745,9 +743,8 @@
   @code{\"wrap-mode\"} property can be used to influence at what character
   positions the line breaks can be placed. Setting @code{\"wrap-width\"} to -1
   turns wrapping off. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.8")
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
