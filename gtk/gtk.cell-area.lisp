@@ -1494,13 +1494,13 @@
 ;;;
 ;;; area :
 ;;;     a GtkCellArea
-;;; 
+;;;
 ;;; renderer :
 ;;;     a GtkCellRenderer
-;;; 
+;;;
 ;;; attribute :
 ;;;     an attribute on the renderer
-;;; 
+;;;
 ;;; Returns :
 ;;;     the model column, or -1
 ;;;
