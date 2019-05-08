@@ -101,7 +101,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (combo path-string new-iter)   : Run Last
+ lambda (combo path-string new-iter)    : Run Last
       @end{pre}
       This signal is emitted each time after the user selected an item in the
       combo box, either by using the mouse or the arrow keys. Contrary to
@@ -121,78 +121,74 @@
         @entry[new-iter]{The new iter selected in the combo box (relative to the
           combo box model).}
        @end{table}
-       Since 2.14
   @end{dictionary}
   @see-slot{gtk-cell-renderer-combo-has-entry}
   @see-slot{gtk-cell-renderer-combo-model}
   @see-slot{gtk-cell-renderer-combo-text-column}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-combo-has-entry --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-entry"
                                                'gtk-cell-renderer-combo) 't)
- "The @code{\"has-entry\"} property of type @code{:boolean} (Read / Write) @br{}
-  If @em{true}, the cell renderer will include an entry and allow to enter values
-  other than the ones in the popup list. @br{}
-  Default value: @em{true} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "model"
-                                               'gtk-cell-renderer-combo) 't)
- "The @code{\"model\"} property of type @class{gtk-tree-model}
-  (Read / Write) @r{}
-  Holds a tree model containing the possible values for the combo box. Use the
-  @code{\"text-column\"} property to specify the column holding the
-  values. @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text-column"
-                                               'gtk-cell-renderer-combo) 't)
- "The @code{\"text-column\"} property of type @code{:int} (Read / Write) @br{}
-  Specifies the model column which holds the possible values for the combo
-  box. Note that this refers to the model specified in the model property, not
-  the model backing the tree view to which this cell renderer is attached.
-  @sym{gtk-cell-renderer-combo} automatically adds a text cell renderer for this
-  column to its combo box. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
+ "The @code{has-entry} property of type @code{:boolean} (Read / Write) @br{}
+  If @em{true}, the cell renderer will include an entry and allow to enter
+  values other than the ones in the popup list. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-combo-has-entry atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-combo-has-entry 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"has-entry\"} of the
-  @class{gtk-cell-renderer-combo} class.")
+  Accessor of the @slot[gtk-cell-renderer-combo]{has-entry} slot of the
+  @class{gtk-cell-renderer-combo} class.
+  @see-class{gtk-cell-renderer-combo}")
+
+;;; --- gtk-cell-renderer-combo-model ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "model"
+                                               'gtk-cell-renderer-combo) 't)
+ "The @code{model} property of type @class{gtk-tree-model}
+  (Read / Write) @r{}
+  Holds a tree model containing the possible values for the combo box. Use the
+  @code{text-column} property to specify the column holding the
+  values.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-combo-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-combo-model 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"model\"} of the
-  @class{gtk-cell-renderer-combo} class.")
+  Accessor of the @slot[gtk-cell-renderer-combo]{model} slot of the
+  @class{gtk-cell-renderer-combo} class.
+  @see-class{gtk-cell-renderer-combo}")
+
+;;; --- gtk-cell-renderer-combo-text-column ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text-column"
+                                               'gtk-cell-renderer-combo) 't)
+ "The @code{text-column} property of type @code{:int} (Read / Write) @br{}
+  Specifies the model column which holds the possible values for the combo
+  box. Note that this refers to the model specified in the model property, not
+  the model backing the tree view to which this cell renderer is attached.
+  @sym{gtk-cell-renderer-combo} automatically adds a text cell renderer for this
+  column to its combo box. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-combo-text-column atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-combo-text-column 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"text-column\"} of the
+  Accessor of the @slot[gtk-cell-renderer-combo]{text-column} slot of the
   @class{gtk-cell-renderer-combo} class.")
 
 ;;; ----------------------------------------------------------------------------
@@ -214,8 +210,7 @@
   @class{gtk-tree-model}. For example, you can bind the \"text\" property on the
   cell renderer to a string value in the model, thus rendering a different
   string in each row of the @class{gtk-tree-view}.
-
-  Since 2.6"
+  @see-class{gtk-cell-renderer-combo}"
   (make-instance 'gtk-cell-renderer-combo))
 
 (export 'gtk-cell-renderer-combo-new)
