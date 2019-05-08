@@ -27,11 +27,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkColorChooserDialog
-;;; 
+;;;
 ;;;     A dialog for choosing colors
-;;;     
+;;;
 ;;; Types and Values
-;;; 
+;;;
 ;;;     GtkColorChooserDialog
 ;;;
 ;;; Functions
