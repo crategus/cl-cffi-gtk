@@ -438,7 +438,7 @@
         Modifies passed color's alpha by a factor f. f is a floating point
         number. f < 1.0 results in a more transparent color while f > 1.0
         results in a more opaque color.
-        
+
         Examples:
         @begin{pre}
  alhpa(blue, 0.5)
@@ -581,7 +581,7 @@
 
     @code{border-image-source: url(path)}
 
-    or 
+    or
 
     @code{border-image-source: -gtk-gradient(...)}
 
@@ -1240,10 +1240,10 @@
 ;;;
 ;;;css_provider :
 ;;;     a GtkCssProvider
-;;; 
+;;;
 ;;; resource_path :
 ;;;     a GResource resource path
-;;; 
+;;;
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
