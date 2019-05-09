@@ -94,46 +94,17 @@
   @see-function{gtk-tree-view-column-add-attribute}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-spinner-active ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-cell-renderer-spinner) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the spinner is active (i. e. shown) in the cell. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "pulse"
-                                               'gtk-cell-renderer-spinner) 't)
- "The @code{\"pulse\"} property of type @code{:uint} (Read / Write) @br{}
-  Pulse of the spinner. Increment this value to draw the next frame of the
-  spinner animation. Usually, you would update this value in a timeout.
-  By default, the @class{gtk-spinner} widget draws one full cycle of the
-  animation, consisting of 12 frames, in 750 milliseconds.@br{}
-  Default value: 0 @br{}
-  Since 2.20")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size"
-                                               'gtk-cell-renderer-spinner) 't)
- "The @code{\"size\"} property of type @symbol{gtk-icon-size}
-  (Read / Write) @br{}
-  The @symbol{gtk-icon-size} value that specifies the size of the rendered
-  spinner. @br{}
-  Default value: @code{:menu} @br{}
-  Since 2.20")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-cell-renderer-spinner-active ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spinner-active atdoc:*function-name-alias*)
@@ -141,11 +112,22 @@
       (documentation 'gtk-cell-renderer-spinner-active 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"active\"} of the
+    Accessor of the @slot[gtk-cell-renderer-spinner]{active} slot of the
     @class{gtk-cell-renderer-spinner} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-spinner}")
 
 ;;; --- gtk-cell-renderer-spinner-pulse ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pulse"
+                                               'gtk-cell-renderer-spinner) 't)
+ "The @code{pulse} property of type @code{:uint} (Read / Write) @br{}
+  Pulse of the spinner. Increment this value to draw the next frame of the
+  spinner animation. Usually, you would update this value in a timeout.
+  By default, the @class{gtk-spinner} widget draws one full cycle of the
+  animation, consisting of 12 frames, in 750 milliseconds. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spinner-pulse atdoc:*function-name-alias*)
@@ -153,11 +135,20 @@
       (documentation 'gtk-cell-renderer-spinner-pulse 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"pulse\"} of the
+    Accessor of the @slot[gtk-cell-renderer-spinner]{pulse} slot of the
     @class{gtk-cell-renderer-spinner} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-spinner}")
 
 ;;; --- gtk-cell-renderer-spinner-size -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size"
+                                               'gtk-cell-renderer-spinner) 't)
+ "The @code{size} property of type @symbol{gtk-icon-size} (Read / Write) @br{}
+  The @symbol{gtk-icon-size} value that specifies the size of the rendered
+  spinner. @br{}
+  Default value: @code{:menu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spinner-size atdoc:*function-name-alias*)
@@ -165,9 +156,10 @@
       (documentation 'gtk-cell-renderer-spinner-size 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"size\"} of the
+    Accessor of the @slot[gtk-cell-renderer-spinner]{size} slot of the
     @class{gtk-cell-renderer-spinner} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-spinner}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_spinner_new ()
@@ -182,8 +174,7 @@
   @begin{short}
     Returns a new cell renderer which will show a spinner to indicate activity.
   @end{short}
-
-  Since 2.20"
+  @see-class{gtk-cell-renderer-spinner}"
   (make-instance 'gtk-cell-renderer-spinner))
 
 (export 'gtk-cell-renderer-spinner-new)
