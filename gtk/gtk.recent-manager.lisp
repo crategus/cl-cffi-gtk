@@ -349,7 +349,7 @@
 (setf (documentation (atdoc:get-slot-from-name "size" 'gtk-recent-manager) 't)
  "The @code{size} property of type @code{:int} (Read) @br{}
   The size of the recently used resources list. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation

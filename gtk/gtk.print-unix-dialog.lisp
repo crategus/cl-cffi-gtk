@@ -195,7 +195,7 @@
                                                'gtk-print-unix-dialog) 't)
  "The @code{current-page} property of type @code{:int} (Read / Write) @br{}
   The current page in the document. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

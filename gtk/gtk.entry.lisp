@@ -2193,7 +2193,7 @@
 (setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-entry) 't)
  "The @code{width-chars} property of tpye @code{:int} (Read / Write) @br{}
   Number of characters to leave space for in the entry. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

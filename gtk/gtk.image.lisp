@@ -399,7 +399,7 @@
   The @code{pixel-size} property can be used to specify a fixed size
   overriding the @code{icon-size} property for images of type
   @code{:icon-name}. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

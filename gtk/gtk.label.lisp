@@ -745,7 +745,7 @@
   layout for details of how the properties @slot[gtk-label]{width-chars} and
   @code{max-width-chars} determine the width of ellipsized and wrapped
   labels. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation
@@ -1061,7 +1061,7 @@
   See the section on text layout for details of how the properties
   @code{width-chars} and @slot[gtk-label]{max-width-chars} determine the
   width of ellipsized and wrapped labels. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation

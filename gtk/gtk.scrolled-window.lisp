@@ -485,7 +485,7 @@
  "The @code{min-content-height} property of type @code{:int}
   (Read / Write) @br{}
   The minimum content height of the scrolled window, or -1 if not set. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -508,7 +508,7 @@
  "The @code{min-content-width} property of type @code{:int}
   (Read / Write) @br{}
   The minimum content width of the scrolled window, or -1 if not set. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

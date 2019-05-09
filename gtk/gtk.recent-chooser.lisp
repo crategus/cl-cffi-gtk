@@ -256,7 +256,7 @@
   display all items. By default, the @symbol{gtk-recent-files-limit} setting
   is respected: you can override that limit on a particular instance of
   @sym{gtk-recent-chooser} by setting this property. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

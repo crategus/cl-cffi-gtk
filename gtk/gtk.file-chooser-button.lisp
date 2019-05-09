@@ -63,7 +63,7 @@
 ;;;         ╰── GtkWidget
 ;;;             ╰── GtkContainer
 ;;;                 ╰── GtkBox
-;;;                     ╰── GtkFileChooserButton 
+;;;                     ╰── GtkFileChooserButton
 ;;;
 ;;; Implemented Interfaces
 ;;;
@@ -191,7 +191,7 @@
                                                'gtk-file-chooser-button) 't)
  "The @code{\"width-chars\"} property of type @code{:int} (Read / Write) @br{}
   The width of the entry and label inside the button, in characters. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 ;;; ----------------------------------------------------------------------------

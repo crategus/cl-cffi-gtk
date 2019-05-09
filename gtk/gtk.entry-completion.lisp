@@ -552,7 +552,7 @@
  "The @code{text-column} property of type @code{:int} (Read / Write) @br{}
   The column of the model containing the strings. Note that the strings must
   be UTF-8. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

@@ -1838,7 +1838,7 @@
   @b{Warning:} The @code{gtk-recent-files-limit} property has been deprecated
   since version 3.10 and should not be used in newly-written code. This setting
   is ignored. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= 50 @br{}
   Default value: 50")
 
 #+cl-cffi-gtk-documentation
@@ -1861,7 +1861,7 @@
   list. Items older than this setting will be excised from the list. If set to
   0, the list will always be empty; if set to -1, no item will be
   removed. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= 30 @br{}
   Default value: 30")
 
 #+cl-cffi-gtk-documentation
@@ -2409,7 +2409,7 @@
  "The @code{gtk-xft-antialias} property of type @code{:int}
   (Read / Write) @br{}
   Whether to antialias Xft fonts: 0 = no, 1 = yes, -1 = default. @br{}
-  Allowed values: [@code{G_MAXULONG},1] @br{}
+  Allowed values: [-1,1] @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -2427,7 +2427,7 @@
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-dpi" 'gtk-settings) 't)
  "The @code{gtk-xft-dpi} property of type @code{:int} (Read / Write) @br{}
   Resolution for Xft, in 1024 * dots/inch. -1 to use default value. @br{}
-  Allowed values: [@code{G_MAXULONG},1048576] @br{}
+  Allowed values: [-1,1048576] @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -2447,7 +2447,7 @@
  "The @code{gtk-xft-hinting} property of type @code{:int}
   (Read / Write) @br{}
   Whether to hint Xft fonts: 0 = no, 1 = yes, -1 = default. @br{}
-  Allowed values: [@code{G_MAXULONG},1] @br{}
+  Allowed values: [-1,1] @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

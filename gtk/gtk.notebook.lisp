@@ -318,7 +318,7 @@
         The @code{position} child property of type @code{:int}
         (Read / Write) @br{}
         The index of the child in the parent. @br{}
-        Allowed values: >= @code{G_MAXULONG} @br{}
+        Allowed values: >= 0 @br{}
         Default value: 0
       @end{entry}
       @begin[reorderable]{entry}
@@ -597,7 +597,7 @@
 (setf (documentation (atdoc:get-slot-from-name "page" 'gtk-notebook) 't)
  "The @code{page} property of type @code{:int} (Read / Write) @br{}
   The index of the current page. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation

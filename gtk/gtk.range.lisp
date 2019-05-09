@@ -461,7 +461,7 @@
   The generic function @sym{gtk-range-lower-stepper-sensitivity} gets the
   sensitivity policy for the stepper that points to the 'lower' end of the
   @class{gtk-range}'s adjustment.
- 
+
   The generic function @sym{(setf gtk-range-lower-stepper-sensitivity} sets the
   sensitivity policy for the stepper that points to the 'lower' end of the
   @class{gtk-range}'s adjustment.
@@ -517,9 +517,8 @@
  "The @code{round-digits} property of type @code{:int} (Read / Write) @br{}
   The number of digits to round the value to when it changes, or -1. See the
   @code{\"change-value\"} signal. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.24")
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-round-digits atdoc:*function-name-alias*)
@@ -614,7 +613,7 @@
   The generic function @sym{(setf gtk-range-upper-stepper-sensitivity)} sets
   the sensitivity policy for the stepper that points to the 'upper' end of the
   @class{gtk-range}'s adjustment.
-  
+
   Since 2.10
   @see-class{gtk-range}")
 
@@ -757,7 +756,7 @@
   See the function @fun{gtk-range-set-min-slider-size}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-range-get-min-slider-size} has been deprecated since
-    version 3.20 and should not be used in newly-written code. Use the 
+    version 3.20 and should not be used in newly-written code. Use the
     min-height/min-width CSS properties on the slider node.
   @end{dictionary}
   Since 2.20
