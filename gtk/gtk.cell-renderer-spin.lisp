@@ -100,67 +100,65 @@
   @see-slot{gtk-cell-renderer-spin-digits}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-spin-adjustment --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "adjustment"
                                                'gtk-cell-renderer-spin) 't)
- "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
+ "The @code{adjustment} property of type @class{gtk-adjustment}
   (Read / Write) @br{}
   The adjustment that holds the value of the spin button. This must be
-  non-@code{nil} for the cell renderer to be editable. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "climb-rate"
-                                               'gtk-cell-renderer-spin) 't)
- "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write) @br{}
-  The acceleration rate when you hold down a button. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "digits"
-                                               'gtk-cell-renderer-spin) 't)
- "The @code{\"digits\"} property of type @code{:uint} (Read / Write) @br{}
-  The number of decimal places to display. @br{}
-  Allowed values: <= 20 @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
+  non-@code{nil} for the cell renderer to be editable.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-adjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-adjustment 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"adjustment\"} of the
-  @class{gtk-cell-renderer-spin} class.")
+  Accessor of the @slot[gtk-cell-renderer-spin]{adjustment} slot of the
+  @class{gtk-cell-renderer-spin} class.
+  @see-class{gtk-cell-renderer-spin}")
+
+;;; --- gtk-cell-renderer-spin-climb-rate --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "climb-rate"
+                                               'gtk-cell-renderer-spin) 't)
+ "The @code{climb-rate} property of type @code{:double} (Read / Write) @br{}
+  The acceleration rate when you hold down a button. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-climb-rate atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-climb-rate 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"climb-rate\"} of the
-  @class{gtk-cell-renderer-spin} class.")
+  Accessor of the @slot[gtk-cell-renderer-spin]{climb-rate} slot of the
+  @class{gtk-cell-renderer-spin} class.
+  @see-class{gtk-cell-renderer-spin}")
+
+;;; --- gtk-cell-renderer-spin-digits ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "digits"
+                                               'gtk-cell-renderer-spin) 't)
+ "The @code{digits} property of type @code{:uint} (Read / Write) @br{}
+  The number of decimal places to display. @br{}
+  Allowed values: <= 20 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-digits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-digits 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"digits\"} of the
-  @class{gtk-cell-renderer-spin} class.")
+  Accessor of the @slot[gtk-cell-renderer-spin]{digits} slot of the
+  @class{gtk-cell-renderer-spin} class.
+  @see-class{gtk-cell-renderer-spin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_spin_new ()
@@ -173,8 +171,7 @@
  "@version{2013-6-22}
   @return{A new @class{gtk-cell-renderer-spin} object.}
   @short{Creates a new @class{gtk-cell-renderer-spin} object.}
-
-  Since 2.10"
+  @see-class{gtk-cell-renderer-spin}"
   (make-instance 'gtk-cell-renderer-spin))
 
 (export 'gtk-cell-renderer-spin-new)
