@@ -269,11 +269,11 @@
     A @sym{gtk-cell-renderer-text} renders a given text in its cell, using the
     font, color and style information provided by its properties.
   @end{short}
-  The text will be ellipsized if it is too long and the @code{\"ellipsize\"}
+  The text will be ellipsized if it is too long and the @code{ellipsize}
   property allows it.
 
-  If the @code{\"mode\"} is @code{:editable}, the @sym{gtk-cell-renderer-text}
-  allows to edit its text using an entry.
+  If the @code{mode} property is @code{:editable}, the
+  @sym{gtk-cell-renderer-text} allows to edit its text using an entry.
   @begin[Signal Details]{dictionary}
     @subheading{The \"edited\" signal}
       @begin{pre}
@@ -338,198 +338,486 @@
   @see-slot{gtk-cell-renderer-text-wrap-width}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-text-align-set ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "align-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"align-set\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{align-set} property of type @code{:boolean} (Read / Write) @br{}
   Whether this tag affects the alignment mode. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-align-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-align-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{align-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-alignment ---------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "alignment"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"alignment\"} property of type @symbol{pango-alignment}
+ "The @code{alignment} property of type @symbol{pango-alignment}
   (Read / Write) @br{}
   Specifies how to align the lines of text with respect to each other.
   Note that this property describes how to align the lines of text in case
-  there are several of them. The @code{\"xalign\"} property of
+  there are several of them. The @code{xalign} property of
   @class{gtk-cell-renderer}, on the other hand, sets the horizontal alignment of
   the whole text. @br{}
-  Default value: @code{:left} @br{}
-  Since 2.10")
+  Default value: @code{:left}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-alignment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-alignment 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{alignment} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-attributes --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"attributes\"} property of type @symbol{pango-attr-list}
+ "The @code{attributes} property of type @symbol{pango-attr-list}
   (Read / Write) @br{}
   A list of style attributes to apply to the text of the renderer.")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-attributes atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-attributes 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{attributes} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-background --------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"background\"} property of type @code{:string} (Write) @br{}
+ "The @code{background} property of type @code{:string} (Write) @br{}
   Background color as a string. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{background} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-background-gdk ----------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-gdk"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"background-gdk\"} property of type @class{gdk-color}
+ "The @code{background-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
   @b{Warning:}
-  The @code{\"background-gdk\"} property has been deprecated since version 3.4
+  The @code{background-gdk} property has been deprecated since version 3.4
   and should not be used in newly written code. Use the
-  @code{\"background-rgba\"} property instead. @br{}
+  @code{background-rgba} property instead. @br{}
   Background color as a @class{gdk-color}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-gdk
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-gdk 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{background-gdk} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-background-rgba ---------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-rgba"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"background-rgba\"} property of type @class{gdk-rgba}
+ "The @code{background-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  Background color as a @class{gdk-rgba} @br{}
-  Since 3.0")
+  Background color as a @class{gdk-rgba}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-rgba
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-rgba 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{background-rgba} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-background-set ----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"background-set\"} property of type @code{:boolean}
+ "The @code{background-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects the background color. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-set
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{background-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-editable ----------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editable"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"editable\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{editable} property of type @code{:boolean} (Read / Write) @br{}
   Whether the text can be modified by the user. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-editable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-editable 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{editable} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-editable-set ------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editable-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"editable-set\"} property of type @code{:boolean}
+ "The @code{editable-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects text editability. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-editable-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-editable-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{editable-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-ellipsize ---------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"ellipsize\"} property of type @symbol{pango-ellipsize-mode}
+ "The @code{ellipsize} property of type @symbol{pango-ellipsize-mode}
   (Read / Write) @br{}
   Specifies the preferred place to ellipsize the string, if the cell renderer
   does not have enough room to display the entire string. Setting it to
-  @code{:none} turns off ellipsizing. See the @code{\"wrap-width\"} property for
+  @code{:none} turns off ellipsizing. See the @code{wrap-width} property for
   another way of making the text fit into a given width. @br{}
-  Default value: @code{:none} @br{}
-  Since 2.6")
+  Default value: @code{:none}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-ellipsize atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-ellipsize 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{ellipsize} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-ellipsize-set -----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"ellipsize-set\"} property of type @code{:boolean}
+ "The @code{ellipsize-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects the ellipsize mode. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-ellipsize-set
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-ellipsize-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{ellipsize-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-family ------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "family"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"family\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{family} property of type @code{:string} (Read / Write) @br{}
   Name of the font family, e. g. Sans, Helvetica, Times, Monospace. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-family atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-family 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{family} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-family-set --------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "family-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"family-set\"} property of type @code{:boolean}
+ "The @code{family-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects the font family. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-family-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-family-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{family-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-font --------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"font\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{font} property of type @code{:string} (Read / Write) @br{}
   Font description as a string, e. g. \"Sans Italic 12\". @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-font atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-font 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{font} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-font-desc ---------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-desc"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"font-desc\"} property of type @symbol{pango-font-description}
+ "The @code{font-desc} property of type @symbol{pango-font-description}
   (Read / Write) @br{}
   Font description as a @symbol{pango-font-description} structure.")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-font-desc atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-font-desc 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{font-desc} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-foreground --------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"foreground\"} property of type @code{:string} (Write) @br{}
+ "The @code{foreground} property of type @code{:string} (Write) @br{}
   Foreground color as a string. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @slot[gtk-cell-renderer-text]{foreground} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-foreground-gdk ----------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-gdk"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"foreground-gdk\"} property of type @class{gdk-color}
+ "The @code{foreground-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
-  @b{Warning:}
-  @code{\"foreground-gdk\"} has been deprecated since version 3.4 and
-  should not be used in newly written code. Use the @code{\"foreground-rgba\"}
-  proerty instead. @br{}
+  @em{Warning:}
+  @code{foreground-gdk} has been deprecated since version 3.4 and
+  should not be used in newly written code. Use the @code{foreground-rgba}
+  property instead. @br{}
   Foreground color as a @class{gdk-color}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-gdk
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-gdk 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{foreground-gdk} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-foreground-rgba ---------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-rgba"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"foreground-rgba\"} property of type @class{gdk-rgba}
+ "The @code{foreground-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  Foreground color as a @class{gdk-rgba} @br{}
-  Since 3.0")
+  Foreground color as a @class{gdk-rgba}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-rgba
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-rgba 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{foreground-rgba} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-foreground-set ----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"foreground-set\"} property of type @code{:boolean}
+ "The @code{foreground-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects the foreground color. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-set
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{foreground-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-language ----------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "language"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"language\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{language} property of type @code{:string} (Read / Write) @br{}
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If you do not understand this parameter, you
   probably do not need it. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-language atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-language 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{language} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-language-set ------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "language-set"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"language-set\"} property of type @code{:boolean}
+ "The @code{language-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether this tag affects the language the text is rendered as. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-language-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-language-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{language-set} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-markup ------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "markup"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"markup\"} property of type @code{:string} (Write) @br{}
+ "The @code{markup} property of type @code{:string} (Write) @br{}
   Marked up text to render. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-markup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-markup 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer-text]{markup} slot of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-max-width-chars ---------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-width-chars"
                                                'gtk-cell-renderer-text) 't)
- "The @code{\"max-width-chars\"} property of type @code{:int}
+ "The @code{max-width-chars} property of type @code{:int}
   (Read / Write) @br{}
   The desired maximum width of the cell, in characters. If this property is
   set to -1, the width will be calculated automatically.
@@ -540,491 +828,6 @@
   Allowed values: >= -1 @br{}
   Default value: -1")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (documentation (atdoc:get-slot-from-name "placeholder-text"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"placeholder-text\"} property of type @code{:string}
-  (Read / Write) @br{}
-  The text that will be displayed in the @class{gtk-cell-renderer} if
-  @code{\"editable\"} is @em{true} and the cell is empty. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "rise"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"rise\"} property of type @code{:int} (Read / Write) @br{}
-  Offset of text above the baseline (below the baseline if rise is
-  negative). @br{}
-  Allowed values: >= -2147483647 @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "rise-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"rise-set\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this tag affects the rise. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "scale"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"scale\"} property of type @code{:double} (Read / Write) @br{}
-  Font scaling factor. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 1")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "scale-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"scale-set\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this tag scales the font size by a factor. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "single-paragraph-mode"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"single-paragraph-mode\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether to keep all text in a single paragraph. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"size\"} property of type @code{:int} (Read / Write) @br{}
-  Font size. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size-points"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"size-points\"} property of type @code{:double}
-  (Read / Write) @br{}
-  Font size in points. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"size-set\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this tag affects the font size. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "stretch"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"stretch\"} property of type @symbol{pango-stretch}
-  (Read / Write) @br{}
-  Font stretch. @br{}
-  Default value: @code{:normal}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "stretch-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"stretch-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this tag affects the font stretch. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "strikethrough"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"strikethrough\"} property @code{:boolean} (Read / Write) @br{}
-  Whether to strike through the text. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "strikethrough-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"strikethrough-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this tag affects strikethrough. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "style"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"style\"} property of type @symbol{pango-style}
-  (Read / Write) @br{}
-  Font style. @br{}
-  Default value: @code{:normal}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "style-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"style-set\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this tag affects the font style. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
-  Text to render. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "underline"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"underline\"} property of type @symbol{pango-underline}
-  (Read / Write) @br{}
-  Style of underline for this text. @br{}
-  Default value: @code{:none}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "underline-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"underline-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this tag affects underlining. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "variant"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"variant\"} property of type @symbol{pango-variant}
-  (Read / Write) @br{}
-  Font variant. @br{}
-  Default value: @code{:normal}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "variant-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"variant-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this tag affects the font variant. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "weight"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"weight\"} property of type @code{:int} (Read / Write) @br{}
-  Font weight. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 400")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "weight-set"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"weight-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this tag affects the font weight. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "width-chars"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"width-chars\"} property of type @code{:int} (Read / Write) @br{}
-  The desired width of the cell, in characters. If this property is set to -1,
-  the width will be calculated automatically, otherwise the cell will request
-  either 3 characters or the property value, whichever is greater. @br{}
-  Allowed values: >= -1 @br{}
-  Default value: -1")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "wrap-mode"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"wrap-mode\"} property of type @symbol{pango-wrap-mode}
-  (Read / Write) @br{}
-  Specifies how to break the string into multiple lines, if the cell renderer
-  does not have enough room to display the entire string. This property has no
-  effect unless the @code{\"wrap-width\"} property is set. @br{}
-  Default value: @code{:char} @br{}
-  Since 2.8")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "wrap-width"
-                                               'gtk-cell-renderer-text) 't)
- "The @code{\"wrap-width\"} property of type @code{:int} (Read / Write) @br{}
-  Specifies the minimum width at which the text is wrapped. The
-  @code{\"wrap-mode\"} property can be used to influence at what character
-  positions the line breaks can be placed. Setting @code{\"wrap-width\"} to -1
-  turns wrapping off. @br{}
-  Allowed values: >= -1 @br{}
-  Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-cell-renderer-text-align-set ---------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-align-set atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-align-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"align-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-alignment ---------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-alignment atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-alignment 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"alignment\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-attributes --------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-attributes atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-attributes 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"attributes\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-background --------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-background atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-background 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"background\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-background-gdk ----------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-background-gdk
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-background-gdk 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"background-gdk\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-background-rgba ---------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-background-rgba
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-background-rgba 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"background-rgba\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-background-set ----------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-background-set
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-background-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"background-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-editable ----------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-editable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-editable 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"editable\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-editable-set ------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-editable-set atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-editable-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"editable-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-ellipsize ---------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-ellipsize atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-ellipsize 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"ellipsize\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-ellipsize-set -----------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-ellipsize-set
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-ellipsize-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"ellipsize-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-family ------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-family atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-family 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"family\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-family-set --------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-family-set atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-family-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"family-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-font --------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-font atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-font 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"font\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-font-desc ---------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-font-desc atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-font-desc 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"font-desc\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-foreground --------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-foreground atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-foreground 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"foreground\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-foreground-gdk ----------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-foreground-gdk
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-foreground-gdk 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"foreground-gdk\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-foreground-rgba ---------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-foreground-rgba
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-foreground-rgba 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"foreground-rgba\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-foreground-set ----------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-foreground-set
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-foreground-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"foreground-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-language ----------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-language atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-language 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"language\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-language-set ------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-language-set atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-language-set 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"language-set\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-markup ------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-text-markup atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-cell-renderer-text-markup 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"markup\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-text-max-width-chars ---------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-max-width-chars
                atdoc:*function-name-alias*)
@@ -1032,9 +835,22 @@
       (documentation 'gtk-cell-renderer-text-max-width-chars 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"max-width-chars\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{max-width-chars} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
+
+;;; --- gtk-cell-renderer-text-placeholder-text --------------------------------
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "placeholder-text"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{placeholder-text} property of type @code{:string}
+  (Read / Write) @br{}
+  The text that will be displayed in the @class{gtk-cell-renderer} if
+  @code{editable} is @em{true} and the cell is empty. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-placeholder-text
@@ -1042,10 +858,20 @@
       "Accessor"
       (documentation 'gtk-cell-renderer-text-placeholder-text 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"placeholder-text\"} of the
-  @class{gtk-cell-renderer-text} class.")
+  Accessor of the @slot[gtk-cell-renderer-text]{placeholder-text} slot of the
+  @class{gtk-cell-renderer-text} class.
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-rise --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{rise} property of type @code{:int} (Read / Write) @br{}
+  Offset of text above the baseline (below the baseline if rise is
+  negative). @br{}
+  Allowed values: >= -2147483647 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-rise atdoc:*function-name-alias*)
@@ -1053,11 +879,19 @@
       (documentation 'gtk-cell-renderer-text-rise 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"rise\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{rise} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-rise-set ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{rise-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether this tag affects the rise. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-rise-set atdoc:*function-name-alias*)
@@ -1065,11 +899,20 @@
       (documentation 'gtk-cell-renderer-text-rise-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"rise-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{rise-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-scale -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{scale} property of type @code{:double} (Read / Write) @br{}
+  Font scaling factor. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-scale atdoc:*function-name-alias*)
@@ -1077,11 +920,19 @@
       (documentation 'gtk-cell-renderer-text-scale 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"scale\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{scale} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-scale-set ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{scale-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether this tag scales the font size by a factor. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-scale-set atdoc:*function-name-alias*)
@@ -1089,11 +940,20 @@
       (documentation 'gtk-cell-renderer-text-scale-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"scale-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{scale-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-single-paragraph-mode ---------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "single-paragraph-mode"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{single-paragraph-mode} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to keep all text in a single paragraph. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-single-paragraph-mode
@@ -1102,11 +962,20 @@
       (documentation 'gtk-cell-renderer-text-single-paragraph-mode 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"single-paragraph-mode\"} of the
-    @class{gtk-cell-renderer-text} class.
-  @end{short}")
+    Accessor of the @slot[gtk-cell-renderer-text]{single-paragraph-mode} slot
+    of the @class{gtk-cell-renderer-text} class.
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-size --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{size} property of type @code{:int} (Read / Write) @br{}
+  Font size. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-size atdoc:*function-name-alias*)
@@ -1114,11 +983,21 @@
       (documentation 'gtk-cell-renderer-text-size 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"size\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{size} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-size-points -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-points"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{size-points} property of type @code{:double}
+  (Read / Write) @br{}
+  Font size in points. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-size-points atdoc:*function-name-alias*)
@@ -1126,11 +1005,19 @@
       (documentation 'gtk-cell-renderer-text-size-points 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"size-points\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{size-points} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-size-set ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{size-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether this tag affects the font size. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-size-set atdoc:*function-name-alias*)
@@ -1138,11 +1025,20 @@
       (documentation 'gtk-cell-renderer-text-size-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"size-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{size-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-stretch -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{stretch} property of type @symbol{pango-stretch}
+  (Read / Write) @br{}
+  Font stretch. @br{}
+  Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-stretch atdoc:*function-name-alias*)
@@ -1150,11 +1046,20 @@
       (documentation 'gtk-cell-renderer-text-stretch 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"stretch\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{stretch} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-stretch-set -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{stretch-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects the font stretch. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-stretch-set atdoc:*function-name-alias*)
@@ -1162,11 +1067,19 @@
       (documentation 'gtk-cell-renderer-text-stretch-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"stretch-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{stretch-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-strikethrough -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{strikethrough} property @code{:boolean} (Read / Write) @br{}
+  Whether to strike through the text. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-strikethrough atdoc:*function-name-alias*)
@@ -1174,11 +1087,20 @@
       (documentation 'gtk-cell-renderer-text-strikethrough 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"strikethrough\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{strikethrough} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-strikethrough-set -------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{strikethrough-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects strikethrough. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-strikethrough-set
@@ -1187,11 +1109,20 @@
       (documentation 'gtk-cell-renderer-text-strikethrough-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"strikethrough-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{strikethrough-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-style -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{style} property of type @symbol{pango-style}
+  (Read / Write) @br{}
+  Font style. @br{}
+  Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-style atdoc:*function-name-alias*)
@@ -1199,11 +1130,19 @@
       (documentation 'gtk-cell-renderer-text-style 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"style\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{style} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-style-set ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{style-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether this tag affects the font style. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-style-set atdoc:*function-name-alias*)
@@ -1211,11 +1150,19 @@
       (documentation 'gtk-cell-renderer-text-style-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"style-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{style-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-text --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
+  Text to render. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-text atdoc:*function-name-alias*)
@@ -1223,11 +1170,20 @@
       (documentation 'gtk-cell-renderer-text-text 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"text\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{text} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-underline ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{underline} property of type @symbol{pango-underline}
+  (Read / Write) @br{}
+  Style of underline for this text. @br{}
+  Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-underline atdoc:*function-name-alias*)
@@ -1235,11 +1191,20 @@
       (documentation 'gtk-cell-renderer-text-underline 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"underline\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{underline} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-underline-set -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{underline-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects underlining. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-underline-set
@@ -1248,11 +1213,20 @@
       (documentation 'gtk-cell-renderer-text-underline-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"underline-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{underline-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-variant -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{variant} property of type @symbol{pango-variant}
+  (Read / Write) @br{}
+  Font variant. @br{}
+  Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-variant atdoc:*function-name-alias*)
@@ -1260,11 +1234,20 @@
       (documentation 'gtk-cell-renderer-text-variant 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"variant\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{variant} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-variant-set -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{variant-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects the font variant. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-variant-set atdoc:*function-name-alias*)
@@ -1272,11 +1255,20 @@
       (documentation 'gtk-cell-renderer-text-variant-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"variant-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{variant-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-weight ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{weight} property of type @code{:int} (Read / Write) @br{}
+  Font weight. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 400")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-weight atdoc:*function-name-alias*)
@@ -1284,11 +1276,20 @@
       (documentation 'gtk-cell-renderer-text-weight 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"weight\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{weight} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-weight-set --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight-set"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{weight-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects the font weight. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-weight-set atdoc:*function-name-alias*)
@@ -1296,11 +1297,22 @@
       (documentation 'gtk-cell-renderer-text-weight-set 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"weight-set\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{weight-set} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-width-chars -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width-chars"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{width-chars} property of type @code{:int} (Read / Write) @br{}
+  The desired width of the cell, in characters. If this property is set to -1,
+  the width will be calculated automatically, otherwise the cell will request
+  either 3 characters or the property value, whichever is greater. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-width-chars atdoc:*function-name-alias*)
@@ -1308,11 +1320,22 @@
       (documentation 'gtk-cell-renderer-text-width-chars 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"width-chars\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{width-chars} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-wrap-mode ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-mode"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{wrap-mode} property of type @symbol{pango-wrap-mode}
+  (Read / Write) @br{}
+  Specifies how to break the string into multiple lines, if the cell renderer
+  does not have enough room to display the entire string. This property has no
+  effect unless the @code{wrap-width} property is set. @br{}
+  Default value: @code{:char}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-wrap-mode atdoc:*function-name-alias*)
@@ -1320,11 +1343,23 @@
       (documentation 'gtk-cell-renderer-text-wrap-mode 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"wrap-mode\"} of the
+    Accessor of the @slot[gtk-cell-renderer-text]{wrap-mode} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-wrap-width ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-width"
+                                               'gtk-cell-renderer-text) 't)
+ "The @code{wrap-width} property of type @code{:int} (Read / Write) @br{}
+  Specifies the minimum width at which the text is wrapped. The
+  @code{wrap-mode} property can be used to influence at what character
+  positions the line breaks can be placed. Setting @code{wrap-width} to -1
+  turns wrapping off. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-wrap-width atdoc:*function-name-alias*)
@@ -1332,9 +1367,10 @@
       (documentation 'gtk-cell-renderer-text-wrap-width 'function)
  "@version{2013-2-23}
   @begin{short}
-    Accessor of the slot @code{\"wrap-width\"} of the
+    Accessor of the slot @code{wrap-width} slot of the
     @class{gtk-cell-renderer-text} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-cell-renderer-text}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_text_new ()
@@ -1350,11 +1386,12 @@
     Creates a new @class{gtk-cell-renderer-text} object.
   @end{short}
   Adjust how text is drawn using object properties. Object properties can be set
-  globally (with the function @fun{g-object-set}). Also, with
+  globally, with the @fun{g-object-set} function. Also, with
   @class{gtk-tree-view-column}, you can bind a property to a value in a
-  @class{gtk-tree-model}. For example, you can bind the @code{\"text\"} property
+  @class{gtk-tree-model}. For example, you can bind the @code{text} property
   on the cell renderer to a string value in the model, thus rendering a
-  different string in each row of the @class{gtk-tree-view}."
+  different string in each row of the @class{gtk-tree-view}.
+  @see-class{gtk-cell-renderer-text}"
   (make-instance 'gtk-cell-renderer-text))
 
 (export 'gtk-cell-renderer-text-new)
@@ -1372,14 +1409,15 @@
     allocated, or -1}
   @begin{short}
     Sets the height of a renderer to explicitly be determined by the
-    @code{\"font\"} and @code{\"y-pad\"} property set on it.
+    @code{font} and @code{y-pad} properties set on it.
   @end{short}
   Further changes in these properties do not affect the height, so they must be
   accompanied by a subsequent call to this function. Using this function is
   unflexible, and should really only be used if calculating the size of a cell
   is too slow (i. e., a massive number of cells displayed). If
   @arg{number-of-rows} is -1, then the fixed height is unset, and the height is
-  determined by the properties again."
+  determined by the properties again.
+  @see-class{gtk-cell-renderer-text}"
   (renderer (g-object gtk-cell-renderer-text))
   (number-of-rows :int))
 
