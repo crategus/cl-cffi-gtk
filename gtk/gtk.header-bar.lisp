@@ -221,14 +221,14 @@
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "decoration-layout"
                                                'gtk-header-bar) 't)
- "The @code{decoration-layout} property of type @class{:string}
+ "The @code{decoration-layout} property of type @code{:string}
   (Read / Write / Construct) @br{}
   The decoration layout for buttons. If this property is not set, the
   \"gtk-decoration-layout\" setting is used.
   See the function @fun{gtk-header-bar-decoration-layout} for information about
   the format of this string. @br{}
-  Since 3.12 @br{}
-  Default value: @code{nil}")
+  Default value: @code{nil} @br{}
+  Since 3.12")
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-header-bar-decoration-layout atdoc:*function-name-alias*)
@@ -272,7 +272,7 @@
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "decoration-layout-set"
                                                'gtk-header-bar) 't)
- "The @code{decoration-layout-set} property of type @class{:boolean}
+ "The @code{decoration-layout-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Set to @emph{true} if @code{decoration-layout} is set. @br{}
   Since 3.12 @br{}
@@ -296,7 +296,7 @@
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "has-subtitle"
                                                'gtk-header-bar) 't)
- "The @code{has-subtitle} property of type @class{:boolean}
+ "The @code{has-subtitle} property of type @code{:boolean}
   (Read / Write) @br{}
   If @emph{true}, reserve space for a subtitle, even if none is currently set.
   @br{}
@@ -333,7 +333,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-close-button"
                                                'gtk-header-bar) 't)
- "The @code{show-close-button} property of type @class{:boolean}
+ "The @code{show-close-button} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to show window decorations.
   Which buttons are actually shown and where is determined by the
@@ -371,7 +371,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing"
                                                'gtk-header-bar) 't)
- "The @code{spacing} property of type @class{:int} (Read / Write) @br{}
+ "The @code{spacing} property of type @code{:int} (Read / Write) @br{}
   The amount of space between children. @br{}
   Allowed values: >= 0 @br{}
   Default value: 6")
@@ -395,7 +395,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "subtitle"
                                                'gtk-header-bar) 't)
- "The @code{subtitle} property of type @class{:string} (Read / Write) @br{}
+ "The @code{subtitle} property of type @code{:string} (Read / Write) @br{}
   The subtitle to display. @br{}
   Default value: @code{nil}")
 
@@ -433,7 +433,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title"
                                                'gtk-header-bar) 't)
- "The @code{title} property of type @class{:string} (Read / Write) @br{}
+ "The @code{title} property of type @code{:string} (Read / Write) @br{}
   The title to display. @br{}
   Default value: @code{nil}")
 
