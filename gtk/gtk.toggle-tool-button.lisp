@@ -39,8 +39,8 @@
 ;;;
 ;;;     gtk_toggle_tool_button_new
 ;;;     gtk_toggle_tool_button_new_from_stock
-;;;     gtk_toggle_tool_button_set_active
-;;;     gtk_toggle_tool_button_get_active
+;;;     gtk_toggle_tool_button_set_active                  Accessor
+;;;     gtk_toggle_tool_button_get_active                  Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -130,14 +130,28 @@
 (setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-tool-button-active 'function)
- "@version{2013-8-23}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-toggle-tool-button-active object) => is-active}
+  @syntax[]{(setf (gtk-toggle-tool-button-active object) is-active)}
+  @argument[object]{a @class{gtk-toggle-tool-button} widget}
+  @argument[is-active]{whether @arg{button} should be active}
   @begin{short}
-    Accessor of the slot @slot[gtk-toggle-tool-button]{active} of the
+    Accessor of the @slot[gtk-toggle-tool-button]{active} slot of the
     @class{gtk-toggle-tool-button} class.
   @end{short}
-  @see-class{gtk-toggle-tool-button}
-  @see-function{gtk-toggle-tool-button-get-active}
-  @see-function{gtk-toggle-tool-button-set-active}")
+
+  The @sym{gtk-toggle-tool-button-active} slot access function
+  queries a @class{gtk-toggle-tool-button} and returns its current state.
+  Returns @em{true} if the toggle button is pressed in and @code{nil} if it
+  is raised.
+
+  The @sym{(setf gtk-toggle-tool-button-active)} slot access function
+  sets the status of the toggle tool button.
+
+  Set to @em{true} if you want the @class{gtk-toggle-button} widget to be
+  'pressed in', and @code{nil} to raise it. This action causes the toggled
+  signal to be emitted.
+  @see-class{gtk-toggle-tool-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_new ()
@@ -181,50 +195,5 @@
                  :stock-id stock-id))
 
 (export 'gtk-toggle-tool-button-new-from-stock)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_tool_button_set_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-tool-button-set-active))
-
-(defun gtk-toggle-tool-button-set-active (button is-active)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[button]{a @class{gtk-toggle-tool-button} widget}
-  @argument[is-active]{whether @arg{button} should be active}
-  @begin{short}
-    Sets the status of the toggle tool button.
-  @end{short}
-  Set to @em{true} if you want the @class{gtk-toggle-button} widget to be
-  'pressed in', and @code{nil} to raise it. This action causes the toggled
-  signal to be emitted.
-  @see-class{gtk-toggle-tool-button}
-  @see-function{gtk-toggle-tool-button-get-active}"
-  (setf (gtk-toggle-tool-button-active button) is-active))
-
-(export 'gtk-toggle-tool-button-set-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_tool_button_get_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-tool-button-get-active))
-
-(defun gtk-toggle-tool-button-get-active (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[button]{a @class{gtk-toggle-tool-button} widget}
-  @return{@em{True} if the toggle tool button is pressed in, @code{nil} if not.}
-  @begin{short}
-    Queries a @class{gtk-toggle-tool-button} and returns its current state.
-  @end{short}
-  Returns @em{true} if the toggle button is pressed in and @code{nil} if it
-  is raised.
-  @see-class{gtk-toggle-tool-button}
-  @see-function{gtk-toggle-tool-button-set-active}"
-  (gtk-toggle-tool-button-active button))
-
-(export 'gtk-toggle-tool-button-get-active)
 
 ;;; --- End of file gtk.toggle-tool-button.lisp --------------------------------
