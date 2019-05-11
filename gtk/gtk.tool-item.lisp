@@ -135,7 +135,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"create-menu-proxy\" signal}
       @begin{pre}
- lambda (tool-item)   : Run Last
+ lambda (tool-item)    : Run Last
       @end{pre}
       This signal is emitted when the toolbar needs information from
       @arg{tool-item} about whether the item should appear in the toolbar
@@ -166,7 +166,7 @@
       @end{table}
     @subheading{The \"toolbar-reconfigured\" signal}
       @begin{pre}
- lambda (tool-item)   : Run Last
+ lambda (tool-item)    : Run Last
       @end{pre}
       This signal is emitted when some property of the toolbar that the item is
       a child of changes. For custom subclasses of @sym{gtk-tool-item}, the
@@ -205,13 +205,26 @@
       "Accessor"
       (documentation 'gtk-tool-item-is-important 'function)
  "@version{2013-11-16}
+  @syntax[]{gtk-tool-item-is-important object) => is-important}
+  @syntax[]{(setf (gtk-tool-item-is-important object) is-important)}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[is-important]{whether the tool item should be considered important}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-item]{is-important} of the
+    Accessor of the @slot[gtk-tool-item]{is-important} slot of the
     @class{gtk-tool-item} class.
   @end{short}
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-get-is-important}
-  @see-function{gtk-tool-item-set-is-important}")
+
+  The @sym{gtk-tool-item-is-important} slot access function
+  returns whether the tool item is considered important.
+
+  The @sym{(setf gtk-tool-item-is-important)} slot access function
+  sets whether the tool item should be considered important.
+
+  The @class{gtk-tool-button} class uses this property to determine whether to
+  show or hide its label when the toolbar style is @code{:both-horiz}. The
+  result is that only tool buttons with the @code{is-important} property set
+  have labels, an effect known as \"priority text\".
+  @see-class{gtk-tool-item}")
 
 ;;; --- gtk-tool-item-visible-horizontal ---------------------------------------
 
@@ -229,13 +242,22 @@
       "Accessor"
       (documentation 'gtk-tool-item-visible-horizontal 'function)
  "@version{2013-11-16}
+  @syntax[]{gtk-tool-item-visible-horizontal object) => visible}
+  @syntax[]{(setf (gtk-tool-item-visible-horizontal object) visible)}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[visible]{whether @arg{tool-item} is visible when in horizontal mode}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-item]{visible-horizontal} of the
+    Accessor of the @slot[gtk-tool-item]{visible-horizontal} slot of the
     @class{gtk-tool-item} class.
   @end{short}
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-get-visible-horizontal}
-  @see-function{gtk-tool-item-set-visible-horizontal}")
+
+  The @sym{gtk-tool-item-visible-horizontal} slot access function
+  returns whether the tool item is visible on toolbars that are docked
+  horizontally.
+
+  The @sym{(setf gtk-tool-item-visible-horizontal)} slot access function
+  sets whether the tool item is visible when the toolbar is docked horizontally.
+  @see-class{gtk-tool-item}")
 
 ;;; --- gtk-tool-item-visible-vertical -----------------------------------------
 
@@ -253,13 +275,27 @@
       "Accessor"
       (documentation 'gtk-tool-item-visible-vertical 'function)
  "@version{2013-11-16}
+  @syntax[]{gtk-tool-item-visible-vertical object) => visible}
+  @syntax[]{(setf (gtk-tool-item-visible-vertical object) visible)}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[visible]{whether @arg{tool-item} is visible when the toolbar is in
+    vertical mode}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-item]{visible-vertical} of the
+    Accessor of the @slot[gtk-tool-item]{visible-vertical} slot of the
     @class{gtk-tool-item} class.
   @end{short}
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-get-visible-vertical}
-  @see-function{gtk-tool-item-set-visible-vertical}")
+
+  The @sym{gtk-tool-item-visible-vertical} slot access function
+  returns whether the tool item is visible when the toolbar is docked
+  vertically.
+
+  The @sym{(setf gtk-tool-item-visible-vertical)} slot access function
+  sets whether the tool item is visible when the toolbar is docked vertically.
+
+  Some tool items, such as text entries, are too wide to be useful on a
+  vertically docked toolbar. If @arg{visible} is @code{nil} the tool item will
+  not appear on toolbars that are docked vertically.
+  @see-class{gtk-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_new ()
@@ -446,141 +482,6 @@
   (tool-item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-get-use-drag-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_set_visible_horizontal ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-set-visible-horizontal))
-
-(defun gtk-tool-item-set-visible-horizontal (tool-item visible-horizontal)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible-horizontal]{whether @arg{tool-item} is visible when in
-    horizontal mode}
-  @begin{short}
-    Sets whether @arg{tool-item} is visible when the toolbar is docked
-    horizontally.
-  @end{short}
-  @see-class{gtk-tool-item}"
-  (setf (gtk-tool-item-visible-horizontal tool-item) visible-horizontal))
-
-(export 'gtk-tool-item-set-visible-horizontal)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_get_visible_horizontal ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-get-visible-horizontal))
-
-(defun gtk-tool-item-get-visible-horizontal (tool-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @return{@em{True} if @arg{tool-item} is visible on toolbars that are docked
-    horizontally.}
-  @begin{short}
-    Returns whether the @arg{tool-item} is visible on toolbars that are docked
-    horizontally.
-  @end{short}
-  @see-class{gtk-tool-item}"
-  (gtk-tool-item-visible-horizontal tool-item))
-
-(export 'gtk-tool-item-get-visible-horizontal)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_set_visible_vertical ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-set-visible-vertical))
-
-(defun gtk-tool-item-set-visible-vertical (tool-item visible-vertical)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible-vertical]{whether @arg{tool-item} is visible when the
-    toolbar is in vertical mode}
-  @begin{short}
-    Sets whether @arg{tool-item} is visible when the toolbar is docked
-    vertically.
-  @end{short}
-  Some tool items, such as text entries, are too wide to be useful on a
-  vertically docked toolbar. If @arg{visible-vertical} is @code{nil}
-  @arg{tool-item} will not appear on toolbars that are docked vertically.
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-get-visible-vertical}"
-  (setf (gtk-tool-item-visible-vertical tool-item) visible-vertical))
-
-(export 'gtk-tool-item-set-visible-vertical)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_get_visible_vertical ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-get-visible-vertical))
-
-(defun gtk-tool-item-get-visible-vertical (tool-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @return{Whether @arg{tool-item} is visible when the toolbar is docked
-    vertically.}
-  @begin{short}
-    Returns whether @arg{tool-item} is visible when the toolbar is docked
-    vertically.
-  @end{short}
-  See the function @fun{gtk-tool-item-set-visible-vertical}.
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-set-visible-vertical}"
-  (gtk-tool-item-visible-vertical tool-item))
-
-(export 'gtk-tool-item-get-visible-vertical)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_set_is_important ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-set-is-important))
-
-(defun gtk-tool-item-set-is-important (tool-item is-important)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[is-important]{whether the tool item should be considered important}
-  @begin{short}
-    Sets whether @arg{tool-item} should be considered important.
-  @end{short}
-  The @class{gtk-tool-button} class uses this property to determine whether to
-  show or hide its label when the toolbar style is @code{:both-horiz}. The
-  result is that only tool buttons with the @code{\"is-important\"} property set
-  have labels, an effect known as \"priority text\".
-  @see-class{gtk-tool-item}
-  @see-class{gtk-tool-button}"
-  (setf (gtk-tool-item-is-important tool-item) is-important))
-
-(export 'gtk-tool-item-set-is-important)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_get_is_important ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-item-get-is-important))
-
-(defun gtk-tool-item-get-is-important (tool-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @return{@em{True} if @arg{tool-item} is considered important.}
-  @begin{short}
-    Returns whether @arg{tool-item} is considered important.
-  @end{short}
-  See the function @fun{gtk-tool-item-set-is-important}.
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-set-is-important}"
-  (gtk-tool-item-is-important tool-item))
-
-(export 'gtk-tool-item-get-is-important)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_get_ellipsize_mode ()
