@@ -179,8 +179,7 @@
         Default value: @code{nil}
       @end{entry}
     @end{table}
-  @end{dictionary}
-")
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -202,7 +201,7 @@
       (documentation 'gtk-popover-menu-visible-submenu 'function)
  "@version{2019-4-6}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover-menu]{visible-submenu} of the
+    Accessor of the @slot[gtk-popover-menu]{visible-submenu} slot of the
     @class{gtk-popover-menu} class.
   @end{short}
   @see-class{gtk-popover}")
@@ -223,7 +222,7 @@
       (documentation 'gtk-popover-menu-child-position 'function)
  "@version{2019-4-6}
   @begin{short}
-    Accessor of the child property @code{position} of the
+    Accessor of the @code{position} child property of the
     @class{gtk-popover-menu} class.
   @end{short}
   @see-class{gtk-popover-menu}")
@@ -240,7 +239,7 @@
       (documentation 'gtk-popover-menu-child-position 'function)
  "@version{2019-4-6}
   @begin{short}
-    Accessor of the child property @code{submenu} of the
+    Accessor of the @code{submenu} child property of the
     @class{gtk-popover-menu} class.
   @end{short}
   @see-class{gtk-popover-menu}")
