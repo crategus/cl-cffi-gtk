@@ -832,157 +832,154 @@
 </interface>
       @end{pre}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"cursor-aspect-ratio\" style property}
-      @code{\"cursor-aspect-ratio\"} of type @code{:float} (Read) @br{}
-      Aspect ratio with which to draw insertion cursor. @br{}
-      Allowed values: [0,1] @br{}
-      Default value: 0.04
-
-    @subheading{The \"cursor-color\" style property}
-      @code{\"cursor-color\"} of type @class{gdk-color} (Read )@br{}
-      Color with which to draw insertion cursor.
-
-    @subheading{The \"focus-line-pattern\" style property}
-      @code{\"focus-line-pattern\"} of type @code{:string} (Read) @br{}
-      Dash pattern used to draw the focus indicator.
-      @begin{indent}
-        @b{Warning:} The @code{\"focus-line-pattern\"} style property has been
+    @begin[code]{table}
+      @begin[cursor-aspect-ration]{entry}
+        The @code{cursor-aspect-ratio} style property of type @code{:float}
+        (Read) @br{}
+        Aspect ratio with which to draw insertion cursor. @br{}
+        Allowed values: [0,1] @br{}
+        Default value: 0.04
+      @end{entry}
+      @begin[cursor-color]{entry}
+        The @code{cursor-color} style property of type @class{gdk-color}
+        (Read ) @br{}
+        Color with which to draw insertion cursor.
+      @end{entry}
+      @begin[focus-line-pattern]{entry}
+        The @code{focus-line-pattern} style property of type @code{:string}
+        (Read) @br{}
+        Dash pattern used to draw the focus indicator. @br{}
+        @em{Warning:} The @code{focus-line-pattern} style property has been
         deprecated since version 3.14 and should not be used in newly-written
-        code. Use the outline-style CSS property instead.
-      @end{indent}
-      Default value: \"\001\001\"
-
-    @subheading{The \"focus-line-width\" style property}
-      @code{\"focus-line-width\"} of type @code{:int} (Read) @br{}
-      Width, in pixels, of the focus indicator line.
-      @begin{indent}
-        @b{Warning:} The @code{\"focus-line-width\"} style property has been
+        code. Use the outline-style CSS property instead. @br{}
+        Default value: \"\001\001\"
+      @end{entry}
+      @begin[focus-line-width]{entry}
+        The @code{focus-line-width} style property of type @code{:int}
+        (Read) @br{}
+        Width, in pixels, of the focus indicator line. @br{}
+        @em{Warning:} The @code{focus-line-width} style property has been
         deprecated since version 3.14 and should not be used in newly-written
-        code. Use the outline-width CSS property instead.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"focus-padding\" style property}
-      @code{\"focus-padding\"} of type @code{:int} (Read) @br{}
-      Width, in pixels, between focus indicator and the widget 'box'.
-      @begin{indent}
-        @b{Warning:} The @code{\"focus-padding\"} style property has been
+        code. Use the outline-width CSS property instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[focus-padding]{entry}
+        The @code{focus-padding} style property of type @code{:int}
+        (Read) @br{}
+        Width, in pixels, between focus indicator and the widget 'box'. @br{}
+        @em{Warning:} The @code{focus-padding} style property has been
         deprecated since version 3.14 and should not be used in newly-written
-        code. Use the padding CSS property instead.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"interior-focus\" style property}
-      @code{\"interior-focus\"} of type @code{:boolean} (Read) @br{}
-      Whether to draw the focus indicator inside widgets.
-      @begin{indent}
-        @b{Warning:} The @code{\"interior-focus\"} style property has been
+        code. Use the padding CSS property instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[interior-focus]{entry}
+        The @code{interior-focus} style property of type @code{:boolean}
+        (Read) @br{}
+        Whether to draw the focus indicator inside widgets. @br{}
+        @em{Warning:} The @code{interior-focus} style property has been
         deprecated since version 3.14 and should not be used in newly-written
-        code. Use the outline CSS property instead.
-      @end{indent}
-      Default value: @em{true}
-
-    @subheading{The \"link-color\" style property}
-      @code{\"link-color\"} of type @class{gdk-color} (Read)@br{}
-      The @code{\"link-color\"} style property defines the color of unvisited
-      links.
-      @begin{indent}
-        @b{Warning:} The @code{\"link-color\"} style property has been
+        code. Use the outline CSS property instead. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[link-color]{entry}
+        The @code{link-color} style property of type @class{gdk-color}
+        (Read) @br{}
+        The @code{link-color} style property defines the color of unvisited
+        links. @br{}
+        @em{Warning:} The @code{link-color} style property has been
         deprecated since version 3.12 and should not be used in newly-written
         code. Links now use a separate state flags for selecting different
         theming, this style property is ignored.
-      @end{indent}
-      Since 2.10
-
-    @subheading{The \"scroll-arrow-hlength\" style property}
-      @code{\"scroll-arrow-hlength\"} of type @code{:int} (Read) @br{}
-      The @code{\"scroll-arrow-hlength\"} style property defines the length of
-      horizontal scroll arrows. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 16 @br{}
-      Since 2.10
-
-    @subheading{The \"scroll-arrow-vlength\" style property}
-      @code{\"scroll-arrow-vlength\"} of type @code{:int} (Read) @br{}
-      The @code{\"scroll-arrow-vlength\"} style property defines the length of
-      vertical scroll arrows. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 16 @br{}
-      Since 2.10
-
-    @subheading{The \"secondary-cursor-color\" style property}
-      @code{\"secondary-cursor-color\"} of type @class{gdk-color} (Read) @br{}
-      Color with which to draw the secondary insertion cursor when editing
-      mixed right-to-left and left-to-right text.
-
-    @subheading{The \"separator-height\" style property}
-      @code{\"separator-height\"} of type @code{:int} (Read) @br{}
-      The @code{\"separator-height\"} style property defines the height of
-      separators. This property only takes effect if the
-      @code{\"wide-separators\"} style property is @em{true}.
-      @begin{indent}
-        @b{Warning:} @code{\"separator-height\"} has been deprecated since
+      @end{entry}
+      @begin[scroll-arrow-hlength]{entry}
+        The @code{scroll-arrow-hlength} style property of type @code{:int}
+        (Read) @br{}
+        The @code{scroll-arrow-hlength} style property defines the length of
+        horizontal scroll arrows. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 16
+      @end{entry}
+      @begin[scroll-arrow-vlength]{entry}
+        The @code{scroll-arrow-vlength} style property of type @code{:int}
+        (Read) @br{}
+        The @code{scroll-arrow-vlength} style property defines the length of
+        vertical scroll arrows. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 16
+      @end{entry}
+      @begin[secondary-cursor-color]{entry}
+        The @code{secondary-cursor-color} style property of type
+        @class{gdk-color} (Read) @br{}
+        Color with which to draw the secondary insertion cursor when editing
+        mixed right-to-left and left-to-right text.
+      @end{entry}
+      @begin[separator-height]{entry}
+        The @code{separator-height} style property of type @code{:int}
+        (Read) @br{}
+        The @code{separator-height} style property defines the height of
+        separators. This property only takes effect if the
+        @code{wide-separators} style property is @em{true}. @br{}
+        @em{Warning:} The @code{separator-height} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use the standard min-height CSS property on the separator elements
+        to size separators; the value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[separator-width]{entry}
+        The @code{separator-width} style property of type @code{:int}
+        (Read) @br{}
+        The @code{separator-width} style property defines the width of
+        separators. This property only takes effect if the
+        @code{wide-separators} style property is @em{true}. @br{}
+        @em{Warning:} @code{\"separator-width\"} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard min-height CSS property on the separator elements to size
-        separators; the value of this style property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 0 @br{}
-      Since 2.10
-
-    @subheading{The \"separator-width\" style property}
-      @code{\"separator-width\"} of type @code{:int} (Read) @br{}
-      The @code{\"separator-width\"} style property defines the width of
-      separators. This property only takes effect if the
-      @code{\"wide-separators\"} style property is @em{true}.
-      @begin{indent}
-        @b{Warning:} @code{\"separator-width\"} has been deprecated since
-        version 3.20 and should not be used in newly-written code. Use the
-        standard min-height CSS property on the separator elements to size
-        separators; the value of this style property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 0 @br{}
-      Since 2.10
-
-    @subheading{The \"text-handle-height\" style property}
-      @code{ \"text-handle-height\"} of type @code{:int} (Read) @br{}
-      Height of text selection handles. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 24
-
-    @subheading{The \"text-handle-width\" style property}
-      @code{\"text-handle-width\"} of type @code{:int} (Read) @br{}
-      Width of text selection handles. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 20
-
-    @subheading{The \"visited-link-color\" style property}
-      @code{\"visited-link-color\"} of type @class{gdk-color} (Read) @br{}
-      The @code{\"visited-link-color\"} style property defines the color of
-      visited links.
-      @begin{indent}
-        @b{Warning:} The @code{\"visited-link-color\"} style property has been
+        separators; the value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[text-handle-height]{entry}
+        The @code{text-handle-height} style property of type @code{:int}
+        (Read) @br{}
+        Height of text selection handles. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 24
+      @end{entry}
+      @begin[text-handle-width]{entry}
+        The @code{text-handle-width} style property of type @code{:int}
+        (Read) @br{}
+        Width of text selection handles. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 20
+      @end{entry}
+      @begin[visited-link-color]{entry}
+        The @code{visited-link-color} style property of type @class{gdk-color}
+        (Read) @br{}
+        The @code{visited-link-color} style property defines the color of
+        visited links. @br{}
+        @em{Warning:} The @code{\"visited-link-color\"} style property has been
         deprecated since version 3.12 and should not be used in newly-written
         code. Links now use a separate state flags for selecting different
-        theming, this style property is ignored. @br{}
-      @end{indent}
-      Since 2.10
-
-    @subheading{The \"wide-separators\" style property}
-      @code{\"wide-separators\"} of type @code{:boolean} (Read) @br{}
-      The @code{\"wide-separators\"} style property defines whether separators
-      have configurable width and should be drawn using a box instead of a
-      line. @br{}
-      Default value: @code{nil} @br{}
-      Since 2.10
-
-    @subheading{The \"window-dragging\" style property}
-      @code{\"window-dragging\"} of type @code{:boolean} (Read) @br{}
-      Whether windows can be dragged by clicking on empty areas. @br{}
-      Default value: @code{nil}
+        theming, this style property is ignored.
+      @end{entry}
+      @begin[wide-separators]{entry}
+        The @code{wide-separators} style property of type @code{:boolean}
+        (Read) @br{}
+        The @code{wide-separators} style property defines whether separators
+        have configurable width and should be drawn using a box instead of a
+        line. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[window-dragging]{entry}
+        The @code{window-dragging} style property of type @code{:boolean}
+        (Read) @br{}
+        Whether windows can be dragged by clicking on empty areas. @br{}
+        Default value: @code{nil}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"accel-closures-changed\" signal}
@@ -1087,8 +1084,6 @@
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
-      Since 2.14
-
     @subheading{The \"delete-event\" signal}
       @begin{pre}
  lambda (widget event)   : Run Last
@@ -1299,8 +1294,6 @@
         @entry[Returns]{@em{True} if the failed drag operation has been already
           handled.}
       @end{table}
-      Since 2.12
-
     @subheading{The \"drag-leave\" signal}
       @begin{pre}
  lambda (widget drag-context time)   : Run Last
@@ -1429,8 +1422,6 @@
         @entry[widget]{The object which received the signal.}
         @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"enter-notify-event\" signal}
       @begin{pre}
  lambda (widget event)   : Run Last
@@ -1527,8 +1518,6 @@
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
-      Since 2.8
-
     @subheading{The \"grab-focus\" signal}
       @begin{pre}
  lambda (widget)   : Action
@@ -1617,8 +1606,6 @@
           @code{nil} if the emitting widget should try to handle the keyboard
           navigation attempt in its parent container(s).}
       @end{table}
-      Since 2.12
-
     @subheading{The \"leave-notify-event\" signal}
       @begin{pre}
  lambda (widget event)   : Run Last
@@ -1792,8 +1779,6 @@
        @entry[Returns]{@em{True} if tooltip should be shown right now,
          @code{nil} otherwise.}
      @end{table}
-     Since 2.12
-
     @subheading{The \"realize\" signal}
       @begin{pre}
  lambda (widget)   : Run First
@@ -1918,7 +1903,7 @@
       @begin{pre}
  lambda (widget state)   : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
         The \"state-changed\" signal is deprecated since version 3.0
         and should not be used in newly-written code. Use the
         \"state-flags-changed\" signal instead.
@@ -1938,13 +1923,11 @@
         @entry[widget]{The object which received the signal.}
         @entry[flags]{The previous state flags.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"style-set\" signal}
       @begin{pre}
  lambda (widget previous-style)   : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
         The \"style-set\" signal has been deprecated since version 3.0 and
         should not be used in newly-written code. Use the \"style-updated\"
         signal.
@@ -1970,8 +1953,6 @@
       @begin[code]{table}
         @entry[widget]{The object on which the signal is emitted.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"touch-event\" signal}
       @begin{pre}
  lambda (widget arg)   : Run Last
@@ -2023,7 +2004,7 @@
       @begin{pre}
  lambda (widget event)   : Run Last
       @end{pre}
-      @b{Warning:} The \"visibility-notify-event\" signal has been deprecated
+      @em{Warning:} The \"visibility-notify-event\" signal has been deprecated
       since version 3.12 and should not be used in newly-written code. Modern
       composited windowing systems with pervasive transparency make it
       impossible to track the visibility of a window reliably, so this signal
@@ -2206,8 +2187,6 @@
   responsible for drawing the widget background.
 
   Note that the background is still drawn when the widget is mapped.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-class{gtk-window}
   @see-class{gtk-event-box}")
@@ -2242,8 +2221,6 @@
 
   See the function @fun{gtk-widget-grab-default} for details about the meaning
   of \"default\".
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-default}")
 
@@ -2275,8 +2252,6 @@
   The generic function @sym{(setf gtk-widget-can-focus)} specifies whether
   the widget can own the input focus. See the function
   @fun{gtk-widget-grab-focus} for actually setting the input focus on a widget.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-focus}")
 
@@ -2314,13 +2289,10 @@
  "The @code{double-buffered} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget is double buffered. @br{}
-  @begin{indent}
-    @b{Warning:} The @code{double-buffered} property has been deprecated since
-    version 3.14 and should not be used in newly-written code. Widgets should
-    not use this property.
-  @end{indent}
-  Default value: @em{true} @br{}
-  Since 2.18")
+  @em{Warning:} The @code{double-buffered} property has been deprecated since
+  version 3.14 and should not be used in newly-written code. Widgets should
+  not use this property. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*)
@@ -2370,8 +2342,6 @@
     under non-X11 backends or with non-native windows. Widgets should not use
     this property.
   @end{dictionary}
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gdk-window-begin-paint-region}
   @see-function{gdk-window-end-paint}")
@@ -2426,8 +2396,7 @@
  "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand in both directions. Setting @code{expand} sets both
   properties @code{hexpand} and @code{vexpand}. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-expand atdoc:*function-name-alias*) "Accessor"
@@ -2452,9 +2421,9 @@
   This property is only relevant for widgets that can take focus.
   Before 3.20, several widgets (@class{gtk-button},
   @class{gtk-file-chosser-button}, @class{gtk-combo-box}) implemented this
-  property individually.@br{}
-  Default value: @code{t}
-  Since: 3.20")
+  property individually. @br{}
+  Default value: @em{true} @br{}
+  Since 3.20")
 
 #+(and gtk-3-20 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-widget-focus-on-click atdoc:*function-name-alias*)
@@ -2489,8 +2458,7 @@
 (setf (documentation (atdoc:get-slot-from-name "halign" 'gtk-widget) 't)
  "The @code{halign} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute horizontal space if widget gets extra space. @br{}
-  Default value: @code{:fill} @br{}
-  Since 3.0")
+  Default value: @code{:fill}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*) "Accessor"
@@ -2539,8 +2507,6 @@
   otherwise.
 
   See the function @fun{gtk-widget-can-default}.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-can-default}")
 
@@ -2569,8 +2535,6 @@
 
   See the function @fun{gtk-widget-is-focus} for the difference between having
   the global input focus, and only having the focus within a toplevel.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-is-focus}")
 
@@ -2588,8 +2552,7 @@
   the event masks of the @class{gdk-window} instances of this widget to include
   \"leave-notify\" and \"motion-notify\" events. This cannot and
   will not be undone when the property is set to @code{nil} again. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-has-tooltip atdoc:*function-name-alias*) "Accessor"
@@ -2610,8 +2573,6 @@
   @slot[gtk-widget]{has-tooltip} property on widget to @arg{has-tooltip}.
 
   See the @slot[gtk-widget]{has-tooltip} property for more information.
-
-  Since 2.12
   @see-class{gtk-widget}")
 
 ;;; --- gtk-widget-height-request ----------------------------------------------
@@ -2646,8 +2607,7 @@
  "The @code{hexpand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand horizontally.
   See the function @fun{gtk-widget-hexpand}. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-hexpand atdoc:*function-name-alias*) "Accessor"
@@ -2712,8 +2672,7 @@
   (Read / Write) @br{}
   Whether to use the @code{hexpand} property. See the function
   @fun{gtk-widget-hexpand-set}.@br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-hexpand-set atdoc:*function-name-alias*) "Accessor"
@@ -2778,8 +2737,7 @@
   Sets all four sides' margin at once. If read, returns max margin on any
   side. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.0")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*) "Accessor"
@@ -2805,8 +2763,7 @@
   widget's normal size request, the margin will be added in addition to the size
   from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.0")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*) "Accessor"
@@ -2825,8 +2782,6 @@
 
   The generic function @sym{(setf gtk-widget-margin-bottom)} sets the bottom
   margin of the widget. See the @slot[gtk-widget]{margin-bottom} property.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
@@ -2872,15 +2827,12 @@
  "The @code{margin-left} property of type @code{:int} (Read / Write) @br{}
   Margin on left side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example.
-  @begin{indent}
-    @b{Warning:} The @code{margin-left} property has been deprecated since
-    version 3.12 and should not be used in newly-written code. Use the
-    @code{margin-start} property instead.
-  @end{indent}
+  from the function @fun{gtk-widget-size-request} for example. @br{}
+  @em{Warning:} The @code{margin-left} property has been deprecated since
+  version 3.12 and should not be used in newly-written code. Use the
+  @code{margin-start} property instead. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.0")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*) "Accessor"
@@ -2904,8 +2856,6 @@
     3.12 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-margin-start} instead.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}
   @see-function{gtk-widget-margin-start}")
@@ -2917,15 +2867,12 @@
  "The @code{margin-right} property of type @code{:int} (Read / Write) @br{}
   Margin on right side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
-  size from the function @fun{gtk-widget-size-request} for example.
-  @begin{indent}
-    @b{Warning:} The @code{margin-right} property has been deprecated since
-    version 3.12 and should not be used in newly-written code. Use the
-    @code{margin-end} property instead.
-  @end{indent}
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
+  @em{Warning:} The @code{margin-right} property has been deprecated since
+  version 3.12 and should not be used in newly-written code. Use the
+  @code{margin-end} property instead. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.0")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*) "Accessor"
@@ -2949,8 +2896,6 @@
     3.12 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-margin-end} instead.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}
   @see-function{gtk-widget-margin-end}")
@@ -2999,8 +2944,7 @@
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.0")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-top atdoc:*function-name-alias*) "Accessor"
@@ -3019,8 +2963,6 @@
 
   The generic function @sym{(setf gtk-widget-margin-top)} sets the top margin
   of widget. See the @slot[gtk-widget]{margin-top} property.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
@@ -3092,8 +3034,6 @@
 
   This is mostly for use in constructing widget hierarchies with externally
   controlled visibility, see @class{gtk-ui-manager}.
-
-  Since 2.4
   @see-class{gtk-widget}
   @see-class{gtk-ui-manager}
   @see-function{gtk-widget-show-all}")
@@ -3216,8 +3156,6 @@
 
   See the function @fun{gtk-widget-grab-default} for details about the meaning
   of \"default\".
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-default}")
 
@@ -3327,8 +3265,7 @@
   The @code{has-tooltip} property will automatically be set to
   @em{true} and there will be taken care of the \"query-tooltip\" signal in the
   default signal handler. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*)
@@ -3355,8 +3292,6 @@
 
   See also the @slot[gtk-widget]{tooltip-markup} property and the function
   @fun{gtk-tooltip-set-markup}.
-
-  Since 2.12
   @see-class{gtk-widget}
   @see-function{gtk-tooltip-set-markup}")
 
@@ -3372,8 +3307,7 @@
   The @code{has-tooltip} property will automatically be set to @em{true} and
   there will be taken care of the \"query-tooltip\" signal in the default
   signal handler. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-tooltip-text atdoc:*function-name-alias*) "Accessor"
@@ -3397,8 +3331,6 @@
 
   See also the @slot[gtk-widget]{tooltip-text} property and the function
   @fun{gtk-tooltip-set-text}.
-
-  Since 2.12
   @see-class{gtk-widget}
   @see-function{gtk-tooltip-set-text}")
 
@@ -3408,8 +3340,7 @@
 (setf (documentation (atdoc:get-slot-from-name "valign" 'gtk-widget) 't)
  "The @code{valign} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute vertical space if widget gets extra space. @br{}
-  Default value: @code{:fill} @br{}
-  Since 3.0")
+  Default value: @code{:fill}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-valign atdoc:*function-name-alias*) "Accessor"
@@ -3428,7 +3359,6 @@
 
   The generic function @sym{(setf gtk-widget-valign)} sets the vertical
   alignment of widget. See the @slot[gtk-widget]{valign} property.
-
   @see-class{gtk-widget}
   @see-function{gtk-widget-halign}")
 
@@ -3439,8 +3369,7 @@
  "The @code{vexpand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand vertically. See the function @fun{gtk-widget-vexpand}.
   @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-vexpand atdoc:*function-name-alias*) "Accessor"
@@ -3472,8 +3401,7 @@
   (Read / Write) @br{}
   Whether to use the @code{vexpand} property. See the function
   @fun{gtk-widget-vexpand-set}.@br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-vexpand-set atdoc:*function-name-alias*) "Accessor"
@@ -3529,8 +3457,6 @@
   This function simply calls the functions @fun{gtk-widget-show} or
   @fun{gtk-widget-hide} but is nicer to use when the visibility of the widget
   depends on some condition.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-show}
   @see-function{gtk-widget-hide}")
@@ -3564,8 +3490,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-widget) 't)
  "The @code{window} property of type @class{gdk-window} (Read) @br{}
-  The widget's window if it is realized, @code{nil} otherwise. @br{}
-  Since 2.14")
+  The widget's window if it is realized, @code{nil} otherwise.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-window atdoc:*function-name-alias*) "Accessor"
@@ -3596,7 +3521,6 @@
   @begin[Note]{dictionary}
     This function does not add any reference to window.
   @end{dictionary}
-  Since 2.18
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-function{gtk-widget-get-parent-window}
@@ -3957,8 +3881,6 @@
     and might appear differently on screen and when rendered using the function
     @sym{gtk-widget-draw}.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-symbol{cairo-t}
   @see-function{gtk-widget-is-drawable}
@@ -4029,7 +3951,6 @@
   @argument[widget]{a @class{gtk-widget} object}
   This function works like the function @fun{gtk-widget-queue-resize}, except
   that the widget is not invalidated.
-  Since 2.4.
   @see-class{gtk-widget}
   @see-function{gtk-widget-queue-resize}"
   (widget (g-object gtk-widget)))
@@ -4479,8 +4400,6 @@
   if the signal is not overridden by a handler or in a derived widget, then the
   default check is that the widget must be sensitive, and the widget and all
   its ancestors mapped.
-
-  Since 2.4
   @see-class{gtk-widget}"
   (when (stringp signal-id)
     (setf signal-id (g-signal-lookup signal-id (g-type-from-instance widget))))
@@ -5492,8 +5411,6 @@
     through the \"draw\" signal, and use Cairo to draw a specific color,
     regardless of the CSS style.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
@@ -5544,8 +5461,6 @@
     version 3.16 and should not be used in newly-written code. Use a custom
     style provider and style classes instead.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-rgba}
   @see-class{gtk-css-provider}
@@ -5580,8 +5495,6 @@
      custom CSS style, through an application-specific
      @class{gtk-style-provider} and a CSS style class.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{pango-font-description}
   @see-function{gtk-widget-override-color}"
@@ -5939,8 +5852,6 @@
     and should not be used in newly-written code. Use the function
     @fun{gtk-widget-override-cursor} instead.
   @end{dictionary}
-
-  Since 2.12
   @see-class{gtk-widget}
   @see-class{gdk-color}
   @see-function{gtk-widget-override-cursor}"
@@ -6176,8 +6087,6 @@
     version 3.10 and should not be used in newly-written code. Use the function
     @fun{gtk-icon-theme-load-icon} instead.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-icon-size}
@@ -6295,8 +6204,6 @@
   Normally you would only use this function in widget implementations. You
   might also use it to schedule a redraw of a @class{gtk-drawing-area} or some
   portion thereof.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-symbol{cairo-region-t}
   @see-function{gdk-window-invalidate-region}"
@@ -6443,8 +6350,6 @@
   @return{The @symbol{g-param-spec} of the style property or @code{nil} if
     @arg{class} has no style property with that name.}
   @short{Finds a style property of a widget class by name.}
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-symbol{g-param-spec}
   @see-function{gtk-widget-class-list-style-properties}"
@@ -6473,8 +6378,6 @@
   @argument[type]{a widget class name}
   @return{A list of @symbol{g-param-spec}.}
   @short{Returns all style properties of a widget class.}
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-symbol{g-param-spec}
   @see-function{gtk-widget-class-find-style-property}"
@@ -6967,8 +6870,6 @@
   @end{short}
   @arg{widget} must have a @class{gdk-display} associated with it, so must be
   attached to a toplevel window.
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-class{gtk-clipboard}
   @see-class{gdk-display}
@@ -6998,8 +6899,6 @@
   In general, you should only create display specific resources when a widget
   has been realized, and you should free those resources when the widget is
   unrealized.
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-class{gtk-window}
   @see-class{gdk-display}"
@@ -7032,8 +6931,6 @@
     version 3.12 and should not be used in newly-written code. Use the function
     @fun{gdk-screen-get-root-window} instead.
   @end{dictionary}
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-function{gdk-screen-get-root-window}"
@@ -7060,8 +6957,6 @@
   In general, you should only create screen specific resources when a widget
   has been realized, and you should free those resources when the widget is
   unrealized.
-
-  Since 2.2
   @see-class{gtk-widget}
   @see-class{gtk-window}
   @see-class{gdk-screen}"
@@ -7085,8 +6980,7 @@
   @end{short}
   All toplevel widgets have an associated screen, and all widgets added into a
   hierarchy with a toplevel window at the top.
-
-  Since 2.2"
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-has-screen)
@@ -7242,8 +7136,6 @@
   destroy the widgets, you must call
   @code{g_list_foreach (result, (GFunc)g_object_ref, NULL)} first, and then
   unref all the widgets afterwards.
-
-  Since 2.4
   @begin[Example]{dictionary}
     @begin{pre}
  (setq button (gtk-button-new-with-mnemonic \"_Hello\"))
@@ -7274,8 +7166,7 @@
   for the widget is cleared when the widget is destroyed, so the caller must
   make sure to update its internal state at this point as well, by using a
   connection to the \"destroy\" signal or a weak notifier.
-
-  Since 2.4"
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (label g-object))
 
@@ -7299,8 +7190,6 @@
   See the function @fun{gtk-widget-list-mnemonic-labels}. The widget must have
   previously been added to the list with the function
   @fun{gtk-widget-add-mnemonic-label}.
-
-  Since 2.4
   @see-class{gtk-widget}
   @see-function{gtk-widget-add-mnemonic-label}
   @see-function{gtk-widget-list-mnemonic-labels}"
@@ -7328,8 +7217,6 @@
   Please note that the semantics of this call will change in the future if
   used on a @arg{widget} that has a composited window in its hierarchy as set
   by the function @fun{gdk-window-set-composited}.
-
-  Since 2.10
   @see-class{gtk-widget}
   @see-function{gdk-window-set-composited}"
   (widget (g-object gtk-widget)))
@@ -7353,8 +7240,6 @@
   Note that the effect of the function @fun{gdk-window-beep} can be configured
   in many ways, depending on the windowing backend and the desktop environment
   or window manager that is used.
-
-  Since 2.12
   @see-function{gdk-window-beep}"
   (widget (g-object gtk-widget)))
 
@@ -7404,8 +7289,6 @@
   widgets where the user should be able to navigate the entire row with the
   cursor keys, as e. g. known from user interfaces that require entering license
   keys.
-
-  Since 2.12
   @see-function{gtk-widget-child-focus}
   @see-function{gtk-widget-error-bell}"
   (widget (g-object gtk-widget))
@@ -7428,8 +7311,6 @@
   @end{short}
   This can be the @class{gtk-window} instance created by default, or the custom
   tooltip window set using @fun{gtk-widget-set-tooltip-window}.
-
-  Since 2.12
   @see-function{gtk-widget-set-tooltip-window}"
   (widget (g-object gtk-window)))
 
@@ -7454,8 +7335,6 @@
 
   If the custom window should have the default theming it needs to have the
   name \"gtk-tooltip\", see the generic function @fun{gtk-widget-name}.
-
-  Since 2.12
   @see-function{gtk-widget-name}"
   (widget (g-object gtk-window))
   (custom-window (g-object gtk-window)))
@@ -7476,8 +7355,6 @@
     is located.
   @end{short}
   See @fun{gtk-tooltip-trigger-tooltip-query} for more information.
-
-  Since 2.12
   @see-function{gtk-tooltip-trigger-tooltip-query}"
   (widget (g-object gtk-widget)))
 
@@ -7545,8 +7422,6 @@
   not initiated by the windowing system this function will return @em{true} for
   all windows, so you need to draw the bottommost window first. Also, do not
   use \"else if\" statements to check which window should be drawn.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-symbol{cairo-t}"
@@ -7576,8 +7451,6 @@
   expose event to be emitted with the \"draw\" signal. It is intended to help
   porting multiwindow widgets from GTK+ 2 to the rendering architecture of
   GTK+ 3.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-symbol{cairo-t}"
@@ -7668,8 +7541,6 @@
     of type @code{GtkAllocation}, but the type is @class{gdk-recangle}. In the
     C implementation @code{GtkAllocation} is a synonym for
     @class{gdk-rectangle}.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-class{gdk-rectangle}
@@ -7700,8 +7571,6 @@
   The @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
   allocation inside the function @fun{gtk-widget-size-allocate} to create an
   adjusted allocation.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-class{gdk-rectangle}
@@ -7801,8 +7670,7 @@
     Determines whether @arg{widget} has a @class{gdk-window} of its own.
   @end{short}
   See @fun{gtk-widget-set-has-window}.
-
-  Since 2.18"
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-has-window)
@@ -7828,8 +7696,6 @@
 
   This function should only be called by widget implementations, and they
   should call it in their @code{init()} function.
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-function{gtk-widget-window}"
@@ -7851,8 +7717,6 @@
     Returns the @arg{widget}'s effective sensitivity, which means it is
     sensitive itself and also its parent widget is sensitive.
   @end{short}
-
-  Since 2.18
   @see-class{gtk-widget}
   @see-function{gtk-widget-sensitive}"
   (widget (g-object gtk-widget)))
@@ -7927,8 +7791,6 @@
   down to all @class{gtk-container} children by different means than turning on
   the state flag down the hierarchy, both @fun{gtk-widget-get-state-flags} and
   @fun{gtk-widget-is-sensitive} will make use of these.
-
-  Since 3.0
   @see-function{gtk-widget-get-state-flags}
   @see-function{gtk-widget-is-sensitive}"
   (widget (g-object gtk-widget))
@@ -7970,8 +7832,7 @@
     the effective @code{:insensitive} state will be returned, that is, also
     based on parent insensitivity, even if @arg{widget} itself is sensitive.
   @end{short}
-
-  Since 3.0"
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-state-flags)
@@ -8051,8 +7912,7 @@
   @return{@em{True} if @arg{widget} is drawable, @code{nil} otherwise.}
   @short{Determines whether @arg{widget} can be drawn to.}
   A widget can be drawn to if it is mapped and visible.
-
-  Since 2.18"
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-drawable)
@@ -8069,10 +7929,9 @@
   @short{Determines whether @arg{widget} is a toplevel widget.}
 
   Currently only @class{gtk-window} and @class{gtk-invisible} (and
-  out-of-process @class{gtk-plug}'s) are toplevel widgets. Toplevel widgets have
-  no parent widget.
-
-  Since 2.18"
+  out-of-process @class{gtk-plug}'s) are toplevel widgets. Toplevel widgets
+  have no parent widget.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-toplevel)
@@ -8095,8 +7954,6 @@
   per device enter/leave events. Note that if custom @class{gdk-window}'s are
   created in \"realize\", the function @sym{gdk-window-set-support-multidevice}
   will have to be called manually on them.
-
-  Since 3.0
   @see-function{gtk-widget-get-support-multidevice}"
   (widget (g-object gtk-widget))
   (support-multidevice :boolean))
@@ -8154,8 +8011,6 @@
   @begin{short}
     Determines whether @arg{widget} is realized.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
@@ -8192,8 +8047,6 @@
   @begin{short}
     Determines whether @arg{widget} is mapped.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
@@ -8631,8 +8484,6 @@
     @class{gtk-size-group}'s that have been applied. That is, the returned
     request is the one that should be used for layout, not necessarily the one
     returned by the widget itself.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-width}
@@ -8685,7 +8536,6 @@
 => 123
     @end{pre}
   @end{dictionary}
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-height}
@@ -8725,8 +8575,6 @@
   @class{gtk-size-group}'s that have been applied. That is, the returned request
   is the one that should be used for layout, not necessarily the one returned by
   the @arg{widget} itself.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-width-for-height}"
@@ -8768,8 +8616,6 @@
   @class{gtk-size-group}'s that have been applied. That is, the returned request
   is the one that should be used for layout, not necessarily the one returned by
   the @arg{widget} itself.
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-height-for-width}"
@@ -8850,8 +8696,6 @@
     container widgets need to request something either in context of their
     children or in context of their allocation capabilities.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-bin}
   @see-symbol{gtk-size-request-mode}"
@@ -8891,8 +8735,6 @@
     height for the natural width is generally smaller than the required height
     for the minimum width.
   @end{dictionary}
-
-  Since 3.0
   @see-class{gtk-widget}
   @see-class{gtk-requisition}"
  (let ((minimum-size (make-gtk-requisition))
