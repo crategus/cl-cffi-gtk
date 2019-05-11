@@ -1409,15 +1409,29 @@
       An entry which shows a search icon.
 
       @about-class{gtk-search-entry}
+
       @about-function{gtk-search-entry-new}
+      @about-function{gtk-search-entry-handle-event}
     @end{subsection}
     @begin[GtkSearchBar]{subsection}
-      not implemented
+      A toolbar to integrate a search entry with.
+
+      @about-class{gtk-search-bar}
+
+      @about-generic{gtk-search-bar-search-mode-enabled}
+      @about-generic{gtk-search-bar-show-close-button}
+
+      @about-function{gtk-search-bar-new}
+      @about-function{gtk-search-bar-connect-entry}
+      @about-function{gtk-search-bar-get-search-mode}
+      @about-function{gtk-search-bar-set-search-mode}
+      @about-function{gtk-search-bar-handle-event}
     @end{subsection}
     @begin[GtkEditable]{subsection}
       Interface for text-editing widgets.
 
       @about-class{gtk-editable}
+
       @about-function{gtk-editable-select-region}
       @about-function{gtk-editable-get-selection-bounds}
       @about-function{gtk-editable-insert-text}
@@ -1577,6 +1591,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       Text buffer iterator.
 
       @about-class{gtk-text-iter}
+
       @about-function{gtk-text-iter-get-buffer}
       @about-function{gtk-text-iter-copy}
       @about-function{gtk-text-iter-assign}
@@ -1662,7 +1677,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-backward-to-tag-toggle}
       @about-function{gtk-text-iter-forward-find-char}
       @about-function{gtk-text-iter-backward-find-char}
+
       @about-symbol{gtk-text-search-flags}
+
       @about-function{gtk-text-iter-forward-search}
       @about-function{gtk-text-iter-backward-search}
       @about-function{gtk-text-iter-equal}
@@ -1674,13 +1691,15 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       A position in the buffer preserved across buffer modifications.
 
       @about-class{gtk-text-mark}
+
+      @about-generic{gtk-text-mark-left-gravity}
+      @about-generic{gtk-text-mark-name}
+
       @about-function{gtk-text-mark-new}
       @about-function{gtk-text-mark-set-visible}
       @about-function{gtk-text-mark-get-visible}
       @about-function{gtk-text-mark-get-deleted}
-      @about-function{gtk-text-mark-get-name}
       @about-function{gtk-text-mark-get-buffer}
-      @about-function{gtk-text-mark-get-left-gravity}
     @end{subsection}
     @begin[GtkTextBuffer]{subsection}
       Stores attributed text for display in a @class{gtk-text-view} widget.
@@ -1697,7 +1716,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-new}
       @about-function{gtk-text-buffer-get-line-count}
       @about-function{gtk-text-buffer-get-char-count}
-      @about-function{gtk-text-buffer-get-tag-table}
       @about-function{gtk-text-buffer-insert}
       @about-function{gtk-text-buffer-insert-at-cursor}
       @about-function{gtk-text-buffer-insert-interactive}
@@ -1710,8 +1728,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-delete}
       @about-function{gtk-text-buffer-delete-interactive}
       @about-function{gtk-text-buffer-backspace}
-      @about-function{gtk-text-buffer-set-text}
-      @about-function{gtk-text-buffer-get-text}
       @about-function{gtk-text-buffer-get-slice}
       @about-function{gtk-text-buffer-insert-pixbuf}
       @about-function{gtk-text-buffer-insert-child-anchor}
@@ -1775,7 +1791,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
     @begin[GtkTextTag]{subsection}
       A tag that can be applied to text in a @class{gtk-text-buffer}.
 
-      @about-symbol{gtk-text-attributes}
       @about-symbol{gtk-wrap-mode}
       @about-symbol{gtk-text-appearance}
 
@@ -1860,6 +1875,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-tag-get-priority}
       @about-function{gtk-text-tag-set-priority}
       @about-function{gtk-text-tag-event}
+
+      @about-symbol{gtk-text-attributes}
+
       @about-function{gtk-text-attributes-new}
       @about-function{gtk-text-attributes-copy}
       @about-function{gtk-text-attributes-copy-values}
@@ -1885,6 +1903,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-symbol{gtk-text-view-layer}
       @about-symbol{gtk-text-window-type}
       @about-symbol{gtk-text-extend-selection}
+
       @about-class{gtk-text-view}
 
       @about-generic{gtk-text-view-accepts-tab}
@@ -1940,10 +1959,13 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-view-starts-display-line}
       @about-function{gtk-text-view-move-visually}
       @about-function{gtk-text-view-add-child-at-anchor}
+
       @about-class{gtk-text-child-anchor}
+
       @about-function{gtk-text-child-anchor-new}
       @about-function{gtk-text-child-anchor-get-widgets}
       @about-function{gtk-text-child-anchor-get-deleted}
+
       @about-function{gtk-text-view-add-child-in-window}
       @about-function{gtk-text-view-move-child}
       @about-function{gtk-text-view-set-wrap-mode}
@@ -2322,8 +2344,9 @@ setup_tree (void)
       The selection object for @class{gtk-tree-view}.
 
       @about-class{gtk-tree-selection}
-      @about-function{gtk-tree-selection-set-mode}
-      @about-function{gtk-tree-selection-get-mode}
+
+      @about-generic{gtk-tree-selection-mode}
+
       @about-function{gtk-tree-selection-set-select-function}
       @about-function{gtk-tree-selection-get-select-function}
       @about-function{gtk-tree-selection-get-user-data}
@@ -2347,7 +2370,29 @@ setup_tree (void)
       A visible column in a @class{gtk-tree-view} widget.
 
       @about-symbol{gtk-tree-view-column-sizing}
+
       @about-class{gtk-tree-view-column}
+
+      @about-generic{gtk-tree-view-column-alignment}
+      @about-generic{gtk-tree-view-column-cell-area}
+      @about-generic{gtk-tree-view-column-clickable}
+      @about-generic{gtk-tree-view-column-expand}
+      @about-generic{gtk-tree-view-column-fixed-width}
+      @about-generic{gtk-tree-view-column-max-width}
+      @about-generic{gtk-tree-view-column-min-width}
+      @about-generic{gtk-tree-view-column-reorderable}
+      @about-generic{gtk-tree-view-column-resizable}
+      @about-generic{gtk-tree-view-column-sizing}
+      @about-generic{gtk-tree-view-column-sort-column-id}
+      @about-generic{gtk-tree-view-column-sort-indicator}
+      @about-generic{gtk-tree-view-column-sort-order}
+      @about-generic{gtk-tree-view-column-spacing}
+      @about-generic{gtk-tree-view-column-title}
+      @about-generic{gtk-tree-view-column-visible}
+      @about-generic{gtk-tree-view-column-widget}
+      @about-generic{gtk-tree-view-column-width}
+      @about-generic{gtk-tree-view-column-x-offset}
+
       @about-function{gtk-tree-view-column-new}
       @about-function{gtk-tree-view-column-new-with-area}
       @about-function{gtk-tree-view-column-new-with-attributes}
@@ -2358,41 +2403,8 @@ setup_tree (void)
       @about-function{gtk-tree-view-column-set-attributes}
       @about-function{gtk-tree-view-column-set-cell-data-func}
       @about-function{gtk-tree-view-column-clear-attributes}
-      @about-function{gtk-tree-view-column-set-spacing}
-      @about-function{gtk-tree-view-column-get-spacing}
-      @about-function{gtk-tree-view-column-set-visible}
-      @about-function{gtk-tree-view-column-get-visible}
-      @about-function{gtk-tree-view-column-set-resizable}
-      @about-function{gtk-tree-view-column-get-resizable}
-      @about-function{gtk-tree-view-column-set-sizing}
-      @about-function{gtk-tree-view-column-get-sizing}
-      @about-function{gtk-tree-view-column-get-width}
-      @about-function{gtk-tree-view-column-get-fixed-width}
-      @about-function{gtk-tree-view-column-set-fixed-width}
-      @about-function{gtk-tree-view-column-set-min-width}
-      @about-function{gtk-tree-view-column-get-min-width}
-      @about-function{gtk-tree-view-column-set-max-width}
-      @about-function{gtk-tree-view-column-get-max-width}
       @about-function{gtk-tree-view-column-clicked}
-      @about-function{gtk-tree-view-column-set-title}
-      @about-function{gtk-tree-view-column-get-title}
-      @about-function{gtk-tree-view-column-set-expand}
-      @about-function{gtk-tree-view-column-get-expand}
-      @about-function{gtk-tree-view-column-set-clickable}
-      @about-function{gtk-tree-view-column-get-clickable}
-      @about-function{gtk-tree-view-column-set-widget}
-      @about-function{gtk-tree-view-column-get-widget}
       @about-function{gtk-tree-view-column-get-button}
-      @about-function{gtk-tree-view-column-set-alignment}
-      @about-function{gtk-tree-view-column-get-alignment}
-      @about-function{gtk-tree-view-column-set-reorderable}
-      @about-function{gtk-tree-view-column-get-reorderable}
-      @about-function{gtk-tree-view-column-set-sort-column-id}
-      @about-function{gtk-tree-view-column-get-sort-column-id}
-      @about-function{gtk-tree-view-column-set-sort-indicator}
-      @about-function{gtk-tree-view-column-get-sort-indicator}
-      @about-function{gtk-tree-view-column-set-sort-order}
-      @about-function{gtk-tree-view-column-get-sort-order}
       @about-function{gtk-tree-view-column-cell-set-cell-data}
       @about-function{gtk-tree-view-column-cell-get-size}
       @about-function{gtk-tree-view-column-cell-get-position}
@@ -2400,34 +2412,42 @@ setup_tree (void)
       @about-function{gtk-tree-view-column-focus-cell}
       @about-function{gtk-tree-view-column-queue-resize}
       @about-function{gtk-tree-view-column-get-tree-view}
-      @about-function{gtk-tree-view-column-get-x-offset}
     @end{subsection}
     @begin[GtkTreeView]{subsection}
       A widget for displaying both trees and lists.
 
-      @about-class{gtk-tree-view}
       @about-symbol{gtk-tree-view-drop-position}
       @about-symbol{gtk-tree-view-private}
+
+      @about-class{gtk-tree-view}
+
+      @about-generic{gtk-tree-view-activate-on-single-click}
+      @about-generic{gtk-tree-view-enable-grid-lines}
+      @about-generic{gtk-tree-view-enable-search}
+      @about-generic{gtk-tree-view-enable-tree-lines}
+      @about-generic{gtk-tree-view-expander-column}
+      @about-generic{gtk-tree-view-fixed-height-mode}
+      @about-generic{gtk-tree-view-headers-clickable}
+      @about-generic{gtk-tree-view-headers-visible}
+      @about-generic{gtk-tree-view-hover-expand}
+      @about-generic{gtk-tree-view-hover-selection}
+      @about-generic{gtk-tree-view-level-indentation}
+      @about-generic{gtk-tree-view-model}
+      @about-generic{gtk-tree-view-reorderable}
+      @about-generic{gtk-tree-view-rubber-banding}
+      @about-generic{gtk-tree-view-rules-hint}
+      @about-generic{gtk-tree-view-search-column}
+      @about-generic{gtk-tree-view-show-expanders}
+      @about-generic{gtk-tree-view-tooltip-column}
+
       @about-function{gtk-tree-view-new}
-      @about-function{gtk-tree-view-get-level-indentation}
-      @about-function{gtk-tree-view-get-show-expanders}
-      @about-function{gtk-tree-view-set-level-indentation}
-      @about-function{gtk-tree-view-set-show-expanders}
       @about-function{gtk-tree-view-new-with-model}
-      @about-function{gtk-tree-view-get-model}
-      @about-function{gtk-tree-view-set-model}
       @about-function{gtk-tree-view-get-selection}
       @about-function{gtk-tree-view-get-hadjustment}
       @about-function{gtk-tree-view-set-hadjustment}
       @about-function{gtk-tree-view-get-vadjustment}
       @about-function{gtk-tree-view-set-vadjustment}
-      @about-function{gtk-tree-view-get-headers-visible}
-      @about-function{gtk-tree-view-set-headers-visible}
       @about-function{gtk-tree-view-columns-autosize}
-      @about-function{gtk-tree-view-get-headers-clickable}
-      @about-function{gtk-tree-view-set-headers-clickable}
-      @about-function{gtk-tree-view-set-rules-hint}
-      @about-function{gtk-tree-view-get-rules-hint}
       @about-function{gtk-tree-view-append-column}
       @about-function{gtk-tree-view-remove-column}
       @about-function{gtk-tree-view-insert-column}
@@ -2437,8 +2457,6 @@ setup_tree (void)
       @about-function{gtk-tree-view-get-column}
       @about-function{gtk-tree-view-get-columns}
       @about-function{gtk-tree-view-move-column-after}
-      @about-function{gtk-tree-view-set-expander-column}
-      @about-function{gtk-tree-view-get-expander-column}
       @about-function{gtk-tree-view-set-column-drag-function}
       @about-function{gtk-tree-view-scroll-to-point}
       @about-function{gtk-tree-view-scroll-to-cell}
@@ -2453,8 +2471,6 @@ setup_tree (void)
       @about-function{gtk-tree-view-collapse-row}
       @about-function{gtk-tree-view-map-expanded-rows}
       @about-function{gtk-tree-view-row-expanded}
-      @about-function{gtk-tree-view-set-reorderable}
-      @about-function{gtk-tree-view-get-reorderable}
       @about-function{gtk-tree-view-get-path-at-pos}
       @about-function{gtk-tree-view-is-blank-at-pos}
       @about-function{gtk-tree-view-get-cell-area}
@@ -2476,49 +2492,38 @@ setup_tree (void)
       @about-function{gtk-tree-view-get-drag-dest-row}
       @about-function{gtk-tree-view-get-dest-row-at-pos}
       @about-function{gtk-tree-view-create-row-drag-icon}
-      @about-function{gtk-tree-view-set-enable-search}
-      @about-function{gtk-tree-view-get-enable-search}
-      @about-function{gtk-tree-view-get-search-column}
-      @about-function{gtk-tree-view-set-search-column}
       @about-function{gtk-tree-view-get-search-equal-func}
       @about-function{gtk-tree-view-set-search-equal-func}
       @about-function{gtk-tree-view-get-search-entry}
       @about-function{gtk-tree-view-set-search-entry}
       @about-function{gtk-tree-view-get-search-position-func}
       @about-function{gtk-tree-view-set-search-position-func}
-      @about-function{gtk-tree-view-get-fixed-height-mode}
-      @about-function{gtk-tree-view-set-fixed-height-mode}
-      @about-function{gtk-tree-view-get-hover-selection}
-      @about-function{gtk-tree-view-set-hover-selection}
-      @about-function{gtk-tree-view-get-hover-expand}
-      @about-function{gtk-tree-view-set-hover-expand}
       @about-function{gtk-tree-view-set-destroy-count-func}
       @about-function{gtk-tree-view-get-row-separator-func}
       @about-function{gtk-tree-view-set-row-separator-func}
-      @about-function{gtk-tree-view-get-rubber-banding}
-      @about-function{gtk-tree-view-set-rubber-banding}
       @about-function{gtk-tree-view-is-rubber-banding-active}
-      @about-function{gtk-tree-view-get-enable-tree-lines}
-      @about-function{gtk-tree-view-set-enable-tree-lines}
+
       @about-symbol{gtk-tree-view-grid-lines}
+
       @about-function{gtk-tree-view-get-grid-lines}
       @about-function{gtk-tree-view-set-grid-lines}
       @about-function{gtk-tree-view-set-tooltip-row}
       @about-function{gtk-tree-view-set-tooltip-cell}
       @about-function{gtk-tree-view-get-tooltip-context}
-      @about-function{gtk-tree-view-get-tooltip-column}
-      @about-function{gtk-tree-view-set-tooltip-column}
     @end{subsection}
     @begin[GtkTreeView drag and drop]{subsection}
       Interfaces for drag-and-drop support in @class{gtk-tree-view}.
 
       @about-class{gtk-tree-drag-source}
       @about-class{gtk-tree-drag-source-iface}
+
       @about-function{gtk-tree-drag-source-drag-data-delete}
       @about-function{gtk-tree-drag-source-drag-data-get}
       @about-function{gtk-tree-drag-source-drag-row-draggable}
+
       @about-class{gtk-tree-drag-dest}
       @about-class{gtk-tree-drag-dest-iface}
+
       @about-function{gtk-tree-drag-dest-drag-data-received}
       @about-function{gtk-tree-drag-dest-row-drop-possible}
       @about-function{gtk-tree-set-row-drag-data}
@@ -2528,62 +2533,60 @@ setup_tree (void)
       A widget displaying a single row of a @class{gtk-tree-model}.
 
       @about-class{gtk-cell-view}
+
+      @about-generic{gtk-cell-view-background}
+      @about-generic{gtk-cell-view-background-gdk}
+      @about-generic{gtk-cell-view-background-rgba}
+      @about-generic{gtk-cell-view-background-set}
+      @about-generic{gtk-cell-view-cell-area}
+      @about-generic{gtk-cell-view-cell-area-context}
+      @about-generic{gtk-cell-view-draw-sensitive}
+      @about-generic{gtk-cell-view-fit-model}
+      @about-generic{gtk-cell-view-model}
+
       @about-function{gtk-cell-view-new}
       @about-function{gtk-cell-view-new-with-context}
       @about-function{gtk-cell-view-new-with-text}
       @about-function{gtk-cell-view-new-with-markup}
       @about-function{gtk-cell-view-new-with-pixbuf}
-      @about-function{gtk-cell-view-set-model}
-      @about-function{gtk-cell-view-get-model}
       @about-function{gtk-cell-view-set-displayed-row}
       @about-function{gtk-cell-view-get-displayed-row}
       @about-function{gtk-cell-view-get-size-of-row}
       @about-function{gtk-cell-view-set-background-color}
       @about-function{gtk-cell-view-set-background-rgba}
-      @about-function{gtk-cell-view-set-draw-sensitive}
-      @about-function{gtk-cell-view-get-draw-sensitive}
-      @about-function{gtk-cell-view-set-fit-model}
-      @about-function{gtk-cell-view-get-fit-model}
     @end{subsection}
     @begin[GtkIconView]{subsection}
       A widget which displays a list of icons in a grid.
 
       @about-class{gtk-icon-view}
+
+      @about-generic{gtk-icon-view-activate-on-single-click}
+      @about-generic{gtk-icon-view-cell-area}
+      @about-generic{gtk-icon-view-column-spacing}
+      @about-generic{gtk-icon-view-columns}
+      @about-generic{gtk-icon-view-item-orientation}
+      @about-generic{gtk-icon-view-item-padding}
+      @about-generic{gtk-icon-view-item-width}
+      @about-generic{gtk-icon-view-margin}
+      @about-generic{gtk-icon-view-markup-column}
+      @about-generic{gtk-icon-view-model}
+      @about-generic{gtk-icon-view-pixbuf-column}
+      @about-generic{gtk-icon-view-reorderable}
+      @about-generic{gtk-icon-view-row-spacing}
+      @about-generic{gtk-icon-view-selection-mode}
+      @about-generic{gtk-icon-view-spacing}
+      @about-generic{gtk-icon-view-text-column}
+      @about-generic{gtk-icon-view-tooltip-column}
+
       @about-function{gtk-icon-view-new}
       @about-function{gtk-icon-view-new-with-area}
       @about-function{gtk-icon-view-new-with-model}
-      @about-function{gtk-icon-view-set-model}
-      @about-function{gtk-icon-view-get-model}
-      @about-function{gtk-icon-view-set-text-column}
-      @about-function{gtk-icon-view-get-text-column}
-      @about-function{gtk-icon-view-set-markup-column}
-      @about-function{gtk-icon-view-get-markup-column}
-      @about-function{gtk-icon-view-set-pixbuf-column}
-      @about-function{gtk-icon-view-get-pixbuf-column}
       @about-function{gtk-icon-view-get-path-at-pos}
       @about-function{gtk-icon-view-get-item-at-pos}
       @about-function{gtk-icon-view-convert-widget-to-bin-window-coords}
       @about-function{gtk-icon-view-set-cursor}
       @about-function{gtk-icon-view-get-cursor}
       @about-function{gtk-icon-view-selected-foreach}
-      @about-function{gtk-icon-view-set-selection-mode}
-      @about-function{gtk-icon-view-get-selection-mode}
-      @about-function{gtk-icon-view-set-item-orientation}
-      @about-function{gtk-icon-view-get-item-orientation}
-      @about-function{gtk-icon-view-set-columns}
-      @about-function{gtk-icon-view-get-columns}
-      @about-function{gtk-icon-view-set-item-width}
-      @about-function{gtk-icon-view-get-item-width}
-      @about-function{gtk-icon-view-set-spacing}
-      @about-function{gtk-icon-view-get-spacing}
-      @about-function{gtk-icon-view-set-row-spacing}
-      @about-function{gtk-icon-view-get-row-spacing}
-      @about-function{gtk-icon-view-set-column-spacing}
-      @about-function{gtk-icon-view-get-column-spacing}
-      @about-function{gtk-icon-view-set-margin}
-      @about-function{gtk-icon-view-get-margin}
-      @about-function{gtk-icon-view-set-item-padding}
-      @about-function{gtk-icon-view-get-item-padding}
       @about-function{gtk-icon-view-get-cell-rect}
       @about-function{gtk-icon-view-select-path}
       @about-function{gtk-icon-view-unselect-path}
@@ -2597,17 +2600,15 @@ setup_tree (void)
       @about-function{gtk-icon-view-set-tooltip-item}
       @about-function{gtk-icon-view-set-tooltip-cell}
       @about-function{gtk-icon-view-get-tooltip-context}
-      @about-function{gtk-icon-view-set-tooltip-column}
-      @about-function{gtk-icon-view-get-tooltip-column}
       @about-function{gtk-icon-view-get-item-row}
       @about-function{gtk-icon-view-get-item-column}
+
       @about-symbol{gtk-icon-view-drop-position}
+
       @about-function{gtk-icon-view-enable-model-drag-source}
       @about-function{gtk-icon-view-enable-model-drag-dest}
       @about-function{gtk-icon-view-unset-model-drag-source}
       @about-function{gtk-icon-view-unset-model-drag-dest}
-      @about-function{gtk-icon-view-set-reorderable}
-      @about-function{gtk-icon-view-get-reorderable}
       @about-function{gtk-icon-view-set-drag-dest-item}
       @about-function{gtk-icon-view-get-drag-dest-item}
       @about-function{gtk-icon-view-get-dest-item-at-pos}
@@ -2618,6 +2619,7 @@ setup_tree (void)
 
       @about-class{gtk-tree-sortable}
       @about-class{gtk-tree-sortable-iface}
+
       @about-function{gtk-tree-sortable-sort-column-changed}
       @about-function{gtk-tree-sortable-get-sort-column-id}
       @about-function{gtk-tree-sortable-set-sort-column-id}
@@ -2629,8 +2631,10 @@ setup_tree (void)
       A @class{gtk-tree-model} which makes an underlying tree model sortable.
 
       @about-class{gtk-tree-model-sort}
+
+      @about-generic{gtk-tree-model-sort-model}
+
       @about-function{gtk-tree-model-sort-new-with-model}
-      @about-function{gtk-tree-model-sort-get-model}
       @about-function{gtk-tree-model-sort-convert-child-path-to-path}
       @about-function{gtk-tree-model-sort-convert-child-iter-to-iter}
       @about-function{gtk-tree-model-sort-convert-path-to-child-path}
@@ -2643,6 +2647,10 @@ setup_tree (void)
       A @class{gtk-tree-model} which hides parts of an underlying tree model.
 
       @about-class{gtk-tree-model-filter}
+
+      @about-generic{gtk-tree-model-filter-child-model}
+      @about-generic{gtk-tree-model-filter-virtual-root}
+
       @about-function{gtk-tree-model-filter-new}
       @about-function{gtk-tree-model-filter-set-visible-func}
       @about-function{gtk-tree-model-filter-set-modify-func}
@@ -2660,6 +2668,7 @@ setup_tree (void)
 
       @about-class{gtk-cell-layout}
       @about-class{gtk-cell-layout-iface}
+
       @about-function{gtk-cell-layout-pack-start}
       @about-function{gtk-cell-layout-pack-end}
       @about-function{gtk-cell-layout-get-area}
@@ -2675,10 +2684,16 @@ setup_tree (void)
       An abstract class for laying out @class{gtk-cell-renderer}'s.
 
       @about-class{gtk-cell-area}
+
+      @about-generic{gtk-cell-area-edit-widget}
+      @about-generic{gtk-cell-area-edited-cell}
+      @about-generic{gtk-cell-area-focus-cell}
+
       @about-function{gtk-cell-area-box-child-align}
       @about-function{gtk-cell-area-box-child-expand}
       @about-function{gtk-cell-area-box-child-fixed-size}
       @about-function{gtk-cell-area-box-child-pack-type}
+
       @about-class{gtk-cell-area-class}
       @about-symbol{GTK-CELL-AREA-WARN-INVALID-CELL-PROPERTY-ID}
       @about-function{gtk-cell-area-add}
@@ -2733,7 +2748,9 @@ setup_tree (void)
       column.
 
       @about-class{gtk-cell-area-box}
-      @about-class{gtk-cell-area-box-class}
+
+      @about-generic{gtk-cell-area-box-spacing}
+
       @about-function{gtk-cell-area-box-new}
       @about-function{gtk-cell-area-box-pack-start}
       @about-function{gtk-cell-area-box-pack-end}
@@ -2744,8 +2761,14 @@ setup_tree (void)
       Stores geometrical information for a series of rows in a
       @class{gtk-cell-area}.
 
-      @about-class{gtk-cell-area-context-class}
       @about-class{gtk-cell-area-context}
+
+      @about-generic{gtk-cell-area-context-area}
+      @about-generic{gtk-cell-area-context-minimum-height}
+      @about-generic{gtk-cell-area-context-minimum-width}
+      @about-generic{gtk-cell-area-context-natural-height}
+      @about-generic{gtk-cell-area-context-natural-width}
+
       @about-function{gtk-cell-area-context-get-area}
       @about-function{gtk-cell-area-context-allocate}
       @about-function{gtk-cell-area-context-reset}
@@ -2763,7 +2786,24 @@ setup_tree (void)
       @about-class{gtk-cell-renderer-state}
       @about-class{gtk-cell-renderer-mode}
       @about-class{gtk-cell-renderer}
-      @about-class{gtk-cell-renderer-class}
+
+      @about-generic{gtk-cell-renderer-cell-background}
+      @about-generic{gtk-cell-renderer-cell-background-gdk}
+      @about-generic{gtk-cell-renderer-cell-background-rgba}
+      @about-generic{gtk-cell-renderer-cell-background-set}
+      @about-generic{gtk-cell-renderer-editing}
+      @about-generic{gtk-cell-renderer-height}
+      @about-generic{gtk-cell-renderer-is-expanded}
+      @about-generic{gtk-cell-renderer-is-expander}
+      @about-generic{gtk-cell-renderer-mode}
+      @about-generic{gtk-cell-renderer-sensitive}
+      @about-generic{gtk-cell-renderer-visible}
+      @about-generic{gtk-cell-renderer-width}
+      @about-generic{gtk-cell-renderer-xalign}
+      @about-generic{gtk-cell-renderer-xpad}
+      @about-generic{gtk-cell-renderer-yalign}
+      @about-generic{gtk-cell-renderer-ypad}
+
       @about-function{gtk-cell-renderer-get-aligned-area}
       @about-function{gtk-cell-renderer-get-size}
       @about-function{gtk-cell-renderer-render}
@@ -2772,10 +2812,6 @@ setup_tree (void)
       @about-function{gtk-cell-renderer-stop-editing}
       @about-function{gtk-cell-renderer-get-fixed-size}
       @about-function{gtk-cell-renderer-set-fixed-size}
-      @about-function{gtk-cell-renderer-get-visible}
-      @about-function{gtk-cell-renderer-set-visible}
-      @about-function{gtk-cell-renderer-get-sensitive}
-      @about-function{gtk-cell-renderer-set-sensitive}
       @about-function{gtk-cell-renderer-get-alignment}
       @about-function{gtk-cell-renderer-set-alignment}
       @about-function{gtk-cell-renderer-get-padding}
@@ -2793,7 +2829,9 @@ setup_tree (void)
       Interface for widgets which can are used for editing cells.
 
       @about-class{gtk-cell-editable}
-      @about-class{gtk-cell-editable-iface}
+
+      @about-generic{gtk-cell-editable-editing-canceled}
+
       @about-function{gtk-cell-editable-start-editing}
       @about-function{gtk-cell-editable-editing-done}
       @about-function{gtk-cell-editable-remove-widget}
@@ -2801,38 +2839,125 @@ setup_tree (void)
     @begin[GtkCellRendererAccel]{subsection}
       Renders a keyboard accelerator in a cell.
 
-      @about-class{gtk-cell-renderer-accel}
       @about-symbol{gtk-cell-renderer-accel-mode}
+
+      @about-class{gtk-cell-renderer-accel}
+
+      @about-generic{gtk-cell-renderer-accel-accel-key}
+      @about-generic{gtk-cell-renderer-accel-accel-mode}
+      @about-generic{gtk-cell-renderer-accel-accel-mods}
+      @about-generic{gtk-cell-renderer-accel-keycode}
+
       @about-function{gtk-cell-renderer-accel-new}
     @end{subsection}
-    @begin[GtkCellRendererComo]{subsection}
+    @begin[GtkCellRendererCombo]{subsection}
       Renders a combobox in a cell.
 
       @about-class{gtk-cell-renderer-combo}
+
+      @about-generic{gtk-cell-renderer-combo-has-entry}
+      @about-generic{gtk-cell-renderer-combo-model}
+      @about-generic{gtk-cell-renderer-combo-text-column}
+
       @about-function{gtk-cell-renderer-combo-new}
     @end{subsection}
     @begin[GtkCellRendererPixbuf]{subsection}
       Renders a pixbuf in a cell.
 
       @about-class{gtk-cell-renderer-pixbuf}
+
+      @about-generic{gtk-cell-renderer-pixbuf-follow-state}
+      @about-generic{gtk-cell-renderer-pixbuf-gicon}
+      @about-generic{gtk-cell-renderer-pixbuf-icon-name}
+      @about-generic{gtk-cell-renderer-pixbuf-pixbuf}
+      @about-generic{gtk-cell-renderer-pixbuf-pixbuf-expander-closed}
+      @about-generic{gtk-cell-renderer-pixbuf-pixbuf-expander-open}
+      @about-generic{gtk-cell-renderer-pixbuf-stock-detail}
+      @about-generic{gtk-cell-renderer-pixbuf-stock-id}
+      @about-generic{gtk-cell-renderer-pixbuf-stock-size}
+      @about-generic{gtk-cell-renderer-pixbuf-surface}
+
       @about-function{gtk-cell-renderer-pixbuf-new}
     @end{subsection}
     @begin[GtkCellRendererProgress]{subsection}
       Renders numbers as progress bars.
 
       @about-class{gtk-cell-renderer-progress}
+
+      @about-generic{gtk-cell-renderer-progress-inverted}
+      @about-generic{gtk-cell-renderer-progress-pulse}
+      @about-generic{gtk-cell-renderer-progress-text}
+      @about-generic{gtk-cell-renderer-progress-text-xalign}
+      @about-generic{gtk-cell-renderer-progress-text-yalign}
+      @about-generic{gtk-cell-renderer-progress-value}
+
       @about-function{gtk-cell-renderer-progress-new}
     @end{subsection}
     @begin[GtkCellRendererSpin]{subsection}
       Renders a spin button in a cell.
 
       @about-class{gtk-cell-renderer-spin}
+
+      @about-generic{gtk-cell-renderer-spin-adjustment}
+      @about-generic{gtk-cell-renderer-spin-climb-rate}
+      @about-generic{gtk-cell-renderer-spin-digits}
+
       @about-function{gtk-cell-renderer-spin-new}
     @end{subsection}
     @begin[GtkCellRendererText]{subsection}
       Renders text in a cell.
 
       @about-class{gtk-cell-renderer-text}
+
+      @about-generic{gtk-cell-renderer-text-align-set}
+      @about-generic{gtk-cell-renderer-text-alignment}
+      @about-generic{gtk-cell-renderer-text-attributes}
+      @about-generic{gtk-cell-renderer-text-background}
+      @about-generic{gtk-cell-renderer-text-background-gdk}
+      @about-generic{gtk-cell-renderer-text-background-rgba}
+      @about-generic{gtk-cell-renderer-text-background-set}
+      @about-generic{gtk-cell-renderer-text-editable}
+      @about-generic{gtk-cell-renderer-text-editable-set}
+      @about-generic{gtk-cell-renderer-text-ellipsize}
+      @about-generic{gtk-cell-renderer-text-ellipsize-set}
+      @about-generic{gtk-cell-renderer-text-family}
+      @about-generic{gtk-cell-renderer-text-family-set}
+      @about-generic{gtk-cell-renderer-text-font}
+      @about-generic{gtk-cell-renderer-text-font-desc}
+      @about-generic{gtk-cell-renderer-text-foreground}
+      @about-generic{gtk-cell-renderer-text-foreground-gdk}
+      @about-generic{gtk-cell-renderer-text-foreground-rgba}
+      @about-generic{gtk-cell-renderer-text-foreground-set}
+      @about-generic{gtk-cell-renderer-text-language}
+      @about-generic{gtk-cell-renderer-text-language-set}
+      @about-generic{gtk-cell-renderer-text-markup}
+      @about-generic{gtk-cell-renderer-text-max-width-chars}
+      @about-generic{gtk-cell-renderer-text-placeholder-text}
+      @about-generic{gtk-cell-renderer-text-rise}
+      @about-generic{gtk-cell-renderer-text-rise-set}
+      @about-generic{gtk-cell-renderer-text-scale}
+      @about-generic{gtk-cell-renderer-text-scale-set}
+      @about-generic{gtk-cell-renderer-text-single-paragraph-mode}
+      @about-generic{gtk-cell-renderer-text-size}
+      @about-generic{gtk-cell-renderer-text-size-points}
+      @about-generic{gtk-cell-renderer-text-size-set}
+      @about-generic{gtk-cell-renderer-text-stretch}
+      @about-generic{gtk-cell-renderer-text-stretch-set}
+      @about-generic{gtk-cell-renderer-text-strikethrough}
+      @about-generic{gtk-cell-renderer-text-strikethrough-set}
+      @about-generic{gtk-cell-renderer-text-style}
+      @about-generic{gtk-cell-renderer-text-style-set}
+      @about-generic{gtk-cell-renderer-text-text}
+      @about-generic{gtk-cell-renderer-text-underline}
+      @about-generic{gtk-cell-renderer-text-underline-set}
+      @about-generic{gtk-cell-renderer-text-variant}
+      @about-generic{gtk-cell-renderer-text-variant-set}
+      @about-generic{gtk-cell-renderer-text-weight}
+      @about-generic{gtk-cell-renderer-text-weight-set}
+      @about-generic{gtk-cell-renderer-text-width-chars}
+      @about-generic{gtk-cell-renderer-text-wrap-mode}
+      @about-generic{gtk-cell-renderer-text-wrap-width}
+
       @about-function{gtk-cell-renderer-text-new}
       @about-function{gtk-cell-renderer-text-set-fixed-height-from-font}
     @end{subsection}
@@ -2840,18 +2965,24 @@ setup_tree (void)
       Renders a toggle button in a cell.
 
       @about-class{gtk-cell-renderer-toggle}
+
+      @about-generic{gtk-cell-renderer-toggle-activatable}
+      @about-generic{gtk-cell-renderer-toggle-active}
+      @about-generic{gtk-cell-renderer-toggle-inconsistent}
+      @about-generic{gtk-cell-renderer-toggle-indicator-size}
+      @about-generic{gtk-cell-renderer-toggle-radio}
+
       @about-function{gtk-cell-renderer-toggle-new}
-      @about-function{gtk-cell-renderer-toggle-get-radio}
-      @about-function{gtk-cell-renderer-toggle-set-radio}
-      @about-function{gtk-cell-renderer-toggle-get-active}
-      @about-function{gtk-cell-renderer-toggle-set-active}
-      @about-function{gtk-cell-renderer-toggle-get-activatable}
-      @about-function{gtk-cell-renderer-toggle-set-activatable}
     @end{subsection}
     @begin[GtkCellRendererSpinner]{subsection}
       Renders a spinning animation in a cell.
 
       @about-class{gtk-cell-renderer-spinner}
+
+      @about-generic{gtk-cell-renderer-spinner-active}
+      @about-generic{gtk-cell-renderer-spinner-pulse}
+      @about-generic{gtk-cell-renderer-spinner-size}
+
       @about-function{gtk-cell-renderer-spinner-new}
     @end{subsection}
     @begin[GtkListStore]{subsection}
@@ -2859,6 +2990,7 @@ setup_tree (void)
       @class{gtk-tree-view}.
 
       @about-class{gtk-list-store}
+
       @about-function{gtk-list-store-new}
       @about-function{gtk-list-store-newv}
       @about-function{gtk-list-store-set-column-types}
@@ -2886,6 +3018,7 @@ setup_tree (void)
       @class{gtk-tree-view}.
 
       @about-class{gtk-tree-store}
+
       @about-function{gtk-tree-store-new}
       @about-function{gtk-tree-store-newv}
       @about-function{gtk-tree-store-set-column-types}
@@ -2916,6 +3049,25 @@ setup_tree (void)
       A widget used to choose from a list of items.
 
       @about-class{gtk-combo-box}
+
+      @about-generic{gtk-combo-box-active}
+      @about-generic{gtk-combo-box-active-id}
+      @about-generic{gtk-combo-box-add-tearoffs}
+      @about-generic{gtk-combo-box-button-sensitivity}
+      @about-generic{gtk-combo-box-cell-area}
+      @about-generic{gtk-combo-box-column-span-column}
+      @about-generic{gtk-combo-box-entry-text-column}
+      @about-generic{gtk-combo-box-focus-on-click}
+      @about-generic{gtk-combo-box-has-entry}
+      @about-generic{gtk-combo-box-has-frame}
+      @about-generic{gtk-combo-box-id-column}
+      @about-generic{gtk-combo-box-model}
+      @about-generic{gtk-combo-box-popup-fixed-width}
+      @about-generic{gtk-combo-box-popup-shown}
+      @about-generic{gtk-combo-box-row-span-column}
+      @about-generic{gtk-combo-box-tearoff-title}
+      @about-generic{gtk-combo-box-wrap-width}
+
       @about-function{gtk-combo-box-new}
       @about-function{gtk-combo-box-new-with-entry}
       @about-function{gtk-combo-box-new-with-model}
@@ -2928,8 +3080,6 @@ setup_tree (void)
       @about-function{gtk-combo-box-set-row-span-column}
       @about-function{gtk-combo-box-get-column-span-column}
       @about-function{gtk-combo-box-set-column-span-column}
-      @about-function{gtk-combo-box-get-active}
-      @about-function{gtk-combo-box-set-active}
       @about-function{gtk-combo-box-get-active-iter}
       @about-function{gtk-combo-box-set-active-iter}
       @about-function{gtk-combo-box-get-id-column}
@@ -2979,10 +3129,25 @@ setup_tree (void)
 
       @about-symbol{gtk-arrow-placement}
       @about-class{gtk-menu}
+
+      @about-generic{gtk-combo-box-accel-group}
+      @about-generic{gtk-combo-box-accel-path}
+      @about-generic{gtk-combo-box-active}
+      @about-generic{gtk-combo-box-anchor-hints}
+      @about-generic{gtk-combo-box-attach-widget}
+      @about-generic{gtk-combo-box-menu-type-hint}
+      @about-generic{gtk-combo-box-monitor}
+      @about-generic{gtk-combo-box-rect-anchor-dx}
+      @about-generic{gtk-combo-box-rect-anchor-dy}
+      @about-generic{gtk-combo-box-reserve-toggle-size}
+      @about-generic{gtk-combo-box-tearoff-state}
+      @about-generic{gtk-combo-box-tearoff-title}
+
       @about-function{gtk-menu-child-left-attach}
       @about-function{gtk-menu-child-right-attach}
       @about-function{gtk-menu-child-top-attach}
       @about-function{gtk-menu-child-bottom-attach}
+
       @about-function{gtk-menu-new}
       @about-function{gtk-menu-new-from-model}
       @about-function{gtk-menu-set-screen}
@@ -3016,6 +3181,10 @@ setup_tree (void)
       widgets.
 
       @about-class{gtk-menu-bar}
+
+      @about-generic{gtk-menu-bar-child-pack-direction}
+      @about-generic{gtk-menu-bar-pack-direction}
+
       @about-function{gtk-menu-bar-new}
       @about-function{gtk-menu-bar-new-from-model}
       @about-symbol{gtk-pack-direction}
@@ -3028,6 +3197,13 @@ setup_tree (void)
       The widget used for item in menus.
 
       @about-class{gtk-menu-item}
+
+      @about-generic{gtk-menu-item-accel-path}
+      @about-generic{gtk-menu-item-label}
+      @about-generic{gtk-menu-item-right-justified}
+      @about-generic{gtk-menu-item-submenu}
+      @about-generic{gtk-menu-item-use-underline}
+
       @about-function{gtk-menu-item-new}
       @about-function{gtk-menu-item-new-with-label}
       @about-function{gtk-menu-item-new-with-mnemonic}
@@ -3045,26 +3221,13 @@ setup_tree (void)
       @about-function{gtk-menu-item-get-reserve-indicator}
       @about-function{gtk-menu-item-set-reserve-indicator}
     @end{subsection}
-    @begin[GtkImageMenuItem]{subsection}
-      A menu item with an icon.
-
-      @about-class{gtk-image-menu-item}
-      @about-function{gtk-image-menu-item-set-image}
-      @about-function{gtk-image-menu-item-get-image}
-      @about-function{gtk-image-menu-item-new}
-      @about-function{gtk-image-menu-item-new-from-stock}
-      @about-function{gtk-image-menu-item-new-with-label}
-      @about-function{gtk-image-menu-item-new-with-mnemonic}
-      @about-function{gtk-image-menu-item-get-use-stock}
-      @about-function{gtk-image-menu-item-set-use-stock}
-      @about-function{gtk-image-menu-item-get-always-show-image}
-      @about-function{gtk-image-menu-item-set-always-show-image}
-      @about-function{gtk-image-menu-item-set-accel-group}
-    @end{subsection}
     @begin[GtkRadioMenuItem]{subsection}
       A choice from multiple check menu items
 
       @about-class{gtk-radio-menu-item}
+
+      @about-generic{gtk-radio-menu-item-group}
+
       @about-function{gtk-radio-menu-item-new}
       @about-function{gtk-radio-menu-item-new-with-label}
       @about-function{gtk-radio-menu-item-new-with-mnemonic}
@@ -3078,6 +3241,11 @@ setup_tree (void)
       A menu item with a check box.
 
       @about-class{gtk-check-menu-item}
+
+      @about-generic{gtk-check-menu-item-active}
+      @about-generic{gtk-check-menu-item-draw-as-radio}
+      @about-generic{gtk-check-menu-item-inconsistent}
+
       @about-function{gtk-check-menu-item-new}
       @about-function{gtk-check-menu-item-new-with-label}
       @about-function{gtk-check-menu-item-new-with-mnemonic}
@@ -3113,10 +3281,18 @@ setup_tree (void)
     @begin[GtkToolbar]{subsection}
       Create bars of buttons and other widgets.
 
+      @about-class{gtk-toolbar-space-style}
+
       @about-class{gtk-toolbar}
+
+      @about-generic{gtk-toolbar-icon-size}
+      @about-generic{gtk-toolbar-icon-size-set}
+      @about-generic{gtk-toolbar-show-arrow}
+      @about-generic{gtk-toolbar-toolbar-style}
+
       @about-function{gtk-toolbar-child-expand}
       @about-function{gtk-toolbar-child-homogeneous}
-      @about-class{gtk-toolbar-space-style}
+
       @about-function{gtk-toolbar-new}
       @about-function{gtk-toolbar-insert}
       @about-function{gtk-toolbar-get-item-index}
@@ -3138,6 +3314,11 @@ setup_tree (void)
       The base class of widgets that can be added to @class{gtk-tool-shell}.
 
       @about-class{gtk-tool-item}
+
+      @about-generic{gtk-tool-item-is-important}
+      @about-generic{gtk-tool-item-visible-horizontal}
+      @about-generic{gtk-tool-item-visible-vertical}
+
       @about-function{gtk-tool-item-new}
       @about-function{gtk-tool-item-set-homogeneous}
       @about-function{gtk-tool-item-get-homogeneous}
@@ -3171,9 +3352,15 @@ setup_tree (void)
       A tool palette with categories.
 
       @about-class{gtk-tool-palette}
-      @about-function{gtk-tool-palette-new}
+
+      @about-generic{gtk-tool-palette-icon-size}
+      @about-generic{gtk-tool-palette-icon-size-set}
+      @about-generic{gtk-tool-palette-toolbar-style}
+
       @about-function{gtk-tool-palette-child-exclusive}
       @about-function{gtk-tool-palette-child-expand}
+
+      @about-function{gtk-tool-palette-new}
       @about-function{gtk-tool-palette-get-exclusive}
       @about-function{gtk-tool-palette-set-exclusive}
       @about-function{gtk-tool-palette-get-expand}
@@ -6181,6 +6368,23 @@ setup_tree (void)
     @begin[GtkVScrollbar]{subsection}
       @about-class{gtk-vscrollbar}
       @about-function{gtk-vscrollbar-new}
+    @end{subsection}
+    @begin[GtkImageMenuItem]{subsection}
+      A menu item with an icon.
+
+      @about-class{gtk-image-menu-item}
+
+      @about-function{gtk-image-menu-item-set-image}
+      @about-function{gtk-image-menu-item-get-image}
+      @about-function{gtk-image-menu-item-new}
+      @about-function{gtk-image-menu-item-new-from-stock}
+      @about-function{gtk-image-menu-item-new-with-label}
+      @about-function{gtk-image-menu-item-new-with-mnemonic}
+      @about-function{gtk-image-menu-item-get-use-stock}
+      @about-function{gtk-image-menu-item-set-use-stock}
+      @about-function{gtk-image-menu-item-get-always-show-image}
+      @about-function{gtk-image-menu-item-set-always-show-image}
+      @about-function{gtk-image-menu-item-set-accel-group}
     @end{subsection}
     @begin[GtkMisc]{subsection}
       Base class for widgets with alignments and padding.
