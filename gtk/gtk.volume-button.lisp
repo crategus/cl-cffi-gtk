@@ -101,15 +101,14 @@
   Whether to use symbolic icons as the icons. Note that if the symbolic icons
   are not available in your installed theme, then the normal (potentially
   colorful) icons will be used. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-volume-button-use-symbolic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-volume-button-use-symbolic 'function)
  "@version{2014-4-19}
-  Accessor of the slot @slot[gtk-volume-button]{use-symbolic} of the
+  Accessor of the @slot[gtk-volume-button]{use-symbolic} slot of the
   @class{gtk-volume-button} class.
   @see-class{gtk-volume-button}")
 
