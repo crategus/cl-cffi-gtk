@@ -109,6 +109,8 @@
     return to its normal state.
   @end{short}
 
+  @image[toggle-button]{}
+
   A toggle button is created by calling either the functions
   @fun{gtk-toggle-button-new} or @fun{gtk-toggle-button-new-with-label}. If
   using the former, it is advisable to pack a widget, (such as a
@@ -181,7 +183,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-button) 't)
-"The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+"The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   If the toggle button should be pressed in. @br{}
   Default value: @code{nil}")
 
@@ -218,7 +220,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw-indicator"
                                                'gtk-toggle-button) 't)
- "The @code{\"draw-indicator\"} property of type @code{:boolean}
+ "The @code{draw-indicator} property of type @code{:boolean}
   (Read / Write) @br{}
   If the toggle part of the button is displayed. @br{}
   Default value: @code{nil}")
@@ -237,7 +239,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inconsistent"
                                                'gtk-toggle-button) 't)
- "The ´@code{\"inconsistent\"} property of type @code{:boolean}
+ "The @code{inconsistent} property of type @code{:boolean}
   (Read / Write) @br{}
   If the toggle button is in an \"in between\" state. @br{}
   Default value: @code{nil}")
