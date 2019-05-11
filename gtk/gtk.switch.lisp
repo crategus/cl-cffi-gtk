@@ -99,6 +99,9 @@
   @begin{short}
     @sym{gtk-switch} is a widget that has two states: on or off.
   @end{short}
+
+  @image[switch]{}
+
   The user can control which state should be active by clicking the empty area,
   or by dragging the handle.
   @begin[CSS nodes]{dictionary}
@@ -115,9 +118,9 @@
       @begin[slider-height]{entry}
         The @code{slider-height} style property of type @code{:int} (Read) @br{}
         The minimum height of the @sym{gtk-switch} handle, in pixels.
-        @b{Warning:} @code{slider-height} has been deprecated since version 3.20
-        and should not be used in newly-written code. Use the CSS min-height
-        property instead. @br{}
+        @em{Warning:} @code{slider-height} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use the CSS
+        min-height property instead. @br{}
         Allowed values: >= 22 @br{}
         Default value: 22 @br{}
         Since 3.18
@@ -125,7 +128,7 @@
       @begin[slider-width]{entry}
         The @code{slider-width} style property of type @code{:int} (Read) @br{}
         The minimum width of the @sym{gtk-switch} handle, in pixels. @br{}
-        @b{Warning:} @code{slider-width} has been deprecated since version 3.20
+        @em{Warning:} @code{slider-width} has been deprecated since version 3.20
         and should not be used in newly-written code. Use the CSS min-height
         property instead. @br{}
         Allowed values: >= 36 @br{}
@@ -203,14 +206,12 @@
 
   The slot access function @sym{(setf gtk-switch-active)} changes the state of
   the switch to the desired one.
-
-  Since 3.0
   @see-class{gtk-switch}")
 
 ;;; --- gtk-switch-state -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-switch) 't)
+(setf (documentation (atdoc:get-slot-from-name "state" 'gtk-switch) 't)
  "The @code{state} property of type @code{:boolean} (Read / Write) @br{}
   The backend state that is controlled by the switch. See the \"state-set\"
   signal for details. @br{}
@@ -255,8 +256,6 @@
  "@version{2014-4-19}
   @return{The newly created @class{gtk-switch} widget.}
   @short{Creates a new @class{gtk-switch} widget.}
-
-  Since 3.0
   @see-class{gtk-switch}"
   (make-instance 'gtk-switch))
 
