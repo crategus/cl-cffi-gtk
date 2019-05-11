@@ -205,7 +205,7 @@
         The @code{internal-padding} style property of type @code{:int} (Read)
         @br{}
         Amount of border space between the toolbar shadow and the buttons. @br{}
-        @b{Warning:} @code{internal-padding} has been deprecated since version
+        @em{Warning:} @code{internal-padding} has been deprecated since version
         3.6 and should not be used in newly-written code. Use the standard
         padding CSS property, through objects like @class{gtk-style-context} and
         @class{gtk-css-provider}; the value of this style property is ignored.
@@ -224,7 +224,7 @@
         The @code{shadow-type} style property of type @symbol{gtk-shadow-type}
         (Read) @br{}
         Style of bevel around the toolbar. @br{}
-        @b{Warning:} @code{shadow-type} has been deprecated since version 3.6
+        @em{Warning:} @code{shadow-type} has been deprecated since version 3.6
         and should not be used in newly-written code. Use the standard border
         CSS property, through objects like @class{gtk-style-context} and
         @class{gtk-css-provider}; the value of this style property is ignored.
@@ -234,7 +234,7 @@
       @begin[space-size]{entry}
         The @code{space-size} style property of type @code{:int} (Read) @br{}
         Size of spacers. @br{}
-        @b{Warning:} @code{space-size} has been deprecated since version 3.20
+        @em{Warning:} @code{space-size} has been deprecated since version 3.20
         and should not be used in newly-written code. Use the standard
         margin/padding CSS properties on the separator elements; the value of
         this style property is ignored. @br{}
@@ -245,7 +245,7 @@
         The @code{space-style} style property of type
         @symbol{gtk-toolbar-space-style} (Read) @br{}
         Whether spacers are vertical lines or just blank. @br{}
-        @b{Warning:} @code{space-style} has been deprecated since version 3.20
+        @em{Warning:} @code{space-style} has been deprecated since version 3.20
         and should not be used in newly-written code. Use CSS properties on the
         separator elements to style toolbar spacers; the value of this style
         property is ignored. @br{}
@@ -329,9 +329,9 @@
  "The @code{icon-size} property of type @code{:int} (Read / Write) @br{}
   The size of the icons in a toolbar is normally determined by the
   @code{toolbar-icon-size} setting. When this property is set, it overrides
-  the setting.
-  This should only be used for special-purpose toolbars, normal application
-  toolbars should respect the user preferences for the size of icons. @br{}
+  the setting. This should only be used for special-purpose toolbars, normal
+  application toolbars should respect the user preferences for the size of
+  icons. @br{}
   Allowed values: >= 0 @br{}
   Default value: 3")
 
@@ -340,13 +340,27 @@
       "Accessor"
       (documentation 'gtk-toolbar-icon-size 'function)
  "@version{2013-10-22}
+  @syntax[]{(gtk-toolbar-icon-size object) => icon-size}
+  @syntax[]{(setf (gtk-toolbar-icon-size object) icon-size)}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[icon-size]{the @symbol{gtk-icon-size} that stock icons in the
+    toolbar shall have}
   @begin{short}
-    Accessor of the slot @slot[gtk-toolbar]{icon-size} of the
+    Accessor of the @slot[gtk-toolbar]{icon-size} slot of the
     @class{gtk-toolbar} class.
   @end{short}
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-get-icon-size}
-  @see-function{gtk-toolbar-set-icon-size}")
+
+  The @sym{gtk-toolbar-icon-size} slot access function
+  retrieves the icon size for the toolbar.
+
+  The @sym{(setf gtk-toolbar-icon-size)} slot access function
+  sets the size of stock icons in the toolbar.
+
+  You can call it both before you add the icons and after they have been added.
+  The size you set will override user preferences for the default icon size.
+  This should only be used for special-purpose toolbars, normal application
+  toolbars should respect the user preferences for the size of icons.
+  @see-class{gtk-toolbar}")
 
 ;;; --- gtk-toolbar-icon-size-set ----------------------------------------------
 
@@ -363,7 +377,7 @@
       (documentation 'gtk-toolbar-icon-size-set 'function)
  "@version{2013-10-22}
   @begin{short}
-    Accessor of the slot @slot[gtk-toolbar]{icon-size-set} of the
+    Accessor of the @slot[gtk-toolbar]{icon-size-set} slot of the
     @class{gtk-toolbar} class.
   @end{short}
   @see-class{gtk-toolbar}")
@@ -372,8 +386,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-arrow" 'gtk-toolbar) 't)
- "The @code{show-arrow} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{show-arrow} property of type @code{:boolean} (Read / Write) @br{}
   If an arrow should be shown if the toolbar does not fit. @br{}
   Default value: @em{true}")
 
@@ -382,10 +395,24 @@
       "Accessor"
       (documentation 'gtk-toolbar-show-arrow 'function)
  "@version{2013-10-22}
+  @syntax[]{(gtk-toolbar-show-arrow object) => show-arrow}
+  @syntax[]{(setf (gtk-toolbar-show-arrow object) show-arrow)}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[show-arrow]{whether to show an overflow menu}
   @begin{short}
-    Accessor of the slot @slot[gtk-toolbar]{show-arrow} of the
+    Accessor of the @slot[gtk-toolbar]{show-arrow} slot of the
     @class{gtk-toolbar} class.
   @end{short}
+
+  The @sym{gtk-toolbar-show-arrow} slot access function
+  returns whether the toolbar has an overflow menu.
+
+  The @sym{(setf gtk-toolbar-show-arrow)} slot access function
+  sets whether to show an overflow menu when toolbar does not have room for
+  all items on it.
+
+  If @em{true}, items that there are not room are available through an
+  overflow menu.
   @see-class{gtk-toolbar}")
 
 ;;; --- gtk-toolbar-toolbar-style ----------------------------------------------
@@ -402,13 +429,22 @@
       "Accessor"
       (documentation 'gtk-toolbar-toolbar-style 'function)
  "@version{2013-10-22}
+  @syntax[]{(gtk-toolbar-style object) => style}
+  @syntax[]{(setf (gtk-toolbar-style object) style)}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[style]{the new style for @arg{toolbar}}
   @begin{short}
-    Accessor of the slot @slot[gtk-toolbar]{toolbar-style} of the
+    Accessor of the @slot[gtk-toolbar]{toolbar-style} slot of the
     @class{gtk-toolbar} class.
   @end{short}
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-get-style}
-  @see-function{gtk-toolbar-set-style}")
+
+  The @sym{gtk-toolbar-style} slot access function
+  retrieves whether the toolbar has text, icons, or both.
+
+  The @sym{(setf gtk-toolbar-style)} slot access function
+  alters the view of the toolbar to display either icons only, text only,
+  or both.
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
@@ -599,29 +635,6 @@
 (export 'gtk-toolbar-set-drop-highlight-item)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_set_show_arrow ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-set-show-arrow))
-
-(defun gtk-toolbar-set-show-arrow (toolbar show-arrow)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[show-arrow]{whether to show an overflow menu}
-  @begin{short}
-    Sets whether to show an overflow menu when toolbar does not have room for
-    all items on it.
-  @end{short}
-  If @em{true}, items that there are not room are available through an
-  overflow menu.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-get-show-arrow}"
-  (setf (gtk-toolbar-show-arrow toolbar) show-arrow))
-
-(export 'gtk-toolbar-set-show-arrow)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_icon_size ()
 ;;; ----------------------------------------------------------------------------
 
@@ -637,69 +650,6 @@
   (toolbar (g-object gtk-toolbar)))
 
 (export 'gtk-toolbar-unset-icon-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_get_show_arrow ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-get-show-arrow))
-
-(defun gtk-toolbar-get-show-arrow (toolbar)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @return{@em{True} if the toolbar has an overflow menu.}
-  @begin{short}
-    Returns whether the toolbar has an overflow menu.
-  @end{short}
-  See the function @fun{gtk-toolbar-set-show-arrow}.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-set-show-arrow}"
-  (gtk-toolbar-show-arrow toolbar))
-
-(export 'gtk-toolbar-get-show-arrow)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_get_style ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-get-style))
-
-(defun gtk-toolbar-get-style (toolbar)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @return{The current style of @arg{toolbar}.}
-  @begin{short}
-    Retrieves whether the toolbar has text, icons, or both.
-  @end{short}
-  See the function @fun{gtk-toolbar-set-style}.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-set-style}"
-  (gtk-toolbar-toolbar-style toolbar))
-
-(export 'gtk-toolbar-get-style)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_get_icon_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-get-icon-size))
-
-(defun gtk-toolbar-get-icon-size (toolbar)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @return{The current icon size for the icons on the toolbar.}
-  @begin{short}
-    Retrieves the icon size for the toolbar.
-  @end{short}
-  See the function @fun{gtk-toolbar-set-icon-size}.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-set-icon-size}"
-  (gtk-toolbar-icon-size toolbar))
-
-(export 'gtk-toolbar-get-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_relief_style ()
@@ -720,51 +670,6 @@
   (toolbar (g-object gtk-toolbar)))
 
 (export 'gtk-toolbar-get-relief-style)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_set_style ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-set-style))
-
-(defun gtk-toolbar-set-style (toolbar style)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[style]{the new style for @arg{toolbar}}
-  Alters the view of @arg{toolbar} to display either icons only, text only,
-  or both.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-get-style}"
-  (setf (gtk-toolbar-toolbar-style toolbar) style))
-
-(export 'gtk-toolbar-set-style)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_set_icon_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toolbar-set-icon-size))
-
-(defun gtk-toolbar-set-icon-size (toolbar icon-size)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[icon-size]{the @symbol{gtk-icon-size} that stock icons in the
-    toolbar shall have}
-  @begin{short}
-    This function sets the size of stock icons in the toolbar.
-  @end{short}
-  You can call it both before you add the icons and after they have been added.
-  The size you set will override user preferences for the default icon size.
-
-  This should only be used for special-purpose toolbars, normal application
-  toolbars should respect the user preferences for the size of icons.
-  @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-set-icon-size}"
-  (setf (gtk-toolbar-icon-size toolbar) icon-size))
-
-(export 'gtk-toolbar-set-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_style ()
