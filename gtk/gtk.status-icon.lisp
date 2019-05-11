@@ -383,20 +383,19 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip"
                                                'gtk-status-icon) 't)
- "The @code{\"has-tooltip\"} property of type @code{:boolean}
+ "The @code{has-tooltip} property of type @code{:boolean}
   (Read / Write) @br{}
-  Enables or disables the emission of \"query-tooltip\" signals on status icon.
-  A value of @em{true} indicates that status icon can have a tooltip, in this
-  case the status icon will be queried using the \"query-tooltip\" signal to
-  determine whether it will provide a tooltip or not.
-  Note that setting this property to @em{true} for the first time will change
-  the event masks of the windows of this status icon to include \"leave-notify\"
-  and \"motion-notify\" events. This will not be undone when the property is set
-  to @code{nil} again.
-  Whether this property is respected is platform dependent. For plain text
-  tooltips, use the @code{\"tooltip-text\"} property in preference. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Enables or disables the emission of \"query-tooltip\" signals on the status
+  icon. A value of @em{true} indicates that the status icon can have a tooltip,
+  in this case the status icon will be queried using the \"query-tooltip\"
+  signal to determine whether it will provide a tooltip or not. Note that
+  setting this property to @em{true} for the first time will change the event
+  masks of the windows of this status icon to include \"leave-notify\" and
+  \"motion-notify\" signals. This will not be undone when the property is set
+  to @code{nil} again. Whether this property is respected is platform dependent.
+  For plain text tooltips, use the @code{tooltip-text} property in preference.
+  @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-has-tooltip atdoc:*function-name-alias*)
@@ -688,18 +687,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup"
                                                'gtk-status-icon) 't)
- "The @code{\"tooltip-markup\"} property of type @code{:string}
+ "The @code{tooltip-markup} property of type @code{:string}
   (Read / Write) @br{}
   Sets the text of tooltip to be the given string, which is marked up with the
-  Pango text markup language. Also see the function
-  @fun{gtk-tooltip-set-markup}.
-  This is a convenience property which will take care of getting the tooltip
-  shown if the given string is not @code{nil}. The @code{\"has-tooltip\"}
+  Pango text markup language. Also see the @fun{gtk-tooltip-set-markup}
+  function. This is a convenience property which will take care of getting the
+  tooltip shown if the given string is not @code{nil}. The @code{has-tooltip}
   property will automatically be set to @em{true} and the default handler for
   the \"query-tooltip\" signal will take care of displaying the tooltip.
   On some platforms, embedded markup will be ignored. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-tooltip-markup atdoc:*function-name-alias*)
@@ -739,19 +736,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text"
                                                'gtk-status-icon) 't)
- "The @code{\"tooltip-text\"} property of type @code{:string}
-  (Read / Write) @br{}
-  Sets the text of tooltip to be the given string. Also see the function
-  @fun{gtk-tooltip-set-text}.
-  This is a convenience property which will take care of getting the tooltip
-  shown if the given string is not @code{nil}. The @code{\"has-tooltip\"}
-  property will automatically be set to @em{true} and the default handler for
-  the \"query-tooltip\" signal will take care of displaying the tooltip.
-  Note that some platforms have limitations on the length of tooltips that
-  they allow on status icons, e. g. Windows only shows the first 64
-  characters. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+ "The @code{tooltip-text} property of type @code{:string} (Read / Write) @br{}
+  Sets the text of tooltip to be the given string. Also see the
+  @fun{gtk-tooltip-set-text} function. This is a convenience property which will
+  take care of getting the tooltip shown if the given string is not @code{nil}.
+  The @code{has-tooltip} property will automatically be set to @em{true} and the
+  default handler for the \"query-tooltip\" signal will take care of displaying
+  the tooltip. Note that some platforms have limitations on the length of
+  tooltips that they allow on status icons, e. g. Windows only shows the first
+  64 characters. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-tooltip-text atdoc:*function-name-alias*)
@@ -761,14 +755,14 @@
   @argument[object]{a @class{gtk-status-icon} widget}
   @argument[text]{the contents of the tooltip for the status icon}
   @begin{short}
-    Accessor of the slot @slot[gtk-status-icon]{tooltip-text} of the
+    Accessor of the @slot[gtk-status-icon]{tooltip-text} slot of the
     @class{gtk-status-icon} class.
   @end{short}
 
-  The generic function @sym{gtk-status-icon-tooltip-text} gets the contents of
-  the tooltip for the status icon.
+  The @sym{gtk-status-icon-tooltip-text} slot access function gets the contents
+  of the tooltip for the status icon.
 
-  The generic function @sym{gtk-status-icon-tooltip-text} sets text as the
+  The @sym{gtk-status-icon-tooltip-text} slot access function sets text as the
   contents of the tooltip.
 
   This function will take care of setting the
@@ -776,8 +770,6 @@
   handler for the \"query-tooltip\" signal.
 
   See also the @slot[gtk-status-icon]{tooltip-text} property.
-
-  Since 2.16
   @see-class{gtk-status-icon}")
 
 ;;; --- gtk-status-icon-visible ------------------------------------------------
