@@ -3367,8 +3367,6 @@ setup_tree (void)
       @about-function{gtk-tool-palette-set-expand}
       @about-function{gtk-tool-palette-get-group-position}
       @about-function{gtk-tool-palette-set-group-position}
-      @about-function{gtk-tool-palette-get-icon-size}
-      @about-function{gtk-tool-palette-set-icon-size}
       @about-function{gtk-tool-palette-unset-icon-size}
       @about-function{gtk-tool-palette-get-style}
       @about-function{gtk-tool-palette-set-style}
@@ -3388,11 +3386,19 @@ setup_tree (void)
       A sub container used in a tool palette.
 
       @about-class{gtk-tool-item-group}
+
+      @about-generic{gtk-tool-item-group-collapsed}
+      @about-generic{gtk-tool-item-group-ellipsize}
+      @about-generic{gtk-tool-item-group-header-relief}
+      @about-generic{gtk-tool-item-group-label}
+      @about-generic{gtk-tool-item-group-label-widget}
+
       @about-function{gtk-tool-item-group-child-expand}
       @about-function{gtk-tool-item-group-child-fill}
       @about-function{gtk-tool-item-group-child-homogeneous}
       @about-function{gtk-tool-item-group-child-new-row}
       @about-function{gtk-tool-item-group-child-position}
+
       @about-function{gtk-tool-item-group-get-collapsed}
       @about-function{gtk-tool-item-group-get-drop-item}
       @about-function{gtk-tool-item-group-get-ellipsize}
@@ -3415,14 +3421,23 @@ setup_tree (void)
       A toolbar item that separates groups of other toolbar items.
 
       @about-class{gtk-separator-tool-item}
+
+      @about-generic{gtk-separator-tool-item-draw}
+
       @about-function{gtk-separator-tool-item-new}
-      @about-function{gtk-separator-tool-item-set-draw}
-      @about-function{gtk-separator-tool-item-get-draw}
     @end{subsection}
     @begin[GtkToolButton]{subsection}
       A @class{gtk-tool-item} subclass that displays buttons.
 
       @about-class{gtk-tool-button}
+
+      @about-generic{gtk-tool-button-icon-name}
+      @about-generic{gtk-tool-button-icon-widget}
+      @about-generic{gtk-tool-button-label}
+      @about-generic{gtk-tool-button-label-widget}
+      @about-generic{gtk-tool-button-stock-id}
+      @about-generic{gtk-tool-button-use-underline}
+
       @about-function{gtk-tool-button-new}
       @about-function{gtk-tool-button-new-from-stock}
       @about-function{gtk-tool-button-set-label}
@@ -3443,10 +3458,11 @@ setup_tree (void)
       menu.
 
       @about-class{gtk-menu-tool-button}
+
+      @about-generic{gtk-menu-tool-button-menu}
+
       @about-function{gtk-menu-tool-button-new}
       @about-function{gtk-menu-tool-button-new-from-stock}
-      @about-function{gtk-menu-tool-button-set-menu}
-      @about-function{gtk-menu-tool-button-get-menu}
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-text}
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-markup}
     @end{subsection}
@@ -3454,15 +3470,19 @@ setup_tree (void)
       A @class{gtk-tool-item} containing a toggle button.
 
       @about-class{gtk-toggle-tool-button}
+
+      @about-generic{gtk-toggle-tool-button-active}
+
       @about-function{gtk-toggle-tool-button-new}
       @about-function{gtk-toggle-tool-button-new-from-stock}
-      @about-function{gtk-toggle-tool-button-set-active}
-      @about-function{gtk-toggle-tool-button-get-active}
     @end{subsection}
     @begin[GtkRadioToolButton]{subsection}
       A toolbar item that contains a radio button.
 
       @about-class{gtk-radio-tool-button}
+
+      @about-generic{gtk-radio-tool-button-group}
+
       @about-function{gtk-radio-tool-button-new}
       @about-function{gtk-radio-tool-button-new-from-stock}
       @about-function{gtk-radio-tool-button-new-from-widget}
@@ -3471,14 +3491,16 @@ setup_tree (void)
       @about-function{gtk-radio-tool-button-set-group}
     @end{subsection}
     @begin[GtkPopover]{subsection}
-      @about-class{gtk-popover}
+
       @about-symbol{gtk-popover-constraint}
 
-      @about-generic{gtk-popover-relative-to}
-      @about-generic{gtk-popover-pointing-to}
-      @about-generic{gtk-popover-position}
+      @about-class{gtk-popover}
+
       @about-generic{gtk-popover-constrain-to}
       @about-generic{gtk-popover-modal}
+      @about-generic{gtk-popover-pointing-to}
+      @about-generic{gtk-popover-position}
+      @about-generic{gtk-popover-relative-to}
       @about-generic{gtk-popover-transitions-enabled}
 
       @about-function{gtk-popover-new}
@@ -3492,6 +3514,8 @@ setup_tree (void)
     @begin[GtkPopoverMenu]{subsection}
 
       @about-class{gtk-popover-menu}
+
+      @about-generic{gtk-popover-visible-submenu}
 
       @about-function{gtk-popover-menu-new}
       @about-function{gtk-popover-menu-open-submenu}
