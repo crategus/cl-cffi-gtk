@@ -134,31 +134,40 @@
     @code{toolitemgroup}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item should receive extra space when the group grows. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"fill\" child property}
-      @code{\"fill\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item should fill the available space. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"homogeneous\" child property}
-      @code{\"homogeneous\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item should be the same size as other homogeneous items. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"new-row\" child property}
-      @code{\"new-row\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item should start a new row. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"position\" child property}
-      @code{\"position\"} of type @code{:int} (Read / Write) @br{}
-      Position of the item within this group. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 0
+    @begin[code]{table}
+      @begin[expand]{entry}
+        The @code{expand} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item should receive extra space when the group grows. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[fill]{entry}
+        The @code{fill} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item should fill the available space. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[homogenous]{entry}
+        The @code{homogeneous} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item should be the same size as other homogeneous items.
+        @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[new-row]{entry}
+        The @code{new-row} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item should start a new row. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[position]{entry}
+        The @code{position} child property of type @code{:int}
+        (Read / Write) @br{}
+        Position of the item within this group. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"expander-size\" style property}
