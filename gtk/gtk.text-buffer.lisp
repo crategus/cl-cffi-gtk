@@ -566,9 +566,7 @@
 
   Deletes current contents of the buffer, and inserts @arg{text} instead.
   @arg{text} must be valid UTF-8.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-text}
-  @see-function{gtk-text-buffer-set-text}")
+  @see-class{gtk-text-buffer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_new ()
