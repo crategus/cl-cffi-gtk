@@ -93,12 +93,13 @@
     where only one button can be active at a time.
   @end{short}
 
-  Use @fun{gtk-radio-tool-button-new} to create a new
-  @sym{gtk-radio-tool-button}. Use @fun{gtk-radio-tool-button-new-from-widget}
-  to create a new @sym{gtk-radio-tool-button} that is part of the same group as
-  an existing @sym{gtk-radio-tool-button}. Use
+  Use the @fun{gtk-radio-tool-button-new} function to create a new
+  @sym{gtk-radio-tool-button}. Use the
+  @fun{gtk-radio-tool-button-new-from-widget} function to create a new
+  @sym{gtk-radio-tool-button} that is part of the same group as an existing
+  @sym{gtk-radio-tool-button}. Use the
   @fun{gtk-radio-tool-button-new-from-stock} or
-  @fun{gtk-radio-tool-button-new-with-stock-from-widget} create a new
+  @fun{gtk-radio-tool-button-new-with-stock-from-widget} functions create a new
   @sym{gtk-radio-tool-button} containing a stock item.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-radio-tool-button} has a single CSS node with name
