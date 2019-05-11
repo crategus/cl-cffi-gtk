@@ -79,9 +79,9 @@
   @class{gtk-tree-view} row or cell, you will have to do a little more work:
   @begin{itemize}
     @begin{item}
-      Set the @code{\"has-tooltip\"} property to @em{true}, this will make GTK+
-      monitor the widget for motion and related events which are needed to
-      determine when and where to show a tooltip.
+      Set the @slot[gtk-widget]{has-tooltip} property to @em{true}, this will
+      make GTK+ monitor the widget for motion and related events which are
+      needed to determine when and where to show a tooltip.
     @end{item}
     @begin{item}
       Connect to the \"query-tooltip\" signal. This signal will be emitted when
@@ -102,7 +102,8 @@
   which will be used as tooltip window. This works as follows:
   @begin{itemize}
     @begin{item}
-      Set @code{\"has-tooltip\"} and connect to \"query-tooltip\" as before.
+      Set the @slot[gtk-widget]{has-tooltip} property and connect to the
+      \"query-tooltip\" signal as before.
     @end{item}
     @begin{item}
       Use the function @fun{gtk-widget-set-tooltip-window} to set a
