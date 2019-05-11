@@ -100,25 +100,31 @@
     The @sym{gtk-menu-bar} class has a single CSS node with name @code{menubar}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"internal-padding\" style property}
-      @code{\"internal-padding\"} of type @code{:int} (Read) @br{}
-      Amount of border space between the menubar shadow and the menu items.
-      @br{}
-      @b{Warning:} @code{\"internal-padding\"} has been deprecated since version
-      3.8 and should not be used in newly-written code. Use the standard padding
-      CSS property, through objects like @class{gtk-style-context} and
-      @class{gtk-css-provider}; the value of this style property is ignored.
-      @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"shadow-type\" style property}
-      @code{shadow-type} of type @symbol{gtk-shadow-type} (Read) @br{}
-      Style of bevel around the menubar. @br{}
-      @b{Warning:} @code{shadow-type} has been deprecated since version 3.20 and
-      should not be used in newly-written code. Use CSS to determine the shadow;
-      the value of this style property is ignored. @br{}
-      Default value: @code{:out}
+    @begin[code]{table}
+      @begin[internal-padding]{entry}
+        The @code{internal-padding} style property of type @code{:int}
+        (Read) @br{}
+        Amount of border space between the menubar shadow and the menu items.
+        @br{}
+        @em{Warning:} The @code{internal-padding} style property has been
+        deprecated since version 3.8 and should not be used in newly-written
+        code. Use the standard padding CSS property, through objects like
+        @class{gtk-style-context} and @class{gtk-css-provider}; the value of
+        this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[shadow-type]{entry}
+        The @code{shadow-type} style property of type @symbol{gtk-shadow-type}
+        (Read) @br{}
+        Style of bevel around the menubar. @br{}
+        @em{Warning:} The @code{shadow-type} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use CSS
+        to determine the shadow; the value of this style property is ignored.
+        @br{}
+        Default value: @code{:out}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-menu-bar-child-pack-direction}
   @see-slot{gtk-menu-bar-pack-direction}")
@@ -132,8 +138,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child-pack-direction"
                                                'gtk-menu-bar) 't)
- "The @code{\"child-pack-direction\"} property of type
-  @symbol{gtk-pack-direction} (Read / Write) @br{}
+ "The @code{child-pack-direction} property of type @symbol{gtk-pack-direction}
+  (Read / Write) @br{}
   The child pack direction of the menubar. It determines how the widgets
   contained in child menuitems are arranged. @br{}
   Default value: @code{:ltr}")
@@ -143,18 +149,28 @@
       "Accessor"
       (documentation 'gtk-menu-bar-child-pack-direction 'function)
  "@version{2013-12-1}
-  Accessor of the slot @code{\"child-pack-direction\"} of the
-  @class{gtk-menu-bar} class.
-  @see-class{gtk-menu-bar}
-  @see-function{gtk-menu-bar-get-child-pack-direction}
-  @see-function{gtk-menu-bar-set-child-pack-direction}")
+  @synŧax[]{(gtk-menu-bar-child-pack-direction object) => child-pack-dir}
+  @synŧax[]{(setf (gtk-menu-bar-child-pack-direction object) child-pack-dir)}
+  @argument[menubar]{a @class{gtk-menu-bar} widget}
+  @argument[child-pack-dir]{a new @symbol{gtk-pack-direction}}
+  @begin{short}
+    Accessor of the @slot[gtk-menu-bar]{child-pack-direction} slot of the
+    @class{gtk-menu-bar} class.
+  @end{short}
+
+  The @sym{gtk-menu-bar-child-pack-direction} slot access function
+  retrieves the current child pack direction of the menubar.
+
+  The @sym{(setf gtk-menu-bar-child-pack-direction)} slot access function
+  sets how widgets should be packed inside the children of a menubar.
+  @see-class{gtk-menu-bar}")
 
 ;;; --- gtk-menu-bar-pack-direction --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pack-direction"
                                                'gtk-menu-bar) 't)
- "The @code{\"pack-direction\"} property of type @symbol{gtk-pack-direction}
+ "The @code{pack-direction} property of type @symbol{gtk-pack-direction}
   (Read / Write) @br{}
   The pack direction of the menubar. It determines how menuitems are arranged
   in the menubar. @br{}
@@ -165,11 +181,21 @@
       "Accessor"
       (documentation 'gtk-menu-bar-pack-direction 'function)
  "@version{2013-12-1}
-  Accessor of the slot @code{\"pack-direction\"} of the @class{gtk-menu-bar}
-  class.
-  @see-class{gtk-menu-bar}
-  @see-class{gtk-menu-bar-get-pack-direction}
-  @see-class{gtk-menu-bar-set-pack-direction}")
+  @synŧax[]{(gtk-menu-bar-pack-direction object) => pack-dir}
+  @synŧax[]{(setf (gtk-menu-bar-pack-direction object) pack-dir)}
+  @argument[menubar]{a @class{gtk-menu-bar} widget}
+  @argument[pack-dir]{a new @symbol{gtk-pack-direction}}
+  @begin{short}
+    Accessor of the @slot[gtk-menu-bar]{pack-direction} slot of the
+    @class{gtk-menu-bar} class.
+  @end{short}
+
+  The @sym{gtk-menu-bar-child-pack-direction} slot access function
+  retrieves the current pack direction of the menubar.
+
+  The @sym{(setf gtk-menu-bar-child-pack-direction)} slot access function
+  sets how items should be packed inside a menubar.
+  @see-class{gtk-menu-bar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_new ()
@@ -207,8 +233,6 @@
   @class{gtk-application-window} to which the menu bar belongs - typically by
   means of being contained within the @class{gtk-application-window} widgets
   hierarchy.
-
-  Since 3.4
   @see-class{gtk-menu-bar}
   @see-class{g-menu-model}
   @see-class{gtk-application-window}"
@@ -251,83 +275,5 @@
     @entry[:ttb]{Widgets are packed top-to-bottom.}
     @entry[:btt]{Widgets are packed bottom-to-top.}
   @end{table}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_bar_set_pack_direction ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-bar-set-pack-direction))
-
-(defun gtk-menu-bar-set-pack-direction (menubar pack-dir)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @argument[pack-dir]{a new @symbol{gtk-pack-direction}}
-  @short{Sets how items should be packed inside a @arg{menubar}.}
-  @see-class{gtk-menu-bar}"
-  (setf (gtk-menu-bar-pack-direction menubar) pack-dir))
-
-(export 'gtk-menu-bar-set-pack-direction)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_bar_get_pack_direction ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-bar-get-pack-direction))
-
-(defun gtk-menu-bar-get-pack-direction (menubar)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @return{The pack direction.}
-  @begin{short}
-    Retrieves the current pack direction of the menubar.
-  @end{short}
-  See the @fun{gtk-menu-bar-set-pack-direction} function.
-  @see-class{gtk-menu-bar}
-  @see-function{gtk-menu-bar-set-pack-direction}"
-  (gtk-menu-bar-pack-direction menubar))
-
-(export 'gtk-menu-bar-get-pack-direction)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_bar_set_child_pack_direction ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-bar-set-child-pack-direction))
-
-(defun gtk-menu-bar-set-child-pack-direction (menubar child-pack-dir)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @argument[child-pack_dir]{a new @symbol{gtk-pack-direction}}
-  @begin{short}
-    Sets how widgets should be packed inside the children of a @arg{menubar}.
-  @end{short}
-  @see-class{gtk-menu-bar}"
-  (setf (gtk-menu-bar-child-pack-direction menubar) child-pack-dir))
-
-(export 'gtk-menu-bar-set-child-pack-direction)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_bar_get_child_pack_direction ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-bar-get-child-pack-direction))
-
-(defun gtk-menu-bar-get-child-pack-direction (menubar)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @retrun{The child pack direction.}
-  @begin{short}
-    Retrieves the current child pack direction of the menubar.
-  @end{short}
-  See the @fun{gtk-menu-bar-set-child-pack-direction} function.
-  @see-class{gtk-menu-bar}
-  @see-function{gtk-menu-bar-set-child-pack-direction}"
-  (gtk-menu-bar-child-pack-direction menubar))
-
-(export 'gtk-menu-bar-get-child-pack-direction)
 
 ;;; --- End of file gtk.menu-bar.lisp ------------------------------------------
