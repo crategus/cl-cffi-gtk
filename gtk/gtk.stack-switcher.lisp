@@ -89,6 +89,8 @@
     pages of the associated stack widget.
   @end{short}
 
+  @image[stackswitcher]{}
+
   All the content for the buttons comes from the child properties of the
   @class{gtk-stack}; the button visibility in a @sym{gtk-stack-switcher}
   widget is controlled by the visibility of the child in the @class{gtk-stack}.
@@ -98,11 +100,12 @@
 
   The @sym{gtk-stack-switcher} widget was added in 3.10.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-stack-switcher} has a single CSS node named stackswitcher and style
-    class .stack-switcher.
+    @sym{gtk-stack-switcher} has a single CSS node named @code{stackswitcher}
+    and style class @code{.stack-switcher}.
 
     When circumstances require it, @sym{gtk-stack-switcher} adds the
-    .needs-attention style class to the widgets representing the stack pages.
+    @code{.needs-attention} style class to the widgets representing the stack
+    pages.
   @end{dictionary}
   @see-slot{gtk-stack-switcher-icon-size}
   @see-slot{gtk-stack-switcher-stack}
