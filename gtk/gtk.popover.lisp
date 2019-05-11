@@ -232,8 +232,7 @@
       @begin[code]{table}
         @entry[popover]{The @sym{gtk-popover} widget.}
       @end{table}
-  @end{dictionary}
-")
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -253,11 +252,24 @@
 (setf (gethash 'gtk-popover-constrain-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-constrain-to 'function)
- "@version{2019-4-6}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-popover-constrain-to object) => constraint}
+  @snytax[]{(setf (gtk-popover-constrain-to object) constraint)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[constraint]{a constraint of type @symbol{gtk-popover-constraint}}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{constrain-to} of the
+    Accessor of the @slot[gtk-popover]{constrain-to} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  The @sym{gtk-popover-constrain-to} slot access function
+  returns the constraint for placing this popover.
+
+  The @sym{(setf gtk-popover-constrain-to)} slot access function
+  sets a constraint for positioning this popover.
+
+  Note that not all platforms support placing popovers freely, and may already
+  impose constraints.
 
   Since 3.20
   @see-class{gtk-popover}")
@@ -275,11 +287,25 @@
 (setf (gethash 'gtk-popover-modal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-modal 'function)
- "@version{2019-4-6}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-popover-modal object) => modal}
+  @snytax[]{(setf (gtk-popover-modal object) modal)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[modal]{a boolean, that is @em{true} to make popover claim all input
+    within the toplevel}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{modal} of the
+    Accessor of the @slot[gtk-popover]{modal} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  The @sym{gtk-popover-modal} slot access function
+  returns whether the popover is modal.
+
+  The @sym{(setf gtk-popover-modal)} slot access function
+  sets whether popover is modal, a modal popover will grab all input within
+  the toplevel and grab the keyboard focus on it when being displayed.
+  Clicking outside the popover area or pressing Esc will dismiss the popover
+  and ungrab input.
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-pointing-to ------------------------------------------------
@@ -294,11 +320,18 @@
 (setf (gethash 'gtk-popover-pointing-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-pointing-to 'function)
- "@version{2019-4-6}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-popover-pointing-to object) => rect}
+  @snytax[]{(setf (gtk-popover-pointing-to object) rect)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[rect]{a @class{gdk-rectangle} to point to}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{pointing-to} of the
+    Accessor of the @slot[gtk-popover]{pointing-to} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  Sets the rectangle that popover will point to, in the coordinate space of
+  the widget popover is attached to, see the @fun{gtk-popover-relative-to}.
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-position ---------------------------------------------------
@@ -314,11 +347,27 @@
 (setf (gethash 'gtk-popover-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-position 'function)
- "@version{2019-4-6}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-popover-pointing-to object) => rect}
+  @snytax[]{(setf (gtk-popover-pointing-to object) rect)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[position]{preferred popover position of type
+    @symbol{gtk-position-type}}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{position} of the
+    Accessor of the @slot[gtk-popover]{position} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  The @sym{gtk-popover-position} slot access function
+  returns the preferred position of the popover.
+
+  The @sym{(setf gtk-popover-position)} slot access function
+  sets the preferred position for the popover to appear. If the popover is
+  currently visible, it will be immediately updated.
+
+  This preference will be respected where possible, although on lack of space,
+  e. g. if close to the window edges, the @class{gtk-popover} may choose to
+  appear on the opposite side.
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-relative-to ------------------------------------------------
@@ -333,11 +382,27 @@
 (setf (gethash 'gtk-popover-relative-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-relative-to 'function)
- "@version{2019-4-6}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-popover-relative-to object) => relative-to}
+  @snytax[]{(setf (gtk-popover-relative-to object) relative-to)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[relative-to]{a @class{gtk-widget}}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{relative-to} of the
+    Accessor of the @slot[gtk-popover]{relative-to} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  The @sym{gtk-popover-relative-to} slot access function
+  returns the widget popover is currently attached to.
+
+  The @sym{(setf gtk-popover-relative-to)} slot access function
+  sets a new widget to be attached to the popover. If the popover is visible,
+  the position will be updated.
+
+  Note: the ownership of popovers is always given to their @arg{relative-to}
+  widget, so if @arg{relative-to} is set to @code{nil} on an attached popover,
+  it will be detached from its previous widget, and consequently destroyed
+  unless extra references are kept.
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-transitions-enabled ----------------------------------------
@@ -347,12 +412,12 @@
                                                'gtk-popover) 't)
  "The @code{transitions-enabled} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether show/hide transitions are enabled for this popover.@br{}
-  @b{Warning:} @code{transitions-enabled} has been deprecated since version 3.22
-  and should not be used in newly-written code. You can show or hide the popover
-  without transitions using the @fun{gtk-widget-show} and @fun{gtk-widget-hide}
-  functions while the @fun{gtk-popover-popup} and @fun{gtk-popover-popdown}
-  functions will use transitions. @br{}
+  Whether show/hide transitions are enabled for this popover. @br{}
+  @em{Warning:} The @code{transitions-enabled} property has been deprecated
+  since version 3.22 and should not be used in newly-written code. You can show
+  or hide the popover without transitions using the @fun{gtk-widget-show} and
+  @fun{gtk-widget-hide} functions while the @fun{gtk-popover-popup} and
+  @fun{gtk-popover-popdown} functions will use transitions. @br{}
   Default value: @em{true} @br{}
   Since 3.16")
 
@@ -361,10 +426,28 @@
       "Accessor"
       (documentation 'gtk-popover-transitions-enabled 'function)
  "@version{2019-4-6}
+  @syntax[]{(gtk-popover-transitions-enabled object) => enabled}
+  @syntax[]{(setf (gtk-popover-transitions-enabled object) enabled)}
+  @argument[object]{a @class{gtk-popover} widget}
+  @argument[enabled]{a boolean wether transition are enabled}
   @begin{short}
-    Accessor of the slot @slot[gtk-popover]{transitions-enabled} of the
+    Accessor of the @slot[gtk-popover]{transitions-enabled} slot of the
     @class{gtk-popover} class.
   @end{short}
+
+  The @sym{gtk-popover-transitions-enabled} slot access function
+  returns whether show/hide transitions are enabled on this popover.
+
+  The @sym{(setf gtk-popover-transitions-enabled)} slot access function
+  sets whether show/hide transitions are enabled on this popover
+  @begin[Warning]{dictionary}
+    The @sym{gtk-popover-transitions-enabled} slot access function has been
+    deprecated since version 3.22 and should not be used in newly-written code.
+    You can show or hide the popover without transitions using the
+    @fun{gtk-widget-show} and @fun{gtk-widget-hide} functions while the
+    @fun{gtk-popover-popup} and @fun{gtk-popover-popdown} functions
+    will use transitions.
+  @end{dictionary}
 
   Since 3.16
   @see-class{gtk-popover}")
@@ -485,253 +568,6 @@
 ;;;     a GtkPopover
 ;;;
 ;;; Since: 3.22
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;; gtk_popover_set_relative_to ()
-;;;
-;;; void
-;;; gtk_popover_set_relative_to (GtkPopover *popover,
-;;;                              GtkWidget *relative_to);
-;;;
-;;; Sets a new widget to be attached to popover . If popover is visible, the
-;;; position will be updated.
-;;;
-;;; Note: the ownership of popovers is always given to their relative_to widget,
-;;; so if relative_to is set to NULL on an attached popover , it will be
-;;; detached from its previous widget, and consequently destroyed unless extra
-;;; references are kept.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; relative_to :
-;;;     a GtkWidget.
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_relative_to ()
-;;;
-;;; GtkWidget *
-;;; gtk_popover_get_relative_to (GtkPopover *popover);
-;;;
-;;; Returns the widget popover is currently attached to
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     a GtkWidget.
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_set_pointing_to ()
-;;;
-;;; void
-;;; gtk_popover_set_pointing_to (GtkPopover *popover, const GdkRectangle *rect);
-;;;
-;;; Sets the rectangle that popover will point to, in the coordinate space of
-;;; the widget popover is attached to, see gtk_popover_set_relative_to().
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; rect :
-;;;     rectangle to point to
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_pointing_to ()
-;;;
-;;; gboolean
-;;; gtk_popover_get_pointing_to (GtkPopover *popover,
-;;;                              GdkRectangle *rect);
-;;;
-;;; If a rectangle to point to has been set, this function will return TRUE and
-;;; fill in rect with such rectangle, otherwise it will return FALSE and fill in
-;;; rect with the attached widget coordinates.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; rect :
-;;;     location to store the rectangle.
-;;;
-;;; Returns :
-;;;     TRUE if a rectangle to point to was set.
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;; -----------------------------------------------------------------------------
-;;; gtk_popover_set_position ()
-;;;
-;;; void
-;;; gtk_popover_set_position (GtkPopover *popover,
-;;;                           GtkPositionType position);
-;;;
-;;; Sets the preferred position for popover to appear. If the popover is
-;;; currently visible, it will be immediately updated.
-;;;
-;;; This preference will be respected where possible, although on lack of space,
-;;; e. g. if close to the window edges, the GtkPopover may choose to appear on
-;;; the opposite side
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; position :
-;;;     preferred popover position
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_position ()
-;;;
-;;; GtkPositionType gtk_popover_get_position (GtkPopover *popover);
-;;;
-;;; Returns the preferred position of popover .
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     The preferred position.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_set_constrain_to ()
-;;;
-;;; void
-;;; gtk_popover_set_constrain_to (GtkPopover *popover,
-;;;                               GtkPopoverConstraint constraint);
-;;;
-;;; Sets a constraint for positioning this popover.
-;;;
-;;; Note that not all platforms support placing popovers freely, and may already
-;;; impose constraints.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; constraint :
-;;;     the new constraint
-;;;
-;;; Since: 3.20
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_constrain_to ()
-;;;
-;;; GtkPopoverConstraint
-;;; gtk_popover_get_constrain_to (GtkPopover *popover);
-;;;
-;;; Returns the constraint for placing this popover. See
-;;; gtk_popover_set_constrain_to().
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     the constraint for placing this popover.
-;;;
-;;; Since: 3.20
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_set_modal ()
-;;;
-;;; void
-;;; gtk_popover_set_modal (GtkPopover *popover,
-;;;                        gboolean modal);
-;;;
-;;; Sets whether popover is modal, a modal popover will grab all input within
-;;; the toplevel and grab the keyboard focus on it when being displayed.
-;;; Clicking outside the popover area or pressing Esc will dismiss the popover
-;;; and ungrab input.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; modal :
-;;;     TRUE to make popover claim all input within the toplevel
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_modal ()
-;;;
-;;; gboolean
-;;; gtk_popover_get_modal (GtkPopover *popover);
-;;;
-;;; Returns whether the popover is modal, see gtk_popover_set_modal to see the
-;;; implications of this.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     TRUE if popover is modal
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_set_transitions_enabled ()
-;;;
-;;; void
-;;; gtk_popover_set_transitions_enabled (GtkPopover *popover,
-;;;                                      gboolean transitions_enabled);
-;;;
-;;; gtk_popover_set_transitions_enabled has been deprecated since version 3.22
-;;; and should not be used in newly-written code.
-;;;
-;;; You can show or hide the popover without transitions using gtk_widget_show()
-;;; and gtk_widget_hide() while gtk_popover_popup() and gtk_popover_popdown()
-;;; will use transitions.
-;;;
-;;; Sets whether show/hide transitions are enabled on this popover
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; transitions_enabled :
-;;;     Whether transitions are enabled
-;;;
-;;; Since: 3.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_popover_get_transitions_enabled ()
-;;;
-;;; gboolean
-;;; gtk_popover_get_transitions_enabled (GtkPopover *popover);
-;;;
-;;; gtk_popover_get_transitions_enabled has been deprecated since version 3.22
-;;; and should not be used in newly-written code.
-;;;
-;;; You can show or hide the popover without transitions using gtk_widget_show()
-;;; and gtk_widget_hide() while gtk_popover_popup() and gtk_popover_popdown()
-;;; will use transitions.
-;;;
-;;; Returns whether show/hide transitions are enabled on this popover.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     TRUE if the show and hide transitions of the given popover are enabled,
-;;;     FALSE otherwise.
-;;;
-;;; Since: 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
