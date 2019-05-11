@@ -396,7 +396,7 @@
   Tags should be in the @class{gtk-text-tag-table} object for a given
   @class{gtk-text-buffer} object before using them with that buffer.
 
-  The function @fun{gtk-text-buffer-create-tag} is the best way to create tags.
+  The @fun{gtk-text-buffer-create-tag} function is the best way to create tags.
   See gtk3-demo for numerous examples.
   @begin[Signal Details]{dictionary}
     @subheading{The \"event\" signal}
@@ -504,7 +504,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-accumulative-margin 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{accumulative-margin} of the
+  Accessor of the @slot[gtk-text-tag]{accumulative-margin} slot of the
   @class{gtk-text-tag} class.")
 
 ;;; --- gtk-text-tag-background ------------------------------------------------
@@ -520,7 +520,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background} of the
+  Accessor of the @slot[gtk-text-tag]{background} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -540,7 +540,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background-full-height} of the
+  Accessor of the @slot[gtk-text-tag]{background-full-height} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -559,7 +559,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background-full-height-set} of the
+  Accessor of the @slot[gtk-text-tag]{background-full-height-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -570,9 +570,9 @@
                                                'gtk-text-tag) 't)
  "The @code{background-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
-  @b{Warning:}
-  @code{\"background-gdk\"} has been deprecated since version 3.4 and should
-  not be used in newly-written code. Use @code{\"background-rgba\"}
+  @em{Warning:}
+  @code{background-gdk} has been deprecated since version 3.4 and should
+  not be used in newly-written code. Use @code{background-rgba}
   instead. @br{}
   Background color as a @class{gdk-color}.")
 
@@ -581,7 +581,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background-gdk 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background-gdk} of the
+  Accessor of the @slot[gtk-text-tag]{background-gdk} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -599,7 +599,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background-rgba 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background-rgba} of the
+  Accessor of the @slot[gtk-text-tag]{background-rgba} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -618,7 +618,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-background-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{background-set} of the
+  Accessor of the @slot[gtk-text-tag]{background-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -636,7 +636,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-direction 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{direction} of the
+  Accessor of the @slot[gtk-text-tag]{direction} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -653,7 +653,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-editable 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{editable} of the @class{gtk-text-tag}
+  Accessor of the @slot[gtk-text-tag]{editable} slot of the @class{gtk-text-tag}
   class.
   @see-class{gtk-text-tag}")
 
@@ -671,7 +671,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-editable-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{editable-set} of the
+  Accessor of the @slot[gtk-text-tag]{editable-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -690,7 +690,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-fallback 'function)
  "@version{2019-4-12}
-  Accessor of the slot @slot[gtk-text-tag]{fallback} of the
+  Accessor of the @slot[gtk-text-tag]{fallback} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -709,7 +709,7 @@
       (documentation 'gtk-text-tag-fallback-set 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{fallback-set} of the
+    Accessor of the @slot[gtk-text-tag]{fallback-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -729,7 +729,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-family 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{family} of the
+  Accessor of the @slot[gtk-text-tag]{family} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -746,7 +746,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-family-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{family-set} of the
+  Accessor of the @slot[gtk-text-tag]{family-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -765,7 +765,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-font 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{font} of the
+  Accessor of the @slot[gtk-text-tag]{font} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -782,7 +782,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-font-desc 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{font-desc} of the
+  Accessor of the @slot[gtk-text-tag]{font-desc} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -802,7 +802,7 @@
       (documentation 'gtk-text-tag-font-features 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{font-features} of the
+    Accessor of the @slot[gtk-text-tag]{font-features} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -826,7 +826,7 @@
       (documentation 'gtk-text-tag-font-features-set 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{font-features-set} of the
+    Accessor of the @slot[gtk-text-tag]{font-features-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -846,7 +846,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-foreground 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{foreground} of the
+  Accessor of the @slot[gtk-text-tag]{foreground} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -857,8 +857,8 @@
                                                'gtk-text-tag) 't)
  "The @code{foreground-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
-  @b{Warning:} @code{\"foreground-gdk\"} has been deprecated since version 3.4
-  and should not be used in newly-written code. Use @code{\"foreground-rgba\"}
+  @em{Warning:} @code{foreground-gdk} has been deprecated since version 3.4
+  and should not be used in newly-written code. Use @code{foreground-rgba}
   instead. @br{}
   Foreground color as a @class{gdk-color}.")
 
@@ -867,7 +867,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-foreground-gdk 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{foreground-gdk} of the
+  Accessor of the @slot[gtk-text-tag]{foreground-gdk} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -885,7 +885,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-foreground-rgba 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{foreground-rgba} of the
+  Accessor of the @slot[gtk-text-tag]{foreground-rgba} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -904,7 +904,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-foreground-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{foreground-set} of the
+  Accessor of the @slot[gtk-text-tag]{foreground-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -921,7 +921,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-indent 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{indent} of the
+  Accessor of the @slot[gtk-text-tag]{indent} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -938,7 +938,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-indent-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{indent-set} of the
+  Accessor of the @slot[gtk-text-tag]{indent-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -958,7 +958,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-invisible 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{invisible} of the
+  Accessor of the @slot[gtk-text-tag]{invisible} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -977,7 +977,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-invisible-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{invisible-set} of the
+  Accessor of the @slot[gtk-text-tag]{invisible-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -996,7 +996,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-justification 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{justification} of the
+  Accessor of the @slot[gtk-text-tag]{justification} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1015,7 +1015,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-justification-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{justification-set} of the
+  Accessor of the @slot[gtk-text-tag]{justification-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1027,7 +1027,7 @@
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If not set, an appropriate default will be used.
   Note that the initial value of this property depends on the current locale,
-  see also the function @fun{gtk-get-default-language}. @br{}
+  see also the @fun{gtk-get-default-language} function. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -1035,7 +1035,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-language 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{language} of the
+  Accessor of the @slot[gtk-text-tag]{language} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1053,7 +1053,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-language-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{language-set} of the
+  Accessor of the @slot[gtk-text-tag]{language-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1071,7 +1071,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-left-margin 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{left-margin} of the
+  Accessor of the @slot[gtk-text-tag]{left-margin} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1090,7 +1090,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-left-margin-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{left-margin-set} of the
+  Accessor of the @slot[gtk-text-tag]{left-margin-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1111,7 +1111,7 @@
       (documentation 'gtk-text-tag-letter-spacing 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{letter-spacing} of the
+    Accessor of the @slot[gtk-text-tag]{letter-spacing} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1135,7 +1135,7 @@
       (documentation 'gtk-text-tag-letter-spacing-set 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{letter-spacing-set} of the
+    Accessor of the @slot[gtk-text-tag]{letter-spacing-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1156,7 +1156,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-name 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{name} of the
+  Accessor of the @slot[gtk-text-tag]{name} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1175,7 +1175,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{paragraph-background} of the
+  Accessor of the @slot[gtk-text-tag]{paragraph-background} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1187,7 +1187,7 @@
  "The @code{paragraph-background-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
   The paragraph background color as a as a @class{gdk-color}. @br{}
-  @b{Warning:}
+  @em{Warning:}
   @code{paragraph-background-gdk} has been deprecated since version 3.4
   and should not be used in newly-written code. Use
   @code{paragraph-background-rgba} instead.")
@@ -1197,7 +1197,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-gdk 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{paragraph-background-gdk} of the
+  Accessor of the @slot[gtk-text-tag]{paragraph-background-gdk} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1215,7 +1215,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-rgba 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{paragraph-background-rgba} of the
+  Accessor of the @slot[gtk-text-tag]{paragraph-background-rgba} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1234,7 +1234,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{paragraph-background-set} of the
+  Accessor of the @slot[gtk-text-tag]{paragraph-background-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1254,7 +1254,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-above-lines} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-above-lines} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1273,7 +1273,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-above-lines-set} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-above-lines-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1293,7 +1293,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-below-lines} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-below-lines} slot of the
   @class{gtk-text-tag} class.
   @see-clas{gtk-text-tag}")
 
@@ -1312,7 +1312,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-below-lines-set} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-below-lines-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1332,7 +1332,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-inside-wrap} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-inside-wrap} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1351,7 +1351,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{pixels-inside-wrap-set} of the
+  Accessor of the @slot[gtk-text-tag]{pixels-inside-wrap-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1369,7 +1369,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-right-margin 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{right-margin} of the
+  Accessor of the @slot[gtk-text-tag]{right-margin} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1388,7 +1388,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-right-margin-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{right-margin-set} of the
+  Accessor of the @slot[gtk-text-tag]{right-margin-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1406,7 +1406,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-rise 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{rise} of the
+  Accessor of the @slot[gtk-text-tag]{rise} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1423,7 +1423,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-rise-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{rise-set} of the
+  Accessor of the @slot[gtk-text-tag]{rise-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1443,7 +1443,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-scale 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{scale} of the
+  Accessor of the @slot[gtk-text-tag]{scale} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1460,7 +1460,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-scale-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-view]{scale-set} of the
+  Accessor of the @slot[gtk-text-view]{scale-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1478,7 +1478,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-size 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{size} of the
+  Accessor of the @slot[gtk-text-tag]{size} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1496,7 +1496,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-size-points 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{size-points} of the
+  Accessor of the @slot[gtk-text-tag]{size-points} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1513,7 +1513,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-size-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{size-set} of the
+  Accessor of the @slot[gtk-text-tag]{size-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1532,7 +1532,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-stretch 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{stretch} of the
+  Accessor of the @slot[gtk-text-tag]{stretch} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1550,7 +1550,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-stretch-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{stretch-set} of the
+  Accessor of the @slot[gtk-text-tag]{stretch-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1569,7 +1569,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{strikethrough} of the
+  Accessor of the @slot[gtk-text-tag]{strikethrough} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1590,7 +1590,7 @@
       (documentation 'gtk-text-tag-strikethrough-rgba 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{strikethrough-rgba} of the
+    Accessor of the @slot[gtk-text-tag]{strikethrough-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1614,7 +1614,7 @@
       (documentation 'gtk-text-tag-strikethrough-rgba-set 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{strikethrough-rgba-set} of the
+    Accessor of the @slot[gtk-text-tag]{strikethrough-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1636,7 +1636,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{strikethrough-set} of the
+  Accessor of the @slot[gtk-text-tag]{strikethrough-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1653,7 +1653,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-style 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{style} of the @class{gtk-text-tag}
+  Accessor of the @slot[gtk-text-tag]{style} slot of the @class{gtk-text-tag}
   class.
   @see-class{gtk-text-tag}")
 
@@ -1670,7 +1670,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-style-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{style-set} of the
+  Accessor of the @slot[gtk-text-tag]{style-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1686,7 +1686,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-tabs 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{tabs} of the @class{gtk-text-tag}
+  Accessor of the @slot[gtk-text-tag]{tabs} slot of the @class{gtk-text-tag}
   class.
   @see-class{gtk-text-tag}")
 
@@ -1703,7 +1703,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-tabs-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{tabs-set} of the
+  Accessor of the @slot[gtk-text-tag]{tabs-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1721,7 +1721,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-underline 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{underline} of the
+  Accessor of the @slot[gtk-text-tag]{underline} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1744,7 +1744,7 @@
       (documentation 'gtk-text-tag-underline-rgba 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{underline-rgba} of the
+    Accessor of the @slot[gtk-text-tag]{underline-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1768,7 +1768,7 @@
       (documentation 'gtk-text-tag-underline-rgba-set 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-tag]{underline-rgba-set} of the
+    Accessor of the @slot[gtk-text-tag]{underline-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
@@ -1790,7 +1790,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-underline-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{underline-set} of the
+  Accessor of the @slot[gtk-text-tag]{underline-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1809,7 +1809,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-variant 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-view]{variant} of the
+  Accessor of the @slot[gtk-text-view]{variant} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1827,7 +1827,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-variant-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{variant-set} of the
+  Accessor of the @slot[gtk-text-tag]{variant-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1846,7 +1846,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-weight 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{weight} of the @class{gtk-text-tag}
+  Accessor of the @slot[gtk-text-tag]{weight} slot of the @class{gtk-text-tag}
   class.
   @see-class{gtk-text-tag}")
 
@@ -1863,7 +1863,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-weight-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{weight-set} of the
+  Accessor of the @slot[gtk-text-tag]{weight-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1882,7 +1882,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{wrap-mode} of the
+  Accessor of the @slot[gtk-text-tag]{wrap-mode} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1901,7 +1901,7 @@
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode-set 'function)
  "@version{2013-3-25}
-  Accessor of the slot @slot[gtk-text-tag]{wrap-mode-set} of the
+  Accessor of the @slot[gtk-text-tag]{wrap-mode-set} slot of the
   @class{gtk-text-tag} class.
   @see-class{gtk-text-tag}")
 
@@ -1935,7 +1935,7 @@
     @entry[:none]{Do not wrap lines; just make the text area wider.}
     @entry[:char]{Wrap text, breaking lines anywhere the cursor can appear
       (between characters, usually - if you want to be technical, between
-      graphemes, see the function @fun{pango-get-log-attrs}).}
+      graphemes, see the @fun{pango-get-log-attrs} function).}
     @entry[:word]{Wrap text, breaking lines in between words.}
     @entry[:word-char]{Wrap text, breaking lines in between words, or if that is
       not enough, also between graphemes.}
