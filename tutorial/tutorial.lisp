@@ -1445,14 +1445,14 @@
         (gtk-combo-box-text-append-text combo "BOTTOM")
         (gtk-combo-box-text-append-text combo "LEFT")
         (gtk-combo-box-text-append-text combo "RIGHT")
-        (gtk-combo-box-set-active combo 0)
+        (setf (gtk-combo-box-active combo) 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
              (let ((pos (gtk-combo-box-text-get-active-text widget)))
                (format t "type      : ~A~%"
                          (g-type-from-instance (pointer widget)))
                (format t "active is : ~A~%"
-                         (gtk-combo-box-get-active widget))
+                         (gtk-combo-box-active widget))
                (setq pos (if pos (intern pos :keyword) :top))
                (setf (gtk-scale-value-pos hscale) pos)
                (setf (gtk-scale-value-pos vscale) pos))))
@@ -2056,7 +2056,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
@@ -2074,7 +2074,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       ;; Change default font throughout the widget
       (gtk-widget-override-font
                              view
@@ -2130,7 +2130,7 @@
              (gtk-widget-destroy window))))
       (gtk-container-add window vbox)
       (gtk-box-pack-start vbox text-view)
-      (gtk-text-buffer-set-text buffer "Hello Text View")
+      (setf (gtk-text-buffer-text buffer) "Hello Text View")
       (gtk-box-pack-start vbox button :expand nil :fill nil)
       (gtk-widget-show-all window))))
 
@@ -2162,7 +2162,7 @@
                                  (leave-gtk-main)))
       (gtk-container-add vbox bbox)
       (gtk-container-add vbox text-view)
-      (gtk-text-buffer-set-text buffer "Hello World Text View")
+      (setf (gtk-text-buffer-text buffer) "Hello World Text View")
       ;; Create tags associated with the buffer.
       (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
                               (make-instance 'gtk-text-tag
@@ -2250,8 +2250,8 @@ happen.")
                  (gtk-text-iter-search iter text)
                (when found
                  (gtk-text-buffer-select-range buffer start end))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                *some-text*)
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
       (gtk-container-add hbox button)
@@ -2313,8 +2313,8 @@ happen.")
                           text
                           (gtk-text-buffer-get-iter-at-mark buffer
                                                             last-pos))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                *some-text*)
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
       (gtk-container-add hbox button-search)
@@ -2354,8 +2354,8 @@ happen.")
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
-   (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                             (format nil "Item 1~%Item 2~%Item 3~%"))
+   (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+         (format nil "Item 1~%Item 2~%Item 3~%"))
    (gtk-container-add vbox text-view)
    (gtk-container-add vbox button)
    (gtk-container-add window vbox)
@@ -2414,12 +2414,12 @@ happen.")
                          (gtk-text-buffer-insert buffer
                                                  (format nil "</~a>" tag))
                          (return)))))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                (format nil
-                                        "<html>~%~
-                                         <head><title>Title</title></head>~%~
-                                         <body>~%~
-                                         <h1>Heading</h1>~%"))
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            (format nil
+                    "<html>~%~
+                     <head><title>Title</title></head>~%~
+                     <body>~%~
+                     <h1>Heading</h1>~%"))
       (gtk-container-add vbox text-view)
       (gtk-container-add vbox button)
       (gtk-container-add window vbox)
@@ -2665,10 +2665,10 @@ happen.")
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Setup the selection handler
-      (gtk-tree-selection-set-mode select :single)
+      (setf (gtk-tree-selection-mode select) :single)
       (g-signal-connect select "changed"
          (lambda (selection)
-           (let* ((model (gtk-tree-view-get-model view))
+           (let* ((model (gtk-tree-view-model view))
                   (iter (gtk-tree-selection-get-selected selection))
                   (name (gtk-tree-model-get-value model iter 0)))
              (format t "You selected the name ~A.~%" name))))
@@ -2748,7 +2748,7 @@ happen.")
     (g-signal-connect view "row-activated"
        (lambda (view path col)
          (declare (ignore col))
-         (let* ((model (gtk-tree-view-get-model view))
+         (let* ((model (gtk-tree-view-model view))
                 (iter (gtk-tree-model-get-iter model path)))
            (when iter
              (format t "The row containing the name ~A has been double-clicked.~%"
@@ -2807,7 +2807,7 @@ happen.")
       (g-signal-connect button "clicked"
          (lambda (button)
            (declare (ignore button))
-           (let ((model (gtk-tree-view-get-model view)))
+           (let ((model (gtk-tree-view-model view)))
              (do ((iter (gtk-tree-model-get-iter-first model)
                         (gtk-tree-model-iter-next model iter)))
                  ((not iter))
@@ -2924,7 +2924,7 @@ happen.")
     ;; pack cell renderer into tree view column
     (gtk-tree-view-column-pack-start column renderer))
   ;; No selection possible
-  (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view) :none)
+  (setf (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view)) :none)
   view))
 
 (defun example-cell-renderer-properties ()
@@ -3778,7 +3778,7 @@ happen.")
       (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
       (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
       ;; Set the first entry to active
-      (gtk-combo-box-set-active combo-box 0)
+      (setf (gtk-combo-box-active combo-box) 0)
       ;; Define the signal handlers
       (g-signal-connect window "destroy"
                         (lambda (w)
@@ -3802,7 +3802,7 @@ happen.")
                              :info
                              :close
                              "You selected row ~A"
-                             (gtk-combo-box-get-active combo-box))))
+                             (gtk-combo-box-active combo-box))))
              (gtk-dialog-run dialog)
              (gtk-widget-destroy dialog))))
       ;; Create renderers for the cells
@@ -3842,7 +3842,7 @@ happen.")
       (gtk-combo-box-text-append-text combo "First entry")
       (gtk-combo-box-text-append-text combo "Second entry")
       (gtk-combo-box-text-append-text combo "Third entry")
-      (gtk-combo-box-set-active combo 0)
+      (setf (gtk-combo-box-active combo) 0)
       (gtk-container-add window combo)
       (gtk-widget-show-all window))))
 
@@ -3874,7 +3874,7 @@ happen.")
       (gtk-combo-box-text-append-text combo "First entry")
       (gtk-combo-box-text-append-text combo "Second entry")
       (gtk-combo-box-text-append-text combo "Third entry")
-      (gtk-combo-box-set-active combo 0)
+      (setf (gtk-combo-box-active combo) 0)
 
       ;; Append an entry to the Combo Box
       (let ((entry (make-instance 'gtk-entry

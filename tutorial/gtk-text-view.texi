@@ -151,7 +151,7 @@ The simplest usage of @xurl{gtk-text-view} might look like in
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 @end verbatim
@@ -211,7 +211,7 @@ attributes there are dedicated methods on @xurl{gtk-text-view} such as
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       ;; Change default font throughout the widget
       (gtk-widget-override-font
                              view
@@ -297,7 +297,7 @@ to selected regions of text.
                                  (leave-gtk-main)))
       (gtk-container-add vbox bbox)
       (gtk-container-add vbox text-view)
-      (gtk-text-buffer-set-text buffer "Hello World Text View")
+      (setf (gtk-text-buffer-text buffer) "Hello World Text View")
       ;; Create tags associated with the buffer.
       (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
                               (make-instance 'gtk-text-tag
@@ -479,8 +479,8 @@ bad things will happen.")
                  (gtk-text-iter-search iter text)
                (when found
                  (gtk-text-buffer-select-range buffer start end))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                *some-text*)
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
       (gtk-container-add hbox button)
@@ -616,8 +616,8 @@ The following example shows the usage of marks to continue the search.
                           text
                           (gtk-text-buffer-get-iter-at-mark buffer
                                                             last-pos))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                *some-text*)
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
       (gtk-container-add hbox button-search)
@@ -717,8 +717,8 @@ functions required to implement the first program, here is the code.
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
-   (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                             (format nil "Item 1~%Item 2~%Item 3~%"))
+   (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+         (format nil "Item 1~%Item 2~%Item 3~%"))
    (gtk-container-add vbox text-view)
    (gtk-container-add vbox button)
    (gtk-container-add window vbox)
@@ -845,12 +845,12 @@ follows.
                          (gtk-text-buffer-insert buffer
                                                  (format nil "</~a>" tag))
                          (return)))))))))
-      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
-                                (format nil
-                                        "<html>~%~
-                                         <head><title>Title</title></head>~%~
-                                         <body>~%~
-                                         <h1>Heading</h1>~%"))
+      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+            (format nil
+                    "<html>~%~
+                     <head><title>Title</title></head>~%~
+                     <body>~%~
+                     <h1>Heading</h1>~%"))
       (gtk-container-add vbox text-view)
       (gtk-container-add vbox button)
       (gtk-container-add window vbox)

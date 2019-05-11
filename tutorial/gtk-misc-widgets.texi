@@ -900,7 +900,7 @@ contain an entry.
       (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
       (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
       ;; Set the first entry to active
-      (gtk-combo-box-set-active combo-box 0)
+      (setf (gtk-combo-box-active combo-box) 0)
       ;; Define the signal handlers
       (g-signal-connect window "destroy"
                         (lambda (w)
@@ -925,7 +925,7 @@ contain an entry.
                              :info
                              :close
                              "You selected row ~A"
-                             (gtk-combo-box-get-active combo-box))))
+                             (gtk-combo-box-active combo-box))))
              (gtk-dialog-run dialog)
              (gtk-widget-destroy dialog))))
       ;; Create renderers for the cells
@@ -1019,7 +1019,7 @@ calling @xurl{gtk-bin-get-child} on the combo box.
       (gtk-combo-box-text-append-text combo "First entry")
       (gtk-combo-box-text-append-text combo "Second entry")
       (gtk-combo-box-text-append-text combo "Third entry")
-      (gtk-combo-box-set-active combo 0)
+      (setf (gtk-combo-box-active combo) 0)
       (gtk-container-add window combo)
       (gtk-widget-show window))))
 @end verbatim
