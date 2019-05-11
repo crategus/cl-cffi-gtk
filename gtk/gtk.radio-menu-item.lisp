@@ -129,7 +129,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-menu-item) 't)
- "The @code{\"group\"} property of type @class{gtk-radio-menu-item}
+ "The @code{group} property of type @class{gtk-radio-menu-item}
   (Write) @br{}
   The radio menu item whose group this widget belongs to.")
 
@@ -139,7 +139,7 @@
       (documentation 'gtk-radio-menu-item-group 'function)
  "@version{2013-12-8}
   @begin{short}
-    Accessor of the slot @slot[gtk-radio-menu-item]{group} of the
+    Accessor of the @slot[gtk-radio-menu-item]{group} slot of the
     @class{gtk-radio-menu-item} class.
   @end{short}
   @see-class{gtk-radio-menu-item}
@@ -378,7 +378,7 @@
 ;;;
 ;;; radio_menu_item :
 ;;;     a GtkRadioMenuItem
-;;; 
+;;;
 ;;; group_source :
 ;;;     a GtkRadioMenuItem whose group we are joining, or NULL to remove the
 ;;;     radio_menu_item from its current group.
