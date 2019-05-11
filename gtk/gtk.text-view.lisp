@@ -325,136 +325,72 @@
                 "GtkBuildable"
                 "GtkScrollable")
    :type-initializer "gtk_text_view_get_type")
-  (
-;;;            gboolean   accepts-tab              Read / Write
-
-   (accepts-tab
+  ((accepts-tab
     gtk-text-view-accepts-tab
     "accepts-tab" "gboolean" t t)
-
-;;;                gint   bottom-margin            Read / Write
-
    #+gtk-3-18
    (bottom-margin
     gtk-text-view-bottom-margin
     "bottom-margin" "gint" t t)
-
-;;;       GtkTextBuffer*  buffer                   Read / Write
-
    (buffer
     gtk-text-view-buffer
     "buffer" "GtkTextBuffer" t t)
-
-;;;            gboolean   cursor-visible           Read / Write
-
    (cursor-visible
     gtk-text-view-cursor-visible
     "cursor-visible" "gboolean" t t)
-
-;;;            gboolean   editable                 Read / Write
-
    (editable
     gtk-text-view-editable
     "editable" "gboolean" t t)
-
-;;;               gchar*  im-module                Read / Write
-
    (im-module
     gtk-text-view-im-module
     "im-module" "gchararray" t t)
-
-;;;                gint   indent                   Read / Write
-
    (indent
     gtk-text-view-indent
     "indent" "gint" t t)
-
-;;;       GtkInputHints   input-hints              Read / Write
-
    #+gtk-3-6
    (input-hints
     gtk-text-view-input-hints
     "input-hints" "GtkInputHints" t t)
-
-;;;     GtkInputPurpose   input-purpose            Read / Write
-
    #+gtk-3-6
    (input-purpose
     gtk-text-view-input-purpose
     "input-purpose" "GtkInputPurpose" t t)
-
-;;;    GtkJustification   justification            Read / Write
-
    (justification
     gtk-text-view-justification
     "justification" "GtkJustification" t t)
-
-;;;                gint   left-margin              Read / Write
-
    (left-margin
     gtk-text-view-left-margin
     "left-margin" "gint" t t)
-
-;;;            gboolean   monospace                Read / Write
-
    (monospace
     gtk-text-view-monospace
     "monospace" "gboolean" t t)
-
-;;;            gboolean   overwrite                Read / Write
-
    (overwrite
     gtk-text-view-overwrite
     "overwrite" "gboolean" t t)
-
-;;;                gint   pixels-above-lines       Read / Write
-
    (pixels-above-lines
     gtk-text-view-pixels-above-lines
     "pixels-above-lines" "gint" t t)
-
-;;;                gint   pixels-below-lines       Read / Write
-
    (pixels-below-lines
     gtk-text-view-pixels-below-lines
     "pixels-below-lines" "gint" t t)
-
-;;;                gint   pixels-inside-wrap       Read / Write
-
    (pixels-inside-wrap
     gtk-text-view-pixels-inside-wrap
     "pixels-inside-wrap" "gint" t t)
-
-;;;            gboolean   populate-all             Read / Write
-
    (populate-all
     gtk-text-view-populate-all
     "populate-all" "gboolean" t t)
-
-;;;                gint   right-margin             Read / Write
-
    (right-margin
     gtk-text-view-right-margin
     "right-margin" "gint" t t)
-
-;;;       PangoTabArray*  tabs                     Read / Write
-
    (tabs
     gtk-text-view-tabs
     "tabs" "PangoTabArray" t t)
-
-;;;                gint   top-margin               Read / Write
-
    (top-margin
     gtk-text-view-top-margin
     "top-margin" "gint" t t)
-
-;;;         GtkWrapMode   wrap-mode                Read / Write
-
    (wrap-mode
     gtk-text-view-wrap-mode
-    "wrap-mode" "GtkWrapMode" t t)
-))
+    "wrap-mode" "GtkWrapMode" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-view 'type)
@@ -850,7 +786,7 @@
   Which IM (input method) module should be used for this entry. See
   @class{gtk-im-context}.
   Setting this to a non-@code{nil} value overrides the system-wide IM module
-  setting. See the @class{gtk-settings} \"gtk-im-module\" property. @br{}
+  setting. See the @class{gtk-settings} @code{gtk-im-module} property. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -2908,7 +2844,7 @@
   @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[purpose]{the purpose of type @symbol{gtk-input-purpose}}
   @begin{short}
-    Sets the @code{\"input-purpose\"} property which can be used by on-screen
+    Sets the @code{input-purpose} property which can be used by on-screen
     keyboards and other input methods to adjust their behaviour.
   @end{short}
 
@@ -2934,7 +2870,7 @@
  "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @begin{short}
-    Gets the value of the @code{\"input-purpose\"} property.
+    Gets the value of the @code{input-purpose} property.
   @end{short}
 
   Since 3.6
@@ -2960,7 +2896,7 @@
   @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[hints]{the hints}
   @begin{short}
-    Sets the @code{\"input-hints\"} property, which allows input methods to
+    Sets the @code{input-hints} property, which allows input methods to
     fine-tune their behaviour.
   @end{short}
 
@@ -2987,7 +2923,7 @@
  "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @begin{short}
-    Gets the value of the @code{\"input-hints\"} property.
+    Gets the value of the @code{input-hints} property.
   @end{short}
 
   Since 3.6
