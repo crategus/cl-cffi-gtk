@@ -99,7 +99,6 @@
         @entry[chooser]{The object which received the signal.}
         @entry[color]{The color.}
       @end{table}
-      Since 3.4
   @end{dictionary}
   @see-slot{gtk-color-chooser-rgba}
   @see-slot{gtk-color-chooser-use-alpha}")
@@ -115,8 +114,7 @@
  "The @code{rgba} property of type @class{gdk-rgba} (Read / Write) @br{}
   The @code{rgba} property contains the currently selected color, as a
   @class{gdk-rgba} structure. The property can be set to change the current
-  selection programmatically. @br{}
-  Since 3.4")
+  selection programmatically.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-rgba atdoc:*function-name-alias*)
@@ -129,17 +127,15 @@
   @argument[color]{a @class{gdk-rgba} color}
   @return{Returns the currently selected color.}
   @begin{short}
-    Accessor of the slot @slot[gtk-color-chooser]{rgba} of the
+    Accessor of the @slot[gtk-color-chooser]{rgba} slot of the
     @class{gtk-color-chooser} class.
   @end{short}
 
-  The slot access function @sym{gtk-color-chooser-rgba}
+  The @sym{gtk-color-chooser-rgba} slot access function
   gets the currently selected color.
 
-  The slot access function @sym{(setf gtk-color-chooser-rgba)}
+  The @sym{(setf gtk-color-chooser-rgba)} slot access function
   sets the color.
-
-  Since 3.4
   @see-class{gtk-color-chooser}")
 
 ;;; --- gtk-color-chooser-use-alpha --------------------------------------------
@@ -153,60 +149,29 @@
   via the @code{rgba} property will be forced to have alpha == 1.
   Implementations are expected to show alpha by rendering the color over a
   non-uniform background (like a checkerboard pattern). @br{}
-  Default value: @em{true} @br{}
-  Since 3.4")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-use-alpha atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-chooser-use-alpha 'function)
- "@version{2013-2-24}
-  @begin{short}
-    Accessor of the slot @slot[gtk-color-chooser]{use-alpha} of the
-    @class{gtk-color-chooser} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_color_chooser_get_use_alpha ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-color-chooser-get-use-alpha))
-
-(defun gtk-color-chooser-get-use-alpha (chooser)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[chooser]{a @class{gtk-color-chooser} object}
-  @return{@em{True} if the color chooser uses the alpha channel,
-    @code{nil} if not.}
-  @begin{short}
-    Returns whether the color chooser shows the alpha channel.
-  @end{short}
-
-  Since 3.4"
-  (gtk-color-chooser-use-alpha chooser))
-
-(export 'gtk-color-chooser-get-use-alpha)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_color_chooser_set_use_alpha ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-color-chooser-set-use-alpha))
-
-(defun gtk-color-chooser-set-use-alpha (chooser use-alpha)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[chooser]{a @class{gtk-color-chooser} object}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-color-chooser-use-alpha object) => use-alpha}
+  @syntax[]{(setf (gtk-color-chooser-use-alpha object) use-alpha)}
+  @argument[object]{a @class{gtk-color-chooser} object}
   @argument[use-alpha]{@em{true} if color chooser should use alpha channel,
     @code{nil} if not}
   @begin{short}
-    Sets whether or not the color chooser should use the alpha channel.
+    Accessor of the @slot[gtk-color-chooser]{use-alpha} slot of the
+    @class{gtk-color-chooser} class.
   @end{short}
 
-  Since 3.4"
-  (setf (gtk-color-chooser-use-alpha chooser) use-alpha))
+  The @sym{gtk-color-chooser-use-alpha} slot access function
+  returns whether the color chooser shows the alpha channel.
 
-(export 'gtk-color-chooser-set-use-alpha)
+  The @sym{(setf gtk-color-chooser-use-alpha)} slot access function
+  sets whether or not the color chooser should use the alpha channel.
+  @see-class{gtk-color-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_chooser_add_palette ()
@@ -248,8 +213,6 @@
   default color and gray palettes from the color chooser.
 
   If colors is @code{nil}, removes all previously added palettes.
-
-  Since 3.4
   @see-class{gtk-color-chooser}"
   (with-foreign-boxed-array (n-colors colors-ptr gdk-rgba colors)
     (%gtk-color-chooser-add-palette chooser
