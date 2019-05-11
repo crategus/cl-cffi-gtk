@@ -126,7 +126,7 @@
         The @code{shadow-type} style property of type @symbol{gtk-shadow-type}
         (Read) @br{}
         Style of bevel around the statusbar text. @br{}
-        @b{Warning:} @code{shadow-type} has been deprecated since version 3.20
+        @em{Warning:} @code{shadow-type} has been deprecated since version 3.20
         and should not be used in newly-written code. Use CSS properties to
         determine the appearance, the value of this style property is ignored.
         @br{}
