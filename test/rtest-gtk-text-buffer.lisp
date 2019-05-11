@@ -13,7 +13,7 @@ Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrsch
 
 Eines Tages aber beschloss eine kleine Zeile Blindtext, ihr Name war Lorem
 Ipsum, hinaus zu gehen in die weite Grammatik. Der große Oxmox riet ihr davon
-ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen 
+ab, da es dort wimmele von bösen Kommata, wilden Fragezeichen und hinterhältigen
 Semikola, doch das Blindtextchen ließ sich nicht beirren. Es packte seine sieben
 Versalien, schob sich sein Initial in den Gürtel und machte sich auf den Weg.
 
@@ -79,24 +79,24 @@ dargestellt werden.")
 
 (test gtk-text-buffer-get-line-count.1
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-1*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-1*)
     (is (= 30 (gtk-text-buffer-get-line-count buffer)))))
 
 (test gtk-text-buffer-get-line-count.2
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-2*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-2*)
     (is (= 18 (gtk-text-buffer-get-line-count buffer)))))
 
 ;;;   gtk_text_buffer_get_char_count
 
 (test gtk-text-buffer-get-char-count.1
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-1*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-1*)
     (is (= 1867 (gtk-text-buffer-get-char-count buffer)))))
 
 (test gtk-text-buffer-get-char-count.2
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-2*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-2*)
     (is (= 1160 (gtk-text-buffer-get-char-count buffer)))))
 
 ;;;   gtk_text_buffer_get_tag_table
@@ -119,15 +119,16 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_backspace
 
 ;;;   gtk_text_buffer_set_text
+;; Replaced with the accessor gtk-text-buffer-text
 
-(test gtk-text-buffer-set-text.1
+(test gtk-text-buffer-text.1
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-1*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-1*)
     (is (equal *sample-text-1* (gtk-text-buffer-text buffer)))))
 
-(test gtk-text-buffer-set-text.2
+(test gtk-text-buffer-text.2
   (let ((buffer (gtk-text-buffer-new)))
-    (gtk-text-buffer-set-text buffer *sample-text-2*)
+    (setf (gtk-text-buffer-text buffer) *sample-text-2*)
     (is (equal *sample-text-2* (gtk-text-buffer-text buffer)))))
 
 ;;;     gtk_text_buffer_get_text
