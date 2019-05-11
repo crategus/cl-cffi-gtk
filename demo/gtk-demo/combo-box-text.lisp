@@ -11,7 +11,7 @@
       (gtk-combo-box-text-append-text combo "First entry")
       (gtk-combo-box-text-append-text combo "Second entry")
       (gtk-combo-box-text-append-text combo "Third entry")
-      (gtk-combo-box-set-active combo 0)
+      (setf (gtk-combo-box-active combo) 0)
       (gtk-container-add window combo)
       (gtk-widget-show-all window))))
 

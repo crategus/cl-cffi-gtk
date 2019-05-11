@@ -72,8 +72,8 @@
           (gtk-widget-override-font
               view
               (pango-font-description-from-string "monospace"))
-          (gtk-text-buffer-set-text buffer "This is the place for the source."))
-        (gtk-text-buffer-set-text buffer "This is the place for the info."))
+          (setf (gtk-text-buffer-text buffer) "This is the place for the source."))
+        (setf (gtk-text-buffer-text buffer) "This is the place for the info."))
     ;; return the scrolled window
     scrolled))
 
@@ -307,14 +307,14 @@
     (g-signal-connect view "row-activated"
        (lambda (tree-view path column)
          (declare (ignore column))
-         (let* ((model (gtk-tree-view-get-model tree-view))
+         (let* ((model (gtk-tree-view-model tree-view))
                 (iter (gtk-tree-model-get-iter model path))
                 (func-name (gtk-tree-model-get-value model iter 2))
                 (func (find-symbol func-name :gtk-demo)))
            (if func
                (funcall func)
                (format t "~%No function.~%")))))
-    (gtk-tree-selection-set-mode selection :browse)
+    (setf (gtk-tree-selection-mode selection) :browse)
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
          (let* ((iter (gtk-tree-selection-get-selected tree-selection))
@@ -511,7 +511,7 @@
       (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
 
       (g-application-run gtk-demo argc argv)
-  
+
 
       (format t "back from G-APPLICATION-RUN.~%")
 )))

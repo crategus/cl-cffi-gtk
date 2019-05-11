@@ -125,7 +125,7 @@
         (gtk-combo-box-text-append-text combo "OUT")
         (gtk-combo-box-text-append-text combo "ETCHED-IN")
         (gtk-combo-box-text-append-text combo "ETCHED-OUT")
-        (gtk-combo-box-set-active combo 3)
+        (setf (gtk-combo-box-active combo) 3)
         (g-signal-connect combo "changed"
            (lambda (combobox)
              (let ((text (gtk-combo-box-text-get-active-text combobox)))

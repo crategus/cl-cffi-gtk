@@ -84,14 +84,14 @@
         (gtk-combo-box-text-append-text combo "BOTTOM")
         (gtk-combo-box-text-append-text combo "LEFT")
         (gtk-combo-box-text-append-text combo "RIGHT")
-        (gtk-combo-box-set-active combo 0)
+        (setf (gtk-combo-box-active combo) 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
              (let ((pos (gtk-combo-box-text-get-active-text widget)))
                (format t "type      : ~A~%"
                          (g-type-from-instance (pointer widget)))
                (format t "active is : ~A~%"
-                         (gtk-combo-box-get-active widget))
+                         (gtk-combo-box-active widget))
                (setq pos (if pos (intern pos :keyword) :top))
                (setf (gtk-scale-value-pos hscale) pos)
                (setf (gtk-scale-value-pos vscale) pos))))

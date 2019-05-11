@@ -14,7 +14,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       ;; Change default font throughout the widget
       (gtk-widget-override-font
                              view
@@ -32,7 +32,7 @@
             (start (gtk-text-buffer-get-iter-at-offset buffer 7))
             (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
         ;; Add the tag to the tag table of the buffer
-        (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer) tag)
+        (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer
         (gtk-text-buffer-apply-tag buffer tag start end))
       ;; Add the view to the window and show all

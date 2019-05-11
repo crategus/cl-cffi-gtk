@@ -14,7 +14,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-text-buffer-set-text buffer "Hello, this is some text.")
+      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 

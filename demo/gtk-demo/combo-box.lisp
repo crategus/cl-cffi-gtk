@@ -28,7 +28,7 @@
       (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
       (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
       ;; Set the first entry to active
-      (gtk-combo-box-set-active combo-box 0)
+      (setf (gtk-combo-box-active combo-box) 0)
       ;; Define the signal handlers
       (g-signal-connect window "destroy"
                         (lambda (w)
@@ -52,7 +52,7 @@
                                         :text "Info Message Dialog"
                                         :secondary-text
                                         (format nil "You clicked on row ~A~%"
-                                                (gtk-combo-box-get-active combo-box)))))
+                                                (gtk-combo-box-active combo-box)))))
              ;; Run the message dialog
              (gtk-dialog-run dialog)
              ;; Destroy the message dialog

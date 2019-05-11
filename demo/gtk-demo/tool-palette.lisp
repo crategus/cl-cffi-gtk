@@ -189,7 +189,7 @@
 
         (gtk-combo-box-text-append-text combo "Vertical")
         (gtk-combo-box-text-append-text combo "Horizontal")
-        (gtk-combo-box-set-active combo 0)
+        (setf (gtk-combo-box-active combo) 0)
         (gtk-container-add page-1
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -224,7 +224,7 @@
         (gtk-combo-box-text-append-text combo "Both")
         (gtk-combo-box-text-append-text combo "Both Horizontal")
         (gtk-combo-box-text-append-text combo "Default")
-        (gtk-combo-box-set-active combo 0)
+        (setf (gtk-combo-box-active combo) 0)
         (gtk-container-add page-1
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -258,7 +258,7 @@
         (gtk-combo-box-text-append-text combo "Button")
         (gtk-combo-box-text-append-text combo "Dnd")
         (gtk-combo-box-text-append-text combo "Dialog")
-        (gtk-combo-box-set-active combo 1)
+        (setf (gtk-combo-box-active combo) 1)
         (gtk-container-add page-1
                            (make-instance 'gtk-label
                                           :use-markup t
