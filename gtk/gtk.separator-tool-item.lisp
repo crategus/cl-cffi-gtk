@@ -38,8 +38,8 @@
 ;;; Functions
 ;;;
 ;;;     gtk_separator_tool_item_new
-;;;     gtk_separator_tool_item_set_draw
-;;;     gtk_separator_tool_item_get_draw
+;;;     gtk_separator_tool_item_set_draw                   Accessor
+;;;     gtk_separator_tool_item_get_draw                   Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -88,14 +88,14 @@
     horizontally docked toolbars.
   @end{short}
 
-  If the @class{gtk-toolbar} child property @code{\"expand\"} is @em{true} and
-  the property @code{\"draw\"} is @code{nil}, a @sym{gtk-separator-tool-item}
+  If the @class{gtk-toolbar} @code{expand} child property is @em{true} and
+  the @code{draw} property is @code{nil}, a @sym{gtk-separator-tool-item}
   will act as a \"spring\" that forces other items to the ends of the toolbar.
 
   Use the function @fun{gtk-separator-tool-item-new} to create a new
   @sym{gtk-separator-tool-item}.
   @see-function{gtk-separator-tool-item-new}
-  @see-function{gtk-separator-tool-item-set-draw}")
+  @see-function{gtk-separator-tool-item-draw}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -113,10 +113,24 @@
       "Accessor"
       (documentation 'gtk-separator-tool-item-draw 'function)
  "@version{2014-1-26}
+  @syntax[]{(gtk-separator-tool-item-draw object) => draw)}
+  @syntax[]{(setf (gtk-separator-tool-item-draw object) draw)}
+  @argument[object]{a @class{gtk-separator-tool-item} widget}
+  @argument[draw]{whether item is drawn as a vertical line}
   @begin{short}
-    Accessor of the slot @slot[gtk-separator-tool-item]{draw} of the
+    Accessor of the @slot[gtk-separator-tool-item]{draw} slot of the
     @class{gtk-separator-tool-item} class.
   @end{short}
+
+  The @sym{gtk-separator-tool-item-draw} slot access function
+  returns whether item is drawn as a line, or just blank.
+
+  The @sym{(setf gtk-separator-tool-item-draw)} slot access function
+  returns whether item is drawn as a vertical line, or just blank.
+
+  Setting this to @code{nil} along with the @fun{gtk-tool-item-set-expand}
+  is useful to create an item that forces following items to the end of the
+  toolbar.
   @see-class{gtk-separator-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -134,50 +148,5 @@
   (make-instance 'gtk-separator-tool-item-new))
 
 (export 'gtk-separator-tool-item-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_separator_tool_item_set_draw ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-separator-tool-item-set-draw))
-
-(defun gtk-separator-tool-item-set-draw (item draw)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[item]{a @class{gtk-separator-tool-item} widget}
-  @argument[draw]{whether item is drawn as a vertical line}
-  @begin{short}
-    Whether item is drawn as a vertical line, or just blank.
-  @end{short}
-  Setting this to @code{nil} along with the function
-  @fun{gtk-tool-item-set-expand} is useful to create an item that forces
-  following items to the end of the toolbar.
-  @see-class{gtk-separator-tool-item}
-  @see-function{gtk-separator-tool-item-get-draw}
-  @see-function{gtk-tool-item-set-expand}"
-  (setf (gtk-separator-tool-item-draw item) draw))
-
-(export 'gtk-separator-tool-item-set-draw)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_separator_tool_item_get_draw ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-separator-tool-item-get-draw))
-
-(defun gtk-separator-tool-item-get-draw (item)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[item]{a @class{gtk-separator-tool-item} widget}
-  @return{@em{True} if @arg{item} is drawn as a line, or just blank.}
-  @begin{short}
-    Returns whether item is drawn as a line, or just blank.
-  @end{short}
-  See the function @fun{gtk-separator-tool-item-set-draw}.
-  @see-class{gtk-separator-tool-item}
-  @see-function{gtk-separator-tool-item-set-draw}"
-  (gtk-separator-tool-item-draw item))
-
-(export 'gtk-separator-tool-item-get-draw)
 
 ;;; --- End of file gtk.separator-tool-item.lisp -------------------------------
