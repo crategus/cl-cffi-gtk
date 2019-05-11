@@ -31,11 +31,13 @@
 ;;;
 ;;;     Retrieve an integer or floating-point number from the user.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkSpinButton
 ;;;     GtkSpinButtonUpdatePolicy
 ;;;     GtkSpinType
+;;;
+;;;     GTK_INPUT_ERROR
 ;;;
 ;;; Functions
 ;;;
@@ -49,10 +51,41 @@
 ;;;     gtk_spin_button_update
 ;;;     gtk_spin_button_get_increments
 ;;;     gtk_spin_button_get_range
-;;;     GTK_INPUT_ERROR
-
-
-
+;;;
+;;; Properties
+;;;
+;;;             GtkAdjustment*  adjustment       Read / Write
+;;;                   gdouble   climb-rate       Read / Write
+;;;                     guint   digits           Read / Write
+;;;                  gboolean   numeric          Read / Write
+;;;                  gboolean   snap-to-ticks    Read / Write
+;;; GtkSpinButtonUpdatePolicy   update-policy    Read / Write
+;;;                   gdouble   value            Read / Write
+;;;                  gboolean   wrap             Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;             GtkShadowType   shadow-type      Read
+;;;
+;;; Signals
+;;;
+;;;                      void   change-value     Action
+;;;                      gint   input            Run Last
+;;;                  gboolean   output           Run Last
+;;;                      void   value-changed    Run Last
+;;;                      void   wrapped          Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;            ╰── GtkEntry
+;;;                 ╰── GtkSpinButton
+;;;
+;;; Implemented Interfaces
+;;;     GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable,
+;;;     GtkCellEditable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -107,6 +140,8 @@
     given range.
   @end{short}
 
+  @image[spinbutton]{}
+
   The main properties of a @sym{gtk-spin-button} are through an adjustment. See
   the @class{gtk-adjustment} section for more details about an adjustment's
   properties.
@@ -141,7 +176,7 @@
         The \"shadow-type\" style property of type @symbol{gtk-shadow-type}
         (Read) @br{}
         Style of bevel around the spin button. @br{}
-        @b{Warning:} The @code{shadow-type} style property has been deprecated
+        @em{Warning:} The @code{shadow-type} style property has been deprecated
         since version 3.20 and should not be used in newly-written code. Use CSS
         to determine the style of the border; the value of this style property
         is ignored. @br{}
@@ -268,7 +303,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "adjustment"
                                                'gtk-spin-button) 't)
- "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
+ "The @code{adjustment} property of type @class{gtk-adjustment}
   (Read / Write) @br{}
   The adjustment that holds the value of the spin button.")
 
@@ -300,7 +335,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "climb-rate"
                                                'gtk-spin-button) 't)
- "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{climb-rate} property of type @code{:double} (Read / Write) @br{}
   The acceleration rate when you hold down a button. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -318,7 +353,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-spin-button) 't)
- "The @code{\"digits\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{digits} property of type @code{:uint} (Read / Write) @br{}
   The number of decimal places to display. @br{}
   Allowed values: <= 20 @br{}
   Default value: 0")
@@ -349,7 +384,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "numeric" 'gtk-spin-button) 't)
- "The @code{\"numeric\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{numeric} property of type @code{:boolean} (Read / Write) @br{}
   Whether non-numeric characters should be ignored. @br{}
   Default value: @code{nil}")
 
@@ -379,7 +414,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "snap-to-ticks"
                                                'gtk-spin-button) 't)
- "The @code{\"snap-to-ticks\"} property of type @code{:boolean}
+ "The @code{snap-to-ticks} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether erroneous values are automatically changed to a spin button's
   nearest step increment. @br{}
@@ -413,7 +448,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "update-policy"
                                                'gtk-spin-button) 't)
- "The @code{\"update-policy\"} property of type
+ "The @code{update-policy} property of type
   @symbol{gtk-spin-button-update-policy} (Read / Write) @br{}
   Whether the spin button should update always, or only when the value is
   legal. @br{}
@@ -445,7 +480,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-spin-button) 't)
- "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{value} property of type @code{:double} (Read / Write) @br{}
   Reads the current value, or sets a new value. @br{}
   Default value: 0")
 
@@ -474,7 +509,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap" 'gtk-spin-button) 't)
- "The @code{\"wrap\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{wrap} property of type @code{:boolean} (Read / Write) @br{}
   Whether a spin button should wrap upon reaching its limits. @br{}
   Default value: @code{nil}")
 
