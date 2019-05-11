@@ -44,8 +44,8 @@
 ;;;     gtk_tool_palette_set_expand
 ;;;     gtk_tool_palette_get_group_position
 ;;;     gtk_tool_palette_set_group_position
-;;;     gtk_tool_palette_get_icon_size
-;;;     gtk_tool_palette_set_icon_size
+;;;     gtk_tool_palette_get_icon_size                       Accessor
+;;;     gtk_tool_palette_set_icon_size                       Accessor
 ;;;     gtk_tool_palette_unset_icon_size
 ;;;     gtk_tool_palette_get_style
 ;;;     gtk_tool_palette_set_style
@@ -59,8 +59,8 @@
 ;;;     gtk_tool_palette_get_drop_item
 ;;;     gtk_tool_palette_set_drag_source
 ;;;
-;;;     gtk_tool_palette_get_hadjustment                   * deprecated *
-;;;     gtk_tool_palette_get_vadjustment                   * deprecated *
+;;;     gtk_tool_palette_get_hadjustment                   * deprecated
+;;;     gtk_tool_palette_get_vadjustment                   * deprecated
 ;;;
 ;;; Properties
 ;;;
@@ -228,24 +228,32 @@
   (Read / Write) @br{}
   The size of the icons in a tool palette is normally determined by the
   @code{toolbar-icon-size} setting. When this property is set, it overrides
-  the setting.
-  This should only be used for special-purpose tool palettes, normal
-  application tool palettes should respect the user preferences for the size
-  of icons. @br{}
+  the setting. This should only be used for special-purpose tool palettes,
+  normal application tool palettes should respect the user preferences for the
+  size of icons. @br{}
   Default value: @code{:small-toolbar}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-palette-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-icon-size 'function)
- "@version{2013-11-17}
+ "@version{2019-5-11}
+  @syntax[]{(gtk-tool-palette-icon-size object) => icon-size}
+  @syntax[]{(setf (gtk-tool-palette-icon-size object) icon-size)}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[icon-size]{the @symbol{gtk-icon-size} that icons in the tool
+    palette shall have}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-palette]{icon-size} of the
+    Accessor of the @slot[gtk-tool-palette]{icon-size} slot of the
     @class{gtk-tool-palette} class.
   @end{short}
-  @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-get-icon-size}
-  @see-function{gtk-tool-palette-set-icon-size}")
+
+  The @sym{gtk-tool-palette-icon-size} slot access function
+  gets the size of icons in the tool palette.
+
+  The @sym{(setf gtk-tool-palette-icon-size)} slot access function
+  sets the size of icons in the tool palette.
+  @see-class{gtk-tool-palette}")
 
 ;;; --- gtk-tool-palette-icon-size-set -----------------------------------------
 
@@ -263,7 +271,7 @@
       (documentation 'gtk-tool-palette-icon-size-set 'function)
  "@version{2013-11-17}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-palette]{icon-size-set} of the
+    Accessor of the @slot[gtk-tool-palette]{icon-size-set} slot of the
     @class{gtk-tool-palette} class.
   @end{short}
   @see-class{gtk-tool-palette}
@@ -285,7 +293,7 @@
       (documentation 'gtk-tool-palette-toolbar-style 'function)
  "@version{2013-11-17}
   @begin{short}
-    Accessor of the slot @slot[gtk-tool-palette]{toolbar-style} of the
+    Accessor of the @slot[gtk-tool-palette]{toolbar-style} slot of the
     @class{gtk-tool-palette} class.
   @end{short}
   @see-class{gtk-tool-palette}
@@ -305,7 +313,7 @@
       "Accessor"
       (documentation 'gtk-tool-palette-child-exclusive 'function)
  "@version{2013-11-17}
-  Accessor of the child property @code{exclusive} of the
+  Accessor of the @code{exclusive} child property of the
   @class{gtk-tool-palette} class.
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-exclusive}
@@ -320,7 +328,7 @@
       "Accessor"
       (documentation 'gtk-tool-palette-child-expand 'function)
  "@version{2013-11-17}
-  Accessor of the child property @code{expand} of the
+  Accessor of the @code{expand} child property of the
   @class{gtk-tool-palette} class.
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-expand}
@@ -492,50 +500,6 @@
 (export 'gtk-tool-palette-set-group-position)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_get_icon_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-palette-get-icon-size))
-
-(defun gtk-tool-palette-get-icon-size (palette)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @return{The @symbol{gtk-icon-size} of icons in the tool palette.}
-  @begin{short}
-    Gets the size of icons in the tool palette.
-  @end{short}
-  See the function @fun{gtk-tool-palette-set-icon-size}.
-  @see-class{gtk-tool-palette}
-  @see-symbol{gtk-icon-size}
-  @see-function{gtk-tool-palette-set-icon-size}"
-  (gtk-tool-palette-icon-size palette))
-
-(export 'gtk-tool-palette-get-icon-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_set_icon_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tool-palette-set-icon-size))
-
-(defun gtk-tool-palette-set-icon-size (palette icon-size)
- #+cl-cffi-gtk-documentation
- "@version{2014-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[icon-size]{the @symbol{gtk-icon-size} that icons in the tool
-    palette shall have}
-  @begin{short}
-    Sets the size of icons in the tool palette.
-  @end{short}
-  @see-class{gtk-tool-palette}
-  @see-symbol{gtk-icon-size}
-  @see-function{gtk-tool-palette-get-icon-size}"
-  (setf (gtk-tool-palette-icon-size palette) icon-size))
-
-(export 'gtk-tool-palette-set-icon-size)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_unset_icon_size ()
 ;;; ----------------------------------------------------------------------------
 
@@ -545,12 +509,12 @@
  "@version{2013-11-17}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @begin{short}
-    Unsets the tool palette icon size set with the function
-    @fun{gtk-tool-palette-set-icon-size}, so that user preferences will be used
-    to determine the icon size.
+    Unsets the tool palette icon size set with the
+    @fun{gtk-tool-palette-icon-size} slot access function, so that user
+    preferences will be used to determine the icon size.
   @end{short}
   @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-set-icon-size}"
+  @see-function{gtk-tool-palette-icon-size}"
   (palette (g-object gtk-tool-palette)))
 
 (export 'gtk-tool-palette-unset-icon-size)
