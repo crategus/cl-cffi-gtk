@@ -169,10 +169,22 @@
       "Accessor"
       (documentation 'gtk-check-menu-item-active 'function)
  "@version{2013-2-24}
+  @syntax[]{(gtk-check-menu-item-active object) => is-active}
+  @syntax[]{(setf (gtk-checkk-menu-item-active object) is-active)}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[is-active]{boolean value indicating whether the check box is
+    active}
   @begin{short}
-    Accessor of the slot @slot[gtk-check-menu-item]{active} of the
+    Accessor of the @slot[gtk-check-menu-item]{active} slot of the
     @class{gtk-check-menu-item} class.
-  @end{short}")
+  @end{short}
+
+  The @sys{gtk-check-menu-item-active} slot access function
+  returns whether the check menu item is active.
+
+  The @sys{(setf gtk-check-menu-item-active)} slot access function
+  sets the active state of the menu item's check box.
+  @see-class{gtk-check-menu-item}")
 
 ;;; --- gtk-check-menu-item-draw-as-radio --------------------------------------
 
@@ -189,18 +201,29 @@
       "Accessor"
       (documentation 'gtk-check-menu-item-draw-as-radio 'function)
  "@version{2013-2-24}
+  @syntax[]{(gtk-check-menu-item-draw-as-radio object) => setting}
+  @syntax[]{(setf (gtk-checkk-menu-item-draw-as-radio object) setting)}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[setting]{whether @arg{check-menu-item} is drawn like a
+    @class{gtk-radio-menu-item}}
   @begin{short}
-    Accessor of the slot @slot[gtk-check-menu-item]{draw-as-radio} of the
+    Accessor of the @slot[gtk-check-menu-item]{draw-as-radio} slot of the
     @class{gtk-check-menu-item} class.
-  @end{short}")
+  @end{short}
+
+  The @sys{gtk-check-menu-item-draw-as-radio} slot access function returns
+  whether @arg{check-menu-item} looks like a @class{gtk-radio-menu-item}.
+
+  The @sys{(setf gtk-check-menu-item-draw-as-radio)} slot access function sets
+  whether @arg{check-menu-item} is drawn like a @class{gtk-radio-menu-item}.
+  @see-class{gtk-check-menu-item}")
 
 ;;; --- gtk-check-menu-item-inconsistent ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inconsistent"
                                                'gtk-check-menu-item) 't)
- "The @code{inconsistent} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{inconsistent} property of type @code{:boolean} (Read / Write) @br{}
   Whether to display an \"inconsistent\" state. @br{}
   Default value: @code{nil}")
 
@@ -209,10 +232,26 @@
       "Accessor"
       (documentation 'gtk-check-menu-item-inconsistent 'function)
  "@version{2013-2-24}
+  @syntax[]{(gtk-check-menu-item-inconsistent object) => setting}
+  @syntax[]{(setf (gtk-checkk-menu-item-inconsistent object) setting)}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[setting]{@em{true} to display an \"inconsistent\" third state check}
   @begin{short}
-    Accessor of the slot @slot[gtk-check-menu-item]{inconsistent} of the
+    Accessor of the @slot[gtk-check-menu-item]{inconsistent} slot of the
     @class{gtk-check-menu-item} class.
-  @end{short}")
+  @end{short}
+
+  If the user has selected a range of elements, such as some text or spreadsheet
+  cells, that are affected by a boolean setting, and the current values in that
+  range are inconsistent, you may want to display the check in an \"in between\"
+  state.
+
+  This function turns on \"in between\" display. Normally you would turn off the
+  inconsistent state again if the user explicitly selects a setting. This has to
+  be done manually, the @fun{gtk-check-menu-item-inconsistent} function
+  only affects visual appearance, it does not affect the semantics of the
+  widget.
+  @see-class{gtk-check-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new ()
@@ -270,43 +309,6 @@
 (export 'gtk-check-menu-item-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_get_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-get-active))
-
-(defun gtk-check-menu-item-get-active (check-menu-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @return{@em{True} if the menu item is checked.}
-  @begin{short}
-    Returns whether the check menu item is active.
-  @end{short}
-  See the @fun{gtk-check-menu-item-set-active} function.
-  @see-function{gtk-check-menu-item-set-active}"
-  (gtk-check-menu-item-active check-menu-item))
-
-(export 'gtk-check-menu-item-get-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_set_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-set-active))
-
-(defun gtk-check-menu-item-set-active (check-menu-item is-active)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @argument[is-active]{boolean value indicating whether the check box is
-    active}
-  Sets the active state of the menu item's check box."
-  (setf (gtk-check-menu-item-active check-menu-item) is-active))
-
-(export 'gtk-check-menu-item-set-active)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_toggled ()
 ;;; ----------------------------------------------------------------------------
 
@@ -318,91 +320,5 @@
   (check-menu-item (g-object gtk-check-menu-item)))
 
 (export 'gtk-check-menu-item-toggled)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_get_inconsistent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-get-inconsistent))
-
-(defun gtk-check-menu-item-get-inconsistent (check-menu-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @return{@em{True} if inconsistent.}
-  Retrieves the value set by the @fun{gtk-check-menu-item-set-inconsistent}
-  function.
-  @see-function{gtk-check-menu-item-set-inconsistent}"
-  (gtk-check-menu-item-inconsistent check-menu-item))
-
-(export 'gtk-check-menu-item-get-inconsistent)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_set_inconsistent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-set-inconsistent))
-
-(defun gtk-check-menu-item-set-inconsistent (check-menu-item setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @argument[setting]{@em{true} to display an \"inconsistent\" third state check}
-  @begin{short}
-    If the user has selected a range of elements (such as some text or
-    spreadsheet cells) that are affected by a boolean setting, and the current
-    values in that range are inconsistent, you may want to display the check in
-    an \"in between\" state.
-  @end{short}
-  This function turns on \"in between\" display. Normally you would turn off the
-  inconsistent state again if the user explicitly selects a setting. This has to
-  be done manually, the @fun{gtk-check-menu-item-set-inconsistent} function
-  only affects visual appearance, it does not affect the semantics of the
-  widget.
-  @see-function{gtk-check-menu-item-set-inconsistent}"
-  (setf (gtk-check-menu-item-inconsistent check-menu-item) setting))
-
-(export 'gtk-check-menu-item-set-inconsistent)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_set_draw_as_radio ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-set-draw-as-radio))
-
-(defun gtk-check-menu-item-set-draw-as-radio (check-menu-item setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @argument[setting]{whether @arg{check-menu-item} is drawn like a
-    @class{gtk-radio-menu-item}}
-  @begin{short}
-    Sets whether @arg{check-menu-item} is drawn like a
-    @class{gtk-radio-menu-item}.
-  @end{short}"
-  (setf (gtk-check-menu-item-draw-as-radio check-menu-item) setting))
-
-(export 'gtk-check-menu-item-set-draw-as-radio)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_check_menu_item_get_draw_as_radio ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-check-menu-item-get-draw-as-radio))
-
-(defun gtk-check-menu-item-get-draw-as-radio (check-menu-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @begin{return}
-    Whether @artg{check-menu-item} looks like a @class{gtk-radio-menu-item}.
-  @end{return}
-  @begin{short}
-    Returns whether @arg{check-menu-item} looks like a
-    @class{gtk-radio-menu-item}.
-  @end{short}"
-  (gtk-check-menu-item-draw-as-radio check-menu-item))
-
-(export 'gtk-check-menu-item-get-draw-as-radio)
 
 ;;; --- End of file gtk.check-menu-item.lisp -----------------------------------
