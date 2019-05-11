@@ -249,7 +249,7 @@
                                         ("Dialog" . :dialog))
                                       :test #'equal))))
                (format t "Signal CHANGED text = ~A, size = ~A~%" text size)
-               (gtk-tool-palette-set-icon-size palette size)
+               (setf (gtk-tool-palette-icon-size palette) size)
              )))
 
         (gtk-combo-box-text-append-text combo "Menu")

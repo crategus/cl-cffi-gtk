@@ -1,5 +1,5 @@
 ;;;; Animated backgrounds
-;;;; 
+;;;;
 ;;;; This demo is done in honour of the Pixbufs demo further down.
 ;;;; It is done exclusively with CSS as the background of the window.
 
@@ -35,7 +35,7 @@
       ;; Add container to window
       (gtk-container-add window container)
       ;; Load CSS from file into the provider
-      (gtk-css-provider-load-from-path provider "css-pixbufs.css")
+      (gtk-css-provider-load-from-path provider (rel-path "css-pixbufs.css"))
       ;; Apply CSS to the widgets
       (apply-css window provider)
       ;; Show the window.
