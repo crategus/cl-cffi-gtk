@@ -1797,8 +1797,6 @@
     Calls the function @fun{gtk-text-iter-forward-visible-word-end} up to
     @arg{count} times.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-forward-visible-word-end}"
   (iter (g-boxed-foreign gtk-text-iter))
@@ -1821,8 +1819,6 @@
     Calls the function @fun{gtk-text-iter-backward-visible-word-start} up to
     @arg{count} times.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-backward-visible-word-start}"
   (iter (g-boxed-foreign gtk-text-iter))
@@ -1846,8 +1842,6 @@
   If @arg{iter} is currently on a word end, moves forward to the next one after
   that. Word breaks are determined by Pango and should be correct for nearly any
   language. If not, the correct fix would be to the Pango word break algorithms.
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-backward-visible-word-start}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -1871,8 +1865,6 @@
   after that. Word breaks are determined by Pango and should be correct for
   nearly any language. If not, the correct fix would be to the Pango word break
   algorithms.
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-forward-visible-word-end}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -1893,8 +1885,6 @@
     Moves @arg{iter} forward to the next visible cursor position.
   @end{short}
   See the function @fun{gtk-text-iter-forward-cursor-position} for details.
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-forward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -1915,8 +1905,6 @@
     Moves @arg{iter} forward to the previous visible cursor position.
   @end{short}
   See the function @fun{gtk-text-iter-backward-cursor-position} for details.
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-backward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -1938,8 +1926,6 @@
     Moves up to @arg{count} visible cursor positions. See the function
     @fun{gtk-text-iter-forward-cursor-position} for details.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-text-iter-forward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
@@ -1961,8 +1947,6 @@
     Moves up to @arg{count} visible cursor positions.
   @end{short}
   See the function @fun{gtk-text-iter-backward-cursor-position} for details.
-
-  Since 2.4
   @see-class{gtk-text-iter}
   @fun{gtk-text-iter-backward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter))
@@ -1986,8 +1970,6 @@
   Returns @em{true} if there was a next line to move to, and @code{nil} if
   @arg{iter} was simply moved to the end of the buffer and is now not
   dereferenceable, or if @arg{iter} was already at the end of the buffer.
-
-  Since 2.8
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-backward-visible-line}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -2013,8 +1995,6 @@
   to the start of the line and the function returns @em{true}. Note that this
   implies that in a loop calling this function, the line number may not change
   on every iteration, if your first iteration is on line 0.
-
-  Since 2.8
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-forward-visible-line}"
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -2042,8 +2022,6 @@
   @code{nil} is returned. If @arg{count} is 0, the function does nothing and
   returns @code{nil}. If @arg{count} is negative, moves backward by
   0 - @arg{count} lines.
-
-  Since 2.8
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-backward-visible-lines}"
   (iter (g-boxed-foreign gtk-text-iter))
@@ -2071,8 +2049,6 @@
   moved onto the end iterator, then @code{nil} is returned. If @arg{count} is 0,
   the function does nothing and returns @code{nil}. If @arg{count} is negative,
   moves forward by 0 - @arg{count} lines.
-
-  Since 2.8
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-forward-visible-lines}"
   (iter (g-boxed-foreign gtk-text-iter))
