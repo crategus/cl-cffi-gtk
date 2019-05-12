@@ -108,13 +108,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-editor"
                                                'gtk-color-chooser-widget) 't)
- "The @code{\"show-editor\"} property of type @code{:boolean}
+ "The @code{show-editor} property of type @code{:boolean}
   (Read / Write) @br{}
-  The @code{\"show-editor\"} property is @arg{true} when the color chooser is
+  The @code{show-editor} property is @arg{true} when the color chooser is
   showing the single-color editor. It can be set to switch the color chooser
   into single-color editing mode. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.4")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-widget-show-editor atdoc:*function-name-alias*)
@@ -122,9 +121,10 @@
       (documentation 'gtk-color-chooser-widget-show-editor 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"show-editor\"} of the
+    Accessor of the @slot[gtk-color-chooser-widget]{show-editor} slot of the
     @class{gtk-color-chooser-widget} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-chooser-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_chooser_widget_new ()
@@ -137,8 +137,7 @@
  "@version{2013-6-3}
   @return{A new @class{gtk-color-chooser-widget} widget.}
   @short{Creates a new @class{gtk-color-chooser-widget} widget.}
-
-  Since 3.4"
+  @see-class{gtk-color-chooser-widget}"
   (make-instance 'gtk-color-chooser-widget))
 
 (export 'gtk-color-chooser-widget-new)
