@@ -103,9 +103,10 @@
       (documentation 'gtk-color-chooser-dialog-show-editor 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @slot[gtk-color-chooser-dialog]{show-editor} of the
+    Accessor of the @slot[gtk-color-chooser-dialog]{show-editor} slot of the
     @class{gtk-color-chooser-dialog} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-chooser-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_chooser_dialog_new ()
@@ -120,8 +121,7 @@
   @argument[parent]{transient parent of the dialog, or @code{nil}}
   @return{A new @class{gtk-color-chooser-dialog} widget.}
   @short{Creates a new @class{gtk-color-chooser-dialog}.}
-
-  Since 3.4"
+  @see-class{gtk-color-chooser-dialog}"
   (make-instance 'gtk-color-chooser-dialog
                  :title title
                  :parent parent))
