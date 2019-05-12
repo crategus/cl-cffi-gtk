@@ -340,140 +340,9 @@
    gtk_file_chooser_set_extra_widget (my_file_chooser, toggle);
    @}
     @end{pre}
-  @subheading{Note}
     If you want to set more than one extra widget in the file chooser, you can a
     container such as a @class{gtk-box} or a @class{gtk-grid} and include your
     widgets in it. Then, set the container as the whole extra widget.
-
-  @subheading{Key Bindings}
-    Internally, GTK+ implements a file chooser's graphical user interface with
-    the private @code{GtkFileChooserDefaultClass}. This widget has several key
-    bindings and their associated signals. This section describes the available
-    key binding signals.
-
-    @b{Example:} @sym{gtk-file-chooser} key binding example
-
-    The default keys that activate the key-binding signals in
-    @code{GtkFileChooserDefaultClass} are as follows:
-    @begin{table}
-      @entry[Signal name]{Default key combinations}
-      @entry[location-popup]{Control+L (empty path);
-                             / (path of \"/\") [a]; ~ (path of \"~\")}
-      @entry[up-folder]{Alt+Up; Alt+Shift+Up [b]; Backspace}
-      @entry[down-folder]{Alt+Down; Alt+Shift+Down [c]}
-      @entry[home-folder]{Alt+Home}
-      @entry[desktop-folder]{Alt+D}
-      @entry[quick-bookmark]{Alt+1 through Alt+0}
-    @end{table}
-    You can change these defaults to something else. For example, to add a Shift
-    modifier to a few of the default bindings, you can include the following
-    fragment in your .config/gtk-3.0/gtk.css file:
-    @begin{pre}
-   @@binding-set MyOwnFilechooserBindings
-   {
-     bind \"<Alt><Shift>Up\" { \"up-folder\" () @}
-     bind \"<Alt><Shift>Down\" { \"down-folder\" () @}
-     bind \"<Alt><Shift>Home\" { \"home-folder\" () @}
-   @}
-
-   GtkFileChooserDefault
-   {
-      gtk-key-bindings: MyOwnFilechooserBindings
-   @}
-    @end{pre}
-
-  @subheading{The \"GtkFileChooserDefault::location-popup\" signal}
-    @begin{pre}
- lambda (chooser path)
-    @end{pre}
-    This is used to make the file chooser show a \"Location\" dialog which the
-    user can use to manually type the name of the file he wishes to select. The
-    path argument is a string that gets put in the text entry for the file name.
-    By default this is bound to Control+L with a path string of \"\" (the empty
-    string). It is also bound to / with a path string of \"/\" (a slash): this
-    lets you type / and immediately type a path name. On Unix systems, this is
-    bound to ~ (tilde) with a path string of \"~\" itself for access to home
-    directories.
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-      @entry[path]{Default contents for the text entry for the file name.}
-    @end{table}
-    @subheading{Note}
-    You can create your own bindings for the \"location-popup\" signal with
-    custom path strings, and have a crude form of easily-to-type bookmarks. For
-    example, say you access the path /home/username/misc very frequently. You
-    could then create an Alt+M shortcut by including the following in your
-    .config/gtk-3.0/gtk.css:
-    @begin{pre}
-    @@binding-set MiscShortcut
-    {
-      bind \"<Alt>M\" { \"location-popup\" (\"/home/username/misc\") @}
-    @}
-
-    GtkFileChooserDefault
-    {
-      gtk-key-bindings: MiscShortcut
-    @}
-    @end{pre}
-
-  @subheading{The \"GtkFileChooserDefault::up-folder\" signal}
-    @begin{pre}
- lambda (chooser)
-    @end{pre}
-    This is used to make the file chooser go to the parent of the current folder
-    in the file hierarchy. By default this is bound to Backspace and Alt+Up (the
-    Up key in the numeric keypad also works).
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-    @end{table}
-  @subheading{The \"GtkFileChooserDefault::down-folder\" signal}
-    @begin{pre}
- lambda (chooser)
-    @end{pre}
-    This is used to make the file chooser go to a child of the current folder in
-    the file hierarchy. The subfolder that will be used is displayed in the path
-    bar widget of the file chooser. For example, if the path bar is showing
-    \"/foo/bar/baz\", then this will cause the file chooser to switch to the
-    \"baz\" subfolder. By default this is bound to Alt+Down (the Down key in the
-    numeric keypad also works).
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-    @end{table}
-  @subheading{The \"GtkFileChooserDefault::home-folder\" signal}
-    @begin{pre}
- lambda (chooser)
-    @end{pre}
-    This is used to make the file chooser show the user's home folder in the
-    file list. By default this is bound to Alt+Home (the Home key in the numeric
-    keypad also works).
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-    @end{table}
-  @subheading{The \"GtkFileChooserDefault::desktop-folder\" signal}
-    @begin{pre}
- lambda (chooser)
-    @end{pre}
-    This is used to make the file chooser show the user's Desktop folder in the
-    file list. By default this is bound to Alt+D.
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-    @end{table}
-  @subheading{The \"GtkFileChooserDefault::quick-bookmark\" signal}
-    @begin{pre}
- lambda (chooser bookmark-index)
-    @end{pre}
-    This is used to make the file chooser switch to the bookmark specified in
-    the bookmark_index parameter. For example, if you have three bookmarks, you
-    can pass 0, 1, 2 to this signal to switch to each of them, respectively. By
-    default this is bound to Alt+1, Alt+2, etc. until Alt+0. Note that in the
-    default binding, that Alt+1 is actually defined to switch to the bookmark at
-    index 0, and so on successively; Alt+0 is defined to switch to the bookmark
-    at index 10.
-    @begin[code]{table}
-      @entry[chooser]{The object which received the signal.}
-      @entry[bookmark-index]{Index of the bookmark to switch to; the indices
-        start at 0.}
-    @end{table}
   @begin[Signal Details]{dictionary}
     @subheading{The \"confirm-overwrite\" signal}
       @begin{pre}
@@ -1350,7 +1219,7 @@
 ;;;
 ;;; chooser :
 ;;;     a GtkFileChooser
-;;; 
+;;;
 ;;; Returns :
 ;;;     The raw text from the file chooser’s “Name” entry. Free this with
 ;;;     g_free(). Note that this string is not a full pathname or URI; it is
