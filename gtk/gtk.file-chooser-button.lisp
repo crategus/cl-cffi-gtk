@@ -39,22 +39,23 @@
 ;;;
 ;;;     gtk_file_chooser_button_new
 ;;;     gtk_file_chooser_button_new_with_dialog
-;;;     gtk_file_chooser_button_get_title
-;;;     gtk_file_chooser_button_set_title
-;;;     gtk_file_chooser_button_get_width_chars
-;;;     gtk_file_chooser_button_set_width_chars
-;;;     gtk_file_chooser_button_get_focus_on_click
-;;;     gtk_file_chooser_button_set_focus_on_click
+;;;     gtk_file_chooser_button_get_title                  Accessor
+;;;     gtk_file_chooser_button_set_title                  Accessor
+;;;     gtk_file_chooser_button_get_width_chars            Accessor
+;;;     gtk_file_chooser_button_set_width_chars            Accessor
+;;;     gtk_file_chooser_button_get_focus_on_click         Accessor
+;;;     gtk_file_chooser_button_set_focus_on_click         Accessor
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkFileChooser*  dialog         Write / Construct Only
-;;;              gchar*  title          Read / Write
-;;;               gint   width-chars    Read / Write
+;;;     GtkFileChooser*  dialog           Write / Construct Only
+;;;           gboolean   focus-on-click   Read / Write
+;;;              gchar*  title            Read / Write
+;;;               gint   width-chars      Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;               void   file-set       Run First
+;;;               void   file-set         Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -106,12 +107,13 @@
  "@version{2013-6-18}
   @begin{short}
     The @sym{gtk-file-chooser-button} is a widget that lets the user select a
-    file. It implements the @class{gtk-file-chooser} interface. Visually, it is
-    a file name with a button to bring up a @class{gtk-file-chooser-dialog}. The
-    user can then use that dialog to change the file associated with that
-    button. This widget does not support setting the @code{\"select-multiple\"}
-    property to @em{true}.
+    file.
   @end{short}
+  It implements the @class{gtk-file-chooser} interface. Visually, it is a file
+  name with a button to bring up a @class{gtk-file-chooser-dialog}. The user can
+  then use that dialog to change the file associated with that button. This
+  widget does not support setting the @slot[gtk-file-chooser]{select-multiple}
+  property to @em{true}.
 
   @b{Example:} Create a button to let the user select a file in /etc
   @begin{pre}
@@ -130,13 +132,13 @@
   @subheading{Important}
     The @sym{gtk-file-chooser-button} will ellipsize the label, and thus will
     request little horizontal space. To give the button more space, you should
-    call the functions @fun{gtk-widget-get-preferred-size},
-    @fun{gtk-file-chooser-button-set-width-chars}, or pack the button in such a
-    way that other interface elements give space to the widget.
+    call the @fun{gtk-widget-get-preferred-size},
+    @fun{gtk-file-chooser-button-set-width-chars} functions, or pack the button
+    in such a way that other interface elements give space to the widget.
   @begin[Signal Details]{dictionary}
     @subheading{The \"file-set\" signal}
       @begin{pre}
- lambda (widget)   : Run First
+ lambda (widget)    : Run First
       @end{pre}
       The \"file-set\" signal is emitted when the user selects a file.
       Note that this signal is only emitted when the user changes the file.
@@ -150,172 +152,212 @@
   @see-slot{gtk-file-chooser-button-width-chars}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-file-chooser-button-dialog -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "dialog"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"dialog\"} property of type @class{gtk-file-chooser}
+ "The @code{dialog} property of type @class{gtk-file-chooser}
   (Write / Construct Only) @br{}
   Instance of the @class{gtk-file-chooser-dialog} associated with the
   button.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "focus-on-click"
-                                               'gtk-file-chooser-button) 't)
- "The @code{\"focus-on-click\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the @sym{gtk-file-chooser-button} button grabs focus when it is
-  clicked with the mouse. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title"
-                                               'gtk-file-chooser-button) 't)
- "The @code{\"title\"} property of type @code{:string} (Read / Write) @br{}
-  Title to put on the @class{gtk-file-chooser-dialog} associated with the
-  button. @br{}
-  Default value: \"Select a File\"")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "width-chars"
-                                               'gtk-file-chooser-button) 't)
- "The @code{\"width-chars\"} property of type @code{:int} (Read / Write) @br{}
-  The width of the entry and label inside the button, in characters. @br{}
-  Allowed values: >= -1 @br{}
-  Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-dialog atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-dialog 'function)
- "@version{2013-3-3}
+ "@version{2019-5-13}
   @begin{short}
-    Accessor of the slot @code{\"dialog\"} of the
+    Accessor of the @slot[gtk-file-chooser-button]{dialog} of the
     @class{gtk-file-chooser-button} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-file-chooser-button}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-file-chooser-button-focus-on-click ---------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-button-focus-on-click atdoc:*function-name-alias*)
+(setf (documentation (atdoc:get-slot-from-name "focus-on-click"
+                                               'gtk-file-chooser-button) 't)
+ "The @code{focus-on-click} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the @sym{gtk-file-chooser-button} button grabs focus when it is
+  clicked with the mouse. @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-button-focus-on-click
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-focus-on-click 'function)
- "@version{2013-3-3}
+ "@version{2019-5-13}
+  @syntax[]{(gtk-file-chooser-button-focus-on-click object) => focus-on-click}
+  @syntax[]{(setf (gtk-file-chooser-button-focus-on-click object) focus-on-click)}
+  @argument[object]{the button widget to modify}
+  @argument[focus-on-click]{whether the button grabs focus when clicked with
+    the mouse}
   @begin{short}
-    Accessor of the slot @code{\"focus-on-click\"} of the
+    Accessor of the @slot[gtk-file-chooser-button]{focus-on-click} of the
     @class{gtk-file-chooser-button} class.
-  @end{short}")
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The @sym{gtk-file-chooser-button-focus-on-click} slot access function
+  returns whether the button grabs focus when it is clicked with the mouse.
+
+  The @sym{(setf gtk-file-chooser-button-focus-on-click} slot access function
+  sets whether the button will grab focus when it is clicked with the mouse.
+
+  Making mouse clicks not grab focus is useful in places like toolbars where
+  you do not want the keyboard focus removed from the main area of the
+  application.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-file-chooser-button-focus-on-click} function has been
+    deprecated since version 3.20 and should not be used in newly-written code.
+    Use the @fun{gtk-widget-focus-on-click} function instead.
+  @end{dictionary}
+  @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-title ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "title"
+                                               'gtk-file-chooser-button) 't)
+ "The @code{title} property of type @code{:string} (Read / Write) @br{}
+  Title to put on the @class{gtk-file-chooser-dialog} associated with the
+  button. @br{}
+  Default value: \"Select a File\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-title 'function)
- "@version{2013-3-3}
+ "@version{2019-5-13}
+  @syntax[]{(gtk-file-chooser-button-title object) => title}
+  @syntax[]{(setf (gtk-file-chooser-button-title object) title)}
+  @argument[object]{the button widget to modify}
+  @argument[title]{the new browse dialog title}
   @begin{short}
-    Accessor of the slot @code{\"title\"} of the
+    Accessor of the @slot[gtk-file-chooser-button]{title} slot of the
     @class{gtk-file-chooser-button} class.
-  @end{short}")
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The @sym{gtk-file-chooser-button-title} slot access function
+  retrieves the title of the browse dialog used by the button. The returned
+  value should not be modified or freed.
+
+  The @sym{(setf gtk-file-chooser-button-title)} slot access function
+  modifies the title of the browse dialog used by button.
+  @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-width-chars ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width-chars"
+                                               'gtk-file-chooser-button) 't)
+ "The @code{width-chars} property of type @code{:int} (Read / Write) @br{}
+  The width of the entry and label inside the button, in characters. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-width-chars atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-width-chars 'function)
- "@version{2013-3-3}
+ "@version{2019-5-13}
+  @syntax[]{(gtk-file-chooser-button-width-chars object) => n-chars}
+  @syntax[]{(setf (gtk-file-chooser-button-title object) n-chars)}
+  @argument[object]{the button widget to modify}
+  @argument[n-chars]{the width, in characters}
   @begin{short}
-    Accessor of the slot @code{\"width-chars\"} of the
+    Accessor of the @slot[gtk-file-chooser-button]{width-chars} slot of the
     @class{gtk-file-chooser-button} class.
-  @end{short}")
+  @end{short}
+
+  The @sym{gtk-file-chooser-button-width-chars} slot access function
+  retrieves the width in characters of the button widget's entry and/or label.
+
+  The @sym{(setf gtk-file-chooser-button-width-chars)} slot access function
+  sets the width, in characters, that button will use to @arg{n-chars}.
+  @see-class{gtk-file-chooser-button}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-file-chooser-button-child-expand -----------------------------------
 
 (define-child-property "GtkFileChooserButton"
                        gtk-file-chooser-button-child-expand
                        "expand" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       gtk-file-chooser-button-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       gtk-file-chooser-button-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       gtk-file-chooser-button-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       gtk-file-chooser-button-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-child-expand 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the @code{expand} child property of the
   @class{gtk-file-chooser-button} class.
   @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-child-fill -------------------------------------
+
+(define-child-property "GtkFileChooserButton"
+                       gtk-file-chooser-button-child-fill
+                       "fill" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-child-fill 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"fill\"} of the
+  Accessor of the @code{fill} child property of the
   @class{gtk-file-chooser-button} class.
   @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-child-padding ----------------------------------
+
+(define-child-property "GtkFileChooserButton"
+                       gtk-file-chooser-button-child-padding
+                       "padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-child-padding 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"padding\"} of the
+  Accessor of the @code{padding} child property of the
   @class{gtk-file-chooser-button} class.
   @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-child-pack-type --------------------------------
+
+(define-child-property "GtkFileChooserButton"
+                       gtk-file-chooser-button-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-child-pack-type 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the @code{pack-type} child property of the
   @class{gtk-file-chooser-button} class.
   @see-class{gtk-file-chooser-button}")
+
+;;; --- gtk-file-chooser-button-child-position ---------------------------------
+
+(define-child-property "GtkFileChooserButton"
+                       gtk-file-chooser-button-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-button-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-button-child-position 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the @code{position} child property of the
   @class{gtk-file-chooser-button} class.
   @see-class{gtk-file-chooser-button}")
 
@@ -367,133 +409,5 @@
                  :dialog dialog))
 
 (export 'gtk-file-chooser-button-new-with-dialog)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_get_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-get-title))
-
-(defun gtk-file-chooser-button-get-title (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{the button widget to examine}
-  @return{A pointer to the browse dialog's title.}
-  @begin{short}
-    Retrieves the title of the browse dialog used by @arg{button}. The returned
-    value should not be modified or freed.
-  @end{short}"
-  (gtk-file-chooser-button-title button))
-
-(export 'gtk-file-chooser-button-get-title)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_set_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-set-title))
-
-(defun gtk-file-chooser-button-set-title (button title)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{the button widget to modify}
-  @argument[title]{the new browse dialog title}
-  @begin{short}
-    Modifies the title of the browse dialog used by button.
-  @end{short}"
-  (setf (gtk-file-chooser-button-title button) title))
-
-(export 'gtk-file-chooser-button-set-title)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_get_width_chars ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-get-width-chars))
-
-(defun gtk-file-chooser-button-get-width-chars (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{the button widget to examine}
-  @begin{return}
-    An integer width (in characters) that the button will use to size itself.
-  @end{return}
-  @begin{short}
-    Retrieves the width in characters of the button widget's entry and/or label.
-  @end{short}"
-  (gtk-file-chooser-button-width-chars button))
-
-(export 'gtk-file-chooser-button-get-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_set_width_chars ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-set-width-chars))
-
-(defun gtk-file-chooser-button-set-width-chars (button n-chars)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{the button widget to examine}
-  @argument[n-chars]{the new width, in characters}
-  @begin{short}
-    Sets the width (in characters) that button will use to @arg{n-chars}.
-  @end{short}"
-  (setf (gtk-file-chooser-button-width-chars button) n-chars))
-
-(export 'gtk-file-chooser-button-set-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_get_focus_on_click ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-get-focus-on-click))
-
-(defun gtk-file-chooser-button-get-focus-on-click (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{a @class{gtk-file-chooser-button} widget}
-  @return{@em{True} if the button grabs focus when it is clicked with the
-    mouse.}
-  @begin{short}
-    Returns whether the button grabs focus when it is clicked with the mouse.
-  @end{short}
-  See the function @fun{gtk-file-chooser-button-set-focus-on-click}.
-  @begin[Warning]{dictionary}
-    The @sym{gtk-file-chooser-button-get-focus-on-click} function has been
-    deprecated since version 3.20 and should not be used in newly-written code.
-    Use the @fun{gtk-widget-get-focus-on-click} function instead.
-  @end{dictionary}
-  @see-function{gtk-file-chooser-button-set-focus-on-click}"
-  (gtk-file-chooser-button-focus-on-click button))
-
-(export 'gtk-file-chooser-button-get-focus-on-click)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_button_set_focus_on_click ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-file-chooser-button-set-focus-on-click))
-
-(defun gtk-file-chooser-button-set-focus-on-click (button focus-on-click)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[button]{a @class{gtk-file-chooser-button} widget}
-  @argument[focus-on-click]{whether the button grabs focus when clicked with
-    the mouse}
-  @begin{short}
-    Sets whether the button will grab focus when it is clicked with the mouse.
-  @end{short}
-  Making mouse clicks not grab focus is useful in places like toolbars where
-  you do not want the keyboard focus removed from the main area of the
-  application.
-  @begin[Warning]{dictionary}
-    The @sym{gtk-file-chooser-button-set-focus-on-click} function has been
-    deprecated since version 3.20 and should not be used in newly-written code.
-    Use the @fun{gtk-widget-set-focus-on-click} function instead.
-  @end{dictionary}"
-  (setf (gtk-file-chooser-button-focus-on-click button) focus-on-click))
-
-(export 'gtk-file-chooser-button-set-focus-on-click)
 
 ;;; --- End of file gtk.file-chooser-button.lisp -------------------------------
