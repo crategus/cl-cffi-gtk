@@ -4,15 +4,11 @@
 ;;; --- GtkApplicationInhibitFlags ---------------------------------------------
 
 (test gtk-application-inhibit-flags
-  ;; Check the flags definition
-  (is (equal '(DEFINE-G-FLAGS "GtkApplicationInhibitFlags"
-    GTK-APPLICATION-INHIBIT-FLAGS
-    (:EXPORT T :TYPE-INITIALIZER "gtk_application_inhibit_flags_get_type")
-  (:LOGOUT 1)
-  (:SWITCH 2)
-  (:SUSPEND 4)
-  (:IDLE 8))
-             (gobject::get-g-type-definition "GtkApplicationInhibitFlags")))
+  ;; Check the type
+  (is-true (g-type-is-flags "GtkApplicationInhibitFlags"))
+  ;; Check the registered name
+  (is (eql 'gtk-application-inhibit-flags
+           (gobject::registered-flags-type "GtkApplicationInhibitFlags")))
   ;; Check the names
   (is (equal '("GTK_APPLICATION_INHIBIT_LOGOUT" "GTK_APPLICATION_INHIBIT_SWITCH"
  "GTK_APPLICATION_INHIBIT_SUSPEND" "GTK_APPLICATION_INHIBIT_IDLE")
@@ -26,82 +22,32 @@
   (is (equal '("logout" "switch" "suspend" "idle")
              (mapcar #'gobject::flags-item-nick
                      (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
-)
+  ;; Check the flags definition
+  (is (equal '(DEFINE-G-FLAGS "GtkApplicationInhibitFlags"
+    GTK-APPLICATION-INHIBIT-FLAGS
+    (:EXPORT T :TYPE-INITIALIZER "gtk_application_inhibit_flags_get_type")
+  (:LOGOUT 1)
+  (:SWITCH 2)
+  (:SUSPEND 4)
+  (:IDLE 8))
+             (gobject::get-g-type-definition "GtkApplicationInhibitFlags"))))
 
 ;;; --- GtkApplication ---------------------------------------------------------
 
 (test gtk-application-class
-  ;; Type checks
+  ;; Type check
   (is-true  (g-type-is-object "GtkApplication"))
-  (is-false (g-type-is-abstract "GtkApplication"))
-  (is-true  (g-type-is-derived "GtkApplication"))
-  (is-false (g-type-is-fundamental "GtkApplication"))
-  (is-true  (g-type-is-value-type "GtkApplication"))
-  (is-true  (g-type-has-value-table "GtkApplication"))
-  (is-true  (g-type-is-classed "GtkApplication"))
-  (is-true  (g-type-is-instantiatable "GtkApplication"))
-  (is-true  (g-type-is-derivable "GtkApplication"))
-  (is-true  (g-type-is-deep-derivable "GtkApplication"))
-  (is-false (g-type-is-interface "GtkApplication"))
-
   ;; Check the registered name
   (is (eq 'gtk-application
           (registered-object-type-by-name "GtkApplication")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkApplication"))))
-    (is (equal (gtype "GtkApplication") (g-type-from-class class)))
-    (is (equal (gtype "GtkApplication") (g-object-class-type class)))
-    (is (equal "GtkApplication" (g-object-class-name class)))
-    (is (equal (gtype "GtkApplication")
-               (g-type-from-class  (g-type-class-peek "GtkApplication"))))
-    (is (equal (gtype "GtkApplication")
-               (g-type-from-class  (g-type-class-peek-static "GtkApplication"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-application)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-application (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkApplication" (gobject-class-g-type-name class)))
-    (is (equal "GtkApplication" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_application_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
+  ;; Check the parent
   (is (equal (gtype "GApplication") (g-type-parent "GtkApplication")))
-  (is (= 3 (g-type-depth "GtkApplication")))
-  (is (equal (gtype "GApplication")
-             (g-type-next-base "GtkApplication" "GObject")))
-  (is-true  (g-type-is-a "GtkApplication" "GObject"))
-  (is-false (g-type-is-a "GtkApplication" "GInitiallyUnowned"))
-  (is-false (g-type-is-a "GtkApplication" "gboolean"))
-  (is-false (g-type-is-a "GtkApplication" "GtkWindow"))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkApplication" query)
-    (is (equal (gtype "GtkApplication")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkApplication"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 424
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 40
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
   ;; Check the children
   (is (equal '()
              (mapcar #'gtype-name (g-type-children "GtkApplication"))))
-             
   ;; Check the interfaces
   (is (equal '("GActionGroup" "GActionMap")
              (mapcar #'gtype-name (g-type-interfaces "GtkApplication"))))
-
   ;; Check the class properties
   (is (equal '("action-group" "active-window" "app-menu" "application-id" "flags"
  "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"
@@ -109,18 +55,6 @@
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkApplication"))
                           #'string-lessp)))
-
-  ;; Check the style properties
-  (is (equal '()
-             (mapcar #'param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkApplication"))))
-
-  ;; Check the names of the child properties
-  ;; GtkApplication is not a GtkContainer
-;  (is (equal '()
-;             (mapcar #'param-spec-name
-;                     (gtk-container-class-list-child-properties "GtkApplication"))))
-
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkApplication" GTK-APPLICATION
                        (:SUPERCLASS G-APPLICATION :EXPORT T :INTERFACES
@@ -136,8 +70,7 @@
                          "register-session" "gboolean" T T)
                         (SCREENSAVER-ACTIVE GTK-APPLICATION-SCREENSAVER-ACTIVE
                          "screensaver-active" "gboolean" T NIL)))
-             (get-g-type-definition "GtkApplication")))
-)
+             (get-g-type-definition "GtkApplication"))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; Functions
@@ -160,8 +93,38 @@
 ;;;     gtk_application_get_menu_by_id
 ;;;     gtk_application_add_accelerator
 ;;;     gtk_application_remove_accelerator
+
 ;;;     gtk_application_list_action_descriptions
+
+(test gtk-applicaton-list-action-descriptions
+  (let ((application (make-instance 'gtk-application)))
+    (is (equal '()
+               (gtk-application-list-action-descriptions application)))
+    (gtk-application-set-accels-for-action application "win::close"
+                                                       '("<Control>q" "<Shift><Alt>F1" "<Release>z"))
+    (is (equal '("win::close")
+               (gtk-application-list-action-descriptions application)))))
+
 ;;;     gtk_application_get_accels_for_action
 ;;;     gtk_application_set_accels_for_action
+
+(test gtk-application-get-accels-for-action
+  (let ((application (make-instance 'gtk-application)))
+    (is-false (gtk-application-get-accels-for-action application "win::close"))
+    (gtk-application-set-accels-for-action application "win::close"
+                                                       '("<Control>q" "<Shift><Alt>F1" "<Release>z"))
+    (is (equal '("<Primary>q" "<Shift><Alt>F1" "<Release>z")
+               (gtk-application-get-accels-for-action application "win::close")))))
+
 ;;;     gtk_application_get_actions_for_accel
+
+(test gtk-application-get-actions-for-accel
+  (let ((application (make-instance 'gtk-application)))
+    (gtk-application-set-accels-for-action application "win::close"
+                                                       '("<Control>q" "<Shift><Alt>F1" "<Release>z"))
+    (is (equal '("win::close")
+               (gtk-application-get-actions-for-accel application "<Control>q")))
+    (gtk-application-set-accels-for-action application "win::save" '("<Control>q"))
+    (is (equal '("win::close" "win::save")
+               (gtk-application-get-actions-for-accel application "<Control>q")))))
 
