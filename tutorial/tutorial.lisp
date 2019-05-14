@@ -2092,7 +2092,7 @@
             (start (gtk-text-buffer-get-iter-at-offset buffer 7))
             (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
         ;; Add the tag to the tag table of the buffer
-        (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer) tag)
+        (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer
         (gtk-text-buffer-apply-tag buffer tag start end))
       ;; Add the view to the window and show all
@@ -2164,15 +2164,15 @@
       (gtk-container-add vbox text-view)
       (setf (gtk-text-buffer-text buffer) "Hello World Text View")
       ;; Create tags associated with the buffer.
-      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
                                              :name "bold"
                                              :weight 700)) ; :bold
-      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
                                              :name "italic"
                                              :style :italic))
-      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
                                              :name "font"
                                              :font "fixed"))
