@@ -1159,88 +1159,101 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_accels_for_action ()
-;;;
-;;; gchar ** gtk_application_get_accels_for_action (GtkApplication *application,
-;;;                                          const gchar *detailed_action_name);
-;;;
-;;; Gets the accelerators that are currently associated with the given action.
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; detailed_action_name
-;;;     a detailed action name, specifying an action and target to obtain
-;;;     accelerators for
-;;;
-;;; Returns
-;;;     accelerators for detailed_action_name , as a NULL-terminated array.
-;;;     Free with g_strfreev() when no longer needed.
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_application_get_accels_for_action"
+           gtk-application-get-accels-for-action) g-strv
+ #+cl-cffi-gtk-documentation
+ "@version{2019-5-14}
+  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[detaild-action-name]{a string with a detailed action name,
+    specifying an action and target to obtain accelerators for}
+  @return{accelerators for @arg{detailed-action-name} as a list of strings}
+  @begin{short}
+    Gets the accelerators that are currently associated with the given action.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-application}"
+  (application (g-object gtk-application))
+  (detailed-action-name :string))
+
+#+gtk-3-12
+(export 'gtk-application-get-accels-for-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_set_accels_for_action ()
-;;;
-;;; void gtk_application_set_accels_for_action (GtkApplication *application,
-;;;                                           const gchar *detailed_action_name,
-;;;                                                const gchar * const *accels);
-;;;
-;;; Sets zero or more keyboard accelerators that will trigger the given action.
-;;; The first item in accels will be the primary accelerator, which may be
-;;; displayed in the UI.
-;;;
-;;; To remove all accelerators for an action, use an empty, zero-terminated
-;;; array for accels .
-;;;
-;;; For the detailed_action_name , see g_action_parse_detailed_name() and
-;;; g_action_print_detailed_name().
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; detailed_action_name
-;;;     a detailed action name, specifying an action and target to associate
-;;;     accelerators with
-;;;
-;;; accels
-;;;     a list of accelerators in the format understood by
-;;;     gtk_accelerator_parse().
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_application_set_accels_for_action"
+           gtk-application-set-accels-for-action) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-5-14}
+  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[detaild-action-name]{a string with a detailed action name,
+    specifying an action and target to obtain accelerators with}
+  @argument[accels]{a string list of accelerators in the format understood by
+    the @fun{gtk-accelerator-parse}}
+  @begin{short}
+    Sets zero or more keyboard accelerators that will trigger the given action.
+  @end{short}
+  The first item in accels will be the primary accelerator, which may be
+  displayed in the UI.
+
+  To remove all accelerators for an action, use an empty list.
+
+  For the detailed action name, see the @fun{g-action-parse-detailed-name} and
+  @fun{g-action-print-detailed-name} functions.
+
+  Since 3.12
+  @see-class{gtk-application}
+  @see-function{gtk-action-parse-detailed-name}
+  @see-function{gtk-action-print-detailed-name}"
+  (application (g-object gtk-application))
+  (detailed-action-name :string)
+  (accels g-strv))
+
+#+gtk-3-12
+(export 'gtk-application-set-accels-for-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_actions_for_accel ()
-;;;
-;;; gchar ** gtk_application_get_actions_for_accel (GtkApplication *application,
-;;;                                                 const gchar *accel);
-;;;
-;;; Returns the list of actions (possibly empty) that accel maps to. Each item
-;;; in the list is a detailed action name in the usual form.
-;;;
-;;; This might be useful to discover if an accel already exists in order to
-;;; prevent installation of a conflicting accelerator (from an accelerator
-;;; editor or a plugin system, for example). Note that having more than one
-;;; action per accelerator may not be a bad thing and might make sense in cases
-;;; where the actions never appear in the same context.
-;;;
-;;; In case there are no actions for a given accelerator, an empty array is
-;;; returned. NULL is never returned.
-;;;
-;;; It is a programmer error to pass an invalid accelerator string. If you are
-;;; unsure, check it with gtk_accelerator_parse() first.
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; accel
-;;;     an accelerator that can be parsed by gtk_accelerator_parse()
-;;;
-;;; Returns
-;;;     a NULL-terminated array of actions for accel .
-;;;
-;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_application_get_actions_for_accel"
+           gtk-application-get-actions-for-accel) g-strv
+ "@version{2019-5-14}
+  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[accel]{a string with an accelerator that can be parsed by the
+    @fun{gtk-accelerator-parse} function}
+  @return{A list of strings of actions for @arg{accel}.}
+  @begin{short}
+    Returns the list of actions, possibly empty, that accel maps to.
+  @end{short}
+  Each item in the list is a detailed action name in the usual form.
+
+  This might be useful to discover if an accel already exists in order to
+  prevent installation of a conflicting accelerator, from an accelerator
+  editor or a plugin system, for example. Note that having more than one
+  action per accelerator may not be a bad thing and might make sense in cases
+  where the actions never appear in the same context.
+
+  In case there are no actions for a given accelerator, an empty list is
+  returned.
+
+  It is a programmer error to pass an invalid accelerator string. If you are
+  unsure, check it with the @fun{gtk-accelerator-parse} function first.
+
+  Since 3.12
+  @see-class{gtk-application}
+  @see-function{gtk-accelerator-parse}"
+  (application (g-object gtk-application))
+  (accel :string))
+
+#+gtk-3-12
+(export 'gtk-application-get-actions-for-accel)
 
 ;;; --- End of file gtk.application.lisp ---------------------------------------
