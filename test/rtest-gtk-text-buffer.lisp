@@ -1,4 +1,3 @@
-
 (def-suite gtk-text-buffer :in gtk-suite)
 (in-suite gtk-text-buffer)
 
@@ -62,18 +61,18 @@ dargestellt werden.")
 (test gtk-text-buffer-new.1
   (is (eq 'gtk-text-buffer (type-of (gtk-text-buffer-new))))
   (is (eq 'gtk-text-tag-table
-          (type-of (gtk-text-buffer-get-tag-table (gtk-text-buffer-new))))))
+          (type-of (gtk-text-buffer-tag-table (gtk-text-buffer-new))))))
 
 (test gtk-text-buffer-new.2
   (is (eq 'gtk-text-buffer (type-of (gtk-text-buffer-new nil))))
   (is (eq 'gtk-text-tag-table
-          (type-of (gtk-text-buffer-get-tag-table (gtk-text-buffer-new nil))))))
+          (type-of (gtk-text-buffer-tag-table (gtk-text-buffer-new nil))))))
 
 (test gtk-text-buffer-new.3
   (let ((tag-table (gtk-text-tag-table-new)))
     (is (eq 'gtk-text-buffer (type-of (gtk-text-buffer-new tag-table))))
     (is (eq tag-table
-            (gtk-text-buffer-get-tag-table (gtk-text-buffer-new tag-table))))))
+            (gtk-text-buffer-tag-table (gtk-text-buffer-new tag-table))))))
 
 ;;;   gtk_text_buffer_get_line_count
 
@@ -92,7 +91,7 @@ dargestellt werden.")
 (test gtk-text-buffer-get-char-count.1
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-1*)
-    (is (= 1867 (gtk-text-buffer-get-char-count buffer)))))
+    (is (= 1866 (gtk-text-buffer-get-char-count buffer)))))
 
 (test gtk-text-buffer-get-char-count.2
   (let ((buffer (gtk-text-buffer-new)))
@@ -104,7 +103,7 @@ dargestellt werden.")
 (test gtk-text-buffer-get-tab-table
   (let ((tag-table (gtk-text-tag-table-new)))
     (is (eq tag-table
-            (gtk-text-buffer-get-tag-table (gtk-text-buffer-new tag-table))))))
+            (gtk-text-buffer-tag-table (gtk-text-buffer-new tag-table))))))
 
 ;;;     gtk_text_buffer_insert
 ;;;     gtk_text_buffer_insert_at_cursor

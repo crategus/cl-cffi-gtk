@@ -150,7 +150,7 @@
                                 "Some sample text for the text buffer."))
          (start (gtk-text-buffer-get-iter-at-offset buffer 12))
          (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
-    (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+    (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                              (make-instance 'gtk-text-tag
                                             :name "bold"
                                             :weight 700))
