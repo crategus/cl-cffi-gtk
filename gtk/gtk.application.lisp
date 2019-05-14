@@ -1166,7 +1166,7 @@
            gtk-application-get-accels-for-action) g-strv
  #+cl-cffi-gtk-documentation
  "@version{2019-5-14}
-  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[application]{a @class{gtk-application} object}
   @argument[detaild-action-name]{a string with a detailed action name,
     specifying an action and target to obtain accelerators for}
   @return{accelerators for @arg{detailed-action-name} as a list of strings}
@@ -1191,7 +1191,7 @@
            gtk-application-set-accels-for-action) :void
  #+cl-cffi-gtk-documentation
  "@version{2019-5-14}
-  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[application]{a @class{gtk-application} object}
   @argument[detaild-action-name]{a string with a detailed action name,
     specifying an action and target to obtain accelerators with}
   @argument[accels]{a string list of accelerators in the format understood by
@@ -1226,7 +1226,7 @@
 (defcfun ("gtk_application_get_actions_for_accel"
            gtk-application-get-actions-for-accel) g-strv
  "@version{2019-5-14}
-  @argument[application]{a @class{gtk-applicaton} object}
+  @argument[application]{a @class{gtk-application} object}
   @argument[accel]{a string with an accelerator that can be parsed by the
     @fun{gtk-accelerator-parse} function}
   @return{A list of strings of actions for @arg{accel}.}
