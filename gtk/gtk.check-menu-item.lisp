@@ -40,13 +40,13 @@
 ;;;     gtk_check_menu_item_new
 ;;;     gtk_check_menu_item_new_with_label
 ;;;     gtk_check_menu_item_new_with_mnemonic
-;;;     gtk_check_menu_item_get_active
-;;;     gtk_check_menu_item_set_active
+;;;     gtk_check_menu_item_get_active                     Accessor
+;;;     gtk_check_menu_item_set_active                     Accessor
 ;;;     gtk_check_menu_item_toggled
-;;;     gtk_check_menu_item_get_inconsistent
-;;;     gtk_check_menu_item_set_inconsistent
-;;;     gtk_check_menu_item_set_draw_as_radio
-;;;     gtk_check_menu_item_get_draw_as_radio
+;;;     gtk_check_menu_item_get_inconsistent               Accessor
+;;;     gtk_check_menu_item_set_inconsistent               Accessor
+;;;     gtk_check_menu_item_set_draw_as_radio              Accessor
+;;;     gtk_check_menu_item_get_draw_as_radio              Accessor
 
 ;;; Properties
 ;;;
@@ -56,11 +56,11 @@
 ;;;
 ;;; Style Properties
 ;;;
-;;;     gint  indicator-size     Read
+;;;         gint  indicator-size   Read
 ;;;
 ;;; Signals
 ;;;
-;;;     void  toggled    Run First
+;;;         void  toggled          Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -104,7 +104,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-menu-item 'type)
- "@version{2013-6-1}
+ "@version{2019-5-15}
   @begin{short}
     A @sym{gtk-check-menu-item} is a menu item that maintains the state of a
     boolean value in addition to a @class{gtk-menu-item} usual role in
@@ -125,26 +125,31 @@
     @code{.left} or @code{.right} style class.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"indicator-size\" style property}
-      @code{\"indicator-size\"} of type @code{:int} (Read) @br{}
-      Size of check or radio indicator. @br{}
-      @b{Warning:} @code{indicator-size} has been deprecated since version 3.20
-      and should not be used in newly-written code. Use the standard CSS
-      property min-width on the check or radio nodes; the value of this style
-      property is ignored. @br{}
+    @begin[code]{table}
+      @begin[indicator-size]{entry}
+        The @code{indicator-size} style property of type @code{:int}
+        (Read) @br{}
+        Size of check or radio indicator. @br{}
+        @em{Warning:} The @code{indicator-size} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use the standard CSS property min-width on the check or radio
+        nodes; the value of this style property is ignored. @br{}
       Allowed values: >= 0 @br{}
       Default value: 16
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (checkmenuitm)   : Run First
+ lambda (checkmenuitm)    : Run First
       @end{pre}
       This signal is emitted when the state of the check box is changed.
-      A signal handler can use the @fun{gtk-check-menu-item-get-active}
+      A signal handler can use the @fun{gtk-check-menu-item-active} slot access
       function to discover the new state.
       @begin[code]{table}
-        @entry[checkmenuitem]{The object which received the signal.}
+        @entry[checkmenuitem]{The @class{gtk-check-menu-item} widget which
+          received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-check-menu-item-active}
@@ -263,7 +268,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-1}
   @return{A new @class{gtk-check-menu-item} widget.}
-  Creates a new @class{gtk-check-menu-item} widget."
+  Creates a new @class{gtk-check-menu-item} widget.
+  @see-class{gtk-check-menu-item}"
   (make-instance 'gtk-check-menu-item))
 
 (export 'gtk-check-menu-item-new)
@@ -279,7 +285,8 @@
  "@version{2013-6-1}
   @argument[label]{the string to use for the label}
   @return{A new @class{gtk-check-menu-item} widget.}
-  Creates a new @class{gtk-check-menu-item} widget with a label."
+  Creates a new @class{gtk-check-menu-item} widget with a label.
+  @see-class{gtk-check-menu-item}"
   (make-instance 'gtk-check-menu-item
                  :label label))
 
@@ -301,7 +308,8 @@
     Creates a new @class{gtk-check-menu-item} widget containing a label.
   @end{short}
   The label will be created using the @fun{gtk-label-new-with-mnemonic}
-  function, so underscores in label indicate the mnemonic for the menu item."
+  function, so underscores in label indicate the mnemonic for the menu item.
+  @see-class{gtk-check-menu-item}"
   (make-instance 'gtk-check-menu-item
                  :label label
                  :use-underline t))
@@ -316,7 +324,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-1}
   @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  Emits the \"toggled\" signal."
+  Emits the \"toggled\" signal.
+  @see-class{gtk-check-menu-item}"
   (check-menu-item (g-object gtk-check-menu-item)))
 
 (export 'gtk-check-menu-item-toggled)
