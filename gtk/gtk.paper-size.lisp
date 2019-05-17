@@ -219,8 +219,6 @@
 
   If name is @code{nil}, the default paper size is returned, see the function
   @fun{gtk-paper-size-get-default}.
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-function{gtk-paper-size-get-default}"
   (name :string))
@@ -249,8 +247,6 @@
   If @arg{ppd-name} is not a recognized PPD paper name, @arg{ppd-display-name},
   @arg{width} and @arg{height} are used to construct a custom
   @class{gtk-paper-size} object.
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (ppd-name :string)
   (ppd-display-name :string)
@@ -304,8 +300,6 @@
   @begin{short}
     Creates a new @class{gtk-paper-size} object with the given parameters.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}"
   (name :string)
@@ -329,8 +323,6 @@
   @begin{short}
     Copies an existing @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (other (g-boxed-foreign gtk-paper-size)))
 
@@ -347,8 +339,6 @@
   @begin{short}
     Free the given @class{gtk-paper-size} object.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (size (g-boxed-foreign gtk-paper-size)))
 
@@ -369,8 +359,6 @@
   @begin{short}
     Compares two @class{gtk-paper-size} objects.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (size1 (g-boxed-foreign gtk-paper-size))
   (size2 (g-boxed-foreign gtk-paper-size)))
@@ -393,8 +381,6 @@
   @begin{short}
     Creates a list of known paper sizes.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-paper-size}"
   (include-custom :boolean))
 
@@ -412,8 +398,6 @@
   @begin{short}
     Gets the name of the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (size (g-boxed-foreign gtk-paper-size)))
 
@@ -432,8 +416,6 @@
   @begin{short}
     Gets the human-readable name of the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (size (g-boxed-foreign gtk-paper-size)))
 
@@ -451,8 +433,6 @@
   @begin{short}
     Gets the PPD name of the @class{gtk-paper-size}, which may be @code{nil}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}"
   (size (g-boxed-foreign gtk-paper-size)))
 
@@ -471,8 +451,6 @@
   @begin{short}
     Gets the paper width of the @class{gtk-paper-size}, in units of @arg{unit}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
   @see-function{gtk-paper-size-get-height}"
@@ -494,8 +472,6 @@
   @begin{short}
     Gets the paper height of the @class{gtk-paper-size}, in units of @arg{unit}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}"
   (size (g-boxed-foreign gtk-paper-size))
@@ -532,8 +508,6 @@
   @begin{short}
     Changes the dimensions of a paper size to @arg{width} x @arg{height}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}"
   (size (g-boxed-foreign gtk-paper-size))
@@ -558,8 +532,6 @@
   @begin{short}
     Gets the default top margin for the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
   @see-function{gtk-paper-size-get-default-bottom-margin}"
@@ -583,8 +555,6 @@
   @begin{short}
     Gets the default bottom margin for the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
   @see-function{gtk-paper-size-get-default-top-margin}"
@@ -608,8 +578,6 @@
   @begin{short}
     Gets the default left margin for the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
   @see-function{gtk-paper-size-get-default-right-margin}"
@@ -633,8 +601,6 @@
   @begin{short}
     Gets the default right margin for the @class{gtk-paper-size}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
   @see-function{gtk-paper-size-get-default-left-margin}"
@@ -658,8 +624,6 @@
     Returns the name of the default paper size, which depends on the current
     locale.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-paper-size}")
 
 (export 'gtk-paper-size-get-default)
@@ -688,8 +652,6 @@
     Reads a paper size from the group @arg{group-name} in the key file
     @arg{key-file}.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-paper-size}
   @see-symbol{g-key-file}"
   (with-g-error (err)
@@ -727,8 +689,6 @@
   @begin{short}
     This function adds the paper size from size to @arg{key-file}.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-paper-size}
   @see-symbol{g-key-file}"
   (size (g-boxed-foreign gtk-paper-size))
