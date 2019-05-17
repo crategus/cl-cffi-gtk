@@ -35,7 +35,7 @@
 ;;;
 ;;;     GtkPageSetup
 ;;;
-;;; Fucntions
+;;; Functions
 ;;;
 ;;;     gtk_page_setup_new
 ;;;     gtk_page_setup_copy
@@ -146,8 +146,6 @@
  "@version{2013-11-17}
   @return{A new @class{gtk-page-setup} object.}
   @short{Creates a new @class{gtk-page-setup} object.}
-
-  Since 2.10
   @see-class{gtk-page-setup}"
   (make-instance 'gtk-page-setup))
 
@@ -163,8 +161,6 @@
   @argument[other]{the @class{gtk-page-setup} object to copy}
   @return{A copy of @arg{other}.}
   @short{Copies a @class{gtk-page-setup} object.}
-
-  Since 2.10
   @see-class{gtk-page-setup}"
   (other (g-object gtk-page-setup)))
 
@@ -181,8 +177,6 @@
   @argument[setup]{a @class{gtk-page-setup} object}
   @return{The page orientation.}
   @short{Gets the page orientation of the @class{gtk-page-setup} object.}
-
-  Since 2.10
   @see-class{gtk-page-setup}
   @see-symbol{gtk-page-orientation}"
   (setup (g-object gtk-page-setup)))
