@@ -127,7 +127,7 @@
   @begin{short}
     These flags serve two purposes.
   @end{short}
-  First, the application can call the @fun{gtk-places-sidebar-set-open-flags}
+  First, the application can call the @fun{gtk-places-sidebar-open-flags}
   function using these flags as a bitmask. This tells the sidebar that the
   application is able to open folders selected from the sidebar in various ways,
   for example, in new tabs or in new windows in addition to the normal mode.
@@ -139,8 +139,8 @@
   on the modifier keys that the user is pressing at the time the selection is
   made.
 
-  If the application never calls the @fun{gtk-places-sidebar-set-open-flags}
-  function, then the sidebar will only use @code{:normal} in the
+  If the application never calls the @fun{gtk-places-sidebar-open-flags} slot
+  access function, then the sidebar will only use @code{:normal} in the
   \"open-location\" signal. This is the default mode of operation.
   @begin{pre}
 (define-g-flags \"GtkPlacesOpenFlags\" gtk-places-open-flags
@@ -151,18 +151,20 @@
   (:new-window #.(ash 1 2)))
   @end{pre}
   @begin[code]{table}
-    @entry[:normal]{This is the default mode that GtkPlacesSidebar uses if no
-      other flags are specified. It indicates that the calling application
-      should open the selected location in the normal way, for example, in the
-      folder view beside the sidebar.}
-    @entry[:new-tab]{When passed to the @fun{gtk-places-sidebar-set-open-flags}
+    @entry[:normal]{This is the default mode that @class{gtk-places-sidebar}
+      uses if no other flags are specified. It indicates that the calling
+      application should open the selected location in the normal way, for
+      example, in the folder view beside the sidebar.}
+    @entry[:new-tab]{When passed to the @fun{gtk-places-sidebar-open-flags}
       function, this indicates that the application can open folders selected
       from the sidebar in new tabs. This value will be passed to the
       \"open-location\" signal when the user selects that a location be opened
       in a new tab instead of in the standard fashion.}
     @entry[:new-window]{Similar to @code{:new-tab}, but indicates that the
       application can open folders in new windows.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-places-sidebar}
+  @see-function{gtk-places-sidebar-open-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPlacesSidebar
@@ -196,21 +198,27 @@
    (show-desktop
     gtk-places-sidebar-show-desktop
     "show-desktop" "gboolean" t t)
+   #+gtk-3-14
    (show-enter-location
     gtk-places-sidebar-show-enter-location
     "show-enter-location" "gboolean" t t)
+   #+gtk-3-18
    (show-other-locations
     gtk-places-sidebar-show-other-locations
     "show-other-locations" "gboolean" t t)
+   #+gtk-3-18
    (show-recent
     gtk-places-sidebar-show-recent
     "show-recent" "gboolean" t t)
+   #+gtk-3-24
    (show-starred-location
     gtk-places-sidebar-show-starred-location
     "show-starred-location" "gboolean" t t)
+   #+gtk-3-18
    (show-trash
     gtk-places-sidebar-show-trash
-    "show-trash" "gboolean" t t)))
+    "show-trash" "gboolean" t t)
+   ))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-places-sidebar 'type)
@@ -220,6 +228,9 @@
     frequently-used places in the file system: the user’s home directory, the
     user’s bookmarks, and volumes and drives.
   @end{short}
+
+  @image[places-sidebar]{}
+
   This widget is used as a sidebar in the @class{gtk-file-chooser} interface and
   may be used by file managers and similar programs.
 
@@ -239,7 +250,7 @@
   To make use of the places sidebar, an application at least needs to connect to
   the \"open-location\" signal. This is emitted when the user selects in the
   sidebar a location to open. The application should also call the
-  @fun{gtk-places-sidebar-set-location} function when it changes the
+  @fun{gtk-places-sidebar-location} function when it changes the
   currently-viewed location.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-places-sidebar} class uses a single CSS node with name
@@ -266,8 +277,6 @@
         @entry[Returns]{The final drag action that the sidebar should pass to
           the drag side of the drag-and-drop operation.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"drag-action-requested\" signal}
       @begin{pre}
  lambda (sidebar context dest-file source-file-list)    : Run Last
@@ -293,8 +302,6 @@
         allowed here, i. e. drops are not allowed in the specified
         @arg{dest-file}.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"drag-perform-drop\" signal}
       @begin{pre}
  lambda (sidebar dest-file source-file-list action)    : Run First
@@ -310,8 +317,6 @@
         @entry[source-file-list]{List of @class{g-file} that got dropped.}
         @entry[action]{Drop action to perform.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"mount\" signal}
       @begin{pre}
  lambda (sidebar mount-operation)    : Run First
@@ -342,8 +347,6 @@
           @symbol{gtk-places-open-flags} flags specifying how the location
           should be opened.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
  lambda (sidebar container selected-item selected-volume)    : Run First
@@ -385,8 +388,6 @@
         @entry[selected-volume]{@class{g-volume} if the selected item is a
           volume, or @code{nil} if it is a file.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"show-connect-to-server\" signal}
       @begin{pre}
  lambda (sidebar)    : Run First
@@ -398,7 +399,7 @@
       corresponding mount by using, for example,
       @code{g_file_mount_enclosing_volume()}.
 
-      @b{Warning:} \"show-connect-to-server\" has been deprecated since version
+      @em{Warning:} \"show-connect-to-server\" has been deprecated since version
       3.18 and should not be used in newly-written code. Use the
       \"show-other-locations\" signal to connect to network servers.
       @begin[code]{table}
@@ -430,8 +431,6 @@
         @entry[primary]{Primary message with a summary of the error to show.}
         @entry[secondary]{Secondary message with details of the error to show.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"show-other-locations\" signal}
       @begin{pre}
  lambda (sidebar)    : Run First
@@ -441,7 +440,7 @@
       points. For example, the application may bring up a page showing
       persistent volumes and discovered network addresses.
 
-      @b{Warning:} \"show-other-locations\" has been deprecated since version
+      @em{Warning:} \"show-other-locations\" has been deprecated since version
       3.20 and should not be used in newly-written code. Use the
       \"show-other-locations-with-flags\" which includes the open flags in order
       to allow the user to specify to open in a new tab or window, in a similar
@@ -516,10 +515,16 @@
       "Accessor"
       (documentation 'gtk-places-sidebar-local-only 'function)
  "@version{2019-4-8}
+  @syntax[]{(gtk-places-sidebar-local-only object) => local-only}
+  @syntax[]{(setf (gtk-places-sidebar-local-only object) local-only)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[local-only]{wether to show only local files}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{local-only} of the
+    Accessor of the @slot[gtk-places-sidebar]{local-only} slot of the
     @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should only show local files.
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-location --------------------------------------------
@@ -535,7 +540,7 @@
       "Accessor"
       (documentation 'gtk-places-sidebar-location 'function)
  "@version{2019-4-8}
-  @syntax[]{(gtk-places-sidebar-location object) => location)}
+  @syntax[]{(gtk-places-sidebar-location object) => location}
   @syntax[]{(setf (gtk-places-sidebar-location object) location)}
   @argument[object]{a @class{gtk-places-sidebar} widget}
   @argument[location]{location to select, or @code{nil} for no current path}
@@ -559,8 +564,6 @@
   for example, in a folder view in a file manager. In turn, the sidebar will
   highlight that location if it is being shown in the list of places, or it will
   unhighlight everything if the location is not among the places in the list.
-
-  Since 3.10
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-open-flags ------------------------------------------
@@ -579,7 +582,7 @@
       "Accessor"
       (documentation 'gtk-places-sidebar-open-flags 'function)
  "@version{2019-4-8}
-  @syntax[]{(gtk-places-sidebar-open-flags object) => flags)}
+  @syntax[]{(gtk-places-sidebar-open-flags object) => flags}
   @syntax[]{(setf (gtk-places-sidebar-open-flags object) flags)}
   @argument[object]{a @class{gtk-places-sidebar} widget}
   @argument[flags]{bitmask of modes in which the calling application can open
@@ -608,8 +611,6 @@
 
   Passing 0 for flags will cause @code{:normal} to always be sent to callbacks
   for the \"open-location\" signal.
-
-  Since 3.10
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-populate-all ----------------------------------------
@@ -629,7 +630,7 @@
       (documentation 'gtk-places-sidebar-populate-all 'function)
  "@version{2019-4-8}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{populate-all} of the
+    Accessor of the @slot[gtk-places-sidebar]{populate-all} slot of the
     @class{gtk-places-sidebar} class.
   @end{short}
 
@@ -652,11 +653,29 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-connect-to-server 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-connect-to-server object) => show-connect-to-server}
+  @syntax[]{(setf (gtk-places-sidebar-show-connect-to-server object) show-connect-to-server)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[show-connect-to-server]{whether to show an item for the Connect to
+    Server command}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-connect-to-server} of
+    Accessor of the @slot[gtk-places-sidebar]{show-connect-to-server} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for connecting to a network
+  server; this is off by default. An application may want to turn this on if
+  it implements a way for the user to connect to network servers directly.
+
+  If you enable this, you should connect to the \"show-connect-to-server\"
+  signal.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-places-sidebar-show-connect-to-server} slot access function has
+    been deprecated since version 3.18 and should not be used in
+    newly-written code. It is recommended to group this functionality with the
+    drives and network location under the new 'Other Location' item.
+  @end{dictionary}
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-desktop ----------------------------------------
@@ -674,120 +693,181 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-desktop 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-desktop) => show-desktop}
+  @syntax[]{(setf (gtk-places-sidebar-show-desktop object) show-desktop)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[show-desktop]{whether to show an item for the Desktop folder}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-desktop} of
+    Accessor of the @slot[gtk-places-sidebar]{show-desktop} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for the Desktop folder. The
+  default value for this option is determined by the desktop environment and
+  the user’s configuration, but this function can be used to override it on a
+  per-application basis.
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-enter-location ---------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-14 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "show-enter-location"
                       'gtk-places-sidebar) 't)
  "The @code{show-enter-location} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the sidebar includes a builtin shortcut to manually enter a location.
   @br{}
-  Default value: @code{nil}")
+  Default value: @code{nil} @br{}
+  Since 3.14")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-14 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-places-sidebar-show-enter-location
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-enter-location 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-enter-location) => show-enter-location}
+  @syntax[]{(setf (gtk-places-sidebar-show-enter-location object) show-enter-location)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument{show-enter-location]{whether to show an item to enter a location}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-enter-location} of
+    Accessor of the @slot[gtk-places-sidebar]{show-enter-location} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for entering a location; this
+  is off by default. An application may want to turn this on if manually
+  entering URLs is an expected user action.
+
+  If you enable this, you should connect to the \"show-enter-location\" signal.
+
+  Since 3.14
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-other-locations --------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "show-other-locations"
                       'gtk-places-sidebar) 't)
  "The @code{show-other-locations} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the sidebar includes an item to show external locations. @br{}
-  Default value: @code{nil}")
+  Default value: @code{nil} @br{}
+  Since 3.18")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-places-sidebar-show-other-locations
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-other-locations 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-other-locations) => show-other-locations}
+  @syntax[]{(setf (gtk-places-sidebar-show-other-locations object) show-other-locations)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[show-other-locations]{whether to show an item for the Other
+    Locations view}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-other-locations} of
+    Accessor of the @slot[gtk-places-sidebar]{show-other-locations} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for the application to show an
+  Other Locations view; this is off by default. When set to @em{true},
+  persistent devices such as hard drives are hidden, otherwise they are shown in
+  the sidebar. An application may want to turn this on if it implements a way
+  for the user to see and interact with drives and network servers directly.
+
+  If you enable this, you should connect to the \"show-other-locations\" signal.
+
+  Since 3.18
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-recent -----------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "show-recent"
                       'gtk-places-sidebar) 't)
  "The @code{show-recent} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the sidebar includes a builtin shortcut for recent files. @br{}
-  Default value: @em{true}")
+  Default value: @em{true} @br{}
+  Since 3.18")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-places-sidebar-show-recent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-recent 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-recent) => show-recent}
+  @syntax[]{(setf (gtk-places-sidebar-show-recent object) show-recent)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[show-recent]{whether to show an item for recent files}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-recent} of
+    Accessor of the @slot[gtk-places-sidebar]{show-recent} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for recent files. The default
+  value for this option is determined by the desktop environment, but this
+  function can be used to override it on a per-application basis.
+
+  Since 3.18
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-starred-location -------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-24 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "show-starred-location"
                       'gtk-places-sidebar) 't)
  "The @code{show-starred-location} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the sidebar includes an item to show starred files. @br{}
-  Default value: @code{nil}")
+  Default value: @code{nil} @br{}
+  Since 3.24")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-24 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-places-sidebar-show-starred-location
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-starred-location 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-starred-location} of
+    Accessor of the @slot[gtk-places-sidebar]{show-starred-location} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Since 3.24
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-trash ------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "show-trash"
                       'gtk-places-sidebar) 't)
  "The @code{show-trash} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the sidebar includes a builtin shortcut to the Trash location. @br{}
-  Default value: @em{true}")
+  Default value: @em{true} @br{}
+  Since 3.18")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-places-sidebar-show-trash atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-places-sidebar-show-trash 'function)
- "@version{2019-4-8}
+ "@version{2019-5-15}
+  @syntax[]{(gtk-places-sidebar-show-trash) => show-trash}
+  @syntax[]{(setf (gtk-places-sidebar-show-trash object) show-trash)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[show-trash]{whether to show an item for the Trash location}
   @begin{short}
-    Accessor of the slot @slot[gtk-places-sidebar]{show-trash} of
+    Accessor of the @slot[gtk-places-sidebar]{show-trash} slot of
     the @class{gtk-places-sidebar} class.
   @end{short}
+
+  Sets whether the sidebar should show an item for the Trash location.
+
+  Since 3.18
   @see-class{gtk-places-sidebar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -802,82 +882,6 @@
 ;;;
 ;;; Returns :
 ;;;     a newly created GtkPlacesSidebar
-;;;
-;;; Since 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_recent ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_recent (GtkPlacesSidebar *sidebar,
-;;;                                     gboolean show_recent);
-;;;
-;;; Sets whether the sidebar should show an item for recent files. The default
-;;; value for this option is determined by the desktop environment, but this
-;;; function can be used to override it on a per-application basis.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_recent :
-;;;     whether to show an item for recent files
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_recent ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_recent (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with gtk_places_sidebar_set_show_recent()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display a builtin shortcut for recent files
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_desktop ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_desktop (GtkPlacesSidebar *sidebar,
-;;;                                     gboolean show_desktop);
-;;;
-;;; Sets whether the sidebar should show an item for the Desktop folder. The
-;;; default value for this option is determined by the desktop environment and
-;;; the user’s configuration, but this function can be used to override it on a
-;;; per-application basis.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_desktop :
-;;;     whether to show an item for the Desktop folder
-;;;
-;;; Since 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_desktop ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_desktop (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with gtk_places_sidebar_set_show_desktop()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display a builtin shortcut to the desktop
-;;;     folder.
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
@@ -973,214 +977,6 @@
 ;;;     them with the keyboard shortcut "Alt-1".
 ;;;
 ;;; Since 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_connect_to_server ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_connect_to_server
-;;;                                (GtkPlacesSidebar *sidebar);
-;;;
-;;; gtk_places_sidebar_get_show_connect_to_server has been deprecated since
-;;; version 3.18 and should not be used in newly-written code.
-;;;
-;;; It is recommended to group this functionality with the drives and network
-;;; location under the new 'Other Location' item
-;;;
-;;; Returns the value previously set with
-;;; gtk_places_sidebar_set_show_connect_to_server()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display a “Connect to Server” item.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_connect_to_server ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_connect_to_server
-;;;                                (GtkPlacesSidebar *sidebar,
-;;;                                 gboolean show_connect_to_server);
-;;;
-;;; gtk_places_sidebar_set_show_connect_to_server has been deprecated since
-;;; version 3.18 and should not be used in newly-written code.
-;;;
-;;; It is recommended to group this functionality with the drives and network
-;;; location under the new 'Other Location' item
-;;;
-;;; Sets whether the sidebar should show an item for connecting to a network
-;;; server; this is off by default. An application may want to turn this on if
-;;; it implements a way for the user to connect to network servers directly.
-;;;
-;;; If you enable this, you should connect to the “show-connect-to-server”
-;;; signal.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_connect_to_server :
-;;;     whether to show an item for the Connect to Server command
-;;;
-;;; Since 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_local_only ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_local_only (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with gtk_places_sidebar_set_local_only().
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will only show local files.
-;;;
-;;; Since 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_local_only ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_local_only (GtkPlacesSidebar *sidebar,
-;;;                                    gboolean local_only);
-;;;
-;;; Sets whether the sidebar should only show local files.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; local_only :
-;;;     whether to show only local files
-;;;
-;;; Since 3.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_enter_location ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_enter_location
-;;;                                (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with
-;;; gtk_places_sidebar_set_show_enter_location()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display an “Enter Location” item.
-;;;
-;;; Since 3.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_enter_location ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_enter_location
-;;;                                (GtkPlacesSidebar *sidebar,
-;;;                                 gboolean show_enter_location);
-;;;
-;;; Sets whether the sidebar should show an item for entering a location; this
-;;; is off by default. An application may want to turn this on if manually
-;;; entering URLs is an expected user action.
-;;;
-;;; If you enable this, you should connect to the “show-enter-location” signal.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_enter_location :
-;;;     whether to show an item to enter a location
-;;;
-;;; Since 3.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_trash ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_trash (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with gtk_places_sidebar_set_show_trash()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display a “Trash” item.
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_trash ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_trash (GtkPlacesSidebar *sidebar,
-;;;                                    gboolean show_trash);
-;;;
-;;; Sets whether the sidebar should show an item for the Trash location.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_trash :
-;;;     whether to show an item for the Trash location
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_get_show_other_locations ()
-;;;
-;;; gboolean
-;;; gtk_places_sidebar_get_show_other_locations (GtkPlacesSidebar *sidebar);
-;;;
-;;; Returns the value previously set with
-;;; gtk_places_sidebar_set_show_other_locations()
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; Returns :
-;;;     TRUE if the sidebar will display an “Other Locations” item.
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_places_sidebar_set_show_other_locations ()
-;;;
-;;; void
-;;; gtk_places_sidebar_set_show_other_locations
-;;;                                (GtkPlacesSidebar *sidebar,
-;;;                                 gboolean show_other_locations);
-;;;
-;;; Sets whether the sidebar should show an item for the application to show an
-;;; Other Locations view; this is off by default. When set to TRUE, persistent
-;;; devices such as hard drives are hidden, otherwise they are shown in the
-;;; sidebar. An application may want to turn this on if it implements a way for
-;;; the user to see and interact with drives and network servers directly.
-;;;
-;;; If you enable this, you should connect to the “show-other-locations” signal.
-;;;
-;;; sidebar :
-;;;     a places sidebar
-;;;
-;;; show_other_locations :
-;;;     whether to show an item for the Other Locations view
-;;;
-;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
