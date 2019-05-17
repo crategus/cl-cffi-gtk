@@ -914,7 +914,7 @@
   @argument[embed]{@em{true} to embed page setup selection in the
     @class{gtk-print-dialog}}
   @begin{short}
-    Accessor of slot @slot[gtk-print-operation]{embed-page-setup} slot of the
+    Accessor of the @slot[gtk-print-operation]{embed-page-setup} slot of the
     @class{gtk-print-operation} class.
   @end{short}
 
@@ -1061,7 +1061,7 @@
   @argument[object]{a @class{gtk-print-operation} object}
   @argument[n-pages]{the number of pages}
   @begin{short}
-    Accessor of the slot @slot[gtk-print-operation]{n-pages} slot of the
+    Accessor of the @slot[gtk-print-operation]{n-pages} slot of the
     @class{gtk-print-operation} class.
   @end{short}
 
@@ -1108,7 +1108,7 @@
 
   The @sym{gtk-print-operation-n-pages} slot access function
   returns the number of pages that will be printed.
-  
+
   Note that this value is set during print preparation phase @code{:preparing},
   so this function should never be called before the data generation phase
   @code{:generating-data}. You can connect to the \"status-changed\" signal and
@@ -1396,8 +1396,6 @@
   @begin{short}
     Creates a new @class{gtk-print-operation} object.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-operation}"
   (make-instance 'gtk-print-operation))
 
@@ -1498,7 +1496,7 @@
       settings = g_object_ref (gtk_print_operation_get_print_settings (print));
     @}
   @end{pre}
-  Note that the function @sym{gtk-print-operation-run} can only be called once
+  Note that the @sym{gtk-print-operation-run} function can only be called once
   on a given @class{gtk-print-operation}.
   @see-class{gtk-print-operation}
   @see-function{gtk-print-operation-allow-async}"
@@ -1520,8 +1518,6 @@
   @end{short}
   This function may be called from a \"begin-print\", \"paginate\" or
   \"draw-page\" signal handler to stop the currently running print operation.
-
-  Since 2.10
   @see-class{gtk-print-operation}"
   (op (g-object gtk-print-operation)))
 
@@ -1541,11 +1537,9 @@
   @end{short}
 
   It is called after completion of page drawing, e. g. drawing in another
-  thread. If the function @fun{gtk-print-operation-set-defer-drawing} was called
+  thread. If the @fun{gtk-print-operation-set-defer-drawing} function was called
   before, then this function has to be called by application. In another case it
   is called by the library itself.
-
-  Since 2.16
   @see-class{gtk-print-operation}
   @fun{gtk-print-operation-set-defer-drawing}"
   (op (g-object gtk-print-operation)))
@@ -1568,8 +1562,6 @@
   @end{short}
 
   This function must be called in the callback of \"draw-page\" signal.
-
-  Since 2.16
   @see-class{gtk-print-operation}
   @see-function{gtk-print-operation-draw-page-finish}"
   (op (g-object gtk-print-operation)))
@@ -1596,8 +1588,6 @@
     When you enable print status tracking the print operation can be in a
     non-finished state even after done has been called, as the operation status
     then tracks the print job status on the printer.
-
-  Since 2.10
   @see-class{gtk-print-operation}"
   (op (g-object gtk-print-operation)))
 
@@ -1624,10 +1614,9 @@
   modifications done in the dialog.
 
   Note that this function may use a recursive mainloop to show the page setup
-  dialog. See the function @fun{gtk-print-run-page-setup-dialog-async} if this
+  dialog. See the @fun{gtk-print-run-page-setup-dialog-async} function if this
   is a problem.
-
-  Since 2.10
+  @see-class{gtk-print-operation}
   @see-class{gtk-page-setup}
   @see-class{gtk-print-settings}
   @see-function{gtk-print-run-page-setup-dialog-async}"
@@ -1687,12 +1676,11 @@
     @arg{page-setup}.
   @end{short}
 
-  In contrast to the function @fun{gtk-print-run-page-setup-dialog}, this
+  In contrast to the @fun{gtk-print-run-page-setup-dialog} function, this
   function returns after showing the page setup dialog on platforms that support
   this, and calls @arg{done-cb} from a signal handler for the \"response\"
   signal of the dialog.
-
-  Since 2.10"
+  @see-class{gtk-print-operation}"
   (with-stable-pointer (done-cb-ptr done-cb)
     (%gtk-print-run-page-setup-dialog-async
                                           parent
@@ -1715,8 +1703,6 @@
   @short{Ends a preview.}
 
   This function must be called to finish a custom print preview.
-
-  Since 2.10
   @see-class{gtk-print-operation}
   @see-class{gtk-print-operation-preview}"
   (preview (g-object gtk-print-operation-preview)))
@@ -1739,8 +1725,7 @@
     Returns whether the given page is included in the set of pages that have
     been selected for printing.
   @end{short}
-
-  Since 2.10
+  @see-class{gtk-print-operation}
   @see-class{gtk-print-operation-preview}"
   (preview (g-object gtk-print-operation-preview))
   (page-nr :int))
@@ -1767,8 +1752,7 @@
 
   Note that this function requires a suitable cairo context to be associated
   with the print context.
-
-  Since 2.10
+  @see-class{gtk-print-operation}
   @see-class{gtk-print-operation-preview-render-page}"
   (preview (g-object gtk-print-operation-preview))
   (page-nr :int))
