@@ -128,7 +128,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"status-changed\" signal}
       @begin{pre}
- lambda (job)   : Run Last
+ lambda (job)    : Run Last
       @end{pre}
       Gets emitted when the status of a job changes. The signal handler can use
       the function @fun{gtk-print-job-get-status} to obtain the new status.
@@ -137,7 +137,6 @@
         emitted.}
       @end{table}
   @end{dictionary}
-  Since 2.10
   @see-slot{gtk-print-job-page-setup}
   @see-slot{gtk-print-job-printer}
   @see-slot{gtk-print-job-settings}
@@ -150,100 +149,132 @@
   @see-function{gtk-print-job-get-status}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-print-job-page-setup -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "page-setup" 'gtk-print-job) t)
- "The @code{\"page-setup\"} property of type @class{gtk-page-setup}
-  (Read / Write / Construct Only) @br{}
+ "The @code{page-setup} property of type @class{gtk-page-setup}
+  (Read / Write / Construct) @br{}
   Page Setup.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "printer" 'gtk-print-job) t)
- "The @code{\"printer\"} property of type @class{gtk-printer}
-  (Read / Write / Construct Only) @br{}
-  Printer to print the job to.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "settings" 'gtk-print-job) t)
- "The @code{\"settings\"} property of type @class{gtk-print-settings}
-  (Read / Write / Construct Only) @br{}
-  Printer settings.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-print-job) t)
- "The @code{\"title\"} property of type @code{:string}
-  (Read / Write / Construct Only) @br{}
-  Title of the print job. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "track-print-status"
-                                               'gtk-print-job) t)
- "The @code{\"track-print-status\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  @em{True} if the print job will continue to emit \"status-changed\" signals
-  after the print data has been sent to the printer or print server. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-page-setup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-page-setup 'function)
- "@version{2013-10-21}
-  Accessor of the slot @code{\"page-setup\"} of the @class{gtk-print-job}
-  class.
+ "@version{2019-5-17}
+  Accessor of the @slot[gtk-print-job]{page-setup} slot of the
+  @class{gtk-print-job} class.
   @see-class{gtk-print-job}")
+
+;;; --- gtk-print-job-printer --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "printer" 'gtk-print-job) t)
+ "The @code{printer} property of type @class{gtk-printer}
+  (Read / Write / Construct Only) @br{}
+  Printer to print the job to.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-printer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-printer 'function)
- "@version{2013-10-21}
-  Accessor of the slot @code{\"printer\"} of the @class{gtk-print-job}
-  class.
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-printer}")
+ "@version{2019-5-17}
+  @argument[object]{a @class{gtk-print-job} object}
+  @return{The printer of @arg{job}.}
+  @begin{short}
+    Accessor of the @slot[gtk-print-job]{printer} of the
+    @class{gtk-print-job} class.
+  @end{short}
+
+  Gets the @class{gtk-printer} object of the print job.
+  @see-class{gtk-print-job}")
+
+;;; --- gtk-print-job-settings -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "settings" 'gtk-print-job) t)
+ "The @code{settings} property of type @class{gtk-print-settings}
+  (Read / Write / Construct Only) @br{}
+  Printer settings.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-settings atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-settings 'function)
- "@version{2013-10-21}
-  Accessor of the slot @code{\"settings\"} of the @class{gtk-print-job}
-  class.
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-settings}")
+ "@version{2019-5-17}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{The settings of @arg{job}.}
+  @begin{short}
+    Accessor of the @slot[gtk-print-job]{settings} slot of the
+    @class{gtk-print-job} class.
+  @end{short}
+
+  Gets the @class{gtk-print-settings} object of the print job.
+  @see-class{gtk-print-job}")
+
+;;; --- gtk-print-job-title ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-print-job) t)
+ "The @code{title} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  Title of the print job. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-title 'function)
- "@version{2013-10-21}
-  Accessor of the slot @code{\"title\"} of the @class{gtk-print-job}
-  class.
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-title}")
+ "@version{2019-5-17}
+  @argument[object]{a @class{gtk-print-job} object}
+  @return{The title of @arg{job}.}
+  @begin{short}
+    Accessor of the @slot[gtk-print-job]{title} slot of the
+    @class{gtk-print-job} class.
+  @end{short}
+
+  Gets the job title.
+  @see-class{gtk-print-job}")
+
+;;; --- gtk-print-job-track-print-status ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "track-print-status"
+                                               'gtk-print-job) t)
+ "The @code{track-print-status} property of type @code{:boolean}
+  (Read / Write) @br{}
+  @em{True} if the print job will continue to emit \"status-changed\" signals
+  after the print data has been sent to the printer or print server. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-track-print-status atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-track-print-status 'function)
- "@version{2013-10-21}
-  Accessor of the slot @code{\"track-print-status\"} of the
-  @class{gtk-print-job} class.
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-track-print-status}
-  @see-function{gtk-print-job-set-track-print-status}")
+ "@version{2019-5-17}
+  @syntax[]{(gtk-print-job-track-print-status object) => track-status}
+  @syntax[]{(setf (gtk-print-job-track-print-status object) track-status)}
+  @argument[object]{a @class{gtk-print-job} object}
+  @argument[track-status]{@em{true} to track status after printing}
+  @begin{short}
+    Accessor of the @slot[gtk-print-job]{track-print-status} slot of the
+    @class{gtk-print-job} class.
+  @end{short}
+
+  The @sym{gtk-print-job-track-print-status} slot access function
+  returns whether jobs will be tracked after printing.
+
+  If @arg{track-status} is @em{true}, the print job will try to continue
+  report on the status of the print job in the printer queues and printer.
+
+  This can allow your application to show things like \"out of paper\" issues,
+  and when the print job actually reaches the printer. This function is often
+  implemented using some form of polling, so it should not be enabled unless
+  needed.
+  @see-class{gtk-print-job}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_new ()
@@ -260,8 +291,6 @@
   @argument[page-setup]{a @class{gtk-page-setup} object}
   @return{A new @class{gtk-print-job} object}
   @short{Creates a new @class{gtk-print-job}.}
-
-  Since 2.10
   @see-class{gtk-print-job}
   @see-class{gtk-printer}
   @see-class{gtk-print-settings}
@@ -275,65 +304,6 @@
 (export 'gtk-print-job-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_settings ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-job-get-settings))
-
-(defun gtk-print-job-get-settings (job)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The settings of @arg{job}.}
-  @short{Gets the @class{gtk-print-settings} of the print job.}
-
-  Since 2.10
-  @see-class{gtk-print-job}
-  @see-class{gtk-print-settings}"
-  (gtk-print-job-settings job))
-
-(export 'gtk-print-job-get-settings)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_printer ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-job-get-printer))
-
-(defun gtk-print-job-get-printer (job)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The printer of @arg{job}.}
-  @short{Gets the @class{gtk-printer} of the print @arg{job}.}
-
-  Since 2.10
-  @see-class{gtk-print-job}
-  @see-class{gtk-printer}"
-  (gtk-print-job-printer job))
-
-(export 'gtk-print-job-get-printer)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-job-get-title))
-
-(defun gtk-print-job-get-title (job)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The title of @arg{job}.}
-  @short{Gets the job title.}
-
-  Since 2.10
-  @see-class{gtk-print-job}"
-  (gtk-print-job-title job))
-
-(export 'gtk-print-job-get-title)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_status ()
 ;;; ----------------------------------------------------------------------------
 
@@ -344,8 +314,6 @@
   @argument[job]{a @class{gtk-print-job} object}
   @return{The status of @arg{job}.}
   @short{Gets the status of the print job.}
-
-  Since 2.10
   @see-class{gtk-print-job}"
   (job (g-object gtk-print-job)))
 
@@ -405,8 +373,6 @@
   The file can be in any format understood by the platforms printing system,
   typically PostScript, but on many platforms PDF may work too. See the
   functions @fun{gtk-printer-accepts-pdf} and @fun{gtk-printer-accepts-ps}.
-
-  Since 2.10
   @see-class{gtk-print-job}
   @see-function{gtk-printer-accepts-pdf}
   @see-function{gtk-printer-accepts-ps}"
@@ -433,8 +399,6 @@
     Gets a cairo surface onto which the pages of the print job should be
     rendered.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-job}
   @see-symbol{cairo-surface-t}"
   (with-g-error (err)
@@ -485,8 +449,6 @@
   @argument[job]{a @class{gtk-print-job} object}
   @argument[func]{function to call when the job completes or an error occurs}
   @short{Sends the print job off to the printer.}
-
-  Since 2.10
   @see-class{gtk-print-job}"
   (%gtk-print-job-send job
                        (callback gtk-print-job-complete-func-cb)
@@ -494,57 +456,6 @@
                        (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-print-job-send)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_track_print_status ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-job-set-track-print-status))
-
-(defun gtk-print-job-set-track-print-status (job track-status)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[track-status]{@em{true} to track status after printing}
-  @begin{short}
-    If @arg{track-status} is @em{true}, the print job will try to continue
-    report on the status of the print job in the printer queues and printer.
-  @end{short}
-  This can allow your application to show things like \"out of paper\" issues,
-  and when the print job actually reaches the printer.
-
-  This function is often implemented using some form of polling, so it should
-  not be enabled unless needed.
-
-  Since 2.10
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-track-print-status}"
-  (setf (gtk-print-job-track-print-status job) track-status))
-
-(export 'gtk-print-job-set-track-print-status)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_track_print_status ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-job-get-track-print-status))
-
-(defun gtk-print-job-get-track-print-status (job)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{@em{True} if print job status will be reported after printing.}
-  @begin{short}
-    Returns wheter jobs will be tracked after printing.
-  @end{short}
-  For details, see the function @fun{gtk-print-job-set-track-print-status}.
-
-  Since 2.10
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-track-print-status}"
-  (gtk-print-job-track-print-status job))
-
-(export 'gtk-print-job-get-track-print-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_pages ()
@@ -556,8 +467,6 @@
   @argument[job]{a @class{gtk-print-job} object}
   @return{The @symbol{gtk-print-pages} setting.}
   @short{Gets the @symbol{gtk-print-pages} setting for this job.}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-symbol{gtk-print-pages}"
   (job (g-object gtk-print-job)))
@@ -576,8 +485,6 @@
   @begin{short}
     Sets the @symbol{gtk-print-pages} setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-symbol{gtk-print-pages}"
   (job (g-object gtk-print-job))
@@ -638,8 +545,6 @@
   @begin{short}
     Gets the @symbol{gtk-page-set} setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-symbol{gtk-page-set}"
   (job (g-object gtk-print-job)))
@@ -658,8 +563,6 @@
   @begin{short}
     Sets the @symbol{gtk-page-set} setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-symbol{gtk-page-set}"
   (job (g-object gtk-print-job))
@@ -677,8 +580,6 @@
   @argument[job]{a @class{gtk-print-job} object}
   @return{The number of copies.}
   @short{Gets the number of copies of this job.}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-num-copies}"
   (job (g-object gtk-print-job)))
@@ -695,8 +596,6 @@
   @argument[job]{a @class{gtk-print-job} object}
   @argument[num-copies]{the number of copies}
   @short{Sets the number of copies for this job.}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-num-copies}"
   (job (g-object gtk-print-job))
@@ -716,8 +615,6 @@
   @begin{short}
     Gets the scale for this job, where 1.0 means unscaled.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-scale}"
   (job (g-object gtk-print-job)))
@@ -736,8 +633,6 @@
   @begin{short}
     Sets the scale for this job, where 1.0 means unscaled.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-scale}"
   (job (g-object gkt-print-job))
@@ -757,8 +652,6 @@
   @begin{short}
     Gets the n-up setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-n-up}"
   (job (g-object gtk-print-job)))
@@ -777,8 +670,6 @@
   @begin{short}
     Sets the n-up setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-n-up}"
   (job (g-object gtk-print-job))
@@ -799,8 +690,6 @@
   @begin{short}
     Gets the n-up layout setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-n-up-layout}"
   (job (g-object gtk-print-job)))
@@ -819,8 +708,6 @@
   @begin{short}
     Sets the n-up layout setting for this job.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-n-up-layout}"
   (job (g-object gtk-print-job))
@@ -840,8 +727,6 @@
   @begin{short}
     Gets whether the job is printed rotated.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-rotate}"
   (job (g-object gtk-print-job)))
@@ -860,8 +745,6 @@
   @begin{short}
     Sets whether this job is printed rotated.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-rotate}"
   (job (g-object gtk-print-job))
@@ -881,8 +764,6 @@
   @begin{short}
     Gets whether this job is printed collated.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-collate}"
   (job (g-object gtk-print-job)))
@@ -901,8 +782,6 @@
   @begin{short}
     Sets whether this job is printed collated.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-collate}"
   (job (g-object gtk-print-job))
@@ -922,8 +801,6 @@
   @begin{short}
     Gets whether this job is printed reversed.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-set-reverse}"
   (job (g-object gtk-print-job)))
@@ -942,8 +819,6 @@
   @begin{short}
     Sets whether this job is printed reversed.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-reverse}"
   (job (g-object gtk-print-job)))
