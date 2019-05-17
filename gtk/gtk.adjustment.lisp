@@ -113,30 +113,33 @@
   @begin{short}
     The @sym{gtk-adjustment} object represents a value which has an associated
     lower and upper bound, together with step and page increments, and a page
-    size. It is used within several GTK+ widgets, including
-    @class{gtk-spin-button}, @class{gtk-viewport}, and @class{gtk-range} (which
-    is a base class for @class{gtk-scrollbar}, and @class{gtk-scale}).
+    size.
   @end{short}
+  It is used within several GTK+ widgets, including @class{gtk-spin-button},
+  @class{gtk-viewport}, and @class{gtk-range}, which is a base class for
+  @class{gtk-scrollbar}, and @class{gtk-scale}.
 
   The @sym{gtk-adjustment} object does not update the value itself. Instead it
   is left up to the owner of the @sym{gtk-adjustment} to control the value.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (adjustment)   : No Recursion
+ lambda (adjustment)    : No Recursion
       @end{pre}
       Emitted when one or more of the @sym{gtk-adjustment} fields have been
       changed, other than the value field.
       @begin[code]{table}
-        @entry[adjustment]{The object which received the signal.}
+        @entry[adjustment]{The @sym{gtk-adjustment} object which received the
+          signal.}
       @end{table}
     @subheading{The \"value-changed\" signal}
       @begin{pre}
- lambda (adjustment)   : No Recursion
+ lambda (adjustment)    : No Recursion
       @end{pre}
       Emitted when the @sym{gtk-adjustment} value field has been changed.
       @begin[code]{table}
-        @entry[adjustment]{The object which received the signal.}
+        @entry[adjustment]{The @sym{gtk-adjustment} object which received the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-adjustment-lower}
@@ -162,11 +165,33 @@
 (setf (gethash 'gtk-adjustment-lower atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-lower 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-lower object) => lower}
+  @syntax[]{(setf (gtk-adjustment-lower object) lower)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[lower]{the new minimum value}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{lower} of the
+    Accessor of the @slot[gtk-adjustment]{lower} slot of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-lower} slot access function
+  retrieves the minimum value of the adjustment.
+
+  The @sym{(setf gtk-adjustment-lower)} slot access function
+  sets the minimum value of the adjustment.
+
+  When setting multiple adjustment properties via their individual setters,
+  multiple \"changed\" signals will be emitted. However, since the emission of
+  the \"changed\" signal is tied to the emission of the \"notify\" signals of
+  the changed properties, it is possible to compress the \"changed\"
+  signals into one by calling the @fun{g-object-freeze-notify} and
+  @fun{g-object-thaw-notify} functions around the calls to the individual
+  setters.
+
+  Alternatively, using a single @fun{g-object-set} for all the properties to
+  change, or using the @fun{gtk-adjustment-configure} function has the same
+  effect of compressing \"changed\" emissions.
   @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-page-increment ------------------------------------------
@@ -183,11 +208,25 @@
 (setf (gethash 'gtk-adjustment-page-increment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-page-increment 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-page-increment object) => page-increment}
+  @syntax[]{(setf (gtk-adjustment-page-increment object) page-increment)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[page-increment]{the new page increment}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{page-increment} of the
+    Accessor of the @slot[gtk-adjustment]{page-increment} slot of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-page-increment} slot access function
+  retrieves the page increment of the adjustment.
+
+  The @sym{(setf gtk-adjustment-page-increment)} slot access function
+  sets the page increment of the adjustment.
+
+  See the @fun{gtk-adjustment-lower} slot access function about how to compress
+  multiple emissions of the \"changed\" signal when setting multiple adjustment
+  properties.
   @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-page-size -----------------------------------------------
@@ -195,7 +234,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "page-size" 'gtk-adjustment) 't)
  "The @code{page-size} property of type @code{:double} (Read / Write) @br{}
-  The page size of the adjustment. Note that the @arg{page-size} is irrelevant
+  The page size of the adjustment. Note that the @code{page-size} is irrelevant
   and should be set to zero if the adjustment is used for a simple scalar value,
   e. g. in a @class{gtk-spin-button}. @br{}
   Default value: 0")
@@ -204,11 +243,25 @@
 (setf (gethash 'gtk-adjustment-page-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-page-size 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-page-size object) => page-size}
+  @syntax[]{(setf (gtk-adjustment-page-size object) page-size)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[page-size]{the new page size}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{page-size} of the
+    Accessor of the @slot[gtk-adjustment]{page-size} slot of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-page-size} slot access function
+  retrieves the page size of the adjustment.
+
+  The @sym{(setf gtk-adjustment-page-size)} slot access function
+  sets the page size of the adjustment.
+
+  See the @fun{gtk-adjustment-lower} slot access function about how to compress
+  multiple emissions of the \"changed\" signal when setting multiple adjustment
+  properties.
   @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-step-increment ------------------------------------------
@@ -224,11 +277,25 @@
 (setf (gethash 'gtk-adjustment-step-increment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-step-increment 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-step-increment object) => step-increment}
+  @syntax[]{(setf (gtk-adjustment-step-increment object) step-increment)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[step-increment]{the new step increment}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{step-increment} of the
+    Accessor of the @slot[gtk-adjustment]{step-increment} of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-step-increment} slot access function
+  retrieves the step increment of the adjustment.
+
+  The @sym{(setf gtk-adjustment-step-increment)} slot access function
+  sets the step increment of the adjustment.
+
+  See the @fun{gtk-adjustment-lower} slot access function about how to compress
+  multiple emissions of the \"changed\" signal when setting multiple adjustment
+  properties.
   @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-upper ---------------------------------------------------
@@ -237,18 +304,36 @@
 (setf (documentation (atdoc:get-slot-from-name "upper" 'gtk-adjustment) 't)
  "The @code{upper} property of type @code{:double} (Read / Write) @br{}
   The maximum value of the adjustment. Note that values will be restricted by
-  @arg{upper} - @arg{page-size} if the @arg{page-size} property is nonzero.@br{}
+  @code{upper} - @code{page-size} if the @code{page-size} property is nonzero.
+  @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-upper atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-upper 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-upper object) => upper}
+  @syntax[]{(setf (gtk-adjustment-upper object) upper)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[upper]{the new maximum value}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{upper} of the
+    Accessor of the @slot[gtk-adjustment]{upper} slot of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-upper} slot access function
+  retrieves the maximum value of the adjustment.
+
+  The @sym{(setf gtk-adjustment-upper)} slot access function
+  sets the maximum value of the adjustment.
+
+  Note that values will be restricted by @code{upper} - @code{page-size} if the
+  @code{page-size} property is nonzero.
+
+  See the @fun{gtk-adjustment-lower} slot access function about how to compress
+  multiple emissions of the \"changed\" signal when setting multiple adjustment
+  properties.
   @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-value ---------------------------------------------------
@@ -263,11 +348,26 @@
 (setf (gethash 'gtk-adjustment-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-adjustment-value 'function)
- "@version{2013-2-10}
+ "@version{2019-5-17}
+  @syntax[]{(gtk-adjustment-value object) => value}
+  @syntax[]{(setf (gtk-adjustment-value object) value)}
+  @argument[object]{a @class{gtk-adjustment} object}
+  @argument[value]{the new value}
   @begin{short}
-    Accessor of the slot @slot[gtk-adjustment]{value} of the
+    Accessor of the @slot[gtk-adjustment]{value} slot of the
     @class{gtk-adjustment} class.
   @end{short}
+
+  The @sym{gtk-adjustment-value} slot access function
+  gets the current value of the adjustment.
+
+  The @sym{(setf gtk-adjustment-value)} slot access function
+  sets the @class{gtk-adjustment} value. The value is clamped to lie between
+  @code{lower} and @code{upper}.
+
+  Note that for adjustments which are used in a @class{gtk-scrollbar}, the
+  effective range of allowed values goes from @code{lower} to @code{upper}
+  - @code{page-size}.
   @see-class{gtk-adjustment}")
 
 ;;; ----------------------------------------------------------------------------
@@ -289,7 +389,8 @@
   @argument[page-increment]{the page increment}
   @argument[page-size]{the page size}
   @return{A new @class{gtk-adjustment} object.}
-  @short{Creates a new @class{gtk-adjustment} object.}"
+  @short{Creates a new @class{gtk-adjustment} object.}
+  @see-class{gtk-adjustment}"
   (make-instance 'gtk-adjustment
                  :value value
                  :lower lower
@@ -299,47 +400,6 @@
                  :page-size page-size))
 
 (export 'gtk-adjustment-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-value))
-
-(defun gtk-adjustment-get-value (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current value of the adjustment.}
-  @short{Gets the current value of the adjustment.}
-  See the function @fun{gtk-adjustment-set-value}.
-  @see-function{gtk-adjustment-set-value}"
-  (gtk-adjustment-value adjustment))
-
-(export 'gtk-adjustment-get-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-set-value))
-
-(defun gtk-adjustment-set-value (adjustment value)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[value]{the new value}
-  @begin{short}
-    Sets the @class{gtk-adjustment} value. The value is clamped to lie between
-    @code{lower} and @code{upper}.
-  @end{short}
-
-  Note that for adjustments which are used in a @class{gtk-scrollbar}, the
-  effective range of allowed values goes from @code{lower} to @code{upper}
-  - @code{page-size}."
-  (setf (gtk-adjustment-value adjustment) value))
-
-(export 'gtk-adjustment-set-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_clamp_page ()
@@ -358,7 +418,8 @@
   @end{short}
   If the range is larger than the page size, then only the start of it will be
   in the current page. A \"changed\" signal will be emitted if the value is
-  changed."
+  changed.
+  @see-class{gtk-adjustment}"
   (adjustment (g-object gtk-adjustment))
   (lower :double)
   (upper :double))
@@ -377,11 +438,12 @@
   typically called by the owner of the @class{gtk-adjustment} after it has
   changed any of the @class{gtk-adjustment} fields other than the value.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-adjustment-changed} has been deprecated since version 
+    The @sym{gtk-adjustment-changed} function has been deprecated since version
     3.18 and should not be used in newly-written code. GTK+ emits the
     \“changed\” signal itself whenever any of the properties (other than value)
     change.
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gtk-adjustment}"
   (adjustment (g-object gtk-adjustment)))
 
 (export 'gtk-adjustment-changed)
@@ -400,11 +462,12 @@
   This is typically called by the owner of the @class{gtk-adjustment} object
   after it has changed the @class{gtk-adjustment} value field.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-adjustment-value-changed} has been deprecated since
+    The @sym{gtk-adjustment-value-changed} function has been deprecated since
     version 3.18 and should not be used in newly-written code. GTK+ emits the
     \“value-changed\” signal itself whenever any of the properties (other than
     value) change.
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gtk-adjustment}"
   (adjustment (g-object gtk-adjustment)))
 
 (export 'gtk-adjustment-value-changed)
@@ -427,8 +490,9 @@
     Sets all properties of the adjustment at once.
   @end{short}
   Use this function to avoid multiple emissions of the \"changed\" signal. See
-  the function @fun{gtk-adjustment-set-lower} for an alternative way of
-  compressing multiple emissions of \"changed\" into one.
+  the @fun{gtk-adjustment-lower} function for an alternative way of compressing
+  multiple emissions of \"changed\" signals into one.
+  @see-class{gtk-adjustment}
   @see-function{gtk-adjustment-set-lower}"
   (adjustment (g-object gtk-adjustment))
   (value :double)
@@ -439,74 +503,6 @@
   (page-size :double))
 
 (export 'gtk-adjustment-configure)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_lower ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-lower))
-
-(defun gtk-adjustment-get-lower (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current minimum value of the adjustment.}
-  @short{Retrieves the minimum value of the adjustment.}
-  @see-class{gtk-adjustment}"
-  (gtk-adjustment-lower adjustment))
-
-(export 'gtk-adjustment-get-lower)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_page_increment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-page-increment))
-
-(defun gtk-adjustment-get-page-increment (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current page increment of the adjustment.}
-  @short{Retrieves the page increment of the adjustment.}
-  @see-class{gtk-adjustment}"
-  (gtk-adjustment-page-increment adjustment))
-
-(export 'gtk-adjustment-get-page-increment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_page_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-page-size))
-
-(defun gtk-adjustment-get-page-size (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current page size of the adjustment.}
-  @short{Retrieves the page size of the adjustment.}
-  @see-class{gtk-adjustment}"
-  (gtk-adjustment-page-size adjustment))
-
-(export 'gtk-adjustment-get-page-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_step_increment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-step-increment))
-
-(defun gtk-adjustment-get-step-increment (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current step increment of the adjustment.}
-  @short{Retrieves the step increment of the adjustment.}
-  @see-class{gtk-adjustment}"
-  (gtk-adjustment-step-increment adjustment))
-
-(export 'gtk-adjustment-get-step-increment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_minimum_increment ()
@@ -525,149 +521,5 @@
        (gtk-adjustment-page-increment adjustment)))
 
 (export 'gtk-adjustment-get-minimum-increment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_get_upper ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-get-upper))
-
-(defun gtk-adjustment-get-upper (adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @return{The current maximum value of the adjustment.}
-  @short{Retrieves the maximum value of the adjustment.}
-  @see-class{gtk-adjustment}"
-  (gtk-adjustment-upper adjustment))
-
-(export 'gtk-adjustment-get-upper)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_lower ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-set-lower))
-
-(defun gtk-adjustment-set-lower (adjustment lower)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[lower]{the new minimum value}
-  @begin{short}
-    Sets the minimum value of the adjustment.
-  @end{short}
-
-  When setting multiple adjustment properties via their individual setters,
-  multiple \"changed\" signals will be emitted. However, since the emission of
-  the \"changed\" signal is tied to the emission of the \"notify\" signals of
-  the changed properties, it is possible to compress the \"changed\"
-  signals into one by calling the functions @fun{g-object-freeze-notify} and
-  @fun{g-object-thaw-notify} around the calls to the individual setters.
-
-  Alternatively, using a single @fun{g-object-set} for all the properties to
-  change, or using the function @fun{gtk-adjustment-configure} has the same
-  effect of compressing \"changed\" emissions.
-  @see-function{g-object-freeze-notify}
-  @see-function{g-object-thaw-notify}
-  @see-function{g-object-set}"
-  (setf (gtk-adjustment-lower adjustment) lower))
-
-(export 'gtk-adjustment-set-lower)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_page_increment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-set-page-increment))
-
-(defun gtk-adjustment-set-page-increment (adjustment page-increment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[page-increment]{the new page increment}
-  @begin{short}
-    Sets the page increment of the adjustment.
-  @end{short}
-
-  See the functions @fun{gtk-adjustment-set-lower} about how to compress
-  multiple emissions of the \"changed\" signal when setting multiple adjustment
-  properties.
-  @see-function{gtk-adjustment-set-lower}"
-  (setf (gtk-adjustment-page-increment adjustment) page-increment))
-
-(export 'gtk-adjustment-set-page-increment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_page_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-set-page-size))
-
-(defun gtk-adjustment-set-page-size (adjustment page-size)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[page-size]{the new page size}
-  @begin{short}
-    Sets the page size of the adjustment.
-  @end{short}
-
-  See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
-  emissions of the \"changed\" signal when setting multiple adjustment
-  properties.
-  @see-function{gtk-adjustment-set-lower}"
-  (setf (gtk-adjustment-page-size adjustment) page-size))
-
-(export 'gtk-adjustment-set-page-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_step_increment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustment-set-step-increment))
-
-(defun gtk-adjustment-set-step-increment (adjustment step-increment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[step-increment]{the new step increment}
-  @begin{short}
-    Sets the step increment of the adjustment.
-  @end{short}
-
-  See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
-  emissions of the \"changed\" signal when setting multiple adjustment
-  properties.
-  @see-function{gtk-adjustment-set-lower}"
-  (setf (gtk-adjustment-step-increment adjustment) step-increment))
-
-(export 'gtk-adjustment-set-step-increment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_adjustment_set_upper ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-adjustent-set-upper))
-
-(defun gtk-adjustment-set-upper (adjustment upper)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @argument[upper]{the new maximum value}
-  @begin{short}
-    Sets the maximum value of the adjustment.
-  @end{short}
-
-  Note that values will be restricted by @code{upper} - @code{page-size} if the
-  @code{page-size} property is nonzero.
-
-  See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
-  emissions of the \"changed\" signal when setting multiple adjustment
-  properties.
-  @see-function{gtk-adjustment-set-lower}"
-  (setf (gtk-adjustment-upper adjustment) upper))
-
-(export 'gtk-adjustment-set-upper)
 
 ;;; --- End of file gtk.adjustment.lisp ----------------------------------------
