@@ -190,7 +190,7 @@
       (documentation 'gtk-handle-box-child-detached 'function)
  "@version{2013-3-26}
   @begin{short}
-    Accessor of the slot @slot[gtk-handle-box]{child-detached} of the
+    Accessor of the @slot[gtk-handle-box]{child-detached} slot of the
     @class{gtk-handle-box} class.
   @end{short}
   @see-class{handle-box}")
@@ -211,7 +211,7 @@
       (documentation 'gtk-handle-box-handle-position 'function)
  "@version{2013-3-26}
   @begin{short}
-    Accessor of the slot @slot[gtk-handle-box]{handle-position} of the
+    Accessor of the @slot[gtk-handle-box]{handle-position} slot of the
     @class{gtk-handle-box} class.
   @end{short}
   @see-class{gtk-handle-box}")
@@ -232,7 +232,7 @@
       (documentation 'gtk-handle-box-shadow-type 'function)
  "@version{2013-3-26}
   @begin{short}
-    Accessor of the slot @slot[gtk-handle-box]{shadow-type} of the
+    Accessor of the @slot[gtk-handle-box]{shadow-type} slot of the
     @class{gtk-handle-box} class.
   @end{short}
   @see-class{gtk-handle-box}")
@@ -253,7 +253,7 @@
       (documentation 'gtk-handle-box-snap-edge 'function)
  "@version{2013-3-26}
   @begin{short}
-    Accessor of the slot @slot[gtk-handle-box]{snap-edge} of the
+    Accessor of the @slot[gtk-handle-box]{snap-edge} slot of the
     @class{gtk-handle-box} class.
   @end{short}
   @see-class{gtk-handle-box}")
@@ -275,7 +275,7 @@
       (documentation 'gtk-handle-box-snap-edge-set 'function)
  "@version{2013-3-26}
   @begin{short}
-    Accessor of the slot @slot[gtk-handle-box]{snap-edge-set} of the
+    Accessor of the @slot[gtk-handle-box]{snap-edge-set} slot of the
     @class{gtk-handle-box} class.
   @end{short}
   @see-class{gtk-handle-box}")
