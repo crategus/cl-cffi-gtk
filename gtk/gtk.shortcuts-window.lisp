@@ -170,7 +170,7 @@
       (documentation 'gtk-shortcuts-window-section-name 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-window]{section-name} of the
+    Accessor of the @slot[gtk-shortcuts-window]{section-name} slot of the
     @class{gtk-shortcuts-window} class.
   @end{short}
   @see-class{gtk-shortcuts-window}")
@@ -193,7 +193,7 @@
       (documentation 'gtk-shortcuts-window-view-name 'function)
  "@version{2019-4-12}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-window]{view-name} of the
+    Accessor of the @slot[gtk-shortcuts-window]{view-name} slot of the
     @class{gtk-shortcuts-window} class.
   @end{short}
   @see-class{gtk-shortcuts-window}")
