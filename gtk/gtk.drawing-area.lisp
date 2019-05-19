@@ -76,7 +76,7 @@
   @begin{itemize}
     @begin{item}
       Mouse and button press signals to respond to input from the user. Use the
-      function @fun{gtk-widget-add-events} to enable events you wish to receive.
+      @fun{gtk-widget-add-events} function to enable events you wish to receive.
     @end{item}
     @begin{item}
       The \"realize\" signal to take any necessary actions when the widget is
@@ -131,18 +131,18 @@
   Draw signals are normally delivered when a drawing area first comes
   onscreen, or when it is covered by another window and then uncovered. You can
   also force an expose event by adding to the \"damage region\" of the drawing
-  area's window; the functions @fun{gtk-widget-queue-draw-area} and
-  @fun{gdk-window-invalidate-rect} are equally good ways to do this. You will
-  then get a draw signal for the invalid region.
+  area's window; the @fun{gtk-widget-queue-draw-area} and
+  @fun{gdk-window-invalidate-rect} functions are equally good ways to do this.
+  You will then get a draw signal for the invalid region.
 
   The available routines for drawing are documented on the GDK Drawing
   Primitives page and the cairo documentation.
 
   To receive mouse events on a drawing area, you will need to enable them with
-  the function @fun{gtk-widget-add-events}. To receive keyboard events, you will
-  need to set the @code{\"can-focus\"} property on the drawing area, and you
-  should probably draw some user-visible indication that the drawing area is
-  focused. Use the function @fun{gtk-widget-has-focus} in your expose event
+  the @fun{gtk-widget-add-events} function. To receive keyboard events, you will
+  need to set the @slot[gtk-widget]{can-focus} property on the drawing area, and
+  you should probably draw some user-visible indication that the drawing area is
+  focused. Use the @fun{gtk-widget-has-focus} function in your expose event
   handler to decide whether to draw the focus indicator. See the function
   @see-function{gtk-render-focus} for one way to draw focus.
   @see-function{gtk-widget-add-events}
