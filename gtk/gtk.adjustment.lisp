@@ -391,13 +391,15 @@
   @return{A new @class{gtk-adjustment} object.}
   @short{Creates a new @class{gtk-adjustment} object.}
   @see-class{gtk-adjustment}"
-  (make-instance 'gtk-adjustment
-                 :value value
-                 :lower lower
-                 :upper upper
-                 :step-increment step-increment
-                 :page-increment page-increment
-                 :page-size page-size))
+  (let ((adjustment (make-instance 'gtk-adjustment
+                                   :lower lower
+                                   :upper upper
+                                   :step-increment step-increment
+                                   :page-increment page-increment
+                                   :page-size page-size)))
+    ;; ensure setting of the arguments lower and upper and then value
+    (setf (gtk-adjustment-value adjustment) value)
+    adjustment))
 
 (export 'gtk-adjustment-new)
 
