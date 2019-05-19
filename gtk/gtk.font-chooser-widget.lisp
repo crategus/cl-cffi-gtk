@@ -80,19 +80,17 @@
  "@version{2013-6-18}
   @begin{short}
     The @sym{gtk-font-chooser-widget} widget lists the available fonts, styles
-    and sizes, allowing the user to select a font. It is used in the
-    @class{gtk-font-chooser-dialog} widget to provide a dialog box for selecting
-    fonts.
+    and sizes, allowing the user to select a font.
   @end{short}
+  It is used in the @class{gtk-font-chooser-dialog} widget to provide a dialog
+  box for selecting fonts.
 
-  To set the font which is initially selected, use the functions
-  @fun{gtk-font-chooser-set-font} or @fun{gtk-font-chooser-set-font-desc}.
+  To set or to get the font which is initially selected, use the
+  @fun{gtk-font-chooser-font} or @fun{gtk-font-chooser-font-desc}
+  slot access functions.
 
-  To get the selected font use the functions @fun{gtk-font-chooser-get-font} or
-  @fun{gtk-font-chooser-get-font-desc}.
-
-  To change the text which is shown in the preview area, use the function
-  @fun{gtk-font-chooser-set-preview-text}.
+  To change the text which is shown in the preview area, use the
+  @fun{gtk-font-chooser-set-preview-text} function.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-font-chooser-widget} class has a single CSS node with name
     @code{fontchooser}.
@@ -123,9 +121,9 @@
  "@version{2019-5-6}
   @begin{short}
     Accessor of the slot @slot[gtk-font-chooser-widget]{tweak-action} of the
-    @class{gtk-font-button} class.
+    @class{gtk-font-chooser-widget} class.
   @end{short}
-  @see-class{gtk-font-button}")
+  @see-class{gtk-font-chooser-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_widget_new ()
@@ -138,8 +136,7 @@
  "@version{2013-6-18}
   @return{A new @class{gtk-font-chooser-widget} widget.}
   @short{Creates a new @class{gtk-font-chooser-widget} widget.}
-
-  Since 3.2"
+  @see-class{gtk-font-chooser-widget}"
   (make-instance 'gtk-font-chooser-widget))
 
 (export 'gtk-font-chooser-widget-new)
