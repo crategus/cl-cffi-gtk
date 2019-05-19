@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkRange
 ;;;
-;;; Base class for widgets which visualize an adjustment
+;;;     Base class for widgets which visualize an adjustment
 ;;;
 ;;; Synopsis
 ;;;
@@ -152,102 +152,92 @@
   setting a \"fill level\" on range widgets. See the function
   @fun{gtk-range-set-fill-level}.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"arrow-displacement-x\" style property}
-      @code{\"arrow-displacement-x\"} of type @code{:int} (Read) @br{}
-      How far in the x direction to move the arrow when the button is
-      depressed. @br{}
-      @begin{indent}
-        @code{\"arrow-displacement-x\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Default value: 0
-
-    @subheading{The \"arrow-displacement-y\" style property}
-      @code{\"arrow-displacement-y\"} of type @code{:int} (Read) @br{}
-      How far in the y direction to move the arrow when the button is
-      depressed. @br{}
-     @begin{indent}
-        @code{\"arrow-displacement-y\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Default value: 0
-
-    @subheading{The \"arrow-scaling\" style property}
-      @code{\"arrow-scaling\"} of type @code{:float} (Read) @br{}
-      The arrow size proportion relative to the scroll button size. @br{}
-      Allowed values: [0,1] @br{}
-     @begin{indent}
-        @code{\"arrow-scaling\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Default value: 0.5 @br{}
-      Since 2.14
-
-    @subheading{The \"slider-width\" style property}
-      @code{\"slider-width\"} of type @code{:int} (Read) @br{}
-      Width of scrollbar or scale thumb. @br{}
-     @begin{indent}
-        @code{\"slider-width\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 14
-
-    @subheading{The \"stepper-size\" style property}
-      @code{\"stepper-size\"} of type @code{:int} (Read) @br{}
-      Length of step buttons at ends. @br{}
-     @begin{indent}
-        @code{\"stepper-size\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 14
-
-    @subheading{The \"stepper-spacing\" style property}
-      @code{\"stepper-spacing\"} of type @code{:int} (Read) @br{}
-      The spacing between the stepper buttons and thumb. Note that
-      stepper-spacing will not have any effect if there are no steppers. @br{}
-     @begin{indent}
-        @code{\"stepper-spacing\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 0
-
-    @subheading{The \"trough-border\" style property}
-      @code{\"trough-border\"} of type @code{:int} (Read) @br{}
-      Spacing between thumb/steppers and outer trough bevel. @br{}
-     @begin{indent}
-        @code{\"trough-border\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored.
-      @end{indent}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"trough-under-steppers\" style property}
-      @code{\"trough-under-steppers\"} of type @code{:boolean} (Read) @br{}
-      Whether to draw the trough across the full length of the range or to
-      exclude the steppers and their spacing. @br{}
-     @begin{indent}
-        @code{\"trough-under-steppers\"} has been deprecated since version 3.20
-        and should not be used in newly-written code. The value of this style
-        property is ignored, and the widget will behave as if it was set to
-        @emph{true}.
-      @end{indent}
-      Default value: @em{true} @br{}
-      Since 2.10
+    @begin[code]{table}
+      @begin[arrow-displacement-x]{entry}
+        The @code{arrow-displacement-x} style property of type @code{:int}
+        (Read) @br{}
+        How far in the x direction to move the arrow when the button is
+        depressed. @br{}
+        @em{Warning:} The @code{arrow-displacement-x} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[arrow-displacement-y]{entry}
+        The @code{arrow-displacement-y} style property of type @code{:int}
+        (Read) @br{}
+        How far in the y direction to move the arrow when the button is
+        depressed. @br{}
+        @em{Warning:} The @code{arrow-displacement-y} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[arrow-scaling]{entry}
+        The @code{arrow-scaling} style property of type @code{:float} (Read)
+        @br{}
+        The arrow size proportion relative to the scroll button size. @br{}
+        Allowed values: [0,1] @br{}
+        @em{Warning:} The @code{arrow-scaling} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
+        Default value: 0.5
+      @end{entry}
+      @begin[slider-width]{entry}
+        The @code{slider-width} style property of type @code{:int} (Read) @br{}
+        Width of scrollbar or scale thumb. @br{}
+        @em{Warning:} The @code{slider-width} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. The
+        value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 14
+      @end{entry}
+      @begin[stepper-size]{entry}
+        The @code{stepper-size} style property of type @code{:int} (Read) @br{}
+        Length of step buttons at ends. @br{}
+        @em{Warning:} The @code{stepper-size} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. The
+        value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 14
+      @end{entry}
+      @begin[stepper-spacing]{entry}
+        The @code{stepper-spacing} style property of type @code{:int} (Read)
+        @br{}
+        The spacing between the stepper buttons and thumb. Note that
+        stepper-spacing will not have any effect if there are no steppers. @br{}
+        @em{Warming:} The @code{stepper-spacing} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[trough-border]{entry}
+        The @code{trough-border} style property of type @code{:int} (Read) @br{}
+        Spacing between thumb/steppers and outer trough bevel. @br{}
+        @em{Warning:} The @code{trough-border} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[trough-under-steppers]{entry}
+        The @code{trough-under-steppers} style property of type @code{:boolean}
+        (Read) @br{}
+        Whether to draw the trough across the full length of the range or to
+        exclude the steppers and their spacing. @br{}
+        @em{Warning:} The @code{trough-under-steppers} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored, and the widget will
+        behave as if it was set to @emph{true}. @br{}
+        Default value: @em{true}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"adjust-bounds\" signal}
       @begin{pre}
- lambda (range value)   : Run Last
+ lambda (range value)    : Run Last
       @end{pre}
       Emitted before clamping a value, to give the application a chance to
       adjust the bounds.
@@ -257,7 +247,7 @@
       @end{table}
     @subheading{The \"change-value\" signal}
       @begin{pre}
- lambda (range scroll value)   : Run Last
+ lambda (range scroll value)    : Run Last
       @end{pre}
       The \"change-value\" signal is emitted when a scroll action is performed
       on a range. It allows an application to determine the type of scroll event
@@ -278,11 +268,9 @@
         @entry[Returns]{@em{True} to prevent other handlers from being invoked
           for the signal, @code{nil} to propagate the signal further.}
       @end{table}
-      Since 2.6
-
     @subheading{The \"move-slider\" signal}
       @begin{pre}
- lambda (range step)   : Action
+ lambda (range step)    : Action
       @end{pre}
       Virtual function that moves the slider. Used for keybindings.
       @begin[code]{table}
@@ -291,7 +279,7 @@
       @end{table}
     @subheading{The \"value-changed\" signal}
       @begin{pre}
- lambda (range)   : Run Last
+ lambda (range)    : Run Last
       @end{pre}
       Emitted when the range value changes.
       @begin[code]{table}
@@ -308,9 +296,7 @@
   @see-slot{gtk-range-upper-stepper-sensitivity}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-range-adjustment ---------------------------------------------------
@@ -327,21 +313,21 @@
       "Accessor"
       (documentation 'gtk-range-adjustment 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
   @syntax[]{(gtk-range-adjustment object) => adjustement}
   @syntax[]{(setf (gtk-range-adjustment object) adjustment)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[adjustment]{a @class{gtk-adjustment} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{adjustment} of the @class{gtk-range}
+    Accessor of the @slot[gtk-range]{adjustment} slot of the @class{gtk-range}
     class.
   @end{short}
 
-  The generic function @sym{gtk-range-adjustment} gets the
+  The @sym{gtk-range-adjustment} slot access function gets the
   @class{gtk-adjustment} object which is the \"model\" object for
   @class{gtk-range}.
 
-  The generic function @sym{(setf gtk-range-adjustment)} sets the adjustment to
-  be used as the \"model\" object for this range widget.
+  The @sym{(setf gtk-range-adjustment)} slot access function sets the adjustment
+  to be used as the \"model\" object for this range widget.
 
   The adjustment indicates the current range value, the minimum and maximum
   range values, the step/page increments used for keybindings and scrolling,
@@ -359,29 +345,28 @@
 (setf (documentation (atdoc:get-slot-from-name "fill-level" 'gtk-range) 't)
  "The @code{fill-level} property of type @code{:double} (Read / Write) @br{}
   The fill level (e. g. prebuffering of a network stream). @br{}
-  See the function @fun{gtk-range-fill-level}. @br{}
-  Default value: 1.79769e+308 @br{}
-  Since 2.12")
+  See the @fun{gtk-range-fill-level} function. @br{}
+  Default value: 1.79769e+308")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-fill-level atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-range-fill-level 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[fill-level]{the new position of the fill level indicator}
   @syntax[]{(gtk-range-fill-level object) => fill-level}
   @syntax[]{(setf (gtk-range-fill-level object) fill-level)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[fill-level]{the new position of the fill level indicator}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{fill-level} of the @class{gtk-range}
+    Accessor of the @slot[gtk-range]{fill-level} slot of the @class{gtk-range}
     class.
   @end{short}
 
-  The generic function @sym{gtk-range-fill-level} gets the current position of
-  the fill level indicator.
-
-  The generic function @sym{(setf gtk-range-fill-level)} sets the new position
+  The @sym{gtk-range-fill-level} slot access function gets the current position
   of the fill level indicator.
+
+  The @sym{(setf gtk-range-fill-level)} slot access function sets the new
+  position of the fill level indicator.
 
   The \"fill level\" is probably best described by its most prominent use case,
   which is an indicator for the amount of pre-buffering in a streaming media
@@ -391,14 +376,12 @@
 
   This amount of prebuffering can be displayed on the range's trough and is
   themeable separately from the trough. To enable fill level display, use the
-  function @fun{gtk-range-show-fill-level}. The range defaults to not
+  @fun{gtk-range-show-fill-level} function. The range defaults to not
   showing the fill level.
 
   Additionally, it is possible to restrict the range's slider position to
   values which are smaller than the fill level. This is controller by the
-  function @fun{gtk-range-restrict-to-fill-level} and is by default enabled.
-
-  Since 2.12
+  @fun{gtk-range-restrict-to-fill-level} function and is by default enabled.
   @see-class{gtk-range}
   @see-function{gtk-range-show-fill-level}
   @see-function{gtk-range-restrict-to-fill-level}")
@@ -416,16 +399,16 @@
       "Accessor"
       (documentation 'gtk-range-inverted 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[setting]{@em{true} to invert the @arg{range}}
   @syntax[]{(gtk-range-inverted object) => setting}
   @syntax[]{(setf (gtk-range-inverted object) setting)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[setting]{@em{true} to invert the @arg{range}}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{inverted} of the @class{gtk-range}
+    Accessor of the @slot[gtk-range]{inverted} slot of the @class{gtk-range}
     class.
   @end{short}
 
-  The generic function @sym{gtk-range-inverted} gets wheter the range is
+  The @sym{gtk-range-inverted} slot access function gets wheter the range is
   inverted.
 
   Ranges normally move from lower to higher values as the slider moves from
@@ -449,24 +432,22 @@
       "Accessor"
       (documentation 'gtk-range-lower-stepper-sensitivity 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[sensitivity]{the lower stepper's sensitivity policy}
   @syntax[]{(gtk-range-lower-stepper-sensitivity object) => sensitivity}
   @syntax[]{(setf (gtk-range-lower-stepper-sensitivity object) sensitivity)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[sensitivity]{the lower stepper's sensitivity policy}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{lower-stepper-sensitivity} of the
+    Accessor of the @slot[gtk-range]{lower-stepper-sensitivity} slot of the
     @class{gtk-range} class.
   @end{short}
 
-  The generic function @sym{gtk-range-lower-stepper-sensitivity} gets the
+  The @sym{gtk-range-lower-stepper-sensitivity} slot access function gets the
   sensitivity policy for the stepper that points to the 'lower' end of the
   @class{gtk-range}'s adjustment.
 
-  The generic function @sym{(setf gtk-range-lower-stepper-sensitivity} sets the
-  sensitivity policy for the stepper that points to the 'lower' end of the
+  The @sym{(setf gtk-range-lower-stepper-sensitivity} slot access function sets
+  the sensitivity policy for the stepper that points to the 'lower' end of the
   @class{gtk-range}'s adjustment.
-
-  Since 2.10
   @see-class{gtk-range}
   @see-function{gtk-range-upper-stepper-sensitivity}")
 
@@ -479,34 +460,31 @@
   (Read / Write) @br{}
   The @code{restrict-to-fill-level} property controls whether slider
   movement is restricted to an upper boundary set by the fill level. See
-  the function @fun{gtk-range-restrict-to-fill-level}. @br{}
-  Default value: @em{true} @br{}
-  Since 2.12")
+  the @fun{gtk-range-restrict-to-fill-level} function. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-restrict-to-fill-level atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-range-restrict-to-fill-level 'function)
  "@version{2013-3-18}
+  @syntax[]{(gtk-range-restrict-to-fill-level object) => setting}
+  @syntax[]{(setf (gtk-range-restrict-to-fill-level object) setting)}
   @argument[object]{a @class{gtk-range} widget}
   @argument[setting]{whether the fill level restricts slider
     movement}
-  @syntax[]{(gtk-range-restrict-to-fill-level object) => setting}
-  @syntax[]{(setf (gtk-range-restrict-to-fill-level object) setting)}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{restrict-to-fill-level} of the
+    Accessor of the @slot[gtk-range]{restrict-to-fill-level} slot of the
     @class{gtk-range} class.
   @end{short}
 
-  The generic function @sym{gtk-range-restrict-to-fill-level} gets whether the
-  range is restricted to the fill level.
+  The @sym{gtk-range-restrict-to-fill-level} slot access function gets whether
+  the range is restricted to the fill level.
 
-  The generic function @sym{(setf gtk-range-restrict-to-fill-level)} sets
-  whether the slider is restricted to the fill level. See the function
-  @fun{gtk-range-fill-level} for a general description of the fill level
-  concept.
-
-  Since 2.12
+  The @sym{(setf gtk-range-restrict-to-fill-level)} slot access function sets
+  whether the slider is restricted to the fill level. See the
+  @fun{gtk-range-fill-level} function for a general description of the fill
+  level concept.
   @see-class{gtk-range}
   @see-function{gtk-range-fill-level}")
 
@@ -516,7 +494,7 @@
 (setf (documentation (atdoc:get-slot-from-name "round-digits" 'gtk-range) 't)
  "The @code{round-digits} property of type @code{:int} (Read / Write) @br{}
   The number of digits to round the value to when it changes, or -1. See the
-  @code{\"change-value\"} signal. @br{}
+  \"change-value\" signal. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -525,22 +503,21 @@
       "Accessor"
       (documentation 'gtk-range-round-digits 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[round-digits]{the precision in digits, or -1}
   @syntax[]{(gtk-range-round-digits object) => round-digits}
   @syntax[]{(setf (gtk-range-round-digits object) round-digits)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[round-digits]{the precision in digits, or -1}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{round-digits} of the @class{gtk-range}
+    Accessor of the @slot[gtk-range]{round-digits} slot of the @class{gtk-range}
     class.
   @end{short}
 
-  The generic function @sym{gtk-range-round-digits} gets the number of digits
-  to round the value to when it changes.
+  The @sym{gtk-range-round-digits} slot access function gets the number of
+  digits to round the value to when it changes.
 
-  The generic function @sym{(setf gtk-range-round-digits)} sets the number of
-  digits to round the value to when it changes. See the \"change-value\" signal.
-
-  Since 2.24
+  The @sym{(setf gtk-range-round-digits)} slot access function sets the number
+  of digits to round the value to when it changes. See the \"change-value\"
+  signal.
   @see-class{gtk-range}")
 
 ;;; --- gtk-range-show-fill-level ----------------------------------------------
@@ -551,33 +528,30 @@
   (Read / Write) @br{}
   The @code{show-fill-level} property controls whether fill level indicator
   graphics are displayed on the trough.
-  See the function @fun{gtk-range-show-fill-level}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  See the @fun{gtk-range-show-fill-level} function. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-show-fill-level atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-range-show-fill-level 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[show-fill-level]{whether a fill level indicator graphics is shown}
   @syntax[]{(gtk-range-show-fill-level object) => show-fill-level}
   @syntax[]{(setf (gtk-range-show-fill-level object) show-fill-level)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[show-fill-level]{whether a fill level indicator graphics is shown}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{show-fill-level} of the
+    Accessor of the @slot[gtk-range]{show-fill-level} slot of the
     @class{gtk-range} class.
   @end{short}
 
-  The generic function @sym{gtk-range-show-fill-level} gets whether the range
-  displays the fill level graphically.
+  The @sym{gtk-range-show-fill-level} slot access function gets whether the
+  range displays the fill level graphically.
 
-  The generic function @sym{(setf gtk-range-show-fill-level)} sets whether a
-  graphical fill level is show on the trough. See the function
-  @fun{gtk-range-fill-level} for a general description of the fill level
-  concept.
-
-  Since 2.12
+  The @sym{(setf gtk-range-show-fill-level)} slot access function sets whether
+  a graphical fill level is show on the trough. See the
+  @fun{gtk-range-fill-level} function for a general description of the fill
+  level concept.
   @see-class{gtk-range}
   @see-function{gtk-range-fill-level}")
 
@@ -597,24 +571,22 @@
       "Accessor"
       (documentation 'gtk-range-upper-stepper-sensitivity 'function)
  "@version{2016-1-16}
-  @argument[object]{a @class{gtk-range} widget}
-  @argument[sensitivity]{the upper stepper's sensitivity policy.}
   @syntax[]{(gtk-range-upper-stepper-sensitivity object) => sensitivity}
   @syntax[]{(setf (gtk-range-upper-stepper-sensitivity object) sensitivity)}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[sensitivity]{the upper stepper's sensitivity policy.}
   @begin{short}
-    Accessor of the slot @slot[gtk-range]{upper-stepper-sensitivity} of the
+    Accessor of the @slot[gtk-range]{upper-stepper-sensitivity} slot of the
     @class{gtk-range} class.
   @end{short}
 
-  The generic function @sym{gtk-range-upper-stepper-sensitivity} gets the
+  The @sym{gtk-range-upper-stepper-sensitivity} slot access function gets the
   sensitivity policy for the stepper that points to the 'upper' end of the
   @class{gtk-range}'s adjustment.
 
-  The generic function @sym{(setf gtk-range-upper-stepper-sensitivity)} sets
+  The @sym{(setf gtk-range-upper-stepper-sensitivity)} slot access function sets
   the sensitivity policy for the stepper that points to the 'upper' end of the
   @class{gtk-range}'s adjustment.
-
-  Since 2.10
   @see-class{gtk-range}")
 
 ;;; ----------------------------------------------------------------------------
@@ -708,10 +680,8 @@
   @argument[range]{a @class{gtk-range} widget}
   @return{@em{True} if the range is flippable.}
   @begin{short}
-    Gets the value set by the function @fun{gtk-range-set-flippable}.
+    Gets the value set by the @fun{gtk-range-set-flippable} function.
   @end{short}
-
-  Since 2.18
   @see-class{gtk-range}
   @see-function{gtk-range-set-flippable}"
   (range (g-object gtk-range)))
@@ -731,9 +701,7 @@
     If a range is flippable, it will switch its direction if it is horizontal
     and its direction is @code{:rtl}.
   @end{short}
-  See the function @fun{gtk-widget-get-direction}.
-
-  Since 2.18
+  See the @fun{gtk-widget-get-direction} function.
   @see-class{gtk-range}
   @see-function{gtk-widget-get-direction}"
   (range (g-object gtk-range))
@@ -753,13 +721,12 @@
   @begin{short}
     This function is useful mainly for @class{gtk-range} subclasses.
   @end{short}
-  See the function @fun{gtk-range-set-min-slider-size}.
+  See the @fun{gtk-range-set-min-slider-size} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-range-get-min-slider-size} has been deprecated since
+    The @sym{gtk-range-get-min-slider-size} function has been deprecated since
     version 3.20 and should not be used in newly-written code. Use the
     min-height/min-width CSS properties on the slider node.
   @end{dictionary}
-  Since 2.20
   @see-class{gtk-range}
   @see-function{gtk-range-set-min-slider-size}"
   (range (g-object gtk-range)))
@@ -787,8 +754,6 @@
   @end{short}
 
   This function is useful mainly for @class{gtk-range} subclasses.
-
-  Since 2.20
   @see-class{gtk-range}"
   (let ((range-rect (make-gdk-rectangle)))
     (%gtk-range-get-range-rect range range-rect)
@@ -819,8 +784,6 @@
   @end{short}
 
   This function is useful mainly for @class{gtk-range} subclasses.
-
-  Since 2.20
   @see-class{gtk-range}"
   (with-foreign-objects ((slider-start :int) (slider-end :int))
     (%gtk-range-get-slider-range range slider-start slider-end)
@@ -846,9 +809,7 @@
   @begin{short}
     This function is useful mainly for @class{gtk-range} subclasses.
   @end{short}
-  See the function @fun{gtk-range-set-slider-size-fixed}.
-
-  Since 2.20
+  See the @fun{gtk-range-set-slider-size-fixed} function.
   @see-class{gtk-range}
   @see-function{gtk-range-set-slider-size-fixed}"
   (range (g-object gtk-range)))
@@ -870,12 +831,10 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-range-set-min-slider-size} has been deprecated since
+    The @sym{gtk-range-set-min-slider-size} function has been deprecated since
     version 3.20 and should not be used in newly-written code.
     Use the min-height/min-width CSS properties on the slider node.
   @end{dictionary}
-
-  Since 2.20
   @see-class{gtk-range}"
   (range (g-object gtk-range))
   (min-size :int))
@@ -898,8 +857,6 @@
   @end{short}
 
   This function is useful mainly for @class{gtk-range} subclasses.
-
-  Since 2.20
   @see-class{gtk-range}"
   (range (g-object gtk-range))
   (size-fixed :boolean))
