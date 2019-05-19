@@ -66,13 +66,6 @@
    (:file "gtk.buildable")             ; GtkBuildable
    (:file "gtk.builder")               ; Build an interface
 
-   ;; Inferfaces
-   (:file "atk.implementor-iface")     ; AtkImplementorIface
-   (:file "gtk.orientable")            ; Interface for flippable widgets
-   (:file "gtk.activatable")           ; Interface for activatable widgets
-   (:file "gtk.scrollable")            ; Interface for scrollable widgets
-   (:file "gtk.actionable")            ; Interface for widgets that have actions
-
    ;; Theming in Gtk+
    (:file "gtk.stock-images")          ; Manipulating stock icons
    (:file "gtk.widget-path")           ; Widget path abstraction
@@ -85,6 +78,13 @@
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.numerable-icon")        ; A GIcon that allows numbered emblems
 
+   ;; Inferfaces
+   (:file "atk.implementor-iface")     ; AtkImplementorIface
+   (:file "gtk.orientable")            ; Interface for flippable widgets
+   (:file "gtk.activatable")           ; Interface for activatable widgets
+   (:file "gtk.scrollable")            ; Interface for scrollable widgets
+   (:file "gtk.actionable")            ; Interface for widgets that have actions
+
    ;; Abstract Base Classes
    (:file "gtk.widget")                ; Base class for all widgets
    (:file "gtk.misc")                  ; Base class for alignments
@@ -95,14 +95,14 @@
    (:file "gtk.im-context")            ; Base class for input contexts
 
    ;; Layout Containers
-   (:file "gtk.box")                   ; Container box   
+   (:file "gtk.box")                   ; Container box
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
    (:file "gtk.revealer"               ; Hide and show with animation
-          :if-feature :gtk-3-10)      
+          :if-feature :gtk-3-10)
    (:file "gtk.list-box"               ; A list container
           :if-feature :gtk-3-10)
    (:file "gtk.flow-box"               ; Allows reflowing its children
-          :if-feature :gtk-3-12)         
+          :if-feature :gtk-3-12)
    (:file "gtk.stack"                  ; A stacking container
           :if-feature :gtk-3-10)
    (:file "gtk.stack-switcher"         ; A controller for GtkStack
@@ -121,7 +121,7 @@
    (:file "gtk.expander")              ; Container which can hide childs
    (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
    (:file "gtk.fixed")                 ; Widgets at fixed coordinates
-   
+
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
    (:file "gtk.frame")                 ; Decorative frame
@@ -147,7 +147,7 @@
    (:file "gtk.progress-bar")          ; GtkProgessBar
    (:file "gtk.statusbar")             ; GTKStatusbar
    (:file "gtk.level-bar"              ; GtkLevelBar
-          :if-feature :gtk-3-6)             
+          :if-feature :gtk-3-6)
    (:file "gtk.info-bar")              ; GtkInfoBar
    (:file "gtk.status-icon")           ; GtkStatusIcon
    (:file "gtk.spinner")               ; GtkSpinner
@@ -302,7 +302,7 @@
    (:file "gtk.app-chooser-button")    ; Button to launch an application
    (:file "gtk.app-chooser-dialog")    ; Application chooser dialog
    (:file "gtk.app-chooser-widget")    ; Application chooser widget
-   
+
    ;; Gestures and event handling
    (:file "gtk.event-controller"        ; Handler of series of events
           :if-feature :gtk-3-14)

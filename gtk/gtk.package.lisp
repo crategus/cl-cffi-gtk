@@ -3536,41 +3536,59 @@ setup_tree (void)
       A button to launch a color selection dialog.
 
       @about-class{gtk-color-button}
+
+      @about-generic{gtk-color-button-alpha}
+      @about-generic{gtk-color-button-color}
+      @about-generic{gtk-color-button-rgba}
+      @about-generic{gtk-color-button-show-editor}
+      @about-generic{gtk-color-button-title}
+      @about-generic{gtk-color-button-use-alpha}
+
       @about-function{gtk-color-button-new}
       @about-function{gtk-color-button-new-with-color}
       @about-function{gtk-color-button-new-with-rgba}
-      @about-function{gtk-color-button-set-color}
-      @about-function{gtk-color-button-get-color}
-      @about-function{gtk-color-button-set-alpha}
-      @about-function{gtk-color-button-get-alpha}
-      @about-function{gtk-color-button-set-rgba}
-      @about-function{gtk-color-button-get-rgba}
-      @about-function{gtk-color-button-set-use-alpha}
-      @about-function{gtk-color-button-get-use-alpha}
-      @about-function{gtk-color-button-set-title}
-      @about-function{gtk-color-button-get-title}
     @end{subsection}
     @begin[GtkColorChooserWidget]{subsection}
       A widget for choosing colors.
 
       @about-class{gtk-color-chooser-widget}
+
+      @about-generic{gtk-color-chooser-widget-show-editor}
+
       @about-function{gtk-color-chooser-widget-new}
     @end{subsection}
     @begin[GtkColorChooserDialog]{subsection}
       A dialog for choosing colors.
 
       @about-class{gtk-color-chooser-dialog}
+
+      @about-generic{gtk-color-chooser-dialog-show-editor}
+
       @about-function{gtk-color-chooser-dialog-new}
     @end{subsection}
     @begin[GtkFileChooser]{subsection}
       File chooser interface used by @class{gtk-file-chooser-widget} and
       @class{gtk-file-chooser-dialog}.
 
-      @about-class{gtk-file-chooser}
       @about-symbol{gtk-file-chooser-action}
       @about-symbol{gtk-file-chooser-confirmation}
       @about-symbol{GTK_FILE_CHOOSER_ERROR}
       @about-symbol{gtk-file-chooser-error}
+
+      @about-class{gtk-file-chooser}
+
+      @about-generic{gtk-file-chooser-action}
+      @about-generic{gtk-file-chooser-create-folders}
+      @about-generic{gtk-file-chooser-do-overwrite-confirmation}
+      @about-generic{gtk-file-chooser-extra-widget}
+      @about-generic{gtk-file-chooser-filter}
+      @about-generic{gtk-file-chooser-local-only}
+      @about-generic{gtk-file-chooser-preview-widget}
+      @about-generic{gtk-file-chooser-preview-widget-active}
+      @about-generic{gtk-file-chooser-select-multiple}
+      @about-generic{gtk-file-chooser-show-hidden}
+      @about-generic{gtk-file-chooser-use-preview-label}
+
       @about-function{gtk-file-chooser-set-action}
       @about-function{gtk-file-chooser-get-action}
       @about-function{gtk-file-chooser-set-local-only}
@@ -3634,11 +3652,18 @@ setup_tree (void)
       A button to launch a file selection dialog.
 
       @about-class{gtk-file-chooser-button}
+
+      @about-generic{gtk-file-chooser-button-dialog}
+      @about-generic{gtk-file-chooser-button-focus-on-click}
+      @about-generic{gtk-file-chooser-button-title}
+      @about-generic{gtk-file-chooser-button-width-chars}
+
       @about-function{gtk-file-chooser-button-child-expand}
       @about-function{gtk-file-chooser-button-child-fill}
       @about-function{gtk-file-chooser-button-child-padding}
       @about-function{gtk-file-chooser-button-child-pack-type}
       @about-function{gtk-file-chooser-button-child-position}
+
       @about-function{gtk-file-chooser-button-new}
       @about-function{gtk-file-chooser-button-new-with-dialog}
       @about-function{gtk-file-chooser-button-get-title}
@@ -3669,11 +3694,16 @@ setup_tree (void)
       File chooser widget that can be embedded in other widgets.
 
       @about-class{gtk-file-chooser-widget}
+
+      @about-generic{gtk-file-chooser-widget-search-mode}
+      @about-generic{gtk-file-chooser-widget-subtitle}
+
       @about-function{gtk-file-chooser-widget-child-expand}
       @about-function{gtk-file-chooser-widget-child-fill}
       @about-function{gtk-file-chooser-widget-child-padding}
       @about-function{gtk-file-chooser-widget-child-pack-type}
       @about-function{gtk-file-chooser-widget-child-position}
+
       @about-function{gtk-file-chooser-widget-new}
     @end{subsection}
     @begin[GtkFileFilter]{subsection}
@@ -3699,13 +3729,18 @@ setup_tree (void)
       Interface implemented by widgets displaying fonts.
 
       @about-class{gtk-font-chooser}
+
+      @about-generic{gtk-font-chooser-font}
+      @about-generic{gtk-font-chooser-font-desc}
+      @about-generic{gtk-font-chooser-font-features}
+      @about-generic{gtk-font-chooser-language}
+      @about-generic{gtk-font-chooser-level}
+      @about-generic{gtk-font-chooser-preview-text}
+      @about-generic{gtk-font-chooser-show-preview-entry}
+
       @about-function{gtk-font-chooser-get-font-family}
       @about-function{gtk-font-chooser-get-font-face}
       @about-function{gtk-font-chooser-get-font-size}
-      @about-function{gtk-font-chooser-get-font}
-      @about-function{gtk-font-chooser-set-font}
-      @about-function{gtk-font-chooser-get-font-desc}
-      @about-function{gtk-font-chooser-set-font-desc}
       @about-function{gtk-font-chooser-get-preview-text}
       @about-function{gtk-font-chooser-set-preview-text}
       @about-function{gtk-font-chooser-get-show-preview-entry}
@@ -3716,20 +3751,16 @@ setup_tree (void)
       A button to launch a font chooser dialog.
 
       @about-class{gtk-font-button}
+
+      @about-generic{gtk-font-button-font-name}
+      @about-generic{gtk-font-button-show-size}
+      @about-generic{gtk-font-button-show-style}
+      @about-generic{gtk-font-button-title}
+      @about-generic{gtk-font-button-use-font}
+      @about-generic{gtk-font-button-use-size}
+
       @about-function{gtk-font-button-new}
       @about-function{gtk-font-button-new-with-font}
-      @about-function{gtk-font-button-set-font-name}
-      @about-function{gtk-font-button-get-font-name}
-      @about-function{gtk-font-button-set-show-style}
-      @about-function{gtk-font-button-get-show-style}
-      @about-function{gtk-font-button-set-show-size}
-      @about-function{gtk-font-button-get-show-size}
-      @about-function{gtk-font-button-set-use-font}
-      @about-function{gtk-font-button-get-use-font}
-      @about-function{gtk-font-button-set-use-size}
-      @about-function{gtk-font-button-get-use-size}
-      @about-function{gtk-font-button-set-title}
-      @about-function{gtk-font-button-get-title}
     @end{subsection}
     @begin[GtkFontChooserWidget]{subsection}
       A widget for selecting fonts.
@@ -3748,17 +3779,20 @@ setup_tree (void)
       Sidebar that displays frequently-used places in the file system.
 
       @about-symbol{gtk-places-open-flags}
+
       @about-class{gtk-places-sidebar}
 
-      @about-generic{gtk-places-sidebar-open-flags}
-      @about-generic{gtk-places-sidebar-location}
-      @about-generic{gtk-places-sidebar-show-recent}
-      @about-generic{gtk-places-sidebar-show-desktop}
-      @about-generic{gtk-places-sidebar-show-connect-to-server}
       @about-generic{gtk-places-sidebar-local-only}
+      @about-generic{gtk-places-sidebar-location}
+      @about-generic{gtk-places-sidebar-open-flags}
+      @about-generic{gtk-places-sidebar-populate-all}
+      @about-generic{gtk-places-sidebar-show-connect-to-server}
+      @about-generic{gtk-places-sidebar-show-desktop}
       @about-generic{gtk-places-sidebar-show-enter-location}
-      @about-generic{gtk-places-sidebar-show-trash}
       @about-generic{gtk-places-sidebar-show-other-locations}
+      @about-generic{gtk-places-sidebar-show-recent}
+      @about-generic{gtk-places-sidebar-show-starred-location}
+      @about-generic{gtk-places-sidebar-show-trash}
 
       @about-function{gtk-places-sidebar-new}
       @about-function{gtk-places-sidebar-add-shortcut}
@@ -3781,19 +3815,14 @@ setup_tree (void)
       @about-generic{gtk-frame-shadow-type}
 
       @about-function{gtk-frame-new}
-      @about-function{gtk-frame-set-label}
-      @about-function{gtk-frame-set-label-widget}
       @about-function{gtk-frame-set-label-align}
-      @about-function{gtk-frame-set-shadow-type}
-      @about-function{gtk-frame-get-label}
       @about-function{gtk-frame-get-label-align}
-      @about-function{gtk-frame-get-label-widget}
-      @about-function{gtk-frame-get-shadow-type}
     @end{subsection}
     @begin[GtkSeparator]{subsection}
       A separator widget.
 
       @about-class{gtk-separator}
+
       @about-function{gtk-separator-new}
     @end{subsection}
   @end{section}
@@ -3802,6 +3831,7 @@ setup_tree (void)
       A Scrollbar.
 
       @about-class{gtk-scrollbar}
+
       @about-function{gtk-scrollbar-new}
     @end{subsection}
     @begin[GtkScrolledWindow]{subsection}
@@ -3809,6 +3839,7 @@ setup_tree (void)
 
       @about-symbol{gtk-policy-type}
       @about-symbol{gtk-corner-type}
+
       @about-class{gtk-scrolled-window}
 
       @about-generic{gtk-scrolled-window-hadjustment}
@@ -4112,8 +4143,22 @@ setup_tree (void)
     @begin[GtkPrinter]{subsection}
       Represents a printer.
 
-      @about-class{gtk-printer}
       @about-class{gtk-print-backend}
+
+      @about-class{gtk-printer}
+
+      @about-generic{gtk-printer-accepting-jobs}
+      @about-generic{gtk-printer-accepts-pdf}
+      @about-generic{gtk-printer-accepts-ps}
+      @about-generic{gtk-printer-backend}
+      @about-generic{gtk-printer-icon-name}
+      @about-generic{gtk-printer-is-virtual}
+      @about-generic{gtk-printer-job-count}
+      @about-generic{gtk-printer-location}
+      @about-generic{gtk-printer-name}
+      @about-generic{gtk-printer-paused}
+      @about-generic{gtk-printer-state-message}
+
       @about-function{gtk-printer-new}
       @about-function{gtk-printer-get-backend}
       @about-function{gtk-printer-get-name}
@@ -4139,6 +4184,13 @@ setup_tree (void)
       Represents a print job.
 
       @about-class{gtk-print-job}
+
+      @about-generic{gtk-print-job-page-setup}
+      @about-generic{gtk-print-job-printer}
+      @about-generic{gtk-print-job-settings}
+      @about-generic{gtk-print-job-title}
+      @about-generic{gtk-print-job-track-print-status}
+
       @about-function{gtk-print-job-new}
       @about-function{gtk-print-job-get-settings}
       @about-function{gtk-print-job-get-printer}
@@ -4270,6 +4322,14 @@ setup_tree (void)
       A representation of an adjustable bounded value.
 
       @about-class{gtk-adjustment}
+
+      @about-generic{gtk-adjustment-lower}
+      @about-generic{gtk-adjustment-page-increment}
+      @about-generic{gtk-adjustment-page-size}
+      @about-generic{gtk-adjustment-step-increment}
+      @about-generic{gtk-adjustment-upper}
+      @about-generic{gtk-adjustment-value}
+
       @about-function{gtk-adjustment-new}
       @about-function{gtk-adjustment-get-value}
       @about-function{gtk-adjustment-set-value}
@@ -4289,18 +4349,24 @@ setup_tree (void)
       @about-function{gtk-adjustment-set-step-increment}
       @about-function{gtk-adjustment-set-upper}
     @end{subsection}
-    @begin[GtkArrow]{subsection}
-      Displays an arrow.
-
-      @about-class{gtk-arrow}
-      @about-function{gtk-arrow-new}
-      @about-function{gtk-arrow-set}
-    @end{subsection}
     @begin[GtkCalendar]{subsection}
       Displays a calendar and allows the user to select a date.
 
-      @about-class{gtk-calendar}
       @about-symbol{gtk-calendar-display-options}
+
+      @about-class{gtk-calendar}
+
+      @about-generic{gtk-calendar-day}
+      @about-generic{gtk-calendar-detail-height-rows}
+      @about-generic{gtk-calendar-detail-width-chars}
+      @about-generic{gtk-calendar-month}
+      @about-generic{gtk-calendar-no-month-change}
+      @about-generic{gtk-calendar-show-day-names}
+      @about-generic{gtk-calendar-show-details}
+      @about-generic{gtk-calendar-show-heading}
+      @about-generic{gtk-calendar-show-week-numbers}
+      @about-generic{gtk-calendar-year}
+
       @about-function{gtk-calendar-new}
       @about-function{gtk-calendar-select-month}
       @about-function{gtk-calendar-select-day}
@@ -4312,10 +4378,6 @@ setup_tree (void)
       @about-function{gtk-calendar-set-display-options}
       @about-function{gtk-calendar-get-date}
       @about-function{gtk-calendar-set-detail-func}
-      @about-function{gtk-calendar-get-detail-width-chars}
-      @about-function{gtk-calendar-set-detail-width-chars}
-      @about-function{gtk-calendar-get-detail-height-rows}
-      @about-function{gtk-calendar-set-detail-height-rows}
     @end{subsection}
     @begin[GtkDrawingArea]{subsection}
       A widget for custom user interface elements.
@@ -4328,16 +4390,23 @@ setup_tree (void)
       window.
 
       @about-class{gtk-event-box}
+
+      @about-generic{gtk-event-box-above-child}
+      @about-generic{gtk-event-box-visible-window}
+
       @about-function{gtk-event-box-new}
-      @about-function{gtk-event-box-set-above-child}
-      @about-function{gtk-event-box-get-above-child}
-      @about-function{gtk-event-box-set-visible-window}
-      @about-function{gtk-event-box-get-visible-window}
     @end{subsection}
     @begin[GtkHandleBox]{subsection}
       A widget for detachable window portions.
 
       @about-class{gtk-handle-box}
+
+      @about-generic{gtk-handle-box-child-detached}
+      @about-generic{gtk-handle-box-handle-position}
+      @about-generic{gtk-handle-box-shadow-type}
+      @about-generic{gtk-handle-box-snap-edge}
+      @about-generic{gtk-handle-box-snap-edge-set}
+
       @about-function{gtk-handle-box-new}
       @about-function{gtk-handle-box-set-shadow-type}
       @about-function{gtk-handle-box-set-handle-position}
@@ -4366,13 +4435,14 @@ setup_tree (void)
     @begin[GtkSizeGroup]{subsection}
       Grouping widgets so they request the same size.
 
-      @about-class{gtk-size-group}
       @about-symbol{gtk-size-group-mode}
+
+      @about-class{gtk-size-group}
+
+      @about-generic{gtk-size-group-ignore-hidden}
+      @about-generic{gtk-size-group-mode}
+
       @about-function{gtk-size-group-new}
-      @about-function{gtk-size-group-set-mode}
-      @about-function{gtk-size-group-get-mode}
-      @about-function{gtk-size-group-set-ignore-hidden}
-      @about-function{gtk-size-group-get-ignore-hidden}
       @about-function{gtk-size-group-add-widget}
       @about-function{gtk-size-group-remove-widget}
       @about-function{gtk-size-group-get-widgets}
@@ -4395,13 +4465,14 @@ setup_tree (void)
       An adapter which makes widgets scrollable.
 
       @about-class{gtk-viewport}
+
+      @about-generic{gtk-viewport-shadow-type}
+
       @about-function{gtk-viewport-new}
       @about-function{gtk-viewport-get-hadjustment}
       @about-function{gtk-viewport-get-vadjustment}
       @about-function{gtk-viewport-set-hadjustment}
       @about-function{gtk-viewport-set-vadjustment}
-      @about-function{gtk-viewport-set-shadow-type}
-      @about-function{gtk-viewport-get-shadow-type}
       @about-function{gtk-viewport-get-bin-window}
       @about-function{gtk-viewport-get-view-window}
     @end{subsection}
@@ -4414,6 +4485,7 @@ setup_tree (void)
       Base class for all widgets.
 
       @about-class{gtk-widget}
+
       @about-generic{gtk-widget-app-paintable}
       @about-generic{gtk-widget-can-default}
       @about-generic{gtk-widget-can-focus}
@@ -4452,7 +4524,7 @@ setup_tree (void)
       @about-generic{gtk-widget-visible}
       @about-generic{gtk-widget-width-request}
       @about-generic{gtk-widget-window}
-      @about-class{gtk-widget-class}
+
       @about-struct{gtk-requisition}
       @about-function{make-gtk-requisition}
       @about-function{copy-gtk-requisition}
@@ -4670,9 +4742,11 @@ setup_tree (void)
       Base class for widgets which contain other widgets.
 
       @about-class{gtk-container}
+
       @about-generic{gtk-container-border-width}
       @about-generic{gtk-container-child}
       @about-generic{gtk-container-resize-mode}
+
       @about-function{gtk-container-add}
       @about-function{gtk-container-remove}
       @about-function{gtk-container-add-with-properties}
@@ -4718,7 +4792,9 @@ setup_tree (void)
       A base class for menu objects.
 
       @about-class{gtk-menu-shell}
+
       @about-generic{gtk-menu-shell-take-focus}
+
       @about-function{gtk-menu-shell-append}
       @about-function{gtk-menu-shell-prepend}
       @about-function{gtk-menu-shell-insert}
@@ -4737,6 +4813,7 @@ setup_tree (void)
       Base class for widgets which visualize an adjustment
 
       @about-class{gtk-range}
+
       @about-generic{gtk-range-adjustment}
       @about-generic{gtk-range-fill-level}
       @about-generic{gtk-range-inverted}
@@ -4745,6 +4822,7 @@ setup_tree (void)
       @about-generic{gtk-range-round-digits}
       @about-generic{gtk-range-show-fill-level}
       @about-generic{gtk-range-upper-stepper-sensitivity}
+
       @about-function{gtk-range-get-fill-level}
       @about-function{gtk-range-get-restrict-to-fill-level}
       @about-function{gtk-range-get-show-fill-level}
@@ -4777,9 +4855,12 @@ setup_tree (void)
       Base class for input method contexts.
 
       @about-class{gtk-im-context}
+
       @about-generic{gtk-im-context-input-hints}
       @about-generic{gtk-im-context-input-purpose}
+
       @about-symbol{gtk-im-contextInfo}
+
       @about-function{gtk-im-context-set-client-window}
       @about-function{gtk-im-context-get-preedit-string}
       @about-function{gtk-im-context-filter-keypress}
@@ -4826,11 +4907,11 @@ setup_tree (void)
       @about-class{gtk-recent-info}
       @about-class{gtk-recent-data}
       @about-symbol{gtk-recnet-manager-error}
-      @about-symbol{gtk-recent-manager-error}
+
       @about-class{gtk-recent-manager}
 
       @about-generic{gtk-recent-manager-filename}
-      @about-generic{gtk-recent-manager-Read}
+      @about-generic{gtk-recent-manager-size}
 
       @about-function{gtk-recent-manager-new}
       @about-function{gtk-recent-manager-get-default}
@@ -4875,6 +4956,7 @@ setup_tree (void)
       @about-symbol{gtk-recent-sort-type}
       @about-symbol{GTK_RECENT_CHOOSER_ERROR}
       @about-symbol{gtk-recent-chooser-error}
+
       @about-class{gtk-recent-chooser}
 
       @about-generic{gtk-recent-chooser-filter}
@@ -6456,6 +6538,13 @@ setup_tree (void)
       @about-function{gtk-status-icon-position-menu}
       @about-function{gtk-status-icon-get-geometry}
       @about-function{gtk-status-icon-get-x11-window-id}
+    @end{subsection}
+    @begin[GtkArrow]{subsection}
+      Displays an arrow.
+
+      @about-class{gtk-arrow}
+      @about-function{gtk-arrow-new}
+      @about-function{gtk-arrow-set}
     @end{subsection}
   @end{section}")
 

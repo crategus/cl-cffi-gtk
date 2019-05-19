@@ -9,7 +9,7 @@ GTK+ Widgets and Objects
 
   Application support
 
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.24 &
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.24
     gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.24
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.24 &
 
@@ -156,9 +156,9 @@ GTK+ Widgets and Objects
  +  gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
  +  gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
 
- +  gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24
+ +  gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24 &
  +  gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
- +  gtk.file-chooser-native.lisp     - GtkFileChooserNative        - GTK+ 3.24 &
+ +  gtk.file-chooser-native.lisp     - GtkFileChooserNative        - GTK+ 3.24 %
  +  gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.24
  +  gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.24
  +  gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24 &
@@ -193,7 +193,7 @@ GTK+ Widgets and Objects
  +  gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.24
 
   Shortcuts Overview
-  
+
  +  gtk.shortcuts-window             - GtkShortcutsWindow          - GTK+ 3.24
  +  gtk-shortcuts-section            - GtkShortcutsSection         - GTK+ 3.24
  +  gtk-shortcuts-group              - GtkShortcutsGroup           - GTK+ 3.24
@@ -201,7 +201,7 @@ GTK+ Widgets and Objects
 
   Miscellaneous
 
- +  gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.24
+    gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.24
  +  gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.24
  +  gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.24
  +  not implemented                  - GtkGLArea
@@ -216,6 +216,7 @@ GTK+ Widgets and Objects
 
   Abstract Base Classes
 
+ +  gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
  +  gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
  +  gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
  +  gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24 &
