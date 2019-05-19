@@ -215,8 +215,9 @@
       to it to override the default behaviour, which is to call the
       @fun{gtk-show-uri} function.
       @begin[code]{table}
-        @entry[label]{The object on which the signal was emitted.}
-        @entry[uri]{The URI that is activated.}
+        @entry[label]{The @class{gtk-about-dialog} widget on which the signal
+          was emitted.}
+        @entry[uri]{A string with the URI that is activated.}
         @entry[Returns]{@em{True} if the link has been activated.}
       @end{table}
   @end{dictionary}
@@ -236,7 +237,7 @@
   @see-slot{gtk-about-dialog-website-label}
   @see-slot{gtk-about-dialog-wrap-license}
   @see-class{gtk-dialog}
-  @symbol{gtk-license}
+  @see-symbol{gtk-license}
   @see-function{gtk-dialog-run}
   @see-function{gtk-show-uri}")
 
