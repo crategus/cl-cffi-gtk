@@ -144,9 +144,8 @@
     @fun{gtk-dialog-add-buttons} function to add your own buttons.
   @end{short}
 
-  @subheading{Note}
-    Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
-    discouraged by the Gnome Human Interface Guidelines.
+  Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
+  discouraged by the Gnome Human Interface Guidelines.
   @begin{pre}
 (define-g-enum \"GtkButtonsType\" gtk-buttons-type
   (:export t
@@ -239,9 +238,7 @@
   (gtk-dialog-run dialog)
   (gtk-widget-destroy dialog))
     @end{pre}
-    You might do a non-modal @sym{gtk-message-dialog} as follows:
-
-    A non-modal dialog.
+    You might do a non-modal @sym{gtk-message-dialog} as follows.
     @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
                                       '(:destroy-with-parent)
@@ -324,7 +321,7 @@
       (documentation 'gtk-message-dialog-image 'function)
  "@version{2014-2-12}
   @argument[object]{a @class{gtk-message-dialog} window}
-  @argument[image]{the image}
+  @argument[image]{the image of type @class{gtk-widget}}
   @syntax[]{(gtk-message-dialog-image object) => image}
   @syntax[]{(setf (gtk-message-dialog-image object) image)}
   @begin{short}
@@ -369,8 +366,8 @@
 
   The @sym{gtk-message-dialog-message-area} slot access function returns the
   @class{gtk-box} widget with orientation @code{:vertical} corresponding to
-  the \"message area\" in the message @arg{dialog}. This is the box where the
-  @arg{dialog}'s primary and secondary labels are packed.
+  the \"message area\" in the message dialog. This is the box where the
+  dialog's primary and secondary labels are packed.
 
   You can add your own extra content to that box and it will appear below those
   labels, on the right side of the dialog's image, or on the left for
@@ -438,7 +435,7 @@
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-use-markup 'function)
  "@version{2014-3-5}
-  Accessor of the @slog[gtk-message-dialog]{secondary-use-markup} slot of the
+  Accessor of the @slot[gtk-message-dialog]{secondary-use-markup} slot of the
   @class{gtk-message-dialog} class.
   @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-format-secondary-markup}")
@@ -488,7 +485,7 @@
 (defun gtk-message-dialog-new (parent flags type buttons message &rest args)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-10}
-  @argument[parent]{transient parent, or @code{nil} for none}
+  @argument[parent]{transient @class{gtk-window} parent, or @code{nil} for none}
   @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
   @argument[type]{type of message of type @symbol{gtk-message-type}}
   @argument[buttons]{set of buttons to use of type @symbol{gtk-buttons-type}}
@@ -533,7 +530,7 @@
                                            &rest args)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-2}
-  @argument[parent]{transient parent, or @code{nil} for none}
+  @argument[parent]{transient @class{gtk-window} parent, or @code{nil} for none}
   @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
   @argument[type]{type of message of type @symbol{gtk-message-type}}
   @argument[buttons]{set of buttons to use of type @symbol{gtk-buttons-type}}
