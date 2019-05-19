@@ -26,7 +26,7 @@
                                  :width-request 200
                                  :height-request 200))
            ;; Store the Label Widget of the Frame.
-           (label-widget (gtk-frame-get-label-widget frame))
+           (label-widget (gtk-frame-label-widget frame))
            ;; The entry for input the text for the Frame Label
            (entry (make-instance 'gtk-entry
                                   :secondary-icon-stock "gtk-ok"
@@ -47,8 +47,8 @@
         (g-signal-connect entry "icon-press"
                           (lambda (entry icon-pos event)
                             (declare (ignore icon-pos event))
-                            (gtk-frame-set-label frame
-                                                 (gtk-entry-text entry))))
+                            (setf (gtk-frame-label frame)
+                                  (gtk-entry-text entry))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -56,7 +56,7 @@
                                           :label
                                           "<b>Set Frame Label</b>"))
         ;; Put the actual Label text into the entry.
-        (setf (gtk-entry-text entry) (gtk-frame-get-label frame))
+        (setf (gtk-entry-text entry) (gtk-frame-label frame))
         ;; Pack the entry in the action widget.
         (gtk-container-add action entry))
 
@@ -129,7 +129,7 @@
         (g-signal-connect combo "changed"
            (lambda (combobox)
              (let ((text (gtk-combo-box-text-get-active-text combobox)))
-               (gtk-frame-set-shadow-type frame (intern text :keyword)))))
+               (setf (gtk-frame-shadow-type frame) (intern text :keyword)))))
 
         (gtk-container-add action
                            (make-instance 'gtk-label
@@ -147,14 +147,14 @@
              (if (gtk-toggle-button-active widget)
                  (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
                    ;; Store the actual Label Widget.
-                   (setf label-widget (gtk-frame-get-label-widget frame))
+                   (setf label-widget (gtk-frame-label-widget frame))
                    (setf (gtk-widget-sensitive entry) nil)
-                   (gtk-frame-set-label-widget frame image)
+                   (setf (gtk-frame-label-widget frame) image)
                    (gtk-widget-show image))
                    ;; Restore the saved Label Widget.
                    (progn
                      (setf (gtk-widget-sensitive entry) t)
-                     (gtk-frame-set-label-widget frame label-widget)))))
+                     (setf (gtk-frame-label-widget frame) label-widget)))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t

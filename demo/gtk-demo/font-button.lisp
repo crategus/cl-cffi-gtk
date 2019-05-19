@@ -28,7 +28,7 @@
            (declare (ignore widget))
            (format t "Font is set:~%")
            (format t "   Font name   : ~A~%"
-                   (gtk-font-chooser-get-font button))
+                   (gtk-font-chooser-font button))
            (format t "   Font family : ~A~%"
                    (pango-font-family-get-name
                      (gtk-font-chooser-get-font-family button)))
