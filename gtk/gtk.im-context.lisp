@@ -150,7 +150,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"commit\" signal}
       @begin{pre}
- lambda (context str)   : Run Last
+ lambda (context str)    : Run Last
       @end{pre}
       The \"commit\" signal is emitted when a complete input sequence has been
       entered by the user. This can be a single character immediately after a
@@ -161,7 +161,7 @@
       @end{table}
     @subheading{The \"delete-surrounding\" signal}
       @begin{pre}
- lambda (context offset n-chars)   : Run Last
+ lambda (context offset n-chars)    : Run Last
       @end{pre}
       The \"delete-surrounding\" signal is emitted when the input method needs
       to delete all or part of the context surrounding the cursor.
@@ -175,7 +175,7 @@
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
- lambda (context)   : Run Last
+ lambda (context)    : Run Last
       @end{pre}
       The \"preedit-changed\" signal is emitted whenever the preedit sequence
       currently being entered has changed. It is also emitted at the end of a
@@ -186,7 +186,7 @@
       @end{table}
     @subheading{The \"preedit-end\" signal}
       @begin{pre}
- lambda (context)   : Run Last
+ lambda (context)    : Run Last
       @end{pre}
       The \"preedit-end\" signal is emitted when a preediting sequence has been
       completed or canceled.
@@ -195,7 +195,7 @@
       @end{table}
     @subheading{The \"preedit-start\" signal}
       @begin{pre}
- lambda (context)   : Run Last
+ lambda (context)    : Run Last
       @end{pre}
       The \"preedit-start\" signal is emitted when a new preediting sequence
       starts.
@@ -204,7 +204,7 @@
       @end{table}
     @subheading{The \"retrieve-surrounding\" signal}
       @begin{pre}
- lambda (context)   : Run Last
+ lambda (context)    : Run Last
       @end{pre}
       The \"retrieve-surrounding\" signal is emitted when the input method
       requires the context surrounding the cursor. The callback should set the
@@ -219,9 +219,7 @@
   @see-slot{gtk-im-context-input-purpose}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-im-context-input-hints ---------------------------------------------
@@ -238,7 +236,7 @@
       "Accessor"
       (documentation 'gtk-im-context-input-hints 'function)
  "@version{2016-1-16}
-  Accessor of the slot @slot[gtk-im-context]{input-hints} of the
+  Accessor of the @slot[gtk-im-context]{input-hints} slot of the
   @class{gtk-im-context} class.
   @see-class{gtk-im-context}")
 
@@ -257,7 +255,7 @@
       "Accessor"
       (documentation 'gtk-im-context-input-purpose 'function)
  "@version{2016-1-16}
-  Accessor of the slot @slot[gtk-im-context]{input-purpose} of the
+  Accessor of the @slot[gtk-im-context]{input-purpose} slot of the
   @class{gtk-im-context} class.
   @see-class{gtk-im-context}")
 
