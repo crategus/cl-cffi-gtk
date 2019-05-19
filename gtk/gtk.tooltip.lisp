@@ -88,7 +88,7 @@
       a tooltip is supposed to be shown. One of the arguments passed to the
       signal handler is a @sym{gtk-tooltip} object. This is the object that we
       are about to display as a tooltip, and can be manipulated in your callback
-      using functions like the function @fun{gtk-tooltip-set-icon}. There are
+      using functions like the @fun{gtk-tooltip-set-icon} function. There are
       functions for setting the tooltip's markup, setting an image from a stock
       icon, or even putting in a custom widget.
     @end{item}
@@ -106,12 +106,12 @@
       \"query-tooltip\" signal as before.
     @end{item}
     @begin{item}
-      Use the function @fun{gtk-widget-set-tooltip-window} to set a
+      Use the @fun{gtk-widget-set-tooltip-window} function to set a
       @class{gtk-window} created by you as tooltip window.
     @end{item}
     @begin{item}
       In the \"query-tooltip\" callback you can access your window using the
-      function @fun{gtk-widget-get-tooltip-window} and manipulate as you wish.
+      @fun{gtk-widget-get-tooltip-window} function and manipulate as you wish.
       The semantics of the return value are exactly as before, return @em{true}
       to show the window, @code{nil} to not show it.
     @end{item}
@@ -138,8 +138,6 @@
     with the Pango text markup language.
   @end{short}
   If @arg{markup} is @code{nil}, the label will be hidden.
-
-  Since 2.12
   @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-text}"
   (tooltip (g-object gtk-tooltip))
@@ -161,8 +159,6 @@
   @end{short}
   If @arg{text} is @code{nil}, the label will be hidden. See also the function
   @fun{gtk-tooltip-set-markup}.
-
-  Since 2.12
   @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-markup}"
   (tooltip (g-object gtk-tooltip))
@@ -183,8 +179,6 @@
     Sets the icon of the @arg{tooltip} (which is in front of the text) to be
     @arg{pixbuf}. If @arg{pixbuf} is @code{nil}, the image will be hidden.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (pixbuf g-object))
@@ -237,8 +231,6 @@
     @arg{icon-size} of type @symbol{gtk-icon-size}. If @arg{icon-name} is
     @code{nil}, the image will be hidden.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (icon-name :string)
@@ -262,8 +254,6 @@
     icon indicated by @arg{gicon} with the size indicated by @arg{size}. If
     @arg{gicon} is @code{nil}, the image will be hidden.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tooltip}
   @see-class{g-icon}
   @see-symbol{gtk-icon-size}"
@@ -290,8 +280,6 @@
     in the @arg{tooltip}, which can be configured using the function
     @fun{gtk-tooltip-set-markup} and @fun{gtk-tooltip-set-icon}.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-markup}
   @see-function{gtk-tooltip-set-icon}"
@@ -315,8 +303,6 @@
     is useful to call when, for example, the state of the widget changed by a
     key press.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-tooltip}"
   (display (g-object gdk-display)))
 
@@ -341,8 +327,6 @@
   For setting tooltips on @class{gtk-tree-view}, please refer to the
   convenience functions for this: @fun{gtk-tree-view-set-tooltip-row} and
   @fun{gtk-tree-view-set-tooltip-cell}.
-
-  Since 2.12
   @see-class{gtk-tooltip}
   @see-function{gtk-tree-view-set-tooltip-row}
   @see-function{gtk-tree-view-set-tooltip-cell}"
