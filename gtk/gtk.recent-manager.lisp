@@ -271,7 +271,7 @@
   from the file itself through GIO.
 
   Looking up the meta-data associated with a recently used file given its URI
-  requires calling the function @fun{gtk-recent-manager-lookup-item}:
+  requires calling the @fun{gtk-recent-manager-lookup-item} function:
   @begin{pre}
  GtkRecentManager *manager;
  GtkRecentInfo *info;
@@ -308,7 +308,7 @@
  lambda (recent-manager)    : Run First
       @end{pre}
       Emitted when the current recently used resources manager changes its
-      contents, either by calling the function @fun{gtk-recent-manager-add-item}
+      contents, either by calling the @fun{gtk-recent-manager-add-item} function
       or by another application.
       @begin[code]{table}
         @entry[recent-manager]{The recent manager.}
@@ -338,7 +338,7 @@
       (documentation 'gtk-recent-manager-filename 'function)
  "@version{2013-11-22}
   @begin{short}
-    Accessor of the slot @slot[gtk-recent-manager]{filename} of the
+    Accessor of the @slot[gtk-recent-manager]{filename} slot of the
     @class{gtk-recent-manager} class.
   @end[short}
   @see-class{gtk-recent-manager}")
@@ -358,7 +358,7 @@
       (documentation 'gtk-recent-manager-size 'function)
  "@version{2013-11-22}
   @begin{short}
-    Accessor of the slot @slot[gtk-recent-manager]{size} of the
+    Accessor of the @slot[gtk-recent-manager]{size slot} of the
     @class{gtk-recent-manager} class.
   @end{short}
   @see-class{gtk-recent-manager}")
@@ -381,7 +381,7 @@
   and emits the \"changed\" signal each time something inside the list changes.
 
   @class{gtk-recent-manager} objects are expensive: be sure to create them only
-  when needed. You should use the function @fun{gtk-recent-manager-get-default}
+  when needed. You should use the @fun{gtk-recent-manager-get-default} function
   instead.
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-get-default}"
@@ -425,9 +425,9 @@
 
   This function automatically retrieves some of the needed metadata and
   setting other metadata to common default values; it then feeds the data to
-  the function @fun{gtk-recent-manager-add-full}.
+  the @fun{gtk-recent-manager-add-full} function.
 
-  See the function @fun{gtk-recent-manager-add-full} if you want to explicitly
+  See the @fun{gtk-recent-manager-add-full} function if you want to explicitly
   define the metadata for the resource pointed by uri.
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-add-full}"
