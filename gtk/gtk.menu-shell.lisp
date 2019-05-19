@@ -101,7 +101,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-current\" signal}
       @begin{pre}
- lambda (menushell force-hide)   : Action
+ lambda (menushell force-hide)    : Action
       @end{pre}
       An action signal that activates the current menu item within the menu
       shell.
@@ -112,7 +112,7 @@
       @end{table}
     @subheading{The \"cancel\" signal}
       @begin{pre}
- lambda (menushell)   : Action
+ lambda (menushell)    : Action
       @end{pre}
       An action signal which cancels the selection within the menu shell. Causes
       the \"selection-done\" signal to be emitted.
@@ -121,7 +121,7 @@
       @end{table}
     @subheading{The \"cycle-focus\" signal}
       @begin{pre}
- lambda (menushell direction)   : Action
+ lambda (menushell direction)    : Action
       @end{pre}
       A keybinding signal which moves the focus in the given direction.
       @begin[code]{table}
@@ -138,7 +138,7 @@
       @end{table}
     @subheading{The \"insert\" signal}
       @begin{pre}
- lambda (menushell child position)   : Run First
+ lambda (menushell child position)    : Run First
       @end{pre}
       The \"insert\" signal is emitted when a new @class{gtk-menu-item} is
       added to a @sym{gtk-menu-shell}. A separate signal is used instead of
@@ -150,11 +150,9 @@
         @entry[child]{The @class{gtk-menu-item} that is being inserted.}
         @entry[position]{The position at which the insert occurs.}
       @end{table}
-      Since 3.2
-
     @subheading{The \"move-current\" signal}
       @begin{pre}
- lambda (menushell direction)   : Action
+ lambda (menushell direction)    : Action
       @end{pre}
       An keybinding signal which moves the current menu item in the direction
       specified by direction.
@@ -164,7 +162,7 @@
       @end{table}
     @subheading{The \"move-selected\" signal}
       @begin{pre}
- lambda (menushell distance)   : Run Last
+ lambda (menushell distance)    : Run Last
       @end{pre}
       The \"move-selected\" signal is emitted to move the selection to another
       item.
@@ -175,11 +173,9 @@
         @entry[Returns]{@em{True} to stop the signal emission, @code{nil} to
           continue.}
       @end{table}
-      Since 2.12
-
     @subheading{The \"selection-done\" signal}
       @begin{pre}
- lambda (menushell)   : Run First
+ lambda (menushell)    : Run First
       @end{pre}
       This signal is emitted when a selection has been completed within a menu
       shell.
@@ -201,27 +197,26 @@
 (setf (documentation (atdoc:get-slot-from-name "take-focus" 'gtk-menu-shell) 't)
  "The @code{take-focus} property of type @code{:boolean} (Read / Write)@br{}
   A boolean that determines whether the menu and its submenus grab the
-  keyboard focus. See the function @fun{gtk-menu-shell-take-focus}. @br{}
-  Default value: @em{true}@br{}
-  Since 2.8")
+  keyboard focus. See the @fun{gtk-menu-shell-take-focus} function. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-shell-take-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-shell-take-focus 'function)
  "@version{2016-1-16}
+  @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
+  @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @argument[take-focus]{@em{true} if the menu shell should take the keyboard
     focus on popup}
-  @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
-  @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
   @begin{short}
-    Accessor of the slot @slot[gtk-menu-shell]{take-focus} of the
+    Accessor of the @slot[gtk-menu-shell]{take-focus} slot of the
     @class{gtk-menu-shell} class.
   @end{short}
 
-  The generic function @sym{gtk-menu-shell-take-focus} returns @em{true} if the
-  menu shell will take the keyboard focus on popup.
+  The @sym{gtk-menu-shell-take-focus} slot access function returns @em{true} if
+  the menu shell will take the keyboard focus on popup.
 
   If @arg{take-focus} is @em{true} (the default) the menu shell will take the
   keyboard focus so that it will receive all keyboard events which is needed
@@ -246,9 +241,7 @@
   should not display mnemonics or accelerators, since it cannot be guaranteed
   that they will work.
 
-  See also the function @fun{gdk-keyboard-grab}.
-
-  Since 2.8
+  See also the @fun{gdk-keyboard-grab} function.
   @see-class{gtk-menu-shell}
   @see-function{gdk-keyboard-grab}")
 
@@ -362,8 +355,6 @@
     Select the first visible or selectable child of the menu shell; do not
     select tearoff items unless the only item is a tearoff item.
   @end{short}
-
-  Since 2.2
   @see-class{gtk-menu-shell}"
   (%gtk-menu-shell-select-first menu-shell search-sensitive))
 
@@ -415,8 +406,6 @@
  "@version{2013-5-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @short{Cancels the selection within the menu shell.}
-
-  Since 2.4
   @see-class{gtk-menu-shell}"
   (menu-shell g-object))
 
