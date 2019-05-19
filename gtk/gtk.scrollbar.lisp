@@ -157,7 +157,7 @@
         The @code{min-slider-length} style property of type @code{:int}
         (Read) @br{}
         Minimum length of scrollbar slider. @br{}
-        @b{Warning:} @code{min-slider-length} has been deprecated since version
+        @em{Warning:} @code{min-slider-length} has been deprecated since version
         3.20 and should not be used in newly-written code. Use
         min-height/min-width CSS properties on the slider element instead. The
         value of this style property is ignored. @br{}
@@ -325,7 +325,7 @@
   @short{Creates a new vertical scrollbar.}
   @begin[Warning]{dictionary}
     @sym{gtk-vscrollbar-new} has been deprecated since version 3.2 and should
-    not be used in newly-written code. Use the function @fun{gtk-scrollbar-new}
+    not be used in newly-written code. Use the @fun{gtk-scrollbar-new} function
     with @code{:vertical} instead.
   @end{dictionary}
   @see-class{gtk-scrollbar}
