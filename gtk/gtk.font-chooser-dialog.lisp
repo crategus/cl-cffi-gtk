@@ -77,11 +77,11 @@
     The @sym{gtk-font-chooser-dialog} widget is a dialog for selecting a font.
     It implements the @class{gtk-font-chooser} interface.
   @end{short}
-
-  @subheading{GtkFontChooserDialog as GtkBuildable}
+  @begin[GtkFontChooserDialog as GtkBuildable]{dictionary}
     The @sym{gtk-font-chooser-dialog} implementation of the
     @class{gtk-buildable} interface exposes the buttons with the names
     \"select_button\" and \"cancel_button\".
+  @end{dictionary}
   @see-class{gtk-font-chooser}")
 
 ;;; ----------------------------------------------------------------------------
@@ -97,8 +97,6 @@
   @argument[parent]{transient parent of the dialog, or @code{nil}}
   @return{A new @class{gtk-font-chooser-dialog} widget.}
   @short{Creates a new @class{gtk-font-chooser-dialog} widget.}
-
-  Since 3.2
   @see-class{gtk-font-chooser-dialog}"
   (make-instance 'gtk-font-chooser-dialog
                  :title title
