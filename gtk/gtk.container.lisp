@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkContainer
 ;;;
-;;; Base class for widgets which contain other widgets
+;;;     Base class for widgets which contain other widgets
 ;;;
 ;;; Types and Values
 ;;;
@@ -175,13 +175,13 @@
     when implementing height-for-width (or width-for-height) containers.
 
     Each request mode involves 2 virtual methods. Height-for-width apis run
-    through the function @fun{gtk-widget-get-preferred-width} and then through
-    the function @fun{gtk-widget-get-preferred-height-for-width}. When handling
+    through the @fun{gtk-widget-get-preferred-width} function and then through
+    the @fun{gtk-widget-get-preferred-height-for-width} function. When handling
     requests in the opposite @symbol{gtk-size-request-mode} it is important that
     every widget request at least enough space to display all of its content at
     all times.
 
-    When the function @fun{gtk-widget-get-preferred-height} is called on a
+    When the @fun{gtk-widget-get-preferred-height} function is called on a
     container that is height-for-width, the container must return the height for
     its minimum width. This is easily achieved by simply calling the reverse
     apis implemented for itself as follows:
@@ -210,7 +210,7 @@
        @}
   @}
     @end{pre}
-    Similarly, when the function @fun{gtk-widget-get-preferred-width-for-height}
+    Similarly, when the @fun{gtk-widget-get-preferred-width-for-height} function
     is called for a container or widget that is height-for-width, it then only
     needs to return the base minimum width like so:
     @begin{pre}
@@ -237,17 +237,17 @@
     allocation of widgets in the input orientation. Assuming an height-for-width
     request mode, a container would implement the
     @code{get_preferred_height_for_width()} virtual function by first calling
-    the function @fun{gtk-widget-get-preferred-width} for each of its children.
+    the @fun{gtk-widget-get-preferred-width} function for each of its children.
 
     For each potential group of children that are lined up horizontally, the
-    values returned by the function @fun{gtk-widget-get-preferred-width} should
+    values returned by the @fun{gtk-widget-get-preferred-width} function should
     be collected in an array of @class{gtk-requested-size} structures. Any child
     spacing should be removed from the input for_width and then the collective
     size should be allocated using the @fun{gtk-distribute-natural-allocation}
     convenience function.
 
     The container will then move on to request the preferred height for each
-    child by using the function @fun{gtk-widget-get-preferred-height-for-width}
+    child by using the @fun{gtk-widget-get-preferred-height-for-width} function
     and using the sizes stored in the @class{gtk-requested-size} array.
 
     To allocate a height-for-width container, it is again important to consider
@@ -264,7 +264,7 @@
     @class{gtk-requested-size} array for any widgets that stack vertically, for
     tabular containers this can be generalized into the heights and widths of
     rows and columns. The vertical space must then again be distributed using
-    the function @fun{gtk-distribute-natural-allocation} while this time
+    the @fun{gtk-distribute-natural-allocation} function while this time
     considering the allocated height of the widget minus any vertical spacing
     that the container adds. Then vertical expand space should be added where
     appropriate and available and the container should go on to actually
@@ -279,7 +279,7 @@
     rather to their relation. Typical examples of child properties are the
     position or pack-type of a widget which is contained in a @class{gtk-box}.
 
-    Use the function @fun{gtk-container-class-install-child-property} to install
+    Use the @fun{gtk-container-class-install-child-property} function to install
     child properties for a container class and the functions
     @fun{gtk-container-class-find-child-property} or
     @fun{gtk-container-class-list-child-properties} to get information about
@@ -328,19 +328,19 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"add\" signal}
       @begin{pre}
- lambda (container widget)   : Run First
+ lambda (container widget)    : Run First
       @end{pre}
     @subheading{The \"check-resize\" signal}
       @begin{pre}
- lambda (container)   : Run Last
+ lambda (container)    : Run Last
       @end{pre}
     @subheading{The \"remove\" signal}
       @begin{pre}
- lambda (container widget)   : Run First
+ lambda (container widget)    : Run First
       @end{pre}
     @subheading{The \"set-focus-child\" signal}
       @begin{pre}
- lambda (container widget)   : Run First
+ lambda (container widget)    : Run First
       @end{pre}
   @end{dictionary}
   @see-slot{gtk-container-border-width}
@@ -373,9 +373,7 @@
   @see-function{gtk-widget-child-notify}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-container-border-width ---------------------------------------------
@@ -393,19 +391,20 @@
       "Accessor"
       (documentation 'gtk-container-border-width 'function)
  "@version{2014-2-6}
-  @argument[object]{a @class{gtk-container} widget}
   @syntax[]{(gtk-container-border-width object) => border-width}
   @syntax[]{(setf gtk-container-border-width object) border-width)}
+  @argument[object]{a @class{gtk-container} widget}
+  @argument[border-width]{an unsigned integer with the border width}
   @begin{short}
-    Accessor of the slot @slot[gtk-container]{border-width} of the
+    Accessor of the @slot[gtk-container]{border-width} slot of the
     @class{gtk-container} class.
   @end{short}
 
-  The generic function @sym{gtk-container-border-width} retrieves the border
-  width of the container.
+  The @sym{gtk-container-border-width} slot access function
+  retrieves the border width of the container.
 
-  The generic function @sym{(setf gtk-container-border-width)} sets the border
-  width of the container.
+  The @sym{(setf gtk-container-border-width)} slot access function
+  sets the border width of the container.
 
   The border width of a container is the amount of space to leave around the
   outside of the container. Valid values are in the range 0 - 65535 pixels. The
@@ -431,7 +430,7 @@
 (setf (gethash 'gtk-container-child atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-child 'function)
  "@version{2013-8-1}
-  Accessor of the slot @slot[gtk-container]{child} of the @class{gtk-container}
+  Accessor of the @slot[gtk-container]{child} slot of the @class{gtk-container}
   class.
   @see-class{gtk-container}")
 
@@ -448,25 +447,26 @@
 (setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-resize-mode 'function)
  "@version{2016-1-14}
-  @argument[object]{a @class{gtk-container} widget}
   @syntax[]{(gtk-container-resize-mode object) => resize-mode}
   @syntax[]{(setf gtk-container-resize-mode object) resize-mode)}
+  @argument[object]{a @class{gtk-container} widget}
+  @argument[resize-mode]{the resize mode of type @symbol{gtk-resize-mode}}
   @begin{short}
-    Accessor of the slot @slot[gtk-container]{resize-mode} of the
+    Accessor of the @slot[gtk-container]{resize-mode} slot of the
     @class{gtk-container} class.
   @end{short}
 
-  The generic function @sym{gtk-container-resize-mode} returns the current
-  resize mode of type @symbol{gtk-resize-mode}.
+  The @sym{gtk-container-resize-mode} slot access function
+  returns the current resize mode of type @symbol{gtk-resize-mode}.
 
-  The generic function @sym{(setf gtk-container-resize-mode)} sets the resize
-  mode for the container.
+  The @sym{(setf gtk-container-resize-mode)} slot access function
+  sets the resize mode for the container.
 
   The resize mode of a container determines whether a resize request will be
   passed to the container's parent, queued for later execution or executed
   immediately.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-container-resize-mode} has been deprecated since
+    The @sym{gtk-container-resize-mode} function has been deprecated since
     version 3.12 and should not be used in newly-written code. Resize modes are
     deprecated. They are not necessary anymore since frame clocks and might
     introduce obscure bugs if used.
@@ -545,9 +545,9 @@
   own a reference to @arg{widget}, and that this may be the last reference held;
   so removing a widget from its container can destroy that widget. If you want
   to use @arg{widget} again, you need to add a reference to it while it is not
-  inside a container, using the function @fun{g-object-ref}. If you do not want
+  inside a container, using the @fun{g-object-ref} function. If you do not want
   to use @arg{widget} again it is usually more efficient to simply destroy it
-  directly using the function @fun{gtk-widget-destroy} since this will remove it
+  directly using the @fun{gtk-widget-destroy} function since this will remove it
   from the @arg{container} and help break any circular reference count cycles.
   @see-class{gtk-container}
   @see-function{g-object-ref}
@@ -617,11 +617,11 @@
  "@version{2013-9-28}
   @argument[container]{a @class{gtk-container} widget}
   @argument[func]{a Lisp function which is passed as a callback to the C
-    function @sym{gtk-container-foreach}}
+    @sym{gtk-container-foreach} function}
   @begin{short}
     Invokes @arg{func} on each non-internal child of @arg{container}.
   @end{short}
-  See the function @fun{gtk-container-forall} for details on what constitutes an
+  See the @fun{gtk-container-forall} function for details on what constitutes an
   \"internal\" child. Most applications should use @sym{gtk-container-foreach},
   rather than @fun{gtk-container-forall}.
   @see-class{gtk-container}
@@ -645,7 +645,7 @@
   @return{A newly allocated list of the @arg{container}'s non-internal
     children.}
   @short{Returns the @arg{container}'s non-internal children.}
-  See the function @fun{gtk-container-forall} for details on what constitutes
+  See the @fun{gtk-container-forall} function for details on what constitutes
   an \"internal\" child.
   @see-class{gtk-container}
   @see-fun{gtk-container-forall}"
@@ -691,9 +691,9 @@
   Containers requesting reallocation redraws get automatically redrawn if any
   of their children changed allocation.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-container-set-reallocate-redraws} has been deprecated
+    The @sym{gtk-container-set-reallocate-redraws} function has been deprecated
     since version 3.14 and should not be used in newly-written code. Call
-    the function @fun{gtk-widget-queue-draw}.
+    the @fun{gtk-widget-queue-draw} function.
   @end{dictionary}
   @see-class{gtk-container}
   @see-function{gtk-widget-queue-draw}"
@@ -715,9 +715,7 @@
     when the container is focussed, or @code{nil} if none is set.}
   @short{Returns the current focus child widget inside @arg{container}.}
   This is not the currently focused widget. That can be obtained by calling
-  the function @fun{gtk-window-get-focus}.
-
-  Since 2.14
+  the @fun{gtk-window-get-focus} function.
   @see-class{gtk-container}
   @see-function{gtk-window-get-focus}"
   (container (g-object gtk-container)))
@@ -743,7 +741,7 @@
   overriding the class closure of this signal.
 
   This function is mostly meant to be used by widgets. Applications can use the
-  function @fun{gtk-widget-grab-focus} to manualy set the focus to a specific
+  @fun{gtk-widget-grab-focus} function to manualy set the focus to a specific
   widget.
   @see-class{gtk-container}
   @see-function{gtk-widget-grab-focus}"
@@ -763,7 +761,7 @@
   @argument[container]{a @class{gtk-container} widget}
   @return{The vertical focus adjustment, or nil if none has been set.}
   @short{Retrieves the vertical focus adjustment for the @arg{container}.}
-  See the function @fun{gtk-container-set-focus-vadjustment}.
+  See the @fun{gtk-container-set-focus-vadjustment} function.
   @see-function{gtk-container-set-focus-vadjustment}
   @see-class{gtk-container}"
   (container (g-object gtk-container)))
@@ -787,7 +785,7 @@
   @end{short}
   This function sets the vertical alignment. See the function
   @fun{gtk-scrolled-window-get-vadjustment} for a typical way of obtaining the
-  adjustment and the function @fun{gtk-container-set-focus-hadjustment} for
+  adjustment and the @fun{gtk-container-set-focus-hadjustment} function for
   setting the horizontal adjustment.
 
   The adjustments have to be in pixel units and in the same coordinate system
@@ -811,7 +809,7 @@
   @argument[container]{a @class{gtk-container} widget}
   @return{The horizontal focus adjustment, or @code{nil} if none has been set.}
   @short{Retrieves the horizontal focus adjustment for the @arg{container}.}
-  See the function @fun{gtk-container-set-focus-hadjustment}.
+  See the @fun{gtk-container-set-focus-hadjustment} function.
   @see-function{gtk-container-set-focus-hadjustment}
   @see-class{gtk-container}"
   (container (g-object gtk-container)))
@@ -835,7 +833,7 @@
   @end{short}
   This function sets the horizontal alignment. See the function
   @fun{gtk-scrolled-window-get-hadjustment} for a typical way of obtaining the
-  adjustment and the function @fun{gtk-container-set-focus-vadjustment} for
+  adjustment and the @fun{gtk-container-set-focus-vadjustment} function for
   setting the vertical adjustment.
 
   The adjustments have to be in pixel units and in the same coordinate system
@@ -857,7 +855,7 @@
  "@version{2013-1-4}
   @short{undocumented}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-container-resize-children} has been deprecated since
+    The @sym{gtk-container-resize-children} function has been deprecated since
     version 3.10 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-container}"
@@ -1048,10 +1046,8 @@
     on @arg{widget}.
   @end{short}
 
-  This is an analogue of the function @fun{g-object-notify} for child
-  properties. Also see the function @fun{gtk-widget-child-notify}.
-
-  Since 3.2
+  This is an analogue of the @fun{g-object-notify} function for child
+  properties. Also see the @fun{gtk-widget-child-notify} function.
   @see-class{gtk-container}
   @see-function{g-object-notify}
   @see-function{gtk-widget-child-notify}"
@@ -1105,8 +1101,8 @@
   @end{short}
   \"Internal\" children generally were not added by the user of the container,
   but were added by the container implementation itself. Most applications
-  should use the function @fun{gtk-container-foreach}, rather than
-  the function @sym{gtk-container-forall}.
+  should use the @fun{gtk-container-foreach} function, rather than
+  the @sym{gtk-container-forall} function.
   @see-class{gtk-container}
   @see-function{gtk-container-foreach}"
   (with-stable-pointer (ptr func)
