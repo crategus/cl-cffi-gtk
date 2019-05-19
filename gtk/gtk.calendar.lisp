@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkCalendar
 ;;;
-;;; Displays a calendar and allows the user to select a date
+;;;     Displays a calendar and allows the user to select a date
 ;;;
 ;;; Synopsis
 ;;;
@@ -141,52 +141,57 @@
 (setf (documentation 'gtk-calendar 'type)
  "@version{2013-8-16}
   @begin{short}
-    @sym{gtk-calendar} is a widget that displays a Gregorian calendar, one month
-    at a time.
+    @sym{gtk-calendar} is a widget that displays a Gregorian calendar, one
+    month at a time.
   @end{short}
-  It can be created with the function @fun{gtk-calendar-new}.
+  It can be created with the @fun{gtk-calendar-new} function.
 
   The month and year currently displayed can be altered with the function
   @fun{gtk-calendar-select-month}. The exact day can be selected from the
-  displayed month using the function @fun{gtk-calendar-select-day}.
+  displayed month using the @fun{gtk-calendar-select-day} function.
 
   To place a visual marker on a particular day, use the function
   @fun{gtk-calendar-mark-day} and to remove the marker, the function
   @fun{gtk-calendar-unmark-day}. Alternative, all marks can be cleared with
-  the function @fun{gtk-calendar-clear-marks}.
+  the @fun{gtk-calendar-clear-marks} function.
 
   The way in which the calendar itself is displayed can be altered using the
-  function @fun{gtk-calendar-set-display-options}.
+  @fun{gtk-calendar-set-display-options} function.
 
   The selected date can be retrieved from a @sym{gtk-calendar} using the
-  function @fun{gtk-calendar-get-date}.
+  @fun{gtk-calendar-get-date} function.
 
   Users should be aware that, although the Gregorian calendar is the legal
   calendar in most countries, it was adopted progressively between 1582 and
   1929. Display before these dates is likely to be historically incorrect.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"horizontal-separation\" style property}
-      @code{\"horizontal-separation\"} of type @code{:int} (Read) @br{}
-      Separation between week headers and main area. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 4
-
-    @subheading{The \"inner-border\" style property}
-      @code{\"inner-border\"} of type @code{:int} (Read) @br{}
-      The spacing around the day/week headers and main area. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 4
-
-    @subheading{The \"vertical-separation\" style property}
-      @code{\"vertical-separation\"} of type @code{:int} (Read) @br{}
-      Space between day headers and main area. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 4
+    @begin[code]{table}
+      @begin[horizontal-separation]{entry}
+        The @code{horizontal-separation} style property of type @code{:int}
+        (Read) @br{}
+        Separation between week headers and main area. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 4
+      @end{entry}
+      @begin[inner-border]{entry}
+        The @code{inner-border} style property of type @code{:int} (Read) @br{}
+        The spacing around the day/week headers and main area. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 4
+      @end{entry}
+      @begin[vertical-separation]{entry}
+        The @code{vertical-separation} style property of type @code{:int}
+        (Read) @br{}
+        Space between day headers and main area. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 4
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"day-selected\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when the user selects a day.
       @begin[code]{table}
@@ -194,7 +199,7 @@
       @end{table}
     @subheading{The \"day-selected-double-click\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when the user double-clicks a day.
       @begin[code]{table}
@@ -202,7 +207,7 @@
       @end{table}
     @subheading{The \"month-changed\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when the user clicks a button to change the selected month on a
       calendar.
@@ -211,7 +216,7 @@
       @end{table}
     @subheading{The \"next-month\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when the user switched to the next month.
       @begin[code]{table}
@@ -219,7 +224,7 @@
       @end{table}
     @subheading{The \"next-year\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when user switched to the next year.
       @begin[code]{table}
@@ -227,7 +232,7 @@
       @end{table}
     @subheading{The \"prev-month\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when the user switched to the previous month.
       @begin[code]{table}
@@ -235,7 +240,7 @@
       @end{table}
     @subheading{The \"prev-year\" signal}
       @begin{pre}
- lambda (calendar)   : Run First
+ lambda (calendar)    : Run First
       @end{pre}
       Emitted when user switched to the previous year.
       @begin[code]{table}
@@ -262,16 +267,14 @@
   @see-function{gtk-calendar-get-date}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-calendar-day -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "day" 'gtk-calendar) 't)
- "The @code{\"day\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{day} property of type @code{:int} (Read / Write) @br{}
   The selected day as a number between 1 and 31, or 0 to unselect the
   currently selected day. This property gets initially set to the current
   day. @br{}
@@ -283,7 +286,8 @@
       "Accessor"
       (documentation 'gtk-calendar-day 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"day\"} of the @class{gtk-calendar} class.
+  Accessor of the @slot[gtk-calendar]{day} slot of the @class{gtk-calendar}
+  class.
   @see-class{gtk-calendar}
   @see-function{gtk-calendar-get-date}
   @see-function{gtk-calendar-select-day}")
@@ -293,54 +297,72 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "detail-height-rows"
                                                'gtk-calendar) 't)
- "The @code{\"detail-height-rows\"} property of type @code{:int}
+ "The @code{detail-height-rows} property of type @code{:int}
   (Read / Write) @br{}
   Height of a detail cell, in rows. A value of 0 allows any width. See the
-  function @fun{gtk-calendar-set-detail-func}. @br{}
+  @fun{gtk-calendar-set-detail-func} function. @br{}
   Allowed values: [0, 127] @br{}
-  Default value: 0 @br{}
-  Since 2.14")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-detail-height-rows atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-detail-height-rows 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"detail-height-rows\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-height-rows}
-  @see-function{gtk-calendar-set-detail-height-rows}")
+ "@version{2019-5-18}
+  @syntax[]{(gtk-calendar-detail-height-rows object) => rows}
+  @syntax[]{(setf (gtk-calendar-detail-height-rows object) rows)}
+  @argument[object]{a @class{gtk-calendar} widget}
+  @argument[rows]{detail height in rows}
+  @begin{short}
+    Accessor of the @slot[gtk-calendar]{detail-height-rows} slot of the
+    @class{gtk-calendar} class.
+  @end{short}
+
+  The @sym{gtk-calendar-detail-height-rows} slot access function
+  queries the height of detail cells, in rows.
+
+  The @sym{(setf gtk-calendar-detail-height-rows)} slot access function
+  updates the height of detail cells.
+  @see-class{gtk-calendar}")
 
 ;;; --- gtk-calendar-detail-width-chars ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "detail-width-chars"
                                                'gtk-calendar) 't)
- "The @code{\"detail-width-chars\"} property of type @code{:int}
+ "The @code{detail-width-chars} property of type @code{:int}
   (Read / Write) @br{}
   Width of a detail cell, in characters. A value of 0 allows any width. See the
-  function @fun{gtk-calendar-set-detail-func}. @br{}
+  @fun{gtk-calendar-set-detail-func} function. @br{}
   Allowed values: [0, 127] @br{}
-  Default value: 0 @br{}
-  Since 2.14")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-detail-width-chars atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-detail-width-chars 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"detail-width-chars\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-width-chars}
-  @see-function{gtk-calendar-set-detail-width-chars}")
+ "@version{2019-5-18}
+  @syntax[]{(gtk-calendar-detail-height-rows object) => rows}
+  @syntax[]{(setf (gtk-calendar-detail-height-rows object) rows)}
+  @argument[object]{a @class{gtk-calendar} widget}
+  @argument[chars]{detail width in characters}
+  @begin{short}
+    Accessor of the @slot[gtk-calendar]{detail-width-chars} slot of the
+    @class{gtk-calendar} class.
+  @end{short}
+
+  The @sym{gtk-calendar-detail-width-chars} slot access function
+  queries the width of detail cells, in characters.
+
+  The @sym{(setf gtk-calendar-detail-width-chars)} slot access function
+  updates the width of detail cells.
+  @see-class{gtk-calendar}")
 
 ;;; --- gtk-calendar-month -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "month" 'gtk-calendar) 't)
- "The @code{\"month\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{month} property of type @code{:int} (Read / Write) @br{}
   The selected month as a number between 0 and 11. This property gets
   initially set to the current month. @br{}
   Allowed values: [0, 11] @br{}
@@ -351,7 +373,8 @@
       "Accessor"
       (documentation 'gtk-calendar-month 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"month\"} of the @class{gtk-calendar} class.
+  Accessor of the @slot[gtk-calendar]{month} slot of the @class{gtk-calendar}
+  class.
   @see-class{gtk-calendar}
   @see-function{gtk-calendar-get-date}
   @see-function{gtk-calendar-select-month}")
@@ -361,19 +384,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-month-change"
                                                'gtk-calendar) 't)
- "The @code{\"no-month-change\"} property of type @code{:boolean}
+ "The @code{no-month-change} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the selected month can be changed. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-no-month-change atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-no-month-change 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"no-month-change\"} of the @class{gtk-calendar}
-  class.
+  Accessor of the @slot[gtk-calendar]{no-month-change} slot of the
+  @class{gtk-calendar} class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
 
@@ -382,19 +404,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-day-names"
                                                'gtk-calendar) 't)
- "The @code{\"show-day-names\"} property of type @code{:boolean}
+ "The @code{show-day-names} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether day names are displayed. @br{}
-  Default value: @em{true} @br{}
-  Since 2.4")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-day-names atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-day-names 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"show-day-names\"} of the @class{gtk-calendar}
-  class.
+  Accessor of the @slot[gtk-calendar]{show-day-names} slot of the
+  @class{gtk-calendar} class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
 
@@ -403,21 +424,20 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-details"
                                                'gtk-calendar) 't)
- "The @code{\"show-details\"} property of type @code{:boolean}
+ "The @code{show-details} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether details are shown directly in the widget, or if they are
   available only as tooltip. When this property is set days with details are
   marked. @br{}
-  Default value: @em{true} @br{}
-  Since 2.14")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-details atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-details 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"show-details\"} of the @class{gtk-calendar}
-  class.
+  Accessor of the @slot[gtk-calendar]{show-details} slot of the
+  @class{gtk-calendar} class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
 
@@ -426,18 +446,17 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-heading"
                                                'gtk-calendar) 't)
- "The @code{\"show-heading\"} property of type @code{:boolean}
+ "The @code{show-heading} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether a heading is displayed. @br{}
-  Default value: @em{true} @br{}
-  Since 2.4")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-heading atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-heading 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"show-heading\"} of the @class{gtk-calendar}
+  Accessor of the @slot[gtk-calendar]{show-heading} slot of the @class{gtk-calendar}
   class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
@@ -447,19 +466,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-week-numbers"
                                                'gtk-calendar) 't)
- "The @code{\"show-week-numbers\"} property of type @code{:boolean}
+ "The @code{show-week-numbers} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether week numbers are displayed. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-week-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-week-numbers 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"show-week-numbers\"} of the @class{gtk-calendar}
-  class.
+  Accessor of the @slot[gtk-calendar]{show-week-numbers} slot of the
+  @class{gtk-calendar} class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
 
@@ -467,7 +485,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "year" 'gtk-calendar) 't)
- "The @code{\"year\"} property of type @code{gint} (Read / Write) @br{}
+ "The @code{year} property of type @code{:int} (Read / Write) @br{}
   The selected year. This property gets initially set to the current year. @br{}
   Allowed values: [0, 4194303] @br{}
   Default value: 0")
@@ -477,7 +495,8 @@
       "Accessor"
       (documentation 'gtk-calendar-year 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"year\"} of the @class{gtk-calendar} class.
+  Accessor of the @slot[gtk-calendar]{year} slot of the @class{gtk-calendar}
+  class.
   @see-class{gtk-calendar}
   @see-function{gtk-calendar-get-date}
   @see-function{gtk-calendar-select-month}")
@@ -683,8 +702,6 @@
   @begin{short}
     Returns if the @arg{day} of the @arg{calendar} is already marked.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-calendar}
   @see-function{gtk-calendar-mark-day}
   @see-function{gtk-calendar-unmark-day}"
@@ -723,8 +740,6 @@
   @begin{short}
     Returns the current display options of calendar.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}
   @see-function{gtk-calendar-set-display-options}"
@@ -747,8 +762,6 @@
     Sets display options, e. .g. whether to display the heading and the month
     headings.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}
   @see-function{gtk-calendar-get-display-options}"
@@ -802,15 +815,14 @@
     each day.
   @end{short}
   Examples for such details are holidays or appointments. That information is
-  shown below each day when the @code{\"show-details\"} property is set. A
-  tooltip containing with full detail information is provided, if the entire
-  text should not fit into the details area, or if the @code{\"show-details\"}
-  property is not set.
+  shown below each day when the @slot[gtk-calendar]{show-details} property is
+  set. A tooltip containing with full detail information is provided, if the
+  entire text should not fit into the details area, or if the
+  @slot[gtk-calendar]{show-details} property is not set.
 
   The size of the details area can be restricted by setting the
-  @code{\"detail-width-chars\"} and @code{\"detail-height-rows\"} properties.
-
-  Since 2.14
+  @slot[gtk-calendar]{detail-width-chars} and
+  @slot[gtk-calendar]{detail-height-rows} properties.
   @see-class{gtk-calendar}"
   (%gtk-calendar-set-detail-func calendar
       (callback gtk-calendar-detail-func-cb)
@@ -818,97 +830,5 @@
       (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-calendar-set-detail-func)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_calendar_get_detail_width_chars ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-calendar-get-detail-width-chars))
-
-(defun gtk-calendar-get-detail-width-chars (calendar)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-16}
-  @argument[calendar]{a @class{gtk-calendar} widget}
-  @return{The width of detail cells, in characters.}
-  @begin{short}
-    Queries the width of detail cells, in characters.
-  @end{short}
-  See the @code{\"detail-width-chars\"} property.
-
-  Since 2.14
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-set-detail-width-chars}"
-  (gtk-calendar-detail-width-chars calendar))
-
-(export 'gtk-calendar-get-detail-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_calendar_set_detail_width_chars ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-calendar-set-detail-width-chars))
-
-(defun gtk-calendar-set-detail-width-chars (calendar chars)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-16}
-  @argument[calendar]{a @class{gtk-calendar} widget}
-  @argument[chars]{detail width in characters}
-  @begin{short}
-    Updates the width of detail cells.
-  @end{short}
-  See the @code{\"detail-width-chars\"} property.
-
-  Since 2.14
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-width-chars}"
-  (setf (gtk-calendar-detail-width-chars calendar) chars))
-
-(export 'gtk-calendar-set-detail-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_calendar_get_detail_height_rows ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-calendar-get-detail-height-rows))
-
-(defun gtk-calendar-get-detail-height-rows (calendar)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-16}
-  @argument[calendar]{a @class{gtk-calendar} widget}
-  @return{The height of detail cells, in rows.}
-  @begin{short}
-    Queries the height of detail cells, in rows.
-  @end{short}
-  See the @code{\"detail-width-chars\"} property.
-
-  Since 2.14
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-set-detail-height-rows}"
-  (gtk-calendar-detail-height-rows calendar))
-
-(export 'gtk-calendar-get-detail-height-rows)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_calendar_set_detail_height_rows ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-calendar-set-detail-height-rows))
-
-(defun gtk-calendar-set-detail-height-rows (calendar rows)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-16}
-  @argument[calendar]{a @class{gtk-calendar} widget}
-  @argument[rows]{detail height in rows}
-  @begin{short}
-    Updates the height of detail cells.
-  @end{short}
-  See the @code{\"detail-height-rows\"} property.
-
-  Since 2.14
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-height-rows}"
-  (setf (gtk-calendar-detail-height-rows calendar) rows))
-
-(export 'gtk-calendar-set-detail-height-rows)
 
 ;;; --- End of file gtk.calendar.lisp ------------------------------------------
