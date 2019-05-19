@@ -329,10 +329,10 @@ are available.
 @findex frame, gtk-frame
 
 @findex gtk-frame-new
-@findex gtk-frame-set-label
+@findex gtk-frame-label
 
 @findex frame-new, gtk-frame-new
-@findex frame-set-label, gtk-frame-set-label
+@findex frame-label, gtk-frame-label
 
 @ifnotinfo
 @float Figure, figure-frame
@@ -349,7 +349,7 @@ A frame can be created with @code{(make-instance 'gtk-frame)} or the function
 @xurl{gtk-frame-new}.  The label is by default placed in the upper left hand
 corner of the frame. A value of @code{NIL} for the label argument will result in
 no label being displayed.  The text of the label can be changed using the
-function @xurl{gtk-frame-set-label}.
+function @xurl{gtk-frame-label}.
 
 @findex gtk-frame-set-label-align
 @findex frame-set-label-align, gtk-frame-set-label-align
@@ -367,10 +367,10 @@ label at the left hand end of the frame.
 @findex gtk-shadow-type
 @findex shadow-type, gtk-shadow-type
 
-@findex gtk-frame-set-shadow-type
-@findex frame-set-shadow-type, gtk-frame-set-shadow-type
+@findex gtk-frame-shadow-type
+@findex frame-shadow-type, gtk-frame-shadow-type
 
-The function @xurl{gtk-frame-set-shadow-type} alters the style of the box that
+The function @xurl{gtk-frame-shadow-type} alters the style of the box that
 is used to outline the frame.  The second argument is a keyword of the
 enumeration type @xurl{gtk-shadow-type}.
 

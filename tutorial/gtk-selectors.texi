@@ -453,8 +453,8 @@ implements the @xurl{gtk-font-chooser} interface.
 To set the font which is initially selected, use the functions
 @xurl{gtk-font-chooser-set-font} or @xurl{gtk-font-chooser-set-font-desc}.
 
-To get the selected font use the functions @xurl{gtk-font-chooser-get-font} or
-@xurl{gtk-font-chooser-get-font-desc}.
+To get the selected font use the functions @xurl{gtk-font-chooser-font} or
+@xurl{gtk-font-chooser-font-desc}.
 
 To change the text which is shown in the preview area, use the function
 @xurl{gtk-font-chooser-set-preview-text}.
@@ -493,10 +493,10 @@ suitable widget for selecting a font in a preference dialog.
            (declare (ignore widget))
            (format t "Font is set:~%")
            (format t "   Font name   : ~A~%"
-                   (gtk-font-chooser-get-font button))
+                   (gtk-font-chooser-font button))
            (format t "   Font family : ~A~%"
                    (pango-font-family-get-name
-                     (gtk-font-chooser-get-font-family button)))
+                     (gtk-font-chooser-font-family button)))
            (format t "   Font face   : ~A~%"
                    (pango-font-face-get-face-name
                      (gtk-font-chooser-get-font-face button)))
@@ -505,6 +505,4 @@ suitable widget for selecting a font in a preference dialog.
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 @end verbatim
-
-
 

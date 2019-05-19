@@ -278,8 +278,8 @@
 @set gtk-font-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-font-chooser.html
 @set gtk-font-chooser-set-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-font.html
 @set gtk-font-chooser-set-font-desc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-font-desc.html
-@set gtk-font-chooser-get-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-get-font.html
-@set gtk-font-chooser-get-font-desc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-get-font-desc.html
+@set gtk-font-chooser-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-font.html
+@set gtk-font-chooser-font-desc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-font-desc.html
 @set gtk-font-chooser-set-preview-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-preview-text.html
 
 @c GtkFontChooserDialog
@@ -298,9 +298,9 @@
 
 @set gtk-frame http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-frame.html
 @set gtk-frame-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-new.html
-@set gtk-frame-set-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-set-label.html
+@set gtk-frame-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-label.html
 @set gtk-frame-set-label-align http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-set-label-align.html
-@set gtk-frame-set-shadow-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-set-shadow-type.html
+@set gtk-frame-shadow-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-frame-shadow-type.html
 
 @c GtkJustification
 
@@ -975,5 +975,4 @@
 @set cairo-user-to-device-distance http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-user-to-device-distance.html
 @set cairo-device-to-user http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-device-to-user.html
 @set cairo-device-to-user-distance http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-device-to-user-distance.html
-
 
