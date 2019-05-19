@@ -7,7 +7,7 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintStatus"))
   ;; Check the registered name
-  (is (eql 'gtk-print-status 
+  (is (eql 'gtk-print-status
            (gobject::registered-enum-type "GtkPrintStatus")))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintStatus"
@@ -48,7 +48,7 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintOperationAction"))
   ;; Check the registered name
-  (is (eql 'gtk-print-operation-action 
+  (is (eql 'gtk-print-operation-action
            (gobject::registered-enum-type "GtkPrintOperationAction")))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationAction"
@@ -80,7 +80,7 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintOperationResult"))
   ;; Check the registered name
-  (is (eql 'gtk-print-operation-result 
+  (is (eql 'gtk-print-operation-result
            (gobject::registered-enum-type "GtkPrintOperationResult")))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationResult"
@@ -251,12 +251,12 @@
     (is-false (gtk-print-operation-print-settings object))
     (is-false (gtk-print-operation-show-progress object))
     (is (eq :initial (gtk-print-operation-status object)))
-    ;; Set status-string is not writeable
+    ;; status-string is not writeable
 ;    (is (setf (gtk-print-operation-status-string object) "Status String"))
     (is (string= "" (gtk-print-operation-status-string object)))
     (is-false (gtk-print-operation-support-selection object))
     (is-false (gtk-print-operation-track-print-status object))
-    (is (eq :none (gtk-print-operation-unit object)))
+    (is (eq :pixel (gtk-print-operation-unit object)))
     (is-false (gtk-print-operation-use-full-page object))
 ))
 

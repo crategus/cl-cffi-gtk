@@ -69,12 +69,19 @@
 
 (load "rtest-gtk-builder.lisp")
 
+;;; Scrolling
+
+(load "rtest-gtk-scrollable.lisp")
+
 ;;; Printing
 
 (load "rtest-gtk-print-operation.lisp")
 (load "rtest-gtk-paper-size.lisp")
 (load "rtest-gtk-print-settings.lisp")
 
+;;; Miscellaneous
+
+(load "rtest-gtk-adjustment.lisp")
 
 
 (load "rtest-gtk-accel-group.lisp")
