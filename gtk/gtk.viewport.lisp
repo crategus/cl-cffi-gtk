@@ -40,8 +40,8 @@
 ;;;     gtk_viewport_get_vadjustment                     * deprecated
 ;;;     gtk_viewport_set_hadjustment                     * deprecated
 ;;;     gtk_viewport_set_vadjustment                     * deprecated
-;;;     gtk_viewport_set_shadow_type
-;;;     gtk_viewport_get_shadow_type
+;;;     gtk_viewport_set_shadow_type                       Accessor
+;;;     gtk_viewport_get_shadow_type                       Accessor
 ;;;     gtk_viewport_get_bin_window
 ;;;     gtk_viewport_get_view_window
 ;;; ----------------------------------------------------------------------------
@@ -75,7 +75,7 @@
 
   If a widget has native scrolling abilities, such as @class{gtk-text-view},
   @class{gtk-tree-view} or @class{gtk-icon-view}, it can be added to a
-  @class{gtk-scrolled-window} with the function @fun{gtk-container-add}. If a
+  @class{gtk-scrolled-window} with the @fun{gtk-container-add} function. If a
   widget does not, you must first add the widget to a @sym{gtk-viewport}, then
   add the viewport to the scrolled window. The convenience function
   @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you
@@ -107,11 +107,21 @@
 (setf (gethash 'gtk-viewport-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-viewport-shadow-type 'function)
- "@version{2013-3-28}
+ "@version{2019-5-18}
+  @syntax[]{(gtk-viewport-shadow-type object) => type}
+  @syntax[]{(setf (gtk-viewport-shadow-type object) type)}
+  @argument[viewport]{a @class{gtk-viewport} widget}
+  @argument[type]{the new shadow type}
   @begin{short}
-    Accessor of the slot @slot[gtk-viewport]{shadow-type} of the
+    Accessor of the @slot[gtk-viewport]{shadow-type} slot of the
     @class{gtk-viewport} class.
   @end{short}
+
+  The @sym{gtk-viewport-shadow-type} slot access function
+  gets the shadow type of the @class{gtk-viewport}.
+
+  The @sym{(setf gtk-viewport-shadow-type)} slot access function
+  sets the shadow type of the viewport.
   @see-class{gtk-viewport}")
 
 ;;; ----------------------------------------------------------------------------
@@ -126,7 +136,8 @@
   @argument[hadjustment]{horizontal adjustment}
   @argument[vadjustment]{vertical adjustment}
   @return{A new @class{gtk-viewport} widget.}
-  Creates a new @class{gtk-viewport} widget with the given adjustments."
+  Creates a new @class{gtk-viewport} widget with the given adjustments.
+  @see-class{gtk-viewport}"
   (make-instance 'gtk-viewport
                  :hadjustment hadjustment
                  :vadjustment vadjustment))
@@ -214,40 +225,6 @@
 ;;; adjustment :
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_set_shadow_type ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-viewport-set-shadow-type))
-
-(defun gtk-viewport-set-shadow-type (viewport type)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-15}
-  @argument[viewport]{a @class{gtk-viewport} widget}
-  @argument[type]{the new shadow type}
-  Sets the shadow type of the @arg{viewport}."
-  (setf (gtk-viewport-shadow-type viewport) type))
-
-(export 'gtk-viewport-set-shadow-type)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_get_shadow_type ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-viewport-get-shadow-type))
-
-(defun gtk-viewport-get-shadow-type (viewport)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-15}
-  @argument[viewport]{a @class{gtk-viewport} widget}
-  @return{The shadow type.}
-  Gets the shadow type of the @class{gtk-viewport}. See
-  the function @fun{gtk-viewport-set-shadow-type}.
-  @see-function{gtk-viewport-set-shadow-type}"
-  (gtk-viewport-shadow-type viewport))
-
-(export 'gtk-viewport-get-shadow-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_get_bin_window ()
