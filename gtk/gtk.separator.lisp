@@ -84,7 +84,7 @@
   It displays a line with a shadow to make it appear sunken into the
   interface.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtkk-separator} class has a single CSS node with name
+    The @sym{gtk-separator} class has a single CSS node with name
     @code{separator}. The node gets one of the @code{.horizontal} or
     @code{.vertical} style classes.
   @end{dictionary}
@@ -107,8 +107,7 @@
     @code{:horizontal} or @code{:vertical} of type @symbol{gtk-orientation}.
   @end{short}
   See also the @class{gtk-orientable} interface.
-
-  Since 3.0
+  @see-class{gtk-separator}
   @see-class{gtk-orientable}
   @see-symbol{gtk-orientation}"
   (make-instance 'gtk-separator
