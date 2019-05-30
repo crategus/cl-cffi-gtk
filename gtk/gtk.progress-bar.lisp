@@ -136,7 +136,7 @@
   When an application has no accurate way of knowing the amount of work to do,
   it can use the @sym{gtk-progress-bar} in activity mode, which shows activity
   by a block moving back and forth within the progress area. In this mode, the
-  application is required to call the function @fun{gtk-progress-bar-pulse}
+  application is required to call the @fun{gtk-progress-bar-pulse} function
   periodically to update the progress bar.
 
   There is quite a bit of flexibility provided to control the appearance of
@@ -247,7 +247,7 @@
   Note that setting this property to a value other than @code{:none} has the
   side-effect that the progress bar requests only enough space to display the
   ellipsis (\"...\"). Another means to set a progress bar's width is the
-  function @fun{gtk-widget-size-request}. @br{}
+  @fun{gtk-widget-size-request} function. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
@@ -260,14 +260,15 @@
   @syntax[]{(gtk-progress-bar-ellipsize object) => mode}
   @syntax[]{(setf (gtk-progress-bar-ellipsize object) mode)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{ellipsize} of the
+    Accessor of the @slot[gtk-progress-bar]{ellipsize} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-progress-bar-ellipsize} returns the ellipsizing
-  position of type @symbol{pango-ellipsize-mode} of the progress bar.
+  The @sym{gtk-progress-bar-ellipsize} slot access function returns the
+  ellipsizing position of type @symbol{pango-ellipsize-mode} of the progress
+  bar.
 
-  The generic function @sym{(setf gtk-progress-bar-ellipsize)} sets the mode
+  The @sym{(setf gtk-progress-bar-ellipsize)} slot access function sets the mode
   used to ellipsize, add an ellipsis: \"...\", the text if there is not enough
   space to render the entire string.
   @see-class{gtk-progress-bar}")
@@ -291,14 +292,14 @@
   @syntax[]{(gtk-progress-bar-fraction object) => fraction}
   @syntax[]{(setf (gtk-progress-bar-fraction object) fraction)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{fraction} of the
+    Accessor of the @slot[gtk-progress-bar]{fraction} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-progress-bar-fraction} returns the current
+  The @sym{gtk-progress-bar-fraction} slot access function returns the current
   fraction from 0.0 to 1.0 of the task that is been completed.
 
-  The generic function @sym{(setf gtk-progress-bar-fraction)} causes the
+  The @sym{(setf gtk-progress-bar-fraction)} slot access function causes the
   progress bar to \"fill in\" the given fraction of the bar. The fraction should
   be between 0.0 and 1.0, inclusive.
   @see-class{gtk-progress-bar}")
@@ -321,14 +322,9 @@
   @syntax[]{(gtk-progress-bar-inverted object) => inverted}
   @syntax[]{(setf (gtk-progress-bar-inverted object) inverted)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{inverted} of the
+    Accessor of the @slot[gtk-progress-bar]{inverted} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
-
-  @return{@em{True} if the progress bar is inverted.}
-
-  The generic function @sym{gtk-progress-bar-inverted} gets the value set by the
-  generic function @sym{(setf gtk-progress-bar-inverted)}.
 
   Progress bars normally grow from top to bottom or left to right. Inverted
   progress bars grow in the opposite direction.
@@ -354,16 +350,16 @@
   @syntax[]{(gtk-progress-bar-pulse-step object) => fraction}
   @syntax[]{(setf (gtk-progress-bar-pulse-step object) fraction)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{pulse-step} of the
+    Accessor of the @slot[gtk-progress-bar]{pulse-step} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-progress-bar-pulse-step} retrieves the pulse
+  The @sym{gtk-progress-bar-pulse-step} slot access function retrieves the pulse
   step which is a fraction from 0.0 to 1.0.
 
-  The generic function @sym{(setf gtk-progress-bar-pulse-step)} sets the
-  fraction of total progress bar length to move the bouncing block for each call
-  to the function @fun{gtk-progress-bar-pulse}.
+  The @sym{(setf gtk-progress-bar-pulse-step)} slot access function sets the
+  fraction of total progress bar length to move the bouncing block for each
+  call to the @fun{gtk-progress-bar-pulse} function.
   @see-class{gtk-progress-bar}
   @see-function{gtk-progress-bar-pulse}")
 
@@ -373,12 +369,12 @@
 (setf (documentation (atdoc:get-slot-from-name "show-text"
                                                'gtk-progress-bar) 't)
  "The @code{show-text} property of type @code{:boolean} (Read / Write) @br{}
-  Sets whether the progress bar will show text superimposed over the bar.
-  The shown text is either the value of the @code{\"text\"} property or, if that
-  is @code{nil}, the @code{\"fraction\"} value, as a percentage.
-  To make a progress bar that is styled and sized suitably for containing text,
-  even if the actual text is blank, set @code{\"show-text\"} to @em{true} and
-  @code{\"text\"} to the empty string (not @code{nil}). @br{}
+  Sets whether the progress bar will show text superimposed over the bar. The
+  shown text is either the value of the @code{text} property or, if that is
+  @code{nil}, the @code{fraction} value, as a percentage. To make a progress bar
+  that is styled and sized suitably for containing text, even if the actual text
+  is blank, set the @code{show-text} property to @em{true} and the @code{text}
+  property to the empty string, not @code{nil}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -391,22 +387,22 @@
   @syntax[]{(gtk-progress-bar-show-text object) => show-text}
   @syntax[]{(setf (gtk-progress-bar-show-text object) show-text)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{show-text} of the
+    Accessor of the @slot[gtk-progress-bar]{show-text} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-progress-bar-show-text} gets the value of the
-  @slot[gtk-progress-bar]{show-text} property.
+  The @sym{gtk-progress-bar-show-text} slot access function gets the value of
+  the @slot[gtk-progress-bar]{show-text} property.
 
-  The generic function @sym{gtk-progress-bar-show-text} sets whether the
+  The @sym{gtk-progress-bar-show-text} slot access function sets whether the
   progress bar will show text superimposed over the bar. The shown text is
   either the value of the @slot[gtk-progress-bar]{text} property or, if that
   is @code{nil}, the @slot[gtk-progress-bar]{fraction} value, as a percentage.
 
   To make a progress bar that is styled and sized suitably for containing text,
-  even if the actual text is blank, set the @code{\"show-text\"} property to
-  @em{true} and the @slot[gtk-progress-bar]{text} property to the empty string,
-  not @code{nil}.
+  even if the actual text is blank, set the @slot[gtk-progress-bar]{show-text}
+  property to @em{true} and the @slot[gtk-progress-bar]{text} property to the
+  empty string, not @code{nil}.
   @see-class{gtk-progress-bar}")
 
 ;;; --- gtk-progress-bar-text --------------------------------------------------
@@ -427,17 +423,17 @@
   @syntax[]{(gtk-progress-bar-text object) => text}
   @syntax[]{(setf (gtk-progress-bar-text object) text)}
   @begin{short}
-    Accessor of the slot @slot[gtk-progress-bar]{text} of the
+    Accessor of the @slot[gtk-progress-bar]{text} slot of the
     @class{gtk-progress-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-progress-bar-text} retrieves the text displayed
-  superimposed on the progress bar, if any, otherwise @code{nil}. The return
-  value is a reference to the text, not a copy of it, so will become invalid if
-  you change the text in the progress bar.
+  The @sym{gtk-progress-bar-text} slot access function retrieves the text
+  displayed superimposed on the progress bar, if any, otherwise @code{nil}. The
+  return value is a reference to the text, not a copy of it, so will become
+  invalid if you change the text in the progress bar.
 
-  The generic function @sym{(setf gtk-progress-bar-text)} causes the given text
-  to appear superimposed on the progress bar.
+  The @sym{(setf gtk-progress-bar-text)} slot access function causes the given
+  text to appear superimposed on the progress bar.
 
   If text is @code{nil} and the @slot[gtk-progress-bar]{show-text} property is
   @em{true}, the current value of the @slot[gtk-progress-bar]{fraction} property
@@ -480,9 +476,9 @@
     back and forth.
   @end{short}
 
-  Each call to @sym{gtk-progress-bar-pulse} causes the block to move by
-  a little bit, the amount of movement per pulse is determined by the generic
-  function @fun{gtk-progress-bar-pulse-step}.
+  Each call to the @sym{gtk-progress-bar-pulse} function causes the block to
+  move by a little bit, the amount of movement per pulse is determined by the
+  @fun{gtk-progress-bar-pulse-step} slot access function.
   @see-class{gtk-progress-bar}
   @see-function{gtk-progress-bar-pulse-step}"
   (pbar (g-object gtk-progress-bar)))
