@@ -54,18 +54,18 @@
 ;;;     gtk_icon_theme_get_search_path
 ;;;     gtk_icon_theme_append_search_path
 ;;;     gtk_icon_theme_prepend_search_path
-;;;     gtk_icon_theme_add_resource_path 
+;;;     gtk_icon_theme_add_resource_path
 ;;;     gtk_icon_theme_set_custom_theme
 ;;;     gtk_icon_theme_has_icon
 ;;;     gtk_icon_theme_lookup_icon
-;;;     gtk_icon_theme_lookup_icon_for_scale 
+;;;     gtk_icon_theme_lookup_icon_for_scale
 ;;;     gtk_icon_theme_choose_icon
-;;;     gtk_icon_theme_choose_icon_for_scale 
+;;;     gtk_icon_theme_choose_icon_for_scale
 ;;;     gtk_icon_theme_lookup_by_gicon
-;;;     gtk_icon_theme_lookup_by_gicon_for_scale 
+;;;     gtk_icon_theme_lookup_by_gicon_for_scale
 ;;;     gtk_icon_theme_load_icon
-;;;     gtk_icon_theme_load_icon_for_scale 
-;;;     gtk_icon_theme_load_surface 
+;;;     gtk_icon_theme_load_icon_for_scale
+;;;     gtk_icon_theme_load_surface
 ;;;     gtk_icon_theme_list_contexts
 ;;;     gtk_icon_theme_list_icons
 ;;;     gtk_icon_theme_get_icon_sizes
@@ -76,26 +76,26 @@
 ;;;     gtk_icon_info_free
 ;;;     gtk_icon_info_new_for_pixbuf
 ;;;     gtk_icon_info_get_base_size
-;;;     gtk_icon_info_get_base_scale 
+;;;     gtk_icon_info_get_base_scale
 ;;;     gtk_icon_info_get_filename
 ;;;     gtk_icon_info_get_builtin_pixbuf
 ;;;     gtk_icon_info_load_icon
-;;;     gtk_icon_info_load_surface 
-;;;     gtk_icon_info_load_icon_async 
-;;;     gtk_icon_info_load_icon_finish 
+;;;     gtk_icon_info_load_surface
+;;;     gtk_icon_info_load_icon_async
+;;;     gtk_icon_info_load_icon_finish
 ;;;     gtk_icon_info_load_symbolic
-;;;     gtk_icon_info_load_symbolic 
-;;;     gtk_icon_info_load_symbolic_async 
-;;;     gtk_icon_info_load_symbolic_finish 
+;;;     gtk_icon_info_load_symbolic
+;;;     gtk_icon_info_load_symbolic_async
+;;;     gtk_icon_info_load_symbolic_finish
 ;;;     gtk_icon_info_load_symbolic_for_style
 ;;;     gtk_icon_info_load_symbolic_for_context
-;;;     gtk_icon_info_load_symbolic_for_context_async 
-;;;     gtk_icon_info_load_symbolic_for_context_finish 
+;;;     gtk_icon_info_load_symbolic_for_context_async
+;;;     gtk_icon_info_load_symbolic_for_context_finish
 ;;;     gtk_icon_info_set_raw_coordinates
 ;;;     gtk_icon_info_get_embedded_rect
 ;;;     gtk_icon_info_get_attach_points
 ;;;     gtk_icon_info_get_display_name
-;;;     gtk_icon_info_is_symbolic 
+;;;     gtk_icon_info_is_symbolic
 ;;;
 ;;; Signals
 ;;;
@@ -271,10 +271,9 @@
       call the @fun{gtk-icon-info-get-builtin-pixbuf} function.}
     @entry[:generic-fallback]{Try to shorten icon name at '-' characters before
       looking at inherited themes. This flag is only supported in functions that
-      take a single icon name. For more general fallback, see the 
-      @fun{gtk-icon-theme-choose-icon} function. Since 2.12}
-    @entry[:force-size]{Always get the icon scaled to the requested size.
-      Since 2.14}
+      take a single icon name. For more general fallback, see the
+      @fun{gtk-icon-theme-choose-icon} function.}
+    @entry[:force-size]{Always get the icon scaled to the requested size.}
     @entry[:force-regular]{Try to always load regular icons, even when symbolic
       icon names are given. Since 3.14}
     @entry[:force-symbolic]{Try to always load symbolic icons, even when regular
@@ -338,8 +337,6 @@
     @fun{gtk-icon-theme-get-default} or @fun{gtk-icon-theme-get-for-screen}
     rather than creating a new icon theme object for scratch.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-icon-theme-get-default}
   @see-function{gtk-icon-theme-get-for-screen}"
   (make-instance 'gtk-icon-theme))
@@ -363,8 +360,6 @@
     Gets the icon theme for the default screen. See the function
     @fun{gtk-icon-theme-get-for-screen}.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-icon-theme-get-for-screen}")
 
 (export 'gtk-icon-theme-get-default)
@@ -392,8 +387,6 @@
     the screen yourself; by using this function a single icon theme object will
     be shared between users.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-icon-theme-new}
   @see-function{gtk-icon-theme-get-default}"
   (screen (g-object gdk-screen)))
@@ -529,10 +522,10 @@
 ;;;
 ;;; icon_theme :
 ;;;     a GtkIconTheme
-;;; 
+;;;
 ;;; path :
 ;;;     a resource path
-;;; 
+;;;
 ;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
@@ -570,8 +563,7 @@
   @begin{short}
     Checks whether an icon theme includes an icon for a particular name.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-icon-theme}"
   (icon-theme (g-object gtk-icon-theme))
   (icon-name :string))
 
@@ -601,8 +593,6 @@
     @fun{gtk-icon-theme-load-icon} combines these two steps if all you need is
     the pixbuf.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-load-icon}"
   (icon-theme (g-object gtk-icon-theme))
@@ -630,19 +620,19 @@
 ;;;
 ;;; icon_theme :
 ;;;     a GtkIconTheme
-;;; 
+;;;
 ;;; icon_name :
 ;;;     the name of the icon to lookup
-;;; 
+;;;
 ;;; size :
 ;;;     desired icon size
-;;; 
+;;;
 ;;; scale :
 ;;;     the desired scale
-;;; 
+;;;
 ;;; flags :
 ;;;     flags modifying the behavior of the icon lookup
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GtkIconInfo object containing information about the icon, or NULL if
 ;;;     the icon wasn’t found.
@@ -676,8 +666,6 @@
 
   If @arg{icon-names} contains more than one name, this function tries them all
   in the given order before falling back to inherited icon themes.
-
-  Since 2.12
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-info-load-icon}
@@ -716,13 +704,13 @@
 ;;;
 ;;; size :
 ;;;     desired icon size
-;;; 
+;;;
 ;;; scale :
 ;;;     desired scale
-;;; 
+;;;
 ;;; flags :
 ;;;     flags modifying the behavior of the icon lookup
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GtkIconInfo object containing information about the icon, or NULL if
 ;;;     the icon wasn’t found.
@@ -833,8 +821,6 @@
   changes, you should consider using the function @fun{gdk-pixbuf-copy} to make
   a private copy of the pixbuf returned by this function. Otherwise GTK+ may
   need to keep the old icon theme loaded, which would be a waste of memory.
-
-  Since 2.4
   @see-class{gtk-icon-theme}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-lookup-icon}
@@ -970,7 +956,7 @@
    \"MimeTypes\" \"Stock\" \"Status\" \"Emblems\")
     @end{pre}
   @end{dictionary}
-  Since 2.12"
+  @see-class{gtk-icon-theme}"
   (icon-theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-list-contexts)
@@ -999,8 +985,7 @@
     string is system dependent, but will typically include such values as
     \"Applications\" and \"MimeTypes\".
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-icon-theme}"
   (let ((context (if context context (null-pointer))))
     (%gtk-icon-theme-list-icons icon-theme context)))
 
@@ -1044,8 +1029,7 @@
     Gets the name of an icon that is representative of the current theme (for
     instance, to use when presenting a list of themes to the user.)
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-icon-theme}"
   (icon-theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-get-example-icon-name)
@@ -1237,7 +1221,6 @@
 => \"/usr/share/icons/ubuntu-mono-light/status/16/battery-charged.svg\"
     @end{pre}
   @end{dictionary}
-  Since 2.4
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-info-get-builtin-pixbuf}
   @see-function{gtk-icon-theme-lookup-icon}"
@@ -1299,8 +1282,6 @@
   @code{:force-size} flag when obtaining the @symbol{gtk-icon-info}. If this
   flag has been specified, the pixbuf returned by this function will be scaled
   to the exact size.
-
-  Since 2.4
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-theme-lookup-icon}"
   (with-g-error (err)
@@ -1329,7 +1310,7 @@
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
-;;; 
+;;;
 ;;; for_window :
 ;;;     GdkWindow to optimize drawing for, or NULL.
 ;;;
@@ -1389,7 +1370,7 @@
 ;;;
 ;;; res :
 ;;;     a GAsyncResult
-;;; 
+;;;
 ;;; error :
 ;;;     location to store error information on failure, or NULL.
 ;;;
@@ -1520,10 +1501,10 @@
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
-;;; 
+;;;
 ;;; res :
 ;;;     a GAsyncResult
-;;; 
+;;;
 ;;; was_symbolic :
 ;;;     a gboolean, returns whether the loaded icon was a symbolic one and
 ;;;     whether the fg color was applied to it.
@@ -1673,7 +1654,7 @@
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
-;;; 
+;;;
 ;;; res :
 ;;;     a GAsyncResult
 ;;;
