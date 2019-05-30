@@ -5869,8 +5869,8 @@
   (window (g-object gdk-window))
   (parent-x :double)
   (parent-y :double)
-  (x :double)
-  (y :double))
+  (x (:pointer :double))
+  (y (:pointer :double)))
 
 (defun gdk-window-coords-from-parent (window parent-x parent-y)
  #+cl-cffi-gtk-documentation
@@ -5893,8 +5893,8 @@
   For normal windows, calling this function is equivalent to subtracting the
   return values of the @fun{gdk-window-get-position} function from the parent
   coordinates. For offscreen windows however, which can be arbitrarily
-  transformed, this function calls the \"from-embedder\" signal to translate the
-  coordinates.
+  transformed, this function calls the \"from-embedder\" signal to translate
+  the coordinates.
 
   You should always use this function when writing generic code that walks
   down a window hierarchy.
@@ -5919,8 +5919,8 @@
   (window (g-object gdk-window))
   (x :double)
   (y :double)
-  (parent-x :double)
-  (parent-y :double))
+  (parent-x (:pointer :double))
+  (parent-y (:pointer :double)))
 
 (defun gdk-window-coords-to-parent (window x y)
  #+cl-cffi-gtk-documentation
