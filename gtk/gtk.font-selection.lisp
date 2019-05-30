@@ -1,29 +1,29 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-selection.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -31,11 +31,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkFontSelection
-;;; 
+;;;
 ;;; Deprecated widget for selecting fonts
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkFontSelection
 ;;;
 ;;;     gtk_font_selection_new
@@ -108,118 +108,122 @@
   @see-function{gtk-font-selection-set-preview-text}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-font-selection-font-name -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-name"
                                                'gtk-font-selection) 't)
- "The @code{\"font-name\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{font-name} property of type @code{:string} (Read / Write) @br{}
   The string that represents this font. @br{}
   Default value: \"Sans 10\"")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "preview-text"
-                                               'gtk-font-selection) 't)
- "The @code{\"preview-text\"} property of type @code{:string}
-  (Read / Write) @br{}
-  The text to display in order to demonstrate the selected font. @br{}
-  Default value: \"abcdefghijk ABCDEFGHIJK\"")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-font-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-font-name 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"font-name\"} of the @class{gtk-font-selection}
-  class.")
+  Accessor of the @slot[gtk-font-selection]{font-name} slot of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
+
+;;; --- gtk-font-selection-preview-text ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "preview-text"
+                                               'gtk-font-selection) 't)
+ "The @code{preview-text} property of type @code{:string}
+  (Read / Write) @br{}
+  The text to display in order to demonstrate the selected font. @br{}
+  Default value: \"abcdefghijk ABCDEFGHIJK\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-preview-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-preview-text 'function)
  "@version{2013-6-19}
-  Accessor of the slot @code{\"preview-text\"} of the @class{gtk-font-selection}
-  class.")
+  Accessor of the @slot[gtk-font-selection]{preview-text} slot of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-font-selection-child-expand ----------------------------------------
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-expand
                        "expand" "gboolean" t t t)
-
-(define-child-property "GtkFontSelection"
-                       gtk-font-selection-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkFontSelection"
-                       gtk-font-selection-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkFontSelection"
-                       gtk-font-selection-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkFontSelection"
-                       gtk-font-selection-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-expand 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the @code{expand} child property of the
   @class{gtk-font-selection} class.
   @see-class{gtk-font-selection}")
+
+;;; --- gtk-font-selection-child-fill ------------------------------------------
+
+(define-child-property "GtkFontSelection"
+                       gtk-font-selection-child-fill
+                       "fill" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-fill 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"fill\"} of the
+  Accessor of the @code{fill} child property of the
   @class{gtk-font-selection} class.
   @see-class{gtk-font-selection}")
+
+;;; --- gtk-font-selection-child-padding ---------------------------------------
+
+(define-child-property "GtkFontSelection"
+                       gtk-font-selection-child-padding
+                       "padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-padding 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"padding\"} of the
+  Accessor of the @code{padding} child property of the
   @class{gtk-font-selection} class.
   @see-class{gtk-font-selection}")
+
+;;; --- gtk-font-selection-child-pack-type -------------------------------------
+
+(define-child-property "GtkFontSelection"
+                       gtk-font-selection-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-pack-type 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the @code{pack-type} child property of the
   @class{gtk-font-selection} class.
   @see-class{gtk-font-selection}")
+
+;;; --- gtk-font-selection-child-position --------------------------------------
+
+(define-child-property "GtkFontSelection"
+                       gtk-font-selection-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-position 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the @code{position} child property of the
   @class{gtk-font-selection} class.
   @see-class{gtk-font-selection}")
 
@@ -233,13 +237,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-24}
   @return{A new @class{gtk-font-selection} widget.}
-  @subheading{Warning}
-    The function @sym{gtk-font-selection-new} is deprecated and should not be
-    used in newly written code. Use @class{gtk-font-chooser}.
-
   @begin{short}
     Creates a new @class{gtk-font-selection} widget.
-  @end{short}"
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-font-selection-new} is deprecated and should not be
+    used in newly written code. Use @class{gtk-font-chooser}.
+  @end{dictionary}
+  @see-class{gtk-font-selection}"
   (make-instance 'gtk-font-selection-new))
 
 (export 'gtk-font-selection-new)
@@ -375,13 +380,12 @@
     The function @sym{gtk-font-selection-get-face} has been deprecated since
     version 3.2 and should not be used in newly written code.
     Use @class{gtk-font-chooser}.
-  
+
   @begin{short}
     Gets the @class{pango-font-face} representing the selected font group
     details (i. e. family, slant, weight, width, etc).
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-face)
@@ -405,8 +409,7 @@
     This returns the @class{gtk-tree-view} which lists all styles available for
     the selected font. For example, 'Regular', 'Bold', etc.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-face-list)
@@ -433,8 +436,7 @@
   @begin{short}
     Gets the @class{pango-font-family} representing the selected font family.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-family)
@@ -457,8 +459,7 @@
     Use @class{gtk-font-chooser}.
 
   @short{The selected font size.}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-size)
@@ -482,8 +483,7 @@
     This returns the @class{gtk-tree-view} that lists font families, for
     example, 'Sans', 'Serif', etc.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-family-list)
@@ -502,12 +502,11 @@
     The function @sym{gtk-font-selection-get-preview-entry} has been deprecated
     since version 3.2 and should not be used in newly written code.
     Use @class{gtk-font-chooser}.
-  
+
   @begin{short}
     This returns the @class{gtk-entry} used to display the font as a preview.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-preview-entry)
@@ -531,8 +530,7 @@
     This returns the @class{gtk-entry} used to allow the user to edit the font
     number manually instead of selecting it from the list of font sizes.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-size-entry)
@@ -555,8 +553,7 @@
   @begin{short}
     This returns the @class{gtk-tree-view} used to list font sizes.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
 (export 'gtk-font-selection-get-size-list)
