@@ -152,6 +152,19 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_buildable_add_child" %gtk-buildable-add-child) :void
+  (buildable (g-object gtk-buildable))
+  (builder (g-object gtk-builder))
+  (child g-object)
+  (type :string))
+
+(defun gtk-buildable-add-child (buildable builder child type)
+  (if type
+      (%gtk-buildable-add-child buildable builder child type)
+      (%gtk-buildable-add-child buildable builder Child (null-pointer))))
+
+(export 'gtk-buildable-add-child)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_set_buildable_property ()
 ;;;
@@ -342,5 +355,13 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_buildable_get_internal_child" gtk-buildable-get-internal-child)
+    g-object
+  (buildable (g-object gtk-buildable))
+  (builder (g-object gtk-builder))
+  (childname :string))
+
+(export 'gtk-buildable-get-internal-child)
 
 ;;; --- End of file gtk.buildable.lisp -----------------------------------------
