@@ -266,7 +266,7 @@
  "The @code{snap-edge-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to use the value from the @code{snap-edge} property or a value
-  derived from @code{\"handle-position\"}. @br{}
+  derived from the @code{handle-position} property. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
