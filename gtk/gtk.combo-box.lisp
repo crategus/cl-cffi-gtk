@@ -656,7 +656,7 @@
   to be @arg{text-column}.
 
   The column @arg{text-column} in the model of the combo box must be of type
-  @code{\"gchararray\"}. This is only relevant if the combo box has been created
+  @code{gchararray}. This is only relevant if the combo box has been created
   with the @code{has-entry} property as @em{true}.
   @see-class{gtk-combo-box}")
 
