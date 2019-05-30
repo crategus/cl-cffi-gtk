@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.color-selection-dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
@@ -75,7 +72,7 @@
     provides a standard dialog for file selection.
   @end{short}
 
-  Use the function @fun{gtk-color-selection-dialog-get-color-selection} to get
+  Use the @fun{gtk-color-selection-dialog-get-color-selection} function to get
   the @class{gtk-color-selection} widget contained within the dialog. Use this
   widget and its @fun{gtk-color-selection-get-current-color} function to gain
   access to the selected color. Connect a handler for this widget's
@@ -97,41 +94,16 @@
   @see-function{gtk-color-selection-dialog-get-color-selection}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-color-selection-dialog-cancel-button -------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cancel-button"
                                                'gtk-color-selection-dialog) 't)
- "The @code{\"cancel-button\"} property of type @class{gtk-widget} (Read) @br{}
+ "The @code{cancel-button} property of type @class{gtk-widget} (Read) @br{}
   The cancel button of the dialog.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "color-selection"
-                                               'gtk-color-selection-dialog) 't)
- "The @code{\"color-selection\"} property of type @class{gtk-widget}
-  (Read) @br{}
-  The color selection embedded in the dialog.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "help-button"
-                                               'gtk-color-selection-dialog) 't)
- "The @code{\"help-button\"} property of type @class{gtk-widget} (Read) @br{}
-  The help button of the dialog.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "ok-button"
-                                               'gtk-color-selection-dialog) 't)
- "The @code{\"ok-button\"} property of type @class{gtk-widget} (Read) @br{}
-  The OK button of the dialog.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-cancel-button
@@ -139,9 +111,17 @@
       "Accessor"
       (documentation 'gtk-color-selection-dialog-cancel-button 'function)
  "@version{2013-12-16}
-  Accessor of the slot @code{\"cancel-button\"} of the
+  Accessor of the @slot[gtk-color-selection-dialog]{cancel-button} slot of the
   @class{gtk-color-selection-dialog} class.
   @see-class{gtk-color-selection-dialog}")
+
+;;; --- gtk-color-selection-dialog-color-selection -----------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "color-selection"
+                                               'gtk-color-selection-dialog) 't)
+ "The @code{color-selection} property of type @class{gtk-widget} (Read) @br{}
+  The color selection embedded in the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-color-selection
@@ -149,9 +129,17 @@
       "Accessor"
       (documentation 'gtk-color-selection-dialog-color-selection 'function)
  "@version{2013-12-16}
-  Accessor of the slot @code{\"color-selection\"} of the
+  Accessor of the @slot[gtk-color-selection-dialog]{color-selection} slot of the
   @class{gtk-color-selection-dialog} class.
   @see-class{gtk-color-selection-dialog}")
+
+;;; --- gtk-color-selection-dialog-help-button ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "help-button"
+                                               'gtk-color-selection-dialog) 't)
+ "The @code{help-button} property of type @class{gtk-widget} (Read) @br{}
+  The help button of the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-help-button
@@ -159,9 +147,17 @@
       "Accessor"
       (documentation 'gtk-color-selection-dialog-help-button 'function)
  "@version{2013-12-16}
-  Accessor of the slot @code{\"help-button\"} of the
+  Accessor of the @slot[gtk-color-selection-dialog]{help-button} slot of the
   @class{gtk-color-selection-dialog} class.
   @see-class{gtk-color-selection-dialog}")
+
+;;; --- gtk-color-selection-dialog-ok-button -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ok-button"
+                                               'gtk-color-selection-dialog) 't)
+ "The @code{ok-button} property of type @class{gtk-widget} (Read) @br{}
+  The OK button of the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-ok-button
@@ -169,7 +165,7 @@
       "Accessor"
       (documentation 'gtk-color-selection-dialog-ok-button 'function)
  "@version{2013-12-16}
-  Accessor of the slot @code{\"ok-button\"} of the
+  Accessor of the @slot[gtk-color-selection-dialog]{ok-button} slot of the
   @class{gtk-color-selection-dialog} class.
   @see-class{gtk-color-selection-dialog}
   @see-function{gtk-color-selection-get-color-selection}")
@@ -208,8 +204,6 @@
   @begin{short}
     Retrieves the @class{gtk-color-selection} widget embedded in the dialog.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-color-selection-dialog}
   @see-class{gtk-color-selection}"
   (gtk-color-selection-dialog-color-selection colorsel))
