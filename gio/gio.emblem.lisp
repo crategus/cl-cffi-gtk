@@ -28,7 +28,7 @@
 ;;;
 ;;; GEmblem
 ;;;
-;;; An object for emblems
+;;;     An object for emblems
 ;;;
 ;;; Synopsis
 ;;;
@@ -72,7 +72,7 @@
   :livemetadata
   :tag)
   @end{pre}
-  @begin[code]{table}  
+  @begin[code]{table}
     @entry[:unkown]{Emblem of unknown origin.}
     @entry[:device]{Emblem adds device-specific information.}
     @entry[:livedata]{Emblem depicts live metadata, such as \"readonly\".}
@@ -99,8 +99,8 @@
     g-emblem-icon
     "icon" "GIcon" t t)
    (origin
-     g-emblem-origin
-     "orign" "GEmblemOrigin" t t)))
+    g-emblem-origin
+    "orign" "GEmblemOrigin" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-emblem 'type)
@@ -119,14 +119,14 @@
   @see-class{g-emblemed-icon}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-emblem-icon --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon" 'g-emblem) 't)
- "The @code{\"icon\"} property of tpye @class{g-object}
+ "The @code{icon} property of tpye @class{g-object}
   (Read / Write / Construct Only) @br{}
   The actual icon of the emblem.")
 
@@ -137,21 +137,22 @@
  "@version{2014-9-22}
   @argument[object]{a @class{g-emblem} from which the icon should be extracted}
   @begin{short}
-    Accessor of the slot @slot[g-emblem]{icon} of the @class{g-emblem} class.
+    Accessor of the @slot[g-emblem]{icon} slot of the @class{g-emblem} class.
   @end{short}
 
-  The generic function @sym{g-emblem-icon} gives back the icon from the emblem.
-  
+  The @sym{g-emblem-icon} slot access function gives back the icon from the
+  emblem.
+
   Since 2.18
   @see-class{g-emblem}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-emblem-origin ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "origin" 'g-emblem) 't)
- "The @code{\"origin\"} property of type @symbol{g-emblem-origin}
+ "The @code{origin} property of type @symbol{g-emblem-origin}
   (Read / Write / Construct Only) @br{}
-  Tells which origin the emblem is derived from. @br{} 
+  Tells which origin the emblem is derived from. @br{}
   Default value: @code{:unkown}")
 
 #+cl-cffi-gtk-documentation
@@ -161,10 +162,10 @@
  "@version{2014-9-22}
   @argument[object]{a @class{g-emblem}}
   @begin{short}
-    Accessor of the slot @slot[g-emblem]{origin} of the @class{g-emblem} class.
+    Accessor of the @slot[g-emblem]{origin} slot of the @class{g-emblem} class.
   @end{short}
 
-  The generic function @sym{g-emblem-origin} gets the origin of the emblem.
+  The @sym{g-emblem-origin} slot access function gets the origin of the emblem.
 
   Since 2.18
   @see-class{g-emblem}")
