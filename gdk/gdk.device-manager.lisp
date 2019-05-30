@@ -235,7 +235,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "display"
                                                'gdk-device-manager) 't)
- "The @code{\"display\"} property of type @code{gdk-display}
+ "The @code{display} property of type @code{gdk-display}
   (Read / Write / Construct) @br{}
   Display for the device manager.")
 
@@ -247,16 +247,14 @@
   @argument[device-manager]{a @class{gdk-device-manager} object}
   @syntax[]{(gdk-device-manager-display object) => display}
   @begin{short}
-    Accessor of the slot @slot[gdk-device-manager]{display} of the
+    Accessor of the @slot[gdk-device-manager]{display} slot of the
     @class{gdk-device-manager} class.
   @end{short}
 
-  The generic function @sym{gdk-device-manager-display} returns the
+  The @sym{gdk-device-manager-display} slot access function returns the
   @class{gdk-display} object to which @arg{device-manager} is associated to,
   or @code{nil}. This memory is owned by GDK and must not be freed or
   unreferenced.
-
-  Since 3.0
   @see-class{gdk-device-manager}
   @see-class{gdk-display}")
 
