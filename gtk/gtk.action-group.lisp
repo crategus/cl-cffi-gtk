@@ -164,8 +164,6 @@
         @entry[action]{The action.}
         @entry[proxy]{The proxy.}
       @end{table}
-      Since 2.4
-
       @subheading{The \"disconnect-proxy\" signal}
         @begin{pre}
  lambda (action-group action proxy)
@@ -180,8 +178,6 @@
           @entry[action]{The action.}
           @entry[proxy]{The proxy.}
         @end{table}
-        Since 2.4
-
       @subheading{The \"post-activate\" signal}
         @begin{pre}
  lambda (action-group action)
@@ -194,8 +190,6 @@
           @entry{action-group]{The group.}
           @entry[action]{The action.}
         @end{table}
-        Since 2.4
-
       @subheading{The \"pre-activate\" signal}
         @begin{pre}
  lambda (action-group action)
@@ -208,7 +202,6 @@
           @entry[action-group]{The group.}
           @entry[action]{The action.}
         @end{table}
-        Since 2.4
   @end{dictionary}
   @see-slot{gtk-action-group-accel-group}
   @see-slot{gtk-action-group-name}
@@ -216,81 +209,83 @@
   @see-slot{gtk-action-group-visible}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-action-group-accel-group -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-group"
                                                'gtk-action-group) 't)
- "The @code{\"accel-group\"} property of type @class{gtk-accel-group}
+ "The @code{accel-group} property of type @class{gtk-accel-group}
   (Read / Write) @br{}
   The accelerator group the actions of this group should use.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action-group) 't)
- "The @code{\"name\"} property of type @code{:string}
-  (Read / Write / Construct) @br{}
-  A name for the action group. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sensitive"
-                                               'gtk-action-group) 't)
- "The @code{\"sensitive\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the action group is enabled. @br{}
-  Default value: @arg{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action-group) 't)
- "The @code{\"visible\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the action group is visible. @br{}
-  Default value: @arg{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-accel-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-accel-group 'function)
  "@version{2013-12-29}
-  Accessor of the slot @code{\"accel-group\"} of the @class{gtk-action-group}
-  class.
+  Accessor of the @slot[gtk-action-group]{accel-group} slot of the
+  @class{gtk-action-group} class.
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-accel-group}
   @see-function{gtk-action-group-set-accel-group}")
+
+;;; --- gtk-action-group-name --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action-group) 't)
+ "The @code{name} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  A name for the action group. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-name 'function)
  "@version{2013-12-29}
-  Accessor of the slot @code{\"name\"} of the @class{gtk-action-group} class.
+  Accessor of the @slot[gtk-action-group]{name} slot of the
+  @class{gtk-action-group} class.
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-name}")
+
+;;; --- gtk-action-group-sensitive ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sensitive"
+                                               'gtk-action-group) 't)
+ "The @code{sensitive} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the action group is enabled. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-sensitive 'function)
  "@version{2013-12-29}
-  Accessor of the slot @code{\"sensitive\"} of the @class{gtk-action-group}
-  class.
+  Accessor of the @slot[gtk-action-group]{sensitive} slot of the
+  @class{gtk-action-group} class.
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-sensitive}
   @see-function{gtk-action-group-set-sensitive}")
+
+;;; --- gtk-action-group-visible -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action-group) 't)
+ "The @code{visible} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the action group is visible. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-visible 'function)
  "@version{2013-12-29}
-  Accessor of the slot @code{\"visible\"} of the @class{gtk-action-group} class.
+  Accessor of the @slot[gtk-action-group]{visible} of the
+  @class{gtk-action-group} class.
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-visible}
   @see-function{gtk-action-group-set-visible}")
@@ -310,8 +305,6 @@
     Creates a new @class{gtk-action-group} object. The @arg{name} of the action
     group is used when associating keybindings with the actions.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-action-group}"
   (make-instance 'gtk-action-group
                  :name name))
@@ -330,8 +323,6 @@
   @argument[action-group]{the action group}
   @return{The name of the action group.}
   @short{Gets the name of the action group.}
-
-  Since 2.4
   @see-class{gtk-action-group}"
   (gtk-action-group-name action-group))
 
@@ -354,8 +345,6 @@
   The constituent actions can only be logically sensitive, see the function
   @fun{gtk-action-is-sensitive}, if they are sensitive, see the function
   @fun{gtk-action-get-sensitive}, and their action group is sensitive.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-is-sensitive}
   @see-function{gtk-action-get-sensitive}
@@ -377,8 +366,6 @@
   @argument[sensitive]{new sensitivity}
   @return{The newly setted sensitivity.}
   @short{Changes the sensitivity of @arg{action-group}.}
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-sensitive}"
   (setf (gtk-action-group-sensitive action-group) sensitive))
@@ -402,8 +389,6 @@
   The constituent actions can only be logically visible, see the function
   @fun{gtk-action-is-visible}, if they are visible, see the function
   @fun{gtk-action-get-visible}, and their action group is visible.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-is-visible}
   @see-function{gtk-action-get-visible}
@@ -425,8 +410,6 @@
   @arg[visible]{new visibility}
   @return{The newly setted visibility.}
   @short{Changes the visible of @arg{action-group}.}
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-get-visible}"
   (setf (gtk-action-group-visible action-group) visible))
@@ -497,8 +480,6 @@
   @argument[action-name]{the name of the action}
   @return{The action, or @code{nil} if no action by that name exists.}
   @short{Looks up an action in the action group by name.}
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action}"
   (action-group (g-object gtk-action-group))
@@ -517,8 +498,6 @@
   @argument[action-group]{the action group}
   @return{A list of the action objects in the action group.}
   @short{Lists the actions in the action group.}
-
-  Since 2.4
   @see-function{gtk-action-group-add-action}"
   (action-group (g-object gtk-action-group)))
 
@@ -544,8 +523,6 @@
   use the accelerator associated with the @code{stock-id} of the action.
 
   Accel paths are set to @code{<Actions>/group-name/action-name}.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-accelerator-parse}"
   (%gtk-action-group-add-action-with-accel action-group
@@ -579,8 +556,6 @@
   the @code{stock-id} of the action.
 
   Accel paths are set to <Actions>/group-name/action-name.
-
-  Since 2.4
   @see-function{gtk-action-group-add-action}
   @see-function{gtk-accelerator-parse}"
   (action-group (g-object gtk-action-group))
@@ -597,7 +572,6 @@
   @argument[action-group]{the action group}
   @argument[action]{an @class{gtk-action} object}
   @short{Removes an action object from the action group.}
-  Since 2.4
   @see-class{gtk-action-group}
   @see-class{gtk-action}
   @see-function{gtk-action-group-add-action}"
@@ -671,8 +645,6 @@
 
   The \"activate\" signals of the actions are connected to the callbacks and
   their accel paths are set to <Actions>/group-name/action-name.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-class{gtk-action}
   @see-function{gtk-action-group-add-action}"
@@ -782,8 +754,6 @@
 
   The \"activate\" signals of the actions are connected to the callbacks and
   their accel paths are set to <Actions>/group-name/action-name.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-class{gtk-toggle-action}
   @see-function{gtk-action-group-add-action}"
@@ -1025,8 +995,6 @@
 
   If you are using @code{gettext()}, it is enough to set the translation domain
   with the @fun{gtk-action-group-set-translation-domain} function.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-actions}
   @see-function{gtk-action-group-set-translation-domain}"
@@ -1057,8 +1025,6 @@
 
   If you are not using @code{gettext()} for localization, see the
   @fun{gtk-action-group-set-translate-func} function.
-
-  Since 2.4
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-actions}
   @see-function{gtk-action-group-set-translate-func}"
@@ -1082,8 +1048,7 @@
     Translates a string using the specified @code{translate_func()}.
   @end{short}
   This is mainly intended for language bindings.
-
-  Since 2.6"
+  @see-class{gtk-action-group}"
   (action-group (g-object gtk-action-group))
   (string (:string :free-to-foreign nil)))
 
