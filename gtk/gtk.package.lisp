@@ -6032,9 +6032,11 @@ setup_tree (void)
       Constructing menus and toolbars from an XML description.
 
       @about-class{gtk-ui-manager}
+
+      @about-generic{gtk-ui-manager-add-tearoffs}
+      @about-generic{gtk-ui-manager-ui}
+
       @about-function{gtk-ui-manager-new}
-      @about-function{gtk-ui-manager-set-add-tearoffs}
-      @about-function{gtk-ui-manager-get-add-tearoffs}
       @about-function{gtk-ui-manager-insert-action-group}
       @about-function{gtk-ui-manager-remove-action-group}
       @about-function{gtk-ui-manager-get-action-groups}
@@ -6049,13 +6051,18 @@ setup_tree (void)
       @about-symbol{gtk-ui-manager-item-type}
       @about-function{gtk-ui-manager-add-ui}
       @about-function{gtk-ui-manager-remove-ui}
-      @about-function{gtk-ui-manager-get-ui}
       @about-function{gtk-ui-manager-ensure-update}
     @end{subsection}
     @begin[GtkActionGroup]{subsection}
       A group of actions.
 
       @about-class{gtk-action-group}
+
+      @about-generic{gtk-action-group-accel-group}
+      @about-generic{gtk-action-group-name}
+      @about-generic{gtk-action-group-sensitive}
+      @about-generic{gtk-action-group-visible}
+
       @about-function{gtk-action-group-new}
       @about-function{gtk-action-group-get-name}
       @about-function{gtk-action-group-get-sensitive}
@@ -6144,12 +6151,15 @@ setup_tree (void)
       An action of which only one in a group can be active.
 
       @about-class{gtk-radio-action}
+
+      @about-generic{gtk-radio-action-current-value}
+      @about-generic{gtk-radio-action-group}
+      @about-generic{gtk-radio-action-value}
+
       @about-function{gtk-radio-action-new}
       @about-function{gtk-radio-action-get-group}
       @about-function{gtk-radio-action-set-group}
       @about-function{gtk-radio-action-join-group}
-      @about-function{gtk-radio-action-get-current-value}
-      @about-function{gtk-radio-action-set-current-value}
     @end{subsection}
     @begin[GtkRecentAction]{subsection}
       An action of which represents a list of recently used files.
@@ -6435,6 +6445,13 @@ setup_tree (void)
       Pack widgets in regular patterns.
 
       @about-class{gtk-table}
+
+      @about-generic{gtk-table-column-spacing}
+      @about-generic{gtk-table-homogeneous}
+      @about-generic{gtk-table-n-columns}
+      @about-generic{gtk-table-n-rows}
+      @about-generic{gtk-table-row-spacing}
+
       @about-function{gtk-table-child-left-attach}
       @about-function{gtk-table-child-right-attach}
       @about-function{gtk-table-child-top-attach}
@@ -6443,6 +6460,7 @@ setup_tree (void)
       @about-function{gtk-table-child-y-options}
       @about-function{gtk-table-child-x-padding}
       @about-function{gtk-table-child-y-padding}
+
       @about-function{gtk-table-new}
       @about-function{gtk-table-resize}
       @about-function{gtk-table-get-size}
