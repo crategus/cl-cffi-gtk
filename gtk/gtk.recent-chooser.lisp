@@ -71,8 +71,8 @@
 ;;;     gtk_recent_chooser_add_filter
 ;;;     gtk_recent_chooser_remove_filter
 ;;;     gtk_recent_chooser_list_filters
-;;;     gtk_recent_chooser_set_filter
-;;;     gtk_recent_chooser_get_filter
+;;;     gtk_recent_chooser_set_filter                      Accessor
+;;;     gtk_recent_chooser_get_filter                      Accessor
 ;;;
 ;;; Properties
 ;;;
