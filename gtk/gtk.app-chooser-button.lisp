@@ -107,14 +107,14 @@
   @end{short}
 
   Initially, a @sym{gtk-app-chooser-button} selects the first application in its
-  list, which will either be the most-recently used application or, if
-  @code{\"show-default-item\"} is @em{true}, the default application.
+  list, which will either be the most-recently used application or, if the
+  @code{show-default-item} property is @em{true}, the default application.
 
   The list of applications shown in a @sym{gtk-app-chooser-button} includes the
-  recommended applications for the given content type. When
-  @code{\"show-default-item\"} is set, the default application is also included.
-  To let the user chooser other applications, you can set the
-  @code{\"show-dialog-item\"} property, which allows to open a full
+  recommended applications for the given content type. When the
+  @code{show-default-item} property is set, the default application is also
+  included. To let the user chooser other applications, you can set the
+  @code{show-dialog-item} property, which allows to open a full
   @class{gtk-app-chooser-dialog}.
 
   It is possible to add custom items to the list, using the function
@@ -174,7 +174,7 @@
                                                'gtk-app-chooser-button) 't)
  "The @code{show-default-item} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  The @code{\"show-default-item\"} property determines whether the dropdown menu
+  The @code{show-default-item} property determines whether the dropdown menu
   should show the default application on top for the provided content type.
   @br{}
   Default value: @code{nil}")
@@ -185,7 +185,7 @@
       "Accessor"
       (documentation 'gtk-app-chooser-button-show-default-item 'function)
  "@version{2013-11-1}
-  Accessor of the slot @slot[gtk-app-chooser-button]{show-default-item} of the
+  Accessor of the @slot[gtk-app-chooser-button]{show-default-item} slot of the
   @class{gtk-app-chooser-button} class.
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-get-show-default-item}
@@ -317,9 +317,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser-button} widget}
-  @return{The value of the @code{\"show-default-item\"} property.}
+  @return{The value of the @slot[gtk-app-chooser-button]{show-default-item}
+    property.}
   @begin{short}
-    Returns the current value of the @code{\"show-default-item\"} property.
+    Returns the current value of the
+    @slot[gtk-app-chooser-button]{show-default-item} property.
   @end{short}
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-set-show-default-item}"
@@ -337,8 +339,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser-button} widget}
-  @argument[setting]{the new value for the @code{\"show-default-item\"}
-    property}
+  @argument[setting]{the new value for the
+    @slot[gtk-app-chooser-button]{show-default-item} property}
   @begin{short}
     Sets whether the dropdown menu of this button should show the default
     application for the given content type at top.
@@ -359,9 +361,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser-button} widget}
-  @return{The value of the @code{\"show-dialog-item\"} property.}
+  @return{The value of the @slot[gtk-app-chooser-button]{show-dialog-item}
+    property.}
   @begin{short}
-    Returns the current value of the @code{\"show-dialog-item\"} property.
+    Returns the current value of the
+    @slot[gtk-app-chooser-button]{show-dialog-item} property.
   @end{short}
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-set-show-dialog-item}"
@@ -379,7 +383,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser-button} widget}
-  @argument[setting]{the new value for the @code{\"show-dialog-item\"} property}
+  @argument[setting]{the new value for the
+    @slot[gtk-app-chooser-button]{show-dialog-item} property}
   @begin{short}
     Sets whether the dropdown menu of this button should show an entry to
     trigger a @class{gtk-app-chooser-dialog}.
