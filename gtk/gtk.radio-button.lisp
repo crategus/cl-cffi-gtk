@@ -172,13 +172,13 @@
     @end{pre}
     When an unselected button in the group is clicked the clicked button
     receives the \"toggled\" signal, as does the previously selected button.
-    Inside the \"toggled\" handler, the function @fun{gtk-toggle-button-active}
+    Inside the \"toggled\" handler, the @fun{gtk-toggle-button-active} function
     can be used to determine if the button has been selected or deselected.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"group-changed\" signal}
       @begin{pre}
- lambda (button)   : Run First
+ lambda (button)    : Run First
       @end{pre}
       Emitted when the group of radio buttons that a radio button belongs to
       changes. This is emitted when a radio button switches from being alone to
