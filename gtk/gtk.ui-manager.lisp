@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.ui-manager.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkUIManager
 ;;;
-;;; Constructing menus and toolbars from an XML description
+;;;     Constructing menus and toolbars from an XML description
 ;;;
 ;;; Synopsis
 ;;;
@@ -230,6 +227,66 @@
 (export 'let-ui)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkUIManagerItemType
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkUIManagerItemType" gtk-ui-manager-item-type
+  (:export t
+   :type-initializer "gtk_ui_manager_item_type_get_type")
+  (:auto 0)
+  (:menubar 1)
+  (:menu 2)
+  (:toolbar 4)
+  (:placeholder 8)
+  (:popup 16)
+  (:menuitem 32)
+  (:toolitem 64)
+  (:separator 128)
+  (:accelerator 256)
+  (:popup-with-accels 512))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-ui-manager-item-type atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-ui-manager-item-type atdoc:*external-symbols*)
+ "@version{2014-1-26}
+  @begin{short}
+    These enumeration values are used by the @fun{gtk-ui-manager-add-ui}
+    function to determine what UI element to create.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkUIManagerItemType\" gtk-ui-manager-item-type
+  (:export t
+   :type-initializer \"gtk_ui_manager_item_type_get_type\"))
+  (:auto 0)
+  (:menubar 1)
+  (:menu 2)
+  (:toolbar 4)
+  (:placeholder 8)
+  (:popup 16)
+  (:menuitem 32)
+  (:toolitem 64)
+  (:separator 128)
+  (:accelerator 256)
+  (:popup-with-accels 512))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:auto]{Pick the type of the UI element according to context.}
+    @entry[:menubar]{Create a menubar.}
+    @entry[:menu]{Create a menu.}
+    @entry[:toolbar]{Create a toolbar.}
+    @entry[:placeholder]{Insert a placeholder.}
+    @entry[:popup]{Create a popup menu.}
+    @entry[:menuitem]{Create a menuitem.}
+    @entry[:toolitem]{Create a toolitem.}
+    @entry[:separator]{Create a separator.}
+    @entry[:accelerator]{Install an accelerator.}
+    @entry[:popup-with-accels]{Same as @code{:popup}, but the actions'
+      accelerators are shown.}
+  @end{table}
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-add-ui}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkUIManager
 ;;; ----------------------------------------------------------------------------
 
@@ -401,8 +458,7 @@
     @end{itemize}
     The behaviour is chosen based on the @slot[gtk-action]{hide-if-empty}
     property of the action to which the submenu is associated.
-
-  @subheading{GtkUIManager as GtkBuildable}
+  @begin[GtkUIManager as GtkBuildable]{dictionary}
     The @sym{gtk-ui-manager} implementation of the @class{gtk-buildable}
     interface accepts @class{gtk-action-group} objects as <child> elements in
     UI definitions.
@@ -440,21 +496,20 @@
     </child>
 </object>
     @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"actions-changed\" signal}
       @begin{pre}
-lambda (manager)   : No Recursion
+lambda (manager)    : No Recursion
       @end{pre}
       The \"actions-changed\" signal is emitted whenever the set of actions
       changes.
       @begin[code]{table}
         @entry[manager]{A @sym{gtk-ui-manager}.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"add-widget\" signal}
       @begin{pre}
-lambda (manager widget)   : No Recursion
+lambda (manager widget)    : No Recursion
       @end{pre}
       The \"add-widget\" signal is emitted for each generated menubar and
       toolbar. It is not emitted for generated popup menus, which can be
@@ -463,11 +518,9 @@ lambda (manager widget)   : No Recursion
         @entry[manager]{A @sym{gtk-ui-manager}.}
         @entry[widget]{The added widget.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"connect-proxy\" signal}
       @begin{pre}
-lambda (manager action proxy)   : No Recursion
+lambda (manager action proxy)    : No Recursion
       @end{pre}
       The \"connect-proxy\" signal is emitted after connecting a proxy to an
       action in the group.
@@ -479,11 +532,9 @@ lambda (manager action proxy)   : No Recursion
         @entry[action]{The action.}
         @entry[proxy]{The proxy.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"disconnect-proxy\" signal}
       @begin{pre}
-lambda (manager action proxy)   : No Recursion
+lambda (manager action proxy)    : No Recursion
       @end{pre}
       The \"disconnect-proxy\" signal is emitted after disconnecting a proxy
       from an action in the group.
@@ -492,11 +543,9 @@ lambda (manager action proxy)   : No Recursion
         @entry[action]{The action.}
         @entry[proxy]{The proxy.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"post-activate\" signal}
       @begin{pre}
-lambda (manager action)   : No Recursion
+lambda (manager action)    : No Recursion
       @end{pre}
       The \"post-activate\" signal is emitted just after the action is
       activated.
@@ -506,11 +555,9 @@ lambda (manager action)   : No Recursion
         @entry[manager]{The ui manager.}
         @entry[action]{The action.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"pre-activate\" signal}
       @begin{pre}
-lambda (manager action)   : No Recursion
+lambda (manager action)    : No Recursion
       @end{pre}
       The \"pre-activate\" signal is emitted just before the action is
       activated. This is intended for applications to get notification just
@@ -519,7 +566,6 @@ lambda (manager action)   : No Recursion
         @entry[manager]{The ui manager.}
         @entry[action]{The action.}
       @end{table}
-      Since 2.4
   @end{dictionary}
   @see-slot{gtk-ui-manager-add-tearoffs}
   @see-slot{gtk-ui-manager-ui}
@@ -537,119 +583,78 @@ lambda (manager action)   : No Recursion
   @see-function{gtk-ui-manager-get-widget}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-ui-manager-add-tearoffs --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "add-tearoffs"
                                                'gtk-ui-manager) 't)
- "The @code{\"add-tearoffs\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  @b{Warning:}
-  The @code{\"add-tearoffs\"} property has been deprecated since version 3.4
-  and should not be used in newly-written code. Tearoff menus are deprecated
-  and should not be used in newly written code.
-
-  The \"add-tearoffs\" property controls whether generated menus have tearoff
+ "The @code{add-tearoffs} property of type @code{:boolean} (Read / Write) @br{}
+  The @code{add-tearoffs} property controls whether generated menus have tearoff
   menu items. Note that this only affects regular menus. Generated popup menus
   never have tearoff menu items. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "ui" 'gtk-ui-manager) 't)
- "The @code{\"ui\"} property of type @code{:string} (Read) @br{}
-  An XML string describing the merged UI. @br{}
-  Default value: \"<ui>\n</ui>\n\"")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  @em{Warning:} The @code{add-tearoffs} property has been deprecated since
+  version 3.4 and should not be used in newly-written code. Tearoff menus are
+  deprecated and should not be used in newly written code. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-add-tearoffs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-ui-manager-add-tearoffs 'function)
  "@version{2014-1-26}
-  Accessor of the slot @slot[gtk-ui-manager]{add-tearoffs} of the
-  @class{gtk-ui-manager} class.
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-ui-manager-get-add-tearoffs}
-  @see-function{gtk-ui-manager-set-add-tearoffs}")
+  @syntax[]{(gtk-ui-manager-add-tearoffs object) => add-tearoffs}
+  @syntax[]{(setf (gtk-ui-manager-add-tearoffs object) add-tearoffs)}
+  @argument[object]{a @class{gtk-ui-manager}}
+  @argument[add-tearoffs]{whether tearoff menu items are added}
+  @begin{short}
+    Accessor of the @slot[gtk-ui-manager]{add-tearoffs} slot of the
+    @class{gtk-ui-manager} class.
+  @end{short}
+
+  The @sym{gtk-ui-manager-add-tearoffs} slot access function
+  returns whether menus generated by the @class{gtk-ui-manager} will have
+  tearoff menu items.
+
+  The @sym{(setf gtk-ui-manager-add-tearoffs)} slot access function
+  sets the @slot[gtk-ui-manager]{add-tearoffs} property, which controls
+  whether menus generated by this @class{gtk-ui-manager} will have tearoff
+  menu items.
+
+  Note that this only affects regular menus. Generated popup menus never have
+  tearoff menu items.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-ui-manager-add-tearoffs} slot access function has been
+    deprecated since version 3.4 and should not be used in newly-written code.
+    Tearoff menus are deprecated and should not be used in newly written code.
+  @end{dictionary}
+  @see-class{gtk-ui-manager}")
+
+;;; --- gtk-ui-manager-ui ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ui" 'gtk-ui-manager) 't)
+ "The @code{ui} property of type @code{:string} (Read) @br{}
+  An XML string describing the merged UI. @br{}
+  Default value: \"<ui>\n</ui>\n\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-ui atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-ui-manager-ui 'function)
  "@version{2014-1-26}
-  Accessor of the slot @slot[gtk-ui-manager]{ui} of the
-  @class{gtk-ui-manager} class.
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-ui-manager-get-ui}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkUIManagerItemType
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkUIManagerItemType" gtk-ui-manager-item-type
-  (:export t
-   :type-initializer "gtk_ui_manager_item_type_get_type")
-  (:auto 0)
-  (:menubar 1)
-  (:menu 2)
-  (:toolbar 4)
-  (:placeholder 8)
-  (:popup 16)
-  (:menuitem 32)
-  (:toolitem 64)
-  (:separator 128)
-  (:accelerator 256)
-  (:popup-with-accels 512))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-ui-manager-item-type atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-ui-manager-item-type atdoc:*external-symbols*)
- "@version{2014-1-26}
+  @syntax[]{(gtk-ui-manager-ui object) => ui}
+  @argument[object]{a @class{gtk-ui-manager}}
+  @argument[ui]{a string containing an XML representation of the merged UI}
   @begin{short}
-    These enumeration values are used by the @fun{gtk-ui-manager-add-ui}
-    function to determine what UI element to create.
+    Accessor of the @slot[gtk-ui-manager]{ui} slot of the
+    @class{gtk-ui-manager} class.
   @end{short}
-  @begin{pre}
-(define-g-flags \"GtkUIManagerItemType\" gtk-ui-manager-item-type
-  (:export t
-   :type-initializer \"gtk_ui_manager_item_type_get_type\"))
-  (:auto 0)
-  (:menubar 1)
-  (:menu 2)
-  (:toolbar 4)
-  (:placeholder 8)
-  (:popup 16)
-  (:menuitem 32)
-  (:toolitem 64)
-  (:separator 128)
-  (:accelerator 256)
-  (:popup-with-accels 512))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:auto]{Pick the type of the UI element according to context.}
-    @entry[:menubar]{Create a menubar.}
-    @entry[:menu]{Create a menu.}
-    @entry[:toolbar]{Create a toolbar.}
-    @entry[:placeholder]{Insert a placeholder.}
-    @entry[:popup]{Create a popup menu.}
-    @entry[:menuitem]{Create a menuitem.}
-    @entry[:toolitem]{Create a toolitem.}
-    @entry[:separator]{Create a separator.}
-    @entry[:accelerator]{Install an accelerator.}
-    @entry[:popup-with-accels]{Same as @code{:popup}, but the actions'
-      accelerators are shown.}
-  @end{table}
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-ui-manager-add-ui}")
+
+  Creates a UI definition of the merged UI.
+  @see-class{gtk-ui-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_new ()
@@ -662,72 +667,10 @@ lambda (manager action)   : No Recursion
  "@version{2014-1-26}
   @return{A new ui manager object.}
   @short{Creates a new ui manager object.}
-
-  Since 2.4
   @see-class{gtk-ui-manager}"
   (make-instance 'gtk-ui-manager))
 
 (export 'gtk-ui-manager-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_ui_manager_set_add_tearoffs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-ui-manager-set-add-tearoffs))
-
-(defun gtk-ui-manager-set-add-tearoffs (manager add-tearoffs)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[manager]{a @class{gtk-ui-manager}}
-  @argument[add-tearoffs]{whether tearoff menu items are added}
-  @begin{short}
-    Sets the @slot[gtk-ui-manager]{add-tearoffs} property, which controls
-    whether menus generated by this @class{gtk-ui-manager} will have tearoff
-    menu items.
-  @end{short}
-
-  Note that this only affects regular menus. Generated popup menus never have
-  tearoff menu items.
-  @begin[Warning]{dictionary}
-    The function @sym{gtk-ui-manager-set-add-tearoffs} has been deprecated since
-    version 3.4 and should not be used in newly written code. Tearoff menus are
-    deprecated and should not be used in newly written code.
-  @end{dictionary}
-
-  Since 2.4
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-ui-manager-get-add-tearoffs}"
-  (setf (gtk-ui-manager-add-tearoffs manager) add-tearoffs))
-
-(export 'gtk-ui-manager-set-add-tearoffs)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_ui_manager_get_add_tearoffs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-ui-manager-get-add-tearoffs))
-
-(defun gtk-ui-manager-get-add-tearoffs (manager)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[manager]{a @class{gtk-ui-manager} object}
-  @return{Whether tearoff menu items are added.}
-  @begin{short}
-    Returns whether menus generated by this @class{gtk-ui-manager} will have
-    tearoff menu items.
-  @end{short}
-  @begin[Warning]{dictionary}
-    The function @sym{gtk-ui-manager-get-add-tearoffs} has been deprecated since
-    version 3.4 and should not be used in newly-written code. Tearoff menus are
-    deprecated and should not be used in newly written code.
-  @end{dictionary}
-
-  Since 2.4
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-ui-manager-set-add-tearoffs}"
-  (gtk-ui-manager-add-tearoffs manager))
-
-(export 'gtk-ui-manager-get-add-tearoffs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_insert_action_group ()
@@ -748,8 +691,6 @@ lambda (manager action)   : No Recursion
 
   If @arg{pos} is larger than the number of action groups in manager, or
   negative, @arg{action-group} will be inserted at the end of the internal list.
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-class{gtk-action-group}"
   (manager (g-object gtk-ui-manager))
@@ -772,8 +713,6 @@ lambda (manager action)   : No Recursion
     Removes an action group from the list of action groups associated with
     manager.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-class{gtk-action-group}"
   (manager (g-object gtk-ui-manager))
@@ -792,8 +731,6 @@ lambda (manager action)   : No Recursion
   @argument[manager]{a @class{gtk-ui-manager} object}
   @return{A list of action groups.}
   @short{Returns the list of action groups associated with @arg{manager}.}
-
-  Since 2.4
   @see-class{gtk-ui-manager}"
   (ui-manager (g-object gtk-ui-manager)))
 
@@ -810,8 +747,6 @@ lambda (manager action)   : No Recursion
   @argument[manager]{a @class{gtk-ui-manager} object}
   @return{The @class{gtk-accel-group}.}
   @short{Returns the @class{gtk-accel-group} associated with @arg{manager}.}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-class{gtk-accel-group}"
   (manager (g-object gtk-ui-manager)))
@@ -847,8 +782,6 @@ lambda (manager action)   : No Recursion
   lifecycle of the UI manager. If you add the widgets returned by this
   function to some container or explicitly reference them, they will survive
   the destruction of the UI manager.
-
-  Since 2.4
   @see-class{gtk-ui-manager}"
   (ui-manager (g-object gtk-ui-manager))
   (path :string))
@@ -873,8 +806,6 @@ lambda (manager action)   : No Recursion
   @begin{short}
     Obtains a list of all toplevel widgets of the requested types.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-symbol{gtk-ui-manger-item-type}"
   (ui-manager (g-object gtk-ui-manager))
@@ -898,10 +829,8 @@ lambda (manager action)   : No Recursion
   @begin{short}
     Looks up an action by following a path.
   @end{short}
-  See the function @fun{gtk-ui-manager-get-widget} for more information about
+  See the @fun{gtk-ui-manager-get-widget} function for more information about
   paths.
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-get-widget}"
   (ui-manager (g-object gtk-ui-manager))
@@ -926,15 +855,13 @@ lambda (manager action)   : No Recursion
   @argument[resource-path]{the resource path of the file to parse}
   @begin{return}
     The merge ID for the merged UI. The merge ID can be used to unmerge the
-    UI with the function @fun{gtk-ui-manager-remove-ui}. If an error occurred,
+    UI with the @fun{gtk-ui-manager-remove-ui} function. If an error occurred,
     the return value is 0.
   @end{return}
   @begin{short}
     Parses a resource file containing a UI definition and merges it with the
     current contents of manager.
   @end{short}
-
-  Since 3.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-remove-ui}
   @see-function{gtk-ui-manager-add-ui-from-file}
@@ -963,15 +890,13 @@ lambda (manager action)   : No Recursion
   @argument[buffer]{the string to parse}
   @begin{return}
     The merge ID for the merged UI. The merge ID can be used to unmerge the
-    UI with the function @fun{gtk-ui-manager-remove-ui}. If an error occurred,
+    UI with the @fun{gtk-ui-manager-remove-ui} function. If an error occurred,
     the return value is 0.
   @end{return}
   @begin{short}
     Parses a string containing a UI definition and merges it with the current
     contents of manager. An enclosing <ui> element is added if it is missing.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-remove-ui}"
   (with-g-error (err)
@@ -1003,8 +928,6 @@ lambda (manager action)   : No Recursion
     Parses a file containing a UI definition and merges it with the current
     contents of manager.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-remove-ui}"
   (with-g-error (err)
@@ -1025,8 +948,6 @@ lambda (manager action)   : No Recursion
     Returns an unused merge ID, suitable for use with the function
     @fun{gtk-ui-manager-add-ui}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-add-ui}"
   (ui-manager (g-object gtk-ui-manager)))
@@ -1062,8 +983,6 @@ lambda (manager action)   : No Recursion
 
   If @arg{path} points to a menuitem or toolitem, the new element will be
   inserted before or after this item, depending on top.
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-symbol{gtk-ui-manager-item-type}
   @see-function{gtk-ui-manager-new-merge-id}"
@@ -1090,35 +1009,12 @@ lambda (manager action)   : No Recursion
   @begin{short}
     Unmerges the part of managers content identified by @arg{merge-id}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-add-ui-from-string}"
   (ui-manager g-object)
   (merge-id :uint))
 
 (export 'gtk-ui-manager-remove-ui)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_ui_manager_get_ui ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-ui-manager-get-ui))
-
-(defun gtk-ui-manager-get-ui (manager)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[manager]{a @class{gtk-ui-manager}}
-  @begin{return}
-    A newly allocated string containing an XML representation of the merged UI.
-  @end{return}
-  @short{Creates a UI definition of the merged UI.}
-
-  Since 2.4
-  @see-class{gtk-ui-manager}"
-  (gtk-ui-manager-ui manager))
-
-(export 'gtk-ui-manager-get-ui)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_ensure_update ()
@@ -1146,7 +1042,6 @@ lambda (manager action)   : No Recursion
 (gtk-widget-show window)
     @end{pre}
   @end{dictionary}
-  Since 2.4
   @see-class{gtk-ui-manager}"
   (ui-manager (g-object gtk-ui-manager)))
 
