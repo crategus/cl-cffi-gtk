@@ -102,62 +102,38 @@
   @see-function{gtk-numerable-icon-set-style-context}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-numerable-icon-background-icon -------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation  (atdoc:get-slot-from-name "background-icon"
                                                 'gtk-numerable-icon) 't)
- "The @code{\"background-icon\"} property of type @class{g-icon}
+ "The @code{background-icon} property of type @class{g-icon}
   (Read / Write) @br{}
   The icon for the number emblem background.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "background-icon-name"
-                                               'gtk-numerable-icon) 't)
- "The @code{\"background-icon-name\"} property of type @code{:string}
-  (Read / Write) @br{}
-  The icon name for the number emblem background. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "count" 'gtk-numerable-icon) 't)
- "The @code{\"count\"} property of type @code{:int} (Read / Write) @br{}
-  The count of the emblem currently displayed. @br{}
-  Allowed values: [-99,99] @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-numerable-icon) 't)
- "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
-  The label to be displayed over the icon. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "style-context"
-                                               'gtk-numerable-icon) 't)
- "The @code{\"style-context\"} property of type @class{gtk-style-context}
-  (Read / Write) @br{}
-  The style context to theme the icon appearance.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-numerable-icon-background-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-background-icon 'function)
  "@version{2014-1-27}
-  Accessor of the slot @slot[gtk-numerable-icon]{background-icon} of the
+  Accessor of the @slot[gtk-numerable-icon]{background-icon} slot of the
   @class{gtk-numerable-icon} class.
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-get-background-gicon}
   @see-function{gtk-numerable-icon-set-background-gicon}")
+
+;;; --- gtk-numerable-icon-background-icon-name --------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-icon-name"
+                                               'gtk-numerable-icon) 't)
+ "The @code{background-icon-name} property of type @code{:string}
+  (Read / Write) @br{}
+  The icon name for the number emblem background. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-numerable-icon-background-icon-name
@@ -165,40 +141,66 @@
       "Accessor"
       (documentation 'gtk-numerable-icon-background-icon-name 'function)
  "@version{2014-1-27}
-  Accessor of the slot @slot[gtk-numerable-icon]{background-icon-name} of the
+  Accessor of the @slot[gtk-numerable-icon]{background-icon-name} slot of the
   @class{gtk-numerable-icon} class.
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-get-background-icon-name}
   @see-function{gtk-numerable-icon-set-background-icon-name}")
+
+;;; --- gtk-numerable-icon-count -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "count" 'gtk-numerable-icon) 't)
+ "The @code{count} property of type @code{:int} (Read / Write) @br{}
+  The count of the emblem currently displayed. @br{}
+  Allowed values: [-99,99] @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-numerable-icon-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-count 'function)
  "@version{2014-1-27}
-  Accessor of the slot @slot[gtk-numerable-icon]{count} of the
+  Accessor of the @slot[gtk-numerable-icon]{count} slot of the
   @class{gtk-numerable-icon} class.
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-get-count}
   @see-function{gtk-numerable-icon-set-count}")
+
+;;; --- gtk-numerable-icon-label -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-numerable-icon) 't)
+ "The @code{label} property of type @code{:string} (Read / Write) @br{}
+  The label to be displayed over the icon. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-numerable-icon-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-label 'function)
  "@version{2014-1-27}
-  Accessor of the slot @slot[gtk-numerable-icon]{label} of the
+  Accessor of the @slot[gtk-numerable-icon]{label} slot of the
   @class{gtk-numerable-icon} class.
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-get-label}
   @see-function{gtk-numerable-icon-set-label}")
+
+;;; --- gtk-numerable-icon-style-context ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style-context"
+                                               'gtk-numerable-icon) 't)
+ "The @code{style-context} property of type @class{gtk-style-context}
+  (Read / Write) @br{}
+  The style context to theme the icon appearance.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-numerable-icon-style-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-style-context 'function)
  "@version{2014-1-27}
-  Accessor of the slot @slot[gtk-numerable-icon]{style-context} of the
+  Accessor of the @slot[gtk-numerable-icon]{style-context} slot of the
   @class{gtk-numerable-icon} class.
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-get-style-context}
@@ -216,8 +218,6 @@
   @argument[base-icon]{a @class{g-icon} to overlay on}
   @return{A new @class{g-icon}.}
   @short{Creates a new unthemed @class{gtk-numerable-icon} object.}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}"
   (make-instance 'gtk-numerable-icon
@@ -243,8 +243,6 @@
   @end{short}
   This is a convenience constructor that calls the function
   @fun{gtk-numerable-icon-set-style-context} internally.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}
   @see-class{g-icon}
@@ -272,8 +270,6 @@
   @end{short}
   The caller of this function does not own a reference to the returned
   @class{g-icon}.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}"
   (gtk-numerable-icon-background-icon numerable-icon))
@@ -301,8 +297,6 @@
   the icon, @arg{icon} will be used, i. e. the last method called between the
   functions @sym{gtk-numerable-icon-set-background-gicon} and
   @fun{gtk-numerable-icon-set-background-icon-name} has always priority.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}
   @see-function{gtk-numerable-icon-set-background-icon-name}"
@@ -325,8 +319,6 @@
     Returns the icon name used as the base background image, or @code{nil}
     if there is none.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}"
   (gtk-numerable-icon-background-icon-name numerable-icon))
 
@@ -354,8 +346,6 @@
   for the icon, @arg{icon-name} will be used, i. e. the last method called
   between the functions @sym{gtk-numerable-icon-set-background-icon-name} and
   @fun{gtk-numerable-icon-set-background-gicon} has always priority.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}
   @see-function{gtk-numerable-icon-set-background-gicon}"
@@ -377,8 +367,6 @@
   @begin{short}
     Returns the value currently displayed by @arg{numerable-icon}.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}"
   (gtk-numerable-icon-count numerable-icon))
 
@@ -405,8 +393,6 @@
   @code{nil} before rendering the number, i. e. the last method called between
   the functions @sym{gtk-numerable-icon-set-count} and
   @fun{gtk-numerable-icon-set-label} has always priority.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-set-label}"
   (setf (gtk-numerable-icon-count numerable-icon) count))
@@ -427,8 +413,6 @@
   @begin{short}
     Returns the currently displayed label of the icon, or @code{nil}.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}"
   (gtk-numerable-icon-label numerable-icon))
 
@@ -460,8 +444,6 @@
   automatically be reset to zero before rendering the label, i. e. the last
   method called between the function @sym{gtk-numerable-icon-set-label} and
   @fun{gtk-numerable-icon-set-count} has always priority.
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-set-count}"
   (setf (gtk-numerable-icon-label numerable-icon) label))
@@ -487,8 +469,6 @@
     Returns the @class{gtk-style-context} object used by the icon for theming,
     or @code{nil} if thereis none.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}
   @see-function{g-object-ref}"
@@ -511,8 +491,6 @@
     Updates the icon to fetch theme information from the given
     @class{gtk-style-context} object.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}"
   (setf (gtk-numerable-icon-style-context numerable-icon) style))
