@@ -261,8 +261,6 @@
   @begin{short}
     Adds a rule allowing a given mime type to @arg{filter}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-file-filter}"
   (filter (g-object gtk-file-filter))
   (mime-type :string))
@@ -281,8 +279,7 @@
   @begin{short}
     Adds a rule allowing a shell style glob to a filter.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-file-filter}"
   (filter g-object)
   (pattern :string))
 
@@ -301,8 +298,7 @@
     Adds a rule allowing image files in the formats supported by
     @class{gdk-pixbuf}.
   @end{short}
-
-  Since 2.6"
+  @see-class{gtk-file-filter}"
   (filter g-object))
 
 (export 'gtk-file-filter-add-pixbuf-formats)
@@ -417,7 +413,7 @@
 ;;;
 ;;; variant :
 ;;;     an a{sv} GVariant
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkFileFilter object.
 ;;;
