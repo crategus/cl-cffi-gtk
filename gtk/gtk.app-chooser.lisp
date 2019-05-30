@@ -153,7 +153,8 @@
   @argument[self]{a @class{gtk-app-chooser} object}
   @return{The content type of @arg{self}.}
   @begin{short}
-    Returns the current value of the @code{\"content-type\"} property.
+    Returns the current value of the @slot[gtk-app-chooser]{content-type}
+    property.
   @end{short}
   @see-class{gtk-app-chooser}"
   (gtk-app-chooser-content-type self))
