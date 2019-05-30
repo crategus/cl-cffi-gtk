@@ -28,7 +28,7 @@
 ;;;
 ;;; GtkThemingEngine
 ;;;
-;;; Theming renderers
+;;;     Theming renderers
 ;;;
 ;;; Synopsis
 ;;;
@@ -259,35 +259,26 @@
   @see-class{gtk-style-context}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-theming-engine) 't)
- "The @code{\"name\"} property of type @code{:string}
+ "The @code{name} property of type @code{:string}
   (Read / Write / Construct Only) @br{}
   The theming engine name, this name will be used when registering custom
   properties, for a theming engine named \"Clearlooks\" registering a
   \"glossy\" custom property, it could be referenced in the CSS file as
   @code{-Clearlooks-glossy: true;} @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-theming-engine-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-theming-engine-name 'function)
  "@version{2013-11-27}
-  Accessor of the slot @code{\"name\"} of the @class{gtk-theming-engine}
-  class.
+  Accessor of the @slot[gtk-theming-engine]{name} slot of the
+  @class{gtk-theming-engine} class.
   @see-class{gtk-theming-engine}")
 
 ;;; ----------------------------------------------------------------------------
