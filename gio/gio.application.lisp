@@ -479,106 +479,116 @@
   @see-function{g-application-command-line-set-exit-status}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- g-application-action-group ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action-group"
                                                'g-application) 't)
- "The @code{\"action-group\"} property of type @class{g-action-group}
+ "The @code{action-group} property of type @class{g-action-group}
   (Write) @br{}
   The group of actions that the application exports.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "application-id"
-                                               'g-application) 't)
- "The @code{\"application-id\"} property of type @code{:string}
-  (Read / Write / Construct) @br{}
-  The unique identifier for the application. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "flags" 'g-application) 't)
- "The @code{\"flags\"} property of type @symbol{g-application-flags}
-  (Read / Write)@br{}
-  Flags specifying the behaviour of the application.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inactivity-timeout"
-                                               'g-application) 't)
- "The @code{\"inactivity-timeout\"} property of type @code{:uint}
-  (Read / Write)@br{}
-  Time (ms) to stay alive after becoming idle. @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "is-registered"
-                                               'g-application) 't)
- "The @code{\"is-registered\"} property of type @code{:boolean} (Read) @br{}
-  If the function @fun{g-application-register} has been called. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "is-remote" 'g-application) 't)
- "The @code{\"is-remote\"} property of type @code{:boolean} (Read) @br{}
-  If this application instance is remote. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-action-group 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"action-group\"} of the @class{g-application}
-  class.")
+  Accessor of the @slot[g-application]{action-group} slot of the
+  @class{g-application} class.
+  @see-class{g-application}")
+
+;;; --- g-application-application-id -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "application-id"
+                                               'g-application) 't)
+ "The @code{application-id} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  The unique identifier for the application. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-application-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-application-id 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"application-id\"} of the @class{g-application}
-  class.")
+  Accessor of the @slot[g-application]{application-id} slot of the
+  @class{g-application} class.
+  @see-class{g-application}")
+
+;;; --- g-application-flags ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "flags" 'g-application) 't)
+ "The @code{flags} property of type @symbol{g-application-flags}
+  (Read / Write) @br{}
+  Flags specifying the behaviour of the application.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-flags atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-flags 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"flags\"} of the @class{g-application}
-  class.")
+  Accessor of the @slot[g-application]{flags} slot of the @class{g-application}
+  class.
+  @see-class{g-application}")
+
+;;; --- g-application-inactivity-timeout ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inactivity-timeout"
+                                               'g-application) 't)
+ "The @code{inactivity-timeout} property of type @code{:uint}
+  (Read / Write) @br{}
+  Time (ms) to stay alive after becoming idle. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-inactivity-timeout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-inactivity-timeout 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"inactivity-timeout\"} of the
-  @class{g-application} class.")
+  Accessor of the @slot[g-application]{inactivity-timeout} slot of the
+  @class{g-application} class.
+  @see-class{g-application}")
+
+;;; --- g-application-is-registered --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "is-registered"
+                                               'g-application) 't)
+ "The @code{is-registered} property of type @code{:boolean} (Read) @br{}
+  If the function @fun{g-application-register} has been called. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-is-registered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-registered 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"is-registered\"} of the @class{g-application}
-  class.")
+  Accessor of the @slot[g-application]{is-registered} slot of the
+  @class{g-application} class.
+  @see-class{g-application}")
+
+;;; --- g-application-is-remote ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "is-remote" 'g-application) 't)
+ "The @code{is-remote} property of type @code{:boolean} (Read) @br{}
+  If this application instance is remote. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-is-remote atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-remote 'function)
  "@version{2013-5-1}
-  Accessor of the slot @code{\"is-remote\"} of the @class{g-application}
-  class.")
+  Accessor of the @slot[g-application]{is-remote} slot of the
+  @class{g-application} class.
+  @see-class{g-application}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GApplicationClass
