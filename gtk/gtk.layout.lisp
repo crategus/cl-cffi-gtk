@@ -421,8 +421,6 @@
   @begin{short}
     Retrieve the bin window of the @arg{layout} used for drawing operations.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-layout}"
   (layout (g-object gtk-layout)))
 
