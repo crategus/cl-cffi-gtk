@@ -173,12 +173,12 @@
   subclasses.
 
   Each action can have one or more proxy widgets. To act as an action proxy,
-  widget needs to implement @class{gtk-activatable} interface. Proxies mirror
-  the state of the action and should change when the action's state changes.
-  Properties that are always mirrored by proxies are @code{\"sensitive\"} and
-  @code{\"visible\"}. @code{\"gicon\"}, @code{\"icon-name\"}, @code{\"label\"},
-  @code{\"short-label\"} and @code{\"stock-id\"} properties are only mirorred
-  if proxy widget has @code{\"use-action-appearance\"} property set to
+  widget needs to implement the @class{gtk-activatable} interface. Proxies
+  mirror the state of the action and should change when the action's state
+  changes. Properties that are always mirrored by proxies are @code{sensitive}
+  and @code{visible}. @code{gicon}, @code{icon-name}, @code{label},
+  @code{short-label} and @code{stock-id} properties are only mirorred if proxy
+  widget has the @slot[gtk-acivatable]{use-action-appearance} property set to
   @arg{true}.
 
   When the proxy is activated, it should activate its action.
@@ -191,7 +191,6 @@
       @begin[code]{table}
         @entry[action]{The @sym{gtk-action}.}
       @end{table}
-      Since 2.4
   @end{dictionary}
   @see-slot{gtk-action-action-group}
   @see-slot{gtk-action-always-show-image}
@@ -211,302 +210,332 @@
   @see-slot{gtk-action-visible-vertical}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-action-action-group ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action-group" 'gtk-action) 't)
- "The @code{\"action-group\"} property of type @class{gtk-action-group}
+ "The @code{action-group} property of type @class{gtk-action-group}
   (Read / Write) @br{}
   The @class{gtk-action-group} this @sym{gtk-action} is associated with, or
   @code{nil} (for internal use).")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "always-show-image"
-                                               'gtk-action) 't)
- "The @code{\"always-show-image\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  If @arg{true}, the action's menu item proxies will ignore the
-  @code{\"gtk-menu-images\"} setting and always show their image, if available.
-  Use this property if the menu item would be useless or hard to use without
-  their image. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.20")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
- "The @code{\"gicon\"} property of type @class{g-icon} (Read / Write) @br{}
-  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock icon
-  is preferred, if the @code{\"stock-id\"} property holds the ID of an existing
-  stock icon. This is an appearance property and thus only applies if
-  @code{\"use-action-appearance\"} is @arg{true}. @br{}
-  Since 2.16")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "hide-if-empty" 'gtk-action) 't)
- "The @code{\"hide-if-empty\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  When @arg{true}, empty menu proxies for this action are hidden. @br{}
-  Default value: @arg{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-action) 't)
- "The @code{\"icon-name\"} property of type @code{:string} (Read / Write) @br{}
-  The name of the icon from the icon theme. Note that the stock icon is
-  preferred, if the @code{\"stock-id\"} property holds the ID of an existing
-  stock icon, and the @class{g-icon} is preferred if the @code{\"gicon\"}
-  property is set. This is an appearance property and thus only applies if
-  @code{\"use-action-appearance\"} is @arg{true}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "is-important" 'gtk-action) 't)
- "The @code{\"is-important\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the action is considered important. When @arg{true}, toolitem proxies
-  for this action show text in @code{:both-horiz} mode. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-action) 't)
- "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
-  The label used for menu items and buttons that activate this action. If the
-  label is @code{nil}, GTK+ uses the stock label specified via the
-  @code{\"stock-id\"} property. This is an appearance property and thus only
-  applies if @code{\"use-action-appearance\"} is @arg{true}. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action) 't)
- "The @code{\"name\"} property of type @code{:string}
-  (Read / Write / Construct) @br{}
-  A unique name for the action. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-action) 't)
- "The @code{\"sensitive\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the action is enabled. @br{}
-  Default value: @arg{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "short-label" 'gtk-action) 't)
- "The @code{\"short-label\"} property of type @code{:string}
-  (Read / Write) @br{}
-  A shorter label that may be used on toolbar buttons. This is an appearance
-  property and thus only applies if @code{\"use-action-appearance\"} is
-  @arg{true}. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "stock-id" 'gtk-action) 't)
- "The @code{\"stock-id\"} property of type @code{:string} (Read / Write) @br{}
-  The stock icon displayed in widgets representing this action. This is an
-  appearance property and thus only applies if @code{\"use-action-appearance\"}
-  is @arg{true}. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "tooltip" 'gtk-action) 't)
- "The @code{\"tooltip\"} property of type @code{:string} (Read / Write) @br{}
-  A tooltip for this action. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action) 't)
- "The @code{\"visible\"} property of type  @code{:boolean} (Read / Write) @br{}
-  Whether the action is visible. @br{}
-  Default value: @arg{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-horizontal"
-                                               'gtk-action) 't)
- "The @code{\"visible-horizontal\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the toolbar item is visible when the toolbar is in a horizontal
-  orientation. @br{}
-  Default value: @arg{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-overflown"
-                                               'gtk-action) 't)
- "The @code{\"visible-overflown\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  When @arg{true}, toolitem proxies for this action are represented in the
-  toolbar overflow menu. @br{}
-  Default value: @arg{true} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-vertical"
-                                               'gtk-action) 't)
- "The @code{\"visible-vertical\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the toolbar item is visible when the toolbar is in a vertical
-  orientation. @br{}
-  Default value: @arg{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-action-group 'function)
  "@version{2013-8-11}
-  Accessor of the slot @code{\"action-group\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{action-group} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}")
+
+;;; --- gtk-action-always-show-image -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "always-show-image"
+                                               'gtk-action) 't)
+ "The @code{always-show-image} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  If @arg{true}, the action's menu item proxies will ignore the
+  @slot[gtk-settings]{gtk-menu-images} setting and always show their image, if
+  available. Use this property if the menu item would be useless or hard to use
+  without their image. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-always-show-image 'function)
  "@version{2013-8-11}
-  Accessor of the slot @code{\"always-show-image\"} of the @class{gtk-action}
-  class.
+  Accessor of the @slot[gtk-action]{always-show-image} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-always-show-image}
   @see-function{gtk-action-set-always-show-image}")
+
+;;; --- gtk-action-gicon -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
+ "The @code{gicon} property of type @class{g-icon} (Read / Write) @br{}
+  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock icon
+  is preferred, if the @code{stock-id} property holds the ID of an existing
+  stock icon. This is an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-gicon 'function)
  "@version{2013-8-11}
-  Accessor of the slot @code{\"gicon\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{gicon} slot of the @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-gicon}
   @see-function{gtk-action-set-gicon}")
+
+;;; --- gtk-action-hide-if-empty -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "hide-if-empty" 'gtk-action) 't)
+ "The @code{hide-if-empty} property of type @code{:boolean}
+  (Read / Write) @br{}
+  When @arg{true}, empty menu proxies for this action are hidden. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-hide-if-empty atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-hide-if-empty 'function)
  "@version{2013-8-11}
-  Accessor of the slot @code{\"hide-if-empty\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{hide-if-empty} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}")
+
+;;; --- gtk-action-icon-name ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-action) 't)
+ "The @code{icon-name} property of type @code{:string} (Read / Write) @br{}
+  The name of the icon from the icon theme. Note that the stock icon is
+  preferred, if the @code{stock-id} property holds the ID of an existing
+  stock icon, and the @class{g-icon} is preferred if the @code{gicon}
+  property is set. This is an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-icon-name 'function)
  "@version{2013-8-11}
-  Accessor of the slot @code{\"icon-name\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{icon-name} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-icon-name}
   @see-function{gtk-action-set-icon-name}")
+
+;;; --- gtk-action-is-important ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "is-important" 'gtk-action) 't)
+ "The @code{is-important} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the action is considered important. When @arg{true}, toolitem proxies
+  for this action show text in @code{:both-horiz} mode. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-is-important 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"is-important\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{is-important} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-is-important}
   @see-function{gtk-action-set-is-important}")
+
+;;; --- gtk-action-label -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-action) 't)
+ "The @code{label} property of type @code{:string} (Read / Write) @br{}
+  The label used for menu items and buttons that activate this action. If the
+  label is @code{nil}, GTK+ uses the stock label specified via the
+  @code{stock-id} property. This is an appearance property and thus only
+  applies if the @slot[gtk-activatable]{use-action-appearance} is @arg{true}.
+  @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-label 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"label\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{label} slot of the @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-label}
   @see-function{gtk-action-set-label}")
+
+;;; --- gtk-action-name --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action) 't)
+ "The @code{name} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  A unique name for the action. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"name\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{name} slot of the @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-name}")
+
+;;; --- gtk-action-sensitive ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-action) 't)
+ "The @code{sensitive} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the action is enabled. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-sensitive 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"sensitive\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{sensitive} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-sensitive}
   @see-function{gtk-action-set-sensitive}")
+
+;;; --- gtk-action-short-label -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "short-label" 'gtk-action) 't)
+ "The @code{short-label} property of type @code{:string}
+  (Read / Write) @br{}
+  A shorter label that may be used on toolbar buttons. This is an appearance
+  property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-short-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-short-label 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"short-label\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{short-label} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-short-label}
   @see-function{gtk-action-set-short-label}")
+
+;;; --- gtk-action-stock-id ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stock-id" 'gtk-action) 't)
+ "The @code{stock-id} property of type @code{:string} (Read / Write) @br{}
+  The stock icon displayed in widgets representing this action. This is an
+  appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} is @arg{true}. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-stock-id 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"stock-id\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{stock-id} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-stock-id}
   @see-function{gtk-action-set-stock-id}")
+
+;;; --- gtk-action-tooltip -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tooltip" 'gtk-action) 't)
+ "The @code{tooltip} property of type @code{:string} (Read / Write) @br{}
+  A tooltip for this action. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-tooltip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-tooltip 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"tooltip\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{tooltip} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-tooltip}
   @see-function{gtk-action-set-tooltip}")
+
+;;; --- gtk-action-visible -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action) 't)
+ "The @code{visible} property of type  @code{:boolean} (Read / Write) @br{}
+  Whether the action is visible. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"visible\"} of the @class{gtk-action} class.
+  Accessor of the @slot[gtk-action]{visible} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible}
   @see-function{gtk-action-set-visible}")
+
+;;; --- gtk-action-visible-horizontal ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible-horizontal"
+                                               'gtk-action) 't)
+ "The @code{visible-horizontal} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the toolbar item is visible when the toolbar is in a horizontal
+  orientation. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-horizontal 'function)
  "@version{2013-12-10}
-    Accessor of the slot @code{\"visible-horizontal\"} of the @class{gtk-action}
-    class.
+    Accessor of the @slot[gtk-action]{visible-horizontal} slot of the
+    @class{gtk-action} class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible-horizontal}
   @see-function{gtk-action-set-visible-horizontal}")
+
+;;; --- gtk-action-visible-overflow --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible-overflown"
+                                               'gtk-action) 't)
+ "The @code{visible-overflown} property of type @code{:boolean}
+  (Read / Write) @br{}
+  When @arg{true}, toolitem proxies for this action are represented in the
+  toolbar overflow menu. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-overflown atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-overflown 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"visible-overflown\"} of the @class{gtk-action}
-  class.
+  Accessor of the @slot[gtk-action]{visible-overflown} slot of the
+  @class{gtk-action} class.
   @see-class{gtk-action}")
+
+;;; --- gtk-action-visible-vertical --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible-vertical"
+                                               'gtk-action) 't)
+ "The @code{visible-vertical} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the toolbar item is visible when the toolbar is in a vertical
+  orientation. @br{}
+  Default value: @arg{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-vertical 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"visible-vertical\"} of the @class{gtk-action}
+  Accessor of the @slot[gtk-action]{visible-vertical} of the @class{gtk-action}
   class.
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible-vertical}
@@ -532,11 +561,9 @@
     Creates a new @class{gtk-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the function @fun{gtk-action-group-add-action}.
+  the action, call the @fun{gtk-action-group-add-action} function.
   See the section called \"UI Definitions\" for information on allowed action
   names.
-
-  Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action}"
@@ -560,8 +587,6 @@
   @argument[action]{the action object}
   @return{The name of the action.}
   @short{Returns the name of the action.}
-
-  Since 2.4
   @see-class{gtk-action}"
   (gtk-action-name action))
 
@@ -578,8 +603,6 @@
   @return{@arg{True} if the action and its associated action group are both
     sensitive.}
   @short{Returns whether the action is effectively sensitive.}
-
-  Since 2.4.
   @see-class{gtk-action}
   @see-function{gtk-action-get-sensitive}
   @see-function{gtk-action-set-sensitive}"
@@ -603,8 +626,6 @@
     not necessarily mean effective sensitivity. See the function
     @fun{gtk-action-is-sensitive} for that.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-action-is-sensitive}
   @see-function{gtk-action-set-sensitive}"
@@ -624,12 +645,10 @@
   @argument[action]{the action object}
   @argument[sensitive]{@em{true} to make the action sensitive}
   @begin{short}
-    Sets the @code{\"sensitive\"} property of the action to sensitive.
+    Sets the @code{sensitive} property of the action to sensitive.
   @end{short}
   Note that this does not necessarily mean effective sensitivity. See the
-  function @fun{gtk-action-is-sensitive} for that.
-
-  Since 2.6
+  @fun{gtk-action-is-sensitive} function for that.
   @see-class{gtk-action}
   @see-function{gtk-action-is-sensitive}
   @see-function{gtk-action-get-sensitive}"
@@ -648,8 +667,6 @@
   @return{@arg{True} if the action and its associated action group are
     both visible.}
   @short{Returns whether the action is effectively visible.}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible}
   @see-function{gtk-action-set-visible}"
@@ -672,9 +689,7 @@
     Returns whether the action itself is visible.
   @end{short}
   Note that this does not necessarily mean effective visibility.
-  See the function @fun{gtk-action-is-sensitive} for that.
-
-  Since 2.4
+  See the @fun{gtk-action-is-sensitive} function for that.
   @see-class{gtk-action}
   @see-function{gtk-action-set-visible}
   @see-function{gtk-action-is-sensitive}"
@@ -694,12 +709,10 @@
   @argument[action]{the action object}
   @argument[visible]{@em{true} to make the action visible}
   @begin{short}
-    Sets the @code{\"visible\"} property of the action to visible.
+    Sets the @code{visible} property of the action to visible.
   @end{short}
   Note that this does not necessarily mean effective visibility.
-  See the function @fun{gtk-action-is-visible} for that.
-
-  Since 2.6
+  See the @fun{gtk-action-is-visible} function for that.
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible}
   @see-function{gtk-action-is-visible}"
@@ -721,8 +734,6 @@
   @end{short}
 
   It can also be used to manually activate an action.
-
-  Since 2.4
   @see-class{gtk-action}"
   (action (g-object gtk-action)))
 
@@ -743,8 +754,6 @@
     This function is intended for use by action implementations to create icons
     displayed in the proxy widgets.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-widget}
   @see-symbol{gtk-icon-size}"
@@ -764,8 +773,6 @@
   @argument[action]{the action object}
   @return{A menu item connected to the action.}
   @short{Creates a menu item widget that proxies for the given action.}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-image-menu-item}"
   (action (g-object gtk-action)))
@@ -783,8 +790,6 @@
   @argument[action]{the action object}
   @return{A toolbar item connected to the action.}
   @short{Creates a toolbar item widget that proxies for the given action.}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-tool-button}"
   (action (g-object gtk-action)))
@@ -805,8 +810,6 @@
     or the toolbar item it creates, this function returns an instance of that
     menu.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-action}
   @see-class{gtk-menu}"
   (action (g-object gtk-action)))
@@ -825,8 +828,6 @@
   @return{A list of proxy widgets.}
   @short{Returns the proxy widgets for an action.}
   See also the function @fun{gtk-activatable-get-related-action}.
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-activatable-get-related-action}"
   (action (g-object gtk-action)))
@@ -851,8 +852,6 @@
   accelerator, the action counts the number of times this function has been
   called and does not remove the accelerator until the function
   @fun{gtk-action-disconnect-accelerator} has been called as many times.
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-action-set-accel-path}
   @see-function{gtk-action-set-accel-group}
@@ -874,8 +873,6 @@
     Undoes the effect of one call to the function
     @fun{gtk-action-connect-accelerator}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-action-connect-accelerator}"
   (action (g-object gtk-action)))
@@ -896,8 +893,6 @@
   widget could result in calling the function @fun{gtk-action-activate}, this
   is a convenience function to avoid recursing in those cases (updating toggle
   state for instance).
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-activate}"
   (action (g-object gtk-action)))
@@ -913,8 +908,6 @@
  "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
   @short{Reenable activation signals from the action.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-block-activate}"
   (action (g-object gtk-action)))
@@ -934,11 +927,9 @@
   @return{@em{True} if the menu item proxies will always show their image.}
   @begin{short}
     Returns whether action's menu item proxies will ignore the
-    @code{\"gtk-menu-images\"} setting and always show their image, if
-    available.
+    @slot[gtk-settings]{gtk-menu-images} setting and always show their image,
+    if available.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-action}
   @see-function{gtk-action-set-always-show-image}"
   (gtk-action-always-show-image action))
@@ -959,14 +950,12 @@
     image}
   @begin{short}
     Sets whether @arg{action}'s menu item proxies will ignore the
-    @code{\"gtk-menu-images\"} setting and always show their image, if
-    available.
+    @slot[gtk-settings]{gtk-menu-images} setting and always show their image,
+    if available.
   @end{short}
 
   Use this if the menu item would be useless or hard to use without their
   image.
-
-  Since 2.20
   @see-class{gtk-action}
   @see-function{gtk-action-get-always-show-image}"
   (setf (gtk-action-always-show-image action) always-show))
@@ -983,8 +972,6 @@
   @argument[action]{the action object}
   @return{The accel path for this action, or @code{nil} if none is set.}
   @short{Returns the accel path for this action.}
-
-  Since 2.6
   @see-class{gtk-action}
   @see-function{gtk-action-set-accel-path}"
   (action (g-object gtk-action)))
@@ -1005,8 +992,6 @@
   @end{short}
   All proxy widgets associated with the action will have this accel path, so
   that their accelerators are consistent.
-
-  Since 2.4
   @see-class{gtk-action}
   @see-function{gtk-action-get-accel-path}"
   (action (g-object gtk-action))
@@ -1028,8 +1013,6 @@
     and must not be unreffed or modified.
   @end{return}
   @short{Returns the accel closure for this action.}
-
-  Since 2.8
   @see-class{gtk-action}"
   (action (g-object gtk-action)))
 
@@ -1048,8 +1031,6 @@
     Sets the @class{gtk-accel-group} in which the accelerator for this action
     will be installed.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-accel-group}"
   (action (g-object gtk-action))
@@ -1069,8 +1050,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[label]{the label text to set}
   @short{Sets the label of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-label}"
   (setf (gtk-action-label action) label))
@@ -1089,8 +1068,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{The label text.}
   @short{Gets the label text of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-label}"
   (gtk-action-label action))
@@ -1109,8 +1086,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[short-label]{the label text to set}
   @short{Sets a shorter label text on @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-short-label}"
   (setf (gtk-action-short-label action) short-label))
@@ -1129,8 +1104,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{The short label text.}
   @short{Gets the short label text of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-short-label}"
   (gtk-action-short-label action))
@@ -1149,8 +1122,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[tooltip]{the tooltip text}
   @short{Sets the tooltip text on @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-tooltip}"
   (setf (gtk-action-tooltip action) tooltip))
@@ -1169,8 +1140,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{The tooltip text.}
   @short{Gets the tooltip text of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-tooltip}"
   (gtk-action-tooltip action))
@@ -1189,8 +1158,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[stock-id]{the stock ID}
   @short{Sets the stock ID on @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-stock-id}"
   (setf (gtk-action-stock-id action) stock-id))
@@ -1209,8 +1176,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{The stock ID.}
   @short{Gets the stock ID of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-stock-id}"
   (gtk-action-stock-id action))
@@ -1231,8 +1196,6 @@
   @begin{short}
     Sets the icon of action.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-gicon}"
   (setf (gtk-action-gicon action) icon))
@@ -1253,8 +1216,6 @@
   @begin{short}
     Gets the @class{g-icon} of @arg{action}.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-gicon}"
   (gtk-action-gicon action))
@@ -1273,8 +1234,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[icon-name]{the icon name to set}
   @short{Sets the icon name on @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-icon-name}"
   (setf (gtk-action-icon-name action) icon-name))
@@ -1293,8 +1252,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{The icon name.}
   @short{Gets the icon name of @arg{action}.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-icon-name}"
   (gtk-action-icon-name action))
@@ -1313,8 +1270,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[visible-horizontal]{whether the action is visible horizontally}
   @short{Sets whether @arg{action} is visible when horizontal.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible-horizontal}"
   (setf (gtk-action-visible-horizontal action) visible-horizontal))
@@ -1333,8 +1288,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{Whether @arg{action} is visible when horizontal.}
   @short{Checks whether @arg{action} is visible when horizontal.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-visible-horizontal}"
   (gtk-action-visible-horizontal action))
@@ -1353,8 +1306,6 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[visible-vertical]{whether the action is visible vertically}
   @short{Sets whether @arg{action} is visible when vertical.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-visible-vertical}"
   (setf (gtk-action-visible-vertical action) visible-vertical))
@@ -1373,8 +1324,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{Whether @arg{action} is visible when horizontal.}
   @short{Checks whether @arg{action} is visible when horizontal.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-visible-vertical}"
   (gtk-action-visible-vertical action))
@@ -1396,8 +1345,6 @@
     Sets whether the action is important, this attribute is used primarily by
     toolbar items to decide whether to show a label or not.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-get-is-important}"
   (setf (gtk-action-is-important action) is-important))
@@ -1416,8 +1363,6 @@
   @argument[action]{a @class{gtk-action} object}
   @return{Whether @arg{action} is important.}
   @short{Checks whether @arg{action} is important or not.}
-
-  Since 2.16
   @see-class{gtk-action}
   @see-function{gtk-action-set-is-important}"
   (gtk-action-is-important action))
