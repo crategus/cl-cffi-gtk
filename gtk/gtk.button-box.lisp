@@ -123,7 +123,7 @@
       left for a horizontal box, or the top for a vertical box.}
     @entry[:end]{Buttons are grouped towards the end of the box, on the right
       for a horizontal box, or the bottom for a vertical box.}
-    @entry[:center]{Buttons are centered in the box. Since 2.12.}
+    @entry[:center]{Buttons are centered in the box.}
     @entry[:expand]{Buttons expand to fill the box. This entails giving buttons
       a \"linked\" appearance, making button sizes homogeneous, and setting
       spacing to 0 (same as calling the functions @fun{gtk-box-homogeneous} and
