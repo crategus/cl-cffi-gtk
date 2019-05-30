@@ -79,10 +79,10 @@
     necessary to implement the @code{GtkActivatable->sync_action_properties()}
     and @code{GtkActivatable->update()} methods and chain up to the parent
     implementation, however when introducing a new @sym{gtk-activatable} class;
-    the @code{\"related-action\"} and @code{\"use-action-appearance\"}
-    properties need to be handled by the implementor. Handling these properties
-    is mostly a matter of installing the action pointer and boolean flag on your
-    instance, and calling @fun{gtk-activatable-do-set-related-action} and
+    the @code{related-action} and @code{use-action-appearance} properties need
+    to be handled by the implementor. Handling these properties is mostly a
+    matter of installing the action pointer and boolean flag on your instance,
+    and calling @fun{gtk-activatable-do-set-related-action} and
     @fun{gtk-activatable-sync-action-properties} at the appropriate times.
 
     @b{Example:} A class fragment implementing @sym{gtk-activatable}
@@ -317,56 +317,49 @@ use-action-appearance property ...
   @see-slot{gtk-activatable-use-action-appearance}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-activatable-related-action -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "related-action"
                                                'gtk-activatable) 't)
- "The @code{\"related-action\"} property of type @class{gtk-action}
-  (Read / Write)  @br{}
+ "The @code{related-action} property of type @class{gtk-action}
+  (Read / Write) @br{}
   The action that this activatable will activate and receive updates from for
   various states and possibly appearance. @br{}
-  @b{Note:} @class{gtk-activatable} implementors need to handle this
+  @em{Note:} @class{gtk-activatable} implementors need to handle this
   property and call the @fun{gtk-activatable-do-set-related-action} function
-  when it changes. @br{}
-  Since 2.16")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-action-appearance"
-                                               'gtk-activatable) 't)
- "The @code{\"use-action-appearance\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this activatable should reset its layout and appearance when setting
-  the related action or when the action changes appearance.
-  See the @class{gtk-action} documentation directly to find which properties
-  should be ignored by the @class{gtk-activatable} when this property is
-  @code{nil}. @br{}
-  @b{Note:}
-  @class{gtk-activatable} implementors need to handle this property and call
-  @fun{gtk-activatable-sync-action-properties} on the activatable widget when
-  it changes. @br{}
-  Default value: @code{true} @br{}
-  Since 2.16")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  when it changes.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable-related-action atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-activatable-related-action 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"related-action\"} of the @class{gtk-activatable}
-  class.
+  Accessor of the @slot[gtk-activatable]{related-action} slot of the
+  @class{gtk-activatable} class.
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-get-related-action}
   @see-function{gtk-activatable-set-related-action}")
+
+;;; --- gtk-activatable-use-action-appearance ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-action-appearance"
+                                               'gtk-activatable) 't)
+ "The @code{use-action-appearance} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this activatable should reset its layout and appearance when setting
+  the related action or when the action changes appearance. See the
+  @class{gtk-action} documentation directly to find which properties should be
+  ignored by the @class{gtk-activatable} when this property is @code{nil}. @br{}
+  @em{Note:}
+  @class{gtk-activatable} implementors need to handle this property and call
+  @fun{gtk-activatable-sync-action-properties} on the activatable widget when
+  it changes. @br{}
+  Default value: @code{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable-use-action-appearance
@@ -374,7 +367,7 @@ use-action-appearance property ...
       "Accessor"
       (documentation 'gtk-activatable-use-action-appearance 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"use-action-appearance\"} of the
+  Accessor of the @slot[gtk-activatable]{use-action-appearance} slot of the
   @class{gtk-activatable} class.
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-get-use-action-appearance}
@@ -430,8 +423,8 @@ use-action-appearance property ...
   @end{short}
 
   When implementing the @class{gtk-activatable} interface you must call this
-  when handling changes of the @code{\"related-action\"} property, and you must
-  also use this to break references in @code{GObject->dispose()}.
+  when handling changes of the @slot[gtk-activatable]{related-action} property,
+  and you must also use this to break references in @code{GObject->dispose()}.
 
   This function adds a reference to the currently set related action for you,
   it also makes sure the @code{GtkActivatable->update()} method is called when
@@ -442,8 +435,6 @@ use-action-appearance property ...
     Be careful to call this before setting the local copy of the
     @class{gtk-action} object property, since this function uses
     @fun{gtk-activatable-get-related-action} to retrieve the previous action.
-
-  Since 2.16
   @see-class{gtk-activatable}
   @see-class{gtk-action}
   @see-function{gtk-activatable-get-related-action}"
@@ -464,8 +455,6 @@ use-action-appearance property ...
   @argument[activatable]{a @class{gtk-activatable} object}
   @return{The related @class{gtk-action} object if one is set.}
   @short{Gets the related @class{gtk-action} object for @arg{activatable}.}
-
-  Since 2.16
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-set-related-action}"
   (gtk-activatable-related-action activatable))
@@ -487,8 +476,6 @@ use-action-appearance property ...
     Gets whether this activatable should reset its layout and appearance when
     setting the related action or when the action changes appearance.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-activatable}"
   (gtk-activatable-use-action-appearance activatable))
 
@@ -506,11 +493,10 @@ use-action-appearance property ...
   @argument[action]{the related @class{gtk-action} or @code{nil}}
   @begin{short}
     This is called to update the @arg{activatable} completely, this is called
-    internally when the @code{\"related-action\"} property is set or unset and
-    by the implementing class when @code{\"use-action-appearance\"} changes.
+    internally when the @slot[gtk-activatable]{related-action} property is set
+    or unset and by the implementing class when
+    @slot[gtk-activatable]{use-action-appearance} changes.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-activatable}
   @see-class{gtk-action}"
   (activatable (g-object gtk-activatable))
@@ -535,10 +521,8 @@ use-action-appearance property ...
 
   @subheading{Note}
     @class{gtk-activatable} implementors need to handle the
-    @code{\"related-action\"} property and call the function
-    @fun{gtk-activatable-do-set-related-action} when it changes.
-
-  Since 2.16
+    @slot[gtk-activatable]{related-action} property and call the
+    @fun{gtk-activatable-do-set-related-action} function when it changes.
   @see-class{gtk-activatable}
   @see-class{gtk-action}
   @see-fun{gtk-activatable-do-set-related-action}"
@@ -564,11 +548,9 @@ use-action-appearance property ...
 
   @subheading{Note}
     @class{gtk-activatable} implementors need to handle the
-    @code{\"use-action-appearance\"} property and call the function
-    @fun{gtk-activatable-sync-action-properties} to update @arg{activatable}
-    if needed.
-
-  Since 2.16
+    @slot[gtk-activatable]{use-action-appearance} property and call the
+    @fun{gtk-activatable-sync-action-properties} function to update
+    @arg{activatable} if needed.
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-sync-action-properties}"
   (setf (gtk-activatable-use-action-appearance activatable) use-appearance))
