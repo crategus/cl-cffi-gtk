@@ -461,7 +461,7 @@
       "Accessor"
       (documentation 'gtk-toolbar-child-expand 'function)
  "@version{2014-1-23}
-  Accessor of the child property @code{expand} of the @class{gtk-toolbar}
+  Accessor of the @code{expand} child property of the @class{gtk-toolbar}
   class.
   @see-class{gtk-toolbar}")
 
@@ -476,7 +476,7 @@
       "Accessor"
       (documentation 'gtk-toolbar-child-homogeneous 'function)
  "@version{2014-1-23}
-  Accessor of the child property @code{\"homogeneous\"} of the
+  Accessor of the @code{homogeneous} child property of the
   @class{gtk-toolbar} class.
   @see-class{gtk-toolbar}")
 
@@ -664,7 +664,7 @@
   @begin{short}
     Returns the relief style of buttons on @arg{toolbar}.
   @end{short}
-  See the function @fun{gtk-button-set-relief}.
+  See the @fun{gtk-button-set-relief} function.
   @see-class{gtk-toolbar}
   @see-function{gtk-toolbar-set-relief-style}"
   (toolbar (g-object gtk-toolbar)))
