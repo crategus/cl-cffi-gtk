@@ -133,8 +133,6 @@
     Creates a new @class{gtk-recent-chooser-dialog}.
   @end{short}
   This function is analogous to the function @fun{gtk-dialog-new-with-buttons}.
-
-  Since 2.10
   @see-class{gtk-recent-chooser-dialog}
   @see-function{gtk-dialog-new-with-buttons}
   @see-function{gtk-recent-chooser-dialog-new-with-buttons}"
@@ -170,8 +168,6 @@
 
   This is useful if you have implemented your own recent manager, or if you
   have a customized instance of a @class{gtk-recent-manager} object.
-
-  Since 2.10
   @see-class{gtk-recent-chooser-dialog}
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-chooser-dialog-new}"
