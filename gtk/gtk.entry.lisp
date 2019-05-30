@@ -696,7 +696,8 @@
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} object on which the signal is
           emitted.}
-        @entry[icon-pos]{The position of the clicked icon.}
+        @entry[icon-pos]{The position of type @symbol{gtk-entry-icon-position}
+          of the clicked icon.}
         @entry[event]{The button press event.}
       @end{table}
     @subheading{The \"icon-release\" signal}
@@ -1775,11 +1776,9 @@
                                                'gtk-entry) 't)
  "The @code{secondary-icon-activatable} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether the secondary icon is activatable.
-  GTK+ emits the \"icon-press\" and \"icon-release\" signals only on sensitive,
-  activatable icons.
-  Sensitive, but non-activatable icons can be used for purely informational
-  purposes. @br{}
+  Whether the secondary icon is activatable. GTK+ emits the \"icon-press\" and
+  \"icon-release\" signals only on sensitive, activatable icons. Sensitive, but
+  non-activatable icons can be used for purely informational purposes. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -1788,7 +1787,7 @@
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-activatable 'function)
  "@version{2014-6-8}
-  Accessor of the slot @slot[gtk-entry]{seconary-icon-activatable} of the
+  Accessor of the @slot[gtk-entry]{seconary-icon-activatable} slot of the
   @class{gtk-entry} class.
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-activatable}
@@ -1859,12 +1858,10 @@
                                                'gtk-entry) 't)
  "The @code{secondary-icon-sensitive} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether the secondary icon is sensitive.
-  An insensitive icon appears grayed out. GTK+ does not emit the \"icon-press\"
-  and \"icon-release\" signals and does not allow DND from insensitive
-  icons.
-  An icon should be set insensitive if the action that would trigger when
-  clicked is currently not available. @br{}
+  Whether the secondary icon is sensitive. An insensitive icon appears grayed
+  out. GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and
+  does not allow DND from insensitive icons. An icon should be set insensitive
+  if the action that would trigger when clicked is currently not available.@br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -1872,7 +1869,7 @@
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-sensitive 'function)
  "@version{2014-6-8}
-  Accessor of the slot @slot[gtk-entry]{seconary-icon-sensitive} of the
+  Accessor of the @slot[gtk-entry]{seconary-icon-sensitive} slot of the
   @class{gtk-entry} class.
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-sensitive}
@@ -2295,7 +2292,7 @@
 
   If the entry is not realized, @arg{text-area} is filled with zeros.
 
-  See also the function @fun{gtk-entry-get-icon-area}.
+  See also the @fun{gtk-entry-get-icon-area} function.
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-area}"
   (let ((text-area (make-gdk-rectangle)))
