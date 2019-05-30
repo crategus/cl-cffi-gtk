@@ -930,10 +930,10 @@
         The @code{separator-width} style property defines the width of
         separators. This property only takes effect if the
         @code{wide-separators} style property is @em{true}. @br{}
-        @em{Warning:} @code{\"separator-width\"} has been deprecated since
-        version 3.20 and should not be used in newly-written code. Use the
-        standard min-height CSS property on the separator elements to size
-        separators; the value of this style property is ignored. @br{}
+        @em{Warning:} The @code{separator-width} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use the standard min-height CSS property on the separator elements
+        to size separators; the value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 0
       @end{entry}
@@ -956,7 +956,7 @@
         (Read) @br{}
         The @code{visited-link-color} style property defines the color of
         visited links. @br{}
-        @em{Warning:} The @code{\"visited-link-color\"} style property has been
+        @em{Warning:} The @code{visited-link-color} style property has been
         deprecated since version 3.12 and should not be used in newly-written
         code. Links now use a separate state flags for selecting different
         theming, this style property is ignored.
@@ -5840,9 +5840,8 @@
     be allocated, or @code{nil} to undo the effect of previous calls to of the
     function @sym{gtk-widget-modify-cursor}.}
   @begin{short}
-    Sets the cursor color to use in a widget, overriding the
-    @code{\"cursor-color\"} and @code{\"secondary-cursor-color\"} style
-    properties.
+    Sets the cursor color to use in a widget, overriding the @code{cursor-color}
+    and @code{secondary-cursor-color} style properties.
   @end{short}
 
   All other style values are left untouched.
