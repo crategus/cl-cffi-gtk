@@ -301,8 +301,7 @@
 ;;; gtk_accel_label_refetch ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch)
-    :boolean
+(defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2014-11-7}
   @argument[label]{a @class{gtk-accel-label} widget}
