@@ -190,7 +190,7 @@
       "Accessor"
       (documentation 'gtk-cell-area-box-child-align 'function)
  "@version{2013-11-26}
-  Accessor of the child property @code{\"align\"} of the
+  Accessor of the @code{align} child property of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
 
@@ -203,7 +203,7 @@
       "Accessor"
       (documentation 'gtk-cell-area-box-child-expand 'function)
  "@version{2013-11-26}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the @code{expand} child property of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
 
@@ -216,7 +216,7 @@
       "Accessor"
       (documentation 'gtk-cell-area-box-child-fixed-size 'function)
  "@version{2013-11-26}
-  Accessor of the child property @code{\"fixed-size\"} of the
+  Accessor of the @code{fixed-size} child property of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
 
@@ -229,7 +229,7 @@
       "Accessor"
       (documentation 'gtk-cell-area-box-child-pack-type 'function)
  "@version{2013-11-26}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the @code{pack-type} child property of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
 
