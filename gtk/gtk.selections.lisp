@@ -592,8 +592,6 @@
     Appends the text targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
-
-  Since 2.6
   @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
@@ -616,8 +614,6 @@
     Appends the image targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
-
-  Since 2.6
   @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint)
@@ -639,8 +635,6 @@
     Appends the URI targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
-
-  Since 2.6
   @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
@@ -666,8 +660,6 @@
     @fun{gtk-text-buffer-register-deserialize-format} to the target list.
   @end{short}
   All targets are added with the same info.
-
-  Since 2.10
   @see-class{gtk-target-list}
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-register-serialize-format}
@@ -755,8 +747,6 @@
     This function creates a @class{gtk-target-entry} list that contains the same
     targets as the passed list.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-target-list}
   @see-class{gtk-target-entry}"
   (with-foreign-object (n-targets :int)
@@ -812,8 +802,6 @@
     Claim ownership of a given selection for a particular widget, or, if widget
     is @code{nil}, release ownership of the selection.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gtk-widget}
   @see-symbol{gdk-atom}
@@ -1009,8 +997,6 @@
   @end{short}
   The pixbuf is converted to the form determined by the file @code{target}
   of @arg{selection-data}.
-
-  Since 2.6
   @see-class{gtk-selection-data}
   @see-class{gdk-pixbuf}
   @see-function{gtk-selection-data-get-pixbuf}"
@@ -1036,8 +1022,6 @@
   @begin{short}
     Gets the contents of the selection data as a @class{gdk-pixbuf}.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-selection-data}
   @see-class{gdk-pixbuf}
   @see-function{gtk-selection-data-set-pixbuf}"
@@ -1062,8 +1046,6 @@
   @end{short}
   The string is converted to the form determined by
   @code{selection_data->target}.
-
-  Since 2.6
   @see-class{gtk-selection-data}"
   (selection-data (g-boxed-foreign gtk-selection-data))
   (uris g-strv))
@@ -1085,8 +1067,6 @@
   @begin{short}
     Gets the contents of the selection data as a list of URIs.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-selection-data}"
   (selection-data (g-boxed-foreign gtk-selection-data)))
 
@@ -1145,8 +1125,6 @@
     determines if any of the targets in targets can be used to provide a
     @class{gdk-pixbuf}.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-selection-data}
   @see-class{gdk-pixbuf}"
   (selection-data (g-boxed-foreign gtk-selection-data))
@@ -1194,8 +1172,6 @@
     determines if any of the targets in targets can be used to provide a list
     or URIs.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-selection-data}"
   (selection-data (g-boxed-foreign gtk-selection-data)))
 
@@ -1220,8 +1196,6 @@
     determines if any of the targets in targets can be used to provide rich
     text.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-selection-data}
   @see-class{gtk-text-buffer}"
   (selection-data (g-boxed-foreign gtk-selection-data))
@@ -1243,8 +1217,6 @@
   @begin{short}
     Retrieves the selection @symbol{gdk-atom} of the selection data.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-selection-data}
   @see-symbol{gdk-atom}"
   (gtk-selection-data-selection selection-data))
@@ -1265,8 +1237,6 @@
   @begin{short}
     Retrieves the raw data of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-get-data-with-length}"
   (gtk-selection-data-data selection-data))
@@ -1287,8 +1257,6 @@
   @begin{short}
     Retrieves the length of the raw data of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-get-data-with-length}"
   (gtk-selection-data-length selection-data))
@@ -1316,8 +1284,6 @@
   @begin{short}
     Retrieves the raw data of the selection along with its length.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-get-data}"
   (with-foreign-object (length-ptr :int)
@@ -1344,8 +1310,6 @@
   @begin{short}
     Retrieves the data type of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}"
   (gtk-selection-data-type selection-data))
 
@@ -1365,8 +1329,6 @@
   @begin{short}
     Retrieves the display of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}
   @see-class{gdk-display}"
   (gtk-selection-data-display selection-data))
@@ -1387,8 +1349,6 @@
   @begin{short}
     Retrieves the format of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}"
   (gtk-selection-data-format selection-data))
 
@@ -1408,8 +1368,6 @@
   @begin{short}
     Retrieves the target of the selection.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-selection-data}"
   (gtk-selection-data-target selection-data))
 
