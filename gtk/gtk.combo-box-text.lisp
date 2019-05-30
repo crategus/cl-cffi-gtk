@@ -89,21 +89,22 @@
     hides the model-view complexity for simple text-only use cases.
   @end{short}
 
-  To create a @sym{gtk-combo-box-text}, use the functions
-  @fun{gtk-combo-box-text-new} or @fun{gtk-combo-box-text-new-with-entry}.
+  To create a @sym{gtk-combo-box-text}, use the @fun{gtk-combo-box-text-new} or
+  @fun{gtk-combo-box-text-new-with-entry} functions.
 
-  You can add items to a @sym{gtk-combo-box-text} with the functions
+  You can add items to a @sym{gtk-combo-box-text} with the
   @fun{gtk-combo-box-text-append-text}, @fun{gtk-combo-box-text-insert-text} or
-  @fun{gtk-combo-box-text-prepend-text} and remove options with the function
-  @fun{gtk-combo-box-text-remove}.
+  @fun{gtk-combo-box-text-prepend-text} functions and remove options with the
+  @fun{gtk-combo-box-text-remove} function.
 
   If the @sym{gtk-combo-box-text} contains an entry via the
-  @code{\"has-entry\"} property, its contents can be retrieved using
-  the function @fun{gtk-combo-box-text-get-active-text}. The entry itself can be
-  accessed by calling the function @fun{gtk-bin-get-child} on the combo box.
+  @code{has-entry} property, its contents can be retrieved using the
+  @fun{gtk-combo-box-text-get-active-text} function. The entry itself can be
+  accessed by calling the @fun{gtk-bin-get-child} function on the combo box.
 
-  You should not call the function @fun{gtk-combo-box-set-model} or attempt to
-  pack more cells into this combo box via its @class{gtk-cell-layout} interface.
+  You should not call the @fun{gtk-combo-box-model} slot access function or
+  attempt to pack more cells into this combo box via its @class{gtk-cell-layout}
+  interface.
 
   @begin[GtkComboBoxText as GtkBuildable]{dictionary}
     The @sym{gtk-combo-box-text} implementation of the @class{gtk-buildable}
@@ -144,7 +145,7 @@
   @see-function{gtk-combo-box-text-prepend-text}
   @see-function{gtk-combo-box-text-remove}
   @see-function{gtk-combo-box-text-get-active-text}
-  @see-function{gtk-combo-box-set-model}
+  @see-function{gtk-combo-box-model}
   @see-function{gtk-bin-get-child}")
 
 ;;; ----------------------------------------------------------------------------
@@ -272,11 +273,9 @@
     @arg{combo-box}. If @arg{id} is non-@code{nil} then it is used as the ID of
     the row.
   @end{short}
-  See the property @code{\"id-column\"} of the @class{gtk-combo-box}.
+  See the @slot[gtk-combo-box]{id-column} property of the @class{gtk-combo-box}.
 
   If @arg{position} is negative then @arg{text} is appended.
-
-  Since 3.0
   @see-class{gtk-combo-box-text}"
   (%gtk-combo-box-text-insert combo-box
                               position
@@ -389,8 +388,6 @@
   @begin{short}
     Removes all the text entries from the combo box.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-remove}"
   (combo-box (g-object gtk-combo-box-text)))
