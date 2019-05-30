@@ -116,155 +116,159 @@
   @see-slot{gtk-alignment-yscale}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-alignment-bottom-padding -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "bottom-padding"
                                                'gtk-alignment) 't)
- "The @code{\"bottom-padding\"} property of type @code{:uint}
-  (Read / Write) @br{}
+ "The @code{bottom-padding} property of type @code{:uint} (Read / Write) @br{}
   The padding to insert at the bottom of the widget. @br{}
-  Allowed values: = @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "left-padding"
-                                               'gtk-alignment) 't)
- "The @code{\"left-padding\"} property of type @code{:uint} (Read / Write) @br{}
-  The padding to insert at the left of the widget. @br{}
-  Allowed values: <= @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "right-padding"
-                                               'gtk-alignment) 't)
- "The @code{\"right-padding\"} property of type @code{:uint}
-  (Read / Write) @br{}
-  The padding to insert at the right of the widget. @br{}
-  Allowed values: <= @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "top-padding"
-                                               'gtk-alignment) 't)
- "The @code{\"top-padding\"} property of type @code{:uint} (Read / Write) @br{}
-  The padding to insert at the top of the widget. @br{}
-  Allowed values: <= @code{G_MAXINT} @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-alignment) 't)
- "The @code{\"xalign\"} property of type @code{:float} (Read / Write) @br{}
-  Horizontal position of child in available space. 0.0 is left aligned, 1.0 is
-  right aligned. @br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 0.5")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "xscale" 'gtk-alignment) 't)
- "The @code{\"xscale\"} property @code{:float} (Read / Write) @br{}
-  If available horizontal space is bigger than needed for the child, how much
-  of it to use for the child. 0.0 means none, 1.0 means all. @br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 1.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-alignment) 't)
- "The @code{\"yalign\"} property of type @code{:float} (Read / Write) @br{}
-  Vertical position of child in available space. 0.0 is top aligned, 1.0 is
-  bottom aligned. @br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 0.5")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "yscale" 'gtk-alignment) 't)
- "The @code{\"yscale\"} property of type @code{:float} (Read / Write) @br{}
-  If available vertical space is bigger than needed for the child, how much of
-  it to use for the child. 0.0 means none, 1.0 means all. @br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 1.0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Allowed values: < @code{G_MAXINT} @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-bottom-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-bottom-padding 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{bottom-padding} of the
+  Accessor of the @slot[gtk-alignment]{bottom-padding} slot of the
   @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-left-padding ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "left-padding"
+                                               'gtk-alignment) 't)
+ "The @code{left-padding} property of type @code{:uint} (Read / Write) @br{}
+  The padding to insert at the left of the widget. @br{}
+  Allowed values: < @code{G_MAXINT} @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-left-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-left-padding 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{left-padding} of the
+  Accessor of the @slot[gtk-alignment]{left-padding} slot of the
   @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-right-padding --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "right-padding"
+                                               'gtk-alignment) 't)
+ "The @code{right-padding} property of type @code{:uint}
+  (Read / Write) @br{}
+  The padding to insert at the right of the widget. @br{}
+  Allowed values: < @code{G_MAXINT} @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-right-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-right-padding 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{right-padding} of the
+  Accessor of the @slot[gtk-alignment]{right-padding} slot of the
   @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-top-padding ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "top-padding"
+                                               'gtk-alignment) 't)
+ "The @code{top-padding} property of type @code{:uint} (Read / Write) @br{}
+  The padding to insert at the top of the widget. @br{}
+  Allowed values: < @code{G_MAXINT} @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-top-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-top-padding 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{top-padding} of the
+  Accessor of the @slot[gtk-alignment]{top-padding} slot of the
   @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-xalign ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-alignment) 't)
+ "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
+  Horizontal position of child in available space. 0.0 is left aligned, 1.0 is
+  right aligned. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-xalign 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[]{xalign} of the @class{gtk-alignment} class.
+  Accessor of the @slot[gtk-alignment]{xalign} slot of the
+  @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-xscale ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "xscale" 'gtk-alignment) 't)
+ "The @code{xscale} property @code{:float} (Read / Write) @br{}
+  If available horizontal space is bigger than needed for the child, how much
+  of it to use for the child. 0.0 means none, 1.0 means all. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 1.0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-yalign 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{yalign} of the @class{gtk-alignment}
+  Accessor of the @slot[gtk-alignment]{yalign} slot of the @class{gtk-alignment}
   class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-yalign ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-alignment) 't)
+ "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
+  Vertical position of child in available space. 0.0 is top aligned, 1.0 is
+  bottom aligned. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-xscale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-xscale 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{xscale} of the @class{gtk-alignment}
+  Accessor of the @slot[gtk-alignment]{xscale} slot of the @class{gtk-alignment}
   class.
   @see-class{gtk-alignment}")
+
+;;; --- gtk-alignment-yscale ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "yscale" 'gtk-alignment) 't)
+ "The @code{yscale} property of type @code{:float} (Read / Write) @br{}
+  If available vertical space is bigger than needed for the child, how much of
+  it to use for the child. 0.0 means none, 1.0 means all. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 1.0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-yscale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-yscale 'function)
  "@version{2014-7-26}
-  Accessor of the slot @slot[gtk-alignment]{yscale} of the @class{gtk-alignment}
+  Accessor of the @slot[gtk-alignment]{yscale} slot of the @class{gtk-alignment}
   class.
   @see-class{gtk-alignment}")
 
@@ -352,9 +356,7 @@
   @begin{short}
     Gets the padding on the different sides of the widget.
   @end{short}
-  See the function @fun{gtk-alignment-set-padding}.
-
-  Since 2.4
+  See the @fun{gtk-alignment-set-padding} function.
   @see-class{gtk-alignment}
   @see-function{gtk-alignment-set-padding}"
   (values (gtk-alignment-top-padding alignment)
@@ -384,8 +386,6 @@
   The padding adds blank space to the sides of the widget. For instance, this
   can be used to indent the child widget towards the right by adding padding on
   the left.
-
-  Since 2.4
   @see-class{gtk-alignment}
   @see-function{gtk-alignment-get-padding}"
   (setf (gtk-alignment-top-padding alignment) top
