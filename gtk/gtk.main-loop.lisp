@@ -354,8 +354,6 @@
   You should add this group to your @class{g-option-context} with
   the function @fun{g-option-context-add-group}, if you are using the function
   @fun{g-option-context-parse} to parse your commandline arguments.
-
-  Since 2.6
   @see-type{g-option-group}
   @see-class{g-option-context}
   @see-function{g-option-context-add-group}
