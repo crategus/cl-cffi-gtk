@@ -96,7 +96,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-themed-icon) 't)
- "The @code{\"name\"} property of type @code{:string}
+ "The @code{name} property of type @code{:string}
   (Write / Construct Only) @br{}
   The icon name. @br{}
   Default value: @code{nil}")
@@ -106,7 +106,7 @@
       "Accessor"
       (documentation 'g-themed-icon-name 'function)
  "@version{2014-9-22}
-  Accessor of the slot @slot[g-themed-icon]{name} of the @class{g-themed-icon}
+  Accessor of the @slot[g-themed-icon]{name} slot of the @class{g-themed-icon}
   class.
   @see-class{g-themed-icon}")
 
@@ -114,7 +114,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "names" 'g-themed-icon) 't)
- "The @code{\"names\"} property of type @type{g-strv}
+ "The @code{names} property of type @type{g-strv}
   (Read / Write / Construct Only) @br{}
   A list of icon names.")
 
@@ -125,7 +125,7 @@
  "@version{2014-9-22}
   @argument[object]{a @class{g-themed-icon} object}
   @begin{short}
-    Accessor of the slot @slot[g-themed-icon]{names} of the
+    Accessor of the @slot[g-themed-icon]{names} slot of the
     @class{g-themed-icon} class.
   @end{short}
 
@@ -137,7 +137,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-default-fallbacks"
                                                'g-themed-icon) 't)
- "The @code{\"use-default-fallbacks\"} property of type @code{:boolean}
+ "The @code{use-default-fallbacks} property of type @code{:boolean}
   (Read / Write / Construct Only) @br{}
   Whether to use the default fallbacks found by shortening the icon name at '-'
   characters. If the @code{\"names\"} list has more than one element, ignores
@@ -158,7 +158,7 @@
       "Accessor"
       (documentation 'g-themed-icon-use-default-fallbacks 'function)
  "@version{2014-9-22}
-  Accessor of the slot @slot[g-themed-icon]{use-default-fallbacks} of the
+  Accessor of the @slot[g-themed-icon]{use-default-fallbacks} slot of the
   @class{g-themed-icon} class.")
 
 ;;; ----------------------------------------------------------------------------
