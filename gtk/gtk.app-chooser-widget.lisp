@@ -124,9 +124,9 @@
   @end{short}
 
   @sym{gtk-app-chooser-widget} offers detailed control over what applications
-  are shown, using the @code{\"show-default\"}, @code{\"show-recommended\"},
-  @code{\"show-fallback\"}, @code{\"show-other\"} and @code{\"show-all\"}
-  properties. See the @class{gtk-app-chooser} documentation for more information
+  are shown, using the @code{show-default}, @code{show-recommended},
+  @code{show-fallback}, @code{show-other} and @code{show-all} properties. See
+  the @class{gtk-app-chooser} documentation for more information
   about these groups of applications.
 
   To keep track of the selected application, use the \"application-selected\"
