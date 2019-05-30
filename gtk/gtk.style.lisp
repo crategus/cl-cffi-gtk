@@ -173,8 +173,6 @@
     @begin[code]{table}
       @entry[style]{The object which received the signal.}
     @end{table}
-    Since 2.4
-
     @subheading{The \"unrealize\" signal}
       @begin{pre}
  lambda (style)   : Run First
@@ -187,34 +185,27 @@
     @begin[code]{table}
       @entry[style]{The object which received the signal.}
     @end{table}
-    Since 2.4
   @end{dictionary}
   @see-slot{gtk-style-context}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "context" 'gtk-style) 't)
- "The @arg{\"context\"} property of type @class{gtk-style-context}
+ "The @code{context} property of type @class{gtk-style-context}
   (Read / Write / Construct Only).@br{}
   @class{gtk-style-context} object to get style from.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context 'function)
  "@version{2013-3-18}
-  Accessor of the slot \"context\" of the @class{gtk-style} class.")
+  Accessor of the @slot[gtk-style]{context} slot of the
+  @class{gtk-style} class.
+  @see-class{gtk-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_new ()
