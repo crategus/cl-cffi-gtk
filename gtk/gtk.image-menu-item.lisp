@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.image-menu-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
@@ -93,91 +90,88 @@
   @see-slot{gtk-image-menu-item-use-stock}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-image-menu-item-accel-group ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-group"
                                                'gtk-image-menu-item) 't)
- "The @code{\"accel-group\"} property of type @class{gtk-accel-group}
+ "The @code{accel-group} property of type @class{gtk-accel-group}
   (Write) @br{}
-  The Accel Group to use for stock accelerator keys. @br{}
-  Since 2.16")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "always-show-image"
-                                               'gtk-image-menu-item) 't)
- "The @code{\"always-show-image\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  If @em{true}, the menu item will ignore the @code{\"gtk-menu-images\"} setting
-  and always show the image, if available.
-  Use this property if the menuitem would be useless or hard to use without
-  the image. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "image"
-                                               'gtk-image-menu-item) 't)
- "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
-  Child widget to appear next to the menu text.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-stock"
-                                               'gtk-image-menu-item) 't)
- "The @code{\"use-stock\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  If @em{true}, the label set in the menuitem is used as a stock id to select
-  the stock item for the item. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  The Accel Group to use for stock accelerator keys.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-accel-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-accel-group 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"accel-group\"} of the
+  Accessor of the @slot[gtk-image-menu-item]{accel-group} slot of the
   @class{gtk-image-menu-item} class.
   @see-class{gtk-image-menu-item}
   @see-function{gtk-image-menu-item-set-accel-group}")
+
+;;; --- gtk-image-menu-item-always-show-image ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "always-show-image"
+                                               'gtk-image-menu-item) 't)
+ "The @code{always-show-image} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  If @em{true}, the menu item will ignore the
+  @slot[gtk-settings]{gtk-menu-images} setting and always show the image, if
+  available. Use this property if the menuitem would be useless or hard to use
+  without the image. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-always-show-image 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"always-show-image\"} of the
+  Accessor of the @slot[gtk-image-menu-item]{always-show-image} slot of the
   @class{gtk-image-menu-item} class.
   @see-class{gtk-image-menu-item}
   @see-function{gtk-image-menu-item-get-always-show-image}
   @see-function{gtk-image-menu-item-set-always-show-image}")
+
+;;; --- gtk-image-menu-item-image ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "image"
+                                               'gtk-image-menu-item) 't)
+ "The @code{image} property of type @class{gtk-widget} (Read / Write) @br{}
+  Child widget to appear next to the menu text.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-image 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"image\"} of the
+  Accessor of the @slot[gtk-image-menu-item]{image} slot of the
   @class{gtk-image-menu-item} class.
   @see-class{gtk-image-menu-item}
   @see-function{gtk-image-menu-item-get-image}
   @see-function{gtk-image-menu-item-set-image}")
+
+;;; --- gtk-image-menu-item-use-stock ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-stock"
+                                               'gtk-image-menu-item) 't)
+ "The @code{use-stock} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  If @em{true}, the label set in the menuitem is used as a stock id to select
+  the stock item for the item. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-use-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-use-stock 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"use-stock\"} of the
+  Accessor of the @slot[gtk-image-menu-item]{use-stock} slot of the
   @class{gtk-image-menu-item} class.
   @see-class{gtk-image-menu-item}
   @see-function{gtk-image-menu-item-get-use-stock}
