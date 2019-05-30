@@ -357,8 +357,7 @@
   representing the current selected color. When the button is clicked, a
   color-selection dialog will open, allowing the user to select a color. The
   swatch will be updated to reflect the new color when the user finishes.
-
-  Since 2.4"
+  @see-class{gtk-color-button}"
   (make-instance 'gtk-color-button))
 
 (export 'gtk-color-button-new)
