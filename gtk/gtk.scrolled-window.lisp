@@ -202,14 +202,14 @@
   child widgets such as @class{gtk-grid}, @class{gtk-box}, and so on.
 
   If a widget has native scrolling abilities, it can be added to the
-  @sym{gtk-scrolled-window} with the function @fun{gtk-container-add}. If a
+  @sym{gtk-scrolled-window} with the @fun{gtk-container-add} function. If a
   widget does not, you must first add the widget to a @class{gtk-viewport}, then
   add the @class{gtk-viewport} to the scrolled window. The convenience function
   @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you can
   ignore the presence of the viewport.
 
   The position of the scrollbars is controlled by the scroll adjustments. See
-  the function @class{gtk-adjustment} for the fields in an adjustment - for
+  the @class{gtk-adjustment} class for the fields in an adjustment - for
   @class{gtk-scrollbar}, used by @sym{gtk-scrolled-window}, the @code{value}
   slot represents the position of the scrollbar, which must be between the
   @code{lower} slot and @code{upper} - @code{page-size}. The @code{page-size}
@@ -266,9 +266,9 @@
         The @code{scrollbars-within-bevel} style property of type
         @code{:boolean} (Read) @br{}
         Whether to place scrollbars within the scrolled window's bevel. @br{}
-        @b{Warning:} @code{scrollbars-within-bevel} has been deprecated since
-        version 3.20 and should not be used in newly-written code. The value of
-        this style property is ignored. @br{}
+        @em{Warning:} The @code{scrollbars-within-bevel} property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. The value of this style property is ignored. @br{}
         Default value: @code{nil}
       @end{entry}
     @end{table}
@@ -832,9 +832,9 @@
   (Read / Write) @br{}
   Whether @code{window-placement} should be used to determine the location
   of the contents with respect to the scrollbars. @br{}
-  @em{Warning:} @code{window-placement-set} has been deprecated since version
-  3.10 and should not be used in newly-written code. This value is ignored and
-  @code{window-placement} value is always honored. @br{}
+  @em{Warning:} The @code{window-placement-set} property has been deprecated
+  since version 3.10 and should not be used in newly-written code. This value
+  is ignored and @code{window-placement} value is always honored. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -962,7 +962,7 @@
                                 or @code{nil}
   @end{return}
   Retrieves the current policy values for the horizontal and vertical
-  scrollbars. See the function @fun{gtk-scrolled-window-set-policy}.
+  scrollbars. See the @fun{gtk-scrolled-window-set-policy} function.
   @see-class{gtk-scrolled-window}
   @see-function{gtk-scrolled-window-set-policy}"
   (values (gtk-scrolled-window-hscrollbar-policy scrolled-window)
@@ -1025,7 +1025,7 @@
     @fun{gtk-scrolled-window-unset-placement}.
   @end{return}
   Gets the placement of the contents with respect to the scrollbars for the
-  scrolled window. See the function @fun{gtk-scrolled-window-set-placement}.
+  scrolled window. See the @fun{gtk-scrolled-window-set-placement} function.
   @see-class{gtk-scrolled-window}
   @see-function{gtk-scrolled-window-set-placement}
   @see-function{gtk-scrolled-window-unset-placement}"
@@ -1054,8 +1054,8 @@
   @symbol{gtk-corner-type} are @code{:top-right}, @code{:bottom-left}, and
   @code{:bottom-right}.
 
-  See also the functions @fun{gtk-scrolled-window-get-placement} and
-  @fun{gtk-scrolled-window-unset-placement}.
+  See also the @fun{gtk-scrolled-window-get-placement} and
+  @fun{gtk-scrolled-window-unset-placement} functions.
   @see-class{gtk-scrolled-window}
   @see-function{gtk-scrolled-window-get-placement}
   @see-function{gtk-scrolled-window-unset-placement}"
@@ -1079,11 +1079,11 @@
   @begin{short}
     Unsets the placement of the contents with respect to the scrollbars for the
     scrolled window. If no window placement is set for a scrolled window, it
-    obeys the @code{\"gtk-scrolled-window-placement\"} XSETTING.
+    obeys the @slot[gtk-settings]{gtk-scrolled-window-placement} settings.
   @end{short}
 
-  See also the functions @fun{gtk-scrolled-window-set-placement} and
-  @fun{gtk-scrolled-window-get-placement}.
+  See also the @fun{gtk-scrolled-window-set-placement} and
+  @fun{gtk-scrolled-window-get-placement} functions.
   @see-class{gtk-scrolled-window}
   @see-function{gtk-scrolled-window-set-placement}
   @see-function{gtk-scrolled-window-get-placement}"
@@ -1103,7 +1103,7 @@
   @return{@em{True} if button presses are captured during kinetic scrolling.}
   @begin{short}
     Return whether button presses are captured during kinetic scrolling. See
-    the function @fun{gtk-scrolled-window-set-capture-button-press}.
+    the @fun{gtk-scrolled-window-set-capture-button-press} function.
   @end{short}
   @see-class{gtk-scrolled-window}
   @see-function{gtk-scrolled-window-set-capture-button-press}"
