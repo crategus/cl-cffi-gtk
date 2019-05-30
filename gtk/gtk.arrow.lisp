@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.arrow.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkArrow
 ;;;
-;;; Displays an arrow
+;;;     Displays an arrow
 ;;;
 ;;; Synopsis
 ;;;
@@ -78,15 +75,19 @@
   from @class{gtk-misc}, it can be padded and/or aligned, to fill exactly the
   space the programmer desires.
 
-  Arrows are created with a call to the function @fun{gtk-arrow-new}. The
+  Arrows are created with a call to the @fun{gtk-arrow-new} function. The
   direction or style of an arrow can be changed after creation by using the
-  function @fun{gtk-arrow-set}.
+  @fun{gtk-arrow-set} function.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"arrow-scaling\" style property}
-      @code{\"arrow-scaling\"} of type @code{:float} (Read) @br{}
-      Amount of space used up by arrow. @br{}
-      Allowed values: [0,1] @br{}
-      Default value: 0.7
+    @begin[code]{table}
+      @begin[arrow-scaling]{entry}
+        The @code{arrow-scaling} style property of type @code{:float}
+        (Read) @br{}
+        Amount of space used up by arrow. @br{}
+        Allowed values: [0,1] @br{}
+        Default value: 0.7
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-arrow-arrow-type}
   @see-slot{gtk-arrow-shadow-type}
@@ -95,46 +96,44 @@
   @see-class{gtk-misc}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-arrow-arrow-type ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "arrow-type" 'gtk-arrow) 't)
- "The @code{\"arrow-type\"} property of type @symbol{gtk-arrow-type}
+ "The @code{arrow-type} property of type @symbol{gtk-arrow-type}
   (Read / Write) @br{}
   The direction the arrow should point. @br{}
   Default value: @code{:right}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-arrow) 't)
- "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write) @br{}
-  Appearance of the shadow surrounding the arrow. @br{}
-  Default value: @code{:out}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-arrow-arrow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-arrow-arrow-type 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"arrow-type\"} of the @class{gtk-arrow} class.
+  Accessor of the @slot[gtk-arrow]{arrow-type} slot of the @class{gtk-arrow}
+  class.
   @see-class{gtk-arrow}
   @see-function{gtk-arrow-set}")
+
+;;; --- gtk-arrow-shadow-type --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-arrow) 't)
+ "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
+  (Read / Write) @br{}
+  Appearance of the shadow surrounding the arrow. @br{}
+  Default value: @code{:out}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-arrow-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-arrow-shadow-type 'function)
  "@version{2013-8-16}
-  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-arrow} class.
+  Accessor of the @slot[gtk-arrow]{shadow-type} slot of the @class{gtk-arrow}
+  class.
   @see-class{gtk-arrow}
   @see-function{gtk-arrow-set}")
 
