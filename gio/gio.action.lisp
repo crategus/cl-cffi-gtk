@@ -117,14 +117,14 @@
   @see-function{g-action-change-state}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- g-action-enabled -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enabled" 'g-action) 't)
- "The @code{\"enabled\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{enabled} property of type @code{:boolean} (Read) @br{}
   If action is currently enabled.
   If the action is disabled then calls to the functions @fun{g-action-activate}
   and @fun{g-action-change-state} have no effect. @br{}
@@ -132,84 +132,88 @@
   Since 2.28")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-enabled 'function)
+ "@version{2013-8-10}
+  Accessor of the @slot[g-action]{enabled} slot of the @class{g-action} class.
+  @see-class{g-action}
+  @see-function{g-action-get-enabled}")
+
+;;; --- g-action-name ----------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-action) 't)
- "The @code{\"name\"} property of type @code{:string} (Read) @br{}
+ "The @code{name} property of type @code{:string} (Read) @br{}
   The name of the action. This is mostly meaningful for identifying the action
   once it has been added to a @class{g-action-group}. @br{}
   Default value: @code{nil} @br{}
   Since 2.28")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "parameter-type" 'g-action) 't)
- "The @code{\"parameter-type\"} property of type @class{g-variant-type}
-  (Read) @br{}
-  The type of the parameter that must be given when activating the action. @br{}
-  Since 2.28")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "state" 'g-action) 't)
- "The @code{\"state\"} property of type @type{g-variant} (Read) @br{}
-  The state of the action, or @code{nil} if the action is stateless. @br{}
-  Allowed values: @code{GVariant<*>} @br{}
-  Default value: @code{nil} @br{}
-  Since 2.28")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
- "The @code{\"state-type\"} property of type @class{g-variant-type}
-  (Read) @br{}
-  The @class{g-variant-type} of the state that the action has, or @code{nil} if
-  the action is stateless. @br{}
-  Since 2.28")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'g-action-enabled 'function)
- "@version{2013-8-10}
-  Accessor of the slot @code{\"enabled\"} of the @class{g-action} class.
-  @see-class{g-action}
-  @see-function{g-action-get-enabled}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-name 'function)
  "@version{2013-8-10}
-  Accessor of the slot @code{\"name\"} of the @class{g-action} class.
+  Accessor of the @slot[g-action]{name} slot of the @class{g-action} class.
   @see-class{g-action}
   @see-function{g-action-get-name}")
+
+;;; --- g-action-parameter-type ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "parameter-type" 'g-action) 't)
+ "The @code{parameter-type} property of type @class{g-variant-type}
+  (Read) @br{}
+  The type of the parameter that must be given when activating the action. @br{}
+  Since 2.28")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-parameter-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-parameter-type 'function)
  "@version{2013-8-10}
-  Accessor of the slot @code{\"parameter-type\"} of the @class{g-action} class.
+  Accessor of the @slot[g-action]{parameter-type} slot of the
+  @class{g-action} class.
   @see-class{g-action}
   @see-function{g-action-get-parameter-type}")
+
+;;; --- g-application-state ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "state" 'g-action) 't)
+ "The @code{state} property of type @type{g-variant} (Read) @br{}
+  The state of the action, or @code{nil} if the action is stateless. @br{}
+  Allowed values: @code{GVariant<*>} @br{}
+  Default value: @code{nil} @br{}
+  Since 2.28")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
  "@version{2013-8-10}
-  Accessor of the slot @code{\"state\"} of the @class{g-action} class.
+  Accessor of the @slot[g-action]{state} slot of the @class{g-action} class.
   @see-class{g-action}
   @see-function{g-action-get-state}")
+
+;;; --- g-action-state-type ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
+ "The @code{state-type} property of type @class{g-variant-type}
+  (Read) @br{}
+  The @class{g-variant-type} of the state that the action has, or @code{nil} if
+  the action is stateless. @br{}
+  Since 2.28")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state-type 'function)
  "@version{2013-8-10}
-  Accessor of the slot @code{\"state-type\"} of the @class{g-action} class.
+  Accessor of the @slot[g-application]{state-type} slot of the @class{g-action}
+  class.
   @see-class{g-action}
   @see-function{g-action-get-state-type}")
 
