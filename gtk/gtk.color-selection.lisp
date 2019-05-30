@@ -119,56 +119,18 @@
   @see-slot{gtk-color-selection-has-palette}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-color-selection-current-alpha --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "current-alpha"
                                                'gtk-color-selection) 't)
- "The @code{\"current-alpha\"} property of type @code{:uint}
-  (Read / Write) @br{}
+ "The @code{current-alpha} property of type @code{:uint} (Read / Write) @br{}
   The current opacity value (0 fully transparent, 65535 fully opaque). @br{}
   Allowed values: <= 65535 @br{}
   Default value: 65535")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "current-color"
-                                               'gtk-color-selection) 't)
- "The @code{\"current-color\"} property of type @class{gdk-color}
-  (Read / Write) @br{}
-  The current color.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "current-rgba"
-                                               'gtk-color-selection) 't)
- "The @code{\"current-rgba\"} property of type @class{gdk-rgba}
-  (Read / Write) @br{}
-  The current RGBA color. @br{}
-  Since 3.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "has-opacity-control"
-                                               'gtk-color-selection) 't)
- "The @code{\"has-opacity-control\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the color selector should allow setting opacity. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "has-palette"
-                                               'gtk-color-selection) 't)
- "The @code{\"has-palette\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether a palette should be used. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-current-alpha atdoc:*function-name-alias*)
@@ -176,9 +138,19 @@
       (documentation 'gtk-color-selection-current-alpha 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"current-alpha\"} of the
+    Accessor of the @slot[gtk-color-selection]{current-alpha} slot of the
     @class{gtk-color-selection} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-selection}")
+
+;;; gtk-color-selection-current-color ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "current-color"
+                                               'gtk-color-selection) 't)
+ "The @code{current-color} property of type @class{gdk-color}
+  (Read / Write) @br{}
+  The current color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-current-color atdoc:*function-name-alias*)
@@ -186,9 +158,19 @@
       (documentation 'gtk-color-selection-current-color 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"current-color\"} of the
+    Accessor of the slot @slot[gtk-color-selection]{current-color} slot of the
     @class{gtk-color-selection} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-current-rgba ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "current-rgba"
+                                               'gtk-color-selection) 't)
+ "The @code{current-rgba} property of type @class{gdk-rgba}
+  (Read / Write) @br{}
+  The current RGBA color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-current-rgba atdoc:*function-name-alias*)
@@ -196,9 +178,20 @@
       (documentation 'gtk-color-selection-current-rgba 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"current-rgba\"} of the
+    Accessor of the @slot[gtk-color-selection]{current-rgba} slot of the
     @class{gtk-color-selection} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-has-opacity-control --------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-opacity-control"
+                                               'gtk-color-selection) 't)
+ "The @code{has-opacity-control} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the color selector should allow setting opacity. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-has-opacity-control atdoc:*function-name-alias*)
@@ -206,9 +199,20 @@
       (documentation 'gtk-color-selection-has-opacity-control 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"has-opacity-control\"} of the
+    Accessor of the @slot[gtk-color-selection]{has-opacity-control} slot of the
     @class{gtk-color-selection} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-has-palette ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-palette"
+                                               'gtk-color-selection) 't)
+ "The @code{has-palette} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether a palette should be used. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-has-palette atdoc:*function-name-alias*)
@@ -216,80 +220,87 @@
       (documentation 'gtk-color-selection-has-palette 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"has-palette\"} of the
+    Accessor of the @slot[gtk-color-selection]{has-palette} slot of the
     @class{gtk-color-selection} class.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-color-selection}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; ---  gtk-color-selection-child-expand --------------------------------------
 
 (define-child-property "GtkColorSelection"
                        gtk-color-selection-child-expand
                        "expand" "gboolean" t t t)
-
-(define-child-property "GtkColorSelection"
-                       gtk-color-selection-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkColorSelection"
-                       gtk-color-selection-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkColorSelection"
-                       gtk-color-selection-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkColorSelection"
-                       gtk-color-selection-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-child-expand 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the @code{expand} child property of the
   @class{gtk-color-selection} class.
   @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-child-fill -----------------------------------------
+
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-fill
+                       "fill" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-child-fill 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"fill\"} of the
+  Accessor of the @code{fill} child property of the
   @class{gtk-color-selection} class.
   @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-child-padding --------------------------------------
+
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-padding
+                       "padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-child-padding 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"padding\"} of the
+  Accessor of the @code{padding} child property of the
   @class{gtk-color-selection} class.
   @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-child-pack-type ------------------------------------
+
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-child-pack-type 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the @code{pack-type} child property of the
   @class{gtk-color-selection} class.
   @see-class{gtk-color-selection}")
+
+;;; --- gtk-color-selection-child-position -------------------------------------
+
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-child-position 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the @slot[gtk-color-selection]{position} child property of the
   @class{gtk-color-selection} class.
   @see-class{gtk-color-selection}")
 
