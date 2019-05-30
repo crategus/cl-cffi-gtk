@@ -102,8 +102,6 @@
   @begin{short}
     Creates a new HSV color selector.
   @end{short}
-
-  Since 2.14
   @see-class{gtk-hsv}"
   (make-instance 'gtk-hsv))
 
@@ -124,8 +122,7 @@
     Sets the current color in an HSV color selector. Color component values
     must be in the [0.0, 1.0] range.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
   (h :double)
   (s :double)
@@ -156,8 +153,7 @@
     Queries the current color in an HSV color selector. Returned values will be
     in the [0.0, 1.0] range.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-hsv-get-color hsv h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))
@@ -175,8 +171,7 @@
   @argument[size]{diameter for the hue ring}
   @argument[ring-width]{width of the hue ring}
   @short{Sets the size and ring width of an HSV color selector.}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
   (size :int)
   (ring-width :int))
@@ -201,8 +196,7 @@
     @code{ring-width} -- the width of the hue ring
   @end{return}
   @short{Queries the size and ring width of an HSV color selector.}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (with-foreign-objects ((size :int) (ring-width :int))
     (%gtk-hsv-get-metrics hsv size ring-width)
     (values (mem-ref size :int) (mem-ref ring-width :int))))
@@ -228,8 +222,7 @@
     value with the mouse. This function queries whether the HSV color selector
     is being adjusted or not.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv)))
 
 (export 'gtk-hsv-is-adjusting)
@@ -261,8 +254,7 @@
     Converts a color from HSV space to RGB. Input values must be in the
     [0.0, 1.0] range; output values will be in the same range.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (with-foreign-objects ((r :double) (g :double) (b :double))
     (%gtk-hsv-to-rgb h s v r g b)
     (values (mem-ref r :double) (mem-ref g :double) (mem-ref b :double))))
@@ -296,8 +288,7 @@
     Converts a color from RGB space to HSV. Input values must be in the
     [0.0, 1.0] range; output values will be in the same range.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-hsv}"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-rgb-to-hsv r g b h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))
