@@ -162,7 +162,6 @@
           emitted.}
         @entry[event]{The @class{gdk-event-owner-change} event.}
       @end{table}
-      Since 2.6
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
@@ -390,8 +389,6 @@
   the ICCCM requires that nonstandard atoms are underscore-prefixed, and
   namespace it as well. For example, if your application called \"Foo\" has a
   special-purpose clipboard, you might call it \"_FOO_SPECIAL_CLIPBOARD\".
-
-  Since 2.2
   @see-class{gtk-clipboard}
   @see-symbol{gdk-atom}
   @see-function{gtk-clipboard-get}"
