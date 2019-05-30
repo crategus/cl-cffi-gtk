@@ -332,6 +332,7 @@
     Standard and pixmap cursors.
 
     @about-symbol{gdk-cursor-type}
+
     @about-class{gdk-cursor}
 
     @about-generic{gdk-cursor-display}
@@ -379,7 +380,7 @@
     @about-function{gdk-geometry-min-aspect}
     @about-function{gdk-geometry-max-aspect}
     @about-function{gdk-geometry-win-gravity}
-    
+
     @about-class{gdk-window}
 
     @about-generic{gdk-window-cursor}
