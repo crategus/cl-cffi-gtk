@@ -75,32 +75,25 @@
   @sym{gtk-recent-action} as the action for a <toolitem> element.")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-numbers"
                                                'gtk-recent-action) 't)
- "The @code{\"show-numbers\"} property of type @code{:boolean}
+ "The @code{show-numbers} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the items should be displayed with a number. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-action-show-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-action-show-numbers 'function)
  "@version{2013-6-2}
-  Accessor of the slot @code{\"show-numbers\"} of the @class{gtk-recent-action}
-  class.")
+  Accessor of the @slot[gtk-recent-action]{show-numbers} slot of the
+  @class{gtk-recent-action} class.
+  @see-class{gtk-recent-action}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_action_new ()
