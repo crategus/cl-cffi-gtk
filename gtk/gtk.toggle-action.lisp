@@ -87,52 +87,46 @@
   @see-slot{gtk-toggle-action-draw-as-radio}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-toggle-action-active -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-action) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the toggle action should be active. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
-                                               'gtk-toggle-action) 't)
- "The @code{\"draw-as-radio\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the proxies for this action look like radio action proxies.
-  This is an appearance property and thus only applies if
-  @code{\"use-action-appearance\"} is @em{true}. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-active 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"active\"} of the @class{gtk-toggle-action}
-  class.
+  Accessor of the @slot[gtk-toggle-action]{active} slot of the
+  @class{gtk-toggle-action} class.
   @see-class{gtk-toggle-action}
   @see-function{gtk-toggle-action-get-active}
   @see-function{gtk-toggle-action-set-active}")
+
+;;; --- gtk-toggle-action-draw-as-radio ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
+                                               'gtk-toggle-action) 't)
+ "The @code{draw-as-radio} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the proxies for this action look like radio action proxies.
+  This is an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-draw-as-radio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-draw-as-radio 'function)
  "@version{2013-12-10}
-  Accessor of the slot @code{\"draw-as-radio\"} of the @class{gtk-toggle-action}
-  class.
+  Accessor of the @slot[gtk-toggle-action]{draw-as-radio} slot of the
+  @class{gtk-toggle-action} class.
   @see-class{gtk-toggle-action}
   @see-function{gtk-toggle-action-get-draw-as-radio}
   @see-function{gtk-toggle-action-set-draw-as-radio}")
