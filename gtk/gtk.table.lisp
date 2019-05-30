@@ -127,80 +127,88 @@
     horizontally and vertically.
   @end{short}
 
-  Tables are created with a call to the function @fun{gtk-table-new}, the size
-  of which can later be changed with the function @fun{gtk-table-resize}.
+  Tables are created with a call to the @fun{gtk-table-new} function, the size
+  of which can later be changed with the @fun{gtk-table-resize} function.
 
-  Widgets can be added to a table using the function @fun{gtk-table-attach} or
-  the more convenient (but slightly less flexible) function
-  @fun{gtk-table-attach-defaults}.
+  Widgets can be added to a table using the @fun{gtk-table-attach} function or
+  the more convenient, but slightly less flexible,
+  @fun{gtk-table-attach-defaults} function.
 
-  To alter the space next to a specific row, use the function
-  @fun{gtk-table-set-row-spacing}, and for a column the function
-  @fun{gtk-table-set-col-spacing}. The gaps between all rows or columns can be
-  changed by calling the functions @fun{gtk-table-set-row-spacings} or
-  @fun{gtk-table-set-col-spacings} respectively. Note that spacing is added
-  between the children, while padding added by the function
-  @fun{gtk-table-attach} is added on either side of the widget it belongs to.
+  To alter the space next to a specific row, use the
+  @fun{gtk-table-set-row-spacing} function, and for a column the
+  @fun{gtk-table-set-col-spacing} function. The gaps between all rows or columns
+  can be changed by calling the @fun{gtk-table-set-row-spacings} or
+  @fun{gtk-table-set-col-spacings} functions respectively. Note that spacing is
+  added between the children, while padding added by the @fun{gtk-table-attach}
+  function is added on either side of the widget it belongs to.
 
-  The function @fun{gtk-table-set-homogeneous}, can be used to set whether all
-  cells in the table will resize themselves to the size of the largest widget in
-  the table.
-
-  @subheading{Note}
+  The @fun{gtk-table-set-homogeneous} function, can be used to set whether all
+  cells in the table will resize themselves to the size of the largest widget
+  in the table.
+  @begin[Warning]{dictionary}
     @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
     provides the same capabilities as @sym{gtk-table} for arranging widgets in
     a rectangular grid, but does support height-for-width geometry management.
-
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"bottom-attach\" child property}
-      @code{\"bottom-attach\"} of type @code{:uint} (Read / Write)@br{}
-      The row number to attach the bottom of the child to.@br{}
-      Allowed values: [1,65535]@br{}
-      Default value: 1
-
-    @subheading{The \"left-attach\" child property}
-      @code{\"left-attach\"} of type @code{:uint} (Read / Write)@br{}
-      The column number to attach the left side of the child to.@br{}
-      Allowed values: <= 65535@br{}
-      Default value: 0
-
-    @subheading{The \"right-attach\" child property}
-      @code{\"right-attach\"} of type @code{:uint} (Read / Write)@br{}
-      The column number to attach the right side of a child widget to.@br{}
-      Allowed values: [1,65535]@br{}
-      Default value: 1
-
-    @subheading{The \"top-attach\" child property}
-      @code{\"top-attach\"} of type @code{:uint} (Read / Write)@br{}
-      The row number to attach the top of a child widget to.@br{}
-      Allowed values: <= 65535@br{}
-      Default value: 0
-
-    @subheading{The \"x-options\" child property}
-      @code{\"x-options\"} of type  @symbol{gtk-attach-options}
-     (Read / Write)@br{}
-      Options specifying the horizontal behaviour of the child.@br{}
-      Default value: @code{'(:expand :fill)}
-
-    @subheading{The \"x-padding\" child property}
-      @code{\"x-padding\"} of type @code{:uint} (Read / Write)@br{}
-      Extra space to put between the child and its left and right neighbors, in
-      pixels.@br{}
-      Allowed values: <= 65535@br{}
-      Default value: 0
-
-    @subheading{The \"y-options\" child property}
-      @code{\"y-options\"} of type @symbol{gtk-attach-options}
-      (Read / Write)@br{}
-      Options specifying the vertical behaviour of the child.@br{}
-      Default value: @code{'(:expand :fill)}
-
-    @subheading{The \"y-padding\" child property}
-      @code{\"y-padding\"} of type @code{:uint} (Read / Write)@br{}
-      Extra space to put between the child and its upper and lower neighbors, in
-      pixels.@br{}
-      Allowed values: <= 65535@br{}
-      Default value: 0
+    @begin[code]{table}
+      @begin[bottom-attach]{entry}
+        The @code{bottom-attach} child property of type @code{:uint}
+        (Read / Write) @br{}
+        The row number to attach the bottom of the child to. @br{}
+        Allowed values: [1,65535] @br{}
+        Default value: 1
+      @end{entry}
+      @begin[left-attach]{entry}
+        The @code{left-attach} child property of type @code{:uint}
+        (Read / Write) @br{}
+        The column number to attach the left side of the child to. @br{}
+        Allowed values: <= 65535 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[right-attach]{entry}
+        The @code{right-attach} child property of type @code{:uint}
+        (Read / Write) @br{}
+        The column number to attach the right side of a child widget to. @br{}
+        Allowed values: [1,65535] @br{}
+        Default value: 1
+      @end{entry}
+      @begin[top-attach]{entry}
+        The @code{top-attach} child property of type @code{:uint}
+        (Read / Write) @br{}
+        The row number to attach the top of a child widget to. @br{}
+        Allowed values: <= 65535 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[x-options]{entry}
+        The @code{x-options} child property of type @symbol{gtk-attach-options}
+        (Read / Write) @br{}
+        Options specifying the horizontal behaviour of the child. @br{}
+        Default value: @code{'(:expand :fill)}
+      @end{entry}
+      @begin[x-padding]{entry}
+        The @code{x-padding} child property of type @code{:uint}
+        (Read / Write) @br{}
+        Extra space to put between the child and its left and right neighbors,
+        in pixels. @br{}
+        Allowed values: <= 65535 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[y-options]{entry}
+        The @code{y-options} child property of type @symbol{gtk-attach-options}
+        (Read / Write) @br{}
+        Options specifying the vertical behaviour of the child. @br{}
+        Default value: @code{'(:expand :fill)}
+      @end{entry}
+      @begin[y-padding]{entry}
+        The @code{y-padding} child property of type @code{:uint}
+        (Read / Write) @br{}
+        Extra space to put between the child and its upper and lower neighbors,
+        in pixels. @br{}
+        Allowed values: <= 65535 @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-table-column-spacing}
   @see-slot{gtk-table-homogeneous}
@@ -209,62 +217,18 @@
   @see-slot{gtk-table-row-spacing}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "column-spacing" 'gtk-table) 't)
- "The @code{\"column-spacing\"} property of type @code{:uint}
-  (Read / Write)@br{}
-  The amount of space between two consecutive columns.@br{}
-  Allowed values: <= 65535@br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "homogeneous" 'gtk-table) 't)
- "The @code{\"homogeneous\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  If @em{true}, the table cells are all the same width/height.@br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "n-columns" 'gtk-table) 't)
- "The @code{\"n-columns\"} property of type @code{:uint} (Read / Write)@br{}
-  The number of columns in the table.@br{}
-  Allowed values: [1,65535]@br{}
-  Default value: 1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "n-rows" 'gtk-table) 't)
- "The @code{\"n-rows\"} property of type @code{:uint} (Read / Write)@br{}
-  The number of rows in the table.@br{}
-  Allowed values: [1,65535]@br{}
-  Default value: 1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "row-spacing" 'gtk-table) 't)
- "The @code{\"row-spacing\"} property of type @code{:uint}  (Read / Write)@br{}
-  The amount of space between two consecutive rows.@br{}
-  Allowed values: <= 65535@br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-table-column-spacing -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "column-spacing" 'gtk-table) 't)
+ "The @code{column-spacing} property of type @code{:uint}
+  (Read / Write) @br{}
+  The amount of space between two consecutive columns. @br{}
+  Allowed values: <= 65535 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-column-spacing atdoc:*function-name-alias*)
@@ -272,158 +236,208 @@
       (documentation 'gtk-table-column-spacing 'function)
  "@version{2013-1-22}
   @begin{short}
-    Accessor of the slot @code{column-spacing} of the @class{gtk-table} class.
-  @end{short}")
+    Accessor of the @slot[gtk-table]{column-spacing} slot of the
+    @class{gtk-table} class.
+  @end{short}
+  @see-class{gtk-table}")
 
 ;;; --- gtk-table-homogeneous -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "homogeneous" 'gtk-table) 't)
+ "The @code{homogeneous} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If @em{true}, the table cells are all the same width/height. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-homogeneous atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-homogeneous 'function)
  "@version{2013-1-22}
   @begin{short}
-    Accessor of the slot @code{homogeneous} of the @class{gtk-table} class.
-  @end{short}")
+    Accessor of the @slot[gtk-table]{homogeneous} slot of the
+    @class{gtk-table} class.
+  @end{short}
+  @see-class{gtk-table}")
 
 ;;; --- gtk-table-n-columns ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "n-columns" 'gtk-table) 't)
+ "The @code{n-columns} property of type @code{:uint} (Read / Write) @br{}
+  The number of columns in the table. @br{}
+  Allowed values: [1,65535] @br{}
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-n-columns atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-n-columns 'function)
  "@version{2013-1-22}
   @begin{short}
-    Accessor of the slot @code{n-columns} of the @class{gtk-table} class.
-  @end{short}")
+    Accessor of the @slot[gtk-table]{n-columns} slot of the
+    @class{gtk-table} class.
+  @end{short}
+  @see-class{gtk-table}")
 
 ;;; --- gtk-table-n-rows -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "n-rows" 'gtk-table) 't)
+ "The @code{n-rows} property of type @code{:uint} (Read / Write) @br{}
+  The number of rows in the table. @br{}
+  Allowed values: [1,65535] @br{}
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-n-rows atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-n-rows 'function)
  "@version{2013-1-22}
   @begin{short}
-    Accessor of the slot @code{n-rows} of the @class{gtk-table} class.
-  @end{short}")
+    Accessor of the @slot[gtk-table]{n-rows} slot of the
+    @class{gtk-table} class.
+  @end{short}
+  @see-class{gtk-table}")
 
 ;;; --- gtk-table-row-spacing --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "row-spacing" 'gtk-table) 't)
+ "The @code{row-spacing} property of type @code{:uint}  (Read / Write) @br{}
+  The amount of space between two consecutive rows. @br{}
+  Allowed values: <= 65535 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-row-spacing atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-row-spacing 'function)
  "@version{2013-1-22}
   @begin{short}
-    Accessor of the slot @code{row-spacing} of the @class{gtk-table} class.
-  @end{short}")
+    Accessor of the @slot[gtk-table]{row-spacing} slot of the
+    @class{gtk-table} class.
+  @end{short}
+  @see-class{gtk-table}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-table-child-left-attach --------------------------------------------
 
 (define-child-property "GtkTable"
                        gtk-table-child-left-attach
                        "left-attach" "guint" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-right-attach
-                       "right-attach" "guint" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-top-attach
-                       "top-attach" "guint" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-bottom-attach
-                       "bottom-attach" "guint" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-x-options
-                       "x-options" "GtkAttachOptions" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-y-options
-                       "y-options" "GtkAttachOptions" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-x-padding
-                       "x-padding" "guint" t t t)
-
-(define-child-property "GtkTable"
-                       gtk-table-child-y-padding
-                       "y-padding" "guint" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-left-attach 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"left-attach\"} of the @class{gtk-table}
+  Accessor of the @code{left-attach} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-right-attach -------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-right-attach
+                       "right-attach" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-right-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-right-attach 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"right-attach\"} of the
+  Accessor of the @code{right-attach} child property of the
   @class{gtk-table} class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-top-attach ---------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-top-attach
+                       "top-attach" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-top-attach 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"top-attach\"} of the @class{gtk-table}
+  Accessor of the @code{top-attach} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-bottom-attach ------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-bottom-attach
+                       "bottom-attach" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-bottom-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-bottom-attach 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"bottom-attach\"} of the
+  Accessor of the @code{bottom-attach} child property of the
   @class{gtk-table} class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-x-options ----------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-x-options
+                       "x-options" "GtkAttachOptions" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-x-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-options 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"x-options\"} of the @class{gtk-table}
+  Accessor of the @code{x-options} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-y-options ----------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-y-options
+                       "y-options" "GtkAttachOptions" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-y-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-options 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"y-options\"} of the @class{gtk-table}
+  Accessor of the @code{y-options} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-x-padding ----------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-x-padding
+                       "x-padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-x-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-padding 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"x-padding\"} of the @class{gtk-table}
+  Accessor of the @code{x-padding} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
+
+;;; --- gtk-table-child-y-padding ----------------------------------------------
+
+(define-child-property "GtkTable"
+                       gtk-table-child-y-padding
+                       "y-padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-y-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-padding 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"y-padding\"} of the @class{gtk-table}
+  Accessor of the @code{y-padding} child property of the @class{gtk-table}
   class.
   @see-class{gtk-table}")
 
@@ -453,6 +467,7 @@
   @subheading{Warning}
     @sym{gtk-table-new} has been deprecated since version 3.4 and should not be
     used in newly-written code. Use @fun{gtk-grid-new}.
+  @see-class{gtk-table}
   @see-function{gtk-table-resize}
   @see-function{gtk-grid-new}"
   (make-instance 'gtk-table
@@ -482,7 +497,8 @@
 
   @subheading{Warning}
     @sym{gtk-table-resize} has been deprecated since version 3.4 and should not
-    be used in newly-written code. @class{gtk-grid} resizes automatically."
+    be used in newly-written code. @class{gtk-grid} resizes automatically.
+  @see-class{gtk-table}"
   (setf (gtk-table-n-rows table) rows
         (gtk-table-n-columns table) columns))
 
@@ -508,8 +524,7 @@
     @sym{gtk-table-get-size} has been deprecated since version 3.4 and should
     not be used in newly-written code. @class{gtk-grid} does not expose the
     number of columns and rows.
-
-  Since 2.22"
+  @see-class{gtk-table}"
   (values (gtk-table-n-rows table)
           (gtk-table-n-columns table)))
 
@@ -578,7 +593,8 @@
     @sym{gtk-table-attach} has been deprecated since version 3.4 and should not
     be used in newly-written code. Use @fun{gtk-grid-attach} with
     @class{gtk-grid}. Note that the attach arguments differ between those two
-    functions."
+    functions.
+  @see-class{gtk-table}"
   (%gtk-table-attach table widget
                      left right top bottom
                      x-options y-options
@@ -617,7 +633,8 @@
     @sym{gtk-table-attach-defaults} has been deprecated since version 3.4 and
     should not be used in newly-written code. Use @fun{gtk-grid-attach} with
     @class{gtk-grid}. Note that the attach arguments differ between those two
-    functions."
+    functions.
+  @see-class{gtk-table}"
   (gtk-table-attach table child left right top bottom))
 
 (export 'gtk-table-attach-defaults)
@@ -642,7 +659,8 @@
     should not be used in newly-written code. Use
     @fun{gtk-widget-set-margin-top} and @fun{gtk-widget-set-margin-bottom} on
     the widgets contained in the row if you need this functionality.
-    @class{gtk-grid} does not support per-row spacing."
+    @class{gtk-grid} does not support per-row spacing.
+  @see-class{gtk-table}"
   (table (g-object gtk-table))
   (row :uint)
   (spacing :uint))
@@ -669,7 +687,8 @@
     should not be used in newly written code. Use
     @fun{gtk-widget-set-margin-left} and @fun{gtk-widget-set-margin-right} on
     the widgets contained in the row if you need this functionality.
-    @class{gtk-grid} does not support per-row spacing."
+    @class{gtk-grid} does not support per-row spacing.
+  @see-class{gtk-table}"
   (table (g-object gtk-table))
   (column :uint)
   (spacing :uint))
@@ -693,7 +712,8 @@
   @subheading{Warning}
     @sym{gtk-table-set-row-spacings} has been deprecated since version 3.4 and
     should not be used in newly written code. Use @fun{gtk-grid-set-row-spacing}
-    with @class{gtk-grid}."
+    with @class{gtk-grid}.
+  @see-class{gtk-table}"
   (setf (gtk-table-row-spacing table) spacing))
 
 (export 'gtk-table-set-row-spacings)
@@ -715,7 +735,8 @@
   @subheading{Warning}
     @sym{gtk-table-set-col-spacings} has been deprecated since version 3.4 and
     should not be used in newly-written code. Use the function
-    @fun{gtk-grid-column-spacing} with @class{gtk-grid}."
+    @fun{gtk-grid-column-spacing} with @class{gtk-grid}.
+  @see-class{gtk-table}"
   (setf (gtk-table-column-spacing table) spacing))
 
 (export 'gtk-table-set-col-spacings)
@@ -743,6 +764,7 @@
     should not be used in newly-written code. Use
     @fun{gtk-grid-set-row-homogeneous} and
     @fun{gtk-grid-set-column-homogeneous} with @class{gtk-grid}.
+  @see-class{gtk-table}
   @see-function{gtk-grid-set-row-homogeneous}
   @see-function{gtk-grid-set-column-homogeneous}"
   (setf (gtk-table-homogeneous table) homogeneous))
@@ -768,7 +790,8 @@
   @subheading{Warning}
     @sym{gtk-table-get-default-row-spacing} has been deprecated since version
     3.4 and should not be used in newly written code. Use
-    @fun{gtk-grid-get-row-spacing} with @class{gtk-grid}."
+    @fun{gtk-grid-get-row-spacing} with @class{gtk-grid}.
+  @see-class{gtk-table}"
   (gtk-table-row-spacing table))
 
 (export 'gtk-table-get-default-row-spacing)
@@ -786,11 +809,10 @@
   @return{@em{True} if the cells are all constrained to the same size}
   @begin{short}
     Returns whether the table cells are all constrained to the same width and
-    height. See the function @fun{gtk-table-set-homogeneous}.
+    height. See the @fun{gtk-table-set-homogeneous} function.
   @end{short}
-
   @begin[Warning]{dictionary}
-    The function @sym{gtk-table-get-homogeneous} has been deprecated since
+    The @sym{gtk-table-get-homogeneous} function has been deprecated since
     version 3.4 and should not be used in newly written code. Use the functions
     @fun{gtk-grid-row-homogeneous} and @fun{gtk-grid-column-homogeneous}
     with the @class{gtk-grid} class.
@@ -821,7 +843,8 @@
   @subheading{Warning}
     @sym{gtk-table-get-row-spacing} has been deprecated since version 3.4 and
     should not be used in newly-written code. @class{gtk-grid} does not offer a
-    replacement for this functionality."
+    replacement for this functionality.
+  @see-class{gtk-table}"
   (table (g-object gtk-table))
   (row :uint))
 
@@ -845,7 +868,8 @@
   @subheading{Warning}
     @sym{gtk-table-get-col-spacing} has been deprecated since version 3.4 and
     should not be used in newly written code. @class{gtk-grid} does not offer a
-    replacement for this functionality."
+    replacement for this functionality.
+  @see-class{gtk-table}"
   (table (g-object gtk-table))
   (column :uint))
 
@@ -872,6 +896,7 @@
     @sym{gtk-table-get-default-col-spacing} has been deprecated since version
     3.4 and should not be used in newly-written code. Use
     @fun{gtk-grid-get-column-spacing} with @class{gtk-grid}.
+  @see-class{gtk-table}
   @see-function{gtk-table-set-col-spacings}
   @see-function{gtk-grid-get-column-spacing}"
   (gtk-table-column-spacing table))
