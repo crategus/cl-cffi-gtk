@@ -322,7 +322,7 @@
       (documentation 'gtk-popover-pointing-to 'function)
  "@version{2019-5-11}
   @syntax[]{(gtk-popover-pointing-to object) => rect}
-  @snytax[]{(setf (gtk-popover-pointing-to object) rect)}
+  @syntax[]{(setf (gtk-popover-pointing-to object) rect)}
   @argument[object]{a @class{gtk-popover} widget}
   @argument[rect]{a @class{gdk-rectangle} to point to}
   @begin{short}
@@ -331,8 +331,10 @@
   @end{short}
 
   Sets the rectangle that popover will point to, in the coordinate space of
-  the widget popover is attached to, see the @fun{gtk-popover-relative-to}.
-  @see-class{gtk-popover}")
+  the widget popover is attached to, see the @fun{gtk-popover-relative-to}
+  function.
+  @see-class{gtk-popover}
+  @see-function{gtk-popover-relative-to}")
 
 ;;; --- gtk-popover-position ---------------------------------------------------
 
@@ -468,6 +470,14 @@
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-popover-new))
+
+(defun gtk-popover-new (relative-to)
+  (make-instance 'gtk-popover
+                 :relative-to relative-to))
+
+(export 'gtk-popover-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_new_from_model ()
 ;;;
@@ -497,6 +507,13 @@
 ;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_popover_new_from_model" gtk-popover-new-from-model)
+    (g-object gtk-widget)
+  (relative-to (g-object gtk-widget))
+  (model (g-object g-menu-model)))
+
+(export 'gtk-popober-new-from-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_bind_model ()
@@ -540,6 +557,13 @@
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_popover_bind_model" gtk-popover-bind-model) :void
+  (popover (g-object gtk-popover))
+  (model (g-object g-menu-model))
+  (action-namespace :string))
+
+(export 'gtk-popover-bind-model)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_popup ()
 ;;;
@@ -555,6 +579,11 @@
 ;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_popover_popup" gtk-popover-popup) :void
+  (popover (g-object gtk-popover)))
+
+(export 'gtk-popover-popup)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_popdown ()
 ;;;
@@ -569,6 +598,11 @@
 ;;;
 ;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_popover_popdown" gtk-popover-popdown) :void
+  (popover (g-object gtk-popover)))
+
+(export 'gtk-popover-popdown)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_set_default_widget ()
@@ -590,6 +624,12 @@
 ;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_popover_set_default_widget" gtk-popover-set-default-widget) :void
+  (popover (g-object gtk-popover))
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-popover-set-default-widget)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_get_default_widget ()
 ;;;
@@ -607,5 +647,11 @@
 ;;;
 ;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_popover_get_default_widget" gtk-popover-get-default-widget)
+    (g-object gtk-widget)
+  (popover (g-object gtk-popover)))
+
+(export 'gtk-popover-get-default-widget)
 
 ;;; --- End of file gtk.popover.lisp -------------------------------------------
