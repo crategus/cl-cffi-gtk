@@ -111,18 +111,17 @@
 
   @image[toggle-button]{}
 
-  A toggle button is created by calling either the functions
-  @fun{gtk-toggle-button-new} or @fun{gtk-toggle-button-new-with-label}. If
-  using the former, it is advisable to pack a widget, (such as a
-  @class{gtk-label} or a @class{gtk-image}), into the toggle button's container.
-  See @class{gtk-button} for more information.
+  A toggle button is created by calling either the @fun{gtk-toggle-button-new}
+  or @fun{gtk-toggle-button-new-with-label} functions. If using the former, it
+  is advisable to pack a widget, such as a @class{gtk-label} or a
+  @class{gtk-image}, into the toggle button's container. See @class{gtk-button}
+  for more information.
 
-  The state of a @sym{gtk-toggle-button} can be set specifically using the
-  generic function @fun{gtk-toggle-button-active}, and retrieved using the
-  generic function @fun{gtk-toggle-button-active}.
+  The state of a @sym{gtk-toggle-button} can be set and retrieved using the
+  @fun{gtk-toggle-button-active} slot access function.
 
-  To simply switch the state of a toggle button, use the function
-  @fun{gtk-toggle-button-toggled}.
+  To simply switch the state of a toggle button, use the
+  @fun{gtk-toggle-button-toggled} function.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-toggle-button} has a single CSS node with name @code{button}. To
     differentiate it from a plain @class{gtk-button}, it gets the @code{.toggle}
@@ -160,7 +159,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (togglebutton)   : Run First
+ lambda (togglebutton)    : Run First
       @end{pre}
       Should be connected if you wish to perform an action whenever the
       @sym{gtk-toggle-button}'s state is changed.
@@ -192,23 +191,23 @@
       "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
  "@version{2014-4-14}
-  @argument[object]{a @class{gtk-toggle-button} widget}
-  @argument[is-active]{@em{true} or @code{nil}}
   @syntax[]{(gtk-toggle-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-button-active object) is-active)}
+  @argument[object]{a @class{gtk-toggle-button} widget}
+  @argument[is-active]{@em{true} or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gtk-toggle-button]{active} of the
+    Accessor of the @slot[gtk-toggle-button]{active} slot of the
     @class{gtk-toggle-button} class.
   @end{short}
 
-  The generic function @sym{gtk-toggle-button-active} queries a
+  The @sym{gtk-toggle-button-active} slot access function queries a
   @class{gtk-toggle-button} widget and returns its current state.
 
   Returns @em{true} if the toggle button is pressed in and @code{nil} if it is
   raised.
 
-  The generic function @sym{(setf gtk-toggle-button-active)} sets the status of
-  the toggle button.
+  The @sym{(setf gtk-toggle-button-active)} slot access function sets the status
+  of the toggle button.
 
   Set to @em{true} if you want the @class{gtk-toggle-button} to be 'pressed in',
   and @code{nil} to raise it. This action causes the toggled signal to be
@@ -230,7 +229,7 @@
       "Accessor"
       (documentation 'gtk-toggle-button-draw-indicator 'function)
  "@version{2014-4-14}
-  Accessor of the slot @slot[gtk-toggle-button]{draw-indicator} of the
+  Accessor of the @slot[gtk-toggle-button]{draw-indicator} slot of the
   @class{gtk-toggle-button} class.
   @see-class{gtk-toggle-button}")
 
@@ -249,26 +248,23 @@
       "Accessor"
       (documentation 'gtk-toggle-button-inconsistent 'function)
  "@version{2014-4-14}
-  @argument[object]{a @class{gtk-toggle-button} widget}
-  @argument[setting]{@em{true} if state is inconsistent}
   @syntax[]{(gtk-toggle-button object) => setting}
   @syntax[]{(setf (gtk-toggle-button object) setting)}
+  @argument[object]{a @class{gtk-toggle-button} widget}
+  @argument[setting]{@em{true} if state is inconsistent}
   @begin{short}
-    Accessor of the slot @slot[gtk-toggle-button]{inconsistent} of the
+    Accessor of the @slot[gtk-toggle-button]{inconsistent} slot of the
     @class{gtk-toggle-button} class.
   @end{short}
-
-  The generic function @sym{gtk-toggle-button-inconsistent}  gets the value set
-  by the generic function @sym{(setf gtk-toggle-button-inconsistent)}.
 
   If the user has selected a range of elements, such as some text or
   spreadsheet cells, that are affected by a toggle button, and the current
   values in that range are inconsistent, you may want to display the toggle in
   an \"in between\" state. This function turns on \"in between\" display.
   Normally you would turn off the inconsistent state again if the user toggles
-  the toggle button. This has to be done manually, the generic function
-  @sym{(setf gtk-toggle-button-inconsistent)} only affects visual appearance,
-  it does not affect the semantics of the button.
+  the toggle button. This has to be done manually, the
+  @sym{(setf gtk-toggle-button-inconsistent)} slot access function only affects
+  visual appearance, it does not affect the semantics of the button.
   @see-class{gtk-toggle-button}")
 
 ;;; ----------------------------------------------------------------------------
@@ -387,8 +383,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2014-9-1}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  Emits the \"toggled\" signal on the @class{gtk-toggle-button} widget. There is
-  no good reason for an application ever to call this function.
+  @begin{short}
+    Emits the \"toggled\" signal on the @class{gtk-toggle-button} widget.
+  @end{short}
+  There is no good reason for an application ever to call this function.
   @see-class{gtk-toggle-button}"
   (toggle-button (g-object gtk-toggle-button)))
 
