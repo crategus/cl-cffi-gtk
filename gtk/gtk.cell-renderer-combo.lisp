@@ -89,12 +89,12 @@
   But while @class{gtk-cell-renderer-text} offers a simple entry to edit the
   text, @sym{gtk-cell-renderer-combo} offers a @class{gtk-combo-box} or
   @class{gtk-combo-box-entry} widget to edit the text. The values to display in
-  the combo box are taken from the tree model specified in the @code{\"model\"}
+  the combo box are taken from the tree model specified in the @code{model}
   property.
 
   The combo cell renderer takes care of adding a text cell renderer to the
   combo box and sets it to display the column specified by its
-  @code{\"text-column\"} property. Further properties of the comnbo box can be
+  @code{text-column} property. Further properties of the comnbo box can be
   set in a handler for the \"editing-started\" signal.
 
   The @sym{gtk-cell-renderer-combo} cell renderer was added in GTK+ 2.6.
@@ -205,7 +205,7 @@
     Creates a new @class{gtk-cell-renderer-combo} object.
   @end{short}
   Adjust how text is drawn using object properties. Object properties can be set
-  globally (with the function @fun{g-object-set}). Also, with
+  globally, with the @fun{g-object-set} function. Also, with
   @class{gtk-tree-view-column}, you can bind a property to a value in a
   @class{gtk-tree-model}. For example, you can bind the \"text\" property on the
   cell renderer to a string value in the model, thus rendering a different
