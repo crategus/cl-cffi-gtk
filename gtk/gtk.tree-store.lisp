@@ -329,7 +329,6 @@
     for language bindings or in case the number of columns to change is not
     known until run-time.
   @end{short}
-  Since 2.12
   @see-function{gtk-tree-store-set}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
@@ -506,8 +505,6 @@
   signal repeatedly can affect the performance of the program, the function
   @sym{gtk-tree-store-insert-with-values} should generally be preferred when
   inserting rows in a sorted tree store.
-
-  Since 2.10
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-insert}
@@ -559,8 +556,7 @@
     values as two arrays, instead of varargs. This function is mainly intended
     for language bindings.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-tree-store}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter))
@@ -709,8 +705,6 @@
     Checks if the given @arg{iter} is a valid iter for this
     @class{gtk-tree-store}.
   @end{short}
-
-  Since 2.2
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
@@ -755,8 +749,6 @@
     Swaps @arg{a} and @arg{b} in the same level of @arg{tree-store}.
   @end{short}
   Note that this function only works with unsorted stores.
-
-  Since 2.2
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
@@ -781,8 +773,6 @@
   @arg{iter} and @arg{position} should be in the same level. Note that this
   function only works with unsorted stores. If @arg{position} is @code{nil},
   @arg{iter} will be moved to the end of the level.
-
-  Since 2.2
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-move-after}"
@@ -808,8 +798,6 @@
   @arg{iter} and @arg{position} should be in the same level. Note that this
   function only works with unsorted stores. If @arg{position} is @code{nil},
   @arg{iter} will be moved to the start of the level.
-
-  Since 2.2
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-move-before}"
