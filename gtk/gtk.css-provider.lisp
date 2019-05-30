@@ -108,9 +108,10 @@
     @code{$XDG_CONFIG_HOME/gtk-3.0/gtk.css} is loaded if it exists. Then, GTK+
     tries to load @code{$HOME/.themes/theme-name/gtk-3.0/gtk.css}, falling back
     to @code{datadir/share/themes/theme-name/gtk-3.0/gtk.css}, where theme-name
-    is the name of the current theme, see the @code{\"gtk-theme-name\"} setting,
-    and @code{datadir} is the prefix configured when GTK+ was compiled, unless
-    overridden by the @code{GTK_DATA_PREFIX} environment variable.
+    is the name of the current theme, see the
+    @slot[gtk-settings]{gtk-theme-name} setting, and @code{datadir} is the
+    prefix configured when GTK+ was compiled, unless overridden by the
+    @code{GTK_DATA_PREFIX} environment variable.
 
   @subheading{Style sheets}
     The basic structure of the style sheets understood by this provider is a
@@ -318,8 +319,8 @@
 
     Customized key bindings are typically defined in a separate
     @code{gtk-keys.css} CSS file and GTK+ loads this file according to the
-    current key theme, which is defined by the @code{\"gtk-key-theme-name\"}
-    setting.
+    current key theme, which is defined by the
+    @slot[gtk-settings]{gtk-key-theme-name} setting.
 
     Example 29. Using the @code{@@binding} rule
     @begin{pre}
@@ -340,8 +341,8 @@
     @end{pre}
     GTK+ also supports an additional @code{@@define-color} rule, in order to
     define a color name which may be used instead of color numeric
-    representations. Also see the @code{\"gtk-color-scheme\"} setting for a way
-    to override the values of these named colors.
+    representations. Also see the @slot[gtk-settings]{gtk-color-scheme} setting
+    for a way to override the values of these named colors.
 
     Example 30. Defining colors
     @begin{pre}
