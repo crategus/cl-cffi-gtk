@@ -245,9 +245,7 @@
   @var{+gdk-current-time+}.
 
   This function can be used as a replacement for @code{gnome_vfs_url_show()} and
-  @code{gnome_url_show()}.
-
-  Since 2.14"
+  @code{gnome_url_show()}."
   (with-g-error (err)
     (%gtk-show-uri screen uri timestamp err)))
 
