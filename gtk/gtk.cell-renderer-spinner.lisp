@@ -83,8 +83,8 @@
   It can often be used as an alternative to a @class{gtk-cell-renderer-progress}
   for displaying indefinite activity, instead of actual progress.
 
-  To start the animation in a cell, set the @code{\"active\"} property to
-  @em{true} and increment the @code{\"pulse\"} property at regular intervals.
+  To start the animation in a cell, set the @code{active} property to
+  @em{true} and increment the @code{pulse} property at regular intervals.
   The usual way to set the cell renderer properties for each cell is to bind
   them to columns in your tree model using e. g. the function
   @fun{gtk-tree-view-column-add-attribute}.
