@@ -310,7 +310,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-size" 'gtk-font-button) 't)
- "The @code{\"use-size\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{use-size} property of type @code{:boolean} (Read / Write) @br{}
   If this property is set to @em{true}, the label will be drawn with the
   selected font size. @br{}
   Default value: @code{nil}")
