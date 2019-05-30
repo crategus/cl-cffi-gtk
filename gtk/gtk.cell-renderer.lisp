@@ -255,8 +255,8 @@
   to draw many cells on the screen. To this extent, it is not expected that a
   CellRenderer keep any permanent state around. Instead, any state is set just
   prior to use using GObjects property system. Then, the cell is measured using
-  the function @fun{gtk-cell-renderer-get-size}. Finally, the cell is rendered
-  in the correct location using the function @fun{gtk-cell-renderer-render}.
+  the @fun{gtk-cell-renderer-get-size} function. Finally, the cell is rendered
+  in the correct location using the @fun{gtk-cell-renderer-render} function.
 
   There are a number of rules that must be followed when writing a new
   @sym{gtk-cell-renderer}. First and formost, its important that a certain set
@@ -280,7 +280,7 @@
       This signal gets emitted when the user cancels the process of editing a
       cell. For example, an editable cell renderer could be written to cancel
       editing when the user presses Escape.
-      See also the function @fun{gtk-cell-renderer-stop-editing}.
+      See also the @fun{gtk-cell-renderer-stop-editing} function.
       @begin[code]{table}
         @entry[renderer]{The object which received the signal.}
       @end{table}
@@ -739,22 +739,22 @@
     @code{width} -- width needed to render a cell, or @code{nil} @br{}
     @code{height} --  height needed to render a cell, or @code{nil}
   @end{return}
-  @subheading{Warning}
-    The function @sym{gtk-cell-renderer-get-size} has been deprecated since
-    version 3.0 and should not be used in newly-written code.
-    Use the function @fun{gtk-cell-renderer-get-preferred-size} instead.
-
   @begin{short}
     Obtains the width and height needed to render the cell. Used by view widgets
     to determine the appropriate size for the @arg{cell-area} passed to the
-    function @fun{gtk-cell-renderer-render}.
+    @fun{gtk-cell-renderer-render} function.
   @end{short}
   If @arg{cell-area} is not @code{nil}, fills in the x and y offsets (if set)
   of the cell relative to this location.
 
   Please note that the values set in @arg{width} and @arg{height}, as well as
   those in @arg{x-offset} and @arg{y-offset} are inclusive of the
-  @code{\"xpad\"} and @code{\"ypad\"} properties.
+  @slot[gtk-cell-renderer]{xpad} and @slot[gtk-cell-renderer]{ypad} properties.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-cell-renderer-get-size} function has been deprecated since
+    version 3.0 and should not be used in newly-written code.
+    Use the @fun{gtk-cell-renderer-get-preferred-size} function instead.
+  @end{dictionary}
   @see-class{gtk-cell-renderer}
   @see-class{gtk-widget}
   @see-class{gdk-rectangle}
