@@ -41,6 +41,8 @@
    (:file "gio.themed-icon")         ; Icon theming support
    (:file "gio.emblemed-icon")       ; Icon with emblems
    (:file "gio.emblem")              ; An object for emblems
+   ;; Resources
+   (:file "gio.resource")            ; Resource framework
    ;; Application support
    (:file "gio.action")              ; An action interface
    (:file "gio.action-group")        ; A group of actions

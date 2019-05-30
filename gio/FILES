@@ -18,7 +18,7 @@ File System Monitoring
 
   GFileMonitor - File Monitor
 
-File-related Utilities
+File-related Utilitiesr
 
   GFilenameCompleter - Filename Completer
 
@@ -185,7 +185,7 @@ Settings
 
 Resources
 
-  GResource - Resource framework
+  gio.resource.lisp            - GResource                         - GIO 2.60
 
 Permissions
 
