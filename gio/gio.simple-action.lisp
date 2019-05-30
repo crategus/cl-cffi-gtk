@@ -148,14 +148,12 @@
   @see-function{g-simple-action-set-state}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enabled" 'g-simple-action) 't)
- "The @code{\"enabled\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{enabled} property of type @code{:boolean} (Read) @br{}
   If action is currently enabled.
   If the action is disabled then calls to the functions @fun{g-action-activate}
   and @fun{g-action-change-state} have no effect. @br{}
@@ -164,7 +162,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-simple-action) 't)
- "The @code{\"name\"} property of type @code{:string} (Read) @br{}
+ "The @code{name} property of type @code{:string} (Read) @br{}
   The name of the action. This is mostly meaningful for identifying the action
   once it has been added to a @class{g-action-group}. @br{}
   Default value: @code{nil} @br{}
@@ -173,14 +171,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parameter-type"
                                                'g-simple-action) 't)
- "The @code{\"parameter-type\"} property of type @class{g-variant-type}
+ "The @code{parameter-type} property of type @class{g-variant-type}
   (Read) @br{}
   The type of the parameter that must be given when activating the action. @br{}
   Since 2.28")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state" 'g-simple-action) 't)
- "The @code{\"state\"} property of type @type{g-variant} (Read) @br{}
+ "The @code{state} property of type @type{g-variant} (Read) @br{}
   The state of the action, or @code{nil} if the action is stateless. @br{}
   Allowed values: @code{GVariant<*>} @br{}
   Default value: @code{nil} @br{}
@@ -189,7 +187,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state-type"
                                                'g-simple-action) 't)
- "The @code{\"state-type\"} property of type @class{g-variant-type}
+ "The @code{state-type} property of type @class{g-variant-type}
   (Read) @br{}
   The @class{g-variant-type} of the state that the action has, or @code{nil} if
   the action is stateless. @br{}
@@ -297,10 +295,10 @@
     Sets the state of the @arg{action} to @arg{value}.
   @end{short}
 
-  This directly updates the @code{\"state\"} property to the given @arg{value}.
+  This directly updates the @code{state} property to the given @arg{value}.
 
   This should only be called by the implementor of the action. Users of the
-  action should not attempt to directly modify the @code{\"state\"} property.
+  action should not attempt to directly modify the @code{state} property.
   Instead, they should call the function @fun{g-action-change-state} to request
   the change.
 
