@@ -71,14 +71,12 @@
   @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'g-emblemed-icon) 't)
- "The @code{\"gicon\"} property of type @class{g-icon}
+ "The @code{gicon} property of type @class{g-icon}
   (Read / Write / Construct Only) @br{}
   The @class{g-icon} to attach emblems to.")
 
@@ -87,7 +85,7 @@
       "Accessor"
       (documentation 'g-emblemed-icon-gicon 'function)
  "@version{2014-9-22}
-  Accessor of the slot @slot[g-emblemed-icon]{gicon} of the
+  Accessor of the @slot[g-emblemed-icon]{gicon} slot of the
   @class{g-emblemed-icon} class.
   @see-class{g-emblemed-icon}
   @see-function{g-emblemed-icon-get-icon}")
