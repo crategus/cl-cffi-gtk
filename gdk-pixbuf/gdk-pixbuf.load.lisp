@@ -70,7 +70,7 @@
 (defun gdk-pixbuf-new-from-file (filename)
  #+cl-cffi-gtk-documentation
  "@version{2013-2-16}
-  @argument[filename]{Name of file to load, in the GLib file name encoding}
+  @argument[filename]{name of file to load, in the GLib file name encoding}
   @return{A newly-created pixbuf with a reference count of 1, or @code{nil} if
     any of several error conditions occurred: the file could not be opened,
     there was no loader for the file's format, there was not enough memory to
@@ -80,7 +80,8 @@
   @end{short}
   The file format is detected automatically. If @code{nil} is returned, then
   error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
-  @code{G_FILE_ERROR} domains."
+  @code{G_FILE_ERROR} domains.
+  @see-class{gdk-pixbuf}"
   (with-g-error (err)
     (%gdk-pixbuf-new-from-file filename err)))
 
