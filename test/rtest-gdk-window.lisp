@@ -68,7 +68,7 @@
       (let ((window (gtk-widget-window toplevel)))
         ;; A check of the implementation of gdk-window-set-geometry-hints
         (with-foreign-object (ptr '(:struct gdk::gdk-geometry-cstruct))
-          (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 'gdk::min-width) 
+          (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 'gdk::min-width)
                 (gdk-geometry-min-width geometry))
           (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 'gdk::min-height)
                 (gdk-geometry-min-height geometry))
@@ -91,7 +91,7 @@
           (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 'gdk::win-gravity)
                 (gdk-geometry-win-gravity geometry))
           ;; Call the C function
-          (gdk::%gdk-window-set-geometry-hints window ptr '(:min-size :max-size))                       
+          (gdk::%gdk-window-set-geometry-hints window ptr '(:min-size :max-size))
     )))))
 
 ;;;     GdkGravitgy
@@ -133,7 +133,7 @@
                                           :height 300))
         (attributes-mask '(:title :x :y)))
     ;; TODO: Causes a memory fault
-;    (is-false (gdk-window-new root-window attributes attributes-mask)) 
+;    (is-false (gdk-window-new root-window attributes attributes-mask))
 ))
 
 ;;;     gdk_window_destroy
@@ -367,8 +367,7 @@
   (let ((root-window (gdk-get-default-root-window)))
     (is (eq 'gdk-window (type-of root-window)))
     (is-true (integerp (gdk-window-get-width root-window)))
-    (is-true (integerp (gdk-window-get-height root-window)))
-  ))
+    (is-true (integerp (gdk-window-get-height root-window)))))
 
 ;;;     gdk_window_get_support_multidevice
 ;;;     gdk_window_set_support_multidevice
@@ -384,12 +383,25 @@
 ;;;     gdk_offscreen_window_set_embedder
 ;;;     gdk_offscreen_window_get_embedder
 ;;;     gdk_window_geometry_changed
-;;;     gdk_window_coords_from_parent
-;;;     gdk_window_coords_to_parent
+
+;;; --- gdk-window-coords-from-parent ------------------------------------------
+
+(test gdk-window-coords-from-parent
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-from-parent window 20.0d0 10.0d0)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
+;;; --- gdk-window-coords-to-parent --------------------------------------------
+
+(test gdk-window-coords-to-parent
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-to-parent window 20.0d0 10.0d0)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
 ;;;     gdk_window_get_effective_parent
 ;;;     gdk_window_get_effective_toplevel
-;;;
-;;; Properties
-;;;
-;;;     GdkCursor*  cursor   Read / Write
 

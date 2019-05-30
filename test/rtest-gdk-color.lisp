@@ -1,4 +1,3 @@
-
 (def-suite gdk-color :in gdk-suite)
 (in-suite gdk-color)
 
@@ -110,5 +109,4 @@
 (test gdk-color-to-string.2
   (let ((color (gdk-color-parse "#ffff0000aaaa")))
     (is (equal "#ffff0000aaaa" (gdk-color-to-string color)))))
-
 

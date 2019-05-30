@@ -4,7 +4,7 @@
 ;;; --- gtk_box_new ------------------------------------------------------------
 
 (test gtk-box-new
-  (is (equal 'gtk-box (type-of (gtk-box-new :vertical))))
+  (is (equal 'gtk-box (type-of (gtk-box-new :orientation :vertical))))
   (is (equal 'gtk-box (type-of (make-instance 'gtk-box :orientation :vertical))))
   (let ((box (make-instance 'gtk-box)))
     (is-false (gtk-box-baseline-position box))
@@ -28,7 +28,7 @@
     (gtk-box-pack-start box button3)
     (is-false (gtk-box-child-position box button1))
     (is-false (gtk-box-child-position box button2))
-    (is-false (gtk-box-child-position box button3))    
+    (is-false (gtk-box-child-position box button3))
   )
 )
 
@@ -50,5 +50,4 @@
 ;;;     gtk_box_get_center_widget
 ;;;     gtk_box_set_center_widget
 ;;;
-
 
