@@ -148,11 +148,15 @@
     @code{toolbutton}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"icon-spacing\" style property}
-      @code{\"icon-spacing\"} of type @code{:int} (Read / Write) @br{}
-      Spacing in pixels between the icon and label. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 3
+    @begin[code]{table}
+      @begin[icon-spacing]{entry}
+        The @code{icon-spacing} style property of type @code{:int}
+        (Read / Write) @br{}
+        Spacing in pixels between the icon and label. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 3
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"clicked\" signal}
