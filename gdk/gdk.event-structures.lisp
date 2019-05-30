@@ -3043,7 +3043,7 @@
       "Accessor"
       (documentation 'gdk-event-crossing-state 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-crossing}
+  Accessor of the @code{state} slot of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
 
