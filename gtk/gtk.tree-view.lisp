@@ -1421,8 +1421,8 @@
   @argument[column]{the @class{gtk-tree-view-column} to add}
   @return{The number of columns in @arg{tree-view} after appending.}
   Appends column to the list of columns. If @arg{tree-view} has
-  @code{\"fixed_height\"} mode enabled, then column must have its
-  @code{\"sizing\"} property set to be @code{:fixed}.
+  fixed height mode enabled, then @arg{column} must have its
+  @slot[gtk-tree-view-column]{sizing} property set to be @code{:fixed}.
   @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view))
   (column (g-object gtk-tree-view-column)))
@@ -1459,8 +1459,8 @@
   @return{The number of columns in @arg{tree-view} after insertion.}
   This inserts the column into the @arg{tree-view} at position. If position is
   -1, then the column is inserted at the end. If @arg{tree-view} has
-  @code{\"fixed_height\"} mode enabled, then column must have its
-  @code{\"sizing\"} property set to be @code{:fixed}.
+  fixed height mode enabled, then @arg{column} must have its
+  @slot[gtk-tree-view-column]{sizing} property set to be @code{:fixed}.
   @see-class{gtk-tree-view}"
   (tree-view g-object)
   (column g-object)
