@@ -42,7 +42,7 @@
   (let ((name (gtk-action-get-name current))
         (type (g-object-type-name current))
         (active (gtk-toggle-action-get-active current))
-        (value (gtk-radio-action-get-current-value current)))
+        (value (gtk-radio-action-current-value current)))
     (when active
       (gtk-label-set-text (app-message *app*)
                           (format nil
