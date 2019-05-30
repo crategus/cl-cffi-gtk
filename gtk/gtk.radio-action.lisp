@@ -32,7 +32,7 @@
 ;;;
 ;;; GtkRadioAction
 ;;;
-;;; An action of which only one in a group can be active
+;;;     An action of which only one in a group can be active
 ;;;
 ;;; Synopsis
 ;;;
@@ -88,81 +88,87 @@
         @entry[current]{The member of actions group which has just been
           activated.}
       @end{table}
-      Since 2.4
   @end{dictionary}
   @see-slot{gtk-radio-action-current-value}
   @see-slot{gtk-radio-action-group}
   @see-slot{gtk-radio-action-value}
   @see-class{gtk-radio-menu-item}
-  @see-function{gtk-radio-action-get-current-value}")
+  @see-function{gtk-radio-action-current-value}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-radio-action-current-value -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "current-value"
                                                'gtk-radio-action) 't)
- "The @code{\"current-value\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{current-value} property of type @code{:int} (Read / Write) @br{}
   The value property of the currently active member of the group to which this
   action belongs. @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-action) 't)
- "The @code{\"group\"} property of type @class{gtk-radio-action} (Write) @br{}
-  Sets a new group for a radio action. @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-radio-action) 't)
- "The @code{\"value\"} property of type @code{:int} (Read / Write) @br{}
-  The value is an arbitrary integer which can be used as a convenient way to
-  determine which action in the group is currently active in an \"activate\" or
-  \"changed\" signal handler. See the function
-  @fun{gtk-radio-action-get-current-value} and @symbol{gtk-radio-action-entry}
-  for convenient ways to get and set this property. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-current-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-current-value 'function)
- "@version{2013-11-28}
-  Accessor of the slot @code{\"current-value\"} of the @class{gtk-radio-action}
-  class.
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-get-current-value}
-  @see-function{gtk-radio-action-set-current-value}")
+ "@version{2019-5-27}
+  @syntax[]{(gtk-radio-action-current-value object) => current-value}
+  @syntax[]{(setf (gtk-radio-action-current-value object) current-value)}
+  @argument[object]{a @class{gtk-radio-action} object}
+  @argument[current-value]{the new value}
+  @begin{short}
+    Accessor of the @slot[gtk-radio-acton]{current-value} slot of the
+    @class{gtk-radio-action} class.
+  @end{short}
+
+  The @sym{(gtk-radio-action-current-value} slot access function
+  obtains the value property of the currently active member of the group to
+  which @arg{action} belongs.
+
+  The @sym{(setf gtk-radio-action-current-value)} slot access function
+  sets the currently active group member to the member with value property
+  @arg{current-value}.
+  @see-class{gtk-radio-action}")
+
+;;; --- gtk-radio-action-group -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-action) 't)
+ "The @code{group} property of type @class{gtk-radio-action} (Write) @br{}
+  Sets a new group for a radio action.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-group 'function)
  "@version{2013-11-28}
-  Accessor of the slot @code{\"group\"} of the @class{gtk-radio-action}
-  class.
+  Accessor of the @slot[gtk-radio-action]{group} slot of the
+  @class{gtk-radio-action} class.
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-get-group}
   @see-function{gtk-radio-action-set-group}")
+
+;;; --- gtk-radio-action-value -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-radio-action) 't)
+ "The @code{value} property of type @code{:int} (Read / Write) @br{}
+  The value is an arbitrary integer which can be used as a convenient way to
+  determine which action in the group is currently active in an \"activate\" or
+  \"changed\" signal handler. See the  @fun{gtk-radio-action-current-value}
+  function and @symbol{gtk-radio-action-entry} for convenient ways to get and
+  set this property. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-value 'function)
  "@version{2013-11-28}
-  Accessor of the slot @code{\"value\"} of the @class{gtk-radio-action}
-  class.
+  Accessor of the @slot[gtk-radio-action]{value} slot of the
+  @class{gtk-radio-action} class.
   @see-class{gtk-radio-action}")
 
 ;;; ----------------------------------------------------------------------------
@@ -180,16 +186,14 @@
   @argument[stock-id]{the stock icon to display in widgets representing this
     action, or @code{nil}}
   @argument[value]{the value which the function
-    @fun{gtk-radio-action-get-current-value} should return if this action is
-    selected.}
+    @fun{gtk-radio-action-current-value} should return if this action is
+    selected}
   @return{A new @class{gtk-radio-action} object}
   @begin{short}
     Creates a new @class{gtk-radio-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
   the action, call the function @fun{gtk-action-group-add-action}.
-
-  Since 2.4
   @see-class{gtk-radio-action}
   @see-class{gtk-action-group}
   @see-function{gtk-radio-action-get-current-value}
@@ -230,7 +234,6 @@
         group = gtk_radio_action_get_group (action);
      @}
   @end{pre}
-  Since 2.4
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-set-group}"
   (action (g-object gtk-radio-action)))
@@ -251,8 +254,6 @@
   @begin{short}
     Sets the radio group for the radio action object.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-get-group}"
   (setf (gtk-radio-action-group action) group))
@@ -289,8 +290,6 @@
         last_action = action;
      @}
   @end{pre}
-
-  Since 3.0
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-get-group}
   @see-function{gtk-radio-action-set-group}"
@@ -298,51 +297,5 @@
   (group-source (g-object gtk-radio-action)))
 
 (export 'gtk-radio-action-join-group)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_radio_action_get_current_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-radio-action-get-current-value))
-
-(defun gtk-radio-action-get-current-value (action)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
-  @argument[action]{a @class{gtk-radio-action} object}
-  @return{The value of the currently active group member.}
-  @begin{short}
-    Obtains the value property of the currently active member of the group to
-    which @arg{action} belongs.
-  @end{short}
-
-  Since 2.4
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-set-current-value}"
-  (gtk-radio-action-current-value action))
-
-(export 'gtk-radio-action-get-current-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_radio_action_set_current_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-radio-action-set-current-value))
-
-(defun gtk-radio-action-set-current-value (context current-value)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
-  @argument[action]{a @class{gtk-radio-action} object}
-  @argument[current-value]{the new value}
-  @begin{short}
-    Sets the currently active group member to the member with value property
-    @arg{current-value}.
-  @end{short}
-
-  Since 2.10
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-get-current-value}"
-  (setf (gtk-radio-action-current-value context) current-value))
-
-(export 'gtk-radio-action-set-current-value)
 
 ;;; --- End of file gtk.radio-action.lisp --------------------------------------
