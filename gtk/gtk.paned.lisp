@@ -134,10 +134,10 @@
 
   @image[panes]{}
 
-  Child widgets are added to the panes of the widget with the functions
-  @fun{gtk-paned-pack1} and @fun{gtk-paned-pack2}. The division between the two
-  children is set by default from the size requests of the children, but it can
-  be adjusted by the user.
+  Child widgets are added to the panes of the widget with the
+  @fun{gtk-paned-pack1} and @fun{gtk-paned-pack2} functions. The division
+  between the two children is set by default from the size requests of the
+  children, but it can be adjusted by the user.
 
   A paned widget draws a separator between the two child widgets and a small
   handle that the user can drag to adjust the division. It does not draw any
@@ -147,16 +147,16 @@
   gutter appears as a ridge. No separator is drawn if one of the children is
   missing.
 
-  Each child has two options that can be set, @code{\"resize\"} and
-  @code{\"shrink\"}. If resize is @em{true}, then when the @sym{gtk-paned} is
-  resized, that child will expand or shrink along with the paned widget. If
-  @code{\"shrink\"} is @em{true}, then that child can be made smaller than its
-  requisition by the user. Setting shrink to @code{nil} allows the application
-  to set a minimum size. If @code{\"resize\"} is @code{nil} for both children,
-  then this is treated as if @code{\"resize\"} is @em{true} for both children.
+  Each child has two options that can be set, @code{resize} and @code{shrink}.
+  If @code{resize} is @em{true}, then when the @sym{gtk-paned} is resized, that
+  child will expand or shrink along with the paned widget. If @code{shrink} is
+  @em{true}, then that child can be made smaller than its requisition by the
+  user. Setting shrink to @code{nil} allows the application to set a minimum
+  size. If @code{resize} is @code{nil} for both children, then this is treated
+  as if @code{resize} is @em{true} for both children.
 
   The application can set the position of the slider as if it were set by the
-  user, by calling the generic function @fun{gtk-paned-position}.
+  user, by calling the @fun{gtk-paned-position} function.
   @begin[CSS nodes]{dictionary}
     @begin{pre}
   paned
@@ -309,8 +309,9 @@
       "Accessor"
       (documentation 'gtk-paned-max-position 'function)
  "@version{2014-7-27}
-  Accessor of the slot @slot[gtk-paned]{max-position} of the @class{gtk-paned}
-  class.")
+  Accessor of the @slot[gtk-paned]{max-position} slot of the @class{gtk-paned}
+  class.
+  @see-class{gtk-paned}")
 
 ;;; --- gtk-paned-min-position -------------------------------------------------
 
@@ -327,8 +328,9 @@
       "Accessor"
       (documentation 'gtk-paned-min-position 'function)
  "@version{2014-7-27}
-  Accessor of the slot @slot[gtk-panded]{min-position} of the @class{gtk-paned}
-  class.")
+  Accessor of the @slot[gtk-panded]{min-position} slot of the @class{gtk-paned}
+  class.
+  @see-class{gtk-panded}")
 
 ;;; --- gtk-paned-position -----------------------------------------------------
 
@@ -351,15 +353,15 @@
   @syntax[]{(gtk-paned-position object) => position}
   @syntax[]{(setf (gtk-panded-position position) position)}
   @begin{short}
-    Accessor of the slot @slot[gtk-paned]{position} of the @class{gtk-paned}
+    Accessor of the @slot[gtk-paned]{position} slot of the @class{gtk-paned}
     class.
   @end{short}
 
-  The generic function @sym{gtk-paned-position} obtains the position of the
+  The @sym{gtk-paned-position} slot access function obtains the position of the
   divider between the two panes.
 
-  The generic function @sym{(setf gtk-paned-position)} sets the position of the
-  divider between the two panes.
+  The @sym{(setf gtk-paned-position)} slot access function sets the position of
+  the divider between the two panes.
   @see-class{gtk-paned}")
 
 ;;; --- gtk-paned-position-set -------------------------------------------------
@@ -368,7 +370,7 @@
 (setf (documentation (atdoc:get-slot-from-name "position-set" 'gtk-paned) 't)
  "The @code{position-set} property of type @code{:boolean}
   (Read / Write)@br{}
-  @em{True} if the @code{\"position\"} property should be used. @br{}
+  @em{True} if the @code{position} property should be used. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -376,7 +378,7 @@
       "Accessor"
       (documentation 'gtk-paned-position-set 'function)
  "@version{2014-7-27}
-  Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
+  Accessor of the @slot[gtk-paned]{position-set} slot of the @class{gtk-paned}
   class.
   @see-class{gtk-paned}")
 
@@ -401,14 +403,14 @@
   @argument[object]{a @class{gtk-paned} object}
   @argument[wide]{the new value for the @code{wide-handle} property}
   @begin{short}
-    Accessor of the slot @slot[gtk-paned]{wide-handle} of the @class{gtk-paned}
+    Accessor of the @slot[gtk-paned]{wide-handle} slot of the @class{gtk-paned}
     class.
   @end{short}
 
-  The generic function @sym{gtk-paned-wide-handled}
+  The @sym{gtk-paned-wide-handled} slot access function
   gets the @code{wide-handle} property.
 
-  The generic function @sym{(setf gtk-paned-wide-handled)}
+  The @sym{(setf gtk-paned-wide-handled)} slot access function
   sets the @code{wide-handle} property.
 
   Since 3.16
@@ -428,7 +430,7 @@
       "Accessor"
       (documentation 'gtk-paned-child-resize 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"resize\"} of the @class{gtk-paned}
+  Accessor of the @code{resize} child property of the @class{gtk-paned}
   class.
   @see-class{gtk-paned}")
 
@@ -442,7 +444,7 @@
       "Accessor"
       (documentation 'gtk-paned-child-shrink 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"shrink\"} of the @class{gtk-paned}
+  Accessor of the @code{shrink} child property of the @class{gtk-paned}
   class.
   @see-class{gtk-paned}")
 
@@ -650,7 +652,7 @@
       "Accessor"
       (documentation 'gtk-hpaned-child-resize 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"resize\"} of the @class{gtk-hpaned}
+  Accessor of the @code{resize} child property of the @class{gtk-hpaned}
   class.
   @see-class{gtk-paned}
   @see-class{gtk-hpaned}")
@@ -660,7 +662,7 @@
       "Accessor"
       (documentation 'gtk-hpaned-child-shrink 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"shrink\"} of the @class{gtk-hpaned}
+  Accessor of the @code{shrink} child property of the @class{gtk-hpaned}
   class.
   @see-class{gtk-paned}
   @see-class{gtk-hpaned}")
@@ -673,12 +675,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
   @return{The new @class{gtk-hpaned} container.}
-  @subheading{Warning}
-    @sym{gtk-hpaned-new} has been deprecated since version 3.2 and should not be
-    used in newly-written code. Use @fun{gtk-paned-new} with @code{:horizontal}
-    instead.
-
   @short{Create a new @class{gtk-hpaned} container.}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-hpaned-new} function has been deprecated since version 3.2 and
+    should not be used in newly-written code. Use the @fun{gtk-paned-new}
+    function with @code{:horizontal} instead.
+  @end{dictionary}
   @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation :horizontal))
@@ -716,8 +718,8 @@
  "@version{2013-5-18}
   @begin{short}
     The @sym{gtk-vpaned} container is a container widget with two children
-    arranged vertically. The division between the two panes is adjustable by the
-    user by dragging a handle. See @class{gtk-paned} for details.
+    arranged vertically. The division between the two panes is adjustable by
+    the user by dragging a handle. See @class{gtk-paned} for details.
   @end{short}
 
   @sym{gtk-vpaned} has been deprecated, use @class{gtk-paned} instead.")
@@ -741,7 +743,7 @@
       "Accessor"
       (documentation 'gtk-vpaned-child-resize 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"resize\"} of the @class{gtk-vpaned}
+  Accessor of the @code{resize} child property of the @class{gtk-vpaned}
   class.
   @see-class{gtk-paned}
   @see-class{gtk-vpaned}")
@@ -751,7 +753,7 @@
       "Accessor"
       (documentation 'gtk-vpaned-child-shrink 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"shrink\"} of the @class{gtk-vpaned}
+  Accessor of the @code{shrink} child property of the @class{gtk-vpaned}
   class.
   @see-class{gtk-paned}
   @see-class{gtk-vpaned}")
@@ -764,12 +766,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
   @return{The new @class{gtk-vpaned} container.}
-  @subheading{Warning}
-    @sym{gtk-vpaned-new} has been deprecated since version 3.2 and should not be
-    used in newly-written code. Use the function @fun{gtk-paned-new} with
-    @code{:vertival} instead.
-
   @short{Create a new @class{gtk-vpaned} container.}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-vpaned-new} function has been deprecated since version 3.2 and
+    should not be used in newly-written code. Use the @fun{gtk-paned-new}
+    function with @code{:vertical} instead.
+  @end{dictionary}
   @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation :vertical))
