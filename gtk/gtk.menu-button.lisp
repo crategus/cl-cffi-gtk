@@ -114,7 +114,7 @@
     @entry[:down]{Represents a downward pointing arrow.}
     @entry[:left]{Represents a left pointing arrow.}
     @entry[:right]{Represents a right pointing arrow.}
-    @entry[:none]{No arrow. Since 2.10}
+    @entry[:none]{No arrow.}
   @end{table}
   @see-class{gtk-arrow}")
 
