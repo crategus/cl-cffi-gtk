@@ -660,9 +660,9 @@
     Returns the printer's capabilities.
   @end{short}
 
-  This is useful when you are using @class{gtk-print-unix-dialog}'s
-  @code{\"manual-capabilities\"} setting and need to know which settings the
-  printer can handle and which you must handle yourself.
+  This is useful when you are using the
+  @slot[gtk-print-unix-dialog]{manual-capabilities} setting and need to know
+  which settings the printer can handle and which you must handle yourself.
 
   This will return 0 unless the printer's details are available, see the
   @fun{gtk-printer-has-details} and @fun{gtk-printer-request-details} functions.
