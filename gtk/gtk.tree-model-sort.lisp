@@ -272,7 +272,7 @@
     corresponds to the row pointed at by @arg{child-iter}. If @arg{sort-iter}
     was not set, @code{nil} is returned.
   @end{short}
-  Note: A boolean is only returned since 2.14."
+  @see-class{gtk-tree-model-sort}"
   (let ((sort-iter (make-gtk-tree-iter)))
     (when (%gtk-tree-model-sort-convert-child-iter-to-iter tree-model-sort
                                                            sort-iter
@@ -396,8 +396,7 @@
     Checks if the given @arg{iter} is a valid iter for this
     @class{gtk-tree-model-sort} object.
   @end{short}
-
-  Since 2.2"
+  @see-class{gtk-tree-model-sort}"
   (tree-model-sort (g-object gtk-tree-model-sort))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
