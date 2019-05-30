@@ -40,6 +40,7 @@
 ;;;     (*GtkListBoxFilterFunc)
 ;;;     (*GtkListBoxSortFunc)
 ;;;     (*GtkListBoxUpdateHeaderFunc)
+;;;
 ;;;     gtk_list_box_new
 ;;;     gtk_list_box_prepend
 ;;;     gtk_list_box_insert
@@ -48,16 +49,15 @@
 ;;;     gtk_list_box_select_all
 ;;;     gtk_list_box_unselect_all
 ;;;     gtk_list_box_get_selected_row
+;;;
 ;;;     (*GtkListBoxForeachFunc)
+;;;
 ;;;     gtk_list_box_selected_foreach
 ;;;     gtk_list_box_get_selected_rows
-
 ;;;     gtk_list_box_set_selection_mode                    Accessor
 ;;;     gtk_list_box_get_selection_mode                    Accessor
-
 ;;;     gtk_list_box_set_activate_on_single_click          Accessor
 ;;;     gtk_list_box_get_activate_on_single_click          Accessor
-
 ;;;     gtk_list_box_get_adjustment
 ;;;     gtk_list_box_set_adjustment
 ;;;     gtk_list_box_set_placeholder
@@ -71,7 +71,9 @@
 ;;;     gtk_list_box_set_sort_func
 ;;;     gtk_list_box_drag_highlight_row
 ;;;     gtk_list_box_drag_unhighlight_row
+;;;
 ;;;     (*GtkListBoxCreateWidgetFunc)
+;;;
 ;;;     gtk_list_box_bind_model
 ;;;     gtk_list_box_row_new
 ;;;     gtk_list_box_row_changed
@@ -79,10 +81,8 @@
 ;;;     gtk_list_box_row_get_header
 ;;;     gtk_list_box_row_set_header
 ;;;     gtk_list_box_row_get_index
-
 ;;;     gtk_list_box_row_set_activatable                   Accessor
 ;;;     gtk_list_box_row_get_activatable                   Accessor
-
 ;;;     gtk_list_box_row_set_selectable                    Accessor
 ;;;     gtk_list_box_row_get_selectable                    Accessor
 ;;;
@@ -207,8 +207,6 @@
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
   lambda (listbox arg1 arg2)
@@ -218,8 +216,6 @@
         @entry[arg1]{A @symbol{gtk-movement-step}}
         @entry[arg2]{A integer}
       @end{table}
-      Since 3.10
-
     @subheading{The \"row-activated\" signal}
       @begin{pre}
   lambda (listbox row)
@@ -230,8 +226,6 @@
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
         @entry[row]{The activated row.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"row-selected\" signal}
       @begin{pre}
   lambda (listbox row)
@@ -245,8 +239,6 @@
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
         @entry[row]{The selected row.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"select-all\" signal}
       @begin{pre}
   lambda (listbox)
@@ -277,8 +269,6 @@
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
   lambda (listbox)
@@ -301,7 +291,6 @@
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
       @end{table}
-      Since 3.10
   @end{dictionary}
   @see-slot{gtk-list-box-activate-on-single-click}
   @see-slot{gtk-list-box-selection-mode}
@@ -345,8 +334,6 @@
 
   If single is @em{true}, rows will be activated when you click on them,
   otherwise you need to double-click.
-
-  Since 3.10
   @see-class{gtk-list-box}")
 
 ;;; --- gtk-list-box-selection-mode --------------------------------------------
@@ -378,8 +365,6 @@
 
   The generic function @sym{(setf gtk-list-box-selection-mode)} sets how
   selection works in the listbox. See @symbol{gtk-selection-mode} for details.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-symbol{gtk-selection-mode}")
 
@@ -535,6 +520,13 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-list-box-new))
+
+(defun gtk-list-box-new ()
+  (make-instance 'gtk-list-box))
+
+(export 'gtk-list-box-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_prepend ()
 ;;;
@@ -552,6 +544,12 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_prepend" gtk-list-box-prepend) :void
+  (box (g-object gtk-list-box))
+  (child (g-object gtk-widget)))
+
+(export 'gtk-list-box-prepend)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_insert ()
@@ -579,6 +577,13 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_insert" gtk-list-box-insert) :void
+  (box (g-object gtk-list-box))
+  (child (g-object gtk-widget))
+  (position :int))
+
+(export 'gtk-list-box-insert)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_select_row ()
 ;;;
@@ -594,6 +599,12 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_select_row" gtk-list-box-select-row) :void
+  (box (g-object gtk-list-box))
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-select-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_unselect_row ()
@@ -612,6 +623,12 @@
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_unselect_row" gtk-list-box-unselect-row) :void
+  (box (g-object gtk-list-box))
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-unselect-row)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_select_all ()
 ;;;
@@ -625,6 +642,11 @@
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_select_all" gtk-list-box-select-all) :void
+  (box (g-object gtk-list-box)))
+
+(export 'gtk-list-box-select-all)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_unselect_all ()
 ;;;
@@ -637,6 +659,11 @@
 ;;;
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_unselect_all" gtk-list-box-unselect-all) :void
+  (box (g-object gtk-list-box)))
+
+(export 'gtk-list-box-unselect-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_get_selected_row ()
@@ -656,6 +683,12 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_get_selected_row" gtk-list-box-get-selected-row)
+    (g-object gtk-list-box-row)
+  (box (g-object gtk-list-box)))
+
+(export 'gtk-list-bet-get-selected-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxForeachFunc ()
@@ -735,6 +768,12 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_get_adjustment" gtk-list-box-get-adjustment)
+    (g-object gtk-adjustment)
+  (box (g-object gtk-list-box)))
+
+(export 'gtk-list-box-get-adjustment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_adjustment ()
 ;;;
@@ -758,6 +797,12 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_set_adjustment" gtk-list-box-set-adjustment) :void
+  (box (g-object gtk-list-box))
+  (adjustment (g-object gtk-adjustment)))
+
+(export 'gtk-list-box-set-adjustment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_placeholder ()
 ;;;
@@ -775,6 +820,12 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_set_placeholder" gtk-list-box-set-placeholder) :void
+  (box (g-object gtk-list-box))
+  (placeholder (g-object gtk-widget)))
+
+(export 'gtk-list-box-set-placeholder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_get_row_at_index ()
@@ -1150,6 +1201,12 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_row_get_header" gtk-list-box-row-get-header)
+    (g-object gtk-widget)
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-row-get-header)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_set_header ()
 ;;;
@@ -1168,6 +1225,12 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_list_box_row_set_header" gtk-list-box-row-set-header) :void
+  (row (g-object gtk-list-box-row))
+  (header (g-object gtk-widget)))
+
+(export 'gtk-list-box-row-set-header)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_get_index ()
 ;;;
@@ -1183,5 +1246,10 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_row_get_index" gtk-list-box-row-get-index) :int
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-row-get-index)
 
 ;;; --- End of file gtk.list-box.lisp ------------------------------------------
