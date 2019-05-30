@@ -611,8 +611,6 @@
   \"rows-reordered\" signal repeatedly can affect the performance of the
   program, the function @sym{gtk-list-store-insert-with-values} should generally
   be preferred when inserting rows in a sorted list store.
-
-  Since 2.6
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-list-store-insert}
@@ -777,8 +775,6 @@
     Checks if the given @arg{iter} is a valid iterator for this
     @class{gtk-list-store}.
   @end{short}
-
-  Since 2.2
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}"
   (list-store (g-object gtk-list-store))
@@ -818,8 +814,6 @@
     Swaps @arg{a} and @arg{b} in @arg{list-store}.
   @end{short}
   Note that this function only works with unsorted stores.
-
-  Since 2.2
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}"
   (list-store (g-object gtk-list-store))
@@ -843,8 +837,6 @@
   @end{short}
   Note that this function only works with unsorted stores. If position is
   @code{nil}, @arg{iter} will be moved to the end of the list.
-
-  Since 2.2
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-list-store-move-after}"
@@ -869,8 +861,6 @@
   @end{short}
   Note that this function only works with unsorted stores. If @arg{position} is
   @code{nil}, @arg{iter} will be moved to the start of the list.
-
-  Since 2.2
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-list-store-move-before}"
