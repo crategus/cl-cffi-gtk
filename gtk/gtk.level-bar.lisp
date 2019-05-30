@@ -149,7 +149,6 @@
     @entry[:continuous]{The bar has a continuous mode.}
     @entry[:discrete]{The bar has a discrete mode.}
   @end{table}
-  Since 3.6
   @see-class{gtk-level-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -189,15 +188,15 @@
     or showing the charge level of a battery.
   @end{short}
 
-  Use the function @fun{gtk-level-bar-value} to set the current value, and
-  the function @fun{gtk-level-bar-add-offset-value} to set the value offsets at
+  Use the @fun{gtk-level-bar-value} function to set the current value, and
+  the @fun{gtk-level-bar-add-offset-value} function to set the value offsets at
   which the bar will be considered in a different state. GTK will add two
   offsets by default on the level bar: @code{\"low\"} and @code{\"high\"},
   with values 0.25 and 0.75 respectively.
 
   The default interval of values is between zero and one, but it is possible to
-  modify the interval using the functions @fun{gtk-level-bar-min-value} and
-  @fun{gtk-level-bar-max-value}. The value will be always drawn in
+  modify the interval using the @fun{gtk-level-bar-min-value} and
+  @fun{gtk-level-bar-max-value} functions. The value will be always drawn in
   proportion to the admissible interval, i. e. a value of 15 with a specified
   interval between 10 and 20 is equivalent to a value of 0.5 with an interval
   between 0 and 1. When @code{:discrete} is used, the bar level is rendered as
@@ -274,36 +273,34 @@
         (Read / Write) @br{}
         The @code{min-block-height} style property determines the minimum
         height for blocks filling the @sym{gtk-level-bar} widget. @br{}
-        @em{Warning:} @code{min-block-height} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use the standard
-        min-width/min-height CSS properties on the block elements; the value of
-        this style property is ignored. @br{}
+        @em{Warning:} The @code{min-block-height} property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use the
+        standard min-width/min-height CSS properties on the block elements; the
+        value of this style property is ignored. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 3 @br{}
-        Since 3.6
+        Default value: 3
       @end{entry}
       @begin[min-block-width]{entry}
         The @code{min-block-width} style property of type @code{:int}
         (Read / Write) @br{}
         The @code{\"min-block-width\"} style property determines the minimum
         width for blocks filling the @sym{gtk-level-bar} widget. @br{}
-        @em{Warning:} @code{min-block-height} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use the standard
-        min-width/min-height CSS properties on the block elements; the value of
-        this style property is ignored. @br{}
+        @em{Warning:} The @code{min-block-height} property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use the
+        standard min-width/min-height CSS properties on the block elements; the
+        value of this style property is ignored. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 3 @br{}
-        Since 3.6
+        Default value: 3
       @end{entry}
     @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"offset-changed\" signal}
       @begin{pre}
-lambda (levelbar name)   : Has Details
+lambda (levelbar name)    : Has Details
       @end{pre}
       Emitted when an offset specified on the bar changes value as an effect to
-      the function @fun{gtk-level-bar-add-offset-value} being called.
+      the @fun{gtk-level-bar-add-offset-value} function being called.
       The signal supports detailed connections; you can connect to the detailed
       signal \"changed::x\" in order to only receive callbacks when the value of
       offset \"x\" changes.
@@ -311,7 +308,6 @@ lambda (levelbar name)   : Has Details
         @entry[levelbar]{A @sym{gtk-level-bar}.}
         @entry[name]{The name of the offset that changed value.}
       @end{table}
-      Since 3.6
   @end{dictionary}
   @see-slot{gtk-level-bar-inverted}
   @see-slot{gtk-level-bar-max-value}
@@ -343,15 +339,15 @@ lambda (levelbar name)   : Has Details
   @syntax[]{(gtk-level-bar-inverted object) => inverted}
   @syntax[]{(setf (gtk-level-bar-inverted object) inverted)}
   @begin{short}
-    Accessor of the slot @slot[gtk-level-bar]{inverted} of the
+    Accessor of the @slot[gtk-level-bar]{inverted} slot of the
     @class{gtk-level-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-level-bar-inverted} returns @em{true} if the
-  level bar is inverted.
+  The @sym{gtk-level-bar-inverted} slot access function returns @em{true} if
+  the level bar is inverted.
 
-  The generic function @sym{(setf gtk-level-bar-inverted)} sets the value of
-  the @slot[gtk-level-bar]{inverted} property.
+  The @sym{(setf gtk-level-bar-inverted)} slot access function sets the value
+  of the @slot[gtk-level-bar]{inverted} property.
 
   Since 3.8
   @see-class{gtk-level-bar}")
@@ -364,8 +360,7 @@ lambda (levelbar name)   : Has Details
   The @code{max-value} property determines the maximum value of the interval
   that can be displayed by the bar. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 1 @br{}
-  Since 3.6")
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-max-value atdoc:*function-name-alias*)
@@ -377,17 +372,15 @@ lambda (levelbar name)   : Has Details
   @syntax[]{(gtk-level-bar-max-value object) => value)}
   @syntax[]{(setf (gtk-level-bar-max-value object) value)}
   @begin{short}
-    Accessor of the slot @slot[gtk-level-bar]{max-value} of the
+    Accessor of the @slot[gtk-level-bar]{max-value} slot of the
     @class{gtk-level-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-level-bar-max-value} returns the value of the
-  @slot[gtk-level-bar]{max-value} property.
+  The @sym{gtk-level-bar-max-value} slot access function returns the value of
+  the @slot[gtk-level-bar]{max-value} property.
 
-  The generic function @sym{(setf gtk-level-bar-value)} sets the value of the
-  @slot[gtk-level-bar]{max-value} property.
-
-  Since 3.6
+  The @sym{(setf gtk-level-bar-value)} slot access function sets the value of
+  the @slot[gtk-level-bar]{max-value} property.
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-min-value}")
 
@@ -399,8 +392,7 @@ lambda (levelbar name)   : Has Details
   The @code{min-value} property determines the minimum value of the interval
   that can be displayed by the bar. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.6")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-min-value atdoc:*function-name-alias*)
@@ -412,17 +404,15 @@ lambda (levelbar name)   : Has Details
   @syntax[]{(gtk-level-bar-min-value object) => value}
   @syntax[]{(setf (gtk-level-bar-min-value object) value)}
   @begin{short}
-    Accessor of the slot @slot[gtk-level-bar]{min-value} of the
+    Accessor of the @slot[gtk-level-bar]{min-value} slot of the
     @class{gtk-level-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-level-bar-min-value} returns the value of the
-  @slot[gtk-level-bar]{min-value} property.
-
-  The generic function @sym{(setf gtk-level-bar-min-value)} sets the value of
+  The @sym{gtk-level-bar-min-value} slot access function returns the value of
   the @slot[gtk-level-bar]{min-value} property.
 
-  Since 3.6
+  The @sym{(setf gtk-level-bar-min-value)} slot access function sets the value
+  of the @slot[gtk-level-bar]{min-value} property.
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-max-value}")
 
@@ -439,8 +429,7 @@ lambda (levelbar name)   : Has Details
   @code{:discrete}, the widget will draw a succession of separate blocks filling
   the draw area, with the number of blocks being equal to the units separating
   the integral roundings of @code{min-value} and @code{max-value}. @br{}
-  Default value: @code{:continuous} @br{}
-  Since 3.6")
+  Default value: @code{:continuous}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-mode atdoc:*function-name-alias*)
@@ -452,17 +441,15 @@ lambda (levelbar name)   : Has Details
   @syntax[]{(gtk-level-bar-mode object) => mode}
   @syntax[]{(setf (gtk-level-bar-mode object) mode)}
   @begin{short}
-    Accessor of the slot @slot[gtk-level-bar]{mode} of the
+    Accessor of the @slot[gtk-level-bar]{mode} slot of the
     @class{gtk-level-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-level-bar-mode} returns the value of type
+  The @sym{gtk-level-bar-mode} slot access function returns the value of type
   @symbol{gtk-level-bar-mode} of the @slot[gtk-level-bar]{mode} property.
 
-  The generic function @sym{(setf gtk-level-bar-mode)} sets the value of the
-  @slot[gtk-level-bar]{mode} property.
-
-  Since 3.6
+  The @sym{(setf gtk-level-bar-mode)} slot access function sets the value of
+  the @slot[gtk-level-bar]{mode} property.
   @see-class{gtk-level-bar}
   @see-symbol{gtk-level-bar-mode}")
 
@@ -474,8 +461,7 @@ lambda (levelbar name)   : Has Details
   The @code{value} property determines the currently filled value of the
   level bar. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.6")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-value atdoc:*function-name-alias*)
@@ -488,18 +474,16 @@ lambda (levelbar name)   : Has Details
   @syntax[]{(gtk-level-bar-value object) >= value}
   @syntax[]{(setf (gtk-level-bar-value object) value)}
   @begin{short}
-    Accessor of the slot @slot[gtk-level-bar]{value} of the
+    Accessor of the @slot[gtk-level-bar]{value} slot of the
     @class{gtk-level-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-level-bar-value} gets the value of the level
+  The @sym{gtk-level-bar-value} slot access function gets the value of the level
   bar in the interval between @slot[gtk-level-bar]{min-value} and
   @slot[gtk-level-bar]{max-value}.
 
-  The generic function @sym{(setf gtk-level-bar-value)} sets the value of the
-  @slot[gtk-level-bar]{value} property.
-
-  Since 3.6
+  The @sym{(setf gtk-level-bar-value)} slot access function sets the value of
+  the @slot[gtk-level-bar]{value} property.
   @see-class{gtk-level-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -513,8 +497,6 @@ lambda (levelbar name)   : Has Details
  "@version{2014-2-3}
   @return{A @class{gtk-level-bar}.}
   @short{Creates a new @class{gtk-level-bar}.}
-
-  Since 3.6
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-new-for-interval}"
   (make-instance 'gtk-level-bar))
@@ -537,8 +519,6 @@ lambda (levelbar name)   : Has Details
     Utility constructor that creates a new @class{gtk-level-bar} for the
     specified interval.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-new}"
   (make-instance 'gtk-level-bar
@@ -565,8 +545,6 @@ lambda (levelbar name)   : Has Details
   one on the bar, a style class named @arg{level-name} will be applied when
   rendering the level bar fill. If another offset marker named @arg{name}
   exists, its value will be replaced by @arg{value}.
-
-  Since 3.6
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-remove-offset-value}"
   (level-bar (g-object gtk-level-bar))
@@ -588,8 +566,6 @@ lambda (levelbar name)   : Has Details
     Removes an offset marker previously added with the function
     @fun{gtk-level-bar-add-offset-value}.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-add-offset-value}"
   (level-bar (g-object gtk-level-bar))
@@ -616,8 +592,6 @@ lambda (levelbar name)   : Has Details
     Fetches the value specified for the offset marker name in the level bar,
     returning @em{true} in case an offset named name was found.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-level-bar}"
   (with-foreign-object (value :double)
     (%gtk-level-bar-get-offset-value level-bar name value)
