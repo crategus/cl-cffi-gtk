@@ -102,7 +102,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-misc) 't)
- "The @code{\"xalign\"} property of type @code{:float} (Read / Write) @br{}
+ "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
   The horizontal alignment, from 0 (left) to 1 (right). Reversed
   for RTL layouts. @br{}
   Allowed values: [0,1] @br{}
@@ -113,13 +113,14 @@
       "Accessor"
       (documentation 'gtk-misc-xalign 'function)
  "@version{2013-3-17}
-  Accessor of the slot @code{\"xalign\"} of the @class{gtk-misc} class.")
+  Accessor of the @slot[gtk-misc]{xalign} slot of the @class{gtk-misc} class.
+  @see-class{gtk-misc}")
 
 ;;; --- gtk-misc-xpad ----------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xpad" 'gtk-misc) 't)
- "The @code{\"xpad\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{xpad} property of type @code{:int} (Read / Write) @br{}
   The amount of space to add on the left and right of the widget, in
   pixels. @br{}
   Allowed values: >= 0 @br{}
@@ -130,13 +131,14 @@
       "Accessor"
       (documentation 'gtk-misc-xpad 'function)
  "@version{2013-3-17}
-  Accessor of the slot @code{\"xpad\"} of the @class{gtk-misc} class.")
+  Accessor of the @slot[gtk-misc]{xpad} slot of the @class{gtk-misc} class.
+  @see-class{gtk-misc}")
 
 ;;; --- gtk-misc-yalign --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-misc) 't)
- "The @code{\"yalign\"} property of type @code{:float} (Read / Write) @br{}
+ "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
   The vertical alignment, from 0 (top) to 1 (bottom). @br{}
   Allowed values: [0,1] @br{}
   Default value: 0.5")
@@ -146,13 +148,14 @@
       "Accessor"
       (documentation 'gtk-misc-yalign 'function)
  "@version{2013-3-17}
-  Accessor of the slot @code{\"yalign\"} of the @class{gtk-misc} class.")
+  Accessor of the @slot[gtk-misch]{yalign} slot of the @class{gtk-misc} class.
+  @see-class{gtk-misc}")
 
 ;;; --- gtk-misc-ypad ----------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ypad" 'gtk-misc) 't)
- "The @code{\"ypad\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{ypad} property of type @code{:int} (Read / Write) @br{}
   The amount of space to add on the top and bottom of the widget, in
   pixels. @br{}
   Allowed values: >= 0 @br{}
@@ -163,7 +166,8 @@
       "Accessor"
       (documentation 'gtk-misc-ypad 'function)
  "@version{2013-3-17}
-  Accessor of the slot @code{\"ypad\"} of the @class{gtk-misc} class.")
+  Accessor of the @slot[gtk-misc]{ypad} slot of the @class{gtk-misc} class.
+  @see-class{gtk-misc}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_misc_set_alignment ()
@@ -177,10 +181,11 @@
   @argument[yalign]{the vertical alignment, from 0 (top) to 1 (bottom)}
   @short{Sets the alignment of the widget.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-misc-set-alignment} has been deprecated since version
+    The @sym{gtk-misc-set-alignment} function has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gtk-misc}"
   (setf (gtk-misc-xalign misc) xalign
         (gtk-misc-yalign misc) yalign))
 
@@ -202,10 +207,11 @@
     widget, in pixels}
   @short{Sets the amount of space to add around the widget.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-misc-set-padding} has been deprecated since version
+    The @sym{gtk-misc-set-padding} function has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gtk-misc}"
   (setf (gtk-misc-xpad misc) xpad
         (gtk-misc-ypad misc) ypad))
 
@@ -224,12 +230,13 @@
   @return{@arg{xalign} -- x alignment of misc, or @code{nil} @br{}
           @arg{yalign} -- y alignment of misc, or @code{nil}}
   @short{Gets the x and y alignment of the widget within its allocation.}
-  See the function @fun{gtk-misc-set-alignment}.
+  See the @fun{gtk-misc-set-alignment} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-misc-get-alignment} has been deprecated since version
+    The @sym{gtk-misc-get-alignment} function has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}
+  @see-class{gtk-misc}
   @see-function{gtk-misc-set-alignment}"
   (values (gtk-misc-xalign misc)
           (gtk-misc-yalign misc)))
@@ -249,12 +256,13 @@
   @return{@arg{xpad} -- padding in the x direction, or @code{nil} @br{}
           @arg{ypad} -- padding in the y direction, or @code{nil}}
   @short{Gets the padding in the x and y directions of the widget.}
-  See the function @fun{gtk-misc-set-padding}.
+  See the @fun{gtk-misc-set-padding} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-misc-get-padding} has been deprecated since version
+    The @sym{gtk-misc-get-padding} function has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}
+  @see-class{gtk-misc}
   @see-function{gtk-misc-set-padding}"
   (values (gtk-misc-xpad misc)
           (gtk-misc-ypad misc)))
