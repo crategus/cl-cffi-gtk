@@ -519,21 +519,21 @@
       (let ((keys (mem-ref keys :pointer))
             (keyvals (mem-ref keyvals :pointer))
             (n-keys (mem-ref n-keys :int)))
-        (prog1
-          (iter (for i from 0 below n-keys)
-                (for keyval = (mem-aref keyvals :uint))
-                (for keymap-key =
-                  (convert-from-foreign
-                    (inc-pointer
-                      keys
-                      (* i
-                         (foreign-type-size '(:struct gdk-keymap-key-cstruct))))
-                    '(g-boxed-foreign gdk-keymap-key)))
-                (collect keymap-key into r-keys)
-                (collect keyval into r-keyvals)
-                (finally (return (values r-keys r-keyvals))))
-          (g-free keys)
-          (g-free keyvals))))))
+        (iter (for i from 0 below n-keys)
+              (for keyval = (mem-aref keyvals :uint i))
+              (for keymap-key =
+                (convert-from-foreign
+                  (inc-pointer
+                    keys
+                    (* i
+                       (foreign-type-size '(:struct gdk-keymap-key-cstruct))))
+                  '(g-boxed-foreign gdk-keymap-key)))
+              (collect keymap-key into r-keys)
+              (collect keyval into r-keyvals)
+              (finally
+                (g-free keys)
+                (g-free keyvals)
+                (return (values r-keys r-keyvals))))))))
 
 (export 'gdk-keymap-get-entries-for-keycode)
 
