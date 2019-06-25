@@ -138,7 +138,7 @@
 ;;; gtk_text_tag_table_add ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :void
+(defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-5-5}
   @argument[table]{a @class{gtk-text-tag-table} object}

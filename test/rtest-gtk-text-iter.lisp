@@ -151,10 +151,10 @@
                                 "Some sample text for the text buffer."))
          (start (gtk-text-buffer-get-iter-at-offset buffer 12))
          (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
-    (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
-                             (make-instance 'gtk-text-tag
-                                            :name "bold"
-                                            :weight 700))
+    (is-true (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                                     (make-instance 'gtk-text-tag
+                                                    :name "bold"
+                                                    :weight 700)))
     (gtk-text-buffer-apply-tag-by-name buffer "bold" start end)
     (is (eq 'gtk-text-tag
             (type-of (first (gtk-text-iter-get-toggled-tags start t)))))))
