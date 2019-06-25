@@ -411,6 +411,19 @@
 ;;;     ultra expanded width
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "PangoStretch" pango-stretch
+  (:export t
+   :type-initializer "pango_stretch_get_type")
+  (:ultra-condensed 0)
+  (:extra-condensed 1)
+  (:condensed 2)
+  (:semi-condensed 3)
+  (:normal 4)
+  (:semi-expanded 5)
+  (:expanded 6)
+  (:extra-expanded 7)
+  (:ultra-expanded 8))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoFontMask
 ;;;
