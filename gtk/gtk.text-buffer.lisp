@@ -1816,6 +1816,9 @@
 ;;;     TRUE if the buffer has been modified
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_modified" gtk-text-buffer-modified) :boolean
+  (buffer (g-object gtk-text-buffer)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_set_modified ()
 ;;;
@@ -1835,13 +1838,22 @@
 ;;;     modification flag setting
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_set_modified" %gtk-text-buffer-set-modified) :void
+  (buffer (g-object gtk-text-buffer))
+  (setting :boolean))
+
+(defun (setf gtk-text-buffer-modified) (new-value buffer)
+  (%gtk-text-buffer-set-modified buffer new-value))
+
+(export 'gtk-text-buffer-modified)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_delete_selection ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete_selection" %gtk-text-buffer-delete-selection)
     :boolean
-  (bufer (g-object gtk-text-buffer))
+  (buffer (g-object gtk-text-buffer))
   (interactive :boolean)
   (default-editable :boolean))
 

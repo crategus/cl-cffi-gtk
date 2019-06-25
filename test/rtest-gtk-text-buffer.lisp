@@ -192,3 +192,10 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_unregister_deserialize_format
 ;;;     gtk_text_buffer_unregister_serialize_format
 
+(test gtk-text-buffer-modified.1
+  (let ((buffer (gtk-text-buffer-new)))
+    (is-false (gtk-text-buffer-modified buffer))
+    (gtk-text-buffer-set-text buffer *sample-text-1*)
+    (is-true (gtk-text-buffer-modified buffer))
+    (setf (gtk-text-buffer-modified buffer) NIL)
+    (is-false (gtk-text-buffer-modified buffer))))
