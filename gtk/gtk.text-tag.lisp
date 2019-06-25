@@ -94,6 +94,14 @@
    (editable-set
     gtk-text-tag-editable-set
     "editable-set" "gboolean" t t)
+   #+gtk-3-16
+   (fallback
+    gtk-text-tag-fallback
+    "fallback" "gboolean" t t)
+   #+gtk-3-16
+   (fallback-set
+    gtk-text-tag-fallback-set
+    "fallback-set" "gboolean" t t)
    (family
     gtk-text-tag-family
     "family" "gchararray" t t)
@@ -106,6 +114,14 @@
    (font-desc
     gtk-text-tag-font-desc
     "font-desc" "PangoFontDescription" t t)
+   #+gtk-3-18
+   (font-features
+    gtk-text-tag-font-features
+    "font-features" "gchararray" t t)
+   #+gtk-3-18
+   (font-features-set
+    gtk-text-tag-font-features-set
+    "font-features-set" "gboolean" t t)
    (foreground
     gtk-text-tag-foreground
     "foreground" "gchararray" nil t)
@@ -148,6 +164,14 @@
    (left-margin-set
     gtk-text-tag-left-margin-set
     "left-margin-set" "gboolean" t t)
+   #+gtk-3-16
+   (letter-spacing
+    gtk-text-tag-letter-spacing
+    "letter-spacing" "gint" t t)
+   #+gtk-3-16
+   (letter-spacing-set
+    gtk-text-tag-letter-spacing-set
+    "letter-spacing-set" "gboolean" t t)
    (name
     gtk-text-tag-name
     "name" "gchararray" t nil)
@@ -217,6 +241,14 @@
    (strikethrough
     gtk-text-tag-strikethrough
     "strikethrough" "gboolean" t t)
+   #+gtk-3-16
+   (strikethrough-rgba
+    gtk-text-tag-strikethrough-rgba
+    "strikethrough-rgba" "GdkRGBA" t t)
+   #+gtk-3-16
+   (strikethrough-rgba-set
+    gtk-text-tag-strikethrough-rgba-set
+    "strikethrough-rgba-set" "gboolean" t t)
    (strikethrough-set
     gtk-text-tag-strikethrough-set
     "strikethrough-set" "gboolean" t t)
@@ -235,6 +267,14 @@
    (underline
     gtk-text-tag-underline
     "underline" "PangoUnderline" t t)
+   #+gtk-3-16
+   (underline-rgba
+    gtk-text-tag-underline-rgba
+    "underline" "PangoUnderline" t t)
+   #+gtk-3-16
+   (underline-rgba-set
+    gtk-text-tag-underline-rgba-set
+    "underline-rgba-set" "gboolean" t t)
    (underline-set
     gtk-text-tag-underline-set
     "underline-set" "gboolean" t t)
