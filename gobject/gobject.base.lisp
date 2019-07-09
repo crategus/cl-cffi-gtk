@@ -2394,7 +2394,7 @@
   (object :pointer)
   (key :string)
   (data :pointer)
-  (destory :pointer))
+  (destroy :pointer))
 
 (export 'g-object-set-data-full)
 
