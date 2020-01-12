@@ -210,7 +210,7 @@
   @see-slot{gtk-tool-palette-toolbar-style}
   @see-class{gtk-tool-item}
   @see-class{gtk-tool-item-group}
-  @see-fun{gtk-tool-palette-new}
+  @see-function{gtk-tool-palette-new}
   @see-function{gtk-container-add}
   @see-function{gtk-tool-palette-add-drag-dest}
   @see-function{gtk-tool-palette-get-drag-item}")
