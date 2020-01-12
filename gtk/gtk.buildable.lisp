@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -128,28 +128,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_add_child ()
-;;;
-;;; void gtk_buildable_add_child (GtkBuildable *buildable,
-;;;                               GtkBuilder *builder,
-;;;                               GObject *child,
-;;;                               const gchar *type);
-;;;
-;;; Adds a child to buildable. type is an optional string describing how the
-;;; child should be added.
-;;;
-;;; buildable :
-;;;     a GtkBuildable
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; child :
-;;;     child to add
-;;;
-;;; type :
-;;;     kind of child or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_buildable_add_child" %gtk-buildable-add-child) :void
@@ -159,6 +137,17 @@
   (type :string))
 
 (defun gtk-buildable-add-child (buildable builder child type)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-5-31}
+  @argument[buildable]{a @class{gtk-buildable} object}
+  @argument[builder]{a @class{gtk-builder} object}
+  @argument[child]{a child to add}
+  @argument[type]{kind of child or @code{nil}}
+  @begin{short}
+    Adds a child to @arg{buildable}.
+  @end{short}
+  @arg{type} is an optional string describing how the child should be added.
+  @see-class{gtk-buildable}"
   (if type
       (%gtk-buildable-add-child buildable builder child type)
       (%gtk-buildable-add-child buildable builder Child (null-pointer))))
@@ -334,30 +323,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_get_internal_child ()
-;;;
-;;; GObject * gtk_buildable_get_internal_child (GtkBuildable *buildable,
-;;;                                             GtkBuilder *builder,
-;;;                                             const gchar *childname);
-;;;
-;;; Get the internal child called childname of the buildable object.
-;;;
-;;; buildable :
-;;;     a GtkBuildable
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; childname :
-;;;     name of child
-;;;
-;;; Returns :
-;;;     the internal child of the buildable object
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_buildable_get_internal_child" gtk-buildable-get-internal-child)
     g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2019-5-31}
+  @argument[buildable]{a @class{gtk-buildable} object}
+  @argument[builder]{a @class{gtk-builder} object}
+  @argument[childname]{name of child}
+  @return{The internal child of the buildable object.}
+  @begin{short}
+    Get the internal child called @arg{childname} of the buildable object.
+  @end{short}
+  @see-class{gtk-buildable}"
   (buildable (g-object gtk-buildable))
   (builder (g-object gtk-builder))
   (childname :string))
