@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -50,17 +50,17 @@
 
 ;;; Properties
 ;;;
-;;;     gboolean  active           Read / Write
-;;;     gboolean  draw-as-radio    Read / Write
-;;;     gboolean  inconsistent     Read / Write
+;;;     gboolean   active           Read / Write
+;;;     gboolean   draw-as-radio    Read / Write
+;;;     gboolean   inconsistent     Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;         gint  indicator-size   Read
+;;;         gint   indicator-size   Read
 ;;;
 ;;; Signals
 ;;;
-;;;         void  toggled          Run First
+;;;         void   toggled          Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -216,10 +216,10 @@
     @class{gtk-check-menu-item} class.
   @end{short}
 
-  The @sys{gtk-check-menu-item-draw-as-radio} slot access function returns
+  The @sym{gtk-check-menu-item-draw-as-radio} slot access function returns
   whether @arg{check-menu-item} looks like a @class{gtk-radio-menu-item}.
 
-  The @sys{(setf gtk-check-menu-item-draw-as-radio)} slot access function sets
+  The @sym{(setf gtk-check-menu-item-draw-as-radio)} slot access function sets
   whether @arg{check-menu-item} is drawn like a @class{gtk-radio-menu-item}.
   @see-class{gtk-check-menu-item}")
 
