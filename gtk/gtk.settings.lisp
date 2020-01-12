@@ -2192,13 +2192,13 @@
   Since 3.14")
 
 #+(and gtk-3-14 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-settings-gtk-titlebar-midle-click
+(setf (gethash 'gtk-settings-gtk-titlebar-middle-click
                atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-settings-gtk-titlebar-midle-click 'function)
+      (documentation 'gtk-settings-gtk-titlebar-middle-click 'function)
  "@version{2019-4-19}
   @begin{short}
-    Accessor of the @slot[gtk-settings]{gtk-titlebar-midle-click} slot of the
+    Accessor of the @slot[gtk-settings]{gtk-titlebar-middle-click} slot of the
     @class{gtk-settings} class.
   @end{short}
 
