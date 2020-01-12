@@ -118,7 +118,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"group-changed\" signal}
       @begin{pre}
- lambda (radiomenuitem)   : Run First
+ lambda (radiomenuitem)    : Run First
       @end{pre}
   @end{dictionary}
   @see-slot{gtk-radio-menu-item-group}")
@@ -148,44 +148,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new (GSList *group);
-;;;
-;;; Creates a new GtkRadioMenuItem.
-;;;
-;;; group :
-;;;     the group to which the radio menu item is to be attached
-;;;
-;;; Returns :
-;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new" gtk-radio-menu-item-new)
     (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} object.
+  @end{short}
+  @see-class{gtk-radio-menu-item}"
   (group (g-slist (g-object gtk-radio-button))))
 
 (export 'gtk-radio-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new_with_label (GSList *group,
-;;;                                                 const gchar *label);
-;;;
-;;; Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
-;;;
-;;; group :
-;;;     .
-;;;
-;;; label :
-;;;     the text for the label
-;;;
-;;; Returns :
-;;;     A new GtkRadioMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new_with_label"
            gtk-radio-menu-item-new-with-label) (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @argument[label]{the text for the label}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} object whose child is a simple
+    @class{gtk-label}.
+  @end{short}
+  @see-class{gtk-radio-menu-item}"
   (group (g-slist (g-object gtk-radio-menu-item)))
   (label :string))
 
@@ -193,27 +185,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new_with_mnemonic (GSList *group,
-;;;                                                    const gchar *label);
-;;;
-;;; Creates a new GtkRadioMenuItem containing a label. The label will be created
-;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
-;;; mnemonic for the menu item.
-;;;
-;;; group :
-;;;     group the radio menu item is inside
-;;;
-;;; label :
-;;;     the text of the button, with an underscore in front of the mnemonic
-;;;     character
-;;;
-;;; Returns :
-;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new_with_mnemonic"
            gtk-radio-menu-item-new-with-mnemonic) (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @argument[label]{the text of the button, with an underscore in front of the
+    mnemonic character}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} object containing a label.
+  @end{short}
+  The label will be created using the @fun{gtk-label-new-with-mnemonic}
+  function, so underscores in the label indicate the mnemonic for the menu item.
+  @see-class{gtk-radio-menu-item}"
   (group (g-slist (g-object gtk-radio-menu-item)))
   (label :string))
 
@@ -221,51 +207,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_from_widget ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
-;;;
-;;; Creates a new GtkRadioMenuItem adding it to the same group as group.
-;;;
-;;; group :
-;;;     An existing GtkRadioMenuItem
-;;;
-;;; Returns :
-;;;     The new GtkRadioMenuItem.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new_from_widget"
            gtk-radio-menu-item-new-from-widget) (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} object adding it to the same group
+    as group.
+  @end{short}
+  @see-class{gtk-radio-menu-item}"
   (group (g-object gtk-radio-menu-item)))
 
 (export 'gtk-radio-menu-item-new-from-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label_from_widget ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new_with_label_from_widget
-;;;                                                    (GtkRadioMenuItem *group,
-;;;                                                     const gchar *label);
-;;;
-;;; Creates a new GtkRadioMenuItem whose child is a simple GtkLabel. The new
-;;; GtkRadioMenuItem is added to the same group as group.
-;;;
-;;; group :
-;;;     an existing GtkRadioMenuItem
-;;;
-;;; label :
-;;;     the text for the label
-;;;
-;;; Returns :
-;;;     The new GtkRadioMenuItem.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new_with_label_from_widget"
            gtk-radio-menu-item-new-with-label-from-widget)
     (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @argument[label]{the text for the label}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} whose child is a simple
+    @class{gtk-label}.
+  @end{short}
+  The new @class{gtk-radio-menu-item} is added to the same group as @arg{group}.
+  @see-class{gtk-radio-menu-item}"
   (group (g-object gtk-radio-menu-item))
   (label :string))
 
@@ -273,33 +247,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic_from_widget ()
-;;;
-;;; GtkWidget * gtk_radio_menu_item_new_with_mnemonic_from_widget
-;;;                                                    (GtkRadioMenuItem *group,
-;;;                                                     const gchar *label);
-;;;
-;;; Creates a new GtkRadioMenuItem containing a label. The label will be created
-;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
-;;; mnemonic for the menu item.
-;;;
-;;; The new GtkRadioMenuItem is added to the same group as group.
-;;;
-;;; group :
-;;;     An existing GtkRadioMenuItem
-;;;
-;;; label :
-;;;     the text of the button, with an underscore in front of the mnemonic
-;;;     character
-;;;
-;;; Returns :
-;;;     The new GtkRadioMenuItem.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_new_with_mnemonic_from_widget"
            gtk-radio-menu-item-new-with-mnemonic-from-widget)
     (g-object gtk-radio-menu-item)
+ "@version{2019-6-7}
+  @argument[group]{the group to which the radio menu item is to be attached}
+  @argument[label]{the text of the button, with an underscore in front of the
+    mnemonic character}
+  @return{A new @class{gtk-radio-menu-item}.}
+  @begin{short}
+    Creates a new @class{gtk-radio-menu-item} containing a label.
+  @end{short}
+  The label will be created using the @fun{gtk-label-new-with-mnemonic}
+  function, so underscores in label indicate the mnemonic for the menu item.
+
+  The new @class{gtk-radio-menu-item} is added to the same group as @arg{group}.
+  @see-class{gtk-radio-menu-item}"
   (group (g-object gtk-radio-menu-item))
   (label :string))
 
@@ -307,43 +272,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_set_group ()
-;;;
-;;; void gtk_radio_menu_item_set_group (GtkRadioMenuItem *radio_menu_item,
-;;;                                     GSList *group);
-;;;
-;;; Sets the group of a radio menu item, or changes it.
-;;;
-;;; radio_menu_item :
-;;;     a GtkRadioMenuItem.
-;;;
-;;; group :
-;;;     the new group
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-radio-menu-item-set-group))
 
 (defun gtk-radio-menu-item-set-group (radio-menu-item group)
+ "@version{2019-6-7}
+  @argument[radio-menu-item]{a @class{gtk-radio-menu-item} object}
+  @argument[group]{the group}
+  @begin{short}
+    Sets the group of a radio menu item, or changes it.
+  @end{short}
+  @see-class{gtk-radio-menu-item}"
   (setf (gtk-radio-menu-item-group radio-menu-item) group))
 
 (export 'gtk-radio-menu-item-set-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_get_group ()
-;;;
-;;; GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
-;;;
-;;; Returns the group to which the radio menu item belongs, as a GList of
-;;; GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-;;;
-;;; radio_menu_item :
-;;;     a GtkRadioMenuItem
-;;;
-;;; Returns :
-;;;     the group of radio_menu_item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_get_group" gtk-radio-menu-item-get-group)
     (g-slist (g-object gtk-radio-menu-item))
+ "@version{2019-6-7}
+  @argument[radio-menu-item]{a @class{gtk-radio-menu-item} object}
+  @return{the group of @arg{radio-menu-item}}
+  @begin{short}
+    Returns the group to which the radio menu item belongs, as a list of
+    @class{gtk-radio-menu-item}.
+  @end{short}
+  @see-class{gtk-radio-menu-item}"
   (radio-menu-item (g-object gtk-radio-menu-item)))
 
 (export 'gtk-radio-menu-item-get-group)
