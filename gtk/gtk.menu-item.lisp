@@ -350,10 +350,10 @@
   @end{short}
 
   The @sym{gtk-menu-item-label} slot access function
-  sets text on the menu item label.
+  gets the text on the menu item label.
 
   The @sym{(setf gtk-menu-item-label)} slot access function
-  sets text on the menu item label.
+  sets the text on the menu item label.
   @see-class{gtk-menu-item}")
 
 ;;; --- gtk-menu-item-right-justified ------------------------------------------
