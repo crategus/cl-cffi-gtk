@@ -968,7 +968,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_drag_source_set_icon_stock" gtk-drag-source-set-icon-stock) :void
- #+cl-cffi-gtk-documenation
+ #+cl-cffi-gtk-documentation
  "@version{2013-11-21}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[stock-id]{a string with the ID of the stock icon to use}
@@ -980,7 +980,7 @@
     The @sym{gtk-drag-source-set-icon-stock} function has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the
     @fun{gtk-drag-source-set-icon-name} instead.
-  @end{dictonary}
+  @end{dictionary}
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (stock-id :string))
@@ -1141,7 +1141,7 @@
 
 (defcfun ("gtk_drag_source_add_uri_targets" gtk-drag-source-add-uri-targets)
     :void
- #+cl-cffi-gtk-documenation
+ #+cl-cffi-gtk-documentation
  "@version{2013-11-20}
   @argument[widget]{a @class{gtk-widget} that is a drag source}
   @begin{short}
