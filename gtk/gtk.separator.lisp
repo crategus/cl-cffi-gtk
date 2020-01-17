@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -138,7 +138,7 @@
 
 (define-g-object-class "GtkHSeparator" gtk-hseparator
   (:superclass gtk-separator
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -186,8 +186,6 @@
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-hseparator))
 
-(export 'gtk-hseparator-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVSeparator
 ;;;
@@ -211,7 +209,7 @@
 
 (define-g-object-class "GtkVSeparator" gtk-vseparator
   (:superclass gtk-separator
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -253,7 +251,5 @@
   @end{dictionary}
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-vseparator))
-
-(export 'gtk-vseparator-new)
 
 ;;; --- End of file gtk.separator.lisp -----------------------------------------
