@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -64,7 +64,7 @@
 
 (define-g-object-class "GtkFontSelection" gtk-font-selection
   (:superclass gtk-box
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -156,7 +156,7 @@
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-expand
-                       "expand" "gboolean" t t t)
+                       "expand" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-expand atdoc:*function-name-alias*)
@@ -171,7 +171,7 @@
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-fill
-                       "fill" "gboolean" t t t)
+                       "fill" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-fill atdoc:*function-name-alias*)
@@ -186,7 +186,7 @@
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-padding
-                       "padding" "guint" t t t)
+                       "padding" "guint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-padding atdoc:*function-name-alias*)
@@ -201,7 +201,7 @@
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
+                       "pack-type" "GtkPackType" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-pack-type atdoc:*function-name-alias*)
@@ -216,7 +216,7 @@
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-position
-                       "position" "gint" t t t)
+                       "position" "gint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-position atdoc:*function-name-alias*)
@@ -246,8 +246,6 @@
   @end{dictionary}
   @see-class{gtk-font-selection}"
   (make-instance 'gtk-font-selection-new))
-
-(export 'gtk-font-selection-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_font_name ()
@@ -281,8 +279,6 @@
   @see-function{pango-font-description-equal}"
   (gtk-font-selection-font-name fontsel))
 
-(export 'gtk-font-selection-get-font-name)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_set_font_name ()
 ;;; ----------------------------------------------------------------------------
@@ -313,8 +309,6 @@
   @see-function{gtk-font-selection-get-font-name}"
   (setf (gtk-font-selection-font-name fontsel) fontname))
 
-(export 'gtk-font-selection-set-font-name)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_preview_text ()
 ;;; ----------------------------------------------------------------------------
@@ -336,8 +330,6 @@
   @end{short}
   @see-function{gtk-font-selection-set-preview-text}"
   (gtk-font-selection-preview-text fontsel))
-
-(export 'gtk-font-selection-get-preview-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_set_preview_text ()
@@ -361,8 +353,6 @@
   @end{short}
   @see-function{gtk-font-selection-get-preview-text}"
   (setf (gtk-font-selection-preview-text fontsel) text))
-
-(export 'gtk-font-selection-set-preview-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face ()
@@ -388,8 +378,6 @@
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
-(export 'gtk-font-selection-get-face)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face_list ()
 ;;; ----------------------------------------------------------------------------
@@ -411,8 +399,6 @@
   @end{short}
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
-
-(export 'gtk-font-selection-get-face-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family ()
@@ -439,8 +425,6 @@
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
-(export 'gtk-font-selection-get-family)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size ()
 ;;; ----------------------------------------------------------------------------
@@ -461,8 +445,6 @@
   @short{The selected font size.}
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
-
-(export 'gtk-font-selection-get-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family_list ()
@@ -486,8 +468,6 @@
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
-(export 'gtk-font-selection-get-family-list)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_preview_entry ()
 ;;; ----------------------------------------------------------------------------
@@ -508,8 +488,6 @@
   @end{short}
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
-
-(export 'gtk-font-selection-get-preview-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_entry ()
@@ -533,8 +511,6 @@
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
 
-(export 'gtk-font-selection-get-size-entry)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_list ()
 ;;; ----------------------------------------------------------------------------
@@ -555,7 +531,5 @@
   @end{short}
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))
-
-(export 'gtk-font-selection-get-size-list)
 
 ;;; --- End of file gtk.font-selection.lisp ------------------------------------
