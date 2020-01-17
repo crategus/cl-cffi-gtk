@@ -292,7 +292,7 @@ file chooser.
 
 @b{Note:}
 If you want to set more than one extra widget in the file chooser, you can use
-a container such as a @xurl{gtk-vbox} or a @xurl{gtk-table} and include your
+a container such as a @xurl{gtk-box} or a @xurl{gtk-table} and include your
 widgets in it.  Then, set the container as the whole extra widget.
 
 @xurl{gtk-file-chooser-dialog} is a dialog box suitable for use with "File/Open"

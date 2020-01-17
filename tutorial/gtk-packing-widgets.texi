@@ -130,7 +130,7 @@ user quite a bit of flexibility when placing widgets.
 @noindent
 @b{Note}
 
-The classes @xurl{gtk-hbox} for horizontal and @xurl{gtk-vbox} for vertical
+The classes GtkHBox for horizontal and GtkVBox for vertical
 boxes are deprecated, but still present in GTK+ 3.  In this tutorial these
 classes are not used.  In addition a single-row or single-column @xurl{gtk-grid}
 provides exactly the same functionality as @xurl{gtk-box}.  See

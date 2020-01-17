@@ -271,7 +271,7 @@ need to know that the 'Close' button returns the @code{:cancel} response ID.
     (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog))
           12)
     ;; Add a label widget with text to the content area
-    (let ((vbox (make-instance 'gtk-vbox :border-width 12))
+    (let ((vbox (make-instance 'gtk-box :orientation :vertical :border-width 12))
           (label (make-instance 'gtk-label
                                 :wrap t
                                 :label
@@ -340,7 +340,8 @@ need to know that the 'Close' button returns the @code{:cancel} response ID.
                                  :title "Example Dialog"
                                  :default-width 250
                                  :border-width 12))
-          (vbox (make-instance 'gtk-vbox
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
                                :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
