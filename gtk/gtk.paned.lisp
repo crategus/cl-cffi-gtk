@@ -615,7 +615,7 @@
 
 (define-g-object-class "GtkHPaned" gtk-hpaned
   (:superclass gtk-paned
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -640,10 +640,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHPaned"
-                       gtk-hpaned-child-resize "resize" "gboolean" t t t)
+                       gtk-hpaned-child-resize "resize" "gboolean" t t nil)
 
 (define-child-property "GtkHPaned"
-                       gtk-hpaned-child-shrink "shrink" "gboolean" t t t)
+                       gtk-hpaned-child-shrink "shrink" "gboolean" t t nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -685,8 +685,6 @@
   (make-instance 'gtk-paned
                  :orientation :horizontal))
 
-(export 'gtk-hpaned-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVPaned
 ;;;
@@ -708,7 +706,7 @@
 
 (define-g-object-class "GtkVPaned" gtk-vpaned
   (:superclass gtk-paned
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_vpaned_get_type")
   nil)
@@ -731,10 +729,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVPaned"
-                       gtk-vpaned-child-resize "resize" "gboolean" t t t)
+                       gtk-vpaned-child-resize "resize" "gboolean" t t nil)
 
 (define-child-property "GtkVPaned"
-                       gtk-vpaned-child-shrink "shrink" "gboolean" t t t)
+                       gtk-vpaned-child-shrink "shrink" "gboolean" t t nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -775,7 +773,5 @@
   @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation :vertical))
-
-(export 'gtk-vpaned-new)
 
 ;;; --- End of file gtk.paned.lisp ---------------------------------------------
