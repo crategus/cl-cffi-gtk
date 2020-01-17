@@ -456,23 +456,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_new ()
-;;;
-;;; GtkWidget * gtk_popover_new (GtkWidget *relative_to);
-;;;
-;; Creates a new popover to point to relative_to
-;;;
-;;; relative_to :
-;;;     GtkWidget the popover is related to.
-;;;
-;;; Returns ;
-;;;     a new GtkPopover
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-popover-new))
 
 (defun gtk-popover-new (relative-to)
+ "@version{2019-6-7}
+  @argument[relative-to]{@class{gtk-widget} the popover is related to}
+  @return{a new @class{gtk-popover} widget}
+  @begin{short}
+    Creates a new popover to point to @arg{relative-to}.
+  @end{short}
+  @see-class{gtk-popover-new}"
   (make-instance 'gtk-popover
                  :relative-to relative-to))
 
@@ -485,16 +480,6 @@
 ;;; gtk_popover_new_from_model (GtkWidget *relative_to,
 ;;;                             GMenuModel *model);
 ;;;
-;;; Creates a GtkPopover and populates it according to model . The popover is
-;;; pointed to the relative_to widget.
-;;;
-;;; The created buttons are connected to actions found in the
-;;; GtkApplicationWindow to which the popover belongs - typically by means of
-;;; being attached to a widget that is contained within the
-;;; GtkApplicationWindows widget hierarchy.
-;;;
-;;; Actions can also be added using gtk_widget_insert_action_group() on the
-;;; menus attach widget or on any of its parent widgets.
 ;;;
 ;;; relative_to :
 ;;;     GtkWidget the popover is related to.
@@ -510,6 +495,26 @@
 
 (defcfun ("gtk_popover_new_from_model" gtk-popover-new-from-model)
     (g-object gtk-widget)
+ "@version{2019-6-7}
+  @argument[relative-to]{@class{gtk-widget} the popover is related to}
+  @argument[model]{a @class{g-menu-model} object}
+  @return{a new @class{gtk-popover} widget}
+  @begin{short}
+    Creates a @class{gtk-popover} widget and populates it according to
+    @arg{model .
+  @end{short}
+ The popover is
+;;; pointed to the relative_to widget.
+;;;
+;;; The created buttons are connected to actions found in the
+;;; GtkApplicationWindow to which the popover belongs - typically by means of
+;;; being attached to a widget that is contained within the
+;;; GtkApplicationWindows widget hierarchy.
+;;;
+;;; Actions can also be added using gtk_widget_insert_action_group() on the
+;;; menus attach widget or on any of its parent widgets.
+
+  @see-class{gtk-popover-new}"
   (relative-to (g-object gtk-widget))
   (model (g-object g-menu-model)))
 
