@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -705,7 +705,7 @@
 
 (define-g-object-class "GtkHBox" gtk-hbox
   (:superclass gtk-box
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -747,7 +747,7 @@
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-expand
-                       "expand" "gboolean" t t t)
+                       "expand" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-expand atdoc:*function-name-alias*)
@@ -762,7 +762,7 @@
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-fill
-                       "fill" "gboolean" t t t)
+                       "fill" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-fill atdoc:*function-name-alias*)
@@ -777,7 +777,7 @@
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-padding
-                       "padding" "guint" t t t)
+                       "padding" "guint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-padding atdoc:*function-name-alias*)
@@ -792,7 +792,7 @@
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
+                       "pack-type" "GtkPackType" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-pack-type atdoc:*function-name-alias*)
@@ -807,7 +807,7 @@
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-position
-                       "position" "gint" t t t)
+                       "position" "gint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-position atdoc:*function-name-alias*)
@@ -849,8 +849,6 @@
                  :homogeneous homogeneous
                  :spacing spacing))
 
-(export 'gtk-hbox-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVBox
 ;;;
@@ -874,7 +872,7 @@
 
 (define-g-object-class "GtkVBox" gtk-vbox
   (:superclass gtk-box
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -920,7 +918,7 @@
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-expand
-                       "expand" "gboolean" t t t)
+                       "expand" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-expand atdoc:*function-name-alias*)
@@ -935,7 +933,7 @@
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-fill
-                       "fill" "gboolean" t t t)
+                       "fill" "gboolean" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-fill atdoc:*function-name-alias*)
@@ -950,7 +948,7 @@
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-padding
-                       "padding" "guint" t t t)
+                       "padding" "guint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-padding atdoc:*function-name-alias*)
@@ -965,7 +963,7 @@
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
+                       "pack-type" "GtkPackType" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-pack-type atdoc:*function-name-alias*)
@@ -980,7 +978,7 @@
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-position
-                       "position" "gint" t t t)
+                       "position" "gint" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-position atdoc:*function-name-alias*)
@@ -1034,7 +1032,5 @@
                  :orientation :vertical
                  :homogeneous homogeneous
                  :spacing spacing))
-
-(export 'gtk-vbox-new)
 
 ;;; --- End of file gtk.box.lisp -----------------------------------------------
