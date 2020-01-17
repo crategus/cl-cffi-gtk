@@ -1241,7 +1241,8 @@
                                   :title "Example Status Bar"
                                   :default-width 300
                                   :border-width 12))
-           (vbox (make-instance 'gtk-vbox
+           (vbox (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
@@ -2109,7 +2110,8 @@
                                   :title "Simple Multiline Text Input"
                                   :default-width 350
                                   :default-height 200))
-           (vbox (make-instance 'gtk-vbox
+           (vbox (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 3))
            (text-view (make-instance 'gtk-text-view))
@@ -3505,8 +3507,8 @@ happen.")
                                   :type :toplevel
                                   :title "Example Text Entry"
                                   :default-width 250))
-           (vbox (make-instance 'gtk-vbox))
-           (hbox (make-instance 'gtk-hbox))
+           (vbox (make-instance 'gtk-box :orientation :vertical))
+           (hbox (make-instance 'gtk-box :orientation :horizontal))
            (entry (make-instance 'gtk-entry
                                  :text "Hello"
                                  :max-length 50))
@@ -3558,19 +3560,22 @@ happen.")
                                  :type :toplevel
                                  :title "Example Spin Button"
                                  :default-width 300))
-          (vbox (make-instance 'gtk-vbox
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
                                :homogeneous nil
                                :spacing 6
                                :border-width 12))
-          (vbox1 (make-instance 'gtk-vbox
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 0
                                 :border-width 6))
-          (vbox2 (make-instance 'gtk-vbox
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 0
                                 :boder-width 6))
-          (hbox (make-instance 'gtk-hbox))
+          (hbox (make-instance 'gtk-box :orientatin :horizontal))
           (frame1 (make-instance 'gtk-frame
                                  :label "Not accelerated"))
           (frame2 (make-instance 'gtk-frame
@@ -3581,7 +3586,7 @@ happen.")
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (let ((vbox (make-instance 'gtk-vbox))
+      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -3602,7 +3607,7 @@ happen.")
                             :expand nil)
         (gtk-box-pack-start vbox spinner :expand nil)
         (gtk-box-pack-start hbox vbox :padding 6))
-      (let ((vbox (make-instance 'gtk-vbox))
+      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -3623,7 +3628,7 @@ happen.")
                             :expand nil)
         (gtk-box-pack-start vbox spinner :expand nil)
         (gtk-box-pack-start hbox vbox :padding 6))
-      (let ((vbox (make-instance 'gtk-vbox))
+      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -3647,8 +3652,8 @@ happen.")
       (gtk-box-pack-start vbox1 hbox :padding 6)
       (gtk-container-add frame1 vbox1)
       (gtk-box-pack-start vbox frame1)
-      (setq hbox (make-instance 'gtk-hbox))
-      (let ((vbox (make-instance 'gtk-vbox))
+      (setq hbox (make-instance 'gtk-box :orientation :horizontal))
+      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
             (spinner1 (make-instance 'gtk-spin-button
                                      :adjustment
                                      (make-instance 'gtk-adjustment
@@ -3687,7 +3692,7 @@ happen.")
              (gtk-spin-button-set-digits
                                spinner1
                                (gtk-spin-button-get-value-as-int spinner2))))
-        (setq vbox (make-instance 'gtk-vbox))
+        (setq vbox (make-instance 'gtk-box :orientation :vertical))
         (gtk-box-pack-start vbox
                             (make-instance 'gtk-label
                                            :label "Digits :"
@@ -3716,7 +3721,7 @@ happen.")
                                      (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
-        (setq hbox (make-instance 'gtk-hbox))
+        (setq hbox (make-instance 'gtk-box :orientation :horizontal))
         (let ((button (gtk-button-new-with-label "Value as Int")))
           (g-signal-connect button "clicked"
              (lambda (widget)
