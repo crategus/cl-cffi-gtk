@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,19 +54,19 @@
 ;;;
 ;;; Properties
 ;;;
-;;;                gint   digits        Read / Write
-;;;            gboolean   draw-value    Read / Write
-;;;            gboolean   has-origin    Read / Write
-;;;     GtkPositionType   value-pos     Read / Write
+;;;                gint   digits           Read / Write
+;;;            gboolean   draw-value       Read / Write
+;;;            gboolean   has-origin       Read / Write
+;;;     GtkPositionType   value-pos        Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;      gint   slider-length            Read
-;;;      gint   value-spacing            Read
+;;;                gint   slider-length    Read
+;;;                gint   value-spacing    Read
 ;;;
 ;;; Signals
 ;;;
-;;;     gchar*  format-value             Run Last
+;;;               gchar*  format-value     Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -505,7 +505,7 @@
 
 (define-g-object-class "GtkHScale" gtk-hscale
   (:superclass gtk-scale
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -552,8 +552,6 @@
                  :orientation :horizontal
                  :adjustment adjustment))
 
-(export 'gtk-hscale-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscale_new_with_range ()
 ;;; ----------------------------------------------------------------------------
@@ -592,8 +590,6 @@
                                             :upper max
                                             :step-increment step)))
 
-(export 'gtk-hscale-new-with-range)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVScale
 ;;;
@@ -618,7 +614,7 @@
 
 (define-g-object-class "GtkVScale" gtk-vscale
   (:superclass gtk-scale
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -663,8 +659,6 @@
                  :orientation :vertical
                  :adjustment adjustment))
 
-(export 'gtk-vscale-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscale_new_with_range ()
 ;;; ----------------------------------------------------------------------------
@@ -700,7 +694,5 @@
                                             :lower min
                                             :upper max
                                             :step-increment step)))
-
-(export 'gtk-vscale-new-with-range)
 
 ;;; --- End of file gtk.scale.lisp ---------------------------------------------
