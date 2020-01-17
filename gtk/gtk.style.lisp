@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.style.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
@@ -130,7 +127,7 @@
 
 (define-g-object-class "GtkStyle" gtk-style
   (:superclass g-object
-   :export t
+   :export nil
    :interfaces nil
    :type-initializer "gtk_style_get_type")
   ((context
@@ -397,8 +394,6 @@
   @end{short}"
   (style (g-object gtk-style))
   (stock-id :string))
-
-(export 'gtk-style-lookup-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_render_icon ()
