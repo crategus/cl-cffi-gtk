@@ -23,7 +23,7 @@
 @c GtkAction
 
 @set gtk-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-action.html
-@set gtk-action-get-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-get-name.html
+@set gtk-action-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-name.html
 
 @c GtkActionable
 
@@ -101,9 +101,6 @@
 @set gtk-box-spacing http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-spacing.html
 @set gtk-box-pack-start http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
 @set gtk-box-pack-end http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
-
-@set gtk-hbox http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-hbox.html
-@set gtk-vbox http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-vbox.html
 
 @c GtkBuildable
 
@@ -523,12 +520,6 @@
 
 @set gtk-scrollbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-scrollbar.html
 @set gtk-scrollbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scrollbar-new.html
-
-@set gtk-hscrollbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-hscrollbar.html
-@set gtk-hscrollbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-hscrollbar-new.html
-
-@set gtk-vscrollbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-vscrollbar.html
-@set gtk-vscrollbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-vscrollbar-new.html
 
 @c GtkScrolledWindow
 
