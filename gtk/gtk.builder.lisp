@@ -444,13 +444,13 @@
   These XML fragments are explained in the documentation of the respective
   objects, see @class{gtk-widget}, @class{gtk-label}, @class{gtk-window},
   @class{gtk-container}, @class{gtk-dialog}, @class{gtk-cell-layout},
-  @class{gtk-color-selection-dialog}, @class{gtk-font-selection-dialog},
-  @class{gtk-expander}, @class{gtk-frame}, @class{gtk-list-store},
-  @class{gtk-tree-store}, @class{gtk-notebook}, @class{gtk-size-group},
-  @class{gtk-tree-view}, @class{gtk-ui-manager}, @class{gtk-action-group}.
-  @class{gtk-menu-item}, @class{gtk-menu-tool-button}, @class{gtk-assistant},
-  @class{gtk-scale}, @class{gtk-combo-box-text}, @class{gtk-recent-filter},
-  @class{gtk-file-filter}, @class{gtk-text-tag-table}.
+  @class{gtk-color-selection-dialog}, @class{gtk-expander}, @class{gtk-frame},
+  @class{gtk-list-store}, @class{gtk-tree-store}, @class{gtk-notebook},
+  @class{gtk-size-group}, @class{gtk-tree-view}, @class{gtk-ui-manager},
+  @class{gtk-action-group}, @class{gtk-menu-item}, @class{gtk-menu-tool-button},
+  @class{gtk-assistant}, @class{gtk-scale}, @class{gtk-combo-box-text},
+  @class{gtk-recent-filter}, @class{gtk-file-filter},
+  @class{gtk-text-tag-table}.
 
   Additionally, since 3.10 a special @code{<template>} tag has been added to the
   format allowing one to define a widget class's components.
