@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.resource-files.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -93,7 +90,7 @@
 
 (define-g-object-class "GtkRcStyle" gtk-rc-style
   (:superclass g-object
-   :export t
+   :export nil
    :interfaces nil
    :type-initializer "gtk_rc_style_get_type")
   nil)
@@ -261,7 +258,7 @@
         When using wildcards, use of \"?\" should be preferred over \"*\". This
         can reduce the matching complexity from O(n^2) to O(n). For example
         @code{\"Gtk*Box\"} can be turned into @code{\"Gtk?Box\"} and will still
-        match @class{gtk-hbox} and @class{gtk-vbox}.
+        match @code{GtkHBox} and @code{GtkVBox}.
       @end{item}
       @begin{item}
         The use of \"*\" wildcards should be restricted as much as possible,
@@ -503,7 +500,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkRcFlags" gtk-rc-flags
-  (:export t
+  (:export nil
    :type-initializer "gtk_rc_flags_get_type")
   (:fg 1)
   (:bg 2)
@@ -530,7 +527,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkRcTokenType" gtk-rc-token-type
-  (:export t
+  (:export nil
    :type-initializer "gtk_rc_token_type_get_type")
   (:invalid 270)
   (:include 271)
