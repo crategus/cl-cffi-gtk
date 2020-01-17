@@ -89,7 +89,7 @@
                                   :type :toplevel
                                   :title name
                                   :window-position :center))
-           (box (make-instance 'gtk-vbox))
+           (box (make-instance 'gtk-box :orientation :vertical))
            (bar (make-instance 'progress-bar :text name)))
       (gtk-container-add window box)
       (gtk-box-pack-start box bar :expand nil)
