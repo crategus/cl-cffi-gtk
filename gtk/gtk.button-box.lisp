@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -476,7 +476,7 @@
 
 (define-g-object-class "GtkHButtonBox" gtk-hbutton-box
   (:superclass gtk-button-box
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -506,9 +506,11 @@
   The spacing between buttons can be set with the @fun{gtk-box-spacing}
   function. The arrangement and layout of the buttons can be
   changed with the function @fun{gtk-button-box-set-layout}.
-
-  @class{gtk-hbutton-box} has been deprecated, use @class{gtk-button-box}
-  instead.")
+  @begin[Warning]{dictionary}
+    @class{gtk-hbutton-box} has been deprecated, use @class{gtk-button-box}
+    instead.
+  @end{dictionary}
+  @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -518,27 +520,27 @@
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-expand
-                       "expand" "gboolean" t t t)
+                       "expand" "gboolean" t t nil)
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-fill
-                       "fill" "gboolean" t t t)
+                       "fill" "gboolean" t t nil)
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-padding
-                       "padding" "guint" t t t)
+                       "padding" "guint" t t nil)
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
+                       "pack-type" "GtkPackType" t t nil)
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-position
-                       "position" "gint" t t t)
+                       "position" "gint" t t nil)
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-secondary
-                       "secondary" "gboolean" t t t)
+                       "secondary" "gboolean" t t nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -620,8 +622,6 @@
   (make-instance 'gtk-button-box
                  :orientation :horizontal))
 
-(export 'gtk-hbutton-box-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVButtonBox
 ;;;
@@ -643,7 +643,7 @@
 
 (define-g-object-class "GtkVButtonBox" gtk-vbutton-box
   (:superclass gtk-button-box
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -685,27 +685,27 @@
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-expand
-                       "expand" "gboolean" t t t)
+                       "expand" "gboolean" t t nil)
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-fill
-                       "fill" "gboolean" t t t)
+                       "fill" "gboolean" t t nil)
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-padding
-                       "padding" "guint" t t t)
+                       "padding" "guint" t t nil)
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
+                       "pack-type" "GtkPackType" t t nil)
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-position
-                       "position" "gint" t t t)
+                       "position" "gint" t t nil)
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-secondary
-                       "secondary" "gboolean" t t t)
+                       "secondary" "gboolean" t t nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -788,7 +788,5 @@
   @see-function{gtk-button-box-new}"
   (make-instance 'gtk-button-box
                  :orientation :vertical))
-
-(export 'gtk-vbutton-box-new)
 
 ;;; --- End of file gtk.button-box.lisp ----------------------------------------
