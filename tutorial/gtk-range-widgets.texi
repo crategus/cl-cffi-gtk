@@ -73,12 +73,9 @@ example the PageDown key).
 
 @emph{Note}
 
-The @xurl{gtk-hscrollbar} widget for a horizontal scrollbar and the
-@xurl{gtk-vscrollbar} widget for a vertical scrollbar are deprecated, but
-present in GTK+ 3.6.  Furthermore, the deprecated functions
-@xurl{gtk-hscrollbar-new} and @xurl{gtk-vscrollbar-new} are availabe in
-GTK+ 3.6, but these functions return a @xurl{gtk-scrollbar} widget and not a
-@code{gtk-hscrollbar} or @code{gtk-vscrollbar} widget.
+The @code{GtkHScrollbar} widget for a horizontal scrollbar and the
+@code{GtkVScrollbar} widget for a vertical scrollbar are deprecated since
+GTK+ 3.2 and not exported in the Lisp implementation.
 
 @c -----------------------------------------------------------------------------
 @node Scale Widgets, Common Range Functions, Scrollbar Widgets, Top
