@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -213,7 +213,7 @@
 
 (define-g-object-class "GtkHScrollbar" gtk-hscrollbar
   (:superclass gtk-scrollbar
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -261,8 +261,6 @@
                  :orientation :horizontal
                  :adjustment adjustment))
 
-(export 'gtk-hscrollbar-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVScrollbar
 ;;;
@@ -286,7 +284,7 @@
 
 (define-g-object-class "GtkVScrollbar" gtk-vscrollbar
   (:superclass gtk-scrollbar
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkOrientable")
@@ -333,7 +331,5 @@
   (make-instance 'gtk-scrollbar
                  :orientation :vertical
                  :adjustment adjustment))
-
-(export 'gtk-vscrollbar-new)
 
 ;;; --- End of file gtk.scrollbar.lisp -----------------------------------------
