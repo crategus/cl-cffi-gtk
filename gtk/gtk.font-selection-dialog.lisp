@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-selection-dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -55,28 +52,10 @@
 
 (define-g-object-class "GtkFontSelectionDialog" gtk-font-selection-dialog
   (:superclass gtk-dialog
-   :export t
+   :export nil
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_font_selection_dialog_get_type")
   nil)
-;  ((:cffi font-name
-;          gtk-font-selection-dialog-font-name
-;          (g-string :free-from-foreign t :free-to-foreign t)
-;          "gtk_font_selection_dialog_get_font_name"
-;          "gtk_font_selection_dialog_set_font_name")
-;   (:cffi preview-text
-;          gtk-font-selection-dialog-preview-text :string
-;          "gtk_font_selection_dialog_get_preview_text"
-;          "gtk_font_selection_dialog_set_preview_text")
-;   (:cffi apply-button
-;          gtk-font-selection-dialog-apply-button g-object
-;          "gtk_font_selection_dialog_get_apply_button" nil)
-;   (:cffi cancel-button
-;          gtk-font-selection-dialog-cancel-button g-object
-;          "gtk_font_selection_dialog_get_cancel_button" nil)
-;   (:cffi ok-button
-;          gtk-font-selection-dialog-ok-button g-object
-;          "gtk_font_selection_dialog_get_ok_button" nil)))
 
 ;;; ----------------------------------------------------------------------------
 
