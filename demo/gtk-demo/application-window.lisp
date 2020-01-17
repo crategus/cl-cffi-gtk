@@ -13,7 +13,7 @@
 (defvar *app* (make-app))
 
 (defun activate-action (action)
-  (let* ((name (gtk-action-get-name action))
+  (let* ((name (gtk-action-name action))
          (type (g-object-type-name action))
          (dialog (gtk-message-dialog-new (app-window *app*)
                                          '(:destroy-with-parent)
@@ -39,7 +39,7 @@
 
 (defun activate-radio-action (action current)
   (declare (ignore action))
-  (let ((name (gtk-action-get-name current))
+  (let ((name (gtk-action-name current))
         (type (g-object-type-name current))
         (active (gtk-toggle-action-get-active current))
         (value (gtk-radio-action-current-value current)))
