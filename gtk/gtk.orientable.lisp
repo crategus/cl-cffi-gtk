@@ -66,16 +66,14 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-orientable 'type)
- "@version{2013-3-30}
+ "@version{2020-1-16}
   @short{An interface for flippable widgets.}
 
   The @sym{gtk-orientable} interface is implemented by all widgets that can be
   oriented horizontally or vertically. Historically, such widgets have been
-  realized as subclasses of a common base class (e. g. @class{gtk-box},
-  @class{gtk-hbox}, @class{gtk-vbox} and @class{gtk-scale}, @class{gtk-hscale},
-  or @class{gtk-vscale}). @sym{gtk-orientable} is more flexible in that it
-  allows the orientation to be changed at runtime, allowing the widgets to
-  \"flip\".
+  realized as subclasses of a common base class, e. g. GtkBox, GtkHBox, GtkVBox.
+  @sym{gtk-orientable} is more flexible in that it allows the orientation to be
+  changed at runtime, allowing the widgets to \"flip\".
   @see-slot{gtk-orientable-orientation}")
 
 ;;; ----------------------------------------------------------------------------
