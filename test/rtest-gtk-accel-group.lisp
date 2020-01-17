@@ -16,7 +16,7 @@
 ;;;   gtk_accel_group_activate
 
 (defun activate-action (action)
-  (let ((name (gtk-action-get-name action))
+  (let ((name (gtk-action-name action))
         (type (g-object-type-name action)))
     (format t "action ~A of type ~A" name type)))
 
@@ -94,7 +94,7 @@
 
 (test gtk-accelerator-valid
   (is-true (gtk-accelerator-valid 113 '(:control-mask))))
-             
+
 ;;;   gtk_accelerator_parse
 
 (test gtk-accelerator-parse
