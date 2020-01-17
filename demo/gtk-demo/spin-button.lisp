@@ -36,7 +36,7 @@
 
         (let ((hbox (make-instance 'gtk-box :orientation :horizontal)))
           ;; A vertical Box with a label and a spin button for a day.
-          (let ((vbox (make-instance 'gtk-vbox))
+          (let ((vbox (make-instance 'gtk-box :orientation :vertical))
                 (spinner (make-instance 'gtk-spin-button
                                         :adjustment
                                         (make-instance 'gtk-adjustment
@@ -63,7 +63,7 @@
             (gtk-box-pack-start hbox vbox :padding 6))
 
           ;; A vertical Box with a label and a spin button for the month.
-          (let ((vbox (make-instance 'gtk-vbox))
+          (let ((vbox (make-instance 'gtk-box :orientation :vertical))
                 (spinner (make-instance 'gtk-spin-button
                                         :adjustment
                                         (make-instance 'gtk-adjustment
@@ -91,7 +91,7 @@
           (gtk-box-pack-start hbox vbox :padding 6))
 
           ;; A vertival Box with a label and a spin button for the year.
-          (let ((vbox (make-instance 'gtk-vbox))
+          (let ((vbox (make-instance 'gtk-box :orientation :vertical))
                 (spinner (make-instance 'gtk-spin-button
                                         :adjustment
                                         (make-instance 'gtk-adjustment

@@ -8,8 +8,8 @@
                                   :type :toplevel
                                   :title "Example Text Entry"
                                   :default-width 250))
-           (vbox (make-instance 'gtk-vbox))
-           (hbox (make-instance 'gtk-hbox))
+           (vbox (make-instance 'gtk-box :orientation :vertical))
+           (hbox (make-instance 'gtk-box :orientation :horizontal))
            (entry (make-instance 'gtk-entry
                                  :text "Hello"
                                  :max-length 50))

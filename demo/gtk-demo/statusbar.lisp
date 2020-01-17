@@ -9,7 +9,8 @@
                                   :title "Example Status Bar"
                                   :default-width 300
                                   :border-width 12))
-           (vbox (make-instance 'gtk-vbox
+           (vbox (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
