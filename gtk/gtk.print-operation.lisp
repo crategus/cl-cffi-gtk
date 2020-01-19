@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -101,7 +101,7 @@
 ;;;         gboolean   show-progress           Read / Write
 ;;;   GtkPrintStatus   status                  Read
 ;;;            gchar*  status-string           Read
-;;;         gboolean   support-selection	   Read / Write
+;;;         gboolean   support-selection       Read / Write
 ;;;         gboolean   track-print-status      Read / Write
 ;;;          GtkUnit   unit                    Read / Write
 ;;;         gboolean   use-full-page           Read / Write
@@ -209,7 +209,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-action atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-print-operation-action atdoc:*external-symbols*)
- "@version{2013-10-27}
+ "@version{2020-1-10}
   @begin{short}
     The action parameter to the @fun{gtk-print-operation-run} function
     determines what action the print operation should perform.
@@ -229,7 +229,8 @@
       the current print settings.}
     @entry[:preview]{Show the print preview.}
     @entry[:export]{Export to a file. This requires the
-      @slot[gtk-print-operation]{export-filename} property to be set.}
+      @slot[gtk-print-operation]{export-filename} property of the
+      @class{gtk-print-operation} to be set.}
   @end{table}
   @see-class{gtk-print-operation}
   @see-function{gtk-print-operation-run}")
@@ -1334,19 +1335,19 @@
 (setf (gethash 'gtk-print-operation-unit atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-unit 'function)
- "@version{2013-11-15}
+ "@version{2020-1-10}
   @syntax[]{(setf (gtk-print-operation-unit object) unit)}
   @argument[object]{a @class{gtk-print-operation} object}
   @argument[unit]{the unit to use}
   @begin{short}
-    Accessor of the @slot[gtk-print-operation]{uni} of the
+    Accessor of the @slot[gtk-print-operation]{unit} slot of the
     @class{gtk-print-operation} class.
   @end{short}
 
-  The @sym{(setf gtk-print-operation-unit)} slot access function
-  sets up the transformation for the cairo context obtained from
-  @class{gtk-print-context} in such a way that distances are measured in units
-  of a value of the @symbol{gtk-unit} enumeration.
+  The @sym{(setf gtk-print-operation-unit)} slot access function sets up the
+  transformation for the cairo context obtained from @class{gtk-print-context}
+  in such a way that distances are measured in units of a value of the
+  @symbol{gtk-unit} enumeration.
   @see-class{gtk-print-operation}")
 
 ;;; --- gtk-print-operation-use-full-page --------------------------------------
@@ -1451,9 +1452,9 @@
   @end{short}
 
   Normally that this function does not return until the rendering of all pages
-  is complete. You can connect to the \"status-changed\" signal on op to obtain
-  some information about the progress of the print operation. Furthermore, it
-  may use a recursive mainloop to show the print dialog.
+  is complete. You can connect to the \"status-changed\" signal on @arg{op} to
+  obtain some information about the progress of the print operation.
+  Furthermore, it may use a recursive mainloop to show the print dialog.
 
   If you call the @fun{gtk-print-operation-allow-async} function the operation
   will run asynchronously if this is supported on the platform. The \"done\"
