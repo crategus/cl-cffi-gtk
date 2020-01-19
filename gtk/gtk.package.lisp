@@ -6619,7 +6619,6 @@ setup_tree (void)
     @begin[GtkThemingEngine]{subsection}
       Theming renderers
 
-      @about-class{GtkThemingEngineClass}
       @about-class{gtk-theming-engine}
       @about-function{gtk-theming-engine-get}
       @about-function{gtk-theming-engine-get-direction}

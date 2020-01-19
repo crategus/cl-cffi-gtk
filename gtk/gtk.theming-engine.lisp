@@ -2,11 +2,11 @@
 ;;; gtk.theming-engine.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,10 +30,11 @@
 ;;;
 ;;;     Theming renderers
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     GtkThemingEngineClass
 ;;;     GtkThemingEngine
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_theming_engine_get
 ;;;     gtk_theming_engine_get_direction
@@ -59,170 +60,18 @@
 ;;;     gtk_theming_engine_state_is_running
 ;;;     gtk_theming_engine_load
 ;;;     gtk_theming_engine_register_property
+;;;
+;;; Properties
+;;;
+;;;     gchar*   name    Read / Write / Construct Only
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkThemingEngine
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkThemingEngineClass
-;;;
-;;; struct GtkThemingEngineClass {
-;;;   GObjectClass parent_class;
-;;;
-;;;   void (* render_line) (GtkThemingEngine *engine,
-;;;                         cairo_t          *cr,
-;;;                         gdouble           x0,
-;;;                         gdouble           y0,
-;;;                         gdouble           x1,
-;;;                         gdouble           y1);
-;;;   void (* render_background) (GtkThemingEngine *engine,
-;;;                               cairo_t          *cr,
-;;;                               gdouble           x,
-;;;                               gdouble           y,
-;;;                               gdouble           width,
-;;;                               gdouble           height);
-;;;   void (* render_frame) (GtkThemingEngine *engine,
-;;;                          cairo_t          *cr,
-;;;                          gdouble           x,
-;;;                          gdouble           y,
-;;;                          gdouble           width,
-;;;                          gdouble           height);
-;;;   void (* render_frame_gap) (GtkThemingEngine *engine,
-;;;                              cairo_t          *cr,
-;;;                              gdouble           x,
-;;;                              gdouble           y,
-;;;                              gdouble           width,
-;;;                              gdouble           height,
-;;;                              GtkPositionType   gap_side,
-;;;                              gdouble           xy0_gap,
-;;;                              gdouble           xy1_gap);
-;;;   void (* render_extension) (GtkThemingEngine *engine,
-;;;                              cairo_t          *cr,
-;;;                              gdouble           x,
-;;;                              gdouble           y,
-;;;                              gdouble           width,
-;;;                              gdouble           height,
-;;;                              GtkPositionType   gap_side);
-;;;   void (* render_check) (GtkThemingEngine *engine,
-;;;                          cairo_t          *cr,
-;;;                          gdouble           x,
-;;;                          gdouble           y,
-;;;                          gdouble           width,
-;;;                          gdouble           height);
-;;;   void (* render_option) (GtkThemingEngine *engine,
-;;;                           cairo_t          *cr,
-;;;                           gdouble           x,
-;;;                           gdouble           y,
-;;;                           gdouble           width,
-;;;                           gdouble           height);
-;;;   void (* render_arrow) (GtkThemingEngine *engine,
-;;;                          cairo_t          *cr,
-;;;                          gdouble           angle,
-;;;                          gdouble           x,
-;;;                          gdouble           y,
-;;;                          gdouble           size);
-;;;   void (* render_expander) (GtkThemingEngine *engine,
-;;;                             cairo_t          *cr,
-;;;                             gdouble           x,
-;;;                             gdouble           y,
-;;;                             gdouble           width,
-;;;                             gdouble           height);
-;;;   void (* render_focus) (GtkThemingEngine *engine,
-;;;                          cairo_t          *cr,
-;;;                          gdouble           x,
-;;;                          gdouble           y,
-;;;                          gdouble           width,
-;;;                          gdouble           height);
-;;;   void (* render_layout) (GtkThemingEngine *engine,
-;;;                           cairo_t          *cr,
-;;;                           gdouble           x,
-;;;                           gdouble           y,
-;;;                           PangoLayout      *layout);
-;;;   void (* render_slider) (GtkThemingEngine *engine,
-;;;                           cairo_t          *cr,
-;;;                           gdouble           x,
-;;;                           gdouble           y,
-;;;                           gdouble           width,
-;;;                           gdouble           height,
-;;;                           GtkOrientation    orientation);
-;;;   void (* render_handle)    (GtkThemingEngine *engine,
-;;;                              cairo_t          *cr,
-;;;                              gdouble           x,
-;;;                              gdouble           y,
-;;;                              gdouble           width,
-;;;                              gdouble           height);
-;;;   void (* render_activity) (GtkThemingEngine *engine,
-;;;                             cairo_t          *cr,
-;;;                             gdouble           x,
-;;;                             gdouble           y,
-;;;                             gdouble           width,
-;;;                             gdouble           height);
-;;;
-;;;   GdkPixbuf * (* render_icon_pixbuf) (GtkThemingEngine    *engine,
-;;;                                       const GtkIconSource *source,
-;;;                                       GtkIconSize          size);
-;;;   void (* render_icon) (GtkThemingEngine *engine,
-;;;                         cairo_t          *cr,
-;;;             GdkPixbuf        *pixbuf,
-;;;                         gdouble           x,
-;;;                         gdouble           y);
-;;; };
-;;;
-;;; Base class for theming engines.
-;;;
-;;; GObjectClass parent_class;
-;;;     The parent class.
-;;;
-;;; render_line ()
-;;;     Renders a line between two points.
-;;;
-;;; render_background ()
-;;;     Renders the background area of a widget region.
-;;;
-;;; render_frame ()
-;;;     Renders the frame around a widget area.
-;;;
-;;; render_frame_gap ()
-;;;     Renders the frame around a widget area with a gap in it.
-;;;
-;;; render_extension ()
-;;;     Renders a extension to a box, usually a notebook tab.
-;;;
-;;; render_check ()
-;;;     Renders a checkmark, as in GtkCheckButton.
-;;;
-;;; render_option ()
-;;;     Renders an option, as in GtkRadioButton.
-;;;
-;;; render_arrow ()
-;;;     Renders an arrow pointing to a certain direction.
-;;;
-;;; render_expander ()
-;;;     Renders an element what will expose/expand part of the UI, as in
-;;;     GtkExpander.
-;;;
-;;; render_focus ()
-;;;     Renders the focus indicator.
-;;;
-;;; render_layout ()
-;;;     Renders a PangoLayout
-;;;
-;;; render_slider ()
-;;;     Renders a slider control, as in GtkScale.
-;;;
-;;; render_handle ()
-;;;     Renders a handle to drag UI elements, as in GtkPaned.
-;;;
-;;; render_activity ()
-;;;     Renders an area displaying activity, such as in GtkSpinner, or
-;;;     GtkProgressBar.
-;;;
-;;; render_icon_pixbuf ()
-;;;     Renders an icon as a GdkPixbuf.
-;;;
-;;; render_icon ()
-;;;     Renders an icon given as a GdkPixbuf.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkThemingEngine
@@ -239,24 +88,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-theming-engine 'type)
- "@version{2013-11-27}
+ "@version{2020-1-17}
   @begin{short}
-    @sym{gtk-theming-engine} is the object used for rendering themed content in
-    GTK+ widgets. Even though GTK+ has a default implementation, it can be
-    overridden in CSS files by enforcing a @sym{gtk-theming-engine} object to
-    be loaded as a module.
+    @sym{gtk-theming-engine} was the object used for rendering themed content in
+    GTK+ widgets.
   @end{short}
+  It used to allow overriding GTK+'s default implementation of rendering
+  functions by allowing engines to be loaded as modules.
 
-  In order to implement a theming engine, a @sym{gtk-theming-engine} subclass
-  must be created, alongside the CSS file that will reference it, the theming
-  engine would be created as an @code{.so} library, and installed in
-  @code{$(gtk-modules-dir)/theming-engines/}.
-
-  @sym{gtk-theming-engine}s have limited access to the object they are
-  rendering, the @sym{gtk-theming-engine} API has read-only accessors to the
-  style information contained in the rendered object's
-  @class{gtk-style-context}.
-  @see-class{gtk-style-context}")
+  @sym{gtk-theming-engine} has been deprecated in GTK 3.14 and will be ignored
+  for rendering. The advancements in CSS theming are good enough to allow
+  themers to achieve their goals without the need to modify source code.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

@@ -334,6 +334,6 @@ Deprecated
     gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.24
     gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.24
     gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.24 &
- +  gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8*
+    gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.24 &
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.24
 
