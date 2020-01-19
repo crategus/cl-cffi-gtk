@@ -807,13 +807,14 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-state-type atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2020-1-18}
   @begin{short}
-    This type indicates the current state of a widget; the state determines how
-    the widget is drawn. The @sym{gtk-state-type} enumeration is also used to
-    identify different colors in a @class{gtk-style} object for drawing, so
-    states can be used for subparts of a widget as well as entire widgets.
+    This type indicates the current state of a widget.
   @end{short}
+  The state determines how the widget is drawn. The @sym{gtk-state-type}
+  enumeration is also used to identify different colors in a deprecated
+  @code{GtkStyle} object for drawing, so states can be used for subparts of a
+  widget as well as entire widgets.
   @begin{pre}
 (define-g-enum \"GtkStateType\" gtk-state-type
   (:export t
@@ -847,7 +848,6 @@
     enumeration have been deprecated in favor of alternatives using the
     @symbol{gtk-state-flags} enumeration.
   @end{dictionary}
-  @see-class{gtk-style}
   @see-symbol{gtk-state-flags}")
 
 ;;; ----------------------------------------------------------------------------
