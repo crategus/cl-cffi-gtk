@@ -185,20 +185,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_orientation ()
-;;;
-;;; void gtk_page_setup_set_orientation (GtkPageSetup *setup,
-;;;                                      GtkPageOrientation orientation);
-;;;
-;;; Sets the page orientation of the GtkPageSetup.
-;;;
-;;; setup :
-;;;     a GtkPageSetup
-;;;
-;;; orientation :
-;;;     a GtkPageOrientation value
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_set_orientation" gtk-page-setup-set-orientation) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[orientation]{a @class{gtk-page-orientation} value}
+  @short{Sets the page orientation of the @class{gtk-page-setup} object.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-page-orientation}"
+  (setup (g-object gtk-page-setup))
+  (orientation gtk-page-orientation))
+
+(export 'gtk-page-setup-set-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_get_paper_size ()
@@ -215,6 +215,19 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_paper_size" gtk-page-setup-get-paper-size)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @return{The paper size.}
+  @short{Gets the paper size of the @class{gtk-page-setup} object.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-paper-size}"
+  (setup (g-object gtk-page-setup)))
+
+(export 'gtk-page-setup-get-paper-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_paper_size ()
@@ -251,6 +264,21 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_top_margin" gtk-page-setup-get-top-margin) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The top margin.}
+  @short{Gets the top margin of the @class{gtk-page-setup} object in units of
+    @arg{unit}.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-top-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_top_margin ()
@@ -292,6 +320,22 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_page_setup_get_bottom_margin" gtk-page-setup-get-bottom-margin)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The bottom margin.}
+  @short{Gets the bottom margin of the @class{gtk-page-setup} object in units of
+    @arg{unit}.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-top-margin)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_bottom_margin ()
 ;;;
@@ -332,6 +376,22 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_page_setup_get_left_margin" gtk-page-setup-get-left-margin)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The left margin.}
+  @short{Gets the left margin of the @class{gtk-page-setup} object in units of
+    @arg{unit}.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-left-margin)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_left_margin ()
 ;;;
@@ -371,6 +431,22 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_right_margin" gtk-page-setup-get-right-margin)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The right margin.}
+  @short{Gets the right margin of the @class{gtk-page-setup} object in units of
+    @arg{unit}.}
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-right-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_right_margin ()
@@ -433,6 +509,25 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_page_setup_get_paper_width" gtk-page-setup-get-paper-width)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The paper width.}
+  @short{Returns the paper width of the @class{gtk-page-setup} object in units
+    of @arg{unit}.}
+
+  Note that this function takes orientation, but not margins into consideration.
+  See the @fun{gtk-page-setup-get-page-width} function.
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-paper-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_get_paper_height ()
 ;;;
@@ -454,6 +549,25 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_paper_height" gtk-page-setup-get-paper-height)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The paper height.}
+  @short{Returns the paper height of the @class{gtk-page-setup} object in units
+    of @arg{unit}.}
+
+  Note that this function takes orientation, but not margins into consideration.
+  See the @fun{gtk-page-setup-get-page-height} function.
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-paper-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_get_page_width ()
@@ -477,6 +591,25 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_page_setup_get_page_width" gtk-page-setup-get-page-width)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The page width.}
+  @short{Returns the page width of the @class{gtk-page-setup} object in units
+    of @arg{unit}.}
+
+  Note that this function takes orientation and margins into consideration.
+  See the @fun{gtk-page-setup-get-paper-width} function.
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-page-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_get_page_height ()
 ;;;
@@ -499,6 +632,25 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_page_height" gtk-page-setup-get-page-height)
+    :double
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-8}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @argument[unit]{the unit for the return value}
+  @return{The page height.}
+  @short{Returns the page height of the @class{gtk-page-setup} object in units
+    of @arg{unit}.}
+
+  Note that this function takes orientation and margins into consideration.
+  See the @fun{gtk-page-setup-get-paper-height} function.
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-unit}"
+  (setup (g-object gtk-page-setup))
+  (unit gtk-unit))
+
+(export 'gtk-page-setup-get-page-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_new_from_file ()
@@ -684,4 +836,3 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ---- End of file gtk.page-setup.lisp ---------------------------------------
-
