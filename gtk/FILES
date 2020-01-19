@@ -133,7 +133,7 @@ GTK+ Widgets and Objects
  +  gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24
  +  gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
  +  gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
- +  gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24
+ +  gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24 &
  +  gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24
  +  gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.24
  +  gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.24
@@ -288,32 +288,52 @@ Theming in GTK+
 
 Deprecated
 
-    not implemented                  - GtkSymbolicColor
-    not implemented                  - GtkGradient
+    Deprecated since GTK+ 3.0
 
- +  gtk.resource-files.lisp          - Resource Files (**)         - GTK+ 3.6.4*
- +  gtk.style.lisp                   - GtkStyle (**)               - GTK+ 3.6.4*
+    gtk.resource-files.lisp          - Resource Files (not exported)
+    gtk.style.lisp                   - GtkStyle (not exported)
+
+    Deprecated since GTK+ 3.2
+
+    gtk.font-selection.lisp          - GtkFontSelection (not exported)
+    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (not exported)
+
+    Deprecated since GTK+ 3.4
+
+ +  gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4*
  +  gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4*
+
+    Deprecated since GTK+ 3.6
+
  +  gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4*
  +  gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4*
  +  gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4*
- +  gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4*
- +  gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4*
- +  gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4*
+
+    Deprecated since GTK+ 3.8
+
+    not implemented                  - GtkSymbolicColor
+    not implemented                  - GtkGradient
+
+    Deprecated since GTK+ 3.10
+
  +  gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.8.8*
- +  gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.8.8*
- +  gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8*
- +  gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8*
+    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.24
+    gtk.action.lisp                  - GtkAction                   - GTK+ 3.24
+    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.24
  +  gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8*
- +  gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8*
+    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.24
  +  gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
- +  gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8*
- +  gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.24
- +  gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
- +  gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
- +  gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
- +  gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.6.4*
- +  gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10 *
+
+    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.24
+    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.24
+    gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.24 &
+    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.24 &
+
+    Deprecated since GTK+ 3.14
+
+    gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.24
+    gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.24
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.24 &
  +  gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8*
- +  gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10 *
+    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.24
 
