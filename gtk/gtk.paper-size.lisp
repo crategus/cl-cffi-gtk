@@ -97,14 +97,14 @@
       (documentation 'gtk-paper-size 'type)
  "@version{2013-11-12}
   @begin{short}
-    @sym{gtk-paper-size} handles paper sizes. It uses the standard called
-    \"PWG 5101.1-2002 PWG: Standard for Media Standardized Names\" to name the
-    paper sizes and to get the data for the page sizes. In addition to
-    standard paper sizes, @class{gtk-paper-size} allows to construct custom
-    paper sizes with arbitrary dimensions.
+    @sym{gtk-paper-size} handles paper sizes.
   @end{short}
+  It uses the standard called \"PWG 5101.1-2002 PWG: Standard for Media
+  Standardized Names\" to name the paper sizes and to get the data for the page
+  sizes. In addition to standard paper sizes, @sym{gtk-paper-size} allows to
+  construct custom paper sizes with arbitrary dimensions.
 
-  The @symbol{gtk-paper-size} object stores not only the dimensions (width and
+  The @sym{gtk-paper-size} object stores not only the dimensions (width and
   height) of a paper size and its name, it also provides default print margins.
 
   Printing support has been added in GTK+ 2.10.
