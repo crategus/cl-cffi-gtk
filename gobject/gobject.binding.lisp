@@ -30,31 +30,31 @@
 ;;;
 ;;;     Bind two object properties
 ;;;
-;;; Functions
-;;;
-;;;     g_binding_get_source 
-;;;     g_binding_get_source_property 
-;;;     g_binding_get_target 
-;;;     g_binding_get_target_property 
-;;;     g_binding_get_flags 
-;;;     g_binding_unbind 
-;;;     g_object_bind_property 
-;;;     (*GBindingTransformFunc) 
-;;;     g_object_bind_property_full 
-;;;     g_object_bind_property_with_closures 
-;;;
-;;; Properties
-;;;
-;;;     GBindingFlags  flags            Read / Write / Construct Only
-;;;     GObject *      source           Read / Write / Construct Only
-;;;     gchar *        source-property  Read / Write / Construct Only
-;;;     GObject *      target           Read / Write / Construct Only
-;;;     gchar *        target-property  Read / Write / Construct Only
-;;;
 ;;; Types and Values
 ;;;
 ;;;     GBinding
 ;;;     GBindingFlags
+;;;
+;;; Functions
+;;;
+;;;     g_binding_get_source
+;;;     g_binding_get_source_property
+;;;     g_binding_get_target
+;;;     g_binding_get_target_property
+;;;     g_binding_get_flags
+;;;     g_binding_unbind
+;;;     g_object_bind_property
+;;;     (*GBindingTransformFunc)
+;;;     g_object_bind_property_full
+;;;     g_object_bind_property_with_closures
+;;;
+;;; Properties
+;;;
+;;;     GBindingFlags   flags              Read / Write / Construct Only
+;;;           GObject*  source             Read / Write / Construct Only
+;;;             gchar*  source-property    Read / Write / Construct Only
+;;;           GObject*  target             Read / Write / Construct Only
+;;;             gchar*  target-property    Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -82,11 +82,11 @@
       (gethash 'g-binding-flags atdoc:*external-symbols*)
  "@version{2019-3-12}
   @begin{short}
-    Flags to be passed to @fun{g-object-bind-property} or
-    @fun{g-object-bind-property-full}.
+    Flags to be passed to the @fun{g-object-bind-property} or
+    @fun{g-object-bind-property-full} functions.
   @end{short}
-  
-  This enumeration can be extended at later date.  
+
+  This enumeration can be extended at later date.
   @begin{pre}
 (define-g-flags \"GBindingFlags\" g-binding-flags
   (:export t
@@ -94,7 +94,7 @@
   (:default 0)
   (:bidirectional 1)
   (:sync-create 2)
-  (:invert-boolean 4))  
+  (:invert-boolean 4))
   @end{pre}
   @begin[code]{table}
     @entry[:default]{The default binding; if the source property changes, the
@@ -107,7 +107,7 @@
     @entry[:invert-bool]{If the two properties being bound are booleans, setting
       one to @em{true} will result in the other being set to @code{nil} and vice
       versa.
-      This flag will only work for boolean properties, and cannot be used when 
+      This flag will only work for boolean properties, and cannot be used when
       passing custom transformation functions to
       @fun{g-object-bind-property-full}.}
   @end{table}
@@ -123,7 +123,7 @@
    :export t
    :interfaces nil
    :type-initializer "g_binding_get_type")
-  ((flag
+  ((flags
     g-binding-flags
     "flags" "GBindingFlags" t t)
    (source
@@ -137,92 +137,151 @@
     "target" "GObject" t t)
    (target-property
     g-binding-target-property
-    "target-property" "gchararray" t t)
-    ))
+    "target-property" "gchararray" t t)))
 
-#|
-
-
-
-
-
-
-
-
-Description
-
-GBinding is the representation of a binding between a property on a GObject instance (or source) and another property on another GObject instance (or target). Whenever the source property changes, the same value is applied to the target property; for instance, the following binding:
-
-g_object_bind_property (object1, "property-a",
-                        object2, "property-b",
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-binding 'type)
+ "@version{2019-6-1}
+  @begin{short}
+    @sym{g-binding} is the representation of a binding between a property on a
+    @class{g-object} instance, or source, and another property on another
+    @class{g-object} instance, or target.
+  @end{short}
+  Whenever the source property changes, the same value is applied to the target
+  property; for instance, the following binding:
+  @begin{pre}
+g_object_bind_property (object1, \"property-a\",
+                        object2, \"property-b\",
                         G_BINDING_DEFAULT);
-will cause the property named "property-b" of object2 to be updated every time g_object_set() or the specific accessor changes the value of the property "property-a" of object1 .
+  @end{pre}
+  will cause the property named @code{property-b} of @code{object2} to be
+  updated every time the @fun{g-object-set} function or the specific accessor
+  changes the value of the property @code{property-a} of @code{object1}.
 
-It is possible to create a bidirectional binding between two properties of two GObject instances, so that if either property changes, the other is updated as well, for instance:
-
-g_object_bind_property (object1, "property-a",
-                        object2, "property-b",
+  It is possible to create a bidirectional binding between two properties of two
+  @class{g-object} instances, so that if either property changes, the other is
+  updated as well, for instance:
+  @begin{pre}
+g_object_bind_property (object1, \"property-a\",
+                        object2, \"property-b\",
                         G_BINDING_BIDIRECTIONAL);
-will keep the two properties in sync.
+  @end{pre}
+  will keep the two properties in sync.
 
-It is also possible to set a custom transformation function (in both directions, in case of a bidirectional binding) to apply a custom transformation from the source value to the target value before applying it; for instance, the following binding:
-
-g_object_bind_property_full (adjustment1, "value",
-                             adjustment2, "value",
+  It is also possible to set a custom transformation function, in both
+  directions, in case of a bidirectional binding, to apply a custom
+  transformation from the source value to the target value before applying it;
+  for instance, the following binding:
+  @begin{pre}
+g_object_bind_property_full (adjustment1, \"value\",
+                             adjustment2, \"value\",
                              G_BINDING_BIDIRECTIONAL,
                              celsius_to_fahrenheit,
                              fahrenheit_to_celsius,
                              NULL, NULL);
-will keep the "value" property of the two adjustments in sync; the celsius_to_fahrenheit function will be called whenever the "value" property of adjustment1 changes and will transform the current value of the property before applying it to the "value" property of adjustment2 .
+  @end{pre}
+  will keep the @code{value} property of the two adjustments in sync; the
+  @code{celsius_to_fahrenheit} function will be called whenever the @code{value}
+  property of @code{adjustment1} changes and will transform the current value of
+  the property before applying it to the @code{value} property of
+  @code{adjustment2}.
 
-Vice versa, the fahrenheit_to_celsius function will be called whenever the "value" property of adjustment2 changes, and will transform the current value of the property before applying it to the "value" property of adjustment1 .
+  Vice versa, the @code{fahrenheit_to_celsius} function will be called whenever
+  the @code{value} property of @code{adjustment2} changes, and will transform
+  the current value of the property before applying it to the @code{value}
+  property of @code{adjustment1}.
 
-Note that GBinding does not resolve cycles by itself; a cycle like
-
+  Note that @sym{g-binding} does not resolve cycles by itself; a cycle like
+  @begin{pre}
 object1:propertyA -> object2:propertyB
 object2:propertyB -> object3:propertyC
 object3:propertyC -> object1:propertyA
-might lead to an infinite loop. The loop, in this particular case, can be avoided if the objects emit the “notify” signal only if the value has effectively been changed. A binding is implemented using the “notify” signal, so it is susceptible to all the various ways of blocking a signal emission, like g_signal_stop_emission() or g_signal_handler_block().
+  @end{pre}
+  might lead to an infinite loop. The loop, in this particular case, can be
+  avoided if the objects emit the \"notify\" signal only if the value has
+  effectively been changed. A binding is implemented using the \"notify\"
+  signal, so it is susceptible to all the various ways of blocking a signal
+  emission, like @fun{g-signal-stop-emission} or @fun{g-signal-handler-block}.
 
-A binding will be severed, and the resources it allocates freed, whenever either one of the GObject instances it refers to are finalized, or when the GBinding instance loses its last reference.
+  A binding will be severed, and the resources it allocates freed, whenever
+  either one of the @class{g-object} instances it refers to are finalized, or
+  when the @sym{g-binding} instance loses its last reference.
 
-Bindings for languages with garbage collection can use g_binding_unbind() to explicitly release a binding between the source and target properties, instead of relying on the last reference on the binding, source, and target instances to drop.
+  Bindings for languages with garbage collection can use the
+  @fun{g-binding-unbind} function to explicitly release a binding between the
+  source and target properties, instead of relying on the last reference on the
+  binding, source, and target instances to drop.
 
-GBinding is available since GObject 2.26
+  @sym{g-binding} is available since version 2.26.
+  @see-slot{g-binding-flags}
+  @see-slot{g-binding-source}
+  @see-slot{g-binding-source-property}
+  @see-slot{g-binding-target}
+  @see-slot{g-binding-target-poperty}")
 
-Since 2.26
+;;; ----------------------------------------------------------------------------
+;;; Propery and Accessor Details
+;;; ----------------------------------------------------------------------------
 
+;;; --- g-binding-flags --------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "flags" 'g-binding) 't)
+ "The @code{flags} property of type @symbol{g-binding-flags}
+  (Read / Write / Construct Only) @br{}
+  Flags to be used to control the @sym{g-binding}.")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-binding-flags atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-binding-flags 'function)
+ "@version{2019-6-1}
+  @begin{short}
+    Accessor of the @slot[g-binding]{flags} slot of the @class{g-binding} class.
+  @end{short}
+  @see-class{g-binding}")
 
+;;; --- g-binding-source -------------------------------------------------------
 
-Property Details
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "source" 'g-binding) 't)
+ "The @code{source} property of type @class{g-object}
+  (Read / Write / Construct Only) @br{}
+  The @class{g-object} that should be used as the source of the binding.")
 
-The “flags” property
-  “flags”                    GBindingFlags
-Flags to be used to control the GBinding
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-binding-source atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-binding-source 'function)
+ "@version{2019-6-1}
+  @begin{short}
+    Accessor of the @slot[g-binding]{source} slot of the @class{g-binding}
+    class.
+  @end{short}
+  @see-class{g-binding}")
 
-Flags: Read / Write / Construct Only
+;;; --- g-binding-source-property ----------------------------------------------
 
-Since: 2.26
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "source-property" 'g-binding) 't)
+ "The @code{source-property} property of type @code{:string}
+  (Read / Write / Construct Only) @br{}
+  The name of the property of the source that should be used as the source of
+  the binding.
+  Default value: @code{nil}")
 
-The “source” property
-  “source”                   GObject *
-The GObject that should be used as the source of the binding
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-binding-source-property atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-binding-source-property 'function)
+ "@version{2019-6-1}
+  @begin{short}
+    Accessor of the @slot[g-binding]{source-property} slot of the
+    @class{g-binding} class.
+  @end{short}
+  @see-class{g-binding}")
 
-Flags: Read / Write / Construct Only
-
-Since: 2.26
-
-The “source-property” property
-  “source-property”          gchar *
-The name of the property of “source” that should be used as the source of the binding
-
-Flags: Read / Write / Construct Only
-
-Default value: NULL
-
-Since: 2.26
+#|
 
 The “target” property
   “target”                   GObject *
@@ -366,20 +425,20 @@ Since: 2.26
     @class{g-binding} reference count reaches zero.
   @end{return}
   @begin{short}
-    Creates a binding between @arg{source_property} on @arg{source} and 
+    Creates a binding between @arg{source_property} on @arg{source} and
     @arg{target_property} on @arg{target}.
   @end{short}
   Whenever the @arg{source-property} is changed the @arg{target-property} is
-  updated using the same value. For instance:  
+  updated using the same value. For instance:
   @begin{pre}
     (g-object-bind-property action \"active\" widget \"sensitive\" :default)
   @end{pre}
-  Will result in the @code{\"sensitive\"} property of the widget 
+  Will result in the @code{\"sensitive\"} property of the widget
   @class{g-object} instance to be updated with the same value of the
   @code{\"active\"} property of the action @class{g-object} instance.
 
   If @arg{flags} contains @code{:bidirectional} then the binding will be mutual:
-  if @arg{target_property} on @arg{target} changes then the 
+  if @arg{target_property} on @arg{target} changes then the
   @arg{source_property} on @arg{source} will be updated as well.
 
   The binding will automatically be removed when either the source or the
@@ -387,7 +446,7 @@ Since: 2.26
   source and the target you can just call @fun{g-object-unref} on the returned
   @class{g-binding} instance.
 
-  A @class{g-object} can have multiple bindings.  
+  A @class{g-object} can have multiple bindings.
 
   Since 2.26
   @see-class{g-binding}
@@ -522,7 +581,7 @@ Since: 2.26
 ;;;                                       GBindingFlags flags,
 ;;;                                       GClosure *transform_to,
 ;;;                                       GClosure *transform_from);
-;;;                                      
+;;;
 ;;; Creates a binding between source_property on source and target_property on
 ;;; target , allowing you to set the transformation functions to be used by the
 ;;; binding.
@@ -552,7 +611,7 @@ Since: 2.26
 ;;; transform_from :
 ;;;     a GClosure wrapping the transformation function from the target to the
 ;;;     source , or NULL to use the default
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GBinding instance representing the binding between the two GObject
 ;;;     instances. The binding is released whenever the GBinding reference count
