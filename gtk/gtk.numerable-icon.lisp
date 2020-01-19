@@ -2,11 +2,11 @@
 ;;; gtk.numerable-icon.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2014 Dieter Kaiser
+;;; Copyright (C) 2014 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,24 +28,44 @@
 ;;;
 ;;; GtkNumerableIcon
 ;;;
-;;; A GIcon that allows numbered emblems
+;;;     A GIcon that allows numbered emblems
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkNumerableIcon
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_numerable_icon_new
 ;;;     gtk_numerable_icon_new_with_style_context
-;;;     gtk_numerable_icon_get_background_gicon
-;;;     gtk_numerable_icon_set_background_gicon
-;;;     gtk_numerable_icon_get_background_icon_name
-;;;     gtk_numerable_icon_set_background_icon_name
-;;;     gtk_numerable_icon_get_count
-;;;     gtk_numerable_icon_set_count
-;;;     gtk_numerable_icon_get_label
-;;;     gtk_numerable_icon_set_label
-;;;     gtk_numerable_icon_get_style_context
-;;;     gtk_numerable_icon_set_style_context
+;;;     gtk_numerable_icon_get_background_gicon            Accessor
+;;;     gtk_numerable_icon_set_background_gicon            Accessor
+;;;     gtk_numerable_icon_get_background_icon_name        Accessor
+;;;     gtk_numerable_icon_set_background_icon_name        Accessor
+;;;     gtk_numerable_icon_get_count                       Accessor
+;;;     gtk_numerable_icon_set_count                       Accessor
+;;;     gtk_numerable_icon_get_label                       Accessor
+;;;     gtk_numerable_icon_set_label                       Accessor
+;;;     gtk_numerable_icon_get_style_context               Accessor
+;;;     gtk_numerable_icon_set_style_context               Accessor
+;;;
+;;; Properties
+;;;
+;;;           GIcon*   background-icon         Read / Write
+;;;           gchar*   background-icon-name    Read / Write
+;;;            gint    count                   Read / Write
+;;;           gchar*   label                   Read / Write
+;;; GtkStyleContext*   style-context	       Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GEmblemedIcon
+;;;         ╰── GtkNumerableIcon
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkNumerableIcon implements GIcon.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -77,7 +97,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-numerable-icon 'type)
- "@version{2014-1-27}
+ "@version{2020-1-14}
   @begin{short}
     @sym{gtk-numerable-icon} is a subclass of @class{g-emblemed-icon} that
     can show a number or short string as an emblem.
@@ -86,20 +106,24 @@
 
   It supports theming by taking font and color information from a provided
   @class{gtk-style-context}; see the function
-  @fun{gtk-numerable-icon-set-style-context}.
+  @fun{gtk-numerable-icon-style-context}.
+  @begin[Example]{dictionary}
+    Typical numerable icons:
 
-  @b{Example}. Typical numerable icons
-
-  @image[numerableicon]{} @image[numerableicon2]{}
-
+    @image[numerableicon]{}
+    @image[numerableicon2]{}
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon} has been deprecated since version 3.14 and should
+    not be used in newly-written code.
+  @end{dictionary}
   @see-slot{gtk-numerable-icon-background-icon}
   @see-slot{gtk-numerable-icon-background-icon-name}
   @see-slot{gtk-numerable-icon-count}
   @see-slot{gtk-numerable-icon-label}
   @see-slot{gtk-numerable-icon-style-context}
   @see-class{g-emblemed-icon}
-  @see-class{gtk-style-context}
-  @see-function{gtk-numerable-icon-set-style-context}")
+  @see-class{gtk-style-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -118,12 +142,36 @@
 (setf (gethash 'gtk-numerable-icon-background-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-background-icon 'function)
- "@version{2014-1-27}
-  Accessor of the @slot[gtk-numerable-icon]{background-icon} slot of the
-  @class{gtk-numerable-icon} class.
+ "@version{2020-1-14}
+  @syntax[]{(gtk-numerable-icon-background-icon object) => icon}
+  @syntax[]{(setf (gtk-numerable-icon-background-icon object) icon)}
+  @argument[object]{a @class{gtk-numerable-icon} object}
+  @argument[icon]{a @class{g-icon}, or @code{nil}}
+  @begin{short}
+    Accessor of the @slot[gtk-numerable-icon]{background-icon} slot of the
+    @class{gtk-numerable-icon} class.
+  @end{short}
+
+  The @sym{gtk-numerable-icon-background-icon} slot access function
+  returns the @class{g-icon} that was set as the base background image, or
+  @code{nil} if there's none.
+
+  The @sym{(setf gtk-numerable-icon-background-icon)} slot access function
+  updates the icon to use @arg{icon} as the base background image.
+
+  If @arg{icon} is @code{nil}, the numerable icon will go back using style
+  information or default theming for its background image.
+
+  If this method is called and an icon name was already set as background for
+  the icon, @arg{icon} will be used, i. e. the last method called between the
+  functions @sym{(setf gtk-numerable-icon-background-icon)} and
+  @sym{(setf gtk-numerable-icon-background-icon-name)} has always priority.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-background-icon} has been deprecated since version
+    3.14 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-get-background-gicon}
-  @see-function{gtk-numerable-icon-set-background-gicon}")
+  @see-function{gtk-numerable-icon-background-icon-name}")
 
 ;;; --- gtk-numerable-icon-background-icon-name --------------------------------
 
@@ -140,12 +188,37 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-background-icon-name 'function)
- "@version{2014-1-27}
-  Accessor of the @slot[gtk-numerable-icon]{background-icon-name} slot of the
-  @class{gtk-numerable-icon} class.
+ "@version{2020-1-14}
+  @syntax[]{(gtk-numerable-icon-background-icon-name object) => icon-name}
+  @syntax[]{(setf (gtk-numerable-icon-background-icon-name object) icon-name)}
+  @argument[object]{a @class{gtk-numerable-icon} object}
+  @argument[icon-name]{an icon name, or @code{nil}}
+  @begin{short}
+    Accessor of the @slot[gtk-numerable-icon]{background-icon-name} slot of the
+    @class{gtk-numerable-icon} class.
+  @end{short}
+
+  The @sym{gtk-numerable-icon-background-icon-name} slot access function
+  returns the icon name used as the base background image, or @code{nil}
+  if there is none.
+
+  The @sym{(setf gtk-numerable-icon-background-icon-name)} slot access function
+  updates the icon to use the icon named @arg{icon-name} from the current
+  icon theme as the base background image.
+
+  If @arg{icon-name} is @code{nil}, @arg{numerable-icon} will go back using
+  style information or default theming for its background image.
+
+  If this method is called and a @class{g-icon} was already set as background
+  for the icon, @arg{icon-name} will be used, i. e. the last method called
+  between the functions @sym{(setf gtk-numerable-icon-background-icon-name)}
+  and @sym{(setf gtk-numerable-icon-background-icon)} has always priority.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-backgroun-icon-name} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-get-background-icon-name}
-  @see-function{gtk-numerable-icon-set-background-icon-name}")
+  @see-function{gtk-numerable-icon-background-icon}")
 
 ;;; --- gtk-numerable-icon-count -----------------------------------------------
 
@@ -160,12 +233,34 @@
 (setf (gethash 'gtk-numerable-icon-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-count 'function)
- "@version{2014-1-27}
-  Accessor of the @slot[gtk-numerable-icon]{count} slot of the
-  @class{gtk-numerable-icon} class.
+ "@version{2020-1-14}
+  @syntax[]{(gtk-numerable-icon-count object) => count}
+  @syntax[]{(setf (gtk-numerable-icon-count object) count)}
+  @argument[object]{a @class{gtk-numerable-icon} object}
+  @argument[count]{a number between -99 and 99}
+  @begin{short}
+    Accessor of the @slot[gtk-numerable-icon]{count} slot of the
+    @class{gtk-numerable-icon} class.
+  @end{short}
+
+  The @sym{gtk-numerable-icon-count} slot access function
+  returns the value currently displayed by the numerable icon.
+
+  The @sym{(setf gtk-numerable-icon-count)} slot access function
+  sets the currently displayed value of the numerable icon to @arg{count}.
+
+  The numeric value is always clamped to make it two digits, i. e. between -99
+  and 99. Setting a count of zero removes the emblem. If this method is called,
+  and a label was already set on the icon, it will automatically be reset to
+  @code{nil} before rendering the number, i. e. the last method called between
+  the functions @sym{(setf gtk-numerable-icon-count)} and
+  @sym{(gtk-numerable-icon-label)} has always priority.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-count} has been deprecated since version 3.14 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-get-count}
-  @see-function{gtk-numerable-icon-set-count}")
+  @see-function{gtk-numerable-label}")
 
 ;;; --- gtk-numerable-icon-label -----------------------------------------------
 
@@ -179,12 +274,38 @@
 (setf (gethash 'gtk-numerable-icon-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-label 'function)
- "@version{2014-1-27}
-  Accessor of the @slot[gtk-numerable-icon]{label} slot of the
-  @class{gtk-numerable-icon} class.
+ "@version{2020-1-14}
+  @syntax[]{(gtk-numerable-icon-label object) => label}
+  @syntax[]{(setf (gtk-numerable-icon-label object) label)}
+  @argument[object]{a @class{gtk-numerable-icon} object}
+  @argument[label]{a short label, or @code{nil}}
+  @begin{short}
+    Accessor of the @slot[gtk-numerable-icon]{label} slot of the
+    @class{gtk-numerable-icon} class.
+  @end{short}
+
+  The @sym{gtk-numerable-icon-label} slot access function
+  returns the currently displayed label of the icon, or @code{nil}.
+
+  The @sym{(setf gtk-numerable-icon-label)} slot access function
+  sets the currently displayed value of the numerable icon to the string in
+  @arg{label}. Setting an empty label removes the emblem.
+
+  Note that this is meant for displaying short labels, such as roman numbers,
+  or single letters. For roman numbers, consider using the Unicode characters
+  U+2160 - U+217F. Strings longer than two characters will likely not be
+  rendered very well.
+
+  If this method is called, and a number was already set on the icon, it will
+  automatically be reset to zero before rendering the label, i. e. the last
+  method called between the function @sym{(setf gtk-numerable-icon-label)} and
+  @sym{(setf gtk-numerable-icon-count)} has always priority.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-label} has been deprecated since version 3.14 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-get-label}
-  @see-function{gtk-numerable-icon-set-label}")
+  @see-function{gtk-numerable-icon-count}")
 
 ;;; --- gtk-numerable-icon-style-context ---------------------------------------
 
@@ -199,12 +320,29 @@
 (setf (gethash 'gtk-numerable-icon-style-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-numerable-icon-style-context 'function)
- "@version{2014-1-27}
-  Accessor of the @slot[gtk-numerable-icon]{style-context} slot of the
-  @class{gtk-numerable-icon} class.
+ "@version{2020-1-14}
+  @syntax[]{(gtk-numerable-icon object) => style}
+  @syntax[]{(setf (gtk-numerable-icon object) style)}
+  @argument[object]{a @class{gtk-numerable-icon} object}
+  @argument[style]{a @class{gtk-style-context} object}
+  @begin{short}
+    Accessor of the @slot[gtk-numerable-icon]{style-context} slot of the
+    @class{gtk-numerable-icon} class.
+  @end{short}
+
+  The @sym{gtk-numerable-icon-style-context} slot access function
+  returns the @class{gtk-style-context} object used by the icon for theming,
+  or @code{nil} if thereis none.
+
+  The @sym{(setf gtk-numerable-icon-style-context)} slot access function
+  updates the icon to fetch theme information from the given
+  @class{gtk-style-context} object.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-style-context} has been deprecated since version
+    3.14 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-get-style-context}
-  @see-function{gtk-numerable-icon-set-style-context}")
+  @see-class{gtk-style-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_numerable_icon_new ()
@@ -214,10 +352,14 @@
 
 (defun gtk-numerable-icon-new (base-icon)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
+ "@version{2020-1-14}
   @argument[base-icon]{a @class{g-icon} to overlay on}
   @return{A new @class{g-icon}.}
   @short{Creates a new unthemed @class{gtk-numerable-icon} object.}
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-new} has been deprecated since version 3.14 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}"
   (make-instance 'gtk-numerable-icon
@@ -233,7 +375,7 @@
 
 (defun gtk-numerable-icon-new-with-style-context (base-icon context)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
+ "@version{2020-1-14}
   @argument[base-icon]{a @class{g-icon} to overlay on}
   @argument[context]{a @class{gtk-style-context} object}
   @return{A new @class{g-icon}.}
@@ -242,259 +384,19 @@
     to the passed @class{gtk-style-context} object.
   @end{short}
   This is a convenience constructor that calls the function
-  @fun{gtk-numerable-icon-set-style-context} internally.
+  @fun{gtk-numerable-icon-style-context} internally.
+  @begin[Warning]{dictionary}
+    @sym{gtk-numerable-icon-new-with-style-context} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}
   @see-class{g-icon}
-  @see-function{gtk-numerable-icon-set-style-context}"
+  @see-function{gtk-numerable-icon-style-context}"
   (make-instance 'gtk-numerable-icon
                  :background-icon base-icon
                  :style-context context))
 
 (export 'gtk-numerable-icon-new-with-style-context)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_get_background_gicon ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-get-background-gicon))
-
-(defun gtk-numerable-icon-get-background-gicon (numerable-icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @return{A @class{g-icon}, or @code{nil}.}
-  @begin{short}
-    Returns the @class{g-icon} that was set as the base background image, or
-    @code{nil} if there's none.
-  @end{short}
-  The caller of this function does not own a reference to the returned
-  @class{g-icon}.
-  @see-class{gtk-numerable-icon}
-  @see-class{g-icon}"
-  (gtk-numerable-icon-background-icon numerable-icon))
-
-(export 'gtk-numerable-icon-get-background-gicon)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_set_background_gicon ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-set-background-gicon))
-
-(defun gtk-numerable-icon-set-background-gicon (numerable-icon icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @argument[icon]{a @class{g-icon}, or @code{nil}}
-  @begin{short}
-    Updates the icon to use @arg{icon} as the base background image.
-  @end{short}
-  If @arg{icon} is @code{nil}, @arg{numerable-icon} will go back using style
-  information or default theming for its background image.
-
-  If this method is called and an icon name was already set as background for
-  the icon, @arg{icon} will be used, i. e. the last method called between the
-  functions @sym{gtk-numerable-icon-set-background-gicon} and
-  @fun{gtk-numerable-icon-set-background-icon-name} has always priority.
-  @see-class{gtk-numerable-icon}
-  @see-class{g-icon}
-  @see-function{gtk-numerable-icon-set-background-icon-name}"
-  (setf (gtk-numerable-icon-background-icon numerable-icon) icon))
-
-(export 'gtk-numerable-icon-set-background-gicon)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_get_background_icon_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-get-background-icon-name))
-
-(defun gtk-numerable-icon-get-background-icon-name (numerable-icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @return{an icon name, or @code{nil}}
-  @begin{short}
-    Returns the icon name used as the base background image, or @code{nil}
-    if there is none.
-  @end{short}
-  @see-class{gtk-numerable-icon}"
-  (gtk-numerable-icon-background-icon-name numerable-icon))
-
-(export 'gtk-numerable-icon-get-background-icon-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_set_background_icon_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-set-background-icon-name))
-
-(defun gtk-numerable-icon-set-background-icon-name (numerable-icon icon-name)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @argument[icon-name]{an icon name, or @code{nil}}
-  @begin{short}
-    Updates the icon to use the icon named @arg{icon-name} from the current
-    icon theme as the base background image.
-  @end{short}
-  If @arg{icon-name} is @code{nil}, @arg{numerable-icon} will go back using
-  style information or default theming for its background image.
-
-  If this method is called and a @class{g-icon} was already set as background
-  for the icon, @arg{icon-name} will be used, i. e. the last method called
-  between the functions @sym{gtk-numerable-icon-set-background-icon-name} and
-  @fun{gtk-numerable-icon-set-background-gicon} has always priority.
-  @see-class{gtk-numerable-icon}
-  @see-class{g-icon}
-  @see-function{gtk-numerable-icon-set-background-gicon}"
-  (setf (gtk-numerable-icon-background-icon-name numerable-icon) icon-name))
-
-(export 'gtk-numerable-icon-set-background-icon-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_get_count ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-get-count))
-
-(defun gtk-numerable-icon-get-count (numerable-icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @return{The currently displayed value.}
-  @begin{short}
-    Returns the value currently displayed by @arg{numerable-icon}.
-  @end{short}
-  @see-class{gtk-numerable-icon}"
-  (gtk-numerable-icon-count numerable-icon))
-
-(export 'gtk-numerable-icon-get-count)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_set_count ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-set-count))
-
-(defun gtk-numerable-icon-set-count (numerable-icon count)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @argument[count]{a number between -99 and 99}
-  @begin{short}
-    Sets the currently displayed value of @arg{numerable-icon} to @arg{count}.
-  @end{short}
-
-  The numeric value is always clamped to make it two digits, i. e. between -99
-  and 99. Setting a count of zero removes the emblem. If this method is called,
-  and a label was already set on the icon, it will automatically be reset to
-  @code{nil} before rendering the number, i. e. the last method called between
-  the functions @sym{gtk-numerable-icon-set-count} and
-  @fun{gtk-numerable-icon-set-label} has always priority.
-  @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-set-label}"
-  (setf (gtk-numerable-icon-count numerable-icon) count))
-
-(export 'gtk-numerable-icon-set-count)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_get_label ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-get-label))
-
-(defun gtk-numerable-icon-get-label (numerable-icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @return{The currently displayed label.}
-  @begin{short}
-    Returns the currently displayed label of the icon, or @code{nil}.
-  @end{short}
-  @see-class{gtk-numerable-icon}"
-  (gtk-numerable-icon-label numerable-icon))
-
-(export 'gtk-numerable-icon-get-label)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_set_label ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-set-label))
-
-(defun gtk-numerable-icon-set-label (numerable-icon label)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @argument[label]{a short label, or @code{nil}}
-  @begin{short}
-    Sets the currently displayed value of @arg{numerable-icon} to the string in
-    @arg{label}.
-  @end{short}
-  Setting an empty label removes the emblem.
-
-  Note that this is meant for displaying short labels, such as roman numbers,
-  or single letters. For roman numbers, consider using the Unicode characters
-  U+2160 - U+217F. Strings longer than two characters will likely not be
-  rendered very well.
-
-  If this method is called, and a number was already set on the icon, it will
-  automatically be reset to zero before rendering the label, i. e. the last
-  method called between the function @sym{gtk-numerable-icon-set-label} and
-  @fun{gtk-numerable-icon-set-count} has always priority.
-  @see-class{gtk-numerable-icon}
-  @see-function{gtk-numerable-icon-set-count}"
-  (setf (gtk-numerable-icon-label numerable-icon) label))
-
-(export 'gtk-numerable-icon-set-label)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_get_style_context ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-get-style-context))
-
-(defun gtk-numerable-icon-get-style-context (numerable-icon)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @begin{return}
-    A @class{gtk-style-context} object, or @code{nil}. This object is internal
-    to GTK+ and should not be unreffed. Use the function @fun{g-object-ref} if
-    you want to keep it around.
-  @end{return}
-  @begin{short}
-    Returns the @class{gtk-style-context} object used by the icon for theming,
-    or @code{nil} if thereis none.
-  @end{short}
-  @see-class{gtk-numerable-icon}
-  @see-class{gtk-style-context}
-  @see-function{g-object-ref}"
-  (gtk-numerable-icon-style-context numerable-icon))
-
-(export 'gtk-numerable-icon-get-style-context)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_numerable_icon_set_style_context ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-numerable-icon-set-style-context))
-
-(defun gtk-numerable-icon-set-style-context (numerable-icon style)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-27}
-  @argument[numerable-icon]{a @class{gtk-numerable-icon} object}
-  @argument[style]{a @class{gtk-style-context} object}
-  @begin{short}
-    Updates the icon to fetch theme information from the given
-    @class{gtk-style-context} object.
-  @end{short}
-  @see-class{gtk-numerable-icon}
-  @see-class{gtk-style-context}"
-  (setf (gtk-numerable-icon-style-context numerable-icon) style))
-
-(export 'gtk-numerable-icon-set-style-context)
 
 ;;; --- End of file gtk.numerable-icon.lisp ------------------------------------
