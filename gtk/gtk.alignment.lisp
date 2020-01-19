@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.alignment.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,16 +29,42 @@
 ;;;
 ;;; GtkAlignment
 ;;;
-;;; A widget which controls the alignment and size of its child
+;;;     A widget which controls the alignment and size of its child
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAlignment
 ;;;
-;;;     gtk_alignment_new
-;;;     gtk_alignment_set
-;;;     gtk_alignment_get_padding
-;;;     gtk_alignment_set_padding
+;;; Functions
+;;;
+;;;     GtkWidget*   gtk_alignment_new
+;;;          void    gtk_alignment_set
+;;;          void    gtk_alignment_get_padding
+;;;          void    gtk_alignment_set_padding
+;;;
+;;; Properties
+;;;
+;;;         guint    bottom-padding    Read / Write
+;;;         guint    left-padding      Read / Write
+;;;         guint    right-padding     Read / Write
+;;;         guint    top-padding       Read / Write
+;;;        gfloat    xalign            Read / Write
+;;;        gfloat    xscale            Read / Write
+;;;        gfloat    yalign            Read / Write
+;;;        gfloat    yscale            Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkAlignment
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkAlignment implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -83,7 +106,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-alignment 'type)
- "@version{2014-1-17}
+ "@version{2020-1-12}
   @begin{short}
     The @sym{gtk-alignment} widget controls the alignment and size of its child
     widget.
@@ -100,12 +123,12 @@
   area. The values range from 0, top or left, to 1, bottom or right. Of course,
   if the scale settings are both set to 1, the alignment settings have no
   effect.
-
-  @subheading{Note}
-    Note that the desired effect can in most cases be achieved by using the
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment} has been deprecated in 3.14 and should not be used in
+    newly-written code. The desired effect can be achieved by using the
     @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign} and
-    @slot[gtk-widget]{margin} properties on the child widget, so
-    @sym{gtk-alignment} should not be used in new code.
+    @slot[gtk-widget]{margin} properties on the child widget.
+  @end{dictionary}
   @see-slot{gtk-alignment-bottom-padding}
   @see-slot{gtk-alignment-left-padding}
   @see-slot{gtk-alignment-right-padding}
@@ -133,10 +156,18 @@
 (setf (gethash 'gtk-alignment-bottom-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-bottom-padding 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{bottom-padding} slot of the
-  @class{gtk-alignment} class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{bottom-padding} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-bottom-padding} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-margin-bottom} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-margin-bottom}")
 
 ;;; --- gtk-alignment-left-padding ---------------------------------------------
 
@@ -152,18 +183,25 @@
 (setf (gethash 'gtk-alignment-left-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-left-padding 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{left-padding} slot of the
-  @class{gtk-alignment} class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{left-padding} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-left-padding} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-margin-start} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-margin-start}")
 
 ;;; --- gtk-alignment-right-padding --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "right-padding"
                                                'gtk-alignment) 't)
- "The @code{right-padding} property of type @code{:uint}
-  (Read / Write) @br{}
+ "The @code{right-padding} property of type @code{:uint} (Read / Write) @br{}
   The padding to insert at the right of the widget. @br{}
   Allowed values: < @code{G_MAXINT} @br{}
   Default value: 0")
@@ -172,10 +210,18 @@
 (setf (gethash 'gtk-alignment-right-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-right-padding 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{right-padding} slot of the
-  @class{gtk-alignment} class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{right-padding} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-right-padding} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-margin-end} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-margin-end}")
 
 ;;; --- gtk-alignment-top-padding ----------------------------------------------
 
@@ -191,10 +237,18 @@
 (setf (gethash 'gtk-alignment-top-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-top-padding 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{top-padding} slot of the
-  @class{gtk-alignment} class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{top-padding} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-top-padding} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-margin-top} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-margin-top}")
 
 ;;; --- gtk-alignment-xalign ---------------------------------------------------
 
@@ -210,10 +264,18 @@
 (setf (gethash 'gtk-alignment-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-xalign 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{xalign} slot of the
-  @class{gtk-alignment} class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{xalign} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-xalign} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-halign} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-halign}")
 
 ;;; --- gtk-alignment-xscale ---------------------------------------------------
 
@@ -226,13 +288,21 @@
   Default value: 1.0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-alignment-yalign atdoc:*function-name-alias*)
+(setf (gethash 'gtk-alignment-xscale atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-alignment-yalign 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{yalign} slot of the @class{gtk-alignment}
-  class.
-  @see-class{gtk-alignment}")
+      (documentation 'gtk-alignment-xscale 'function)
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{xscale} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-xscale} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-hexpand} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-hexpand}")
 
 ;;; --- gtk-alignment-yalign ---------------------------------------------------
 
@@ -245,13 +315,21 @@
   Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-alignment-xscale atdoc:*function-name-alias*)
+(setf (gethash 'gtk-alignment-yalign atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-alignment-xscale 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{xscale} slot of the @class{gtk-alignment}
-  class.
-  @see-class{gtk-alignment}")
+      (documentation 'gtk-alignment-yalign 'function)
+ "@version{2020-1-17}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{yalign} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-yalign} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-valign} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-valign}")
 
 ;;; --- gtk-alignment-yscale ---------------------------------------------------
 
@@ -267,20 +345,28 @@
 (setf (gethash 'gtk-alignment-yscale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-yscale 'function)
- "@version{2014-7-26}
-  Accessor of the @slot[gtk-alignment]{yscale} slot of the @class{gtk-alignment}
-  class.
-  @see-class{gtk-alignment}")
+ "@version{2020-1-12}
+  @begin{short}
+    Accessor of the @slot[gtk-alignment]{yscale} slot of the
+    @class{gtk-alignment} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-alignment-yscale} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use the function @fun{gtk-widget-vexpand} instead.
+  @end{dictionary}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-vexpand}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alignment_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-alignmnet-new))
+(declaim (inline gtk-alignment-new))
 
 (defun gtk-alignment-new (xalign yalign xscale yscale)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-17}
+ "@version{2020-1-17}
   @argument[xalign]{the horizontal alignment of the child widget, from 0.0
     (left) to 1.0 (right)}
   @argument[yalign]{the vertical alignment of the child widget, from 0.0 (top)
@@ -293,7 +379,12 @@
   @argument[yscale]{the amount that the child widget expands vertically to fill
     up unused space, from 0.0 to 1.0. The values are similar to @arg{xscale}.}
   @return{The new @class{gtk-alignment} container.}
-  Creates a new @class{gtk-alignment} container.
+  @short{Creates a new @class{gtk-alignment} container.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-alignment-new} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use @class{gtk-widget} alignment and margin properties.
+  @end{dictionary}
   @see-class{gtk-alignment}"
   (make-instance 'gtk-alignment
                  :xalign xalign
@@ -311,7 +402,7 @@
 
 (defun gtk-alignment-set (alignment xalign yalign xscale yscale)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-17}
+ "@version{2020-1-17}
   @argument[alignment]{a @class{gtk-alignment} container}
   @argument[xalign]{the horizontal alignment of the child widget, from 0.0
     (left) to 1.0 (right)}
@@ -324,7 +415,12 @@
     @class{gtk-alignment} container.}
   @argument[yscale]{the amount that the child widget expands vertically to fill
     up unused space, from 0.0 to 1.0. The values are similar to @arg{xscale}.}
-  Sets the @class{gtk-alignment} container values.
+  @short{Sets the @class{gtk-alignment} container values.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-alignment-set} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+    Use @class{gtk-widget} alignment and margin properties.
+  @end{dictionary}
   @see-class{gtk-alignment}"
   (setf (gtk-alignment-xalign alignment) xalign
         (gtk-alignment-yalign alignment) yalign
@@ -341,7 +437,7 @@
 
 (defun gtk-alignment-get-padding (alignment)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-17}
+ "@version{2020-1-17}
   @argument[alignment]{a @class{gtk-alignment} container}
   @begin{return}
     @code{padding-top} -- the padding for the top of the widget,
@@ -357,6 +453,11 @@
     Gets the padding on the different sides of the widget.
   @end{short}
   See the @fun{gtk-alignment-set-padding} function.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-alignment-get-padding} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+    Use @class{gtk-widget} alignment and margin properties.
+  @end{dictionary}
   @see-class{gtk-alignment}
   @see-function{gtk-alignment-set-padding}"
   (values (gtk-alignment-top-padding alignment)
@@ -386,6 +487,11 @@
   The padding adds blank space to the sides of the widget. For instance, this
   can be used to indent the child widget towards the right by adding padding on
   the left.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-alignment-set-padding} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+    Use @class{gtk-widget} alignment and margin properties.
+  @end{dictionary}
   @see-class{gtk-alignment}
   @see-function{gtk-alignment-get-padding}"
   (setf (gtk-alignment-top-padding alignment) top
