@@ -122,8 +122,8 @@
   To make detaching and reattaching the handlebox as minimally confusing as
   possible to the user, it is important to set the snap edge so that the snap
   edge does not move when the handlebox is deattached. For instance, if the
-  handlebox is packed at the bottom of a @class{gtk-vbox}, then when the
-  handlebox is detached, the bottom edge of the handlebox's allocation will
+  handlebox is packed at the bottom of a vertical @class{gtk-box}, then when
+  the handlebox is detached, the bottom edge of the handlebox's allocation will
   remain fixed as the height of the handlebox shrinks, so the snap edge should
   be set to @code{:bottom}.
 
