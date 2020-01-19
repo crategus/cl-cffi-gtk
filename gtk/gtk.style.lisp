@@ -130,8 +130,9 @@
    :export nil
    :interfaces nil
    :type-initializer "gtk_style_get_type")
-  ((context
-    gtk-style-context
+  ((;; Workaround to avoid collision with symbol gtk-style-context for the class
+    context-deprecated
+    gtk-style-context-deprecated
     "context" "GtkStyleContext" t t)))
 
 ;;; --- gtk-style --------------------------------------------------------------
@@ -189,13 +190,13 @@
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and nil cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "context" 'gtk-style) 't)
  "The @code{context} property of type @class{gtk-style-context}
-  (Read / Write / Construct Only).@br{}
+  (Read / Write / Construct Only). @br{}
   @class{gtk-style-context} object to get style from.")
 
-#+cl-cffi-gtk-documentation
+#+(and nil cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-style-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context 'function)
@@ -383,15 +384,17 @@
   @argument[style]{a @class{gtk-style} object}
   @argument[stock-id]{an icon name}
   @return{A icon set of @arg{stock-id}.}
-  @subheading{Warning}
-    @sym{gtk-style-lookup-icon-set} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-    Use @fun{gtk-style-context-lookup-icon-set} instead.
-
   @begin{short}
     Looks up @arg{stock-id} in the icon factories associated with style and the
     default icon factory, returning an icon set if found, otherwise @code{nil}.
-  @end{short}"
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-style-lookup-icon-set} has been deprecated since version 3.0 and
+    should not be used in newly-written code.
+    Use the function @fun{gtk-style-context-lookup-icon-set} instead.
+  @end{short}
+  @see-class{gtk-style}
+  @see-function{gtk-style-context-lookup-icon-set}"
   (style (g-object gtk-style))
   (stock-id :string))
 
