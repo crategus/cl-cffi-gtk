@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -136,7 +136,7 @@
   @class{gdk-device-manager} object. Every display has a device manager, which
   you can obtain using the function @fun{gdk-display-get-device-manager}.
   @begin[Signal Details]{dictionary}
-    @subheading{The \"closed\" signal} 
+    @subheading{The \"closed\" signal}
       @begin{pre}
  lambda (display is-error)    : Run Last
       @end{pre}
@@ -335,7 +335,7 @@
 (defcfun ("gdk_display_get_device_manager" gdk-display-get-device-manager)
     (g-object gdk-device-manager)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-1-6}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
     A @class{gdk-device-manager} object, or @code{nil}.
@@ -343,8 +343,6 @@
   @begin{short}
     Returns the device manager associated to the display.
   @end{short}
-
-  Since 3.0
   @begin[Warning]{dictionary}
     The @sym{gdk-display-get-device-manager} function has been deprecated since
     version 3.20. and should not be used in newly-written code. Use the
@@ -1130,11 +1128,9 @@
   @end{short}
 
   GTK+ will call this function automatically for @class{gtk-window} windows with
-  a custom startup notification identifier unless the function the function
+  a custom startup notification identifier unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
-
-  Since 3.0
   @see-class{gdk-display}
   @see-function{gtk-window-set-auto-startup-notification}"
   (display (g-object gdk-display))
