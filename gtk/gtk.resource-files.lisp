@@ -103,7 +103,7 @@
     of the operation of a GTK+ program at runtime.
     The @sym{gtk-rc-style} structure is used to represent a set of information
     about the appearance of a widget. This can later be composited together
-    with other @sym{gtk-rc-style} structures to form a @class{gtk-style} object.
+    with other @sym{gtk-rc-style} structures to form a @code{GtkStyle} object.
   @end{short}
 
   @subheading{Warning}
