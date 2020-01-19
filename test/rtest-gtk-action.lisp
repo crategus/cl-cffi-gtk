@@ -58,8 +58,7 @@
                          "visible-overflown" "gboolean" T T)
                         (VISIBLE-VERTICAL GTK-ACTION-VISIBLE-VERTICAL
                          "visible-vertical" "gboolean" T T)))
-             (get-g-type-definition "GtkAction")))
-)
+             (get-g-type-definition "GtkAction"))))
 
 ;;;   gtk_action_new
 
@@ -127,7 +126,7 @@
 (test gtk-action-create-icon
   (let ((action (gtk-action-new "action")))
     ;; Check for a stock-id, also check for icon-name and gicon
-    (gtk-action-set-stock-id action "gtk-ok")
+    (setf (gtk-action-stock-id action) "gtk-ok")
     (is (eq 'gtk-image (type-of (gtk-action-create-icon action :dialog))))))
 
 ;;;   gtk-action-create-menu-item
