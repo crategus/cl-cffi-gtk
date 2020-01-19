@@ -230,8 +230,15 @@
     @begin[GAction]{subsection}
       An action interface.
 
-      @about-class{g-action}
       @about-symbol{GActionInterface}
+      @about-class{g-action}
+
+      @about-generic{g-action-enabled}
+      @about-generic{g-action-name}
+      @about-generic{g-action-parameter-type}
+      @about-generic{g-action-state}
+      @about-generic{g-action-state-type}
+
       @about-function{g-action-get-name}
       @about-function{g-action-get-parameter-type}
       @about-function{g-action-get-state-type}

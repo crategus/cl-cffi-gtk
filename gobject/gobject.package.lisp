@@ -842,7 +842,15 @@
   @end{section}
   @begin[GBinding]{section}
     @about-symbol{g-binding-flags}
+
     @about-class{g-binding}
+
+    @about-generic{g-binding-flags}
+    @about-generic{g-binding-source}
+    @about-generic{g-binding-source-property}
+    @about-generic{g-binding-target}
+    @about-generic{g-binding-target-property}
+
     @about-function{g-object-bind-property}
   @end{section} ")
 

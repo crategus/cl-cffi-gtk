@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -5525,23 +5525,97 @@ setup_tree (void)
       @about-function{gtk-drag-source-add-image-targets}
       @about-function{gtk-drag-source-add-uri-targets}
     @end{subsection}
-    @begin[Stock items]{subsection}
-      Prebuilt common menu/toolbar items and corresponding icons.
-
-      @about-class{gtk-stock-item}
-      @about-function{gtk-stock-add}
-      @about-function{gtk-stock-add-static}
-      @about-function{gtk-stock-item-copy}
-      @about-function{gtk-stock-item-free}
-      @about-function{gtk-stock-list-ids}
-      @about-function{gtk-stock-lookup}
-      @about-function{gtk-stock-set-translate-func}
-    @end{subsection}
     @begin[GtkSettings]{subsection}
       Sharing settings between applications.
 
-      @about-class{gtk-settings}
       @about-symbol{GtkSettingsValue}
+
+      @about-class{gtk-settings}
+
+      @about-generic{gtk-settings-color-hash}
+      @about-generic{gtk-settings-gtk-alternative-button-order}
+      @about-generic{gtk-settings-gtk-alternative-sort-arrows}
+      @about-generic{gtk-settings-gtk-application-prefer-dark-theme}
+      @about-generic{gtk-settings-gtk-auto-mnemonics}
+      @about-generic{gtk-settings-gtk-button-images}
+      @about-generic{gtk-settings-gtk-can-change-accels}
+      @about-generic{gtk-settings-gtk-color-palette}
+      @about-generic{gtk-settings-gtk-color-scheme}
+      @about-generic{gtk-settings-gtk-cursor-blink}
+      @about-generic{gtk-settings-gtk-cursor-blink-time}
+      @about-generic{gtk-settings-gtk-cursor-blink-timeout}
+      @about-generic{gtk-settings-gtk-cursor-theme-name}
+      @about-generic{gtk-settings-gtk-cursor-theme-size}
+      @about-generic{gtk-settings-gtk-decoration-layout}
+      @about-generic{gtk-settings-gtk-dialogs-use-header}
+      @about-generic{gtk-settings-gtk-dnd-drag-threshold}
+      @about-generic{gtk-settings-gtk-double-click-distance}
+      @about-generic{gtk-settings-gtk-double-click-time}
+      @about-generic{gtk-settings-gtk-enable-accels}
+      @about-generic{gtk-settings-gtk-enable-animations}
+      @about-generic{gtk-settings-gtk-enable-event-sounds}
+      @about-generic{gtk-settings-gtk-enable-input-feedback-sounds}
+      @about-generic{gtk-settings-gtk-enable-mnemonics}
+      @about-generic{gtk-settings-gtk-enable-primary-paste}
+      @about-generic{gtk-settings-gtk-enable-tooltips}
+      @about-generic{gtk-settings-gtk-entry-password-hint-timeout}
+      @about-generic{gtk-settings-gtk-entry-select-on-focus}
+      @about-generic{gtk-settings-gtk-error-bell}
+      @about-generic{gtk-settings-gtk-fallback-icon-theme}
+      @about-generic{gtk-settings-gtk-file-chooser-backend}
+      @about-generic{gtk-settings-gtk-font-name}
+      @about-generic{gtk-settings-gtk-fontconfig-timestamp}
+      @about-generic{gtk-settings-gtk-icon-sizes}
+      @about-generic{gtk-settings-gtk-icon-theme-name}
+      @about-generic{gtk-settings-gtk-im-module}
+      @about-generic{gtk-settings-gtk-im-preedit-style}
+      @about-generic{gtk-settings-gtk-im-status-style}
+      @about-generic{gtk-settings-gtk-key-theme-name}
+      @about-generic{gtk-settings-gtk-keynav-cursor-only}
+      @about-generic{gtk-settings-gtk-keynav-use-caret}
+      @about-generic{gtk-settings-gtk-keynav-wrap-around}
+      @about-generic{gtk-settings-gtk-label-select-on-focus}
+      @about-generic{gtk-settings-gtk-long-press-time}
+      @about-generic{gtk-settings-gtk-menu-bar-accel}
+      @about-generic{gtk-settings-gtk-menu-bar-popup-delay}
+      @about-generic{gtk-settings-gtk-menu-images}
+      @about-generic{gtk-settings-gtk-menu-popdown-delay}
+      @about-generic{gtk-settings-gtk-menu-popup-delay}
+      @about-generic{gtk-settings-gtk-modules}
+      @about-generic{gtk-settings-gtk-primary-button-warps-slider}
+      @about-generic{gtk-settings-gtk-print-backends}
+      @about-generic{gtk-settings-gtk-print-preview-command}
+      @about-generic{gtk-settings-gtk-recent-files-enabled}
+      @about-generic{gtk-settings-gtk-recent-files-limit}
+      @about-generic{gtk-settings-gtk-recent-files-max-age}
+      @about-generic{gtk-settings-gtk-scrolled-window-placement}
+      @about-generic{gtk-settings-gtk-shell-shows-app-menu}
+      @about-generic{gtk-settings-gtk-shell-shows-desktop}
+      @about-generic{gtk-settings-gtk-shell-shows-menubar}
+      @about-generic{gtk-settings-gtk-show-input-method-menu}
+      @about-generic{gtk-settings-gtk-show-unicode-menu}
+      @about-generic{gtk-settings-gtk-sound-theme-name}
+      @about-generic{gtk-settings-gtk-split-cursor}
+      @about-generic{gtk-settings-gtk-theme-name}
+      @about-generic{gtk-settings-gtk-timeout-expand}
+      @about-generic{gtk-settings-gtk-timeout-initial}
+      @about-generic{gtk-settings-gtk-timeout-repeat}
+      @about-generic{gtk-settings-gtk-titlebar-double-click}
+      @about-generic{gtk-settings-gtk-titlebar-middle-click}
+      @about-generic{gtk-settings-gtk-titlebar-right-click}
+      @about-generic{gtk-settings-gtk-toolbar-icon-size}
+      @about-generic{gtk-settings-gtk-toolbar-style}
+      @about-generic{gtk-settings-gtk-tooltip-browse-mode-timeout}
+      @about-generic{gtk-settings-gtk-tooltip-browse-timeout}
+      @about-generic{gtk-settings-gtk-tooltip-timeout}
+      @about-generic{gtk-settings-gtk-touchscreen-mode}
+      @about-generic{gtk-settings-gtk-visible-focus}
+      @about-generic{gtk-settings-gtk-xft-antialias}
+      @about-generic{gtk-settings-gtk-xft-dpi}
+      @about-generic{gtk-settings-gtk-xft-hinting}
+      @about-generic{gtk-settings-gtk-xft-hintstyle}
+      @about-generic{gtk-settings-gtk-xft-rgba}
+
       @about-function{gtk-settings-get-default}
       @about-function{gtk-settings-get-for-screen}
       @about-function{gtk-settings-install-property}
@@ -5847,36 +5921,6 @@ setup_tree (void)
       @about-function{gtk-style-properties-set-valist}
       @about-function{gtk-style-properties-unset-property}
     @end{subsection}
-    @begin[GtkThemingEngine]{subsection}
-      Theming renderers
-
-      @about-class{GtkThemingEngineClass}
-      @about-class{gtk-theming-engine}
-      @about-function{gtk-theming-engine-get}
-      @about-function{gtk-theming-engine-get-direction}
-      @about-function{gtk-theming-engine-get-junction-sides}
-      @about-function{gtk-theming-engine-get-path}
-      @about-function{gtk-theming-engine-get-property}
-      @about-function{gtk-theming-engine-get-screen}
-      @about-function{gtk-theming-engine-get-state}
-      @about-function{gtk-theming-engine-get-style}
-      @about-function{gtk-theming-engine-get-style-property}
-      @about-function{gtk-theming-engine-get-style-valist}
-      @about-function{gtk-theming-engine-get-valist}
-      @about-function{gtk-theming-engine-get-color}
-      @about-function{gtk-theming-engine-get-background-color}
-      @about-function{gtk-theming-engine-get-border-color}
-      @about-function{gtk-theming-engine-get-border}
-      @about-function{gtk-theming-engine-get-padding}
-      @about-function{gtk-theming-engine-get-margin}
-      @about-function{gtk-theming-engine-get-font}
-      @about-function{gtk-theming-engine-has-class}
-      @about-function{gtk-theming-engine-has-region}
-      @about-function{gtk-theming-engine-lookup-color}
-      @about-function{gtk-theming-engine-state-is-running}
-      @about-function{gtk-theming-engine-load}
-      @about-function{gtk-theming-engine-register-property}
-    @end{subsection}
     @begin[GtkWidgetPath]{subsection}
       Widget path abstraction.
 
@@ -5959,332 +6003,223 @@ setup_tree (void)
       @about-function{gtk-icon-info-get-attach-points}
       @about-function{gtk-icon-info-get-display-name}
     @end{subsection}
-    @begin[Themable Stock Images]{subsection}
-      Manipulating stock icons
-
-      @about-class{gtk-icon-source}
-      @about-class{gtk-icon-factory}
-      @about-class{gtk-icon-set}
-      @about-symbol{gtk-icon-size}
-      @about-function{gtk-icon-source-copy}
-      @about-function{gtk-icon-source-free}
-      @about-function{gtk-icon-factory-add}
-      @about-function{gtk-icon-factory-add-default}
-      @about-function{gtk-icon-factory-lookup}
-      @about-function{gtk-icon-factory-lookup-default}
-      @about-function{gtk-icon-factory-new}
-      @about-function{gtk-icon-factory-remove-default}
-      @about-function{gtk-icon-set-add-source}
-      @about-function{gtk-icon-set-copy}
-      @about-function{gtk-icon-set-new}
-      @about-function{gtk-icon-set-new-from-pixbuf}
-      @about-function{gtk-icon-set-ref}
-      @about-function{gtk-icon-set-render-icon}
-      @about-function{gtk-icon-set-render-icon-pixbuf}
-      @about-function{gtk-icon-set-unref}
-      @about-function{gtk-icon-size-lookup}
-      @about-function{gtk-icon-size-lookup-for-settings}
-      @about-function{gtk-icon-size-register}
-      @about-function{gtk-icon-size-register-alias}
-      @about-function{gtk-icon-size-from-name}
-      @about-function{gtk-icon-size-get-name}
-      @about-function{gtk-icon-size-get-sizes}
-      @about-function{gtk-icon-source-get-direction}
-      @about-function{gtk-icon-source-get-direction-wildcarded}
-      @about-function{gtk-icon-source-get-filename}
-      @about-function{gtk-icon-source-get-pixbuf}
-      @about-function{gtk-icon-source-get-icon-name}
-      @about-function{gtk-icon-source-get-size}
-      @about-function{gtk-icon-source-get-size-wildcarded}
-      @about-function{gtk-icon-source-get-state}
-      @about-function{gtk-icon-source-get-state-wildcarded}
-      @about-function{gtk-icon-source-new}
-      @about-function{gtk-icon-source-set-direction}
-      @about-function{gtk-icon-source-set-direction-wildcarded}
-      @about-function{gtk-icon-source-set-filename}
-      @about-function{gtk-icon-source-set-pixbuf}
-      @about-function{gtk-icon-source-set-icon-name}
-      @about-function{gtk-icon-source-set-size}
-      @about-function{gtk-icon-source-set-size-wildcarded}
-      @about-function{gtk-icon-source-set-state}
-      @about-function{gtk-icon-source-set-state-wildcarded}
-    @end{subsection}
-    @begin[GtkNumerableIcon]{subsection}
-      A @class{g-icon} that allows numbered emblems.
-
-      @about-class{gtk-numerable-icon}
-      @about-function{gtk-numerable-icon-new}
-      @about-function{gtk-numerable-icon-new-with-style-context}
-      @about-function{gtk-numerable-icon-get-background-gicon}
-      @about-function{gtk-numerable-icon-set-background-gicon}
-      @about-function{gtk-numerable-icon-get-background-icon-name}
-      @about-function{gtk-numerable-icon-set-background-icon-name}
-      @about-function{gtk-numerable-icon-get-count}
-      @about-function{gtk-numerable-icon-set-count}
-      @about-function{gtk-numerable-icon-get-label}
-      @about-function{gtk-numerable-icon-set-label}
-      @about-function{gtk-numerable-icon-get-style-context}
-      @about-function{gtk-numerable-icon-set-style-context}
-    @end{subsection}
-  @end{section}
-  @begin[Action-based menus and toolbars]{section}
-    @begin[GtkUIManager]{subsection}
-      Constructing menus and toolbars from an XML description.
-
-      @about-class{gtk-ui-manager}
-
-      @about-generic{gtk-ui-manager-add-tearoffs}
-      @about-generic{gtk-ui-manager-ui}
-
-      @about-function{gtk-ui-manager-new}
-      @about-function{gtk-ui-manager-insert-action-group}
-      @about-function{gtk-ui-manager-remove-action-group}
-      @about-function{gtk-ui-manager-get-action-groups}
-      @about-function{gtk-ui-manager-get-accel-group}
-      @about-function{gtk-ui-manager-get-widget}
-      @about-function{gtk-ui-manager-get-toplevels}
-      @about-function{gtk-ui-manager-get-action}
-      @about-function{gtk-ui-manager-add-ui-from-resource}
-      @about-function{gtk-ui-manager-add-ui-from-string}
-      @about-function{gtk-ui-manager-add-ui-from-file}
-      @about-function{gtk-ui-manager-new-merge-id}
-      @about-symbol{gtk-ui-manager-item-type}
-      @about-function{gtk-ui-manager-add-ui}
-      @about-function{gtk-ui-manager-remove-ui}
-      @about-function{gtk-ui-manager-ensure-update}
-    @end{subsection}
-    @begin[GtkActionGroup]{subsection}
-      A group of actions.
-
-      @about-class{gtk-action-group}
-
-      @about-generic{gtk-action-group-accel-group}
-      @about-generic{gtk-action-group-name}
-      @about-generic{gtk-action-group-sensitive}
-      @about-generic{gtk-action-group-visible}
-
-      @about-function{gtk-action-group-new}
-      @about-function{gtk-action-group-get-name}
-      @about-function{gtk-action-group-get-sensitive}
-      @about-function{gtk-action-group-set-sensitive}
-      @about-function{gtk-action-group-get-visible}
-      @about-function{gtk-action-group-set-visible}
-      @about-function{gtk-action-group-get-accel-group}
-      @about-function{gtk-action-group-set-accel-group}
-      @about-function{gtk-action-group-get-action}
-      @about-function{gtk-action-group-list-actions}
-      @about-function{gtk-action-group-add-action}
-      @about-function{gtk-action-group-add-action-with-accel}
-      @about-function{gtk-action-group-remove-action}
-      @about-symbol{gtk-action-entry}
-      @about-function{gtk-action-group-add-actions}
-      @about-function{gtk-action-group-add-actions-full}
-      @about-symbol{gtk-toggle-action-entry}
-      @about-function{gtk-action-group-add-toggle-actions}
-      @about-function{gtk-action-group-add-toggle-actions-full}
-      @about-symbol{gtk-radio-action-entry}
-      @about-function{gtk-action-group-add-radio-actions}
-      @about-function{gtk-action-group-add-radio-actions-full}
-      @about-function{gtk-action-group-set-translate-func}
-      @about-function{gtk-action-group-set-translation-domain}
-      @about-function{gtk-action-group-translate-string}
-    @end{subsection}
-    @begin[GtkAction]{subsection}
-      An action which can be triggered by a menu or toolbar item.
-
-      @about-class{gtk-action}
-      @about-function{gtk-action-new}
-      @about-function{gtk-action-get-name}
-      @about-function{gtk-action-is-sensitive}
-      @about-function{gtk-action-get-sensitive}
-      @about-function{gtk-action-set-sensitive}
-      @about-function{gtk-action-is-visible}
-      @about-function{gtk-action-get-visible}
-      @about-function{gtk-action-set-visible}
-      @about-function{gtk-action-activate}
-      @about-function{gtk-action-create-icon}
-      @about-function{gtk-action-create-menu-item}
-      @about-function{gtk-action-create-tool-item}
-      @about-function{gtk-action-create-menu}
-      @about-function{gtk-action-get-proxies}
-      @about-function{gtk-action-connect-accelerator}
-      @about-function{gtk-action-disconnect-accelerator}
-      @about-function{gtk-action-block-activate}
-      @about-function{gtk-action-unblock-activate}
-      @about-function{gtk-action-get-always-show-image}
-      @about-function{gtk-action-set-always-show-image}
-      @about-function{gtk-action-get-accel-path}
-      @about-function{gtk-action-set-accel-path}
-      @about-function{gtk-action-get-accel-closure}
-      @about-function{gtk-action-set-accel-group}
-      @about-function{gtk-action-set-label}
-      @about-function{gtk-action-get-label}
-      @about-function{gtk-action-set-short-label}
-      @about-function{gtk-action-get-short-label}
-      @about-function{gtk-action-set-tooltip}
-      @about-function{gtk-action-get-tooltip}
-      @about-function{gtk-action-set-stock-id}
-      @about-function{gtk-action-get-stock-id}
-      @about-function{gtk-action-set-gicon}
-      @about-function{gtk-action-get-gicon}
-      @about-function{gtk-action-set-icon-name}
-      @about-function{gtk-action-get-icon-name}
-      @about-function{gtk-action-set-visible-horizontal}
-      @about-function{gtk-action-get-visible-horizontal}
-      @about-function{gtk-action-set-visible-vertical}
-      @about-function{gtk-action-get-visible-vertical}
-      @about-function{gtk-action-set-is-important}
-      @about-function{gtk-action-get-is-important}
-    @end{subsection}
-    @begin[GtkToogleAction]{subsection}
-      An action which can be toggled between two states.
-
-      @about-class{gtk-toggle-action}
-      @about-function{gtk-toggle-action-new}
-      @about-function{gtk-toggle-action-toggled}
-      @about-function{gtk-toggle-action-set-active}
-      @about-function{gtk-toggle-action-get-active}
-      @about-function{gtk-toggle-action-set-draw-as-radio}
-      @about-function{gtk-toggle-action-get-draw-as-radio}
-    @end{subsection}
-    @begin[GtkRadioAction]{subsection}
-      An action of which only one in a group can be active.
-
-      @about-class{gtk-radio-action}
-
-      @about-generic{gtk-radio-action-current-value}
-      @about-generic{gtk-radio-action-group}
-      @about-generic{gtk-radio-action-value}
-
-      @about-function{gtk-radio-action-new}
-      @about-function{gtk-radio-action-get-group}
-      @about-function{gtk-radio-action-set-group}
-      @about-function{gtk-radio-action-join-group}
-    @end{subsection}
-    @begin[GtkRecentAction]{subsection}
-      An action of which represents a list of recently used files.
-
-      @about-class{gtk-recent-action}
-      @about-function{gtk-recent-action-new}
-      @about-function{gtk-recent-action-new-for-manager}
-      @about-function{gtk-recent-action-get-show-numbers}
-      @about-function{gtk-recent-action-set-show-numbers}
-    @end{subsection}
-    @begin[GtkActivatable]{subsection}
-      An interface for activatable widgets.
-
-      @about-class{gtk-activatable}
-      @about-class{gtk-activatable-iface}
-      @about-function{gtk-activatable-do-set-related-action}
-      @about-function{gtk-activatable-get-related-action}
-      @about-function{gtk-activatable-get-use-action-appearance}
-      @about-function{gtk-activatable-sync-action-properties}
-      @about-function{gtk-activatable-set-related-action}
-      @about-function{gtk-activatable-set-use-action-appearance}
-    @end{subsection}
   @end{section}
   @begin[Deprecated]{section}
-    @begin[GtkAlignment]{subsection}
-      A widget which controls the alignment and size of its child.
-
-      @about-class{gtk-alignment}
-      @about-function{gtk-alignment-new}
-      @about-function{gtk-alignment-set}
-      @about-function{gtk-alignment-get-padding}
-      @about-function{gtk-alignment-set-padding}
-    @end{subsection}
-
-    @begin[GtkSymbolicColor]{subsection}
-      not implemented
-    @end{subsection}
-    @begin[GtkGradient]{subsection}
-      not implemented
-    @end{subsection}
+    @begin[Deprecated since GTK 3.0]{subsection}@end{subsection}
     @begin[Resource Files]{subsection}
       Deprecated routines for handling resource files.
 
-      @about-class{gtk-rc-style}
-      @about-symbol{gtk-rc-flags}
-      @about-symbol{gtk-rc-token-type}
-      @about-function{gtk-rc-scanner-new}
-      @about-function{gtk-rc-get-style}
-      @about-function{gtk-rc-get-style-by-paths}
-      @about-function{gtk-rc-parse}
-      @about-function{gtk-rc-parse-string}
-      @about-function{gtk-rc-reparse-all}
-      @about-function{gtk-rc-reparse-all-for-settings}
-      @about-function{gtk-rc-reset-styles}
-      @about-function{gtk-rc-add-default-file}
-      @about-function{gtk-rc-get-default-files}
-      @about-function{gtk-rc-set-default-files}
-      @about-function{gtk-rc-parse-color}
-      @about-function{gtk-rc-parse-color-full}
-      @about-function{gtk-rc-parse-state}
-      @about-function{gtk-rc-parse-priority}
-      @about-function{gtk-rc-find-module-in-path}
-      @about-function{gtk-rc-find-pixmap-in-path}
-      @about-function{gtk-rc-get-module-dir}
-      @about-function{gtk-rc-get-im-module-path}
-      @about-function{gtk-rc-get-im-module-file}
-      @about-function{gtk-rc-get-theme-dir}
-      @about-function{gtk-rc-style-new}
-      @about-function{gtk-rc-style-copy}
+      In GTK+ 3.0, resource files have been deprecated and replaced by CSS-like
+      style sheets, which are understood by @class{gtk-css-provider}. In the
+      Lisp binding the implementation was never very complete. The few symbols
+      are not exported.
     @end{subsection}
     @begin[GtkStyle]{subsection}
-      Functions for drawing widget parts
+      Deprecated object that holds style information for widgets.
 
-      @about-class{gtk-style}
-      @about-function{gtk-style-new}
-      @about-function{gtk-style-copy}
-      @about-function{gtk-style-attach}
-      @about-function{gtk-style-detach}
-      @about-function{gtk-style-set-background}
-      @about-function{gtk-style-apply-default-background}
-      @about-function{gtk-style-apply-default-pixmap}
-      @about-function{gtk-style-lookup-color}
-      @about-function{gtk-style-lookup-icon-set}
-      @about-function{gtk-style-render-icon}
-      @about-function{gtk-style-get-style-property}
-      @about-function{gtk-style-get-valist}
-      @about-function{gtk-style-get}
-      @about-function{gtk-paint-arrow}
-      @about-function{gtk-paint-box}
-      @about-function{gtk-paint-box-gap}
-      @about-function{gtk-paint-check}
-      @about-function{gtk-paint-diamond}
-      @about-function{gtk-paint-extension}
-      @about-function{gtk-paint-flat-box}
-      @about-function{gtk-paint-focus}
-      @about-function{gtk-paint-handle}
-      @about-function{gtk-paint-hline}
-      @about-function{gtk-paint-option}
-      @about-function{gtk-paint-polygon}
-      @about-function{gtk-paint-shadow}
-      @about-function{gtk-paint-shadow-gap}
-      @about-function{gtk-paint-slider}
-      @about-function{gtk-paint-spinner}
-      @about-function{gtk-paint-string}
-      @about-function{gtk-paint-tab}
-      @about-function{gtk-paint-vline}
-      @about-function{gtk-paint-expander}
-      @about-function{gtk-paint-layout}
-      @about-function{gtk-paint-resize-grip}
-      @about-function{gtk-draw-insertion-cursor}
-      @about-symbol{gtk-rc-property}
+      In GTK+ 3.0, GtkStyle has been deprecated and replaced by
+      @class{gtk-style-context}. In the Lisp binding the implementation was
+      never very complete. The few symbols are not exported.
+    @end{subsection}
+
+    @begin[Deprecated since GTK 3.2]{subsection}@end{subsection}
+    @begin[GtkHBox]{subsection}
+      A deprecated horizontal container box.
+
+      GtkHBox has been deprecated since GTK 3.2. You can use @class{gtk-box}
+      with the value @code{:horizontal} for the
+      @slot[gtk-orientable]{orientation} property instead, which is a very
+      quick and easy change. If you have derived your own classes from GtkHBox,
+      you can simply change the inheritance to derive directly from
+      @class{gtk-box}. No further changes are needed, since the default value of
+      the @slot[gtk-orientable]{orientation} property is @code{:horizontal}.
+
+      If you want your code to be future-proof, the recommendation is to switch
+      to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
+      favor of the more flexible grid widget eventually.
+
+      In the Lisp binding the symbols and functions for GtkHBox are not
+      exported.
+    @end{subsection}
+    @begin[GtkVBox]{subsection}
+      A deprecated vertical container box.
+
+      GtkVBox has been deprecated since GTK 3.2. You can use @class{gtk-box}
+      instead, which is a very quick and easy change. If you have derived your
+      own classes from GVBox, you can simply change the inheritance to derive
+      directly from @class{gtk-box}, and set the
+      @slot[gtk-orientable]{orientation} property to @code{:vertical} in your
+      instance init function.
+
+      If you want your code to be future-proof, the recommendation is to switch
+      to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
+      favor of the more flexible grid widget eventually.
+
+      In the Lisp binding the symbols and functions for GtkVBox are not
+      exported.
+    @end{subsection}
+    @begin[GtkHButtonBox]{subsection}
+      A deprecated container for arranging buttons horizontally.
+
+      GtkHButtonBox has been deprecated since GTK 3.2 and should not be used
+      in newly-written code. Use @class{gtk-button-box} with the value
+      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkHButtonBox are not
+      exported.
+    @end{subsection}
+    @begin[GtkVButtonBox]{subsection}
+      A deprecated container for arranging buttons vertically.
+
+      GtkVButtonBox has been deprecated since GTK 3.2 and should not be used
+      in newly-written code. Use @class{gtk-button-box} with the value
+      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions of GtkVButtonBox are not
+      exported.
+    @end{subsection}
+    @begin[GtkHPaned]{subsection}
+      A deprecated container with two panes arranged horizontally.
+
+      GtkHPaned has been deprecated since GTK 3.2 and should not be used
+      in newly-written code. Use @class{gtk-paned} with the value
+      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkHPaned are not
+      exported.
+    @end{subsection}
+    @begin[GtkVPaned]{subsection}
+      A deprecated container with two panes arranged vertically.
+
+      GtkVPaned has been deprecated since GTK 3.2 and should not be used
+      in newly-written code. Use @class{gtk-paned} with the value
+      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkVPaned are not
+      exported.
     @end{subsection}
     @begin[GtkHScale]{subsection}
-      A horizontal slider widget for selecting a value from a range.
+      A deprecated horizontal slider widget for selecting a value from a range.
 
-      @about-class{gtk-hscale}
-      @about-function{gtk-hscale-new}
-      @about-function{gtk-hscale-new-with-range}
+      GtkHScale has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-scale} with the value
+      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkHScale are not
+      exported.
     @end{subsection}
     @begin[GtkVScale]{subsection}
-      A vertical slider widget for selecting a value from a range.
+      A deprecated vertical slider widget for selecting a value from a range.
 
-      @about-class{gtk-vscale}
-      @about-function{gtk-vscale-new}
-      @about-function{gtk-vscale-new-with-range}
+      GtkVScale has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-scale} with the value
+      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkVScale are not
+      exported.
+    @end{subsection}
+    @begin[GtkHSeparator]{subsection}
+      A deprecated horizontal separator widget.
+
+      GtkHSeparator has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-separator} with the value
+      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkHSeparator are not
+      exported.
+    @end{subsection}
+    @begin[GtkVSeparator]{subsection}
+      A deprecated vertical separator widget.
+
+      GtkVSeparator has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-separator} with the value
+      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkVSeparator are not
+      exported.
+    @end{subsection}
+    @begin[GtkHScrollbar]{subsection}
+      A deprecated horizontal scrollbar.
+
+      GtkHScrollbar has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-scrollbar} with the value
+      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkHScrollbar are not
+      exported.
+    @end{subsection}
+    @begin[GtkVScrollbar]{subsection}
+      A deprecated vertical scrollbar.
+
+      GtkVScrollbar has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-scrollbar} with the value
+      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      instead.
+
+      In the Lisp binding the symbols and functions for GtkVScrollbar are not
+      exported.
+    @end{subsection}
+    @begin[GtkFontSelection]{subsection}
+      Deprecated widget for selecting fonts.
+
+      GtkFontSelection is deprecated since GTK 3.2 and should not be used in
+      newly written code. Use @class{gtk-font-chooser} instead.
+
+      In the Lisp binding the symbols and functions for GtkFontSelection are
+      not exported.
+    @end{subsection}
+    @begin[GtkFontSelectionDialog]{subsection}
+      Deprecated dialog box for selecting fonts.
+
+      GtkFontSelectionDialog is deprecated since GTK 3.2 and should not be
+      used in newly written code. Use @class{gtk-font-chooser-dialog} instead.
+
+      In the Lisp binding the symbols and functions for GtkFontSelectionDialog
+      are not exported.
+    @end{subsection}
+
+    @begin[Deprecated since GTK 3.4]{subsection}@end{subsection}
+    @begin[GtkTable]{subsection}
+      Pack widgets in regular patterns.
+
+      @about-class{gtk-table}
+      @about-generic{gtk-table-column-spacing}
+      @about-generic{gtk-table-homogeneous}
+      @about-generic{gtk-table-n-columns}
+      @about-generic{gtk-table-n-rows}
+      @about-generic{gtk-table-row-spacing}
+      @about-function{gtk-table-child-left-attach}
+      @about-function{gtk-table-child-right-attach}
+      @about-function{gtk-table-child-top-attach}
+      @about-function{gtk-table-child-bottom-attach}
+      @about-function{gtk-table-child-x-options}
+      @about-function{gtk-table-child-y-options}
+      @about-function{gtk-table-child-x-padding}
+      @about-function{gtk-table-child-y-padding}
+      @about-function{gtk-table-new}
+      @about-function{gtk-table-resize}
+      @about-function{gtk-table-get-size}
+      @about-function{gtk-table-attach}
+      @about-function{gtk-table-attach-defaults}
+      @about-function{gtk-table-set-row-spacing}
+      @about-function{gtk-table-set-col-spacing}
+      @about-function{gtk-table-set-row-spacings}
+      @about-function{gtk-table-set-col-spacings}
+      @about-function{gtk-table-set-homogeneous}
+      @about-function{gtk-table-get-default-row-spacing}
+      @about-function{gtk-table-get-homogeneous}
+      @about-function{gtk-table-get-row-spacing}
+      @about-function{gtk-table-get-col-spacing}
+      @about-function{gtk-table-get-default-col-spacing}
     @end{subsection}
     @begin[GtkTearoffMenuItem]{subsection}
       A menu item used to tear off and reattach its menu.
@@ -6292,6 +6227,8 @@ setup_tree (void)
       @about-class{gtk-tearoff-menu-item}
       @about-function{gtk-tearoff-menu-item-new}
     @end{subsection}
+
+    @begin[Deprecated since GTK 3.6]{subsection}@end{subsection}
     @begin[GtkColorSelection]{subsection}
       A widget used to select a color.
 
@@ -6343,171 +6280,188 @@ setup_tree (void)
       @about-function{gtk-hsv-to-rgb}
       @about-function{gtk-rgb-to-hsv}
     @end{subsection}
-    @begin[GtkFontSelection]{subsection}
-      Deprecated widget for selecting fonts.
 
-      @about-class{gtk-font-selection}
-      @about-function{gtk-font-selection-child-expand}
-      @about-function{gtk-font-selection-child-fill}
-      @about-function{gtk-font-selection-child-padding}
-      @about-function{gtk-font-selection-child-pack-type}
-      @about-function{gtk-font-selection-child-position}
-      @about-function{gtk-font-selection-new}
-      @about-function{gtk-font-selection-get-font-name}
-      @about-function{gtk-font-selection-set-font-name}
-      @about-function{gtk-font-selection-get-preview-text}
-      @about-function{gtk-font-selection-set-preview-text}
-      @about-function{gtk-font-selection-get-face}
-      @about-function{gtk-font-selection-get-face-list}
-      @about-function{gtk-font-selection-get-family}
-      @about-function{gtk-font-selection-get-size}
-      @about-function{gtk-font-selection-get-family-list}
-      @about-function{gtk-font-selection-get-preview-entry}
-      @about-function{gtk-font-selection-get-size-entry}
-      @about-function{gtk-font-selection-get-size-list}
+    @begin[Deprecated since GTK 3.8]{subsection}@end{subsection}
+    @begin[GtkSymbolicColor]{subsection}
+      GtkSymbolicColor is deprecated since version 3.8. Symbolic colors are
+      considered an implementation detail of GTK+. In the Lisp binding no
+      symbols or functions of GtkSymbolicColor are implemented.
     @end{subsection}
-    @begin[GtkFontSelectionDialog]{subsection}
-      Deprecated dialog box for selecting fonts.
+    @begin[GtkGradient]{subsection}
+      GtkGradient is deprecated since version 3.8. It was used internally by
+      GTK’s CSS engine to represent gradients. As its handling is not conforming
+      to modern web standards, it is not used anymore. If you want to use
+      gradients in your own code, please use Cairo directly. In the Lisp binding
+      no symbols or functions of GtkGradient are implemented.
+    @end{subsection}
 
-      @about-class{gtk-font-selection-dialog}
-      @about-function{gtk-font-selection-dialog-new}
-      @about-function{gtk-font-selection-dialog-get-font-name}
-      @about-function{gtk-font-selection-dialog-set-font-name}
-      @about-function{gtk-font-selection-dialog-get-preview-text}
-      @about-function{gtk-font-selection-dialog-set-preview-text}
-      @about-function{gtk-font-selection-dialog-get-cancel-button}
-      @about-function{gtk-font-selection-dialog-get-ok-button}
-      @about-function{gtk-font-selection-dialog-get-font-selection}
-    @end{subsection}
-    @begin[GtkHBox]{subsection}
-      A horizontal container box.
+    @begin[Deprecated since GTK 3.10]{subsection}@end{subsection}
+    @begin[GtkUIManager]{subsection}
+      Constructing menus and toolbars from an XML description.
 
-      @about-class{gtk-hbox}
-      @about-function{gtk-hbox-new}
-      @about-function{gtk-hbox-child-expand}
-      @about-function{gtk-hbox-child-fill}
-      @about-function{gtk-hbox-child-padding}
-      @about-function{gtk-hbox-child-pack-type}
-      @about-function{gtk-hbox-child-position}
+      @about-class{gtk-ui-manager}
+      @about-generic{gtk-ui-manager-add-tearoffs}
+      @about-generic{gtk-ui-manager-ui}
+      @about-function{gtk-ui-manager-new}
+      @about-function{gtk-ui-manager-insert-action-group}
+      @about-function{gtk-ui-manager-remove-action-group}
+      @about-function{gtk-ui-manager-get-action-groups}
+      @about-function{gtk-ui-manager-get-accel-group}
+      @about-function{gtk-ui-manager-get-widget}
+      @about-function{gtk-ui-manager-get-toplevels}
+      @about-function{gtk-ui-manager-get-action}
+      @about-function{gtk-ui-manager-add-ui-from-resource}
+      @about-function{gtk-ui-manager-add-ui-from-string}
+      @about-function{gtk-ui-manager-add-ui-from-file}
+      @about-function{gtk-ui-manager-new-merge-id}
+      @about-symbol{gtk-ui-manager-item-type}
+      @about-function{gtk-ui-manager-add-ui}
+      @about-function{gtk-ui-manager-remove-ui}
+      @about-function{gtk-ui-manager-ensure-update}
     @end{subsection}
-    @begin[GtkVBox]{subsection}
-      A vertical container box.
+    @begin[GtkActionGroup]{subsection}
+      A group of actions.
 
-      @about-class{gtk-vbox}
-      @about-function{gtk-vbox-new}
-      @about-function{gtk-vbox-child-expand}
-      @about-function{gtk-vbox-child-fill}
-      @about-function{gtk-vbox-child-padding}
-      @about-function{gtk-vbox-child-pack-type}
-      @about-function{gtk-vbox-child-position}
+      @about-class{gtk-action-group}
+      @about-generic{gtk-action-group-accel-group}
+      @about-generic{gtk-action-group-name}
+      @about-generic{gtk-action-group-sensitive}
+      @about-generic{gtk-action-group-visible}
+      @about-function{gtk-action-group-new}
+      @about-function{gtk-action-group-get-action}
+      @about-function{gtk-action-group-list-actions}
+      @about-function{gtk-action-group-add-action}
+      @about-function{gtk-action-group-add-action-with-accel}
+      @about-function{gtk-action-group-remove-action}
+      @about-symbol{gtk-action-entry}
+      @about-function{gtk-action-group-add-actions}
+      @about-function{gtk-action-group-add-actions-full}
+      @about-symbol{gtk-toggle-action-entry}
+      @about-function{gtk-action-group-add-toggle-actions}
+      @about-function{gtk-action-group-add-toggle-actions-full}
+      @about-symbol{gtk-radio-action-entry}
+      @about-function{gtk-action-group-add-radio-actions}
+      @about-function{gtk-action-group-add-radio-actions-full}
+      @about-function{gtk-action-group-set-translate-func}
+      @about-function{gtk-action-group-set-translation-domain}
+      @about-function{gtk-action-group-translate-string}
     @end{subsection}
-    @begin[GtkHButtonBox]{subsection}
-      A container for arranging buttons horizontally
+    @begin[GtkAction]{subsection}
+      An action which can be triggered by a menu or toolbar item.
 
-      @about-class{gtk-hbutton-box}
-      @about-function{gtk-hbutton-box-new}
-      @about-function{gtk-hbutton-box-child-expand}
-      @about-function{gtk-hbutton-box-child-fill}
-      @about-function{gtk-hbutton-box-child-padding}
-      @about-function{gtk-hbutton-box-child-pack-type}
-      @about-function{gtk-hbutton-box-child-position}
-      @about-function{gtk-hbutton-box-child-secondary}
+      @about-class{gtk-action}
+      @about-generic{gtk-action-action-group}
+      @about-generic{gtk-action-always-show-image}
+      @about-generic{gtk-action-gicon}
+      @about-generic{gtk-action-hide-if-empty}
+      @about-generic{gtk-action-icon-name}
+      @about-generic{gtk-action-is-important}
+      @about-generic{gtk-action-label}
+      @about-generic{gtk-action-name}
+      @about-generic{gtk-action-sensitive}
+      @about-generic{gtk-action-short-label}
+      @about-generic{gtk-action-stock-id}
+      @about-generic{gtk-action-tooltip}
+      @about-generic{gtk-action-visible}
+      @about-generic{gtk-action-visible-horizontal}
+      @about-generic{gtk-action-visible-overflown}
+      @about-generic{gtk-action-visible-vertical}
+      @about-function{gtk-action-new}
+      @about-function{gtk-action-get-name}
+      @about-function{gtk-action-is-sensitive}
+      @about-function{gtk-action-get-sensitive}
+      @about-function{gtk-action-set-sensitive}
+      @about-function{gtk-action-is-visible}
+      @about-function{gtk-action-get-visible}
+      @about-function{gtk-action-set-visible}
+      @about-function{gtk-action-activate}
+      @about-function{gtk-action-create-icon}
+      @about-function{gtk-action-create-menu-item}
+      @about-function{gtk-action-create-tool-item}
+      @about-function{gtk-action-create-menu}
+      @about-function{gtk-action-get-proxies}
+      @about-function{gtk-action-connect-accelerator}
+      @about-function{gtk-action-disconnect-accelerator}
+      @about-function{gtk-action-block-activate}
+      @about-function{gtk-action-unblock-activate}
+      @about-function{gtk-action-get-always-show-image}
+      @about-function{gtk-action-set-always-show-image}
+      @about-function{gtk-action-get-accel-path}
+      @about-function{gtk-action-set-accel-path}
+      @about-function{gtk-action-get-accel-closure}
+      @about-function{gtk-action-set-accel-group}
+      @about-function{gtk-action-set-label}
+      @about-function{gtk-action-get-label}
+      @about-function{gtk-action-set-short-label}
+      @about-function{gtk-action-get-short-label}
+      @about-function{gtk-action-set-tooltip}
+      @about-function{gtk-action-get-tooltip}
+      @about-function{gtk-action-set-stock-id}
+      @about-function{gtk-action-get-stock-id}
+      @about-function{gtk-action-set-gicon}
+      @about-function{gtk-action-get-gicon}
+      @about-function{gtk-action-set-icon-name}
+      @about-function{gtk-action-get-icon-name}
+      @about-function{gtk-action-set-visible-horizontal}
+      @about-function{gtk-action-get-visible-horizontal}
+      @about-function{gtk-action-set-visible-vertical}
+      @about-function{gtk-action-get-visible-vertical}
+      @about-function{gtk-action-set-is-important}
+      @about-function{gtk-action-get-is-important}
     @end{subsection}
-    @begin[GtkVButtonBox]{subsection}
-      A container for arranging buttons vertically
+    @begin[GtkToggleAction]{subsection}
+      An action which can be toggled between two states.
 
-      @about-class{gtk-vbutton-box}
-      @about-function{gtk-vbutton-box-new}
-      @about-function{gtk-vbutton-box-child-expand}
-      @about-function{gtk-vbutton-box-child-fill}
-      @about-function{gtk-vbutton-box-child-padding}
-      @about-function{gtk-vbutton-box-child-pack-type}
-      @about-function{gtk-vbutton-box-child-position}
-      @about-function{gtk-vbutton-box-child-secondary}
+      @about-class{gtk-toggle-action}
+      @about-generic{gtk-toggle-action-active}
+      @about-generic{gtk-toggle-action-draw-as-radio}
+      @about-function{gtk-toggle-action-new}
+      @about-function{gtk-toggle-action-toggled}
     @end{subsection}
-    @begin[GtkHPaned]{subsection}
-      A container with two panes arranged horizontally.
+    @begin[GtkRadioAction]{subsection}
+      An action of which only one in a group can be active.
 
-      @about-class{gtk-hpaned}
-      @about-function{gtk-hpaned-new}
-      @about-function{gtk-hpaned-child-resize}
-      @about-function{gtk-hpaned-child-shrink}
+      @about-class{gtk-radio-action}
+      @about-generic{gtk-radio-action-current-value}
+      @about-generic{gtk-radio-action-group}
+      @about-generic{gtk-radio-action-value}
+      @about-function{gtk-radio-action-new}
+      @about-function{gtk-radio-action-get-group}
+      @about-function{gtk-radio-action-set-group}
+      @about-function{gtk-radio-action-join-group}
     @end{subsection}
-    @begin[GtkVPaned]{subsection}
-      A container with two panes arranged vertically.
+    @begin[GtkRecentAction]{subsection}
+      An action of which represents a list of recently used files.
 
-      @about-class{gtk-vpaned}
-      @about-function{gtk-vpaned-new}
-      @about-function{gtk-vpaned-child-resize}
-      @about-function{gtk-vpaned-child-shrink}
+      @about-class{gtk-recent-action}
+      @about-generic{gtk-recent-action-show-numbers}
+      @about-function{gtk-recent-action-new}
+      @about-function{gtk-recent-action-new-for-manager}
     @end{subsection}
-    @begin[GtkTable]{subsection}
-      Pack widgets in regular patterns.
+    @begin[GtkActivatable]{subsection}
+      An interface for activatable widgets.
 
-      @about-class{gtk-table}
-
-      @about-generic{gtk-table-column-spacing}
-      @about-generic{gtk-table-homogeneous}
-      @about-generic{gtk-table-n-columns}
-      @about-generic{gtk-table-n-rows}
-      @about-generic{gtk-table-row-spacing}
-
-      @about-function{gtk-table-child-left-attach}
-      @about-function{gtk-table-child-right-attach}
-      @about-function{gtk-table-child-top-attach}
-      @about-function{gtk-table-child-bottom-attach}
-      @about-function{gtk-table-child-x-options}
-      @about-function{gtk-table-child-y-options}
-      @about-function{gtk-table-child-x-padding}
-      @about-function{gtk-table-child-y-padding}
-
-      @about-function{gtk-table-new}
-      @about-function{gtk-table-resize}
-      @about-function{gtk-table-get-size}
-      @about-function{gtk-table-attach}
-      @about-function{gtk-table-attach-defaults}
-      @about-function{gtk-table-set-row-spacing}
-      @about-function{gtk-table-set-col-spacing}
-      @about-function{gtk-table-set-row-spacings}
-      @about-function{gtk-table-set-col-spacings}
-      @about-function{gtk-table-set-homogeneous}
-      @about-function{gtk-table-get-default-row-spacing}
-      @about-function{gtk-table-get-homogeneous}
-      @about-function{gtk-table-get-row-spacing}
-      @about-function{gtk-table-get-col-spacing}
-      @about-function{gtk-table-get-default-col-spacing}
-    @end{subsection}
-    @begin[GtkHSeparator]{subsection}
-      @about-class{gtk-hseparator}
-      @about-function{gtk-hseparator-new}
-    @end{subsection}
-    @begin[GtkVSeparator]{subsection}
-      @about-class{gtk-vseparator}
-      @about-function{gtk-vseparator-new}
-    @end{subsection}
-    @begin[GtkHScrollbar]{subsection}
-      @about-class{gtk-hscrollbar}
-      @about-function{gtk-hscrollbar-new}
-    @end{subsection}
-    @begin[GtkVScrollbar]{subsection}
-      @about-class{gtk-vscrollbar}
-      @about-function{gtk-vscrollbar-new}
+      @about-class{gtk-activatable}
+      @about-class{gtk-activatable-iface}
+      @about-function{gtk-activatable-do-set-related-action}
+      @about-function{gtk-activatable-get-related-action}
+      @about-function{gtk-activatable-get-use-action-appearance}
+      @about-function{gtk-activatable-sync-action-properties}
+      @about-function{gtk-activatable-set-related-action}
+      @about-function{gtk-activatable-set-use-action-appearance}
     @end{subsection}
     @begin[GtkImageMenuItem]{subsection}
-      A menu item with an icon.
+      A deprecated widget for a menu item with an icon.
 
       @about-class{gtk-image-menu-item}
-
-      @about-function{gtk-image-menu-item-set-image}
-      @about-function{gtk-image-menu-item-get-image}
+      @about-generic{gtk-image-menu-item-accel-group}
+      @about-generic{gtk-image-menu-item-always-show-image}
+      @about-generic{gtk-image-menu-item-image}
+      @about-generic{gtk-image-menu-item-use-stock}
       @about-function{gtk-image-menu-item-new}
       @about-function{gtk-image-menu-item-new-from-stock}
       @about-function{gtk-image-menu-item-new-with-label}
       @about-function{gtk-image-menu-item-new-with-mnemonic}
-      @about-function{gtk-image-menu-item-get-use-stock}
-      @about-function{gtk-image-menu-item-set-use-stock}
-      @about-function{gtk-image-menu-item-get-always-show-image}
-      @about-function{gtk-image-menu-item-set-always-show-image}
       @about-function{gtk-image-menu-item-set-accel-group}
     @end{subsection}
     @begin[GtkMisc]{subsection}
@@ -6519,10 +6473,132 @@ setup_tree (void)
       @about-function{gtk-misc-get-alignment}
       @about-function{gtk-misc-get-padding}
     @end{subsection}
+    @begin[Stock items]{subsection}
+      Prebuilt common menu/toolbar items and corresponding icons.
+
+      Since GTK+ 3.10, stock items are deprecated. You should instead set up
+      whatever labels and/or icons you need using normal widget API, rather
+      than relying on GTK+ providing ready-made combinations of these.
+
+      Stock items represent commonly-used menu or toolbar items such as \"Open\"
+      or \"Exit\". Each stock item is identified by a stock ID; stock IDs are
+      just strings like \"gtk-open\" or \"gtk-exit\". Applications can register
+      their own stock items in addition to those built-in to GTK+.
+
+      Each stock ID can be associated with a @code{GtkStockItem}, which contains
+      the user-visible label, keyboard accelerator, and translation domain of
+      the menu or toolbar item; and/or with an icon stored in a
+      @class{gtk-icon-factory}. See @class{gtk-icon-factory} for more
+      information on stock icons. The connection between a @code{GtkStockItem}
+      and stock icons is purely conventional by virtue of using the same stock
+      ID; it's possible to register a stock item but no icon, and vice versa.
+      Stock icons may have a RTL variant which gets used for right-to-left
+      locales.
+
+      Only the function @fun{gtk-stock-list-ids} is in the Lisp binding
+      implemented. For more information see
+      @url[https://developer.gnome.org/gtk3/stable/gtk3-Stock-Items.html]{Stock Items}
+      in the GTK+ documentation.
+
+      @about-class{gtk-stock-item}
+      @about-function{gtk-stock-add}
+      @about-function{gtk-stock-add-static}
+      @about-function{gtk-stock-item-copy}
+      @about-function{gtk-stock-item-free}
+      @about-function{gtk-stock-list-ids}
+      @about-function{gtk-stock-lookup}
+      @about-function{gtk-stock-set-translate-func}
+    @end{subsection}
+    @begin[Themable Stock Images]{subsection}
+      Manipulating stock icons
+
+      @about-class{gtk-icon-source}
+      @about-class{gtk-icon-factory}
+      @about-class{gtk-icon-set}
+      @about-symbol{gtk-icon-size}
+      @about-function{gtk-icon-source-copy}
+      @about-function{gtk-icon-source-free}
+      @about-function{gtk-icon-factory-add}
+      @about-function{gtk-icon-factory-add-default}
+      @about-function{gtk-icon-factory-lookup}
+      @about-function{gtk-icon-factory-lookup-default}
+      @about-function{gtk-icon-factory-new}
+      @about-function{gtk-icon-factory-remove-default}
+      @about-function{gtk-icon-set-add-source}
+      @about-function{gtk-icon-set-copy}
+      @about-function{gtk-icon-set-new}
+      @about-function{gtk-icon-set-new-from-pixbuf}
+      @about-function{gtk-icon-set-ref}
+      @about-function{gtk-icon-set-render-icon}
+      @about-function{gtk-icon-set-render-icon-pixbuf}
+      @about-function{gtk-icon-set-unref}
+      @about-function{gtk-icon-size-lookup}
+      @about-function{gtk-icon-size-lookup-for-settings}
+      @about-function{gtk-icon-size-register}
+      @about-function{gtk-icon-size-register-alias}
+      @about-function{gtk-icon-size-from-name}
+      @about-function{gtk-icon-size-get-name}
+      @about-function{gtk-icon-size-get-sizes}
+      @about-function{gtk-icon-source-get-direction}
+      @about-function{gtk-icon-source-get-direction-wildcarded}
+      @about-function{gtk-icon-source-get-filename}
+      @about-function{gtk-icon-source-get-pixbuf}
+      @about-function{gtk-icon-source-get-icon-name}
+      @about-function{gtk-icon-source-get-size}
+      @about-function{gtk-icon-source-get-size-wildcarded}
+      @about-function{gtk-icon-source-get-state}
+      @about-function{gtk-icon-source-get-state-wildcarded}
+      @about-function{gtk-icon-source-new}
+      @about-function{gtk-icon-source-set-direction}
+      @about-function{gtk-icon-source-set-direction-wildcarded}
+      @about-function{gtk-icon-source-set-filename}
+      @about-function{gtk-icon-source-set-pixbuf}
+      @about-function{gtk-icon-source-set-icon-name}
+      @about-function{gtk-icon-source-set-size}
+      @about-function{gtk-icon-source-set-size-wildcarded}
+      @about-function{gtk-icon-source-set-state}
+      @about-function{gtk-icon-source-set-state-wildcarded}
+    @end{subsection}
+
+    @begin[Deprecated since GTK 3.14]{subsection}@end{subsection}
+    @begin[GtkNumerableIcon]{subsection}
+      A @class{g-icon} that allows numbered emblems.
+
+      @about-class{gtk-numerable-icon}
+      @about-generic{gtk-numerable-icon-background-icon}
+      @about-generic{gtk-numerable-icon-background-icon-name}
+      @about-generic{gtk-numerable-icon-count}
+      @about-generic{gtk-numerable-icon-label}
+      @about-generic{gtk-numerable-icon-style-context}
+      @about-function{gtk-numerable-icon-new}
+      @about-function{gtk-numerable-icon-new-with-style-context}
+    @end{subsection}
+    @begin[GtkArrow]{subsection}
+      Displays an arrow.
+
+      @about-class{gtk-arrow}
+      @about-function{gtk-arrow-new}
+      @about-function{gtk-arrow-set}
+    @end{subsection}
     @begin[GtkStatusIcon]{subsection}
       Display an icon in the system tray.
 
       @about-class{gtk-status-icon}
+      @about-generic{gtk-status-icon-embedded}
+      @about-generic{gtk-status-icon-file}
+      @about-generic{gtk-status-icon-gicon}
+      @about-generic{gtk-status-icon-has-tooltip}
+      @about-generic{gtk-status-icon-icon-name}
+      @about-generic{gtk-status-icon-orientation}
+      @about-generic{gtk-status-icon-pixbuf}
+      @about-generic{gtk-status-icon-screen}
+      @about-generic{gtk-status-icon-size}
+      @about-generic{gtk-status-icon-stock}
+      @about-generic{gtk-status-icon-storage-type}
+      @about-generic{gtk-status-icon-title}
+      @about-generic{gtk-status-icon-tooltip-markup}
+      @about-generic{gtk-status-icon-tooltip-text}
+      @about-generic{gtk-status-icon-visible}
       @about-function{gtk-status-icon-new}
       @about-function{gtk-status-icon-new-from-pixbuf}
       @about-function{gtk-status-icon-new-from-file}
@@ -6534,35 +6610,58 @@ setup_tree (void)
       @about-function{gtk-status-icon-set-from-stock}
       @about-function{gtk-status-icon-set-from-icon-name}
       @about-function{gtk-status-icon-set-from-gicon}
-      @about-function{gtk-status-icon-get-pixbuf}
-      @about-function{gtk-status-icon-get-stock}
-      @about-function{gtk-status-icon-get-icon-name}
-      @about-function{gtk-status-icon-get-gicon}
-      @about-function{gtk-status-icon-get-size}
-      @about-function{gtk-status-icon-set-screen}
-      @about-function{gtk-status-icon-get-screen}
-      @about-function{gtk-status-icon-set-tooltip-text}
-      @about-function{gtk-status-icon-get-tooltip-text}
-      @about-function{gtk-status-icon-set-tooltip-markup}
-      @about-function{gtk-status-icon-get-tooltip-markup}
-      @about-function{gtk-status-icon-set-has-tooltip}
-      @about-function{gtk-status-icon-get-has-tooltip}
-      @about-function{gtk-status-icon-set-title}
-      @about-function{gtk-status-icon-get-title}
       @about-function{gtk-status-icon-set-name}
-      @about-function{gtk-status-icon-set-visible}
-      @about-function{gtk-status-icon-get-visible}
       @about-function{gtk-status-icon-is-embedded}
       @about-function{gtk-status-icon-position-menu}
       @about-function{gtk-status-icon-get-geometry}
       @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
-    @begin[GtkArrow]{subsection}
-      Displays an arrow.
+    @begin[GtkThemingEngine]{subsection}
+      Theming renderers
 
-      @about-class{gtk-arrow}
-      @about-function{gtk-arrow-new}
-      @about-function{gtk-arrow-set}
+      @about-class{GtkThemingEngineClass}
+      @about-class{gtk-theming-engine}
+      @about-function{gtk-theming-engine-get}
+      @about-function{gtk-theming-engine-get-direction}
+      @about-function{gtk-theming-engine-get-junction-sides}
+      @about-function{gtk-theming-engine-get-path}
+      @about-function{gtk-theming-engine-get-property}
+      @about-function{gtk-theming-engine-get-screen}
+      @about-function{gtk-theming-engine-get-state}
+      @about-function{gtk-theming-engine-get-style}
+      @about-function{gtk-theming-engine-get-style-property}
+      @about-function{gtk-theming-engine-get-style-valist}
+      @about-function{gtk-theming-engine-get-valist}
+      @about-function{gtk-theming-engine-get-color}
+      @about-function{gtk-theming-engine-get-background-color}
+      @about-function{gtk-theming-engine-get-border-color}
+      @about-function{gtk-theming-engine-get-border}
+      @about-function{gtk-theming-engine-get-padding}
+      @about-function{gtk-theming-engine-get-margin}
+      @about-function{gtk-theming-engine-get-font}
+      @about-function{gtk-theming-engine-has-class}
+      @about-function{gtk-theming-engine-has-region}
+      @about-function{gtk-theming-engine-lookup-color}
+      @about-function{gtk-theming-engine-state-is-running}
+      @about-function{gtk-theming-engine-load}
+      @about-function{gtk-theming-engine-register-property}
+    @end{subsection}
+    @begin[GtkAlignment]{subsection}
+      A deprecated widget which controls the alignment and size of its child.
+
+      @about-class{gtk-alignment}
+      @about-generic{gtk-alignment-bottom-padding}
+      @about-generic{gtk-alignment-left-padding}
+      @about-generic{gtk-alignment-right-padding}
+      @about-generic{gtk-alignment-top-padding}
+      @about-generic{gtk-alignment-xalign}
+      @about-generic{gtk-alignment-xscale}
+      @about-generic{gtk-alignment-yalign}
+      @about-generic{gtk-alignment-yscale}
+      @about-function{gtk-alignment-new}
+      @about-function{gtk-alignment-set}
+      @about-function{gtk-alignment-get-padding}
+      @about-function{gtk-alignment-set-padding}
     @end{subsection}
   @end{section}")
 
