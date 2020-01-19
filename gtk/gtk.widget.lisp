@@ -1932,7 +1932,7 @@
       widget. Note that style-modifying functions like the function
       @fun{gtk-widget-modify-base} also cause this signal to be emitted.
       Note that this signal is emitted for changes to the deprecated
-      @class{gtk-style}. To track changes to the @class{gtk-style-context}
+      @code{GtkStyle} object. To track changes to the @class{gtk-style-context}
       associated with a widget, use the \"style-updated\" signal.
       @begin[code]{table}
         @entry[widget]{The object on which the signal is emitted.}
@@ -2080,7 +2080,6 @@
   @see-class{gtk-selection-data}
   @see-class{gtk-target-list}
   @see-class{gtk-entry}
-  @see-class{gtk-style}
   @see-class{gtk-style-context}
   @see-class{gdk-window}
   @see-class{gdk-color}
@@ -3226,24 +3225,28 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-widget) 't)
- "The @code{style} property of type @class{gtk-style} (Read / Write) @br{}
-  The style of the widget, which contains information about how it will look
-  (colors etc).")
+ "The @code{style} property of type @code{GtkStyle} (Read / Write) @br{}
+  The style of the widget, which contains information about how it will look.
+  @br{}
+  @em{Warning:} The @code{style} property is deprecated since version 3.0 and
+  should not be used in newly-written code. Use @class{gtk-style-context}
+  instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-style atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-style 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-1-19}
   @syntax[]{(gtk-widget-style object) => style}
   @syntax[]{(setf (gtk-widget-style object) style)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[style]{a deprecated @code{GtkStyle} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{style} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{style} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  Used to access the @code{GtkStyle} for a widget. Since GTK+ 3 this function
-  does nothing, the passed in style is ignored.
+  Used to access the deprecated @code{GtkStyle} object for a widget. Since
+  GTK+ 3.0 this function does nothing, the passed in style is ignored.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-style} has been deprecated since version 3.0 and should not
     be used in newly-written code. Use @class{gtk-style-context} instead.
@@ -5083,13 +5086,12 @@
 ;;; gtk_widget_get_default_style ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
+(defcfun ("gtk_widget_get_default_style" gtk-widget-get-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-1-18}
   @begin{return}
-    The default style. This @class{gtk-style} object is owned by GTK+ and
-    should not be modified or freed.
+    The deprecated default style.
   @end{return}
   @short{Returns the default style used by all widgets initially.}
   @begin[Warning]{dictionary}
@@ -5104,7 +5106,7 @@
   @see-class{gtk-style-provider}
   @see-function{gtk-css-provider-get-default}")
 
-(export 'gtk-widget-default-style)
+(export 'gtk-widget-get-default-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTextDirection
