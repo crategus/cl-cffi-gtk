@@ -1,9 +1,39 @@
-
 (def-suite gtk-paper-size :in gtk-suite)
 (in-suite gtk-paper-size)
 
 ;;;     GtkPaperSize
+
+(test gtk-paper-size-boxed
+ (is-true (gtype "GtkPaperSize"))
+ (is-true (gobject::get-g-boxed-foreign-info 'gtk-paper-size)))
+
 ;;;     GtkUnit
+
+(test gtk-unit
+  ;; Check the type
+  (is-true (g-type-is-enum "GtkUnit"))
+  ;; Check the registered name
+  (is (eql 'gtk-unit (gobject::registered-enum-type "GtkUnit")))
+  ;; Check the names
+  (is (equal '("GTK_UNIT_NONE" "GTK_UNIT_POINTS" "GTK_UNIT_INCH" "GTK_UNIT_MM")
+             (mapcar #'gobject::enum-item-name
+                     (gobject::get-enum-items "GtkUnit"))))
+  ;; Check the values
+  (is (equal '(0 1 2 3)
+             (mapcar #'gobject::enum-item-value
+                     (gobject::get-enum-items "GtkUnit"))))
+  ;; Check the nick names
+  (is (equal '("none" "points" "inch" "mm")
+             (mapcar #'gobject::enum-item-nick
+                     (gobject::get-enum-items "GtkUnit"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkUnit" GTK-UNIT
+                (:EXPORT T :TYPE-INITIALIZER "gtk_unit_get_type")
+                (:NONE 0)
+                (:POINTS 1)
+                (:INCH 2)
+                (:MM 3))
+             (gobject::get-g-type-definition "GtkUnit"))))
 
 ;;;     GTK_PAPER_NAME_A3
 ;;;     GTK_PAPER_NAME_A4

@@ -39,8 +39,7 @@
   (is (equal '("initial" "preparing" "generating-data" "sending-data" "pending"
  "pending-issue" "printing" "finished" "finished-aborted")
              (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkPrintStatus"))))
-)
+                     (gobject::get-enum-items "GtkPrintStatus")))))
 
 ;;;     GtkPrintOperationAction
 
@@ -71,8 +70,7 @@
   ;; Check the nick names
   (is (equal '("print-dialog" "print" "preview" "export")
              (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkPrintOperationAction"))))
-)
+                     (gobject::get-enum-items "GtkPrintOperationAction")))))
 
 ;;;     GtkPrintOperationResult
 
@@ -103,8 +101,7 @@
   ;; Check the nick names
   (is (equal '("error" "apply" "cancel" "in-progress")
              (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkPrintOperationResult"))))
-)
+                     (gobject::get-enum-items "GtkPrintOperationResult")))))
 
 ;;;     GtkPrintError
 
@@ -134,8 +131,7 @@
   ;; Check the nick names
   (is (equal '("general" "internal-error" "nomem" "invalid-file")
              (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkPrintError"))))
-)
+                     (gobject::get-enum-items "GtkPrintError")))))
 
 ;;;     GTK_PRINT_ERROR
 
@@ -155,8 +151,7 @@
   (is (equal '(DEFINE-G-INTERFACE "GtkPrintOperationPreview"
     GTK-PRINT-OPERATION-PREVIEW
     (:EXPORT T :TYPE-INITIALIZER "gtk_print_operation_preview_get_type"))
-             (get-g-type-definition "GtkPrintOperationPreview")))
-)
+             (get-g-type-definition "GtkPrintOperationPreview"))))
 
 ;;;     GtkPrintOperation
 
@@ -225,14 +220,15 @@
                         (UNIT GTK-PRINT-OPERATION-UNIT "unit" "GtkUnit" T T)
                         (USE-FULL-PAGE GTK-PRINT-OPERATION-USE-FULL-PAGE
                          "use-full-page" "gboolean" T T)))
-             (get-g-type-definition "GtkPrintOperation")))
-)
+             (get-g-type-definition "GtkPrintOperation"))))
 
 ;;; --- Access Properties ------------------------------------------------------
 
 (test gtk-print-operation-properties
   (let ((object (make-instance 'gtk-print-operation)))
+    ;; Get allow-async
     (is-false (gtk-print-operation-allow-async object))
+    ;; Get current-page
     (is (= -1 (gtk-print-operation-current-page object)))
     ;; Set custom-tab-label
     (setf (gtk-print-operation-custom-tab-label object) "Custom Tab")
@@ -257,8 +253,7 @@
     (is-false (gtk-print-operation-support-selection object))
     (is-false (gtk-print-operation-track-print-status object))
     (is (eq :pixel (gtk-print-operation-unit object)))
-    (is-false (gtk-print-operation-use-full-page object))
-))
+    (is-false (gtk-print-operation-use-full-page object))))
 
 ;;;     gtk_print_operation_new
 
