@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-action.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkToggleAction
 ;;;
-;;; An action which can be toggled between two states
+;;;     An action which can be toggled between two states.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkToggleAction
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_toggle_action_new
 ;;;     gtk_toggle_action_toggled
@@ -44,6 +43,26 @@
 ;;;     gtk_toggle_action_get_active
 ;;;     gtk_toggle_action_set_draw_as_radio
 ;;;     gtk_toggle_action_get_draw_as_radio
+;;;
+;;; Properties
+;;;
+;;;     gboolean    active           Read / Write
+;;;     gboolean    draw-as-radio    Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void    toggled          Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkAction
+;;;         ╰── GtkToggleAction
+;;;             ╰── GtkRadioAction
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkToggleAction implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -75,7 +94,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (toggleaction)   : Run First
+ lambda (toggleaction)    : Run First
       @end{pre}
       Should be connected if you wish to perform an action whenever the
       @sym{gtk-toggle-action} state is changed.
@@ -102,12 +121,22 @@
 (setf (gethash 'gtk-toggle-action-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-active 'function)
- "@version{2013-12-10}
-  Accessor of the @slot[gtk-toggle-action]{active} slot of the
-  @class{gtk-toggle-action} class.
-  @see-class{gtk-toggle-action}
-  @see-function{gtk-toggle-action-get-active}
-  @see-function{gtk-toggle-action-set-active}")
+ "@version{2019-6-6}
+  @syntax[]{(gtk-toggle-action-active object) => is-active}
+  @syntax[]{(setf (gtk-toggle-action-active object) is-active)}
+  @argument[object]{the @class{gtk-toggle-action} object}
+  @argument[is-active]{whether the action should be checked or not}
+  @begin{short}
+    Accessor of the @slot[gtk-toggle-action]{active} slot of the
+    @class{gtk-toggle-action} class.
+  @end{short}
+
+  The @sym{gtk-toggle-action-active} slot access function
+  returns the checked state of the toggle action.
+
+  The @sym{(setf gtk-toggle-action-action)} slot access function
+  sets the checked state on the toggle action.
+  @see-class{gtk-toggle-action}")
 
 ;;; --- gtk-toggle-action-draw-as-radio ----------------------------------------
 
@@ -124,45 +153,44 @@
 (setf (gethash 'gtk-toggle-action-draw-as-radio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-draw-as-radio 'function)
- "@version{2013-12-10}
-  Accessor of the @slot[gtk-toggle-action]{draw-as-radio} slot of the
-  @class{gtk-toggle-action} class.
-  @see-class{gtk-toggle-action}
-  @see-function{gtk-toggle-action-get-draw-as-radio}
-  @see-function{gtk-toggle-action-set-draw-as-radio}")
+ "@version{2019-6-6}
+  @syntax[]{(gtk-toggle-action-draw-as-radio object) => draw-as-radio}
+  @syntax[]{(setf (gtk-toggle-action-draw-as-radio object) draw-as-radio)}
+  @argument[object]{the @class{gtk-toggle-action} object}
+  @argument[draw-as-radio]{whether the action should have proxies like a radio
+    action}
+  @begin{short}
+    Accessor of the @slot[gtk-toggle-action]{draw-as-radio} slot of the
+    @class{gtk-toggle-action} class.
+  @end{short}
+
+  The @sym{gtk-toggle-action-draw-as-radio} slot access function
+  returns whether the action should have proxies like a radio action.
+
+  The @sym{(setf gtk-toggle-action-draw-as-radio)} slot access function
+  sets whether the action should have proxies like a radio action.
+  @see-class{gtk-toggle-action}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_new ()
-;;;
-;;; GtkToggleAction * gtk_toggle_action_new (const gchar *name,
-;;;                                          const gchar *label,
-;;;                                          const gchar *tooltip,
-;;;                                          const gchar *stock_id);
-;;;
-;;; Creates a new GtkToggleAction object. To add the action to a GtkActionGroup
-;;; and set the accelerator for the action, call
-;;; gtk_action_group_add_action_with_accel().
-;;;
-;;; name :
-;;;     A unique name for the action
-;;;
-;;; label :
-;;;     The label displayed in menu items and on buttons, or NULL.
-;;;
-;;; tooltip :
-;;;     A tooltip for the action, or NULL.
-;;;
-;;; stock_id :
-;;;     The stock icon to display in widgets representing the action, or NULL.
-;;;
-;;; Returns :
-;;;     a new GtkToggleAction
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_toggle_action_new" gtk-toggle-action-new)
     (g-object gtk-toggle-action)
+ "@version{2019-6-6}
+  @argument[name]{a unique name for the action}
+  @argument[label]{the label displayed in menu items and on buttons, or
+    @code{nil}}
+  @argument[tooltip]{a tooltip for the action, or @code{nil}}
+  @argument[stock-id]{the stock icon to display in widgets representing the
+    action, or @code{nil}}
+  @return{A new @class{gtk-toggle-action} object.}
+  @begin{short}
+    Creates a new @class{gtk-toggle-action} object.
+  @end{short}
+  To add the action to a @class{gtk-action-group} and set the accelerator for
+  the action, call the @fun{gtk-action-group-add-action} function.
+  @see-class{gtk-toggle-action}"
   (name :string)
   (label :string)
   (tooltip :string)
@@ -172,114 +200,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_toggled ()
-;;;
-;;; void gtk_toggle_action_toggled (GtkToggleAction *action);
-;;;
-;;; Emits the "toggled" signal on the toggle action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_toggle_action_toggled" gtk-toggle-action-toggled) :void
+ "@version{2019-6-6}
+  @argument[action]{the @class{gtk-toggle-action} object}
+  @begin{short}
+    Emits the \"toggled\" signal on the toggle action.
+  @end{short}
+  @see-class{gtk-toggle-action}"
   (action (g-object gtk-toggle-action)))
 
 (export 'gtk-toggle-action-toggled)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_action_set_active ()
-;;;
-;;; void gtk_toggle_action_set_active (GtkToggleAction *action,
-;;;                                    gboolean is_active);
-;;;
-;;; Sets the checked state on the toggle action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; is_active :
-;;;     whether the action should be checked or not
-;;;
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-action-set-active))
-
-(defun gtk-toggle-action-set-active (action is-active)
-  (setf (gtk-toggle-action-active action) is-active))
-
-(export 'gtk-toggle-action-set-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_action_get_active ()
-;;;
-;;; gboolean gtk_toggle_action_get_active (GtkToggleAction *action);
-;;;
-;;; Returns the checked state of the toggle action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     the checked state of the toggle action
-;;;
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-action-get-active))
-
-(defun gtk-toggle-action-get-active (action)
-  (gtk-toggle-action-active action))
-
-(export 'gtk-toggle-action-get-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_action_set_draw_as_radio ()
-;;;
-;;; void gtk_toggle_action_set_draw_as_radio (GtkToggleAction *action,
-;;;                                           gboolean draw_as_radio);
-;;;
-;;; Sets whether the action should have proxies like a radio action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; draw_as_radio :
-;;;     whether the action should have proxies like a radio action
-;;;
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-action-set-draw-as-radio))
-
-(defun gtk-toggle-action-set-draw-as-radio (action draw-as-radio)
-  (setf (gtk-toggle-action-draw-as-radio action) draw-as-radio))
-
-(export 'gtk-toggle-action-set-draw-as-radio)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_action_get_draw_as_radio ()
-;;;
-;;; gboolean gtk_toggle_action_get_draw_as_radio (GtkToggleAction *action);
-;;;
-;;; Returns whether the action should have proxies like a radio action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     whether the action should have proxies like a radio action.
-;;;
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-action-get-draw-as-radio))
-
-(defun gtk-toggle-action-get-draw-as-radio (action)
-  (gtk-toggle-action-draw-as-radio action))
-
-(export 'gtk-toggle-action-get-draw-as-radio)
 
 ;;; --- End of file gtk.toggle-action.lisp -------------------------------------
