@@ -2,11 +2,11 @@
 ;;; gtk.stock-item.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.4.3 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,19 +28,11 @@
 ;;;﻿
 ;;; Stock Items
 ;;;
-;;; Prebuilt common menu/toolbar items and corresponding icons
+;;;     Prebuilt common menu/toolbar items and corresponding icons.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkStockItem
-;;;
-;;;     gtk_stock_add
-;;;     gtk_stock_add_static
-;;;     gtk_stock_item_copy
-;;;     gtk_stock_item_free
-;;;     gtk_stock_list_ids
-;;;     gtk_stock_lookup
-;;;     gtk_stock_set_translate_func
 ;;;
 ;;;     GTK_STOCK_ABOUT                 "gtk-about"
 ;;;     GTK_STOCK_ADD                   "gtk-add"
@@ -150,22 +142,15 @@
 ;;;     GTK_STOCK_ZOOM_IN               "gtk-zoom-in"
 ;;;     GTK_STOCK_ZOOM_OUT              "gtk-zoom-out"
 ;;;
-;;; Description
+;;; Functions
 ;;;
-;;; Stock items represent commonly-used menu or toolbar items such as "Open" or
-;;; "Exit". Each stock item is identified by a stock ID; stock IDs are just
-;;; strings, but macros such as GTK_STOCK_OPEN are provided to avoid typing
-;;; mistakes in the strings. Applications can register their own stock items in
-;;; addition to those built-in to GTK+.
-;;;
-;;; Each stock ID can be associated with a GtkStockItem, which contains the
-;;; user-visible label, keyboard accelerator, and translation domain of the menu
-;;; or toolbar item; and/or with an icon stored in a GtkIconFactory. See
-;;; GtkIconFactory for more information on stock icons. The connection between a
-;;; GtkStockItem and stock icons is purely conventional (by virtue of using the
-;;; same stock ID); it's possible to register a stock item but no icon, and vice
-;;; versa. Stock icons may have a RTL variant which gets used for right-to-left
-;;; locales.
+;;;     gtk_stock_add
+;;;     gtk_stock_add_static
+;;;     gtk_stock_item_copy
+;;;     gtk_stock_item_free
+;;;     gtk_stock_list_ids
+;;;     gtk_stock_lookup
+;;;     gtk_stock_set_translate_func
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -187,6 +172,9 @@
 ;;;
 ;;; void gtk_stock_add (const GtkStockItem *items, guint n_items);
 ;;;
+;;; gtk_stock_add has been deprecated since version 3.10 and should not be used
+;;; in newly-written code.
+;;;
 ;;; Registers each of the stock items in items. If an item already exists with
 ;;; the same stock ID as one of the items, the old item gets replaced. The stock
 ;;; items are copied, so GTK+ does not hold any pointer into items and items can
@@ -205,6 +193,9 @@
 ;;;
 ;;; void gtk_stock_add_static (const GtkStockItem *items, guint n_items);
 ;;;
+;;; gtk_stock_add_static has been deprecated since version 3.10 and should not
+;;; be used in newly-written code.
+;;;
 ;;; Same as gtk_stock_add(), but doesn't copy items, so items must persist until
 ;;; application exit.
 ;;;
@@ -220,6 +211,9 @@
 ;;;
 ;;; GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 ;;;
+;;; gtk_stock_item_copy has been deprecated since version 3.10 and should not
+;;; be used in newly-written code.
+;;;
 ;;; Copies a stock item, mostly useful for language bindings and not in
 ;;; applications.
 ;;;
@@ -234,6 +228,9 @@
 ;;; gtk_stock_item_free ()
 ;;;
 ;;; void gtk_stock_item_free (GtkStockItem *item);
+;;;
+;;; gtk_stock_item_free has been deprecated since version 3.10 and should not
+;;; be used in newly-written code.
 ;;;
 ;;; Frees a stock item allocated on the heap, such as one returned by
 ;;; gtk_stock_item_copy(). Also frees the fields inside the stock item, if they
@@ -255,10 +252,25 @@
 (defcfun ("gtk_stock_list_ids" gtk-stock-list-ids)
     (g-slist :string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-17}
+ "@version{2020-1-18}
   @return{A list of known stock IDs.}
-  Retrieves a list of all known stock IDs added to a @class{gtk-icon-factory}
-  or registered with @fun{gtk-stock-add}.
+  @begin{short}
+    Retrieves a list of all known stock IDs added to a @class{gtk-icon-factory}
+    or registered with @fun{gtk-stock-add}.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gtk-stock-list-ids)
+=> (\"gtk-zoom-out\" \"gtk-zoom-in\" \"gtk-zoom-fit\" ...)
+  (member \"gtk-cancel\" (gtk-stock-list-ids) :test #'equal)
+=> (\"gtk-cancel\" \"gtk-bold\" \"gtk-apply\" \"gtk-add\" \"gtk-about\")
+    @end{pre}
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    @sym{gtk-stock-list-ids} has been deprecated since version 3.10 and should
+    not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-icon-factory}
   @see-function{gtk-stock-add}")
 
 (export 'gtk-stock-list-ids)
@@ -267,6 +279,9 @@
 ;;; gtk_stock_lookup ()
 ;;;
 ;;; gboolean gtk_stock_lookup (const gchar *stock_id, GtkStockItem *item);
+;;;
+;;; gtk_stock_lookupp has been deprecated since version 3.10 and should not
+;;; be used in newly-written code.
 ;;;
 ;;; Fills item with the registered values for stock_id, returning TRUE if
 ;;; stock_id was known.
@@ -288,6 +303,9 @@
 ;;;                                    GtkTranslateFunc func,
 ;;;                                    gpointer data,
 ;;;                                    GDestroyNotify notify);
+;;;
+;;; gtk_stock_set_translate_func has been deprecated since version 3.10 and
+;;; should not be used in newly-written code.
 ;;;
 ;;; Sets a function to be used for translating the label of a stock item.
 ;;;
@@ -337,6 +355,5 @@
 ;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.stock-item.lisp ----------------------------------------
