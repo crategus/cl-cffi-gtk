@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -241,7 +241,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer 'type)
- "@version{2013-6-21}
+ "@version{2020-1-18}
   @begin{short}
     The @sym{gtk-cell-renderer} is a base class of a set of objects used for
     rendering a cell to a @symbol{cairo-t}. These objects are used primarily by
@@ -261,17 +261,22 @@
   There are a number of rules that must be followed when writing a new
   @sym{gtk-cell-renderer}. First and formost, its important that a certain set
   of properties will always yield a cell renderer of the same size, barring a
-  @class{gtk-style} change. The @sym{gtk-cell-renderer} also has a number of
+  @code{GtkStyle} change. The @sym{gtk-cell-renderer} also has a number of
   generic properties that are expected to be honored by all children.
 
   Beyond merely rendering a cell, cell renderers can optionally provide active
-  user interface elements. A cell renderer can be activatable like
+  user interface elements. A cell renderer can be \"activatable\" like
   @class{gtk-cell-renderer-toggle}, which toggles when it gets activated by a
-  mouse click, or it can be editable like @class{gtk-cell-renderer-text}, which
-  allows the user to edit the text using a @class{gtk-entry}. To make a cell
-  renderer activatable or editable, you have to implement the
+  mouse click, or it can be \"editable\" like @class{gtk-cell-renderer-text},
+  which allows the user to edit the text using a @class{gtk-entry}. To make a
+  cell renderer activatable or editable, you have to implement the
   @code{GtkCellRendererClass.activate} or
   @code{GtkCellRendererClass.start_editing} virtual functions, respectively.
+
+  Many properties of @sym{gtk-cell-renderer} and its subclasses have a
+  corresponding @code{set} property, e. g. @code{cell-background-set}
+  corresponds to @code{cell-background}. These @code{set} properties reflect
+  whether a property has been set or not. You should not set them independently.
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-canceled\" signal}
       @begin{pre}
