@@ -1984,7 +1984,7 @@
   (cell-area (g-boxed-foreign gdk-rectangle))
   (flags gtk-cell-renderer-state))
 
-(export 'gtk-cell-renderer-activate-cell)
+(export 'gtk-cell-area-activate-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_stop_editing ()
