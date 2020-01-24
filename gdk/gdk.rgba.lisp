@@ -223,7 +223,7 @@
 
 (defun gdk-rgba-parse (spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2020-1-24}
   @argument[spec]{the string specifying the color}
   @return{A @class{gdk-rgba} structure with the filled in values.}
   @begin{short}
@@ -236,17 +236,31 @@
     @item{A standard name taken from the X11 @code{rgb.txt} file.}
     @item{A hex value in the form @code{rgb}, @code{rrggbb}, @code{rrrgggbbb}
       or @code{rrrrggggbbbb}.}
-    @item{A RGB color in the form @code{rgb(r,g,b)}. In this case the color will
-      have full opacity.}
+    @item{A RGB color in the form @code{rgb(r,g,b)}. In this case the color
+      will have full opacity.}
     @item{A RGBA color in the form @code{rgba(r,g,b,a)}.}
   @end{itemize}
   Where @code{r}, @code{g}, @code{b} and @code{a} are respectively the red,
   green, blue and alpha color values. In the last two cases, @code{r}, @code{g}
-  and @code{b} are either integers in the range 0 to 255 or precentage values in
-  the range 0% to 100%, and @code{a} is a floating point value in the range
+  and @code{b} are either integers in the range 0 to 255 or precentage values
+  in the range 0% to 100%, and @code{a} is a floating point value in the range
   0 to 1.
-
-  Since 3.0
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (gdk-rgba-parse \"LightGreen\")
+=> #S(GDK-RGBA
+      :RED 0.5647058823529412d0
+      :GREEN 0.9333333333333333d0
+      :BLUE 0.5647058823529412d0
+      :ALPHA 1.0d0)
+ (gdk-rgba-parse \"#90ee90\")
+=> #S(GDK-RGBA
+      :RED 0.5647058823529412d0
+      :GREEN 0.9333333333333333d0
+      :BLUE 0.5647058823529412d0
+      :ALPHA 1.0d0)
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-to-string}"
   (let ((rgba (make-gdk-rgba)))
