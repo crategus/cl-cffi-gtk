@@ -206,7 +206,6 @@ GTK+ Widgets and Objects
  +  gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.24
  +  not implemented                  - GtkGLArea
  +  gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.24
- +  gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.24
  +  gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.24 &
  +  gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.24 &
  +  gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.24
@@ -300,14 +299,13 @@ Deprecated
 
     Deprecated since GTK+ 3.4
 
- +  gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4*
- +  gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4*
+    gtk.handle-box.lisp              - GtkHandleBox                - GTK+ 3.24
+    gtk.table.lisp                   - GtkTable                    - GTK+ 3.24
+    gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.24
 
-    Deprecated since GTK+ 3.6
-
- +  gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4*
- +  gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4*
- +  gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4*
+    gtk.color-selection.lisp         - GtkColorSelection           - GTK+ 3.24
+    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog     - GTK+ 3.24
+    gtk.hsv.lisp                     - GtkHSV                      - GTK+ 3.24
 
     Deprecated since GTK+ 3.8
 
@@ -316,13 +314,13 @@ Deprecated
 
     Deprecated since GTK+ 3.10
 
- +  gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.8.8*
+    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.24
     gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.24
     gtk.action.lisp                  - GtkAction                   - GTK+ 3.24
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.24
- +  gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8*
+    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.24
     gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.24
- +  gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
+    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.24
 
     gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.24
     gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.24

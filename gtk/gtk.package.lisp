@@ -2,7 +2,7 @@
 ;;; gtk.package.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -1282,7 +1282,7 @@
       @about-function{gtk-entry-new}
       @about-function{gtk-entry-new-with-buffer}
       @about-function{gtk-entry-get-text-area}
-      @about-function{gtk-entry-set-invisible-char}
+      @about-function{gtk-entry-unset-invisible-char}
       @about-function{gtk-entry-set-alignment}
       @about-function{gtk-entry-get-alignment}
       @about-function{gtk-entry-get-layout}
@@ -1634,6 +1634,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-is-end}
       @about-function{gtk-text-iter-is-start}
       @about-function{gtk-text-iter-forward-char}
+      @about-function{gtk-text-iter-move}
       @about-function{gtk-text-iter-backward-char}
       @about-function{gtk-text-iter-forward-chars}
       @about-function{gtk-text-iter-backward-chars}
@@ -1675,11 +1676,13 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-forward-to-line-end}
       @about-function{gtk-text-iter-forward-to-tag-toggle}
       @about-function{gtk-text-iter-backward-to-tag-toggle}
+      @about-function{gtk-text-iter-find-char}
       @about-function{gtk-text-iter-forward-find-char}
       @about-function{gtk-text-iter-backward-find-char}
 
       @about-symbol{gtk-text-search-flags}
 
+      @about-function{gtk-text-iter-search}
       @about-function{gtk-text-iter-forward-search}
       @about-function{gtk-text-iter-backward-search}
       @about-function{gtk-text-iter-equal}
@@ -1728,6 +1731,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-delete}
       @about-function{gtk-text-buffer-delete-interactive}
       @about-function{gtk-text-buffer-backspace}
+      @about-function{gtk-text-buffer-get-text}
       @about-function{gtk-text-buffer-get-slice}
       @about-function{gtk-text-buffer-insert-pixbuf}
       @about-function{gtk-text-buffer-insert-child-anchor}
@@ -2267,7 +2271,7 @@ setup_tree (void)
                                                       NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 
-   /* Now we can manipulate the view just like any other GTK widget */
+   /* Now we can manipulate the view just like any other GTK+ widget */
    ...
 @}
       @end{pre}
@@ -2783,8 +2787,8 @@ setup_tree (void)
     @begin[GtkCellRenderer]{subsection}
       An object for rendering a single cell.
 
-      @about-class{gtk-cell-renderer-state}
-      @about-class{gtk-cell-renderer-mode}
+      @about-symbol{gtk-cell-renderer-state}
+      @about-symbol{gtk-cell-renderer-mode}
       @about-class{gtk-cell-renderer}
 
       @about-generic{gtk-cell-renderer-cell-background}
@@ -3458,9 +3462,7 @@ setup_tree (void)
       menu.
 
       @about-class{gtk-menu-tool-button}
-
       @about-generic{gtk-menu-tool-button-menu}
-
       @about-function{gtk-menu-tool-button-new}
       @about-function{gtk-menu-tool-button-new-from-stock}
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-text}
@@ -3514,9 +3516,9 @@ setup_tree (void)
     @begin[GtkPopoverMenu]{subsection}
 
       @about-class{gtk-popover-menu}
-
       @about-generic{gtk-popover-visible-submenu}
-
+      @about-function{gtk-popover-menu-child-position}
+      @about-function{gtk-popover-menu-child-submenu}
       @about-function{gtk-popover-menu-new}
       @about-function{gtk-popover-menu-open-submenu}
     @end{subsection}
@@ -4396,26 +4398,6 @@ setup_tree (void)
 
       @about-function{gtk-event-box-new}
     @end{subsection}
-    @begin[GtkHandleBox]{subsection}
-      A widget for detachable window portions.
-
-      @about-class{gtk-handle-box}
-
-      @about-generic{gtk-handle-box-child-detached}
-      @about-generic{gtk-handle-box-handle-position}
-      @about-generic{gtk-handle-box-shadow-type}
-      @about-generic{gtk-handle-box-snap-edge}
-      @about-generic{gtk-handle-box-snap-edge-set}
-
-      @about-function{gtk-handle-box-new}
-      @about-function{gtk-handle-box-set-shadow-type}
-      @about-function{gtk-handle-box-set-handle-position}
-      @about-function{gtk-handle-box-set-snap-edge}
-      @about-function{gtk-handle-box-get-handle-position}
-      @about-function{gtk-handle-box-get-shadow-type}
-      @about-function{gtk-handle-box-get-snap-edge}
-      @about-function{gtk-handle-box-get-child-detached}
-    @end{subsection}
     @begin[GtkIMContexSimple]{subsection}
       An input method context supporting table-based input methods.
 
@@ -4723,14 +4705,6 @@ setup_tree (void)
       @about-function{gtk-distribute-natural-allocation}
       @about-function{gtk-widget-get-valign}
       @about-function{gtk-widget-set-valign}
-      @about-function{gtk-widget-get-margin-left}
-      @about-function{gtk-widget-set-margin-left}
-      @about-function{gtk-widget-get-margin-right}
-      @about-function{gtk-widget-set-margin-right}
-      @about-function{gtk-widget-get-margin-top}
-      @about-function{gtk-widget-set-margin-top}
-      @about-function{gtk-widget-get-margin-bottom}
-      @about-function{gtk-widget-set-margin-bottom}
       @about-function{gtk-widget-get-vexpand}
       @about-function{gtk-widget-set-vexpand}
       @about-function{gtk-widget-get-vexpand-set}
@@ -5136,15 +5110,12 @@ setup_tree (void)
       @about-function{gtk-event-controller-handle-event}
       @about-function{gtk-event-controller-reset}
     @end{subsection}
-
     @begin[GtkEventControllerKey]{subsection}
       Event controller for key events
 
       @about-class{gtk-event-controller-key}
-
-      @about-class{gtk-event-controller-key-new}
+      @about-function{gtk-event-controller-key-new}
     @end{subsection}
-
     @begin[GtkEventControllerScroll]{subsection}
       Event controller for scroll events
 
@@ -5163,15 +5134,13 @@ setup_tree (void)
 
       @about-function{gtk-event-controller-motion-new}
     @end{subsection}
-
     @begin[GtkGesture]{subsection}
       Base class for gestures
 
+      @about-symbol{gtk-event-sequence-state}
       @about-class{gtk-gesture}
-
       @about-generic{gtk-gesture-n-points}
       @about-generic{gtk-gesture-window}
-
       @about-function{gtk-gesture-get-device}
       @about-function{gtk-gesture-is-active}
       @about-function{gtk-gesture-is-recognized}
@@ -5190,7 +5159,6 @@ setup_tree (void)
       @about-function{gtk-gesture-get-group}
       @about-function{gtk-gesture-is-grouped-with}
     @end{subsection}
-
     @begin[GtkGestureSingle]{subsection}
       Base class for mouse/single-touch gestures
 
@@ -6005,7 +5973,7 @@ setup_tree (void)
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}
-    @begin[Deprecated since GTK 3.0]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.0]{subsection}@end{subsection}
     @begin[Resource Files]{subsection}
       Deprecated routines for handling resource files.
 
@@ -6022,11 +5990,11 @@ setup_tree (void)
       never very complete. The few symbols are not exported.
     @end{subsection}
 
-    @begin[Deprecated since GTK 3.2]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.2]{subsection}@end{subsection}
     @begin[GtkHBox]{subsection}
       A deprecated horizontal container box.
 
-      GtkHBox has been deprecated since GTK 3.2. You can use @class{gtk-box}
+      GtkHBox has been deprecated since GTK+ 3.2. You can use @class{gtk-box}
       with the value @code{:horizontal} for the
       @slot[gtk-orientable]{orientation} property instead, which is a very
       quick and easy change. If you have derived your own classes from GtkHBox,
@@ -6044,9 +6012,9 @@ setup_tree (void)
     @begin[GtkVBox]{subsection}
       A deprecated vertical container box.
 
-      GtkVBox has been deprecated since GTK 3.2. You can use @class{gtk-box}
+      GtkVBox has been deprecated since GTK+ 3.2. You can use @class{gtk-box}
       instead, which is a very quick and easy change. If you have derived your
-      own classes from GVBox, you can simply change the inheritance to derive
+      own classes from GtkVBox, you can simply change the inheritance to derive
       directly from @class{gtk-box}, and set the
       @slot[gtk-orientable]{orientation} property to @code{:vertical} in your
       instance init function.
@@ -6061,7 +6029,7 @@ setup_tree (void)
     @begin[GtkHButtonBox]{subsection}
       A deprecated container for arranging buttons horizontally.
 
-      GtkHButtonBox has been deprecated since GTK 3.2 and should not be used
+      GtkHButtonBox has been deprecated since GTK+ 3.2 and should not be used
       in newly-written code. Use @class{gtk-button-box} with the value
       @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6072,7 +6040,7 @@ setup_tree (void)
     @begin[GtkVButtonBox]{subsection}
       A deprecated container for arranging buttons vertically.
 
-      GtkVButtonBox has been deprecated since GTK 3.2 and should not be used
+      GtkVButtonBox has been deprecated since GTK+ 3.2 and should not be used
       in newly-written code. Use @class{gtk-button-box} with the value
       @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6083,7 +6051,7 @@ setup_tree (void)
     @begin[GtkHPaned]{subsection}
       A deprecated container with two panes arranged horizontally.
 
-      GtkHPaned has been deprecated since GTK 3.2 and should not be used
+      GtkHPaned has been deprecated since GTK+ 3.2 and should not be used
       in newly-written code. Use @class{gtk-paned} with the value
       @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6094,7 +6062,7 @@ setup_tree (void)
     @begin[GtkVPaned]{subsection}
       A deprecated container with two panes arranged vertically.
 
-      GtkVPaned has been deprecated since GTK 3.2 and should not be used
+      GtkVPaned has been deprecated since GTK+ 3.2 and should not be used
       in newly-written code. Use @class{gtk-paned} with the value
       @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6105,7 +6073,7 @@ setup_tree (void)
     @begin[GtkHScale]{subsection}
       A deprecated horizontal slider widget for selecting a value from a range.
 
-      GtkHScale has been deprecated since GTK 3.2 and should not be
+      GtkHScale has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-scale} with the value
       @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6116,7 +6084,7 @@ setup_tree (void)
     @begin[GtkVScale]{subsection}
       A deprecated vertical slider widget for selecting a value from a range.
 
-      GtkVScale has been deprecated since GTK 3.2 and should not be
+      GtkVScale has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-scale} with the value
       @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6127,7 +6095,7 @@ setup_tree (void)
     @begin[GtkHSeparator]{subsection}
       A deprecated horizontal separator widget.
 
-      GtkHSeparator has been deprecated since GTK 3.2 and should not be
+      GtkHSeparator has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-separator} with the value
       @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6138,7 +6106,7 @@ setup_tree (void)
     @begin[GtkVSeparator]{subsection}
       A deprecated vertical separator widget.
 
-      GtkVSeparator has been deprecated since GTK 3.2 and should not be
+      GtkVSeparator has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-separator} with the value
       @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6149,7 +6117,7 @@ setup_tree (void)
     @begin[GtkHScrollbar]{subsection}
       A deprecated horizontal scrollbar.
 
-      GtkHScrollbar has been deprecated since GTK 3.2 and should not be
+      GtkHScrollbar has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-scrollbar} with the value
       @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6160,7 +6128,7 @@ setup_tree (void)
     @begin[GtkVScrollbar]{subsection}
       A deprecated vertical scrollbar.
 
-      GtkVScrollbar has been deprecated since GTK 3.2 and should not be
+      GtkVScrollbar has been deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-scrollbar} with the value
       @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
@@ -6171,7 +6139,7 @@ setup_tree (void)
     @begin[GtkFontSelection]{subsection}
       Deprecated widget for selecting fonts.
 
-      GtkFontSelection is deprecated since GTK 3.2 and should not be used in
+      GtkFontSelection is deprecated since GTK+ 3.2 and should not be used in
       newly written code. Use @class{gtk-font-chooser} instead.
 
       In the Lisp binding the symbols and functions for GtkFontSelection are
@@ -6180,14 +6148,25 @@ setup_tree (void)
     @begin[GtkFontSelectionDialog]{subsection}
       Deprecated dialog box for selecting fonts.
 
-      GtkFontSelectionDialog is deprecated since GTK 3.2 and should not be
+      GtkFontSelectionDialog is deprecated since GTK+ 3.2 and should not be
       used in newly written code. Use @class{gtk-font-chooser-dialog} instead.
 
       In the Lisp binding the symbols and functions for GtkFontSelectionDialog
       are not exported.
     @end{subsection}
 
-    @begin[Deprecated since GTK 3.4]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.4]{subsection}@end{subsection}
+    @begin[GtkHandleBox]{subsection}
+      A depreacted widget for detachable window portions.
+
+      @about-class{gtk-handle-box}
+      @about-generic{gtk-handle-box-child-detached}
+      @about-generic{gtk-handle-box-handle-position}
+      @about-generic{gtk-handle-box-shadow-type}
+      @about-generic{gtk-handle-box-snap-edge}
+      @about-generic{gtk-handle-box-snap-edge-set}
+      @about-function{gtk-handle-box-new}
+    @end{subsection}
     @begin[GtkTable]{subsection}
       Pack widgets in regular patterns.
 
@@ -6222,37 +6201,30 @@ setup_tree (void)
       @about-function{gtk-table-get-default-col-spacing}
     @end{subsection}
     @begin[GtkTearoffMenuItem]{subsection}
-      A menu item used to tear off and reattach its menu.
+      A deprecated menu item used to tear off and reattach its menu.
 
       @about-class{gtk-tearoff-menu-item}
       @about-function{gtk-tearoff-menu-item-new}
     @end{subsection}
-
-    @begin[Deprecated since GTK 3.6]{subsection}@end{subsection}
     @begin[GtkColorSelection]{subsection}
-      A widget used to select a color.
+      A deprecated widget used to select a color.
 
       @about-class{gtk-color-selection}
+      @about-generic{gtk-color-selection-current-alpha}
+      @about-generic{gtk-color-selection-current-color}
+      @about-generic{gtk-color-selection-current-rgba}
+      @about-generic{gtk-color-selection-has-opacity-control}
+      @about-generic{gtk-color-selection-has-palette}
       @about-function{gtk-color-selection-child-expand}
       @about-function{gtk-color-selection-child-fill}
       @about-function{gtk-color-selection-child-padding}
       @about-function{gtk-color-selection-child-pack-type}
       @about-function{gtk-color-selection-child-position}
       @about-function{gtk-color-selection-new}
-      @about-function{gtk-color-selection-set-has-opacity-control}
-      @about-function{gtk-color-selection-get-has-opacity-control}
-      @about-function{gtk-color-selection-set-has-palette}
-      @about-function{gtk-color-selection-get-has-palette}
-      @about-function{gtk-color-selection-get-current-alpha}
-      @about-function{gtk-color-selection-set-current-alpha}
-      @about-function{gtk-color-selection-get-current-color}
-      @about-function{gtk-color-selection-set-current-color}
       @about-function{gtk-color-selection-get-previous-alpha}
       @about-function{gtk-color-selection-set-previous-alpha}
       @about-function{gtk-color-selection-get-previous-color}
       @about-function{gtk-color-selection-set-previous-color}
-      @about-function{gtk-color-selection-get-current-rgba}
-      @about-function{gtk-color-selection-set-current-rgba}
       @about-function{gtk-color-selection-get-previous-rgba}
       @about-function{gtk-color-selection-set-previous-rgba}
       @about-function{gtk-color-selection-is-adjusting}
@@ -6264,11 +6236,14 @@ setup_tree (void)
       Deprecated dialog box for selecting a color.
 
       @about-class{gtk-color-selection-dialog}
+      @about-generic{gtk-color-selection-dialog-cancel-button}
+      @about-generic{gtk-color-selection-dialog-color-selection}
+      @about-generic{gtk-color-selection-dialog-help-button}
+      @about-generic{gtk-color-selection-dialog-ok-button}
       @about-function{gtk-color-selection-dialog-new}
-      @about-function{gtk-color-selection-dialog-get-color-selection}
     @end{subsection}
     @begin[GtkHSV]{subsection}
-      A \"color wheel\" widget.
+      A deprecated \"color wheel\" widget.
 
       @about-class{gtk-hsv}
       @about-function{gtk-hsv-new}
@@ -6281,7 +6256,7 @@ setup_tree (void)
       @about-function{gtk-rgb-to-hsv}
     @end{subsection}
 
-    @begin[Deprecated since GTK 3.8]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.8]{subsection}@end{subsection}
     @begin[GtkSymbolicColor]{subsection}
       GtkSymbolicColor is deprecated since version 3.8. Symbolic colors are
       considered an implementation detail of GTK+. In the Lisp binding no
@@ -6295,7 +6270,7 @@ setup_tree (void)
       no symbols or functions of GtkGradient are implemented.
     @end{subsection}
 
-    @begin[Deprecated since GTK 3.10]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.10]{subsection}@end{subsection}
     @begin[GtkUIManager]{subsection}
       Constructing menus and toolbars from an XML description.
 
@@ -6560,7 +6535,7 @@ setup_tree (void)
       @about-function{gtk-icon-source-set-state-wildcarded}
     @end{subsection}
 
-    @begin[Deprecated since GTK 3.14]{subsection}@end{subsection}
+    @begin[Deprecated since GTK+ 3.14]{subsection}@end{subsection}
     @begin[GtkNumerableIcon]{subsection}
       A @class{g-icon} that allows numbered emblems.
 
