@@ -2,12 +2,12 @@
 ;;; gtk.table.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,12 +29,14 @@
 ;;;
 ;;; GtkTable
 ;;;
-;;; Pack widgets in regular patterns
+;;;     Pack widgets in regular patterns
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTable
 ;;;     GtkAttachOptions
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_table_new
 ;;;     gtk_table_resize
@@ -51,6 +53,37 @@
 ;;;     gtk_table_get_row_spacing
 ;;;     gtk_table_get_col_spacing
 ;;;     gtk_table_get_default_col_spacing
+;;;
+;;; Properties
+;;;
+;;;                guint    column-spacing    Read / Write
+;;;             gboolean    homogeneous       Read / Write
+;;;                guint    n-columns         Read / Write
+;;;                guint    n-rows            Read / Write
+;;;                guint    row-spacing       Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;                guint    bottom-attach     Read / Write
+;;;                guint    left-attach       Read / Write
+;;;                guint    right-attach      Read / Write
+;;;                guint    top-attach        Read / Write
+;;;     GtkAttachOptions    x-options         Read / Write
+;;;                guint    x-padding         Read / Write
+;;;     GtkAttachOptions    y-options         Read / Write
+;;;                guint    y-padding         Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkTable
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkTable implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -120,7 +153,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-table 'type)
- "@version{2013-5-20}
+ "@version{2020-1-20}
   @begin{short}
     The @sym{gtk-table} functions allow the programmer to arrange widgets in
     rows and columns, making it easy to align many widgets next to each other,
@@ -136,8 +169,8 @@
 
   To alter the space next to a specific row, use the
   @fun{gtk-table-set-row-spacing} function, and for a column the
-  @fun{gtk-table-set-col-spacing} function. The gaps between all rows or columns
-  can be changed by calling the @fun{gtk-table-set-row-spacings} or
+  @fun{gtk-table-set-col-spacing} function. The gaps between all rows or
+  columns can be changed by calling the @fun{gtk-table-set-row-spacings} or
   @fun{gtk-table-set-col-spacings} functions respectively. Note that spacing is
   added between the children, while padding added by the @fun{gtk-table-attach}
   function is added on either side of the widget it belongs to.
@@ -146,9 +179,10 @@
   cells in the table will resize themselves to the size of the largest widget
   in the table.
   @begin[Warning]{dictionary}
-    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
-    provides the same capabilities as @sym{gtk-table} for arranging widgets in
-    a rectangular grid, but does support height-for-width geometry management.
+    @sym{gtk-table} has been deprecated since GTK+ 3.4. Use @class{gtk-grid}
+    instead. It provides the same capabilities as @sym{gtk-table} for arranging
+    widgets in a rectangular grid, but does support height-for-width geometry
+    management.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -234,11 +268,16 @@
 (setf (gethash 'gtk-table-column-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-column-spacing 'function)
- "@version{2013-1-22}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-table]{column-spacing} slot of the
     @class{gtk-table} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-homogeneous -------------------------------------------
@@ -253,11 +292,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-homogeneous atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-homogeneous 'function)
- "@version{2013-1-22}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-table]{homogeneous} slot of the
     @class{gtk-table} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-n-columns ----------------------------------------------------
@@ -272,11 +316,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-n-columns atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-n-columns 'function)
- "@version{2013-1-22}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-table]{n-columns} slot of the
     @class{gtk-table} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-n-rows -------------------------------------------------------
@@ -291,11 +340,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-n-rows atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-n-rows 'function)
- "@version{2013-1-22}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-table]{n-rows} slot of the
     @class{gtk-table} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-row-spacing --------------------------------------------------
@@ -310,11 +364,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-row-spacing atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-table-row-spacing 'function)
- "@version{2013-1-22}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-table]{row-spacing} slot of the
     @class{gtk-table} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -331,9 +390,16 @@
 (setf (gethash 'gtk-table-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-left-attach 'function)
- "@version{2013-9-10}
-  Accessor of the @code{left-attach} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{left-attach} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-right-attach -------------------------------------------
@@ -346,9 +412,16 @@
 (setf (gethash 'gtk-table-child-right-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-right-attach 'function)
- "@version{2013-9-10}
-  Accessor of the @code{right-attach} child property of the
-  @class{gtk-table} class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{right-attach} child property of the
+    @class{gtk-table} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-top-attach ---------------------------------------------
@@ -361,9 +434,16 @@
 (setf (gethash 'gtk-table-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-top-attach 'function)
- "@version{2013-9-10}
-  Accessor of the @code{top-attach} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{top-attach} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-bottom-attach ------------------------------------------
@@ -376,9 +456,16 @@
 (setf (gethash 'gtk-table-child-bottom-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-bottom-attach 'function)
- "@version{2013-9-10}
-  Accessor of the @code{bottom-attach} child property of the
-  @class{gtk-table} class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{bottom-attach} child property of the
+    @class{gtk-table} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-x-options ----------------------------------------------
@@ -391,9 +478,16 @@
 (setf (gethash 'gtk-table-child-x-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-options 'function)
- "@version{2013-9-10}
-  Accessor of the @code{x-options} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{x-options} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-y-options ----------------------------------------------
@@ -406,9 +500,16 @@
 (setf (gethash 'gtk-table-child-y-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-options 'function)
- "@version{2013-9-10}
-  Accessor of the @code{y-options} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{y-options} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-x-padding ----------------------------------------------
@@ -421,9 +522,16 @@
 (setf (gethash 'gtk-table-child-x-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-padding 'function)
- "@version{2013-9-10}
-  Accessor of the @code{x-padding} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{x-padding} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; --- gtk-table-child-y-padding ----------------------------------------------
@@ -436,9 +544,16 @@
 (setf (gethash 'gtk-table-child-y-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-padding 'function)
- "@version{2013-9-10}
-  Accessor of the @code{y-padding} child property of the @class{gtk-table}
-  class.
+ "@version{2020-1-20}
+  @begin{short}
+    Accessor of the @code{y-padding} child property of the @class{gtk-table}
+    class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
+    provides the same capabilities as @sym{gtk-table} for arranging widgets in
+    a rectangular grid, but does support height-for-width geometry management.
+  @end{dictionary}
   @see-class{gtk-table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -449,24 +564,25 @@
 
 (defun gtk-table-new (rows columns homogeneous)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[rows]{the number of rows the new table should have}
   @argument[columns]{the number of columns the new table should have}
-  @argument[homogeneous]{if set to @em{true}, all table cells are resized to the
-    size of the cell containing the largest widget}
+  @argument[homogeneous]{if set to @em{true}, all table cells are resized to
+    the size of the cell containing the largest widget}
   @return{The the newly created table widget.}
   @begin{short}
     Used to create a new table widget.
   @end{short}
   An initial size must be given by specifying how many @arg{rows} and
   @arg{columns} the table should have, although this can be changed later with
-  @fun{gtk-table-resize}. @arg{rows} and @arg{columns} must both be in the range
-  1 ... 65535. For historical reasons, 0 is accepted as well and is silently
-  interpreted as 1.
-
-  @subheading{Warning}
-    @sym{gtk-table-new} has been deprecated since version 3.4 and should not be
-    used in newly-written code. Use @fun{gtk-grid-new}.
+  the function @fun{gtk-table-resize}. @arg{rows} and @arg{columns} must both
+  be in the range 1 ... 65535. For historical reasons, 0 is accepted as well
+  and is silently interpreted as 1.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-new} has been deprecated since version 3.4 and
+    should not be used in newly-written code. Use the function
+    @fun{gtk-grid-new}.
+  @end{dictionary}
   @see-class{gtk-table}
   @see-function{gtk-table-resize}
   @see-function{gtk-grid-new}"
@@ -485,7 +601,7 @@
 
 (defun gtk-table-resize (table rows columns)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{the @class{gtk-table} container you wish to change the size
     of}
   @argument[rows]{the new number of rows}
@@ -494,10 +610,11 @@
     If you need to change a table's size after it has been created, this
     function allows you to do so.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-resize} has been deprecated since version 3.4 and should not
-    be used in newly-written code. @class{gtk-grid} resizes automatically.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-resize} has been deprecated since version 3.4
+    and should not be used in newly-written code. @class{gtk-grid} resizes
+    automatically.
+  @end{dictionary}
   @see-class{gtk-table}"
   (setf (gtk-table-n-rows table) rows
         (gtk-table-n-columns table) columns))
@@ -512,18 +629,18 @@
 
 (defun gtk-table-get-size (table)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @begin{return}
     @code{n-rows} -- number of rows, or @code{nil}@br{}
     @code{n-columns} -- the number of columns, or @code{nil}
   @end{return}
   @short{Gets the number of rows and columns in the table.}
-
-  @subheading{Warning}
-    @sym{gtk-table-get-size} has been deprecated since version 3.4 and should
-    not be used in newly-written code. @class{gtk-grid} does not expose the
-    number of columns and rows.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-size} has been deprecated since version 3.4
+    and should not be used in newly-written code. @class{gtk-grid} does not
+    expose the number of columns and rows.
+  @end{dictionary}
   @see-class{gtk-table}"
   (values (gtk-table-n-rows table)
           (gtk-table-n-columns table)))
@@ -552,7 +669,7 @@
                                            (x-padding 0)
                                            (y-padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{the @class{gtk-table} to add a new widget to}
   @argument[child]{the widget to add}
   @argument[left-attach]{the column number to attach the left side of a child
@@ -560,12 +677,12 @@
   @argument[right-attach]{the column number to attach the right side of a child
     widget to}
   @argument[top-attach]{the row number to attach the top of a child widget to}
-  @argument[bottom-attach]{the row number to attach the bottom of a child widget
-    to}
+  @argument[bottom-attach]{the row number to attach the bottom of a child
+    widget to}
   @argument[x-options]{used to specify the properties of the child widget when
     the table is resized}
-  @argument[y-options]{the same as @arg{x-options}, except this field determines
-    behaviour of vertical resizing}
+  @argument[y-options]{the same as @arg{x-options}, except this field
+    determines behaviour of vertical resizing}
   @argument[x-padding]{an integer value specifying the padding on the left and
     right of the widget being added to the table}
   @argument[y-padding]{the amount of padding above and below the child widget}
@@ -577,23 +694,22 @@
   @arg{bottom-attach}. These each represent the leftmost, rightmost, uppermost
   and lowest column and row numbers of the table. (Columns and rows are indexed
   from zero).
-
-  To make a button occupy the lower right cell of a 2 x 2 table, use
-  @begin{pre}
- gtk_table_attach (table, button,
-                   1, 2, // left, right attach
-                   1, 2, // top, bottom attach
-                   xoptions, yoptions,
-                   xpadding, ypadding);
-  @end{pre}
-  If you want to make the button span the entire bottom row, use
-  @code{left-attach = 0} and @code{right-attach = 2} instead.
-
-  @subheading{Warning}
-    @sym{gtk-table-attach} has been deprecated since version 3.4 and should not
-    be used in newly-written code. Use @fun{gtk-grid-attach} with
-    @class{gtk-grid}. Note that the attach arguments differ between those two
-    functions.
+  @begin[Example]{dictionary}
+    To make a button occupy the lower right cell of a 2 x 2 table, use
+    @begin{pre}
+  (gtk-table-attach table button 1 2 1 2)
+    @end{pre}
+    If you want to make the button span the entire bottom row, use
+    @begin{pre}
+  (gtk-table-attach table button 0 2 1 2)
+    @end{pre}
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-attach} has been deprecated since version 3.4
+    and should not be used in newly-written code. Use the function
+    @fun{gtk-grid-attach} with @class{gtk-grid}. Note that the attach arguments
+    differ between those two functions.
+  @end{dictionary}
   @see-class{gtk-table}"
   (%gtk-table-attach table widget
                      left right top bottom
@@ -610,7 +726,7 @@
 
 (defun gtk-table-attach-defaults (table child left right top bottom)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{the table to add a new child widget to}
   @argument[widget]{the child widget to add}
   @argument[left-attach]{the column number to attach the left side of the child
@@ -622,18 +738,19 @@
   @argument[bottom-attach]{the row number to attach the bottom of the child
     widget to}
   @begin{short}
-    As there are many options associated with @fun{gtk-table-attach}, this
-    convenience function provides the programmer with a means to add children to
-    a table with identical padding and expansion options.
+    As there are many options associated with the function
+    @fun{gtk-table-attach}, this convenience function provides the programmer
+    with a means to add children to a table with identical padding and
+    expansion options.
   @end{short}
   The values used for the @symbol{gtk-attach-options} are
   @code{'(:expand :fill)}, and the padding is set to 0.
-
-  @subheading{Warning}
-    @sym{gtk-table-attach-defaults} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use @fun{gtk-grid-attach} with
-    @class{gtk-grid}. Note that the attach arguments differ between those two
-    functions.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-attach-defaults} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the function
+    @fun{gtk-grid-attach} with @class{gtk-grid}. Note that the attach arguments
+    differ between those two functions.
+  @end{dictionary}
   @see-class{gtk-table}"
   (gtk-table-attach table child left right top bottom))
 
@@ -645,7 +762,7 @@
 
 (defcfun ("gtk_table_set_row_spacing" gtk-table-set-row-spacing) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} containing the row whose properties you
     wish to change}
   @argument[row]{row number whose spacing will be changed}
@@ -653,13 +770,13 @@
   @begin{short}
     Changes the space between a given table row and the subsequent row.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-set-row-spacing} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use
-    @fun{gtk-widget-set-margin-top} and @fun{gtk-widget-set-margin-bottom} on
-    the widgets contained in the row if you need this functionality.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-set-row-spacing} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the functions
+    @fun{gtk-widget-margin-top} and @fun{gtk-widget-margin-bottom} on the
+    widgets contained in the row if you need this functionality.
     @class{gtk-grid} does not support per-row spacing.
+  @end{dictionary}
   @see-class{gtk-table}"
   (table (g-object gtk-table))
   (row :uint)
@@ -673,7 +790,7 @@
 
 (defcfun ("gtk_table_set_col_spacing" gtk-table-set-col-spacing) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @argument[column]{the column whose spacing should be changed}
   @argument[spacing]{number of pixels that the spacing should take up}
@@ -681,13 +798,13 @@
     Alters the amount of space between a given table column and the following
     column.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-set-col-spacing} has been deprecated since version 3.4 and
-    should not be used in newly written code. Use
-    @fun{gtk-widget-set-margin-left} and @fun{gtk-widget-set-margin-right} on
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-set-col-spacing} has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the functions
+    @fun{gtk-widget-margin-start} and @fun{gtk-widget-margin-end} on
     the widgets contained in the row if you need this functionality.
     @class{gtk-grid} does not support per-row spacing.
+  @end{dictionary}
   @see-class{gtk-table}"
   (table (g-object gtk-table))
   (column :uint)
@@ -703,16 +820,16 @@
 
 (defun gtk-table-set-row-spacings (table spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
-  @argument[spacing]{the number of pixels of space to place between every row in
-    the table}
+  @argument[spacing]{the number of pixels of space to place between every row
+    in the table}
   @short{Sets the space between every row in table equal to spacing.}
-
-  @subheading{Warning}
-    @sym{gtk-table-set-row-spacings} has been deprecated since version 3.4 and
-    should not be used in newly written code. Use @fun{gtk-grid-set-row-spacing}
-    with @class{gtk-grid}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-set-row-spacings} has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the function
+    @fun{gtk-grid-row-spacing} with @class{gtk-grid}.
+  @end{dictionary}
   @see-class{gtk-table}"
   (setf (gtk-table-row-spacing table) spacing))
 
@@ -726,16 +843,16 @@
 
 (defun gtk-table-set-col-spacings (table spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
-  @argument[spacing]{the number of pixels of space to place between every column
-    in the table}
+  @argument[spacing]{the number of pixels of space to place between every
+    column in the table}
   @short{Sets the space between every column in table equal to spacing.}
-
-  @subheading{Warning}
-    @sym{gtk-table-set-col-spacings} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use the function
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-set-col-spacings} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the function
     @fun{gtk-grid-column-spacing} with @class{gtk-grid}.
+  @end{dictionary}
   @see-class{gtk-table}"
   (setf (gtk-table-column-spacing table) spacing))
 
@@ -749,21 +866,21 @@
 
 (defun gtk-table-set-homogeneous (table homogeneous)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2020-1-20}
   @argument[table]{the @class{gtk-table} widget you wish to set the homogeneous
     properties of}
-  @argument[homogeneous]{set to @em{true} to ensure all table cells are the same
-    size, set to @code{nil} if this is not your desired behaviour}
+  @argument[homogeneous]{set to @em{true} to ensure all table cells are the
+    same size, set to @code{nil} if this is not your desired behaviour}
   @begin{short}
-    Changes the homogeneous property of table cells, i. e. whether all cells are
-    an equal size or not.
+    Changes the homogeneous property of table cells, i. e. whether all cells
+    are an equal size or not.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-set-homogeneous} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use
-    @fun{gtk-grid-set-row-homogeneous} and
-    @fun{gtk-grid-set-column-homogeneous} with @class{gtk-grid}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-set-homogeneous} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the functions
+    @fun{gtk-grid-row-homogeneous} and @fun{gtk-grid-column-homogeneous} with
+    @class{gtk-grid}.
+  @end{dictionary}
   @see-class{gtk-table}
   @see-function{gtk-grid-set-row-homogeneous}
   @see-function{gtk-grid-set-column-homogeneous}"
@@ -779,18 +896,19 @@
 
 (defun gtk-table-get-default-row-spacing (table)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @return{The default row spacing.}
   @begin{short}
-    Gets the default row spacing for the table. This is the spacing that will be
-    used for newly added rows. See @fun{gtk-table-set-row-spacings}.
+    Gets the default row spacing for the table. This is the spacing that will
+    be used for newly added rows. See the function
+    @fun{gtk-table-set-row-spacings}.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-get-default-row-spacing} has been deprecated since version
-    3.4 and should not be used in newly written code. Use
-    @fun{gtk-grid-get-row-spacing} with @class{gtk-grid}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-default-row-spacing} has been deprecated
+    since version 3.4 and should not be used in newly written code. Use the
+    function @fun{gtk-grid-row-spacing} with @class{gtk-grid}.
+  @end{dictionary}
   @see-class{gtk-table}"
   (gtk-table-row-spacing table))
 
@@ -804,15 +922,15 @@
 
 (defun gtk-table-get-homogeneous (table)
  #+cl-cffi-gtk-documentation
- "@version{2014-3-9}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @return{@em{True} if the cells are all constrained to the same size}
   @begin{short}
     Returns whether the table cells are all constrained to the same width and
-    height. See the @fun{gtk-table-set-homogeneous} function.
+    height. See the function @fun{gtk-table-set-homogeneous}.
   @end{short}
   @begin[Warning]{dictionary}
-    The @sym{gtk-table-get-homogeneous} function has been deprecated since
+    The function @sym{gtk-table-get-homogeneous} has been deprecated since
     version 3.4 and should not be used in newly written code. Use the functions
     @fun{gtk-grid-row-homogeneous} and @fun{gtk-grid-column-homogeneous}
     with the @class{gtk-grid} class.
@@ -831,19 +949,19 @@
 
 (defcfun ("gtk_table_get_row_spacing" gtk-table-get-row-spacing) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @argument[row]{a row in the table, 0 indicates the first row}
   @return{The row spacing.}
   @begin{short}
-    Gets the amount of space between row row, and row row + 1. See
+    Gets the amount of space between row row, and row row + 1. See the function
     @fun{gtk-table-set-row-spacing}.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-get-row-spacing} has been deprecated since version 3.4 and
-    should not be used in newly-written code. @class{gtk-grid} does not offer a
-    replacement for this functionality.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-row-spacing} has been deprecated since
+    version 3.4 and should not be used in newly-written code. @class{gtk-grid}
+    does not offer a replacement for this functionality.
+  @end{dictionary}
   @see-class{gtk-table}"
   (table (g-object gtk-table))
   (row :uint))
@@ -856,7 +974,7 @@
 
 (defcfun ("gtk_table_get_col_spacing" gtk-table-get-col-spacing) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @argument[column]{a column in the table, 0 indicates the first column}
   @return{The column spacing.}
@@ -864,11 +982,11 @@
     Gets the amount of space between column col, and column col + 1. See
     @fun{gtk-table-set-col-spacing}.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-get-col-spacing} has been deprecated since version 3.4 and
-    should not be used in newly written code. @class{gtk-grid} does not offer a
-    replacement for this functionality.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-col-spacing} has been deprecated since
+    version 3.4 and should not be used in newly written code. @class{gtk-grid}
+    does not offer a replacement for this functionality.
+  @end{dictionary}
   @see-class{gtk-table}"
   (table (g-object gtk-table))
   (column :uint))
@@ -883,19 +1001,19 @@
 
 (defun gtk-table-get-default-col-spacing (table)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2020-1-20}
   @argument[table]{a @class{gtk-table} widget}
   @return{The default column spacing.}
   @begin{short}
     Gets the default column spacing for the @arg{table}. This is the spacing
     that will be used for newly added columns.
-    See @fun{gtk-table-set-col-spacings}.
+    See the function @fun{gtk-table-set-col-spacings}.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-table-get-default-col-spacing} has been deprecated since version
-    3.4 and should not be used in newly-written code. Use
-    @fun{gtk-grid-get-column-spacing} with @class{gtk-grid}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-default-col-spacing} has been deprecated
+    since version 3.4 and should not be used in newly-written code. Use the
+    function @fun{gtk-grid-column-spacing} with @class{gtk-grid}.
+  @end{dictionary}
   @see-class{gtk-table}
   @see-function{gtk-table-set-col-spacings}
   @see-function{gtk-grid-get-column-spacing}"
