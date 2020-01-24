@@ -23,13 +23,13 @@
                                          name
                                          type)))
     (cond ((string= name "DarkTheme")
-           (let ((value (gtk-toggle-action-get-active action))
+           (let ((value (gtk-toggle-action-active action))
                  (settings (gtk-settings-get-default)))
              (g-object-set-property settings
                                     "gtk-application-prefer-dark-theme"
                                     value)))
           ((string= name "HideTitlebar")
-           (let ((value (gtk-toggle-action-get-active action)))
+           (let ((value (gtk-toggle-action-active action)))
              (setf (gtk-window-hide-titlebar-when-maximized (app-window *app*))
                    value)))
           (t
@@ -41,7 +41,7 @@
   (declare (ignore action))
   (let ((name (gtk-action-name current))
         (type (g-object-type-name current))
-        (active (gtk-toggle-action-get-active current))
+        (active (gtk-toggle-action-active current))
         (value (gtk-radio-action-current-value current)))
     (when active
       (gtk-label-set-text (app-message *app*)
