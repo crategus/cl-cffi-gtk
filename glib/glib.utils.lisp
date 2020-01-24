@@ -116,17 +116,19 @@
 (defcfun ("g_get_application_name" g-get-application-name) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-7-22}
-  @return{Human-readable application name. May return @code{nil}.}
+  @begin{return}
+    A string with a human-readable application name. May return @code{nil}.
+  @end{return}
   @begin{short}
-    Gets a human-readable name for the application, as set by
+    Gets a human-readable name for the application, as set by the function
     @fun{g-set-application-name}.
   @end{short}
 
   This name should be localized if possible, and is intended for display to the
-  user. Contrast with @fun{g-get-prgname}, which gets a non-localized name. If
-  @fun{g-set-application-name} has not been called, returns the result of
-  @fun{g-get-prgname} (which may be @code{nil} if @fun{g-set-prgname} has also
-  not been called).
+  user. Contrast with the function @fun{g-get-prgname}, which gets a
+  non-localized name. If the function @fun{g-set-application-name} has not been
+  called, returns the result of the function @fun{g-get-prgname}, which may be
+  @code{nil} if the function @fun{g-set-prgname} has also not been called.
 
   Since 2.2
   @see-function{g-set-application-name}
