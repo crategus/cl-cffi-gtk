@@ -165,20 +165,22 @@
 
 (defun gtk-text-iter-move (iter &key (count 1) (by :char) (direction :forward))
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
+ "@version{2020-1-24}
   This is a convenience function of the Lisp implementation which combines
   the following functions in a single function:
-  @fun{gtk-text-iter-forward-chars},
-  @fun{gtk-text-iter-forward-lines},
-  @fun{gtk-text-iter-forward-word-ends},
-  @fun{gtk-text-iter-backward-word-starts},
-  @fun{gtk-text-iter-forward-cursor-positions},
-  @fun{gtk-text-iter-forward-sentence-ends},
-  @fun{gtk-text-iter-backward-sentence-starts},
-  @fun{gtk-text-iter-forward-visible-word-ends},
-  @fun{gtk-text-iter-backward-visible-word-starts},
-  @fun{gtk-text-iter-forward-visible-lines}, and
-  @fun{gtk-text-iter-forward-visible-cursor-positions}
+  @begin{itemize}
+    @item{@fun{gtk-text-iter-forward-chars}}
+    @item{@fun{gtk-text-iter-forward-lines}}
+    @item{@fun{gtk-text-iter-forward-word-ends}}
+    @item{@fun{gtk-text-iter-backward-word-starts}}
+    @item{@fun{gtk-text-iter-forward-cursor-positions}}
+    @item{@fun{gtk-text-iter-forward-sentence-ends}}
+    @item{@fun{gtk-text-iter-backward-sentence-starts}}
+    @item{@fun{gtk-text-iter-forward-visible-word-ends}}
+    @item{@fun{gtk-text-iter-backward-visible-word-starts}}
+    @item{@fun{gtk-text-iter-forward-visible-lines}}
+    @item{@fun{gtk-text-iter-forward-visible-cursor-positions}}
+  @end{itemize}
   @see-function{gtk-text-iter-forward-chars}
   @see-function{gtk-text-iter-forward-lines}
   @see-function{gtk-text-iter-forward-word-ends}
