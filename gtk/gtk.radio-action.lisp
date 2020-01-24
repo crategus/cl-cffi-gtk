@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.radio-action.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,9 +31,11 @@
 ;;;
 ;;;     An action of which only one in a group can be active
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRadioAction
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_radio_action_new
 ;;;     gtk_radio_action_get_group
@@ -44,6 +43,27 @@
 ;;;     gtk_radio_action_join_group
 ;;;     gtk_radio_action_get_current_value
 ;;;     gtk_radio_action_set_current_value
+;;;
+;;; Properties
+;;;
+;;;               gint    current-value    Read / Write
+;;;     GtkRadioAction*   group            Write
+;;;               gint    value            Read / Write
+;;;
+;;; Signals
+;;;
+;;;               void    changed          No Recursion
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkAction
+;;;         ╰── GtkToggleAction
+;;;             ╰── GtkRadioAction
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkRadioAction implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -178,7 +198,7 @@
 (defcfun ("gtk_radio_action_new" gtk-radio-action-new)
     (g-object gtk-radio-action)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-1-22}
   @argument[name]{a unique name for the action}
   @argument[label]{the label displayed in menu items and on buttons,
     or @code{nil}}
@@ -194,6 +214,10 @@
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
   the action, call the function @fun{gtk-action-group-add-action}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-new} has been deprecated since version
+    3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}
   @see-class{gtk-action-group}
   @see-function{gtk-radio-action-get-current-value}
@@ -213,7 +237,7 @@
 (defcfun ("gtk_radio_action_get_group" gtk-radio-action-get-group)
     (g-slist (g-object gtk-radio-action) :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-1-22}
   @argument[action]{the action object}
   @return{The list representing the radio group for this object.}
   @begin{short}
@@ -234,6 +258,10 @@
         group = gtk_radio_action_get_group (action);
      @}
   @end{pre}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-get-group} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-set-group}"
   (action (g-object gtk-radio-action)))
@@ -248,12 +276,16 @@
 
 (defun gtk-radio-action-set-group (action group)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-1-22}
   @argument[action]{the action object}
   @argument[group]{a list representing a radio group}
   @begin{short}
     Sets the radio group for the radio action object.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-set-group} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-get-group}"
   (setf (gtk-radio-action-group action) group))
@@ -266,7 +298,7 @@
 
 (defcfun ("gtk_radio_action_join_group" gtk-radio-action-join-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-1-22}
   @argument[action]{the action object}
   @argument[group-source]{a radio action object whos group we are joining, or
     @code{nil} to remove the radio action from its group}
@@ -290,6 +322,10 @@
         last_action = action;
      @}
   @end{pre}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-join-group} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-get-group}
   @see-function{gtk-radio-action-set-group}"
