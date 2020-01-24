@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.hsv.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkHSV
 ;;;
-;;; A 'color wheel' widget
+;;;     A color wheel widget
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkHSV
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_hsv_new
 ;;;     gtk_hsv_set_color
@@ -49,8 +48,19 @@
 ;;;
 ;;; Signals
 ;;;
-;;;   "changed"                                        : Run First
-;;;   "move"                                           : Action
+;;;     void    changed    Run First
+;;;     void    move       Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkHSV
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkHSV implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -69,23 +79,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hsv 'type)
- "@version{2013-6-3}
+ "@version{2020-1-22}
   @begin{short}
     @sym{gtk-hsv} is the \"color wheel\" part of a complete color selector
-    widget. It allows to select a color by determining its HSV components in an
-    intuitive way. Moving the selection around the outer ring changes the hue,
-    and moving the selection point inside the inner triangle changes value and
-    saturation.
+    widget.
   @end{short}
+  It allows to select a color by determining its HSV components in an intuitive
+  way. Moving the selection around the outer ring changes the hue, and moving
+  the selection point inside the inner triangle changes value and saturation.
+  @begin[Warning]{dictionary}
+    @sym{gtk-hsv} has been deprecated since GTK+ 3.4 together with
+    @class{gtk-color-selection}, where it was used.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (hsv)   : Run First
+ lambda (hsv)    : Run First
       @end{pre}
 
     @subheading{The \"move\" signal}
       @begin{pre}
- lambda (hsv arg)   : Action
+ lambda (hsv arg)    : Action
       @end{pre}
   @end{dictionary}")
 
@@ -97,11 +111,15 @@
 
 (defun gtk-hsv-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-27}
-  @return{A newly-created HSV color selector.}
+ "@version{2020-1-22}
+  @return{A newly-created @class{gtk-hsv} color selector.}
   @begin{short}
     Creates a new HSV color selector.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-new} is deprecated since version 3.4 and should
+    not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (make-instance 'gtk-hsv))
 
@@ -113,15 +131,19 @@
 
 (defcfun ("gtk_hsv_set_color" gtk-hsv-set-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[hsv]{an HSV color selector}
-  @argument[h]{hue}
-  @argument[s]{saturation}
-  @argument[v]{value}
+ "@version{2020-1-24}
+  @argument[hsv]{a @class{gtk-hsv} color selector}
+  @argument[h]{hue of type @code{:double}}
+  @argument[s]{saturation of type @code{:double}}
+  @argument[v]{value of type @code{:double}}
   @begin{short}
-    Sets the current color in an HSV color selector. Color component values
-    must be in the [0.0, 1.0] range.
+    Sets the current color in an HSV color selector.
   @end{short}
+  Color component values must be in the [0.0, 1.0] range.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-set-color} is deprecated since version 3.4 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
   (h :double)
@@ -142,17 +164,21 @@
 
 (defun gtk-hsv-get-color (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[hsv]{an HSV color selector}
+ "@version{2020-1-24}
+  @argument[hsv]{a @class{gtk-hsv} color selector}
   @begin{return}
-    @code{h} -- the hue @br{}
-    @code{s} -- the saturation @br{}
-    @code{v} -- the value
+    @code{h} -- the hue of type @code{:double} @br{}
+    @code{s} -- the saturation of type @code{:double} @br{}
+    @code{v} -- the value of type @code{:double}
   @end{return}
   @begin{short}
-    Queries the current color in an HSV color selector. Returned values will be
-    in the [0.0, 1.0] range.
+    Queries the current color in an HSV color selector.
   @end{short}
+  Returned values will be in the [0.0, 1.0] range.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-get-color} is deprecated since version 3.4 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-hsv-get-color hsv h s v)
@@ -166,11 +192,15 @@
 
 (defcfun ("gtk_hsv_set_metrics" gtk-hsv-set-metrics) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[hsv]{an HSV color selector}
-  @argument[size]{diameter for the hue ring}
-  @argument[ring-width]{width of the hue ring}
+ "@version{2020-1-24}
+  @argument[hsv]{a @class{gtk-hsv} color selector}
+  @argument[size]{diameter of type @code{:int} for the hue ring}
+  @argument[ring-width]{width of type @code{:int} of the hue ring}
   @short{Sets the size and ring width of an HSV color selector.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-set-metrics} is deprecated since version 3.4 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
   (size :int)
@@ -189,13 +219,17 @@
 
 (defun gtk-hsv-get-metrics (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[hsv]{an HSV color selector}
+ "@version{2020-1-24}
+  @argument[hsv]{a @class{gtk-hsv} color selector}
   @begin{return}
-    @code{size} -- the diameter of the hue ring @br{}
-    @code{ring-width} -- the width of the hue ring
+    @code{size} -- the diameter of type @code{:int} of the hue ring @br{}
+    @code{ring-width} -- the width of type @code{:int} of the hue ring
   @end{return}
   @short{Queries the size and ring width of an HSV color selector.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-get-metrics} is deprecated since version 3.4 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (with-foreign-objects ((size :int) (ring-width :int))
     (%gtk-hsv-get-metrics hsv size ring-width)
@@ -209,19 +243,24 @@
 
 (defcfun ("gtk_hsv_is_adjusting" gtk-hsv-is-adjusting) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[hsv]{a @class{gtk-hsv} object}
+ "@version{2020-1-24}
+  @argument[hsv]{a @class{gtk-hsv} color selector}
   @begin{return}
     @em{True} if clients can ignore changes to the color value, since they may
-    be transitory, or @code{nil} if they should consider the color value status
+    be transitory, or @em{false} if they should consider the color value status
     to be final.
   @end{return}
   @begin{short}
     An HSV color selector can be said to be adjusting if multiple rapid changes
     are being made to its value, for example, when the user is adjusting the
-    value with the mouse. This function queries whether the HSV color selector
-    is being adjusted or not.
+    value with the mouse.
   @end{short}
+  This function queries whether the HSV color selector is being adjusted or not.
+  @see-class{gtk-hsv}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-hsv-is-adjusting} is deprecated since version 3.4 and
+    should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv)))
 
@@ -241,20 +280,21 @@
 
 (defun gtk-hsv-to-rgb (h s v)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[h]{hue}
-  @argument[s]{saturation}
-  @argument[v]{value}
+ "@version{2020-1-24}
+  @argument[h]{hue of type @code{:double}}
+  @argument[s]{saturation of type @code{:double}}
+  @argument[v]{value of type @code{:double}}
   @begin{return}
-    @code{r} -- the red component @br{}
-    @code{g} -- the green component @br{}
-    @code{b} -- the blue component
+    @code{r} -- the red component of type @code{:double} @br{}
+    @code{g} -- the green component of type @code{:double} @br{}
+    @code{b} -- the blue component of type @code{:double}
   @end{return}
   @begin{short}
     Converts a color from HSV space to RGB. Input values must be in the
     [0.0, 1.0] range; output values will be in the same range.
   @end{short}
-  @see-class{gtk-hsv}"
+  @see-class{gtk-hsv}
+  @see-function{gtk-rgb-to-hsv}"
   (with-foreign-objects ((r :double) (g :double) (b :double))
     (%gtk-hsv-to-rgb h s v r g b)
     (values (mem-ref r :double) (mem-ref g :double) (mem-ref b :double))))
@@ -275,14 +315,14 @@
 
 (defun gtk-rgb-to-hsv (r g b)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[r]{red}
-  @argument[g]{green}
-  @argument[b]{blue}
+ "@version{2020-1-24}
+  @argument[r]{red of type @code{:double}}
+  @argument[g]{green of type @code{:double}}
+  @argument[b]{blue of type @code{:double}}
   @begin{return}
-    @code{h} -- the hue component @br{}
-    @code{s} -- the saturation component @br{}
-    @code{v} -- the value component
+    @code{h} -- the hue component of type @code{:double} @br{}
+    @code{s} -- the saturation component of type @code{:double} @br{}
+    @code{v} -- the value component of type @code{:double}
   @end{return}
   @begin{short}
     Converts a color from RGB space to HSV. Input values must be in the
