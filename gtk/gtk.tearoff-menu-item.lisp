@@ -1,14 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tearoff-menu-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See http://www.gtk.org.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,28 +29,30 @@
 ;;;
 ;;; GtkTearoffMenuItem
 ;;;
-;;; A menu item used to tear off and reattach its menu
+;;;     A menu item used to tear off and reattach its menu
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTearoffMenuItem
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tearoff_menu_item_new
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkTearoffMenuItem
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkMenuItem
+;;;                         ╰── GtkTearoffMenuItem
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GtkTearoffMenuItem implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;;     GtkTearoffMenuItem implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActivatable and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -71,24 +72,25 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tearoff-menu-item 'type)
- "@version{2013-6-1}
+ "@version{2020-1-20}
   @begin{short}
     A @sym{gtk-tearoff-menu-item} is a special @class{gtk-menu-item} which is
     used to tear off and reattach its menu.
   @end{short}
 
-  When its menu is shown normally, the @class{gtk-tearoff-menu-item} is drawn as
+  When its menu is shown normally, the @sym{gtk-tearoff-menu-item} is drawn as
   a dotted line indicating that the menu can be torn off. Activating it causes
   its menu to be torn off and displayed in its own window as a tearoff menu.
 
-  When its menu is shown as a tearoff menu, the @class{gtk-tearoff-menu-item}
+  When its menu is shown as a tearoff menu, the @sym{gtk-tearoff-menu-item}
   is drawn as a dotted line which has a left pointing arrow graphic indicating
   that the tearoff menu can be reattached. Activating it will erase the tearoff
   menu window.
-
-  @subheading{Note}
-    @sym{gtk-tearoff-menu-item} is deprecated and should not be used in newly
-    written code. Menus are not meant to be torn around.")
+  @begin[Warning]{dictionary}
+    @sym{gtk-tearoff-menu-item} is deprecated since GTK+ 3.4 and should not be
+    used in newly written code. Menus are not meant to be torn around.
+  @end{dictionary}
+  @see-class{gtk-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tearoff_menu_item_new ()
@@ -98,14 +100,14 @@
 
 (defun gtk-tearoff-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2020-1-20}
   @return{A new @class{gtk-tearoff-menu-item} widget.}
-  @subheading{Warning}
-    @sym{gtk-tearoff-menu-item-new} has been deprecated since version 3.4 and
-    should not be used in newly-written code. @class{gtk-tearoff-menu-item} is
-    deprecated and should not be used in newly written code.
-
-  @short{Creates a new @class{gtk-tearoff-menu-item} widget.}"
+  @short{Creates a new @class{gtk-tearoff-menu-item} widget.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-tearoff-menu-item-new} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-tearoff-menu-item}"
   (make-instance 'gtk-tearoff-menu-item))
 
 (export 'gtk-tearoff-menu-item-new)
