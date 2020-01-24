@@ -2,12 +2,12 @@
 ;;; gtk.handle-box.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -56,8 +56,8 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void   child-attached    Run First
-;;;     void   child-detached    Run First
+;;;                void   child-attached     Run First
+;;;                void   child-detached     Run First
 ;;;
 ;;;
 ;;; Object Hierarchy
@@ -104,15 +104,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-handle-box 'type)
- "@version{2013-5-23}
+ "@version{2020-1-20}
   @begin{short}
     The @sym{gtk-handle-box} widget allows a portion of a window to be
-    \"torn off\". It is a bin widget which displays its child and a handle that
-    the user can drag to tear off a separate window (the float window)
-    containing the child widget. A thin ghost is drawn in the original location
-    of the handlebox. By dragging the separate window back to its original
-    location, it can be reattached.
+    \"torn off\".
   @end{short}
+  It is a bin widget which displays its child and a handle that the user can
+  drag to tear off a separate window (the float window) containing the child
+  widget. A thin ghost is drawn in the original location of the handlebox. By
+  dragging the separate window back to its original location, it can be
+  reattached.
 
   When reattaching, the ghost and float window must be aligned along one of
   the edges, the snap edge. This either can be specified by the application
@@ -126,22 +127,18 @@
   the handlebox is detached, the bottom edge of the handlebox's allocation will
   remain fixed as the height of the handlebox shrinks, so the snap edge should
   be set to @code{:bottom}.
-
-  @subheading{Note}
-    @sym{gtk-handle-box} has been deprecated. It is very specialized, lacks
-    features to make it useful and most importantly does not fit well into
-    modern application design. Do not use it. There is no replacement.
+  @begin[Warning]{dictionary}
+    @sym{gtk-handle-box} has been deprecated since GTK+ 3.4. It is very
+    specialized, lacks features to make it useful and most importantly does not
+    fit well into modern application design. Do not use it. There is no
+    replacement.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"child-attached\" signal}
       @begin{pre}
- lambda (handlebox widget)   : Run First
+ lambda (handlebox widget)    : Run First
       @end{pre}
-      @b{Warning}@br{}
-      \"child-attached\" has been deprecated since version 3.4 and
-      should not be used in newly-written code. @sym{gtk-handle-box} has been
-      deprecated.
-
-      This signal is emitted when the contents of the handlebox are reattached
+      This signal is emitted when the contents of the handle box are reattached
       to the main window.
       @begin[code]{table}
         @entry[handlebox]{The object which received the signal.}
@@ -150,13 +147,9 @@
       @end{table}
     @subheading{The \"child-detached\" signal}
       @begin{pre}
- lambda (handlebox widget)   : Run First
+ lambda (handlebox widget)    : Run First
       @end{pre}
-      @b{Warning}@br{}
-      \"child-detached\" has been deprecated since version 3.4 and should not be
-      used in newly-written code. @sym{gtk-handle-box} has been deprecated.
-
-      This signal is emitted when the contents of the handlebox are detached
+      This signal is emitted when the contents of the handle box are detached
       from the main window.
       @begin[code]{table}
         @entry[handlebox]{The object which received the signal.}
@@ -188,12 +181,17 @@
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-child-detached 'function)
- "@version{2013-3-26}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{child-detached} slot of the
     @class{gtk-handle-box} class.
   @end{short}
-  @see-class{handle-box}")
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-child-detached} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+    @class{gtk-handle-box} has been deprecated.
+  @end{dictionary}
+  @see-class{gtk-handle-box}")
 
 ;;; --- gtk-handle-box-handle-position -----------------------------------------
 
@@ -209,11 +207,16 @@
 (setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-handle-position 'function)
- "@version{2013-3-26}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{handle-position} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-handle-position} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+    @class{gtk-handle-box} has been deprecated.
+  @end{dictionary}
   @see-class{gtk-handle-box}")
 
 ;;; --- gtk-handle-box-shadow-type ---------------------------------------------
@@ -230,11 +233,16 @@
 (setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-shadow-type 'function)
- "@version{2013-3-26}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{shadow-type} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-shadow-type} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+    @class{gtk-handle-box} has been deprecated.
+  @end{dictionary}
   @see-class{gtk-handle-box}")
 
 ;;; --- gtk-handle-box-snap-edge -----------------------------------------------
@@ -251,11 +259,16 @@
 (setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge 'function)
- "@version{2013-3-26}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{snap-edge} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-snap-edge} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+    @class{gtk-handle-box} has been deprecated.
+  @end{dictionary}
   @see-class{gtk-handle-box}")
 
 ;;; --- gtk-handle-box-snap-edge-set -------------------------------------------
@@ -263,8 +276,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "snap-edge-set"
                                                'gtk-handle-box) 't)
- "The @code{snap-edge-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{snap-edge-set} property of type @code{:boolean} (Read / Write) @br{}
   Whether to use the value from the @code{snap-edge} property or a value
   derived from the @code{handle-position} property. @br{}
   Default value: @code{nil}")
@@ -273,11 +285,16 @@
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge-set 'function)
- "@version{2013-3-26}
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{snap-edge-set} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-snap-edge-set} has been deprecated since
+    version 3.4 and should not be used in newly-written code.
+    @class{gtk-handle-box} has been deprecated.
+  @end{dictionary}
   @see-class{gtk-handle-box}")
 
 ;;; ----------------------------------------------------------------------------
