@@ -234,10 +234,10 @@
                        "submenu" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-popover-menu-child-position atdoc:*function-name-alias*)
+(setf (gethash 'gtk-popover-menu-child-submenu atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-popover-menu-child-position 'function)
- "@version{2019-4-6}
+      (documentation 'gtk-popover-menu-child-submenu 'function)
+ "@version{2020-1-20}
   @begin{short}
     Accessor of the @code{submenu} child property of the
     @class{gtk-popover-menu} class.
