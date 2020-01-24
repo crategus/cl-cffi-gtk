@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.activatable.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,12 +29,13 @@
 ;;;
 ;;; GtkActivatable
 ;;;
-;;; An interface for activatable widgets
+;;;     An interface for activatable widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkActivatable
-;;;     GtkActivatableIface
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_activatable_do_set_related_action
 ;;;     gtk_activatable_get_related_action
@@ -45,6 +43,31 @@
 ;;;     gtk_activatable_sync_action_properties
 ;;;     gtk_activatable_set_related_action
 ;;;     gtk_activatable_set_use_action_appearance
+;;;
+;;; Properties
+;;;
+;;;     GtkAction*   related-action           Read / Write
+;;;      gboolean    use-action-appearance    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkActivatable
+;;;
+;;; Prerequisites
+;;;
+;;;     GtkActivatable requires GObject.
+;;;
+;;; Known Implementations
+;;;
+;;;     GtkActivatable is implemented by GtkButton, GtkCheckButton,
+;;;     GtkCheckMenuItem, GtkColorButton, GtkFontButton, GtkImageMenuItem,
+;;;     GtkLinkButton, GtkLockButton, GtkMenuButton, GtkMenuItem,
+;;;     GtkMenuToolButton, GtkModelButton, GtkRadioButton, GtkRadioMenuItem,
+;;;     GtkRadioToolButton, GtkRecentChooserMenu, GtkScaleButton,
+;;;     GtkSeparatorMenuItem, GtkSeparatorToolItem, GtkSwitch,
+;;;     GtkTearoffMenuItem, GtkToggleButton, GtkToggleToolButton,
+;;;     GtkToolButton, GtkToolItem and GtkVolumeButton.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -337,9 +360,30 @@ use-action-appearance property ...
 (setf (gethash 'gtk-activatable-related-action atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-activatable-related-action 'function)
- "@version{2013-12-8}
-  Accessor of the @slot[gtk-activatable]{related-action} slot of the
-  @class{gtk-activatable} class.
+ "@version{2020-1-22}
+  @syntax[]{(gtk-activatable-related-action object) => action}
+  @syntax[]{(setf (gtk-activatable-related-action object) action)}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @argument[action]{the @class{gtk-action} object to set}
+  @begin{short}
+    Accessor of the @slot[gtk-activatable]{related-action} slot of the
+    @class{gtk-activatable} class.
+  @end{short}
+
+  The @sym{gtk-activatable-related-action} slot access function
+  gets the related @class{gtk-action} object for @arg{activatable}.
+
+  The @sym{(setf gtk-activatable-related-action)} slot access function
+  sets the related action on the activatable object.
+  @begin[Note]{dictionary}
+    @class{gtk-activatable} implementors need to handle the
+    @slot[gtk-activatable]{related-action} property and call the
+    @fun{gtk-activatable-do-set-related-action} function when it changes.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-activatable-related-action} has been deprecated
+    since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-get-related-action}
   @see-function{gtk-activatable-set-related-action}")
@@ -366,46 +410,34 @@ use-action-appearance property ...
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-activatable-use-action-appearance 'function)
- "@version{2013-12-8}
-  Accessor of the @slot[gtk-activatable]{use-action-appearance} slot of the
-  @class{gtk-activatable} class.
-  @see-class{gtk-activatable}
-  @see-function{gtk-activatable-get-use-action-appearance}
-  @see-function{gtk-activatable-set-use-action-appearance}")
+ "@version{2020-1-22}
+  @syntax[]{(gtk-activatable-use-action-appearance object) => action}
+  @syntax[]{(setf (gtk-activatable-use-action-appearance object) action)}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @argument[use-appearance]{whether to use the actions appearance}
+  @begin{short}
+    Accessor of the @slot[gtk-activatable]{use-action-appearance} slot of the
+    @class{gtk-activatable} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
-;;; struct GtkActivatableIface
-;;;
-;;; struct GtkActivatableIface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   /* virtual table */
-;;;   void (* update)                 (GtkActivatable *activatable,
-;;;                                    GtkAction      *action,
-;;;                                    const gchar    *property_name);
-;;;   void (* sync_action_properties) (GtkActivatable *activatable,
-;;;                                    GtkAction      *action);
-;;; };
-;;;
-;;; GTypeInterface g_iface;
-;;;
-;;;
-;;; update ()
-;;;     Called to update the activatable when its related action's properties
-;;;     change. You must check the "use-action-appearance" property only apply
-;;;     action properties that are meant to effect the appearance accordingly.
-;;;
-;;; sync_action_properties ()
-;;;     Called to update the activatable completely, this is called internally
-;;;     when "related-action" property is set or unset and by the implementor
-;;;     when "use-action-appearance" changes.
-;;;
-;;; Note
-;;;
-;;; This method can be called with a NULL action at times
-;;;
-;;; Since 2.16
-;;; ----------------------------------------------------------------------------
+  The @sym{gtk-activatable-use-action-appearance} slot access function
+  gets whether this activatable should reset its layout and appearance when
+  setting the related action or when the action changes appearance.
+
+  The @sym{(setf gtk-activatable-use-action-appearance)} slot access function
+  sets whether this activatable should reset its layout and appearance when
+  setting the related action or when the action changes appearance.
+  @begin[Note]{dictionary}
+    @class{gtk-activatable} implementors need to handle the
+    @slot[gtk-activatable]{use-action-appearance} property and call the
+    @fun{gtk-activatable-sync-action-properties} function to update
+    @arg{activatable} if needed.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-activatable-use-action-appearance} has been deprecated
+    since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-activatable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_do_set_related_action ()
@@ -414,7 +446,7 @@ use-action-appearance property ...
 (defcfun ("gtk_activatable_do_set_related_action"
            gtk-activatable-do-set-related-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
+ "@version{2020-1-22}
   @argument[activatable]{a @class{gtk-activatable} object}
   @argument[action]{the @class{gtk-action} object to set}
   @begin{short}
@@ -430,11 +462,15 @@ use-action-appearance property ...
   it also makes sure the @code{GtkActivatable->update()} method is called when
   the related @class{gtk-action} object properties change and registers to the
   action's proxy list.
-
-  @subheading{Note}
+  @begin[Note]{dictionary}
     Be careful to call this before setting the local copy of the
     @class{gtk-action} object property, since this function uses
     @fun{gtk-activatable-get-related-action} to retrieve the previous action.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-activatable-do-set-related-action} has been deprecated
+    since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-activatable}
   @see-class{gtk-action}
   @see-function{gtk-activatable-get-related-action}"
@@ -444,51 +480,13 @@ use-action-appearance property ...
 (export 'gtk-activatable-do-set-related-action)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_activatable_get_related_action ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-activable-get-related-action))
-
-(defun gtk-activatable-get-related-action (activatable)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
-  @argument[activatable]{a @class{gtk-activatable} object}
-  @return{The related @class{gtk-action} object if one is set.}
-  @short{Gets the related @class{gtk-action} object for @arg{activatable}.}
-  @see-class{gtk-activatable}
-  @see-function{gtk-activatable-set-related-action}"
-  (gtk-activatable-related-action activatable))
-
-(export 'gtk-activatable-get-related-action)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_activatable_get_use_action_appearance ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-activatable-get-use-action-appearance))
-
-(defun gtk-activatable-get-use-action-appearance (activatable)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
-  @argument[activatable]{a @class{gtk-activatable} object}
-  @return{Whether @arg{activatable} uses its actions appearance.}
-  @begin{short}
-    Gets whether this activatable should reset its layout and appearance when
-    setting the related action or when the action changes appearance.
-  @end{short}
-  @see-class{gtk-activatable}"
-  (gtk-activatable-use-action-appearance activatable))
-
-(export 'gtk-activatable-get-use-action-appearance)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_sync_action_properties ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_activatable_sync_action_properties"
            gtk-activatable-sync-action-properties) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
+ "@version{2020-1-22}
   @argument[activatable]{a @class{gtk-activatable} object}
   @argument[action]{the related @class{gtk-action} or @code{nil}}
   @begin{short}
@@ -497,64 +495,15 @@ use-action-appearance property ...
     or unset and by the implementing class when
     @slot[gtk-activatable]{use-action-appearance} changes.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-activatable-sync-action-properties} has been
+    deprecated since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-activatable}
   @see-class{gtk-action}"
   (activatable (g-object gtk-activatable))
   (action (g-object gtk-action)))
 
 (export 'gtk-activatable-sync-action-properties)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_activatable_set_related_action ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-activatable-set-related-action))
-
-(defun gtk-activatable-set-related-action (activatable action)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
-  @argument[activatable]{a @class{gtk-activatable} object}
-  @argument[action]{the @class{gtk-action} object to set}
-  @begin{short}
-    Sets the related action on the activatable object.
-  @end{short}
-
-  @subheading{Note}
-    @class{gtk-activatable} implementors need to handle the
-    @slot[gtk-activatable]{related-action} property and call the
-    @fun{gtk-activatable-do-set-related-action} function when it changes.
-  @see-class{gtk-activatable}
-  @see-class{gtk-action}
-  @see-fun{gtk-activatable-do-set-related-action}"
-  (setf (gtk-activatable-related-action activatable) action))
-
-(export 'gtk-activatable-set-related-action)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_activatable_set_use_action_appearance ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-activatable-set-use-action-appearance))
-
-(defun gtk-activatable-set-use-action-appearance (activatable use-appearance)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
-  @argument[activatable]{a @class{gtk-activatable} object}
-  @argument[use-appearance]{whether to use the actions appearance}
-  @begin{short}
-    Sets whether this activatable should reset its layout and appearance when
-    setting the related action or when the action changes appearance
-  @end{short}
-
-  @subheading{Note}
-    @class{gtk-activatable} implementors need to handle the
-    @slot[gtk-activatable]{use-action-appearance} property and call the
-    @fun{gtk-activatable-sync-action-properties} function to update
-    @arg{activatable} if needed.
-  @see-class{gtk-activatable}
-  @see-function{gtk-activatable-sync-action-properties}"
-  (setf (gtk-activatable-use-action-appearance activatable) use-appearance))
-
-(export 'gtk-activatable-set-use-action-appearance)
 
 ;;; --- End of file gtk.activatable.lisp ---------------------------------------
