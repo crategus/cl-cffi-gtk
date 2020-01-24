@@ -1117,7 +1117,8 @@
                                          :angle 270))
       (gtk-box-pack-start vbox2 hbox)
       (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-hseparator))
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal))
       (gtk-box-pack-start vbox2
                           (gtk-label-new "Normal Label"))
       (gtk-box-pack-start vbox2
@@ -3048,17 +3049,17 @@ happen.")
                  (gtk-color-selection-dialog-color-selection colorseldlg)))
           (setq handled t)
           (gtk-color-selection-set-previous-color colorsel color)
-          (gtk-color-selection-set-current-color colorsel color)
-          (gtk-color-selection-set-has-palette colorsel t)
+          (setf (gtk-color-selection-current-color colorsel) color)
+          (setf (gtk-color-selection-has-palette colorsel) t)
           (g-signal-connect colorsel "color-changed"
              (lambda (widget)
                (declare (ignore widget))
-               (let ((color (gtk-color-selection-get-current-color colorsel)))
+               (let ((color (gtk-color-selection-current-color colorsel)))
                  (gtk-widget-modify-bg area :normal color))))
           (let ((response (gtk-dialog-run colorseldlg)))
             (gtk-widget-destroy colorseldlg)
             (if (eql response :ok)
-                (setq color (gtk-color-selection-get-current-color colorsel))
+                (setq color (gtk-color-selection-current-color colorsel))
                 (gtk-widget-modify-bg area :normal color)))))
       handled))
 
@@ -3486,7 +3487,8 @@ happen.")
              ;; Create and show the about dialog
              (create-about-dialog))))
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator))
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal))
       ;; Create a quit button
       (let ((button (make-instance 'gtk-button
                                    :label "Quit")))
