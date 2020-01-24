@@ -44,7 +44,8 @@
                                          :angle 270))
       (gtk-box-pack-start vbox2 hbox)
       (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-hseparator))
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal))
       (gtk-box-pack-start vbox2
                           (gtk-label-new "Normal Label"))
       (gtk-box-pack-start vbox2

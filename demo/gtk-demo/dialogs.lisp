@@ -131,7 +131,8 @@
              ;; Create and show the about dialog
              (create-about-dialog))))
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator))
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal))
       ;; Create a quit button
       (let ((button (make-instance 'gtk-button
                                    :label "Quit")))
