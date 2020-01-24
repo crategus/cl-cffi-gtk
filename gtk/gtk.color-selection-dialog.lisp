@@ -2,12 +2,12 @@
 ;;; gtk.color-selection-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,14 +29,38 @@
 ;;;
 ;;; GtkColorSelectionDialog
 ;;;
-;;; Deprecated dialog box for selecting a color
+;;;     Deprecated dialog box for selecting a color
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;    GtkColorSelectionDialog
+;;;     GtkColorSelectionDialog
+;;;
+;;; Functions
 ;;;
 ;;;    gtk_color_selection_dialog_new
 ;;;    gtk_color_selection_dialog_get_color_selection
+;;;
+;;; Properties
+;;;
+;;;     GtkWidget*   cancel-button      Read
+;;;     GtkWidget*   color-selection    Read
+;;;     GtkWidget*   help-button        Read
+;;;     GtkWidget*   ok-button          Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkDialog
+;;;                             ╰── GtkColorSelectionDialog
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkColorSelectionDialog implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -65,33 +89,35 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-selection-dialog 'type)
- "@version{2013-12-16}
+ "@version{2020-1-21}
   @begin{short}
     The @sym{gtk-color-selection-dialog} provides a standard dialog which allows
     the user to select a color much like the @class{gtk-file-chooser-dialog}
     provides a standard dialog for file selection.
   @end{short}
 
-  Use the @fun{gtk-color-selection-dialog-get-color-selection} function to get
-  the @class{gtk-color-selection} widget contained within the dialog. Use this
-  widget and its @fun{gtk-color-selection-get-current-color} function to gain
+  Use the function @fun{gtk-color-selection-dialog-color-selection} to get the
+  @class{gtk-color-selection} widget contained within the dialog. Use this
+  widget and its function @fun{gtk-color-selection-current-color} to gain
   access to the selected color. Connect a handler for this widget's
   \"color-changed\" signal to be notified when the color changes.
-
-  @subheading{GtkColorSelectionDialog as GtkBuildable}
+  @begin[GtkColorSelectionDialog as GtkBuildable]{dictionary}
     The @sym{gtk-color-selection-dialog} implementation of the
     @class{gtk-buildable} interface exposes the embedded
     @class{gtk-color-selection} as internal child with the name
-    \"color_selection\". It also exposes the buttons with the names
-    \"ok_button\", \"cancel_button\" and \"help_button\".
+    @code{color_selection}. It also exposes the buttons with the names
+    @code{ok_button}, @code{cancel_button} and @code{help_button}.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    @sym{gtk-color-selection-dialog} is deprecated since GTK+ 3.4 and should
+    not be used in newly-written code.
+  @end{dictionary}
   @see-slot{gtk-color-selection-dialog-cancel-button}
   @see-slot{gtk-color-selection-dialog-color-selection}
   @see-slot{gtk-color-selection-dialog-help-button}
   @see-slot{gtk-color-selection-dialog-ok-button}
   @see-class{gtk-color-selection}
-  @see-class{gtk-file-chooser-dialog}
-  @see-function{gtk-color-selection-get-current-color}
-  @see-function{gtk-color-selection-dialog-get-color-selection}")
+  @see-function{gtk-color-selection-current-color}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -110,9 +136,15 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-cancel-button 'function)
- "@version{2013-12-16}
-  Accessor of the @slot[gtk-color-selection-dialog]{cancel-button} slot of the
-  @class{gtk-color-selection-dialog} class.
+ "@version{2020-1-21}
+  @begin{short}
+    Accessor of the @slot[gtk-color-selection-dialog]{cancel-button} slot of
+    the @class{gtk-color-selection-dialog} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-color-selection-dialog-cancel-button} is deprecated
+    and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-color-selection-dialog}")
 
 ;;; --- gtk-color-selection-dialog-color-selection -----------------------------
@@ -128,9 +160,18 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-color-selection 'function)
- "@version{2013-12-16}
-  Accessor of the @slot[gtk-color-selection-dialog]{color-selection} slot of the
-  @class{gtk-color-selection-dialog} class.
+ "@version{2020-1-22}
+  @begin{short}
+    Accessor of the @slot[gtk-color-selection-dialog]{color-selection} slot of
+    the @class{gtk-color-selection-dialog} class.
+  @end{short}
+
+  The @sym{gtk-color-selection-dialog-color-selection} slot access function
+  retrieves the @class{gtk-color-selection} widget embedded in the dialog.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-color-selection-dialog-color-selection} is deprecated
+    and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-color-selection-dialog}")
 
 ;;; --- gtk-color-selection-dialog-help-button ---------------------------------
@@ -146,9 +187,15 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-help-button 'function)
- "@version{2013-12-16}
-  Accessor of the @slot[gtk-color-selection-dialog]{help-button} slot of the
-  @class{gtk-color-selection-dialog} class.
+ "@version{2020-1-21}
+  @begin{short}
+    Accessor of the @slot[gtk-color-selection-dialog]{help-button} slot of the
+    @class{gtk-color-selection-dialog} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-color-selection-dialog-help-button} is deprecated
+    and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-color-selection-dialog}")
 
 ;;; --- gtk-color-selection-dialog-ok-button -----------------------------------
@@ -164,11 +211,16 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-ok-button 'function)
- "@version{2013-12-16}
-  Accessor of the @slot[gtk-color-selection-dialog]{ok-button} slot of the
-  @class{gtk-color-selection-dialog} class.
-  @see-class{gtk-color-selection-dialog}
-  @see-function{gtk-color-selection-get-color-selection}")
+ "@version{2020-1-21}
+  @begin{short}
+    Accessor of the @slot[gtk-color-selection-dialog]{ok-button} slot of the
+    @class{gtk-color-selection-dialog} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-color-selection-dialog-ok-button} is deprecated
+    and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-color-selection-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_dialog_new ()
@@ -178,36 +230,20 @@
 
 (defun gtk-color-selection-dialog-new (title)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-16}
+ "@version{2020-1-21}
   @argument[title]{a string containing the title text for the dialog}
   @return{A @class{gtk-color-selection-dialog} widget.}
   @begin{short}
     Creates a new @class{gtk-color-selection-dialog}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-color-selection-dialog-new} is deprecated and should
+    not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-color-selection-dialog}"
   (make-instance 'gtk-color-selection-dialog
                  :title title))
 
 (export 'gtk-color-selection-dialog-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_color_selection_dialog_get_color_selection ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-color-selection-dialog-get-color-selection))
-
-(defun gtk-color-selection-dialog-get-color-selection (colorsel)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-16}
-  @argument[colorsel]{a @class{gtk-color-selection-dialog} widget}
-  @return{The embedded @class{gtk-color-selection} widget.}
-  @begin{short}
-    Retrieves the @class{gtk-color-selection} widget embedded in the dialog.
-  @end{short}
-  @see-class{gtk-color-selection-dialog}
-  @see-class{gtk-color-selection}"
-  (gtk-color-selection-dialog-color-selection colorsel))
-
-(export 'gtk-color-selection-dialog-get-color-selection)
 
 ;;; --- End of file gtk.color-selection-dialog.lisp ----------------------------
