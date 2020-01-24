@@ -2,12 +2,12 @@
 ;;; gtk.menu-tool-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -46,11 +46,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkMenu*  menu         Read / Write
+;;;     GtkMenu*   menu         Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;        void   show-menu    Run First
+;;;        void    show-menu    Run First
 ;;;
 ;;;
 ;;; Object Hierarchy
@@ -90,16 +90,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-tool-button 'type)
- "@version{2013-8-23}
+ "@version{2020-1-20}
   @begin{short}
     A @sym{gtk-menu-tool-button} is a @class{gtk-tool-item} that contains a
-    button and a small additional button with an arrow. When clicked, the arrow
-    button pops up a dropdown menu.
+    button and a small additional button with an arrow.
   @end{short}
+  When clicked, the arrow button pops up a dropdown menu.
 
-  Use the @fun{gtk-menu-tool-button-new} function to create a new
-  @sym{gtk-menu-tool-button}. Use the @fun{gtk-menu-tool-button-new-from-stock}
-  function to create a new @sym{gtk-menu-tool-button} containing a stock item.
+  Use the function @fun{gtk-menu-tool-button-new} to create a new
+  @sym{gtk-menu-tool-button}. Use the function
+  @fun{gtk-menu-tool-button-new-from-stock} to create a new
+  @sym{gtk-menu-tool-button} containing a stock item.
   @begin[GtkMenuToolButton as GtkBuildable]{dictionary}
     The @sym{gtk-menu-tool-button} implementation of the @class{gtk-buildable}
     interface supports adding a menu by specifying \"menu\" as the \"type\"
@@ -120,8 +121,8 @@
  lambda (button)    : Run First
       @end{pre}
       The \"show-menu\" signal is emitted before the menu is shown.
-      It can be used to populate the menu on demand, using the
-      @fun{gtk-menu-tool-button-get-menu} function.
+      It can be used to populate the menu on demand, using the function
+      @fun{gtk-menu-tool-button-get-menu}.
       Note that even if you populate the menu dynamically in this way, you must
       set an empty menu on the @sym{gtk-menu-tool-button} beforehand, since the
       arrow is made insensitive if the menu is not set.
@@ -141,48 +142,11 @@
   (Read / Write) @br{}
   The dropdown menu.")
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_tool_button_set_menu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-tool-button-set-menu))
-
-(defun gtk-menu-tool-button-set-menu (button menu)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @see-class{gtk-menu}
-  @see-class{gtk-menu-tool-button}
-  @see-function{gtk-menu-tool-button-get-menu}"
-  (setf (gtk-menu-tool-button-menu button) menu))
-
-(export 'gtk-menu-tool-button-set-menu)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_tool_button_get_menu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-tool-button-get-menu))
-
-(defun gtk-menu-tool-button-get-menu (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[button]{a @class{gtk-menu-tool-button} widget}
-  @return{The @class{gtk-menu} associated with @arg{button}.}
-  @begin{short}
-  @end{short}
-  @see-class{gtk-menu}
-  @see-class{gtk-menu-tool-button}
-  @see-function{gtk-menu-tool-button-set-menu}"
-  (gtk-menu-tool-button-menu button))
-
-(export 'gtk-menu-tool-button-get-menu)
-
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-tool-button-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tool-button-menu 'function)
- "@version{2013-8-23}
+ "@version{2020-1-20}
   @syntax[]{(gtk-menu-tool-button-menu object) => menu}
   @syntax[]{(setf (gtk-menu-tool-button-menu object) menu)}
   @argument[object]{a @class{gtk-menu-tool-button} widget}
