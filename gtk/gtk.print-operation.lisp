@@ -1666,8 +1666,8 @@
 
 (defun gtk-print-run-page-setup-dialog-async (parent page-setup settings done-cb)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
-  @argument[parent]{transient parent, or @code{nil}}
+ "@version{2020-1-24}
+  @argument[parent]{a @class{gtk-window} transient parent, or @code{nil}}
   @argument[page-setup]{an existing @class{gtk-page-setup}, or @code{nil}}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[done-cb]{a function to call when the user saves the modified page
@@ -1690,7 +1690,7 @@
                                           (callback gtk-page-setup-done-func-cb)
                                           done-cb-ptr)))
 
-(export 'gtk-print-run-page-setup-dialag-async)
+(export 'gtk-print-run-page-setup-dialog-async)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_end_preview ()
