@@ -2,12 +2,12 @@
 ;;; gtk.print-settings.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -188,7 +188,7 @@
  "@version{2013-5-30}
   @begin{short}
     A @sym{gtk-print-settings} object represents the settings of a print dialog
-    in a system-independent way. 
+    in a system-independent way.
   @end{short}
   The main use for this object is that once you have printed you can get a
   settings object that represents the settings the user chose, and the next time
@@ -1323,17 +1323,18 @@
 ;;; gtk_print_settings_get_n_copies ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_get_n_copies" gtk-print-copies-get-n-copies) :int
+(defcfun ("gtk_print_settings_get_n_copies" gtk-print-settings-get-n-copies)
+    :int
  #+cl-cffi-gtk-documentation
- "@version{2013-12-3}
+ "@version{2020-1-24}
   @argument[settings]{a @class{gtk-print-settings} object}
-  @return{The number of copies to print.}
+  @return{The number of type @code{:int} of copies to print.}
   @short{Gets the value of \"n-copies\".}
   @see-class{gtk-print-settings}
   @see-function{gtk-print-settings-get-n-copies}"
   (settings (g-object gtk-print-settings)))
 
-(export 'gtk-print-settings-n-copies)
+(export 'gtk-print-settings-get-n-copies)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_n_copies ()
@@ -1708,7 +1709,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @return{The media type.}
   @short{Gets the value of \"media-type\".}
-  
+
   The set of media types is defined in PWG 5101.1-2002 PWG.
   @see-class{gtk-print-settings}"
   (settings (g-object gtk-print-settings)))
