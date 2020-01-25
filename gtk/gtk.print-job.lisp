@@ -2,11 +2,11 @@
 ;;; gtk.print-job.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -68,15 +68,15 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkPageSetup*  page-setup            Read / Write / Construct Only
-;;;       GtkPrinter*  printer               Read / Write / Construct Only
-;;; GtkPrintSettings*  settings              Read / Write / Construct Only
-;;;            gchar*  title                 Read / Write / Construct Only
-;;;         gboolean   track-print-status    Read / Write
+;;;     GtkPageSetup*   page-setup            Read / Write / Construct Only
+;;;       GtkPrinter*   printer               Read / Write / Construct Only
+;;; GtkPrintSettings*   settings              Read / Write / Construct Only
+;;;            gchar*   title                 Read / Write / Construct Only
+;;;         gboolean    track-print-status    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void   status-changed    Run Last
+;;;             void    status-changed        Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -700,11 +700,12 @@
 ;;; gtk_print_job_set_n_up_layout ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_n_up_layout" gtk-print-job-set-n-layout) :void
+(defcfun ("gtk_print_job_set_n_up_layout" gtk-print-job-set-n-up-layout) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
+ "@version{2020-1-24}
   @argument[job]{a @class{gtk-print-job} object}
-  @argument[layout]{the n-up layout setting}
+  @argument[layout]{the n-up layout setting of type
+    @symbol{gtk-number-up-layout}}
   @begin{short}
     Sets the n-up layout setting for this job.
   @end{short}
