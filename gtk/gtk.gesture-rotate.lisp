@@ -2,11 +2,11 @@
 ;;; gtk.gesture-rotate.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,7 +41,7 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void  angle-changed  Run First
+;;;     void    angle-changed    Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -115,16 +115,16 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_gesture_rotate_get_angle_delta"
-          %gtk-gesture-rotate-get-angle-delta) :double
+          gtk-gesture-rotate-get-angle-delta) :double
  #+cl-cffi-gtk-documentation
- "@version{2019-3-23}
-  @argument[widget]{A @class{gtk-gesture-rotate}.}
-  @return{The angle delta in radians.}
+ "@version{2020-1-24}
+  @argument[gesture]{A @class{gtk-gesture-rotate} object.}
+  @return{The angle delta of type @code{:double} in radians.}
   @begin{short}
-    If gesture is active, this function returns the angle difference in radians
-    since the gesture was first recognized.
+    If the gesture is active, this function returns the angle difference in
+    radians since the gesture was first recognized.
   @end{short}
-  If gesture is not active, 0 is returned.
+  If gesture is not active, 0.0d0 is returned.
 
   Since 3.14
   @see-class{gtk-gesture-rotate}"
