@@ -16,7 +16,7 @@
     popover))
 
 (defun create-complex-popover (parent pos)
-  (let* ((builder (gtk-builder-new-from-file "popover.ui"))
+  (let* ((builder (gtk-builder-new-from-file (rel-path "popover.ui")))
          (window (gtk-builder-get-object builder "window"))
          (content (gtk-bin-get-child window)))
     (gtk-container-remove (gtk-widget-parent content) content)
