@@ -7,10 +7,12 @@
            #:example-message-dialog-new #:example-message-dialog-new-with-markup
            #:example-message-dialog-set-image #:example-message-dialog-set-markup
            #:example-message-dialog-ui #:example-show-about-dialog
-           #:example-simple-list-store))
+           #:example-simple-list-store
+           #:simple-application))
 
 (in-package :gtk-example)
 
 (defun rel-path (filename)
   (let ((system-path (asdf:system-source-directory :cl-cffi-gtk-example-gtk)))
     (princ-to-string (merge-pathnames filename system-path))))
+

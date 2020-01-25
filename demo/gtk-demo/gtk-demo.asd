@@ -11,7 +11,6 @@
                (:file "app-chooser-dialog")
                (:file "arrows")
                (:file "aspect-frame")
-;               (:file "application")
                (:file "application-window")
                (:file "assistant")
                (:file "box")

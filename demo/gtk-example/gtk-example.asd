@@ -1,6 +1,6 @@
-;;;; cl-cffi-gtk-example-gtk.asd
+;;;; gtk-example.asd
 
-(asdf:defsystem :cl-cffi-gtk-example-gtk
+(asdf:defsystem :gtk-example
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -12,4 +12,6 @@
                (:file "list-store")
                (:file "menu-builder")
                (:file "message-dialog-new")
-               (:file "show-about-dialog")))
+               (:file "show-about-dialog")
+               (:file "simple-application")))
+

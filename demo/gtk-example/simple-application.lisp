@@ -1,6 +1,6 @@
 ;;;; Simple Application
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
 (defclass bloat-pad (gtk-application)
   ()
@@ -142,17 +142,14 @@
       (gtk-widget-show-all window)))
 
 (defun bloat-pad-activate (application)
-  ;; Start a main loop and create an application window
-  (within-main-loop
-    (new-window application nil))
-  ;; Wait until the main loop has finished
-  (join-gtk-main))
+  ;; Create a new application window
+  (new-window application nil))
 
 (defun create-about-dialog ()
   (let (;; Create an about dialog
         (dialog (make-instance 'gtk-about-dialog
-                               :program-name "Example Dialog"
-                               :version "0.00"
+                               :program-name "Simple Application"
+                               :version "0.9"
                                :copyright "(c) Dieter Kaiser"
                                :website
                                "github.com/crategus/cl-cffi-gtk"
@@ -290,25 +287,20 @@
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
 (defun bloat-pad-new ()
-  (g-set-application-name "Bloatpad")
-  (format t "~A~%" (g-get-application-name))
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
-        t)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
-        t)
+  (unless (string= "Bloatpad" (g-get-application-name))
+      (g-set-application-name "Bloatpad"))
   (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
                  :flags :handles-open
                  :inactivity-timeout 30000
                  :register-session t))
 
-(defun demo-application (&optional (argc 0) (argv (null-pointer)))
-  (let (;; Create an instance of the application Bloat Pad
-        (bloat-pad (bloat-pad-new)))
-    (format t "call G-APPLICATION-RUN.~%")
-    ;; Run the application
-    (g-application-run bloat-pad argc argv)
-    (format t "back from G-APPLICATION-RUN.~%")
-    ;; Destroy the application
-    (g-object-unref (pointer bloat-pad))))
+(defun simple-application (&optional (argc 0) (argv (null-pointer)))
+  (within-main-loop
+    (let (;; Create an instance of the application Bloat Pad
+          (bloat-pad (bloat-pad-new)))
+      ;; Run the application
+      (g-application-run bloat-pad argc argv)
+      ;; Destroy the application
+      (g-object-unref (pointer bloat-pad)))))
 
