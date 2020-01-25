@@ -272,8 +272,18 @@
     representing graphical data.
 
     @about-struct{gdk-point}
-    @about-struct{gdk-rectangle}
+    @about-function{make-gdk-point}
+    @about-function{copy-gdk-point}
+    @about-function{gdk-point-x}
+    @about-function{gdk-point-y}
 
+    @about-struct{gdk-rectangle}
+    @about-function{make-gdk-rectangle}
+    @about-function{copy-gdk-rectangle}
+    @about-function{gdk-rectangle-x}
+    @about-function{gdk-rectangle-y}
+    @about-function{gdk-rectangle-width}
+    @about-function{gdk-rectangle-height}
     @about-function{gdk-rectangle-intersect}
     @about-function{gdk-rectangle-union}
     @about-function{gdk-rectangle-equal}
@@ -717,7 +727,6 @@
     @about-function{gdk-event-key-is-modifier}
 
     @about-struct{gdk-event-button}
-
     @about-function{copy-gdk-event-button}
     @about-function{make-gdk-event-button}
     @about-function{gdk-event-button-type}
@@ -734,7 +743,6 @@
     @about-function{gdk-event-button-y-root}
 
     @about-struct{gdk-event-touch}
-
     @about-function{copy-gdk-event-touch}
     @about-function{make-gdk-event-touch}
     @about-function{gdk-event-touch-type}
@@ -785,13 +793,61 @@
     @about-function{gdk-event-motion-y-root}
 
     @about-struct{gdk-event-expose}
+    @about-function{copy-gdk-event-expose}
+    @about-function{make-gdk-event-expose}
+    @about-function{gdk-event-expose-type}
+    @about-function{gdk-event-expose-window}
+    @about-function{gdk-event-expose-send-event}
+    @about-function{gdk-event-expose-area}
+    @about-function{gdk-event-expose-region}
+    @about-function{gdk-event-expose-count}
+
     @about-struct{gdk-event-visibility}
+
     @about-struct{gdk-event-crossing}
+    @about-function{copy-gdk-event-crossing}
+    @about-function{make-gdk-event-crossing}
+    @about-function{gdk-event-crossing-type}
+    @about-function{gdk-event-crossing-window}
+    @about-function{gdk-event-crossing-send-event}
+    @about-function{gdk-event-crossing-subwindow}
+    @about-function{gdk-event-crossing-time}
+    @about-function{gdk-event-crossing-x}
+    @about-function{gdk-event-crossing-y}
+    @about-function{gdk-event-crossing-x-root}
+    @about-function{gdk-event-crossing-y-root}
+    @about-function{gdk-event-crossing-mode}
+    @about-function{gdk-event-crossing-detail}
+    @about-function{gdk-event-crossing-focus}
+    @about-function{gdk-event-crossing-state}
+
     @about-struct{gdk-event-focus}
+
     @about-struct{gdk-event-configure}
+    @about-function{copy-gdk-event-configure}
+    @about-function{make-gdk-event-configure}
+    @about-function{gdk-event-configure-type}
+    @about-function{gdk-event-configure-window}
+    @about-function{gdk-event-congigure-send-event}
+    @about-function{gdk-event-configure-x}
+    @about-function{gdk-event-configure-y}
+    @about-function{gdk-event-configure-width}
+    @about-function{gdk-event-configure-height}
+
     @about-struct{gdk-event-property}
     @about-struct{gdk-event-selection}
+
     @about-struct{gdk-event-dnd}
+    @about-function{copy-gdk-event-dnd}
+    @about-function{make-gdk-event-dnd}
+    @about-function{gdk-event-dnd-type}
+    @about-function{gdk-event-dnd-window}
+    @about-function{gdk-event-dnd-send-event}
+    @about-function{gdk-event-dnd-context}
+    @about-function{gdk-event-dnd-time}
+    @about-function{gdk-event-dnd-x-root}
+    @about-function{gdk-event-dnd-y-root}
+
     @about-struct{gdk-event-proximity}
     @about-struct{gdk-event-window-state}
     @about-struct{gdk-event-setting}
