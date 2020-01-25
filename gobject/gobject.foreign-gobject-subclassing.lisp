@@ -2,7 +2,7 @@
 ;;; gobject.foreign-gobject-subclassing.lisp
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -64,12 +64,7 @@
   (let* ((type-name (gtype-name (g-type-from-class class)))
          (lisp-type-info (gethash type-name *registered-types*))
          (lisp-class (object-type-class lisp-type-info)))
-    (format t "IN CLASS-INIT:~%")
-    (format t "   name  = ~A~%" type-name)
-    (format t "   class = ~A~%" lisp-class)
-    (register-object-type type-name lisp-class)
-    )
-
+    (register-object-type type-name lisp-class))
   (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
         (callback c-object-property-get)
         (foreign-slot-value class '(:struct g-object-class) :set-property)
