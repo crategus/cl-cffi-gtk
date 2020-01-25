@@ -103,7 +103,7 @@
                             (setf response response-id)
                             (gtk-widget-destroy dialog)))
         ;; Set an image.
-        (gtk-message-dialog-set-image dialog image)
+        (setf (gtk-message-dialog-image dialog) image)
         ;; Set secondary text.
         (gtk-message-dialog-format-secondary-text dialog
                 "This is a message dialog of type :info with a different image.")
