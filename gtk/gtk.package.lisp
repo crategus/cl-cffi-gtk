@@ -341,8 +341,6 @@
       @about-function{gtk-message-dialog-new}
       @about-function{gtk-message-dialog-new-with-markup}
       @about-function{gtk-message-dialog-set-markup}
-      @about-function{gtk-message-dialog-set-image}
-      @about-function{gtk-message-dialog-get-image}
       @about-function{gtk-message-dialog-format-secondary-text}
       @about-function{gtk-message-dialog-format-secondary-markup}
       @about-function{gtk-message-dialog-get-message-area}
@@ -1223,10 +1221,9 @@
       A single line text entry field.
 
       @about-symbol{gtk-entry-icon-position}
-      @about-symbol{gtkk-input-purpose}
+      @about-symbol{gtk-input-purpose}
       @about-symbol{gtk-input-hints}
       @about-class{gtk-entry}
-
       @about-generic{gtk-entry-activates-default}
       @about-generic{gtk-entry-attributes}
       @about-generic{gtk-entry-buffer}
@@ -1278,7 +1275,6 @@
       @about-generic{gtk-entry-visibility}
       @about-generic{gtk-entry-width-chars}
       @about-generic{gtk-entry-xalign}
-
       @about-function{gtk-entry-new}
       @about-function{gtk-entry-new-with-buffer}
       @about-function{gtk-entry-get-text-area}
@@ -3285,8 +3281,7 @@ setup_tree (void)
     @begin[GtkToolbar]{subsection}
       Create bars of buttons and other widgets.
 
-      @about-class{gtk-toolbar-space-style}
-
+      @about-symbol{gtk-toolbar-space-style}
       @about-class{gtk-toolbar}
 
       @about-generic{gtk-toolbar-icon-size}
@@ -3599,8 +3594,6 @@ setup_tree (void)
       @about-function{gtk-file-chooser-get-select-multiple}
       @about-function{gtk-file-chooser-set-show-hidden}
       @about-function{gtk-file-chooser-get-show-hidden}
-      @about-function{gtk-file-chooser-set-do-overwrite-confirmation}
-      @about-function{gtk-file-chooser-get-do-overwrite-confirmation}
       @about-function{gtk-file-chooser-set-create-folders}
       @about-function{gtk-file-chooser-get-create-folders}
       @about-function{gtk-file-chooser-set-current-name}
@@ -4880,7 +4873,7 @@ setup_tree (void)
 
       @about-class{gtk-recent-info}
       @about-class{gtk-recent-data}
-      @about-symbol{gtk-recnet-manager-error}
+      @about-symbol{gtk-recent-manager-error}
 
       @about-class{gtk-recent-manager}
 
@@ -5160,14 +5153,12 @@ setup_tree (void)
       @about-function{gtk-gesture-is-grouped-with}
     @end{subsection}
     @begin[GtkGestureSingle]{subsection}
-      Base class for mouse/single-touch gestures
+      Base class for mouse/single-touch gestures.
 
       @about-class{gtk-gesture-single}
-
       @about-generic{gtk-gesture-single-button}
       @about-generic{gtk-gesture-single-exclusive}
       @about-generic{gtk-gesture-single-touch-only}
-
       @about-function{gtk-gesture-single-get-current-button}
       @about-function{gtk-gesture-single-get-current-sequence}
     @end{subsection}
@@ -5221,16 +5212,13 @@ setup_tree (void)
       @about-function{gtk-gesture-swipe-new}
       @about-function{gtk-gesture-swipe-get-velocity}
     @end{subsection}
-
     @begin[GtkGestureRotate]{subsection}
       Rotate gesture.
 
       @about-class{gtk-gesture-rotate}
-
       @about-function{gtk-gesture-rotate-new}
       @about-function{gtk-gesture-rotate-get-angle-delta}
     @end{subsection}
-
     @begin[GtkGestureZoom]{subsection}
       Zoom gesture.
 
@@ -5859,13 +5847,12 @@ setup_tree (void)
     @begin[GtkStyleProvider]{subsection}
       Interface to provide style information to @class{gtk-style-context}.
 
-      @about-class{GtkStyleProviderIface}
+      @about-variable{+gtk-style-provider-priority-fallback+}
+      @about-variable{+gtk-style-provider-priority-theme+}
+      @about-variable{+gtk-style-provider-priority-settings+}
+      @about-variable{+gtk-style-provider-priority-application+}
+      @about-variable{+gtk-style-provider-priority-user+}
       @about-class{gtk-style-provider}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-FALLBACK}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-THEME}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-SETTINGS}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-APPLICATION}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-USER}
       @about-function{gtk-style-provider-get-icon-factory}
       @about-function{gtk-style-provider-get-style}
       @about-function{gtk-style-provider-get-style-property}
@@ -5934,8 +5921,7 @@ setup_tree (void)
       @about-class{gtk-icon-theme}
       @about-symbol{gtk-icon-info}
       @about-symbol{gtk-icon-lookup-flags}
-      @about-class{gtk-icon-theme-error}
-      @about-function{gtk-icon-theme-error}
+      @about-symbol{gtk-icon-theme-error}
       @about-function{gtk-icon-theme-new}
       @about-function{gtk-icon-theme-get-default}
       @about-function{gtk-icon-theme-get-for-screen}

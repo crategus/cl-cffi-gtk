@@ -251,13 +251,13 @@ GTK+ Widgets and Objects
  +  gtk.event-controller-scroll.lisp - GtkEventControllerScroll    - GTK+ 3.24
  +  gtk.event-controller-motion.lisp - GtkEventControllerMotion    - GTK+ 3.24
  +  gtk.gesture.lisp                 - GtkGesture                  - GTK+ 3.24 &
- +  gtk.gesture-single.lisp          - GtkGestureSingle            - GTK+ 3.24
+    gtk.gesture-single.lisp          - GtkGestureSingle            - GTK+ 3.24
  +  gtk.gesture-drag.lisp            - GtkGestureDrag              - GTK+ 3.24
  +  gtk.gesture-long-press.lisp      - GtkGestureLongPress         - GTK+ 3.24
  +  gtk.gesture-multi-press.lisp     - GtkGestureMultiPress        - GTK+ 3.24
  +  gtk.gesture-pan.lisp             - GtkGesturePan               - GTK+ 3.24
  +  gtk.gesture-swipe.lisp           - GtkGestureSwipe             - GTK+ 3.24
- +  gtk.gesture-rotate.lisp          - GtkGestureRotate            - GTK+ 3.24
+    gtk.gesture-rotate.lisp          - GtkGestureRotate            - GTK+ 3.24
  +  gtk.gesture-zoom.lisp            - GtkGestureZoom              - GTK+ 3.24
  +  gtk.gesture-stylus.lisp          - GtkGestureStylus            - GTK+ 3.24 &
  +  gtk.pad-controller.lisp          - GtkPadController            - GTK+ 3.24 &
