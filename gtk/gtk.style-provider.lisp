@@ -32,7 +32,6 @@
 ;;;
 ;;; Types and Values
 ;;;
-;;;     GtkStyleProviderIface
 ;;;     GtkStyleProvider
 ;;;
 ;;;     GTK_STYLE_PROVIDER_PRIORITY_FALLBACK
@@ -57,44 +56,12 @@
 ;;;
 ;;; Description
 ;;;
-;;; GtkStyleProvider is an interface used to provide style information to a
-;;; GtkStyleContext. See gtk_style_context_add_provider() and
-;;; gtk_style_context_add_provider_for_screen().
+;;;     GtkStyleProvider is an interface used to provide style information to a
+;;;     GtkStyleContext. See gtk_style_context_add_provider() and
+;;;     gtk_style_context_add_provider_for_screen().
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkStyleProviderIface
-;;;
-;;; struct GtkStyleProviderIface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   GtkStyleProperties * (* get_style) (GtkStyleProvider *provider,
-;;;                                       GtkWidgetPath    *path);
-;;;
-;;;   gboolean (* get_style_property) (GtkStyleProvider *provider,
-;;;                                    GtkWidgetPath    *path,
-;;;                                    GtkStateFlags     state,
-;;;                                    GParamSpec       *pspec,
-;;;                                    GValue           *value);
-;;;
-;;;   GtkIconFactory * (* get_icon_factory) (GtkStyleProvider *provider,
-;;;                      GtkWidgetPath    *path);
-;;; };
-;;;
-;;; GTypeInterface g_iface;
-;;;
-;;;
-;;; get_style ()
-;;;     Gets a set of style information that applies to a widget path.
-;;;
-;;; get_style_property ()
-;;;     Gets the value of a widget style property that applies to a widget path.
-;;;
-;;; get_icon_factory ()
-;;;     Gets the icon factory that applies to a widget path.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkStyleProvider
