@@ -667,28 +667,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_get_selected_row ()
-;;;
-;;; GtkListBoxRow * gtk_list_box_get_selected_row (GtkListBox *box);
-;;;
-;;; Gets the selected row.
-;;;
-;;; Note that the box may allow multiple selection, in which case you should use
-;;; gtk_list_box_selected_foreach() to find all selected rows.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Returns :
-;;;     the selected row.
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_list_box_get_selected_row" gtk-list-box-get-selected-row)
     (g-object gtk-list-box-row)
+ "@version{2020-1-24}
+  @argument[box]{a @class{gtk-list-box} widget}
+  @return{The selected @class{gtk-list-box-row} widget.}
+  @begin{short}
+    Gets the selected row.
+  @end{short}
+
+  Note that the list box may allow multiple selection, in which case you should
+  use the function @fun{gtk-list-box-selected-foreach} to find all selected
+  rows.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
   (box (g-object gtk-list-box)))
 
-(export 'gtk-list-bet-get-selected-row)
+(export 'gtk-list-box-get-selected-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxForeachFunc ()
