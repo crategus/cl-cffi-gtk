@@ -113,7 +113,7 @@
                                              :save
                                              \"gtk-cancel\" :cancel
                                              \"gtk-save\" :accept)))
-    (gtk-file-chooser-set-do-overwrite-confirmation dialog t)
+    (setf (gtk-file-chooser-do-overwrite-confirmation dialog) t)
     (if filename
         (gtk-file-chooser-set-filename dialog filename)
         (gtk-file-chooser-set-current-name dialog \"Untitled document\"))
