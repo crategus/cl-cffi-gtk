@@ -2,11 +2,11 @@
 ;;; gtk.gesture-single.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,9 +47,9 @@
 ;;;
 ;;; Properties
 ;;;
-;;;        guint  button      Read / Write
-;;;     gboolean  exclusive   Read / Write
-;;;     gboolean  touch-only  Read / Write
+;;;        guint    button        Read / Write
+;;;     gboolean    exclusive     Read / Write
+;;;     gboolean    touch-only    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -228,11 +228,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_gesture_single_get_current_button"
-           gtk-gesture-single-get-cuttent-button) :uint
+           gtk-gesture-single-get-current-button) :uint
  #+cl-cffi-gtk-documentation
- "@version{2019-3-22}
+ "@version{2020-1-24}
   @argument[gesture]{a @class{gtk-gesture-single} object}
-  @return{The current button number.}
+  @return{The current button number of type @code{:uint}.}
   @begin{short}
     Returns the button number currently interacting with @arg{gesture}, or 0 if
     there is none.
@@ -249,12 +249,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_gesture_single_get_current_sequence"
-           gtk-gesture-single-get-cuttent-sequence)
+           gtk-gesture-single-get-current-sequence)
          (g-boxed-foreign gdk-event-sequence)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-22}
+ "@version{2020-1-24}
   @argument[gesture]{a @class{gtk-gesture-single} object}
-  @return{The current sequence.}
+  @return{The current sequence of type @class{gdk-event-sequence}.}
   @begin{short}
     Returns the event sequence currently interacting with @arg{gesture}.
   @end{short}
