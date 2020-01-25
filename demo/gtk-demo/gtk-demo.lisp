@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-demo.lisp
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,39 +21,49 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-;;(asdf:load-system :cl-cffi-gtk)
-
 (in-package :gtk-demo)
 
 ;;; ----------------------------------------------------------------------------
 
 (defvar info-buffer (make-instance 'gtk-text-buffer))
 (defvar source-buffer (make-instance 'gtk-text-buffer))
+(defvar ui-buffer (make-instance 'gtk-text-buffer))
+(defvar css-buffer (make-instance 'gtk-text-buffer))
 
 ;;; ----------------------------------------------------------------------------
+
+(defun clear-buffer (buffer)
+  (multiple-value-bind (start end)
+      (gtk-text-buffer-get-bounds buffer)
+    (gtk-text-buffer-delete buffer start end)))
 
 (defun load-file (filename)
   (with-open-file (stream (rel-path filename))
     ;; Read the info-header of the file
-    (multiple-value-bind (start end)
-        (gtk-text-buffer-get-bounds info-buffer)
-      (gtk-text-buffer-delete info-buffer start end)
-      (do ((line (read-line stream nil)
-                 (read-line stream nil)))
-          ((or (null line)
-               (not (>= (length line) 4))
-               (not (string= line ";;;;" :start1 0 :end1 4))))
-        (gtk-text-buffer-insert info-buffer (string-left-trim ";" line))
-        (gtk-text-buffer-insert info-buffer (format nil "~%"))))
+    (clear-buffer info-buffer)
+    (do ((line (read-line stream nil)
+               (read-line stream nil)))
+        ((or (null line)
+             (not (>= (length line) 4))
+             (not (string= line ";;;;" :start1 0 :end1 4))))
+      (gtk-text-buffer-insert info-buffer (string-left-trim ";" line))
+      (gtk-text-buffer-insert info-buffer (format nil "~%")))
     ;; Read the source code of the file
-    (multiple-value-bind (start end)
-        (gtk-text-buffer-get-bounds source-buffer)
-      (gtk-text-buffer-delete source-buffer start end)
-      (do ((line (read-line stream nil)
-                 (read-line stream nil)))
-          ((null line))
-        (gtk-text-buffer-insert source-buffer (string-left-trim ";" line))
-        (gtk-text-buffer-insert source-buffer (format nil "~%"))))))
+    (clear-buffer source-buffer)
+    (do ((line (read-line stream nil)
+               (read-line stream nil)))
+        ((null line))
+      (gtk-text-buffer-insert source-buffer line)
+      (gtk-text-buffer-insert source-buffer (format nil "~%")))))
+
+(defun load-file-buffer (buffer filename)
+  (with-open-file (stream (rel-path filename))
+    (clear-buffer buffer)
+    (do ((line (read-line stream nil)
+               (read-line stream nil)))
+        ((null line))
+      (gtk-text-buffer-insert buffer line)
+      (gtk-text-buffer-insert buffer (format nil "~%")))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -67,13 +77,9 @@
                               :editable nil
                               :cursor-visible nil)))
     (gtk-container-add scrolled view)
-    (if is-source
-        (progn
-          (gtk-widget-override-font
-              view
-              (pango-font-description-from-string "monospace"))
-          (setf (gtk-text-buffer-text buffer) "This is the place for the source."))
-        (setf (gtk-text-buffer-text buffer) "This is the place for the info."))
+    (when is-source
+      (gtk-widget-override-font view
+                                (pango-font-description-from-string "monospace")))
     ;; return the scrolled window
     scrolled))
 
@@ -84,212 +90,261 @@
                               :column-types '("gchararray" ; Title
                                               "gchararray" ; Filename
                                               "gchararray" ; Function name
-                                              "guint"))))
+                                              "gchararray" ; UI Definition
+                                              "gchararray" ; CSS Definition
+                                              ))))
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Theming in GTK+" "" "" 0)))
+                                            "Theming in GTK+")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Accordion"
-                                "css-accordion.lisp" "DEMO-CSS-ACCORDION" 0)
+                                "css-accordion.lisp"
+                                "DEMO-CSS-ACCORDION"
+                                ""
+                                "css-accordion.css")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Pixbufs"
-                                "css-pixbufs.lisp" "DEMO-CSS-PIXBUFS" 0)
+                                "css-pixbufs.lisp"
+                                "DEMO-CSS-PIXBUFS"
+                                ""
+                                "css-pixbufs.css")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Numerable Icons"
-                                "numerable-icon.lisp" "DEMO-NUMERABLE-ICON" 0)
+                                "numerable-icon.lisp"
+                                "DEMO-NUMERABLE-ICON")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Windows" "" "" 0)))
+                                            "Windows")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Window"
-                                "simple-window.lisp" "EXAMPLE-SIMPLE-WINDOW" 0)
+                                "simple-window.lisp"
+                                "EXAMPLE-SIMPLE-WINDOW")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Message"
                                 "simple-message.lisp"
-                                "EXAMPLE-SIMPLE-MESSAGE" 0)
+                                "EXAMPLE-SIMPLE-MESSAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Dialogs"
-                                "dialogs.lisp" "EXAMPLE-DIALOG" 0)
+                                "dialogs.lisp"
+                                "EXAMPLE-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Assistant"
-                                "assistant.lisp" "DEMO-ASSISTANT" 0)
+                                "assistant.lisp"
+                                "DEMO-ASSISTANT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Application Window"
                                 "application-window.lisp"
-                                "DEMO-APPLICATION-WINDOW" 0)
+                                "DEMO-APPLICATION-WINDOW")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Display Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Labels"
-                                "labels.lisp" "EXAMPLE-LABELS" 0)
+                                "labels.lisp"
+                                "EXAMPLE-LABELS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Images"
-                                "image.lisp" "DEMO-IMAGE" 0)
+                                "image.lisp"
+                                "DEMO-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "More Labels"
-                                "more-labels.lisp" "EXAMPLE-MORE-LABELS" 0)
+                                "more-labels.lisp"
+                                "EXAMPLE-MORE-LABELS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Progress Bar Widget"
-                                "progress-bar.lisp" "EXAMPLE-PROGRESS-BAR" 0)
+                                "progress-bar.lisp"
+                                "EXAMPLE-PROGRESS-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Statusbar"
-                                "statusbar.lisp" "EXAMPLE-STATUSBAR" 0)
+                                "statusbar.lisp"
+                                "EXAMPLE-STATUSBAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Info Bar"
-                                "info-bar.lisp" "EXAMPLE-INFO-BAR" 0)
+                                "info-bar.lisp"
+                                "EXAMPLE-INFO-BAR")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Button Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Button"
-                                "button.lisp" "EXAMPLE-BUTTON" 0)
+                                "button.lisp"
+                                "EXAMPLE-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "More Buttons"
-                                "buttons.lisp" "EXAMPLE-BUTTONS" 0)
+                                "buttons.lisp"
+                                "EXAMPLE-BUTTONS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Toggle Buttons"
                                 "toggle-buttons.lisp"
-                                "EXAMPLE-TOGGLE-BUTTONS" 0)
+                                "EXAMPLE-TOGGLE-BUTTONS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Link Button"
-                                "link-button.lisp" "EXAMPLE-LINK-BUTTON" 0)
+                                "link-button.lisp"
+                                "EXAMPLE-LINK-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Switch"
-                                "switch.lisp" "EXAMPLE-SWITCH" 0)
+                                "switch.lisp"
+                                "EXAMPLE-SWITCH")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Numeric/Text Data Entry")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry"
-                                "text-entry.lisp" "EXAMPLE-TEXT-ENTRY" 0)
+                                "text-entry.lisp"
+                                "EXAMPLE-TEXT-ENTRY")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry Buffer"
-                                "entry-buffer.lisp" "EXAMPLE-ENTRY-BUFFER" 0)
+                                "entry-buffer.lisp"
+                                "EXAMPLE-ENTRY-BUFFER")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry Completion"
                                 "entry-completion.lisp"
-                                "EXAMPLE-ENTRY-COMPLETION" 0)
+                                "EXAMPLE-ENTRY-COMPLETION")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scale Widgets"
-                                "scale-widgets.lisp" "EXAMPLE-SCALE-WIDGETS" 0)
+                                "scale-widgets.lisp"
+                                "EXAMPLE-SCALE-WIDGETS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Spin Button"
-                                "spin-button.lisp" "EXAMPLE-SPIN-BUTTON" 0)
+                                "spin-button.lisp"
+                                "EXAMPLE-SPIN-BUTTON")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                              "Multiline Text Editor")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Text View"
                                 "simple-text-view.lisp"
-                                "EXAMPLE-SIMPLE-TEXT-VIEW" 0)
+                                "EXAMPLE-SIMPLE-TEXT-VIEW")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Attributes"
                                 "text-view-attributes.lisp"
-                                "EXAMPLE-TEXT-VIEW-ATTRIBUTES" 0)
+                                "EXAMPLE-TEXT-VIEW-ATTRIBUTES")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Tree, List and Icon Grid Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Tree View"
                                 "simple-tree-view.lisp"
-                                "EXAMPLE-SIMPLE-TREE-VIEW" 0)
+                                "EXAMPLE-SIMPLE-TREE-VIEW")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Menus, Combo Box, Toolbar")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Combo Box"
                                 "combo-box.lisp"
-                                "EXAMPLE-COMBO-BOX" 0)
+                                "EXAMPLE-COMBO-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Combo Box Text"
                                 "combo-box-text.lisp"
-                                "EXAMPLE-COMBO-BOX-TEXT" 0)
+                                "EXAMPLE-COMBO-BOX-TEXT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Menu"
-                                "menu.lisp" "EXAMPLE-MENU" 0)
+                                "menu.lisp"
+                                "EXAMPLE-MENU")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Tool Palette"
-                                "tool-palette.lisp" "DEMO-TOOL-PALETTE" 0)
+                                "tool-palette.lisp"
+                                "DEMO-TOOL-PALETTE")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Popover"
+                                "popover.lisp"
+                                "DO-POPOVER"
+                                "popover.ui")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Selectors (Color/File/Font)")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Button"
-                                "color-button.lisp" "EXAMPLE-COLOR-BUTTON" 0)
+                                "color-button.lisp"
+                                "EXAMPLE-COLOR-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Dialog"
                                 "color-chooser-dialog.lisp"
-                                "EXAMPLE-COLOR-CHOOSER-DIALOG" 0)
+                                "EXAMPLE-COLOR-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "Simple File Chooser Dialog"
                                  "simple-file-chooser.lisp"
-                                 "EXAMPLE-SIMPLE-FILE-CHOOSER-DIALOG" 0)
+                                 "EXAMPLE-SIMPLE-FILE-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "File Chooser Button"
                                 "file-chooser-button.lisp"
-                                "EXAMPLE-FILE-CHOOSER-BUTTON" 0)
+                                "EXAMPLE-FILE-CHOOSER-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button"
-                                "font-button.lisp" "EXAMPLE-FONT-BUTTON" 0)
+                                "font-button.lisp"
+                                "EXAMPLE-FONT-BUTTON")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Layout Containers" "" "" 0)))
+                                            "Layout Containers")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Box packing"
-                                "box-packing.lisp" "EXAMPLE-BOX-PACKING" 0)
+                                "box-packing.lisp"
+                                "EXAMPLE-BOX-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Table packing"
-                                "table-packing.lisp" "EXAMPLE-TABLE-PACKING" 0)
+                                "table-packing.lisp"
+                                "EXAMPLE-TABLE-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Grid packing"
-                                "grid-packing.lisp" "EXAMPLE-GRID-PACKING" 0)
+                                "grid-packing.lisp"
+                                "EXAMPLE-GRID-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Button Boxes"
-                                "button-box.lisp" "EXAMPLE-BUTTON-BOX" 0)
+                                "button-box.lisp"
+                                "EXAMPLE-BUTTON-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Alignment"
-                                "alignment.lisp" "DEMO-ALIGNMENT" 0)
+                                "alignment.lisp"
+                                "DEMO-ALIGNMENT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Fixed Container"
-                                "fixed.lisp" "EXAMPLE-FIXED" 0)
+                                "fixed.lisp"
+                                "EXAMPLE-FIXED")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Frame Container"
-                                "frame.lisp" "DEMO-FRAME" 0)
+                                "frame.lisp"
+                                "DEMO-FRAME")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Aspect Frame"
-                                "aspect-frame.lisp" "EXAMPLE-ASPECT-FRAME" 0)
+                                "aspect-frame.lisp"
+                                "EXAMPLE-ASPECT-FRAME")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Paned Window"
-                                "paned-window.lisp" "EXAMPLE-PANED-WINDOW" 0)
+                                "paned-window.lisp"
+                                "EXAMPLE-PANED-WINDOW")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Notebook"
-                                "notebook.lisp" "EXAMPLE-NOTEBOOK" 0)
+                                "notebook.lisp"
+                                "EXAMPLE-NOTEBOOK")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Scrolling")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scrolled Window"
                                 "scrolled-window.lisp"
-                                "EXAMPLE-SCROLLED-WINDOW" 0)
+                                "EXAMPLE-SCROLLED-WINDOW")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Miscellaneous")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Drawing in response to input"
-                                "drawing.lisp" "EXAMPLE-DRAWING" 0)
+                                "drawing.lisp"
+                                "EXAMPLE-DRAWING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Arrows"
-                                "arrows.lisp" "EXAMPLE-ARROWS" 0)
+                                "arrows.lisp"
+                                "EXAMPLE-ARROWS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Calendar"
-                                "calendar.lisp" "EXAMPLE-CALENDAR" 0)
+                                "calendar.lisp"
+                                "EXAMPLE-CALENDAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "The Event Box"
-                                "event-box.lisp" "EXAMPLE-EVENT-BOX" 0)
+                                "event-box.lisp"
+                                "EXAMPLE-EVENT-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Demo Pixbufs"
-                                "pixbufs.lisp" "DEMO-PIXBUFS" 0)
-
+                                "pixbufs.lisp"
+                                "DEMO-PIXBUFS")
     )
     model))
 
@@ -315,65 +370,24 @@
                (funcall func)
                (format t "~%No function.~%")))))
     (setf (gtk-tree-selection-mode selection) :browse)
+    ;; The selection has changed.
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
          (let* ((iter (gtk-tree-selection-get-selected tree-selection))
-                (filename (gtk-tree-model-get-value model iter 1)))
+                (filename (gtk-tree-model-get-value model iter 1))
+                (ui-file (gtk-tree-model-get-value model iter 3))
+                (css-file (gtk-tree-model-get-value model iter 4)))
            (if (> (length filename) 0)
-               (load-file filename)))))
+               (load-file filename))
+           (if (> (length ui-file) 0)
+               (load-file-buffer ui-buffer ui-file)
+               (clear-buffer ui-buffer))
+           (if (> (length css-file) 0)
+               (load-file-buffer css-buffer css-file)
+               (clear-buffer css-buffer)))))
       view))
 
-;;; ----------------------------------------------------------------------------
-
-(defun main (application)
-  (within-main-loop
-    (let ((window (make-instance 'gtk-application-window
-                                 :application application
-                                 :type :toplevel
-                                 :title "GTK+ Lisp Code Demos"
-                                 :default-width 800
-                                 :default-height 600))
-          ;; A horizontal pane
-          (content (make-instance 'gtk-paned
-                                  :orientation :horizontal))
-          ;; A scrollable
-          (scroller (make-instance 'gtk-scrolled-window
-                                   :hscrollbar-policy :never
-                                   :vscrollbar-policy :automatic
-                                   :hexpand t
-                                   :vexpand t))
-          ;; A notebook
-          (notebook (make-instance 'gtk-notebook
-                                   :scrollable t))
-          (view (create-view-and-model)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)
-                          (g-application-quit application)))
-      ;; Set an icon for the application
-      (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
-        (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
-        (gtk-window-set-default-icon-list (list pixbuf)))
-      ;; Add the widgets to the content of the window
-      (gtk-container-add scroller view)
-      (gtk-paned-add1 content scroller)
-      (gtk-paned-add2 content notebook)
-      ;; Add the notebook pages to the notebook
-      (gtk-notebook-append-page notebook
-                                (create-text info-buffer nil)
-                                (gtk-label-new-with-mnemonic "_Info"))
-      (gtk-notebook-append-page notebook
-                                (create-text source-buffer t)
-                                (gtk-label-new-with-mnemonic "_Source"))
-      ;; Add the content to the window
-      (gtk-container-add window content)
-      (gtk-widget-show-all window)))
-  (join-gtk-main))
-
 (defun gtk-demo-activate (application)
-  (format t "~a~%" "in GTK-DEMO-ACTIVATE")
-
     (let ((window (make-instance 'gtk-application-window
                                  :application application
                                  :type :toplevel
@@ -413,6 +427,12 @@
       (gtk-notebook-append-page notebook
                                 (create-text source-buffer t)
                                 (gtk-label-new-with-mnemonic "_Source"))
+      (gtk-notebook-append-page notebook
+                                (create-text ui-buffer t)
+                                (gtk-label-new-with-mnemonic "_UI Definition"))
+      (gtk-notebook-append-page notebook
+                                (create-text css-buffer t)
+                                (gtk-label-new-with-mnemonic "_CSS Definition"))
       ;; Add the content to the window
       (gtk-container-add window content)
       (gtk-widget-show-all window)))
@@ -460,13 +480,11 @@
 </interface>")
 
 (defun gtk-demo-startup (application)
-  (format t "~a~%" "in GTK-DEMO-STARTUP")
+  ;; Load the application menu
   (let ((builder (make-instance 'gtk-builder)))
     (gtk-builder-add-from-string builder *appmenu*)
     (setf (gtk-application-app-menu application)
-          (gtk-builder-get-object builder "appmenu"))
-    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default)) nil)
-
+          (gtk-builder-get-object builder "appmenu")))
 
   ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))
@@ -492,28 +510,19 @@
          ;; Quit the application
          (g-application-quit application)))
     ;; Add the action to action map of the application
-    (g-action-map-add-action application action))
-
-
-  )
-)
+    (g-action-map-add-action application action)))
 
 (defun gtk-demo (&optional (argc 0) (argv (null-pointer)))
   (within-main-loop
     (unless (equal "GTK Lisp Demo" (g-get-application-name))
       (g-set-application-name "GTK Lisp Demo"))
-    (format t "Application name is '~a'~%" (g-get-application-name))
     (let ((gtk-demo (make-instance 'gtk-application
                                    :application-id "org.gtk.lisp.demo"
                                    :register-session t)))
-
+      ;; Connect signal handlers to the application
       (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
       (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
-
-      (g-application-run gtk-demo argc argv)
-
-
-      (format t "back from G-APPLICATION-RUN.~%")
-)))
+      ;; Start the application
+      (g-application-run gtk-demo argc argv))))
 
 ;;; --- End of file gtk-demo.lisp ----------------------------------------------
