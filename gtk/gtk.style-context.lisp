@@ -2,7 +2,7 @@
 ;;; gtk.style-context.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -1433,21 +1433,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_reset_widgets ()
-;;;
-;;; void gtk_style_context_reset_widgets (GdkScreen *screen);
-;;;
-;;; This function recomputes the styles for all widgets under a particular
-;;; GdkScreen. This is useful when some global parameter has changed that
-;;; affects the appearance of all widgets, because when a widget gets a new
-;;; style, it will both redraw and recompute any cached information about its
-;;; appearance. As an example, it is used when the color scheme changes in the
-;;; related GtkSettings object.
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_reset_widgets" gtk-style-context-reset-widgets)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-27}
+  @argument[screen]{a @class{gdk-screen} object}
+  @begin{short}
+    This function recomputes the styles for all widgets under a particular
+    screen.
+  @end{short}
+  This is useful when some global parameter has changed that affects the
+  appearance of all widgets, because when a widget gets a new style, it will
+  both redraw and recompute any cached information about its appearance. As an
+  example, it is used when the color scheme changes in the related
+  @class{gtk-settings} object.
+  @see-class{gtk-style-context}
+  @see-class{gtk-settings}
+  @see-class{gdk-screen}"
+  (screen (g-object gdk-screen)))
+
+(export 'gtk-style-context-reset-widgets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_background ()
