@@ -1065,6 +1065,7 @@
       @about-class{gtk-button}
 
       @about-generic{gtk-button-always-show-image}
+      @about-generic{gtk-button-focus-on-click}
       @about-generic{gtk-button-image}
       @about-generic{gtk-button-image-position}
       @about-generic{gtk-button-label}
@@ -4468,6 +4469,7 @@ setup_tree (void)
       @about-generic{gtk-widget-double-buffered}
       @about-generic{gtk-widget-events}
       @about-generic{gtk-widget-expand}
+      @about-generic{gtk-widget-focus-on-click}
       @about-generic{gtk-widget-halign}
       @about-generic{gtk-widget-has-default}
       @about-generic{gtk-widget-has-focus}
