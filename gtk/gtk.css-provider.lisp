@@ -1142,35 +1142,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_load_from_data ()
-;;;
-;;; gboolean gtk_css_provider_load_from_data (GtkCssProvider *css_provider,
-;;;                                           const gchar *data,
-;;;                                           gssize length,
-;;;                                           GError **error);
-;;;
-;;; Loads data into css_provider, making it clear any previously loaded
-;;; information.
-;;;
-;;; css_provider :
-;;;     a GtkCssProvider
-;;;
-;;; data :
-;;;     CSS data loaded in memory
-;;;
-;;; length :
-;;;     the length of data in bytes, or -1 for NUL terminated strings. If length
-;;;     is not -1, the code will assume it is not NUL terminated and will
-;;;     potentially do a copy.
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE. The return value is deprecated and FALSE will only be returned for
-;;;     backwards compatibility reasons if an error is not NULL and a loading
-;;;     error occured. To track errors while loading CSS, connect to the
-;;;     GtkCssProvider::parsing-error signal.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_css_provider_load_from_data" %gtk-css-provider-load-from-data)
+    :boolean
+  (provider (g-object gtk-css-provider))
+  (data :string)
+  (length :long)
+  (error :pointer))
+
+(defun gtk-css-provider-load-from-data (provider data)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-26}
+  @argument[provider]{a @class{gtk-css-provider} object}
+  @argument[data]{a string with the CSS data}
+  @begin{return}
+    @emd{True}. The return value is deprecated and @em{false} will only be
+    returned for backwards compatibility reasons if an error is not @code{NULL}
+    and a loading error occured. To track errors while loading CSS, connect to
+    the \"parsing-error\" signal of @class{gtk-css-provider}.
+  @end{return}
+  @begin{short}
+    Loads data into the CSS provider, making it clear any previously loaded
+    information.
+  @end{short}
+  @see-class{gtk-css-provider}"
+  (with-g-error (err)
+    (%gtk-css-provider-load-from-data provider data -1 err)))
+
+(export 'gtk-css-provider-load-from-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_load_from_file ()
