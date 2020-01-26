@@ -555,8 +555,8 @@
 (setf (gethash 'gtk-text-buffer-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-text 'function)
- "@version{2019-5-4}
-  @syntax[]{(setf (gtk-text-buffer-text object) text}
+ "@version{2020-1-26}
+  @syntax[]{(setf (gtk-text-buffer-text object) text)}
   @argument[object]{a @class{gtk-text-buffer} object}
   @argument[text]{UTF-8 text to insert}
   @begin{short}
