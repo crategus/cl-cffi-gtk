@@ -2,12 +2,12 @@
 ;;; gtk.button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -55,8 +55,8 @@
 ;;;     gtk_button_set_use_stock                           Accessor
 ;;;     gtk_button_get_use_underline                       Accessor
 ;;;     gtk_button_set_use_underline                       Accessor
-;;;     gtk_button_set_focus_on_click
-;;;     gtk_button_get_focus_on_click
+;;;     gtk_button_set_focus_on_click                      Accessor
+;;;     gtk_button_get_focus_on_click                      Accessor
 ;;;     gtk_button_set_alignment
 ;;;     gtk_button_get_alignment
 ;;;     gtk_button_set_image                               Accessor
@@ -417,29 +417,28 @@
 (setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-focus-on-click 'function)
- "@version{2014-2-27}
+ "@version{2020-1-26}
   @argument[object]{a @class{gtk-button} widget}
   @argument[focus-on-click]{whether the button grabs focus when clicked with
     the mouse}
   @syntax[]{(gtk-button-focus-on-click object) => focus-on-click}
   @syntax[]{(setf (gtk-button-focus-on-click object) focus-on-click)}
   @begin{short}
-    Accessor of the slot @slot[gtk-button]{focus-on-click} of the
+    Accessor of the @slot[gtk-button]{focus-on-click} slot of the
     @class{gtk-button} class.
   @end{short}
 
-  The generic function @sym{gtk-button-focus-on-click} returns whether the
+  The slot access function @sym{gtk-button-focus-on-click)} returns whether the
   button grabs focus when it is clicked with the mouse.
 
-  The generic function @sym{(setf gtk-button-focus-on-click} sets whether the
-  button will grab focus when it is clicked with the mouse. Making mouse clicks
-  not grab focus is useful in places like toolbars where you do not want the
-  keyboard focus removed from the main area of the application.
-  @see-class{gtk-button}
+  The slot access function @sym{(setf gtk-button-focus-on-click} sets whether
+  the button will grab focus when it is clicked with the mouse. Making mouse
+  clicks not grab focus is useful in places like toolbars where you do not want
+  the keyboard focus removed from the main area of the application.
   @begin[Warning]{dictionary}
     The function @sym{gtk-button-focus-on-click} has been deprecated since
     version 3.20 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-set-focus-on-click} instead.
+    @fun{gtk-widget-focus-on-click} instead.
   @end{dictionary}
   @see-class{gtk-button}")
 
