@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.icon-theme.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -139,16 +136,16 @@
  "@version{2013-3-15}
   @begin{short}
     @sym{gtk-icon-theme} provides a facility for looking up icons by name and
-    size. The main reason for using a name rather than simply providing a
-    filename is to allow different icons to be used depending on what icon theme
-    is selected by the user. The operation of icon themes on Linux and Unix
-    follows the Icon Theme Specification. There is a default icon theme, named
-    hicolor where applications should install their icons, but more additional
-    application themes can be installed as operating system vendors and users
-    choose.
+    size.
   @end{short}
+  The main reason for using a name rather than simply providing a filename is to
+  allow different icons to be used depending on what icon theme is selected by
+  the user. The operation of icon themes on Linux and Unix follows the Icon
+  Theme Specification. There is a default icon theme, named hicolor where
+  applications should install their icons, but more additional application
+  themes can be installed as operating system vendors and users choose.
 
-  Named icons are similar to the Themeable Stock Images(3) facility, and the
+  Named icons are similar to the Themeable Stock Images facility, and the
   distinction between the two may be a bit confusing. A few things to keep in
   mind:
   @begin{itemize}
