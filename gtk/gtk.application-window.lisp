@@ -163,7 +163,6 @@
   been given the gettext domain to use.
 
   The following attributes are used when constructing menu items:
-
   @begin{itemize}
     @item{\"label\": a user-visible string to display}
     @item{\"action\": the prefixed name of the action to trigger}
@@ -175,9 +174,7 @@
       hidden. Possible values include \"action-disabled\", \"action-missing\",
       \"macos-menubar\".}
   @end{itemize}
-
   The following attributes are used when constructing sections:
-
   @begin{itemize}
     @item{\"label\": a user-visible string to use as section heading}
     @item{\"display-hint\": a string used to determine special formatting for
@@ -186,9 +183,7 @@
       to use when \"display-hint\" is set to \"horizontal-buttons\". Possible
       values include \"rtl\", \"ltr\", and \"none\".}
   @end{itemize}
-
   The following attributes are used when constructing submenus:
-
   @begin{itemize}
     @item{\"label\": a user-visible string to display}
     @item{\"icon\": icon name to display}
