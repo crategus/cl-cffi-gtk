@@ -1261,7 +1261,11 @@
 ;;;     input GFile.
 ;;;
 ;;; Returns :
-;;;     string containing the GFile's path, or NULL if no such path exists. The returned string should be freed with g_free() when no longer needed.
+;;;     string containing the GFile's path, or NULL if no such path exists. The
+;;;     returned string should be freed with g_free() when no longer needed.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_file_get_uri ()
 ;;;
 ;;; char *              g_file_get_uri                      (GFile *file);
@@ -1274,16 +1278,25 @@
 ;;;     input GFile.
 ;;;
 ;;; Returns :
-;;;     a string containing the GFile's URI. The returned string should be freed with g_free() when no longer needed.
+;;;     a string containing the GFile's URI. The returned string should be
+;;;     freed with g_free() when no longer needed.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_file_get_parse_name ()
 ;;;
 ;;; char *              g_file_get_parse_name               (GFile *file);
 ;;;
-;;; Gets the parse name of the file. A parse name is a UTF-8 string that describes the file such that one can get the GFile back using g_file_parse_name().
+;;; Gets the parse name of the file. A parse name is a UTF-8 string that
+;;; describes the file such that one can get the GFile back using
+;;; g_file_parse_name().
 ;;;
-;;; This is generally used to show the GFile as a nice full-pathname kind of string in a user interface, like in a location entry.
+;;; This is generally used to show the GFile as a nice full-pathname kind of
+;;; string in a user interface, like in a location entry.
 ;;;
-;;; For local files with names that can safely be converted to UTF8 the pathname is used, otherwise the IRI is used (a form of URI that allows UTF8 characters unescaped).
+;;; For local files with names that can safely be converted to UTF8 the pathname
+;;; is used, otherwise the IRI is used (a form of URI that allows UTF8
+;;; characters unescaped).
 ;;;
 ;;; This call does no blocking i/o.
 ;;;
@@ -1291,12 +1304,17 @@
 ;;;     input GFile.
 ;;;
 ;;; Returns :
-;;;     a string containing the GFile's parse name. The returned string should be freed with g_free() when no longer needed.
+;;;     a string containing the GFile's parse name. The returned string should
+;;;     be freed with g_free() when no longer needed.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_file_get_parent ()
 ;;;
 ;;; GFile *             g_file_get_parent                   (GFile *file);
 ;;;
-;;; Gets the parent directory for the file. If the file represents the root directory of the file system, then NULL will be returned.
+;;; Gets the parent directory for the file. If the file represents the root
+;;; directory of the file system, then NULL will be returned.
 ;;;
 ;;; This call does no blocking i/o.
 ;;;
@@ -1304,7 +1322,10 @@
 ;;;     input GFile.
 ;;;
 ;;; Returns :
-;;;     a GFile structure to the parent of the given GFile or NULL if there is no parent. Free the returned object with g_object_unref(). [transfer full]
+;;;     a GFile structure to the parent of the given GFile or NULL if there is
+;;;     no parent. Free the returned object with g_object_unref().
+;;; ----------------------------------------------------------------------------
+
 ;;; g_file_has_parent ()
 ;;;
 ;;; gboolean            g_file_has_parent                   (GFile *file,

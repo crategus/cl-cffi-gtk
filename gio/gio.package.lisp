@@ -160,22 +160,21 @@
     @begin[GApplication]{subsection}
       Core application class.
 
-      @about-class{g-application}
-      @about-symbol{g-application-class}
       @about-symbol{g-application-flags}
+      @about-class{g-application}
+      @about-generic{g-application-action-group}
+      @about-generic{g-application-application-id}
+      @about-generic{g-application-flags}
+      @about-generic{g-application-inactivity-timeout}
+      @about-generic{g-application-is-busy}
+      @about-generic{g-application-is-registered}
+      @about-generic{g-application-is-remote}
+      @about-generic{g-application-resource-base-path}
       @about-function{g-application-id-is-valid}
       @about-function{g-application-new}
-      @about-function{g-application-get-application-id}
-      @about-function{g-application-set-application-id}
-      @about-function{g-application-get-inactivity-timeout}
-      @about-function{g-application-set-inactivity-timeout}
-      @about-function{g-application-get-flags}
-      @about-function{g-application-set-flags}
       @about-function{g-application-get-dbus-connection}
       @about-function{g-application-get-dbus-object-path}
       @about-function{g-application-set-action-group}
-      @about-function{g-application-get-is-registered}
-      @about-function{g-application-get-is-remote}
       @about-function{g-application-register}
       @about-function{g-application-hold}
       @about-function{g-application-release}
@@ -183,8 +182,20 @@
       @about-function{g-application-activate}
       @about-function{g-application-open}
       @about-function{g-application-run}
+      @about-function{g-application-send-notification}
+      @about-function{g-application-withdraw_notification}
+      @about-function{g-application-add-main-option-entries}
+      @about-function{g-application-add-main-option}
+      @about-function{g-application-add-option-group}
+      @about-function{g-application-set-option-context-parameter-string}
+      @about-function{g-application-set-option-context-summary}
+      @about-function{g-application-set-option-context-description}
       @about-function{g-application-set-default}
       @about-function{g-application-get-default}
+      @about-function{g-application-mark-busy}
+      @about-function{g-application-unmark-busy}
+      @about-function{g-application-bind-busy-property}
+      @about-function{g-application-unbind-busy-property}
     @end{subsection}
     @begin[GActionGroup]{subsection}
       A group of actions.

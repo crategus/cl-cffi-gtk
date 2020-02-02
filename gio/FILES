@@ -195,7 +195,7 @@ Permissions
 
 Application support
 
-  gio.application.lisp         - GApplication                      - GIO 2.36.4&
+  gio.application.lisp         - GApplication                      - GIO 2.62 &
 
   GApplicationCommandLine - A command-line invocation of an application
 
