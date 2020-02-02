@@ -73,11 +73,53 @@
              (get-g-type-definition "GtkApplication"))))
 
 ;;; ----------------------------------------------------------------------------
+;;; Properties and Accessors
+;;; ----------------------------------------------------------------------------
+
+(test gtk-application-accessors
+  (let ((application (make-instance 'gtk-application)))
+    (is-false (gtk-application-active-window application))
+    (is-false (gtk-application-app-menu application))
+    (is-false (gtk-application-menubar application))
+    (is-false (gtk-application-register-session application))
+    (is-false (gtk-application-screensaver-active application))
+))
+
+
+
+;("action-group"   "application-id" "flags"
+; "inactivity-timeout" "is-busy" "is-registered" "is-remote"
+;  "resource-base-path" )
+
+
+;;; ----------------------------------------------------------------------------
 ;;; Functions
 ;;; ----------------------------------------------------------------------------
 
 ;;;     gtk_application_new
+
+(test gtk-application-new
+  (let ((application (gtk-application-new "com.crategus.test" '(:none))))
+    (is-true (g-application-id-is-valid "com.crategus.test"))
+    (is (equal "com.crategus.test"
+               (g-application-application-id application)))
+    (is-false (g-application-flags application))
+  )
+)
+
 ;;;     gtk_application_add_window
+
+(test gtk-application-add-window
+  (let ((application (make-instance 'gtk-application))
+        (window (make-instance 'gtk-application-window)))
+    (is-false (gtk-application-active-window application))
+
+    (gtk-application-add-window application window)
+
+    (is-false (gtk-application-active-window application))
+
+))
+
 ;;;     gtk_application_remove_window
 ;;;     gtk_application_get_windows
 ;;;     gtk_application_get_window_by_id

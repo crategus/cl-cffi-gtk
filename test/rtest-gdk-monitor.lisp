@@ -48,7 +48,7 @@
   (is (equal (gtype "GObject") (g-type-parent "GdkMonitor")))
   ;; Check the children
   (is (equal '("GdkX11Monitor" "GdkBroadwayMonitor")
-             (mapcar #'gtype-name (g-type-children "GdkMonitor"))))             
+             (mapcar #'gtype-name (g-type-children "GdkMonitor"))))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'gtype-name (g-type-interfaces "GdkMonitor"))))
@@ -89,15 +89,15 @@
     (is (eq 'gdk-display
             (type-of (gdk-monitor-display monitor))))
     ;; gdk-monitor-geometry
-    (is-true (gdk-rectangle-equal (make-gdk-rectangle :x 0 
-                                                      :y 0 
-                                                      :width 1366 
+    (is-true (gdk-rectangle-equal (make-gdk-rectangle :x 0
+                                                      :y 0
+                                                      :width 1366
                                                       :height 768)
                                   (gdk-monitor-geometry monitor)))
     ;; gdk-monitor-workarea
-    (is-true (gdk-rectangle-equal (make-gdk-rectangle :x 0 
-                                                      :y 27 
-                                                      :width 1366 
+    (is-true (gdk-rectangle-equal (make-gdk-rectangle :x 0
+                                                      :y 27
+                                                      :width 1366
                                                       :height 741)
                                   (gdk-monitor-workarea monitor)))
     ;; gdk-monitor-width-mm
@@ -105,7 +105,7 @@
     ;; gdk-monitor-height-mm
     (is (= 193 (gdk-monitor-height-mm monitor)))
     ;; gdk-monitor-manufacturer
-    (is-false (gdk-monitor-manufacturer monitor))
+    (is (string= "AUO" (gdk-monitor-manufacturer monitor)))
     ;; gdk-monitor-model
     (is (string= "eDP-1" (gdk-monitor-model monitor)))
     ;; gdk-monitor-scale-factor

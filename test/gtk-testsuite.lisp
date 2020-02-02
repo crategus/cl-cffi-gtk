@@ -1,4 +1,3 @@
-
 #-5am
 (progn
   (format t "~&Loading of package fiveam ...~%")

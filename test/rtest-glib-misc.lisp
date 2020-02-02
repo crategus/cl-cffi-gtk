@@ -1,4 +1,3 @@
-
 (def-suite glib-misc :in glib-suite)
 (in-suite glib-misc)
 
@@ -86,4 +85,5 @@
 
 (test g-slist
   (is (equal '(a b c) (translate-to-foreign '(a b c) 'g-slist-type))))
+
 
