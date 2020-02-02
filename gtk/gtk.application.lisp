@@ -2,11 +2,11 @@
 ;;; gtk.application.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -61,16 +61,17 @@
 ;;;
 ;;; Properties
 ;;;
-;;;      GtkWindow*  active-window         Read
-;;;     GMenuModel*  app-menu              Read / Write
-;;;     GMenuModel*  menubar               Read / Write
-;;;       gboolean   register-session      Read / Write
-;;;       gboolean   screensaver-active    Read
+;;;      GtkWindow*   active-window         Read
+;;;     GMenuModel*   app-menu              Read / Write
+;;;     GMenuModel*   menubar               Read / Write
+;;;       gboolean    register-session      Read / Write
+;;;       gboolean    screensaver-active    Read
 ;;;
 ;;; Signals
 ;;;
-;;;           void   window-added          Run First
-;;;           void   window-removed        Run First
+;;;           void    query-end             Run First
+;;;           void    window-added          Run First
+;;;           void    window-removed        Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -116,7 +117,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application 'type)
- "@version{2013-8-8}
+ "@version{2020-1-31}
   @begin{short}
     @sym{gtk-application} is a class that handles many important aspects of a
     GTK+ application in a convenient fashion, without enforcing a
@@ -127,7 +128,7 @@
   uniqueness, session management, provides some basic scriptability and desktop
   shell integration by exporting actions and menus and manages a list of
   toplevel windows whose life-cycle is automatically tied to the life-cycle of
- your application.
+  your application.
 
   While @sym{gtk-application} works fine with plain @class{gtk-window} widgets,
   it is recommended to use it together with @class{gtk-application-window}.
@@ -136,358 +137,105 @@
   when invoking actions that arrive from other processes. The GDK lock is not
   touched for local action invocations. In order to have actions invoked in a
   predictable context it is therefore recommended that the GDK lock be held
-  while invoking actions locally with the @fun{g-action-group-activate-action}
-  function. The same applies to actions associated with
-  @class{gtk-application-window} and to the \"activate\" and \"open\"
+  while invoking actions locally with the function
+  @fun{g-action-group-activate-action}. The same applies to actions associated
+  with @class{gtk-application-window} and to the \"activate\" and \"open\"
   @class{g-application} methods.
 
-  To set an application menu for a @sym{gtk-application}, use the
-  @fun{gtk-application-app-menu} slot access function. The @class{g-menu-model}
-  object that this function expects is usually constructed using
-  @class{gtk-builder}, as seen in the following example. To specify a menubar
-  that will be shown by @class{gtk-application-window} widgets, use the
-  @fun{gtk-application-menubar} slot access function. Use the base
-  @class{g-action-map} interface to add actions, to respond to the user
-  selecting these menu items.
+  @sym{gtk-application} will automatically load menus from the
+  @class{gtk-builder} resource located at @file{\"gtk/menus.ui\"}, relative to
+  the application's resource base path, see the function
+  @fun{g-application-set-resource-base-path}. The menu with the ID \"app-menu\"
+  is taken as the application's app menu and the menu with the ID \"menubar\"
+  is taken as the application's menubar. Additional menus, most interesting
+  submenus, can be named and accessed via the function
+  @fun{gtk-application-get-menu-by-id} which allows for dynamic population of
+  a part of the menu structure.
 
-  GTK+ displays these menus as expected, depending on the platform the
-  application is running on.
+  If the resources @file{\"gtk/menus-appmenu.ui\"} or
+  @file{\"gtk/menus-traditional.ui\"} are present then these files will be used
+  in preference, depending on the value of the function
+  @fun{gtk-application-prefers-app-menu}. If the resource
+  @file{\"gtk/menus-common.ui\"} is present it will be loaded as well. This is
+  useful for storing items that are referenced from both
+  @file{\"gtk/menus-appmenu.ui\"} and @file{\"gtk/menus-traditional.ui\"}.
 
-  @b{Figure Menu integration in OS X.}
+  It is also possible to provide the menus manually using the slot access
+  functions @fun{gtk-application-app-menu} and @fun{gtk-application-menubar}.
 
-  @image[bloatpad-osx]{}
+  @sym{gtk-application} will also automatically setup an icon search path for
+  the default icon theme by appending @file{\"icons\"} to the resource base
+  path. This allows your application to easily store its icons as resources.
+  See the function @fun{gtk-icon-theme-add-resource-path} for more information.
 
-  @b{Figure Menu integration in GNOME.}
-
-  @image[bloatpad-gnome]{}
-
-  @b{Figure Menu integration in Xfce.}
-
-  @image[bloatpad-xfce]{}
+  If there is a resource located at @file{\"gtk/help-overlay.ui\"} which
+  defines a @class{gtk-shortcuts-window} with ID \"help_overlay\" then
+  @sym{gtk-application} associates an instance of this shortcuts window with
+  each @class{gtk-application-window} and sets up keyboard accelerators
+  (@kbd{Control-F1} and @kbd{Control-?}) to open it. To create a menu item that
+  displays the shortcuts window, associate the item with the action
+  @code{win.show-help-overlay}.
 
   @sym{gtk-application} optionally registers with a session manager of the
   users session, if you set the @code{register-session} property, and offers
   various functionality related to the session life-cycle.
 
-  An application can block various ways to end the session with the
-  @fun{gtk-application-inhibit} function. Typical use cases for this kind of
-  inhibiting are long-running, uninterruptible operations, such as burning a
-  CD or performing a disk backup. The session manager may not honor the
-  inhibitor, but it can be expected to inform the user about the negative
-  consequences of ending the session while inhibitors are present.
-
+  An application can block various ways to end the session with the function
+  @fun{gtk-application-inhibit}. Typical use cases for this kind of inhibiting
+  are long-running, uninterruptible operations, such as burning a CD or
+  performing a disk backup. The session manager may not honor the inhibitor,
+  but it can be expected to inform the user about the negative consequences of
+  ending the session while inhibitors are present.
   @begin[Example]{dictionary}
     A simple application
     @begin{pre}
-(defclass bloat-pad (gtk-application)
-  ()
-  (:metaclass gobject-class)
-  (:g-type-name . \"BloatPad\"))
-
-(register-object-type-implementation \"BloatPad\"
-                                     bloat-pad
-                                     \"GtkApplication\"
-                                     nil
-                                     nil)
-
-(defun new-window (application file)
-  (declare (ignore file))
-    (let (;; Create the application window
-          (window (make-instance 'gtk-application-window
-                                 :application application
-                                 :title \"Bloatpad\"
-                                 :border-width 12
-                                 :default-width 500
-                                 :default-height 400))
-          (grid (make-instance 'gtk-grid))
-          (toolbar (make-instance 'gtk-toolbar)))
-
-      ;; Connect signal \"destroy\" to the application window
-      (g-signal-connect window \"destroy\"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)
-                          (if (zerop gtk::*main-thread-level*)
-                              (g-application-quit application))))
-
-      ;; Add action \"copy\" to the application window
-      (let ((action (g-simple-action-new \"copy\" nil)))
-        (g-action-map-add-action window action)
-        (g-signal-connect action \"activate\"
-           (lambda (action parameter)
-             (declare (ignore action parameter))
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window \"bloatpad-text\"))))
-               (gtk-text-buffer-copy-clipboard
-                                  (gtk-text-view-buffer view)
-                                  (gtk-widget-get-clipboard view
-                                                            \"CLIPBOARD\"))))))
-
-      ;; Add action \"paste\" to the application window
-      (let ((action (g-simple-action-new \"paste\" nil)))
-        (g-action-map-add-action window action)
-        (g-signal-connect action \"activate\"
-           (lambda (action parameter)
-             (declare (ignore action parameter))
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window \"bloatpad-text\"))))
-               (gtk-text-buffer-paste-clipboard
-                                       (gtk-text-view-buffer view)
-                                       (gtk-widget-get-clipboard view
-                                                                 \"CLIPBOARD\")
-                                       :default-editable t)))))
-
-      ;; Add action \"fullscreen\" to the application window
-      (let ((action (g-simple-action-new-stateful
-                                               \"fullscreen\"
-                                               nil
-                                               (g-variant-new-boolean nil))))
-        (g-action-map-add-action window action)
-        (g-signal-connect action \"activate\"
-           (lambda (action parameter)
-             (declare (ignore parameter))
-             (let* ((state (g-action-state action))
-                    (value (g-variant-get-boolean state)))
-               (g-action-change-state action
-                                      (g-variant-new-boolean (not value))))))
-        (g-signal-connect action \"change-state\"
-           (lambda (action parameter)
-             (if (g-variant-get-boolean parameter)
-                 (gtk-window-fullscreen window)
-                 (gtk-window-unfullscreen window))
-             (setf (g-simple-action-state action) parameter))))
-
-      ;; Add action \"justify\" to the application window
-      (let ((action (g-simple-action-new-stateful
-                                             \"justify\"
-                                             (g-variant-type-new \"s\")
-                                             (g-variant-new-string \"left\"))))
-        (g-action-map-add-action window action)
-        (g-signal-connect action \"activate\"
-           (lambda (action parameter)
-             (g-action-change-state action parameter)))
-        (g-signal-connect action \"change-state\"
-           (lambda (action parameter)
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window \"bloatpad-text\")))
-                   (str (g-variant-get-string parameter)))
-               (cond ((equal str \"left\")
-                      (setf (gtk-text-view-justification view) :left))
-                     ((equal str \"center\")
-                      (setf (gtk-text-view-justification view) :center))
-                     (t
-                      (setf (gtk-text-view-justification view) :right)))
-               (g-simple-action-set-state action parameter)))))
-
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id \"gtk-justify-left\")))
-        (gtk-actionable-set-detailed-action-name button \"win.justify::left\")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id \"gtk-justify-center\")))
-        (gtk-actionable-set-detailed-action-name button \"win.justify::center\")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id \"gtk-justify-right\")))
-        (gtk-actionable-set-detailed-action-name button \"win.justify::right\")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-separator-tool-item
-                                   :draw nil)))
-        (gtk-tool-item-set-expand button t)
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-tool-item))
-            (box (make-instance 'gtk-box
-                                :orientation :horizontal
-                                :spacing 6))
-            (label (make-instance 'gtk-label
-                                  :label \"Fullscreen:\"))
-            (switch (make-instance 'gtk-switch)))
-        (setf (gtk-actionable-action-name switch) \"win.fullscreen\")
-        (gtk-container-add box label)
-        (gtk-container-add box switch)
-        (gtk-container-add button box)
-        (gtk-container-add toolbar button))
-      (gtk-grid-attach grid toolbar 0 0 1 1)
-      (let ((scrolled (make-instance 'gtk-scrolled-window
-                                     :hexpand t
-                                     :vexpand t))
-            (view (make-instance 'gtk-text-view)))
-        (g-object-set-data window \"bloatpad-text\" (pointer view))
-        (gtk-container-add scrolled view)
-        (gtk-grid-attach grid scrolled 0 1 1 1))
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window)))
-
-(defun bloat-pad-activate (application)
-  ;; Start a main loop and create an application window
+(defun simple-application (&optional (argv nil))
   (within-main-loop
-    (new-window application nil))
-  ;; Wait until the main loop has finished
-  (join-gtk-main))
+    (let (;; Create an application
+          (app (make-instance 'gtk-application
+                              :application-id \"com.crategus.simple-application\"
+                              :flags :none)))
 
-(defun create-about-dialog ()
-  (let (;; Create an about dialog
-        (dialog (make-instance 'gtk-about-dialog
-                               :program-name \"Example Dialog\"
-                               :version \"0.00\"
-                               :copyright \"(c) Dieter Kaiser\"
-                               :website
-                               \"github.com/crategus/cl-cffi-gtk\"
-                               :website-label \"Project web site\"
-                               :license \"LLGPL\"
-                               :authors '(\"Dieter Kaiser\")
-                               :documenters '(\"Dieter Kaiser\")
-                               :artists '(\"None\")
-                               :logo-icon-name
-                               \"applications-development\"
-                               :wrap-license t)))
-    ;; Run the about dialog
-    (gtk-dialog-run dialog)
-    ;; Destroy the about dialog
-    (gtk-widget-destroy dialog)))
+      ;; Connect signal \"ativate\" to the applicaton
+      (g-signal-connect app \"activate\"
+          (lambda (application)
+            ;; Create an application window
+            (let ((window (make-instance 'gtk-application-window
+                                         :application application
+                                         :title \"Simple Application\"
+                                         :default-width 500
+                                         :default-height 300)))
+              ;; Connect signal \"destroy\" to the application window
+              (g-signal-connect window \"destroy\"
+                                (lambda (widget)
+                                  (declare (ignore widget))
+                                  ;; Leave the main loop
+                                  (leave-gtk-main)
+                                  ;; Quit the application
+                                  (g-application-quit app)))
+              ;; Show the application window
+              (gtk-widget-show-all window))))
 
-(defvar *menu*
-  \"<interface>
-    <menu id='app-menu'>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_New Window</attribute>
-       <attribute name='action'>app.new</attribute>
-       <attribute name='accel'>&lt;Primary&gt;n</attribute>
-      </item>
-     </section>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
-       <attribute name='action'>app.about</attribute>
-      </item>
-     </section>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_Quit</attribute>
-       <attribute name='action'>app.quit</attribute>
-       <attribute name='accel'>&lt;Primary&gt;q</attribute>
-      </item>
-     </section>
-     </menu>
-    <menu id='menubar'>
-     <submenu>
-      <attribute name='label' translatable='yes'>_Edit</attribute>
-      <section>
-       <item>
-        <attribute name='label' translatable='yes'>_Copy</attribute>
-        <attribute name='action'>win.copy</attribute>
-        <attribute name='accel'>&lt;Primary&gt;c</attribute>
-       </item>
-       <item>
-        <attribute name='label' translatable='yes'>_Paste</attribute>
-        <attribute name='action'>win.paste</attribute>
-        <attribute name='accel'>&lt;Primary&gt;v</attribute>
-       </item>
-      </section>
-     </submenu>
-     <submenu>
-      <attribute name='label' translatable='yes'>_View</attribute>
-      <section>
-       <item>
-        <attribute name='label' translatable='yes'>_Fullscreen</attribute>
-        <attribute name='action'>win.fullscreen</attribute>
-        <attribute name='accel'>F11</attribute>
-       </item>
-      </section>
-     </submenu>
-    </menu>
-   </interface>\")
-
-(defun bloat-pad-startup (application)
-  ;; Add action \"new\" to the application
-  (let ((action (g-simple-action-new \"new\" nil)))
-    ;; Connect a handler to the signal \"activate\"
-    (g-signal-connect action \"activate\"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         ;; ensure-gtk-main increases the thread level for the new window
-         (ensure-gtk-main)
-         (new-window application nil)))
-    ;; Add the action to the action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Add action \"about\" to the application
-  (let ((action (g-simple-action-new \"about\" nil)))
-    ;; Connect a handler to the signal \"activate\"
-    (g-signal-connect action \"activate\"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         (create-about-dialog)))
-    ;; Add the action to the action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Add action \"quit\" to the application
-  (let ((action (g-simple-action-new \"quit\" nil)))
-    ;; Connect a handler to the signal activate
-    (g-signal-connect action \"activate\"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         ;; Destroy all windows of the application
-         (dolist (window (gtk-application-get-windows application))
-           (gtk-widget-destroy window))
-         ;; Quit the main loop
-         (leave-gtk-main)
-         ;; Quit the application
-         (g-application-quit application)))
-    ;; Add the action to action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Intitialize the application menu and the menubar
-  (let ((builder (make-instance 'gtk-builder)))
-    ;; Read the menus from a string
-    (gtk-builder-add-from-string builder *menu*)
-    ;; Set the application menu
-    (setf (gtk-application-app-menu application)
-          (gtk-builder-get-object builder \"app-menu\"))
-    ;; Set the menubar
-    (setf (gtk-application-menubar application)
-          (gtk-builder-get-object builder \"menubar\"))))
-
-(defun bloat-pad-open (application)
-  (declare (ignore application))
-  ;; Executed when the application is opened
-  nil)
-
-(defun bloat-pad-shutdown (application)
-  (declare (ignore application))
-  ;; Executed when the application is shut down
-  nil)
-
-(defmethod initialize-instance :after
-    ((app bloat-pad) &key &allow-other-keys)
-  (g-signal-connect app \"activate\" #'bloat-pad-activate)
-  (g-signal-connect app \"startup\" #'bloat-pad-startup)
-  (g-signal-connect app \"open\" #'bloat-pad-open)
-  (g-signal-connect app \"shutdown\" #'bloat-pad-shutdown))
-
-(defun bloat-pad-new ()
-  (g-set-application-name \"Bloatpad\")
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
-        t)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
-        t)
-  (make-instance 'bloat-pad
-                 :application-id \"org.gtk.Test.bloatpad\"
-                 :flags :handles-open
-                 :inactivity-timeout 30000
-                 :register-session t))
-
-(defun example-application (&optional (argc 0) (argv (null-pointer)))
-  (let (;; Create an instance of the application Bloat Pad
-        (bloat-pad (bloat-pad-new)))
-    ;; Run the application
-    (g-application-run bloat-pad argc argv)
-    ;; Destroy the application
-    (g-object-unref (pointer bloat-pad))))
+      ;; Run the application
+      (g-application-run app argv))))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
+    @subheading{The \"query-end\" signal}
+      @begin{pre}
+ lambda (application)    : Run First
+      @end{pre}
+      Emitted when the session manager is about to end the session, only if
+      @code{register-session} is @arg{true}. Applications can connect to this
+      signal and call the function @fun{gtk-application-inhibit} with the value
+      @code{:logout} of type @symbol{gtk-application-inhibit-flags} to delay
+      the end of the session until state has been saved.
+      @begin[code]{table}
+        @entry[application]{The @sym{gtk-application} object which emitted the
+          signal.}
+      @end{table}
+      Since: 3.24
+
     @subheading{The \"window-added\" signal}
       @begin{pre}
  lambda (application window)    : Run First
@@ -654,8 +402,8 @@
                                                'gtk-application) 't)
  "The @code{register-session} property of type @code{:boolean}
   (Read / Write) @br{}
-  Set this property to @em{true} to register with the session manager. @br{}
-  Default value: @code{nil}")
+  Set this property to @arg{true} to register with the session manager. @br{}
+  Default value: @arg{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-register-session atdoc:*function-name-alias*)
@@ -672,11 +420,11 @@
 (setf (documentation (atdoc:get-slot-from-name "screensaver-active"
                                                'gtk-application) 't)
  "The @code{screensaver-active} property of type @code{:boolean} (Read) @br{}
-  This property is @em{true} if GTK+ believes that the screensaver is currently
-  active. GTK+ only tracks session state (including this) when
-  @code{register-session} is set to @em{true}.
+  This property is @arg{true} if GTK+ believes that the screensaver is currently
+  active. GTK+ only tracks session state, including this, when the
+  @code{register-session} property is set to @arg{true}.
   Tracking the screensaver state is supported on Linux. @br{}
-  Default value: @code{nil} @br{}
+  Default value: @arg{false} @br{}
   Since 3.24")
 
 #+(and gtk-3-24 cl-cffi-gtk-documentation)
@@ -699,18 +447,19 @@
 (declaim (inline gtk-application-new))
 
 (defun gtk-application-new (application-id flags)
- "@version{2013-7-25}
-  @argument[application-id]{the application ID of type @code{:string}}
+ "@version{2020-1-31}
+  @argument[application-id]{the application ID of type @code{:string} or a
+    @code{null}-pointer for no application ID}
   @argument[flags]{the application flags of type @symbol{g-application-flags}}
   @return{A new @class{gtk-application} object.}
   @begin{short}
     Creates a new @class{gtk-application} object.
   @end{short}
 
-  The @code{gtk_init()} function is called as soon as the application gets
+  The function @code{gtk_init()} is called as soon as the application gets
   registered as the primary instance.
 
-  Concretely, the @code{gtk_init()} function is called in the default handler
+  Concretely, the function @code{gtk_init()} is called in the default handler
   for the \"startup\" signal. Therefore, @class{gtk-application} subclasses
   should chain up in their \"startup\" handler before using any GTK+ API.
 
@@ -721,8 +470,12 @@
   support GTK+ commandline arguments, you can explicitly call the function
   @code{gtk_init} before creating the application instance.
 
-  The application ID must be valid. See the  @fun{g-application-id-is-valid}
-  function.
+  The application ID must be valid. See the function
+  @fun{g-application-id-is-valid}.
+
+  If no application ID is given then some features, most notably application
+  uniqueness, will be disabled. No application ID is only allowed with
+  GTK+ 3.6 or later.
   @see-class{gtk-application}
   @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
@@ -962,7 +715,7 @@
   @argument[application]{the @class{gtk-application} object}
   @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of actions
     should be queried}
-  @return{A @code{:boolean} that is @em{true} if any of the actions specified in
+  @return{A @code{:boolean} that is @arg{true} if any of the actions specified in
     @arg{flags} are inhibited.}
   @begin{short}
     Determines if any of the actions specified in @arg{flags} are currently
@@ -985,13 +738,13 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-4-9}
   @argument[application]{a @class{gtk-application} object}
-  @return{A @code{:boolean} that is @em{true} if you should set an app menu}
+  @return{A @code{:boolean} that is @arg{true} if you should set an app menu}
   @begin{short}
     Determines if the desktop environment in which the application is running
     would prefer an application menu be shown.
   @end{short}
 
-  If this function returns @em{true} then the application should call the
+  If this function returns @arg{true} then the application should call the
   @fun{gtk-application-app-menu} slot access function with the contents of an
   application menu, which will be shown by the desktop environment. If it
   returns @code{nil} then you should consider using an alternate approach, such
@@ -1032,7 +785,7 @@
 ;;; gtk_application_get_menu_by_id ()
 ;;; ----------------------------------------------------------------------------
 
-#+gkt-3-14
+#+gtk-3-14
 (defcfun ("gtk_application_get_menu_by_id" gtk-application-get-menu-by-id)
     (g-object g-menu)
  #+cl-cffi-gtk-documentation
@@ -1052,7 +805,7 @@
   (application (g-object gtk-application))
   (id :string))
 
-#+3-14
+#+gtk-3-14
 (export 'gtk-application-get-menu-by-id)
 
 ;;; ----------------------------------------------------------------------------
@@ -1222,7 +975,7 @@
 ;;; gtk_application_get_actions_for_accel ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
+#+gtk-3-14
 (defcfun ("gtk_application_get_actions_for_accel"
            gtk-application-get-actions-for-accel) g-strv
  "@version{2019-5-14}
@@ -1247,13 +1000,13 @@
   It is a programmer error to pass an invalid accelerator string. If you are
   unsure, check it with the @fun{gtk-accelerator-parse} function first.
 
-  Since 3.12
+  Since 3.14
   @see-class{gtk-application}
   @see-function{gtk-accelerator-parse}"
   (application (g-object gtk-application))
   (accel :string))
 
-#+gtk-3-12
+#+gtk-3-14
 (export 'gtk-application-get-actions-for-accel)
 
 ;;; --- End of file gtk.application.lisp ---------------------------------------
