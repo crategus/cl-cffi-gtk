@@ -512,17 +512,17 @@
     ;; Add the action to action map of the application
     (g-action-map-add-action application action)))
 
-(defun gtk-demo (&optional (argc 0) (argv (null-pointer)))
+(defun gtk-demo (&optional (argv nil))
   (within-main-loop
     (unless (equal "GTK Lisp Demo" (g-get-application-name))
       (g-set-application-name "GTK Lisp Demo"))
     (let ((gtk-demo (make-instance 'gtk-application
-                                   :application-id "org.gtk.lisp.demo"
+                                   :application-id "com.crategus.gtk-demo"
                                    :register-session t)))
       ;; Connect signal handlers to the application
       (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
       (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
       ;; Start the application
-      (g-application-run gtk-demo argc argv))))
+      (g-application-run gtk-demo argv))))
 
 ;;; --- End of file gtk-demo.lisp ----------------------------------------------
