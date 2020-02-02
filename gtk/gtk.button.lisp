@@ -428,10 +428,10 @@
     @class{gtk-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-button-focus-on-click)} returns whether the
+  The slot access function @sym{gtk-button-focus-on-click} returns whether the
   button grabs focus when it is clicked with the mouse.
 
-  The slot access function @sym{(setf gtk-button-focus-on-click} sets whether
+  The slot access function @sym{(setf gtk-button-focus-on-click)} sets whether
   the button will grab focus when it is clicked with the mouse. Making mouse
   clicks not grab focus is useful in places like toolbars where you do not want
   the keyboard focus removed from the main area of the application.
