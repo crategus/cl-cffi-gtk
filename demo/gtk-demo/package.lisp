@@ -1,7 +1,7 @@
 (defpackage :gtk-demo
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :common-lisp)
-  (:export #:main))
+  (:export #:gtk-demo))
 
 (in-package :gtk-demo)
 
