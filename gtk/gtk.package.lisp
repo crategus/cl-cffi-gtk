@@ -6262,6 +6262,7 @@ setup_tree (void)
     @begin[GtkUIManager]{subsection}
       Constructing menus and toolbars from an XML description.
 
+      @about-symbol{gtk-ui-manager-item-type}
       @about-class{gtk-ui-manager}
       @about-generic{gtk-ui-manager-add-tearoffs}
       @about-generic{gtk-ui-manager-ui}
@@ -6277,7 +6278,6 @@ setup_tree (void)
       @about-function{gtk-ui-manager-add-ui-from-string}
       @about-function{gtk-ui-manager-add-ui-from-file}
       @about-function{gtk-ui-manager-new-merge-id}
-      @about-symbol{gtk-ui-manager-item-type}
       @about-function{gtk-ui-manager-add-ui}
       @about-function{gtk-ui-manager-remove-ui}
       @about-function{gtk-ui-manager-ensure-update}
@@ -6330,13 +6330,8 @@ setup_tree (void)
       @about-generic{gtk-action-visible-overflown}
       @about-generic{gtk-action-visible-vertical}
       @about-function{gtk-action-new}
-      @about-function{gtk-action-get-name}
       @about-function{gtk-action-is-sensitive}
-      @about-function{gtk-action-get-sensitive}
-      @about-function{gtk-action-set-sensitive}
       @about-function{gtk-action-is-visible}
-      @about-function{gtk-action-get-visible}
-      @about-function{gtk-action-set-visible}
       @about-function{gtk-action-activate}
       @about-function{gtk-action-create-icon}
       @about-function{gtk-action-create-menu-item}
@@ -6347,30 +6342,10 @@ setup_tree (void)
       @about-function{gtk-action-disconnect-accelerator}
       @about-function{gtk-action-block-activate}
       @about-function{gtk-action-unblock-activate}
-      @about-function{gtk-action-get-always-show-image}
-      @about-function{gtk-action-set-always-show-image}
       @about-function{gtk-action-get-accel-path}
       @about-function{gtk-action-set-accel-path}
       @about-function{gtk-action-get-accel-closure}
       @about-function{gtk-action-set-accel-group}
-      @about-function{gtk-action-set-label}
-      @about-function{gtk-action-get-label}
-      @about-function{gtk-action-set-short-label}
-      @about-function{gtk-action-get-short-label}
-      @about-function{gtk-action-set-tooltip}
-      @about-function{gtk-action-get-tooltip}
-      @about-function{gtk-action-set-stock-id}
-      @about-function{gtk-action-get-stock-id}
-      @about-function{gtk-action-set-gicon}
-      @about-function{gtk-action-get-gicon}
-      @about-function{gtk-action-set-icon-name}
-      @about-function{gtk-action-get-icon-name}
-      @about-function{gtk-action-set-visible-horizontal}
-      @about-function{gtk-action-get-visible-horizontal}
-      @about-function{gtk-action-set-visible-vertical}
-      @about-function{gtk-action-get-visible-vertical}
-      @about-function{gtk-action-set-is-important}
-      @about-function{gtk-action-get-is-important}
     @end{subsection}
     @begin[GtkToggleAction]{subsection}
       An action which can be toggled between two states.
