@@ -584,6 +584,17 @@ Substitutions must start with a slash, and must not contain a trailing slash bef
 ;;; Since: 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_resources_lookup_data" %g-resources-lookup-data) :string
+  (path :string)
+  (lookup-flags :int) ; nachbessern type ist GResourceLookupFlags
+  (error :pointer))
+
+(defun g-resources-lookup-data (filename)
+  (with-g-error (error)
+    (%g-resources-lookup-data filename 0 error)))
+
+(export 'g-resources-lookup-data)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_resources_open_stream ()
 ;;;
