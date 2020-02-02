@@ -331,7 +331,7 @@
 
 (defun example-simple-app ()
   (within-main-loop
-    (let ((app (gtk-application-new "crategus.example-simple-app" :none)))
+    (let ((app (gtk-application-new "com.crategus.example-simple-app" :none)))
       (g-signal-connect app "activate"
                             (lambda (app)
                               (let ((window (gtk-application-window-new app)))
@@ -339,9 +339,7 @@
                                 (setf (gtk-window-default-size window)
                                       '(200 200))
                                 (gtk-widget-show-all window))))
-      (let ((status (g-application-run app 0 (null-pointer))))
-        (g-object-unref (pointer app))
-        status))))
+      (g-application-run app nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -4615,15 +4613,13 @@ happen.")
                  :inactivity-timeout 30000
                  :register-session t))
 
-(defun example-application (&optional (argc 0) (argv (null-pointer)))
+(defun example-application (&optional (argv nil))
   (let (;; Create an instance of the application Bloat Pad
         (bloat-pad (bloat-pad-new)))
     (format t "call G-APPLICATION-RUN.~%")
     ;; Run the application
-    (g-application-run bloat-pad argc argv)
-    (format t "back from G-APPLICATION-RUN.~%")
-    ;; Destroy the application
-    (g-object-unref (pointer bloat-pad))))
+    (g-application-run bloat-pad argv)
+    (format t "back from G-APPLICATION-RUN.~%")))
 
 ;;; ----------------------------------------------------------------------------
 

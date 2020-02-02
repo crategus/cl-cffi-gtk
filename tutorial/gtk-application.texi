@@ -479,7 +479,7 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
   (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
         nil)
   (make-instance 'bloat-pad
-                 :application-id "org.gtk.Test.bloatpad"
+                 :application-id "com.crategus.bloatpad"
                  :flags :handles-open
                  :inactivity-timeout 30000
                  :register-session t))
@@ -489,9 +489,7 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
         (bloat-pad (bloat-pad-new)))
     (format t "call G-APPLICATION-RUN.~%")
     ;; Run the application
-    (g-application-run bloat-pad argc argv)
-    (format t "back from G-APPLICATION-RUN.~%")
-    ;; Destroy the application
-    (g-object-unref (pointer bloat-pad))))
+    (g-application-run bloat-pad argv)
+    (format t "back from G-APPLICATION-RUN.~%")))
 @end verbatim
 
