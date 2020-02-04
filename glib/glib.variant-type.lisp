@@ -747,24 +747,32 @@
 (export '+g-variant-type-vardict+)
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE()
-;;;
-;;; # define G_VARIANT_TYPE(type_string)
-;;;                                    (g_variant_type_checked_ ((type_string)))
-;;;
-;;; Converts a string to a const GVariantType. Depending on the current
-;;; debugging level, this function may perform a runtime check to ensure that
-;;; string is a valid GVariant type string.
-;;;
-;;; It is always a programmer error to use this macro with an invalid type
-;;; string. If in doubt, use g_variant_type_string_is_valid() to check if the
-;;; string is valid.
-;;;
-;;; type_string :
-;;;     a well-formed GVariantType type string
-;;;
-;;; Since 2.24
+;;; G_VARIANT_TYPE() --> g_variant_type_checked_
 ;;; ----------------------------------------------------------------------------
+
+;; We call the private C function g_variant_tpye_checked_ to define a Lisp
+;; function which returns a GVariantType from a valid type string.
+
+(defcfun ("g_variant_type_checked_" g-variant-type-checked)
+    (gobject:g-boxed-foreign g-variant-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-4}
+  @argument[type-string]{a well-formed @class{g-variant-type} type string}
+  @return{a @class{g-variant-type}}
+  @begin{short}
+    Converts a string to a @class{g-variant-type}.
+  @end{short}
+  Depending on the current debugging level, this function may perform a runtime
+  check to ensure that the type string is a valid @class{g-variant} type string.
+
+  It is always a programmer error to use this function with an invalid type
+  string. If in doubt, use the function @fun{g-variant-type-string-is-valid} to
+  check if the string is valid.
+  @see-class{g-variant-type}
+  @see-function{g-variant-type-string-is-valid}"
+  (type-string :string))
+
+(export 'g-variant-type-checked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_free ()
