@@ -3317,6 +3317,37 @@
 ;;;     a reference to a GVariant, or NULL
 ;;; ----------------------------------------------------------------------------
 
+
+;;; GVariant * g_variant_parse (const GVariantType *type,
+;;;                             const gchar *text,
+;;;                             const gchar *limit,
+;;;                             const gchar **endptr,
+;;;                             GError **error);
+
+(defcfun ("g_variant_parse" %g-variant-parse-1)
+    (:pointer (:struct g-variant))
+  (type :pointer)
+  (text :string)
+  (limit :pointer)
+  (endptr :pointer)
+  (error :pointer))
+
+(defcfun ("g_variant_parse" %g-variant-parse-2)
+    (:pointer (:struct g-variant))
+  (type (gobject:g-boxed-foreign g-variant-type))
+  (text :string)
+  (limit :pointer)
+  (endptr :pointer)
+  (error :pointer))
+
+(defun g-variant-parse (type text)
+  (with-g-error (error)
+    (if type
+        (%g-variant-parse-2 type text (null-pointer) (null-pointer) error)
+        (%g-variant-parse-1 (null-pointer) text (null-pointer) (null-pointer) error))))
+
+(export 'g-variant-parse)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_parsed_va ()
 ;;;
