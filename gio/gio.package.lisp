@@ -221,9 +221,7 @@
       Interface for action containers.
 
       @about-class{g-action-map}
-      @about-symbol{GActionMapInterface}
       @about-function{g-action-map-lookup-action}
-      @about-struct{g-action-entry}
       @about-function{g-action-map-add-action-entries}
       @about-function{g-action-map-add-action}
       @about-function{g-action-map-remove-action}
