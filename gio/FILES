@@ -1,233 +1,51 @@
-Content from the GIO Reference Manual for Version 2.36.4
+Content from the GIO Reference Manual for Version 2.62
 
     *   - needs update
     %   - not fully implemented
     &   - objects and structures are implemented, some functions are missing
    (**) - deprecated
 
-File Operations
-
-  GFile - File and Directory Handling
-  GFileAttribute - Key-Value Paired File Attributes
-  GFileInfo - File Information and Attributes
-  GFileEnumerator - Enumerated Files Routines
-  GIOError - Error helper functions
-  GMountOperation - Object used for authentication and user interaction
-
-File System Monitoring
-
-  GFileMonitor - File Monitor
-
-File-related Utilitiesr
-
-  GFilenameCompleter - Filename Completer
-
-Asynchronous I/O
-
-  GCancellable - Thread-safe Operation Cancellation Stack
-  GAsyncResult - Asynchronous Function Results
-  GTask - Cancellable synchronous or asynchronous task and result
-  GIOScheduler - I/O Scheduler
-  GSimpleAsyncResult - Simple asynchronous results implementation
-
-Data conversion
-
-  GConverter - Data conversion interface
-  GCharsetConverter - Convert between charsets
-  GZlibCompressor - Zlib compressor
-  GZlibDecompressor - Zlib decompressor
-
-Streaming I/O
-
-  GSeekable - Stream seeking interface
-  GInputStream - Base class for implementing streaming input
-  GOutputStream - Base class for implementing streaming output
-  GIOStream - Base class for implementing read/write streams
-  GFileInputStream - File input streaming operations
-  GFileOutputStream - File output streaming operations
-  GFileIOStream - File read and write streaming operations
-  GFileDescriptorBased - Interface for file descriptor based IO
-  GFilterInputStream - Filter Input Stream
-  GFilterOutputStream - Filter Output Stream
-  GMemoryInputStream - Streaming input operations on memory chunks
-  GMemoryOutputStream - Streaming output operations on memory chunks
-  GBufferedInputStream - Buffered Input Stream
-  GBufferedOutputStream - Buffered Output Stream
-  GDataInputStream - Data Input Stream
-  GDataOutputStream - Data Output Stream
-  GUnixInputStream - Streaming input operations for UNIX file descriptors
-  GUnixOutputStream - Streaming output operations for UNIX file descriptors
-  GWin32InputStream - Streaming input operations for Windows file handles
-  GWin32OutputStream - Streaming output operations for Windows file handles
-  GConverterInputstream - Converter Input Stream
-  GConverterOutputstream - Converter Output Stream
-  GPollableInputStream - Interface for pollable input streams
-  GPollableOutputStream - Interface for pollable output streams
-  gpollableutils - GPollableInputStream / GPollableOutputStream utilities
-
 File types and applications
 
-  gio.content-type.lisp - Platform-specific content typing         - GIO 2.40&
-  gio.app-info.lisp - GAppInfo                                     - GIO 2.40%
+  gio.content-type.lisp        - Platform-specific content typing  - GIO 2.40&
+  gio.app-info.lisp            - GAppInfo                          - GIO 2.40%
 
-  GDesktopAppInfo - Application information from desktop files
-
-Volumes and Drives
-
-  GVolumeMonitor - Volume Monitor
-  GVolume - Volume management
-  GMount - Mount management
-  GDrive - Drive management
-  Unix Mounts - UNIX mounts
+  not implemented              - GDesktopAppInfo
 
 Icons
 
-  gio.icon.lisp - GIcon                                            - GIO 2.40&
+  gio.icon.lisp                - GIcon                             - GIO 2.40&
 
-  GFileIcon - Icons pointing to an image file
-  GLoadableIcon - Loadable Icons
+  not implemented              - GFileIcon
+  not implemented              - GLoadableIcon
 
-  gio.themed-icon.lisp    - GThemedIcon                            - GIO 2.40&
-  gio.emblemed-icon.lisp  - Icon with emblems                      - GIO 2.40&
-  gio.emblem.lisp         - An object for emblems                  - GIO 2.40&
-
-Failable Initialization
-
-  GInitable - Failable object initialization interface
-  GAsyncInitable - Asynchronously failable object initialization interface
-
-Low-level network support
-
-  GSocket - Low-level socket object
-  GInetAddress - An IPv4/IPv6 address
-  GInetAddressMask - An IPv4/IPv6 address mask
-  GSocketAddress - Abstract base class representing endpoints for socket
-                   communication
-  GInetSocketAddress - Internet GSocketAddress
-  GUnixSocketAddress - UNIX GSocketAddress
-  GSocketControlMessage - A GSocket control message
-  GUnixFDList - An object containing a set of UNIX file descriptors
-  GUnixFDMessage - A GSocketControlMessage containing a GUnixFDList
-  GCredentials - An object containing credentials
-  GUnixCredentialsMessage - A GSocketControlMessage containing credentials
-  GProxy - Interface for proxy handling
-  GProxyAddress - An internet address with proxy information
-  gnetworking.h - System networking includes
-
-High-level network functionallity
-
-  GSocketClient - Helper for connecting to a network service
-  GSocketConnection - A socket connection
-  GUnixConnection - A UNIX domain GSocketConnection
-  GTcpConnection - A TCP GSocketConnection
-  GTcpWrapperConnection - wrapper for non-GSocketConnection-based, GSocket-based
-                          GIOStreams
-  GSocketListener - Helper for accepting network client connections
-  GSocketService - Make it easy to implement a network service
-  GThreadedSocketService - A threaded GSocketService
-  GNetworkMonitor - Network status monitor
-
-TLS (SSL) support
-
-  TLS Overview - TLS (aka SSL) support for GSocketConnection
-  GTlsCertificate - TLS certificate
-  GTlsConnection - TLS connection type
-  GTlsClientConnection - TLS client-side connection
-  GTlsServerConnection - TLS server-side connection
-  GTlsBackend - TLS backend implementation
-  GTlsDatabase - TLS database type
-  GTlsFileDatabase - TLS file based database type
-  GTlsInteraction - Interaction with the user during TLS operations.
-  GTlsPassword - TLS Passwords for prompting
-
-DNS resolution
-
-  GResolver - Asynchronous and cancellable DNS resolver
-  GProxyResolver - Asynchronous and cancellable network proxy resolver
-  GSimpleProxyResolver - Simple proxy resolver implementation
-  GSocketConnectable - Interface for potential socket endpoints
-  GNetworkAddress - A GSocketConnectable for resolving hostnames
-  GNetworkService - A GSocketConnectable for resolving SRV records
-  GSrvTarget - DNS SRV record target
-
-Lowlevel D-Bus Support
-
-  D-Bus Utilities - Various utilities related to D-Bus.
-  D-Bus Addresses - D-Bus connection endpoints
-  D-Bus Introspection Data - Node and interface description data structures
-  GDBusError - Mapping D-Bus errors to and from GError
-  GDBusMessage - D-Bus Message
-  GDBusConnection - D-Bus Connections
-  GDBusMethodInvocation - Object for handling remote calls
-  GDBusServer - Helper for accepting connections
-  GDBusAuthObserver - Object used for authenticating connections
-
-Highlevel D-Bus Support
-
-  Owning Bus Names - Simple API for owning bus names
-  Watching Bus Names - Simple API for watching bus names
-  GDBusInterface - Base type for D-Bus interfaces
-  GDBusInterfaceSkeleton - Service-side D-Bus interface
-  GDBusProxy - Client-side D-Bus interface proxy
-  GDBusObject - Base type for D-Bus objects
-  GDBusObjectSkeleton - Service-side D-Bus object
-  GDBusObjectProxy - Client-side D-Bus object
-  GDBusObjectManager - Base type for D-Bus object managers
-  GDBusObjectManagerServer - Service-side object manager
-  GDBusObjectManagerClient - Client-side object manager
-
-Settings
-
-  GSettings - High-level API for application settings
-  GSettingsBackend - Interface for settings backend implementations
-  GSettingsSchema, GSettingsSchemaSource - introspecting and controlling the
-                                           loading of GSettings schemas
+  gio.themed-icon.lisp         - GThemedIcon                       - GIO 2.40&
+  gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.40&
+  gio.emblem.lisp              - An object for emblems             - GIO 2.40&
 
 Resources
 
   gio.resource.lisp            - GResource                         - GIO 2.60
 
-Permissions
-
-  GPermission - An object representing the permission to perform a certain
-                action
-  GSimplePermission - A GPermission that doesn't change value
-
 Application support
 
   gio.application.lisp         - GApplication                      - GIO 2.62 &
 
-  GApplicationCommandLine - A command-line invocation of an application
+  not implemented              - GApplicationCommandLine
 
   gio.action-group.lisp        - GActionGroup                      - GIO 2.36.4&
-  gio.action-map.lisp          - GActionMap                        - GIO 2.36.4
+  gio.action-map.lisp          - GActionMap                        - GIO 2.62
   gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.36.4
   gio.action.lisp              - GAction                           - GIO 2.36.4
   gio.simple-action.lisp       - GSimpleAction                     - GIO 2.36.4
 
-  GRemoteActionGroup - a GActionGroup that interacts with other processes
-  GActionGroup exporter - Export GActionGroups on D-Bus
-  GDBusActionGroup - A D-Bus GActionGroup implementation
+  not implemented              - GRemoteActionGroup
+  not implemented              - GActionGroup exporter
+  not implemented              - GDBusActionGroup
 
   gio.menu-model-lisp          - GMenuModel                        - GIO 2.36.4%
   gio.menu.lisp                - GMenu                             - GIO 2.38.1%
 
-  GMenuModel exporter - Export GMenuModels on D-Bus
-  GDBusMenuModel - A D-Bus GMenuModel implementation
-
-Extending GIO
-
-  GVfs - Virtual File System
-  GIOModule - Loadable GIO Modules
-  Extension Points - Extension Points
-
-GIO Tools
-
-  gio-querymodules - GIO module cache creation
-  gsettings - GSettings configuration tool
-  glib-compile-schemas - GSettings schema compiler
-  glib-compile-resources - GLib resource compiler
-  gdbus - Tool for working with D-Bus objects
-  gdbus-codegen - D-Bus code and documentation generator
-  gresource - GResource tool
+  not implemented              - GMenuModel exporter
+  not implemented              - GDBusMenuModel
 
