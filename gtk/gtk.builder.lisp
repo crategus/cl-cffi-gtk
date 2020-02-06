@@ -1093,7 +1093,8 @@
      (signal-name (:string :free-from-foreign nil))
      (handler-name (:string :free-from-foreign nil))
      (connect-object g-object)
-     (flags connect-flags) (data :pointer))
+     (flags connect-flags)
+     (data :pointer))
   (restart-case
       (funcall (glib::get-stable-pointer-value data)
                builder object signal-name handler-name connect-object flags)
