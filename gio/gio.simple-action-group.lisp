@@ -176,16 +176,19 @@
 
 (defun g-simple-action-group-add-entries (simple entries)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2020-2-3}
   @argument[simple]{a @class{g-simple-action-group} object}
-  @argument[entries]{a pointer to the first item in an array of
-    @sym{g-action-entry} structs}
+  @argument[entries]{a list of descriptions for the actions}
   @begin{short}
     A convenience function for creating multiple @class{g-simple-action}
     instances and adding them to the action group.
   @end{short}
 
-  Since 2.30"
+  This function calls the function @fun{g-action-map-add-action-entries}.
+  See the documentation of @fun{g-action-map-add-action-entries} for more
+  information about the parameters in the list to describe an action.
+  @see-class{g-simple-action-group}
+  @see-function{g-action-map-add-action-entries}"
   (g-action-map-add-action-entries simple entries))
 
 (export 'g-simple-action-group-add-entries)
