@@ -4,6 +4,7 @@
 (in-suite gio-suite)
 
 (load "rtest-gio-action.lisp")
+(load "rtest-gio-action-map.lisp")
 (load "rtest-gio-content-type.lisp")
 (load "rtest-gio-icon.lisp")
 (load "rtest-gio-resource.lisp")

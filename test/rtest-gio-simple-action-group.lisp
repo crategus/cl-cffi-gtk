@@ -1,4 +1,3 @@
-
 (def-suite gio-simple-action-group :in gio-suite)
 (in-suite gio-simple-action-group)
 
@@ -55,35 +54,23 @@ static GActionEntry win_entries[] = {
 #+nil
 (test g-simple-action-group-add-entries.1
   (let ((group (g-simple-action-group-new))
-        (entries '(("copy"  nil nil nil nil)
-                   ("paste" nil nil nil nil))))
+        (entries '(("copy"           ; name
+                    (null-pointer)   ; activate callback
+                    (null-pointer)   ; g-variant-type string
+                    (null-pointer)   ; g-variant
+                    (null-pointer)   ; change-state callback
+                   )
+                   ("paste" (null-pointer) (null-pointer) (null-pointer) (null-pointer)))))
     (g-simple-action-group-add-entries group entries)
     (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "copy"))))
     (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "paste"))))
 ))
 
-(defcallback activate-quit :void
-    ((simple (g-object g-simple-action))
-     (parameter (:pointer (:struct g-variant))))
-  (declare (ignore simple parameter))
-;  (format t "activate-quit called~%")
-  )
 
-(defcallback activate-print-string :void
-    ((simple (g-object g-simple-action))
-     (parameter (:pointer (:struct g-variant))))
-  (declare (ignore simple parameter))
-;  (format t "activate-print-string~%")
-  )
 
-(defun create-action-group ()
-  (let ((entries (list (list "quit"
-                             (callback activate-quit) nil nil nil)
-                       (list "print-string"
-                             (callback activate-print-string) "s" nil nil)))
-        (group (g-simple-action-group-new)))
-    (g-action-map-add-action-entries group entries)
-    group))
+
+
+
 
 ; Unhandled memory fault
 #+nil

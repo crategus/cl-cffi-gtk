@@ -1,4 +1,3 @@
-
 (def-suite glib-variant-type :in glib-suite)
 (in-suite glib-variant-type)
 
@@ -147,9 +146,8 @@
 ;;;   g_variant_type_new
 
 (test g-variant-type-new
-  (is (eq 'g-variant-type (type-of (g-variant-type-new "b"))))
-  (is (eq 'g-variant-type (type-of (g-variant-type-new +g-variant-type-boolean+))))
-)
+  (is-true (pointerp (g-variant-type-new "b")))
+  (is-true (pointerp (g-variant-type-new +g-variant-type-boolean+))))
 
 ;;;     g_variant_type_string_is_valid
 
@@ -319,8 +317,8 @@
     (setf iter (g-variant-type-next iter))
     (is (equal "n" (g-variant-type-dup-string iter)))
     (setf iter (g-variant-type-next iter))
-    ;; We do not get a NULL-POINTER,check this.
-    (is (eq 'g-variant-type (type-of iter)))))
+    ;; At last we get a NULL-POINTER
+    (is-true (null-pointer-p iter))))
 
 ;;;   g_variant_type_key
 ;;;   g_variant_type_value

@@ -27,4 +27,3 @@
 (load "rtest-gio.lisp")
 (load "rtest-pango.lisp")
 (load "rtest-cairo.lisp")
-
