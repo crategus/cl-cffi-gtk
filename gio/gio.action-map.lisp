@@ -112,16 +112,6 @@
 
 ;; This structure is not used in the Lisp implementation
 
-(defcstruct (g-action-entry)
-  (name :string)
-  (activate :pointer)
-  (parameter-type :string)
-  (state :string)
-  (change-state :pointer)
-  (padding1 g-size)             ; private in the C implementation
-  (padding2 g-size)
-  (padding3 g-size))
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_map_add_action_entries ()
 ;;; ----------------------------------------------------------------------------
@@ -161,23 +151,18 @@
   in the future.
   @b{Example :} Using the function @sym{g-action-map-add-action-entries}
   @begin{pre}
-(defcallback activate-quit :void
-    ((simple (g-object g-simple-action))
-     (parameter (:pointer (:struct g-variant))))
-  (declare (ignore simple parameter))
-  (format t \"activate-quit called~%\"))
+(defun activate-quit (action parameter)
+  (declare (ignore action parameter)))
 
-(defcallback activate-print-string :void
-    ((simple (g-object g-simple-action))
-     (parameter (:pointer (:struct g-variant))))
-  (declare (ignore simple parameter))
-  (format t \"activate-print-string~%\"))
+(defun activate-print (action parameter)
+  (declare (ignore action parameter)))
 
 (defun create-action-group ()
   (let ((entries (list (list \"quit\"
-                             (callback activate-quit) nil nil nil)
-                       (list \"print-string\"
-                             (callback activate-print-string) \"s\" nil nil)))
+                             #'activate-quit)
+                       (list \"print\"
+                             #'activate-print
+                             \"s\")))
         (group (g-simple-action-group-new)))
     (g-action-map-add-action-entries group entries)
     group))
@@ -185,12 +170,12 @@
   @see-class{g-action-map}
   @see-class{g-simple-action}"
   (dolist (entry entries)
-    (let ((action nil)
-          (name (first entry))
-          (activate (second entry))
-          (type (g-variant-type-new (third entry)))
-          (state (fourth entry))
-          (change-state (fifth entry)))
+    (let* ((action nil)
+           (name (first entry))
+           (activate (second entry))
+           (type (when (third entry) (g-variant-type-checked (third entry))))
+           (state (when (fourth entry) (g-variant-parse nil (fourth entry))))
+           (change-state (fifth entry)))
       (if state
           (setf action (g-simple-action-new-stateful name type state))
           (setf action (g-simple-action-new name type)))
