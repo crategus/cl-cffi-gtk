@@ -109,7 +109,7 @@
 ;;; g_boxed_copy ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_boxed_copy" g-boxed-copy) :pointer
+(defcfun ("g_boxed_copy" %g-boxed-copy) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-6-10}
   @argument[boxed-type]{the type of @arg{src-boxed}}
@@ -118,7 +118,11 @@
   Provide a copy of a boxed structure @arg{src-boxed} which is of type
   @arg{boxed-type}."
   (boxed-type g-type)
-  (src-boxed :pointer))
+  (boxed-src :pointer))
+
+(defun g-boxed-copy (boxed-type boxed-src)
+  (unless (null-pointer-p boxed-src)
+    (%g-boxed-copy boxed-type boxed-src)))
 
 (export 'g-boxed-copy)
 
