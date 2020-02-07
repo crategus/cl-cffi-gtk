@@ -1,7 +1,35 @@
-(def-suite gio-simple-action-group :in gio-suite)
-(in-suite gio-simple-action-group)
+(def-suite g-simple-action-group :in gio-suite)
+(in-suite g-simple-action-group)
 
 ;;;   GSimpleActionGroup
+
+(test g-simple-action-group-class
+  ;; Type check
+  (is-true  (g-type-is-object "GSimpleActionGroup"))
+  ;; Check the registered name
+  (is (eq 'g-simple-action-group
+          (registered-object-type-by-name "GSimpleActionGroup")))
+  ;; Check the parent
+  (is (equal (gtype "GObject") (g-type-parent "GSimpleActionGroup")))
+  ;; Check the children
+  (is (equal '()
+             (mapcar #'gtype-name (g-type-children "GSimpleActionGroup"))))
+  ;; Check the interfaces
+  (is (equal '("GActionGroup" "GActionMap")
+             (mapcar #'gtype-name (g-type-interfaces "GSimpleActionGroup"))))
+  ;; Check the class properties
+  (is (equal '()
+             (stable-sort (mapcar #'param-spec-name
+                                  (g-object-class-list-properties "GSimpleActionGroup"))
+                          #'string-lessp)))
+  ;; Check the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GSimpleActionGroup" G-SIMPLE-ACTION-GROUP
+                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
+                        ("GActionGroup" "GActionMap"))
+                       NIL)
+             (get-g-type-definition "GSimpleActionGroup"))))
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;   g_simple_action_group_new
 
@@ -12,8 +40,7 @@
 
 (test g-simple-action-group-lookup
   (let ((action-group (g-simple-action-group-new)))
-    (is-false (g-simple-action-group-lookup action-group "action"))
-))
+    (is-false (g-simple-action-group-lookup action-group "action"))))
 
 ;;;   g_simple_action_group_insert
 
@@ -23,8 +50,7 @@
                                   (g-simple-action-new "simple"
                                                        (g-variant-type-new "b")))
     (is (eq 'g-simple-action
-            (type-of (g-simple-action-group-lookup group "simple"))))
-))
+            (type-of (g-simple-action-group-lookup group "simple"))))))
 
 ;;;   g_simple_action_group_remove
 
@@ -36,69 +62,19 @@
     (is (eq 'g-simple-action
             (type-of (g-simple-action-group-lookup group "simple"))))
     (g-simple-action-group-remove group "simple")
-    (is-false (g-simple-action-group-lookup group "simple"))
-))
+    (is-false (g-simple-action-group-lookup group "simple"))))
 
 ;;;   g_simple_action_group_add_entries
 
-#|
-static GActionEntry win_entries[] = {
-  { "copy", window_copy, NULL, NULL, NULL },
-  { "paste", window_paste, NULL, NULL, NULL },
-  { "fullscreen", activate_toggle, NULL, "false", change_fullscreen_state },
-  { "justify", activate_radio, "s", "'left'", change_justify_state }
-}
-|#
-
-; Unhandled memory fault
-#+nil
-(test g-simple-action-group-add-entries.1
+(test g-simple-action-group-add-entries
   (let ((group (g-simple-action-group-new))
-        (entries '(("copy"           ; name
-                    (null-pointer)   ; activate callback
-                    (null-pointer)   ; g-variant-type string
-                    (null-pointer)   ; g-variant
-                    (null-pointer)   ; change-state callback
+        (entries '(("copy"       ; name
+                    nil          ; activate callback
+                    nil          ; g-variant-type string
+                    nil          ; g-variant
+                    nil          ; change-state callback
                    )
-                   ("paste" (null-pointer) (null-pointer) (null-pointer) (null-pointer)))))
+                   ("paste" nil nil nil nil))))
     (g-simple-action-group-add-entries group entries)
     (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "copy"))))
-    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "paste"))))
-))
-
-
-
-
-
-
-
-; Unhandled memory fault
-#+nil
-(test g-action-map-add-action-entries.2
-  (let ((group (create-action-group)))
-    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "quit"))))
-    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "print-string"))))
-    (g-action-activate (g-simple-action-group-lookup group "quit") (null-pointer))
-    (g-action-activate (g-simple-action-group-lookup group "print-string") (g-variant-new-string "a string"))
-))
-
-#|
-
-
- static GActionGroup *
- create_action_group (void)
- {
-   const GActionEntry entries[] = {
-     { \"quit\",         activate_quit              @},
-     { \"print-string\", activate_print_string, \"s\" @}
-   @};
-   GSimpleActionGroup *group;
-
-   group = g_simple_action_group_new ();
-   g_action_map_add_action_entries (G_ACTION_MAP (group),
-                                    entries, G_N_ELEMENTS (entries), NULL);
-
-   return G_ACTION_GROUP (group);
- @}
-|#
-
+    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "paste"))))))

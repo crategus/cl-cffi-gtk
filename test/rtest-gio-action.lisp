@@ -1,5 +1,5 @@
-(def-suite gio-action :in gio-suite)
-(in-suite gio-action)
+(def-suite g-action :in gio-suite)
+(in-suite g-action)
 
 ;;;   GAction
 

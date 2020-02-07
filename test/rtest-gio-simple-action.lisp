@@ -128,7 +128,7 @@
            (format t "~&    parameter : ~A~%" parameter))))
     (g-signal-connect action "change-state"
        (lambda (action value)
-         (g-simple-action-set-state action value)
+         (setf (g-simple-action-state action) value)
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'change-state' occured.~%")
            (format t "~&    action : ~A~%" action)
@@ -140,9 +140,9 @@
     ;; g-action-activate
     (g-action-activate action (g-variant-new-boolean t))))
 
-;;;   g_simple_action_set_enabled
+;;;   g_simple_action_enabled
 
-(test g-simple-action-set-enabled
+(test g-simple-action-enabled
   (let ((action (g-simple-action-new-stateful "simple"
                                               (g-variant-type-new "b")
                                               (g-variant-new-boolean t))))
@@ -156,30 +156,30 @@
            (format t "~&    parameter : ~A~%" parameter))))
     (g-signal-connect action "change-state"
        (lambda (action value)
-         (g-simple-action-set-state action value)
+         (setf (g-simple-action-state action) value)
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'change-state'.~%")
            (format t "~&    action : ~A~%" action)
            (format t "~&    name   : ~A~%" (g-action-get-name action))
            (format t "~&    value  : ~A~%" value))))
 
-    (is-true (g-simple-action-set-enabled action  t))
+    (is-true (setf (g-simple-action-enabled action)  t))
     (g-signal-emit action "activate" (g-variant-new-boolean nil))
     ;; TODO: This seems not to work. We can activate the action.
-    (is-false (g-simple-action-set-enabled action nil))
+    (is-false (setf (g-simple-action-enabled action) nil))
     (is-false (g-action-get-enabled action))
     (g-signal-emit action "activate" (g-variant-new-boolean nil))))
 
 ;;;   g_simple_action_set_state
 
-(test g-simple-action-set-state
+(test g-simple-action-state
   (let ((action (g-simple-action-new-stateful "simple"
                                               (g-variant-type-new "b")
                                               (g-variant-new-boolean t))))
-    ;;g-simple-action-set-state
-    (g-simple-action-set-state action (g-variant-new-boolean nil))
+    ;;g-simple-action-state
+    (setf (g-simple-action-state action) (g-variant-new-boolean nil))
     (is-false (g-variant-get-boolean (g-action-get-state action)))
-    (g-simple-action-set-state action (g-variant-new-boolean t))
+    (setf (g-simple-action-state action) (g-variant-new-boolean t))
     (is-true (g-variant-get-boolean (g-action-get-state action)))))
 
 ;;;   Example from the API documentation
