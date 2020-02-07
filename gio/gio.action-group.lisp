@@ -2,11 +2,11 @@
 ;;; gio.action-group.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.36.4 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,12 +28,13 @@
 ;;;
 ;;; GActionGroup
 ;;;
-;;; A group of actions
+;;;     A group of actions
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GActionGroup
-;;;     GActionGroupInterface
+;;;
+;;; Functions
 ;;;
 ;;;     g_action_group_list_actions
 ;;;     g_action_group_query_action
@@ -50,30 +51,30 @@
 ;;;     g_action_group_action_enabled_changed
 ;;;     g_action_group_action_state_changed
 ;;;
+;;; Signals
+;;;
+;;;     void    action-added              Has Details
+;;;     void    action-enabled-changed    Has Details
+;;;     void    action-removed            Has Details
+;;;     void    action-state-changed      Has Details
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GInterface
-;;;    +----GActionGroup
+;;;     GInterface
+;;;     ╰── GActionGroup
 ;;;
 ;;; Prerequisites
 ;;;
-;;; GActionGroup requires GObject.
+;;;     GActionGroup requires GObject.
 ;;;
 ;;; Known Derived Interfaces
 ;;;
-;;; GActionGroup is required by GActionMap and GRemoteActionGroup.
+;;;     GActionGroup is required by GRemoteActionGroup.
 ;;;
 ;;; Known Implementations
 ;;;
-;;; GActionGroup is implemented by GApplication, GDBusActionGroup and
-;;; GSimpleActionGroup.
-;;;
-;;; Signals
-;;;
-;;;   "action-added"                                   : Has Details
-;;;   "action-enabled-changed"                         : Has Details
-;;;   "action-removed"                                 : Has Details
-;;;   "action-state-changed"                           : Has Details
+;;;     GActionGroup is implemented by GApplication, GDBusActionGroup and
+;;;     GSimpleActionGroup.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -140,7 +141,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"action-added\" signal}
       @begin{pre}
- lambda (action-group action-name)   : Has Details
+ lambda (action-group action-name)    : Has Details
       @end{pre}
       Signals that a new action was just added to the group. This signal is
       emitted after the action has been added and is now visible.
@@ -148,11 +149,9 @@
         @entry[action-group]{The @sym{g-action-group} that changed.}
         @entry[action-name]{The name of the action in @arg{action-group}.}
       @end{table}
-      Since 2.28
-
     @subheading{The \"action-enabled-changed\" signal}
       @begin{pre}
- lambda (action-group action-name enabled)   : Has Details
+ lambda (action-group action-name enabled)    : Has Details
       @end{pre}
       Signals that the enabled status of the named action has changed.
       @begin[code]{table}
@@ -160,11 +159,9 @@
         @entry[action-name]{The name of the action in @arg{action-group}.}
         @entry[enabled]{Whether the action is enabled or not.}
       @end{table}
-      Since 2.28
-
     @subheading{The \"action-removed\" signal}
       @begin{pre}
- lambda (action-group action-name)   : Has Details
+ lambda (action-group action-name)    : Has Details
       @end{pre}
       Signals that an action is just about to be removed from the group. This
       signal is emitted before the action is removed, so the action is still
@@ -173,11 +170,9 @@
         @entry[action-group]{The @sym{g-action-group} that changed.}
         @entry[action-name]{The name of the action in @arg{action-group}.}
       @end{table}
-      Since 2.28
-
     @subheading{The \"action-state-changed\" signal}
       @begin{pre}
- lambda (action-group action-name value)   : Has Details
+ lambda (action-group action-name value)    : Has Details
       @end{pre}
       Signals that the state of the named action has changed.
       @begin[code]{table}
@@ -185,7 +180,6 @@
         @entry[action-name]{The name of the action in @arg{action-group}.}
         @entry[value]{The new value of the state.}
       @end{table}
-      Since 2.28
   @end{dictionary}
   @see-function{g-action-group-activate-action}
   @see-function{g-action-group-get-action-parameter-type}
@@ -194,116 +188,6 @@
   @see-function{g-action-group-change-action-state}
   @see-function{g-action-group-list-actions}
   @see-function{g-action-group-query-action}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GActionGroupInterface
-;;;
-;;; struct GActionGroupInterface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   /* virtual functions */
-;;;   gboolean     (*has_action)             (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   gchar **     (*list_actions)           (GActionGroup  *action_group);
-;;;
-;;;   gboolean     (*get_action_enabled)     (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   const GVariantType* (*get_action_parameter_type)
-;;;                                          (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   const GVariantType* (*get_action_state_type)
-;;;                                          (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   GVariant *   (*get_action_state_hint)  (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   GVariant *   (*get_action_state)       (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;
-;;;   void         (*change_action_state)    (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name,
-;;;                                           GVariant      *value);
-;;;
-;;;   void         (*activate_action)        (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name,
-;;;                                           GVariant      *parameter);
-;;;
-;;;   /* signals */
-;;;   void         (*action_added)           (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;   void         (*action_removed)         (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name);
-;;;   void         (*action_enabled_changed) (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name,
-;;;                                           gboolean       enabled);
-;;;   void         (*action_state_changed)   (GActionGroup  *action_group,
-;;;                                           const gchar   *action_name,
-;;;                                           GVariant      *state);
-;;;
-;;;   /* more virtual functions */
-;;;   gboolean     (*query_action)         (GActionGroup        *action_group,
-;;;                                         const gchar         *action_name,
-;;;                                         gboolean            *enabled,
-;;;                                         const GVariantType **parameter_type,
-;;;                                         const GVariantType **state_type,
-;;;                                         GVariant           **state_hint,
-;;;                                         GVariant           **state);
-;;; };
-;;;
-;;; The virtual function table for GActionGroup.
-;;;
-;;; GTypeInterface g_iface;
-;;;
-;;;
-;;; has_action ()
-;;;     the virtual function pointer for g_action_group_has_action()
-;;;
-;;; list_actions ()
-;;;     the virtual function pointer for g_action_group_list_actions()
-;;;
-;;; get_action_enabled ()
-;;;     the virtual function pointer for g_action_group_get_action_enabled()
-;;;
-;;; get_action_parameter_type ()
-;;;     the virtual function pointer for
-;;;     g_action_group_get_action_parameter_type()
-;;;
-;;; get_action_state_type ()
-;;;     the virtual function pointer for g_action_group_get_action_state_type()
-;;;
-;;; get_action_state_hint ()
-;;;     the virtual function pointer for g_action_group_get_action_state_hint()
-;;;
-;;; get_action_state ()
-;;;     the virtual function pointer for g_action_group_get_action_state()
-;;;
-;;; change_action_state ()
-;;;     the virtual function pointer for g_action_group_change_action_state()
-;;;
-;;; activate_action ()
-;;;     the virtual function pointer for g_action_group_activate_action()
-;;;
-;;; action_added ()
-;;;     the class closure for the "action-added" signal
-;;;
-;;; action_removed ()
-;;;     the class closure for the "action-removed" signal
-;;;
-;;; action_enabled_changed ()
-;;;     the class closure for the "action-enabled-changed" signal
-;;;
-;;; action_state_changed ()
-;;;     the class closure for the "action-enabled-changed" signal
-;;;
-;;; query_action ()
-;;;     the virtual function pointer for g_action_group_query_action()
-;;;
-;;; Since 2.28
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_list_actions ()
@@ -317,8 +201,7 @@
   @begin{short}
     Lists the actions contained within @arg{action-group}.
   @end{short}
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group)))
 
 (export 'g-action-group-list-actions)
@@ -405,8 +288,7 @@
   @begin{short}
     Checks if the named action exists within @arg{action-group}.
   @end{short}
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -429,8 +311,7 @@
 
   An action must be enabled in order to be activated or in order to have its
   state changed from outside callers.
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -462,8 +343,6 @@
   The parameter type of a particular action will never change but it is
   possible for an action to be removed and for a new action to be added with
   the same name but a different parameter type.
-
-  Since 2.28
   @see-class{g-action-group}
   @see-function{g-action-group-activate-action}"
   (action-group (g-object g-action-group))
@@ -500,8 +379,6 @@
   The state type of a particular action will never change but it is possible
   for an action to be removed and for a new action to be added with the same
   name but a different state type.
-
-  Since 2.28
   @see-class{g-action-group}
   @see-function{g-action-group-change-action-state}
   @see-function{g-action-group-get-action-state}"
@@ -541,8 +418,6 @@
 
   The return value, if non-@code{null}, should be freed with the function
   @fun{g-variant-unref} when it is no longer required.
-
-  Since 2.28
   @see-class{g-action-group}
   @see-function{g-variant-unref}"
   (action-group (g-object g-action-group))
@@ -571,8 +446,7 @@
 
   The return value (if non-@code{null}) should be freed with
   @code{g_variant_unref()} when it is no longer required.
-
-  Since 2.28
+  @see-class{g-action-group}
   @see-function{g-action-group-get-action-state-type}"
   (action-group (g-object g-action-group))
   (action-name :string))
@@ -603,8 +477,6 @@
   See the function @fun{g-action-group-get-action-state-hint}.
 
   If the value @type{g-variant} is floating, it is consumed.
-
-  Since 2.28
   @see-class{g-action-group}
   @see-function{g-action-group-get-action-state-type}
   @see-function{g-action-group-get-action-state-hint}"
@@ -632,8 +504,7 @@
   must be given as parameter. If the action is expecting no parameters then
   parameter must be @code{nil}. See the function
   @fun{g-action-group-get-action-parameter-type}.
-
-  Since 2.28
+  @see-class{g-action-group}
   @see-function{g-action-group-get-action-parameter-type}"
   (action-group (g-object g-action-group))
   (action-name :string)
@@ -655,8 +526,7 @@
   @end{short}
 
   This function should only be called by @class{g-action-group} implementations.
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -676,8 +546,7 @@
   @end{short}
 
   This function should only be called by @class{g-action-group} implementations.
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -700,8 +569,7 @@
 
   This function should only be called by @class{g-action-group}
   implementations.
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string)
   (enabled :boolean))
@@ -724,8 +592,7 @@
   @end{short}
 
   This function should only be called by @class{g-action-group} implementations.
-
-  Since 2.28"
+  @see-class{g-action-group}"
   (action-group (g-object g-action-group))
   (action-name :string)
   (state (:pointer (:struct g-variant))))

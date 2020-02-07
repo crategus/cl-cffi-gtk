@@ -2,11 +2,11 @@
 ;;; gio.simple-action-group.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.36.4 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; GSimpleActionGroup
 ;;;
-;;; A simple GActionGroup implementation
+;;;     A simple GActionGroup implementation
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GSimpleActionGroup
+;;;
+;;; Functions
 ;;;
 ;;;     g_simple_action_group_new
 ;;;     g_simple_action_group_lookup
@@ -42,12 +44,12 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GSimpleActionGroup
+;;;     GObject
+;;;     ╰── GSimpleActionGroup
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GSimpleActionGroup implements GActionGroup and GActionMap.
+;;;     GSimpleActionGroup implements GActionGroup and GActionMap.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -72,8 +74,6 @@
     objects, implementing the @class{g-action-group} and @class{g-action-map}
     interfaces.
   @end{short}
-
-  Since 2.28
   @see-class{g-action}
   @see-class{g-action-map}
   @see-class{g-action-group}")
@@ -91,8 +91,6 @@
   @begin{short}
     Creates a new, empty, @class{g-simple-action-group}.
   @end{short}
-
-  Since 2.28
   @see-class{g-simple-action-group}"
   (make-instance 'g-simple-action-group))
 
@@ -114,8 +112,6 @@
   @end{short}
 
   If no such action exists, returns @code{nil}.
-
-  Since 2.28
   @see-class{g-action}
   @see-class{g-simple-action-group}"
   (simple (g-object g-simple-action-group))
@@ -140,8 +136,7 @@
   then the old action is dropped from the group.
 
   The action group takes its own reference on action.
-
-  Since 2.28"
+  @see-class{g-simple-action-group}"
   (simple (g-object g-simple-action-group))
   (action (g-object g-action)))
 
@@ -161,8 +156,7 @@
   @end{short}
 
   If no action of this name is in the group then nothing happens.
-
-  Since 2.28"
+  @see-class{g-simple-action-group}"
   (simple (g-object g-simple-action-group))
   (action-name :string))
 

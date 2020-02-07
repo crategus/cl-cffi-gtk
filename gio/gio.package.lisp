@@ -201,7 +201,6 @@
       A group of actions.
 
       @about-class{g-action-group}
-      @about-symbol{g-action-group-interface}
       @about-function{g-action-group-list-actions}
       @about-function{g-action-group-query-action}
       @about-function{g-action-group-has-action}
@@ -261,10 +260,14 @@
       A simple GAction implementation.
 
       @about-class{g-simple-action}
+      @about-generic{g-simple-action-enabled}
+      @about-generic{g-simple-action-name}
+      @about-generic{g-simple-action-parameter-type}
+      @about-generic{g-simple-action-state}
+      @about-generic{g-simple-action-state-type}
       @about-function{g-simple-action-new}
       @about-function{g-simple-action-new-stateful}
-      @about-function{g-simple-action-set-enabled}
-      @about-function{g-simple-action-set-state}
+      @about-function{g-simple-action-set-state-hint}
     @end{subsection}
     @begin[GMenuModel]{subsection}
       An abstract class representing the contents of a menu.
