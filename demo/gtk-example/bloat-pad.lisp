@@ -78,7 +78,7 @@
              (if (g-variant-get-boolean parameter)
                  (gtk-window-fullscreen window)
                  (gtk-window-unfullscreen window))
-             (g-simple-action-set-state action parameter))))
+             (setf (g-simple-action-state action) parameter))))
 
       ;; Add action "justify" to the application window
       (let ((action (g-simple-action-new-stateful
@@ -100,7 +100,7 @@
                       (setf (gtk-text-view-justification view) :center))
                      (t
                       (setf (gtk-text-view-justification view) :right)))
-               (g-simple-action-set-state action parameter)))))
+               (setf (g-simple-action-state action) parameter)))))
 
       ;; Left justify toggle tool button for the toolbar
       (let ((button (make-instance 'gtk-toggle-tool-button
