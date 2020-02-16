@@ -13,5 +13,6 @@
                (:file "menu-builder")
                (:file "message-dialog-new")
                (:file "show-about-dialog")
-               (:file "simple-application")))
+               (:file "simple-application")
+               (:file "image-menu-item")))
 

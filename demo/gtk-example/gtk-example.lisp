@@ -8,7 +8,8 @@
            #:example-message-dialog-set-image #:example-message-dialog-set-markup
            #:example-message-dialog-ui #:example-show-about-dialog
            #:example-simple-list-store
-           #:simple-application))
+           #:simple-application
+           #:exmple-image-menu-item))
 
 (in-package :gtk-example)
 

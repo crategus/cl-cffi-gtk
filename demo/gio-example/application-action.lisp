@@ -42,7 +42,7 @@
             (lambda (action parameter)
               (declare (ignore parameter))
               (format t "Action ~A is activated.~%" (g-action-name action))
-              (let ((state (g-variant-get-boolean (g-action-get-state action))))
+              (let ((state (g-variant-get-boolean (g-action-state action))))
                 (if state
                     (setf (g-simple-action-state action)
                           (g-variant-new-boolean nil))
