@@ -36,7 +36,7 @@ Application support
   gio.action-group.lisp        - GActionGroup                      - GIO 2.62 &
   gio.action-map.lisp          - GActionMap                        - GIO 2.62
   gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.62
-  gio.action.lisp              - GAction                           - GIO 2.36.4
+  gio.action.lisp              - GAction                           - GIO 2.62
   gio.simple-action.lisp       - GSimpleAction                     - GIO 2.62
 
   not implemented              - GRemoteActionGroup

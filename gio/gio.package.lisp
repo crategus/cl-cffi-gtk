@@ -238,23 +238,18 @@
     @begin[GAction]{subsection}
       An action interface.
 
-      @about-symbol{GActionInterface}
       @about-class{g-action}
-
       @about-generic{g-action-enabled}
       @about-generic{g-action-name}
       @about-generic{g-action-parameter-type}
       @about-generic{g-action-state}
       @about-generic{g-action-state-type}
-
-      @about-function{g-action-get-name}
-      @about-function{g-action-get-parameter-type}
-      @about-function{g-action-get-state-type}
+      @about-function{g-action-name-is-valid}
       @about-function{g-action-get-state-hint}
-      @about-function{g-action-get-enabled}
-      @about-function{g-action-get-state}
       @about-function{g-action-change-state}
       @about-function{g-action-activate}
+      @about-function{g-action-parse-detailed-name}
+      @about-function{g-action-print-detailed-name}
     @end{subsection}
     @begin[GSimpleAction]{subsection}
       A simple GAction implementation.

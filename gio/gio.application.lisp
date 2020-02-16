@@ -313,7 +313,7 @@
 
   Regardless of which of these entry points is used to start the application,
   @sym{g-application} passes some platform data from the launching instance to
-  the primary instance, in the form of a @symbol{g-variant} dictionary mapping
+  the primary instance, in the form of a @type{g-variant} dictionary mapping
   strings to variants. To use platform data, override the @code{before_emit} or
   @code{after_emit} virtual functions in your @sym{g-application} subclass. When
   dealing with @code{GApplicationCommandLine} objects, the platform data is
@@ -430,7 +430,7 @@
             (lambda (action parameter)
               (declare (ignore parameter))
               (format t \"Action ~A is activated.~%\" (g-action-name action))
-              (let ((state (g-variant-get-boolean (g-action-get-state action))))
+              (let ((state (g-variant-get-boolean (g-action-state action))))
                 (if state
                     (setf (g-simple-action-state action)
                           (g-variant-new-boolean nil))
@@ -532,7 +532,7 @@
 
       You can override @code{local_command_line()} if you need more powerful
       capabilities than what is provided here, but this should not normally be
-      required.
+      required. Since 2.40.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} object.}
         @entry[options]{The options dictionary of type @symbol{g-variant-dict}.}
@@ -541,8 +541,6 @@
           a positive value for failure. To continue, return -1 to let the
           default option processing continue.}
       @end{table}
-      Since 2.40
-
     @subheading{The \"name-lost\" signal}
       @begin{pre}
  lambda (application)    : Run Last
@@ -553,14 +551,12 @@
       @symbol{g-application-flags}.
 
       The default handler for this signal calls the function
-      @fun{g-application-quit}.
+      @fun{g-application-quit}. Since 2.60.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} object.}
         @entry[options]{The options dictionary of type @symbol{g-variant-dict}.}
         @entry[Returns]{@arg{True} if the signal has been handled.}
       @end{table}
-      Since 2.60
-
     @subheading{The \"open\" signal}
       @begin{pre}
  lambda (application files n-files hint)    : Run Last
@@ -1621,7 +1617,8 @@
 ;;; g_application_get_default ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_application_get_default" g-application-get-default) :void
+(defcfun ("g_application_get_default" g-application-get-default)
+    (g-object g-application)
  #+cl-cffi-gtk-documentation
  "@version{2020-2-2}
   @return{The default application for this process, or @code{nil}.}
@@ -1661,6 +1658,11 @@
 ;;;
 ;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_mark_busy" g-application-mark-busy) :void
+  (application (g-object g-application)))
+
+(export 'g-application-mark-busy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_unmark_busy ()

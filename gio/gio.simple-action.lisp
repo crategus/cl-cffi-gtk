@@ -82,10 +82,10 @@
     "enabled" "gboolean" t t)
    (name
     g-simple-action-name
-    "name" "gchararray" t t)
+    "name" "gchararray" t nil)
    (parameter-type
     g-simple-action-parameter-type
-    "parameter-type" "GVariantType" t t)
+    "parameter-type" "GVariantType" t nil)
    (state
     g-simple-action-state
     "state" "GVariant" t t)
@@ -342,7 +342,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-2-2}
   @argument[simple]{a @class{g-simple-action} object}
-  @argument[state-hint]{a @symbol{g-variant} representing the state hint}
+  @argument[state-hint]{a @type{g-variant} representing the state hint}
   @begin{short}
     Sets the state hint for the action.
   @end{short}
