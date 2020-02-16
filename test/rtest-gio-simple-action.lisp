@@ -76,9 +76,9 @@
 (test g-simple-action-new
   (let ((action (g-simple-action-new "simple" (g-variant-type-new "b"))))
     (is (eq 'g-simple-action (type-of action)))
-    (is (equal "simple" (g-action-get-name action)))
-    (is (eq 'g-variant-type (type-of (g-action-get-parameter-type action))))
-    (is (equal "b" (g-variant-type-peek-string (g-action-get-parameter-type action))))))
+    (is (equal "simple" (g-action-name action)))
+    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
+    (is (equal "b" (g-variant-type-peek-string (g-action-parameter-type action))))))
 
 ;;;   g_simple_action_new_stateful
 
@@ -87,10 +87,10 @@
                                               (g-variant-type-new "b")
                                               (g-variant-new-boolean t))))
     (is (eq 'g-simple-action (type-of action)))
-    (is (equal "simple" (g-action-get-name action)))
-    (is (eq 'g-variant-type (type-of (g-action-get-parameter-type action))))
-    (is (equal "b" (g-variant-type-peek-string (g-action-get-parameter-type action))))
-    (is-true (g-variant-get-boolean (g-action-get-state action)))))
+    (is (equal "simple" (g-action-name action)))
+    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
+    (is (equal "b" (g-variant-type-peek-string (g-action-parameter-type action))))
+    (is-true (g-variant-get-boolean (g-action-state action)))))
 
 ;;; --- Functions from the interface -------------------------------------------
 
@@ -98,18 +98,18 @@
   (let ((action (g-simple-action-new-stateful "simple"
                                               (g-variant-type-new "b")
                                               (g-variant-new-boolean t))))
-    ;; g-action-get-name
-    (is (equal "simple" (g-action-get-name action)))
-    ;; g-action-get-parameter-type
-    (is (eq 'g-variant-type (type-of (g-action-get-parameter-type action))))
-    ;; g-action-get-state-type
-    (is (eq 'g-variant-type (type-of (g-action-get-state-type action))))
+    ;; g-action-name
+    (is (equal "simple" (g-action-name action)))
+    ;; g-action-parameter-type
+    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
+    ;; g-action-state-type
+    (is (eq 'g-variant-type (type-of (g-action-state-type action))))
     ;; We have to initialize the state with a g-variant-array to set a hint
     (is-true (null-pointer-p (g-action-get-state-hint action)))
-    ;; g-action-get-enabled
-    (is-true (g-action-get-enabled action))
-    ;; g-action-get-state
-    (is-true (g-variant-get-boolean (g-action-get-state action)))))
+    ;; g-action-enabled
+    (is-true (g-action-enabled action))
+    ;; g-action-state
+    (is-true (g-variant-get-boolean (g-action-state action)))))
 
 ;;;   g_action_change_state
 ;;;   g_action_activate
@@ -124,7 +124,7 @@
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'activate' occured.~%")
            (format t "~&    action    : ~A~%" action)
-           (format t "~&    name      : ~A~%" (g-action-get-name action))
+           (format t "~&    name      : ~A~%" (g-action-name action))
            (format t "~&    parameter : ~A~%" parameter))))
     (g-signal-connect action "change-state"
        (lambda (action value)
@@ -132,11 +132,11 @@
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'change-state' occured.~%")
            (format t "~&    action : ~A~%" action)
-           (format t "~&    name   : ~A~%" (g-action-get-name action))
+           (format t "~&    name   : ~A~%" (g-action-name action))
            (format t "~&    value  : ~A~%" value))))
     ;; g-action-change-state
     (g-action-change-state action (g-variant-new-boolean nil))
-    (is-false (g-variant-get-boolean (g-action-get-state action)))
+    (is-false (g-variant-get-boolean (g-action-state action)))
     ;; g-action-activate
     (g-action-activate action (g-variant-new-boolean t))))
 
@@ -152,7 +152,7 @@
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'activate'.~%")
            (format t "~&    action    : ~A~%" action)
-           (format t "~&    name      : ~A~%" (g-action-get-name action))
+           (format t "~&    name      : ~A~%" (g-action-name action))
            (format t "~&    parameter : ~A~%" parameter))))
     (g-signal-connect action "change-state"
        (lambda (action value)
@@ -160,14 +160,14 @@
          (when *g-simple-action-verbose*
            (format t "~&GSimpleAction: signal 'change-state'.~%")
            (format t "~&    action : ~A~%" action)
-           (format t "~&    name   : ~A~%" (g-action-get-name action))
+           (format t "~&    name   : ~A~%" (g-action-name action))
            (format t "~&    value  : ~A~%" value))))
 
     (is-true (setf (g-simple-action-enabled action)  t))
     (g-signal-emit action "activate" (g-variant-new-boolean nil))
     ;; TODO: This seems not to work. We can activate the action.
     (is-false (setf (g-simple-action-enabled action) nil))
-    (is-false (g-action-get-enabled action))
+    (is-false (g-action-enabled action))
     (g-signal-emit action "activate" (g-variant-new-boolean nil))))
 
 ;;;   g_simple_action_set_state
@@ -178,9 +178,9 @@
                                               (g-variant-new-boolean t))))
     ;;g-simple-action-state
     (setf (g-simple-action-state action) (g-variant-new-boolean nil))
-    (is-false (g-variant-get-boolean (g-action-get-state action)))
+    (is-false (g-variant-get-boolean (g-action-state action)))
     (setf (g-simple-action-state action) (g-variant-new-boolean t))
-    (is-true (g-variant-get-boolean (g-action-get-state action)))))
+    (is-true (g-variant-get-boolean (g-action-state action)))))
 
 ;;;   Example from the API documentation
 
@@ -197,11 +197,11 @@
 
     ;; Emit the "change-state" signal on action
     (g-action-change-state action (g-variant-new-int32 5))
-    (is (= 5 (g-variant-get-int32 (g-action-get-state action))))
+    (is (= 5 (g-variant-get-int32 (g-action-state action))))
     ;; Emit the "change-state" signal for 10
     (g-action-change-state action (g-variant-new-int32 10))
-    (is (= 10 (g-variant-get-int32 (g-action-get-state action))))
+    (is (= 10 (g-variant-get-int32 (g-action-state action))))
     ;; Emit the "change-state" signal for 20
     (g-action-change-state action (g-variant-new-int32 20))
     ;; The state has not changed.
-    (is (= 10 (g-variant-get-int32 (g-action-get-state action))))))
+    (is (= 10 (g-variant-get-int32 (g-action-state action))))))

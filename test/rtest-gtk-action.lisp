@@ -83,8 +83,7 @@
     (is (equal "action" (gtk-action-name action)))))
 
 ;;;   gtk-action-is-sensitive
-;;;   gtk-action-get-sensitive
-;;;   gtk-action-set-sensitive
+;;;   gtk-action-sensitive
 
 (test gtk-action-sensitive
   (let ((action (gtk-action-new "action")))
@@ -95,8 +94,7 @@
     (is-false (gtk-action-is-sensitive action))))
 
 ;;;   gtk-action-is-visible
-;;;   gtk-action-get-visible
-;;;   gtk-action-set-visible
+;;;   gtk-action-visible
 
 (test gtk-action-visible
   (let ((action (gtk-action-new "action")))
