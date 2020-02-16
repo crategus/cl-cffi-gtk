@@ -856,7 +856,7 @@
   @see-class{gtk-action}
   @see-function{gtk-action-sensitive}
   @see-class{g-action}
-  @see-function{g-action-get-enabled}"
+  @see-function{g-action-enabled}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-is-sensitive)
@@ -968,14 +968,14 @@
 (defcfun ("gtk_action_create_tool_item" gtk-action-create-tool-item)
     (g-object gtk-tool-button)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2020-2-8}
   @argument[action]{a @class{gtk-action} object}
-  @return{A toolbar item connected to the action.}
+  @return{A @class{gtk-tool-button} toolbar item connected to the action.}
   @short{Creates a toolbar item widget that proxies for the given action.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-tool-item} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use a
-    @class{gtk-tool-ttem} and associate it with a @class{g-action} using the
+    @class{gtk-tool-item} and associate it with a @class{g-action} using the
     function @fun{gtk-actionable-action-name} instead.
   @end{dictionary}
   @see-class{gtk-action}
@@ -990,13 +990,13 @@
 
 (defcfun ("gtk_action_create_menu" gtk-action-create-menu) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2020-2-8}
   @argument[action]{a @class{gtk-action} object}
-  @return{The menu item provided by the action, or @code{NULL}.}
+  @return{The menu item provided by the action, or @code{nil}.}
   @begin{short}
-    If action provides a @class{gtk-menu} widget as a submenu for the menu item
-    or the toolbar item it creates, this function returns an instance of that
-    menu.
+    If the action provides a @class{gtk-menu} widget as a submenu for the menu
+    item or the toolbar item it creates, this function returns an instance of
+    that menu.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-menu} has been deprecated since version
@@ -1017,10 +1017,10 @@
 (defcfun ("gtk_action_get_proxies" gtk-action-get-proxies)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2020-2-8}
   @argument[action]{a @class{gtk-action} object}
   @return{A list of proxy widgets.}
-  @short{Returns the proxy widgets for an action.}
+  @short{Returns the proxy widgets for the action.}
   See also the function @fun{gtk-activatable-get-related-action}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-get-proxies} has been deprecated since version
@@ -1038,10 +1038,11 @@
 
 (defcfun ("gtk_action_connect_accelerator" gtk-action-connect-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2020-2-8}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
-    Installs the accelerator for action if action has an accel path and group.
+    Installs the accelerator for the action if the action has an accel path and
+    group.
   @end{short}
   See the functions @fun{gtk-action-set-accel-path} and
   @fun{gtk-action-set-accel-group}.

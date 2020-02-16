@@ -2,7 +2,7 @@
 ;;; gtk.theming-engine.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -95,10 +95,11 @@
   @end{short}
   It used to allow overriding GTK+'s default implementation of rendering
   functions by allowing engines to be loaded as modules.
-
-  @sym{gtk-theming-engine} has been deprecated in GTK 3.14 and will be ignored
-  for rendering. The advancements in CSS theming are good enough to allow
-  themers to achieve their goals without the need to modify source code.")
+  @begin[Warning]{dictionary}
+    @sym{gtk-theming-engine} has been deprecated in GTK 3.14 and will be ignored
+    for rendering. The advancements in CSS theming are good enough to allow
+    themers to achieve their goals without the need to modify source code.
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

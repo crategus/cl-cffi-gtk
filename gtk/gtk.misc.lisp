@@ -2,12 +2,12 @@
 ;;; gtk.misc.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,7 +82,7 @@
   positioned within its allocated area. Note that if the widget is added to a
   container in such a way that it expands automatically to fill its allocated
   area, the alignment settings will not alter the widgets position.
-  @begin[Note]{dictionary}
+  @begin[Warning]{dictionary}
     Note that the desired effect can in most cases be achieved by using the
     @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign} and
     @slot[gtk-widget]{margin} properties on the child widget, so @sym{gtk-misc}
@@ -175,13 +175,15 @@
 
 (defun gtk-misc-set-alignment (misc xalign yalign)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2020-2-16}
   @argument[misc]{a @class{gtk-misc} widget}
-  @argument[xalign]{the horizontal alignment, from 0 (left) to 1 (right)}
-  @argument[yalign]{the vertical alignment, from 0 (top) to 1 (bottom)}
+  @argument[xalign]{the horizontal alignment of type @code{:float}, from 0
+    (left) to 1 (right)}
+  @argument[yalign]{the vertical alignment of type @code{:float}, from 0
+    (top) to 1 (bottom)}
   @short{Sets the alignment of the widget.}
   @begin[Warning]{dictionary}
-    The @sym{gtk-misc-set-alignment} function has been deprecated since version
+    The function @sym{gtk-misc-set-alignment} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}
@@ -199,15 +201,15 @@
 
 (defun gtk-misc-set-padding (misc xpad ypad)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2020-2-16}
   @argument[misc]{a @class{gtk-misc} widget}
-  @argument[xpad]{the amount of space to add on the left and right of the
-    widget, in pixels}
-  @argument[ypad]{the amount of space to add on the top and bottom of the
-    widget, in pixels}
+  @argument[xpad]{the amount of space of type @code{:int} to add on the left
+    and right of the widget, in pixels}
+  @argument[ypad]{the amount of space of type @code{:int} to add on the top
+    and bottom of the widget, in pixels}
   @short{Sets the amount of space to add around the widget.}
   @begin[Warning]{dictionary}
-    The @sym{gtk-misc-set-padding} function has been deprecated since version
+    The function @sym{gtk-misc-set-padding} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}
@@ -227,12 +229,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-26}
   @argument[misc]{a @class{gtk-misc} widget}
-  @return{@arg{xalign} -- x alignment of misc, or @code{nil} @br{}
-          @arg{yalign} -- y alignment of misc, or @code{nil}}
+  @return{@arg{xalign} -- x alignment of type @code{:float} of misc, or
+                          @code{nil} @br{}
+          @arg{yalign} -- y alignment of type @code{:float} of misc, or
+                          @code{nil}}
   @short{Gets the x and y alignment of the widget within its allocation.}
-  See the @fun{gtk-misc-set-alignment} function.
+  See the function @fun{gtk-misc-set-alignment}.
   @begin[Warning]{dictionary}
-    The @sym{gtk-misc-get-alignment} function has been deprecated since version
+    The function @sym{gtk-misc-get-alignment} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}
@@ -251,14 +255,16 @@
 
 (defun gtk-misc-get-padding (misc)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2020-2-16}
   @argument[misc]{a @class{gtk-misc} widget}
-  @return{@arg{xpad} -- padding in the x direction, or @code{nil} @br{}
-          @arg{ypad} -- padding in the y direction, or @code{nil}}
+  @return{@arg{xpad} -- padding of type @code{:int} in the x direction, or
+                        @code{nil} @br{}
+          @arg{ypad} -- padding of type @code{:int} in the y direction, or
+                        @code{nil}}
   @short{Gets the padding in the x and y directions of the widget.}
-  See the @fun{gtk-misc-set-padding} function.
+  See the function @fun{gtk-misc-set-padding}.
   @begin[Warning]{dictionary}
-    The @sym{gtk-misc-get-padding} function has been deprecated since version
+    The function @sym{gtk-misc-get-padding} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
     alignment and margin properties.
   @end{dictionary}

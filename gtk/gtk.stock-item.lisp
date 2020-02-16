@@ -2,7 +2,7 @@
 ;;; gtk.stock-item.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -267,8 +267,8 @@
     @end{pre}
   @end{dictionary}
   @begin[Warning]{dictionary}
-    @sym{gtk-stock-list-ids} has been deprecated since version 3.10 and should
-    not be used in newly-written code.
+    The function @sym{gtk-stock-list-ids} has been deprecated since version
+    3.10 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-icon-factory}
   @see-function{gtk-stock-add}")

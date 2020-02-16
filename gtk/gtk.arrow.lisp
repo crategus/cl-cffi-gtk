@@ -2,7 +2,7 @@
 ;;; gtk.arrow.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -96,17 +96,18 @@
   from @class{gtk-misc}, it can be padded and/or aligned, to fill exactly the
   space the programmer desires.
 
-  Arrows are created with a call to the @fun{gtk-arrow-new} function. The
+  Arrows are created with a call to the function @fun{gtk-arrow-new}. The
   direction or style of an arrow can be changed after creation by using the
-  @fun{gtk-arrow-set} function.
-
-  @sym{gtk-arrow} has been deprecated; you can simply use a @class{gtk-image}
-  with a suitable icon name, such as \"pan-down-symbolic\". When replacing
-  @class{gtk-arrow} by an image, pay attention to the fact that
-  @class{gtk-arrow} is doing automatic flipping between @code{:left} and
-  @code{:right}, depending on the text direction. To get the same effect with an
-  image, use the icon names \"pan-start-symbolic\" and \"pan-end-symbolic\",
-  which react to the text direction.
+  function @fun{gtk-arrow-set}.
+  @begin[Warning]{dictionary}
+    @sym{gtk-arrow} has been deprecated; you can simply use a @class{gtk-image}
+    with a suitable icon name, such as \"pan-down-symbolic\". When replacing
+    @class{gtk-arrow} by an image, pay attention to the fact that
+    @class{gtk-arrow} is doing automatic flipping between @code{:left} and
+    @code{:right}, depending on the text direction. To get the same effect with
+    an image, use the icon names \"pan-start-symbolic\" and
+    \"pan-end-symbolic\", which react to the text direction.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[arrow-scaling]{entry}
@@ -185,6 +186,7 @@
     suitable icon.
   @end{dictionary}
   @see-class{gtk-arrow}
+  @see-class{gtk-image}
   @see-symbol{gtk-arrow-type}
   @see-symbol{gtk-shadow-type}"
   (make-instance 'gtk-arrow
@@ -212,6 +214,7 @@
     suitable icon.
   @end{dictionary}
   @see-class{gtk-arrow}
+  @see-class{gtk-image}
   @see-symbol{gtk-arrow-type}
   @see-symbol{gtk-shadow-type}"
   (setf (gtk-arrow-arrow-type arrow) arrow-type

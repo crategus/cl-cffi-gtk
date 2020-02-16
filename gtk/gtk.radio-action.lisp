@@ -89,22 +89,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-action 'type)
- "@version{2013-11-28}
+ "@version{2020-2-8}
   @begin{short}
-    A @sym{gtk-radio-action} is similar to @class{gtk-radio-menu-item}. A number
-    of radio actions can be linked together so that only one may be active at
-    any one time.
+    A @sym{gtk-radio-action} is similar to @class{gtk-radio-menu-item}.
   @end{short}
+  A number of radio actions can be linked together so that only one may be
+  active at any one time.
+  @begin[Warning]{dictionary}
+    @sym{gtk-radio-action} has been deprecated since version 3.10 and should
+    not be used in newly-written code.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (action current)   : No Recursion
+ lambda (action current)    : No Recursion
       @end{pre}
       The \"changed\" signal is emitted on every member of a radio group when
       the active member is changed. The signal gets emitted after the
       \"activate\" signals for the previous and current active members.
       @begin[code]{table}
-        @entry[action]{The action on which the signal is emitted.}
+        @entry[action]{The @class{gtk-radio-action} object on which the signal
+          is emitted.}
         @entry[current]{The member of actions group which has just been
           activated.}
       @end{table}
@@ -112,8 +117,7 @@
   @see-slot{gtk-radio-action-current-value}
   @see-slot{gtk-radio-action-group}
   @see-slot{gtk-radio-action-value}
-  @see-class{gtk-radio-menu-item}
-  @see-function{gtk-radio-action-current-value}")
+  @see-class{gtk-radio-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -150,6 +154,10 @@
   The @sym{(setf gtk-radio-action-current-value)} slot access function
   sets the currently active group member to the member with value property
   @arg{current-value}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-current-value} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}")
 
 ;;; --- gtk-radio-action-group -------------------------------------------------
@@ -163,12 +171,40 @@
 (setf (gethash 'gtk-radio-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-group 'function)
- "@version{2013-11-28}
-  Accessor of the @slot[gtk-radio-action]{group} slot of the
-  @class{gtk-radio-action} class.
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-get-group}
-  @see-function{gtk-radio-action-set-group}")
+ "@version{2020-2-8}
+  @syntax[]{(gtk-radio-action-group object) => group}
+  @syntax[]{(setf (gtk-radio-action-group object) group)}
+  @argument[object]{a @class{gtk-radio-action} object}
+  @argument[group]{a list representing a radio group}
+  @begin{short}
+    Accessor of the @slot[gtk-radio-action]{group} slot of the
+    @class{gtk-radio-action} class.
+  @end{short}
+
+  The slot access function @sym{gtk-radio-action-group} returns the list
+  representing the radio group for this object. The slot access function
+  @sym{(setf gtk-radio-action-group)} sets the radio group for the radio action
+  object.
+
+  Note that the returned list is only valid until the next change to the group.
+  A common way to set up a group of radio group is the following:
+  @begin{pre}
+   GSList *group = NULL;
+   GtkRadioAction *action;
+
+   while (/* more actions to add */)
+     {
+        action = gtk_radio_action_new (...);
+
+        gtk_radio_action_set_group (action, group);
+        group = gtk_radio_action_get_group (action);
+     @}
+  @end{pre}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-group} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-radio-action}")
 
 ;;; --- gtk-radio-action-value -------------------------------------------------
 
@@ -186,9 +222,15 @@
 (setf (gethash 'gtk-radio-action-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-value 'function)
- "@version{2013-11-28}
-  Accessor of the @slot[gtk-radio-action]{value} slot of the
-  @class{gtk-radio-action} class.
+ "@version{2020-2-8}
+  @begin{short}
+    Accessor of the @slot[gtk-radio-action]{value} slot of the
+    @class{gtk-radio-action} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-action-value} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-radio-action}")
 
 ;;; ----------------------------------------------------------------------------
@@ -205,7 +247,7 @@
   @argument[tooltip]{a tooltip for this action, or @code{nil}}
   @argument[stock-id]{the stock icon to display in widgets representing this
     action, or @code{nil}}
-  @argument[value]{the value which the function
+  @argument[value]{the value of type @code{:int} which the function
     @fun{gtk-radio-action-current-value} should return if this action is
     selected}
   @return{A new @class{gtk-radio-action} object}
@@ -220,7 +262,7 @@
   @end{dictionary}
   @see-class{gtk-radio-action}
   @see-class{gtk-action-group}
-  @see-function{gtk-radio-action-get-current-value}
+  @see-function{gtk-radio-action-current-value}
   @see-function{gtk-action-group-add-action}"
   (name :string)
   (label :string)
@@ -231,83 +273,20 @@
 (export 'gtk-radio-action-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_radio_action_get_group ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_radio_action_get_group" gtk-radio-action-get-group)
-    (g-slist (g-object gtk-radio-action) :free-from-foreign nil)
- #+cl-cffi-gtk-documentation
- "@version{2020-1-22}
-  @argument[action]{the action object}
-  @return{The list representing the radio group for this object.}
-  @begin{short}
-    Returns the list representing the radio group for this object.
-  @end{short}
-  Note that the returned list is only valid until the next change to the group.
-
-  A common way to set up a group of radio group is the following:
-  @begin{pre}
-   GSList *group = NULL;
-   GtkRadioAction *action;
-
-   while (/* more actions to add */)
-     {
-        action = gtk_radio_action_new (...);
-
-        gtk_radio_action_set_group (action, group);
-        group = gtk_radio_action_get_group (action);
-     @}
-  @end{pre}
-  @begin[Warning]{dictionary}
-    The function @sym{gtk-radio-action-get-group} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-set-group}"
-  (action (g-object gtk-radio-action)))
-
-(export 'gtk-radio-action-get-group)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_radio_action_set_group ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-radio-action-set-group))
-
-(defun gtk-radio-action-set-group (action group)
- #+cl-cffi-gtk-documentation
- "@version{2020-1-22}
-  @argument[action]{the action object}
-  @argument[group]{a list representing a radio group}
-  @begin{short}
-    Sets the radio group for the radio action object.
-  @end{short}
-  @begin[Warning]{dictionary}
-    The function @sym{gtk-radio-action-set-group} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-get-group}"
-  (setf (gtk-radio-action-group action) group))
-
-(export 'gtk-radio-action-set-group)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_join_group ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_action_join_group" gtk-radio-action-join-group) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-1-22}
-  @argument[action]{the action object}
+  @argument[action]{a @class{gtk-radio-action} object}
   @argument[group-source]{a radio action object whos group we are joining, or
     @code{nil} to remove the radio action from its group}
   @begin{short}
     Joins a radio action object to the group of another radio action object.
   @end{short}
-
-  Use this in language bindings instead of the the functions
-  @fun{gtk-radio-action-get-group} and @fun{gtk-radio-action-set-group}.
+  Use this in language bindings instead of the the slot access function
+  @fun{gtk-radio-action-group}.
 
   A common way to set up a group of radio actions is the following:
   @begin{pre}
@@ -326,9 +305,7 @@
     The function @sym{gtk-radio-action-join-group} has been deprecated since
     version 3.10 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-radio-action}
-  @see-function{gtk-radio-action-get-group}
-  @see-function{gtk-radio-action-set-group}"
+  @see-class{gtk-radio-action}"
   (action (g-object gtk-radio-action))
   (group-source (g-object gtk-radio-action)))
 

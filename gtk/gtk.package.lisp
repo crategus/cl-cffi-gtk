@@ -3489,11 +3489,11 @@ setup_tree (void)
       @about-function{gtk-radio-tool-button-set-group}
     @end{subsection}
     @begin[GtkPopover]{subsection}
+      Context dependent bubbles.
 
       @about-symbol{gtk-popover-constraint}
 
       @about-class{gtk-popover}
-
       @about-generic{gtk-popover-constrain-to}
       @about-generic{gtk-popover-modal}
       @about-generic{gtk-popover-pointing-to}
@@ -6310,7 +6310,7 @@ setup_tree (void)
       @about-function{gtk-action-group-translate-string}
     @end{subsection}
     @begin[GtkAction]{subsection}
-      An action which can be triggered by a menu or toolbar item.
+      A deprecated action which can be triggered by a menu or toolbar item.
 
       @about-class{gtk-action}
       @about-generic{gtk-action-action-group}
@@ -6348,7 +6348,7 @@ setup_tree (void)
       @about-function{gtk-action-set-accel-group}
     @end{subsection}
     @begin[GtkToggleAction]{subsection}
-      An action which can be toggled between two states.
+      A deprecated action which can be toggled between two states.
 
       @about-class{gtk-toggle-action}
       @about-generic{gtk-toggle-action-active}
@@ -6357,19 +6357,17 @@ setup_tree (void)
       @about-function{gtk-toggle-action-toggled}
     @end{subsection}
     @begin[GtkRadioAction]{subsection}
-      An action of which only one in a group can be active.
+      A deprecated action of which only one in a group can be active.
 
       @about-class{gtk-radio-action}
       @about-generic{gtk-radio-action-current-value}
       @about-generic{gtk-radio-action-group}
       @about-generic{gtk-radio-action-value}
       @about-function{gtk-radio-action-new}
-      @about-function{gtk-radio-action-get-group}
-      @about-function{gtk-radio-action-set-group}
       @about-function{gtk-radio-action-join-group}
     @end{subsection}
     @begin[GtkRecentAction]{subsection}
-      An action of which represents a list of recently used files.
+      A deprecated action of which represents a list of recently used files.
 
       @about-class{gtk-recent-action}
       @about-generic{gtk-recent-action-show-numbers}
@@ -6377,16 +6375,13 @@ setup_tree (void)
       @about-function{gtk-recent-action-new-for-manager}
     @end{subsection}
     @begin[GtkActivatable]{subsection}
-      An interface for activatable widgets.
+      An deprecated interface for activatable widgets.
 
       @about-class{gtk-activatable}
-      @about-class{gtk-activatable-iface}
+      @about-generic{gtk-activatable-related-action}
+      @about-generic{gtk-activatable-use-action-appearance}
       @about-function{gtk-activatable-do-set-related-action}
-      @about-function{gtk-activatable-get-related-action}
-      @about-function{gtk-activatable-get-use-action-appearance}
       @about-function{gtk-activatable-sync-action-properties}
-      @about-function{gtk-activatable-set-related-action}
-      @about-function{gtk-activatable-set-use-action-appearance}
     @end{subsection}
     @begin[GtkImageMenuItem]{subsection}
       A deprecated widget for a menu item with an icon.
@@ -6403,7 +6398,7 @@ setup_tree (void)
       @about-function{gtk-image-menu-item-set-accel-group}
     @end{subsection}
     @begin[GtkMisc]{subsection}
-      Base class for widgets with alignments and padding.
+      A deprecated base class for widgets with alignments and padding.
 
       @about-class{gtk-misc}
       @about-function{gtk-misc-set-alignment}
@@ -6500,7 +6495,7 @@ setup_tree (void)
 
     @begin[Deprecated since GTK+ 3.14]{subsection}@end{subsection}
     @begin[GtkNumerableIcon]{subsection}
-      A @class{g-icon} that allows numbered emblems.
+      A depracted @class{g-icon} that allows numbered emblems.
 
       @about-class{gtk-numerable-icon}
       @about-generic{gtk-numerable-icon-background-icon}

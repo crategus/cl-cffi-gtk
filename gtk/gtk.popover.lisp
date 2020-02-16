@@ -2,11 +2,11 @@
 ;;; gtk.popover.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -114,8 +114,8 @@
   :window)
   @end{pre}
   @begin[code]{table}
-    @entry[:none]{Don't constrain the popover position beyond what is imposed by
-      the implementation.}
+    @entry[:none]{Don't constrain the popover position beyond what is imposed
+      by the implementation.}
     @entry[:window]{Constrain the popover to the boundaries of the window that
       it is attached to.}
   @end{table}
@@ -232,7 +232,13 @@
       @begin[code]{table}
         @entry[popover]{The @sym{gtk-popover} widget.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-slot{gtk-popover-constrain-to}
+  @see-slot{gtk-popover-modal}
+  @see-slot{gtk-popover-pointing-to}
+  @see-slot{gtk-popover-position}
+  @see-slot{gtk-popover-relative-to}
+  @see-slot{gtk-popover-transitions-enabled}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -254,7 +260,7 @@
       (documentation 'gtk-popover-constrain-to 'function)
  "@version{2019-5-11}
   @syntax[]{(gtk-popover-constrain-to object) => constraint}
-  @snytax[]{(setf (gtk-popover-constrain-to object) constraint)}
+  @syntax[]{(setf (gtk-popover-constrain-to object) constraint)}
   @argument[object]{a @class{gtk-popover} widget}
   @argument[constraint]{a constraint of type @symbol{gtk-popover-constraint}}
   @begin{short}
@@ -289,7 +295,7 @@
       (documentation 'gtk-popover-modal 'function)
  "@version{2019-5-11}
   @syntax[]{(gtk-popover-modal object) => modal}
-  @snytax[]{(setf (gtk-popover-modal object) modal)}
+  @syntax[]{(setf (gtk-popover-modal object) modal)}
   @argument[object]{a @class{gtk-popover} widget}
   @argument[modal]{a boolean, that is @em{true} to make popover claim all input
     within the toplevel}
@@ -351,7 +357,7 @@
       (documentation 'gtk-popover-position 'function)
  "@version{2019-5-11}
   @syntax[]{(gtk-popover-pointing-to object) => rect}
-  @snytax[]{(setf (gtk-popover-pointing-to object) rect)}
+  @syntax[]{(setf (gtk-popover-pointing-to object) rect)}
   @argument[object]{a @class{gtk-popover} widget}
   @argument[position]{preferred popover position of type
     @symbol{gtk-position-type}}
@@ -384,9 +390,9 @@
 (setf (gethash 'gtk-popover-relative-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-relative-to 'function)
- "@version{2019-5-11}
+ "@version{2020-2-11}
   @syntax[]{(gtk-popover-relative-to object) => relative-to}
-  @snytax[]{(setf (gtk-popover-relative-to object) relative-to)}
+  @syntax[]{(setf (gtk-popover-relative-to object) relative-to)}
   @argument[object]{a @class{gtk-popover} widget}
   @argument[relative-to]{a @class{gtk-widget}}
   @begin{short}
@@ -395,16 +401,16 @@
   @end{short}
 
   The @sym{gtk-popover-relative-to} slot access function
-  returns the widget popover is currently attached to.
-
-  The @sym{(setf gtk-popover-relative-to)} slot access function
-  sets a new widget to be attached to the popover. If the popover is visible,
-  the position will be updated.
-
-  Note: the ownership of popovers is always given to their @arg{relative-to}
-  widget, so if @arg{relative-to} is set to @code{nil} on an attached popover,
-  it will be detached from its previous widget, and consequently destroyed
-  unless extra references are kept.
+  returns the widget popover is currently attached to. The
+  @sym{(setf gtk-popover-relative-to)} slot access function sets a new widget
+  to be attached to the popover. If the popover is visible, the position will
+  be updated.
+  @begin[Note]{dictionary}
+    The ownership of popovers is always given to their @arg{relative-to}
+    widget, so if @arg{relative-to} is set to @code{nil} on an attached popover,
+    it will be detached from its previous widget, and consequently destroyed
+    unless extra references are kept.
+  @end{dictionary}
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-transitions-enabled ----------------------------------------
@@ -461,6 +467,7 @@
 (declaim (inline gtk-popover-new))
 
 (defun gtk-popover-new (relative-to)
+ #+cl-cffi-gtk-documentation
  "@version{2020-1-24}
   @argument[relative-to]{@class{gtk-widget} the popover is related to}
   @return{A new @class{gtk-popover} widget.}
@@ -479,6 +486,7 @@
 
 (defcfun ("gtk_popover_new_from_model" gtk-popover-new-from-model)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
  "@version{2020-1-24}
   @argument[relative-to]{@class{gtk-widget} the popover is related to}
   @argument[model]{a @class{g-menu-model} object}
@@ -507,47 +515,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_bind_model ()
-;;;
-;;; void
-;;; gtk_popover_bind_model (GtkPopover *popover,
-;;;                         GMenuModel *model,
-;;;                         const gchar *action_namespace);
-;;;
-;;; Establishes a binding between a GtkPopover and a GMenuModel.
-;;;
-;;; The contents of popover are removed and then refilled with menu items
-;;; according to model . When model changes, popover is updated. Calling this
-;;; function twice on popover with different model will cause the first binding
-;;; to be replaced with a binding to the new model. If model is NULL then any
-;;; previous binding is undone and all children are removed.
-;;;
-;;; If action_namespace is non-NULL then the effect is as if all actions
-;;; mentioned in the model have their names prefixed with the namespace, plus a
-;;; dot. For example, if the action “quit” is mentioned and action_namespace is
-;;; “app” then the effective action name is “app.quit”.
-;;;
-;;; This function uses GtkActionable to define the action name and target values
-;;; on the created menu items. If you want to use an action group other than
-;;; “app” and “win”, or if you want to use a GtkMenuShell outside of a
-;;; GtkApplicationWindow, then you will need to attach your own action group to
-;;; the widget hierarchy using gtk_widget_insert_action_group(). As an example,
-;;; if you created a group with a “quit” action and inserted it with the name
-;;; “mygroup” then you would use the action name “mygroup.quit” in your
-;;; GMenuModel.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; model :
-;;;     the GMenuModel to bind to or NULL to remove binding.
-;;;
-;;; action_namespace :
-;;;     the namespace for actions in model .
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_popover_bind_model" gtk-popover-bind-model) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-11}
+  @argument[popover]{a @class{gtk-popover}}
+  @argument[model]{a @class{g-menu-model} object to bind to or @code{nil} to
+    remove the binding}
+  @argument[action-namespace]{a @code{:string} with the namespace for actions
+    in @arg{model}}
+  @begin{short}
+    Establishes a binding between a @class{gtk-popover} and a
+    @class{g-menu-model}.
+  @end{short}
+
+  The contents of the popover are removed and then refilled with menu items
+  according to the menu model. When the menu model changes, the popover is
+  updated. Calling this function twice on the popover with different menu model
+  will cause the first binding to be replaced with a binding to the new model.
+  If the model is @code{nil} then any previous binding is undone and all
+  children are removed.
+
+  If @arg{action-namespace} is non-@code{nil} then the effect is as if all
+  actions mentioned in the model have their names prefixed with the namespace,
+  plus a dot. For example, if the action \"quit\" is mentioned and
+  @arg{action-namespace} is \"app\" then the effective action name is
+  \"app.quit\".
+
+  This function uses @class{gtk-actionable} to define the action name and
+  target values on the created menu items. If you want to use an action group
+  other than \"app\" and \"win\", or if you want to use a @class{gtk-menu-shell}
+  outside of a @class{gtk-application-window}, then you will need to attach your
+  own action group to the widget hierarchy using the function
+  @fun{gtk-widget-insert-action-group}. As an example, if you created a group
+  with a \"quit\" action and inserted it with the name \"mygroup\" then you
+  would use the action name \"mygroup.quit\" in your @class{g-menu-model}.
+
+  Since 3.12
+  @see-class{gtk-popover}
+  @see-class{g-menu-model}
+  @see-class{gtk-actionable}"
   (popover (g-object gtk-popover))
   (model (g-object g-menu-model))
   (action-namespace :string))
@@ -556,92 +564,100 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_popup ()
-;;;
-;;; void gtk_popover_popup (GtkPopover *popover);
-;;;
-;;; Pops popover up. This is different than a gtk_widget_show() call in that it
-;;; shows the popover with a transition. If you want to show the popover without
-;;; a transition, use gtk_widget_show().
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-22
 (defcfun ("gtk_popover_popup" gtk-popover-popup) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-11}
+  @argument[popover]{a @class{gtk-popover}}
+  @begin{short}
+    Pops the popover up.
+  @end{short}
+  This is different than a @sym{gtk-widget-show} call in that it shows the
+  popover with a transition. If you want to show the popover without a
+  transition, use the function @fun{gtk-widget-show}.
+
+  Since 3.22
+  @see-class{gtk-popover}
+  @see-function{gtk-widget-show}"
   (popover (g-object gtk-popover)))
 
+#+gtk-3-22
 (export 'gtk-popover-popup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_popdown ()
-;;;
-;;; void gtk_popover_popdown (GtkPopover *popover);
-;;;
-;;; Pops popover down.This is different than a gtk_widget_hide() call in that it
-;;; shows the popover with a transition. If you want to hide the popover without
-;;; a transition, use gtk_widget_hide().
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-22
 (defcfun ("gtk_popover_popdown" gtk-popover-popdown) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-11}
+  @argument[popover]{a @class{gtk-popover}}
+  @begin{short}
+    Pops the popover down.
+  @end{short}
+  This is different than a @fun{gtk-widget-hide} call in that it shows the
+  popover with a transition. If you want to hide the popover without a
+  transition, use the function @fun{gtk-widget-hide}.
+
+  Since 3.22
+  @see-class{gtk-popover}
+  @see-function{gtk-widget-hide}"
   (popover (g-object gtk-popover)))
 
+#+gtk-3-22
 (export 'gtk-popover-popdown)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_set_default_widget ()
-;;;
-;;; void
-;;; gtk_popover_set_default_widget (GtkPopover *popover,
-;;;                                 GtkWidget *widget);
-;;;
-;;; Sets the widget that should be set as default widget while the popover is
-;;; shown (see gtk_window_set_default()). GtkPopover remembers the previous
-;;; default widget and reestablishes it when the popover is dismissed.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; widget :
-;;;     the new default widget, or NULL.
-;;;
-;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-18
 (defcfun ("gtk_popover_set_default_widget" gtk-popover-set-default-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-11}
+  @argument[popover]{a @class{gtk-popover}}
+  @argument[widget]{the new default widget, or @code{nil}}
+  @begin{short}
+    Sets the widget that should be set as default widget while the popover is
+    shown (see the function @fun{gtk-window-set-default}).
+  @end{short}
+  @class{gtk-popover} remembers the previous default widget and reestablishes
+  it when the popover is dismissed.
+
+  Since 3.18
+  @see-class{gtk-popover}
+  @see-function{gtk-window-set-default}"
   (popover (g-object gtk-popover))
   (widget (g-object gtk-widget)))
 
+#+gtk-3-18
 (export 'gtk-popover-set-default-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_popover_get_default_widget ()
-;;;
-;;; GtkWidget *
-;;; gtk_popover_get_default_widget (GtkPopover *popover);
-;;;
-;;; Gets the widget that should be set as the default while the popover is
-;;; shown.
-;;;
-;;; popover :
-;;;     a GtkPopover
-;;;
-;;; Returns :
-;;;     the default widget, or NULL if there is none.
-;;;
-;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-18
 (defcfun ("gtk_popover_get_default_widget" gtk-popover-get-default-widget)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-11}
+  @argument[popover]{a @class{gtk-popover}}
+  @return{The default widget, or @code{nil} if there is none.}
+  @begin{short}
+    Gets the widget that should be set as the default while the popover is
+    shown.
+  @end{short}
+
+  Since 3.18
+  @see-class{gtk-popover}
+  @see-function{gtk-window-set-default}"
   (popover (g-object gtk-popover)))
 
+#+gtk-3-18
 (export 'gtk-popover-get-default-widget)
 
 ;;; --- End of file gtk.popover.lisp -------------------------------------------

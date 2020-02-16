@@ -2,7 +2,7 @@
 ;;; gtk.numerable-icon.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -110,8 +110,7 @@
   @begin[Example]{dictionary}
     Typical numerable icons:
 
-    @image[numerableicon]{}
-    @image[numerableicon2]{}
+    @image[numerableicon]{} @image[numerableicon2]{}
   @end{dictionary}
   @begin[Warning]{dictionary}
     @sym{gtk-numerable-icon} has been deprecated since version 3.14 and should
@@ -154,9 +153,8 @@
 
   The @sym{gtk-numerable-icon-background-icon} slot access function
   returns the @class{g-icon} that was set as the base background image, or
-  @code{nil} if there's none.
-
-  The @sym{(setf gtk-numerable-icon-background-icon)} slot access function
+  @code{nil} if there's none. The
+  @sym{(setf gtk-numerable-icon-background-icon)} slot access function
   updates the icon to use @arg{icon} as the base background image.
 
   If @arg{icon} is @code{nil}, the numerable icon will go back using style
@@ -167,8 +165,8 @@
   functions @sym{(setf gtk-numerable-icon-background-icon)} and
   @sym{(setf gtk-numerable-icon-background-icon-name)} has always priority.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-background-icon} has been deprecated since version
-    3.14 and should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-background-icon} has been deprecated
+    since version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-background-icon-name}")
@@ -192,7 +190,7 @@
   @syntax[]{(gtk-numerable-icon-background-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-numerable-icon-background-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-numerable-icon} object}
-  @argument[icon-name]{an icon name, or @code{nil}}
+  @argument[icon-name]{a @code{:string} with an icon name, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-numerable-icon]{background-icon-name} slot of the
     @class{gtk-numerable-icon} class.
@@ -200,11 +198,9 @@
 
   The @sym{gtk-numerable-icon-background-icon-name} slot access function
   returns the icon name used as the base background image, or @code{nil}
-  if there is none.
-
-  The @sym{(setf gtk-numerable-icon-background-icon-name)} slot access function
-  updates the icon to use the icon named @arg{icon-name} from the current
-  icon theme as the base background image.
+  if there is none. The @sym{(setf gtk-numerable-icon-background-icon-name)}
+  slot access function updates the icon to use the icon named @arg{icon-name}
+  from the current icon theme as the base background image.
 
   If @arg{icon-name} is @code{nil}, @arg{numerable-icon} will go back using
   style information or default theming for its background image.
@@ -214,8 +210,8 @@
   between the functions @sym{(setf gtk-numerable-icon-background-icon-name)}
   and @sym{(setf gtk-numerable-icon-background-icon)} has always priority.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-backgroun-icon-name} has been deprecated since
-    version 3.14 and should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-backgroun-icon-name} has been
+    deprecated since version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-background-icon}")
@@ -245,7 +241,6 @@
 
   The @sym{gtk-numerable-icon-count} slot access function
   returns the value currently displayed by the numerable icon.
-
   The @sym{(setf gtk-numerable-icon-count)} slot access function
   sets the currently displayed value of the numerable icon to @arg{count}.
 
@@ -253,11 +248,11 @@
   and 99. Setting a count of zero removes the emblem. If this method is called,
   and a label was already set on the icon, it will automatically be reset to
   @code{nil} before rendering the number, i. e. the last method called between
-  the functions @sym{(setf gtk-numerable-icon-count)} and
-  @sym{(gtk-numerable-icon-label)} has always priority.
+  the functions @sym{gtk-numerable-icon-count} and
+  @sym{gtk-numerable-icon-label} has always priority.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-count} has been deprecated since version 3.14 and
-    should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-count} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-label}")
@@ -286,7 +281,6 @@
 
   The @sym{gtk-numerable-icon-label} slot access function
   returns the currently displayed label of the icon, or @code{nil}.
-
   The @sym{(setf gtk-numerable-icon-label)} slot access function
   sets the currently displayed value of the numerable icon to the string in
   @arg{label}. Setting an empty label removes the emblem.
@@ -298,11 +292,11 @@
 
   If this method is called, and a number was already set on the icon, it will
   automatically be reset to zero before rendering the label, i. e. the last
-  method called between the function @sym{(setf gtk-numerable-icon-label)} and
-  @sym{(setf gtk-numerable-icon-count)} has always priority.
+  method called between the functions @sym{gtk-numerable-icon-label} and
+  @sym{gtk-numerable-icon-count} has always priority.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-label} has been deprecated since version 3.14 and
-    should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-label} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-function{gtk-numerable-icon-count}")
@@ -333,13 +327,12 @@
   The @sym{gtk-numerable-icon-style-context} slot access function
   returns the @class{gtk-style-context} object used by the icon for theming,
   or @code{nil} if thereis none.
-
   The @sym{(setf gtk-numerable-icon-style-context)} slot access function
   updates the icon to fetch theme information from the given
   @class{gtk-style-context} object.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-style-context} has been deprecated since version
-    3.14 and should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-style-context} has been deprecated
+    since version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}")
@@ -357,8 +350,8 @@
   @return{A new @class{g-icon}.}
   @short{Creates a new unthemed @class{gtk-numerable-icon} object.}
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-new} has been deprecated since version 3.14 and
-    should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-new} has been deprecated since version
+    3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}"
@@ -386,12 +379,11 @@
   This is a convenience constructor that calls the function
   @fun{gtk-numerable-icon-style-context} internally.
   @begin[Warning]{dictionary}
-    @sym{gtk-numerable-icon-new-with-style-context} has been deprecated since
-    version 3.14 and should not be used in newly-written code.
+    The function @sym{gtk-numerable-icon-new-with-style-context} has been
+    deprecated since version 3.14 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-numerable-icon}
   @see-class{gtk-style-context}
-  @see-class{g-icon}
   @see-function{gtk-numerable-icon-style-context}"
   (make-instance 'gtk-numerable-icon
                  :background-icon base-icon

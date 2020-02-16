@@ -2,7 +2,7 @@
 ;;; gtk.stock-images.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -231,7 +231,7 @@
       (gethash 'gtk-icon-size atdoc:*external-symbols*)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-8}
-  @short{}
+  @short{Built-in stock icon sizes.}
   @begin{pre}
 (define-g-enum \"GtkIconSize\" gtk-icon-size
   (:export t
@@ -286,7 +286,7 @@
  "@version{2020-1-18}
   @argument[factory]{a @class{gtk-icon-factory} object}
   @argument[stock-id]{icon name of type @code{:string}}
-  @argument[icon-set]{a @class{gtk-icon-set} sructure}
+  @argument[icon-set]{a @class{gtk-icon-set} structure}
   @begin{short}
     Adds the given @arg{icon-set} to the icon factory, under the name
     @arg{stock-id}.
@@ -348,7 +348,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-18}
   @argument[factory]{a @class{gtk-icon-factory} object}
-  @argument[stock-id]{an icon name}
+  @argument[stock-id]{a @code{:string} with an icon name}
   @return{The icon set of @arg{stock-id}.}
   @begin{short}
     Looks up @arg{stock-id} in the icon factory, returning an icon set if
@@ -378,7 +378,7 @@
     (g-boxed-foreign gtk-icon-set :return)
  #+cl-cffi-gtk-documentation
  "@version{2020-1-18}
-  @argument[stock-id]{an icon name}
+  @argument[stock-id]{a @code{:string} with an icon name}
   @return{A @class{gtk-icon-set}, or @code{nil}.}
   @begin{short}
     Looks for an icon in the list of default icon factories.

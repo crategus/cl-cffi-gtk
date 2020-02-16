@@ -145,7 +145,7 @@
   @sym{gtk-application} will automatically load menus from the
   @class{gtk-builder} resource located at @file{\"gtk/menus.ui\"}, relative to
   the application's resource base path, see the function
-  @fun{g-application-set-resource-base-path}. The menu with the ID \"app-menu\"
+  @fun{g-application-resource-base-path}. The menu with the ID \"app-menu\"
   is taken as the application's app menu and the menu with the ID \"menubar\"
   is taken as the application's menubar. Additional menus, most interesting
   submenus, can be named and accessed via the function
