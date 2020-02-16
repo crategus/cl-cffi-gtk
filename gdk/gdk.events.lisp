@@ -130,7 +130,7 @@
 ;;; GDK_PRIORITY_REDRAW
 ;;; ----------------------------------------------------------------------------
 
-(defconstant gdk-priority-redraw (+ +g-priority-high-idle+ 20)
+(defconstant +gdk-priority-redraw+ (+ +g-priority-high-idle+ 20)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-14}
   This is the priority that the idle handler processing window updates is
@@ -139,7 +139,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-priority-redraw atdoc:*variable-name-alias*) "Constant")
 
-(export 'gdk-priority-redraw)
+(export '+gdk-priority-redraw+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_EVENT_PROPAGATE

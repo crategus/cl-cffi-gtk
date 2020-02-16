@@ -281,7 +281,20 @@
     @about-function{gdk-pixbuf-format-is-disabled}
     @about-function{gdk-pixbuf-format-set-disabled}
     @about-function{gdk-pixbuf-format-get-license}
+
     @about-struct{gdk-pixbuf-format}
+    @about-function{copy-gdk-pixbuf-format}
+    @about-function{make-gdk-pixbuf-format}
+    @about-function{gdk-pixbuf-format-name}
+    @about-function{gdk-pixbuf-format-signature}
+    @about-function{gdk-pixbuf-format-domain}
+    @about-function{gdk-pixbuf-format-description}
+    @about-function{gdk-pixbuf-format-mime-types}
+    @about-function{gdk-pixbuf-format-extensions}
+    @about-function{gdk-pixbuf-format-flags}
+    @about-function{gdk-pixbuf-format-disabled}
+    @about-function{gdk-pixbuf-format-license}
+
     @about-symbol{gdk-pixbuf-format-flags}
     @about-type{gdk-pixbuf-module-pattern}
     @about-symbol{gdk-pixbuf-module}

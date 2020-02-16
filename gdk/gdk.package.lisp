@@ -203,8 +203,13 @@
   @begin[GdkDevice]{section}
     Object representing an input device.
 
-    @about-class{gdk-device}
+    @about-struct{gdk-time-coord}
+    @about-function{copy-gdk-time-coord}
+    @about-function{make-gdk-time-coord}
+    @about-function{gdk-time-coord-time}
+    @about-function{gdk-time-coord-axes}
 
+    @about-symbol{gdk-grab-status}
     @about-symbol{gdk-input-source}
     @about-symbol{gdk-input-mode}
     @about-symbol{gdk-axis-use}
@@ -212,9 +217,8 @@
     @about-symbol{gdk-device-tool-type}
     @about-symbol{gdk-device-type}
     @about-symbol{gdk-grab-ownership}
-    @about-struct{gdk-time-coord}
-    @about-symbol{gdk-grab-status}
 
+    @about-class{gdk-device}
     @about-generic{gdk-device-name}
     @about-generic{gdk-device-vendor-id}
     @about-generic{gdk-device-product-id}
@@ -304,6 +308,12 @@
     RGBA colors
 
     @about-struct{gdk-rgba}
+    @about-function{make-gdk-rgba}
+    @about-function{copy-gdk-rgba}
+    @about-function{gdk-rgba-red}
+    @about-function{gdk-rgba-green}
+    @about-function{gdk-rgba-blue}
+    @about-function{gdk-rgba-alpha}
     @about-function{gdk-rgba-copy}
     @about-function{gdk-rgba-free}
     @about-function{gdk-rgba-parse}
@@ -361,6 +371,8 @@
   @begin[Windows]{section}
     Onscreen display areas in the target window system.
 
+    @about-variable{+gdk-parent-relative+}
+
     @about-symbol{gdk-window-type}
     @about-symbol{gdk-window-window-class}
     @about-symbol{gdk-window-hints}
@@ -368,7 +380,25 @@
     @about-symbol{gdk-anchor-hints}
     @about-symbol{gdk-window-edge}
     @about-symbol{gdk-window-type-hint}
+
     @about-struct{gdk-window-attr}
+    @about-function{copy-gdk-window-attr}
+    @about-function{make-gdk-window-attr}
+    @about-function{gdk-window-attr-title}
+    @about-function{gdk-window-attr-event-mask}
+    @about-function{gdk-window-attr-x}
+    @about-function{gdk-window-attr-y}
+    @about-function{gdk-window-attr-width}
+    @about-function{gdk-window-attr-height}
+    @about-function{gdk-window-attr-window-class}
+    @about-function{gdk-window-attr-visual}
+    @about-function{gdk-window-attr-window-type}
+    @about-function{gdk-window-attr-cursor}
+    @about-function{gdk-window-attr-wmclass-name}
+    @about-function{gdk-window-attr-wmclass-class}
+    @about-function{gdk-window-attr-override-redirect}
+    @about-function{gdk-window-attr-type-hint}
+
     @about-symbol{gdk-window-attributes-type}
     @about-symbol{gdk-fullscreen-mode}
     @about-symbol{gdk-filter-return}
@@ -629,12 +659,13 @@
 
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-event-mask}
-    @about-symbol{gdk-event-sequence}
+
+    @about-class{gdk-event-sequence}
 
     @about-variable{+gdk-current-time+}
     @about-variable{+gdk-priority-events+}
     @about-variable{+gdk-priority-redraw+}
-    @about-variable{+gdk-event-progage+}
+    @about-variable{+gdk-event-propagate+}
     @about-variable{+gdk-event-stop+}
     @about-variable{+gdk-button-primary+}
     @about-variable{+gdk-button-middle+}
@@ -803,6 +834,12 @@
     @about-function{gdk-event-expose-count}
 
     @about-struct{gdk-event-visibility}
+    @about-function{copy-gdk-event-visibility}
+    @about-function{make-gdk-event-visibility}
+    @about-function{gdk-event-visibility-type}
+    @about-function{gdk-event-visibility-window}
+    @about-function{gdk-event-visibility-send-event}
+    @about-function{gdk-event-visibility-state}
 
     @about-struct{gdk-event-crossing}
     @about-function{copy-gdk-event-crossing}
@@ -822,20 +859,45 @@
     @about-function{gdk-event-crossing-state}
 
     @about-struct{gdk-event-focus}
+    @about-function{copy-gdk-event-focus}
+    @about-function{make-gdk-event-focus}
+    @about-function{gdk-event-focus-type}
+    @about-function{gdk-event-focus-window}
+    @about-function{gdk-event-focus-send-event}
+    @about-function{gdk-event-focus-in}
 
     @about-struct{gdk-event-configure}
     @about-function{copy-gdk-event-configure}
     @about-function{make-gdk-event-configure}
     @about-function{gdk-event-configure-type}
     @about-function{gdk-event-configure-window}
-    @about-function{gdk-event-congigure-send-event}
+    @about-function{gdk-event-configure-send-event}
     @about-function{gdk-event-configure-x}
     @about-function{gdk-event-configure-y}
     @about-function{gdk-event-configure-width}
     @about-function{gdk-event-configure-height}
 
     @about-struct{gdk-event-property}
+    @about-function{copy-gdk-event-property}
+    @about-function{make-gdk-event-property}
+    @about-function{gdk-event-property-type}
+    @about-function{gdk-event-property-window}
+    @about-function{gdk-event-property-send-event}
+    @about-function{gdk-event-property-atom}
+    @about-function{gdk-event-property-time}
+    @about-function{gdk-event-property-state}
+
     @about-struct{gdk-event-selection}
+    @about-function{copy-gdk-event-selection}
+    @about-function{make-gdk-event-selection}
+    @about-function{gdk-event-selection-type}
+    @about-function{gdk-event-selection-window}
+    @about-function{gdk-event-selection-send-event}
+    @about-function{gdk-event-selection-selection}
+    @about-function{gdk-event-selection-target}
+    @about-function{gdk-event-selection-property}
+    @about-function{gdk-event-selection-time}
+    @about-function{gdk-event-selection-requestor}
 
     @about-struct{gdk-event-dnd}
     @about-function{copy-gdk-event-dnd}
@@ -849,22 +911,134 @@
     @about-function{gdk-event-dnd-y-root}
 
     @about-struct{gdk-event-proximity}
+    @about-function{copy-gdk-event-proximity}
+    @about-function{make-gdk-event-proximity}
+    @about-function{gdk-event-proximity-type}
+    @about-function{gdk-event-proximity-window}
+    @about-function{gdk-event-proximity-send-event}
+    @about-function{gdk-event-proximity-time}
+    @about-function{gdk-event-proximity-device}
+
     @about-struct{gdk-event-window-state}
+    @about-function{copy-gdk-event-window-state}
+    @about-function{make-gdk-event-window-state}
+    @about-function{gdk-event-window-state-type}
+    @about-function{gdk-event-window-state-window}
+    @about-function{gdk-event-window-state-send-event}
+    @about-function{gdk-event-window-state-changed-mask}
+    @about-function{gdk-event-window-state-new-window-state}
+
     @about-struct{gdk-event-setting}
+    @about-function{copy-gdk-event-setting}
+    @about-function{make-gdk-event-setting}
+    @about-function{gdk-event-setting-type}
+    @about-function{gdk-event-setting-window}
+    @about-function{gdk-event-setting-send-event}
+    @about-function{gdk-event-setting-action}
+    @about-function{gdk-event-setting-name}
+
     @about-struct{gdk-event-owner-change}
+    @about-function{copy-gdk-event-owner-change}
+    @about-function{make-gdk-event-owner-change}
+    @about-function{gdk-event-owner-change-type}
+    @about-function{gdk-event-owner-change-window}
+    @about-function{gdk-event-owner-change-send-event}
+    @about-function{gdk-event-owner-change-owner}
+    @about-function{gdk-event-owner-change-reason}
+    @about-function{gdk-event-owner-change-selection}
+    @about-function{gdk-event-owner-change-time}
+    @about-function{gdk-event-owner-change-selection-time}
+
     @about-struct{gdk-event-grab-broken}
+    @about-function{copy-gdk-event-grab-broken}
+    @about-function{make-gdk-event-grab-broken}
+    @about-function{gdk-event-grab-broken-type}
+    @about-function{gdk-event-grab-broken-window}
+    @about-function{gdk-event-grab-broken-send-event}
+    @about-function{gdk-event-grab-broken-keyboard}
+    @about-function{gdk-event-grab-broken-implicit}
+    @about-function{gdk-event-grab-broken-grab-window}
 
     @about-struct{gdk-event-touchpad-swipe}
+    @about-function{copy-gdk-event-touchpad-swipe}
+    @about-function{make-gdk-event-touchpad-swipe}
+    @about-function{gdk-event-touchpad-swipe-type}
+    @about-function{gdk-event-touchpad-swipe-window}
+    @about-function{gdk-event-touchpad-swipe-send-event}
+    @about-function{gdk-event-touchpad-swipe-phase}
+    @about-function{gdk-event-touchpad-swipe-n-fingers}
+    @about-function{gdk-event-touchpad-swipe-time}
+    @about-function{gdk-event-touchpad-swipe-x}
+    @about-function{gdk-event-touchpad-swipe-y}
+    @about-function{gdk-event-touchpad-swipe-dx}
+    @about-function{gdk-event-touchpad-swipe-dy}
+    @about-function{gdk-event-touchpad-swipe-x-root}
+    @about-function{gdk-event-touchpad-swipe-y-root}
+    @about-function{gdk-event-touchpad-swipe-state}
+
     @about-struct{gdk-event-touchpad-pinch}
+    @about-function{copy-gdk-event-touchpad-pinch}
+    @about-function{make-gdk-event-touchpad-pinch}
+    @about-function{gdk-event-touchpad-pinch-type}
+    @about-function{gdk-event-touchpad-pinch-window}
+    @about-function{gdk-event-touchpad-pinch-send-event}
+    @about-function{gdk-event-touchpad-pinch-phase}
+    @about-function{gdk-event-touchpad-pinch-n-fingers}
+    @about-function{gdk-event-touchpad-pinch-time}
+    @about-function{gdk-event-touchpad-pinch-x}
+    @about-function{gdk-event-touchpad-pinch-y}
+    @about-function{gdk-event-touchpad-pinch-dx}
+    @about-function{gdk-event-touchpad-pinch-dy}
+    @about-function{gdk-event-touchpad-pinch-angle-delta}
+    @about-function{gdk-event-touchpad-pinch-scale}
+    @about-function{gdk-event-touchpad-pinch-x-root}
+    @about-function{gdk-event-touchpad-pinch-y-root}
+    @about-function{gdk-event-touchpad-pinch-state}
+
     @about-struct{gdk-event-pad-button}
+    @about-function{copy-gdk-event-pad-button}
+    @about-function{make-gdk-event-pad-button}
+    @about-function{gdk-event-pad-button-type}
+    @about-function{gdk-event-pad-button-window}
+    @about-function{gdk-event-pad-button-send-event}
+    @about-function{gdk-event-pad-button-time}
+    @about-function{gdk-event-pad-button-group}
+    @about-function{gdk-event-pad-button-button}
+    @about-function{gdk-event-pad-button-mode}
+
     @about-struct{gdk-event-pad-axis}
+    @about-function{copy-gdk-event-pad-axis}
+    @about-function{make-gdk-event-pad-axis}
+    @about-function{gdk-event-pad-axis-type}
+    @about-function{gdk-event-pad-axis-window}
+    @about-function{gdk-event-pad-axis-send-event}
+    @about-function{gdk-event-pad-axis-time}
+    @about-function{gdk-event-pad-axis-group}
+    @about-function{gdk-event-pad-axis-index}
+    @about-function{gdk-event-pad-axis-mode}
+    @about-function{gdk-event-pad-axis-value}
+
     @about-struct{gdk-event-pad-group-mode}
+    @about-function{copy-gdk-event-pad-group-mode}
+    @about-function{make-gdk-event-pad-group-mode}
+    @about-function{gdk-event-pad-group-mode-type}
+    @about-function{gdk-event-pad-group-mode-window}
+    @about-function{gdk-event-pad-group-mode-send-event}
+    @about-function{gdk-event-pad-group-mode-time}
+    @about-function{gdk-event-pad-group-mode-group}
+    @about-function{gdk-event-pad-group-mode-mode}
   @end{section}
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes.
 
     @about-class{gdk-keymap}
+
     @about-struct{gdk-keymap-key}
+    @about-function{copy-gdk-keymap-key}
+    @about-function{make-gdk-keymap-key}
+    @about-function{gdk-keymap-key-keycode}
+    @about-function{gdk-keymap-key-group}
+    @about-function{gdk-keymap-key-level}
 
     @about-function{gdk-keymap-get-default}
     @about-function{gdk-keymap-get-for-display}

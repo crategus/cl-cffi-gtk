@@ -1162,7 +1162,7 @@
   @see-slot{gdk-window-attr-wmclass-name}
   @see-slot{gdk-window-attr-wmclass-class}
   @see-slot{gdk-window-attr-override-redirect}
-  @see-slot{gdk-window-attr-type-hint gdk-window-type-hint}
+  @see-slot{gdk-window-attr-type-hint}
   @see-constructor{copy-gdk-window-attr}
   @see-constructor{make-gdk-window-attr}
   @see-class{gdk-visual}
