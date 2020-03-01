@@ -34,11 +34,11 @@
 ;;;
 ;;;     GtkStyleContext
 ;;;
-;;;     GtkJunctionSides                              ---> gtk.enumerations.lisp
-;;;     GtkRegionFlags                                ---> gtk.enumerations.lisp
+;;;     GtkJunctionSides
+;;;     GtkRegionFlags                                   to gtk-widget-path.lisp
 ;;;     GtkStyleContextPrintFlags
 ;;;     GtkBorder
-;;;     GtkBorderStyle                                ---> gtk.enumerations.lisp
+;;;     GtkBorderStyle
 ;;;
 ;;;     GTK_STYLE_PROPERTY_BACKGROUND_COLOR
 ;;;     GTK_STYLE_PROPERTY_COLOR
@@ -253,21 +253,144 @@
 (glib-init::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkStyleContextPrintFlags
-;;;
-;;; Flags that modify the behavior of gtk_style_context_to_string(). New values
-;;; may be added to this enumeration.
-;;;
-;;; Members
-;;;
-;;; GTK_STYLE_CONTEXT_PRINT_NONE
-;;;
-;;; GTK_STYLE_CONTEXT_PRINT_RECURSE
-;;;     Print the entire tree of CSS nodes starting at the style context's node
-;;;
-;;; GTK_STYLE_CONTEXT_PRINT_SHOW_STYLE
-;;;     Show the values of the CSS properties for each node
+;;; enum GtkJunctionSides
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkJunctionSides" gtk-junction-sides
+  (:export t
+   :type-initializer "gtk_junction_sides_get_type")
+  (:none 0)
+  (:corner-topleft #.(ash 1 0))
+  (:corner-topright #.(ash 1 1))
+  (:corner-bottomleft #.(ash 1 2))
+  (:corner-bottomright #.(ash 1 3))
+  (:top 3)
+  (:left 5)
+  (:bottom 6)
+  (:right 10))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-junction-sides atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-junction-sides atdoc:*external-symbols*)
+ "@version{2020-2-28}
+  @begin{short}
+    Describes how a rendered element connects to adjacent elements.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkJunctionSides\" gtk-junction-sides
+  (:export t
+   :type-initializer \"gtk_junction_sides_get_type\")
+  (:none 0)
+  (:corner-topleft #.(ash 1 0))
+  (:corner-topright #.(ash 1 1))
+  (:corner-bottomleft #.(ash 1 2))
+  (:corner-bottomright #.(ash 1 3))
+  (:top 3)
+  (:left 5)
+  (:bottom 6)
+  (:right 10))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No junctions.}
+    @entry[:corner-topleft]{Element connects on the top-left corner.}
+    @entry[:corner-topright]{Element connects on the top-right corner.}
+    @entry[:corner-bottomleft]{Element connects on the bottom-left corner.}
+    @entry[:corner-bottomright]{Element connects on the bottom-right corner.}
+    @entry[:top]{Element connects on the top side.}
+    @entry[:bottom]{Element connects on the bottom side.}
+    @entry[:left]{Element connects on the left side.}
+    @entry[:right]{Element connects on the right side.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkStyleContextPrintFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkStyleContextPrintFlags" gtk-style-context-print-flags
+  (:export t
+   :type-initializer "gtk_style_context_print_flags_get_type")
+  (:none 0)
+  (:recurse #.(ash 1 0))
+  (:show-style #.(ash 1 1)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-style-context-print-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-style-context-print-flags atdoc:*external-symbols*)
+ "@version{2020-2-28}
+  @begin{short}
+    Flags that modify the behavior of the @fun{gtk-style-context-to-string}
+    function.
+  @end{short}
+  New values may be added to this enumeration.
+  @begin{pre}
+(define-g-flags \"GtkStyleContextPrintFlags\" gtk-style-context-print-flags
+  (:export t
+   :type-initializer \"gtk_style_context_print_flags_get_type\")
+  (:none 0)
+  (:recurse #.(ash 1 0))
+  (:show-style #.(ash 1 1)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{}
+    @entry[:recurse]{Print the entire tree of CSS nodes starting at the style
+      context's node.}
+    @entry[:show-style]{Show the values of the CSS properties for each node.}
+  @end{table}
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-to-string}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkBorderStyle
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkBorderStyle" gtk-border-style
+  (:export t
+   :type-initializer "gtk_border_style_get_type")
+  :none
+  :solid
+  :inset
+  :outset
+  :hidden
+  :dotted
+  :dashed
+  :double
+  :groove
+  :ridge)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-border-style atdoc:*external-symbols*)
+ "@version{2020-2-28}
+  @begin{short}
+    Describes how the border of a UI element should be rendered.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkBorderStyle\" gtk-border-style
+  (:export t
+   :type-initializer \"gtk_border_style_get_type\")
+  :none
+  :solid
+  :inset
+  :outset
+  :hidden
+  :dotted
+  :dashed
+  :double
+  :groove
+  :ridge)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No visible border.}
+    @entry[:solid]{A single line segment.}
+    @entry[:inset]{Looks as if the content is sunken into the canvas.}
+    @entry[:outset]{Looks as if the content is coming out of the canvas.}
+    @entry[:hidden]{Same as @code{:none}.}
+    @entry[:dotted]{A series of round dots.}
+    @entry[:dashed]{A series of square-ended dashes.}
+    @entry[:double]{Two parrallel lines with some space between them.}
+    @entry[:groove]{Looks as if it were carved in the canvas.}
+    @entry[:ridge]{Looks as if it were coming out of the canvas.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBorder
@@ -514,9 +637,9 @@
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "paint-clock"
                                                'gtk-style-context) 't)
- "The @code{paint-clock} property of type @class{gkd-frame-clock}
+ "The @code{paint-clock} property of type @class{gdk-frame-clock}
   (Read / Write) @br{}
-  The associated @class{gdk-frame-clock} object.")
+  The associated frame clock object.")
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-style-context-paint-clock atdoc:*function-name-alias*)
@@ -568,7 +691,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-style-context) 't)
  "The @code{screen} property of type @class{gdk-screen} (Read / Write) @br{}
-  The associated @class{gdk-screen} object.")
+  The associated screen object.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-screen atdoc:*function-name-alias*)
@@ -600,23 +723,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_new ()
-;;;
-;;; GtkStyleContext * gtk_style_context_new (void);
-;;;
-;;; Creates a standalone GtkStyleContext, this style context won't be attached
-;;; to any widget, so you may want to call gtk_style_context_set_path()
-;;; yourself.
-;;;
-;;; Note
-;;;
-;;; This function is only useful when using the theming layer separated from
-;;; GTK+, if you are using GtkStyleContext to theme GtkWidgets, use
-;;; gtk_widget_get_style_context() in order to get a style context ready to
-;;; theme the widget.
-;;;
-;;; Returns :
-;;;     A newly created GtkStyleContext.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-style-context-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-28}
+  @return{A newly created @class{gtk-style-context} object.}
+  @begin{short}
+    Creates a standalone @class{gtk-style-context} object.
+  @end{short}
+  This style context won't be attached to any widget, so you may want to call
+  the function @fun{gtk-style-context-set-path} yourself.
+  @begin[Note]{dictionary}
+    This function is only useful when using the theming layer separated from
+    GTK+, if you are using @class{gtk-style-context} to theme GtkWidgets, use
+    the function @fun{gtk-widget-get-style-context} in order to get a style
+    context ready to theme the widget.
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-set-path}
+  @see-function{gtk-widget-get-style-context}"
+  (make-instance 'gtk-style-context))
+
+(export 'gtk-style-context-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_provider ()
@@ -624,26 +753,26 @@
 
 (defcfun ("gtk_style_context_add_provider" gtk-style-context-add-provider) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
+ "@version{2020-2-28}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[provider]{a @class{gtk-style-provider} object}
-  @argument[priority]{the priority of the style provider. The lower it is, the
-    earlier it will be used in the style construction. Typically this will be in
-    the range between @var{+gtk-style-provider-priority-fallback+} and
-    @var{+gtk-style-provider-priority-user+}.}
+  @argument[priority]{the priority of type @code{:uint} of the style provider}
   @begin{short}
-    Adds a style provider to @arg{context}, to be used in style construction.
+    Adds a style provider to the context, to be used in style construction.
   @end{short}
 
-  @subheading{Note}
-  If both priorities are the same, a @class{gtk-style-provider} added through
-  this function takes precedence over another added through the
-  @fun{gtk-style-context-add-provider-for-screen} function.
+  The lower the priority of the style provider is, the earlier it will be used
+  in the style construction. Typically this will be in the range between the
+  priorities @var{+gtk-style-provider-priority-fallback+} and
+  @var{+gtk-style-provider-priority-user+}.
+  @begin[Note]{dictionary}
+    If both priorities are the same, a @class{gtk-style-provider} added through
+    this function takes precedence over another added through the function
+    @fun{gtk-style-context-add-provider-for-screen}.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
-  @see-function{gtk-style-context-add-provider-for-screen}
-  @see-variable{+gtk-style-provider-priority-fallback+}
-  @see-variable{+gtk-style-provider-priority-user+}"
+  @see-function{gtk-style-context-add-provider-for-screen}"
   (context (g-object gtk-style-context))
   (provider (g-object gtk-style-provider))
   (priority :uint))
@@ -657,25 +786,27 @@
 (defcfun ("gtk_style_context_add_provider_for_screen"
            gtk-style-context-add-provider-for-screen) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
+ "@version{2020-2-28}
   @argument[screen]{a @class{gdk-screen} object}
   @argument[provider]{a @class{gtk-style-provider} object}
-  @argument[priority]{The priority of the style provider. The lower it is, the
-    earlier it will be used in the style construction. Typically this will be in
-    the range between @code{GTK_STYLE_PROVIDER_PRIORITY_FALLBACK} and
-    @code{GTK_STYLE_PROVIDER_PRIORITY_USER}.}
+  @argument[priority]{the priority of type @code{:uint} of the style provider}
   @begin{short}
     Adds a global style provider to screen, which will be used in style
     construction for all @class{gtk-style-context}s under screen.
   @end{short}
 
+  The lower the priority of the style provider is, the earlier it will be used
+  in the style construction. Typically this will be in the range between the
+  priorities @var{+gtk-style-provider-priority-fallback+} and
+  @var{+gtk-style-provider-priority-user+}.
+
   GTK+ uses this to make styling information from @class{gtk-settings}
   available.
-
-  @subheading{Note}
+  @begin[Note]{dictionary}
     If both priorities are the same, a @class{gtk-style-provider} added through
-    the @fun{gtk-style-context-add-provider} function takes precedence over
+    the function @fun{gtk-style-context-add-provider} takes precedence over
     another added through this function.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
@@ -708,102 +839,135 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_junction_sides ()
-;;;
-;;; GtkJunctionSides
-;;; gtk_style_context_get_junction_sides (GtkStyleContext *context);
-;;;
-;;; Returns the sides where rendered elements connect visually with others.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     the junction sides
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_junction_sides"
+           gtk-style-context-get-junction-sides) gtk-junction-sides
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{The junction sides of type @symbol{gtk-junction-sides}.}
+  @begin{short}
+    Returns the sides where rendered elements connect visually with others.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-junction-sides}"
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-get-junction-sides)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_path ()
-;;;
-;;; const GtkWidgetPath * gtk_style_context_get_path (GtkStyleContext *context);
-;;;
-;;; Returns the widget path used for style matching.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     A GtkWidgetPath.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_path" gtk-style-context-get-path)
+    (g-boxed-foreign gtk-widget-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{A @class{gtk-widget-path} structure.}
+  @begin{short}
+    Returns the widget path used for style matching.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{gtk-widget-path}"
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-get-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_property ()
-;;;
-;;; void gtk_style_context_get_property (GtkStyleContext *context,
-;;;                                      const gchar *property,
-;;;                                      GtkStateFlags state,
-;;;                                      GValue *value);
-;;;
-;;; Gets a style property from context for the given state.
-;;;
-;;; When value is no longer needed, g_value_unset() must be called to free any
-;;; allocated memory.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; property :
-;;;     style property name
-;;;
-;;; state :
-;;;     state to retrieve the property value for
-;;;
-;;; value :
-;;;     return location for the style property value
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_property" %gtk-style-context-get-property)
+    :void
+  (context (g-object gtk-style-context))
+  (property :string)
+  (state gtk-state-flags)
+  (value (:pointer (:struct g-value))))
+
+(defun gtk-style-context-get-property (context property state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[property]{a @code{:string} with a style property name}
+  @argument[state]{a state of type @symbol{gtk-state-flags} to retrieve the
+    property value for}
+  @return{The value for the style property.}
+  @begin{short}
+    Gets a style property from the context for the given state.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq context (gtk-style-context-new))
+=> #<GTK-STYLE-CONTEXT {100687D223@}>
+ (gtk-style-context-get-property context \"color\" :normal)
+=> #S(GDK-RGBA :RED 1.0d0 :GREEN 1.0d0 :BLUE 1.0d0 :ALPHA 1.0d0)
+ (gtk-style-context-get-property context \"opacity\" :normal)
+=> 1.0d0
+ (gtk-style-context-get-property context \"font\" :normal)
+=> #<PANGO-FONT-DESCRIPTION {100687E0B3@}>
+ (pango-font-description-to-string *)
+=> \"Ubuntu 11\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-class{gtk-widget-path}"
+  (with-foreign-object (value '(:struct g-value))
+    (g-value-zero value)
+    (prog2
+      (%gtk-style-context-get-property context property state value)
+      ;; TODO: Handle the case für an invalid property
+      (when value
+        (parse-g-value value))
+      (g-value-unset value))))
+
+(export 'gtk-style-context-get-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_frame_clock ()
-;;;
-;;; GdkFrameClock *
-;;; gtk_style_context_get_frame_clock (GtkStyleContext *context);
-;;;
-;;; Returns the GdkFrameClock to which context is attached.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     a GdkFrameClock, or NULL if context does not have an attached frame
-;;;     clock.
-;;;
-;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(defcfun ("gtk_style_context_get_frame_clock" gtk-style-context-get-frame-clock)
+    (g-object gdk-frame-clock)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{A @class{gdk-frame-clock}, or @code{nil} if the context does not
+    have an attached frame clock.}
+  @begin{short}
+    Returns the @class{gdk-frame-clock} to which the context is attached.
+  @end{short}
+
+  Since 3.8
+  @see-class{gtk-style-context}
+  @see-class{gdk-frame-clock}"
+  (context (g-object gtk-style-context)))
+
+#+gtk-3-8
+(export 'gtk-style-context-get-frame-clock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_state ()
-;;;
-;;; GtkStateFlags gtk_style_context_get_state (GtkStyleContext *context);
-;;;
-;;; Returns the state used when rendering.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     the state flags
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_state" gtk-style-context-get-state)
+    gtk-state-flags
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{The @symbol{gtk-state-flags} values.}
+  @begin{short}
+    Returns the state used when rendering.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}"
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-get-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_style ()
@@ -824,25 +988,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_style_property ()
-;;;
-;;; void gtk_style_context_get_style_property (GtkStyleContext *context,
-;;;                                            const gchar *property_name,
-;;;                                            GValue *value);
-;;;
-;;; Gets the value for a widget style property.
-;;;
-;;; When value is no longer needed, g_value_unset() must be called to free any
-;;; allocated memory.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; property_name :
-;;;     the name of the widget style property
-;;;
-;;; value :
-;;;     Return location for the property value
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_style_property"
+          %gtk-style-context-get-style-property) :void
+  (context (g-object gtk-style-context))
+  (property :string)
+  (value (:pointer (:struct g-value))))
+
+(defun gtk-style-context-get-style-property (context widget property)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[widget]{a @class{gtk-widget} the style property is looked up for}
+  @argument[property]{a @code{:string} with the name of the widget style
+    property}
+  @return{Returns the @class{g-value} of the style property.}
+  @begin{short}
+    Gets the value for a widget style property.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{g-value}"
+  (let ((type (param-spec-type
+                    (gtk-widget-class-find-style-property
+                        (g-type-from-instance widget)
+                        property))))
+    (with-foreign-object (value '(:struct g-value))
+      (g-value-zero value)
+      (g-value-init value type)
+      (prog2
+        (%gtk-style-context-get-style-property context property value)
+        (parse-g-value value)
+        (g-value-unset value)))))
+
+(export 'gtk-style-context-get-style-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_style_valist ()
@@ -911,6 +1090,13 @@
 ;;;     NULL or the section where value was defined
 ;;; ----------------------------------------------------------------------------
 
+;(defcfun ("gtk_style_context_get_section" gtk-style-context-get-section)
+;    (g-boxed-foreign gtk-css-section)
+;  (context (g-object gtk-style-context))
+;  (property :string))
+
+;(export 'gtk-style-context-get-section)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_color ()
 ;;; ----------------------------------------------------------------------------
@@ -922,17 +1108,18 @@
 
 (defun gtk-style-context-get-color (context state)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2020-1-3}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the color
     for}
-  @return{@code{color} -- value for the foreground color}
+  @return{The @class{gdk-rgba} value for the foreground color}
   @begin{short}
     Gets the foreground color for a given state.
   @end{short}
+  See the function @fun{gtk-style-context-get-property} for details.
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}
-  @see-function{gtk-style-context-get-background-color}"
+  @see-function{gtk-style-context-get-property}"
   (let ((color (make-gdk-rgba)))
     (%gtk-style-context-get-color context state color)
     color))
@@ -941,155 +1128,179 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_background_color ()
-;;;
-;;; void gtk_style_context_get_background_color (GtkStyleContext *context,
-;;;                                              GtkStateFlags state,
-;;;                                              GdkRGBA *color);
-;;;
-;;; Gets the background color for a given state.
-;;;
-;;; Warning
-;;;
-;;; gtk_style_context_get_background_color has been deprecated since version
-;;; 3.16 and should not be used in newly-written code.
-;;;
-;;; Use gtk_render_background() instead.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the color for
-;;;
-;;; color :
-;;;     return value for the background color
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_background_color"
+          %gtk-style-context-get-background-color) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(defun gtk-style-context-get-background-color (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the color
+    for}
+  @return{Returns the @class{gdk-rgba} background color.}
+  @begin{short}
+    Gets the background color for a given state.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-style-context-get-background-color} has been
+    deprecated since version 3.16 and should not be used in newly-written code.
+    Use the function @fun{gtk-render-background} instead.
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}
+  @see-function{gtk-render-background}"
+  (let ((color (make-gdk-rgba)))
+    (%gtk-style-context-get-background-color context state color)
+    color))
+
+(export 'gtk-style-context-get-background-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_border_color ()
-;;;
-;;; void gtk_style_context_get_border_color (GtkStyleContext *context,
-;;;                                          GtkStateFlags state,
-;;;                                          GdkRGBA *color);
-;;;
-;;; Gets the border color for a given state.
-;;;
-;;; Warning
-;;;
-;;; gtk_style_context_get_border_color has been deprecated since version 3.16
-;;; and should not be used in newly-written code.
-;;;
-;;; Use gtk_render_frame() instead.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the color for
-;;;
-;;; color :
-;;;     return value for the border color
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_border_color"
+          %gtk-style-context-get-border-color) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(defun gtk-style-context-get-border-color (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the color
+    for}
+  @return{Returns the @class{gdk-rgba} border color.}
+  @begin{short}
+    Gets the border color for a given state.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-style-context-get-border-color} has been deprecated
+    since version 3.16 and should not be used in newly-written code.
+    Use the function @fun{gtk-render-frame} instead.
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}
+  @see-function{gtk-render-frame}"
+  (let ((color (make-gdk-rgba)))
+    (%gtk-style-context-get-border-color context state color)
+    color))
+
+(export 'gtk-style-context-get-border-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_border ()
-;;;
-;;; void gtk_style_context_get_border (GtkStyleContext *context,
-;;;                                    GtkStateFlags state,
-;;;                                    GtkBorder *border);
-;;;
-;;; Gets the border for a given state as a GtkBorder. See
-;;; GTK_STYLE_PROPERTY_BORDER_WIDTH.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the border for
-;;;
-;;; border :
-;;;     return value for the border settings
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_border" %gtk-style-context-get-border) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (border (g-boxed-foreign gtk-border)))
+
+(defun gtk-style-context-get-border (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
+    border for}
+  @return{Returns border settings as a @class{gtk-border} structure.}
+  @begin{short}
+    Gets the value for the border settings for a given state.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{gtk-border}"
+  (let ((border (make-gtk-border)))
+    (%gtk-style-context-get-border context state border)
+    border))
+
+(export 'gtk-style-context-get-border)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_padding ()
-;;;
-;;; void gtk_style_context_get_padding (GtkStyleContext *context,
-;;;                                     GtkStateFlags state,
-;;;                                     GtkBorder *padding);
-;;;
-;;; Gets the padding for a given state as a GtkBorder. See
-;;; GTK_STYLE_PROPERTY_PADDING.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the padding for
-;;;
-;;; padding :
-;;;     return value for the padding settings
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_padding" %gtk-style-context-get-padding) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (padding (g-boxed-foreign gtk-border)))
+
+(defun gtk-style-context-get-padding (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
+    padding for}
+  @return{Returns padding settings as a @class{gtk-border} structure.}
+  @begin{short}
+    Gets the value for the padding settings for a given state.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{gtk-border}"
+  (let ((padding (make-gtk-border)))
+    (%gtk-style-context-get-padding context state padding)
+    padding))
+
+(export 'gtk-style-context-get-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_margin ()
-;;;
-;;; void gtk_style_context_get_margin (GtkStyleContext *context,
-;;;                                    GtkStateFlags state,
-;;;                                    GtkBorder *margin);
-;;;
-;;; Gets the margin for a given state as a GtkBorder. See
-;;; GTK_STYLE_PROPERTY_MARGIN.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the border for
-;;;
-;;; margin :
-;;;     return value for the margin settings
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_margin" %gtk-style-context-get-margin) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (margin (g-boxed-foreign gtk-border)))
+
+(defun gtk-style-context-get-margin (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
+    margin for}
+  @return{Returns margin settings as a @class{gtk-border} structure.}
+  @begin{short}
+    Gets the value for the margin settings for a given state.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{gtk-border}"
+  (let ((margin (make-gtk-border)))
+    (%gtk-style-context-get-margin context state margin)
+    margin))
+
+(export 'gtk-style-context-get-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_font ()
-;;;
-;;; const PangoFontDescription * gtk_style_context_get_font
-;;;                                                   (GtkStyleContext *context,
-;;;                                                    GtkStateFlags state);
-;;;
-;;; Returns the font description for a given state. The returned object is const
-;;; and will remain valid until the "changed" signal happens.
-;;;
-;;; Warning
-;;;
-;;; gtk_style_context_get_font has been deprecated since version 3.8 and should
-;;; not be used in newly-written code.
-;;;
-;;; Use gtk_style_context_get() for "font" or subproperties instead.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the font for
-;;;
-;;; Returns :
-;;;     the PangoFontDescription for the given state. This object is owned by
-;;;     GTK+ and should not be freed. [transfer none]
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_font" gtk-style-context-get-font)
+    (g-boxed-foreign pango-font-description)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
+    font for}
+  @return{Returns the @class{pango-font-description} for the given state.}
+  @begin{short}
+    Returns the font description for a given state.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-style-context-get-font} has been deprecated since
+    version 3.8 and should not be used in newly-written code. Use the function
+    @fun{gtk-style-context-get} for \"font\" or subproperties instead.
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get}"
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags))
+
+(export 'gtk-style-context-get-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_invalidate ()
@@ -1156,25 +1367,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_lookup_color ()
-;;;
-;;; gboolean gtk_style_context_lookup_color (GtkStyleContext *context,
-;;;                                          const gchar *color_name,
-;;;                                          GdkRGBA *color);
-;;;
-;;; Looks up and resolves a color name in the context color map.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; color_name :
-;;;     color name to lookup
-;;;
-;;; color :
-;;;     Return location for the looked up color.
-;;;
-;;; Returns :
-;;;     TRUE if color_name was found and resolved, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_lookup_color" %gtk-style-context-lookup-color)
+    :boolean
+  (context (g-object gtk-style-context))
+  (color-name :string)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(defun gtk-style-context-lookup-color (context color-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-1-3}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[color-name]{a @code{:string} with a color name to lookup}
+  @return{The looked up @class{gdk-rgba}, or @code{nil}.}
+  @begin{short}
+    Looks up and resolves a color name in the context color map.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-class{gdk-rgba}"
+  (let ((color (make-gdk-rgba)))
+    (when (%gtk-style-context-lookup-color context color-name color)
+      color)))
+
+(export 'gtk-style-context-lookup-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_lookup_icon_set ()
@@ -1183,19 +1399,22 @@
 (defcfun ("gtk_style_context_lookup_icon_set" gtk-style-context-lookup-icon-set)
     (g-boxed-foreign gtk-icon-set)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-5}
+ "@version{2020-3-1}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[stock-id]{a @code{:string} with an icon name}
   @return{The looked up @class{gtk-icon-set}, or @code{nil}.}
-  Looks up @arg{stock-id} in the icon factories associated to context and the
-  default icon factory, returning an icon set if found, otherwise @code{nil}.
+  @begin{short}
+    Looks up @arg{stock-id} in the icon factories associated to context and the
+    default icon factory, returning an icon set if found, otherwise @code{nil}.
+  @end{short}
   @begin[Warning]{dictionary}
-    The @sym{gtk-style-context-lookup-icon-set} function has been deprecated
+    The function @sym{gtk-style-context-lookup-icon-set} has been deprecated
     since version 3.10 and should not be used in newly-written code. Use the
-    @fun{gtk-icon-theme-lookup-icon} function instead.
+    function @fun{gtk-icon-theme-lookup-icon} instead.
   @end{dictionary}
   @see-class{gtk-style-context}
-  @see-class{gtk-icon-set}"
+  @see-class{gtk-icon-set}
+  @see-function{gtk-icon-theme-lookup-icon}"
   (context (g-object gtk-style-context))
   (stock-id :string))
 
@@ -1398,38 +1617,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_remove_provider ()
-;;;
-;;; void gtk_style_context_remove_provider (GtkStyleContext *context,
-;;;                                         GtkStyleProvider *provider);
-;;;
-;;; Removes provider from the style providers list in context.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; provider :
-;;;     a GtkStyleProvider
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_remove_provider" gtk-style-context-remove-provider)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[provider]{a @class{gtk-style-provider} object}
+  @begin{short}
+    Removes the provider from the style providers list in the context.
+  @end{short}
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-add-provider}"
+  (context (g-object gtk-style-context))
+  (provider (g-object gtk-style-provider)))
+
+(export 'gtk-style-context-remove-provider)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_remove_provider_for_screen ()
-;;;
-;;; void gtk_style_context_remove_provider_for_screen
-;;;                                                (GdkScreen *screen,
-;;;                                                 GtkStyleProvider *provider);
-;;;
-;;; Removes provider from the global style providers list in screen.
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; provider :
-;;;     a GtkStyleProvider
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_remove_provider_for_screen"
+           gtk-style-context-remove-provider-for-screen) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-1}
+  @argument[screen]{a @class{gdk-screen} object}
+  @argument[provider]{a @class{gtk-style-provider} object}
+  @begin{short}
+    Removes the provider from the global style providers list in the screen.
+  @end{short}
+  @see-class{gdk-screen}
+  @see-function{gtk-style-context-add-provider-for-screen}"
+  (screen (g-object gdk-screen))
+  (provider (g-object gtk-style-provider)))
+
+(export 'gtk-style-context-remove-provider-for-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_reset_widgets ()
@@ -1515,27 +1739,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_junction_sides ()
-;;;
-;;; void gtk_style_context_set_junction_sides (GtkStyleContext *context,
-;;;                                            GtkJunctionSides sides);
-;;;
-;;; Sets the sides where rendered elements (mostly through gtk_render_frame())
-;;; will visually connect with other visual elements.
-;;;
-;;; This is merely a hint that may or may not be honored by theming engines.
-;;;
-;;; Container widgets are expected to set junction hints as appropriate for
-;;; their children, so it should not normally be necessary to call this function
-;;; manually.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; sides :
-;;;     sides where rendered elements are visually connected to other elements
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_set_junction_sides"
+           gtk-style-context-set-junction-sides) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[sides]{sides of type @symbol{g-junction-sides} where rendered
+    elements are visually connected to other elements}
+  @begin{short}
+    Sets the sides where rendered elements, mostly through the function
+    @fun{gtk-render-frame}, will visually connect with other visual elements.
+  @end{short}
+
+  This is merely a hint that may or may not be honored by theming engines.
+
+  Container widgets are expected to set junction hints as appropriate for their
+  children, so it should not normally be necessary to call this function
+  manually.
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-junction-sides}"
+  (context (g-object gtk-style-context))
+  (sides gtk-junction-sides))
+
+(export 'gtk-style-context-set-junction-sides)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_path ()
@@ -1564,31 +1792,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_class ()
-;;;
-;;; void gtk_style_context_add_class (GtkStyleContext *context,
-;;;                                   const gchar *class_name);
-;;;
-;;; Adds a style class to context, so posterior calls to gtk_style_context_get()
-;;; or any of the gtk_render_*() functions will make use of this new class for
-;;; styling.
-;;;
-;;; In the CSS file format, a GtkEntry defining an "entry" class, would be
-;;; matched by:
-;;;
-;;; GtkEntry.entry { ... }
-;;;
-;;; While any widget defining an "entry" class would be matched by:
-;;;
-;;; .entry { ... }
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; class_name :
-;;;     class name to use in styling
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_add_class" gtk-style-context-add-class) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-29}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[name]{a @code{:string} with a class name to use in styling}
+  @begin{short}
+    Adds a style class to the context, so posterior calls to the function
+    @fun{gtk-style-context-get} or any of the @code{gtk-render-*} functions will
+    make use of this new class for styling.
+  @end{short}
+
+  In the CSS file format, a GtkEntry defining an \"entry\" class, would be
+  matched by:
+  @begin{pre}
+ GtkEntry.entry { ... @}
+  @end{pre}
+  While any widget defining an \"entry\" class would be matched by:
+  @begin{pre}
+ .entry { ... @}
+  @end{pre}
+  @see-class{gtk-style-context}"
+  (context (g-object gtk-style-context))
+  (name :string))
+
+(export 'gtk-style-context-add-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_remove_class ()
@@ -1606,6 +1836,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_remove_class" gtk-style-context-remove-class) :void
+  (context (g-object gtk-style-context))
+  (class-name :string))
+
+(export 'gtk-style-context-remove-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_has_class ()
@@ -1627,6 +1863,12 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_style_context_has_class" gtk-style-context-has-class) :boolean
+  (context (g-object gtk-style-context))
+  (class-name :string))
+
+(export 'gtk-style-context-has-class)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_list_classes ()
 ;;;
@@ -1645,50 +1887,54 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_style_context_list_classes" gtk-style-context-list-classes)
+    (g-list g-string)
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-list-classes)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_region ()
-;;;
-;;; void gtk_style_context_add_region (GtkStyleContext *context,
-;;;                                    const gchar *region_name,
-;;;                                    GtkRegionFlags flags);
-;;;
-;;; Adds a region to context, so posterior calls to gtk_style_context_get() or
-;;; any of the gtk_render_*() functions will make use of this new region for
-;;; styling.
-;;;
-;;; In the CSS file format, a GtkTreeView defining a "row" region, would be
-;;; matched by:
-;;;
-;;; GtkTreeView row { ... }
-;;;
-;;; Pseudo-classes are used for matching flags, so the two following rules:
-;;;
-;;; GtkTreeView row:nth-child(even) { ... }
-;;; GtkTreeView row:nth-child(odd) { ... }
-;;;
-;;; would apply to even and odd rows, respectively.
-;;;
-;;; Note
-;;;
-;;; Region names must only contain lowercase letters and '-', starting always
-;;; with a lowercase letter.
-;;;
-;;; Warning
-;;;
-;;; gtk_style_context_add_region has been deprecated since version 3.14 and
-;;; should not be used in newly-written code.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; region_name :
-;;;     region name to use in styling
-;;;
-;;; flags :
-;;;     flags that apply to the region
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_add_region" gtk-style-context-add-region) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-29}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[name]{a @code{:string} with a region name to use in styling}
+  @argument[flags]{flags of type @symbol{gtk-region-flags} that apply to the
+    region}
+  @begin{short}
+    Adds a region to the context, so posterior calls to the function
+    @fun{gtk-style-context-get} or any of the @code{gtk-render-*} functions will
+    make use of this new region for styling.
+  @end{short}
+
+  In the CSS file format, a GtkTreeView defining a \"row\" region, would be
+  matched by:
+  @begin{pre}
+ GtkTreeView row { ... @}
+  @end{pre}
+  Pseudo-classes are used for matching flags, so the two following rules would
+  apply to even and odd rows, respectively.
+  @begin{pre}
+ GtkTreeView row:nth-child(even) { ... @}
+ GtkTreeView row:nth-child(odd) { ... @}
+  @end{pre}
+  @begin[Note]{dictionary}
+    Region names must only contain lowercase letters and '-', starting always
+    with a lowercase letter.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-style-context-add-region} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-style-context}"
+  (context (g-object gtk-style-context))
+  (name :string)
+  (flags gtk-region-flags))
+
+(export 'gtk-style-context-add-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_remove_region ()
@@ -1711,6 +1957,13 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_remove_region" gtk-style-context-remove-region)
+    :void
+  (context (g-object gtk-style-context))
+  (region-name g-string))
+
+(export 'gtk-style-context-remove-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_has_region ()
@@ -1742,6 +1995,18 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_style_context_has_region" %gtk-style-context-has-region) :boolean
+  (context (g-object gtk-style-context))
+  (region-name g-string)
+  (flags (:pointer gtk-region-flags)))
+
+(defun gtk-style-context-has-region (context region-name)
+  (with-foreign-object (flags 'gtk-region-flags)
+    (when (%gtk-style-context-has-region context region-name flags)
+      (mem-ref flags 'gtk-region-flags))))
+
+(export 'gtk-style-context-has-region)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_list_regions ()
 ;;;
@@ -1764,6 +2029,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_list_regions" gtk-style-context-list-regions)
+    (g-list g-string)
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-list-regions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_frame_clock ()
@@ -1788,6 +2059,15 @@
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-8
+(defcfun ("gtk_style_context_set_frame_clock" gtk-style-context-set-frame-clock)
+    :void
+  (context (g-object gtk-style-context))
+  (frame-clock (g-object gdk-frame-clock)))
+
+#+gtk-3-8
+(export 'gtk-style-context-set-frame-clock)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_state ()
 ;;;
@@ -1806,6 +2086,12 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_style_context_set_state" gtk-style-context-set-state) :void
+  (context (g-object gtk-style-context))
+  (flags gtk-state-flags))
+
+(export 'gtk-style-context-set-state)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_scale ()
 ;;;
@@ -1823,6 +2109,14 @@
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-10
+(defcfun ("gtk_style_context_set_scale" gtk-style-context-set-scale) :void
+  (context (g-object gtk-style-context))
+  (scale :int))
+
+#+gtk-3-10
+(export 'gtk-style-context-set-scale)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_scale ()
 ;;;
@@ -1838,6 +2132,13 @@
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_style_context_get_scale" gtk-style-context-get-scale) :int
+  (context (g-object gtk-style-context)))
+
+#+gtk-3-10
+(export 'gtk-style-context-get-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_to_string ()
@@ -1867,6 +2168,14 @@
 ;;;
 ;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-20
+(defcfun ("gtk_style_context_to_string" gtk-style-context-to-string) :string
+  (context (g-object gtk-style-context))
+  (flags gtk-style-context-print-flags))
+
+#+gtk-3-20
+(export 'gtk-style-context-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_new ()
