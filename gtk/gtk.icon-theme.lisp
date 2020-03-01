@@ -500,31 +500,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_add_resource_path ()
-;;;
-;;; void
-;;; gtk_icon_theme_add_resource_path (GtkIconTheme *icon_theme,
-;;;                                   const gchar *path);
-;;;
-;;; Adds a resource path that will be looked at when looking for icons, similar
-;;; to search paths.
-;;;
-;;; This function should be used to make application-specific icons available as
-;;; part of the icon theme.
-;;;
-;;; The resources are considered as part of the hicolor icon theme and must be
-;;; located in subdirectories that are defined in the hicolor icon theme, such
-;;; as @path/16x16/actions/run.png. Icons that are directly placed in the
-;;; resource path instead of a subdirectory are also considered as ultimate
-;;; fallback.
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; path :
-;;;     a resource path
-;;;
-;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-14
+(defcfun ("gtk_icon_theme_add_resource_path" gtk-icon-theme-add-resource-path)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-27}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @argument[path]{a @code{:string} with a resource path}
+  @begin{short}
+    Adds a resource path that will be looked at when looking for icons, similar
+    to search paths.
+  @end{short}
+
+  This function should be used to make application specific icons available as
+  part of the icon theme.
+
+  The resources are considered as part of the hicolor icon theme and must be
+  located in subdirectories that are defined in the hicolor icon theme, such
+  as @file{@@path/16x16/actions/run.png}. Icons that are directly placed in the
+  resource path instead of a subdirectory are also considered as ultimate
+  fallback.
+
+  Since 3.14
+  @see-class{gtk-icon-theme}"
+  (icon-theme (g-object gtk-icon-theme))
+  (path :string))
+
+#+gtk-3-14
+(export 'gtk-icon-theme-add-resource-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_set_custom_theme ()
