@@ -5729,7 +5729,10 @@ setup_tree (void)
     @begin[GtkStyleContext]{subsection}
       Rendering UI elements
 
+      @about-symbol{gtk-junction-sides}
+      @about-symbol{gtk-region-flags}
       @about-symbol{gtk-style-context-print-flags}
+      @about-symbol{gtk-border-style}
 
       @about-class{gtk-style-context}
 
@@ -5897,9 +5900,11 @@ setup_tree (void)
       @about-function{gtk-widget-path-iter-clear-classes}
       @about-function{gtk-widget-path-iter-clear-regions}
       @about-function{gtk-widget-path-iter-get-name}
+      @about-function{gtk-widget-path-iter-get-object-name}
       @about-function{gtk-widget-path-iter-get-object-type}
       @about-function{gtk-widget-path-iter-get-siblings}
       @about-function{gtk-widget-path-iter-get-sibling-index}
+      @about-function{gtk-widget-path-iter-get-state}
       @about-function{gtk-widget-path-iter-has-class}
       @about-function{gtk-widget-path-iter-has-name}
       @about-function{gtk-widget-path-iter-has-qclass}
@@ -5911,7 +5916,9 @@ setup_tree (void)
       @about-function{gtk-widget-path-iter-remove-class}
       @about-function{gtk-widget-path-iter-remove-region}
       @about-function{gtk-widget-path-iter-set-name}
+      @about-function{gtk-widget-path-iter-set-object-name}
       @about-function{gtk-widget-path-iter-set-object-type}
+      @about-function{gtk-widget-path-iter-set-state}
       @about-function{gtk-widget-path-length}
       @about-function{gtk-widget-path-new}
       @about-function{gtk-widget-path-prepend-type}
@@ -6375,7 +6382,7 @@ setup_tree (void)
       @about-function{gtk-recent-action-new-for-manager}
     @end{subsection}
     @begin[GtkActivatable]{subsection}
-      An deprecated interface for activatable widgets.
+      A deprecated interface for activatable widgets.
 
       @about-class{gtk-activatable}
       @about-generic{gtk-activatable-related-action}
@@ -6495,7 +6502,7 @@ setup_tree (void)
 
     @begin[Deprecated since GTK+ 3.14]{subsection}@end{subsection}
     @begin[GtkNumerableIcon]{subsection}
-      A depracted @class{g-icon} that allows numbered emblems.
+      A deprecated @class{g-icon} that allows numbered emblems.
 
       @about-class{gtk-numerable-icon}
       @about-generic{gtk-numerable-icon-background-icon}
@@ -6594,6 +6601,15 @@ setup_tree (void)
       @about-function{gtk-alignment-set}
       @about-function{gtk-alignment-get-padding}
       @about-function{gtk-alignment-set-padding}
+    @end{subsection}
+    @begin[Deprecated since GTK+ 3.16]{subsection}@end{subsection}
+    @begin[GtkStyleProperties]{subsection}
+      Deprecated store for style property information.
+
+      GtkStyleProperties has been deprecated in GTK 3.16. The CSS machinery does
+      not use it anymore and all users of this object have been deprecated.
+      No symbols und functions for GtkStyleProperties are implemented in the
+      Lisp binding.
     @end{subsection}
   @end{section}")
 

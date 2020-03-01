@@ -281,8 +281,7 @@ Theming in GTK+
  +  gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.24 &
  +  gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.24 &
  +  gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.24 &
- +  gtk.style-properties.lisp        - GtkStyleProperties          - GTK+ 3.24 %
- +  gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.24 &
+    gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.24 &
  +  gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.24 &
 
 Deprecated
@@ -334,4 +333,8 @@ Deprecated
     gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.24 &
     gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.24 &
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.24
+
+    Deprecated since GTK+ 3.16
+
+    not implemented                  - GtkStyleProperties
 
