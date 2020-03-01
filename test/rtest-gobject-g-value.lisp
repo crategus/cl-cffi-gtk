@@ -1,10 +1,9 @@
-
-(def-suite gobject-g-value :in gobject-suite)
-(in-suite gobject-g-value)
+(def-suite g-value :in gobject-suite)
+(in-suite g-value)
 
 ;;;     GValue
 
-(test g-value
+(test g-value-class
    #-windows
   (is (= 24 (foreign-type-size '(:struct g-value))))
    #+windows

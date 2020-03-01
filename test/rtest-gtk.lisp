@@ -141,6 +141,12 @@
 
 (load "rtest-gtk-selections.lisp")
 
+;;;  Theming in GTK+
+
+(load "rtest-gtk-style-context.lisp")
+(load "rtest-gtk-css-provider.lisp")
+(load "rtest-gtk-widget-path.lisp")
+
 ;;;  Deprecated
 
 (load "rtest-gtk-action.lisp")

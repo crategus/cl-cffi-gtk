@@ -1,6 +1,8 @@
 (def-suite gtk-application :in gtk-suite)
 (in-suite gtk-application)
 
+(defvar *gtk-application-verbose* nil)
+
 ;;; --- GtkApplicationInhibitFlags ---------------------------------------------
 
 (test gtk-application-inhibit-flags
@@ -11,7 +13,7 @@
            (gobject::registered-flags-type "GtkApplicationInhibitFlags")))
   ;; Check the names
   (is (equal '("GTK_APPLICATION_INHIBIT_LOGOUT" "GTK_APPLICATION_INHIBIT_SWITCH"
- "GTK_APPLICATION_INHIBIT_SUSPEND" "GTK_APPLICATION_INHIBIT_IDLE")
+               "GTK_APPLICATION_INHIBIT_SUSPEND" "GTK_APPLICATION_INHIBIT_IDLE")
              (mapcar #'gobject::flags-item-name
                      (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
   ;; Check the values
@@ -24,12 +26,13 @@
                      (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkApplicationInhibitFlags"
-    GTK-APPLICATION-INHIBIT-FLAGS
-    (:EXPORT T :TYPE-INITIALIZER "gtk_application_inhibit_flags_get_type")
-  (:LOGOUT 1)
-  (:SWITCH 2)
-  (:SUSPEND 4)
-  (:IDLE 8))
+                              GTK-APPLICATION-INHIBIT-FLAGS
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gtk_application_inhibit_flags_get_type")
+                              (:LOGOUT 1)
+                              (:SWITCH 2)
+                              (:SUSPEND 4)
+                              (:IDLE 8))
              (gobject::get-g-type-definition "GtkApplicationInhibitFlags"))))
 
 ;;; --- GtkApplication ---------------------------------------------------------
@@ -50,8 +53,8 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkApplication"))))
   ;; Check the class properties
   (is (equal '("action-group" "active-window" "app-menu" "application-id" "flags"
- "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"
- "register-session" "resource-base-path" "screensaver-active")
+               "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"
+               "register-session" "resource-base-path" "screensaver-active")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkApplication"))
                           #'string-lessp)))
@@ -72,66 +75,60 @@
                          "screensaver-active" "gboolean" T NIL)))
              (get-g-type-definition "GtkApplication"))))
 
-;;; ----------------------------------------------------------------------------
-;;; Properties and Accessors
-;;; ----------------------------------------------------------------------------
+;;; --- Properties and Accessors -----------------------------------------------
 
-(test gtk-application-accessors
-  (let ((application (make-instance 'gtk-application)))
-    (is-false (gtk-application-active-window application))
-    (is-false (gtk-application-app-menu application))
-    (is-false (gtk-application-menubar application))
-    (is-false (gtk-application-register-session application))
-    (is-false (gtk-application-screensaver-active application))
-))
+(test gtk-application-properties
+  (let (;; Create an application
+        (app (make-instance 'gtk-application
+                            :application-id "com.crategus.test"
+                            :flags :none
+                            :register-session nil
+                            :inactivity-timeout 2000)))
+    ;; Signal handler "activate"
+    (g-signal-connect app "activate"
+                      (lambda (app)
+                        (g-application-hold app)
+                        (when *gtk-application-verbose*
+                          (format t "~%The application is in startup.~%"))
+                        ;; gtk-application-active-window
+                        (is-false (gtk-application-active-window app))
+                        ;; gtk-application-app-menu
+                        (is-false (gtk-application-app-menu app))
+                        (setf (gtk-application-app-menu app) (make-instance 'g-menu))
+                        (is (eq 'g-menu (type-of (gtk-application-app-menu app))))
+                        ;; gtk-application-menubar
+                        (is-false (gtk-application-menubar app))
+                        (setf (gtk-application-menubar app) (make-instance 'g-menu))
+                        (is (eq 'g-menu (type-of (gtk-application-menubar app))))
+                        ;; gtk-application-register-session
+                        (is-false (gtk-application-register-session app))
+                        (setf (gtk-application-register-session app) t)
+                        (is-true (gtk-application-register-session app))
+                        ;; gtk-application-screensaver-active
+                        (is-false (gtk-application-screensaver-active app))
+                        (g-application-release app)))
+    ;; Run the application
+    (g-application-run app nil)))
 
-
-
-;("action-group"   "application-id" "flags"
-; "inactivity-timeout" "is-busy" "is-registered" "is-remote"
-;  "resource-base-path" )
-
-
-;;; ----------------------------------------------------------------------------
-;;; Functions
-;;; ----------------------------------------------------------------------------
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_application_new
 
 (test gtk-application-new
-  (let ((application (gtk-application-new "com.crategus.test" '(:none))))
+  (let ((application (gtk-application-new "com.crategus.test" '(:handles-open))))
     (is-true (g-application-id-is-valid "com.crategus.test"))
-    (is (equal "com.crategus.test"
-               (g-application-application-id application)))
-    (is-false (g-application-flags application))
-  )
-)
+    (is (string= "com.crategus.test"
+                 (g-application-application-id application)))
+    (is (equal '(:handles-open) (g-application-flags application)))))
 
 ;;;     gtk_application_add_window
-
-(test gtk-application-add-window
-  (let ((application (make-instance 'gtk-application))
-        (window (make-instance 'gtk-application-window)))
-    (is-false (gtk-application-active-window application))
-
-    (gtk-application-add-window application window)
-
-    (is-false (gtk-application-active-window application))
-
-))
-
 ;;;     gtk_application_remove_window
 ;;;     gtk_application_get_windows
 ;;;     gtk_application_get_window_by_id
-;;;     gtk_application_get_active_window                  Accessor
 ;;;     gtk_application_inhibit
 ;;;     gtk_application_uninhibit
 ;;;     gtk_application_is_inhibited
 ;;;     gtk_application_prefers_app_menu
-;;;     gtk_application_get_app_menu                       Accessor
-;;;     gtk_application_set_app_menu                       Accessor
-;;;     gtk_application_get_menubar                        Accessor
-;;;     gtk_application_set_menubar                        Accessor
 ;;;     gtk_application_get_menu_by_id
 ;;;     gtk_application_add_accelerator
 ;;;     gtk_application_remove_accelerator
@@ -169,4 +166,3 @@
     (gtk-application-set-accels-for-action application "win::save" '("<Control>q"))
     (is (equal '("win::close" "win::save")
                (gtk-application-get-actions-for-accel application "<Control>q")))))
-

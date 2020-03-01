@@ -1,4 +1,3 @@
-
 (def-suite gobject-type-info :in gobject-suite)
 (in-suite gobject-type-info)
 
@@ -37,7 +36,7 @@
   (is (= (ash 255 2) +g-type-fundamental-max+)))
 
 ;;;   g_type_gtype
-  
+
 (test g-type-gtype
   (is (equal "GType" (gtype-name (g-type-gtype)))))
 
@@ -103,10 +102,10 @@
   (is (equal (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))))
 
 ;;;   g_type_make_fundamental
-                                   
+
 (test g-type-make-fundamental
   (is (= (ash 256 2) (g-type-make-fundamental 256))))
-  
+
 ;;;   g_type_is_abstract
 
 (test g-type-is-abstract
@@ -180,7 +179,7 @@
   (is-true  (g-type-is-derived "GtkTreePath")))
 
 ;;;   g_type_is_fundamental
-  
+
 (test g-type-is-fundamental
   (is-true  (g-type-is-fundamental +g-type-invalid+))
   (is-true  (g-type-is-fundamental +g-type-none+))
@@ -216,7 +215,7 @@
   (is-false (g-type-is-fundamental "GtkTreePath")))
 
 ;;;   g_type_is_value_type
-  
+
 (test g-type-is-value-type
   (is-false (g-type-is-value-type +g-type-invalid+))
   (is-false (g-type-is-value-type +g-type-none+))
@@ -252,7 +251,7 @@
   (is-true  (g-type-is-value-type "GtkTreePath")))
 
 ;;;   g_type_has_value_table
-  
+
 (test g-type-has-value-table
 ;  (is-false (g-type-has-value-table +g-type-invalid+))
 ;  (is-false (g-type-has-value-table +g-type-none+))
@@ -288,7 +287,7 @@
   (is-true  (g-type-has-value-table "GtkTreePath")))
 
 ;;;   g_type_is_classed
-  
+
 (test g-type-is-classed
   (is-false (g-type-is-classed +g-type-invalid+))
   (is-false (g-type-is-classed +g-type-none+))
@@ -324,7 +323,7 @@
   (is-false (g-type-is-classed "GtkTreePath")))
 
 ;;;   g_type_is_instantiatable
-  
+
 (test g-type-is-instantiatable
   (is-false (g-type-is-instantiatable +g-type-invalid+))
   (is-false (g-type-is-instantiatable +g-type-none+))
@@ -360,7 +359,7 @@
   (is-false (g-type-is-instantiatable "GtkTreePath")))
 
 ;;;   g_type_is_derivable
-  
+
 (test g-type-is-derivable
   (is-false (g-type-is-derivable +g-type-invalid+))
   (is-false (g-type-is-derivable +g-type-none+))
@@ -396,7 +395,7 @@
   (is-true  (g-type-is-derivable "GtkTreePath")))
 
 ;;;   g_type_is_deep_derivable
-  
+
 (test g-type-is-deep-derivable
   (is-false (g-type-is-deep-derivable +g-type-invalid+))
   (is-false (g-type-is-deep-derivable +g-type-none+))
@@ -432,7 +431,7 @@
   (is-false (g-type-is-deep-derivable "GtkTreePath")))
 
 ;;; g_type_is_interface
-  
+
 (test g-type-is-interface
   (is-false (g-type-is-interface +g-type-invalid+))
   (is-false (g-type-is-interface +g-type-none+))

@@ -9,6 +9,7 @@
 (load "rtest-gio-simple-action-group.lisp")
 
 (load "rtest-gio-application.lisp")
+(load "rtest-gio-application-command-line.lisp")
 
 (load "rtest-gio-content-type.lisp")
 (load "rtest-gio-icon.lisp")
