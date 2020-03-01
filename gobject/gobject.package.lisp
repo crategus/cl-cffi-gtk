@@ -119,12 +119,42 @@
     to be a letter (a-z or A-Z) or an underscore '_'. Subsequent characters can
     be letters, numbers or any of '-_+'.
 
+    @about-variable{+g-type-invalid+}
+    @about-variable{+g-type-none+}
+    @about-variable{+g-type-interface+}
+    @about-variable{+g-type-char+}
+    @about-variable{+g-type-uchar+}
+    @about-variable{+g-type-boolean+}
+    @about-variable{+g-type-int+}
+    @about-variable{+g-type-uint+}
+    @about-variable{+g-type-long+}
+    @about-variable{+g-type-ulong+}
+    @about-variable{+g-type-int64+}
+    @about-variable{+g-type-uint64+}
+    @about-variable{+g-type-enum+}
+    @about-variable{+g-type-flags+}
+    @about-variable{+g-type-float+}
+    @about-variable{+g-type-double+}
+    @about-variable{+g-type-string+}
+    @about-variable{+g-type-pointer+}
+    @about-variable{+g-type-boxed+}
+    @about-variable{+g-type-param+}
+    @about-variable{+g-type-object+}
+    @about-variable{+g-type-gtype+}
+    @about-variable{+g-type-variant+}
+
+    @about-variable{+g-type-reserved-glib-first+}
+    @about-variable{+g-type-reserved-glib-last+}
+    @about-variable{+g-type-reserved-bse-first+}
+    @about-variable{+g-type-reserved-bse-last+}
+    @about-variable{+g-type-reserved-user-first+}
+
     @about-class{g-type}
     @about-function{g-type-gtype}
     @about-symbol{g-type-flags}
     @about-symbol{g-type-fundamental-flags}
     @about-function{g-type-fundamental}
-    @about-variable{g-type-fundamental-max}
+    @about-variable{+g-type-fundamental-max+}
     @about-function{g-type-make-fundamental}
     @about-function{g-type-is-abstract}
     @about-function{g-type-is-derived}
@@ -228,51 +258,65 @@
     for all object types in GTK+, Pango and other libraries based on GObject.
     The GObject class provides methods for object construction and destruction,
     property access methods, and signal support. Signals are described in detail
-    in Signals(3).
+    in the
+    @url[https://developer.gnome.org/gobject/stable/signal.html]{GObject documentation}.
 
     @about-class{g-object}
+    @about-generic{pointer}
+    @about-generic{g-object-has-reference}
+    @about-generic{g-object-signal-handlers}
+
     @about-symbol{g-object-class}
     @about-symbol{g-object-construct-param}
+    @about-symbol{g-parameter}
+    @about-class{g-initially-unowned}
+    @about-class{g-initially-unowned-class}
+
     @about-function{g-type-is-object}
     @about-function{G_OBJECT}
     @about-function{g-is-object}
     @about-function{G_OBJECT_CLASS}
     @about-function{g-is-object-class}
-    @about-function{G_OBJECT_GET_CLASS}
+    @about-function{g-object-get-class}
     @about-function{g-object-type}
     @about-function{g-object-type-name}
     @about-function{g-object-class-type}
     @about-function{g-object-class-name}
+
     @about-function{g-object-class-install-property}
     @about-function{g-object-class-install-properties}
     @about-function{g-object-class-find-property}
     @about-function{g-object-class-list-properties}
     @about-function{g-object-class-override-property}
     @about-function{g-object-interface-install-property}
-    @about-function{g-object-interface-find_property}
+    @about-function{g-object-interface-find-property}
     @about-function{g-object-interface-list-properties}
     @about-function{g-object-new}
+    @about-function{g-object-new-with-properties}
     @about-function{g-object-newv}
-    @about-symbol{g-parameter}
     @about-function{g-object-ref}
     @about-function{g-object-unref}
     @about-function{g-object-ref-sink}
+    @about-function{g-set-object}
     @about-function{g-clear-object}
-    @about-class{g-initially-unowned}
-    @about-class{g-initially-unowned-class}
-    @about-function{G_TYPE_INITIALLY_UNOWNED}
     @about-function{g-object-is-floating}
     @about-function{g-object-force-floating}
+    @about-symbol{GWeakNotify}
     @about-function{g-object-weak-ref}
     @about-function{g-object-weak-unref}
     @about-function{g-object-add-weak-pointer}
     @about-function{g-object-remove-weak-pointer}
+    @about-function{g-set-weak-pointer}
+    @about-function{g-clear-weak-pointer}
+    @about-symbol{GToggleNotify}
     @about-function{g-object-add-toggle-ref}
     @about-function{g-object-remove-toggle-ref}
     @about-function{g-object-connect}
     @about-function{g-object-disconnect}
     @about-function{g-object-set}
+    @about-function{g-object-setv}
     @about-function{g-object-get}
+    @about-function{g-object-getv}
     @about-function{g-object-notify}
     @about-function{g-object-notify-by-pspec}
     @about-function{g-object-freeze-notify}
@@ -296,12 +340,12 @@
     @about-function{g-object-get-valist}
     @about-function{g-object-watch-closure}
     @about-function{g-object-run-dispose}
-    @about-function{G_OBJECT_WARN_INVALID_PROPERTY_ID}
-    @about-function{GWeakRef}
+    @about-symbol{G_OBJECT_WARN_INVALID_PROPERTY_ID}
     @about-function{g-weak-ref-init}
     @about-function{g-weak-ref-clear}
     @about-function{g-weak-ref-get}
     @about-function{g-weak-ref-set}
+    @about-function{g-assert-finalize-object}
   @end{section}
   @begin[Enumeration and Flag Types]{section}
     The GLib type system provides fundamental types for enumeration and flags
@@ -426,7 +470,7 @@
     @about-function{G_IS_PARAM_SPEC_BOOLEAN}
     @about-function{G_PARAM_SPEC_BOOLEAN}
     @about-function{G_VALUE_HOLDS_BOOLEAN}
-    @about-function{G_TYPE_PARAM_BOOLEAN}
+    @about-variable{g-type-param-boolean}
     @about-symbol{g-param-spec-boolean}
     @about-function{g-param-spec-boolean}
     @about-function{g-value-set-boolean}
@@ -434,7 +478,7 @@
     @about-function{G_IS_PARAM_SPEC_CHAR}
     @about-function{G_PARAM_SPEC_CHAR}
     @about-function{G_VALUE_HOLDS_CHAR}
-    @about-function{G_TYPE_PARAM_CHAR}
+    @about-variable{g-type-param-char}
     @about-symbol{g-param-spec-char}
     @about-function{g-param-spec-char}
     @about-function{g-value-set-char}
@@ -444,7 +488,7 @@
     @about-function{G_IS_PARAM_SPEC_UCHAR}
     @about-function{G_PARAM_SPEC_UCHAR}
     @about-function{G_VALUE_HOLDS_UCHAR}
-    @about-function{G_TYPE_PARAM_UCHAR}
+    @about-variable{g-type-param-uchar}
     @about-symbol{g-param-spec-uchar}
     @about-function{g-param-spec-uchar}
     @about-function{g-value-set-uchar}
@@ -452,7 +496,7 @@
     @about-function{G_IS_PARAM_SPEC_INT}
     @about-function{G_PARAM_SPEC_INT}
     @about-function{G_VALUE_HOLDS_INT}
-    @about-function{G_TYPE_PARAM_INT}
+    @about-variable{g-type-param-int}
     @about-symbol{g-param-spec-int}
     @about-function{g-param-spec-int}
     @about-function{g-value-set-int}
@@ -460,7 +504,7 @@
     @about-function{G_IS_PARAM_SPEC_UINT}
     @about-function{G_PARAM_SPEC_UINT}
     @about-function{G_VALUE_HOLDS_UINT}
-    @about-function{G_TYPE_PARAM_UINT}
+    @about-variable{g-type-param-uint}
     @about-symbol{g-param-spec-uint}
     @about-function{g-param-spec-uint}
     @about-function{g-value-set-uint}
@@ -468,7 +512,7 @@
     @about-function{G_IS_PARAM_SPEC_LONG}
     @about-function{G_PARAM_SPEC_LONG}
     @about-function{G_VALUE_HOLDS_LONG}
-    @about-function{G_TYPE_PARAM_LONG}
+    @about-variable{g-type-param-long}
     @about-symbol{g-param-spec-long}
     @about-function{g-param-spec-long}
     @about-function{g-value-set-long}
@@ -476,7 +520,7 @@
     @about-function{G_IS_PARAM_SPEC_ULONG}
     @about-function{G_PARAM_SPEC_ULONG}
     @about-function{G_VALUE_HOLDS_ULONG}
-    @about-function{G_TYPE_PARAM_ULONG}
+    @about-variable{g-type-param-ulong}
     @about-symbol{g-param-spec-ulong}
     @about-function{g-param-spec-ulong}
     @about-function{g-value-set-ulong}
@@ -484,7 +528,7 @@
     @about-function{G_IS_PARAM_SPEC_INT64}
     @about-function{G_PARAM_SPEC_INT64}
     @about-function{G_VALUE_HOLDS_INT64}
-    @about-function{G_TYPE_PARAM_INT64}
+    @about-variable{g-type-param-int64}
     @about-symbol{g-param-spec-int64}
     @about-function{g-param-spec-int64}
     @about-function{g-value-set-int64}
@@ -492,7 +536,7 @@
     @about-function{G_IS_PARAM_SPEC_UINT64}
     @about-function{G_PARAM_SPEC_UINT64}
     @about-function{G_VALUE_HOLDS_UINT64}
-    @about-function{G_TYPE_PARAM_UINT64}
+    @about-variable{g-type-param-uint64}
     @about-symbol{g-param-spec-uint64}
     @about-function{g-param-spec-uint64}
     @about-function{g-value-set-uint64}
@@ -500,7 +544,7 @@
     @about-function{G_IS_PARAM_SPEC_FLOAT}
     @about-function{G_PARAM_SPEC_FLOAT}
     @about-function{G_VALUE_HOLDS_FLOAT}
-    @about-function{G_TYPE_PARAM_FLOAT}
+    @about-variable{g-type-param-float}
     @about-symbol{g-param-spec-float}
     @about-function{g-param-spec-float}
     @about-function{g-value-set-float}
@@ -508,7 +552,7 @@
     @about-function{G_IS_PARAM_SPEC_DOUBLE}
     @about-function{G_PARAM_SPEC_DOUBLE}
     @about-function{G_VALUE_HOLDS_DOUBLE}
-    @about-function{G_TYPE_PARAM_DOUBLE}
+    @about-variable{g-type-param-double}
     @about-symbol{g-param-spec-double}
     @about-function{g-param-spec-double}
     @about-function{g-value-set-double}
@@ -516,7 +560,7 @@
     @about-function{G_IS_PARAM_SPEC_ENUM}
     @about-function{G_PARAM_SPEC_ENUM}
     @about-function{G_VALUE_HOLDS_ENUM}
-    @about-function{G_TYPE_PARAM_ENUM}
+    @about-variable{g-type-param-enum}
     @about-symbol{g-param-spec-enum}
     @about-function{g-param-spec-enum}
     @about-function{g-value-set-enum}
@@ -524,7 +568,7 @@
     @about-function{G_IS_PARAM_SPEC_FLAGS}
     @about-function{G_PARAM_SPEC_FLAGS}
     @about-function{G_VALUE_HOLDS_FLAGS}
-    @about-function{G_TYPE_PARAM_FLAGS}
+    @about-variable{g-type-param-flags}
     @about-symbol{g-param-spec-flags}
     @about-function{g-param-spec-flags}
     @about-function{g-value-set-flags}
@@ -532,7 +576,7 @@
     @about-function{G_IS_PARAM_SPEC_STRING}
     @about-function{G_PARAM_SPEC_STRING}
     @about-function{G_VALUE_HOLDS_STRING}
-    @about-function{G_TYPE_PARAM_STRING}
+    @about-variable{g-type-param-string}
     @about-symbol{g-param-spec-string}
     @about-function{g-param-spec-string}
     @about-function{g-value-set-string}
@@ -544,7 +588,7 @@
     @about-function{G_IS_PARAM_SPEC_PARAM}
     @about-function{G_PARAM_SPEC_PARAM}
     @about-function{G_VALUE_HOLDS_PARAM}
-    @about-function{G_TYPE_PARAM_PARAM}
+    @about-variable{g-type-param-param}
     @about-symbol{g-param-spec-param}
     @about-function{g-param-spec-param}
     @about-function{g-value-set-param}
@@ -555,7 +599,7 @@
     @about-function{G_IS_PARAM_SPEC_BOXED}
     @about-function{G_PARAM_SPEC_BOXED}
     @about-function{G_VALUE_HOLDS_BOXED}
-    @about-function{G_TYPE_PARAM_BOXED}
+    @about-variable{g-type-param-boxed}
     @about-symbol{g-param-spec-boxed}
     @about-function{g-param-spec-boxed}
     @about-function{g-value-set-boxed}
@@ -567,7 +611,7 @@
     @about-function{G_IS_PARAM_SPEC_POINTER}
     @about-function{G_PARAM_SPEC_POINTER}
     @about-function{G_VALUE_HOLDS_POINTER}
-    @about-function{G_TYPE_PARAM_POINTER}
+    @about-variable{g-type-param-pointer}
     @about-symbol{g-param-spec-pointer}
     @about-function{g-param-spec-pointer}
     @about-function{g-value-set-pointer}
@@ -575,7 +619,7 @@
     @about-function{G_IS_PARAM_SPEC_OBJECT}
     @about-function{G_PARAM_SPEC_OBJECT}
     @about-function{G_VALUE_HOLDS_OBJECT}
-    @about-function{G_TYPE_PARAM_OBJECT}
+    @about-variable{g-type-param-object}
     @about-symbol{g-param-spec-object}
     @about-function{g-param-spec-object}
     @about-function{g-value-set-object}
@@ -585,23 +629,23 @@
     @about-function{g-value-dup-object}
     @about-function{G_IS_PARAM_SPEC_UNICHAR}
     @about-function{G_PARAM_SPEC_UNICHAR}
-    @about-function{G_TYPE_PARAM_UNICHAR}
+    @about-variable{g-type-param-unichar}
     @about-symbol{g-param-spec-unichar}
     @about-function{g-param-spec-unichar}
     @about-function{G_IS_PARAM_SPEC_VALUE_ARRAY}
     @about-function{G_PARAM_SPEC_VALUE_ARRAY}
-    @about-function{G_TYPE_PARAM_VALUE_ARRAY}
+    @about-variable{g-type-param-value-array}
     @about-symbol{g-param-spec-value-array}
     @about-function{g-param-spec-value-array}
     @about-function{G_IS_PARAM_SPEC_OVERRIDE}
     @about-function{G_PARAM_SPEC_OVERRIDE}
-    @about-function{G_TYPE_PARAM_OVERRIDE}
+    @about-variable{g-type-param-override}
     @about-symbol{g-param-spec-override}
     @about-function{g-param-spec-override}
     @about-function{G_IS_PARAM_SPEC_GTYPE}
     @about-function{G_PARAM_SPEC_GTYPE}
     @about-function{G_VALUE_HOLDS_GTYPE}
-    @about-function{G_TYPE_PARAM_GTYPE}
+    @about-variable{g-type-param-gtype}
     @about-symbol{g-param-spec-g-type}
     @about-function{g-param-spec-g-type}
     @about-function{g-value-get-g-type}
@@ -609,7 +653,7 @@
     @about-function{G_IS_PARAM_SPEC_VARIANT}
     @about-function{G_PARAM_SPEC_VARIANT}
     @about-function{G_VALUE_HOLDS_VARIANT}
-    @about-function{G_TYPE_PARAM_VARIANT}
+    @about-variable{g-type-param-variant}
     @about-symbol{g-param-spec-variant}
     @about-function{g-param-spec-variant}
     @about-function{g-value-get-variant}
