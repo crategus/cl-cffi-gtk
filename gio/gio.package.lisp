@@ -197,6 +197,29 @@
       @about-function{g-application-bind-busy-property}
       @about-function{g-application-unbind-busy-property}
     @end{subsection}
+    @begin[GApplicationCommandLine]{subsection}
+      A command-line invocation of an application.
+
+      @about-class{g-application-command-line}
+      @about-generic{g-application-command-line-arguments}
+      @about-generic{g-application-command-line-is-remote}
+      @about-generic{g-application-command-line-options}
+      @about-generic{g-application-command-line-platform-data}
+
+      @about-function{g-application-command-line-get-arguments}
+      @about-function{g-application-command-line-get-cwd}
+      @about-function{g-application-command-line-get-environ}
+      @about-function{g-application-command-line-get-options-dict}
+      @about-function{g-application-command-line-get-stdin}
+      @about-function{g-application-command-line-create-file-for-arg}
+      @about-function{g-application-command-line-getenv}
+      @about-function{g-application-command-line-get-is-remote}
+      @about-function{g-application-command-line-get-platform-data}
+      @about-function{g-application-command-line-set-exit-status}
+      @about-function{g-application-command-line-get-exit-status}
+      @about-function{g-application-command-line-print}
+      @about-function{g-application-command-line-printerr}
+    @end{subsection}
     @begin[GActionGroup]{subsection}
       A group of actions.
 
