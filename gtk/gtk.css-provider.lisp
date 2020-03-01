@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1140,6 +1140,14 @@
 ;;;     and you must not free it.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_css_provider_get_named" gtk-css-provider-get-named)
+    (g-object gtk-css-provider)
+
+  (name :string)
+  (variant :string))
+
+(export 'gtk-css-provider-get-named)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_load_from_data ()
 ;;; ----------------------------------------------------------------------------
@@ -1322,70 +1330,95 @@
 ;;;
 ;;;
 ;;; GTK_CSS_PROVIDER_ERROR_UNKNOWN_VALUE
-;;;
-;;; GtkCssSection
-;;;
-;;; typedef struct _GtkCssSection GtkCssSection;
-;;;
-;;; Defines a part of a CSS document. Because sections are nested into one
-;;; another, you can use gtk_css_section_get_parent() to get the containing
-;;; region.
-;;;
-;;; Since 3.2
-;;; ----------------------------------------------------------------------------
+;;;-----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCssSectionType
-;;;
-;;; typedef enum {
-;;;   GTK_CSS_SECTION_DOCUMENT,
-;;;   GTK_CSS_SECTION_IMPORT,
-;;;   GTK_CSS_SECTION_COLOR_DEFINITION,
-;;;   GTK_CSS_SECTION_BINDING_SET,
-;;;   GTK_CSS_SECTION_RULESET,
-;;;   GTK_CSS_SECTION_SELECTOR,
-;;;   GTK_CSS_SECTION_DECLARATION,
-;;;   GTK_CSS_SECTION_VALUE,
-;;;   GTK_CSS_SECTION_KEYFRAMES
-;;; } GtkCssSectionType;
-;;;
-;;; The different types of sections indicate parts of a CSS document as parsed
-;;; by GTK's CSS parser. They are oriented towards the CSS grammar CSS grammer,
-;;; but may contain extensions.
-;;;
-;;; More types might be added in the future as the parser incorporates more
-;;; features.
-;;;
-;;; GTK_CSS_SECTION_DOCUMENT
-;;;     The section describes a complete document. This section time is the only
-;;;     one where gtk_css_section_get_parent() might return NULL.
-;;;
-;;; GTK_CSS_SECTION_IMPORT
-;;;     The section defines an import rule.
-;;;
-;;; GTK_CSS_SECTION_COLOR_DEFINITION
-;;;     The section defines a color. This is a GTK extension to CSS.
-;;;
-;;; GTK_CSS_SECTION_BINDING_SET
-;;;     The section defines a binding set. This is a GTK extension to CSS.
-;;;
-;;; GTK_CSS_SECTION_RULESET
-;;;     The section defines a CSS ruleset.
-;;;
-;;; GTK_CSS_SECTION_SELECTOR
-;;;     The section defines a CSS selector.
-;;;
-;;; GTK_CSS_SECTION_DECLARATION
-;;;     The section defines the declaration of a CSS variable.
-;;;
-;;; GTK_CSS_SECTION_VALUE
-;;;     The section defines the value of a CSS declaration.
-;;;
-;;; GTK_CSS_SECTION_KEYFRAMES
-;;;     The section defines keyframes. See CSS animations for details. Since 3.6
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkCssSectionType" gtk-css-section-type
+  (:export t
+   :type-initializer "gtk_css_section_type_get_type")
+  (:document 0)
+  (:import 1)
+  (:color-definition 2)
+  (:binding-set 3)
+  (:ruleset 4)
+  (:selector 5)
+  (:declaration 6)
+  (:value 7)
+  (:keyframes 8))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-corner-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-corner-type atdoc:*external-symbols*)
+ "@version{2020-2-29}
+  @begin{short}
+    The different types of sections indicate parts of a CSS document as parsed
+    by GTK's CSS parser.
+  @end{short}
+  They are oriented towards the CSS grammar CSS grammer, but may contain
+  extensions.
+
+  More types might be added in the future as the parser incorporates more
+  features.
+  @begin{pre}
+(define-g-enum \"GtkCssSectionType\" gtk-css-section-type
+  (:export t
+   :type-initializer \"gtk_css_section_type_get_type\")
+  (:document 0)
+  (:import 1)
+  (:color-definition 2)
+  (:binding-set 3)
+  (:ruleset 4)
+  (:selector 5)
+  (:declaration 6)
+  (:value 7)
+  (:keyframes 8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:document]{The section describes a complete document. This section
+      time is the only one where the function @fun{gtk-css-section-get-parent}
+      might return @code{nil}.}
+    @entry[:import]{The section defines an import rule.}
+    @entry[:color-definition]{The section defines a color. This is a GTK
+      extension to CSS.}
+    @entry[:binding-set]{The section defines a binding set. This is a GTK
+      extension to CSS.}
+    @entry[:ruleset]{The section defines a CSS ruleset.}
+    @entry{:selector]{The section defines a CSS selector.}
+    @entry[:declaration]{The section defines the declaration of a CSS variable.}
+    @entry[:value]{The section defines the value of a CSS declaration.}
+    @entry[:keyframes]{The section defines keyframes. See CSS animations for
+      details. Since 3.6.}
+  @end{table}
+  @see-class{gtk-css-provider}")
+
+;;; ----------------------------------------------------------------------------
+;;; GtkCssSection
+;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "gtk_css_section_get_type" :int))
+
+(define-g-boxed-opaque gtk-css-section "GtkCssSection"
+  :alloc (error "GtkCssSection can not be created from Lisp side"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-css-section atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-css-section 'type)
+ "@version{2020-2-29}
+  @begin{short}
+    Defines a part of a CSS document.
+  @end{short}
+  Because sections are nested into one another, you can use the function
+  @fun{gtk-css-section-get-parent} to get the containing region.
+  @begin{pre}
+(define-g-boxed-opaque gtk-css-section \"GtkCssSection\"
+  :alloc (error \"GtkCssSection can not be created from Lisp side\"))
+  @end{pre}
+  @see-function{gtk-css-section-get-parent}")
+
+(export (boxed-related-symbols 'gtk-css-section))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_section_get_end_line ()
