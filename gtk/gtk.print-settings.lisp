@@ -470,12 +470,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPageRange
-;;;
-;;; struct GtkPageRange {
-;;;   gint start;
-;;;   gint end;
-;;; };
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct gtk-page-range
+  (start :int)
+  (end :int))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-page-range atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-page-range atdoc:*external-symbols*)
+ "@version{2020-2-23}
+  @short{}
+  @begin{pre}
+(defcstruct gtk-page-range
+  (start :int)
+  (end :int))
+  @end{pre}")
+
+(export 'gtk-page-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAGE_RANGES
@@ -847,6 +859,13 @@
     Returns the value associated with @arg{key}, interpreted as a length.
   @end{return}
   The returned value is converted to @arg{unit}.
+  @begin[Example]{dictionary}
+ (setq settings (make-instance 'gtk-print-settings))
+=> #<GTK-PRINT-SETTINGS {1004A34623@}>
+ (gtk-print-settings-set-length settings \"paper-width\" 100.0d0 :mm)
+ (gtk-print-settings-get-length settings \"paper-width\" :mm)
+=> 100.0d0
+  @end{dictionary}
   @see-class{gtk-print-settings}
   @see-symbol{gtk-unit}
   @see-class{gtk-print-settings-set-length}"
@@ -868,6 +887,13 @@
   @argument[value]{a length}
   @argument[unit]{the unit of length}
   @short{Associates a length in units of @arg{unit} with @arg{key}.}
+  @begin[Example]{dictionary}
+ (setq settings (make-instance 'gtk-print-settings))
+=> #<GTK-PRINT-SETTINGS {1004A34623@}>
+ (gtk-print-settings-set-length settings \"paper-width\" 100.0d0 :mm)
+ (gtk-print-settings-get-length settings \"paper-width\" :mm)
+=> 100.0d0
+  @end{dictionary}
   @see-class{gtk-print-settings}
   @see-symbol{gtk-unit}
   @see-function{gtk-print-settings-get-length}"
@@ -1033,6 +1059,13 @@
   @begin{short}
     Gets the value of \"paper-format\", converted to a @class{gtk-paper-size}.
   @end{short}
+  @begin[Example]{dictionary}
+ (setq settings (make-instance 'gtk-print-settings))
+=> #<GTK-PRINT-SETTINGS {1005336783@}>
+ (gtk-print-settings-set-paper-size settings (gtk-paper-size-new \"iso_a4\"))
+ (gtk-print-settings-get-paper-size settings)
+=> #<GTK-PAPER-SIZE {1005337A83@}>
+  @end{dictionary}
   @see-class{gtk-print-settings}
   @see-class{gtk-paper-size}
   @see-function{gtk-print-settings-set-paper-size}"
@@ -1053,6 +1086,13 @@
   @begin{short}
     Sets the value of \"paper-format\", \"paper-width\", and \"paper-height\".
   @end{short}
+  @begin[Example]{dictionary}
+ (setq settings (make-instance 'gtk-print-settings))
+=> #<GTK-PRINT-SETTINGS {1005336783@}>
+ (gtk-print-settings-set-paper-size settings (gtk-paper-size-new \"iso_a4\"))
+ (gtk-print-settings-get-paper-size settings)
+=> #<GTK-PAPER-SIZE {1005337A83@}>
+  @end{dictionary}
   @see-class{gtk-print-settings}
   @see-class{gtk-paper-size}
   @see-function{gtk-print-settings-get-paper-size}"
