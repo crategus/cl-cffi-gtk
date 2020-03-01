@@ -2791,10 +2791,9 @@
   Margin on end of widget, horizontally. This property supports left-to-right
   text directions. This property adds margin outside of the widget's normal
   size request, the margin will be added in addition to the size from
-  @fun{gkt-widget-size-request} for example. @br{}
+  @fun{gtk-widget-size-request} for example. Since 3.12. @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.12")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-end atdoc:*function-name-alias*) "Accessor"
@@ -8202,18 +8201,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_path ()
-;;;
-;;; GtkWidgetPath * gtk_widget_get_path (GtkWidget *widget);
-;;;
-;;; Returns the GtkWidgetPath representing widget, if the widget is not
-;;; connected to a toplevel widget, a partial path will be created.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     The GtkWidgetPath representing widget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_path" gtk-widget-get-path)
+    (g-boxed-foreign gtk-widget-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gtk-widget-path} structure representing the widget.}
+  @begin{short}
+    Returns the @class{gtk-widget-path} representing the widget.
+  @end{short}
+  If the widget is not connected to a toplevel widget, a partial path will be
+  created.
+  @see-class{gtk-widget}
+  @see-class{gtk-widget-path}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context ()
@@ -8234,19 +8239,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reset_style ()
-;;;
-;;; void gtk_widget_reset_style (GtkWidget *widget);
-;;;
-;;; Updates the style context of widget and all descendents by updating its
-;;; widget path. GtkContainers may want to use this on a child when reordering
-;;; it in a way that a different style might apply to it. See also
-;;; gtk_container_get_path_for_child().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_reset_style" gtk-widget-reset-style) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-2-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @begin{short}
+    Updates the style context of the widget and all descendents by updating its
+    widget path.
+  @end{short}
+  GtkContainers may want to use this on a child when reordering it in a way that
+  a different style might apply to it. See also the function
+  @fun{gtk-container-get-path-for-child}.
+  @see-class{gtk-widget}
+  @see-class{gtk-widget-path}
+  @see-function{gtk-container-get-path-for-child}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-reset-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_get_css_name ()
