@@ -339,7 +339,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     @sym{gtk-ui-manager} is deprecated since GTK+ 3.10. To construct user
-    interfaces from XML definitions, you should use @class{gkt-builder},
+    interfaces from XML definitions, you should use @class{gtk-builder},
     @class{g-menu-model}, et al. To work with actions, use @class{g-action},
     @class{gtk-actionable} et al. These newer classes support richer
     functionality and integration with various desktop shells. It should be

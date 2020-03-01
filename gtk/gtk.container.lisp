@@ -660,13 +660,16 @@
 (defcfun ("gtk_container_get_path_for_child" gtk-container-get-path-for-child)
     (g-boxed-foreign gtk-widget-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2020-2-29}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[child]{a child of @arg{container}}
-  @return{A newly created @class{gtk-widget-path}.}
-  Returns a newly created widget path representing all the widget hierarchy
-  from the toplevel down to and including child.
-  @see-class{gtk-container}"
+  @argument[child]{a @class{gtk-widget} child of @arg{container}}
+  @return{A newly created @class{gtk-widget-path} structure.}
+  @begin{short}
+    Returns a newly created widget path representing all the widget hierarchy
+    from the toplevel down to and including child.
+  @end{short}
+  @see-class{gtk-container}
+  @see-class{gtk-widget-path}"
   (container (g-object gtk-container))
   (child (g-object gtk-widget)))
 

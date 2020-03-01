@@ -630,7 +630,7 @@
   the window is attached, or @code{nil} if the window is not attached to any
   widget.
 
-  The @sym{(setf gkt-window-attached-to)} slot access function marks the window
+  The @sym{(setf gtk-window-attached-to)} slot access function marks the window
   as attached to @arg{attach-widget}. This creates a logical binding between
   the window and the widget it belongs to, which is used by GTK+ to propagate
   information such as styling or accessibility to the window as if it was a

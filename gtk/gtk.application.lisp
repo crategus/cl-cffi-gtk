@@ -131,7 +131,8 @@
   your application.
 
   While @sym{gtk-application} works fine with plain @class{gtk-window} widgets,
-  it is recommended to use it together with @class{gtk-application-window}.
+  it is recommended to use it together with @class{gtk-application-window}
+  widgets.
 
   When GDK threads are enabled, @sym{gtk-application} will acquire the GDK lock
   when invoking actions that arrive from other processes. The GDK lock is not
@@ -169,7 +170,7 @@
   See the function @fun{gtk-icon-theme-add-resource-path} for more information.
 
   If there is a resource located at @file{\"gtk/help-overlay.ui\"} which
-  defines a @class{gtk-shortcuts-window} with ID \"help_overlay\" then
+  defines a @class{gtk-shortcuts-window} with ID @code{help_overlay} then
   @sym{gtk-application} associates an instance of this shortcuts window with
   each @class{gtk-application-window} and sets up keyboard accelerators
   (@kbd{Control-F1} and @kbd{Control-?}) to open it. To create a menu item that
@@ -225,23 +226,21 @@
       @begin{pre}
  lambda (application)    : Run First
       @end{pre}
-      Emitted when the session manager is about to end the session, only if
-      @code{register-session} is @arg{true}. Applications can connect to this
-      signal and call the function @fun{gtk-application-inhibit} with the value
-      @code{:logout} of type @symbol{gtk-application-inhibit-flags} to delay
-      the end of the session until state has been saved.
+      Emitted when the session manager is about to end the session, only if the
+      @code{register-session} property is @arg{true}. Applications can connect
+      to this signal and call the function @fun{gtk-application-inhibit} with
+      the value @code{:logout} of type @symbol{gtk-application-inhibit-flags} to
+      delay the end of the session until the state has been saved. Since 3.24.
       @begin[code]{table}
         @entry[application]{The @sym{gtk-application} object which emitted the
           signal.}
       @end{table}
-      Since: 3.24
-
     @subheading{The \"window-added\" signal}
       @begin{pre}
  lambda (application window)    : Run First
       @end{pre}
       Emitted when a @class{gtk-window} widget is added to @arg{application}
-      through the @fun{gtk-application-add-window} function.
+      through the function @fun{gtk-application-add-window}.
       @begin[code]{table}
         @entry[application]{The @sym{gtk-application} object which emitted the
           signal.}
@@ -253,7 +252,7 @@
       @end{pre}
       Emitted when a @class{gtk-window} widget is removed from
       @arg{application}, either as a side-effect of being destroyed or
-      explicitly through the @fun{gtk-application-remove-window} function.
+      explicitly through the function @fun{gtk-application-remove-window}.
       @begin[code]{table}
         @entry[application]{The @sym{gtk-application} object which emitted the
           signal.}
@@ -264,7 +263,10 @@
   @see-slot{gtk-application-app-menu}
   @see-slot{gtk-application-menubar}
   @see-slot{gtk-application-register-session}
-  @see-slot{gtk-application-screensaver-active}")
+  @see-slot{gtk-application-screensaver-active}
+  @see-class{gtk-application-window}
+  @see-class{gtk-builder}
+  @see-class{g-menu-model}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -276,8 +278,7 @@
 (setf (documentation (atdoc:get-slot-from-name "active-window"
                                                'gtk-application) 't)
  "The @code{active-window} property of type @class{gtk-window} (Read) @br{}
-  The window which most recently had focus. @br{}
-  Since 3.6")
+  The window which most recently had focus. Since 3.6.")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
@@ -423,9 +424,8 @@
   This property is @arg{true} if GTK+ believes that the screensaver is currently
   active. GTK+ only tracks session state, including this, when the
   @code{register-session} property is set to @arg{true}.
-  Tracking the screensaver state is supported on Linux. @br{}
-  Default value: @arg{false} @br{}
-  Since 3.24")
+  Tracking the screensaver state is supported on Linux. Since 3.24. @br{}
+  Default value: @arg{false}")
 
 #+(and gtk-3-24 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-application-screensaver-active atdoc:*function-name-alias*)
@@ -607,10 +607,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-inhibit-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-application-inhibit-flags atdoc:*external-symbols*)
- "@version{2013-8-8}
+ "@version{2020-2-27}
   @begin{short}
-    Types of user actions that may be blocked by the
-    @fun{gtk-application-inhibit} function.
+    Types of user actions that may be blocked by the function
+    @fun{gtk-application-inhibit}.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkApplicationInhibitFlags\" gtk-application-inhibit-flags
@@ -628,6 +628,7 @@
     @entry[:suspend]{Inhibit suspending the session or computer.}
     @entry[:idle]{Inhibit the session being marked as idle and possibly locked.}
   @end{table}
+  @see-class{gtk-application}
   @see-function{gtk-application-inhibit}")
 
 ;;; ----------------------------------------------------------------------------
@@ -652,9 +653,9 @@
   @end{return}
   @begin{short}
     Inform the session manager that certain types of actions should be
-    inhibited. This is not guaranteed to work on all platforms and for all types
-    of actions.
+    inhibited.
   @end{short}
+  This is not guaranteed to work on all platforms and for all types of actions.
 
   Applications should invoke this method when they begin an operation that
   should not be interrupted, such as creating a CD or DVD. The types of
@@ -695,9 +696,9 @@
     @fun{gtk-application-inhibit} function}
   @begin{short}
     Removes an inhibitor that has been established with the
-    @fun{gtk-application-inhibit} function. Inhibitors are also cleared when the
-    application exits.
+    @fun{gtk-application-inhibit} function.
   @end{short}
+  Inhibitors are also cleared when the application exits.
   @see-class{gtk-application}
   @see-function{gtk-application-inhibit}"
   (application (g-object gtk-application))

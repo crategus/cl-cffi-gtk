@@ -225,7 +225,7 @@
     gtk-stack-visible-child
     "visible-child" "GtkWidget" t t)
    (visible-child-name
-    gkt-stack-visible-child-name
+    gtk-stack-visible-child-name
     "visible-child-name" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation

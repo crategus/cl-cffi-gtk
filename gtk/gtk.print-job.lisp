@@ -635,7 +635,7 @@
   @end{short}
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-scale}"
-  (job (g-object gkt-print-job))
+  (job (g-object gtk-print-job))
   (scale :double))
 
 (export 'gtk-print-job-set-scale)

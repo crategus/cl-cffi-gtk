@@ -627,7 +627,7 @@
     drops on that @arg{widget}}
   @argument[targets]{the @symbol{gtk-tool-palette-drag-targets} which the
     @arg{widget} should support}
-  @argument[actions]{the @symbol{gkd-drag-action}s which the @arg{widget}
+  @argument[actions]{the @symbol{gdk-drag-action} flags which the @arg{widget}
     should suppport}
   @begin{short}
     Sets @arg{palette} as drag source (see the function

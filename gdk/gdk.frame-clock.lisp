@@ -115,7 +115,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"after-paint\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal ends processing of the frame. Applications should generally
       not handle this signal.
@@ -124,7 +124,7 @@
       @end{table}
     @subheading{The \"before-paint\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal begins processing of the frame. Applications should generally
       not handle this signal.
@@ -133,7 +133,7 @@
       @end{table}
     @subheading{The \"flush-events\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal is used to flush pending motion events that are being batched
       up and compressed together. Applications should not handle this signal.
@@ -142,7 +142,7 @@
       @end{table}
     @subheading{The \"layout\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal is emitted as the second step of toolkit and application
       processing of the frame. Any work to update sizes and positions of
@@ -153,7 +153,7 @@
       @end{table}
     @subheading{The \"paint\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal is emitted as the third step of toolkit and application
       processing of the frame. The frame is repainted. GDK normally handles this
@@ -164,7 +164,7 @@
       @end{table}
     @subheading{The \"resume-events\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal is emitted after processing of the frame is finished, and is
       handled internally by GTK+ to resume normal event processing. Applications
@@ -174,7 +174,7 @@
       @end{table}
     @subheading{The \"update\" signal}
       @begin{pre}
- lambda (clock)   : Run Last
+ lambda (clock)    : Run Last
       @end{pre}
       This signal is emitted as the first step of toolkit and application
       processing of the frame. Animations should be updated using

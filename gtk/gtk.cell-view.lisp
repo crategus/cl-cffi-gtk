@@ -367,7 +367,7 @@
   sets whether the cell view should request space to fit the entire
   @class{gtk-tree-model}.
 
-  This is used by @class{gkt-combo-box} to ensure that the cell view displayed
+  This is used by @class{gtk-combo-box} to ensure that the cell view displayed
   on the combo box's button always gets enough space and does not resize when
   selection changes.
   @see-class{gtk-cell-view}")

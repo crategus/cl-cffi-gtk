@@ -149,7 +149,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"details-acquired\" signal}
       @begin{pre}
- lambda (printer success)   : Run Last
+ lambda (printer success)    : Run Last
       @end{pre}
       Gets emitted in response to a request for detailed information about a
       printer from the print backend. The success parameter indicates if the

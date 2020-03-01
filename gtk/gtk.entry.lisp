@@ -1812,7 +1812,7 @@
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-gicon}")
 
-;;; --- gkt-entry-secondary-icon-name ------------------------------------------
+;;; --- gtk-entry-secondary-icon-name ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-name"
