@@ -5862,25 +5862,6 @@ setup_tree (void)
       @about-function{gtk-style-provider-get-style}
       @about-function{gtk-style-provider-get-style-property}
     @end{subsection}
-    @begin[GtkStyleProperties]{subsection}
-      Store for style property information
-
-      @about-class{gtk-style-properties}
-      @about-function{gtk-style-properties-clear}
-      @about-function{gtk-style-properties-get}
-      @about-function{gtk-style-properties-get-property}
-      @about-function{gtk-style-properties-get-valist}
-      @about-function{gtk-style-properties-lookup-color}
-      @about-function{gtk-style-properties-lookup-property}
-      @about-function{gtk-style-properties-map-color}
-      @about-function{gtk-style-properties-merge}
-      @about-function{gtk-style-properties-new}
-      @about-function{gtk-style-properties-register-property}
-      @about-function{gtk-style-properties-set}
-      @about-function{gtk-style-properties-set-property}
-      @about-function{gtk-style-properties-set-valist}
-      @about-function{gtk-style-properties-unset-property}
-    @end{subsection}
     @begin[GtkWidgetPath]{subsection}
       Widget path abstraction.
 
@@ -5927,10 +5908,12 @@ setup_tree (void)
     @begin[GtkIconTheme]{subsection}
       Looking up icons by name
 
-      @about-class{gtk-icon-theme}
       @about-symbol{gtk-icon-info}
       @about-symbol{gtk-icon-lookup-flags}
       @about-symbol{gtk-icon-theme-error}
+
+      @about-class{gtk-icon-theme}
+
       @about-function{gtk-icon-theme-new}
       @about-function{gtk-icon-theme-get-default}
       @about-function{gtk-icon-theme-get-for-screen}
@@ -5939,32 +5922,45 @@ setup_tree (void)
       @about-function{gtk-icon-theme-get-search-path}
       @about-function{gtk-icon-theme-append-search-path}
       @about-function{gtk-icon-theme-prepend-search-path}
+      @about-function{gtk-icon-theme-add-resource-path}
       @about-function{gtk-icon-theme-set-custom-theme}
       @about-function{gtk-icon-theme-has-icon}
       @about-function{gtk-icon-theme-lookup-icon}
+      @about-function{gtk-icon-theme-lookup-icon-for-scale}
       @about-function{gtk-icon-theme-choose-icon}
+      @about-function{gtk-icon-theme-choose-icon-for-scale}
       @about-function{gtk-icon-theme-lookup-by-gicon}
+      @about-function{gtk-icon-theme-lookup-by-gicon-for-scale}
       @about-function{gtk-icon-theme-load-icon}
+      @about-function{gtk-icon-theme-load-icon-for-scale}
+      @about-function{gtk-icon-theme-load-surface}
       @about-function{gtk-icon-theme-list-contexts}
       @about-function{gtk-icon-theme-list-icons}
       @about-function{gtk-icon-theme-get-icon-sizes}
       @about-function{gtk-icon-theme-get-example-icon-name}
       @about-function{gtk-icon-theme-rescan-if-needed}
       @about-function{gtk-icon-theme-add-builtin-icon}
+
       @about-function{gtk-icon-info-copy}
       @about-function{gtk-icon-info-free}
       @about-function{gtk-icon-info-new-for-pixbuf}
       @about-function{gtk-icon-info-get-base-size}
+      @about-function{gtk-icon-info-get-base-scale}
       @about-function{gtk-icon-info-get-filename}
       @about-function{gtk-icon-info-get-builtin-pixbuf}
       @about-function{gtk-icon-info-load-icon}
-      @about-function{gtk-icon-info-load-symbolic}
+      @about-function{gtk-icon-info-load-surface}
+      @about-function{gtk-icon-info-load-icon-async}
+      @about-function{gtk-icon-info-load-icon-finish}
       @about-function{gtk-icon-info-load-symbolic-for-style}
       @about-function{gtk-icon-info-load-symbolic-for-context}
+      @about-function{gtk-icon-info-load-symbolic-for-context-async}
+      @about-function{gtk-icon-info-load-symbolic-for-context-finish}
       @about-function{gtk-icon-info-set-raw-coordinates}
       @about-function{gtk-icon-info-get-embedded-rect}
       @about-function{gtk-icon-info-get-attach-points}
       @about-function{gtk-icon-info-get-display-name}
+      @about-function{gtk-icon-info-is-symbolic}
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}

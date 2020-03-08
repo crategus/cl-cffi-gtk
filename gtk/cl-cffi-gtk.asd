@@ -70,10 +70,9 @@
    (:file "gtk.stock-images")          ; Manipulating stock icons
    (:file "gtk.widget-path")           ; Widget path abstraction
    (:file "gtk.style-provider")        ; Interface to provide style information
-   (:file "gtk.style-context")         ; Rendering UI elements
-;   (:file "gtk.style-properties")      ; Store for style property information
-   (:file "gtk.theming-engine")        ; Theming renderers
    (:file "gtk.css-provider")          ; CSS-like styling for widgets
+   (:file "gtk.style-context")         ; Rendering UI elements
+   (:file "gtk.theming-engine")        ; Theming renderers
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.numerable-icon")        ; A GIcon that allows numbered emblems

@@ -34,7 +34,8 @@
            #:with-stable-pointer
            ;; Symbols from glib.error.lisp
            #:with-catching-to-g-error
-           #:with-g-error))
+           #:with-g-error
+           #:with-ignore-g-error))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :glib) t)
@@ -314,7 +315,7 @@
     A system for reporting errors.
 
     GLib provides a standard method of reporting errors from a called function
-    to the calling code. In the Lisp binding we provide internally the to macros
+    to the calling code. In the Lisp binding we provide internally the macros
     @code{with-g-error} and @code{with-catching-to-g-error} to handle errors
     from the GTK+ and GLIB libraries. Only the type @type{g-error} is exported.
 

@@ -279,10 +279,10 @@ GTK+ Core Reference
 Theming in GTK+
 
  +  gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.24 &
- +  gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.24 &
- +  gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.24 &
+    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.24 &
+    gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.24
     gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.24 &
- +  gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.24 &
+    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.24 &
 
 Deprecated
 
