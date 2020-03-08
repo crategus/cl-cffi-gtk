@@ -65,6 +65,13 @@
       (gtk-text-buffer-insert buffer line)
       (gtk-text-buffer-insert buffer (format nil "~%")))))
 
+(defun read-file (filename)
+  (with-open-file (instream filename :direction :input :if-does-not-exist nil)
+    (when instream
+      (let ((string (make-string (file-length instream))))
+        (read-sequence string instream)
+        string))))
+
 ;;; ----------------------------------------------------------------------------
 
 (defun create-text (buffer is-source)
@@ -96,11 +103,23 @@
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Theming in GTK+")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "CSS Basics"
+                                "css-basics.lisp"
+                                "DO-CSS-BASICS"
+                                ""
+                                "css-basics.css")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Accordion"
                                 "css-accordion.lisp"
                                 "DEMO-CSS-ACCORDION"
                                 ""
                                 "css-accordion.css")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "CSS Blend Modes"
+                                "css-blendmodes.lisp"
+                                "DO-CSS-BLENDMODES"
+                                "css-blendmodes.ui"
+                                "css-blendmodes.css")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Pixbufs"
                                 "css-pixbufs.lisp"

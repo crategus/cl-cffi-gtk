@@ -1,0 +1,20 @@
+/* You can edit the text in this window to change the
+ * appearance of this Window.
+ * Be careful, if you screw it up, nothing might be visible
+ * anymore. :)
+ */
+
+/* Set a very futuristic style by default */
+* {
+  color: yellow;
+  background: black;
+  font-family: Monospace;
+  border: 1px solid;
+}
+
+/* Make sure selections are visible */
+selection {
+  background-color: darkGreen;
+  color: black;
+}
+

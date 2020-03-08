@@ -26,6 +26,8 @@
                (:file "combo-box-text")
                (:file "drag-and-drop")
                (:file "css-accordion")
+               (:file "css-basics")
+               (:file "css-blendmodes")
                (:file "css-pixbufs")
                (:file "dialog-alternative-order")
                (:file "dialog-toplevel")

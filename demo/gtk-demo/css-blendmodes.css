@@ -1,0 +1,79 @@
+/*
+ * First page.
+ */
+image.duck {
+    background-image: url('ducky.png');
+    background-size: cover;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+image.gradient {
+    background-image: linear-gradient(to right, red 0%, green 50%, blue 100%);
+    min-width: 200px;
+    min-height: 200px;
+}
+
+/*
+ * Second page.
+ */
+image.red {
+    background: url('blends.png') top center;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+image.blue {
+    background: url('blends.png') bottom center;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+/*
+ * Third page.
+ */
+image.cyan {
+    background: url('cmy.jpg') top center;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+image.magenta {
+    background: url('cmy.jpg') center center;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+image.yellow {
+    background: url('cmy.jpg') bottom center;
+    min-width: 200px;
+    min-height: 200px;
+}
+
+
+image.blend0 {
+  background-image: url('ducky.png'),
+                    linear-gradient(to right, red 0%, green 50%, blue 100%);
+  background-size: cover;
+  background-blend-mode: ~a;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+image.blend1 {
+  background: url('blends.png') top center,
+              url('blends.png') bottom center;
+  background-blend-mode: ~a;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+image.blend2 {
+  background: url('cmy.jpg') top center,
+              url('cmy.jpg') center center,
+              url('cmy.jpg') bottom center;
+  background-blend-mode: ~a;
+  min-width: 200px;
+  min-height: 200px;
+}
+
