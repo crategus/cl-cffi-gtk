@@ -341,14 +341,14 @@
 ;;; struct GError
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct g-error
+(defcstruct %g-error
   (:domain g-quark)
   (:code :int)
   (:message (:string :free-from-foreign nil)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-error atdoc:*type-name-alias*) "CStruct"
-      (documentation 'g-error 'type)
+(setf (gethash '%g-error atdoc:*type-name-alias*) "CStruct"
+      (documentation '%g-error 'type)
  "@version{2013-6-16}
   @begin{short}
     The @sym{g-error} structure contains information about an error that has
@@ -366,7 +366,7 @@
     @entry[:message]{Human-readable informative error message.}
   @end{table}")
 
-(export 'g-error)
+;(export '%g-error)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -392,9 +392,9 @@
 (defun maybe-raise-g-error-condition (err)
   (unless (null-pointer-p err)
     (error 'g-error-condition
-           :domain (foreign-slot-value err '(:struct g-error) :domain)
-           :code (foreign-slot-value err '(:struct g-error) :code)
-           :message (foreign-slot-value err '(:struct g-error) :message))))
+           :domain (foreign-slot-value err '(:struct %g-error) :domain)
+           :code (foreign-slot-value err '(:struct %g-error) :code)
+           :message (foreign-slot-value err '(:struct %g-error) :message))))
 
 (defmacro with-g-error ((err) &body body)
   `(with-foreign-object (,err :pointer)
@@ -402,6 +402,13 @@
      (unwind-protect
           (progn ,@body)
        (maybe-raise-g-error-condition (mem-ref ,err :pointer))
+       (%g-clear-error ,err))))
+
+(defmacro with-ignore-g-error ((err) &body body)
+  `(with-foreign-object (,err :pointer)
+     (setf (mem-ref ,err :pointer) (null-pointer))
+     (unwind-protect
+          (progn ,@body)
        (%g-clear-error ,err))))
 
 (defmacro with-catching-to-g-error ((err) &body body)
