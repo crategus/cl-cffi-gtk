@@ -40,10 +40,10 @@
 ;;;     gtk_widget_path_append_type
 ;;;     gtk_widget_path_append_with_siblings
 ;;;     gtk_widget_path_append_for_widget
-;;;     gtk_widget_path_copy
-;;;     gtk_widget_path_ref
-;;;     gtk_widget_path_unref
-;;;     gtk_widget_path_free
+;;;     gtk_widget_path_copy                               missing
+;;;     gtk_widget_path_ref                                missing
+;;;     gtk_widget_path_unref                              missing
+;;;     gtk_widget_path_free                               missing
 ;;;     gtk_widget_path_get_object_type
 ;;;     gtk_widget_path_has_parent
 ;;;     gtk_widget_path_is_type
@@ -59,9 +59,9 @@
 ;;;     gtk_widget_path_iter_get_state
 ;;;     gtk_widget_path_iter_has_class
 ;;;     gtk_widget_path_iter_has_name
-;;;     gtk_widget_path_iter_has_qclass
-;;;     gtk_widget_path_iter_has_qname
-;;;     gtk_widget_path_iter_has_qregion
+;;;     gtk_widget_path_iter_has_qclass                    missing
+;;;     gtk_widget_path_iter_has_qname                     missing
+;;;     gtk_widget_path_iter_has_qregion                   missing
 ;;;     gtk_widget_path_iter_has_region
 ;;;     gtk_widget_path_iter_list_classes
 ;;;     gtk_widget_path_iter_list_regions
@@ -118,7 +118,8 @@
     @entry[:last]{Region is the last one within a set.}
     @entry[:only]{Region is the only one within a set.}
     @entry[:sorted]{Region is part of a sorted area.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-style-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidgetPath
@@ -157,18 +158,15 @@
     Defining the first tab widget in a notebook:
     @begin{pre}
 (let ((path (gtk-widget-path-new)))
-
   (gtk-widget-path-iter-add-region
       path
       (gtk-widget-path-append-type path \"GtkNotebook\")
       \"tab\"
       '(:even :first))
-
   (gtk-widget-path-iter-set-name
       path
       (gtk-widget-path-append-type path \"GtkLabel\")
       \"first tab label\")
-
   ... )
     @end{pre}
     All this information will be used to match the style information that
@@ -540,6 +538,14 @@
     Returns the @class{g-type} of the object that is at position @arg{pos} in
     the widget hierarchy defined in @arg{path}.
   @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq widget (make-instance 'gtk-button))
+=> #<GTK-BUTTON {10027EB373@}>
+ (gtk-widget-path-iter-get-object-type (gtk-widget-get-path *) -1)
+=> #<GTYPE :name \"GtkButton\" :id 23267040>
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-widget-path}"
   (path (g-boxed-foreign gtk-widget-path))
   (pos :int))
