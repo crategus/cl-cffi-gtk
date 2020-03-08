@@ -421,6 +421,7 @@
 
 ;;;     gtk_style_context_get_style_valist
 ;;;     gtk_style_context_get_valist
+
 ;;;     gtk_style_context_get_section
 
 ;;;     gtk_style_context_get_color

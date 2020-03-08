@@ -82,7 +82,7 @@
 
 ;;;     gtk_css_provider_get_default
 
-(test gtk-csss-provider-get-default
+(test gtk-css-provider-get-default
   (is (eq 'gtk-css-provider (type-of (gtk-css-provider-get-default)))))
 
 ;;;     gtk_css_provider_get_named
@@ -94,8 +94,7 @@
 (test gtk-css-provider-load-from-path
   (let ((provider (gtk-css-provider-new)))
     (is-true (gtk-css-provider-load-from-path provider "rtest-gtk-css-provider.css"))
-    (is-true (stringp (gtk-css-provider-to-string provider)))
-))
+    (is-true (stringp (gtk-css-provider-to-string provider)))))
 
 ;;;     gtk_css_provider_load_from_resource
 ;;;     gtk_css_provider_new
@@ -104,16 +103,18 @@
 
 (test gtk-css-provider-to-string
   (let ((provider (gtk-css-provider-new)))
-    (is (string= "" (gtk-css-provider-to-string provider)))
-))
+    (is (string= "" (gtk-css-provider-to-string provider)))))
 
 ;;;     gtk_css_section_get_end_line
 ;;;     gtk_css_section_get_end_position
+
 ;;;     gtk_css_section_get_file
 ;;;     gtk_css_section_get_parent
 ;;;     gtk_css_section_get_section_type
+
 ;;;     gtk_css_section_get_start_line
 ;;;     gtk_css_section_get_start_position
+
 ;;;     gtk_css_section_ref
 ;;;     gtk_css_section_unref
 
