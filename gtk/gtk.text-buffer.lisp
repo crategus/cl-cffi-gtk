@@ -1724,6 +1724,20 @@
 ;;;     byte index from start of line
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_iter_at_line_index"
+          %gtk-text-buffer-get-iter-at-line-index) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (line-number :int)
+  (byte-index :int))
+
+(defun gtk-text-buffer-get-iter-at-line-index (buffer line-number byte-index)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-line-index buffer iter line-number byte-index)
+    iter))
+
+(export 'gtk-text-buffer-get-iter-at-line-index)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_mark ()
 ;;; ----------------------------------------------------------------------------
