@@ -42,8 +42,8 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_style_provider_get_icon_factory
-;;;     gtk_style_provider_get_style
+;;;     gtk_style_provider_get_icon_factory                missing / deprecated
+;;;     gtk_style_provider_get_style                       missing / ddprectaed
 ;;;     gtk_style_provider_get_style_property
 ;;;
 ;;; Object Hierarchy
@@ -53,12 +53,6 @@
 ;;;
 ;;; Known Implementations
 ;;;     GtkStyleProvider is implemented by GtkCssProvider and GtkSettings.
-;;;
-;;; Description
-;;;
-;;;     GtkStyleProvider is an interface used to provide style information to a
-;;;     GtkStyleContext. See gtk_style_context_add_provider() and
-;;;     gtk_style_context_add_provider_for_screen().
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -74,10 +68,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-provider atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-style-provider 'type)
- "@version{2013-7-29}
-  @sym{gtk-style-provider} is an interface used to provide style information to
-  a @class{gtk-style-context}. See the functions
-  @fun{gtk-style-context-add-provider} and
+ "@version{2020-3-2}
+  @begin{short}
+    @sym{gtk-style-provider} is an interface used to provide style information
+    to a @class{gtk-style-context}.
+  @end{short}
+  See the functions @fun{gtk-style-context-add-provider} and
   @fun{gtk-style-context-add-provider-for-screen}.
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-add-provider}
@@ -223,35 +219,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_provider_get_style_property ()
-;;;
-;;; gboolean gtk_style_provider_get_style_property (GtkStyleProvider *provider,
-;;;                                                 GtkWidgetPath *path,
-;;;                                                 GtkStateFlags state,
-;;;                                                 GParamSpec *pspec,
-;;;                                                 GValue *value);
-;;;
-;;; Looks up a widget style property as defined by provider for the widget
-;;; represented by path.
-;;;
-;;; provider :
-;;;     a GtkStyleProvider
-;;;
-;;; path :
-;;;     GtkWidgetPath to query
-;;;
-;;; state :
-;;;     state to query the style property for
-;;;
-;;; pspec :
-;;;     The GParamSpec to query
-;;;
-;;; value :
-;;;     return location for the property value
-;;;
-;;; Returns :
-;;;     TRUE if the property was found and has a value, FALSE otherwise
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_provider_get_style_property"
+          %gtk-style-provider-get-style-property) :void
+  (provider (g-object gtk-style-provide))
+  (path (g-boxed-foreign gtk-widget-path))
+  (state gtk-state-flags)
+  (pspec (:pointer (:struct g-param-spec)))
+  (value (:pointer (:struct g-value))))
+
+(defun gtk-style-provider-get-style-property (provider path state pspec)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-7}
+  @argument[provider]{a @class{gtk-style-provider} object}
+  @argument[path]{a @symbol{gtk-widget-path} structure to query}
+  @argument[state]{the @symbol{gtk-state-flags} to query the style property for}
+  @argument[pspec]{the @symbol{g-param-spec} to query}
+  @return{Returns the @class{g-value} of the style property.}
+  @begin{short}
+    Looks up a widget style property as defined by the provider for the widget
+    represented by @arg{path}.
+  @end{short}
+  @see-class{gtk-style-provider}
+  @see-class{g-value}"
+  (let ((type (param-spec-type pspec)))
+    (with-foreign-object (value '(:struct g-value))
+      (g-value-zero value)
+      (g-value-init value type)
+      (prog2
+        (%gtk-style-provider-get-style-property provider path state pspec value)
+        (parse-g-value value)
+        (g-value-unset value)))))
+
+(export 'gtk-style-provider-get-style-property)
 
 ;;; --- End of file gtk-style-provider.lisp ------------------------------------
