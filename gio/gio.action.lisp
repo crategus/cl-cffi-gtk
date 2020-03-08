@@ -439,11 +439,11 @@
   target value is empty or contains characters other than alphanumerics,
   '-' and '.'.
   @see-class{g-action}"
-  (with-g-error (error)
+  (with-g-error (err)
     (%g-action-parse-detailed-name detailed-name
                                    action-name
                                    target-value
-                                   error)))
+                                   err)))
 
 (export 'g-action-parse-detailed-name)
 

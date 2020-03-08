@@ -3341,10 +3341,10 @@
   (error :pointer))
 
 (defun g-variant-parse (type text)
-  (with-g-error (error)
+  (with-g-error (err)
     (if type
-        (%g-variant-parse-2 type text (null-pointer) (null-pointer) error)
-        (%g-variant-parse-1 (null-pointer) text (null-pointer) (null-pointer) error))))
+        (%g-variant-parse-2 type text (null-pointer) (null-pointer) err)
+        (%g-variant-parse-1 (null-pointer) text (null-pointer) (null-pointer) err))))
 
 (export 'g-variant-parse)
 

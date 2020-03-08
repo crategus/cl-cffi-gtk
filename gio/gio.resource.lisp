@@ -241,8 +241,8 @@ Substitutions must start with a slash, and must not contain a trailing slash bef
   (error :pointer))
 
 (defun g-resource-load (filename)
-  (with-g-error (error)
-    (%g-resource-load filename error)))
+  (with-g-error (err)
+    (%g-resource-load filename err)))
 
 (export 'g-resource-load)
 
@@ -590,8 +590,8 @@ Substitutions must start with a slash, and must not contain a trailing slash bef
   (error :pointer))
 
 (defun g-resources-lookup-data (filename)
-  (with-g-error (error)
-    (%g-resources-lookup-data filename 0 error)))
+  (with-g-error (err)
+    (%g-resources-lookup-data filename 0 err)))
 
 (export 'g-resources-lookup-data)
 
