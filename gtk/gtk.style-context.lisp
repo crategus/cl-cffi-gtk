@@ -733,13 +733,13 @@
  "@version{2020-2-28}
   @return{A newly created @class{gtk-style-context} object.}
   @begin{short}
-    Creates a standalone @class{gtk-style-context} object.
+    Creates a standalone style context object.
   @end{short}
   This style context won't be attached to any widget, so you may want to call
   the function @fun{gtk-style-context-set-path} yourself.
   @begin[Note]{dictionary}
     This function is only useful when using the theming layer separated from
-    GTK+, if you are using @class{gtk-style-context} to theme GtkWidgets, use
+    GTK+, if you are using a style context to theme GtkWidgets, use
     the function @fun{gtk-widget-get-style-context} in order to get a style
     context ready to theme the widget.
   @end{dictionary}
@@ -770,9 +770,9 @@
   priorities @var{+gtk-style-provider-priority-fallback+} and
   @var{+gtk-style-provider-priority-user+}.
   @begin[Note]{dictionary}
-    If both priorities are the same, a @class{gtk-style-provider} object added
-    through this function takes precedence over another added through the
-    function @fun{gtk-style-context-add-provider-for-screen}.
+    If both priorities are the same, a style provider object added through this
+    function takes precedence over another added through the function
+    @fun{gtk-style-context-add-provider-for-screen}.
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
@@ -807,9 +807,9 @@
   GTK+ uses this to make styling information from @class{gtk-settings}
   available.
   @begin[Note]{dictionary}
-    If both priorities are the same, a @class{gtk-style-provider} object added
-    through the function @fun{gtk-style-context-add-provider} takes precedence
-    over another added through this function.
+    If both priorities are the same, a style provider object added through the
+    function @fun{gtk-style-context-add-provider} takes precedence over another
+    added through this function.
   @end{dictionary}
   @see-class{gdk-screen}
   @see-class{gtk-style-context}
@@ -918,7 +918,7 @@
     @end{pre}
   @end{dictionary}
   @see-class{gtk-style-context}
-  @see-class{gtk-widget-path}"
+  @see-symbol{gtk-state-flags}"
   (with-foreign-object (value '(:struct g-value))
     (g-value-zero value)
     (prog2
@@ -940,10 +940,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-1}
   @argument[context]{a @class{gtk-style-context} object}
-  @return{A @class{gdk-frame-clock}, or @code{nil} if the context does not
+  @return{A @class{gdk-frame-clock}, or @code{nil} if the style context does not
     have an attached frame clock.}
   @begin{short}
-    Returns the @class{gdk-frame-clock} to which the context is attached.
+    Returns the @class{gdk-frame-clock} to which the style context is attached.
   @end{short}
 
   Since 3.8
@@ -1007,12 +1007,21 @@
   @argument[widget]{a @class{gtk-widget} the style property is looked up for}
   @argument[property]{a @code{:string} with the name of the widget style
     property}
-  @return{Returns the @class{g-value} of the style property.}
+  @return{Returns the value of the style property.}
   @begin{short}
     Gets the value for a widget style property.
   @end{short}
-  @see-class{gtk-style-context}
-  @see-class{g-value}"
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq message (make-instance 'gtk-message-dialog))
+=> #<GTK-MESSAGE-DIALOG {100577F4A3@}>
+ (setq context (gtk-widget-get-style-context message))
+=> #<GTK-STYLE-CONTEXT {10057DE323@}>
+ (gtk-style-context-get-style-property context message \"message-border\")
+=> 12
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-style-context}"
   (let ((type (param-spec-type
                     (gtk-widget-class-find-style-property
                         (g-type-from-instance widget)
@@ -1117,8 +1126,17 @@
     Gets the foreground color for a given state.
   @end{short}
   See the function @fun{gtk-style-context-get-property} for details.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq context (gtk-style-context-new))
+=> #<GTK-STYLE-CONTEXT {10058ED093@}>
+ (gtk-style-context-get-color context :normal)
+=> #S(GDK-RGBA :RED 1.0d0 :GREEN 1.0d0 :BLUE 1.0d0 :ALPHA 1.0d0)
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}
+  @see-class{gdk-rgba}
   @see-function{gtk-style-context-get-property}"
   (let ((color (make-gdk-rgba)))
     (%gtk-style-context-get-color context state color)
@@ -1153,6 +1171,7 @@
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}
+  @see-class{gdk-rgba}
   @see-function{gtk-render-background}"
   (let ((color (make-gdk-rgba)))
     (%gtk-style-context-get-background-color context state color)
@@ -1187,6 +1206,7 @@
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}
+  @see-class{gdk-rgba}
   @see-function{gtk-render-frame}"
   (let ((color (make-gdk-rgba)))
     (%gtk-style-context-get-border-color context state color)
@@ -1214,7 +1234,8 @@
     Gets the value for the border settings for a given state.
   @end{short}
   @see-class{gtk-style-context}
-  @see-class{gtk-border}"
+  @see-class{gtk-border}
+  @see-symbol{gtk-state-flags}"
   (let ((border (make-gtk-border)))
     (%gtk-style-context-get-border context state border)
     border))
@@ -1241,7 +1262,8 @@
     Gets the value for the padding settings for a given state.
   @end{short}
   @see-class{gtk-style-context}
-  @see-class{gtk-border}"
+  @see-class{gtk-border}
+  @see-symbol{gtk-state-flags}"
   (let ((padding (make-gtk-border)))
     (%gtk-style-context-get-padding context state padding)
     padding))
@@ -1268,7 +1290,8 @@
     Gets the value for the margin settings for a given state.
   @end{short}
   @see-class{gtk-style-context}
-  @see-class{gtk-border}"
+  @see-class{gtk-border}
+  @see-symbol{gtk-state-flags}"
   (let ((margin (make-gtk-border)))
     (%gtk-style-context-get-margin context state margin)
     margin))
@@ -1286,16 +1309,18 @@
   @argument[context]{a @class{gtk-style-context} object}
   @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
     font for}
-  @return{Returns the @class{pango-font-description} for the given state.}
+  @return{Returns a @class{pango-font-description}structure for the given
+    state.}
   @begin{short}
     Returns the font description for a given state.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-style-context-get-font} has been deprecated since
     version 3.8 and should not be used in newly-written code. Use the function
-    @fun{gtk-style-context-get} for \"font\" or subproperties instead.
+    @fun{gtk-style-context-get-property} for \"font\" or subproperties instead.
   @end{dictionary}
   @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}
   @see-function{gtk-style-context-get}"
   (context (g-object gtk-style-context))
   (state gtk-state-flags))
@@ -1378,10 +1403,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-3}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[color-name]{a @code{:string} with a color name to lookup}
-  @return{The looked up @class{gdk-rgba}, or @code{nil}.}
+  @argument[color-name]{a string with a color name to lookup}
+  @return{The looked up @class{gdk-rgba} color, or @code{nil}.}
   @begin{short}
-    Looks up and resolves a color name in the context color map.
+    Looks up and resolves a color name in the style context color map.
   @end{short}
   @see-class{gtk-style-context}
   @see-class{gdk-rgba}"
@@ -1400,7 +1425,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-2}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[stock-id]{a @code{:string} with an icon name}
+  @argument[stock-id]{a string with an icon name}
   @return{The looked up @class{gtk-icon-set} object, or @code{nil}.}
   @begin{short}
     Looks up @arg{stock-id} in the icon factories associated to the style
@@ -1449,18 +1474,18 @@
 
   If @arg{region-id} is @code{NULL}, all rendered elements using the style
   context will be affected by this state transition.
-
-  As a practical example, a @class{gtk-button} notifying a state transition on
-  the prelight state:
-  @begin{pre}
-   gtk_style_context_notify_state_change (context,
-                                          gtk_widget_get_window (widget),
-                                          NULL,
-                                          GTK_STATE_PRELIGHT,
-                                          button->in_button);
-  @end{pre}
-  Can be handled in the CSS file like this:
-  @begin{pre}
+  @begin[Example]{dictionary}
+    As a practical example, a button notifying a state transition on the
+    prelight state:
+    @begin{pre}
+ gtk_style_context_notify_state_change (context,
+                                        gtk_widget_get_window (widget),
+                                        NULL,
+                                        GTK_STATE_PRELIGHT,
+                                        button->in_button);
+    @end{pre}
+    Can be handled in the CSS file like this:
+    @begin{pre}
    GtkButton {
        background-color: #f00
    @}
@@ -1469,12 +1494,13 @@
        background-color: #fff;
        transition: 200ms linear
    @}
-  @end{pre}
-  This combination will animate the button background from red to white if a
-  pointer enters the button, and back to red if the pointer leaves the button.
+    @end{pre}
+    This combination will animate the button background from red to white if a
+    pointer enters the button, and back to red if the pointer leaves the button.
 
-  Note that state is used when finding the transition parameters, which is why
-  the style places the transition under the @code{:hover} pseudo-class.
+    Note that state is used when finding the transition parameters, which is why
+    the style places the transition under the @code{:hover} pseudo-class.
+  @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-style-context-notify-state-change} has been deprecated
     since version 3.6 and should not be used in newly-written code. This
@@ -1693,7 +1719,7 @@
   @argument[context]{a @class{gtk-style-context} object}
   @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Sets the background of @arg{window} to the background pattern or color
+    Sets the background of the window to the background pattern or color
     specified in the style context for its current state.
   @end{short}
   @begin[Warning]{dictionary}
@@ -1701,7 +1727,7 @@
     since version 3.18 and should not be used in newly-written code. Use the
     function @fun{gtk-render-background} instead. Note that clients still using
     this function are now responsible for calling this function again whenever
-    context is invalidated.
+    the style context is invalidated.
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gdk-window}
@@ -1742,16 +1768,12 @@
   @end{short}
   So all modifications done through the functions
   @fun{gtk-style-context-add-class},
-  @fun{gtk-style-context-remove-class},
-  @fun{gtk-style-context-add-region},
-  @fun{gtk-style-context-remove-region} or
+  @fun{gtk-style-context-remove-class} or
   @fun{gtk-style-context-set-junction-sides} can be reverted in one go through
-  @fun{gtk-style-context-restore}.
+  the function @fun{gtk-style-context-restore}.
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-add-class}
   @see-function{gtk-style-context-remove-class}
-  @see-function{gtk-style-context-add-region}
-  @see-function{gtk-style-context-remove-region}
   @see-function{gtk-style-context-set-junction-sides}
   @see-function{gtk-style-context-restore}"
   (context (g-object gtk-style-context)))
@@ -1767,8 +1789,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-2-28}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[sides]{sides of type @symbol{g-junction-sides} where rendered
-    elements are visually connected to other elements}
+  @argument[sides]{sides of type @symbol{g-junction-sides}}
   @begin{short}
     Sets the sides where rendered elements, mostly through the function
     @fun{gtk-render-frame}, will visually connect with other visual elements.
@@ -1818,25 +1839,27 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-2-29}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[name]{a @code{:string} with a class name to use in styling}
+  @argument[class-name]{a string with a class name to use in styling}
   @begin{short}
     Adds a style class to the context, so posterior calls to the function
-    @fun{gtk-style-context-get} or any of the @sym{gtk-render-*} functions will
-    make use of this new class for styling.
+    @fun{gtk-style-context-get-property} or any of the @sym{gtk-render-*}
+    functions will make use of this new class for styling.
   @end{short}
-
-  In the CSS file format, a GtkEntry defining an \"entry\" class, would be
-  matched by:
-  @begin{pre}
+  @begin[Example]{dictionary}
+    In the CSS file format, a GtkEntry defining an \"entry\" class, would be
+    matched by:
+    @begin{pre}
  GtkEntry.entry { ... @}
   @end{pre}
   While any widget defining an \"entry\" class would be matched by:
   @begin{pre}
  .entry { ... @}
-  @end{pre}
-  @see-class{gtk-style-context}"
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get-property}"
   (context (g-object gtk-style-context))
-  (name g-string))
+  (class-name g-string))
 
 (export 'gtk-style-context-add-class)
 
@@ -1850,7 +1873,7 @@
   @argument[context]{a @class{gtk-style-context} object}
   @argument[class-name]{a string with a class name to remove}
   @begin{short}
-    Removes @arg{class-name} from the style context.
+    Removes a class name from the style context.
   @end{short}
   @see-class{gtk-style-context}"
   (context (g-object gtk-style-context))
@@ -1904,26 +1927,27 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-2-29}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[name]{a @code{:string} with a region name to use in styling}
+  @argument[name]{a string with a region name to use in styling}
   @argument[flags]{flags of type @symbol{gtk-region-flags} that apply to the
     region}
   @begin{short}
     Adds a region to the context, so posterior calls to the function
-    @fun{gtk-style-context-get} or any of the @sym{gtk-render-*} functions will
-    make use of this new region for styling.
+    @fun{gtk-style-context-get-property} or any of the @sym{gtk-render-*}
+    functions will make use of this new region for styling.
   @end{short}
-
-  In the CSS file format, a GtkTreeView defining a \"row\" region, would be
-  matched by:
-  @begin{pre}
+  @begin[Example]{dictionary}
+    In the CSS file format, a GtkTreeView defining a \"row\" region, would be
+    matched by:
+    @begin{pre}
  GtkTreeView row { ... @}
-  @end{pre}
-  Pseudo-classes are used for matching flags, so the two following rules would
-  apply to even and odd rows, respectively.
-  @begin{pre}
+    @end{pre}
+    Pseudo-classes are used for matching flags, so the two following rules would
+    apply to even and odd rows, respectively.
+    @begin{pre}
  GtkTreeView row:nth-child(even) { ... @}
  GtkTreeView row:nth-child(odd) { ... @}
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @begin[Note]{dictionary}
     Region names must only contain lowercase letters and '-', starting always
     with a lowercase letter.
@@ -2000,7 +2024,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-2}
   @argument[context]{a @class{gtk-style-context} object}
-  @return{Returns list of strings with the currently defined regions.}
+  @return{Returns a list of strings with the currently defined regions.}
   @begin{short}
     Returns the list of regions currently defined in the style context.
   @end{short}
@@ -2035,7 +2059,7 @@
   Since 3.8
   @see-class{gtk-style-context}
   @see-class{gdk-frame-clock}
-  @see-functon{gtk-widget-get-style-context}"
+  @see-function{gtk-widget-get-style-context}"
   (context (g-object gtk-style-context))
   (frame-clock (g-object gdk-frame-clock)))
 
@@ -2055,7 +2079,8 @@
     Sets the state to be used when rendering with any of the @sym{gtk-render-*}
     functions.
   @end{short}
-  @see-class{gtk-style-context}"
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}"
   (context (g-object gtk-style-context))
   (flags gtk-state-flags))
 
@@ -2151,7 +2176,8 @@
 \"
     @end{pre}
   @end{dictionary}
-  @see-class{gtk-style-context}"
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-style-context-print-flags}"
   (context (g-object gtk-style-context))
   (flags gtk-style-context-print-flags))
 
