@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -986,7 +986,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (button :uint)
              (device (g-object gdk-device))
              (x-root :double)
@@ -1000,7 +1000,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (sequence (g-boxed-foreign gdk-event-sequence))
              (emulating-pointer :boolean)
              (device (g-object gdk-device))
@@ -1048,7 +1048,7 @@
              (mode gdk-crossing-mode)
              (detail gdk-notify-type)
              (focus :boolean)
-             (state :uint))
+             (state gdk-modifier-type))
             ;; GdkEventFocus
             ((:focus-change) gdk-event-focus
              (in :int16))
@@ -1216,7 +1216,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (button :uint)
              (device (g-object gdk-device))
              (x-root :double)
@@ -1230,7 +1230,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (sequence (g-boxed-foreign gdk-event-sequence))
              (emulating-pointer :boolean)
              (device (g-object gdk-device))
@@ -1278,7 +1278,7 @@
              (mode gdk-crossing-mode)
              (detail gdk-notify-type)
              (focus :boolean)
-             (state :uint))
+             (state gdk-modifier-type))
             ;; GdkEventFocus
             ((:focus-change) gdk-event-focus
              (in :int16))
@@ -1715,7 +1715,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (button :uint)
              (device (g-object gdk-device))
              (x-root :double)
@@ -1942,7 +1942,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state :uint)
+             (state gdk-modifier-type)
              (sequence (g-boxed-foreign gdk-event-sequence))
              (emulating-pointer :boolean)
              (device (g-object gdk-device))
@@ -2844,7 +2844,7 @@
              (mode gdk-crossing-mode)
              (detail gdk-notify-type)
              (focus :boolean)
-             (state :uint))
+             (state gdk-modifier-type))
   ... ))
   @end{pre}
   @begin[code]{table}
@@ -4359,7 +4359,7 @@
              (dy :double)
              (x-root :double)
              (y-root :double)
-             (state :uint))
+             (state gdk-modifier-type))
   ... ))
   @end{pre}
   @begin[code]{table}
