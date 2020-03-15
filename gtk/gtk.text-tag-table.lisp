@@ -2,12 +2,12 @@
 ;;; gtk.text-tag-table.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -152,18 +152,21 @@
 ;;; gtk_text_tag_table_add ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :void
+(defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2020-3-15}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[tag]{a @class{gtk-text-tag} object}
+  @return{A @code{:boolean} which is @em{true} on success.}
   @begin{short}
-    Add a @arg{tag} to the @arg{table}. The @arg{tag} is assigned the highest
-    priority in the @arg{table}.
+    Add a tag to the table. The tag is assigned the highest priority in the
+    table.
   @end{short}
 
-  @arg{tag} must not be in a tag table already, and may not have the same name
-  as an already-added tag."
+  The tag must not be in a tag table already, and may not have the same name
+  as an already-added tag.
+  @see-class{gtk-text-tag-table}
+  @see-class{gtk-text-tag}"
   (table (g-object gtk-text-tag-table))
   (tag (g-object gtk-text-tag)))
 
