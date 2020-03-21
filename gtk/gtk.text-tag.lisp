@@ -2,12 +2,12 @@
 ;;; gtk.text-tag.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,7 +37,7 @@
 ;;;     GtkTextAttributes
 ;;;     GtkTextAppearance
 ;;;
-;;;     GtkWrapMode          ---> GtkTextView ?
+;;;     GtkWrapMode          <--- GtkTextView
 ;;;
 ;;; Functions
 ;;;
@@ -386,7 +386,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag 'type)
- "@version{2013-5-5}
+ "@version{2020-3-20}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -398,6 +398,11 @@
 
   The @fun{gtk-text-buffer-create-tag} function is the best way to create tags.
   See gtk3-demo for numerous examples.
+
+  For each property of @class{gtk-text-tag}, there is a \"set\" property, e. g.
+  \"font-set\" corresponds to \"font\". These \"set\" properties reflect whether
+  a property has been set or not. They are maintained by GTK+ and you should not
+  set them independently.
   @begin[Signal Details]{dictionary}
     @subheading{The \"event\" signal}
       @begin{pre}
@@ -414,7 +419,7 @@
         @entry[iter]{A @class{gtk-text-iter} pointing at the location the event
           occured.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-text-tag-accumulative-margin}
@@ -2056,10 +2061,13 @@
 ;;; };
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct gtk-text-attributes
-  (:appearance (:pointer (:struct gtk-text-appearance)))
-  (:justification gtk-justification)
-  (:direction gtk-text-direction)
+(glib-init::at-init () (foreign-funcall "gtk_text_attributes_get_type" :int))
+
+(define-g-boxed-cstruct gtk-text-attributes "GtkTextAttributes"
+  (:refcount :uint :initform 0)
+  (:appearance (:pointer (:struct gtk-text-appearance)) :initform (null-pointer))
+  (:justification :int)
+  (:direction :int)
   (:font (g-boxed-foreign pango-font-description))
   (:font-scale :double)
   (:left-margin :int)
@@ -2076,15 +2084,16 @@
   (:editable :uint))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-attributes atdoc:*type-name-alias*) "CStruct"
+(setf (gethash 'gtk-text-attributes atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-text-attributes 'type)
- "@version{2013-6-4}
+ "@version{2020-3-20}
   @begin{short}
     Using @sym{gtk-text-attributes} directly should rarely be necessary. It is
-    primarily useful with the @fun{gtk-text-iter-get-attributes} function. As
-    with most GTK+ structs, the fields in this struct should only be read, never
+    primarily useful with the @fun{gtk-text-iter-attributes} function. As with
+    most GTK+ structs, the fields in this struct should only be read, never
     modified directly.
   @end{short}
+
   @begin{pre}
 (defcstruct gtk-text-attributes
   (:appearance (:pointer (:struct gtk-text-appearance)))
@@ -2104,9 +2113,19 @@
   (:invisible :uint)
   (:bg-full-height :uint)
   (:editable :uint))
-  @end{pre}")
+  @end{pre}
+  @begin[code]{table}
 
-(export 'gtk-text-attributes)
+    @entry[xx]{1st component of the transformation matrix.}
+
+  @end{table}
+
+  @see-constructor{copy-gtk-text-attributes}
+  @see-constructor{make-gtk-text-attributes}
+  @see-slot{gtk-text-attributes-appearance}
+")
+
+(export (boxed-related-symbols 'gtk-text-attributes))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_new ()
