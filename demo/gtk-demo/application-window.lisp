@@ -186,12 +186,12 @@
  </ui>")
 
 (defun update-statusbar (buffer statusbar)
-  (let* ((count (gtk-text-buffer-get-char-count buffer))
+  (let* ((count (gtk-text-buffer-char-count buffer))
          (iter (gtk-text-buffer-get-iter-at-mark
                    buffer
                    (gtk-text-buffer-get-insert buffer)))
-         (row (gtk-text-iter-get-line iter))
-         (col (gtk-text-iter-get-line-offset iter))
+         (row (gtk-text-iter-line iter))
+         (col (gtk-text-iter-line-offset iter))
          (msg (format nil "Row: ~A Col: ~A | Chars: ~A" row col count)))
     (gtk-statusbar-pop statusbar 0)
     (gtk-statusbar-push statusbar 0 msg)))
