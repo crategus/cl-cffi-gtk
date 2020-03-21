@@ -349,67 +349,86 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoVariant
-;;;
-;;; typedef enum {
-;;;   PANGO_VARIANT_NORMAL,
-;;;   PANGO_VARIANT_SMALL_CAPS
-;;; } PangoVariant;
-;;;
-;;; An enumeration specifying capitalization variant of the font.
-;;;
-;;; PANGO_VARIANT_NORMAL
-;;;     a normal font
-;;;
-;;; PANGO_VARIANT_SMALL_CAPS
-;;;     a font with the lower case characters replaced by smaller variants of
-;;;     the capital characters
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoVariant" pango-variant
+  (:export t
+   :type-initializer "pango_variant_get_type")
+  (:normal 0)
+  (:small-caps 1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-weight atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-weight atdoc:*external-symbols*)
+ "@version{2020-3-20}
+  @begin{short}
+    An enumeration specifying capitalization variant of the font.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoVariant\" pango-variant
+  (:export t
+   :type-initializer \"pango_variant_get_type\")
+  (:normal 0)
+  (:small-caps 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{A normal font.}
+    @entry[:small-caps]{A font with the lower case characters replaced by
+      smaller variants of the capital characters.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoStretch
-;;;
-;;; typedef enum {
-;;;   PANGO_STRETCH_ULTRA_CONDENSED,
-;;;   PANGO_STRETCH_EXTRA_CONDENSED,
-;;;   PANGO_STRETCH_CONDENSED,
-;;;   PANGO_STRETCH_SEMI_CONDENSED,
-;;;   PANGO_STRETCH_NORMAL,
-;;;   PANGO_STRETCH_SEMI_EXPANDED,
-;;;   PANGO_STRETCH_EXPANDED,
-;;;   PANGO_STRETCH_EXTRA_EXPANDED,
-;;;   PANGO_STRETCH_ULTRA_EXPANDED
-;;; } PangoStretch;
-;;;
-;;; An enumeration specifying the width of the font relative to other designs
-;;; within a family.
-;;;
-;;; PANGO_STRETCH_ULTRA_CONDENSED
-;;;     ultra condensed width
-;;;
-;;; PANGO_STRETCH_EXTRA_CONDENSED
-;;;     extra condensed width
-;;;
-;;; PANGO_STRETCH_CONDENSED
-;;;     condensed width
-;;;
-;;; PANGO_STRETCH_SEMI_CONDENSED
-;;;     semi condensed width
-;;;
-;;; PANGO_STRETCH_NORMAL
-;;;     the normal width
-;;;
-;;; PANGO_STRETCH_SEMI_EXPANDED
-;;;     semi expanded width
-;;;
-;;; PANGO_STRETCH_EXPANDED
-;;;     expanded width
-;;;
-;;; PANGO_STRETCH_EXTRA_EXPANDED
-;;;     extra expanded width
-;;;
-;;; PANGO_STRETCH_ULTRA_EXPANDED
-;;;     ultra expanded width
 ;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "pango_stretch_get_type" :int))
+
+(define-g-enum "PangoStretch" pango-stretch
+  (:export t
+   :type-initializer "pango_stretch_type_get_type")
+  (:ultra-condensed 0)
+  (:extra-condensed 1)
+  (:condensed 2)
+  (:semi-condensed 3)
+  (:normal 4)
+  (:semi-expanded 5)
+  (:expanded 6)
+  (:extra-expanded 7)
+  (:ultra-expanded 8))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-stretch atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-stretch atdoc:*external-symbols*)
+ "@version{2020-3-20}
+  @begin{short}
+    An enumeration specifying the width of the font relative to other designs
+    within a family.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoStretch\" pango-stretch
+  (:export t
+   :type-initializer \"pango_stretch_type_get_type\")
+  (:ultra-condensed 0)
+  (:extra-condensed 1)
+  (:condensed 2)
+  (:semi-condensed 3)
+  (:normal 4)
+  (:semi-expanded 5)
+  (:expanded 6)
+  (:extra-expanded 7)
+  (:ultra-expanded 8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:ultra-condensed]{Ultra condensed width.}
+    @entry[:extra-condensed]{Extra condensed width.}
+    @entry[:condensed]{Condensed width.}
+    @entry[:semi-condensed]{Semi condensed width.}
+    @entry[:normal]{The normal widt.}
+    @entry[:semi-expanded]{Semi expanded width.}
+    @entry[:expanded]{Expanded width.}
+    @entry[:extra-expanded]{Extra expanded width.}
+    @endtry[:ultra-expanded]{Ultra expanded width.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoFontMask
