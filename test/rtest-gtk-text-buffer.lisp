@@ -54,7 +54,67 @@ OpenType-Funktionalitäten. Je nach Software und Voreinstellungen können
 eingebaute Kapitälchen, Kerning oder Ligaturen (sehr pfi ffi g) nicht richtig
 dargestellt werden.")
 
+;;; --- Types and Values -------------------------------------------------------
+
 ;;;   GtkTextBuffer
+
+(test gtk-text-buffer-class
+  ;; Type check
+  (is-true  (g-type-is-object "GtkTextBuffer"))
+  ;; Check the registered name
+  (is (eq 'gtk-text-buffer
+          (registered-object-type-by-name "GtkTextBuffer")))
+  ;; Check the parent
+  (is (equal (gtype "GObject") (g-type-parent "GtkTextBuffer")))
+  ;; Check the children
+  (is (equal '()
+             (mapcar #'gtype-name (g-type-children "GtkTextBuffer"))))
+  ;; Check the interfaces
+  (is (equal '()
+             (mapcar #'gtype-name (g-type-interfaces "GtkTextBuffer"))))
+  ;; Check the class properties
+  (is (equal '("copy-target-list" "cursor-position" "has-selection"
+               "paste-target-list" "tag-table" "text")
+             (stable-sort (mapcar #'param-spec-name
+                                  (g-object-class-list-properties "GtkTextBuffer"))
+                          #'string-lessp)))
+  ;; Check the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextBuffer" GTK-TEXT-BUFFER
+                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                        :TYPE-INITIALIZER "gtk_text_buffer_get_type")
+                       ((COPY-TARGET-LIST GTK-TEXT-BUFFER-COPY-TARGET-LIST
+                         "copy-target-list" "GtkTargetList" T NIL)
+                        (CURSOR-POSITION GTK-TEXT-BUFFER-CURSOR-POSITION
+                         "cursor-position" "gint" T NIL)
+                        (HAS-SELECTION GTK-TEXT-BUFFER-HAS-SELECTION
+                         "has-selection" "gboolean" T NIL)
+                        (PASTE-TARGET-LIST GTK-TEXT-BUFFER-PASTE-TARGET-LIST
+                         "paste-target-list" "GtkTargetList" T NIL)
+                        (TAG-TABLE GTK-TEXT-BUFFER-TAG-TABLE "tag-table"
+                         "GtkTextTagTable" T NIL)
+                        (TEXT GTK-TEXT-BUFFER-TEXT "text" "gchararray" T T)))
+             (get-g-type-definition "GtkTextBuffer"))))
+
+;;; --- Properties -------------------------------------------------------------
+
+;;;       GtkTargetList*  copy-target-list       Read
+;;;                gint   cursor-position        Read
+;;;            gboolean   has-selection          Read
+;;;       GtkTargetList*  paste-target-list      Read
+;;;     GtkTextTagTable*  tag-table              Read / Write / Construct Only
+;;;               gchar*  text                   Read / Write
+
+(test gtk-text-buffer-properties
+  (let ((buffer (make-instance 'gtk-text-buffer)))
+
+    (is (eq 'gtk-target-list (type-of (gtk-text-buffer-copy-target-list buffer))))
+    (is (= 0 (gtk-text-buffer-cursor-position buffer)))
+    (is-false (gtk-text-buffer-has-selection buffer))
+    (is (eq 'gtk-target-list (type-of (gtk-text-buffer-paste-target-list buffer))))
+    (is (eq 'gtk-text-tag-table (type-of (gtk-text-buffer-tag-table buffer))))
+    (is (string= "" (gtk-text-buffer-text buffer)))))
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;   gtk_text_buffer_new
 
@@ -76,43 +136,104 @@ dargestellt werden.")
 
 ;;;   gtk_text_buffer_get_line_count
 
-(test gtk-text-buffer-get-line-count.1
+(test gtk-text-buffer-line-count.1
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-1*)
-    (is (= 30 (gtk-text-buffer-get-line-count buffer)))))
+    (is (= 30 (gtk-text-buffer-line-count buffer)))))
 
-(test gtk-text-buffer-get-line-count.2
+(test gtk-text-buffer-line-count.2
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-2*)
-    (is (= 18 (gtk-text-buffer-get-line-count buffer)))))
+    (is (= 18 (gtk-text-buffer-line-count buffer)))))
 
 ;;;   gtk_text_buffer_get_char_count
 
-(test gtk-text-buffer-get-char-count.1
+(test gtk-text-buffer-char-count.1
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-1*)
-    (is (= 1866 (gtk-text-buffer-get-char-count buffer)))))
+    (is (= 1866 (gtk-text-buffer-char-count buffer)))))
 
-(test gtk-text-buffer-get-char-count.2
+(test gtk-text-buffer-char-count.2
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-2*)
-    (is (= 1160 (gtk-text-buffer-get-char-count buffer)))))
-
-;;;   gtk_text_buffer_get_tag_table
-
-(test gtk-text-buffer-get-tab-table
-  (let ((tag-table (gtk-text-tag-table-new)))
-    (is (eq tag-table
-            (gtk-text-buffer-tag-table (gtk-text-buffer-new tag-table))))))
+    (is (= 1160 (gtk-text-buffer-char-count buffer)))))
 
 ;;;     gtk_text_buffer_insert
+
+(test gtk-text-buffer-insert
+  (let* ((buffer (make-instance 'gtk-text-buffer))
+         (iter (gtk-text-buffer-get-start-iter buffer)))
+    (is-true (gtk-text-buffer-insert buffer "text1"))
+    (is (string= "text1" (gtk-text-buffer-text buffer)))
+    (is (= 5 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (setf iter (gtk-text-buffer-get-end-iter buffer)))
+    (is-true (gtk-text-buffer-insert buffer "text2" :position iter))
+    (is (string= "text1text2" (gtk-text-buffer-text buffer)))
+    (is (= 10 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (gtk-text-buffer-insert buffer "text3" :interactive t))
+    (is (string= "text1text2text3" (gtk-text-buffer-text buffer)))
+    (is (= 15 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (setf iter (gtk-text-buffer-get-end-iter buffer)))
+    (is-true (gtk-text-buffer-insert buffer "text4" :position iter :interactive t))
+    (is (string= "text1text2text3text4" (gtk-text-buffer-text buffer)))
+    (is (= 20 (gtk-text-buffer-cursor-position buffer)))))
+
 ;;;     gtk_text_buffer_insert_at_cursor
+
+(test gtk-text-buffer-insert-at-cursor
+  (let ((buffer (make-instance 'gtk-text-buffer)))
+    (is-false (gtk-text-buffer-insert-at-cursor buffer "text"))
+    (is (string= "text" (gtk-text-buffer-text buffer)))
+    (is (= 4 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-false (gtk-text-buffer-insert-at-cursor buffer "text"))
+    (is (string= "texttext" (gtk-text-buffer-text buffer)))
+    (is (= 8 (gtk-text-buffer-cursor-position buffer)))))
+
 ;;;     gtk_text_buffer_insert_interactive
+
+(test gtk-text-buffer-insert-interactive
+  (let* ((buffer (make-instance 'gtk-text-buffer))
+         (iter (gtk-text-buffer-get-start-iter buffer)))
+    (is-true (gtk-text-buffer-insert-interactive buffer iter "text" t))
+    (is (string= "text" (gtk-text-buffer-text buffer)))
+    (is (= 4 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (gtk-text-buffer-insert-interactive buffer iter "text" t))
+    (is (string= "texttext" (gtk-text-buffer-text buffer)))
+    (is (= 8 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-false (gtk-text-buffer-insert-interactive buffer iter "text" nil))
+    (is (string= "texttext" (gtk-text-buffer-text buffer)))
+    (is (= 8 (gtk-text-buffer-cursor-position buffer)))))
+
 ;;;     gtk_text_buffer_insert_interactive_at_cursor
+
+(test gtk-text-buffer-insert-interactive-at-cursor
+  (let ((buffer (make-instance 'gtk-text-buffer)))
+    (is-true (gtk-text-buffer-insert-interactive-at-cursor buffer "text" t))
+    (is (string= "text" (gtk-text-buffer-text buffer)))
+    (is (= 4 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (gtk-text-buffer-insert-interactive-at-cursor buffer "text" t))
+    (is (string= "texttext" (gtk-text-buffer-text buffer)))
+    (is (= 8 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-false (gtk-text-buffer-insert-interactive-at-cursor buffer "text" nil))
+    (is (string= "texttext" (gtk-text-buffer-text buffer)))
+    (is (= 8 (gtk-text-buffer-cursor-position buffer)))))
+
 ;;;     gtk_text_buffer_insert_range
 ;;;     gtk_text_buffer_insert_range_interactive
+
+
+
 ;;;     gtk_text_buffer_insert_with_tags
 ;;;     gtk_text_buffer_insert_with_tags_by_name
+
 ;;;     gtk_text_buffer_delete
 ;;;     gtk_text_buffer_delete_interactive
 ;;;     gtk_text_buffer_backspace
@@ -162,8 +283,19 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_get_start_iter
 ;;;     gtk_text_buffer_get_end_iter
 ;;;     gtk_text_buffer_get_bounds
+
 ;;;     gtk_text_buffer_get_modified
 ;;;     gtk_text_buffer_set_modified
+
+(test gtk-text-buffer-modified
+  (let ((buffer (make-instance 'gtk-text-buffer :text *sample-text-1*)))
+    (is-true (gtk-text-buffer-modified buffer))
+    (is-false (setf (gtk-text-buffer-modified buffer) nil))
+    (is-false (gtk-text-buffer-modified buffer))
+    ;; Modify the buffer
+    (is-true (gtk-text-buffer-insert buffer "text"))
+    (is-true (gtk-text-buffer-modified buffer))))
+
 ;;;     gtk_text_buffer_delete_selection
 ;;;     gtk_text_buffer_paste_clipboard
 ;;;     gtk_text_buffer_copy_clipboard

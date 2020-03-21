@@ -12,7 +12,7 @@
   ;; Check the parent
   (is (equal (gtype "GObject") (g-type-parent "GSimpleActionGroup")))
   ;; Check the children
-  (is (equal '()
+  (is (equal '("GApplicationExportedActions" "GtkApplicationWindowActions")
              (mapcar #'gtype-name (g-type-children "GSimpleActionGroup"))))
   ;; Check the interfaces
   (is (equal '("GActionGroup" "GActionMap")

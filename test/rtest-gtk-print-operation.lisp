@@ -161,6 +161,9 @@
   ;; Check the registered name
   (is (eq 'gtk-print-operation
           (registered-object-type-by-name "GtkPrintOperation")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintOperation"
+               (g-type-name (gtype (foreign-funcall "gtk_print_operation_get_type" :int)))))
   ;; Check the parent
   (is (equal (gtype "GObject") (g-type-parent "GtkPrintOperation")))
   ;; Check the children

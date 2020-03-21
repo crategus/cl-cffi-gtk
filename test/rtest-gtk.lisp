@@ -51,6 +51,16 @@
 ;    gtk.aspect-frame.lisp
 ;    gtk.fixed.lisp
 
+;;;  Multiline Text Editor
+
+(load "rtest-gtk-text-iter.lisp")
+(load "rtest-gtk-text-mark.lisp")
+(load "rtest-gtk-text-buffer.lisp")
+(load "rtest-gtk-text-tag.lisp")
+
+; gtk.text-tag-table.lisp
+; gtk.text-view.lisp
+
 ;;;  Scrolling
 
 (load "rtest-gtk-scrollable.lisp")
@@ -102,7 +112,5 @@
 (load "rtest-gtk-entry-buffer.lisp")
 (load "rtest-gtk-frame.lisp")
 (load "rtest-gtk-list-store.lisp")
-(load "rtest-gtk-text-buffer.lisp")
-(load "rtest-gtk-text-iter.lisp")
 (load "rtest-gtk-tool-palette.lisp")
 

@@ -4,7 +4,7 @@
 
 #-windows
 (test registered-object-types
-  (is (= 281
+  (is (= 283
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+windows
@@ -35,6 +35,4 @@
    (is (equal '()
               (alexandria:hash-table-alist gobject::*foreign-gobjects-strong*))))
   (sb-ext:gc :full t))
-
-
 

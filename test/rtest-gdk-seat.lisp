@@ -222,28 +222,11 @@
 
 (test gdk-seat-get-slaves
   (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
-    (is (equal '("SYN1B7E:01 06CB:2970 Touchpad" "Virtual core XTEST pointer"
- "RAPOO BT3.0 Mouse")
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :pointer))))
-    (is (equal '()
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :touch))))
-    (is (equal '()
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :tablet-stylus))))
-    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Virtual core XTEST keyboard"
- "HD WebCam: HD WebCam" "Video Bus" "Sleep Button" "Power Button"
- "Acer WMI hotkeys" "Video Bus")
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :keyboard))))
-    (is (equal '("SYN1B7E:01 06CB:2970 Touchpad" "Virtual core XTEST pointer"
- "RAPOO BT3.0 Mouse")
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all-pointing))))
-    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Virtual core XTEST keyboard"
- "HD WebCam: HD WebCam" "Video Bus" "Sleep Button" "Power Button"
- "Acer WMI hotkeys" "Video Bus" "SYN1B7E:01 06CB:2970 Touchpad"
- "Virtual core XTEST pointer" "RAPOO BT3.0 Mouse")
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all))))
-    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Virtual core XTEST keyboard"
- "HD WebCam: HD WebCam" "Video Bus" "Sleep Button" "Power Button"
- "Acer WMI hotkeys" "Video Bus" "SYN1B7E:01 06CB:2970 Touchpad"
- "Virtual core XTEST pointer" "RAPOO BT3.0 Mouse")
-               (mapcar #'gdk-device-name (gdk-seat-get-slaves seat '(:pointer :keyboard)))))))
+    (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :pointer)))))
+    (is (equal '() (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :touch))))
+    (is (equal '() (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :tablet-stylus))))
+    (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :keyboard)))))
+    (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all-pointing)))))
+    (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all)))))
+    (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat '(:pointer :keyboard))))))))
 
