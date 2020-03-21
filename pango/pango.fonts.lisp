@@ -385,7 +385,7 @@
 
 (define-g-enum "PangoStretch" pango-stretch
   (:export t
-   :type-initializer "pango_stretch_type_get_type")
+   :type-initializer "pango_stretch_get_type")
   (:ultra-condensed 0)
   (:extra-condensed 1)
   (:condensed 2)
@@ -407,7 +407,7 @@
   @begin{pre}
 (define-g-enum \"PangoStretch\" pango-stretch
   (:export t
-   :type-initializer \"pango_stretch_type_get_type\")
+   :type-initializer \"pango_stretch_get_type\")
   (:ultra-condensed 0)
   (:extra-condensed 1)
   (:condensed 2)
