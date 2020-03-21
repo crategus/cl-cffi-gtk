@@ -620,14 +620,14 @@
 @set gtk-text-iter-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-search.html
 @set gtk-text-iter-forward-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-search.html
 @set gtk-text-iter-backward-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-backward-search.html
-@set gtk-text-iter-set-line-offset http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-set-line-offset.html
+@set gtk-text-iter-line-offset http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-line-offset.html
 @set gtk-text-iter-forward-to-line-end http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-to-line-end.html
 @set gtk-text-iter-find-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-find-char.html
 @set gtk-text-iter-backward-find-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-backward-find-char.html
 @set gtk-text-iter-forward-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-char.html
-@set gtk-text-iter-get-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-char.html
-@set gtk-text-iter-get-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-pixbuf.html
-@set gtk-text-iter-get-child-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-child-anchor.html
+@set gtk-text-iter-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-char.html
+@set gtk-text-iter-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-pixbuf.html
+@set gtk-text-iter-child-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-child-anchor.html
 
 @c GtkTextMark
 
@@ -653,7 +653,7 @@
 @set gtk-text-view-buffer-to-window-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-buffer-to-window-coords.html
 @set gtk-text-view-get-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-window.html
 @set gtk-text-view-window-to-buffer-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-window-to-buffer-coords.html
-@set gtk-text-view-set-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-editable.html
+@set gtk-text-view-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-editable.html
 
 @c GtkToogleAction
 

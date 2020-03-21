@@ -365,7 +365,7 @@ range of text can be removed in one go using the function
 The above functions apply attributes to portions of text in a buffer.  If
 attributes have to be applied for the entire @xurl{gtk-text-view} widget, the
 @code{gtk-text-view-set-*} functions can be used.  For example, the function
-@xurl{gtk-text-view-set-editable} makes @code{text-view} editable/non-editable.
+@xurl{gtk-text-view-editable} makes @code{text-view} editable/non-editable.
 
 See the GTK+ API documentation @url{http://www.crategus.com/books/cl-cffi-gtk/}
 for a complete list of available functions.  The attributes set by these
@@ -649,8 +649,8 @@ marks are in the same position.
 @node Examing and Modify Text, Images and Widgets, Searching, Top
 @section Examing and Modify Text
 
-@findex gtk-text-iter-set-line-offset
-@findex text-iter-set-line-offset, gtk-text-iter-set-line-offset
+@findex gtk-text-iter-line-offset
+@findex text-iter-line-offset, gtk-text-iter-line-offset
 
 @findex gtk-text-iter-forward-to-line-end
 @findex text-iter-forward-to-line-end, gtk-text-iter-forward-to-line-end
@@ -670,7 +670,7 @@ To insert tags around the current line, we first obtain an iter at the current
 cursor position. Then we move the iter to the beginning of the line, insert the
 start tag, move the iter to the end of the line, and insert the end tag.  An
 iter can be moved to a specified offset in the same line using the function
-@xurl{gtk-text-iter-set-line-offset} with the arguments @code{iter} and
+@xurl{gtk-text-iter-line-offset} with the arguments @code{iter} and
 @code{char-on-line}.  The function moves @code{iter} within the line, to the
 character offset specified by @code{char-on-line}.  If @code{char-on-line} is
 equal to the no. of characters in the line, the iter is moved to the start of
@@ -713,7 +713,7 @@ functions required to implement the first program, here is the code.
          (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-mark buffer "insert"))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
-           (gtk-text-iter-set-line-offset iter 0)
+           (setf (gtk-text-iter-line-offset iter) 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
@@ -761,11 +761,11 @@ the angle bracket we move the left angle bracket @code{iter} by one character.
 And then extract the character at that position.  To move an @code{iter} forward
 by one character, the function @xurl{gtk-text-iter-forward-char} can be used.
 
-@findex gtk-text-iter-get-char
-@findex text-iter-get-char, gtk-text-iter-get-char
+@findex gtk-text-iter-char
+@findex text-iter-char, gtk-text-iter-char
 
 To extract the character at an @code{iter} the function
-@xurl{gtk-text-iter-get-char} can be used.  After determining the tag type we do
+@xurl{gtk-text-iter-char} can be used.  After determining the tag type we do
 the following,
 @itemize @bullet
   @item If the tag is an end tag, we push the tag name into a stack and then
@@ -806,7 +806,7 @@ follows.
 (defun closing-tag-p (iter)
   (let ((slash (gtk-text-iter-copy iter)))
     (gtk-text-iter-forward-char slash)
-    (eql (gtk-text-iter-get-char slash) #\/)))
+    (eql (gtk-text-iter-char slash) #\/)))
 
 (defun example-text-view-editing-2 ()
   (within-main-loop
@@ -925,7 +925,7 @@ a buffer using the function @xurl{gtk-text-buffer-get-text} the @code{0xFFFC}
 characters representing images are dropped off in the returned text. If these
 characters representing images are required, use the slice variant -
 @xurl{gtk-text-buffer-get-slice}.  The image at a given position can be
-retrieved using the function @xurl{gtk-text-iter-get-pixbuf}.
+retrieved using the function @xurl{gtk-text-iter-pixbuf}.
 
 @subheading Inserting Widgets
 
@@ -998,7 +998,7 @@ clicks on the Insert button.
 Child anchors are also represented in the buffer using the object replacement
 character @code{0xFFFC}.  Retrieving a widget is also a two step process.
 First, the child anchor has to be retrieved.  This can be done using the
-function @xurl{gtk-text-iter-get-child-anchor}.  Next, the widget(s) associated
+function @xurl{gtk-text-iter-child-anchor}.  Next, the widget(s) associated
 with the child anchor has to be retrieved.  This can be done using the function
 @xurl{gtk-text-child-anchor-get-widgets}.  The function returns a list of
 widgets.  As mentioned earlier, if you are not doing tricky things like multiple
@@ -1122,7 +1122,7 @@ functions.
     (let ((start (gtk-text-iter-copy location)))
       (when (gtk-text-iter-backward-word-start start)
         (let* ((word (string-trim " "
-                                  (gtk-text-iter-get-text start location)))
+                                  (gtk-text-iter-text start location)))
                (tip-text (get-tip word)))
           (when tip-text
             (let ((rect (gtk-text-view-get-iter-location text-view location))
