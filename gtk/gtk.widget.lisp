@@ -5111,9 +5111,12 @@
 ;;; enum GtkTextDirection
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Implement a base-type for defining an enumeration
+
 (define-g-enum "GtkTextDirection" gtk-text-direction
   (:export t
    :type-initializer "gtk_text_direction_get_type")
+  (:dummy -1) ; Workaround to ensure the base-type is :int for the enumeration
   (:none 0)
   (:ltr 1)
   (:rtl 2))

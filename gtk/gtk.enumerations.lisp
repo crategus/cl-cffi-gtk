@@ -319,9 +319,12 @@
 ;;; enum GtkJustification
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Implement a base-type for defining an enumeration
+
 (define-g-enum "GtkJustification" gtk-justification
   (:export t
    :type-initializer "gtk_justification_get_type")
+  (:dummy -1)  ; Workaround to ensure the base-type is :int for the enumeration
   (:left 0)
   (:right 1)
   (:center 2)
