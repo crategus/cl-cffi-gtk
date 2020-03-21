@@ -2751,24 +2751,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_default_attributes ()
-;;;
-;;; GtkTextAttributes * gtk_text_view_get_default_attributes
-;;;                                                    (GtkTextView *text_view);
-;;;
-;;; Obtains a copy of the default text attributes. These are the attributes used
-;;; for text unless a tag overrides them. You'd typically pass the default
-;;; attributes in to gtk_text_iter_get_attributes() in order to get the
-;;; attributes in effect at a given text position.
-;;;
-;;; The return value is a copy owned by the caller of this function, and should
-;;; be freed.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     a new GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_view_get_default_attributes"
+           gtk-text-view-default-attributes)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-21}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{A @symbol{gtk-text-attributes} structure.}
+  @begin{short}
+    Obtains the default text attributes.
+  @end{short}
+  These are the attributes used for text unless a tag overrides them. You'd
+  typically pass the default attributes in to the function
+  @fun{gtk-text-iter-attributes} in order to get the attributes in effect at a
+  given text position.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-iter-attributes}"
+    (g-boxed-foreign gtk-text-attributes)
+  (text-view (g-object gtk-text-view)))
+
+(export 'gtk-text-view-default-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_im_context_filter_keypress ()
