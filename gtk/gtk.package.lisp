@@ -1589,30 +1589,31 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
 
       @about-class{gtk-text-iter}
 
-      @about-function{gtk-text-iter-get-buffer}
+      @about-function{gtk-text-iter-buffer}
       @about-function{gtk-text-iter-copy}
       @about-function{gtk-text-iter-assign}
       @about-function{gtk-text-iter-free}
-      @about-function{gtk-text-iter-get-offset}
-      @about-function{gtk-text-iter-get-line}
-      @about-function{gtk-text-iter-get-line-offset}
-      @about-function{gtk-text-iter-get-line-index}
-      @about-function{gtk-text-iter-get-visible-line-index}
-      @about-function{gtk-text-iter-get-visible-line-offset}
-      @about-function{gtk-text-iter-get-char}
-      @about-function{gtk-text-iter-get-slice}
-      @about-function{gtk-text-iter-get-text}
-      @about-function{gtk-text-iter-get-visible-slice}
-      @about-function{gtk-text-iter-get-visible-text}
-      @about-function{gtk-text-iter-get-pixbuf}
-      @about-function{gtk-text-iter-get-marks}
-      @about-function{gtk-text-iter-get-toggled-tags}
-      @about-function{gtk-text-iter-get-child-anchor}
+      @about-function{gtk-text-iter-offset}
+      @about-function{gtk-text-iter-line}
+      @about-function{gtk-text-iter-line-offset}
+      @about-function{gtk-text-iter-line-index}
+      @about-function{gtk-text-iter-visible-line-index}
+      @about-function{gtk-text-iter-visible-line-offset}
+      @about-function{gtk-text-iter-char}
+      @about-function{gtk-text-iter-slice}
+      @about-function{gtk-text-iter-text}
+      @about-function{gtk-text-iter-visible-slice}
+      @about-function{gtk-text-iter-visible-text}
+      @about-function{gtk-text-iter-pixbuf}
+      @about-function{gtk-text-iter-marks}
+      @about-function{gtk-text-iter-toggled-tags}
+      @about-function{gtk-text-iter-child-anchor}
+      @about-function{gtk-text-iter-starts-tag}
       @about-function{gtk-text-iter-begins-tag}
       @about-function{gtk-text-iter-ends-tag}
       @about-function{gtk-text-iter-toggles-tag}
       @about-function{gtk-text-iter-has-tag}
-      @about-function{gtk-text-iter-get-tags}
+      @about-function{gtk-text-iter-tags}
       @about-function{gtk-text-iter-editable}
       @about-function{gtk-text-iter-can-insert}
       @about-function{gtk-text-iter-starts-word}
@@ -1624,14 +1625,14 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-ends-sentence}
       @about-function{gtk-text-iter-inside-sentence}
       @about-function{gtk-text-iter-is-cursor-position}
-      @about-function{gtk-text-iter-get-chars-in-line}
-      @about-function{gtk-text-iter-get-bytes-in-line}
-      @about-function{gtk-text-iter-get-attributes}
-      @about-function{gtk-text-iter-get-language}
+      @about-function{gtk-text-iter-chars-in-line}
+      @about-function{gtk-text-iter-bytes-in-line}
+      @about-function{gtk-text-iter-attributes}
+      @about-function{gtk-text-iter-language}
       @about-function{gtk-text-iter-is-end}
       @about-function{gtk-text-iter-is-start}
-      @about-function{gtk-text-iter-forward-char}
       @about-function{gtk-text-iter-move}
+      @about-function{gtk-text-iter-forward-char}
       @about-function{gtk-text-iter-backward-char}
       @about-function{gtk-text-iter-forward-chars}
       @about-function{gtk-text-iter-backward-chars}
@@ -1663,12 +1664,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-backward-visible-line}
       @about-function{gtk-text-iter-forward-visible-lines}
       @about-function{gtk-text-iter-backward-visible-lines}
-      @about-function{gtk-text-iter-set-offset}
-      @about-function{gtk-text-iter-set-line}
-      @about-function{gtk-text-iter-set-line-offset}
-      @about-function{gtk-text-iter-set-line-index}
-      @about-function{gtk-text-iter-set-visible-line-index}
-      @about-function{gtk-text-iter-set-visible-line-offset}
       @about-function{gtk-text-iter-forward-to-end}
       @about-function{gtk-text-iter-forward-to-line-end}
       @about-function{gtk-text-iter-forward-to-tag-toggle}
@@ -1678,10 +1673,10 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-iter-backward-find-char}
 
       @about-symbol{gtk-text-search-flags}
-
       @about-function{gtk-text-iter-search}
       @about-function{gtk-text-iter-forward-search}
       @about-function{gtk-text-iter-backward-search}
+
       @about-function{gtk-text-iter-equal}
       @about-function{gtk-text-iter-compare}
       @about-function{gtk-text-iter-in-range}
@@ -1696,10 +1691,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-generic{gtk-text-mark-name}
 
       @about-function{gtk-text-mark-new}
-      @about-function{gtk-text-mark-set-visible}
-      @about-function{gtk-text-mark-get-visible}
-      @about-function{gtk-text-mark-get-deleted}
-      @about-function{gtk-text-mark-get-buffer}
+      @about-function{gtk-text-mark-visible}
+      @about-function{gtk-text-mark-deleted}
+      @about-function{gtk-text-mark-buffer}
     @end{subsection}
     @begin[GtkTextBuffer]{subsection}
       Stores attributed text for display in a @class{gtk-text-view} widget.
@@ -1714,17 +1708,20 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-generic{gtk-text-buffer-text}
 
       @about-function{gtk-text-buffer-new}
-      @about-function{gtk-text-buffer-get-line-count}
-      @about-function{gtk-text-buffer-get-char-count}
+      @about-function{gtk-text-buffer-line-count}
+      @about-function{gtk-text-buffer-char-count}
+
       @about-function{gtk-text-buffer-insert}
       @about-function{gtk-text-buffer-insert-at-cursor}
       @about-function{gtk-text-buffer-insert-interactive}
       @about-function{gtk-text-buffer-insert-interactive-at-cursor}
+
       @about-function{gtk-text-buffer-insert-range}
       @about-function{gtk-text-buffer-insert-range-interactive}
       @about-function{gtk-text-buffer-insert-with-tags}
       @about-function{gtk-text-buffer-insert-with-tags-by-name}
       @about-function{gtk-text-buffer-insert-markup}
+
       @about-function{gtk-text-buffer-delete}
       @about-function{gtk-text-buffer-delete-interactive}
       @about-function{gtk-text-buffer-backspace}
@@ -1760,8 +1757,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-get-start-iter}
       @about-function{gtk-text-buffer-get-end-iter}
       @about-function{gtk-text-buffer-get-bounds}
-      @about-function{gtk-text-buffer-get-modified}
-      @about-function{gtk-text-buffer-set-modified}
+
+      @about-function{gtk-text-buffer-modified}
+
       @about-function{gtk-text-buffer-delete-selection}
       @about-function{gtk-text-buffer-paste-clipboard}
       @about-function{gtk-text-buffer-copy-clipboard}
@@ -1995,7 +1993,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-view-get-tabs}
       @about-function{gtk-text-view-set-accepts-tab}
       @about-function{gtk-text-view-get-accepts-tab}
-      @about-function{gtk-text-view-get-default-attributes}
+      @about-function{gtk-text-view-default-attributes}
       @about-function{gtk-text-view-im-context-filter-keypress}
       @about-function{gtk-text-view-reset-im-context}
       @about-function{gtk-text-view-set-input-purpose}
