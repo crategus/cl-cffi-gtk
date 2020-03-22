@@ -3,41 +3,52 @@
 
 ;;; --- Types and Values -------------------------------------------------------
 
+;;;     GtkWrapMode          <--- GtkTextView
+
+(test gtk-wrap-mode
+  ;; Check the type
+  (is-true (g-type-is-enum "GtkWrapMode"))
+  ;; Check the type initializer
+  (is (string= "GtkWrapMode"
+               (g-type-name (gtype (foreign-funcall "gtk_wrap_mode_get_type" :int)))))
+  ;; Check the registered name
+  (is (eql 'gtk-wrap-mode (gobject::registered-enum-type "GtkWrapMode")))
+  ;; Check the names
+  (is (equal '("GTK_WRAP_NONE" "GTK_WRAP_CHAR" "GTK_WRAP_WORD" "GTK_WRAP_WORD_CHAR")
+             (mapcar #'gobject::enum-item-name
+                     (gobject::get-enum-items "GtkWrapMode"))))
+  ;; Check the values
+  (is (equal '(0 1 2 3)
+             (mapcar #'gobject::enum-item-value
+                     (gobject::get-enum-items "GtkWrapMode"))))
+  ;; Check the nick names
+  (is (equal '("none" "char" "word" "word-char")
+             (mapcar #'gobject::enum-item-nick
+                     (gobject::get-enum-items "GtkWrapMode"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkWrapMode"
+                             GTK-WRAP-MODE
+                             (:EXPORT T :TYPE-INITIALIZER "gtk_wrap_mode_get_type")
+                             (:NONE 0)
+                             (:CHAR 1)
+                             (:WORD 2)
+                             (:WORD-CHAR 3))
+             (gobject::get-g-type-definition "GtkWrapMode"))))
+
+;;;     GtkTextAppearance
+
+;; *** not implemented ***
+
 ;;;     GtkTextAttributes
 
 (test gtk-text-attributes
-
   ;; Type check
   (is-true (g-type-is-a (gtype "GtkTextAttributes") +g-type-boxed+))
   ;; Check the type initializer
   (is (string= "GtkTextAttributes"
-               (g-type-name (gtype (foreign-funcall "gtk_text_attributes_get_type" :int)))))
-
-)
+               (g-type-name (gtype (foreign-funcall "gtk_text_attributes_get_type" :int))))))
 
 (test gtk-text-attributes-slots
-  (let ((attr (make-gtk-text-attributes)))
-    (is (= 0 (gtk-text-attributes-refcount attr)))
-    (is-true (null-pointer-p (gtk-text-attributes-appearance attr)))
-    (is-false (gtk-text-attributes-justification attr))
-    (is-false (gtk-text-attributes-direction attr))
-    (is-false (gtk-text-attributes-font attr))
-    (is-false (gtk-text-attributes-font-scale attr))
-    (is-false (gtk-text-attributes-left-margin attr))
-    (is-false (gtk-text-attributes-right-margin attr))
-    (is-false (gtk-text-attributes-indent attr))
-    (is-false (gtk-text-attributes-pixels-above-lines attr))
-    (is-false (gtk-text-attributes-pixels-below-lines attr))
-    (is-false (gtk-text-attributes-pixels-inside-wrap attr))
-    (is-false (gtk-text-attributes-tabs attr))             ; type is pango-tab-array
-    (is-false (gtk-text-attributes-wrap-mode attr))
-    (is-false (gtk-text-attributes-language attr))
-    (is-false (gtk-text-attributes-invisible attr))
-    (is-false (gtk-text-attributes-bg-full-height attr))
-    (is-false (gtk-text-attributes-editable attr))
-))
-
-(test gtk-text-attributes-slots.2
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text "Some sample text for the text buffer."))
          (view (gtk-text-view-new-with-buffer buffer))
@@ -47,10 +58,9 @@
     (is (eq 'gtk-text-view (type-of view)))
     (is (eq 'gtk-text-attributes (type-of attr)))
 
-    (is (= 1 (gtk-text-attributes-refcount attr)))
     (is-true (pointerp (gtk-text-attributes-appearance attr)))
-    (is (= 65535 (gtk-text-attributes-justification attr))) ; not of type gtk-justification
-    (is (= 0 (gtk-text-attributes-direction attr))) ; not of type gtk-text-direction
+    (is (eq :dummy2 (gtk-text-attributes-justification attr)))
+    (is (eq :none (gtk-text-attributes-direction attr)))
     (is (eq 'pango-font-description (type-of (gtk-text-attributes-font attr))))
     (is (= 0.0d0 (gtk-text-attributes-font-scale attr)))
     (is (= 0 (gtk-text-attributes-left-margin attr)))
@@ -62,13 +72,11 @@
     (is-true (pointerp (gtk-text-attributes-tabs attr)))
     (is (eq :none (gtk-text-attributes-wrap-mode attr)))
     (is (eq 'pango-language (type-of (gtk-text-attributes-language attr))))
-    (is (= 0 (gtk-text-attributes-invisible attr)))
-    (is (= 0 (gtk-text-attributes-bg-full-height attr)))
-    (is (= 0 (gtk-text-attributes-editable attr)))
-))
-
-;;;     GtkTextAppearance
-;;;     GtkWrapMode          <--- GtkTextView
+    (is-false (gtk-text-attributes-invisible attr))
+    (is-false (gtk-text-attributes-bg-full-height attr))
+    (is-false (gtk-text-attributes-editable attr))
+    (is-false (gtk-text-attributes-no-fallback attr))
+    (is (= 0 (gtk-text-attributes-letter-spacing attr)))))
 
 ;;;     GtkTextTag
 
@@ -347,8 +355,36 @@
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_text_tag_new
+
+(test gtk-text-tag-new
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "tag"))))
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "bold" :weight 700))))
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "blue-foreground" :foreground "blue"))))
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "italic" :style :italic))))
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "font" :font "fixed"))))
+  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "font-italic" :font "fixed" :style :italic)))))
+
 ;;;     gtk_text_tag_get_priority
 ;;;     gtk_text_tag_set_priority
+
+(test gtk-text-tag-priority
+  (let ((tag1 (gtk-text-tag-new "bold" :weight 700))
+        (tag2 (gtk-text-tag-new "font" :font "fixed"))
+        (table (gtk-text-tag-table-new)))
+
+    (is-true (gtk-text-tag-table-add table tag1))
+    (is (= 1 (gtk-text-tag-table-size table)))
+    (is (= 0 (gtk-text-tag-priority tag1)))
+
+    (is-true (gtk-text-tag-table-add table tag2))
+    (is (= 2 (gtk-text-tag-table-size table)))
+    (is (= 1 (gtk-text-tag-priority tag2)))
+
+    (is (= 0 (setf (gtk-text-tag-priority tag2) 0)))
+    (is (= 0 (gtk-text-tag-priority tag2)))
+    (is (= 1 (setf (gtk-text-tag-priority tag2) 1)))
+    (is (= 1 (gtk-text-tag-priority tag2)))))
+
 ;;;     gtk_text_tag_event
 ;;;     gtk_text_tag_changed
 
