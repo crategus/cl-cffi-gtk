@@ -234,15 +234,17 @@
 ;;; gtk_text_tag_table_get_size ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-get-size) :int
+(defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2014-1-23}
+ "@version{2020-3-21}
   @argument[table]{a @class{gtk-text-tag-table} object}
-  @return{Number of tags in @arg{table}.}
-  Returns the size of the number of tags.
+  @return{A @code{:int} with the number of tags in @arg{table}.}
+  @begin{short}
+    Returns the size of the number of tags in the tag table.
+  @end{short}
   @see-class{gtk-text-tag-table}"
   (table (g-object gtk-text-tag-table)))
 
-(export 'gtk-text-tag-table-get-size)
+(export 'gtk-text-tag-table-size)
 
 ;;; --- End of file gtk.text-tag-table.lisp ------------------------------------
