@@ -273,7 +273,15 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_apply_tag_by_name
 ;;;     gtk_text_buffer_remove_tag_by_name
 ;;;     gtk_text_buffer_remove_all_tags
+
 ;;;     gtk_text_buffer_create_tag
+
+(test gtk-text-buffer-create-tag
+  (let ((buffer (make-instance 'gtk-text-buffer :text "Some sample text.")))
+    (is (eq 'gtk-text-tag (type-of (gtk-text-buffer-create-tag buffer "bold" :weight 400))))
+    (is (eq 'gtk-text-tag
+            (type-of (gtk-text-buffer-create-tag buffer "font-italic" :font "fixed" :style :italic))))))
+
 ;;;     gtk_text_buffer_get_iter_at_line_offset
 ;;;     gtk_text_buffer_get_iter_at_offset
 ;;;     gtk_text_buffer_get_iter_at_line
