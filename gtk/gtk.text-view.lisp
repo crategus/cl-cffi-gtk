@@ -2,12 +2,12 @@
 ;;; gtk.text-view.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,7 +37,7 @@
 ;;;     GtkTextViewLayer
 ;;;     GtkTextWindowType
 ;;;     GtkTextExtendSelection
-;;;     GtkWrapMode                                        ---> gtk.text-tag
+;;;     GtkWrapMode                               ---> gtk.text-attributes.lisp
 ;;;     GtkTextChildAnchor
 ;;;
 ;;;     GTK_TEXT_VIEW_PRIORITY_VALIDATE
@@ -676,8 +676,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accepts-tab" 'gtk-text-view) 't)
- "The @code{accepts-tab} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{accepts-tab} property of type @code{:boolean} (Read / Write) @br{}
   Whether Tab will result in a tab character being entered. @br{}
   Default value: @em{true}")
 
@@ -685,12 +684,27 @@
 (setf (gethash 'gtk-text-view-accepts-tab atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-accepts-tab 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{accepts-tab} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-accepts-tab}
-  @see-function{gtk-text-view-set-accepts-tab}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-accepts-tab object) => accepts-tab}
+  @syntax[]{(setf (gtk-text-view-accepts-tab object) accepts-tab)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[accepts-tab]{@em{true} if pressing the Tab key should insert a tab
+    character, @em{false}, if pressing the Tab key should move the keyboard
+    focus}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{accepts-tab} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-accepts-tab} returns whether pressing the Tab
+  key inserts a tab characters. The function
+  @sym{(setf gtk-text-view-accepts-tab)} sets the behavior of the text widget
+  when the Tab key is pressed.
+
+  If @arg{accepts-tab} is @em{true}, a tab character is inserted. If
+  @arg{accepts-tab} is @em{false} the keyboard focus is moved to the next widget
+  in the focus chain.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-bottom-margin --------------------------------------------
 
@@ -698,23 +712,33 @@
 (setf (documentation (atdoc:get-slot-from-name "bottom-margin" 'gtk-text-view)
                      't)
  "The @code{bottom-margin} property of type @code{:int} (Read / Write) @br{}
-  The bottom margin for text in the text view.
-  Note that this property is confusingly named. In CSS terms, the value set here
-  is padding, and it is applied in addition to the padding from the theme.
-  Don't confuse this property with @code{margin-bottom}. @br{}
+  The bottom margin for text in the text view. Note that this property is
+  confusingly named. In CSS terms, the value set here is padding, and it is
+  applied in addition to the padding from the theme. Don't confuse this
+  property with the @slot[gtk-widget]{margin-bottom} property. Since 3.18 @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.18")
+  Default value: 0")
 
 #+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-bottom-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-bottom-margin 'function)
- "@version{2019-4-14}
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-bottom-margin object) => bottom-margin}
+  @syntax[]{(setf (gtk-text-view-bottom-margin object) bottom-margin)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[bottom-margin]{a @code{:int} with the bottom margin in pixels}
   @begin{short}
     Accessor of the slot @slot[gtk-text-view]{bottom-margin} of the
     @class{gtk-text-view} class.
   @end{short}
+
+  The function @sym{gtk-text-view-margin-bottom} gets the bottom margin for text
+  in the text view. The function @sym{(setf gtk-text-view-margin-bottom)} sets
+  the bottom margin for text in the text view.
+
+  Note that this function is confusingly named. In CSS terms, the value set
+  here is padding.
 
   Since 3.18
   @see-class{gtk-text-view}")
@@ -728,15 +752,29 @@
   The buffer which is displayed.")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-view-buffer atdoc:*function-name-alias*)
-      "Accessor"
+(setf (gethash 'gtk-text-view-buffer atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-text-view-buffer 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{buffer} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-buffer object) => buffer}
+  @syntax[]{(setf (gtk-text-view-buffer object) buffer)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{buffer} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-buffer} returns the @class{gtk-text-buffer}
+  object being displayed by the text view. The function
+  @sym{(setf gtk-text-view-buffer)} sets @arg{buffer} as the buffer being
+  displayed by the text view.
+
+  The previous buffer displayed by the text view is unreferenced, and a
+  reference is added to @arg{buffer}. If you owned a reference to @arg{buffer}
+  before passing it to this function, you must remove that reference yourself;
+  @class{gtk-text-view} will not \"adopt\" it.
   @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-buffer}
-  @see-function{gtk-text-view-set-buffer}")
+  @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-view-cursor-visible -------------------------------------------
 
@@ -752,12 +790,23 @@
 (setf (gethash 'gtk-text-view-cursor-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-cursor-visible 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{cursor-visible} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-cursor-visible}
-  @see-function{gtk-text-view-set-cursor-visible}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-cursor-visible object) => setting}
+  @syntax[]{(setf (gtk-text-view-cursor-visible object) setting)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[setting]{a @code{:boolean} whether to show the insertion cursor}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{cursor-visible} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-cursor-visible} returns whether the insertion
+  mark is visible. The function @sym{(setf gtk-text-view-cursor-visible)}
+  toggles whether the insertion point is displayed.
+
+  A buffer with no editable text probably should not have a visible cursor, so
+  you may want to turn the cursor off.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-editable -------------------------------------------------
 
@@ -771,31 +820,44 @@
 (setf (gethash 'gtk-text-view-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-editable 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{editable} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-editable}
-  @see-function{gtk-text-view-set-editable}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-editable object) => setting}
+  @syntax[]{(setf (gtk-text-view-editable object) setting)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[setting]{a @code{:boolean} whether the text view is editable}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{editable} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-editable} returns the default editability of
+  the text view. The function @sym{(setf gtk-text-view-editable)} sets the
+  default editability of the text view.
+
+  You can override this default setting with tags in the buffer, using the
+  @slot[gtk-text-tag]{editable} attribute of tags.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-im-module ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-text-view) 't)
  "The @code{im-module} property of type @code{:string} (Read / Write) @br{}
-  Which IM (input method) module should be used for this entry. See
-  @class{gtk-im-context}.
-  Setting this to a non-@code{nil} value overrides the system-wide IM module
-  setting. See the @class{gtk-settings} @code{gtk-im-module} property. @br{}
-  Default value: @code{nil}")
+  Which IM (input method) module should be used for this entry. See the
+  @class{gtk-im-context} class. Setting this to a non-@code{nil} value overrides
+  the system-wide IM module setting. See the @slot[gtk-settings]{gtk-im-module}
+  property. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-im-module atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-im-module 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{im-module} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{im-module} of the
+    @class{gtk-text-view} class.
+  @end{short}
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-indent ---------------------------------------------------
@@ -810,12 +872,23 @@
 (setf (gethash 'gtk-text-view-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-indent 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{indent} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-indent}
-  @see-function{gtk-text-view-set-indent}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-indent object) => indent}
+  @syntax[]{(setf (gtk-text-view-indent object) indent)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[indent]{a @code{:int} with the indentation in pixels}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{indent} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-indent} gets the default indentation of
+  paragraphs in the text view. The function @sym{(setf gtk-text-view-indent)}
+  sets the default indentation for paragraphs in the text view.
+
+  Tags in the view's buffer may override the default. The indentation may be
+  negative.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-input-hints ----------------------------------------------
 
@@ -824,19 +897,30 @@
  "The @code{input-hints} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
   Additional hints (beyond the \"input-purpose\" signal) that allow input
-  methods to fine-tune their behaviour. @br{}
-  Since 3.6")
+  methods to fine-tune their behaviour. Since 3.6")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-hints 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{input-hints} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-input-hints object) => hints}
+  @syntax[]{(setf (gtk-text-view-input-hints object) hints)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[hints]{the hints of type @symbol{gtk-input-hints}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{input-hints} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-input-hints} gets the value of the
+  @code{input-hints} property. The function
+  @sym{(setf gtk-text-view-input-hints)} sets the @code{input-hints} property,
+  which allows input methods to fine-tune their behaviour.
+
+  Since 3.6
   @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-input-hints}
-  @see-function{gtk-text-view-set-input-hints}")
+  @see-symbol{gtk-input-hints}")
 
 ;;; --- gtk-text-view-input-purpose --------------------------------------------
 
@@ -845,23 +929,33 @@
                                                'gtk-text-view) 't)
  "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
   (Read / Write) @br{}
-  The purpose of this text field.
-  This property can be used by on-screen keyboards and other input methods to
-  adjust their behaviour. @br{}
-  Default value: @code{:free-form} @br{}
-  Since 3.6")
+  The purpose of this text field. This property can be used by on-screen
+  keyboards and other input methods to adjust their behaviour. Since 3.6 @br{}
+  Default value: @code{:free-form}")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-purpose 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{input-purpose} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-input-purpose object) => purpose}
+  @syntax[]{(setf (gtk-text-view-input-purpose object) purpose)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[purpose]{the purpose of type @symbol{gtk-input-purpose}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{input-purpose} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The @sym{gtk-text-view-input-purpose} gets the value of the
+  @code{input-purpose} property. The function
+  @sym{(setf gtk-text-view-input-purpose)} sets the @code{input-purpose}
+  property which can be used by on-screen keyboards and other input methods to
+  adjust their behaviour.
+
+  Since 3.6
   @see-class{gtk-text-view}
-  @see-symbol{gtk-input-purpose}
-  @see-function{gtk-text-view-get-input-purpose}
-  @see-function{gtk-text-view-set-input-purpose}")
+  @see-symbol{gtk-input-purpose}")
 
 ;;; --- gtk-text-view-justification --------------------------------------------
 
@@ -877,13 +971,24 @@
 (setf (gethash 'gtk-text-view-justification atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-justification 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{justification} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-justification object) => justification}
+  @syntax[]{(setf (gtk-text-view-justification object) justification)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[justification]{justification of type @symbol{gtk-justification}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{justification} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-justification} gets the default justification
+  of paragraphs in the text view. The function
+  @sym{(setf gtk-text-view-justification)} sets the default justification of
+  text in the text view.
+
+  Tags in the buffer may override the default.
   @see-class{gtk-text-view}
-  @see-symbol{gtk-justification}
-  @see-function{gtk-text-view-get-justification}
-  @see-function{gtk-text-view-set-justification}")
+  @see-symbol{gtk-justification}")
 
 ;;; --- gtk-text-view-left-margin ----------------------------------------------
 
@@ -898,12 +1003,23 @@
 (setf (gethash 'gtk-text-view-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-left-margin 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{left-margin} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-left-margin}
-  @see-function{gtk-text-view-set-left-margin}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-left-margin object) => left-margin}
+  @syntax[]{(setf (gtk-text-view-left-margin object) left-margin)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[left-margin]{a @code{:int} with the left margin in pixels}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{left-margin} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-left-margin} gets the default left margin
+  size of paragraphs in the text view. The function
+  @sym{(setf gtk-text-view-left-margin)} sets the default left margin for text
+  in the text view.
+
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-monospace ------------------------------------------------
 
@@ -911,19 +1027,27 @@
 (setf (documentation (atdoc:get-slot-from-name "monospace"
                                                'gtk-text-view) 't)
  "The @code{monospace} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to use a monospace font. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.16")
+  Whether to use a monospace font. Since 3.16 @br{}
+  Default value: @code{nil}")
 
 #+(and gtk-3-16 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-monospace atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-monospace 'function)
- "@version{2019-4-14}
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-monospace object) => monospace}
+  @syntax[]{(setf (gtk-text-view-monospace object) monospace)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[monospace]{@em{true} to request monospace styling}
   @begin{short}
     Accessor of the slot @slot[gtk-text-view]{monospace} of the
     @class{gtk-text-view} class.
   @end{short}
+
+  The function @sym{gtk-text-view-monospace} gets the value of the
+  @code{monospace} property. The function @sym{(setf gtk-text-view-monospace)}
+  sets the @code{monospace} property, which indicates that the text view should
+  use monospace fonts.
 
   Since 3.16
   @see-class{gtk-text-view}")
@@ -934,18 +1058,27 @@
 (setf (documentation (atdoc:get-slot-from-name "overwrite" 'gtk-text-view) 't)
  "The @code{overwrite} property of type @code{:boolean} (Read / Write) @br{}
   Whether entered text overwrites existing contents. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-overwrite atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-overwrite 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{overwrite} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-overwrite}
-  @see-function{gtk-text-view-set-overwrite}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-overwrite object) => overwrite}
+  @syntax[]{(setf (gtk-text-view-overwrite object) overwrite)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[overwrite]{@em{true} to turn on overwrite mode, @em{false} to turn
+    it off}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{overwrite} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-overwrite} returns whether the text view is in
+  overwrite mode or not. The function @sym{(setf gtk-text-view-overwrite)}
+  changes the text view overwrite mode.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-pixels-above-lines ---------------------------------------
 
@@ -962,12 +1095,23 @@
 (setf (gethash 'gtk-text-view-pixels-above-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-above-lines 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{pixels-above-lines} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-above-lines}
-  @see-function{gtk-text-view-set-pixels-above-lines}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-pixels-above-lines object) => pixels-above-lines}
+  @syntax[]{(setf (gtk-text-view-pixels-above-lines object) pixels-above-lines)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[pixels-above-lines]{a @code{:int} with the pixels above paragraphs}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{pixels-above-lines} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-pixels-above-lines} gets the default number
+  of pixels to put above paragraphs. The function
+  @sym{(setf gtk-text-view-pixels-above-lines)} sets the default number of
+  blank pixels above paragraphs in the text view.
+
+  Tags in the buffer for the text view may override the defaults.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-pixels-below-lines ---------------------------------------
 
@@ -984,12 +1128,23 @@
 (setf (gethash 'gtk-text-view-pixels-below-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-below-lines 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{pixels-below-lines} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-below-lines}
-  @see-function{gtk-text-view-set-pixels-below-lines}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-pixels-below-lines object) => pixels-below-lines}
+  @syntax[]{(setf (gtk-text-view-pixels-below-lines object) pixels-below-lines)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[pixels-below-lines]{a @code{:int} with the pixels below paragraphs}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{pixels-below-lines} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-pixels-below-lines} gets the default number
+  of pixels to put below paragraphs. The function
+  @sym{(setf gtk-text-view-pixels-below-lines)} sets the default number of
+  pixels of blank space to put below paragraphs in the text view.
+
+  May be overridden by tags applied to the text view's buffer.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-pixels-inside-wrap ---------------------------------------
 
@@ -1006,12 +1161,23 @@
 (setf (gethash 'gtk-text-view-pixels-inside-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-inside-wrap 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{pixels-inside-wrap} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-inside-wrap}
-  @see-function{gtk-text-view-set-pixels-inside-wrap}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-pixels-inside-wrap object) => pixels-inside-wrap}
+  @syntax[]{(setf (gtk-text-view-pixels-inside-wrap object) pixels-inside-wrap)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[pixels-inside-wrap]{default number of pixels between wrapped lines}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{pixels-inside-wrap} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-pixels-inside-wrap} gets the default number
+  of pixels of blank space to leave between display/wrapped lines within a
+  paragraph. The function @sym{(setf gtk-text-view-pixels-inside-wrap)} sets
+  the default number of pixels.
+
+  May be overridden by tags in the text view's buffer.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-populate-all ---------------------------------------------
 
@@ -1020,9 +1186,8 @@
                                                'gtk-text-view) 't)
  "The @code{populate-all} property of type @code{:boolean} (Read / Write) @br{}
   If @code{populate-all} is @em{true}, the \"populate-popup\" signal is also
-  emitted for touch popups. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.8")
+  emitted for touch popups. Since 3.8 @br{}
+  Default value: @code{nil}")
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-populate-all atdoc:*function-name-alias*)
@@ -1051,12 +1216,23 @@
 (setf (gethash 'gtk-text-view-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-right-margin 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{right-margin} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-right-margin}
-  @see-function{gtk-text-view-set-right-margin}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-right-margin object) => right-margin}
+  @syntax[]{(setf (gtk-text-view-right-margin object) right-margin)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[right-margin]{a @code{:int} with the right margin in pixels}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{right-margin} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-right-margin} gets the default right margin
+  for text in the text view. The function
+  @sym{(setf gtk-text-view-right-margin)} sets the default right margin for
+  text in the text view.
+
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-tabs -----------------------------------------------------
 
@@ -1070,12 +1246,23 @@
 (setf (gethash 'gtk-text-view-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-tabs 'function)
- "@version{2013-8-10}
-  Accessor of the slot @slot[gtk-text-view]{tabs} of the
-  @class{gtk-text-view} class.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-tabs}
-  @see-function{gtk-text-view-set-tabs}")
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-tabs object) => tabs}
+  @syntax[]{(setf (gtk-text-view-tabs object) tabs)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[tabs]{tabs as a @class{pango-tab-array} structure}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{tabs} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-tabs} gets a copy of the default tab array,
+  or @code{nil} if \"standard\" tabs are used. The function
+  @sym{(setf gtk-text-view-tabs)} sets the default tab stops for paragraphs
+  in the text view.
+
+  Tags in the buffer may override the defaults.
+  @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-top-margin -----------------------------------------------
 
@@ -1085,20 +1272,30 @@
   The top margin for text in the text view. Note that this property is
   confusingly named. In CSS terms, the value set here is padding, and it is
   applied in addition to the padding from the theme. Don't confuse this property
-  with @code{margin-top}. @br{}
+  with the @slot[gtk-widget]{margin-top} property. Since 3.18 @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.18")
+  Default value: 0")
 
 #+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-top-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-top-margin 'function)
- "@version{2019-4-14}
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-top-margin object) => top-margin}
+  @syntax[]{(setf (gtk-text-view-top-margin object) top-margin)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[top-margin]{a @code{:int} with the top margin in pixels}
   @begin{short}
     Accessor of the slot @slot[gtk-text-view]{top-margin} of the
     @class{gtk-text-view} class.
   @end{short}
+
+  The function @sym{gtk-text-view-top-margin} gets the top margin for text in
+  the text view. The function @sym{(setf gtk-text-view-top-margin)} sets the
+  top margin for text in the text view.
+
+  Note that this function is confusingly named. In CSS terms, the value set
+  here is padding.
 
   Since 3.18
   @see-class{gtk-text-view}")
@@ -1117,13 +1314,21 @@
 (setf (gethash 'gtk-text-view-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-wrap-mode 'function)
- "@version{2013-8-20}
-  Accessor of the slot @slot[gtk-text-view]{wrap-mode} of the
-  @class{gtk-text-view} class.
+ "@version{2020-3-22}
+  @syntax[]{(gtk-text-view-top-margin object) => top-margin}
+  @syntax[]{(setf (gtk-text-view-top-margin object) top-margin)}
+  @argument[object]{a @class{gtk-text-view} widget}
+  @argument[wrap-mode]{a @symbol{gtk-wrap-mode}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-view]{wrap-mode} of the
+    @class{gtk-text-view} class.
+  @end{short}
+
+  The function @sym{gtk-text-view-wrap-mode} gets the line wrapping for the
+  text view. The function @sym{(setf gtk-text-view-wrap-mode)} sets the line
+  wrapping for the text view.
   @see-class{gtk-text-view}
-  @see-symbol{gtk-wrap-mode}
-  @see-function{gtk-text-view-get-wrap-mode}
-  @see-function{gtk-text-view-set-wrap-mode}")
+  @see-symbol{gtk-wrap-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_new ()
@@ -1133,15 +1338,17 @@
 
 (defun gtk-text-view-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2020-3-22}
   @return{A new @class{gtk-text-view} object.}
-  Creates a new @class{gtk-text-view} object. If you do not call the function
-  @fun{gtk-text-view-buffer} before using the text view, an empty default
-  buffer will be created for you. Get the buffer with the function
-  @fun{gtk-text-view-get-buffer}. If you want to specify your own buffer,
-  consider the function @fun{gtk-text-view-new-with-buffer}.
-  @see-function{gtk-text-view-set-buffer}
-  @see-function{gtk-text-view-get-buffer}
+  @begin{short}
+    Creates a new @class{gtk-text-view} object.
+  @end{short}
+  If you do not call the function @fun{gtk-text-view-buffer} before using the
+  text view, an empty default buffer will be created for you. Get the buffer
+  with the function @fun{gtk-text-view-buffer}. If you want to specify your own
+  buffer, consider the function @fun{gtk-text-view-new-with-buffer}.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-buffer}
   @see-function{gtk-text-view-new-with-buffer}"
   (make-instance 'gtk-text-view))
 
@@ -1155,63 +1362,23 @@
 
 (defun gtk-text-view-new-with-buffer (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2020-3-22}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{A new @class{gtk-text-view} object.}
-  Creates a new @class{gtk-text-view} widget displaying the buffer @arg{buffer}.
-  One buffer can be shared among many widgets. @arg{buffer} may be @code{nil} to
-  create a default buffer, in which case this function is equivalent to the
-  function @fun{gtk-text-view-new}. The text view adds its own reference count
-  to the buffer; it does not take over an existing reference.
+  @begin{short}
+    Creates a new @class{gtk-text-view} widget displaying the buffer
+    @arg{buffer}.
+  @end{short}
+
+  One buffer can be shared among many widgets. @arg{buffer} may be @code{nil}
+  to create a default buffer, in which case this function is equivalent to the
+  function @fun{gtk-text-view-new}.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-new}"
   (make-instance 'gtk-text-view
                  :buffer buffer))
 
 (export 'gtk-text-view-new-with-buffer)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_buffer ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-buffer))
-
-(defun gtk-text-view-set-buffer (text-view buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @begin{short}
-    Sets @arg{buffer} as the buffer being displayed by @arg{text-view}.
-  @end{short}
-  The previous buffer displayed by the text view is unreferenced, and a
-  reference is added to @arg{buffer}. If you owned a reference to @arg{buffer}
-  before passing it to this function, you must remove that reference yourself;
-  @class{gtk-text-view} will not \"adopt\" it.
-  @see-class{gtk-text-view}
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-view-get-buffer}"
-  (setf (gtk-text-view-buffer text-view) buffer))
-
-(export 'gtk-text-view-set-buffer)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_buffer ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-buffer))
-
-(defun gtk-text-view-get-buffer (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{A @class{gtk-text-buffer} widget.}
-  Returns the @class{gtk-text-buffer} object being displayed by this text view.
-  @see-class{gtk-text-view}
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-view-set-buffer}"
-  (gtk-text-view-buffer text-view))
-
-(export 'gtk-text-view-get-buffer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_hadjustment ()
@@ -1274,7 +1441,7 @@
                                                (x-align 0.0 x-align-supplied)
                                                (y-align 0.0 y-align-supplied))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-7}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[mark]{a @class{gtk-text-mark} object}
   @argument[within-margin]{margin as a [0.0, 0.5) fraction of screen size}
@@ -1282,12 +1449,17 @@
     get the mark onscreen)}
   @argument[xalign]{horizontal alignment of mark within visible area}
   @argument[yalign]{vertical alignment of mark within visible area}
-  Scrolls @arg{text-view} so that mark is on the screen in the position
-  indicated by @arg{xalign} and @arg{yalign}. An alignment of 0.0 indicates left
-  or top, 1.0 indicates right or bottom, 0.5 means center. If @arg{use-align} is
-  @code{nil}, the text scrolls the minimal distance to get the mark onscreen,
-  possibly not scrolling at all. The effective screen for purposes of this
-  function is reduced by a margin of size @arg{within-margin}."
+  @begin{short}
+    Scrolls the text view so that mark is on the screen in the position
+    indicated by @arg{xalign} and @arg{yalign}.
+  @end{short}
+
+  An alignment of 0.0 indicates left or top, 1.0 indicates right or bottom, 0.5
+  means center. If @arg{use-align} is @code{nil}, the text scrolls the minimal
+  distance to get the mark onscreen, possibly not scrolling at all. The
+  effective screen for purposes of this function is reduced by a margin of size
+  @arg{within-margin}
+  @see-class{gtk-text-view}"
   (%gtk-text-view-scroll-to-mark text-view
                                  mark
                                  (coerce within-margin 'double-float)
@@ -1325,13 +1497,13 @@
   @return{@em{True} if scrolling occurred.}
   @begin{short}
     Scrolls @arg{text-view} so that @arg{iter} is on the screen in the position
-    indicated by @arg{xalign} and @arg{yalign}. An alignment of 0.0 indicates
-    left or top, 1.0 indicates right or bottom, 0.5 means center. If
-    @arg{use-align} is @code{nil}, the text scrolls the minimal distance to get
-    the mark onscreen, possibly not scrolling at all. The effective screen for
-    purposes of this function is reduced by a margin of size
-    @arg{within-margin}.
+    indicated by @arg{xalign} and @arg{yalign}.
   @end{short}
+  An alignment of 0.0 indicates left or top, 1.0 indicates right or bottom, 0.5
+  means center. If @arg{use-align} is @code{nil}, the text scrolls the minimal
+  distance to get the mark onscreen, possibly not scrolling at all. The
+  effective screen for purposes of this function is reduced by a margin of size
+  @arg{within-margin}.
 
   Note that this function uses the currently-computed height of the lines in
   the text buffer. Line heights are computed in an idle handler; so this
@@ -1339,6 +1511,7 @@
   computations. To avoid oddness, consider using the function
   @fun{gtk-text-view-scroll-to-mark} which saves a point to be scrolled to after
   line validation.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-scroll-to-mark}"
   (%gtk-text-view-scroll-to-iter text-view
                                  iter
@@ -1356,11 +1529,14 @@
 (defcfun ("gtk_text_view_scroll_mark_onscreen"
           gtk-text-view-scroll-mark-onscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[mark]{a mark in the buffer for @arg{text-view} object}
-  Scrolls @arg{text-view} the minimum distance such that mark is contained
-  within the visible area of the widget."
+  @begin{short}
+    Scrolls @arg{text-view} the minimum distance such that mark is contained
+    within the visible area of the widget.
+  @end{short}
+  @see-class{gtk-text-view}"
   (text-view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark)))
 
@@ -1373,12 +1549,15 @@
 (defcfun ("gtk_text_view_move_mark_onscreen"
           gtk-text-view-move-mark-onscreen) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[mark]{a @class{gtk-text-mark} object}
   @return{@em{True} if the mark moved (was not already onscreen).}
-  Moves a @arg{mark} within the buffer so that it it located within the
-  currently-visible text area."
+  @begin{short}
+    Moves a @arg{mark} within the buffer so that it it located within the
+    currently-visible text area.
+  @end{short}
+  @see-class{gtk-text-view}"
   (text-view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark)))
 
@@ -1391,11 +1570,14 @@
 (defcfun ("gtk_text_view_place_cursor_onscreen"
           gtk-text-view-place-cursor-onscreen) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @return{@em{True} if the cursor had to be moved.}
-  Moves the cursor to the currently visible region of the buffer, it it is not
-  there already."
+  @begin{short}
+    Moves the cursor to the currently visible region of the buffer, it it is
+    not there already.
+  @end{short}
+  @see-class{gtk-text-view}"
   (text-view (g-object gtk-text-view)))
 
 (export 'gtk-text-view-place-cursor-onscreen)
@@ -1414,8 +1596,10 @@
  "@version{2014-1-23}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @return{The current visible region.}
-  The currently visible region of the buffer, in buffer coordinates. Convert to
-  window coordinates with the function
+  @begin{short}
+    The currently visible region of the buffer, in buffer coordinates.
+  @end{short}
+  Convert to window coordinates with the function
   @fun{gtk-text-view-buffer-to-window-coords}.
   @see-class{gtk-text-view}
   @see-class{gdk-rectangle}
@@ -1438,7 +1622,7 @@
 
 (defun gtk-text-view-get-iter-location (text-view iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-18}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{Bounds of the character at @arg{iter}.}
@@ -1510,18 +1694,21 @@
 
 (defun gtk-text-view-get-line-at-y (text-view y)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[y]{a y coordinate}
   @begin{return}
     @code{target-iter} -- a @class{gtk-text-iter} object @br{}
     @code{line-top} -- top coordinate of the line
   @end{return}
-  Gets the @class{gtk-text-iter} at the start of the line containing the
-  coordinate @arg{y}. @arg{y} is in buffer coordinates, convert from window
-  coordinates with the function @fun{gtk-text-view-window-to-buffer-coords}. If
-  non-@code{nil}, @arg{line-top} will be filled with the coordinate of the top
-  edge of the line.
+  @begin{short}
+    Gets the @class{gtk-text-iter} at the start of the line containing the
+    coordinate @arg{y}.
+  @end{short}
+  @arg{y} is in buffer coordinates, convert from window coordinates with the
+  function @fun{gtk-text-view-window-to-buffer-coords}. If non-@code{nil},
+  @arg{line-top} will be filled with the coordinate of the top edge of the line.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-window-to-buffer-coords}"
   (let ((iter (make-instance 'gtk-text-iter)))
     (with-foreign-object (line-top :int)
@@ -1542,17 +1729,20 @@
 
 (defun gtk-text-view-get-line-yrange (text-view iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @begin{return}
     @code{y} -- y coordinate @br{}
     @code{height} -- height
   @end{return}
-  Gets the @arg{y} coordinate of the top of the line containing @arg{iter}, and
-  the @arg{height} of the line. The coordinate is a buffer coordinate; convert
-  to window coordinates with the function
-  @fun{gtk-text-view-buffer-to-window-coords}.
+  @begin{short}
+    Gets the @arg{y} coordinate of the top of the line containing @arg{iter},
+    and the @arg{height} of the line.
+  @end{short}
+  The coordinate is a buffer coordinate; convert to window coordinates with the
+  function @fun{gtk-text-view-buffer-to-window-coords}.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-buffer-to-window-coords}"
   (with-foreign-objects ((y :int) (height :int))
     (%gtk-text-view-get-line-yrange text-view iter y height)
@@ -1579,11 +1769,14 @@
   @argument[iter]{a @class{gtk-text-iter} object}
   @argument[x]{x position, in buffer coordinates}
   @argument[y]{y position, in buffer coordinates}
-  Retrieves the iterator at buffer coordinates @arg{x} and @arg{y}. Buffer
-  coordinates are coordinates for the entire buffer, not just the
+  @begin{short}
+    Retrieves the iterator at buffer coordinates @arg{x} and @arg{y}.
+  @end{short}
+  Buffer coordinates are coordinates for the entire buffer, not just the
   currently-displayed portion. If you have coordinates from an event, you have
   to convert those to buffer coordinates with the function
   @fun{gtk-text-view-window-to-buffer-coords}.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-window-to-buffer-coords}"
   (let ((iter (make-instance 'gtk-text-iter)))
     (%gtk-text-view-get-iter-at-location view iter x y)
@@ -1605,7 +1798,7 @@
 
 (defun gtk-text-view-get-iter-at-position (text-view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[x]{x position, in buffer coordinates}
   @argument[y]{y position, in buffer coordinates}
@@ -1617,15 +1810,17 @@
   @end{return}
   @begin{short}
     Retrieves the iterator pointing to the character at buffer coordinates
-    @arg{x} and @arg{y}. Buffer coordinates are coordinates for the entire
-    buffer, not just the currently-displayed portion. If you have coordinates
-    from an event, you have to convert those to buffer coordinates with the
-    function @fun{gtk-text-view-window-to-buffer-coords}.
+    @arg{x} and @arg{y}.
   @end{short}
+  Buffer coordinates are coordinates for the entire buffer, not just the
+  currently-displayed portion. If you have coordinates from an event, you have
+  to convert those to buffer coordinates with the function
+  @fun{gtk-text-view-window-to-buffer-coords}.
 
   Note that this is different from the function
   @fun{gtk-text-view-get-iter-at-location}, which returns cursor locations,
   i. e. positions between characters.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-window-to-buffer-coords}
   @see-function{gtk-text-view-get-iter-at-location}"
   (with-foreign-object (trailing :int)
@@ -1755,13 +1950,16 @@
 (defcfun ("gtk_text_view_get_window_type" gtk-text-view-get-window-type)
     gtk-text-window-type
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[window]{a window type}
   @return{The window type.}
-  Usually used to find out which window an event corresponds to. If you
-  connect to an event signal on @arg{text-view}, this function should be called
-  on @code{event->window} to see which window it was."
+  @begin{short}
+    Usually used to find out which window an event corresponds to.
+  @end{short}
+  If you connect to an event signal on the text view, this function should be
+  called on @code{event->window} to see which window it was.
+  @see-class{gtk-text-view}"
   (text-view (g-object gtk-text-view))
   (window (g-object gdk-window)))
 
@@ -1774,7 +1972,7 @@
 (defcfun ("gtk_text_view_set_border_window_size"
            gtk-text-view-set-border-window-size) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to affect}
   @argument[size]{width or height of the window}
@@ -1782,10 +1980,13 @@
     Sets the width of @code{:left} or @code{:right}, or the height of
     @code{:top} or @code{:bottom}.
   @end{short}
-  Automatically destroys the corresponding window if the size is set to 0, and
-  creates the window if the size is set to non-zero. This function can only be
-  used for the \"border windows\", it does not work with @code{:widget},
-  @code{:text}, or @code{:private}.
+  @begin{short}
+    Automatically destroys the corresponding window if the size is set to 0,
+    and creates the window if the size is set to non-zero.
+  @end{short}
+  This function can only be used for the \"border windows\", it does not work
+  with @code{:widget}, @code{:text}, or @code{:private}.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-get-border-window-size}"
   (text-view (g-object gtk-text-view))
   (type gtk-text-window-type)
@@ -1800,12 +2001,15 @@
 (defcfun ("gtk_text_view_get_border_window_size"
            gtk-text-view-get-border-window-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to return size from}
   @return{Width of window.}
-  Gets the width of the specified border window. See the function
-  @fun{gtk-text-view-set-border-window-size}.
+  @begin{short}
+    Gets the width of the specified border window.
+  @end{short}
+  See the function @fun{gtk-text-view-set-border-window-size}.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-set-border-window-size}"
   (text-view (g-object gtk-text-view))
   (type gtk-text-window-type))
@@ -1819,17 +2023,20 @@
 (defcfun ("gtk_text_view_forward_display_line"
           gtk-text-view-forward-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
-  Moves the given @arg{iter} forward by one display (wrapped) line. A display
-  line is different from a paragraph. Paragraphs are separated by newlines or
-  other paragraph separator characters. Display lines are created by
-  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  @begin{short}
+    Moves the given @arg{iter} forward by one display (wrapped) line.
+  @end{short}
+  A display line is different from a paragraph. Paragraphs are separated by
+  newlines or other paragraph separator characters. Display lines are created
+  by line-wrapping a paragraph. If wrapping is turned off, display lines and
   paragraphs will be the same. Display lines are divided differently for each
   view, since they depend on the view's width; paragraphs are the same in all
-  views, since they depend on the contents of the @class{gtk-text-buffer}."
+  views, since they depend on the contents of the @class{gtk-text-buffer}.
+  @see-class{gtk-text-view}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1842,14 +2049,16 @@
 (defcfun ("gtk_text_view_backward_display_line"
           gtk-text-view-backward-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
-  Moves the given @arg{iter} backward by one display (wrapped) line. A display
-  line is different from a paragraph. Paragraphs are separated by newlines or
-  other paragraph separator characters. Display lines are created by
-  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  @begin{short}
+    Moves the given @arg{iter} backward by one display (wrapped) line.
+  @end{short}
+  A display line is different from a paragraph. Paragraphs are separated by
+  newlines or other paragraph separator characters. Display lines are created
+  by line-wrapping a paragraph. If wrapping is turned off, display lines and
   paragraphs will be the same. Display lines are divided differently for each
   view, since they depend on the view's width; paragraphs are the same in all
   views, since they depend on the contents of the @class{gtk-text-buffer}."
@@ -1865,17 +2074,20 @@
 (defcfun ("gtk_text_view_forward_display_line_end"
           gtk-text-view-forward-display-line-end) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
-  Moves the given @arg{iter} forward to the next display line end. A display
-  line is different from a paragraph. Paragraphs are separated by newlines or
-  other paragraph separator characters. Display lines are created by
-  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  @begin{short}
+    Moves the given @arg{iter} forward to the next display line end.
+  @end{short}
+  A display line is different from a paragraph. Paragraphs are separated by
+  newlines or other paragraph separator characters. Display lines are created
+  by line-wrapping a paragraph. If wrapping is turned off, display lines and
   paragraphs will be the same. Display lines are divided differently for each
   view, since they depend on the view's width; paragraphs are the same in all
-  views, since they depend on the contents of the @class{gtk-text-buffer}."
+  views, since they depend on the contents of the @class{gtk-text-buffer}.
+  @see-class{gtk-text-view}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1888,17 +2100,20 @@
 (defcfun ("gtk_text_view_backward_display_line_start"
           gtk-text-view-backward-display-line-start) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
-  Moves the given @arg{iter} backward to the next display line start. A display
-  line is different from a paragraph. Paragraphs are separated by newlines or
-  other paragraph separator characters. Display lines are created by
-  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  @begin{short}
+    Moves the given @arg{iter} backward to the next display line start.
+  @end{short}
+  A display line is different from a paragraph. Paragraphs are separated by
+  newlines or other paragraph separator characters. Display lines are created
+  by line-wrapping a paragraph. If wrapping is turned off, display lines and
   paragraphs will be the same. Display lines are divided differently for each
   view, since they depend on the view's width; paragraphs are the same in all
-  views, since they depend on the contents of the @class{gtk-text-buffer}."
+  views, since they depend on the contents of the @class{gtk-text-buffer}.
+  @see-class{gtk-text-view}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1911,13 +2126,16 @@
 (defcfun ("gtk_text_view_starts_display_line"
           gtk-text-view-starts-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if @arg{iter} begins a wrapped line.}
-  Determines whether @arg{iter} is at the start of a display line. See the
-  function @fun{gtk-text-view-forward-display-line} for an explanation of
-  display lines vs. paragraphs.
+  @begin{short}
+    Determines whether @arg{iter} is at the start of a display line.
+  @end{short}
+  See the function @fun{gtk-text-view-forward-display-line} for an explanation
+  of display lines vs. paragraphs.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-forward-display-line}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
@@ -1930,7 +2148,7 @@
 
 (defcfun ("gtk_text_view_move_visually" gtk-text-view-move-visually) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2020-3-22}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of characters to move (negative moves left, positive
@@ -1938,15 +2156,17 @@
   @return{@em{True} if @arg{iter} moved and is not on the end iterator.}
   @begin{short}
     Move the iterator a given number of characters visually, treating it as the
-    strong cursor position. If @arg{count} is positive, then the new strong
-    cursor position will be @arg{count} positions to the right of the old cursor
-    position. If @arg{count} is negative then the new strong cursor position
-    will be @arg{count} positions to the left of the old cursor position.
+    strong cursor position.
   @end{short}
+  If @arg{count} is positive, then the new strong cursor position will be
+  @arg{count} positions to the right of the old cursor position. If @arg{count}
+  is negative then the new strong cursor position will be @arg{count} positions
+  to the left of the old cursor position.
 
   In the presence of bi-directional text, the correspondence between logical
   and visual order will depend on the direction of the current run, and there
-  may be jumps when the cursor is moved off of the end of a run."
+  may be jumps when the cursor is moved off of the end of a run.
+  @see-class{gtk-text-view}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
@@ -1965,7 +2185,10 @@
   @argument[child]{a @class{gtk-widget} object}
   @argument[anchor]{a @class{gtk-text-child-anchor} in the
     @class{gtk-text-buffer} for @arg{text-view}}
-  Adds a child widget in the text buffer, at the given anchor."
+  @begin{short}
+    Adds a child widget in the text buffer, at the given anchor.
+  @end{short}
+  @see-class{gtk-text-view}"
   (view g-object)
   (child g-object)
   (anchor g-object))
@@ -1985,10 +2208,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-child-anchor 'type)
- "@version{2013-5-10}
-  A @sym{gtk-text-child-anchor} is a spot in the buffer where child widgets can
-  be \"anchored\" (inserted inline, as if they were characters). The anchor can
-  have multiple widgets anchored, to allow for multiple views.")
+ "@version{2020-3-22}
+  @begin{short}
+    A @sym{gtk-text-child-anchor} is a spot in the buffer where child widgets
+    can be \"anchored\" (inserted inline, as if they were characters).
+  @end{short}
+  The anchor can have multiple widgets anchored, to allow for multiple views.
+  @see-class{gtk-text-view}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_child_anchor_new ()
@@ -2025,7 +2251,9 @@
  "@version{2013-8-18}
   @argument[anchor]{a @class{gtk-text-child-anchor} object}
   @return{List of widgets anchored at @arg{anchor}.}
-  Gets a list of all widgets anchored at this child @arg{anchor}.
+  @begin{short}
+    Gets a list of all widgets anchored at this child @arg{anchor}.
+  @end{short}
   @see-class{gtk-text-child-anchor}"
   (anchor (g-object gtk-text-child-anchor)))
 
@@ -2097,8 +2325,11 @@
   @argument[child]{child widget already added to the text view}
   @argument[xpos]{new X position in window coordinates}
   @argument[ypos]{new Y position in window coordinates}
-  Updates the position of a child, as for the function
-  @fun{gtk-text-view-add-child-in-window}.
+  @begin{short}
+    Updates the position of a child, as for the function
+    @fun{gtk-text-view-add-child-in-window}.
+  @end{short}
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-add-child-in-window}"
   (view (g-object gtk-text-view))
   (child (g-object gtk-widget))
@@ -2106,127 +2337,6 @@
   (y-pos :int))
 
 (export 'gtk-text-view-move-child)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_wrap_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-wrap-mode))
-
-(defun gtk-text-view-set-wrap-mode (text-view wrap-mode)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[wrap-mode]{a @symbol{gtk-wrap-mode}}
-  Sets the line wrapping for the view.
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-wrap-mode}
-  @see-function{gtk-text-view-get-wrap-mode}"
-  (setf (gtk-text-view-wrap-mode text-view) wrap-mode))
-
-(export 'gtk-text-view-set-wrap-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_wrap_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-wrap-mode))
-
-(defun gtk-text-view-get-wrap-mode (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{The line wrap setting of type @symbol{gtk-wrap-mode}.}
-  Gets the line wrapping for the view.
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-wrap-mode}
-  @see-function{gtk-text-view-set-wrap-mode}"
-  (gtk-text-view-wrap-mode text-view))
-
-(export 'gtk-text-view-get-wrap-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_editable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-editable))
-
-(defun gtk-text-view-set-editable (text-view setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[setting]{whether @arg{text-view} is editable}
-  @begin{short}
-    Sets the default editability of the @class{gtk-text-view}.
-  @end{short}
-  You can override this default setting with tags in the buffer, using the
-  \"editable\" attribute of tags.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-editable}"
-  (setf (gtk-text-view-editable text-view) setting))
-
-(export 'gtk-text-view-set-editable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_editable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-editable))
-
-(defun gtk-text-view-get-editable (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Whether text is editable by default.}
-  @begin{short}
-    Returns the default editability of the @class{gtk-text-view}.
-  @end{short}
-  Tags in the buffer may override this setting for some ranges of text.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-editable}"
-  (gtk-text-view-editable text-view))
-
-(export 'gtk-text-view-get-editable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_cursor_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-cursor-visible))
-
-(defun gtk-text-view-set-cursor-visible (text-view setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[setting]{whether to show the insertion cursor}
-  @begin{short}
-    Toggles whether the insertion point is displayed.
-  @end{short}
-  A buffer with no editable text probably should not have a visible cursor, so
-  you may want to turn the cursor off.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-cursor-visible}"
-  (setf (gtk-text-view-cursor-visible text-view) setting))
-
-(export 'gtk-text-view-set-cursor-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_cursor_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-cursor-visible))
-
-(defun gtk-text-view-get-cursor-visible (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Whether the insertion mark is visible.}
-  Find out whether the cursor is being displayed.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-cursor-visible}"
-  (gtk-text-view-cursor-visible text-view))
-
-(export 'gtk-text-view-get-cursor-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_reset_cursor_blink ()
@@ -2245,509 +2355,6 @@
 ;;;
 ;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_overwrite ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-overwrite))
-
-(defun gtk-text-view-set-overwrite (text-view overwrite)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widet}
-  @argument[overwrite]{@em{true} to turn on overwrite mode, @code{nil} to turn
-    it off}
-  @begin{short}
-    Changes the @class{gtk-text-view} overwrite mode.
-  @end{short}
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-overwrite}"
-  (setf (gtk-text-view-overwrite text-view) overwrite))
-
-(export 'gtk-text-view-set-overwrite)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_overwrite ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-overwrite))
-
-(defun gtk-text-view-get-overwrite (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Whether @arg{text-view} is in overwrite mode or not.}
-  @begin{short}
-    Returns whether the @class{gtk-text-view} is in overwrite mode or not.
-  @end{short}
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-overwrite}"
-  (gtk-text-view-overwrite text-view))
-
-(export 'gtk-text-view-get-overwrite)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_pixels_above_lines ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-pixels-above-lines))
-
-(defun gtk-text-view-set-pixels-above-lines (text-view pixels-above-lines)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[pixels-above-lines]{pixels above paragraphs}
-  @begin{short}
-    Sets the default number of blank pixels above paragraphs in @arg{text-view.}
-  @end{short}
-  Tags in the buffer for text_view may override the defaults.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-above-lines}"
-  (setf (gtk-text-view-pixels-above-lines text-view) pixels-above-lines))
-
-(export 'gtk-text-view-set-pixels-above-lines)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_pixels_above_lines ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-pixels-above-lines))
-
-(defun gtk-text-view-get-pixels-above-lines (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Default number of pixels above paragraphs.}
-  Gets the default number of pixels to put above paragraphs.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-pixels-above-lines}"
-  (gtk-text-view-pixels-above-lines text-view))
-
-(export 'gtk-text-view-get-pixels-above-lines)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_pixels_below_lines ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-pixels-below-lines))
-
-(defun gtk-text-view-set-pixels-below-lines (text-view pixels-below-lines)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-22}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[pixels-below-lines]{pixels below paragraphs}
-  @begin{short}
-    Sets the default number of pixels of blank space to put below paragraphs in
-    @arg{text-view}.
-  @end{short}
-  May be overridden by tags applied to @arg{text-view}'s buffer.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-below-lines}"
-  (setf (gtk-text-view-pixels-below-lines text-view) pixels-below-lines))
-
-(export 'gtk-text-view-set-pixels-below-lines)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_pixels_below_lines ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-pixels-below-lines))
-
-(defun gtk-text-view-get-pixels-below-lines (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Default number of blank pixels below paragraphs.}
-  Gets the value set by the function @fun{gtk-text-view-set-pixels-below-lines}.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-pixels-below-lines}"
-  (gtk-text-view-pixels-below-lines text-view))
-
-(export 'gtk-text-view-get-pixels-below-lines)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_pixels_inside_wrap ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-pixels-inside-wrap))
-
-(defun gtk-text-view-set-pixels-inside-wrap (text-view pixels-inside-wrap)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[pixels-inside-wrap]{default number of pixels between wrapped lines}
-  @begin{short}
-    Sets the default number of pixels of blank space to leave between
-    display/wrapped lines within a paragraph.
-  @end{short}
-  May be overridden by tags in @arg{text-view}'s buffer.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-pixels-inside-wrap}"
-  (setf (gtk-text-view-pixels-inside-wrap text-view) pixels-inside-wrap))
-
-(export 'gtk-text-view-set-pixels-inside-wrap)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_pixels_inside_wrap ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-pixels-inside-wrap))
-
-(defun gtk-text-view-get-pixels-inside-wrap (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Default number of pixels of blank space between wrapped lines.}
-  Gets the value set by the function @fun{gtk-text-view-set-pixels-inside-wrap}.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-pixels-inside-wrap}"
-  (gtk-text-view-pixels-inside-wrap text-view))
-
-(export 'gtk-text-view-get-pixels-inside-wrap)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_justification ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-justification))
-
-(defun gtk-text-view-set-justification (text-view justification)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[justification]{justification of type @symbol{gtk-justification}}
-  @begin{short}
-    Sets the default justification of text in @arg{text-view}.
-  @end{short}
-  Tags in the view's buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-justification}
-  @see-function{gtk-text-view-get-justification}"
-  (setf (gtk-text-view-justification text-view) justification))
-
-(export 'gtk-text-view-set-justification)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_justification ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-justification))
-
-(defun gtk-text-view-get-justification (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{The default justification of type @symbol{gtk-justification}.}
-  @begin{short}
-    Gets the default justification of paragraphs in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-justification}
-  @see-function{gtk-text-view-set-justification}"
-  (gtk-text-view-justification text-view))
-
-(export 'gtk-text-view-get-justification)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_left_margin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-left-margin))
-
-(defun gtk-text-view-set-left-margin (text-view left-margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[left-margin]{left margin in pixels}
-  @begin{short}
-    Sets the default left margin for text in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-left-margin}"
-  (setf (gtk-text-view-left-margin text-view) left-margin))
-
-(export 'gtk-text-view-set-left-margin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_left_margin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-left-margin))
-
-(defun gtk-text-view-get-left-margin (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{left margin in pixels}
-  @begin{short}
-    Gets the default left margin size of paragraphs in the @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-left-margin}"
-  (gtk-text-view-left-margin text-view))
-
-(export 'gtk-text-view-get-left-margin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_right_margin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-right-margin))
-
-(defun gtk-text-view-set-right-margin (text-view right-margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[right-margin]{right margin in pixels}
-  @begin{short}
-    Sets the default right margin for text in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-right-margin}"
-  (setf (gtk-text-view-right-margin text-view) right-margin))
-
-(export 'gtk-text-view-set-right-margin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_right_margin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-right-margin))
-
-(defun gtk-text-view-get-right-margin (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{right margin in pixels}
-  @begin{short}
-    Gets the default right margin for text in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-right-margin}"
-  (gtk-text-view-right-margin text-view))
-
-(export 'gtk-text-view-get-right-margin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_top_margin ()
-;;;
-;;; void
-;;; gtk_text_view_set_top_margin (GtkTextView *text_view,
-;;;                               gint top_margin);
-;;;
-;;; Sets the top margin for text in text_view .
-;;;
-;;; Note that this function is confusingly named. In CSS terms, the value set
-;;; here is padding.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; top_margin :
-;;; top margin in pixels
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_top_margin ()
-;;;
-;;; gint gtk_text_view_get_top_margin (GtkTextView *text_view);
-;;;
-;;; Gets the top margin for text in the text_view .
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     top margin in pixels
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_bottom_margin ()
-;;;
-;;; void
-;;; gtk_text_view_set_bottom_margin (GtkTextView *text_view,
-;;;                                  gint bottom_margin);
-;;;
-;;; Sets the bottom margin for text in text_view .
-;;;
-;;; Note that this function is confusingly named. In CSS terms, the value set
-;;; here is padding.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; bottom_margin :
-;;;     bottom margin in pixels
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_bottom_margin ()
-;;;
-;;; gint gtk_text_view_get_bottom_margin (GtkTextView *text_view);
-;;;
-;;; Gets the bottom margin for text in the text_view .
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     bottom margin in pixels
-;;;
-;;; Since 3.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_indent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-indent))
-
-(defun gtk-text-view-set-indent (text-view indent)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[indent]{indentation in pixels}
-  @begin{short}
-    Sets the default indentation for paragraphs in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-indent}"
-  (setf (gtk-text-view-indent text-view) indent))
-
-(export 'gtk-text-view-set-indent)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_indent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-indent))
-
-(defun gtk-text-view-get-indent (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{Number of pixels of indentation.}
-  @begin{short}
-    Gets the default indentation of paragraphs in @arg{text-view}.
-  @end{short}
-  Tags in the view's buffer may override the default. The indentation may be
-  negative.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-indent}"
-  (gtk-text-view-indent text-view))
-
-(export 'gtk-text-view-get-indent)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_tabs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-tabs))
-
-(defun gtk-text-view-set-tabs (text-view tabs)
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[tabs]{tabs as a @class{pango-tab-array} structure}
-  @begin{short}
-    Sets the default tab stops for paragraphs in @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the default.
-  @see-class{gtk-text-view}
-  @see-class{pango-tab-array}
-  @see-function{gtk-text-view-get-tabs}"
-  (setf (gtk-text-view-tabs text-view) tabs))
-
-(export 'gtk-text-view-set-tabs)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_tabs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-tabs))
-
-(defun gtk-text-view-get-tabs (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @begin{return}
-    Copy of default tab array, or @code{nil} if \"standard\" tabs are used; must
-    be freed with @fun{pango-tab-array-free}.
-  @end{return}
-  @begin{short}
-    Gets the default tabs for @arg{text-view}.
-  @end{short}
-  Tags in the buffer may override the defaults. The returned array will be
-  @code{nil} if \"standard\" (8-space) tabs are used. Free the return value with
-  @fun{pango-tab-array-free}.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-tabs}
-  @see-class{pango-tab-array}
-  @see-function{pango-tab-array-free}"
-  (gtk-text-view-tabs text-view))
-
-(export 'gtk-text-view-get-tabs)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_accepts_tab ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-set-accepts-tab))
-
-(defun gtk-text-view-set-accepts-tab (text-view accepts-tab)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-19}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[accepts-tab]{@em{True} if pressing the Tab key should insert a tab
-    character, @code{nil}, if pressing the Tab key should move the keyboard
-    focus.}
-  @begin{short}
-    Sets the behavior of the text widget when the Tab key is pressed.
-  @end{short}
-  If @arg{accepts-tab} is @em{true}, a tab character is inserted. If
-  @arg{accepts-tab} is @code{nil} the keyboard focus is moved to the next widget
-  in the focus chain.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-get-accepts-tab}"
-  (setf (gtk-text-view-accepts-tab text-view) accepts-tab))
-
-(export 'gtk-text-view-set-accepts-tab)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_accepts_tab ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-view-get-accepts-tab))
-
-(defun gtk-text-view-get-accepts-tab (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-19}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @begin{return}
-    @em{True} if pressing the Tab key inserts a tab character, @code{nil} if
-    pressing the Tab key moves the keyboard focus.
-  @end{return}
-  @begin{short}
-    Returns whether pressing the Tab key inserts a tab characters.
-  @end{short}
-  See the function @fun{gtk-text-view-set-accepts-tab}.
-  @see-class{gtk-text-view}
-  @see-function{gtk-text-view-set-accepts-tab}"
-  (gtk-text-view-accepts-tab text-view))
-
-(export 'gtk-text-view-get-accepts-tab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_default_attributes ()
@@ -2832,145 +2439,6 @@
 ;;;     a GtkTextView
 ;;;
 ;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_input_purpose ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-text-view-set-input-purpose))
-
-#+gtk-3-6
-(defun gtk-text-view-set-input-purpose (text-view purpose)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[purpose]{the purpose of type @symbol{gtk-input-purpose}}
-  @begin{short}
-    Sets the @code{input-purpose} property which can be used by on-screen
-    keyboards and other input methods to adjust their behaviour.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-input-purpose}
-  @see-function{gtk-text-view-get-input-purpose}"
-  (setf (gtk-text-view-input-purpose text-view) purpose))
-
-#+gtk-3-6
-(export 'gtk-text-view-set-input-purpose)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_input_purpose ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-text-view-get-input-purpose))
-
-#+gtk-3-6
-(defun gtk-text-view-get-input-purpose (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @begin{short}
-    Gets the value of the @code{input-purpose} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-input-purpose}
-  @see-function{gtk-text-view-set-input-purpose}"
-  (gtk-text-view-input-purpose text-view))
-
-#+gtk-3-6
-(export 'gtk-text-view-get-input-purpose)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_input_hints ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-text-view-set-input-hints))
-
-#+gtk-3-6
-(defun gtk-text-view-set-input-hints (text-view hints)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[hints]{the hints}
-  @begin{short}
-    Sets the @code{input-hints} property, which allows input methods to
-    fine-tune their behaviour.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-input-hints}
-  @see-function{gtk-text-view-get-input-hints}"
-
-  (setf (gtk-text-view-input-hints text-view) hints))
-
-#+gtk-3-6
-(export 'gtk-text-view-set-input-hints)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_input_hints ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-text-view-get-input-hints))
-
-#+gtk-3-6
-(defun gtk-text-view-get-input-hints (text-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @begin{short}
-    Gets the value of the @code{input-hints} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-text-view}
-  @see-symbol{gtk-text-view}
-  @see-function{gtk-text-view-set-input-hints}"
-  (gtk-text-view-input-hints text-view))
-
-#+gtk-3-6
-(export 'gtk-text-view-get-input-hints)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_set_monospace ()
-;;;
-;;; void
-;;; gtk_text_view_set_monospace (GtkTextView *text_view,
-;;;                              gboolean monospace);
-;;;
-;;; Sets the “monospace” property, which indicates that the text view should use
-;;; monospace fonts.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; monospace :
-;;;     TRUE to request monospace styling
-;;;
-;;; Since 3.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_monospace ()
-;;;
-;;; gboolean gtk_text_view_get_monospace (GtkTextView *text_view);
-;;;
-;;; Gets the value of the “monospace” property.
-;;;
-;;; Return: TRUE if monospace fonts are desired
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.text-view.lisp -----------------------------------------
