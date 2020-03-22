@@ -289,10 +289,10 @@
       (gethash 'pango-weight atdoc:*external-symbols*)
  "@version{2013-6-29}
   @begin{short}
-    An enumeration specifying the weight (boldness) of a font. This is a
-    numerical value ranging from 100 to 900, but there are some predefined
-    values.
+    An enumeration specifying the weight (boldness) of a font.
   @end{short}
+  This is a numerical value ranging from 100 to 900, but there are some
+  predefined values.
   @begin{pre}
 (define-g-enum \"PangoWeight\" pango-weight
   (:export t
@@ -358,8 +358,8 @@
   (:small-caps 1))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-weight atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'pango-weight atdoc:*external-symbols*)
+(setf (gethash 'pango-variant atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-variant atdoc:*external-symbols*)
  "@version{2020-3-20}
   @begin{short}
     An enumeration specifying capitalization variant of the font.
@@ -1025,7 +1025,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-29}
   @argument[str]{string representation of a font description}
-  @return{A new @class{pango-font-description}.}
+  @return{A new @class{pango-font-description} structure.}
   @begin{short}
     Creates a new font description from a string representation in the form
     @code{[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]}, where @code{FAMILY-LIST} is a
@@ -1052,7 +1052,7 @@
            pango-font-description-to-string) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-6-29}
-  @argument[desc]{a @class{pango-font-description} object}
+  @argument[desc]{a @class{pango-font-description} structure}
   @return{A new string that must be freed with @code{g_free()}.}
   @begin{short}
     Creates a string representation of a font description.

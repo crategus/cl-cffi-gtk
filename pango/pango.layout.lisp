@@ -421,8 +421,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-8}
   @argument[layout]{a @class{pango-layout} object}
-  @argument[desc]{the new @class{pango-font-description}, or @code{nil} to unset
-    the current font description}
+  @argument[desc]{the new @class{pango-font-description} structure, or
+    @code{nil} to unset the current font description}
   @begin{short}
     Sets the default font description for the layout.
   @end{short}

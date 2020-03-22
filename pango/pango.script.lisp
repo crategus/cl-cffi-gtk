@@ -597,7 +597,7 @@
 (defcfun ("pango_language_get_type" pango-language-get-type) g-type
  #+cl-cffi-gtk-documentation
  "@version{2013-3-9}
-  @short{The GObject type for @class{pango-language}.}")
+  @short{The GObject type for @class{pango-language} structure.}")
 
 (export 'pango-language-get-type)
 
@@ -625,7 +625,7 @@
   mapping '_' to '-', and stripping all characters other than letters and '-'.
 
   Use the function @fun{pango-language-get-default} if you want to get the
-  @class{pango-language} for the current locale of the process.
+  @class{pango-language} structure for the current locale of the process.
   @see-function{pango-language-get-default}"
   (language :string))
 
@@ -752,10 +752,10 @@
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-9}
-  @return{The default language as a @class{pango-language} object.}
+  @return{The default language as a @class{pango-language} structure.}
   @begin{short}
-    Returns the @class{pango-language} for the current locale of the process.
-    Note that this can change over the life of an application.
+    Returns the @class{pango-language} structure for the current locale of the
+    process. Note that this can change over the life of an application.
   @end{short}
 
   On Unix systems, this is the return value derived from
@@ -793,7 +793,7 @@
     :string
  #+cl-cffi-gtk-documentation
  "@version{2013-6-30}
-  @argument[language]{a @class{pango-language}, or @code{nil}}
+  @argument[language]{a @class{pango-language} structure, or @code{nil}}
   @begin{return}
     The sample string. This value is owned by Pango and should not be freed.
   @end{return}
