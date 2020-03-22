@@ -80,7 +80,7 @@
       (documentation 'pango-tab-array 'type)
  "@version{2013-8-10}
   @begin{short}
-    A @syma{pango-tab-array} structure contains an array of tab stops. Each tab
+    A @sym{pango-tab-array} structure contains an array of tab stops. Each tab
     stop has an alignment and a position.
   @end{short}
   @begin{pre}
