@@ -45,6 +45,7 @@
       ;; Signal handler for listbox
       (g-signal-connect listbox "row-activated"
                         (lambda (listbox row)
+                          (declare (ignore listbox))
                           (let ((blend-mode (second (elt +blend-modes+
                                                          (gtk-list-box-row-get-index row)))))
                             (update-css-for-blend-mode provider blend-mode))))

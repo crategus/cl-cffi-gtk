@@ -57,6 +57,7 @@
         (gtk-entry-set-icon-from-icon-name entry :secondary "edit-clear")
         (g-signal-connect entry "icon-press"
             (lambda (entry icon-pos event)
+              (declare (ignore event))
               (let ((rect (gtk-entry-get-icon-area entry icon-pos)))
                 (setf (gtk-popover-pointing-to popover) rect)
                       (gtk-widget-show popover))))
