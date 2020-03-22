@@ -1615,45 +1615,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_create_tag ()
-;;;
-;;; GtkTextTag * gtk_text_buffer_create_tag (GtkTextBuffer *buffer,
-;;;                                          const gchar *tag_name,
-;;;                                          const gchar *first_property_name,
-;;;                                          ...);
-;;;
-;;; Creates a tag and adds it to the tag table for buffer. Equivalent to calling
-;;; gtk_text_tag_new() and then adding the tag to the buffer's tag table. The
-;;; returned tag is owned by the buffer's tag table, so the ref count will be
-;;; equal to one.
-;;;
-;;; If tag_name is NULL, the tag is anonymous.
-;;;
-;;; If tag_name is non-NULL, a tag called tag_name must not already exist in the
-;;; tag table for this buffer.
-;;;
-;;; The first_property_name argument and subsequent arguments are a list of
-;;; properties to set on the tag, as with g_object_set().
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer
-;;;
-;;; tag_name :
-;;;     name of the new tag, or NULL
-;;;
-;;; first_property_name :
-;;;     name of first property to set, or NULL
-;;;
-;;; ... :
-;;;     NULL-terminated list of property names and values
-;;;
-;;; Returns :
-;;;     a new tag
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-text-buffer-create-tag (buffer name &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-3-22}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @argument[name]{a @code{:string} with the name of the new tag, or @code{nil}}
+  @argument[args]{list of property keywords and values}
+  @return{The new @class{gtk-text-tag} object.}
+  @begin{short}
+    Creates a tag and adds it to the tag table for the buffer.
+  @end{short}
+  Equivalent to calling the function @fun{gtk-text-tag-new} and then adding the
+  tag to the buffer's tag table. The returned tag is owned by the buffer's tag
+  table, so the ref count will be equal to one.
 
-  (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
-                          (gtk-text-tag-new name args)))
+  If @arg{name} is @code{nil}, the tag is anonymous. If @arg{name} is
+  non-@code{nil}, a tag called @arg{name} must not already exist in the tag
+  table for this buffer.
+
+  The @arg{args} argument is a list of properties and values to set on the
+  tag.
+  @see-class{gtk-text-buffer}"
+  (let ((tag (apply #'make-instance (list* 'gtk-text-tag :name name args))))
+    (when (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
+      tag)))
 
 (export 'gtk-text-buffer-create-tag)
 
