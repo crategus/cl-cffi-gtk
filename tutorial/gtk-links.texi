@@ -646,7 +646,7 @@
 @set gtk-text-view http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-view.html
 @set gtk-text-view-new-with-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-new-with-buffer.html
 @set gtk-text-view-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-buffer.html
-@set gtk-text-view-set-tabs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-tabs.html
+@set gtk-text-view-tabs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-tabs.html
 @set gtk-text-view-scroll-mark-onscreen http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-scroll-mark-onscreen.html
 @set gtk-text-view-add-child-at-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-add-child-at-anchor.html
 @set gtk-text-view-get-iter-at-location http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-iter-at-location.html

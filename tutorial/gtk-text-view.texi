@@ -184,8 +184,8 @@ displays after the widget is created with @xurl{gtk-text-view-buffer}.
 @findex gtk-widget-override-font
 @findex widget-override-font, gtk-widget-override-font
 
-@findex gtk-text-view-set-tabs
-@findex text-view-set-tabs, gtk-text-view-set-tabs
+@findex gtk-text-view-tabs
+@findex text-view-tabs, gtk-text-view-tabs
 
 There are two ways to affect text attributes in @xurl{gtk-text-view}.  You can
 change the default attributes for a given @xurl{gtk-text-view}, and you can
@@ -193,7 +193,7 @@ apply tags that change the attributes for a region of text.  For text features
 that come from the theme - such as font and foreground color - use standard
 @xurl{gtk-widget} functions such as @xurl{gtk-widget-override-font}.  For other
 attributes there are dedicated methods on @xurl{gtk-text-view} such as
-@xurl{gtk-text-view-set-tabs}.
+@xurl{gtk-text-view-tabs}.
 
 @float Example, example-text-view-attributes
 @caption{Changing Text Attributes of a Text View}
@@ -221,7 +221,7 @@ attributes there are dedicated methods on @xurl{gtk-text-view} such as
                                  :normal
                                  (gdk-rgba-parse "red"))
       ;; Change left margin throughout the widget
-      (gtk-text-view-set-left-margin view 30)
+      (setf (gtk-text-view-left-margin view) 30)
       ;; Use a tag to change the color for just one part of the widget
       (let ((tag (make-instance 'gtk-text-tag
                                 :name "blue_foreground"
@@ -364,7 +364,7 @@ range of text can be removed in one go using the function
 
 The above functions apply attributes to portions of text in a buffer.  If
 attributes have to be applied for the entire @xurl{gtk-text-view} widget, the
-@code{gtk-text-view-set-*} functions can be used.  For example, the function
+@code{(setf gtk-text-view-*)} functions can be used.  For example, the function
 @xurl{gtk-text-view-editable} makes @code{text-view} editable/non-editable.
 
 See the GTK+ API documentation @url{http://www.crategus.com/books/cl-cffi-gtk/}

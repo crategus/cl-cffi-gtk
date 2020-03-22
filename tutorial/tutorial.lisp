@@ -2084,7 +2084,7 @@
                                  :normal
                                  (gdk-rgba-parse "red"))
       ;; Change left margin throughout the widget
-      (gtk-text-view-set-left-margin view 30)
+      (setf (gtk-text-view-left-margin view) 30)
       ;; Use a tag to change the color for just one part of the widget
       (let ((tag (make-instance 'gtk-text-tag
                                 :name "blue_foreground"
