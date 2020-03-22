@@ -1650,6 +1650,13 @@
 ;;;     a new tag
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-text-buffer-create-tag (buffer name &rest args)
+
+  (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                          (gtk-text-tag-new name args)))
+
+(export 'gtk-text-buffer-create-tag)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_line_offset ()
 ;;; ----------------------------------------------------------------------------
