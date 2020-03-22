@@ -2042,7 +2042,7 @@
       (documentation 'gtk-entry-tabs 'function)
  "@version{2014-11-9}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[tabs]{a @class{pango-tab-array}}
+  @argument[tabs]{a @class{pango-tab-array} structure}
   @syntax[]{(gtk-entry-tabs object) => tabs}
   @syntax[]{(setf (gtk-entry-tabs object) tabs)}
   @begin{short}

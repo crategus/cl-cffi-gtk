@@ -188,15 +188,14 @@
 
 ;;; --- gtk-event-controller-widget --------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-14 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "widget"
                                                'gtk-event-controller) 't)
  "The @code{widget} property of type @class{gtk-widget} (Read / Write) @br{}
-  The widget receiving the @class{gdk-events} that the controller will handle.
-  @br{}
+  The widget receiving the @class{gdk-event} that the controller will handle.
   Since 3.14 @br{}")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-14 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-event-controller-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-controller-widget 'function)

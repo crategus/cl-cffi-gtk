@@ -185,7 +185,7 @@
   something with the font, use this string with the
   @fun{pango-font-description-from-string} function. If you are interested in
   peeking certain values, family name, style, size, weight, just query these
-  properties from the @class{pango-font-description} object.
+  properties from the @class{pango-font-description} structure.
   @begin[Warning]{dictionary}
     The @sym{gtk-font-button-font-name} slot access function has been deprecated
     since version 3.22 and should not be used in newly-written code. Use the

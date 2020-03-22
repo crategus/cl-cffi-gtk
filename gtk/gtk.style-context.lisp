@@ -1309,7 +1309,7 @@
   @argument[context]{a @class{gtk-style-context} object}
   @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the
     font for}
-  @return{Returns a @class{pango-font-description}structure for the given
+  @return{Returns a @class{pango-font-description} structure for the given
     state.}
   @begin{short}
     Returns the font description for a given state.

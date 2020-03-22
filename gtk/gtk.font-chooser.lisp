@@ -183,7 +183,7 @@
                                                'gtk-font-chooser) 't)
  "The @code{font-desc} property of type @class{pango-font-description}
   (Read / Write) @br{}
-  The font description as a @class{pango-font-description}.")
+  The font description as a @class{pango-font-description} structure.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-chooser-font-desc atdoc:*function-name-alias*)
@@ -193,7 +193,7 @@
   @syntax[]{(gtk-font-chooser-font-desc object) => font-desc}
   @syntax[]{(setf (gtk-font-chooser-font-desc object) font-desc)}
   @argument[object]{a @class{gtk-font-chooser} object}
-  @argument[font-desc]{a @class{pango-font-description} object}
+  @argument[font-desc]{a @class{pango-font-description} structure}
   @begin{short}
     Accessor of the @slot[gtk-font-chooser]{font-desc} slot of the
     @class{gtk-font-chooser} class.

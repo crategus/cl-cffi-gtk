@@ -2755,10 +2755,11 @@
 
 (defcfun ("gtk_text_view_get_default_attributes"
            gtk-text-view-default-attributes)
+    (g-boxed-foreign gtk-text-attributes)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-21}
   @argument[text-view]{a @class{gtk-text-view} widget}
-  @return{A @symbol{gtk-text-attributes} structure.}
+  @return{A @class{gtk-text-attributes} structure.}
   @begin{short}
     Obtains the default text attributes.
   @end{short}
@@ -2767,8 +2768,8 @@
   @fun{gtk-text-iter-attributes} in order to get the attributes in effect at a
   given text position.
   @see-class{gtk-text-view}
+  @see-class{gtk-text-attributes}
   @see-function{gtk-text-iter-attributes}"
-    (g-boxed-foreign gtk-text-attributes)
   (text-view (g-object gtk-text-view)))
 
 (export 'gtk-text-view-default-attributes)

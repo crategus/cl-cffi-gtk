@@ -106,10 +106,11 @@
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-21}
-  @return{The default language as a @class{pango-language} object.}
+  @return{The default language as a @class{pango-language} structure.}
   @begin{short}
-    Returns the @class{pango-language} object for the default language currently
-    in effect. The default language is derived from the current locale.
+    Returns the @class{pango-language} structure for the default language
+    currently in effect. The default language is derived from the current
+    locale.
   @end{short}
   Note that this can change over the life of an application. It determines, for
   example, whether GTK+ uses the right-to-left or left-to-right text direction.

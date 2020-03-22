@@ -646,9 +646,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-desc"
                                                'gtk-cell-renderer-text) 't)
- "The @code{font-desc} property of type @symbol{pango-font-description}
+ "The @code{font-desc} property of type @class{pango-font-description}
   (Read / Write) @br{}
-  Font description as a @symbol{pango-font-description} structure.")
+  Font description as a @class{pango-font-description} structure.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-text-font-desc atdoc:*function-name-alias*)

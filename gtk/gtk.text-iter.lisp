@@ -1151,11 +1151,13 @@
 ;;; gtk_text_iter_get_attributes ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Is this implementation correct? Argument attributes can be modified!
+
 (defcfun ("gtk_text_iter_get_attributes" gtk-text-iter-attributes) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @argument[attributes]{a @symbol{gtk-text-attributes} structure}
+  @argument[attributes]{a @class{gtk-text-attributes} structure}
   @return{@em{True} if @arg{attributes} was modified.}
   @begin{short}
     Computes the effect of any tags applied to this spot in the text.
