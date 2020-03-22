@@ -166,8 +166,8 @@
           :if-feature :gtk-3-16)
 
    ;; Multiline Text Editor
-   (:file "gtk.text-tag")              ; GtkTextTag
    (:file "gtk.text-iter")             ; GtkTextIter
+   (:file "gtk.text-tag")              ; GtkTextTag
    (:file "gtk.text-mark")             ; GtkTextMark
    (:file "gtk.text-buffer")           ; GtkTextBuffer
    (:file "gtk.text-tag-table")        ; GtkTextTagTable

@@ -1875,7 +1875,29 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-tag-set-priority}
       @about-function{gtk-text-tag-event}
 
-      @about-symbol{gtk-text-attributes}
+      @about-struct{gtk-text-attributes}
+      @about-function{make-gtk-text-attributes}
+      @about-function{copy-gtk-text-attributes}
+      @about-function{gtk-text-attributes-refcount}
+      @about-function{gtk-text-attributes-appearance}
+      @about-function{gtk-text-attributes-justification}
+      @about-function{gtk-text-attributes-direction}
+      @about-function{gtk-text-attributes-font}
+      @about-function{gtk-text-attributes-font-scale}
+      @about-function{gtk-text-attributes-left-margin}
+      @about-function{gtk-text-attributes-right-margin}
+      @about-function{gtk-text-attributes-indent}
+      @about-function{gtk-text-attributes-pixels-above-lines}
+      @about-function{gtk-text-attributes-pixels-below-lines}
+      @about-function{gtk-text-attributes-pixels-inside-wrap}
+      @about-function{gtk-text-attributes-tabs}
+      @about-function{gtk-text-attributes-wrap-mode}
+      @about-function{gtk-text-attributes-language}
+      @about-function{gtk-text-attributes-invisible}
+      @about-function{gtk-text-attributes-bg-full-height}
+      @about-function{gtk-text-attributes-editable}
+      @about-function{gtk-text-attributes-no-fallback}
+      @about-function{gtk-text-attributes-letter-spacing}
 
       @about-function{gtk-text-attributes-new}
       @about-function{gtk-text-attributes-copy}
@@ -1893,7 +1915,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-tag-table-remove}
       @about-function{gtk-text-tag-table-lookup}
       @about-function{gtk-text-tag-table-foreach}
-      @about-function{gtk-text-tag-table-get-size}
+      @about-function{gtk-text-tag-table-size}
     @end{subsection}
     @begin[GtkTextView]{subsection}
       Widget that displays a @class{gtk-text-buffer} object.
