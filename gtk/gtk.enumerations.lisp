@@ -324,11 +324,13 @@
 (define-g-enum "GtkJustification" gtk-justification
   (:export t
    :type-initializer "gtk_justification_get_type")
-  (:dummy -1)  ; Workaround to ensure the base-type is :int for the enumeration
+  (:dummy1 -1)  ; Workaround to ensure the base-type is :int for the enumeration
   (:left 0)
   (:right 1)
   (:center 2)
-  (:fill 3))
+  (:fill 3)
+  (:dummy2 65535) ; gtk-text-view-default-attributes returns this value
+)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*) "Enum"
