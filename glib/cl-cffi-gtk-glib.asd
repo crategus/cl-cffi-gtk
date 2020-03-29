@@ -50,6 +50,7 @@
   :depends-on (:cffi
                :alexandria
                :iterate
-               :trivial-features))
+               :trivial-features
+               :bordeaux-threads))
 
 ;;; --- End of file cl-cffi-gtk-glib.asd ---------------------------------------

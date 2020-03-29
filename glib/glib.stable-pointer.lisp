@@ -32,7 +32,8 @@
 ;; free-stable-pointer. Stable pointers are used to pass references to lisp
 ;; objects to foreign code. thing is any object. The return value is an integer.
 
-(let ((stable-pointers (make-array 0 :adjustable t :fill-pointer t)))
+(let ((stable-pointers (make-array 0 :adjustable t :fill-pointer t))
+      (sp-mutex (bt:make-lock "stable-pointers lock")))
 
   (defun allocate-stable-pointer (thing)
     (flet ((find-fresh-id ()
@@ -40,28 +41,32 @@
                  (position nil stable-pointers)
                  ;; Add a place for the pointer
                  (vector-push-extend nil stable-pointers))))
-      (let ((id (find-fresh-id)))
-        (setf (aref stable-pointers id) thing)
-        (make-pointer id))))
+      (bt:with-lock-held (sp-mutex)
+        (let ((id (find-fresh-id)))
+          (setf (aref stable-pointers id) thing)
+          (make-pointer id)))))
 
   ;; Frees the stable pointer previously allocated by allocate-stable-pointer
 
   (defun free-stable-pointer (stable-pointer)
-    (setf (aref stable-pointers (pointer-address stable-pointer))
-          nil))
+    (bt:with-lock-held (sp-mutex)
+      (setf (aref stable-pointers (pointer-address stable-pointer))
+            nil)))
 
   ;; Returns the objects that is referenced by stable pointer previously
   ;; allocated by allocate-stable-pointer. May be called any number of times.
 
   (defun get-stable-pointer-value (stable-pointer)
-    (let ((ptr-id (pointer-address stable-pointer)))
-      (when (<= 0 ptr-id (1- (length stable-pointers)))
-        (aref stable-pointers ptr-id))))
+    (bt:with-lock-held (sp-mutex)
+      (let ((ptr-id (pointer-address stable-pointer)))
+        (when (<= 0 ptr-id (1- (length stable-pointers)))
+          (aref stable-pointers ptr-id)))))
 
   (defun set-stable-pointer-value (stable-pointer data)
-    (let ((ptr-id (pointer-address stable-pointer)))
-      (when (<= 0 ptr-id (1- (length stable-pointers)))
-        (setf (aref stable-pointers ptr-id) data))))
+    (bt:with-lock-held (sp-mutex)
+      (let ((ptr-id (pointer-address stable-pointer)))
+        (when (<= 0 ptr-id (1- (length stable-pointers)))
+          (setf (aref stable-pointers ptr-id) data)))))
 )
 
 ;; Executes body with ptr bound to the stable pointer to result of evaluating
