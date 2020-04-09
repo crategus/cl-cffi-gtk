@@ -260,7 +260,7 @@
         The @code{appears-as-list} style property of type @code{:boolean}
         (Read) @br{}
         Whether dropdowns should look like lists rather than menus. @br{}
-        Default value: @code{nil}{
+        Default value: @code{nil}
       @end{entry}
       @begin[arrow-scaling]{entry}
         The @code{arrow-scaling} style property of @code{:float} (Read) @br{}
@@ -410,7 +410,7 @@
  "The @code{active} property of type @code{:int} (Read / Write) @br{}
   The item which is currently active. If the model is a non-flat treemodel,
   and the active item is not an immediate child of the root of the tree, this
-  property has the value @code{gtk_tree_path_get_indices (path)[0]}, where
+  property has the value @code{(gtk-tree-path-indices path)}, where
   @arg{path} is the @class{gtk-tree-path} of the active item. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
