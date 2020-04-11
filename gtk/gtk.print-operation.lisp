@@ -515,7 +515,7 @@
       happened during the run. If @arg{result} is @code{:error} then you can
       call the function @code{gtk_print_operation_get_error ()} for more
       information. If you enabled print status tracking then the function
-      @fun{gtk-print-operation-is-finished} may still return @code{false} after
+      @fun{gtk-print-operation-is-finished} may still return @em{false} after
       the \"done\" signal was emitted.
       @begin[code]{table}
         @entry[operation]{The @sym{gtk-print-operation} object on which the
@@ -733,7 +733,7 @@
   operation is actually done. The Windows port does not support asynchronous
   operation at all, this is unlikely to change. On other platforms, all actions
   except for @code{:export} support asynchronous operation. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-allow-async atdoc:*function-name-alias*)
@@ -870,7 +870,7 @@
   (Read / Write) @br{}
   If @em{true}, the page size combo box and the orientation combo box are
   embedded into the page setup page. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-embed-page-setup
@@ -945,7 +945,7 @@
   Determines whether there is a selection in your application. This can allow
   your application to print the selection. This is typically used to make a
   \"Selection\" button sensitive. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-has-selection atdoc:*function-name-alias*)
@@ -1130,7 +1130,7 @@
                                                'gtk-print-operation) 't)
  "The @code{show-progress} property of type @code{:boolean} (Read / Write) @br{}
   Determines whether to show a progress dialog during the print operation. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-show-progress atdoc:*function-name-alias*)
@@ -1226,7 +1226,7 @@
   (Read / Write) @br{}
   If @em{true}, the print operation will support print of selection. This
   allows the print dialog to show a \"Selection\" button. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-support-selection
@@ -1261,7 +1261,7 @@
   application to show things like \"out of paper\" issues, and when the print
   job actually reaches the printer. However, this is often implemented using
   polling, and should not be enabled unless needed. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-track-print-status
@@ -1329,7 +1329,7 @@
   which may not be the top left corner of the sheet, depending on page
   orientation and the number of pages per sheet. Otherwise, the origin is at
   the top left corner of the imageable area, i. e. inside the margins. @br{}
-  Default value: @code{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-use-full-page atdoc:*function-name-alias*)
@@ -1574,12 +1574,11 @@
   modifications done in the dialog.
 
   Note that this function may use a recursive mainloop to show the page setup
-  dialog. See the @fun{gtk-print-run-page-setup-dialog-async} function if this
-  is a problem.
+  dialog. See the @code{gtk_print_run_page_setup_dialog_async()} function if
+  this is a problem.
   @see-class{gtk-print-operation}
   @see-class{gtk-page-setup}
-  @see-class{gtk-print-settings}
-  @see-function{gtk-print-run-page-setup-dialog-async}"
+  @see-class{gtk-print-settings}"
   (parent (g-object gtk-window))
   (page-setup (g-object gtk-page-setup))
   (settings (g-object gtk-print-settings)))
