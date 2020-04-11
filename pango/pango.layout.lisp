@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.layout.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the Pango Reference Manual
-;;; Version 1.30.0 and modified to document the Lisp binding to the Pango
+;;; Version 1.44 and modified to document the Lisp binding to the Pango
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +29,26 @@
 ;;;
 ;;; Layout Objects
 ;;;
-;;; High-level layout driver objects
+;;;     High-level layout driver objects
 ;;;
-;;; Synopsis
+;;; Types and Values
+;;;
+;;;     PangoWrapMode
+;;;     PangoEllipsizeMode
+;;;     PangoAlignment
+;;;     PangoLayoutLine
+;;;     PangoLayoutRun
 ;;;
 ;;;     PangoLayout
 ;;;     PangoLayoutIter
+;;;
+;;; Functions
 ;;;
 ;;;     pango_layout_new
 ;;;     pango_layout_copy
 ;;;     pango_layout_get_context
 ;;;     pango_layout_context_changed
+;;;     pango_layout_get_serial
 ;;;     pango_layout_set_text
 ;;;     pango_layout_get_text
 ;;;     pango_layout_get_character_count
@@ -59,19 +65,15 @@
 ;;;     pango_layout_set_wrap
 ;;;     pango_layout_get_wrap
 ;;;     pango_layout_is_wrapped
-;;;
-;;;     PangoWrapMode
-;;;
 ;;;     pango_layout_set_ellipsize
 ;;;     pango_layout_get_ellipsize
 ;;;     pango_layout_is_ellipsized
-;;;
-;;;     PangoEllipsizeMode
-;;;
 ;;;     pango_layout_set_indent
 ;;;     pango_layout_get_indent
 ;;;     pango_layout_get_spacing
 ;;;     pango_layout_set_spacing
+;;;     pango_layout_set_line_spacing
+;;;     pango_layout_get_line_spacing
 ;;;     pango_layout_set_justify
 ;;;     pango_layout_get_justify
 ;;;     pango_layout_set_auto_dir
@@ -82,9 +84,6 @@
 ;;;     pango_layout_get_tabs
 ;;;     pango_layout_set_single_paragraph_mode
 ;;;     pango_layout_get_single_paragraph_mode
-;;;
-;;;     PangoAlignment
-;;;
 ;;;     pango_layout_get_unknown_glyphs_count
 ;;;     pango_layout_get_log_attrs
 ;;;     pango_layout_get_log_attrs_readonly
@@ -124,10 +123,6 @@
 ;;;     pango_layout_iter_get_line_yrange
 ;;;     pango_layout_iter_get_line_extents
 ;;;     pango_layout_iter_get_layout_extents
-;;;
-;;;     PangoLayoutLine
-;;;     PangoLayoutRun
-;;;
 ;;;     pango_layout_line_ref
 ;;;     pango_layout_line_unref
 ;;;     pango_layout_line_get_extents
@@ -135,9 +130,191 @@
 ;;;     pango_layout_line_index_to_x
 ;;;     pango_layout_line_x_to_index
 ;;;     pango_layout_line_get_x_ranges
+;;;     pango_layout_line_get_height
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GBoxed
+;;;     ├── PangoLayoutIter
+;;;     ╰── PangoLayoutLine
+;;;
+;;;     GEnum
+;;;     ├── PangoAlignment
+;;;     ├── PangoEllipsizeMode
+;;;     ╰── PangoWrapMode
+;;;
+;;;     GObject
+;;;     ╰── PangoLayout
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoWrapMode
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoWrapMode" pango-wrap-mode
+  (:export t
+   :type-initializer "pango_wrap_mode_get_type")
+  (:word 0)
+  (:char 1)
+  (:word-char 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-wrap-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-wrap-mode atdoc:*external-symbols*)
+ "@version{2013-4-12}
+  @begin{short}
+    A @sym{pango-wrap-mode} describes how to wrap the lines of a
+    @class{pango-layout} to the desired width.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoWrapMode\" pango-wrap-mode
+  (:export t
+   :type-initializer \"pango_wrap_mode_get_type\")
+  (:word 0)
+  (:char 1)
+  (:word-char 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:word]{Wrap lines at word boundaries.}
+    @entry[:char]{Wrap lines at character boundaries.}
+    @entry[:word-char]{Wrap lines at word boundaries, but fall back to
+      character boundaries if there is not enough space for a full word.}
+  @end{table}")
+
+(export 'pango-wrap-mode)
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoEllipsizeMode
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoEllipsizeMode" pango-ellipsize-mode
+  (:export t
+   :type-initializer "pango_ellipsize_mode_get_type")
+  (:none 0)
+  (:start 1)
+  (:middle 2)
+  (:end 3))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-ellipsize-mode atdoc:*external-symbols*)
+ "@version{2013-4-12}
+  @begin{short}
+    The @sym{pango-ellipsize-mode} enumeration describes what sort of (if any)
+    ellipsization should be applied to a line of text. In the ellipsization
+    process characters are removed from the text in order to make it fit to a
+    given width and replaced with an ellipsis.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoEllipsizeMode\" pango-ellipsize-mode
+  (:export t
+   :type-initializer \"pango_ellipsize_mode_get_type\")
+  (:none 0)
+  (:start 1)
+  (:middle 2)
+  (:end 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No ellipsization.}
+    @entry[:start]{Omit characters at the start of the text.}
+    @entry[:middle]{Omit characters in the middle of the text.}
+    @entry[:end]{Omit characters at the end of the text.}
+  @end{table}")
+
+(export 'pango-ellipsize-mode)
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoAlignment
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoAlignment" pango-alignment
+  (:export t
+   :type-initializer "pango_alignment_get_type")
+  (:left 0)
+  (:center 1)
+  (:right 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-alignment atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-alignment atdoc:*external-symbols*)
+ "@version{2020-4-8}
+  @begin{short}
+    A @sym{pango-alignment} describes how to align the lines of a
+    @class{pango-layout} within the available space.
+  @end{short}
+  If the @class{pango-layout} object is set to justify using the function
+  @fun{pango-layout-set-justify}, this only has effect for partial lines.
+  @begin{pre}
+(define-g-enum \"PangoAlignment\" pango-alignment
+  (:export t
+   :type-initializer \"pango_alignment_get_type\")
+  (:left 0)
+  (:center 1)
+  (:right 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:left]{Put all available space on the right.}
+    @entry[:center]{Center the line within the available space.}
+    @entry[:right]{Put all available space on the left.}
+  @end{table}
+  @see-class{pango-layout}
+  @see-function{pango-layout-set-justify}")
+
+;;; ----------------------------------------------------------------------------
+;;; struct PangoLayoutLine
+;;;
+;;; struct PangoLayoutLine {
+;;;   PangoLayout *layout;
+;;;   /* start of line as byte index into layout->text */
+;;;   gint         start_index;
+;;;   /* length of line in bytes */
+;;;   gint         length;
+;;;   GSList      *runs;
+;;;   /* TRUE if this is the first line of the paragraph */
+;;;   guint        is_paragraph_start : 1;
+;;;   /* Resolved PangoDirection of line */
+;;;   guint        resolved_dir : 3;
+;;; };
+;;; ----------------------------------------------------------------------------
+
+;; TODO: Implement PangoLayoutLine as a Gboxed Cstruct
+
+(define-g-boxed-opaque pango-layout-line "PangoLayoutLine"
+  :alloc (error "Use Pango to create PANGO-LAYOUT-LINEs"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-layout-line atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-layout-line 'type)
+ "@version{2013-6-30}
+  @begin{short}
+    The @sym{pango-layout-line} structure represents one of the lines resulting
+    from laying out a paragraph via @class{pango-layout}.
+  @end{short}
+  @sym{pango-layout-line} structures are obtained by calling the function
+  @fun{pango-layout-get-line} and are only valid until the text, attributes,
+  or settings of the parent @class{pango-layout} are modified.
+
+  Routines for rendering @class{pango-layout} objects are provided in code
+  specific to each rendering system.
+  @begin{pre}
+(define-g-boxed-opaque pango-layout-line \"PangoLayoutLine\"
+  :alloc (error \"Use Pango to create PANGO-LAYOUT-LINEs\"))
+  @end{pre}
+  @see-function{pango-layout-get-line}")
+
+(export (boxed-related-symbols 'pango-layout-line))
+
+;;; ----------------------------------------------------------------------------
+;;; PangoLayoutRun
+;;;
+;;; typedef PangoGlyphItem PangoLayoutRun;
+;;;
+;;; The PangoLayoutRun structure represents a single run within a
+;;; PangoLayoutLine; it is simply an alternate name for PangoGlyphItem. See the
+;;; PangoGlyphItem docs for details on the fields.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLayout
@@ -154,13 +331,13 @@
 (setf (documentation 'pango-layout 'type)
  "@version{2013-12-8}
   @begin{short}
-    The @sym{pango-layout} structure represents an entire paragraph of text. It
-    is initialized with a @class{pango-context}, UTF-8 string and set of
-    attributes for that string. Once that is done, the set of formatted lines
-    can be extracted from the object, the layout can be rendered, and conversion
-    between logical character positions within the layout's text, and the
-    physical position of the resulting glyphs can be made.
+    The @sym{pango-layout} structure represents an entire paragraph of text.
   @end{short}
+  It is initialized with a @class{pango-context}, UTF-8 string and set of
+  attributes for that string. Once that is done, the set of formatted lines
+  can be extracted from the object, the layout can be rendered, and conversion
+  between logical character positions within the layout's text, and the
+  physical position of the resulting glyphs can be made.
 
   There are also a number of parameters to adjust the formatting of a
   @sym{pango-layout}. It is possible, as well, to ignore the 2-D setup, and
@@ -267,49 +444,68 @@
 (export 'pango-layout-context-changed)
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_layout_get_serial ()
+;;;
+;;; guint
+;;; pango_layout_get_serial (PangoLayout *layout);
+;;;
+;;; Returns the current serial number of layout . The serial number is
+;;; initialized to an small number larger than zero when a new layout is created
+;;; and is increased whenever the layout is changed using any of the setter
+;;; functions, or the PangoContext it uses has changed. The serial may wrap, but
+;;; will never have the value 0. Since it can wrap, never compare it with
+;;; "less than", always use "not equals".
+;;;
+;;; This can be used to automatically detect changes to a PangoLayout, and is
+;;; useful for example to decide whether a layout needs redrawing. To force the
+;;; serial to be increased, use pango_layout_context_changed().
+;;;
+;;; layout :
+;;;     a PangoLayout
+;;;
+;;; Returns :
+;;;     The current serial number of layout .
+;;;
+;;; Since 1.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_text ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("pango_layout_set_text" %pango-layout-set-text) :void
-  (layout (g-object pango-layout))
-  (text :string)
-  (length :int))
-
-(defun pango-layout-set-text (layout text)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[layout]{a @class{pango-layout} object}
-  @argument[text]{a valid UTF-8 string}
-  @begin{short}
-    Sets the text of the @arg{layout}.
-  @end{short}
-
-  Note that if you have used the functions @fun{pango-layout-set-markup} or
-  @fun{pango-layout-set-markup-with-accel} on @arg{layout} before, you may want
-  to call the function @fun{pango-layout-set-attributes} to clear the attributes
-  set on the layout from the markup as this function does not clear attributes.
-  @see-function{pango-layout-get-text}
-  @see-function{pango-layout-set-markup}
-  @see-function{pango-layout-set-markup-with-accel}
-  @see-function{pango-layout-set-attributes}"
-  (%pango-layout-set-text layout text (length text)))
-
-(export 'pango-layout-set-text)
-
-;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_text ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_text" pango-layout-get-text) :string
+(defun (setf pango-layout-text) (text layout)
+  (foreign-funcall "pango_layout_set_text"
+                   (g-object pango-layout) layout
+                   g-string text
+                   :int (length text))
+  text)
+
+(defcfun ("pango_layout_get_text" pango-layout-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2020-4-8}
+  @syntax[]{(pango-layout-text layout) => text}
+  @syntax[]{(setf (pango-layout-text layout) text)}
   @argument[layout]{a @class{pango-layout} object}
-  @return{The text in the @arg{layout}.}
-  Gets the text in the @arg{layout}.
-  @see-function{pango-layout-set-text}"
+  @argument[text]{a valid UTF-8 string}
+  @begin{short}
+    Accessor of the text of a @class{pango-layout} object.
+  @end{short}
+
+  The function @sym{pango-layout-text} gets the text in the @arg{layout}.
+  The function @sym{(setf pango-layout-text)} sets the text of the @arg{layout}.
+
+  Note that if you have used the functions @fun{pango-layout-markup} or
+  @fun{pango-layout-markup-with-accel} on @arg{layout} before, you may want
+  to call the function @fun{pango-layout-attributes} to clear the attributes
+  set on the layout from the markup as this function does not clear attributes.
+  @see-class{pango-layout}
+  @see-function{pango-layout-markup}
+  @see-function{pango-layout-markup-with-accel}
+  @see-function{pango-layout-attributes}"
   (layout (g-object pango-layout)))
 
-(export 'pango-layout-get-text)
+(export 'pango-layout-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_character_count ()
@@ -414,53 +610,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_font_description ()
+;;; pango_layout_get_font_description ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_set_font_description" pango-layout-set-font-description)
-    :void
+(defun (setf pango-layout-font-description) (desc layout)
+  (foreign-funcall "pango_layout_set_font_description"
+                   (g-object pango-layout) layout
+                   (g-boxed-foreign pango-font-description) desc
+                   :void)
+  desc)
+
+(defcfun ("pango_layout_get_font_description" pango-layout-font-description)
+    (g-boxed-foreign pango-font-description)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
+ "@version{2020-4-11}
+  @syntax[]{(pango-layout-font-description layout) => desc}
+  @syntax[]{(setf (pango-layout-font-description layout) desc)}
   @argument[layout]{a @class{pango-layout} object}
   @argument[desc]{the new @class{pango-font-description} structure, or
     @code{nil} to unset the current font description}
   @begin{short}
-    Sets the default font description for the layout.
+    Accessor of the font description of the Pango layout.
   @end{short}
+
+  The function @sym{pango-layout-font-description} gets the font description for
+  the Pango layout. The function @sym{(setf pango-layout-font-description)} sets
+  the default font description for the Pango layout.
+
   If no font description is set on the layout, the font description from the
   layout's context is used.
   @see-class{pango-layout}
-  @see-class{pango-font-description}
-  @see-function{pango-layout-get-font-description}"
-  (layout (g-object pango-layout))
-  (desc (g-boxed-foreign pango-font-description)))
-
-(export 'pango-layout-set-font-description)
-
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_font_description ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("pango_layout_get_font_description" pango-layout-get-font-description)
-    (g-boxed-foreign pango-font-description)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
-  @argument[layout]{a @class{pango-layout} object}
-  @begin{return}
-    A pointer to the layout's font description, or @code{NULL} if the font
-    description from the layout's context is inherited. This value is owned
-    by the layout and must not be modified or freed.
-  @end{return}
-  @begin{short}
-    Gets the font description for the layout, if any.
-  @end{short}
-
-  Since 1.8
-  @see-class{pango-layout}
-  @see-class{pango-font-description}
-  @see-function{pango-layout-set-font-description}"
+  @see-class{pango-font-description}"
   (layout (g-object pango-layout)))
 
-(export 'pango-layout-get-font-description)
+(export 'pango-layout-font-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_width ()
@@ -477,6 +660,18 @@
 ;;;     the desired width in Pango units, or -1 to indicate that no wrapping or
 ;;;     ellipsization should be performed
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf pango-layout-width) (width layout)
+  (foreign-funcall "pango_layout_set_width"
+                   (g-object pango-layout) layout
+                   :int width
+                   :void)
+  width)
+
+(defcfun ("pango_layout_get_width" pango-layout-width) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_width ()
@@ -528,6 +723,18 @@
 ;;;
 ;;; Since 1.20
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf pango-layout-height) (height layout)
+  (foreign-funcall "pango_layout_set_height"
+                   (g-object pango-layout) layout
+                   :int height
+                   :void)
+  height)
+
+(defcfun ("pango_layout_get_height" pango-layout-height) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_height ()
@@ -600,42 +807,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum PangoWrapMode
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "PangoWrapMode" pango-wrap-mode
-  (:export t
-   :type-initializer "pango_wrap_mode_get_type")
-  (:word 0)
-  (:char 1)
-  (:word-char 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-wrap-mode atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'pango-wrap-mode atdoc:*external-symbols*)
- "@version{2013-4-12}
-  @begin{short}
-    A @sym{pango-wrap-mode} describes how to wrap the lines of a
-    @class{pango-layout} to the desired width.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"PangoWrapMode\" pango-wrap-mode
-  (:export t
-   :type-initializer \"pango_wrap_mode_get_type\")
-  (:word 0)
-  (:char 1)
-  (:word-char 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:word]{Wrap lines at word boundaries.}
-    @entry[:char]{Wrap lines at character boundaries.}
-    @entry[:word-char]{Wrap lines at word boundaries, but fall back to
-      character boundaries if there is not enough space for a full word.}
-  @end{table}")
-
-(export 'pango-wrap-mode)
-
-;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_ellipsize ()
 ;;;
 ;;; void pango_layout_set_ellipsize (PangoLayout *layout,
@@ -700,46 +871,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum PangoEllipsizeMode
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "PangoEllipsizeMode" pango-ellipsize-mode
-  (:export t
-   :type-initializer "pango_ellipsize_mode_get_type")
-  (:none 0)
-  (:start 1)
-  (:middle 2)
-  (:end 3))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'pango-ellipsize-mode atdoc:*external-symbols*)
- "@version{2013-4-12}
-  @begin{short}
-    The @sym{pango-ellipsize-mode} enumeration describes what sort of (if any)
-    ellipsization should be applied to a line of text. In the ellipsization
-    process characters are removed from the text in order to make it fit to a
-    given width and replaced with an ellipsis.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"PangoEllipsizeMode\" pango-ellipsize-mode
-  (:export t
-   :type-initializer \"pango_ellipsize_mode_get_type\")
-  (:none 0)
-  (:start 1)
-  (:middle 2)
-  (:end 3))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:none]{No ellipsization.}
-    @entry[:start]{Omit characters at the start of the text.}
-    @entry[:middle]{Omit characters in the middle of the text.}
-    @entry[:end]{Omit characters at the end of the text.}
-  @end{table}")
-
-(export 'pango-ellipsize-mode)
-
-;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_indent ()
 ;;;
 ;;; void pango_layout_set_indent (PangoLayout *layout, int indent);
@@ -800,6 +931,49 @@
 ;;;
 ;;; spacing :
 ;;;     the amount of spacing
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_set_line_spacing ()
+;;;
+;;; void
+;;; pango_layout_set_line_spacing (PangoLayout *layout,
+;;;                                float factor);
+;;;
+;;; Sets a factor for line spacing. Typical values are: 0, 1, 1.5, 2. The
+;;; default values is 0.
+;;;
+;;; If factor is non-zero, lines are placed so that
+;;;
+;;; baseline2 = baseline1 + factor * height2
+;;;
+;;; where height2 is the line height of the second line (as determined by the
+;;; font(s)). In this case, the spacing set with pango_layout_set_spacing() is
+;;; ignored.
+;;;
+;;; If factor is zero, spacing is applied as before.
+;;;
+;;; layout :
+;;;     a PangoLayout
+;;;
+;;; factor :
+;;;     the new line spacing factor
+;;;
+;;; Since 1.44
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_get_line_spacing ()
+;;;
+;;; float
+;;; pango_layout_get_line_spacing (PangoLayout *layout);
+;;;
+;;; Gets the value that has been set with pango_layout_set_line_spacing().
+;;;
+;;; layout :
+;;;     a PangoLayout
+;;;
+;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -902,6 +1076,18 @@
 ;;;     the alignment
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-alignment) (alignment layout)
+  (foreign-funcall "pango_layout_set_alignment"
+                   (g-object pango-layout) layout
+                   pango-alignment alignment
+                   :void)
+  alignment)
+
+(defcfun ("pango_layout_get_alignment" pango-layout-alignment) pango-alignment
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-alignment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_alignment ()
 ;;;
@@ -982,29 +1168,6 @@
 ;;; Returns :
 ;;;     TRUE if the layout does not break paragraphs at paragraph separator
 ;;;     characters, FALSE otherwise.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum PangoAlignment
-;;;
-;;; typedef enum {
-;;;   PANGO_ALIGN_LEFT,
-;;;   PANGO_ALIGN_CENTER,
-;;;   PANGO_ALIGN_RIGHT
-;;; } PangoAlignment;
-;;;
-;;; A PangoAlignment describes how to align the lines of a PangoLayout within
-;;; the available space. If the PangoLayout is set to justify using
-;;; pango_layout_set_justify(), this only has effect for partial lines.
-;;;
-;;; PANGO_ALIGN_LEFT
-;;;     Put all available space on the right
-;;;
-;;; PANGO_ALIGN_CENTER
-;;;     Center the line within the available space
-;;;
-;;; PANGO_ALIGN_RIGHT
-;;;     Put all available space on the left
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1864,60 +2027,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; struct PangoLayoutLine
-;;;
-;;; struct PangoLayoutLine {
-;;;   PangoLayout *layout;
-;;;   /* start of line as byte index into layout->text */
-;;;   gint         start_index;
-;;;   /* length of line in bytes */
-;;;   gint         length;
-;;;   GSList      *runs;
-;;;   /* TRUE if this is the first line of the paragraph */
-;;;   guint        is_paragraph_start : 1;
-;;;   /* Resolved PangoDirection of line */
-;;;   guint        resolved_dir : 3;
-;;; };
-;;; ----------------------------------------------------------------------------
-
-;; TODO: Implement PangoLayoutLine as a Gboxed Cstruct
-
-(define-g-boxed-opaque pango-layout-line "PangoLayoutLine"
-  :alloc (error "Use Pango to create PANGO-LAYOUT-LINEs"))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-layout-line atdoc:*class-name-alias*) "CStruct"
-      (documentation 'pango-layout-line 'type)
- "@version{2013-6-30}
-  @begin{short}
-    The @sym{pango-layout-line} structure represents one of the lines resulting
-    from laying out a paragraph via @class{pango-layout}.
-  @end{short}
-  @sym{pango-layout-line} structures are obtained by calling the function
-  @fun{pango-layout-get-line} and are only valid until the text, attributes,
-  or settings of the parent @class{pango-layout} are modified.
-
-  Routines for rendering @class{pango-layout} objects are provided in code
-  specific to each rendering system.
-  @begin{pre}
-(define-g-boxed-opaque pango-layout-line \"PangoLayoutLine\"
-  :alloc (error \"Use Pango to create PANGO-LAYOUT-LINEs\"))
-  @end{pre}
-  @see-function{pango-layout-get-line}")
-
-(export (boxed-related-symbols 'pango-layout-line))
-
-;;; ----------------------------------------------------------------------------
-;;; PangoLayoutRun
-;;;
-;;; typedef PangoGlyphItem PangoLayoutRun;
-;;;
-;;; The PangoLayoutRun structure represents a single run within a
-;;; PangoLayoutLine; it is simply an alternate name for PangoGlyphItem. See the
-;;; PangoGlyphItem docs for details on the fields.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; pango_layout_line_ref ()
 ;;;
 ;;; PangoLayoutLine * pango_layout_line_ref (PangoLayoutLine *line);
@@ -2092,6 +2201,25 @@
 ;;;
 ;;; n_ranges :
 ;;;     The number of ranges stored in ranges.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_line_get_height ()
+;;;
+;;; void
+;;; pango_layout_line_get_height (PangoLayoutLine *line,
+;;;                               int *height);
+;;;
+;;; Computes the height of the line, ie the distance between this and the
+;;; previous lines baseline.
+;;;
+;;; line :
+;;;     a PangoLayoutLine
+;;;
+;;; height :
+;;;     return location for the line height.
+;;;
+;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file pango.layout.lisp ------------------------------------------

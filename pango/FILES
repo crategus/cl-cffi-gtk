@@ -15,7 +15,7 @@ Basic Pango Interfaces
 
   Text Attribute Markup - Simple markup language to encode text with attributes
 
- pango.layout.lisp - High-level layout driver objects            - Pango 1.30.0*
+ pango.layout.lisp - High-level layout driver objects            - Pango 1.44 &
  pango.script.lisp - Scripts and Languages                       - Pango 1.29.5*
  pango.biderectional.lisp - Handling bidirectional text          - Pango 1.32.6%
 

@@ -43,7 +43,7 @@
   @begin[Basic Pango Interfaces]{section}
     @begin[Rendering]{subsection}
       Functions to run the rendering pipeline.
-      
+
       The Pango rendering pipeline takes a string of Unicode characters and
       converts it into glyphs. The functions described in this section
       accomplish various steps of this process.
@@ -354,50 +354,59 @@
       using the detailed interfaces for itemization and shaping, using that
       functionality directly involves writing a fairly large amount of code.
       The objects and functions in this section provide a high-level driver
-      for formatting entire paragraphs of text at once.
+      for formatting entire paragraphs of text at once. This includes
+      paragraph-level functionality such as line-breaking, justification,
+      alignment and ellipsization.
 
+      @about-symbol{pango-wrap-mode}
+      @about-symbol{pango-ellipsize-mode}
+      @about-symbol{pango-alignment}
+      @about-class{pango-layout-line}
+      @about-symbol{pango-layout-run}
       @about-class{pango-layout}
       @about-class{pango-layout-iter}
+
       @about-function{pango-layout-new}
       @about-function{pango-layout-copy}
       @about-function{pango-layout-get-context}
       @about-function{pango-layout-context-changed}
-      @about-function{pango-layout-set-text}
-      @about-function{pango-layout-get-text}
+      @about-function{pango-layout-get-serial}
+
+      @about-function{pango-layout-text}
+
       @about-function{pango-layout-get-character-count}
       @about-function{pango-layout-set-markup}
       @about-function{pango-layout-set-markup-with-accel}
       @about-function{pango-layout-set-attributes}
       @about-function{pango-layout-get-attributes}
-      @about-function{pango-layout-set-font-description}
-      @about-function{pango-layout-get-font-description}
-      @about-function{pango-layout-set-width}
-      @about-function{pango-layout-get-width}
-      @about-function{pango-layout-set-height}
-      @about-function{pango-layout-get-height}
+
+      @about-function{pango-layout-font-description}
+      @about-function{pango-layout-width}
+      @about-function{pango-layout-height}
+
       @about-function{pango-layout-set-wrap}
       @about-function{pango-layout-get-wrap}
       @about-function{pango-layout-is-wrapped}
-      @about-symbol{pango-wrap-mode}
       @about-function{pango-layout-set-ellipsize}
       @about-function{pango-layout-get-ellipsize}
       @about-function{pango-layout-is-ellipsized}
-      @about-symbol{pango-ellipsize-mode}
       @about-function{pango-layout-set-indent}
       @about-function{pango-layout-get-indent}
       @about-function{pango-layout-get-spacing}
       @about-function{pango-layout-set-spacing}
+      @about-function{pango-layout-set-line-spacing}
+      @about-function{pango-layout-get-line-spacing}
       @about-function{pango-layout-set-justify}
       @about-function{pango-layout-get-justify}
       @about-function{pango-layout-set-auto-dir}
       @about-function{pango-layout-get-auto-dir}
-      @about-function{pango-layout-set-alignment}
-      @about-function{pango-layout-get-alignment}
+
+      @about-function{pango-layout-alignment}
+
       @about-function{pango-layout-set-tabs}
       @about-function{pango-layout-get-tabs}
       @about-function{pango-layout-set-single-paragraph-mode}
       @about-function{pango-layout-get-single-paragraph-mode}
-      @about-symbol{pango-alignment}
       @about-function{pango-layout-get-unknown-glyphs-count}
       @about-function{pango-layout-get-log-attrs}
       @about-function{pango-layout-get-log-attrs-readonly}
@@ -437,8 +446,6 @@
       @about-function{pango-layout-iter-get-line-yrange}
       @about-function{pango-layout-iter-get-line-extents}
       @about-function{pango-layout-iter-get-layout-extents}
-      @about-class{pango-layout-line}
-      @about-symbol{pango-layout-run}
       @about-function{pango-layout-line-ref}
       @about-function{pango-layout-line-unref}
       @about-function{pango-layout-line-get-extents}
@@ -446,6 +453,7 @@
       @about-function{pango-layout-line-index-to-x}
       @about-function{pango-layout-line-x-to-index}
       @about-function{pango-layout-line-get-x-ranges}
+      @about-function{pango-layout-line-get-height}
     @end{subsection}
     @begin[Scripts and Languages]{subsection}
       Identifying writing systems and languages
