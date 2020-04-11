@@ -30,21 +30,23 @@
 ;;;
 ;;;     Represents a print job
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPrintJob
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_print_job_new
-;;;     gtk_print_job_get_settings
-;;;     gtk_print_job_get_printer
-;;;     gtk_print_job_get_title
+;;;     gtk_print_job_get_settings                         Accessor
+;;;     gtk_print_job_get_printer                          Accessor
+;;;     gtk_print_job_get_title                            Accessor
 ;;;     gtk_print_job_get_status
 ;;;     gtk_print_job_set_source_fd
 ;;;     gtk_print_job_set_source_file
 ;;;     gtk_print_job_get_surface
 ;;;     gtk_print_job_send
-;;;     gtk_print_job_set_track_print_status
-;;;     gtk_print_job_get_track_print_status
+;;;     gtk_print_job_set_track_print_status               Accessor
+;;;     gtk_print_job_get_track_print_status               Accessor
 ;;;     gtk_print_job_get_pages
 ;;;     gtk_print_job_set_pages
 ;;;     gtk_print_job_get_page_ranges
@@ -113,17 +115,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-print-job 'type)
- "@version{2013-10-21}
+ "@version{2020-4-10}
   @begin{short}
-    A @sym{gtk-print-job} object represents a job that is sent to a printer. You
-    only need to deal directly with print jobs if you use the non-portable
-    @class{gtk-print-unix-dialog} API.
+    A @sym{gtk-print-job} object represents a job that is sent to a printer.
   @end{short}
+  You only need to deal directly with print jobs if you use the non-portable
+  @class{gtk-print-unix-dialog} API.
 
-  Use the function @fun{gtk-print-job-get-surface} to obtain the cairo surface
-  onto which the pages must be drawn. Use the function @fun{gtk-print-job-send}
-  to send the finished job to the printer. If you do not use cairo
-  @sym{gtk-print-job} also supports printing of manually generated postscript,
+  Use the function @fun{gtk-print-job-surface} to obtain the cairo surface onto
+  which the pages must be drawn. Use the function @fun{gtk-print-job-send} to
+  send the finished job to the printer. If you do not use Cairo
+  @sym{gtk-print-job} also supports printing of manually generated PostScript,
   via the function @fun{gtk-print-job-set-source-file}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"status-changed\" signal}
@@ -131,7 +133,7 @@
  lambda (job)    : Run Last
       @end{pre}
       Gets emitted when the status of a job changes. The signal handler can use
-      the function @fun{gtk-print-job-get-status} to obtain the new status.
+      the function @fun{gtk-print-job-status} to obtain the new status.
       @begin[code]{table}
         @entry[job]{The @sym{gtk-print-job} object on which the signal was
         emitted.}
@@ -143,10 +145,10 @@
   @see-slot{gtk-print-job-title}
   @see-slot{gtk-print-job-track-print-status}
   @see-class{gtk-print-unix-dialog}
-  @see-function{gtk-print-job-get-surface}
+  @see-function{gtk-print-job-surface}
   @see-function{gtk-print-job-send}
   @see-function{gtk-print-job-set-source-file}
-  @see-function{gtk-print-job-get-status}")
+  @see-function{gtk-print-job-status}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -157,17 +159,23 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "page-setup" 'gtk-print-job) t)
  "The @code{page-setup} property of type @class{gtk-page-setup}
-  (Read / Write / Construct) @br{}
+  (Read / Write / Construct Only) @br{}
   Page Setup.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-page-setup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-page-setup 'function)
- "@version{2019-5-17}
-  Accessor of the @slot[gtk-print-job]{page-setup} slot of the
-  @class{gtk-print-job} class.
-  @see-class{gtk-print-job}")
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-page-setup object) => page-setup}
+  @argument[object]{a @class{gtk-print-job} object}
+  @argument[page-setup]{a @class{gtk-page-setup} object}
+  @begin{short}
+    Accessor of the @slot[gtk-print-job]{page-setup} slot of the
+    @class{gtk-print-job} class.
+  @end{short}
+  @see-class{gtk-print-job}
+  @see-class{gtk-page-setup}")
 
 ;;; --- gtk-print-job-printer --------------------------------------------------
 
@@ -181,16 +189,17 @@
 (setf (gethash 'gtk-print-job-printer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-printer 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-printer object) => printer}
   @argument[object]{a @class{gtk-print-job} object}
-  @return{The printer of @arg{job}.}
+  @argument[printer]{a @class{gtk-printer} object}
   @begin{short}
     Accessor of the @slot[gtk-print-job]{printer} of the
     @class{gtk-print-job} class.
   @end{short}
-
-  Gets the @class{gtk-printer} object of the print job.
-  @see-class{gtk-print-job}")
+  Gets the printer of the print job.
+  @see-class{gtk-print-job}
+  @see-class{gtk-printer}")
 
 ;;; --- gtk-print-job-settings -------------------------------------------------
 
@@ -204,23 +213,24 @@
 (setf (gethash 'gtk-print-job-settings atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-settings 'function)
- "@version{2019-5-17}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The settings of @arg{job}.}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-settings object) => settings}
+  @argument[object]{a @class{gtk-print-job} object}
+  @argument[settings]{a @class{gtk-print-settings} object}
   @begin{short}
     Accessor of the @slot[gtk-print-job]{settings} slot of the
     @class{gtk-print-job} class.
   @end{short}
-
-  Gets the @class{gtk-print-settings} object of the print job.
-  @see-class{gtk-print-job}")
+  Gets the print settings of the print job.
+  @see-class{gtk-print-job}
+  @see-class{gtk-print-settings}")
 
 ;;; --- gtk-print-job-title ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title" 'gtk-print-job) t)
- "The @code{title} property of type @code{:string}
-  (Read / Write / Construct) @br{}
+ "The @code{title} property of type @code{g-string}
+  (Read / Write / Construct Only) @br{}
   Title of the print job. @br{}
   Default value: @code{nil}")
 
@@ -228,14 +238,14 @@
 (setf (gethash 'gtk-print-job-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-title 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-title object) => title}
   @argument[object]{a @class{gtk-print-job} object}
-  @return{The title of @arg{job}.}
+  @argument[title]{a string with the job title.}
   @begin{short}
     Accessor of the @slot[gtk-print-job]{title} slot of the
     @class{gtk-print-job} class.
   @end{short}
-
   Gets the job title.
   @see-class{gtk-print-job}")
 
@@ -248,13 +258,13 @@
   (Read / Write) @br{}
   @em{True} if the print job will continue to emit \"status-changed\" signals
   after the print data has been sent to the printer or print server. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-job-track-print-status atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-job-track-print-status 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-job-track-print-status object) => track-status}
   @syntax[]{(setf (gtk-print-job-track-print-status object) track-status)}
   @argument[object]{a @class{gtk-print-job} object}
@@ -264,8 +274,8 @@
     @class{gtk-print-job} class.
   @end{short}
 
-  The @sym{gtk-print-job-track-print-status} slot access function
-  returns whether jobs will be tracked after printing.
+  The slot access function @sym{gtk-print-job-track-print-status} returns
+  whether jobs will be tracked after printing.
 
   If @arg{track-status} is @em{true}, the print job will try to continue
   report on the status of the print job in the printer queues and printer.
@@ -284,13 +294,13 @@
 
 (defun gtk-print-job-new (title printer settings page-setup)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[title]{the job title}
-  @argument[printer]{a @class{gtk-printer} oject}
+ "@version{2020-4-10}
+  @argument[title]{a string with the job title}
+  @argument[printer]{a @class{gtk-printer} object}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[page-setup]{a @class{gtk-page-setup} object}
-  @return{A new @class{gtk-print-job} object}
-  @short{Creates a new @class{gtk-print-job}.}
+  @return{A new @class{gtk-print-job} object.}
+  @short{Creates a new @class{gtk-print-job} object.}
   @see-class{gtk-print-job}
   @see-class{gtk-printer}
   @see-class{gtk-print-settings}
@@ -304,20 +314,21 @@
 (export 'gtk-print-job-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_status ()
+;;; gtk_print_job_get_status () -> gtk-print-job-status
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_get_status" gtk-print-job-get-status)
+(defcfun ("gtk_print_job_get_status" gtk-print-job-status)
     gtk-print-status
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
+ "@version{2020-4-10}
   @argument[job]{a @class{gtk-print-job} object}
-  @return{The status of @arg{job}.}
+  @return{The status of type @symbol{gtk-print-status} of @arg{job}.}
   @short{Gets the status of the print job.}
-  @see-class{gtk-print-job}"
+  @see-class{gtk-print-job}
+  @see-symbol{gtk-print-status}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-status)
+(export 'gtk-print-job-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_source_fd ()
@@ -357,18 +368,17 @@
 (defcfun ("gtk_print_job_set_source_file" %gtk-print-job-set-source-file)
     :boolean
   (job (g-object gtk-print-job))
-  (filename :string)
+  (filename g-string)
   (error :pointer))
 
 (defun gtk-print-job-set-source-file (job filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
+ "@version{2020-4-10}
   @argument[job]{a @class{gtk-print-job} object}
-  @argument[filename]{the file to be printed}
-  @return{@code{Nil} if an error occurred.}
+  @argument[filename]{a string with the file name to be printed}
+  @return{@code{False} if an error occurred.}
   @begin{short}
-    Make the @class{gtk-print-job} send an existing document to the printing
-    system.
+    Make the print job send an existing document to the printing system.
   @end{short}
   The file can be in any format understood by the platforms printing system,
   typically PostScript, but on many platforms PDF may work too. See the
@@ -382,7 +392,7 @@
 (export 'gtk-print-job-set-source-file)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_surface ()
+;;; gtk_print_job_get_surface () -> gtk-print-job-surface
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_print_job_get_surface" %gtk-print-job-get-surface)
@@ -390,11 +400,11 @@
   (job (g-object gtk-print-job))
   (error :pointer))
 
-(defun gtk-print-job-get-surface (job)
+(defun gtk-print-job-surface (job)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
+ "@version{2020-4-10}
   @argument[job]{a @class{gtk-print-job} object}
-  @return{The cairo surface of @arg{job}.}
+  @return{The cairo surface of type @symbol{cairo-surface-t} of @arg{job}.}
   @begin{short}
     Gets a cairo surface onto which the pages of the print job should be
     rendered.
@@ -404,7 +414,7 @@
   (with-g-error (err)
     (%gtk-print-job-get-surface job err)))
 
-(export 'gtk-print-job-get-surface)
+(export 'gtk-print-job-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPrintJobCompleteFunc ()
@@ -445,7 +455,7 @@
 
 (defun gtk-print-job-send (job func)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
+ "@version{2020-4-10}
   @argument[job]{a @class{gtk-print-job} object}
   @argument[func]{function to call when the job completes or an error occurs}
   @short{Sends the print job off to the printer.}
@@ -458,372 +468,323 @@
 (export 'gtk-print-job-send)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_pages ()
+;;; gtk_print_job_get_pages () -> gtk-print-job-pages
+;;; gtk_print_job_set_pages () -> (setf gtk-print-job-pages)
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_get_pages" gtk-print-job-get-pages) gtk-print-pages
+(defun (setf gtk-print-job-pages) (pages job)
+  (foreign-funcall "gtk_print_job_set_pages"
+                   (g-object gtk-print-job) job
+                   gtk-print-pages pages
+                   :void)
+  pages)
+
+(defcfun ("gtk_print_job_get_pages" gtk-print-job-pages) gtk-print-pages
  #+cl-cffi-gtk-documentation
- "@version{2013-10-21}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The @symbol{gtk-print-pages} setting.}
-  @short{Gets the @symbol{gtk-print-pages} setting for this job.}
-  @see-class{gtk-print-job}
-  @see-symbol{gtk-print-pages}"
-  (job (g-object gtk-print-job)))
-
-(export 'gtk-print-job-get-pages)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_pages ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_set_pages" gtk-print-job-set-pages) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-pages job) => pages}
+  @syntax[]{(setf (gtk-print-job-pages job) pages)}
   @argument[job]{a @class{gtk-print-job} object}
   @argument[pages]{the @symbol{gtk-print-pages} setting}
   @begin{short}
-    Sets the @symbol{gtk-print-pages} setting for this job.
+    Accessor of the page setting for the print job.
   @end{short}
+
+  The function @sym{gtk-print-job-pages} gets the pages setting for the print
+  job. The function @sym{(setf gtk-print-job-pages)} sets the pages setting for
+  the print job.
   @see-class{gtk-print-job}
   @see-symbol{gtk-print-pages}"
-  (job (g-object gtk-print-job))
-  (pages gtk-print-pages))
-
-(export 'gtk-print-job-set-pages)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_page_ranges ()
-;;;
-;;; GtkPageRange * gtk_print_job_get_page_ranges (GtkPrintJob *job,
-;;;                                               gint *n_ranges);
-;;;
-;;; Gets the page ranges for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; n_ranges :
-;;;     return location for the number of ranges
-;;;
-;;; Returns :
-;;;     a pointer to an array of GtkPageRange structs.
-;;;
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_page_ranges ()
-;;;
-;;; void gtk_print_job_set_page_ranges (GtkPrintJob *job,
-;;;                                     GtkPageRange *ranges,
-;;;                                     gint n_ranges);
-;;;
-;;; Sets the page ranges for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; ranges :
-;;;     pointer to an array of GtkPageRange structs. [array length=n_ranges]
-;;;
-;;; n_ranges :
-;;;     the length of the ranges array
-;;;
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_page_set ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_page_set" gtk-print-job-get-page-set) gtk-page-set
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The @symbol{gtk-page-set} setting.}
-  @begin{short}
-    Gets the @symbol{gtk-page-set} setting for this job.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-symbol{gtk-page-set}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-page-set)
+(export 'gtk-print-job-pages)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_page_set ()
+;;; gtk_print_job_get_page_ranges () -> gtk-print-job-page-ranges
+;;; gtk_print_job_set_page_ranges () -> (setf gtk-print-job-page-ranges)
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_page_set" gtk-print-job-set-page-set) :void
+(defun (setf gtk-print-job-page-ranges) (ranges job)
+  (setf (gtk-print-settings-page-ranges (gtk-print-job-settings job)) ranges))
+
+(defun gtk-print-job-page-ranges (job)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-page-ranges job) => page-ranges}
+  @syntax[]{(setf (gtk-print-job-page-ranges job) page-ranges)}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[page-ranges]{a list with the page ranges}
+  @begin{short}
+    Accessor of the page ranges for the print job.
+  @end{short}
+
+  The function @sym{gtk-print-job-page-ranges} gets the page ranges for the
+  print job. The function @sym{(setf gtk-print-job-page-ranges)} sets the page
+  for the print job.
+  @see-class{gtk-print-job}"
+  (gtk-print-settings-page-ranges (gtk-print-job-settings job)))
+
+(export 'gtk-print-job-page-ranges)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_job_get_page_set () -> gtk-print-job-page-set
+;;; gtk_print_job_set_page_set () -> (setf gtk-print-job-page-set)
+;;; ----------------------------------------------------------------------------
+
+(defun (setf gtk-print-job-page-set) (page-set job)
+  (foreign-funcall "gtk_print_job_set_page_set"
+                   (g-object gtk-print-job) job
+                   gtk-page-set page-set
+                   :void)
+  page-set)
+
+(defcfun ("gtk_print_job_get_page_set" gtk-print-job-page-set) gtk-page-set
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-page-set job) => page-set}
+  @syntax[]{(setf (gtk-print-job-page-set job) page-set)}
   @argument[job]{a @class{gtk-print-job} object}
   @argument[page-set]{a @symbol{gtk-page-set} setting}
   @begin{short}
-    Sets the @symbol{gtk-page-set} setting for this job.
+    Accessor of the @symbol{gtk-page-set} setting for the print job.
   @end{short}
+
+  The function @sym{gtk-print-job-page-set} gets the setting for the print job.
+  The function @sym{(setf gtk-print-job-page-set)} sets the setting for the
+  print job.
   @see-class{gtk-print-job}
   @see-symbol{gtk-page-set}"
-  (job (g-object gtk-print-job))
-  (page-set gtk-page-set))
+  (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-set-page-set)
+(export 'gtk-print-job-page-set)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_num_copies ()
+;;; gtk_print_job_get_num_copies () -> gtk-print-job-num-copies
+;;; gtk_print_job_set_num_copies () -> (setf gtk-print-job-num-copies)
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf gtk-print-job-numcopies) (num-copies job)
+  (foreign-funcall "gtk_print_job_set_num_copies"
+                   (g-object gtk-print-job) job
+                   :int num-copies)
+  num-copies)
 
 (defcfun ("gtk_print_job_get_num_copies" gtk-print-job-get-num-copies) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-num-copies job) => num-copies}
+  @syntax[]{(setf (gtk-print-job-num-copies job) num-copies)}
   @argument[job]{a @class{gtk-print-job} object}
-  @return{The number of copies.}
-  @short{Gets the number of copies of this job.}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-num-copies}"
+  @argument[num-copies]{an integer with the number of copies}
+  @begin{short}
+    Accessor of the number of copies for the print job.
+  @end{short}
+
+  The function @sym{gtk-print-job-num-copies} gets the number of copies of the
+  print job. The function @sym{(setf gtk-print-job-num-copies)} sets the number
+  of copies for the print job.
+  @see-class{gtk-print-job}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-num-copies)
+(export 'gtk-print-job-num-copies)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_num_copies ()
+;;; gtk_print_job_get_scale () -> gtk-print-job-scale
+;;; gtk_print_job_set_scale () -> (setf gtk-print-job-scale)
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_num_copies" gtk-print-job-set-num-copies) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[num-copies]{the number of copies}
-  @short{Sets the number of copies for this job.}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-num-copies}"
-  (job (g-object gtk-print-job))
-  (num-copies :int))
-
-(export 'gtk-print-job-set-num-copies)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_scale ()
-;;; ----------------------------------------------------------------------------
+(defun (setf gtk-print-job-scale) (scale job)
+  (foreign-funcall "gtk_print_job_set_scale"
+                   (g-object gtk-print-job) job
+                   :double scale
+                   :void)
+  scale)
 
 (defcfun ("gtk_print_job_get_scale" gtk-print-job-get-scale) :double
  #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-scale job) => scale}
+  @syntax[]{(setf (gtk-print-job-scale job) scale)}
   @argument[job]{a @class{gtk-print-job} object}
-  @return{The scale.}
+  @argument[scale]{a @code{:double} with the scale}
   @begin{short}
-    Gets the scale for this job, where 1.0 means unscaled.
+    Accessor of the scale for the print job.
   @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-scale}"
+
+  The function @sym{gtk-print-job-scale} gets the scale for the print job,
+  where 1.0 means unscaled. The function @sym{(setf gtk-print-job-scale)} sets
+  the scale for the print job.
+  @see-class{gtk-print-job}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-scale)
+(export 'gtk-print-job-scale)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_scale ()
+;;; gtk_print_job_get_n_up () -> gtk-print-job-n-up
+;;; gtk_print_job_set_n_up () -> (setf gtk-print-job-n-up)
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_scale" gtk-print-job-set-scale) :void
+(defun (setf gtk-print-job-n-up) (n-up job)
+  (foreign-funcall "gtk_print_job_set_n_up"
+                   (g-object gtk-print-job) job
+                   :uint n-up
+                   :void)
+  n-up)
+
+(defcfun ("gtk_print_job_get_n_up" gtk-print-job-n-up) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-n-up job) => n-up}
+  @syntax[]{(setf (gtk-print-job-n-up job) n-up)}
   @argument[job]{a @class{gtk-print-job} object}
-  @argument[scale]{the scale}
+  @argument[n-up]{an unsigned integer with the n-up value}
   @begin{short}
-    Sets the scale for this job, where 1.0 means unscaled.
+    Accessor of the n-up setting for the print job.
   @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-scale}"
-  (job (g-object gtk-print-job))
-  (scale :double))
 
-(export 'gtk-print-job-set-scale)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_n_up ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_n_up" gtk-print-job-get-n-up) :uint
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{The n-up setting.}
-  @begin{short}
-    Gets the n-up setting for this job.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-n-up}"
+  The function @sym{gtk-print-job-n-up} gets the n-up setting for the print
+  job. The function @sym{(setf gtk-print-job-n-up)} sets the n-up setting for
+  the print job.
+  @see-class{gtk-print-job}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-n-up)
+(export 'gtk-print-job-n-up)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_n_up ()
+;;; gtk_print_job_get_n_up_layout () -> gtk-print-job-n-up-layout
+;;; gtk_print_job_set_n_up_layout () -> (setf gtk-print-job-n-up-layout)
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_n_up" gtk-print-job-set-n-up) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[n-up]{the n-up value}
-  @begin{short}
-    Sets the n-up setting for this job.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-n-up}"
-  (job (g-object gtk-print-job))
-  (n-up :uint))
+(defun (setf gtk-print-job-n-up-layout) (layout job)
+  (foreign-funcall "gtk_print_job_set_n_up_layout"
+                   (g-object gtk-print-job) job
+                   gtk-number-up-layout layout
+                   :void)
+  layout)
 
-(export 'gtk-print-job-set-n-up)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_get_n_up_layout ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_n_up_layout" gtk-print-job-get-n-up-layout)
+(defcfun ("gtk_print_job_get_n_up_layout" gtk-print-job-n-up-layout)
     gtk-number-up-layout
  #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-n-up-layout job) => layout}
+  @syntax[]{(setf (gtk-print-job-n-up-layout job) layout)}
   @argument[job]{a @class{gtk-print-job} object}
+  @argument[layout]{the layout setting of type @symbol{gtk-number-up-layout}}
   @return{The n-up layout.}
   @begin{short}
-    Gets the n-up layout setting for this job.
+    Accessor of the layout setting for the print job.
   @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-n-up-layout}"
+
+  The function @sym{gtk-print-job-n-up-layout} gets the layout setting for the
+  print job. The function @sym{(setf gtk-print-job-n-up-layout)} sets the
+  layout setting for the print job.
+  @see-class{gtk-print-job}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-get-n-up-layout)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_job_set_n_up_layout ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_set_n_up_layout" gtk-print-job-set-n-up-layout) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[layout]{the n-up layout setting of type
-    @symbol{gtk-number-up-layout}}
-  @begin{short}
-    Sets the n-up layout setting for this job.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-n-up-layout}"
-  (job (g-object gtk-print-job))
-  (layout gtk-number-up-layout))
-
-(export 'gtk-print-job-set-n-up-layout)
+(export 'gtk-print-job-n-up-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_rotate ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_rotate" gtk-print-job-get-rotate) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{Whether the job is printed rotated.}
-  @begin{short}
-    Gets whether the job is printed rotated.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-rotate}"
-  (job (g-object gtk-print-job)))
-
-(export 'gtk-print-job-get-rotate)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_rotate ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_rotate" gtk-print-job-set-rotate) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[rotate]{whether to print rotated}
-  @begin{short}
-    Sets whether this job is printed rotated.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-rotate}"
-  (job (g-object gtk-print-job))
-  (rotate :boolean))
+(defun (setf gtk-print-job-rotate) (rotate job)
+  (foreign-funcall "gtk_print_job_set_rotate"
+                   (g-object gtk-print-job) job
+                   :boolean rotate
+                   :void)
+  rotate)
 
-(export 'gtk-print-job-set-rotate)
+(defcfun ("gtk_print_job_get_rotate" gtk-print-job-rotate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-rotate job) => rotate}
+  @syntax[]{(setf (gtk-print-job-rotate job) rotate)}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[rotate]{a boolean whether to print rotated}
+  @begin{short}
+    Accessor of the rotate setting for the print job.
+  @end{short}
+
+  The function @sym{gtk-print-job-rotate} gets whether the job is printed
+  rotated. The function @sym{(setf gtk-print-job-rotate)} sets whether the job
+  is printed rotated.
+  @see-class{gtk-print-job}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-rotate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_collate ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_collate" gtk-print-job-get-collate) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{Whether the job is printed collated.}
-  @begin{short}
-    Gets whether this job is printed collated.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-collate}"
-  (job (g-object gtk-print-job)))
-
-(export 'gtk-print-job-get-collate)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_collate ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_set_collate" gtk-print-job-set-collate) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @argument[collate]{whether the job is printed collated}
-  @begin{short}
-    Sets whether this job is printed collated.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-collate}"
-  (job (g-object gtk-print-job))
-  (collate :boolean))
+(defun (setf gtk-print-job-collate) (collate job)
+  (foreign-funcall "gtk_print_job_set_collate"
+                   (g-object gtk-print-job) job
+                   :boolean collate
+                   :void)
+  collate)
 
-(export 'gtk-print-job-set-collate)
+(defcfun ("gtk_print_job_get_collate" gtk-print-job-get-collate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-collate job) => collate}
+  @syntax[]{(setf (gtk-print-job-collate job) collate)}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[collate]{a boolean whether the job is printed collated}
+  @return{Whether the job is printed collated.}
+  @begin{short}
+    Accessor of the collate setting of the print job.
+  @end{short}
+
+  The function @sym{gtk-print-job-collate} gets whether the job is printed
+  collated. The function @sym{(setf gtk-print-job-collate)} sets whether the
+  job is printed collated.
+  @see-class{gtk-print-job}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-collate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_reverse ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_job_get_reverse" gtk-print-job-get-reverse) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @return{Whether the job is printed reversed.}
-  @begin{short}
-    Gets whether this job is printed reversed.
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-set-reverse}"
-  (job (g-object gtk-print-job)))
-
-(export 'gtk-print-job-get-reverse)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_reverse ()
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf gtk-print-job-reverse) (reverse job)
+  (foreign-funcall "gtk_print_job_set_reverse"
+                   (g-object gtk-print-job) job
+                   :boolean reverse
+                   :void)
+  reverse)
 
 (defcfun ("gtk_print_job_set_reverse" gtk-print-job-set-reverse) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-23}
   @argument[job]{a @class{gtk-print-job} object}
-  @argument[reverse]{whether the job is printed reversed}
   @begin{short}
-    Sets whether this job is printed reversed.
   @end{short}
   @see-class{gtk-print-job}
   @see-function{gtk-print-job-get-reverse}"
   (job (g-object gtk-print-job)))
 
-(export 'gtk-print-job-set-reverse)
+(defcfun ("gtk_print_job_get_reverse" gtk-print-job-reverse) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-job-reverse job) => reverse}
+  @syntax[]{(setf (gtk-print-job-reverse job) reverse)}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[reverse]{a boolean whether the job is printed reversed}
+  @begin{short}
+    Accessor of the reverse setting of the print job.
+  @end{short}
+
+  The function @sym{gtk-print-job-reverse} gets whether the job is printed
+  reversed. The function @sym{(setf gtk-print-job-reverse)} sets whether the
+  job is printed reversed.
+  @see-class{gtk-print-job}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-reverse)
 
 ;;; --- End of file gtk.print-job.lisp -----------------------------------------
