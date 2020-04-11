@@ -1301,7 +1301,7 @@
     rather than using the lowlevel function
     @fun{gdk-pango-context-get-for-screen}. Once you have a
     @class{pango-layout} object, you can set the text and attributes of it with
-    Pango functions like @fun{pango-layout-set-text} and get its size with
+    Pango functions like @fun{pango-layout-text} and get its size with
     @fun{pango-layout-get-size}. Note that Pango uses a fixed point system
     internally, so converting between Pango units and pixels using the constant
     @var{+pango-scale+} or the function @fun{pango-pixels}.
@@ -1354,8 +1354,8 @@
                   (context (gdk-pango-context-get-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))
-             (pango-layout-set-text layout \"Text\")
-             (pango-layout-set-font-description layout desc)
+             (setf (pango-layout-text layout) \"Text\")
+             (setf (pango-layout-font-description layout) desc)
 
              ;; Draw the layout n-words times in a circle
              (do* ((i 0 (+ i 1))
