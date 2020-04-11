@@ -86,7 +86,7 @@ GLib Utilities
                                  supported by GRegex
     Simple XML Subset Parser   - parses a subset of XML
 
-  glib.key-value.lisp          - parses .ini-like config files    - Glib 2.38.2&
+  glib.key-value.lisp          - parses .ini-like config files    - Glib 2.64 &
 
     Bookmark file parser       - parses files containing bookmarks
     Testing                    - a test framework
@@ -126,7 +126,7 @@ GLib Data Types
                                  particular memory locations
 
   glib.variant-type.lisp       - GVariantType                     - Glib 2.36.3
-  glib.variant.lisp            - GVariant                         - Glib 2.36.3%
+  glib.variant.lisp            - GVariant                         - Glib 2.64 &
 
     GVariant Format Strings    - varargs conversion of GVariants
     GVariant Text Format       - textual representation of GVariants

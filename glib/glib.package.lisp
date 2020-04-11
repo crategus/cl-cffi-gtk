@@ -425,6 +425,62 @@
     @about-function{g-option-group-set-translate-func}
     @about-function{g-option-group-set-translation-domain}
   @end{section}
+  @begin[Key-value file parser]{section}
+    Parses .ini-like config files.
+
+    @about-symbol{g-key-file-error}
+    @about-symbol{g-key-file-flags}
+    @about-type{g-key-file}
+    @about-function{g-key-file-new}
+    @about-function{g-key-file-free}
+    @about-function{g-key-file-ref}
+    @about-function{g-key-file-unref}
+    @about-function{g-key-file-set-list-separator}
+    @about-function{g-key-file-load-from-file}
+    @about-function{g-key-file-load-from-data}
+    @about-function{g-key-file-load-from-bytes}
+    @about-function{g-key-file-load-from-data-dirs}
+    @about-function{g-key-file-load-from-dirs}
+    @about-function{g-key-file-to-data}
+    @about-function{g-key-file-save-to-file}
+    @about-function{g-key-file-get-start-group}
+    @about-function{g-key-file-get-groups}
+    @about-function{g-key-file-get-keys}
+    @about-function{g-key-file-has-group}
+    @about-function{g-key-file-has-key}
+    @about-function{g-key-file-get-value}
+    @about-function{g-key-file-get-string}
+    @about-function{g-key-file-get-locale-string}
+    @about-function{g-key-file-get-locale-for-key}
+    @about-function{g-key-file-get-boolean}
+    @about-function{g-key-file-get-integer}
+    @about-function{g-key-file-get-int64}
+    @about-function{g-key-file-get-uint64}
+    @about-function{g-key-file-get-double}
+    @about-function{g-key-file-get-string-list}
+    @about-function{g-key-file-get-locale-string-list}
+    @about-function{g-key-file-get-boolean-list}
+    @about-function{g-key-file-get-integer-list}
+    @about-function{g-key-file-get-double-list}
+    @about-function{g-key-file-get-comment}
+    @about-function{g-key-file-set-value}
+    @about-function{g-key-file-set-string}
+    @about-function{g-key-file-set-locale-string}
+    @about-function{g-key-file-set-boolean}
+    @about-function{g-key-file-set-integer}
+    @about-function{g-key-file-set-int64}
+    @about-function{g-key-file-set-uint64}
+    @about-function{g-key-file-set-double}
+    @about-function{g-key-file-set-string-list}
+    @about-function{g-key-file-set-locale-string-list}
+    @about-function{g-key-file-set-boolean-list}
+    @about-function{g-key-file-set-integer-list}
+    @about-function{g-key-file-set-double-list}
+    @about-function{g-key-file-set-comment}
+    @about-function{g-key-file-remove-group}
+    @about-function{g-key-file-remove-key}
+    @about-function{g-key-file-remove-comment}
+  @end{section}
   @begin[GVariantType]{section}
     Introduction to the GVariant type system.
 
@@ -491,6 +547,13 @@
     Strongly typed value datatype.
 
     @about-type{g-variant}
+
+    @about-symbol{g-variant-class}
+    @about-symbol{g-variant-iter}
+    @about-symbol{g-variant-builder}
+    @about-symbol{g-variant-dict}
+    @about-symbol{g-variant-parse-error}
+
     @about-function{g-variant-unref}
     @about-function{g-variant-ref}
     @about-function{g-variant-ref-sink}
@@ -503,7 +566,6 @@
     @about-function{g-variant-compare}
     @about-function{g-variant-classify}
     @about-function{g-variant-check-format-string}
-    @about-symbol{g-variant-class}
     @about-function{g-variant-get}
     @about-function{g-variant-get-va}
     @about-function{g-variant-new}
@@ -519,6 +581,8 @@
     @about-function{g-variant-new-handle}
     @about-function{g-variant-new-double}
     @about-function{g-variant-new-string}
+    @about-function{g-variant-new-take-string}
+    @about-function{g-variant-new-printf}
     @about-function{g-variant-new_object-path}
     @about-function{g-variant-is-object-path}
     @about-function{g-variant-new-signature}
@@ -569,12 +633,11 @@
     @about-function{g-variant-new-from-bytes}
     @about-function{g-variant-byteswap}
     @about-function{g-variant-get-normal-form}
-    @about-function{g-variant-g-variant-is-normal-form}
+    @about-function{g-variant-is-normal-form}
     @about-function{g-variant-hash}
     @about-function{g-variant-equal}
     @about-function{g-variant-print}
     @about-function{g-variant-string}
-    @about-symbol{g-variant-iter}
     @about-function{g-variant-iter-copy}
     @about-function{g-variant-iter-free}
     @about-function{g-variant-iter-init}
@@ -583,7 +646,6 @@
     @about-function{g-variant-iter-next-value}
     @about-function{g-variant-iter-next}
     @about-function{g-variant-iter-loop}
-    @about-function{g-variant-builder}
     @about-function{g-variant-builder-unref}
     @about-function{g-variant-builder-ref}
     @about-function{g-variant-builder-new}
@@ -595,11 +657,23 @@
     @about-function{g-variant-builder-end}
     @about-function{g-variant-builder-open}
     @about-function{g-variant-builder-close}
-    @about-symbol{g-variant-parse-error}
-    @about-symbol{G_VARIANT_PARSE_ERROR}
+    @about-function{g-variant-dict-init}
+    @about-function{g-variant-dict-unref}
+    @about-function{g-variant-dict-ref}
+    @about-function{g-variant-dict-new}
+    @about-function{g-variant-dict-init}
+    @about-function{g-variant-dict-clear}
+    @about-function{g-variant-dict-contains}
+    @about-function{g-variant-dict-lookup}
+    @about-function{g-variant-dict-lookup-value}
+    @about-function{g-variant-dict-insert}
+    @about-function{g-variant-dict-insert-value}
+    @about-function{g-variant-dict-remove}
+    @about-function{g-variant-dict-end}
     @about-function{g-variant-parse}
     @about-function{g-variant-new-parsed-va}
     @about-function{g-variant-new-parsed}
+    @about-function{g-variant-parse-error-print-context}
   @end{section}")
 
 ;;; --- End of file glib.package.lisp ------------------------------------------
