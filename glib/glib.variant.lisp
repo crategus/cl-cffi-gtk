@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.variant.lisp
 ;;;
-;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; The documentation of this file is taken from the GLib 2.64 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,20 @@
 ;;;
 ;;; GVariant
 ;;;
-;;; Strongly typed value datatype
+;;;     Strongly typed value datatype
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GVariant
+;;;     GVariantClass
+;;;     GVariantIter
+;;;     GVariantBuilder
+;;;     GVariantDict
+;;;     GVariantParseError
+;;;
+;;;     G_VARIANT_PARSE_ERROR
+;;;
+;;; Functions
 ;;;
 ;;;     g_variant_unref
 ;;;     g_variant_ref
@@ -44,17 +53,14 @@
 ;;;     g_variant_is_of_type
 ;;;     g_variant_is_container
 ;;;     g_variant_compare
-;;;
 ;;;     g_variant_classify
-;;;
-;;;     GVariantClass
 ;;;
 ;;;     g_variant_check_format_string
 ;;;     g_variant_get
 ;;;     g_variant_get_va
+;;;
 ;;;     g_variant_new
 ;;;     g_variant_new_va
-;;;
 ;;;     g_variant_new_boolean
 ;;;     g_variant_new_byte
 ;;;     g_variant_new_int16
@@ -66,6 +72,10 @@
 ;;;     g_variant_new_handle
 ;;;     g_variant_new_double
 ;;;     g_variant_new_string
+;;;
+;;;     g_variant_new_take_string ()
+;;;     g_variant_new_printf ()
+;;;
 ;;;     g_variant_new_object_path
 ;;;     g_variant_is_object_path
 ;;;     g_variant_new_signature
@@ -128,8 +138,6 @@
 ;;;     g_variant_print
 ;;;     g_variant_print_string
 ;;;
-;;;     GVariantIter
-;;;
 ;;;     g_variant_iter_copy
 ;;;     g_variant_iter_free
 ;;;     g_variant_iter_init
@@ -138,8 +146,6 @@
 ;;;     g_variant_iter_next_value
 ;;;     g_variant_iter_next
 ;;;     g_variant_iter_loop
-;;;
-;;;     GVariantBuilder
 ;;;
 ;;;     g_variant_builder_unref
 ;;;     g_variant_builder_ref
@@ -153,13 +159,25 @@
 ;;;     g_variant_builder_open
 ;;;     g_variant_builder_close
 ;;;
-;;;     GVariantParseError
-;;;
-;;;     G_VARIANT_PARSE_ERROR
+;;;     G_VARIANT_DICT_INIT()
+;;;     g_variant_dict_unref ()
+;;;     g_variant_dict_ref ()
+;;;     g_variant_dict_new ()
+;;;     g_variant_dict_init ()
+;;;     g_variant_dict_clear ()
+;;;     g_variant_dict_contains ()
+;;;     g_variant_dict_lookup ()
+;;;     g_variant_dict_lookup_value ()
+;;;     g_variant_dict_insert ()
+;;;     g_variant_dict_insert_value ()
+;;;     g_variant_dict_remove ()
+;;;     g_variant_dict_end ()
 ;;;
 ;;;     g_variant_parse
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
+;;;
+;;;     g_variant_parse_error_print_context ()
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
@@ -298,8 +316,8 @@
     \"a{sv@}\" then a type information struct will exist for \"a{sv@}\",
     \"{sv@}\", \"s\", and \"v\". Multiple uses of the same type will share the
     same type information. Additionally, all single-digit types are stored in
-    read-only static memory and do not contribute to the writable memory footprint
-    of a program using @sym{g-variant}.
+    read-only static memory and do not contribute to the writable memory
+    footprint of a program using @sym{g-variant}.
 
     Aside from the type information structures stored in read-only memory, there
     are two forms of type information. One is used for container types where
@@ -674,7 +692,7 @@
       (gethash 'g-variant-class atdoc:*external-symbols*)
  "@version{2013-2-7}
   @short{The range of possible top-level types of @type{g-variant} instances.}
-  Since 2.24.
+  Since 2.24
   @begin{pre}
 (defcenum g-variant-class
   (:boolean     #.(char-code #\b))
@@ -731,7 +749,7 @@
   @begin{short}
     Classifies @arg{value} according to its top-level type.
   @end{short}
-  Since 2.24."
+  Since 2.24"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-classify)
@@ -1009,7 +1027,7 @@
     instance.}
   @short{Creates a new @code{int32} @type{g-variant} instance.}
 
-  Since 2.24."
+  Since 2.24"
   (value :int32))
 
 (export 'g-variant-new-int32)
@@ -1125,6 +1143,56 @@
 (export 'g-variant-new-string)
 
 ;;; ----------------------------------------------------------------------------
+;;; g_variant_new_take_string ()
+;;;
+;;; GVariant *
+;;; g_variant_new_take_string (gchar *string);
+;;;
+;;; Creates a string GVariant with the contents of string .
+;;;
+;;; string must be valid UTF-8, and must not be NULL. To encode potentially-NULL
+;;; strings, use this with g_variant_new_maybe().
+;;;
+;;; This function consumes string . g_free() will be called on string when it
+;;; is no longer required.
+;;;
+;;; You must not modify or access string in any other way after passing it to
+;;; this function. It is even possible that string is immediately freed.
+;;;
+;;; string :
+;;;     a normal UTF-8 nul-terminated string
+;;;
+;;; Returns :
+;;;     a floating reference to a new string GVariant instance.
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_new_printf ()
+;;;
+;;; GVariant *
+;;; g_variant_new_printf (const gchar *format_string,
+;;;                       ...);
+;;;
+;;; Creates a string-type GVariant using printf formatting.
+;;;
+;;; This is similar to calling g_strdup_printf() and then g_variant_new_string()
+;;; but it saves a temporary variable and an unnecessary copy.
+;;;
+;;; format_string :
+;;;     a printf-style format string
+;;;
+;;; ... :
+;;;     arguments for format_string
+;;;
+;;; Returns :
+;;;     a floating reference to a new string GVariant instance.
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_object_path ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1142,7 +1210,7 @@
   @arg{string} must be a valid D-Bus object path. Use
   @fun{g-variant-is-object-path} if you are not sure.
 
-  Since 2.24."
+  Since 2.24"
   (object-path :string))
 
 (export 'g-variant-new-object-path)
@@ -1189,7 +1257,7 @@
   @arg{string} must be a valid D-Bus type signature.
   Use @fun{g-variant-is-signature} if you are not sure.
 
-  Since 2.24."
+  Since 2.24"
   (signature :string))
 
 (export 'g-variant-new-signature)
@@ -2496,13 +2564,12 @@
 
 (defcfun ("g_variant_equal" g-variant-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
+ "@version{2020-4-11}
   @argument[one]{a @type{g-variant} instance}
   @argument[two]{a @type{g-variant} instance}
   @return{@em{True} if @arg{one} and @arg{two} are equal.}
   @short{Checks if @arg{one} and @arg{two} have the same type and value.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (one (:pointer (:struct g-variant)))
   (two (:pointer (:struct g-variant))))
 
@@ -2510,26 +2577,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_print ()
-;;;
-;;; gchar * g_variant_print (GVariant *value, gboolean type_annotate);
-;;;
-;;; Pretty-prints value in the format understood by g_variant_parse().
-;;;
-;;; The format is described here.
-;;;
-;;; If type_annotate is TRUE, then type information is included in the output.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; type_annotate :
-;;;     TRUE if type information should be included in the output
-;;;
-;;; Returns :
-;;;     a newly-allocated string holding the result
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_print" g-variant-print) g-string
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-11}
+  @argument[value]{a @type{g-variant} structure}
+  @argument[type-annotate]{@em{true} if type information should be included in
+    the output}
+  @return{A string holding the result.}
+  @begin{short}
+    Pretty-prints @arg{value} in the format understood by the
+    function @fun{g-variant-parse}.
+  @end{short}
+
+  If @arg{type-annotate} is @em{true}, then type information is included in the
+  output.
+  @see-type{g-variant}
+  @see-function{g-variant-print}"
+  (value (:pointer (:struct g-variant)))
+  (type-annotate :boolean))
+
+(export 'g-variant-print)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_print_string ()
@@ -3261,68 +3330,349 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_parse ()
+;;;G_VARIANT_DICT_INIT()
 ;;;
-;;; GVariant * g_variant_parse (const GVariantType *type,
-;;;                             const gchar *text,
-;;;                             const gchar *limit,
-;;;                             const gchar **endptr,
-;;;                             GError **error);
+;;; #define G_VARIANT_DICT_INIT(asv) { { { asv, 3488698669u, { 0, } } } }
 ;;;
-;;; Parses a GVariant from a text representation.
+;;; A stack-allocated GVariantDict must be initialized if it is used together
+;;; with g_auto() to avoid warnings or crashes if function returns before
+;;; g_variant_dict_init() is called on the builder. This macro can be used as
+;;; initializer instead of an explicit zeroing a variable when declaring it and
+;;; a following g_variant_dict_init(), but it cannot be assigned to a variable.
 ;;;
-;;; A single GVariant is parsed from the content of text.
+;;; The passed asv has to live long enough for GVariantDict to gather the
+;;; entries from, as the gathering does not happen in the G_VARIANT_DICT_INIT()
+;;; call, but rather in functions that make sure that GVariantDict is valid. In
+;;; context where the initialization value has to be a constant expression, the
+;;; only possible value of asv is NULL. It is still possible to call
+;;; g_variant_dict_init() safely with a different asv right after the variable
+;;; was initialized with G_VARIANT_DICT_INIT().
 ;;;
-;;; The format is described here.
+;;; g_autoptr(GVariant) variant = get_asv_variant ();
+;;; g_auto(GVariantDict) dict = G_VARIANT_DICT_INIT (variant);
 ;;;
-;;; The memory at limit will never be accessed and the parser behaves as if the
-;;; character at limit is the nul terminator. This has the effect of bounding
-;;; text.
+;;; asv :
+;;;     a GVariant*.
 ;;;
-;;; If endptr is non-NULL then text is permitted to contain data following the
-;;; value that this function parses and endptr will be updated to point to the
-;;; first character past the end of the text parsed by this function. If endptr
-;;; is NULL and there is extra data then an error is returned.
-;;;
-;;; If type is non-NULL then the value will be parsed to have that type. This
-;;; may result in additional parse errors (in the case that the parsed value
-;;; doesn't fit the type) but may also result in fewer errors (in the case that
-;;; the type would have been ambiguous, such as with empty arrays).
-;;;
-;;; In the event that the parsing is successful, the resulting GVariant is
-;;; returned.
-;;;
-;;; In case of any error, NULL will be returned. If error is non-NULL then it
-;;; will be set to reflect the error that occurred.
-;;;
-;;; Officially, the language understood by the parser is "any string produced by
-;;; g_variant_print()".
-;;;
-;;; type :
-;;;     a GVariantType, or NULL
-;;;
-;;; text :
-;;;     a string containing a GVariant in text form
-;;;
-;;; limit :
-;;;     a pointer to the end of text, or NULL
-;;;
-;;; endptr :
-;;;     a location to store the end pointer, or NULL
-;;;
-;;; error :
-;;;     a pointer to a NULL GError pointer, or NULL
-;;;
-;;; Returns :
-;;;     a reference to a GVariant, or NULL
+;;;Since 2.50
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_unref ()
+;;;
+;;; void
+;;; g_variant_dict_unref (GVariantDict *dict);
+;;;
+;;; Decreases the reference count on dict .
+;;;
+;;; In the event that there are no more references, releases all memory
+;;; associated with the GVariantDict.
+;;;
+;;; Don't call this on stack-allocated GVariantDict instances or bad things
+;;; will happen.
+;;;
+;;; dict :
+;;;     a heap-allocated GVariantDict.
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
 
-;;; GVariant * g_variant_parse (const GVariantType *type,
-;;;                             const gchar *text,
-;;;                             const gchar *limit,
-;;;                             const gchar **endptr,
-;;;                             GError **error);
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_ref ()
+;;;
+;;; GVariantDict *
+;;; g_variant_dict_ref (GVariantDict *dict);
+;;;
+;;; Increases the reference count on dict .
+;;;
+;;; Don't call this on stack-allocated GVariantDict instances or bad things
+;;; will happen.
+;;;
+;;; dict :
+;;;     a heap-allocated GVariantDict
+;;;
+;;; Returns :
+;;;     a new reference to dict .
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_new ()
+;;;
+;;; GVariantDict *
+;;; g_variant_dict_new (GVariant *from_asv);
+;;;
+;;; Allocates and initialises a new GVariantDict.
+;;;
+;;; You should call g_variant_dict_unref() on the return value when it is no
+;;; longer needed. The memory will not be automatically freed by any other call.
+;;;
+;;; In some cases it may be easier to place a GVariantDict directly on the stack
+;;; of the calling function and initialise it with g_variant_dict_init(). This
+;;; is particularly useful when you are using GVariantDict to construct a
+;;; GVariant.
+;;;
+;;; from_asv :
+;;;     the GVariant with which to initialise the dictionary.
+;;;
+;;; Returns :
+;;;     a GVariantDict.
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_init ()
+;;;
+;;; void
+;;; g_variant_dict_init (GVariantDict *dict,
+;;;                      GVariant *from_asv);
+;;;
+;;; Initialises a GVariantDict structure.
+;;;
+;;; If from_asv is given, it is used to initialise the dictionary.
+;;;
+;;; This function completely ignores the previous contents of dict . On one
+;;; hand this means that it is valid to pass in completely uninitialised memory.
+;;; On the other hand, this means that if you are initialising over top of an
+;;; existing GVariantDict you need to first call g_variant_dict_clear() in
+;;; order to avoid leaking memory.
+;;;
+;;; You must not call g_variant_dict_ref() or g_variant_dict_unref() on a
+;;; GVariantDict that was initialised with this function. If you ever pass a
+;;; reference to a GVariantDict outside of the control of your own code then
+;;; you should assume that the person receiving that reference may try to use
+;;; reference counting; you should use g_variant_dict_new() instead of this
+;;; function.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; from_asv :
+;;;     the initial value for dict .
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_clear ()
+;;;
+;;; void
+;;; g_variant_dict_clear (GVariantDict *dict);
+;;;
+;;; Releases all memory associated with a GVariantDict without freeing the
+;;; GVariantDict structure itself.
+;;;
+;;; It typically only makes sense to do this on a stack-allocated GVariantDict
+;;; if you want to abort building the value part-way through. This function
+;;; need not be called if you call g_variant_dict_end() and it also doesn't
+;;; need to be called on dicts allocated with g_variant_dict_new
+;;; (see g_variant_dict_unref() for that).
+;;;
+;;; It is valid to call this function on either an initialised GVariantDict or
+;;; one that was previously cleared by an earlier call to g_variant_dict_clear()
+;;; but it is not valid to call this function on uninitialised memory.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_contains ()
+;;;
+;;; gboolean
+;;; g_variant_dict_contains (GVariantDict *dict,
+;;;                          const gchar *key);
+;;;
+;;; Checks if key exists in dict .
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to look up in the dictionary
+;;;
+;;; Returns :
+;;;     TRUE if key is in dict
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_lookup ()
+;;;
+;;; gboolean
+;;; g_variant_dict_lookup (GVariantDict *dict,
+;;;                        const gchar *key,
+;;;                        const gchar *format_string,
+;;;                        ...);
+;;;
+;;; Looks up a value in a GVariantDict.
+;;;
+;;; This function is a wrapper around g_variant_dict_lookup_value() and
+;;; g_variant_get(). In the case that NULL would have been returned, this
+;;; function returns FALSE. Otherwise, it unpacks the returned value and
+;;; returns TRUE.
+;;;
+;;; format_string determines the C types that are used for unpacking the values
+;;; and also determines if the values are copied or borrowed, see the section
+;;; on GVariant format strings.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to look up in the dictionary
+;;;
+;;; format_string :
+;;;     a GVariant format string
+;;;
+;;; ... :
+;;;     the arguments to unpack the value into
+;;;
+;;; Returns :
+;;;     TRUE if a value was unpacked
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_lookup_value ()
+;;;
+;;; GVariant *
+;;; g_variant_dict_lookup_value (GVariantDict *dict,
+;;;                              const gchar *key,
+;;;                              const GVariantType *expected_type);
+;;;
+;;; Looks up a value in a GVariantDict.
+;;;
+;;; If key is not found in dictionary , NULL is returned.
+;;;
+;;; The expected_type string specifies what type of value is expected. If the
+;;; value associated with key has a different type then NULL is returned.
+;;;
+;;; If the key is found and the value has the correct type, it is returned. If
+;;; expected_type was specified then any non-NULL return value will have this
+;;; type.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to look up in the dictionary
+;;;
+;;; expected_type :
+;;;     a GVariantType, or NULL.
+;;;
+;;; Returns :
+;;;     the value of the dictionary key, or NULL.
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_insert ()
+;;;
+;;; void
+;;; g_variant_dict_insert (GVariantDict *dict,
+;;;                        const gchar *key,
+;;;                        const gchar *format_string,
+;;;                        ...);
+;;;
+;;; Inserts a value into a GVariantDict.
+;;;
+;;; This call is a convenience wrapper that is exactly equivalent to calling
+;;; g_variant_new() followed by g_variant_dict_insert_value().
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to insert a value for
+;;;
+;;; format_string :
+;;;     a GVariant varargs format string
+;;;
+;;; ... :
+;;;     arguments, as per format_string
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_insert_value ()
+;;;
+;;; void
+;;; g_variant_dict_insert_value (GVariantDict *dict,
+;;;                              const gchar *key,
+;;;                              GVariant *value);
+;;;
+;;; Inserts (or replaces) a key in a GVariantDict.
+;;;
+;;;  value is consumed if it is floating.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to insert a value for
+;;;
+;;; value :
+;;;     the value to insert
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_remove ()
+;;;
+;;; gboolean
+;;; g_variant_dict_remove (GVariantDict *dict,
+;;;                        const gchar *key);
+;;;
+;;; Removes a key and its associated value from a GVariantDict.
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; key :
+;;;     the key to remove
+;;;
+;;; Returns :
+;;;     TRUE if the key was found and removed
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_dict_end ()
+;;;
+;;; GVariant *
+;;; g_variant_dict_end (GVariantDict *dict);
+;;;
+;;; Returns the current value of dict as a GVariant of type
+;;; G_VARIANT_TYPE_VARDICT, clearing it in the process.
+;;;
+;;; It is not permissible to use dict in any way after this call except for
+;;; reference counting operations (in the case of a heap-allocated GVariantDict)
+;;; or by reinitialising it with g_variant_dict_init() (in the case of
+;;; stack-allocated).
+;;;
+;;; dict :
+;;;     a GVariantDict
+;;;
+;;; Returns :
+;;;     a new, floating, GVariant.
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_parse ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_parse" %g-variant-parse-1)
     (:pointer (:struct g-variant))
@@ -3341,10 +3691,50 @@
   (error :pointer))
 
 (defun g-variant-parse (type text)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-11}
+  @argument[type]{a @class{g-variant-type}}
+  @argument[text]{a string containing a @type{g-variant} in text form}
+  @return{A @type{g-variant} structure.}
+  @begin{short}
+    Parses a @type{g-variant} from a text representation.
+  @end{short}
+
+  If @arg{type} is non-@code{nil} then the value will be parsed to have that
+  type. This may result in additional parse errors (in the case that the parsed
+  value doesn't fit the type) but may also result in fewer errors (in the case
+  that the type would have been ambiguous, such as with empty arrays).
+
+  In the event that the parsing is successful, the resulting @type{g-variant}
+  is returned.
+
+  In case of any error, @code{nil} will be returned. If error is non-@code{nil}
+  then it will be set to reflect the error that occurred.
+
+  Officially, the language understood by the parser is any string produced by
+  the function @fun{g-variant-print}.
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (g-variant-parse (g-variant-type-new \"b\") \"true\")
+=> #.(SB-SYS:INT-SAP #X7F99C4012440)
+  (g-variant-print * nil)
+=> \"true\"
+  (g-variant-parse (g-variant-type-new \"i\") \"100\")
+=> #.(SB-SYS:INT-SAP #X7F99C4012CF0)
+  (g-variant-print * nil)
+=> \"100\"
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-variant}
+  @see-function{g-variant-print}"
   (with-g-error (err)
     (if type
         (%g-variant-parse-2 type text (null-pointer) (null-pointer) err)
-        (%g-variant-parse-1 (null-pointer) text (null-pointer) (null-pointer) err))))
+        (%g-variant-parse-1 (null-pointer)
+                            text
+                            (null-pointer)
+                            (null-pointer)
+                            err))))
 
 (export 'g-variant-parse)
 
@@ -3390,15 +3780,15 @@
 ;;; format must be a text format GVariant with one extension: at any point that
 ;;; a value may appear in the text, a '%' character followed by a GVariant
 ;;; format string (as per g_variant_new()) may appear. In that case, the same
-;;; arguments are collected from the argument list as g_variant_new() would have
-;;; collected.
+;;; arguments are collected from the argument list as g_variant_new() would
+;;; have collected.
 ;;;
 ;;; Consider this simple example:
 ;;;
 ;;; g_variant_new_parsed ("[('one', 1), ('two', %i), (%s, 3)]", 2, "three");
 ;;;
-;;; In the example, the variable argument parameters are collected and filled in
-;;; as if they were part of the original string to produce the result of
+;;; In the example, the variable argument parameters are collected and filled
+;;; in as if they were part of the original string to produce the result of
 ;;; [('one', 1), ('two', 2), ('three', 3)].
 ;;;
 ;;; This function is intended only to be used with format as a string literal.
@@ -3417,6 +3807,49 @@
 ;;;
 ;;; Returns :
 ;;;     a new floating GVariant instance
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_parse_error_print_context ()
+;;;
+;;; gchar *
+;;; g_variant_parse_error_print_context (GError *error,
+;;;                                      const gchar *source_str);
+;;;
+;;; Pretty-prints a message showing the context of a GVariant parse error within
+;;; the string for which parsing was attempted.
+;;;
+;;; The resulting string is suitable for output to the console or other
+;;; monospace media where newlines are treated in the usual way.
+;;;
+;;; The message will typically look something like one of the following:
+;;;
+;;; unterminated string constant:
+;;;   (1, 2, 3, 'abc
+;;;             ^^^^
+;;; or
+;;;
+;;; unable to find a common type:
+;;;   [1, 2, 3, 'str']
+;;;    ^        ^^^^^
+;;;
+;;; The format of the message may change in a future version.
+;;;
+;;; error must have come from a failed attempt to g_variant_parse() and
+;;; source_str must be exactly the same string that caused the error. If
+;;; source_str was not nul-terminated when you passed it to g_variant_parse()
+;;; then you must add nul termination before using this function.
+;;;
+;;; error :
+;;;     a GError from the GVariantParseError domain
+;;;
+;;; source_str :
+;;;     the string that was given to the parser
+;;;
+;;; Returns :
+;;;     the printed message.
+;;;
+;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file glib.variant.lisp ------------------------------------------
