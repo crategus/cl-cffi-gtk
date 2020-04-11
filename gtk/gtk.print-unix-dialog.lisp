@@ -2,12 +2,12 @@
 ;;; gtk.print-unix-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -90,7 +90,7 @@
 ;;; enum GtkPrintCapabilities
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GtkPrintCapabilities" gtk-print-capabilities
+(define-g-flags "GtkPrintCapabilities" gtk-print-capabilities
   (:export t
    :type-initializer "gtk_print_capabilities_get_type")
   (:page-set         #.(ash 1 0))
@@ -105,14 +105,14 @@
   (:number-up-layout #.(ash 1 9)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-print-capabilities atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-print-capabilities atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-print-capabilities atdoc:*external-symbols*)
- "@version{2013-5-30}
+ "@version{2020-4-10}
   @begin{short}
-    An enum for specifying which features the print dialog should offer. If
-    neither @code{:generate-pdf} nor @code{:generate-ps} is specified, GTK+
-    assumes that all formats are supported.
+    An enum for specifying which features the print dialog should offer.
   @end{short}
+  If neither @code{:generate-pdf} nor @code{:generate-ps} is specified, GTK+
+  assumes that all formats are supported.
   @begin{pre}
 (define-g-enum \"GtkPrintCapabilities\" gtk-print-capabilities
   (:export t
@@ -183,7 +183,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-print-unix-dialog 'type)
- "@version{2013-5-30}
+ "@version{2020-4-10}
   @begin{short}
     @sym{gtk-print-unix-dialog} implements a print dialog for platforms which
     do not provide a native print dialog, like Unix.
@@ -194,9 +194,9 @@
   @image[printdialog]{}
 
   In order to print something with @sym{gtk-print-unix-dialog}, you need to use
-  the @fun{gtk-print-unix-dialog-get-selected-printer} function to obtain a
+  the function @fun{gtk-print-unix-dialog-selected-printer} to obtain a
   @class{gtk-printer} object and use it to construct a @class{gtk-print-job}
-  using the @fun{gtk-print-job-new} function.
+  object using the function @fun{gtk-print-job-new}.
 
   @sym{gtk-print-unix-dialog} uses the following response values:
   @begin[code]{table}
@@ -204,7 +204,6 @@
     @entry[:apply]{for the \"Preview\" button}
     @entry[:cancel]{for the \"Cancel\" button}
   @end{table}
-  Printing support was added in GTK+ 2.10.
   @begin[GtkPrintUnixDialog as GtkBuildable]{dictionary}
     The @sym{gtk-print-unix-dialog} implementation of the @class{gtk-buildable}
     interface exposes its notebook internal children with the name \"notebook\".
@@ -260,20 +259,20 @@
 (setf (gethash 'gtk-print-unix-dialog-current-page atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-current-page 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-unix-dialog-current-page object) => current-page}
   @syntax[]{(setf (gtk-print-unix-dialog-current-page object) current-page)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
-  @argument[current-page]{the current page number}
+  @argument[current-page]{an integer with the current page number}
   @begin{short}
     Accessor of the @slot[gtk-print-unix-dialog]{current-page} slot of the
     @class{gtk-print-unix-dialog} class.
   @end{short}
 
-  The @sym{gtk-print-unix-dialog-current-page} slot access function
-  gets the current page of the @class{gtk-print-unix-dialog} widget.
+  The slot access function @sym{gtk-print-unix-dialog-current-page} gets the
+  current page of the @class{gtk-print-unix-dialog} widget.
 
-  The @sym{(setf gtk-print-unix-dialog-current-page)} slot access function
+  The slot access function @sym{(setf gtk-print-unix-dialog-current-page)}
   sets the current page number. If @arg{current-page} is not -1, this enables
   the current page choice for the range of pages to print.
   @see-class{gtk-print-unix-dialog}")
@@ -284,17 +283,17 @@
 (setf (documentation (atdoc:get-slot-from-name "embed-page-setup"
                                                'gtk-print-unix-dialog) 't)
  "The @code{embed-page-setup} property of type @code{:boolean}
-  (Read / Write) @br{}
+ (Read / Write) @br{}
   @em{True} if page setup combos are embedded in @sym{gtk-print-unix-dialog}.
   @br{}
-  Default value: @code{nil} @br{}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-embed-page-setup
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-embed-page-setup 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-unix-dialog-embed-page-setup object) => embed}
   @syntax[]{(setf (gtk-print-unix-dialog-embed-page-setup object) embed)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
@@ -314,13 +313,13 @@
                                                'gtk-print-unix-dialog) 't)
  "The @code{has-selection} property of type @code{:boolean} (Read / Write) @br{}
   Whether the application has a selection. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-has-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-has-selection 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-unix-dialog-has-selection object) => has-selection}
   @syntax[]{(setf (gtk-print-unix-dialog-has-selection object) has-selection)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
@@ -330,7 +329,7 @@
     @class{gtk-print-unix-dialog} class.
   @end{short}
 
-  Sets whether a selection exists.
+  Whether the application has a selection.
   @see-class{gtk-print-unix-dialog}")
 
 ;;; gtk-print-unix-dialog-manual-capabilities ----------------------------------
@@ -347,11 +346,12 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-manual-capabilities 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-unix-dialog-manual-capabilities) => capabilities}
   @syntax[]{(setf (gtk-print-unix-dialog-manual-capabilities object) capabilities)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
-  @argument[capabilities]{the printing capabilities of your application}
+  @argument[capabilities]{the printing capabilities of type
+    @symbol{gtk-print-capabilities} of the application}
   @begin{short}
     Accessor of the @slot[gtk-print-unix-dialog]{manual-capabilities} slot of
     the @class{gtk-print-unix-dialog} class.
@@ -370,13 +370,13 @@
                                                'gtk-print-unix-dialog) 't)
  "The @code{page-setup} property of type @class{gtk-page-setup}
   (Read / Write) @br{}
-  The @class{gtk-page-setup} to use.")
+  The page setup to use.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-page-setup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-page-setup 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
   @syntax[]{(gtk-print-unix-dialog-page-setup) => page-setup}
   @syntax[]{(setf (gtk-print-unix-dialog-page-setup object) page-setup)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
@@ -386,11 +386,10 @@
     @class{gtk-print-unix-dialog} class.
   @end{short}
 
-  The @sym{gtk-print-unix-dialog-page-setup} slot access function
-  gets the page setup that is used by the @class{gtk-print-unix-dialog} widget.
-
-  The @sym{(setf gtk-print-unix-dialog-page-setup)} slot access function
-  sets the page setup of the @class{gtk-print-unix-dialog} widget.
+  The slot access function @sym{gtk-print-unix-dialog-page-setup} gets the page
+  setup that is used by the print dialog. The slot access function
+  @sym{(setf gtk-print-unix-dialog-page-setup)} sets the page setup of the
+  print dialog.
   @see-class{gtk-print-unix-dialog}")
 
 ;;; --- gtk-print-unix-dialog-print-settings -----------------------------------
@@ -400,16 +399,30 @@
                                                'gtk-print-unix-dialog) 't)
  "The @code{print-settings} property of type @class{gtk-print-settings}
   (Read / Write) @br{}
-  The @class{gtk-print-settings} used for initializing the dialog.")
+  The print settings used for initializing the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-print-settings
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-print-settings 'function)
- "@version{2013-3-30}
-  Accessor of the @slot[gtk-print-unix-dialog]{print-settings} slot of the
-  @class{gtk-print-unix-dialog} class.
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-unix-dialog-print-settings object) => settings}
+  @syntax[]{(setf (gtk-print-unix-dialog-print-settings object) settings)}
+  @argument[object]{a @class{gtk-print-unix-dialog} widget}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @begin{short}
+    Accessor of the @slot[gtk-print-unix-dialog]{print-settings} slot of the
+    @class{gtk-print-unix-dialog} class.
+  @end{short}
+
+  The slot access function @sym{gtk-print-unix-dialog-print-settings} gets the
+  print settings that represents the current values in the print dialog. The
+  slot access function @sym{(setf gtk-print-unix-dialog-print-settings)} sets
+  the print settings for the print dialog.
+
+  Typically, this is used to restore saved print settings from a previous print
+  operation before the print dialog is shown.
   @see-class{gtk-print-unix-dialog}")
 
 ;;; --- gtk-print-unix-dialog-selected-printer ---------------------------------
@@ -419,22 +432,24 @@
                                                'gtk-print-unix-dialog) 't)
  "The @code{selected-printer} property of type @class{gtk-printer}
   (Read) @br{}
-  The @class{gtk-printer} which is selected.")
+  The printer which is selected.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-selected-printer
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-selected-printer 'function)
- "@version{2019-5-17}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-unix-dialog-selected-printer object) => printer}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
-  @return{The currently selected printer.}
+  @argument[printer]{a @class{gtk-printer} object}
   @begin{short}
     Accessor of the @slot[gtk-print-unix-dialog]{selected-printer} slot of the
     @class{gtk-print-unix-dialog} class.
   @end{short}
 
-  Gets the currently selected printer.
+  The slot access function @sym{gtk-print-unix-dialog} gets the currently
+  selected printer.
   @see-class{gtk-print-unix-dialog}")
 
 ;;; --- gtk-print-unix-dialog-support-selection --------------------------------
@@ -445,88 +460,82 @@
  "The @code{support-selection} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the dialog supports selection. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-unix-dialog-support-selection
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-unix-dialog-support-selection 'function)
- "@version{2019-5-17}
-  @syntax[]{(gtk-print-unix-dialog-support-selection) => support-selection}
-  @syntax[]{(setf (gtk-print-unix-dialog-support-selection object) support-selection)}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-unix-dialog-support-selection) => selection}
+  @syntax[]{(setf (gtk-print-unix-dialog-support-selection object) selection)}
   @argument[object]{a @class{gtk-print-unix-dialog} widget}
-  @argument[support-selection]{@em{true} to allow print selection}
+  @argument[selection]{@em{true} to allow print selection}
   @begin{short}
     Accessor of the @slot[gtk-print-unix-dialog]{support-selection} slot of the
     @class{gtk-print-unix-dialog} class.
   @end{short}
 
-  Sets whether the print dialog allows user to print a selection.
+  Whether the print dialog allows user to print a selection.
   @see-class{gtk-print-unix-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_unix_dialog_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-print-unix-dialog-new))
-
 (defun gtk-print-unix-dialog-new (title parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+ "@version{2020-4-10}
+  @argument[title]{a string with the title of the dialog, or @code{nil}}
+  @argument[parent]{transient parent of type @class{gtk-window} of the dialog,
+    or @code{nil}}
   @return{A new @class{gtk-print-unix-dialog} widget.}
-  @short{Creates a new @class{gtk-print-unix-dialog} widget.}
+  @short{Creates a new print dialog.}
   @see-class{gtk-print-unix-dialog}"
-  (make-instance 'gtk-print-unix-dialog
-                 :title title
-                 :parent parent))
+  (let ((dialog (make-instance 'gtk-print-unix-dialog)))
+    (when title
+      (setf (gtk-window-title dialog) title))
+    (when parent
+      (setf (gtk-window-transient-for dialog) parent))
+    dialog))
 
 (export 'gtk-print-unix-dialog-new)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_print_unix_dialog_get_settings ()
 ;;; gtk_print_unix_dialog_set_settings ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-print-unix-dialog-set-settings))
-
-(defun gtk-print-unix-dialog-set-settings (dialog settings)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
-  @argument[dialog]{a @class{gtk-print-unix-dialog} widget}
-  @argument[settings]{a @class{gtk-print-settings}, or @code{nil}}
-  @begin{short}
-    Sets the @class{gtk-print-settings} for the @class{gtk-print-unix-dialog}.
-    Typically, this is used to restore saved print settings from a previous
-    print operation before the print dialog is shown.
-  @end{short}
-  @see-class{gtk-print-unix-dialog}"
+(defun (setf gtk-print-unix-dialog-settings) (settings dialog)
   (setf (gtk-print-unix-dialog-print-settings dialog) settings))
 
-(export 'gtk-print-unix-dialog-set-settings)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_unix_dialog_get_settings ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-print-unix-dialog-get-settings))
-
-(defun gtk-print-unix-dialog-get-settings (dialog)
+(defun gtk-print-unix-dialog-settings (dialog)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2020-4-10}
+  @syntax[]{(gtk-print-unix-dialog-settings object) => settings}
+  @syntax[]{(setf (gtk-print-unix-dialog-settings object) settings)}
   @argument[dialog]{a @class{gtk-print-unix-dialog} widget}
-  @return{A new @class{gtk-print-settings} object with the values from
-    @arg{dialog}.}
+  @argument[settings]{a @class{gtk-print-settings} object}
   @begin{short}
-    Gets a new @class{gtk-print-settings} object that represents the current
-    values in the print dialog. Note that this creates a new object, and you
-    need to unref it if don't want to keep it.
+    Accessor of the print settings of the print unix dialog.
   @end{short}
+
+  The function @sym{gtk-print-unix-dialog-settings} gets the print settings
+  that represents the current values in the print dialog. The function
+  @sym{(setf gtk-print-unix-dialog-settings)} sets the print settings for the
+  print dialog.
+
+  Typically, this is used to restore saved print settings from a previous print
+  operation before the print dialog is shown.
+  @begin[Note]{dictionary}
+    The function @sym{gtk-print-unix-dialog-settings} corresponds to the slot
+    access function @fun{gtk-print-unix-dialog-print-settings}.
+  @end{dictionary}
   @see-class{gtk-print-unix-dialog}"
   (gtk-print-unix-dialog-print-settings dialog))
 
-(export 'gtk-print-unix-dialog-get-settings)
+(export 'gtk-print-unix-dialog-settings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_unix_dialog_add_custom_tab ()
@@ -535,7 +544,7 @@
 (defcfun ("gtk_print_unix_dialog_add_custom_tab"
            gtk-print-unix-dialog-add-custom-tab) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2020-4-10}
   @argument[dialog]{a @class{gtk-print-unix-dialog} widget}
   @argument[child]{the widget to put in the custom tab}
   @argument[tab-label]{the widget to use as tab label}
@@ -556,12 +565,11 @@
 (defcfun ("gtk_print_unix_dialog_get_page_setup_set"
            gtk-print-unix-dialog-get-page-setup-set) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2020-4-10}
   @argument[dialog]{a @class{gtk-print-unix-dialog} widget}
-  @return{Whether a page setup was set by user.}
+  @return{A boolean whether a page setup was set by the user.}
   @begin{short}
-    Gets the page setup that is used by the @class{gtk-print-unix-dialog}
-    widget.
+    Gets the page setup that is used by the print dialog.
   @end{short}
   @see-class{gtk-print-unix-dialog}"
   (dialog (g-object gtk-print-unix-dialog)))
