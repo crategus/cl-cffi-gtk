@@ -2114,6 +2114,8 @@
   (event (g-boxed-foreign gdk-event))
   (iter (g-boxed-foreign gtk-text-iter)))
 
+(export 'gtk-text-tag-event)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_changed ()
 ;;; ----------------------------------------------------------------------------
@@ -2125,7 +2127,6 @@
   @argument[tag]{a @class{gtk-text-tag} object}
   @argument[size-changed]{a @code{:boolean} wether the change affects the
     @class{gtk-text-view} layout}
-
   @begin{short}
     Emits the \"tag-changed\" signal on the @class{gtk-text-tag-table} object
     where the tag is included.
@@ -2140,5 +2141,8 @@
   @see-class{gdk-event}"
   (tag (g-object gtk-text-tag))
   (size-changed :boolean))
+
+#+gtk-3-20
+(export 'gtk-text-tag-changed)
 
 ;;; --- End of file gtk.text-tag.lisp ------------------------------------------

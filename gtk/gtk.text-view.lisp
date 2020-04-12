@@ -46,15 +46,16 @@
 ;;;
 ;;;     gtk_text_view_new
 ;;;     gtk_text_view_new_with_buffer
-;;;     gtk_text_view_set_buffer
-;;;     gtk_text_view_get_buffer
-;;;     gtk_text_view_get_hadjustment
-;;;     gtk_text_view_get_vadjustment
+;;;     gtk_text_view_set_buffer                           Accessor
+;;;     gtk_text_view_get_buffer                           Accessor
+;;;     gtk_text_view_get_hadjustment                      deprecated
+;;;     gtk_text_view_get_vadjustment                      deprecated
 ;;;     gtk_text_view_scroll_to_mark
 ;;;     gtk_text_view_scroll_to_iter
 ;;;     gtk_text_view_scroll_mark_onscreen
 ;;;     gtk_text_view_move_mark_onscreen
 ;;;     gtk_text_view_place_cursor_onscreen
+;;;
 ;;;     gtk_text_view_get_visible_rect
 ;;;     gtk_text_view_get_iter_location
 ;;;     gtk_text_view_get_cursor_locations
@@ -62,12 +63,15 @@
 ;;;     gtk_text_view_get_line_yrange
 ;;;     gtk_text_view_get_iter_at_location
 ;;;     gtk_text_view_get_iter_at_position
+;;
 ;;;     gtk_text_view_buffer_to_window_coords
 ;;;     gtk_text_view_window_to_buffer_coords
+;;;
 ;;;     gtk_text_view_get_window
 ;;;     gtk_text_view_get_window_type
 ;;;     gtk_text_view_set_border_window_size
 ;;;     gtk_text_view_get_border_window_size
+;;;
 ;;;     gtk_text_view_forward_display_line
 ;;;     gtk_text_view_backward_display_line
 ;;;     gtk_text_view_forward_display_line_end
@@ -81,54 +85,46 @@
 ;;;     gtk_text_child_anchor_get_deleted
 ;;;     gtk_text_view_add_child_in_window
 ;;;     gtk_text_view_move_child
-;;;     gtk_text_view_set_wrap_mode
-;;;     gtk_text_view_get_wrap_mode
-;;;     gtk_text_view_set_editable
-;;;     gtk_text_view_get_editable
-;;;     gtk_text_view_set_cursor_visible
-;;;     gtk_text_view_get_cursor_visible
-
-;;;     gtk_text_view_reset_cursor_blink ()
-
-;;;     gtk_text_view_set_overwrite
-;;;     gtk_text_view_get_overwrite
-
-;;;     gtk_text_view_set_pixels_above_lines
-;;;     gtk_text_view_get_pixels_above_lines
-;;;     gtk_text_view_set_pixels_below_lines
-;;;     gtk_text_view_get_pixels_below_lines
-;;;     gtk_text_view_set_pixels_inside_wrap
-;;;     gtk_text_view_get_pixels_inside_wrap
-
-;;;     gtk_text_view_set_justification
-;;;     gtk_text_view_get_justification
-;;;     gtk_text_view_set_left_margin
-;;;     gtk_text_view_get_left_margin
-;;;     gtk_text_view_set_right_margin
-;;;     gtk_text_view_get_right_margin
-
-;;;     gtk_text_view_set_top_margin ()
-;;;     gtk_text_view_get_top_margin ()
-;;;     gtk_text_view_set_bottom_margin ()
-;;;     gtk_text_view_get_bottom_margin ()
-
-;;;     gtk_text_view_set_indent
-;;;     gtk_text_view_get_indent
-
-;;;     gtk_text_view_set_tabs
-;;;     gtk_text_view_get_tabs
-;;;     gtk_text_view_set_accepts_tab
-;;;     gtk_text_view_get_accepts_tab
+;;;     gtk_text_view_set_wrap_mode                        Accessor
+;;;     gtk_text_view_get_wrap_mode                        Accessor
+;;;     gtk_text_view_set_editable                         Accessor
+;;;     gtk_text_view_get_editable                         Accessor
+;;;     gtk_text_view_set_cursor_visible                   Accessor
+;;;     gtk_text_view_get_cursor_visible                   Accessor
+;;;     gtk_text_view_reset_cursor_blink
+;;;     gtk_text_view_set_overwrite                        Accessor
+;;;     gtk_text_view_get_overwrite                        Accessor
+;;;     gtk_text_view_set_pixels_above_lines               Accessor
+;;;     gtk_text_view_get_pixels_above_lines               Accessor
+;;;     gtk_text_view_set_pixels_below_lines               Accessor
+;;;     gtk_text_view_get_pixels_below_lines               Accessor
+;;;     gtk_text_view_set_pixels_inside_wrap               Accessor
+;;;     gtk_text_view_get_pixels_inside_wrap               Accessor
+;;;     gtk_text_view_set_justification                    Accessor
+;;;     gtk_text_view_get_justification                    Accessor
+;;;     gtk_text_view_set_left_margin                      Accessor
+;;;     gtk_text_view_get_left_margin                      Accessor
+;;;     gtk_text_view_set_right_margin                     Accessor
+;;;     gtk_text_view_get_right_margin                     Accessor
+;;;     gtk_text_view_set_top_margin                       Accessor
+;;;     gtk_text_view_get_top_margin                       Accessor
+;;;     gtk_text_view_set_bottom_margin                    Accessor
+;;;     gtk_text_view_get_bottom_margin                    Accessor
+;;;     gtk_text_view_set_indent                           Accessor
+;;;     gtk_text_view_get_indent                           Accessor
+;;;     gtk_text_view_set_tabs                             Accessor
+;;;     gtk_text_view_get_tabs                             Accessor
+;;;     gtk_text_view_set_accepts_tab                      Accessor
+;;;     gtk_text_view_get_accepts_tab                      Accessor
 ;;;     gtk_text_view_get_default_attributes
 ;;;     gtk_text_view_im_context_filter_keypress
 ;;;     gtk_text_view_reset_im_context
-;;;     gtk_text_view_set_input_purpose
-;;;     gtk_text_view_get_input_purpose
-;;;     gtk_text_view_set_input_hints
-;;;     gtk_text_view_get_input_hints
-
-;;;     gtk_text_view_set_monospace ()
-;;;     gtk_text_view_get_monospace ()
+;;;     gtk_text_view_set_input_purpose                    Accessor
+;;;     gtk_text_view_get_input_purpose                    Accessor
+;;;     gtk_text_view_set_input_hints                      Accessor
+;;;     gtk_text_view_get_input_hints                      Accessor
+;;;     gtk_text_view_set_monospace                        Accessor
+;;;     gtk_text_view_get_monospace                        Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -435,81 +431,79 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"backspace\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"backspace\" signal is a keybinding signal which gets emitted when
-      the user asks for it.
-      The default bindings for this signal are Backspace and Shift-Backspace.
+      the user asks for it. The default bindings for this signal are Backspace
+      and Shift-Backspace.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"copy-clipboard\" signal is a keybinding signal which gets emitted to
-      copy the selection to the clipboard.
-      The default bindings for this signal are Ctrl-c and Ctrl-Insert.
+      copy the selection to the clipboard. The default bindings for this signal
+      are Ctrl-c and Ctrl-Insert.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"cut-clipboard\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"cut-clipboard\" signal is a keybinding signal which gets emitted to
-      cut the selection to the clipboard.
-      The default bindings for this signal are Ctrl-x and Shift-Delete.
+      cut the selection to the clipboard. The default bindings for this signal
+      are Ctrl-x and Shift-Delete.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"delete-from-cursor\" signal}
       @begin{pre}
- lambda (text-view type count)    : Action
+ lambda (view type count)    : Action
       @end{pre}
       The \"delete-from-cursor\" signal is a keybinding signal which gets
-      emitted when the user initiates a text deletion.
-      If the type is @code{:chars}, GTK+ deletes the selection if there is one,
-      otherwise it deletes the requested number of characters. The default
-      bindings for this signal are Delete for deleting a character, Ctrl-Delete
-      for deleting a word and Ctrl-Backspace for deleting a word backwords.
+      emitted when the user initiates a text deletion. If the type is
+      @code{:chars}, GTK+ deletes the selection if there is one, otherwise it
+      deletes the requested number of characters. The default bindings for this
+      signal are Delete for deleting a character, Ctrl-Delete for deleting a
+      word and Ctrl-Backspace for deleting a word backwords. Since 3.16
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[type]{The granularity of the deletion, as a
           @symbol{gtk-delete-type}.}
         @entry[count]{The number of type units to delete.}
       @end{table}
     @subheading{The \"extend-selection\" signal}
       @begin{pre}
- lambda (text-view granularity location start end)    : Run Last
+ lambda (view granularity location start end)    : Run Last
       @end{pre}
       The \"extend-selection\" signal is emitted when the selection needs to be
       extended at @arg{location}.
       @begin[code]{table}
-        @entry[text-view]{The @class{gtk-text-view} object which received the
-          signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[granularity]{The granularity of type
           @symbol{gtk-text-extend-selection}.}
-        @entry[location]{The @class{gtk-text-iter} location where to extend the
+        @entry[location]{The @class{gtk-text-iter} iterator where to extend the
           selection.}
-        @entry[start]{The @class{gtk-text-iter} where the selection should
-          start.}
-        @entry[end]{The @class{gtk-text-iter} where the selection should end.}
-        @entry[Returns]{@code{GDK_EVENT_STOP} to stop other handlers from being
-          invoked for the event. @code{GDK_EVENT_PROPAGATE} to propagate the
+        @entry[start]{The @class{gtk-text-iter} iterator where the selection
+          should start.}
+        @entry[end]{The @class{gtk-text-iter} iterator where the selection
+          should end.}
+        @entry[Returns]{@var{+gdk-event-stop+} to stop other handlers from being
+          invoked for the event. @var{+gdk-event-propagate+} to propagate the
           event further.}
       @end{table}
-      Since 3.16
-
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
- lambda (text-view string)
+ lambda (view string)
       @end{pre}
       The \"insert-at-cursor\" signal is a keybinding signal which gets emitted
       when the user initiates the insertion of a fixed string at the cursor.
       This signal has no default bindings.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[string]{The string to insert.}
       @end{table}
     @subheading{The \"insert-emoji\" signal}
@@ -517,36 +511,29 @@
  lambda (text-view)    : Action
       @end{pre}
       The \"insert-emoji\" signal is a keybinding signal which gets emitted to
-      present the Emoji chooser for the @arg{text-view}.
-      The default bindings for this signal are @code{Ctrl-.} and
-      @code{Ctrl-;}
+      present the Emoji chooser for the @arg{text-view}. The default bindings
+      for this signal are @code{Ctrl-.} and @code{Ctrl-;}. Since 3.22
       @begin[code]{table}
-        @entry[text-view]{The @class{gtk-text-view} object which received the
-          signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
-      Since 3.22
-
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (text-view step count extended-selection)    : Action
+ lambda (view step count extended-selection)    : Action
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement. If the cursor is not visible in
-      @arg{text-view}, this signal causes the viewport to be moved instead.
+      the user initiates a cursor movement. If the cursor is not visible in the
+      text view, this signal causes the viewport to be moved instead.
       Applications should not connect to it, but may emit it with the function
       @fun{g-signal-emit-by-name} if they need to control the cursor
-      programmatically.
-      The default bindings for this signal come in two variants, the variant
-      with the Shift modifier extends the selection, the variant without the
-      Shift modifer does not. There are too many key combinations to list them
-      all here.
-      Arrow keys move by individual characters/lines
-      Ctrl-arrow key combinations move by words/paragraphs
-      Home/End keys move to the ends of the buffer
-      PageUp/PageDown keys move vertically by pages
-      Ctrl-PageUp/PageDown keys move horizontally by pages
+      programmatically. The default bindings for this signal come in two
+      variants, the variant with the Shift modifier extends the selection, the
+      variant without the Shift modifer does not. There are too many key
+      combinations to list them all here. Arrow keys move by individual
+      characters/lines Ctrl-arrow key combinations move by words/paragraphs
+      Home/End keys move to the ends of the buffer PageUp/PageDown keys move
+      vertically by pages Ctrl-PageUp/PageDown keys move horizontally by pages.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[step]{The granularity of the move, as a
           @symbol{gtk-movement-step}.}
         @entry[count]{The number of step units to move.}
@@ -555,95 +542,100 @@
       @end{table}
     @subheading{The \"move-viewport\" signal}
       @begin{pre}
- lambda (text-view step count)    : Action
+ lambda (view step count)    : Action
       @end{pre}
       The \"move-viewport\" signal is a keybinding signal which can be bound to
       key combinations to allow the user to move the viewport, i. e. change what
-      part of the text view is visible in a containing scrolled window.
-      There are no default bindings for this signal.
+      part of the text view is visible in a containing scrolled window. There
+      are no default bindings for this signal.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[step]{The granularity of the move, as a
           @symbol{gtk-movement-step}.}
         @entry[count]{The number of step units to move.}
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"paste-clipboard\" signal is a keybinding signal which gets emitted
-      to paste the contents of the clipboard into the text view.
-      The default bindings for this signal are Ctrl-v and Shift-Insert.
+      to paste the contents of the clipboard into the text view. The default
+      bindings for this signal are Ctrl-v and Shift-Insert.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
- lambda (entry menu)    : Run Last
+ lambda (view menu)    : Run Last
       @end{pre}
-      The \"populate-popup\" signal gets emitted before showing the context menu
-      of the text view.
-      If you need to add items to the context menu, connect to this signal and
-      append your menuitems to the menu.
+      The \"populate-popup\" signal gets emitted before showing the context
+      menu of the text view. If you need to add items to the context menu,
+      connect to this signal and append your items to the popup, which will be
+      a @class{gtk-menu} in this case. If the @code{populate-all} property is
+      @em{true}, this signal will also be emitted to populate touch popups. In
+      this case, popup will be a different container, e.g. a
+      @class{gtk-toolbar}. The signal handler should not make assumptions about
+      the type of the widget, but check whether popup is a @class{gtk-menu} or
+      @class{gtk-toolbar} or another kind of container.
       @begin[code]{table}
-        @entry[entry]{The text view on which the signal is emitted.}
+        @entry[view]{The @sym{gtk-text-view} object on which the signal is
+          emitted.}
         @entry[menu]{The menu that is being populated.}
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
- lambda (text-view preedit)    : Action
+ lambda (view preedit)    : Action
       @end{pre}
       If an input method is used, the typed text will not immediately be
       committed to the buffer. So if you are interested in the text, connect to
-      this signal.
-      This signal is only emitted if the text at the given position is actually
-      editable.
+      this signal. This signal is only emitted if the text at the given position
+      is actually editable.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
         @entry[preedit]{The current preedit string.}
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
- lambda (text-view select)    : Action
+ lambda (view select)    : Action
       @end{pre}
       The \"select-all\" signal is a keybinding signal which gets emitted to
-      select or unselect the complete contents of the text view.
-      The default bindings for this signal are Ctrl-a and Ctrl-/ for selecting
-      and Shift-Ctrl-a and Ctrl-\ for unselecting.
+      select or unselect the complete contents of the text view. The default
+      bindings for this signal are Ctrl-a and Ctrl-/ for selecting and
+      Shift-Ctrl-a and Ctrl-\ for unselecting.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
-        @entry[select]{@em{True} to select, @code{nil} to unselect.}
+        @entry[view]{The @sym{gtk-text-viw} object which received the signal.}
+        @entry[select]{@em{True} to select, @em{false} to unselect.}
       @end{table}
     @subheading{The \"set-anchor\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"set-anchor\" signal is a keybinding signal which gets emitted when
       the user initiates setting the \"anchor\" mark. The \"anchor\" mark gets
-      placed at the same position as the \"insert\" mark.
-      This signal has no default bindings.
+      placed at the same position as the \"insert\" mark. This signal has no
+      default bindings.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"toggle-cursor-visible\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (text)    : Action
       @end{pre}
       The \"toggle-cursor-visible signal\" is a keybinding signal which gets
-      emitted to toggle the visibility of the cursor.
-      The default binding for this signal is F7.
+      emitted to toggle the visibility of the cursor. The default binding for
+      this signal is F7.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
     @subheading{The \"toggle-overwrite\" signal}
       @begin{pre}
- lambda (text-view)    : Action
+ lambda (view)    : Action
       @end{pre}
       The \"toggle-overwrite\" signal is a keybinding signal which gets emitted
-      to toggle the overwrite mode of the text view.
-      The default bindings for this signal is Insert.
+      to toggle the overwrite mode of the text view. The default bindings for
+      this signal is Insert.
       @begin[code]{table}
-        @entry[text-view]{The object which received the signal.}
+        @entry[view]{The @sym{gtk-text-view} object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-text-view-accepts-tab}
@@ -1366,13 +1358,12 @@
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{A new @class{gtk-text-view} object.}
   @begin{short}
-    Creates a new @class{gtk-text-view} widget displaying the buffer
-    @arg{buffer}.
+    Creates a new @class{gtk-text-view} widget displaying the buffer.
   @end{short}
 
-  One buffer can be shared among many widgets. @arg{buffer} may be @code{nil}
-  to create a default buffer, in which case this function is equivalent to the
-  function @fun{gtk-text-view-new}.
+  One buffer can be shared among many widgets. The argument @arg{buffer} may be
+  @code{nil} to create a default buffer, in which case this function is
+  equivalent to the function @fun{gtk-text-view-new}.
   @see-class{gtk-text-view}
   @see-function{gtk-text-view-new}"
   (make-instance 'gtk-text-view
@@ -1429,41 +1420,38 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_view_scroll_to_mark" %gtk-text-view-scroll-to-mark) :void
-  (text-view (g-object gtk-text-view))
+  (view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark))
   (within-margin :double)
   (use-align :boolean)
   (x-align :double)
   (y-align :double))
 
-(defun gtk-text-view-scroll-to-mark (text-view mark &key
-                                               (within-margin 0.4)
-                                               (x-align 0.0 x-align-supplied)
-                                               (y-align 0.0 y-align-supplied))
+(defun gtk-text-view-scroll-to-mark (view mark &key (within-margin 0.4)
+                                                    (x-align 0.0 x-align-p)
+                                                    (y-align 0.0 y-align-p))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2020-3-23}
+  @argument[view]{a @class{gtk-text-view} object}
   @argument[mark]{a @class{gtk-text-mark} object}
   @argument[within-margin]{margin as a [0.0, 0.5) fraction of screen size}
-  @argument[use-align]{whether to use alignment arguments (if @code{nil}, just
-    get the mark onscreen)}
   @argument[xalign]{horizontal alignment of mark within visible area}
   @argument[yalign]{vertical alignment of mark within visible area}
   @begin{short}
-    Scrolls the text view so that mark is on the screen in the position
+    Scrolls the text view so that the mark is on the screen in the position
     indicated by @arg{xalign} and @arg{yalign}.
   @end{short}
 
   An alignment of 0.0 indicates left or top, 1.0 indicates right or bottom, 0.5
-  means center. If @arg{use-align} is @code{nil}, the text scrolls the minimal
-  distance to get the mark onscreen, possibly not scrolling at all. The
-  effective screen for purposes of this function is reduced by a margin of size
-  @arg{within-margin}
+  means center. If you don't pass a value for @arg{x-align} and @arg{y-align},
+  the text scrolls the minimal distance to get the mark onscreen, possibly not
+  scrolling at all. The effective screen for purposes of this function is
+  reduced by a margin of size @arg{within-margin}.
   @see-class{gtk-text-view}"
-  (%gtk-text-view-scroll-to-mark text-view
+  (%gtk-text-view-scroll-to-mark view
                                  mark
                                  (coerce within-margin 'double-float)
-                                 (or x-align-supplied y-align-supplied)
+                                 (or x-align-p y-align-p)
                                  (coerce x-align 'double-float)
                                  (coerce y-align 'double-float)))
 
@@ -1481,29 +1469,26 @@
   (x-align :double)
   (y-align :double))
 
-(defun gtk-text-view-scroll-to-iter (text-view iter &key
-                                               (within-margin 0.4)
-                                               (x-align 0.0 x-align-supplied)
-                                               (y-align 0.0 y-align-supplied))
+(defun gtk-text-view-scroll-to-iter (view iter &key (within-margin 0.4)
+                                                    (x-align 0.0 x-align-p)
+                                                    (y-align 0.0 y-align-p))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2020-3-23}
+  @argument[view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @argument[within-margin]{margin as a [0.0, 0.5) fraction of screen size}
-  @argument[use-align]{whether to use alignment arguments (if @code{nil}, just
-    get the mark onscreen)}
   @argument[xalign]{horizontal alignment of mark within visible area}
   @argument[yalign]{vertical alignment of mark within visible area}
   @return{@em{True} if scrolling occurred.}
   @begin{short}
-    Scrolls @arg{text-view} so that @arg{iter} is on the screen in the position
+    Scrolls the text view so that the iterator is on the screen in the position
     indicated by @arg{xalign} and @arg{yalign}.
   @end{short}
   An alignment of 0.0 indicates left or top, 1.0 indicates right or bottom, 0.5
-  means center. If @arg{use-align} is @code{nil}, the text scrolls the minimal
-  distance to get the mark onscreen, possibly not scrolling at all. The
-  effective screen for purposes of this function is reduced by a margin of size
-  @arg{within-margin}.
+  means center. If you don't pass a value for @arg{x-align} and @arg{y-align},
+  the text scrolls the minimal distance to get the iterator onscreen, possibly
+  not scrolling at all. The effective screen for purposes of this function is
+  reduced by a margin of size @arg{within-margin}.
 
   Note that this function uses the currently-computed height of the lines in
   the text buffer. Line heights are computed in an idle handler; so this
@@ -1513,10 +1498,10 @@
   line validation.
   @see-class{gtk-text-view}
   @see-function{gtk-text-view-scroll-to-mark}"
-  (%gtk-text-view-scroll-to-iter text-view
+  (%gtk-text-view-scroll-to-iter view
                                  iter
                                  (coerce within-margin 'double-float)
-                                 (or x-align-supplied y-align-supplied)
+                                 (or x-align-p y-align-p)
                                  (coerce x-align 'double-float)
                                  (coerce y-align 'double-float)))
 
@@ -1529,15 +1514,16 @@
 (defcfun ("gtk_text_view_scroll_mark_onscreen"
           gtk-text-view-scroll-mark-onscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
-  @argument[text-view]{a @class{gtk-text-view} object}
-  @argument[mark]{a mark in the buffer for @arg{text-view} object}
+ "@version{2020-3-23}
+  @argument[view]{a @class{gtk-text-view} object}
+  @argument[mark]{a @class{gtk-text-mark} object in the buffer for the text
+    view}
   @begin{short}
-    Scrolls @arg{text-view} the minimum distance such that mark is contained
+    Scrolls the text view the minimum distance such that the mark is contained
     within the visible area of the widget.
   @end{short}
   @see-class{gtk-text-view}"
-  (text-view (g-object gtk-text-view))
+  (view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark)))
 
 (export 'gtk-text-view-scroll-mark-onscreen)
@@ -1545,6 +1531,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_move_mark_onscreen ()
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Check this implementation. Is it correct?
 
 (defcfun ("gtk_text_view_move_mark_onscreen"
           gtk-text-view-move-mark-onscreen) :boolean
@@ -1554,7 +1542,7 @@
   @argument[mark]{a @class{gtk-text-mark} object}
   @return{@em{True} if the mark moved (was not already onscreen).}
   @begin{short}
-    Moves a @arg{mark} within the buffer so that it it located within the
+    Moves a @arg{mark} within the buffer so that it is located within the
     currently-visible text area.
   @end{short}
   @see-class{gtk-text-view}"
@@ -1574,7 +1562,7 @@
   @argument[text-view]{a @class{gtk-text-view} object}
   @return{@em{True} if the cursor had to be moved.}
   @begin{short}
-    Moves the cursor to the currently visible region of the buffer, it it is
+    Moves the cursor to the currently visible region of the buffer, if it is
     not there already.
   @end{short}
   @see-class{gtk-text-view}"

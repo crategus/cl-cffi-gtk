@@ -138,11 +138,11 @@
  "@version{2013-5-12}
   @begin{short}
     The @sym{gtk-tree-model} interface defines a generic tree interface for use
-    by the @class{gtk-tree-view} widget. It is an abstract interface, and is
-    designed to be usable with any appropriate data structure. The programmer
-    just has to implement this interface on their own data type for it to be
-    viewable by a @class{gtk-tree-view} widget.
+    by the @class{gtk-tree-view} widget.
   @end{short}
+  It is an abstract interface, and is designed to be usable with any appropriate
+  data structure. The programmer just has to implement this interface on their
+  own data type for it to be viewable by a @class{gtk-tree-view} widget.
 
   The model is represented as a hierarchical tree of strongly-typed, columned
   data. In other words, the model can be seen as a tree where every node has
@@ -165,19 +165,19 @@
   Models are accessed on a node/column level of granularity. One can query for
   the value of a model at a certain node and a certain column on that node.
   There are two structures used to reference a particular node in a model.
-  They are the @class{gtk-tree-path} and the @class{gtk-tree-iter}[4]. Most of
+  They are the @class{gtk-tree-path} and the @class{gtk-tree-iter}. Most of
   the interface consists of operations on a @class{gtk-tree-iter}.
 
   A path is essentially a potential node. It is a location on a model that may
   or may not actually correspond to a node on a specific model. The
-  @class{gtk-tree-path} struct can be converted into either an array of unsigned
-  integers or a string. The string form is a list of numbers separated by a
-  colon. Each number refers to the offset at that level. Thus, the path '0'
+  @class{gtk-tree-path} structure can be converted into either an array of
+  unsigned integers or a string. The string form is a list of numbers separated
+  by a colon. Each number refers to the offset at that level. Thus, the path '0'
   refers to the root node and the path '2:4' refers to the fifth child of the
   third node.
 
   By contrast, a @class{gtk-tree-iter} is a reference to a specific node on a
-  specific model. It is a generic struct with an integer and three generic
+  specific model. It is a generic structure with an integer and three generic
   pointers. These are filled in by the model in a model-specific way. One can
   convert a path to an iterator by calling the function
   @fun{gtk-tree-model-get-iter}. These iterators are the primary way of
@@ -187,8 +187,8 @@
   operations using them for navigating the model.
 
   It is expected that models fill in the iterator with private data. For
-  example, the @class{gtk-list-store} model, which is internally a simple linked
-  list, stores a list node in one of the pointers. The
+  example, the @class{gtk-list-store} model, which is internally a simple
+  linked list, stores a list node in one of the pointers. The
   @class{gtk-tree-model-sort} stores an array and an offset in two of the
   pointers. Additionally, there is an integer field. This field is generally
   filled with a unique stamp per model. This stamp is for catching errors

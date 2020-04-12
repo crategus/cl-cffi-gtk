@@ -79,9 +79,9 @@
   @begin{short}
     A tag table defines a set of tags that can be used together.
   @end{short}
-  Each tag is stored in a @class{gtk-text-tag-table} object. Each buffer has one
-  tag table associated with it; only tags from that tag table can be used with
-  the buffer. A single tag table can be shared between multiple buffers,
+  Each tag is stored in a @class{gtk-text-tag-table} object. Each buffer has
+  one tag table associated with it; only tags from that tag table can be used
+  with the buffer. A single tag table can be shared between multiple buffers,
   however.
   @begin[GtkTextTagTables as GtkBuildable]{dictionary}
     The @sym{gtk-text-tag-table} implementation of the @class{gtk-buildable}
@@ -237,7 +237,7 @@
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[func]{a function to call on each tag}
   @begin{short}
-    Calls @arg{func} on each tag in tag table.
+    Calls @arg{func} on each tag in the tag table.
   @end{short}
   Note that the tag table may not be modified while iterating over it (you
   cannot add/remove tags).
@@ -250,7 +250,7 @@
 (export 'gtk-text-tag-table-foreach)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_tag_table_get_size ()
+;;; gtk_text_tag_table_get_size () --> gtk-text-table-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
