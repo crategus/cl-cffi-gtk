@@ -43,7 +43,7 @@ GTK+ Widgets and Objects
  +  gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.24
  +  gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.24
  +  gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.24
- +  gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.24
+    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.24
  +  gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.24
  +  gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.24
  +  gtk.expander.lisp                - GtkExpander                 - GTK+ 3.24
@@ -183,15 +183,15 @@ GTK+ Widgets and Objects
 
   Printing
 
- +  gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.24
- +  gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.24
- +  gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.24 &
- +  gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.24 &
- +  gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.24 &
- +  gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.24 &
- +  gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.24 &
- +  gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.24
- +  gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.24
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.24
+    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.24
+    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.24
+    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.24
+    gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.24
+    gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.24
+    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.24
+    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.24
+    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.24
 
   Shortcuts Overview
 

@@ -384,6 +384,7 @@
                :cffi
                :bordeaux-threads
                :iterate
-               :trivial-features))
+               :trivial-features
+               :split-sequence))
 
 ;;; --- End of file cl-cffi-gtk.asd --------------------------------------------

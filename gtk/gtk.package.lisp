@@ -713,24 +713,21 @@
       A widget with two adjustable panes.
 
       @about-class{gtk-paned}
-
       @about-generic{gtk-paned-max-position}
       @about-generic{gtk-paned-min-position}
       @about-generic{gtk-paned-position}
       @about-generic{gtk-paned-position-set}
       @about-generic{gtk-paned-wide-handle}
-
       @about-function{gtk-paned-child-resize}
       @about-function{gtk-paned-child-shrink}
-
       @about-function{gtk-paned-new}
       @about-function{gtk-paned-add1}
       @about-function{gtk-paned-add2}
       @about-function{gtk-paned-pack1}
       @about-function{gtk-paned-pack2}
-      @about-function{gtk-paned-get-child1}
-      @about-function{gtk-paned-get-child2}
-      @about-function{gtk-paned-get-handle-window}
+      @about-function{gtk-paned-child1}
+      @about-function{gtk-paned-child2}
+      @about-function{gtk-paned-handle-window}
     @end{subsection}
     @begin[GtkLayout]{subsection}
       Infinite scrollable area containing child widgets and/or custom drawing.
@@ -1754,8 +1751,8 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-get-iter-at-line-index}
       @about-function{gtk-text-buffer-get-iter-at-mark}
       @about-function{gtk-text-buffer-get-iter-at-child-anchor}
-      @about-function{gtk-text-buffer-get-start-iter}
-      @about-function{gtk-text-buffer-get-end-iter}
+      @about-function{gtk-text-buffer-start-iter}
+      @about-function{gtk-text-buffer-end-iter}
       @about-function{gtk-text-buffer-get-bounds}
 
       @about-function{gtk-text-buffer-modified}
@@ -3908,10 +3905,8 @@ setup_tree (void)
       @about-symbol{gtk-print-operation-action}
       @about-symbol{gtk-print-operation-result}
       @about-symbol{gtk-print-error}
-      @about-symbol{GTK_PRINT_ERROR}
 
       @about-class{gtk-print-operation}
-
       @about-generic{gtk-print-operation-allow-async}
       @about-generic{gtk-print-operation-current-page}
       @about-generic{gtk-print-operation-custom-tab-label}
@@ -3942,7 +3937,6 @@ setup_tree (void)
       @about-function{gtk-print-run-page-setup-dialog-async}
 
       @about-class{gtk-print-operation-preview}
-
       @about-function{gtk-print-operation-preview-end-preview}
       @about-function{gtk-print-operation-preview-is-selected}
       @about-function{gtk-print-operation-preview-render-page}
@@ -3951,24 +3945,28 @@ setup_tree (void)
       Encapsulates context for drawing pages.
 
       @about-class{gtk-print-context}
-
       @about-function{gtk-print-context-get-cairo-context}
       @about-function{gtk-print-context-set-cairo-context}
-      @about-function{gtk-print-context-get-page-setup}
-      @about-function{gtk-print-context-get-width}
-      @about-function{gtk-print-context-get-height}
-      @about-function{gtk-print-context-get-dpi-x}
-      @about-function{gtk-print-context-get-dpi-y}
-      @about-function{gtk-print-context-get-pango-fontmap}
+      @about-function{gtk-print-context-page-setup}
+      @about-function{gtk-print-context-width}
+      @about-function{gtk-print-context-height}
+      @about-function{gtk-print-context-dpi-x}
+      @about-function{gtk-print-context-dpi-y}
+      @about-function{gtk-print-context-pango-fontmap}
       @about-function{gtk-print-context-create-pango-context}
       @about-function{gtk-print-context-create-pango-layout}
-      @about-function{gtk-print-context-get-hard-margins}
+      @about-function{gtk-print-context-hard-margins}
     @end{subsection}
     @begin[GtkPrintSettings]{subsection}
       Stores print settings.
 
+      @about-symbol{gtk-page-orientation}
+      @about-symbol{gtk-print-duplex}
+      @about-symbol{gtk-print-quality}
+      @about-symbol{gtk-number-up-layout}
+      @about-symbol{gtk-print-pages}
+      @about-symbol{gtk-page-set}
       @about-class{gtk-print-settings}
-
       @about-function{gtk-print-settings-new}
       @about-function{gtk-print-settings-copy}
       @about-function{gtk-print-settings-has-key}
@@ -3986,103 +3984,35 @@ setup_tree (void)
       @about-function{gtk-print-settings-get-int}
       @about-function{gtk-print-settings-get-int-with-default}
       @about-function{gtk-print-settings-set-int}
-
-      @about-function{GTK_PRINT_SETTINGS_PRINTER}
-      @about-function{gtk-print-settings-get-printer}
-      @about-function{gtk-print-settings-set-printer}
-
-      @about-symbol{gtk-page-orientation}
-      @about-function{GTK_PRINT_SETTINGS_ORIENTATION}
-      @about-function{gtk-print-settings-get-orientation}
-      @about-function{gtk-print-settings-set-orientation}
-      @about-function{GTK_PRINT_SETTINGS_PAPER_FORMAT}
-      @about-function{gtk-print-settings-get-paper-size}
-      @about-function{gtk-print-settings-set-paper-size}
-      @about-function{GTK_PRINT_SETTINGS_PAPER_WIDTH}
+      @about-function{gtk-print-settings-printer}
+      @about-function{gtk-print-settings-orientation}
+      @about-function{gtk-print-settings-paper-size}
       @about-function{gtk-print-settings-get-paper-width}
       @about-function{gtk-print-settings-set-paper-width}
-      @about-function{GTK_PRINT_SETTINGS_PAPER_HEIGHT}
       @about-function{gtk-print-settings-get-paper-height}
       @about-function{gtk-print-settings-set-paper-height}
-      @about-function{GTK_PRINT_SETTINGS_USE_COLOR}
-      @about-function{gtk-print-settings-get-use-color}
-      @about-function{gtk-print-settings-set-use-color}
-      @about-function{GTK_PRINT_SETTINGS_COLLATE}
-      @about-function{gtk-print-settings-get-collate}
-      @about-function{gtk-print-settings-set-collate}
-      @about-function{GTK_PRINT_SETTINGS_REVERSE}
-      @about-function{gtk-print-settings-get-reverse}
-      @about-function{gtk-print-settings-set-reverse}
-
-      @about-symbol{gtk-print-duplex}
-      @about-function{GTK_PRINT_SETTINGS_DUPLEX}
-      @about-function{gtk-print-settings-get-duplex}
-      @about-function{gtk-print-settings-set-duplex}
-
-      @about-symbol{gtk-print-quality}
-      @about-function{GTK_PRINT_SETTINGS_QUALITY}
-      @about-function{gtk-print-settings-get-quality}
-      @about-function{gtk-print-settings-set-quality}
-      @about-function{GTK_PRINT_SETTINGS_N_COPIES}
-      @about-function{gtk-print-settings-get-n-copies}
-      @about-function{gtk-print-settings-set-n-copies}
-      @about-function{GTK_PRINT_SETTINGS_NUMBER_UP}
-      @about-function{gtk-print-settings-get-number-up}
-      @about-function{gtk-print-settings-set-number-up}
-
-      @about-symbol{gtk-number-up-layout}
-      @about-function{GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT}
-      @about-function{gtk-print-settings-get-number-up-layout}
-      @about-function{gtk-print-settings-set-number-up-layout}
-      @about-function{GTK_PRINT_SETTINGS_RESOLUTION}
-      @about-function{gtk-print-settings-get-resolution}
-      @about-function{gtk-print-settings-set-resolution}
+      @about-function{gtk-print-settings-use-color}
+      @about-function{gtk-print-settings-collate}
+      @about-function{gtk-print-settings-reverse}
+      @about-function{gtk-print-settings-duplex}
+      @about-function{gtk-print-settings-quality}
+      @about-function{gtk-print-settings-n-copies}
+      @about-function{gtk-print-settings-number-up}
+      @about-function{gtk-print-settings-number-up-layout}
+      @about-function{gtk-print-settings-resolution}
       @about-function{gtk-print-settings-set-resolution-xy}
-      @about-function{GTK_PRINT_SETTINGS_RESOLUTION_X}
-      @about-function{gtk-print-settings-get-resolution-x}
-      @about-function{GTK_PRINT_SETTINGS_RESOLUTION_Y}
-      @about-function{gtk-print-settings-get-resolution-y}
-      @about-function{GTK_PRINT_SETTINGS_PRINTER_LPI}
-      @about-function{gtk-print-settings-get-printer-lpi}
-      @about-function{gtk-print-settings-set-printer-lpi}
-      @about-function{GTK_PRINT_SETTINGS_SCALE}
-      @about-function{gtk-print-settings-get-scale}
-      @about-function{gtk-print-settings-set-scale}
-
-      @about-symbol{gtk-print-pages}
-      @about-function{GTK_PRINT_SETTINGS_PRINT_PAGES}
-      @about-function{gtk-print-settings-get-print-pages}
-      @about-function{gtk-print-settings-set-print-pages}
-
-      @about-symbol{gtk-page-range}
-      @about-function{GTK_PRINT_SETTINGS_PAGE_RANGES}
-      @about-function{gtk-print-settings-get-page-ranges}
-      @about-function{gtk-print-settings-set-page-ranges}
-
-      @about-symbol{gtk-page-set}
-      @about-function{GTK_PRINT_SETTINGS_PAGE_SET}
-      @about-function{gtk-print-settings-get-page-set}
-      @about-function{gtk-print-settings-set-page-set}
-      @about-function{GTK_PRINT_SETTINGS_DEFAULT_SOURCE}
-      @about-function{gtk-print-settings-get-default-source}
-      @about-function{gtk-print-settings-set-default-source}
-      @about-function{GTK_PRINT_SETTINGS_MEDIA_TYPE}
-      @about-function{gtk-print-settings-get-media-type}
-      @about-function{gtk-print-settings-set-media-type}
-      @about-function{GTK_PRINT_SETTINGS_DITHER}
-      @about-function{gtk-print-settings-get-dither}
-      @about-function{gtk-print-settings-set-dither}
-      @about-function{GTK_PRINT_SETTINGS_FINISHINGS}
-      @about-function{gtk-print-settings-get-finishings}
-      @about-function{gtk-print-settings-set-finishings}
-      @about-function{GTK_PRINT_SETTINGS_OUTPUT_BIN}
-      @about-function{gtk-print-settings-get-output-bin}
-      @about-function{gtk-print-settings-set-output-bin}
-      @about-function{GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT}
-      @about-function{GTK_PRINT_SETTINGS_OUTPUT_URI}
-      @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_EXTRA}
-      @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION}
-
+      @about-function{gtk-print-settings-resolution-x}
+      @about-function{gtk-print-settings-resolution-y}
+      @about-function{gtk-print-settings-printer-lpi}
+      @about-function{gtk-print-settings-scale}
+      @about-function{gtk-print-settings-print-pages}
+      @about-function{gtk-print-settings-page-ranges}
+      @about-function{gtk-print-settings-page-set}
+      @about-function{gtk-print-settings-default-source}
+      @about-function{gtk-print-settings-media-type}
+      @about-function{gtk-print-settings-dither}
+      @about-function{gtk-print-settings-finishings}
+      @about-function{gtk-print-settings-output-bin}
       @about-function{gtk-print-settings-new-from-file}
       @about-function{gtk-print-settings-new-from-key-file}
       @about-function{gtk-print-settings-new-from-gvariant}
@@ -4098,10 +4028,8 @@ setup_tree (void)
       @about-class{gtk-page-setup}
       @about-function{gtk-page-setup-new}
       @about-function{gtk-page-setup-copy}
-      @about-function{gtk-page-setup-get-orientation}
-      @about-function{gtk-page-setup-set-orientation}
-      @about-function{gtk-page-setup-get-paper-size}
-      @about-function{gtk-page-setup-set-paper-size}
+      @about-function{gtk-page-setup-orientation}
+      @about-function{gtk-page-setup-paper-size}
       @about-function{gtk-page-setup-get-top-margin}
       @about-function{gtk-page-setup-set-top-margin}
       @about-function{gtk-page-setup-get-bottom-margin}
@@ -4117,52 +4045,48 @@ setup_tree (void)
       @about-function{gtk-page-setup-get-page-height}
       @about-function{gtk-page-setup-new-from-file}
       @about-function{gtk-page-setup-new-from-key-file}
+      @about-function{gtk-page-setup-new-from-gvariant}
       @about-function{gtk-page-setup-load-file}
       @about-function{gtk-page-setup-load-key-file}
       @about-function{gtk-page-setup-to-file}
       @about-function{gtk-page-setup-to-key-file}
+      @about-function{gtk-page-setup-to-gvariant}
     @end{subsection}
     @begin[GtkPaperSize]{subsection}
       Support for named paper sizes.
 
-      @about-class{gtk-paper-size}
       @about-symbol{gtk-unit}
-      @about-symbol{GTK-PAPER-NAME-A3}
-      @about-symbol{GTK-PAPER-NAME-A4}
-      @about-symbol{GTK-PAPER-NAME-A5}
-      @about-symbol{GTK-PAPER-NAME-B5}
-      @about-symbol{GTK-PAPER-NAME-LETTER}
-      @about-symbol{GTK-PAPER-NAME-EXECUTIVE}
-      @about-symbol{GTK-PAPER-NAME-LEGAL}
+      @about-class{gtk-paper-size}
       @about-function{gtk-paper-size-new}
       @about-function{gtk-paper-size-new-from-ppd}
       @about-function{gtk-paper-size-new-custom}
       @about-function{gtk-paper-size-copy}
       @about-function{gtk-paper-size-free}
       @about-function{gtk-paper-size-is-equal}
-      @about-function{gtk-paper-size-get-paper-sizes}
-      @about-function{gtk-paper-size-get-name}
-      @about-function{gtk-paper-size-get-display-name}
-      @about-function{gtk-paper-size-get-ppd-name}
-      @about-function{gtk-paper-size-get-width}
-      @about-function{gtk-paper-size-get-height}
+      @about-function{gtk-paper-size-paper-sizes}
+      @about-function{gtk-paper-size-name}
+      @about-function{gtk-paper-size-display-name}
+      @about-function{gtk-paper-size-ppd-name}
+      @about-function{gtk-paper-size-width}
+      @about-function{gtk-paper-size--height}
+      @about-function{gtk-paper-size-is-ipp}
       @about-function{gtk-paper-size-is-custom}
       @about-function{gtk-paper-size-set-size}
-      @about-function{gtk-paper-size-get-default-top-margin}
-      @about-function{gtk-paper-size-get-default-bottom-margin}
-      @about-function{gtk-paper-size-get-default-left-margin}
-      @about-function{gtk-paper-size-get-default-right-margin}
-      @about-function{gtk-paper-size-get-default}
+      @about-function{gtk-paper-size-default-top-margin}
+      @about-function{gtk-paper-size-default-bottom-margin}
+      @about-function{gtk-paper-size-default-left-margin}
+      @about-function{gtk-paper-size-default-right-margin}
+      @about-function{gtk-paper-size-default}
       @about-function{gtk-paper-size-new-from-key-file}
+      @about-function{gtk-paper-size-new-from-gvariant}
       @about-function{gtk-paper-size-to-key-file}
+      @about-function{gtk-paper-size-to-gvariant}
     @end{subsection}
     @begin[GtkPrinter]{subsection}
       Represents a printer.
 
       @about-class{gtk-print-backend}
-
       @about-class{gtk-printer}
-
       @about-generic{gtk-printer-accepting-jobs}
       @about-generic{gtk-printer-accepts-pdf}
       @about-generic{gtk-printer-accepts-ps}
@@ -4174,15 +4098,8 @@ setup_tree (void)
       @about-generic{gtk-printer-name}
       @about-generic{gtk-printer-paused}
       @about-generic{gtk-printer-state-message}
-
       @about-function{gtk-printer-new}
-      @about-function{gtk-printer-get-backend}
-      @about-function{gtk-printer-get-name}
-      @about-function{gtk-printer-get-state-message}
-      @about-function{gtk-printer-get-description}
-      @about-function{gtk-printer-get-location}
-      @about-function{gtk-printer-get-icon-name}
-      @about-function{gtk-printer-get-job-count}
+      @about-function{gtk-printer-description}
       @about-function{gtk-printer-is-active}
       @about-function{gtk-printer-is-paused}
       @about-function{gtk-printer-is-accepting-jobs}
@@ -4191,58 +4108,41 @@ setup_tree (void)
       @about-function{gtk-printer-compare}
       @about-function{gtk-printer-has-details}
       @about-function{gtk-printer-request-details}
-      @about-function{gtk-printer-get-capabilities}
-      @about-function{gtk-printer-get-default-page-size}
-      @about-function{gtk-printer-get-hard-margins}
+      @about-function{gtk-printer-capabilities}
+      @about-function{gtk-printer-default-page-size}
+      @about-function{gtk-printer-hard-margins}
       @about-function{gtk-enumerate-printers}
     @end{subsection}
     @begin[GtkPrintJob]{subsection}
       Represents a print job.
 
       @about-class{gtk-print-job}
-
       @about-generic{gtk-print-job-page-setup}
       @about-generic{gtk-print-job-printer}
       @about-generic{gtk-print-job-settings}
       @about-generic{gtk-print-job-title}
       @about-generic{gtk-print-job-track-print-status}
-
       @about-function{gtk-print-job-new}
-      @about-function{gtk-print-job-get-settings}
-      @about-function{gtk-print-job-get-printer}
-      @about-function{gtk-print-job-get-title}
-      @about-function{gtk-print-job-get-status}
+      @about-function{gtk-print-job-status}
       @about-function{gtk-print-job-set-source-file}
-      @about-function{gtk-print-job-get-surface}
+      @about-function{gtk-print-job-surface}
       @about-function{gtk-print-job-send}
-      @about-function{gtk-print-job-set-track-print-status}
-      @about-function{gtk-print-job-get-track-print-status}
-      @about-function{gtk-print-job-get-pages}
-      @about-function{gtk-print-job-set-pages}
-      @about-function{gtk-print-job-get-page-ranges}
-      @about-function{gtk-print-job-set-page-ranges}
-      @about-function{gtk-print-job-get-page-set}
-      @about-function{gtk-print-job-set-page-set}
-      @about-function{gtk-print-job-get-num-copies}
-      @about-function{gtk-print-job-set-num-copies}
-      @about-function{gtk-print-job-get-scale}
-      @about-function{gtk-print-job-set-scale}
-      @about-function{gtk-print-job-get-n-up}
-      @about-function{gtk-print-job-set-n-up}
-      @about-function{gtk-print-job-get-n-up-layout}
-      @about-function{gtk-print-job-set-n-up-layout}
-      @about-function{gtk-print-job-get-rotate}
-      @about-function{gtk-print-job-set-rotate}
-      @about-function{gtk-print-job-get-collate}
-      @about-function{gtk-print-job-set-collate}
-      @about-function{gtk-print-job-get-reverse}
-      @about-function{gtk-print-job-set-reverse}
+      @about-function{gtk-print-job-pages}
+      @about-function{gtk-print-job-page-ranges}
+      @about-function{gtk-print-job-page-set}
+      @about-function{gtk-print-job-num-copies}
+      @about-function{gtk-print-job-scale}
+      @about-function{gtk-print-job-n-up}
+      @about-function{gtk-print-job-n-up-layout}
+      @about-function{gtk-print-job-rotate}
+      @about-function{gtk-print-job-collate}
+      @about-function{gtk-print-job-reverse}
     @end{subsection}
     @begin[GtkPrintUnixDialog]{subsection}
       A print dialog.
 
+      @about-symbol{gtk-print-capabilities}
       @about-class{gtk-print-unix-dialog}
-
       @about-generic{gtk-print-unix-dialog-current-page}
       @about-generic{gtk-print-unix-dialog-embed-page-setup}
       @about-generic{gtk-print-unix-dialog-has-selection}
@@ -4251,37 +4151,19 @@ setup_tree (void)
       @about-generic{gtk-print-unix-dialog-print-settings}
       @about-generic{gtk-print-unix-dialog-selected-printer}
       @about-generic{gtk-print-unix-dialog-support-selection}
-
       @about-function{gtk-print-unix-dialog-new}
-      @about-function{gtk-print-unix-dialog-set-page-setup}
-      @about-function{gtk-print-unix-dialog-get-page-setup}
-      @about-function{gtk-print-unix-dialog-set-current-page}
-      @about-function{gtk-print-unix-dialog-get-current-page}
-      @about-function{gtk-print-unix-dialog-set-settings}
-      @about-function{gtk-print-unix-dialog-get-settings}
-      @about-function{gtk-print-unix-dialog-get-selected-printer}
+      @about-function{gtk-print-unix-dialog-settings}
       @about-function{gtk-print-unix-dialog-add-custom-tab}
-      @about-function{gtk-print-unix-dialog-set-support-selection}
-      @about-function{gtk-print-unix-dialog-get-support-selection}
-      @about-function{gtk-print-unix-dialog-set-has-selection}
-      @about-function{gtk-print-unix-dialog-get-has-selection}
-      @about-function{gtk-print-unix-dialog-set-embed-page-setup}
-      @about-function{gtk-print-unix-dialog-get-embed-page-setup}
-      @about-function{gtk-print-unix-dialog-get-page-setup-set}
-      @about-symbol{gtk-print-capabilities}
-      @about-function{gtk-print-unix-dialog-set-manual-capabilities}
-      @about-function{gtk-print-unix-dialog-get-manual-capabilities}
+      @about-function{gtk-print-unix-dialog-page-setup-set}
+      @about-function{gtk-print-unix-dialog-manual-capabilities}
     @end{subsection}
     @begin[GtkPageSetupUnixDialog]{subsection}
       A page setup dialog.
 
       @about-class{gtk-page-setup-unix-dialog}
-
       @about-function{gtk-page-setup-unix-dialog-new}
-      @about-function{gtk-page-setup-unix-dialog-set-page-setup}
-      @about-function{gtk-page-setup-unix-dialog-get-page-setup}
-      @about-function{gtk-page-setup-unix-dialog-set-print-settings}
-      @about-function{gtk-page-setup-unix-dialog-get-print-settings}
+      @about-function{gtk-page-setup-unix-dialog-page-setup}
+      @about-function{gtk-page-setup-unix-dialog-print-settings}
     @end{subsection}
   @end{section}
   @begin[Shortcuts Overview]{section}
