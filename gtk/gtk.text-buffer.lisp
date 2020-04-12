@@ -1826,54 +1826,62 @@
 (export 'gtk-text-buffer-get-iter-at-child-anchor)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_start_iter ()
+;;; gtk_text_buffer_get_start_iter () --> gtk-text-buffer-start-iter
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_buffer_get_start_iter" %gtk-text-buffer-get-start-iter)
+(defcfun ("gtk_text_buffer_get_start_iter" %gtk-text-buffer-start-iter)
     :void
   (buffer (g-object gtk-text-buffer))
   (iter (g-boxed-foreign gtk-text-iter)))
 
-(defun gtk-text-buffer-get-start-iter (buffer)
+(defun gtk-text-buffer-start-iter (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2020-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{iter -- iterator to initialize}
-  Initialized @arg{iter} with the first position in the text @arg{buffer}. This
-  is the same as using the function @fun{gtk-text-buffer-get-iter-at-offset} to
-  get the @arg{iter} at character offset 0.
-  @see-function{gtk-text-buffer-get-iter-at-offset}"
+  @return{Returns a @class{gtk-text-iter} iterator.}
+  @begin{short}
+    Returns an iterator with the first position in the text buffer.
+  @end{short}
+  This is the same as using the function @fun{gtk-text-buffer-iter-at-offset}
+  to get the itererator at character offset 0.
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-buffer-iter-at-offset}"
   (let ((iter (make-instance 'gtk-text-iter)))
-    (%gtk-text-buffer-get-start-iter buffer iter)
+    (%gtk-text-buffer-start-iter buffer iter)
     iter))
 
-(export 'gtk-text-buffer-get-start-iter)
+(export 'gtk-text-buffer-start-iter)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_end_iter ()
+;;; gtk_text_buffer_get_end_iter () --> gtk-text-buffer-end-iter
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_buffer_get_end_iter" %gtk-text-buffer-get-end-iter) :void
+(defcfun ("gtk_text_buffer_get_end_iter" %gtk-text-buffer-end-iter) :void
   (buffer (g-object gtk-text-buffer))
   (iter (g-boxed-foreign gtk-text-iter)))
 
-(defun gtk-text-buffer-get-end-iter (buffer)
+(defun gtk-text-buffer-end-iter (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2020-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{iter -- iterator to initialize}
-  Initializes @arg{iter} with the \"end iterator\", one past the last valid
-  character in the text @arg{buffer}. If dereferenced with the function
-  @fun{gtk-text-iter-char}, the end iterator has a character value of 0. The
-  entire buffer lies in the range from the first position in the @arg{buffer}
-  (call the function @fun{gtk-text-buffer-get-start-iter} to get character
-  position 0) to the end iterator.
+  @return{Returns a @class{gtk-text-iter} iterator.}
+  @begin{short}
+    Returns an iterator with the \"end iterator\", one past the last valid
+    character in the text buffer.
+  @end{short}
+  If dereferenced with the function @fun{gtk-text-iter-char}, the end iterator
+  has a character value of 0. The entire buffer lies in the range from the
+  first position in the text buffer (call the function
+  @fun{gtk-text-buffer-start-iter} to get character position 0) to the end
+  iterator.
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-buffer-start-iter}
   @see-function{gtk-text-iter-char}"
   (let ((iter (make-instance 'gtk-text-iter)))
-    (%gtk-text-buffer-get-end-iter buffer iter)
+    (%gtk-text-buffer-end-iter buffer iter)
     iter))
 
-(export 'gtk-text-buffer-get-end-iter)
+(export 'gtk-text-buffer-end-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_bounds ()
