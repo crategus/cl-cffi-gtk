@@ -45,8 +45,8 @@
                   (context (gdk-pango-context-get-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))
-             (pango-layout-set-text layout "Text")
-             (pango-layout-set-font-description layout desc)
+             (setf (pango-layout-text layout) "Text")
+             (setf (pango-layout-font-description layout) desc)
 
              ;; Draw the layout n-words times in a circle
              (do* ((i 0 (+ i 1))

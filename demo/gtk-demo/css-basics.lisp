@@ -37,8 +37,8 @@
       (g-signal-connect text "changed"
                         (lambda (buffer)
                           (format t "Signal changed für text buffer~%")
-                          (let ((start (gtk-text-buffer-get-start-iter buffer))
-                                (end (gtk-text-buffer-get-end-iter buffer)))
+                          (let ((start (gtk-text-buffer-start-iter buffer))
+                                (end (gtk-text-buffer-end-iter buffer)))
                             (gtk-text-buffer-remove-all-tags buffer start end)
                             (gtk-css-provider-load-from-data
                                 provider
