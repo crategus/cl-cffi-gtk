@@ -474,7 +474,7 @@ bad things will happen.")
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-buffer text-view))
-                  (iter (gtk-text-buffer-get-start-iter buffer)))
+                  (iter (gtk-text-buffer-start-iter buffer)))
              (multiple-value-bind (found start end)
                  (gtk-text-iter-search iter text)
                (when found
@@ -603,7 +603,7 @@ The following example shows the usage of marks to continue the search.
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-buffer text-view))
-                  (iter (gtk-text-buffer-get-start-iter buffer)))
+                  (iter (gtk-text-buffer-start-iter buffer)))
              (find-text text-view text iter))))
       (g-signal-connect button-next "clicked"
          (lambda (widget)
