@@ -2456,12 +2456,12 @@
     Converts from a position in the entry contents (returned by the function
     @fun{gtk-entry-text}) to a position in the @arg{entry}'s
     @class{pango-layout} (returned by the function @fun{gtk-entry-get-layout},
-    with text retrieved via the function @fun{pango-layout-get-text}).
+    with text retrieved via the function @fun{pango-layout-text}).
   @end{short}
   @see-class{gtk-entry}
   @see-function{gtk-entry-text}
   @see-function{gtk-entry-get-layout}
-  @see-function{pango-layout-get-text}"
+  @see-function{pango-layout-text}"
   (entry (g-object entry))
   (layout-index :int))
 
