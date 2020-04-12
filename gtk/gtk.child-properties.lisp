@@ -69,7 +69,8 @@
                                                    child
                                                    ,property-gname
                                                    new-value
-                                                   ,property-type))))
+                                                   ,property-type)
+                      new-value)))
      ,@(when export
              (list `(export ',property-name)))))
 
