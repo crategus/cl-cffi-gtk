@@ -1,6 +1,9 @@
 (def-suite gtk-box :in gtk-suite)
 (in-suite gtk-box)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (foreign-funcall "gtk_printer_option_widget_get_type" :int))
+
 ;;; --- GtkBox -----------------------------------------------------------------
 
 (test gtk-box-class
@@ -13,32 +16,33 @@
   (is (equal (gtype "GtkContainer") (g-type-parent "GtkBox")))
   ;; Check the children
   (is (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox" "GtkStatusbar"
- "GtkInfoBar" "GtkColorChooserWidget" "GtkColorSelection"
- "GtkFileChooserWidget" "GtkFileChooserButton" "GtkFontChooserWidget"
- "GtkFontSelection" "GtkRecentChooserWidget" "GtkAppChooserWidget"
- "GtkShortcutsSection" "GtkShortcutsGroup" "GtkShortcutsShortcut")
+               "GtkInfoBar" "GtkColorChooserWidget" "GtkColorSelection"
+               "GtkFileChooserWidget" "GtkFileChooserButton" "GtkFontChooserWidget"
+               "GtkFontSelection" "GtkRecentChooserWidget" "GtkAppChooserWidget"
+               "GtkShortcutsSection" "GtkShortcutsGroup" "GtkShortcutsShortcut"
+               "GtkPrinterOptionWidget")
              (mapcar #'gtype-name (g-type-children "GtkBox"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'gtype-name (g-type-interfaces "GtkBox"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "baseline-position" "border-width" "can-default" "can-focus"
- "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"
- "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
- "hexpand-set" "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
- "margin-left" "margin-right" "margin-start" "margin-top" "name" "no-show-all"
- "opacity" "orientation" "parent" "receives-default" "resize-mode"
- "scale-factor" "sensitive" "spacing" "style" "tooltip-markup" "tooltip-text"
- "valign" "vexpand" "vexpand-set" "visible" "width-request" "window")
+               "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"
+               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
+               "hexpand-set" "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name" "no-show-all"
+               "opacity" "orientation" "parent" "receives-default" "resize-mode"
+               "scale-factor" "sensitive" "spacing" "style" "tooltip-markup" "tooltip-text"
+               "valign" "vexpand" "vexpand-set" "visible" "width-request" "window")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkBox"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
- "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
- "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
- "separator-width" "text-handle-height" "text-handle-width"
- "visited-link-color" "wide-separators" "window-dragging")
+               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
+               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
+               "separator-width" "text-handle-height" "text-handle-width"
+               "visited-link-color" "wide-separators" "window-dragging")
              (mapcar #'param-spec-name
                      (gtk-widget-class-list-style-properties "GtkBox"))))
   ;; Get the names of the child properties

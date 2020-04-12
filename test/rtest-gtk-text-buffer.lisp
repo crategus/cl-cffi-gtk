@@ -33,7 +33,6 @@ betrunken machten und es dann in ihre Agentur schleppten, wo sie es für ihre
 Projekte wieder und wieder missbrauchten. Und wenn es nicht umgeschrieben wurde,
 dann benutzen Sie es immer noch.")
 
-
 (defvar *sample-text-2*
   "Dies ist ein Typoblindtext.
 An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal
@@ -64,6 +63,9 @@ dargestellt werden.")
   ;; Check the registered name
   (is (eq 'gtk-text-buffer
           (registered-object-type-by-name "GtkTextBuffer")))
+  ;; Check the type initializer
+  (is (string= "GtkTextBuffer"
+               (g-type-name (gtype (foreign-funcall "gtk_text_buffer_get_type" :int)))))
   ;; Check the parent
   (is (equal (gtype "GObject") (g-type-parent "GtkTextBuffer")))
   ;; Check the children
@@ -162,12 +164,12 @@ dargestellt werden.")
 
 (test gtk-text-buffer-insert
   (let* ((buffer (make-instance 'gtk-text-buffer))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
     (is-true (gtk-text-buffer-insert buffer "text1"))
     (is (string= "text1" (gtk-text-buffer-text buffer)))
     (is (= 5 (gtk-text-buffer-cursor-position buffer)))
 
-    (is-true (setf iter (gtk-text-buffer-get-end-iter buffer)))
+    (is-true (setf iter (gtk-text-buffer-end-iter buffer)))
     (is-true (gtk-text-buffer-insert buffer "text2" :position iter))
     (is (string= "text1text2" (gtk-text-buffer-text buffer)))
     (is (= 10 (gtk-text-buffer-cursor-position buffer)))
@@ -176,7 +178,7 @@ dargestellt werden.")
     (is (string= "text1text2text3" (gtk-text-buffer-text buffer)))
     (is (= 15 (gtk-text-buffer-cursor-position buffer)))
 
-    (is-true (setf iter (gtk-text-buffer-get-end-iter buffer)))
+    (is-true (setf iter (gtk-text-buffer-end-iter buffer)))
     (is-true (gtk-text-buffer-insert buffer "text4" :position iter :interactive t))
     (is (string= "text1text2text3text4" (gtk-text-buffer-text buffer)))
     (is (= 20 (gtk-text-buffer-cursor-position buffer)))))
@@ -197,7 +199,7 @@ dargestellt werden.")
 
 (test gtk-text-buffer-insert-interactive
   (let* ((buffer (make-instance 'gtk-text-buffer))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
     (is-true (gtk-text-buffer-insert-interactive buffer iter "text" t))
     (is (string= "text" (gtk-text-buffer-text buffer)))
     (is (= 4 (gtk-text-buffer-cursor-position buffer)))

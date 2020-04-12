@@ -9,6 +9,9 @@
   ;; Check the registered name
   (is (eql 'gtk-print-status
            (gobject::registered-enum-type "GtkPrintStatus")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintStatus"
+               (g-type-name (gtype (foreign-funcall "gtk_print_status_get_type" :int)))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintStatus"
     GTK-PRINT-STATUS
@@ -49,6 +52,9 @@
   ;; Check the registered name
   (is (eql 'gtk-print-operation-action
            (gobject::registered-enum-type "GtkPrintOperationAction")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintOperationAction"
+               (g-type-name (gtype (foreign-funcall "gtk_print_operation_action_get_type" :int)))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationAction"
     GTK-PRINT-OPERATION-ACTION
@@ -80,6 +86,9 @@
   ;; Check the registered name
   (is (eql 'gtk-print-operation-result
            (gobject::registered-enum-type "GtkPrintOperationResult")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintOperationResult"
+               (g-type-name (gtype (foreign-funcall "gtk_print_operation_result_get_type" :int)))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationResult"
     GTK-PRINT-OPERATION-RESULT
@@ -110,6 +119,9 @@
   (is-true (g-type-is-enum "GtkPrintError"))
   ;; Check the registered name
   (is (eql 'gtk-print-error (gobject::registered-enum-type "GtkPrintError")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintError"
+               (g-type-name (gtype (foreign-funcall "gtk_print_error_get_type" :int)))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintError"
     GTK-PRINT-ERROR
@@ -133,8 +145,6 @@
              (mapcar #'gobject::enum-item-nick
                      (gobject::get-enum-items "GtkPrintError")))))
 
-;;;     GTK_PRINT_ERROR
-
 ;;;     GtkPrintOperationPreview
 
 (test gtk-print-operation-preview
@@ -143,6 +153,9 @@
   ;; Check the registered name
   (is (eq 'gtk-print-operation-preview
           (registered-object-type-by-name "GtkPrintOperationPreview")))
+  ;; Check the type initializer
+  (is (string= "GtkPrintOperationPreview"
+               (g-type-name (gtype (foreign-funcall "gtk_print_operation_preview_get_type" :int)))))
   ;; Get the names of the interface properties.
   (is (equal '()
              (mapcar #'param-spec-name
@@ -229,34 +242,85 @@
 
 (test gtk-print-operation-properties
   (let ((object (make-instance 'gtk-print-operation)))
-    ;; Get allow-async
+    ;; allow-async
     (is-false (gtk-print-operation-allow-async object))
-    ;; Get current-page
+    (is-true (setf (gtk-print-operation-allow-async object) t))
+    (is-true (gtk-print-operation-allow-async object))
+    ;; current-page
     (is (= -1 (gtk-print-operation-current-page object)))
-    ;; Set custom-tab-label
-    (setf (gtk-print-operation-custom-tab-label object) "Custom Tab")
+    ;; set n-pages > current-page
+    (is (= 20 (setf (gtk-print-operation-n-pages object) 20)))
+    (is (= 10 (setf (gtk-print-operation-current-page object) 10)))
+    (is (= 10 (gtk-print-operation-current-page object)))
+    ;; custom-tab-label
+    (is-false (gtk-print-operation-custom-tab-label object))
+    (is (string= "Custom Tab" (setf (gtk-print-operation-custom-tab-label object) "Custom Tab")))
     (is (string= "Custom Tab" (gtk-print-operation-custom-tab-label object)))
+    ;; default-page-setup
     (is-false (gtk-print-operation-default-page-setup object))
+    (is (eq 'gtk-page-setup
+            (type-of (setf (gtk-print-operation-default-page-setup object) (gtk-page-setup-new)))))
+    (is (eq 'gtk-page-setup (type-of (gtk-print-operation-default-page-setup object))))
+    ;; embed-page-setup
     (is-false (gtk-print-operation-embed-page-setup object))
-    ;; Set export-filename
-    (setf (gtk-print-operation-export-filename object) "Export Filename")
+    (is-true (setf (gtk-print-operation-embed-page-setup object) t))
+    (is-true (gtk-print-operation-embed-page-setup object))
+    ;; export-filename
+    (is-false (gtk-print-operation-export-filename object))
+    (is (string= "Export Filename" (setf (gtk-print-operation-export-filename object) "Export Filename")))
     (is (string= "Export Filename" (gtk-print-operation-export-filename object)))
+    ;; has-selection
     (is-false (gtk-print-operation-has-selection object))
+    (is-true (setf (gtk-print-operation-has-selection object) t))
+    (is-true (gtk-print-operation-has-selection object))
     ;; Set job-name
-    (setf (gtk-print-operation-job-name object) "Print Job")
+    (is (stringp (gtk-print-operation-job-name object)))
+    (is (string= "Print Job" (setf (gtk-print-operation-job-name object) "Print Job")))
     (is (string= "Print Job" (gtk-print-operation-job-name object)))
-    (is (= -1 (gtk-print-operation-n-pages object)))
+    ;; n-pages
+    (is (= 20 (gtk-print-operation-n-pages object)))
+    (is (= 30 (setf (gtk-print-operation-n-pages object) 30)))
+    (is (= 30 (gtk-print-operation-n-pages object)))
+    ;; n-pages-to-print
     (is (= -1 (gtk-print-operation-n-pages-to-print object)))
+    ;; n-pages-to-print is not writeable
+    (signals (error) (setf (gtk-print-operation-n-pages-to-print object) 10))
+    (is (= -1 (gtk-print-operation-n-pages-to-print object)))
+    ;; print-settings
     (is-false (gtk-print-operation-print-settings object))
+    (is (eq 'gtk-print-settings
+            (type-of (setf (gtk-print-operation-print-settings object) (gtk-print-settings-new)))))
+    (is (eq 'gtk-print-settings (type-of (gtk-print-operation-print-settings object))))
+    ;; show-progess
     (is-false (gtk-print-operation-show-progress object))
+    (is-true (setf (gtk-print-operation-show-progress object) t))
+    (is-true (gtk-print-operation-show-progress object))
+    ;; status
     (is (eq :initial (gtk-print-operation-status object)))
-    ;; status-string is not writeable
-;    (is (setf (gtk-print-operation-status-string object) "Status String"))
+    ;; status is not writeable
+    (signals (error) (setf (gtk-print-operation-status object) :preparing))
+    (is (eq :initial (gtk-print-operation-status object)))
+    ;; status-string
     (is (string= "" (gtk-print-operation-status-string object)))
+    ;; status-string is not writeable
+    (signals (error) (setf (gtk-print-operation-status-string object) "status"))
+    (is (string= ""  (gtk-print-operation-status-string object)))
+    ;; support-selection
     (is-false (gtk-print-operation-support-selection object))
+    (is-true (setf (gtk-print-operation-support-selection object) t))
+    (is-true (gtk-print-operation-support-selection object))
+    ;; track-print-status
     (is-false (gtk-print-operation-track-print-status object))
+    (is-true (setf (gtk-print-operation-track-print-status object) t))
+    (is-true (gtk-print-operation-track-print-status object))
+    ;; unit
     (is (eq :pixel (gtk-print-operation-unit object)))
-    (is-false (gtk-print-operation-use-full-page object))))
+    (is (eq :mm (setf (gtk-print-operation-unit object) :mm)))
+    (is (eq :mm (gtk-print-operation-unit object)))
+    ;; use-full-page
+    (is-false (gtk-print-operation-use-full-page object))
+    (is-true (setf (gtk-print-operation-use-full-page object) t))
+    (is-true (gtk-print-operation-use-full-page object))))
 
 ;;;     gtk_print_operation_new
 
@@ -266,15 +330,19 @@
 ;;;     gtk_print_operation_get_error
 
 ;;;     gtk_print_operation_run
+
+;; TODO: Fails in a second run of the testsuite with memory error. Check this.
+
+;(test gtk-print-operation-run
+;  (let ((operation (gtk-print-operation-new)))
+;    (is (eq :cancel (gtk-print-operation-run operation :print nil)))))
+
 ;;;     gtk_print_operation_cancel
 ;;;     gtk_print_operation_draw_page_finish
 ;;;     gtk_print_operation_set_defer_drawing
 ;;;     gtk_print_operation_is_finished
 ;;;     gtk_print_run_page_setup_dialog
-;;;
-;;;     GtkPageSetupDoneFunc
 ;;;     gtk_print_run_page_setup_dialog_async
-;;;
 ;;;     gtk_print_operation_preview_end_preview
 ;;;     gtk_print_operation_preview_is_selected
 ;;;     gtk_print_operation_preview_render_page

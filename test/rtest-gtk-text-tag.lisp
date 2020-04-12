@@ -388,6 +388,38 @@
 ;;;     gtk_text_tag_event
 ;;;     gtk_text_tag_changed
 
+(test gtk-text-tag-signals
+  (let* ((tag (gtk-text-tag-new "bold"))
+         (buffer (make-instance 'gtk-text-buffer :text "Some text."))
+         (table (gtk-text-buffer-tag-table buffer))
+         (view (gtk-text-view-new-with-buffer buffer))
+         (iter (gtk-text-buffer-start-iter buffer))
+         (result nil))
+    (g-signal-connect tag "event"
+                      (lambda (tag object event iter)
+                        (setf result (cons "event" result))
+                        (is (eq 'gtk-text-tag (type-of tag)))
+                        (is (eq 'gtk-text-view (type-of object)))
+                        (is (eq 'gdk-event (type-of event)))
+                        (is (eq 'gtk-text-iter (type-of iter)))))
+    (g-signal-connect table "tag-changed"
+                      (lambda (table tag size-changed)
+                        (setf result (cons "changed" result))
+                        (is (eq 'gtk-text-tag-table (type-of table)))
+                        (is (eq 'gtk-text-tag (type-of tag)))
+                        (is (eq 'boolean (type-of size-changed)))))
+    (is (eq 'gtk-text-tag (type-of tag)))
+    (is (eq 'gtk-text-buffer (type-of buffer)))
+    (is (eq 'gtk-text-tag-table (type-of table)))
+    (is (eq 'gtk-text-view (type-of view)))
+    (is (eq 'gtk-text-iter (type-of iter)))
+
+    (gtk-text-tag-event tag view (make-gdk-event :type :nothing) iter)
+    (gtk-text-tag-table-add table tag)
+    (gtk-text-tag-changed tag 0)
+
+    (is (equal '("changed" "event") result))))
+
 ;;;     gtk_text_attributes_new
 ;;;     gtk_text_attributes_copy
 ;;;     gtk_text_attributes_copy_values

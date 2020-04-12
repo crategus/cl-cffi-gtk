@@ -16,18 +16,18 @@
 ;;;   cairo_reference
 ;;;   cairo_destroy
 
-(test cairo-create
+(test cairo-reference
   (let* ((surface (cairo-image-surface-create :rgb24 100 150))
          (context (cairo-create surface)))
     (is-true (pointerp context))
     (is (eq :success (cairo-status context)))
-    (is (eql 1 (cairo-get-reference-count context)))
+    (is (= 1 (cairo-get-reference-count context)))
     (is-true (pointerp (cairo-reference context)))
-    (is (eql 2 (cairo-get-reference-count context)))
+    (is (= 2 (cairo-get-reference-count context)))
     (cairo-destroy context)
-    (is (eql 1 (cairo-get-reference-count context)))
+    (is (= 1 (cairo-get-reference-count context)))
     (cairo-destroy context)
-    (is (eql 0 (cairo-get-reference-count context)))))
+    (is (= 0 (cairo-get-reference-count context)))))
 
 ;;;   cairo_status
 

@@ -50,7 +50,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer :text "text")))
 
     (dotimes (i 1000000)
-      (gtk-text-buffer-get-start-iter buffer))
+      (gtk-text-buffer-start-iter buffer))
 ))
 
 
@@ -60,7 +60,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
     (is (eq buffer (gtk-text-iter-buffer iter)))))
 
 ;;;     gtk_text_iter_copy
@@ -258,7 +258,7 @@ dann benutzen Sie es immer noch.")
                                 :text "Some sample text for the text buffer."))
          (view (gtk-text-view-new-with-buffer buffer))
          (attributes (gtk-text-view-default-attributes view))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
 
     (is (eq 'gtk-text-buffer (type-of buffer)))
     (is (eq 'gtk-text-view (type-of view)))
@@ -276,7 +276,7 @@ dann benutzen Sie es immer noch.")
                                 :text "Some sample text for the text buffer."))
          (view (gtk-text-view-new-with-buffer buffer))
          (attributes (gtk-text-view-default-attributes view))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
 
     (is (eq 'gtk-text-buffer (type-of buffer)))
     (is (eq 'gtk-text-view (type-of view)))

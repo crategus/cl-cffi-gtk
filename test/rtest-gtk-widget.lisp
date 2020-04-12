@@ -7,79 +7,25 @@
 ;;; --- GtkWidget --------------------------------------------------------------
 
 (test gtk-widget-class
-  ;; Type checks
+  ;; Type check
   (is-true  (g-type-is-object "GtkWidget"))
-  (is-true  (g-type-is-abstract "GtkWidget"))
-  (is-true  (g-type-is-derived "GtkWidget"))
-  (is-false (g-type-is-fundamental "GtkWidget"))
-  (is-true  (g-type-is-value-type "GtkWidget"))
-  (is-true  (g-type-has-value-table "GtkWidget"))
-  (is-true  (g-type-is-classed "GtkWidget"))
-  (is-true  (g-type-is-instantiatable "GtkWidget")) ; Why is this true?
-  (is-true  (g-type-is-derivable "GtkWidget"))
-  (is-true  (g-type-is-deep-derivable "GtkWidget"))
-  (is-false (g-type-is-interface "GtkWidget"))
-
   ;; Check the registered name
   (is (eq 'gtk-widget
           (registered-object-type-by-name "GtkWidget")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkWidget"))))
-    (is (equal (gtype "GtkWidget") (g-type-from-class class)))
-    (is (equal (gtype "GtkWidget") (g-object-class-type class)))
-    (is (equal "GtkWidget" (g-object-class-name class)))
-    (is (equal (gtype "GtkWidget")
-               (g-type-from-class  (g-type-class-peek "GtkWidget"))))
-    (is (equal (gtype "GtkWidget")
-               (g-type-from-class  (g-type-class-peek-static "GtkWidget"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-widget)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-widget (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkWidget" (gobject-class-g-type-name class)))
-    (is (equal "GtkWidget" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_widget_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
+  ;; Check the type initializer
+  (is (string= "GtkWidget"
+               (g-type-name (gtype (foreign-funcall "gtk_widget_get_type" :int)))))
+  ;; Check the parent
   (is (equal (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget")))
-  (is (= 3 (g-type-depth "GtkWidget")))
-  (is (equal (gtype "GInitiallyUnowned")
-             (g-type-next-base "GtkWidget" "GObject")))
-  (is-true  (g-type-is-a "GtkWidget" "GObject"))
-  (is-true  (g-type-is-a "GtkWidget" "GInitiallyUnowned"))
-  (is-false (g-type-is-a "GtkWidget" "gboolean"))
-  (is-false (g-type-is-a "GtkWidget" "GtkWindow"))
-
   ;; Check the children
+  ;; TODO: The class GtkIcon is not documented.
   (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
-               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
-               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
+               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch" "GtkCellView"
+               "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea" "GtkIcon")
              (mapcar #'gtype-name (g-type-children "GtkWidget"))))
-             
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'gtype-name (g-type-interfaces "GtkWidget"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkWidget" query)
-    (is (equal (gtype "GtkWidget")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkWidget"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 824
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 32
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
   ;; Get the class properties.
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
                "double-buffered" "events" "expand" "focus-on-click"
@@ -94,7 +40,6 @@
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkWidget"))
                           #'string-lessp)))
-
   ;; Get the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
                "focus-line-width" "focus-padding" "interior-focus" "link-color"
@@ -104,10 +49,6 @@
                "wide-separators" "window-dragging")
              (mapcar #'param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWidget"))))
-
-  ;; Get the names of the child properties
-  ;; No test because GtkWidget is not a Container
-
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkWidget" GTK-WIDGET
                        (:SUPERCLASS G-INITIALLY-UNOWNED :EXPORT T :INTERFACES
@@ -125,7 +66,7 @@
                          "double-buffered" "gboolean" T T)
                         (EVENTS GTK-WIDGET-EVENTS "events" "GdkEventMask" T T)
                         (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T T)
-                        (FOCUS-ON-CLICK GTK-WIDGET-FOCUS-ON-CLICK 
+                        (FOCUS-ON-CLICK GTK-WIDGET-FOCUS-ON-CLICK
                          "focus-on-click" "gboolean" T T)
                         (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T T)
                         (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT "has-default"
@@ -402,7 +343,7 @@
   @see-slot{gtk-widget-parent}
   @see-slot{gtk-widget-receives-default}
 
-scale-factor  
+scale-factor
 
   @see-slot{gtk-widget-sensitive}
   @see-slot{gtk-widget-style}
@@ -433,7 +374,7 @@ scale-factor
 |#
 
 ;;; --- gtk-widget-width-request -----------------------------------------------
-  
+
 (test gtk-widget-width-request
   (let ((widget (make-instance 'gtk-button)))
     (is (eql -1 (gtk-widget-width-request widget)))
@@ -569,22 +510,22 @@ scale-factor
 ;;;   gtk_widget_class_find_style_property
 
 (test gtk-widget-class-find-style-property.1
-  (is (equal "cursor-aspect-ratio"
-             (param-spec-name
-               (gtk-widget-class-find-style-property "GtkFrame"
-                                                     "cursor-aspect-ratio")))))
+  (is (string= "cursor-aspect-ratio"
+               (param-spec-name
+                 (gtk-widget-class-find-style-property "GtkFrame"
+                                                       "cursor-aspect-ratio")))))
 
 (test gtk-widget-class-find-style-property.2
-  (is (equal "cursor-color"
-             (param-spec-name
-               (gtk-widget-class-find-style-property "GtkFrame"
-                                                     "cursor-color")))))
+  (is (string= "cursor-color"
+               (param-spec-name
+                 (gtk-widget-class-find-style-property "GtkFrame"
+                                                       "cursor-color")))))
 
 (test gtk-widget-class-find-style-property.3
-  (is (equal "focus-line-pattern"
-             (param-spec-name
-               (gtk-widget-class-find-style-property "GtkFrame"
-                                                     "focus-line-pattern")))))
+  (is (string= "focus-line-pattern"
+               (param-spec-name
+                 (gtk-widget-class-find-style-property "GtkFrame"
+                                                       "focus-line-pattern")))))
 
 ;;;   gtk_widget_class_list_style_properties
 
@@ -724,7 +665,7 @@ scale-factor
 
 (test gtk-widget-get-request-mode.2
   (is (eql :constant-size
-           (gtk-widget-get-request-mode (make-instance 'gtk-button 
+           (gtk-widget-get-request-mode (make-instance 'gtk-button
                                                        :label "Hello")))))
 
 ;;;     gtk_widget_get_preferred_size

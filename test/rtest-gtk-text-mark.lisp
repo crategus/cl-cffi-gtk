@@ -11,6 +11,9 @@
   ;; Check the registered name
   (is (eq 'gtk-text-mark
           (registered-object-type-by-name "GtkTextMark")))
+  ;; Check the type initializer
+  (is (string= "GtkTextMark"
+               (g-type-name (gtype (foreign-funcall "gtk_text_mark_get_type" :int)))))
   ;; Check the parent
   (is (equal (gtype "GObject") (g-type-parent "GtkTextMark")))
   ;; Check the children
@@ -78,7 +81,7 @@
 (test gtk-text-mark-deleted
   (let* ((buffer (make-instance 'gtk-text-buffer :text "Some sample text"))
          (mark (gtk-text-mark-new "Name" t))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
     (is-false (gtk-text-buffer-add-mark buffer mark iter))
     (is-false (gtk-text-mark-deleted mark))
     (is-false (gtk-text-buffer-delete-mark buffer mark))
@@ -89,7 +92,7 @@
 (test gtk-text-mark-buffer
   (let* ((buffer (make-instance 'gtk-text-buffer :text "Some sample text"))
          (mark (gtk-text-mark-new "Name" t))
-         (iter (gtk-text-buffer-get-start-iter buffer)))
+         (iter (gtk-text-buffer-start-iter buffer)))
     (is-false (gtk-text-buffer-add-mark buffer mark iter))
     (is (eq 'gtk-text-buffer (type-of (gtk-text-mark-buffer mark))))))
 

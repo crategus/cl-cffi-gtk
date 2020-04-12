@@ -43,7 +43,9 @@
 ;    gtk.header-bar.lisp
 ;    gtk.overlay.lisp
 ;    gtk.button-box.lisp
-;    gtk.paned.lisp
+
+(load "rtest-gtk-paned.lisp")
+
 ;    gtk.layout.lisp
 ;    gtk.notebook.lisp
 ;    gtk.expander.lisp
@@ -57,9 +59,8 @@
 (load "rtest-gtk-text-mark.lisp")
 (load "rtest-gtk-text-buffer.lisp")
 (load "rtest-gtk-text-tag.lisp")
-
-; gtk.text-tag-table.lisp
-; gtk.text-view.lisp
+(load "rtest-gtk-text-tag-table.lisp")
+(load "rtest-gtk-text-view.lisp")
 
 ;;;  Scrolling
 
@@ -68,8 +69,14 @@
 ;;;  Printing
 
 (load "rtest-gtk-print-operation.lisp")
-(load "rtest-gtk-paper-size.lisp")
+(load "rtest-gtk-print-context.lisp")
 (load "rtest-gtk-print-settings.lisp")
+(load "rtest-gtk-page-setup.lisp")
+(load "rtest-gtk-paper-size.lisp")
+(load "rtest-gtk-printer.lisp")
+(load "rtest-gtk-print-job.lisp")
+(load "rtest-gtk-print-unix-dialog.lisp")
+(load "rtest-gtk-page-setup-unix-dialog.lisp")
 
 ;;;  Miscellaneous
 
@@ -106,8 +113,6 @@
 
 (load "rtest-gtk-action.lisp")
 (load "rtest-gtk-action-group.lisp")
-
-
 
 (load "rtest-gtk-entry-buffer.lisp")
 (load "rtest-gtk-frame.lisp")
