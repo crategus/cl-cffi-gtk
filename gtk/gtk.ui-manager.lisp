@@ -156,7 +156,7 @@
     (setf (gtk-box-child-position b child) position)))
 
 (defmethod pack-child ((p gtk-paned) child &key (resize 'default) (shrink t))
-  (if (null (gtk-paned-get-child1 p))
+  (if (null (gtk-paned-child1 p))
       (gtk-paned-pack1 p
                        child
                        :resize (if (eq resize 'default) nil resize)
