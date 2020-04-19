@@ -540,7 +540,7 @@
 ;;; gtk_css_section_get_parent ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_section_get_parent" gtk-section-get-parent)
+(defcfun ("gtk_css_section_get_parent" gtk-css-section-get-parent)
     (g-boxed-foreign gtk-css-section)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-7}
@@ -559,7 +559,7 @@
   @see-class{gtk-css-section}"
   (section (g-boxed-foreign gtk-css-section)))
 
-(export 'gtk-section-get-parent)
+(export 'gtk-css-section-get-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_section_get_section_type ()
