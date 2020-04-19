@@ -1091,7 +1091,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "print-settings"
                                                'gtk-print-operation) 't)
- "The @code{print-settings} property of type @symbol{gtk-print-settings}
+ "The @code{print-settings} property of type @class{gtk-print-settings}
   (Read / Write) @br{}
   The print settings used for initializing the dialog. Setting this property is
   typically used to re-establish print settings from a previous print operation,
