@@ -353,8 +353,8 @@
         @entry[window]{The offscreen window on which the signal is emitted.}
         @entry[width]{The width of the offscreen surface to create.}
         @entry[height]{The height of the offscreen surface to create.}
-        @entry[Returns]{The newly created @symbol{cairo-surface-t} for the
-          offscreen window.}
+        @entry[Returns]{The newly created @symbol{cairo-surface-t} structure
+          for the offscreen window.}
       @end{table}
     @subheading{The \"from-embedder\" signal}
       @begin{pre}

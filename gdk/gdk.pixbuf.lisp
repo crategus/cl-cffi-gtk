@@ -113,8 +113,8 @@
   @return{A newly-created pixbuf with a reference count of 1,
     or @code{nil} on error.}
   @begin{short}
-    Transfers image data from a @symbol{cairo-surface-t} and converts it to an
-    RGB(A) representation inside a @class{gdk-pixbuf} object.
+    Transfers image data from a @symbol{cairo-surface-t} structure and converts
+    it to an RGB(A) representation inside a @class{gdk-pixbuf} object.
   @end{short}
   This allows you to efficiently read individual pixels from cairo surfaces. For
   @class{gdk-window}'s, use the function @fun{gdk-pixbuf-get-from-window}

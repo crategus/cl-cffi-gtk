@@ -596,7 +596,7 @@
  "@version{2019-5-29}
   @argument[cursor]{a @class{gdk-cursor} object}
   @begin{return}
-    surface -- a @class{cairo-surface-t} representing a cursor @br{}
+    surface -- a @symbol{cairo-surface-t} structure representing a cursor @br{}
     x-hot   -- the hotspot x position @br{}
     y-hot   -- the hotspot y position
   @end{return}
