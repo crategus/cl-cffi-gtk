@@ -4,7 +4,7 @@
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :depends-on (:cl-cffi-gtk)
+  :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "package")
                (:file "alignment")
                (:file "app-chooser-button")
@@ -55,6 +55,7 @@
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")
+               (:file "printing")
                (:file "progress-bar")
                (:file "scale-widgets")
                (:file "scrolled-window")

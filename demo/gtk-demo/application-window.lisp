@@ -44,11 +44,11 @@
         (active (gtk-toggle-action-active current))
         (value (gtk-radio-action-current-value current)))
     (when active
-      (gtk-label-set-text (app-message *app*)
-                          (format nil
-                                  "You activated radio action ~S of type ~S.~% ~
-                                   Current value ~D."
-                                   name type value))
+      (setf (gtk-label-text (app-message *app*))
+            (format nil
+                    "You activated radio action ~S of type ~S.~% ~
+                     Current value ~D."
+                    name type value))
       (setf (gtk-info-bar-message-type (app-infobar *app*)) value)
       (gtk-widget-show (app-infobar *app*)))))
 
@@ -284,7 +284,7 @@
 
       ;; Add infobar
       (gtk-widget-show message)
-      (gtk-box-pack-start (gtk-info-bar-get-content-area infobar) message)
+      (gtk-box-pack-start (gtk-info-bar-content-area infobar) message)
       (gtk-info-bar-add-button infobar "gtk-ok" -5)
       (g-signal-connect infobar "response"
                         (lambda (infobar response-id)

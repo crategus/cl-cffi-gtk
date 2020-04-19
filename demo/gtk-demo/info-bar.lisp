@@ -14,7 +14,7 @@
                                     :no-show-all t))
            (message (make-instance 'gtk-label
                                    :label ""))
-           (content (gtk-info-bar-get-content-area info-bar)))
+           (content (gtk-info-bar-content-area info-bar)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -35,7 +35,7 @@
            (gtk-widget-hide info-bar)))
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
-      (gtk-label-set-text message "An Info Message in the content area.")
+      (setf (gtk-label-text message) "An Info Message in the content area.")
       (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all

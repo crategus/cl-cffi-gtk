@@ -1,6 +1,6 @@
 (defpackage :gtk-demo
   (:use :gtk :gdk :gdk-pixbuf :gobject
-   :glib :gio :pango :cairo :cffi :common-lisp)
+   :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
   (:export #:gtk-demo))
 
 (in-package :gtk-demo)

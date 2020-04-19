@@ -2,8 +2,13 @@
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :common-lisp)
   (:export #:example-dialog #:example-dialog-new #:example-dialog-new-with-buttons
-           #:example-dialog-ui #:example-file-chooser-dialog #:example-grab
-           #:example-menu-builder #:example-message-dialog-get-message-area
+           #:example-dialog-ui #:example-file-chooser-dialog
+           #:example-grab
+           #:example-image-button-press
+           #:example-info-bar
+           #:example-level-bar
+           #:example-menu-builder
+           #:example-message-dialog-get-message-area
            #:example-message-dialog-new #:example-message-dialog-new-with-markup
            #:example-message-dialog-set-image #:example-message-dialog-set-markup
            #:example-message-dialog-ui

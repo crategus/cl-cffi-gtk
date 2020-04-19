@@ -14,7 +14,7 @@
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
-           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (id (gtk-statusbar-context-id statusbar "Example Status Bar"))
            (count 0))
       (g-signal-connect window "destroy"
                         (lambda (widget)

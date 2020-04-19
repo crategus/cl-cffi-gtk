@@ -43,75 +43,74 @@
   (defun event-handler (event)
     (format t "Event ~A~%" event)
     (when (not (eq :expose (gdk-event-type event)))
-      (gtk-label-set-text event-type
-                          (format nil "~A" (gdk-event-type event)))
-      (gtk-label-set-text event-window
-                          (format nil "~A" (gdk-event-window event)))
+      (setf (gtk-label-text event-type)
+            (format nil "~A" (gdk-event-type event)))
+      (setf (gtk-label-text event-window)
+            (format nil "~A" (gdk-event-window event)))
       (case (gdk-event-type event)
         ((:button-release :button-press :2button-press :3button-press)
          (format t "Button relase and press event~%")
-         (gtk-label-set-text event-button-time
-                             (format nil "~A" (gdk-event-button-time event)))
-         (gtk-label-set-text event-button-x
-                             (format nil "~A" (gdk-event-button-x event)))
-         (gtk-label-set-text event-button-y
-                             (format nil "~A" (gdk-event-button-y event)))
-         (gtk-label-set-text event-button-axes
-                             (format nil "~A" (gdk-event-button-axes event)))
-         (gtk-label-set-text event-button-state
-                             (format nil "~A"
-                                     (foreign-bitfield-symbols 'gdk-modifier-type
-                                                               (gdk-event-button-state event))))
-         (gtk-label-set-text event-button-button
-                             (format nil "~A" (gdk-event-button-button event)))
-         (gtk-label-set-text event-button-device
-                             (format nil "~A" (gdk-event-button-device event)))
-         (gtk-label-set-text event-button-x-root
-                             (format nil "~A" (gdk-event-button-x-root event)))
-         (gtk-label-set-text event-button-y-root
-                             (format nil "~A" (gdk-event-button-y-root event)))
+         (setf (gtk-label-text event-button-time)
+               (format nil "~A" (gdk-event-button-time event)))
+         (setf (gtk-label-text event-button-x)
+               (format nil "~A" (gdk-event-button-x event)))
+         (setf (gtk-label-text event-button-y)
+               (format nil "~A" (gdk-event-button-y event)))
+         (setf (gtk-label-text event-button-axes)
+               (format nil "~A" (gdk-event-button-axes event)))
+         (setf (gtk-label-text event-button-state)
+               (format nil "~A"
+                       (foreign-bitfield-symbols 'gdk-modifier-type
+                                                 (gdk-event-button-state event))))
+         (setf (gtk-label-text event-button-button)
+               (format nil "~A" (gdk-event-button-button event)))
+         (setf (gtk-label-text event-button-device)
+               (format nil "~A" (gdk-event-button-device event)))
+         (setf (gtk-label-text event-button-x-root)
+               (format nil "~A" (gdk-event-button-x-root event)))
+         (setf (gtk-label-text event-button-y-root)
+               (format nil "~A" (gdk-event-button-y-root event)))
          (gtk-notebook-set-current-page notebook 0))
         ((:key-press :key-release)
-         (gtk-label-set-text event-key-time
-                             (format nil "~A" (gdk-event-key-time event)))
-         (gtk-label-set-text event-key-state
-                             (format nil "~A" (gdk-event-key-state event)))
-         (gtk-label-set-text event-key-keyval
-                             (format nil "~A" (gdk-event-key-keyval event)))
-         (gtk-label-set-text event-key-length
-                             (format nil "~A" (gdk-event-key-length event)))
-         (gtk-label-set-text event-key-string
-                             (format nil "~A" (gdk-event-key-string event)))
-         (gtk-label-set-text event-key-hardware-keycode
-                             (format nil "~A" (gdk-event-key-hardware-keycode event)))
-         (gtk-label-set-text event-key-group
-                             (format nil "~A" (gdk-event-key-group event)))
-         (gtk-label-set-text event-key-is-modifier
-                             (format nil "~A" (gdk-event-key-is-modifier event)))
+         (setf (gtk-label-text event-key-time)
+               (format nil "~A" (gdk-event-key-time event)))
+         (setf (gtk-label-text event-key-state)
+               (format nil "~A" (gdk-event-key-state event)))
+         (setf (gtk-label-text event-key-keyval)
+               (format nil "~A" (gdk-event-key-keyval event)))
+         (setf (gtk-label-text event-key-length)
+               (format nil "~A" (gdk-event-key-length event)))
+         (setf (gtk-label-text event-key-string)
+               (format nil "~A" (gdk-event-key-string event)))
+         (setf (gtk-label-text event-key-hardware-keycode)
+               (format nil "~A" (gdk-event-key-hardware-keycode event)))
+         (setf (gtk-label-text event-key-group)
+               (format nil "~A" (gdk-event-key-group event)))
+         (setf (gtk-label-text event-key-is-modifier)
+               (format nil "~A" (gdk-event-key-is-modifier event)))
          (gtk-notebook-set-current-page notebook 1))
         ((:enter-notify :leave-notify)
-         (gtk-label-set-text event-crossing-subwindow
-                             (format nil "~A" (gdk-event-crossing-subwindow event)))
-         (gtk-label-set-text event-crossing-time
-                             (format nil "~A" (gdk-event-crossing-time event)))
-         (gtk-label-set-text event-crossing-x
-                             (format nil "~A" (gdk-event-crossing-x event)))
-         (gtk-label-set-text event-crossing-y
-                             (format nil "~A" (gdk-event-crossing-y event)))
-         (gtk-label-set-text event-crossing-x-root
-                             (format nil "~A" (gdk-event-crossing-x-root event)))
-         (gtk-label-set-text event-crossing-y-root
-                             (format nil "~A" (gdk-event-crossing-y-root event)))
-         (gtk-label-set-text event-crossing-mode
-                             (format nil "~A" (gdk-event-crossing-mode event)))
-         (gtk-label-set-text event-crossing-detail
-                             (format nil "~A" (gdk-event-crossing-detail event)))
-         (gtk-label-set-text event-crossing-focus
-                             (format nil "~A" (gdk-event-crossing-focus event)))
-         (gtk-label-set-text event-crossing-state
-                             (format nil "~A" (gdk-event-crossing-state event)))
+         (setf (gtk-label-text event-crossing-subwindow)
+               (format nil "~A" (gdk-event-crossing-subwindow event)))
+         (setf (gtk-label-text event-crossing-time)
+               (format nil "~A" (gdk-event-crossing-time event)))
+         (setf (gtk-label-text event-crossing-x)
+               (format nil "~A" (gdk-event-crossing-x event)))
+         (setf (gtk-label-text event-crossing-y)
+               (format nil "~A" (gdk-event-crossing-y event)))
+         (setf (gtk-label-text event-crossing-x-root)
+               (format nil "~A" (gdk-event-crossing-x-root event)))
+         (setf (gtk-label-text event-crossing-y-root)
+               (format nil "~A" (gdk-event-crossing-y-root event)))
+         (setf (gtk-label-text event-crossing-mode)
+               (format nil "~A" (gdk-event-crossing-mode event)))
+         (setf (gtk-label-text event-crossing-detail)
+               (format nil "~A" (gdk-event-crossing-detail event)))
+         (setf (gtk-label-text event-crossing-focus)
+               (format nil "~A" (gdk-event-crossing-focus event)))
+         (setf (gtk-label-text event-crossing-state)
+               (format nil "~A" (gdk-event-crossing-state event)))
          (gtk-notebook-set-current-page notebook 2))
-
 ))
     (gtk-main-do-event event)
     +gdk-event-stop+)
