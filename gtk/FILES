@@ -53,14 +53,14 @@ GTK+ Widgets and Objects
 
   Display Widgets
 
- +  gtk.label.lisp                   - GtkLabel                    - GTK+ 3.24
- +  gtk.image.lisp                   - GtkImage                    - GTK+ 3.24 &
- +  gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.24
- +  gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.24
- +  gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.24
- +  gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.24
- +  gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.24
- +  gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.24
+    gtk.label.lisp                   - GtkLabel                    - GTK+ 3.24
+    gtk.image.lisp                   - GtkImage                    - GTK+ 3.24
+    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.24
+    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.24
+    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.24
+    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.24
+    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.24
+    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.24
 
   Buttons and Toggles
 

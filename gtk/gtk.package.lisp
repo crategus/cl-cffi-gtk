@@ -873,7 +873,6 @@
       A widget that displays a small to medium amount of text.
 
       @about-class{gtk-label}
-
       @about-generic{gtk-label-angle}
       @about-generic{gtk-label-attributes}
       @about-generic{gtk-label-cursor-position}
@@ -896,31 +895,25 @@
       @about-generic{gtk-label-wrap-mode}
       @about-generic{gtk-label-xalign}
       @about-generic{gtk-label-yalign}
-
       @about-function{gtk-label-new}
-      @about-function{gtk-label-set-text}
+      @about-function{gtk-label-text}
       @about-function{gtk-label-set-markup}
       @about-function{gtk-label-set-markup-with-mnemonic}
-      @about-function{gtk-label-set-line-wrap}
-      @about-function{gtk-label-set-line-wrap-mode}
-      @about-function{gtk-label-get-layout-offsets}
-      @about-function{gtk-label-get-text}
+      @about-function{gtk-label-line-wrap}
+      @about-function{gtk-label-line-wrap-mode}
+      @about-function{gtk-label-layout-offsets}
       @about-function{gtk-label-new-with-mnemonic}
       @about-function{gtk-label-select-region}
       @about-function{gtk-label-set-text-with-mnemonic}
-      @about-function{gtk-label-get-layout}
-      @about-function{gtk-label-get-line-wrap}
-      @about-function{gtk-label-get-line-wrap-mode}
-      @about-function{gtk-label-get-selection-bounds}
-      @about-function{gtk-label-get-current-uri}
+      @about-function{gtk-label-layout}
+      @about-function{gtk-label-selection-bounds}
+      @about-function{gtk-label-current-uri}
     @end{subsection}
     @begin[GtkImage]{subsection}
       A widget displaying an image.
 
       @about-symbol{gtk-image-type}
-
       @about-class{gtk-image}
-
       @about-generic{gtk-image-file}
       @about-generic{gtk-image-gicon}
       @about-generic{gtk-image-icon-name}
@@ -934,7 +927,6 @@
       @about-generic{gtk-image-storage-type}
       @about-generic{gtk-image-surface}
       @about-generic{gtk-image-use-fallback}
-
       @about-function{gtk-image-get-icon-set}
       @about-function{gtk-image-get-stock}
       @about-function{gtk-image-get-animation}
@@ -965,7 +957,7 @@
       Show a spinner animation.
 
       @about-class{gtk-spinner}
-
+      @about-generic{gtk-spinner-active}
       @about-function{gtk-spinner-new}
       @about-function{gtk-spinner-start}
       @about-function{gtk-spinner-stop}
@@ -974,11 +966,9 @@
       Report important messages to the user.
 
       @about-class{gtk-info-bar}
-
       @about-generic{gtk-info-bar-message-type}
       @about-generic{gtk-info-bar-revealed}
       @about-generic{gtk-info-bar-show-close-button}
-
       @about-function{gtk-info-bar-new}
       @about-function{gtk-info-bar-new-with-buttons}
       @about-function{gtk-info-bar-add-action-widget}
@@ -987,21 +977,19 @@
       @about-function{gtk-info-bar-set-response-sensitive}
       @about-function{gtk-info-bar-set-default-response}
       @about-function{gtk-info-bar-response}
-      @about-function{gtk-info-bar-get-action-area}
-      @about-function{gtk-info-bar-get-content-area}
+      @about-function{gtk-info-bar-action-area}
+      @about-function{gtk-info-bar-content-area}
     @end{subsection}
     @begin[GtkProgressBar]{subsection}
       A widget which indicates progress visually.
 
       @about-class{gtk-progress-bar}
-
+      @about-generic{gtk-progress-bar-ellipsize}
       @about-generic{gtk-progress-bar-fraction}
       @about-generic{gtk-progress-bar-inverted}
+      @about-generic{gtk-progress-bar-pulse-step}
       @about-generic{gtk-progress-bar-show-text}
       @about-generic{gtk-progress-bar-text}
-      @about-generic{gtk-progress-bar-ellipsize}
-      @about-generic{gtk-progress-bar-pulse-step}
-
       @about-function{gtk-progress-bar-new}
       @about-function{gtk-progress-bar-pulse}
     @end{subsection}
@@ -1009,18 +997,12 @@
       A bar that can be used as a level indicator.
 
       @about-symbol{gtk-level-bar-mode}
-      @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
-      @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
-      @about-symbol{GTK_LEVEL_BAR_OFFSET_FULL}
-
       @about-class{gtk-level-bar}
-
       @about-generic{gtk-level-bar-inverted}
       @about-generic{gtk-level-bar-max-value}
       @about-generic{gtk-level-bar-min-value}
       @about-generic{gtk-level-bar-mode}
       @about-generic{gtk-level-bar-value}
-
       @about-function{gtk-level-bar-new}
       @about-function{gtk-level-bar-new-for-interval}
       @about-function{gtk-level-bar-add-offset-value}
@@ -1031,25 +1013,22 @@
       Report messages of minor importance to the user.
 
       @about-class{gtk-statusbar}
-
       @about-function{gtk-statusbar-new}
-      @about-function{gtk-statusbar-get-context-id}
+      @about-function{gtk-statusbar-context-id}
       @about-function{gtk-statusbar-push}
       @about-function{gtk-statusbar-pop}
       @about-function{gtk-statusbar-remove}
       @about-function{gtk-statusbar-remove-all}
-      @about-function{gtk-statusbar-get-message-area}
+      @about-function{gtk-statusbar-message-area}
     @end{subsection}
     @begin[GtkAccelLabel]{subsection}
       A label which displays an accelerator key on the right of the text.
 
       @about-class{gtk-accel-label}
-
       @about-generic{gtk-accel-label-accel-closure}
       @about-generic{gtk-accel-label-accel-widget}
-
       @about-function{gtk-accel-label-new}
-      @about-function{gtk-accel-label-get-accel-width}
+      @about-function{gtk-accel-label-accel-width}
       @about-function{gtk-accel-label-set-accel}
       @about-function{gtk-accel-label-get-accel}
       @about-function{gtk-accel-label-refetch}
@@ -1868,9 +1847,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-generic{gtk-text-tag-wrap-mode-set}
 
       @about-function{gtk-text-tag-new}
-      @about-function{gtk-text-tag-get-priority}
-      @about-function{gtk-text-tag-set-priority}
+      @about-function{gtk-text-tag-priority}
       @about-function{gtk-text-tag-event}
+      @about-function{gtk-text-tag-changed}
 
       @about-struct{gtk-text-attributes}
       @about-function{make-gtk-text-attributes}
@@ -3905,7 +3884,6 @@ setup_tree (void)
       @about-symbol{gtk-print-operation-action}
       @about-symbol{gtk-print-operation-result}
       @about-symbol{gtk-print-error}
-
       @about-class{gtk-print-operation}
       @about-generic{gtk-print-operation-allow-async}
       @about-generic{gtk-print-operation-current-page}
@@ -3925,7 +3903,6 @@ setup_tree (void)
       @about-generic{gtk-print-operation-track-print-status}
       @about-generic{gtk-print-operation-unit}
       @about-generic{gtk-print-operation-use-full-page}
-
       @about-function{gtk-print-operation-new}
       @about-function{gtk-print-operation-get-error}
       @about-function{gtk-print-operation-run}
@@ -3935,7 +3912,6 @@ setup_tree (void)
       @about-function{gtk-print-operation-is-finished}
       @about-function{gtk-print-run-page-setup-dialog}
       @about-function{gtk-print-run-page-setup-dialog-async}
-
       @about-class{gtk-print-operation-preview}
       @about-function{gtk-print-operation-preview-end-preview}
       @about-function{gtk-print-operation-preview-is-selected}
@@ -3974,23 +3950,17 @@ setup_tree (void)
       @about-function{gtk-print-settings-set}
       @about-function{gtk-print-settings-unset}
       @about-function{gtk-print-settings-foreach}
-      @about-function{gtk-print-settings-get-bool}
-      @about-function{gtk-print-settings-set-bool}
-      @about-function{gtk-print-settings-get-double}
-      @about-function{gtk-print-settings-get-double-with-default}
-      @about-function{gtk-print-settings-set-double}
-      @about-function{gtk-print-settings-get-length}
-      @about-function{gtk-print-settings-set-length}
-      @about-function{gtk-print-settings-get-int}
-      @about-function{gtk-print-settings-get-int-with-default}
-      @about-function{gtk-print-settings-set-int}
+      @about-function{gtk-print-settings-bool}
+      @about-function{gtk-print-settings-double}
+      @about-function{gtk-print-settings-double-with-default}
+      @about-function{gtk-print-settings-length}
+      @about-function{gtk-print-settings-int}
+      @about-function{gtk-print-settings-int-with-default}
       @about-function{gtk-print-settings-printer}
       @about-function{gtk-print-settings-orientation}
       @about-function{gtk-print-settings-paper-size}
-      @about-function{gtk-print-settings-get-paper-width}
-      @about-function{gtk-print-settings-set-paper-width}
-      @about-function{gtk-print-settings-get-paper-height}
-      @about-function{gtk-print-settings-set-paper-height}
+      @about-function{gtk-print-settings-paper-width}
+      @about-function{gtk-print-settings-paper-height}
       @about-function{gtk-print-settings-use-color}
       @about-function{gtk-print-settings-collate}
       @about-function{gtk-print-settings-reverse}
@@ -4030,19 +4000,15 @@ setup_tree (void)
       @about-function{gtk-page-setup-copy}
       @about-function{gtk-page-setup-orientation}
       @about-function{gtk-page-setup-paper-size}
-      @about-function{gtk-page-setup-get-top-margin}
-      @about-function{gtk-page-setup-set-top-margin}
-      @about-function{gtk-page-setup-get-bottom-margin}
-      @about-function{gtk-page-setup-set-bottom-margin}
-      @about-function{gtk-page-setup-get-left-margin}
-      @about-function{gtk-page-setup-set-left-margin}
-      @about-function{gtk-page-setup-get-right-margin}
-      @about-function{gtk-page-setup-set-right-margin}
+      @about-function{gtk-page-setup-top-margin}
+      @about-function{gtk-page-setup-bottom-margin}
+      @about-function{gtk-page-setup-left-margin}
+      @about-function{gtk-page-setup-right-margin}
       @about-function{gtk-page-setup-set-paper-size-and-default-margins}
-      @about-function{gtk-page-setup-get-paper-width}
-      @about-function{gtk-page-setup-get-paper-height}
-      @about-function{gtk-page-setup-get-page-width}
-      @about-function{gtk-page-setup-get-page-height}
+      @about-function{gtk-page-setup-paper-width}
+      @about-function{gtk-page-setup-paper-height}
+      @about-function{gtk-page-setup-page-width}
+      @about-function{gtk-page-setup-page-height}
       @about-function{gtk-page-setup-new-from-file}
       @about-function{gtk-page-setup-new-from-key-file}
       @about-function{gtk-page-setup-new-from-gvariant}
@@ -4059,6 +4025,7 @@ setup_tree (void)
       @about-class{gtk-paper-size}
       @about-function{gtk-paper-size-new}
       @about-function{gtk-paper-size-new-from-ppd}
+      @about-function{gtk-paper-size-new-from-ipp}
       @about-function{gtk-paper-size-new-custom}
       @about-function{gtk-paper-size-copy}
       @about-function{gtk-paper-size-free}
@@ -4068,7 +4035,7 @@ setup_tree (void)
       @about-function{gtk-paper-size-display-name}
       @about-function{gtk-paper-size-ppd-name}
       @about-function{gtk-paper-size-width}
-      @about-function{gtk-paper-size--height}
+      @about-function{gtk-paper-size-height}
       @about-function{gtk-paper-size-is-ipp}
       @about-function{gtk-paper-size-is-custom}
       @about-function{gtk-paper-size-set-size}
@@ -4155,7 +4122,6 @@ setup_tree (void)
       @about-function{gtk-print-unix-dialog-settings}
       @about-function{gtk-print-unix-dialog-add-custom-tab}
       @about-function{gtk-print-unix-dialog-page-setup-set}
-      @about-function{gtk-print-unix-dialog-manual-capabilities}
     @end{subsection}
     @begin[GtkPageSetupUnixDialog]{subsection}
       A page setup dialog.
@@ -5729,18 +5695,18 @@ setup_tree (void)
     @begin[GtkCssProvider]{subsection}
       CSS-like styling for widgets.
 
+      @about-symbol{gtk-css-provider-error}
+      @about-class{gtk-css-section}
+      @about-symbol{gtk-css-section-type}
       @about-class{gtk-css-provider}
       @about-function{gtk-css-provider-get-default}
       @about-function{gtk-css-provider-get-named}
       @about-function{gtk-css-provider-load-from-data}
       @about-function{gtk-css-provider-load-from-file}
       @about-function{gtk-css-provider-load-from-path}
+      @about-function{gtk-css-provider-load-from-resource}
       @about-function{gtk-css-provider-new}
       @about-function{gtk-css-provider-to-string}
-      @about-symbol{GTK-CSS-PROVIDER-ERROR}
-      @about-symbol{GtkCssProviderError}
-      @about-symbol{GtkCssSection}
-      @about-symbol{GtkCssSectionType}
       @about-function{gtk-css-section-get-end-line}
       @about-function{gtk-css-section-get-end-position}
       @about-function{gtk-css-section-get-file}
@@ -5854,6 +5820,7 @@ setup_tree (void)
       @about-function{gtk-icon-info-load-surface}
       @about-function{gtk-icon-info-load-icon-async}
       @about-function{gtk-icon-info-load-icon-finish}
+      @about-function{gtk-icon-info-load-symbolic}
       @about-function{gtk-icon-info-load-symbolic-for-style}
       @about-function{gtk-icon-info-load-symbolic-for-context}
       @about-function{gtk-icon-info-load-symbolic-for-context-async}
