@@ -799,6 +799,17 @@
 ;;;     particular size in device units.
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-font-description-size) (size desc)
+  (foreign-funcall "pango_font_description_set_size"
+                   (g-boxed-foreign pango-font-description) desc
+                   :int size)
+  size)
+
+(defcfun ("pango_font_description_get_size" pango-font-description-size) :int
+  (desc (g-boxed-foreign pango-font-description)))
+
+(export 'pango-font-description-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_description_get_size ()
 ;;;
