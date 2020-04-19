@@ -199,6 +199,21 @@
   settings for the next time your app runs, or even store them in a document.
   The predefined keys try to use shared values as much as possible so that
   moving such a document between systems still works.
+
+  The list of keys for a print setting:
+  @begin{pre}
+\"printer\"                \"orientation\"              \"paper-format\"
+\"paper-width\"            \"paper-height\"             \"use-color\"
+\"collate\"                \"reverse\"                  \"duplex\"
+\"quality\"                \"n-copies\"                 \"number-up\"
+\"number-up-layout\"       \"resolution\"               \"resolution-x\"
+\"resolution-y\"           \"printer-lpi\"              \"scale\"
+\"print-pages\"            \"page-ranges\"              \"page-set\"
+\"default-source\"         \"media-type\"               \"dither\"
+\"finishings\"             \"output-bin\"               \"output-dir\"
+\"output-basename\"        \"output-file-format\"       \"output-uri\"
+\"win32-driver-extra\"     \"win32-driver-version\"
+  @end{pre}
   @see-class{gtk-print-operation}
   @see-class{gtk-print-unix-dialog}")
 
@@ -412,6 +427,10 @@
 ;;;     end of page range.
 ;;; ----------------------------------------------------------------------------
 
+;; Not implemented.
+;; We handle page ranges as a list of lists, e. g. '((1) (15 20) 25).
+;; The string representation of this is "pages-ranges=1, 15-20, 25"
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPageSet
 ;;; ----------------------------------------------------------------------------
@@ -594,76 +613,88 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_bool ()
+;;; gtk_print_settings_set_bool ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_get_bool" gtk-print-settings-get-bool) :boolean
+(defun (setf gtk-print-settings-bool) (value settings key)
+  (foreign-funcall "gtk_print_settings_set_bool"
+                   (g-object gtk-print-settings) settings
+                   g-string key
+                   :boolean value
+                   :void)
+  value)
+
+(defcfun ("gtk_print_settings_get_bool" gtk-print-settings-bool) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-12}
+  @syntax[]{(gtk-print-settings-bool settings key) => value}
+  @syntax[]{(setf (gtk-print-settings-bool settings key) value)}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
-  @return{@em{True}, if @arg{key} maps to a true value.}
+  @argument[value]{a boolean}
   @begin{short}
-    Returns the boolean represented by the value that is associated with
-    @arg{key}.
+    Accessor of the boolean value of a key in a print setting.
   @end{short}
+
+  The function @sym{gtk-print-settings-bool} returns the boolean represented
+  by the value that is associated with @arg{key}. The function
+  @sym{(setf gtk-print-settings-bool)} sets @arg{key} to a boolean value.
 
   The string \"true\" represents @em{true}, any other string @em{false}.
   @see-class{gtk-print-settings}"
   (settings (g-object gtk-print-settings))
   (key g-string))
 
-(export 'gtk-print-settings-get-bool)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_set_bool ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_set_bool" gtk-print-settings-set-bool) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[key]{a string with a key}
-  @argument[value]{a boolean}
-  @short{Sets @arg{key} to a boolean value.}
-  @see-class{gtk-print-settings}"
-  (settings (g-object gtk-print-settings))
-  (key g-string)
-  (value :boolean))
-
-(export 'gtk-print-settings-set-bool)
+(export 'gtk-print-settings-bool)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_double ()
+;;; gtk_print_settings_set_double ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_get_double" gtk-print-settings-get-double) :double
+(defun (setf gtk-print-settings-double) (value settings key)
+  (foreign-funcall "gtk_print_settings_set_double"
+                   (g-object gtk-print-settings) settings
+                   g-string key
+                   :double (coerce value 'double-float)
+                   :void)
+  value)
+
+(defcfun ("gtk_print_settings_get_double" gtk-print-settings-double) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
+  @syntax[]{(gtk-print-settings-double settings key) => value}
+  @syntax[]{(setf (gtk-print-settings-double settings key) value)}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
-  @return{The double value of @arg{key}.}
-  @short{Returns the double value associated with @arg{key}, or 0.}
+  @argument[value]{a double value}
+  @begin{short}
+    Accessor of the double value of a key in a print setting.
+  @end{short}
+
+  The function @sym{gtk-print-settings-double} gets the double value of
+  @arg{key}, or 0. The function @sym{(setf gkt-print-settings-double)}
+  sets @arg{key} to a double value.
   @see-class{gtk-print-settings}
-  @see-function{gtk-print-settings-set-double}
-  @see-function{gtk-print-settings-get-double-with-default}"
+  @see-function{gtk-print-settings-double-with-default}"
   (settings (g-object gtk-print-settings))
   (key g-string))
 
-(export 'gtk-print-settings-get-double)
+(export 'gtk-print-settings-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_double_with_default ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_print_settings_get_double_with_default"
-          %gtk-print-settings-get-double-with-default) :double
+          %gtk-print-settings-double-with-default) :double
   (settings (g-object gtk-print-settings))
   (key g-string)
   (default :double))
 
-(defun gtk-print-settings-get-double-with-default (settings key default)
+(defun gtk-print-settings-double-with-default (settings key default)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
   @argument[default]{a number with the default value}
@@ -676,135 +707,101 @@
 
   Floating point numbers are parsed with @code{g_ascii_strtod()}.
   @see-class{gtk-print-settings}
-  @see-function{gtk-print-settings-get-double}
-  @see-function{gtk-print-settings-set-double}"
-  (%gtk-print-settings-get-double-with-default settings
-                                               key
-                                               (coerce default 'double-float)))
+  @see-function{gtk-print-settings-double}"
+  (%gtk-print-settings-double-with-default settings
+                                           key
+                                           (coerce default 'double-float)))
 
-(export 'gtk-print-settings-get-double-with-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_set_double ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_set_double" %gtk-print-settings-set-double) :void
-  (settings (g-object gtk-print-settings))
-  (key g-string)
-  (value :double))
-
-(defun gtk-print-settings-set-double (settings key value)
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[key]{a string with a key}
-  @argument[value]{a double value}
-  @short{Sets @arg{key} to a double value.}
-  @see-class{gtk-print-settings}
-  @see-function{gtk-print-settings-get-double}
-  @see-function{gtk-print-settings-get-double-with-default}"
-  (%gtk-print-settings-set-double settings key (coerce value 'double-float)))
-
-(export 'gtk-print-settings-set-double)
+(export 'gtk-print-settings-double-with-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_length ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_get_length" gtk-print-settings-get-length) :double
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[key]{a string with a key}
-  @argument[unit]{the unit of type @symbol{gtk-unit} of the return value}
-  @return{The length value of @arg{key}, converted to @arg{unit}.}
-  @begin{return}
-    The length value of @arg{key}, converted to @arg{unit}.
-  @end{return}
-  @begin{short}
-    Returns the value associated with @arg{key}, interpreted as a length.
-  @end{short}
-  The returned value is converted to @arg{unit}.
-  @begin[Example]{dictionary}
-    @begin{pre}
- (setq settings (make-instance 'gtk-print-settings))
-=> #<GTK-PRINT-SETTINGS {1004A34623@}>
- (gtk-print-settings-set-length settings \"paper-width\" 100.0d0 :mm)
- (gtk-print-settings-get-length settings \"paper-width\" :mm)
-=> 100.0d0
-    @end{pre}
-  @end{dictionary}
-  @see-class{gtk-print-settings}
-  @see-symbol{gtk-unit}
-  @see-class{gtk-print-settings-set-length}"
-  (settings (g-object gtk-print-settings))
-  (key g-string)
-  (unit gtk-unit))
-
-(export 'gtk-print-settings-get-length)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_length ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_set_length" %gtk-print-settings-set-length) :void
-  (settings (g-object gtk-print-settings))
-  (key g-string)
-  (value :double)
-  (unit gtk-unit))
+(defun (setf gtk-print-settings-length) (value settings key unit)
+  (foreign-funcall "gtk_print_settings_set_length"
+                   (g-object gtk-print-settings) settings
+                   g-string key
+                   :double (coerce value 'double-float)
+                   gtk-unit unit
+                   :void)
+  value)
 
-(defun gtk-print-settings-set-length (settings key value unit)
+(defcfun ("gtk_print_settings_get_length" gtk-print-settings-length) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
+  @syntax[]{(gtk-print-settings-length settings key unit) => value}
+  @syntax[]{(setf (gtk-print-settings-length settings key unit) value)}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
+  @argument[unit]{the unit of type @symbol{gtk-unit} of the return value}
   @argument[value]{a number with the length}
-  @argument[unit]{the unit of the length}
-  @short{Associates a length in units of @arg{unit} with @arg{key}.}
+  @begin{short}
+    Accessor of the length value of a key in a print setting.
+  @end{short}
+
+  The function @sym{gtk-print-settings-length} returns the length value of
+  @arg{key}, converted to @arg{unit}. The function
+  @sym{(setf gtk-print-settings-length)} associates a length in units of
+  @arg{unit} with @arg{key}.
   @begin[Example]{dictionary}
     @begin{pre}
  (setq settings (make-instance 'gtk-print-settings))
 => #<GTK-PRINT-SETTINGS {1004A34623@}>
- (gtk-print-settings-set-length settings \"paper-width\" 100.0d0 :mm)
- (gtk-print-settings-get-length settings \"paper-width\" :mm)
+ (setf (gtk-print-settings-length settings \"paper-width\" :mm) 100.0d0)
+ (gtk-print-settings-length settings \"paper-width\" :mm)
 => 100.0d0
     @end{pre}
   @end{dictionary}
   @see-class{gtk-print-settings}
-  @see-symbol{gtk-unit}
-  @see-function{gtk-print-settings-get-length}"
-  (%gtk-print-settings-set-length settings
-                                  key
-                                  (coerce value 'double-float)
-                                  unit))
+  @see-symbol{gtk-unit}"
+  (settings (g-object gtk-print-settings))
+  (key g-string)
+  (unit gtk-unit))
 
-(export 'gtk-print-settings-set-length)
+(export 'gtk-print-settings-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_int ()
+;;; gtk_print_settings_set_int ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_get_int" gtk-print-settings-get-int) :int
+(defun (setf gtk-print-settings-int) (value settings key)
+  (foreign-funcall "gtk_print_settings_set_int"
+                   (g-object gtk-print-settings) settings
+                   g-string key
+                   :int value)
+  value)
+
+(defcfun ("gtk_print_settings_get_int" gtk-print-settings-int) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
+  @syntax[]{(gtk-print-settings-int settings key) => value}
+  @syntax[]{(setf (gtk-print-settings-int settings key) value)}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
-  @return{The integer value of @arg{key}.}
-  @short{Returns the integer value of @arg{key}, or 0.}
+  @argument[value]{an integer}
+  @begin{short}
+    Accessor of the integer value of a key in a print setting.
+  @end{short}
+
+  The function @sym{gtk-print-settings-int} returns the integer value of
+  @arg{key}, or 0. The function @sym{(setf gtk-print-settings-int)} sets
+  @arg{key} to an integer value.
   @see-class{gtk-print-settings}
-  @see-class{gtk-print-settings-set-int}
-  @see-class{gtk-print-settings-get-int-with-default}"
+  @see-class{gtk-print-settings-int-with-default}"
   (settings (g-object gtk-print-settings))
   (key g-string))
 
-(export 'gtk-print-settings-get-int)
+(export 'gtk-print-settings-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_int_with_default ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_print_settings_get_int_with_default"
-           gtk-print-settings-get-int-with-default) :int
+           gtk-print-settings-int-with-default) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-4-5}
   @argument[settings]{a @class{gtk-print-settings} object}
@@ -816,33 +813,12 @@
     value.
   @end{short}
   @see-class{gtk-print-settings}
-  @see-function{gtk-print-settings-get-int}
-  @see-function{gtk-print-settings-set-int}"
+  @see-function{gtk-print-settings-int}"
   (settings (g-object gtk-print-settings))
   (key g-string)
   (default :int))
 
-(export 'gtk-print-settings-get-int-with-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_set_int ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_set_int" gtk-print-settings-set-int) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[key]{a string with a key}
-  @argument[value]{an integer}
-  @short{Sets @arg{key} to an integer value.}
-  @see-class{gtk-print-settings}
-  @see-function{gtk-print-settings-get-int}
-  @see-function{gtk-print-settings-get-int-with-default}"
-  (settings (g-object gtk-print-settings))
-  (key g-string)
-  (value :int))
-
-(export 'gtk-print-settings-set-int)
+(export 'gtk-print-settings-int-with-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_printer ()
@@ -864,7 +840,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[printer]{a string with the printer name}
   @begin{short}
-    Accessor of the printer name of a @class{gtk-print-settings} object.
+    Accessor of the printer name of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-printer} obtains the value of
@@ -899,8 +875,7 @@
   @argument[orientation]{a page orientation of type
     @symbol{gtk-page-orientation}}
   @begin{short}
-    Accessor of the \"orientation\" value of a @class{gtk-print-settings}
-    object.
+    Accessor of the \"orientation\" value of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-orientation} gets the value of
@@ -935,7 +910,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[paper-size]{a paper size of type @class{gtk-paper-size}}
   @begin{short}
-    Accessor of the \"paper-format\" of a @class{gtk-print-settings} object.
+    Accessor of the \"paper-format\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-paper-size} gets the value of
@@ -962,105 +937,80 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_paper_width ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_get_paper_width"
-           gtk-print-settings-get-paper-width) :double
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value}
-  @return{The paper width, in units of @arg{unit}.}
-  @begin{short}
-    Gets the value of \"paper-width\" converted to @arg{unit}.
-  @end{short}
-  @see-class{gtk-print-settings}
-  @see-symbol{gtk-unit}
-  @see-function{gtk-print-settings-set-paper-width}
-  @see-function{gtk-print-settings-set}
-  @see-function{gtk-print-settings-get}"
-  (settings (g-object gtk-print-settings))
-  (unit gtk-unit))
-
-(export 'gtk-print-settings-get-paper-width)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_paper_width ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_set_paper_width"
-          %gtk-print-settings-set-paper-width) :void
-  (settings (g-object gtk-print-settings))
-  (width :double)
-  (unit gtk-unit))
+(defun (setf gtk-print-settings-paper-width) (width settings unit)
+  (foreign-funcall "gtk_print_settings_set_paper_width"
+                   (g-object gtk-print-settings) settings
+                   :double (coerce width 'double-float)
+                   gtk-unit unit
+                   :void)
+  width)
 
-(defun gtk-print-settings-set-paper-width (settings width unit)
+(defcfun ("gtk_print_settings_get_paper_width"
+           gtk-print-settings-paper-width) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
+  @syntax[]{(gtk-print-settings-paper-width settings) => width}
+  @syntax[]{(setf (gtk-print-settings-paper-width settings) width)}
   @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value}
   @argument[width]{a @code{:double} with the paper width}
-  @argument[unit]{the units of type @symbol{gtk-unit} of width}
-  @short{Sets the value of \"paper-width\".}
+  @begin{short}
+    Accessor of the paper width of a print setting, in units of @arg{unit}.
+  @end{short}
+
+  The function @sym{gtk-print-settings-paper-width} gets the value of
+  \"paper-width\" converted to @arg{unit}. The function
+  @sym{(setf gtk-print-settings-paper-width)} sets the value of \"paper-width\".
   @see-class{gtk-print-settings}
   @see-symbol{gtk-unit}
-  @see-function{gtk-print-settings-get-paper-width}
   @see-function{gtk-print-settings-set}
   @see-function{gtk-print-settings-get}"
-  (%gtk-print-settings-set-paper-width settings
-                                       (coerce width 'double-float)
-                                       unit))
+  (settings (g-object gtk-print-settings))
+  (unit gtk-unit))
 
-(export 'gtk-print-settings-set-paper-width)
+(export 'gtk-print-settings-paper-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_paper_height ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_print_settings_get_paper_height"
-           gtk-print-settings-get-paper-height) :double
- #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
-  @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value}
-  @return{The paper height, in units of @arg{unit}.}
-  @short{Gets the value of \"paper-height\", converted to @arg{unit}.}
-  @see-class{gtk-print-settings}
-  @see-symbol{gtk-unit}
-  @see-function{gtk-print-settings-set-paper-height}
-  @see-function{gtk-print-settings-set}
-  @see-function{gtk-print-settings-get}"
-  (settings (g-object gtk-print-settings))
-  (unit gtk-unit))
-
-(export 'gtk-print-settings-get-paper-height)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_paper_height ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_settings_set_paper_height"
-          %gtk-print-settings-set-paper-height) :void
-  (settings (g-object gtk-print-settings))
-  (height :double)
-  (unit gtk-unit))
+(defun (setf gtk-print-settings-paper-height) (height settings unit)
+  (foreign-funcall "gtk_print_settings_set_paper_height"
+                   (g-object gtk-print-settings) settings
+                   :double (coerce height 'double-float)
+                   gtk-unit unit
+                   :void)
+  height)
 
-(defun gtk-print-settings-set-paper-height (settings height unit)
+(defcfun ("gtk_print_settings_get_paper_height"
+           gtk-print-settings-paper-height) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-4-5}
+ "@version{2020-4-13}
+  @syntax[]{(gtk-print-settings-paper-height settings) => height}
+  @syntax[]{(setf (gtk-print-settings-paper-height settings) height)}
   @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value}
   @argument[height]{a @code{:double} with the paper height}
-  @argument[unit]{the units of type @symbol{gtk-unit} of height}
-  @short{Sets the value of \"paper-height\".}
+  @begin{short}
+    Accessor of the paper height of a print setting, in units of @arg{unit}.
+  @end{short}
+
+  The function @sym{gtk-print-settings-paper-height} gets the value of
+  \"paper-height\", converted to @arg{unit}. The function
+  @sym{(setf gtk-print-settings-paper-height)} sets the value of
+  \"paper-height\".
   @see-class{gtk-print-settings}
   @see-symbol{gtk-unit}
-  @see-function{gtk-print-settings-get-paper-height}
   @see-function{gtk-print-settings-set}
   @see-function{gtk-print-settings-get}"
-  (%gtk-print-settings-set-paper-height settings
-                                        (coerce height 'double-float)
-                                        unit))
+  (settings (g-object gtk-print-settings))
+  (unit gtk-unit))
 
-(export 'gtk-print-settings-set-paper-height)
+(export 'gtk-print-settings-paper-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_use_color ()
@@ -1083,7 +1033,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[use-color]{a @code{:boolean} whether to use color}
   @begin{short}
-    Accessor of \"use-color\" of a @class{gtk-print-settings} object.
+    Accessor of \"use-color\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-use-color} gets the value of
@@ -1116,7 +1066,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[collate]{a @code{:boolean} whether to collate the output}
   @begin{short}
-    Accessor of \"collate\" of a @class{gtk-print-settings} object.
+    Accessor of \"collate\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-collate} gets the value of \"collate\".
@@ -1150,7 +1100,7 @@
   @argument[reverse]{a @code{:boolean} whether to reverse the output}
   @return{Whether to reverse the order of the printed pages.}
   @begin{short}
-    Accessor of \"reverse\" of a @class{gtk-print-settings} object.
+    Accessor of \"reverse\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-reverse} gets the value of \"reverse\".
@@ -1184,7 +1134,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[duplex]{a @symbol{gtk-print-duplex} value}
   @begin{short}
-    Accessor of \"duplex\" of a @class{gtk-print-settings} object.
+    Accessor of \"duplex\" of a print setting.
   @end{short}
   Whether to print the output in duplex.
 
@@ -1219,7 +1169,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[quality]{a @class{gtk-print-quality} value}
   @begin{short}
-    Accessor of \"quality\" of a @class{gtk-print-settings} object.
+    Accessor of \"quality\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-quality} gets the value of \"quality\".
@@ -1252,7 +1202,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[n-copies]{the number of copies}
   @begin{short}
-    Accessor of \"n-copies\" of a @class{gtk-print-settings} object.
+    Accessor of \"n-copies\" of a print setting.
   @end{short}
   The number of type @code{:int} of copies to print.
 
@@ -1286,7 +1236,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[number-up]{the number of pages per sheet}
   @begin{short}
-    Accessor of \"number-up\" of a @class{gtk-print-settings} object.
+    Accessor of \"number-up\" of a print setting.
   @end{short}
   The number of pages per sheet.
 
@@ -1321,7 +1271,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[number-up-layout]{a @symbol{gtk-number-up-layout} value}
   @begin{short}
-    Accessor of \"number-up-layout\" of a @class{gtk-print-settings} object.
+    Accessor of \"number-up-layout\" of a print setting.
   @end{short}
   Layout of page in number-up mode.
 
@@ -1357,7 +1307,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[resolution]{a @code{:int} with the resolution in dpi}
   @begin{short}
-    Accessor of \"resolution\" of a @class{gtk-print-settings} object.
+    Accessor of \"resolution\" of a print setting.
   @end{short}
   The resolution in dpi.
 
@@ -1374,6 +1324,8 @@
 ;;; gtk_print_settings_set_resolution_xy ()
 ;;; ----------------------------------------------------------------------------
 
+;; We do not export this function. Consider to remove it.
+
 (defcfun ("gtk_print_settings_set_resolution_xy"
            gtk-print-settings-set-resolution-xy) :void
  #+cl-cffi-gtk-documentation
@@ -1388,8 +1340,6 @@
   (settings (g-object gtk-print-settings))
   (resolution-x :int)
   (resolution-y :int))
-
-(export 'gtk-print-settings-set-resolution-xy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_resolution_x ()
@@ -1448,7 +1398,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[lpi]{an integer with the resolution in lpi (lines per inch)}
   @begin{short}
-    Accessor of \"printer-lip\" of a @class{gtk-print-settings} object.
+    Accessor of \"printer-lip\" of a print setting.
   @end{short}
   The resolution in lpi (lines per inch).
 
@@ -1482,7 +1432,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[scale]{a @code{:double} with the scale in percent}
   @begin{short}
-    Accessor of \"scale\" of a @class{gtk-print-settings} object.
+    Accessor of \"scale\" of a print setting.
   @end{short}
   The scale in percent.
 
@@ -1516,7 +1466,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[pages]{a @symbol{gtk-print-pages} value}
   @begin{short}
-    Accessor of \"print-pages\" of a @class{gtk-print-settings} object.
+    Accessor of \"print-pages\" of a print setting.
   @end{short}
   Which pages to print.
 
@@ -1543,7 +1493,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[page-ranges]{a list of pages ranges}
   @begin{short}
-    Accessor of \"page-ranges\" of a @class{gtk-print-settings} object.
+    Accessor of \"page-ranges\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-page-ranges} gets the value of
@@ -1609,7 +1559,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[page-set]{a @symbol{gtk-page-set} value}
   @begin{short}
-    Accessor of \"page-set\" of a @class{gtk-print-settings} object.
+    Accessor of \"page-set\" of a print setting.
   @end{short}
   The set of pages to print.
 
@@ -1644,7 +1594,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[default-source]{a string with the default source}
   @begin{short}
-    Accessor of \"default-source\" of a @class{gtk-print-settings} object.
+    Accessor of \"default-source\" of a print setting.
   @end{short}
   The default source.
 
@@ -1680,7 +1630,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[media-type]{a string with the media type}
   @begin{short}
-    Accessor of \"media-type\" of a @class{gtk-print-settings} object.
+    Accessor of \"media-type\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-media-type} gets the value of
@@ -1715,7 +1665,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[dither]{a string with the dithering that is used}
   @begin{short}
-    Accessor of \"dither\" of a @class{gtk-print-settings} object.
+    Accessor of \"dither\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-dither} gets the value of \"dither\".
@@ -1749,7 +1699,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[finishings]{a string with the finishings}
   @begin{short}
-    Accessor of \"finishings\" of a @class{gtk-print-settings} object.
+    Accessor of \"finishings\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-finishings} gets the value of
@@ -1783,7 +1733,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[output-bin]{a string with the output bin}
   @begin{short}
-    Accessor of \"output-bin\" of a @class{gtk-print-settings} object.
+    Accessor of \"output-bin\" of a print setting.
   @end{short}
 
   The function @sym{gtk-print-settings-outpu-bin} gets the value of
