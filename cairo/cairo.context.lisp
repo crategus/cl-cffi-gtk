@@ -315,7 +315,7 @@
  "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @begin{return}
-    The target surface of type @see-symbol{cairo-surface-t}. This object is
+    The target surface of type @symbol{cairo-surface-t}. This object is
     owned by cairo.
   @end{return}
   @begin{short}
@@ -1991,7 +1991,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2014-2-1}
   @argument[cr]{a cairo context}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @argument[surface-x]{x coordinate at which to place the origin of
     @arg{surface}}
   @argument[surface-y]{y coordinate at which to place the origin of

@@ -116,7 +116,7 @@
  "@version{2013-11-16}
   @begin{short}
     A @sym{cairo-device-t} represents the driver interface for drawing
-    operations to a @symbol{cairo-surface-t}.
+    operations to a @symbol{cairo-surface-t} structure.
   @end{short}
   There are different subtypes of @sym{cairo-device-t} for different drawing
   backends; for example, the function @code{cairo-egl-device-create} creates

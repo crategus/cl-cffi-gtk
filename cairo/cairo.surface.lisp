@@ -473,16 +473,16 @@
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-10-20}
-  @argument[surface]{a @symbol{cairo-surface-t}}
-  @return{The referenced @symbol{cairo-surface-t}.}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
+  @return{The referenced @symbol{cairo-surface-t} structure.}
   @begin{short}
     Increases the reference count on @arg{surface} by one.
   @end{short}
   This prevents @arg{surface} from being destroyed until a matching call to
   the function @fun{cairo-surface-destroy} is made.
 
-  The number of references to a @symbol{cairo-surface-t} can be get using
-  the function @fun{cairo-surface-get-reference-count}.
+  The number of references to a @symbol{cairo-surface-t} structure can be get
+  using the function @fun{cairo-surface-get-reference-count}.
 
   Since 1.0
   @see-symbol{cairo-surface-t}
@@ -518,7 +518,7 @@
 (defcfun ("cairo_surface_status" cairo-surface-status) cairo-status-t
  #+cl-cffi-gtk-documentation
  "@version{2013-11-14}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @begin{return}
     @code{:success}, @code{:null-pointer}, @code{:no-memory},
     @code{:read-error}, @code{:invalid-content}, @code{:invalid-format}, or
@@ -565,7 +565,7 @@
 (defcfun ("cairo_surface_flush" cairo-surface-flush) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-20}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @begin{short}
     Do any pending drawing for the surface and also restore any temporary
     modifications cairo has made to the surface's state.
@@ -642,7 +642,7 @@
 (defcfun ("cairo_surface_mark_dirty" cairo-surface-mark-dirty) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-20}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @begin{short}
     Tells cairo that drawing has been done to surface using means other than
     cairo, and that cairo should reread any cached areas.
@@ -698,7 +698,7 @@
 (defcfun ("cairo_surface_set_device_offset" cairo-surface-set-device) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-1-23}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @argument[x-offset]{the offset in the x direction, in device units}
   @argument[y-offset]{the offset in the y direction, in device units}
   @begin{short}
@@ -706,9 +706,9 @@
     CTM when drawing to surface.
   @end{short}
   One use case for this function is when we want to create a
-  @symbol{cairo-surface-t} that redirects drawing for a portion of an onscreen
-  surface to an offscreen surface in a way that is completely invisible to the
-  user of the cairo API. Setting a transformation via the function
+  @symbol{cairo-surface-t} structure that redirects drawing for a portion of an
+  onscreen surface to an offscreen surface in a way that is completely invisible
+  to the user of the cairo API. Setting a transformation via the function
   @fun{cairo-translate} is not sufficient to do this, since functions like
   the function @fun{cairo-device-to-user} will expose the hidden offset.
 
@@ -942,7 +942,7 @@
 (defcfun ("cairo_surface_get_type" cairo-surface-get-type) cairo-surface-type-t
  #+cl-cffi-gtk-documentation
  "@version{2013-10-20}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @return{The type of surface.}
   @begin{short}
     This function returns the type of the backend used to create a surface. See
@@ -964,7 +964,7 @@
     :uint
  #+cl-cffi-gtk-documentation
  "@version{2013-12-7}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @begin{return}
     The current reference count of @arg{surface}. If the object is a nil object,
     0 will be returned.

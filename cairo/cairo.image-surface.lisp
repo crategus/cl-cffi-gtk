@@ -237,7 +237,7 @@
 (defcfun ("cairo_image_surface_get_width" cairo-image-surface-get-width) :int
  #+cl-cffi-gtk-documentation
  "@version{2014-2-7}
-  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface]{a @symbol{cairo-surface-t} structure}
   @return{The width of the surface in pixels.}
   @begin{short}
     Get the width of the image surface in pixels.

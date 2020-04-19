@@ -64,8 +64,8 @@
  "@version{2014-2-1}
   @argument[filename]{name of PNG file to load}
   @begin{return}
-    A new @symbol{cairo-surface-t} initialized with the contents of the PNG
-    file, or a \"nil\" surface if any error occurred.
+    A new @symbol{cairo-surface-t} structure initialized with the contents of
+    the PNG file, or a \"nil\" surface if any error occurred.
   @end{return}
   @begin{short}
     Creates a new image surface and initializes the contents to the given PNG
