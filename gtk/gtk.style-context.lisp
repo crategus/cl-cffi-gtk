@@ -2751,12 +2751,13 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_render_surface" gtk-render-surface) :void
+(defcfun ("gtk_render_icon_surface" gtk-render-icon-surface) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-3-8}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argurment[surface]{a @symbol{cairo-surface-t} containing the icon to draw}
+  @argumuent[surface]{a @symbol{cairo-surface-t} structure containing the icon
+    to draw}
   @argument[x]{a @code{:double} with a x position for the icon}
   @argument[y]{a @code{:double} with a y position for the icon}
   @begin{short}
@@ -2773,7 +2774,7 @@
   (y :double))
 
 #+gtk-3-10
-(export 'gtk-render-surface)
+(export 'gtk-render-icon-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_icon ()

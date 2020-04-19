@@ -89,15 +89,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-store 'type)
- "@version{2013-8-22}
+ "@version{2020-4-14}
   @begin{short}
     The @sym{gtk-list-store} object is a list model for use with a
-    @class{gtk-tree-view} widget. It implements the @class{gtk-tree-model}
-    interface, and consequentialy, can use all of the methods available there.
-    It also implements the @class{gtk-tree-sortable} interface so it can be
-    sorted by the view. Finally, it also implements the tree drag and drop
-    interfaces.
+    @class{gtk-tree-view} widget.
   @end{short}
+  It implements the @class{gtk-tree-model} interface, and consequentialy, can
+  use all of the methods available there. It also implements the
+  @class{gtk-tree-sortable} interface so it can be sorted by the view. Finally,
+  it also implements the tree drag and drop interfaces.
 
   The @sym{gtk-list-store} can accept most GObject types as a column type,
   though it cannot accept all custom types. Internally, it will keep a copy of
@@ -105,11 +105,38 @@
   GObjects are handled a little differently. The @sym{gtk-list-store} will keep
   a reference to the object instead of copying the value. As a result, if the
   object is modified, it is up to the application writer to call the function
-  @fun{gtk-tree-model-row-changed} to emit the \"row-changed\" signal. This most
-  commonly affects lists with @class{gdk-pixbuf}s stored.
+  @fun{gtk-tree-model-row-changed} to emit the \"row-changed\" signal. This
+  most commonly affects lists with @class{gdk-pixbuf}s stored.
 
-  @b{Example:} Creating a simple list store.
-  @begin{pre}
+  @subheading{Performance Considerations}
+    Internally, the @sym{gtk-list-store} was implemented with a linked list
+    with a tail pointer prior to GTK+ 2.6. As a result, it was fast at data
+    insertion and deletion, and not fast at random data access. The
+    @sym{gtk-list-store} sets the @code{:iters-persist} flag of type
+    @symbol{gtk-tree-model-flags}, which means that @class{gtk-tree-iter}
+    structures can be cached while the row exists. Thus, if access to a
+    particular row is needed often and your code is expected to run on older
+    versions of GTK+, it is worth keeping the iter around.
+
+  @subheading{Atomic Operations}
+    It is important to note that only the method
+    @fun{gtk-list-store-insert-with-values} is atomic, in the sense that the
+    row is being appended to the store and the values filled in in a single
+    operation with regard to @class{gtk-tree-model} signaling. In contrast,
+    using e. g. the functions @fun{gtk-list-store-append} and then
+    @fun{gtk-list-store-set} will first create a row, which triggers the
+    \"row-inserted\" signal on @sym{gtk-list-store}. The row, however, is still
+    empty, and any signal handler connecting to \"row-inserted\" on this
+    particular store should be prepared for the situation that the row might
+    be empty. This is especially important if you are wrapping the
+    @sym{gtk-list-store} inside a @class{gtk-tree-model-filter} and are using
+    a @code{GtkTreeModelFilterVisibleFunc}. Using any of the non-atomic
+    operations to append rows to the @sym{gtk-list-store} will cause the
+    @code{GtkTreeModelFilterVisibleFunc} to be visited with an empty row first;
+    the function must be prepared for that.
+  @begin[Example]{dictionary}
+    Creating a simple list store.
+    @begin{pre}
 (defun create-and-fill-model ()
   (let ((list-data '(\"Name1\" \"Name2\" \"Name3\" \"Name4\" \"Name5\"))
         ;; Create a new list store with three columns
@@ -133,43 +160,17 @@
                                 t))
     ;; Return the new list store
     list-store))
-  @end{pre}
-  @subheading{Performance Considerations}
-    Internally, the @sym{gtk-list-store} was implemented with a linked list with
-    a tail pointer prior to GTK+ 2.6. As a result, it was fast at data insertion
-    and deletion, and not fast at random data access. The @sym{gtk-list-store}
-    sets the @code{:iters-persist} flag of type @symbol{gtk-tree-model-flags},
-    which means that @class{gtk-tree-iter} structures can be cached while the
-    row exists. Thus, if access to a particular row is needed often and your
-    code is expected to run on older versions of GTK+, it is worth keeping the
-    iter around.
-
-  @subheading{Atomic Operations}
-    It is important to note that only the method
-    @fun{gtk-list-store-insert-with-values} is atomic, in the sense that the
-    row is being appended to the store and the values filled in in a single
-    operation with regard to @class{gtk-tree-model} signaling. In contrast,
-    using e. g. the functions @fun{gtk-list-store-append} and then
-    @fun{gtk-list-store-set} will first create a row, which triggers the
-    \"row-inserted\" signal on @sym{gtk-list-store}. The row, however, is still
-    empty, and any signal handler connecting to \"row-inserted\" on this
-    particular store should be prepared for the situation that the row might be
-    empty. This is especially important if you are wrapping the
-    @sym{gtk-list-store} inside a @class{gtk-tree-model-filter} and are using a
-    @code{GtkTreeModelFilterVisibleFunc}. Using any of the non-atomic operations
-    to append rows to the @sym{gtk-list-store} will cause the
-    @code{GtkTreeModelFilterVisibleFunc} to be visited with an empty row first;
-    the function must be prepared for that.
-
-  @subheading{GtkListStore as GtkBuildable}
+    @end{pre}
+  @end{dictionary}
+  @begin[GtkListStore as GtkBuildable]{dictionary}
     The @sym{gtk-list-store} implementation of the @class{gtk-buildable}
     interface allows to specify the model columns with a @code{<columns>}
     element that may contain multiple @code{<column>} elements, each specifying
     one model column. The \"type\" attribute specifies the data type for the
     column.
 
-    Additionally, it is possible to specify content for the list store in the UI
-    definition, with the @code{<data>} element. It can contain multiple
+    Additionally, it is possible to specify content for the list store in the
+    UI definition, with the @code{<data>} element. It can contain multiple
     @code{<row>} elements, each specifying to content for one row of the list
     model. Inside a @code{<row>}, the @code{<col>} elements specify the content
     for individual cells.
@@ -201,6 +202,7 @@
      </data>
    </object>
     @end{pre}
+  @end{dictionary}
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-sortable}
@@ -242,18 +244,18 @@
 
 (defun gtk-list-store-new (&rest column-types)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-16}
+ "@version{2020-4-13}
   @argument[column-types]{all @class{g-type} types for the columns, from first
     to last}
   @return{A new @class{gtk-list-store} object.}
   @begin{short}
-    Creates a new list store as with each of the types passed in. Note that only
-    types derived from standard GObject fundamental types are supported.
+    Creates a new list store as with each of the types passed in.
   @end{short}
-
-  @subheading{Example:}
-    The following example creates a new @sym{gtk-list-store} with three columnes,
-    of type @code{int}, @code{string} and @class{gdk-pixbuf}.
+  Note that only types derived from standard GObject fundamental types are
+  supported.
+  @begin[Example]{dictionary}
+    The following example creates a new @sym{gtk-list-store} with three
+    columnes, of type @codeg{gint}, @code{gchararray} and @code{GdkPixbuf}.
     @begin{pre}
  (gtk-list-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")
     @end{pre}
@@ -262,6 +264,7 @@
  (make-instance 'gtk-list-store
                 :column-types '(\"gint\" \"gchararray\" \"GdkPixbuf\"))
     @end{pre}
+  @end{dictionary}
   @see-class{gtk-list-store}
   @see-class{g-type}"
   (make-instance 'gtk-list-store

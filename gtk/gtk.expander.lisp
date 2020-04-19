@@ -447,31 +447,28 @@
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-expander) 't)
  "The @code{use-markup} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  The text of the label includes XML markup. See the function
-  @fun{pango-parse-markup}. @br{}
-  Default value: @code{nil}")
+  The text of the label includes XML Pango markup. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-use-markup 'function)
- "@version{2014-9-7}
+ "@version{2020-4-15}
+  @syntax[]{(gtk-expander-use-markup object) => use-markup}
+  @syntax[]{(setf (gtk-expander-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-expander} widget}
   @argument[use-markup]{@em{true} if the label's text should be parsed for
     markup}
-  @syntax[]{(gtk-expander-use-markup object) => use-markup}
-  @syntax[]{(setf (gtk-expander-use-markup object) use-markup)}
   @begin{short}
-    Accessor of the slot @slot[gtk-expander]{use-markup} of the
+    Accessor of the @slot[gtk-expander]{use-markup} slot of the
     @class{gtk-expander} class.
   @end{short}
 
-  The generic function @sym{gtk-expander-use-markup} returns whether the label's
-  text is interpreted as marked up with the Pango text markup language.
-
-  The generic function @sym{(setf gtk-expander-use-markup)} sets whether the
-  text of the label contains markup in Pango's text markup language. See the
-  function @fun{gtk-label-set-markup}.
+  The slot access function @sym{gtk-expander-use-markup} returns whether the
+  label's text is interpreted as marked up with the Pango text markup language.
+  The slot access function @sym{(setf gtk-expander-use-markup)} sets whether
+  the text of the label contains markup in Pango's text markup language.
   @see-class{gtk-expander}
   @see-function{gtk-label-set-markup}")
 

@@ -350,7 +350,7 @@
   (path (g-boxed-foreign gtk-widget-path))
   (type g-type))
 
-(export 'gtk-widget-has-parent)
+(export 'gtk-widget-path-has-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_is_type ()
@@ -370,6 +370,8 @@
   @see-class{gtk-widget-path}"
   (path (g-boxed-foreign gtk-widget-path))
   (type g-type))
+
+(export 'gtk-widget-path-is-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_add_class ()

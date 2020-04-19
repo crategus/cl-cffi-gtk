@@ -3003,34 +3003,34 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-show-all" 'gtk-widget) 't)
- "The @code{no-show-all} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{no-show-all} property of type @code{:boolean} (Read / Write) @br{}
   Whether the function @fun{gtk-widget-show-all} should not affect this
   widget. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-no-show-all atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-no-show-all 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-4-17}
   @syntax[]{(gtk-widget-no-show-all object) => no-show-all}
   @syntax[]{(setf (gtk-widget-no-show-all object) no-show-all)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argurment[no-show-all]{a boolean wether the function
+    @fun{gtk-widget-show-all} should not affect this widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{no-show-all} of the
+    Accessor of the @slot[gtk-widget]{no-show-all} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-no-show-all} returns the current value
-  of the @slot[gtk-widget]{no-show-all} property, which determines whether calls
-  to the function @fun{gtk-widget-show-all} will affect this widget.
+  The slot access function @sym{gtk-widget-no-show-all} returns the current
+  value of the @slot[gtk-widget]{no-show-all} property. The slot access function
+  @sym{(setf gtk-widget-no-show-all)} sets the @slot[gtk-widget]{no-show-all}
+  property.
 
-  The generic function @sym{(setf gtk-widget-no-show-all)} sets the
-  @slot[gtk-widget]{no-show-all} property, which determines whether calls to
-  the function @fun{gtk-widget-show-all} will affect this widget.
-
-  This is mostly for use in constructing widget hierarchies with externally
-  controlled visibility, see @class{gtk-ui-manager}.
+  The @slot[gtk-widget]{no-show-all} property determines whether calls
+  to the function @fun{gtk-widget-show-all} will affect this widget. This is
+  mostly for use in constructing widget hierarchies with externally controlled
+  visibility, see @class{gtk-ui-manager}.
   @see-class{gtk-widget}
   @see-class{gtk-ui-manager}
   @see-function{gtk-widget-show-all}")
@@ -7131,7 +7131,7 @@
     Returns a list of the widgets, normally labels, for which this @arg{widget}
     is the target of a mnemonic.
   @end{short}
-  (See for example, @fun{gtk-label-set-mnemonic-widget}.)
+  (See for example, @fun{gtk-label-mnemonic-widget}.)
 
   The widgets in the list are not individually referenced. If you want to
   iterate through the list and perform actions involving callbacks that might
@@ -7146,7 +7146,7 @@
 => (#<GTK-LABEL {C292FE1@}>)
     @end{pre}
   @end{dictionary}
-  @see-function{gtk-label-set-mnemonic-widget}"
+  @see-function{gtk-label-mnemonic-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-list-mnemonic-labels)

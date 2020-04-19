@@ -425,18 +425,25 @@
                                                'gtk-message-dialog) 't)
  "The @code{secondary-use-markup} property of type @code{:boolean}
   (Read / Write) @br{}
-  @em{True} if the secondary text of the dialog includes Pango markup. See
-  the @fun{pango-parse-markup} function. @br{}
-  Default value: @code{nil}")
+  @em{True} if the secondary text of the dialog includes Pango markup. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-secondary-use-markup
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-use-markup 'function)
- "@version{2014-3-5}
-  Accessor of the @slot[gtk-message-dialog]{secondary-use-markup} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{2020-4-15}
+  @syntax[]{(gtk-message-dialog-secondary-use-markup object) => use-markup}
+  @syntax[]{(setf (gtk-message-dialog-secondary-use-markup object) use-markup)}
+  @argument[object]{a @class{gtk-message-dialog} widget}
+  @argument[use-markup]{a boolean wether to use Pango markup}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{secondary-use-markup} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  @em{True} if the secondary text of the dialog includes Pango markup.
   @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-format-secondary-markup}")
 
@@ -463,19 +470,25 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup"
                                                'gtk-message-dialog) 't)
- "The @code{use-markup} property of type @code{:boolean}
-  (Read / Write) @br{}
-  @em{True} if the primary text of the dialog includes Pango markup. See
-  the @fun{pango-parse-markup} function. @br{}
-  Default value: @code{nil}")
+ "The @code{use-markup} property of type @code{:boolean} (Read / Write) @br{}
+  @em{True} if the primary text of the dialog includes Pango markup. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-use-markup 'function)
- "@version{2014-3-5}
-  Accessor of the @slot[gtk-message-dialog]{use-markup} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{2020-4-15}
+  @syntax[]{(gtk-message-dialog-use-markup object) => use-markup}
+  @syntax[]{(setf (gtk-message-dialog-use-markup object) use-markup)}
+  @argument[object]{a @class{gtk-message-dialog} widget}
+  @argument[use-markup]{a boolean wether to use Pango markup}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{use-markup} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  @em{True} if the primary text of the dialog includes Pango markup.
   @see-class{gtk-message-dialog}")
 
 ;;; ----------------------------------------------------------------------------

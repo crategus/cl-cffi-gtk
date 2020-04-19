@@ -82,7 +82,7 @@
 
   The idea is to take a widget and manually set the state of it, add it to a
   @sym{gtk-offscreen-window} and then retrieve the snapshot as a
-  @symbol{cairo-surface-t} or @class{gdk-pixbuf} object.
+  @symbol{cairo-surface-t} structure or @class{gdk-pixbuf} object.
 
   @sym{gtk-offscreen-window} derives from @class{gtk-window} only as an
   implementation detail. Applications should not use any API specific to

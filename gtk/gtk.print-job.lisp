@@ -569,7 +569,7 @@
                    :int num-copies)
   num-copies)
 
-(defcfun ("gtk_print_job_get_num_copies" gtk-print-job-get-num-copies) :int
+(defcfun ("gtk_print_job_get_num_copies" gtk-print-job-num-copies) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-4-10}
   @syntax[]{(gtk-print-job-num-copies job) => num-copies}
@@ -600,7 +600,7 @@
                    :void)
   scale)
 
-(defcfun ("gtk_print_job_get_scale" gtk-print-job-get-scale) :double
+(defcfun ("gtk_print_job_get_scale" gtk-print-job-scale) :double
  #+cl-cffi-gtk-documentation
  "@version{2020-4-10}
   @syntax[]{(gtk-print-job-scale job) => scale}
@@ -726,7 +726,7 @@
                    :void)
   collate)
 
-(defcfun ("gtk_print_job_get_collate" gtk-print-job-get-collate) :boolean
+(defcfun ("gtk_print_job_get_collate" gtk-print-job-collate) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-4-10}
   @syntax[]{(gtk-print-job-collate job) => collate}
@@ -757,16 +757,6 @@
                    :boolean reverse
                    :void)
   reverse)
-
-(defcfun ("gtk_print_job_set_reverse" gtk-print-job-set-reverse) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-23}
-  @argument[job]{a @class{gtk-print-job} object}
-  @begin{short}
-  @end{short}
-  @see-class{gtk-print-job}
-  @see-function{gtk-print-job-get-reverse}"
-  (job (g-object gtk-print-job)))
 
 (defcfun ("gtk_print_job_get_reverse" gtk-print-job-reverse) :boolean
  #+cl-cffi-gtk-documentation

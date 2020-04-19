@@ -1366,7 +1366,7 @@
   @argument[icon-info]{a @symbol{gtk-icon-info} structure}
   @argument[for-window]{a @class{gdk-window} object to optimize drawing for,
     or @code{nil}}
-  @return{A @class{cairo-surface-t} structure with the rendered icon.}
+  @return{A @symbol{cairo-surface-t} structure with the rendered icon.}
   @begin{short}
     Renders an icon previously looked up in an icon theme using the function
     @fun{gtk-icon-theme-lookup-icon}.

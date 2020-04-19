@@ -430,21 +430,27 @@
 (setf (documentation (atdoc:get-slot-from-name "use-markup"
                                                'gtk-model-button) 't)
  "The @code{use-markjup} property of type @code{:boolean} (Read / Write) @br{}
-  If @em{true}, XML tags in the text of the button are interpreted as by the
-  function @fun{pango-parse-markup} to format the enclosed spans of text. If
-  @code{nil}, the text will be displayed verbatim. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.24")
+  If @em{true}, XML tags in the text of the button are interpreted to format the
+  enclosed spans of text. If @em{false}, the text will be displayed verbatim.
+  Since 3.24 @br{}
+  Default value: @em{false}")
 
 #+(and gtk-3-24 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-model-button-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-use-markup 'function)
- "@version{2019-4-2}
+ "@version{2020-4-15}
+  @syntax[]{(gtk-model-button-use-markup object) => use-markup}
+  @syntax[]{(setf (gtk-model-button-use-markup object) use-markup)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[use-markup]{a boolean wether to use Pango markup}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{use-markup} of the
+    Accessor of the @slot[gtk-model-button]{use-markup} slot of the
     @class{gtk-model-button} class.
   @end{short}
+
+  If @em{true}, XML tags in the text of the button are interpreted to format the
+  enclosed spans of text. If @em{false}, the text will be displayed verbatim.
 
   Since 3.24
   @see-class{gtk-model-button}")

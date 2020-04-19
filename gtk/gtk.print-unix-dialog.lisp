@@ -563,7 +563,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_print_unix_dialog_get_page_setup_set"
-           gtk-print-unix-dialog-get-page-setup-set) :boolean
+           gtk-print-unix-dialog-page-setup-set) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-4-10}
   @argument[dialog]{a @class{gtk-print-unix-dialog} widget}
@@ -574,6 +574,6 @@
   @see-class{gtk-print-unix-dialog}"
   (dialog (g-object gtk-print-unix-dialog)))
 
-(export 'gtk-print-unix-dialog-get-page-setup-set)
+(export 'gtk-print-unix-dialog-page-setup-set)
 
 ;;; --- End of file gtk.print-unix-dialog.lisp ---------------------------------
