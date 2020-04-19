@@ -1,4 +1,3 @@
-
 (def-suite gtk-accel-map :in gtk-suite)
 (in-suite gtk-accel-map)
 

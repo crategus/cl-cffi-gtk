@@ -337,10 +337,10 @@ output-file-format : pdf
 
 (test gtk-print-settings-bool
   (let ((settings (gtk-print-settings-new)))
-    (gtk-print-settings-set-bool settings "use-color" t)
-    (is-true (gtk-print-settings-get-bool settings "use-color"))
-    (gtk-print-settings-set-bool settings "use-color" nil)
-    (is-false (gtk-print-settings-get-bool settings "use-color"))))
+    (is-true (setf (gtk-print-settings-bool settings "use-color") t))
+    (is-true (gtk-print-settings-bool settings "use-color"))
+    (is-false (setf (gtk-print-settings-bool settings "use-color") nil))
+    (is-false (gtk-print-settings-bool settings "use-color"))))
 
 ;;;     gtk_print_settings_get_double
 ;;;     gtk_print_settings_get_double_with_default
@@ -348,23 +348,23 @@ output-file-format : pdf
 
 (test gtk-print-settings-double
   (let ((settings (gtk-print-settings-new)))
-    (gtk-print-settings-set-double settings "paper-width" 100.0d0)
-    (is (= 100 (gtk-print-settings-get-double settings "paper-width")))
-    (is (= 100 (gtk-print-settings-get-double-with-default settings "paper-width" 90.0d0)))
-    (is (= 90 (gtk-print-settings-get-double-with-default settings "xxx" 90.0d0)))))
+    (is (= 100 (setf (gtk-print-settings-double settings "paper-width") 100.0d0)))
+    (is (= 100 (gtk-print-settings-double settings "paper-width")))
+    (is (= 100 (gtk-print-settings-double-with-default settings "paper-width" 90.0d0)))
+    (is (=  90 (gtk-print-settings-double-with-default settings "xxx" 90.0d0)))))
 
 ;;;     gtk_print_settings_get_length
 ;;;     gtk_print_settings_set_length
 
 (test gtk-print-settings-length
   (let ((settings (gtk-print-settings-new)))
-    (is (= 0.0d0 (gtk-print-settings-get-length settings "paper-width" :mm)))
-    (gtk-print-settings-set-length settings "paper-width" 100.0d0 :mm)
-    (is (= 100.0d0 (gtk-print-settings-get-length settings "paper-width" :mm)))
-    (gtk-print-settings-set-length settings "paper-width" 320.0d0 :points)
-    (is (= 320.0d0 (gtk-print-settings-get-length settings "paper-width" :points)))
-    (gtk-print-settings-set-length settings "paper-width" 100.0d0 :inch)
-    (is (= 100.0d0 (gtk-print-settings-get-length settings "paper-width" :inch)))))
+    (is (=   0 (gtk-print-settings-length settings "paper-width" :mm)))
+    (is (= 100 (setf (gtk-print-settings-length settings "paper-width" :mm) 100.0d0)))
+    (is (= 100 (gtk-print-settings-length settings "paper-width" :mm)))
+    (is (= 320 (setf (gtk-print-settings-length settings "paper-width" :points) 320.0d0)))
+    (is (= 320 (gtk-print-settings-length settings "paper-width" :points)))
+    (is (= 100 (setf (gtk-print-settings-length settings "paper-width" :inch) 100.0d0)))
+    (is (= 100 (gtk-print-settings-length settings "paper-width" :inch)))))
 
 ;;;     gtk_print_settings_get_int
 ;;;     gtk_print_settings_get_int_with_default
@@ -372,10 +372,10 @@ output-file-format : pdf
 
 (test gtk-print-settings-int
   (let ((settings (gtk-print-settings-new)))
-    (gtk-print-settings-set-int settings "paper-width" 100)
-    (is (= 100 (gtk-print-settings-get-int settings "paper-width")))
-    (is (= 100 (gtk-print-settings-get-int-with-default settings "paper-width" 90)))
-    (is (= 90 (gtk-print-settings-get-int-with-default settings "xxx" 90)))))
+    (is (= 100 (setf (gtk-print-settings-int settings "paper-width") 100)))
+    (is (= 100 (gtk-print-settings-int settings "paper-width")))
+    (is (= 100 (gtk-print-settings-int-with-default settings "paper-width" 90)))
+    (is (=  90 (gtk-print-settings-int-with-default settings "xxx" 90)))))
 
 ;;;     gtk_print_settings_get_printer
 ;;;     gtk_print_settings_set_printer
@@ -407,8 +407,8 @@ output-file-format : pdf
 
 (test gtk-print-settings-paper-width
   (let ((settings (gtk-print-settings-new)))
-    (gtk-print-settings-set-paper-width settings 100.0d0 :mm)
-    (is (= 100.0d0 (gtk-print-settings-get-paper-width settings :mm)))
+    (is (= 100 (setf (gtk-print-settings-paper-width settings :mm) 100.0d0)))
+    (is (= 100 (gtk-print-settings-paper-width settings :mm)))
     (is (string= "100" (gtk-print-settings-get settings "paper-width")))))
 
 ;;;     gtk_print_settings_get_paper_height
@@ -416,8 +416,8 @@ output-file-format : pdf
 
 (test gtk-print-settings-paper-height
   (let ((settings (gtk-print-settings-new)))
-    (gtk-print-settings-set-paper-height settings 100.0d0 :mm)
-    (is (= 100.0d0 (gtk-print-settings-get-paper-height settings :mm)))
+    (is (= 100 (setf (gtk-print-settings-paper-height settings :mm) 100.0d0)))
+    (is (= 100 (gtk-print-settings-paper-height settings :mm)))
     (is (string= "100" (gtk-print-settings-get settings "paper-height")))))
 
 ;;;     gtk_print_settings_get_use_color
@@ -539,7 +539,6 @@ output-file-format : pdf
 
 (test gtk-print-settings-resolution-xy
   (let ((settings (gtk-print-settings-new)))
-    (is-false (gtk-print-settings-set-resolution-xy settings 100 200))
     (is (eq 100 (gtk-print-settings-resolution-x settings)))
     (is (eq 200 (gtk-print-settings-resolution-y settings)))))
 

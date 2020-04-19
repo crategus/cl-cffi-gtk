@@ -77,10 +77,10 @@
 (test gtk-page-setup-top-margin
   (let ((page-setup (gtk-page-setup-new)))
     ;; Get top margin
-    (is (= 6.35d0 (gtk-page-setup-get-top-margin page-setup :mm)))
+    (is (= 6.35d0 (gtk-page-setup-top-margin page-setup :mm)))
     ;; Set top margin
-    (is-false (gtk-page-setup-set-top-margin page-setup 10.0 :mm))
-    (is (= 10.0 (gtk-page-setup-get-top-margin page-setup :mm)))))
+    (is (= 10.0 (setf (gtk-page-setup-top-margin page-setup :mm) 10.0)))
+    (is (= 10.0 (gtk-page-setup-top-margin page-setup :mm)))))
 
 ;;;     gtk-page-setup-get-bottom-margin
 ;;;     gtk-page-setup-set-bottom-margin
@@ -88,10 +88,10 @@
 (test gtk-page-setup-bottom-margin
   (let ((page-setup (gtk-page-setup-new)))
     ;; Get top margin
-    (is (= 14.224d0 (gtk-page-setup-get-bottom-margin page-setup :mm)))
+    (is (= 14.224d0 (gtk-page-setup-bottom-margin page-setup :mm)))
     ;; Set top margin
-    (is-false (gtk-page-setup-set-bottom-margin page-setup 10.0 :mm))
-    (is (= 10.0 (gtk-page-setup-get-bottom-margin page-setup :mm)))))
+    (is (= 10.0 (setf (gtk-page-setup-bottom-margin page-setup :mm) 10.0)))
+    (is (= 10.0 (gtk-page-setup-bottom-margin page-setup :mm)))))
 
 ;;;     gtk-page-setup-get-left-margin
 ;;;     gtk-page-setup-set-left-margin
@@ -99,10 +99,10 @@
 (test gtk-page-setup-left-margin
   (let ((page-setup (gtk-page-setup-new)))
     ;; Get left margin
-    (is (= 6.35d0 (gtk-page-setup-get-left-margin page-setup :mm)))
+    (is (= 6.35d0 (gtk-page-setup-left-margin page-setup :mm)))
     ;; Set left margin
-    (is-false (gtk-page-setup-set-left-margin page-setup 10.0 :mm))
-    (is (= 10.0 (gtk-page-setup-get-left-margin page-setup :mm)))))
+    (is (= 10.0 (setf (gtk-page-setup-left-margin page-setup :mm) 10.0)))
+    (is (= 10.0 (gtk-page-setup-left-margin page-setup :mm)))))
 
 ;;;     gtk-page-setup-get-right-margin
 ;;;     gtk-page-setup-set-right-margin
@@ -110,23 +110,23 @@
 (test gtk-page-setup-right-margin
   (let ((page-setup (gtk-page-setup-new)))
     ;; Get right margin
-    (is (= 6.35d0 (gtk-page-setup-get-right-margin page-setup :mm)))
+    (is (= 6.35d0 (gtk-page-setup-right-margin page-setup :mm)))
     ;; Set right margin
-    (is-false (gtk-page-setup-set-right-margin page-setup 10.0 :mm))
-    (is (= 10.0 (gtk-page-setup-get-right-margin page-setup :mm)))))
+    (is (= 10.0 (setf (gtk-page-setup-right-margin page-setup :mm) 10.0)))
+    (is (= 10.0 (gtk-page-setup-right-margin page-setup :mm)))))
 
 ;;;     gtk-page-setup-set-paper-size-and-default-margins
 
 (test gtk-page-setup-set-paper-size-and-default-margins
   (let ((page-setup (gtk-page-setup-new)))
     ;; Paper size for A4
-    (is (= 210.0d0 (gtk-page-setup-get-paper-width page-setup :mm)))
-    (is (= 297.0d0 (gtk-page-setup-get-paper-height page-setup :mm)))
+    (is (= 210.0d0 (gtk-page-setup-paper-width page-setup :mm)))
+    (is (= 297.0d0 (gtk-page-setup-paper-height page-setup :mm)))
     ;; Set paper size to A3
     (is-false (gtk-page-setup-set-paper-size-and-default-margins page-setup (gtk-paper-size-new "iso_a3")))
     ;; Paper size for A3
-    (is (= 297.0d0 (gtk-page-setup-get-paper-width page-setup :mm)))
-    (is (= 420.0d0 (gtk-page-setup-get-paper-height page-setup :mm)))))
+    (is (= 297.0d0 (gtk-page-setup-paper-width page-setup :mm)))
+    (is (= 420.0d0 (gtk-page-setup-paper-height page-setup :mm)))))
 
 ;;;     gtk-page-setup-get-paper-width
 ;;;     gtk-page-setup-get-paper-height
@@ -135,10 +135,10 @@
 
 (test gtk-page-setup-paper-and-page
   (let ((page-setup (gtk-page-setup-new)))
-    (is (= 210.0d0 (gtk-page-setup-get-paper-width page-setup :mm)))
-    (is (= 297.0d0 (gtk-page-setup-get-paper-height page-setup :mm)))
-    (is (= 197.3d0 (gtk-page-setup-get-page-width page-setup :mm)))
-    (is (= 276.426d0 (gtk-page-setup-get-page-height page-setup :mm)))))
+    (is (= 210.0d0 (gtk-page-setup-paper-width page-setup :mm)))
+    (is (= 297.0d0 (gtk-page-setup-paper-height page-setup :mm)))
+    (is (= 197.3d0 (gtk-page-setup-page-width page-setup :mm)))
+    (is (= 276.426d0 (gtk-page-setup-page-height page-setup :mm)))))
 
 ;;;     gtk-page-setup-new-from-file
 ;;;     gtk-page-setup-to-file

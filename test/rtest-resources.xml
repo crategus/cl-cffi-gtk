@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/home/dieter/Lisp/lisp-projects/cl-gtk/test">
+    <file>gtk-logo-24.png</file>
+  </gresource>
+</gresources>
+
