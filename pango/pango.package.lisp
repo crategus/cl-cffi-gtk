@@ -377,9 +377,8 @@
       @about-function{pango-layout-get-character-count}
       @about-function{pango-layout-set-markup}
       @about-function{pango-layout-set-markup-with-accel}
-      @about-function{pango-layout-set-attributes}
-      @about-function{pango-layout-get-attributes}
 
+      @about-function{pango-layout-attributes}
       @about-function{pango-layout-font-description}
       @about-function{pango-layout-width}
       @about-function{pango-layout-height}
