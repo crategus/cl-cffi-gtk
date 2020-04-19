@@ -608,6 +608,19 @@
 ;;;     a PangoAttrList
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-attributes) (attrs layout)
+  (foreign-funcall "pango_layout_set_attributes"
+                   (g-object pango-layout) layout
+                   (g-boxed-foreign pango-attr-list) attrs
+                   :void)
+  attrs)
+
+(defcfun ("pango_layout_get_attributes" pango-layout-attributes)
+    (g-boxed-foreign pango-attr-list)
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-attributes)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_font_description ()
 ;;; pango_layout_get_font_description ()
@@ -1532,6 +1545,19 @@
 ;;; height :
 ;;;     location to store the logical height, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_pixel_size" %pango-layout-get-pixel-size) :void
+  (layout (g-object pango-layout))
+  (width (:pointer :int))
+  (height (:pointer :int)))
+
+(defun pango-layout-pixel-size (layout)
+  (with-foreign-objects ((width :int) (height :int))
+    (%pango-layout-get-pixel-size layout width height)
+    (values (mem-ref width :int)
+            (mem-ref height :int))))
+
+(export 'pango-layout-pixel-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_baseline ()
