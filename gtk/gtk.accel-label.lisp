@@ -2,12 +2,12 @@
 ;;; gtk.accel-label.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -85,13 +85,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-label 'type)
- "@version{2013-4-22}
+ "@version{2020-4-19}
   @begin{short}
     The @sym{gtk-accel-label} widget is a subclass of @class{gtk-label} that
     also displays an accelerator key on the right of the label text, e. g.
     \"Ctl+S\". It is commonly used in menus to show the keyboard short-cuts for
     commands.
   @end{short}
+
+  @image[accel-label]{}
 
   The accelerator key to display is not set explicitly. Instead, the
   @sym{gtk-accel-label} displays the accelerators which have been added to a
@@ -149,6 +151,9 @@
 
 ;;; --- gtk-accel-label-accel-closure ------------------------------------------
 
+;; TODO: GClosure is in the C implementatin a boxed type, but not in Lisp.
+;; Therefore the accessor for accel-closure does not work.
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-closure"
                                                'gtk-accel-label) 't)
@@ -160,16 +165,20 @@
 (setf (gethash 'gtk-accel-label-accel-closure atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-closure 'function)
- "@version{2014-3-7}
+ "@version{2020-4-19}
+  @syntax[]{(gtk-accel-label-accel-closure object) => closure}
+  @syntax[]{(setf (gtk-accel-label-accel-closure object) closure)}
   @argument[label]{a @class{gtk-accel-label} widget}
   @argument[closure]{the closure to monitor for accelerator changes}
   @begin{short}
-    Accessor of the slot @slot[gtk-accel-label]{accel-closure} of the
+    Accessor of the @slot[gtk-accel-label]{accel-closure} slot of the
     @class{gtk-accel-label} class.
   @end{short}
 
-  The generic function @sym{(setf gtk-accel-label-accel-closure} sets the
-  closure to be monitored by this accelerator label.
+  The slot access function @sym{gtk-accel-label-accel-closure} gets the closure
+  to be monitored by this accelerator. The slot access function
+  @sym{(setf gtk-accel-label-accel-closure)} sets the closure to be monitored
+  by this accelerator label.
 
   The closure must be connected to an accelerator group; see the function
   @fun{gtk-accel-group-connect}.
@@ -189,21 +198,20 @@
 (setf (gethash 'gtk-accel-label-accel-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-widget 'function)
- "@version{2013-4-22}
-  @argument[label]{a @class{gtk-accel-label} widget}
-  @argument[widget]{the widget to be monitored}
+ "@version{2020-4-19}
   @syntax[]{(gtk-accel-label-accel-widget object) => widget}
   @syntax[]{(setf (gtk-accel-label-accel-widget object) widget)}
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @argument[widget]{the widget to be monitored}
   @begin{short}
-    Accessor of the slot @slot[gtk-accel-label]{accel-widget} of the
+    Accessor of the @slot[gtk-accel-label]{accel-widget} slot of the
     @class{gtk-accel-label} class.
   @end{short}
 
-  The generic function @sym{gtk-accel-label-accel-widget} returns the object
-  monitored by the accelerator label, or @code{nil}.
-
-  The generic functions @sym{(setf gtk-accel-label-accel-widget)} sets the
-  widget to be monitored by this accelerator label.
+  The slot access function @sym{gtk-accel-label-accel-widget} returns the
+  widget monitored by the accelerator label. The slot access functions
+  @sym{(setf gtk-accel-label-accel-widget)} sets the widget to be monitored
+  by this accelerator label.
   @see-class{gtk-accel-label}")
 
 ;;; ----------------------------------------------------------------------------
@@ -212,28 +220,29 @@
 
 (declaim (inline gtk-accel-label-new))
 
-(defun gtk-accel-label-new (string)
+(defun gtk-accel-label-new (text)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-7}
-  @argument[string]{the label string, must be @code{nil}}
+ "@version{2020-4-19}
+  @argument[text]{a string with the text of the label}
   @return{A new @class{gtk-accel-label} widget.}
-  Creates a new @class{gtk-accel-label} widget.
+  @begin{short}
+    Creates a new accel label widget.
+  @end{short}
   @see-class{gtk-accel-label}"
   (make-instance 'gtk-accel-label
-                 :label string))
+                 :label text))
 
 (export 'gtk-accel-label-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_accel_label_get_accel_width ()
+;;; gtk_accel_label_get_accel_width () -> gtk-accel-label-accel-width
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_accel_label_get_accel_width" gtk-accel-label-get-accel-width)
-    :int
+(defcfun ("gtk_accel_label_get_accel_width" gtk-accel-label-accel-width) :int
   #+cl-cffi-gtk-documentation
- "@version{2014-11-7}
+ "@version{2020-4-19}
   @argument[label]{a @class{gtk-accel-label} widget}
-  @return{The width needed to display the accelerator key(s).}
+  @return{An integer with the width needed to display the accelerator key(s).}
   @begin{short}
     Returns the width needed to display the accelerator key(s).
   @end{short}
@@ -242,7 +251,7 @@
   @see-class{gtk-accel-label}"
   (label (g-object gtk-accel-label)))
 
-(export 'gtk-accel-label-get-accel-width)
+(export 'gtk-accel-label-accel-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_set_accel ()
@@ -251,9 +260,9 @@
 #+gtk-3-6
 (defcfun ("gtk_accel_label_set_accel" gtk-accel-label-set-accel) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
+ "@version{2020-4-19}
   @argument[accel-label]{a @class{gtk-accel-label} widget}
-  @argument[accelerator-key]{a keyval, or 0}
+  @argument[accelerator-key]{an unsigned integer with a keyval, or 0}
   @argument[accelerator-mods]{the modifier mask of type
     @symbol{gdk-modifier-type} for the accel}
   @begin{short}
@@ -277,25 +286,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_get_accel ()
-;;;
-;;; void
-;;; gtk_accel_label_get_accel (GtkAccelLabel *accel_label,
-;;;                            guint *accelerator_key,
-;;;                           GdkModifierType *accelerator_mods);
-;;;
-;;; Gets the keyval and modifier mask set with gtk_accel_label_set_accel().
-;;;
-;;; accel_label :
-;;;     a GtkAccelLabel
-;;;
-;;; accelerator_key :
-;;;     return location for the keyval.
-;;;
-;;; accelerator_mods :
-;;;     return location for the modifier mask.
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_accel_label_get_accel" %gtk-accel-label-get-accel) :void
+  (accel-label (g-object gtk-accel-label))
+  (accelerator-key (:pointer :uint))
+  (accelerator-mods (:pointer gdk-modifier-type)))
+
+#+gtk-3-12
+(defun gtk-accel-label-get-accel (accel-label)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-19}
+  @argument[accel-label]{a @class{gtk-accel-label} widget}
+  @begin{return}
+    @code{accelerator-key} --  an unsigned integer with a keyval @br{}
+    @code{accelerator-mods} -- the modifier mask of type
+                               @symbol{gdk-modifier-mask}
+  @end{return}
+  @begin{short}
+    Gets the keyval and modifier mask set with the function
+    @fun{gtk-accel-label-set-accel}.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-accel-label}
+  @see-function{gtk-accel-label-set-accel}"
+  (with-foreign-objects ((accelerator-key :uint)
+                         (accelerator-mods 'gdk-modifier-type))
+    (%gtk-accel-label-get-accel accel-label accelerator-key accelerator-mods)
+    (values (mem-ref accelerator-key :uint)
+            (mem-ref accelerator-mods 'gdk-modifier-type))))
+
+#+gtk-3-12
+(export 'gtk-accel-label-get-accel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()
@@ -303,9 +327,9 @@
 
 (defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2014-11-7}
+ "@version{2020-4-19}
   @argument[label]{a @class{gtk-accel-label} widget}
-  @return{Always returns @code{nil}.}
+  @return{Always returns @em{false}.}
   @begin{short}
     Recreates the string representing the accelerator keys.
   @end{short}
