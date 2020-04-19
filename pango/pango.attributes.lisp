@@ -540,17 +540,6 @@
 ;;;     FALSE if error is set, otherwise TRUE
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-parse-markup atdoc:*symbol-name-alias*)
-      "Function"
-      (gethash 'pango-parse-markup atdoc:*external-symbols*)
- "@version{2013-4-20}
-  At the current time this function is not implemented in the Lisp binding to
-  GTK+.")
-
-#+cl-cffi-gtk-documentation
-(export 'pango-parse-markup)
-
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_type_register ()
 ;;;
