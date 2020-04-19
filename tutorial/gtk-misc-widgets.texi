@@ -783,19 +783,17 @@ function @code{gtk-spin-button-update}.
           (g-signal-connect button "clicked"
              (lambda (widget)
                (declare (ignore widget))
-               (gtk-label-set-text
-                      label
-                      (format nil "~A"
-                              (gtk-spin-button-get-value-as-int spinner1)))))
+               (setf (gtk-label-text label)
+                     (format nil "~A"
+                             (gtk-spin-button-get-value-as-int spinner1)))))
             (gtk-box-pack-start hbox button))
         (let ((button (gtk-button-new-with-label "Value as Float")))
           (g-signal-connect button "clicked"
              (lambda (widget)
                (declare (ignore widget))
-               (gtk-label-set-text
-                             label
-                             (format nil "~A"
-                                     (gtk-spin-button-value spinner1)))))
+               (setf (gtk-label-text label)
+                     (format nil "~A"
+                             (gtk-spin-button-value spinner1)))))
           (gtk-box-pack-start hbox button))
         (gtk-box-pack-start vbox2 hbox)
         (gtk-box-pack-start vbox2 label))

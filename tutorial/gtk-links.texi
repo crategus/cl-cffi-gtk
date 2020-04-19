@@ -327,7 +327,7 @@
 @set gtk-info-bar-add-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-add-button.html
 @set gtk-info-bar-new-with-buttons http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-new-with-buttons.html
 @set gtk-info-bar-set-response-sensitive http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-set-response-sensitive.html
-@set gtk-info-bar-get-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-get-content-area.html
+@set gtk-info-bar-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-content-area.html
 @set gtk-info-bar-message-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-message-type.html
 
 @c GtkLinkButton
@@ -342,18 +342,17 @@
 @set gtk-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-label.html
 @set gtk-label-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-new.html
 @set gtk-label-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-new-with-mnemonic.html
-@set gtk-label-set-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-text.html
-@set gtk-label-get-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-text.html
-@set gtk-label-set-mnemonic-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-mnemonic-widget.html
+@set gtk-label-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-text.html
+@set gtk-label-mnemonic-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-mnemonic-widget.html
 @set gtk-label-set-text-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-text-with-mnemonic.html
 @set gtk-label-set-markup http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-markup.html
 
-@set gtk-label-set-attributes http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-attributes.html
-@set gtk-label-set-selectable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-selectable.html
-@set gtk-label-set-line-wrap http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-line-wrap.html
+@set gtk-label-attributes http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-attributes.html
+@set gtk-label-selectable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-selectable.html
+@set gtk-label-line-wrap http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-line-wrap.html
 @set gtk-label-justify http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-justify.html
 @set gtk-label-pattern http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-pattern.html
-@set gtk-label-get-current-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-current-uri.html
+@set gtk-label-current-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-current-uri.html
 
 @c GtkLayout
 
@@ -564,7 +563,7 @@
 
 @set gtk-statusbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-statusbar.html
 @set gtk-statusbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-new.html
-@set gtk-statusbar-get-context-id http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-get-context-id.html
+@set gtk-statusbar-context-id http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-context-id.html
 @set gtk-statusbar-push http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-push.html
 @set gtk-statusbar-pop http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-pop.html
 @set gtk-statusbar-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-remove.html

@@ -30,13 +30,11 @@
 
 @findex gtk-label-new
 @findex gtk-label-new-with-mnemonic
-@findex gtk-label-set-text
-@findex gtk-label-get-text
+@findex gtk-label-text
 
 @findex label-new, gtk-label-new
 @findex label-new-with-mnemonic, gtk-label-new-with-mnemonic
-@findex label-set-text, gtk-label-set-text
-@findex label-get-text, gtk-label-get-text
+@findex label-text, gtk-label-text
 
 Labels are used a lot in GTK+, and are relatively simple.  The @xurl{gtk-label}
 widget displays a small amount of text.  As the name implies, most labels are
@@ -49,11 +47,11 @@ To create a new label, use @code{make-instance} with the class name
 @xurl{gtk-label} or the functions @xurl{gtk-label-new} or
 @xurl{gtk-label-new-with-mnemonic}.  The sole argument of the functions is the
 string you wish the label to display.  To change the text of the label after
-creation, use the function @xurl{gtk-label-set-text}.  The first argument
+creation, use the function @xurl{gtk-label-text}.  The first argument
 is the label you created previously, and the second is the new string. The space
 needed for the new string will be automatically adjusted if needed.  You can
 produce multi-line labels by putting line breaks in the label string.  To
-retrieve the current string, use @xurl{gtk-label-get-text}.
+retrieve the current string, use @xurl{gtk-label-text}.
 
 @ifnotinfo
 @float Figure, figure-labels
@@ -66,11 +64,11 @@ retrieve the current string, use @xurl{gtk-label-get-text}.
 
 @findex gtk-label-new-with-mnemonic
 @findex gtk-label-set-text-with-mnemonic
-@findex gtk-label-set-mnemonic-widget
+@findex gtk-label-mnemonic-widget
 
 @findex label-new-with-mnemonic, gtk-label-new-with-mnemonic
 @findex label-set-text-with-mnemonic, gtk-label-set-text-with-mnemonic
-@findex label-set-mnemonic-widget, gtk-label-set-mnemonic-widget
+@findex label-mnemonic-widget, gtk-label-mnemonic-widget
 
 Labels may contain mnemonics.  Mnemonics are underlined characters in the
 label, used for keyboard navigation.  Mnemonics are created by providing a
@@ -81,7 +79,7 @@ to the functions @xurl{gtk-label-new-with-mnemonic} or
 Mnemonics automatically activate any activatable widget the label is inside,
 such as a @xurl{gtk-button}; if the label is not inside the mnemonic's target
 widget, you have to tell the label about the target using
-@xurl{gtk-label-set-mnemonic-widget}.
+@xurl{gtk-label-mnemonic-widget}.
 
 Here is a simple example where the label is inside a button:
 @verbatim
@@ -102,22 +100,22 @@ already inside:
 
 To create a mnemonic for a widget alongside the label, such as a
 @xurl{gtk-entry}, you have to point the label at the entry with
-@xurl{gtk-label-set-mnemonic-widget}:
+@xurl{gtk-label-mnemonic-widget}:
 @verbatim
   ;; Pressing Alt+H will focus the entry
   (let* ((entry (gtk-entry-new))
          (label (gtk-label-new-with-mnemonic "_Hello")))
-    (gtk-label-set-mnemonic-widget label entry)
+    (gtk-label-mnemonic-widget label entry)
     [...] )
 @end verbatim
 
 @subheading Markup (styled text)
 
 @findex gtk-label-set-markup
-@findex gtk-label-set-attributes
+@findex gtk-label-attributes
 
 @findex label-set-markup, gtk-label-set-markup
-@findex label-set-attributes, gtk-label-set-attributes
+@findex label-attributes, gtk-label-attributes
 
 To make it easy to format text in a label (changing colors, fonts, etc.),
 label text can be provided in a simple markup format.  Here's how to create
@@ -162,10 +160,10 @@ exact string being displayed, so translations will cause problems.
 
 @subheading Selectable labels
 
-@findex gtk-label-set-selectable
-@findex label-set-selectable, gtk-label-set-selectable
+@findex gtk-label-selectable
+@findex label-selectable, gtk-label-selectable
 
-Labels can be made selectable with @xurl{gtk-label-set-selectable}.  Selectable
+Labels can be made selectable with @xurl{gtk-label-selectable}.  Selectable
 labels allow the user to copy the label contents to the clipboard.  Only labels
 that contain useful-to-copy information - such as error messages - should be
 made selectable.
@@ -176,11 +174,11 @@ A label can contain any number of paragraphs, but will have performance
 problems if it contains more than a small number.  Paragraphs are separated
 by newlines or other paragraph separators understood by Pango.
 
-@findex gtk-label-set-line-wrap
-@findex label-set-line-wrap, gtk-label-set-line-wrap
+@findex gtk-label-line-wrap
+@findex label-line-wrap, gtk-label-line-wrap
 
 The label widget is capable of line wrapping the text automatically.  This can
-be activated using the function @xurl{gtk-label-set-line-wrap}.  The first
+be activated using the function @xurl{gtk-label-line-wrap}.  The first
 argument is the label and the second argument take @code{T} or @code{NIL} to
 switch on or to switch off the line wrapping.
 
@@ -233,8 +231,8 @@ first two characters and eight and ninth characters.
 
 @subheading Links
 
-@findex gtk-label-get-current-uri
-@findex label-get-current-uri, gtk-label-get-current-uri
+@findex gtk-label-current-uri
+@findex label-current-uri, gtk-label-current-uri
 
 GTK+ supports markup for clickable hyperlinks in addition to regular Pango
 markup.  The markup for links is borrowed from HTML, using the a with href and
@@ -248,7 +246,7 @@ tooltip on the link.  An example looks like this:
 @end verbatim
 
 It is possible to implement custom handling for links and their tooltips
-with the @code{activate-link} signal and the @xurl{gtk-label-get-current-uri}
+with the @code{activate-link} signal and the @xurl{gtk-label-current-uri}
 function.
 
 @subheading GtkLabel as GtkBuildable
@@ -937,7 +935,7 @@ last-in-first-out order, not context identifier order.
 
 A statusbar is created with a call to @xurl{gtk-statusbar-new}.  A new context
 Identifier is requested using a call to the function
-@xurl{gtk-statusbar-get-context-id} with a short textual description of the
+@xurl{gtk-statusbar-context-id} with a short textual description of the
 context as the second argument.
 
 There are three functions that can operate on statusbars:
@@ -968,7 +966,7 @@ items onto the statusbar, and one for popping the last item back off.
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
-           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (id (gtk-statusbar-context-id statusbar "Example Status Bar"))
            (count 0))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -1013,7 +1011,7 @@ you to add buttons to the action area with @xurl{gtk-info-bar-add-button} or
 @xurl{gtk-info-bar-new-with-buttons}.  The sensitivity of action widgets can be
 controlled with @xurl{gtk-info-bar-set-response-sensitive}.  To add widgets to
 the main content area of a @xurl{gtk-info-bar}, use the function
-@xurl{gtk-info-bar-get-content-area} and add your widgets to the container.
+@xurl{gtk-info-bar-content-area} and add your widgets to the container.
 
 Similar to @xurl{gtk-message-dialog}, the contents of a @xurl{gtk-info-bar} can
 by classified as error message, warning, informational message, etc, by using
@@ -1036,7 +1034,7 @@ the background color of the message area.
                                     :no-show-all t))
            (message (make-instance 'gtk-label
                                    :label ""))
-           (content (gtk-info-bar-get-content-area info-bar)))
+           (content (gtk-info-bar-content-area info-bar)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -1057,7 +1055,7 @@ the background color of the message area.
            (gtk-widget-hide info-bar)))
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
-      (gtk-label-set-text message "An Info Message in the content area.")
+      (setf (gtk-label-text message) "An Info Message in the content area.")
       (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all

@@ -916,8 +916,8 @@
          (lambda (widget param)
            (declare (ignore param))
            (if (gtk-switch-active widget)
-               (setf (gtk-label-set-label label) "The Switch is ON")
-               (setf (gtk-label-set-label label) "The Switch is OFF"))))
+               (setf (gtk-label-label label) "The Switch is ON")
+               (setf (gtk-label-label label) "The Switch is OFF"))))
       (gtk-container-add grid switch)
       (gtk-container-add grid label)
       (gtk-container-add window grid)
@@ -1245,7 +1245,7 @@
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
-           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (id (gtk-statusbar-context-id statusbar "Example Status Bar"))
            (count 0))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -1285,7 +1285,7 @@
                                     :no-show-all t))
            (message (make-instance 'gtk-label
                                    :label ""))
-           (content (gtk-info-bar-get-content-area info-bar)))
+           (content (gtk-info-bar-content-area info-bar)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -1306,7 +1306,7 @@
            (gtk-widget-hide info-bar)))
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
-      (gtk-label-set-text message "An Info Message in the content area.")
+      (setf (gtk-label-text message) "An Info Message in the content area.")
       (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
@@ -3726,19 +3726,17 @@ happen.")
           (g-signal-connect button "clicked"
              (lambda (widget)
                (declare (ignore widget))
-               (gtk-label-set-text
-                      label
-                      (format nil "~A"
-                              (gtk-spin-button-get-value-as-int spinner1)))))
+               (setf (gtk-label-text label)
+                     (format nil "~A"
+                             (gtk-spin-button-get-value-as-int spinner1)))))
             (gtk-box-pack-start hbox button))
         (let ((button (gtk-button-new-with-label "Value as Float")))
           (g-signal-connect button "clicked"
              (lambda (widget)
                (declare (ignore widget))
-               (gtk-label-set-text
-                             label
-                             (format nil "~A"
-                                     (gtk-spin-button-value spinner1)))))
+               (setf (gtk-label-text label)
+                     (format nil "~A"
+                             (gtk-spin-button-value spinner1)))))
           (gtk-box-pack-start hbox button))
         (gtk-box-pack-start vbox2 hbox)
         (gtk-box-pack-start vbox2 label))
