@@ -106,7 +106,7 @@
 ;;; GVariantType
 ;;; ----------------------------------------------------------------------------
 
-(gobject:define-g-boxed-opaque g-variant-type "GVariantType"
+(gobject::define-g-boxed-opaque g-variant-type "GVariantType"
   :alloc (error "GVariantType can not be created from Lisp side"))
 
 #+cl-cffi-gtk-documentation
@@ -271,7 +271,7 @@
   @see-function{g-variant-type-copy}
   @see-function{g-variant-type-free}")
 
-(export (gobject:boxed-related-symbols 'g-variant-type))
+(export (gobject::boxed-related-symbols 'g-variant-type))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BOOLEAN
@@ -793,7 +793,7 @@
   Since 2.24
   @see-function{g-variant-type-copy}
   @see-function{g-variant-type-new}"
-  (type (gobject::g-boxed-foreign g-variant-type)))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-free)
 
