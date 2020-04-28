@@ -1638,51 +1638,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_mark_busy ()
-;;;
-;;; void
-;;; g_application_mark_busy (GApplication *application);
-;;;
-;;; Increases the busy count of application .
-;;;
-;;; Use this function to indicate that the application is busy, for instance
-;;; while a long running operation is pending.
-;;;
-;;; The busy state will be exposed to other processes, so a session shell will
-;;; use that information to indicate the state to the user (e.g. with a
-;;; spinner).
-;;;
-;;; To cancel the busy indication, use g_application_unmark_busy().
-;;;
-;;; application :
-;;;     a GApplication
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_mark_busy" g-application-mark-busy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-28}
+  @argument[application]{a @class{g-application} object}
+  @begin{short}
+    Increases the busy count of the application.
+  @end{short}
+
+  Use this function to indicate that the application is busy, for instance
+  while a long running operation is pending.
+
+  The busy state will be exposed to other processes, so a session shell will
+  use that information to indicate the state to the user, e. g. with a
+  spinner.
+
+  To cancel the busy indication, use the function
+  @fun{g-application-unmark-busy}.
+  @see-class{g-application}
+  @see-function{g-application-unmark-busy}"
   (application (g-object g-application)))
 
 (export 'g-application-mark-busy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_unmark_busy ()
-;;;
-;;; void
-;;; g_application_unmark_busy (GApplication *application);
-;;;
-;;; Decreases the busy count of application .
-;;;
-;;; When the busy count reaches zero, the new state will be propagated to other
-;;; processes.
-;;;
-;;; This function must only be called to cancel the effect of a previous call
-;;; to g_application_mark_busy().
-;;;
-;;; application :
-;;;     a GApplication
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_unmark_busy" g-application-unmark-busy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-28}
+  @argument[application]{a @class{g-application} object}
+  @begin{short}
+    Decreases the busy count of the application.
+  @end{short}
+
+  When the busy count reaches zero, the new state will be propagated to other
+  processes.
+
+  This function must only be called to cancel the effect of a previous call
+  to the function @fun{g-application-mark-busy}.
+  @see-class{g-application}
+  @see-function{g-application-mark-busy}"
+  (application (g-object g-application)))
+
+(export 'g-application-unmark-busy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_bind_busy_property ()
