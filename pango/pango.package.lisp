@@ -473,8 +473,8 @@
       @about-function{pango-language-matches}
       @about-function{pango-language-includes-script}
       @about-function{pango-language-get-scripts}
-      @about-function{pango-language-get-default}
-      @about-function{pango-language-get-sample-string}
+      @about-function{pango-language-default}
+      @about-function{pango-language-sample-string}
     @end{subsection}
     @begin[Bidirectional Text]{subsection}
       Types and functions to help with handling bidirectional text.

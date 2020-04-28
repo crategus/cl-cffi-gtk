@@ -624,9 +624,9 @@
   This function first canonicalizes the string by converting it to lowercase,
   mapping '_' to '-', and stripping all characters other than letters and '-'.
 
-  Use the function @fun{pango-language-get-default} if you want to get the
+  Use the function @fun{pango-language-default} if you want to get the
   @class{pango-language} structure for the current locale of the process.
-  @see-function{pango-language-get-default}"
+  @see-function{pango-language-default}"
   (language :string))
 
 (export 'pango-language-from-string)
@@ -745,18 +745,19 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_language_get_default ()
+;;; pango_language_get_default () -> pango-language-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_language_get_default" pango-language-get-default)
+(defcfun ("pango_language_get_default" pango-language-default)
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2020-4-28}
   @return{The default language as a @class{pango-language} structure.}
   @begin{short}
     Returns the @class{pango-language} structure for the current locale of the
-    process. Note that this can change over the life of an application.
+    process.
   @end{short}
+  Note that this can change over the life of an application.
 
   On Unix systems, this is the return value derived from
   @code{setlocale(LC_CTYPE, NULL)}, and the user can affect this through the
@@ -778,24 +779,26 @@
 
   Your application should call @code{setlocale(LC_ALL, \"\");} for the user
   settings to take effect. Gtk+ does this in its initialization functions
-  automatically (by calling @code{gtk_set_locale()}). See @code{man setlocale}
+  automatically by calling @code{gtk_set_locale()}. See @code{man setlocale}
   for more details.
 
-  Since 1.16")
+  Since 1.16
+  @see-class{pango-language}
+  @see-function{pango-language-sample-string}")
 
-(export 'pango-language-get-default)
+(export 'pango-language-default)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_language_get_sample_string ()
+;;; pango_language_get_sample_string () -> pango-language-sample-string
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_language_get_sample_string" pango-language-get-sample-string)
-    :string
+(defcfun ("pango_language_get_sample_string" pango-language-sample-string)
+    g-string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2020-4-28}
   @argument[language]{a @class{pango-language} structure, or @code{nil}}
   @begin{return}
-    The sample string. This value is owned by Pango and should not be freed.
+    The sample string.
   @end{return}
   @begin{short}
     Get a string that is representative of the characters needed to render a
@@ -807,17 +810,15 @@
   feature requirements unique to the language. It is suitable for use as
   sample text in a font selection dialog.
 
-  If language is @code{nil}, the default language as found by the function
-  @fun{pango-language-get-default} is used.
+  If @arg{language} is @code{nil}, the default language as found by the function
+  @fun{pango-language-default} is used.
 
-  If Pango does not have a sample string for language, the classic
-  \"The quick brown fox...\" is returned. This can be detected by comparing the
-  returned pointer value to that returned for (non-existent) language code
-  \"xx\". That is, compare to:
-  @code{(pango-language-get-sample-string (pango-language-from-string \"xx\"))}
-  @see-function{pango-language-get-default}"
+  If Pango does not have a sample string for @arg{language}, the classic
+  \"The quick brown fox...\" is returned.
+  @see-class{pango-language}
+  @see-function{pango-language-default}"
   (language (g-boxed-foreign pango-language)))
 
-(export 'pango-language-get-sample-string)
+(export 'pango-language-sample-string)
 
 ;;; --- End of file pango.script.lisp ------------------------------------------
