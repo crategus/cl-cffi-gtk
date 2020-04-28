@@ -3496,36 +3496,33 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-window 'function)
- "@version{2014-2-7}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-4-22}
   @syntax[]{(gtk-widget-window object) => window}
-  @syntax[]{(setf (gtk-widget-window object) window)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{window} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{window} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-window} returns the widget's window
+  The slot access function @sym{gtk-widget-window} returns the widget's window
   of type @class{gdk-window} if it is realized, @code{nil} otherwise.
 
-  The generic function @sym{(setf gtk-widget-window)} sets a widget's window.
-
   This function should only be used in a widget's \"realize\" implementation.
-  The window passed is usually either new window created with the function
+  The window passed is usually either a new window created with the function
   @fun{gdk-window-new}, or the window of its parent widget as returned by the
-  function @fun{gtk-widget-get-parent-window}.
+  function @fun{gtk-widget-parent-window}.
 
   Widgets must indicate whether they will create their own @class{gdk-window}
-  by calling the function @fun{gtk-widget-set-has-window}. This is usually done
+  by calling the function @fun{gtk-widget-has-window}. This is usually done
   in the widget's @code{init()} function.
-
   @begin[Note]{dictionary}
     This function does not add any reference to window.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-window}
-  @see-function{gtk-widget-get-parent-window}
-  @see-function{gtk-widget-set-has-window}")
+  @see-function{gtk-widget-parent-window}
+  @see-function{gtk-widget-has-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCallback ()
@@ -4601,45 +4598,46 @@
 (export 'gtk-widget-set-state)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_parent_window ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_parent_window" gtk-widget-set-parent-window) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[parent-window]{the new parent window}
-  @short{Sets a non default parent window for @arg{widget}.}
-
-  For @class{gtk-window} classes, setting a @arg{parent-window} effects whether
-  the window is a toplevel window or can be embedded into other widgets.
-
-  @subheading{Note}
-    For @class{gtk-window} classes, this needs to be called before the window
-    is realized.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-parent-window}"
-  (widget (g-object gtk-window))
-  (parent-window (g-object gdk-window)))
-
-(export 'gtk-widget-set-parent-window)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_parent_window ()
+;;; gtk_widget_set_parent_window () -> gtk-widget-parent-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_parent_window" gtk-widget-get-parent-window)
+;; TODO: Is there a difference to the accessor gtk-widget-parent?
+
+(defun (setf gtk-widget-parent-window) (parent-window widget)
+  (foreign-funcall "gtk_widget_set_parent_window"
+                   (g-object gtk-widget) widget
+                   (g-object gdk-window) parent-window
+                   :void)
+  parent-window)
+
+(defcfun ("gtk_widget_get_parent_window" gtk-widget-parent-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2020-4-22}
+  @syntax[]{(gtk-widget-parent-window widget) => parent-window}
+  @syntax[]{(setf (gtk-widget-parent-window widget) parent-window)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The parent window of @arg{widget}.}
-  Gets @arg{widget}'s parent window.
+  @argument[parent-window]{the parent window of type @class{gdk-window}}
+  @begin{short}
+    Accessor of the parent window of a @class{gtk-widget} object.
+  @end{short}
+
+  The function @sym{gtk-widget-parent-window} gets the widget's parent window.
+  The function @sym{(setf gtk-widget-parent-window)} sets a non default parent
+  window for the widget.
+
+  For @class{gtk-window} classes, setting a parent window effects whether
+  the window is a toplevel window or can be embedded into other widgets.
+  @begin[Note]{dictionary}
+    For @class{gtk-window} classes, this needs to be called before the window
+    is realized.
+  @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-set-parent-window}"
+  @see-class{gdk-window}"
   (widget (g-object gtk-window)))
 
-(export 'gtk-widget-get-parent-window)
+(export 'gtk-widget-parent-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_events ()
@@ -4905,42 +4903,43 @@
 (export 'gtk-widget-set-visual)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_pointer ()
+;;; gtk_widget_get_pointer () -> gtk-widget-pointer
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_pointer" %gtk-widget-get-pointer) :void
+(defcfun ("gtk_widget_get_pointer" %gtk-widget-pointer) :void
   (widget (g-object gtk-widget))
   (x (:pointer :int))
   (y (:pointer :int)))
 
-(defun gtk-widget-get-pointer (widget)
+(defun gtk-widget-pointer (widget)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2020-4-22}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{return}
-    @code{x} -- x coordinate, or @code{nil} @br{}
-    @code{y} -- y coordinate, or @code{nil}
+    @code{x} -- an integer with the x coordinate @br{}
+    @code{y} -- an integer with the y coordinate
   @end{return}
   @begin{short}
     Obtains the location of the mouse pointer in widget coordinates.
   @end{short}
+
   Widget coordinates are a bit odd; for historical reasons, they are defined as
-  @code{widget->window} coordinates for widgets that are not @code{:no-window}
-  widgets, and are relative to @code{widget->allocation.x},
-  @code{widget->allocation.y} for widgets that are @code{:no-window} widgets.
+  @code{widget->window} coordinates for widgets that return @em{true} for
+  @fun{gtk-widget-has-window}; and are relative to
+  @code{widget->allocation.x}, @code{widget->allocation.y} otherwise.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-get-pointer} has been deprecated since version
-    3.4 and should not be used in newly-written code. Use the function
-    @fun{gdk-window-get-device-position} instead.
+    The function @sym{gtk-widget-pointer} has been deprecated since version 3.4
+    and should not be used in newly-written code. Use the function
+    @fun{gdk-window-device-position} instead.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gdk-window-get-device-position}"
+  @see-function{gdk-window-device-position}"
   (with-foreign-objects ((x :int) (y :int))
-    (%gtk-widget-get-pointer widget x y)
+    (%gtk-widget-pointer widget x y)
     (values (mem-ref x :int)
             (mem-ref y :int))))
 
-(export 'gtk-widget-get-pointer)
+(export 'gtk-widget-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_ancestor ()
@@ -5124,7 +5123,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-direction atdoc:*external-symbols*)
- "@version{2012-11-4}
+ "@version{2020-4-22}
   @begin{short}
     This direction controls the primary direction for widgets containing text,
     and also the direction in which the children of a container are packed.
@@ -5143,96 +5142,85 @@
   (:ltr 1)
   (:rtl 2))
   @end{pre}
-  @see-function{gtk-widget-get-direction}
-  @see-function{gtk-widget-set-direction}")
+  @see-function{gtk-widget-direction}
+  @see-function{gtk-widget-default-direction}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()
+;;; gtk_widget_set_direction () -> gtk-widget-direction
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_direction" gtk-widget-get-direction)
+(defun (setf gtk-widget-direction) (direction widget)
+  (foreign-funcall "gtk_widget_set_direction"
+                   (g-object gtk-widget) widget
+                   gtk-text-direction direction
+                   :void)
+  direction)
+
+(defcfun ("gtk_widget_get_direction" gtk-widget-direction)
     gtk-text-direction
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-4-22}
+  @syntax[]{(gtk-widget-direction widget) => direction}
+  @syntax[]{(setf (gtk-widget-direction widget) direction)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The reading direction of type @symbol{gtk-text-direction} for
-    the widget.}
-  @short{Gets the reading direction for a particular widget.}
-  See the function @fun{gtk-widget-set-direction}.
-  @see-class{gtk-widget}
-  @see-symbol{gtk-text-direction}
-  @see-function{gtk-widget-set-direction}"
-  (widget (g-object gtk-widget)))
-
-(export 'gtk-widget-get-direction)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_direction ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_direction" gtk-widget-set-direction) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[direction]{the new direction of type @symbol{gtk-text-direction}}
+  @argument[direction]{the direction of type @symbol{gtk-text-direction}}
   @begin{short}
-    Sets the reading direction on a particular widget.
+    Accessor of the text direction of a @class{gtk-widget} object.
   @end{short}
-  This direction controls the primary direction for widgets containing text, and
-  also the direction in which the children of a container are packed. The
+
+  The function @sym{gtk-widget-direction} gets the reading direction for a
+  widget. The function @sym{(setf gtk-widget-direction)} sets the reading
+  direction on a widget.
+
+  This direction controls the primary direction for widgets containing text,
+  and also the direction in which the children of a container are packed. The
   ability to set the direction is present in order so that correct localization
   into languages with right-to-left reading directions can be done. Generally,
   applications will let the default reading direction present, except for
   containers where the containers are arranged in an order that is explicitely
   visual rather than logical, such as buttons for text justification.
 
-  If the direction is set to the value @code{:none} of the
-  @symbol{gtk-text-direction} enumeration, then the value set by the function
-  @fun{gtk-widget-set-default-direction} will be used.
+  If the direction is set to the value @code{:none}, then the value set by the
+  function @fun{gtk-widget-default-direction} will be used.
   @see-class{gtk-widget}
   @see-symbol{gtk-text-direction}
-  @see-function{gtk-widget-set-default-direction}"
-  (widget (g-object gtk-widget))
-  (direction gtk-text-direction))
+  @see-function{gtk-widget-default-direction}"
+  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-set-direction)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_default_direction ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_default_direction" gtk-widget-set-default-direction)
-    :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
-  @argument[dir]{the new default direction of type @symbol{gtk-text-direction}.
-    This cannot be @code{:none}.}
-  Sets the default reading direction for widgets where the direction has not
-  been explicitly set by the fucntion @fun{gtk-widget-set-direction}.
-  @see-symbol{gtk-text-direction}
-  @see-function{gtk-widget-set-direction}"
-  (direction gtk-text-direction))
-
-(export 'gtk-widget-set-default-direction)
+(export 'gtk-widget-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_default_direction ()
+;;; gtk_widget_set_default_direction () -> gtk-widget-default-direction
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_default_direction" gtk-widget-get-default-direction)
+(defun (setf gtk-widget-default-direction) (direction)
+  (foreign-funcall "gtk_widget_set_default_direction"
+                   gtk-text-direction direction
+                   :void)
+  direction)
+
+(defcfun ("gtk_widget_get_default_direction" gtk-widget-default-direction)
     gtk-text-direction
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
-  @return{The current default direction.}
+ "@version{2020-4-22}
+  @syntax[]{(gtk-widget-default-direction) => direction}
+  @syntax[]{(setf (gtk-widget-default-direction) direction)}
+  @argument[direction]{the default direction of type
+    @symbol{gtk-text-direction}, this cannot be @code{:none}.}
   @begin{short}
-    Obtains the current default reading direction of type
-    @symbol{gtk-text-direction}.
+    Accessor of the default reading direction.
   @end{short}
-  See the function @fun{gtk-widget-set-default-direction}.
-  @see-symbol{gtk-text-direction}
-  @see-function{gtk-widget-set-default-direction}")
 
-(export 'gtk-widget-get-default-direction)
+  The function @sym{gtk-widget-default-direction} obtains the current default
+  reading direction. The function @sym{(setf gtk-widget-default-direction)} sets
+  the default reading direction for widgets where the direction has not
+  been explicitly set by the fucntion @fun{gtk-widget-direction}.
+  @see-symbol{gtk-text-direction}
+  @see-function{gtk-widget-directiton}")
+
+(export 'gtk-widget-default-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_shape_combine_region ()
@@ -6882,21 +6870,20 @@
 (export 'gtk-widget-get-clipboard)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_display ()
+;;; gtk_widget_get_display () -> gtk-widget-display
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_display" gtk-widget-get-display)
-    (g-object gdk-display)
+(defcfun ("gtk_widget_get_display" gtk-widget-display) (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-4-26}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The @class{gdk-display} for the toplevel for this widget.}
+  @return{The @class{gdk-display} object for the toplevel for this widget.}
   @begin{short}
-    Get the @class{gdk-display} for the toplevel window associated with this
-    widget.
+    Get the @class{gdk-display} object for the toplevel window associated with
+    this widget.
   @end{short}
   This function can only be called after the widget has been added to a widget
-  hierarchy with a @class{gtk-window} at the top.
+  hierarchy with a @class{gtk-window} widget at the top.
 
   In general, you should only create display specific resources when a widget
   has been realized, and you should free those resources when the widget is
@@ -6906,7 +6893,7 @@
   @see-class{gdk-display}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-display)
+(export 'gtk-widget-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_root_window ()
@@ -7661,50 +7648,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_has_window ()
+;;; gtk_widget_set_has_window () -> gtk-widget-has-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_has_window" gtk-widget-get-has-window) :boolean
+(defun (setf gtk-widget-has-window) (has-window widget)
+  (foreign-funcall "gtk_widget_set_has_window"
+                   (g-object gtk-widget) widget
+                   :boolean has-window
+                   :void)
+  has-window)
+
+(defcfun ("gtk_widget_get_has_window" gtk-widget-has-window) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2020-4-22}
+  @syntax[]{(gtk-widget-has-window widget) => has-window}
+  @syntax[]{(setf (gtk-widget-has-window widget) has-window)}
   @argument[widget]{a @class{gtk-widget} instance}
-  @return{@em{True} if @arg{widget} has a window, @arg{false} otherwise.}
+  @argument[has-window]{a boolean whether or not @arg{widget} has a window}
   @begin{short}
-    Determines whether @arg{widget} has a @class{gdk-window} of its own.
+    Accessor of the has window value of the @class{gtk-widget} object.
   @end{short}
-  See @fun{gtk-widget-set-has-window}.
-  @see-class{gtk-widget}"
-  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-has-window)
+  The function @sym{gtk-widget-has-window} determines whether the widget has a
+  @class{gdk-window} of its own. The function @sym{(setf gtk-widget-has-window)}
+  specifies whether the widget has a @class{gdk-window} of its own.
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_has_window ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_has_window" gtk-widget-set-has-window) :void
- #+cl-cffi-gtk-documentation
- "@version{2014-2-7}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[has-window]{whether or not @arg{widget} has a window}
-  @begin{short}
-    Specifies whether @arg{widget} has a @class{gdk-window} of its own.
-  @end{short}
   Note that all realized widgets have a non-@code{NULL} \"window\" pointer,
   @fun{gtk-widget-window} never returns a @code{NULL} window when a widget
   is realized, but for many of them it is actually the @class{gdk-window} of
   one of its parent widgets. Widgets that do not create a window for themselves
-  in \"realize\" must announce this by calling this function with
-  @code{has-window = nil}.
+  in \"realize\" must announce this by calling this function with the value
+  @em{false}.
 
   This function should only be called by widget implementations, and they
   should call it in their @code{init()} function.
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-function{gtk-widget-window}"
-  (widget (g-object gtk-widget))
-  (has-window :boolean))
+  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-set-has-window)
+(export 'gtk-widget-has-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_sensitive ()
