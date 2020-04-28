@@ -115,7 +115,7 @@
   Note that this can change over the life of an application. It determines, for
   example, whether GTK+ uses the right-to-left or left-to-right text direction.
 
-  This function is equivalent to the function @fun{pango-language-get-default}.
+  This function is equivalent to the function @fun{pango-language-default}.
   See that function for details.
   @begin[Example]{dictionary}
     @begin{pre}
@@ -126,7 +126,7 @@
     @end{pre}
   @end{dictionary}
   @see-class{pango-language}
-  @see-function{pango-language-get-default}")
+  @see-function{pango-language-default}")
 
 (export 'gtk-get-default-language)
 

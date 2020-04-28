@@ -422,14 +422,14 @@
     typical use of a secondary child is the help button in a dialog.
   @end{short}
 
-  This group appears after the other children if the style is
-  @code{:start}, @code{:spread} or @code{:edge}, and before the other children
-  if the style is @code{:end}. For horizontal button boxes, the definition of
-  before/after depends on direction of the widget (see the function
-  @fun{gtk-widget-set-direction}). If the style is @code{:start} or @code{:end},
+  This group appears after the other children if the style is @code{:start},
+  @code{:spread} or @code{:edge}, and before the other children if the style is
+  @code{:end}. For horizontal button boxes, the definition of before/after
+  depends on the direction of the widget, see the function
+  @fun{gtk-widget-direction}. If the style is @code{:start} or @code{:end},
   then the secondary children are aligned at the other end of the button box
-  from the main children. For the other styles, they appear immediately next to
-  the main children.
+  from the main children. For the other styles, they appear immediately next
+  to the main children.
   @see-class{gtk-button-box}"
   (setf (gtk-button-box-child-secondary widget child) is-secondary))
 

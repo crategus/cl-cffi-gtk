@@ -1430,7 +1430,7 @@
 
   Of course you will need to create a @class{gtk-event-box} to receive the
   events, and pack the label inside it, since labels are windowless. Labels
-  return @em{false} from the function @fun{gtk-widget-get-has-window}. Remember
+  return @em{false} from the function @fun{gtk-widget-has-window}. Remember
   when using the @class{pango-layout} functions you need to convert to and from
   pixels using the function @fun{pango-pixels} or the constant
   @var{+pango-scale+}.

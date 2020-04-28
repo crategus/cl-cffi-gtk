@@ -701,9 +701,9 @@
     If a range is flippable, it will switch its direction if it is horizontal
     and its direction is @code{:rtl}.
   @end{short}
-  See the @fun{gtk-widget-get-direction} function.
+  See the function @fun{gtk-widget-direction}.
   @see-class{gtk-range}
-  @see-function{gtk-widget-get-direction}"
+  @see-function{gtk-widget-direction}"
   (range (g-object gtk-range))
   (flippable :boolean))
 

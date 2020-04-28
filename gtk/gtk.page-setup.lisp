@@ -552,7 +552,7 @@
     (g-object gtk-page-setup)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-30}
-  @argument[variant]{an @code{a{sv@}} @symbol{g-variant} structure}
+  @argument[variant]{a @code{a{sv@}} @type{g-variant} structure}
   @return{A new @class{gtk-page-setup} object.}
   @begin{short}
     Desrialize a page setup from an @code{a{sv@}} variant in the format

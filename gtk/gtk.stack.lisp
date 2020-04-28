@@ -243,7 +243,7 @@
 
   Transitions between pages can be animated as slides or fades. This can be
   controlled with the function @fun{gtk-stack-transition-type}. These animations
-  respect the \"gtk-enable-animations\" setting.
+  respect the @slot[gtk-settings]{gtk-enable-animations} setting.
   The @sym{gtk-stack} widget was added in GTK+ 3.10.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-stack} has a single CSS node named @code{stack}.

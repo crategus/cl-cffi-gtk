@@ -454,9 +454,9 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pack-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pack-type atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2020-4-21}
   @begin{short}
-    Represents the packing location of a @class{gtk-box} children.
+    Represents the packing location of a @class{gtk-box} child.
   @end{short}
   See also @class{gtk-button-box}.
   @begin{pre}

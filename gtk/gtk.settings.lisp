@@ -1057,9 +1057,17 @@
 (setf (gethash 'gtk-settings-gtk-enable-animations atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-enable-animations 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-enable-animations} slot of the
-  @class{gtk-settings} class.
+ "@version{2020-4-23}
+  @syntax[]{(gtk-settings-gtk-enable-animations object) => animations}
+  @syntax[]{(setf (gtk-settings-gtk-enable-animations object) animations)}
+  @argument[object]{the @class{gtk-settings} object}
+  @argument[animations]{a boolean wether to enable animations}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-enable-animations} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Wether to enable toolkit-wide animations. The default value is @em{true}.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-enable-event-sounds -----------------------------------

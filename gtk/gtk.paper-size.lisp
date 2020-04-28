@@ -610,7 +610,7 @@
   @end{short}
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
-  @see-function{gtk-paper-size-get-default-top-margin}"
+  @see-function{gtk-paper-size-default-top-margin}"
   (size (g-boxed-foreign gtk-paper-size))
   (unit gtk-unit))
 
@@ -633,7 +633,7 @@
   @end{short}
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
-  @see-function{gtk-paper-size-get-default-right-margin}"
+  @see-function{gtk-paper-size-default-right-margin}"
   (size (g-boxed-foreign gtk-paper-size))
   (unit gtk-unit))
 
@@ -656,7 +656,7 @@
   @end{short}
   @see-class{gtk-paper-size}
   @see-symbol{gtk-unit}
-  @see-function{gtk-paper-size-get-default-left-margin}"
+  @see-function{gtk-paper-size-default-left-margin}"
   (size (g-boxed-foreign gtk-paper-size))
   (unit gtk-unit))
 

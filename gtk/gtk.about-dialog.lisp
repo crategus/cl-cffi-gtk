@@ -864,7 +864,7 @@
            (lambda (widget response-id)
              (declare (ignore response-id))
              (let ((button-box (gtk-dialog-get-action-area widget)))
-               (dolist (button (gtk-container-get-children button-box))
+               (dolist (button (gtk-container-children button-box))
                  (when (g-type-check-instance-type button "GtkToggleButton")
                    (setf (gtk-toggle-button-active button) nil))))
                (gtk-widget-hide widget)))
