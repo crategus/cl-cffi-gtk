@@ -36,14 +36,18 @@ Application support
   gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.62
   gio.action.lisp              - GAction                           - GIO 2.62
   gio.simple-action.lisp       - GSimpleAction                     - GIO 2.62
+  gio.property-action.lisp     - GPropertyAction                   - GIO 2.64 &
 
   not implemented              - GRemoteActionGroup
   not implemented              - GActionGroup exporter
   not implemented              - GDBusActionGroup
+
+  not implemented              - GMemoryMonitor
 
   gio.menu-model-lisp          - GMenuModel                        - GIO 2.36.4%
   gio.menu.lisp                - GMenu                             - GIO 2.38.1%
 
   not implemented              - GMenuModel exporter
   not implemented              - GDBusMenuModel
+  not implemented              - GNotification
 

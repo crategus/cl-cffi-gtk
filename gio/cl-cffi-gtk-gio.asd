@@ -48,6 +48,7 @@
    (:file "gio.action-group")        ; A group of actions
    (:file "gio.action-map")          ; Interface for action containers
    (:file "gio.simple-action")       ; Simple GAction implementation
+   (:file "gio.property-action")     ; A GAction reflecting a GObject property
    (:file "gio.simple-action-group") ; Simple GActionGroup implementation
    (:file "gio.application")         ; Core application class
    (:file "gio.application-command-line") ; Command-line invocation of an application

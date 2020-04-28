@@ -287,6 +287,20 @@
       @about-function{g-simple-action-new-stateful}
       @about-function{g-simple-action-set-state-hint}
     @end{subsection}
+    @begin[GPropertyAction]{subsection}
+      A GAction reflecting a GObject property.
+
+      @about-class{g-property-action}
+      @about-generic{g-property-action-enabled}
+      @about-generic{g-property-action-invert-boolean}
+      @about-generic{g-property-action-name}
+      @about-generic{g-property-action-object}
+      @about-generic{g-property-action-parameter-type}
+      @about-generic{g-property-action-property-name}
+      @about-generic{g-property-action-state}
+      @about-generic{g-property-action-state-type}
+      @about-function{g-property-action-new}
+    @end{subsection}
     @begin[GMenuModel]{subsection}
       An abstract class representing the contents of a menu.
 
