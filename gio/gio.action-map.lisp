@@ -118,7 +118,7 @@
 
 (defun g-action-map-add-action-entries (action-map entries)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-3}
+ "@version{2020-4-25}
   @argument[action-map]{a @class{g-action-map} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
@@ -149,8 +149,9 @@
   @end{table}
   All values after name are optional. Additional optional fields may be added
   in the future.
-  @b{Example :} Using the function @sym{g-action-map-add-action-entries}
-  @begin{pre}
+  @begin[Example]{dictionary}
+    Using the function @sym{g-action-map-add-action-entries}:
+    @begin{pre}
 (defun activate-quit (action parameter)
   (declare (ignore action parameter)))
 
@@ -166,7 +167,8 @@
         (group (g-simple-action-group-new)))
     (g-action-map-add-action-entries group entries)
     group))
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @see-class{g-action-map}
   @see-class{g-simple-action}"
   (dolist (entry entries)
