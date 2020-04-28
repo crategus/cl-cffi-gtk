@@ -150,7 +150,7 @@
       @begin{pre}
  lambda (seat device)    : Run Last
       @end{pre}
-      The \"device-removed\" signal is emitted when an input device is removed, 
+      The \"device-removed\" signal is emitted when an input device is removed,
       e. g. unplugged.
       @begin[code]{table}
         @entry[seat]{The @sym{gdk-seat} object on which the signal is emitted.}
@@ -350,13 +350,13 @@
 (export 'gdk-seat-get-capabilities)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_seat_get_pointer ()
+;;; gdk_seat_get_pointer () -> gdk-seat-pointer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_seat_get_pointer"
-           gdk-seat-get-pointer) (g-object gdk-device)
+           gdk-seat-pointer) (g-object gdk-device)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-30}
+ "@version{2020-4-23}
   @argument[seat]{a @class{gdk-seat} object}
   @return{A master @class{gdk-device} object with pointer capabilities.}
   @begin{short}
@@ -366,7 +366,7 @@
   @see-class{gdk-device}"
   (seat (g-object gdk-seat)))
 
-(export 'gdk-seat-get-pointer)
+(export 'gdk-seat-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_get_keyboard ()
