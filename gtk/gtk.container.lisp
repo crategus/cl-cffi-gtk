@@ -505,21 +505,24 @@
 
 (defcfun ("gtk_container_add" gtk-container-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2020-4-21}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[widget]{a @arg{widget} to be placed inside @arg{container}}
+  @argument[widget]{a @class{gtk-widget} object to be placed inside
+    @arg{container}}
   @begin{short}
-    Adds @arg{widget} to @arg{container}.
+    Adds a widget to the container.
   @end{short}
-
   Typically used for simple containers such as @class{gtk-window},
-  @class{gtk-frame}, or @class{gtk-button}; for more complicated layout
-  containers such as @class{gtk-box} or @class{gtk-grid}, this function will
-  pick default packing parameters that may not be correct. So consider functions
-  such as @fun{gtk-box-pack-start} and @fun{gtk-grid-attach} as an
-  alternative to @sym{gtk-container-add} in those cases. A widget may be added
-  to only one container at a time; you cannot place the same widget inside two
-  different containers.
+  @class{gtk-frame}, or @class{gtk-button}.
+
+  For more complicated layout containers such as @class{gtk-box} or
+  @class{gtk-grid}, this function will pick default packing parameters that may
+  not be correct. So consider functions such as @fun{gtk-box-pack-start} and
+  @fun{gtk-grid-attach} as an alternative to the function
+  @sym{gtk-container-add} in those cases.
+
+  A widget may be added to only one container at a time; you cannot place the
+  same widget inside two different containers.
   @see-class{gtk-container}
   @see-class{gtk-window}
   @see-class{gtk-frame}
@@ -537,21 +540,14 @@
 
 (defcfun ("gtk_container_remove" gtk-container-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-24}
+ "@version{2020-4-21}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[widget]{a current child of @arg{container}}
-  @short{Removes @arg{widget} from @arg{container}.}
-  @arg{widget} must be inside @arg{container}. Note that @arg{container} will
-  own a reference to @arg{widget}, and that this may be the last reference held;
-  so removing a widget from its container can destroy that widget. If you want
-  to use @arg{widget} again, you need to add a reference to it while it is not
-  inside a container, using the @fun{g-object-ref} function. If you do not want
-  to use @arg{widget} again it is usually more efficient to simply destroy it
-  directly using the @fun{gtk-widget-destroy} function since this will remove it
-  from the @arg{container} and help break any circular reference count cycles.
-  @see-class{gtk-container}
-  @see-function{g-object-ref}
-  @see-function{gtk-widget-destroy}"
+  @argument[widget]{a current @class{gtk-widget} child of @arg{container}}
+  @begin{short}
+    Removes a widget from the container.
+  @end{short}
+  The child widget must be inside the container.
+  @see-class{gtk-container}"
   (container (g-object gtk-container))
   (widget (g-object gtk-widget)))
 
@@ -634,24 +630,35 @@
 (export 'gtk-container-foreach)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_get_children ()
+;;; gtk_container_get_children () -> gtk-container-children
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_container_get_children" gtk-container-get-children)
+(defcfun ("gtk_container_get_children" gtk-container-children)
     (g-list g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2020-4-21}
   @argument[container]{a @class{gtk-container} widget}
-  @return{A newly allocated list of the @arg{container}'s non-internal
-    children.}
-  @short{Returns the @arg{container}'s non-internal children.}
-  See the @fun{gtk-container-forall} function for details on what constitutes
+  @return{A list of the containers non-internal children.}
+  @begin{short}
+    Returns a list with the non-internal children of the container.
+  @end{short}
+  See the function @fun{gtk-container-forall} for details on what constitutes
   an \"internal\" child.
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (setq box (make-instance 'gtk-box :orientation :vertical))
+=> #<GTK-BOX {1001E2A183@}>
+  (gtk-container-add box (make-instance 'gtk-button))
+  (gtk-container-add box (make-instance 'gtk-label))
+  (gtk-container-children box)
+=> (#<GTK-BUTTON {1001E2B0A3@}> #<GTK-LABEL {1001E2BFD3@}>)
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-container}
-  @see-fun{gtk-container-forall}"
+  @see-function{gtk-container-forall}"
   (container (g-object gtk-container)))
 
-(export 'gtk-container-get-children)
+(export 'gtk-container-children)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_path_for_child ()
