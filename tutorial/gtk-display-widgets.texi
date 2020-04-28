@@ -755,7 +755,7 @@ on an image.  The output of this example is in @ref{figure images}.
                                    :label "Insensitive")))
         (g-signal-connect button "toggled"
            (lambda (widget)
-             (let ((childs (gtk-container-get-children vgrid)))
+             (let ((childs (gtk-container-children vgrid)))
                (dolist (child childs)
                  (unless (g-type-is-a (g-object-type child)
                                       "GtkToggleButton")
