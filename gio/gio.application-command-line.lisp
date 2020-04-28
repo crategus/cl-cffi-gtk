@@ -253,7 +253,7 @@ command_line (GApplication            *application,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "arguments"
                                                'g-application-command-line) 't)
- "The @code{arguments} property of type @symbol{g-variant}
+ "The @code{arguments} property of type @type{g-variant}
   (Write / Construct only) @br{}
   The commandline that caused this \"command-line\" signal emission. @br{}
   Allowed values: @code{GVariant<aay>} @br{}
@@ -273,7 +273,7 @@ command_line (GApplication            *application,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "options"
                                                'g-application-command-line) 't)
- "The @code{options} property of type @symbol{g-variant}
+ "The @code{options} property of type @type{g-variant}
   (Write / Construct Only) @br{}
   The options sent along with the commandline. @br{}
   Allowed values: @code{GVariant<a{sv@}>} @br{}
@@ -284,7 +284,7 @@ command_line (GApplication            *application,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "platform-data"
                                                'g-application-command-line) 't)
- "The @code{platform-data} property of type @symbol{g-variant}
+ "The @code{platform-data} property of type @type{g-variant}
   (Write / Construct Only) @br{}
   Platform-specific data for the commandline. @br{}
   Allowed values: @code{GVariant<a{sv@}>} @br{}
