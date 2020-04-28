@@ -464,17 +464,65 @@ scale-factor
 ;;;     gtk_widget_get_style
 ;;;     gtk_widget_reset_rc_styles
 ;;;     gtk_widget_get_default_style
-;;;     gtk_widget_set_direction
-;;;
+
 ;;;     GtkTextDirection
-;;;
+
+(test gtk-text-direction
+  ;; Check the type
+  (is-true (g-type-is-enum "GtkTextDirection"))
+  ;; Check the type initializer
+  (is (string= "GtkTextDirection"
+               (g-type-name (gtype (foreign-funcall "gtk_text_direction_get_type" :int)))))
+  ;; Check the registered name
+  (is (eq 'gtk-text-direction (gobject::registered-enum-type "GtkTextDirection")))
+  ;; Check the names
+  (is (equal '("GTK_TEXT_DIR_NONE" "GTK_TEXT_DIR_LTR" "GTK_TEXT_DIR_RTL")
+             (mapcar #'gobject::enum-item-name
+                     (gobject::get-enum-items "GtkTextDirection"))))
+  ;; Check the values
+  (is (equal '(0 1 2)
+             (mapcar #'gobject::enum-item-value
+                     (gobject::get-enum-items "GtkTextDirection"))))
+  ;; Check the nick names
+  (is (equal '("none" "ltr" "rtl")
+             (mapcar #'gobject::enum-item-nick
+                     (gobject::get-enum-items "GtkTextDirection"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkTextDirection"
+                             GTK-TEXT-DIRECTION
+                             (:EXPORT T :TYPE-INITIALIZER "gtk_text_direction_get_type")
+                             (:NONE 0)
+                             (:LTR 1)
+                             (:RTL 2))
+             (gobject::get-g-type-definition "GtkTextDirection"))))
+
+;;;     gtk_widget_set_direction
 ;;;     gtk_widget_get_direction
 ;;;     gtk_widget_set_default_direction
 ;;;     gtk_widget_get_default_direction
+
+(test gtk-widget-direction
+  (let ((label (make-instance 'gtk-label))
+        ;; Store the default value of the text direction
+        (default (gtk-widget-default-direction)))
+    (is (eq :ltr (gtk-widget-default-direction)))
+    (is (eq :ltr (gtk-widget-direction label)))
+    (is (eq :rtl (setf (gtk-widget-direction label) :rtl)))
+    (is (eq :rtl (gtk-widget-direction label)))
+    ;; Set direction to :none
+    (is (eq :none (setf (gtk-widget-direction label) :none)))
+    ;; the default direction, if :none
+    (is (eq :ltr (gtk-widget-direction label)))
+    ;; Set the default direction
+    (is (eq :rtl (setf (gtk-widget-default-direction) :rtl)))
+    (is (eq :rtl (gtk-widget-direction label)))
+    ;; Restore the default value of the text direction
+    (is (eq default (setf (gtk-widget-default-direction) default)))))
+
 ;;;     gtk_widget_shape_combine_region
 ;;;     gtk_widget_input_shape_combine_region
 ;;;     gtk_widget_path
-;;;     gtk_widget_class_path
+;;;     gtk_widget_class_pathr
 ;;;     gtk_widget_get_composite_name
 ;;;     gtk_widget_override_background_color
 ;;;     gtk_widget_override_color

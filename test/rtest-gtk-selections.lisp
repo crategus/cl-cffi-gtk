@@ -267,7 +267,7 @@
 ;;;   gtk_selection_owner_set_for_display
 
 (test gtk-selection-owner-set-for-display
-  (let ((display (gdk-display-get-default))
+  (let ((display (gdk-display-default))
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
@@ -390,7 +390,7 @@
   (let ((selection (make-gtk-selection-data :selection "PRIMARY"
                                             :target "STRING"
                                             :type "STRING"
-                                            :display (gdk-display-get-default))))
+                                            :display (gdk-display-default))))
 
     (gtk-selection-data-set-text selection "text")
     (is (equal "text" (gtk-selection-data-get-text selection)))))

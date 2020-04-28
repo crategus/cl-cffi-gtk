@@ -190,7 +190,7 @@
 ;;;     gdk-seat-display                               Accessor
 
 (test gdk-seat-display
-  (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
+  (let ((seat (gdk-display-default-seat (gdk-display-default))))
     (is (eq 'gdk-display
             (type-of (gdk-seat-display seat))))))
 
@@ -200,28 +200,28 @@
 ;;;     gdk_seat_get_capabilities
 
 (test gdk-seat-get-capabilities
-  (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
+  (let ((seat (gdk-display-default-seat (gdk-display-default))))
     (is (equal '(:POINTER :KEYBOARD)
                (gdk-seat-get-capabilities seat)))))
 
 ;;;     gdk_seat_get_pointer
 
-(test gdk-seat-get-pointer
-  (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
+(test gdk-seat-pointer
+  (let ((seat (gdk-display-default-seat (gdk-display-default))))
     (is (eq 'GDK-X11-DEVICE-XI2
-            (type-of (gdk-seat-get-pointer seat))))))
+            (type-of (gdk-seat-pointer seat))))))
 
 ;;;     gdk_seat_get_keyboard
 
 (test gdk-seat-get-keyboard
-  (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
+  (let ((seat (gdk-display-default-seat (gdk-display-default))))
     (is (eq 'GDK-X11-DEVICE-XI2
             (type-of (gdk-seat-get-keyboard seat))))))
 
 ;;;     gdk_seat_get_slaves
 
 (test gdk-seat-get-slaves
-  (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
+  (let ((seat (gdk-display-default-seat (gdk-display-default))))
     (is-true (stringp (first (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :pointer)))))
     (is (equal '() (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :touch))))
     (is (equal '() (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :tablet-stylus))))

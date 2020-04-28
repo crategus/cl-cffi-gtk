@@ -77,7 +77,7 @@
          (iter (gtk-list-store-set store (gtk-list-store-append store) 99 "string")))
     (is (= 99 (gtk-tree-model-get-value store iter 0)))
     (is (equal "string" (gtk-tree-model-get-value store iter 1)))
-    (is-false (gtk-list-store-set store iter 199))
+    (is (eq 'gtk-tree-iter (type-of (gtk-list-store-set store iter 199))))
     (is (= 199 (gtk-tree-model-get-value store iter 0)))
     (is (equal "string" (gtk-tree-model-get-value store iter 1)))))
 

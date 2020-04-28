@@ -84,7 +84,7 @@
 )
 
 (test gdk-monitor-properties
-  (let ((monitor (gdk-display-get-primary-monitor (gdk-display-get-default))))
+  (let ((monitor (gdk-display-get-primary-monitor (gdk-display-default))))
     ;; gdk-monitor-get-display
     (is (eq 'gdk-display
             (type-of (gdk-monitor-display monitor))))
@@ -118,6 +118,6 @@
 ;;;     gdk_monitor_is_primary
 
 (test gdk-monitor-property
-  (let ((monitor (gdk-display-get-primary-monitor (gdk-display-get-default))))
+  (let ((monitor (gdk-display-get-primary-monitor (gdk-display-default))))
     (is-true (gdk-monitor-is-primary monitor))))
 

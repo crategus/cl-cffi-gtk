@@ -539,8 +539,8 @@ output-file-format : pdf
 
 (test gtk-print-settings-resolution-xy
   (let ((settings (gtk-print-settings-new)))
-    (is (eq 100 (gtk-print-settings-resolution-x settings)))
-    (is (eq 200 (gtk-print-settings-resolution-y settings)))))
+    (is (= 300 (gtk-print-settings-resolution-x settings)))
+    (is (= 300 (gtk-print-settings-resolution-y settings)))))
 
 ;;;     gtk_print_settings_get_printer_lpi
 ;;;     gtk_print_settings_set_printer_lpi

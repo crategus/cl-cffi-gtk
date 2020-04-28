@@ -3,16 +3,43 @@
 (def-suite gio-suite :in gtk-testsuite)
 (in-suite gio-suite)
 
-(load "rtest-gio-action.lisp")
-(load "rtest-gio-action-map.lisp")
-(load "rtest-gio-simple-action.lisp")
-(load "rtest-gio-simple-action-group.lisp")
+;;; File types and applications
+
+(load "rtest-gio-content-type.lisp")
+;  gio.app-info.lisp
+;  not implemented              - GDesktopAppInfo
+
+;;; Icons
+
+(load "rtest-gio-icon.lisp")
+;  not implemented              - GFileIcon
+;  not implemented              - GLoadableIcon
+
+(load "rtest-gio-themed-icon.lisp")
+;  gio.emblemed-icon.lisp
+;  gio.emblem.lisp
+
+;;; Resources
+
+(load "rtest-gio-resource.lisp")
+
+;;; Application support
 
 (load "rtest-gio-application.lisp")
 (load "rtest-gio-application-command-line.lisp")
+;  gio.action-group.lisp
+(load "rtest-gio-action-map.lisp")
+(load "rtest-gio-simple-action-group.lisp")
+(load "rtest-gio-action.lisp")
+(load "rtest-gio-simple-action.lisp")
+(load "rtest-gio-property-action.lisp")
+;  not implemented              - GRemoteActionGroup
+;  not implemented              - GActionGroup exporter
+;  not implemented              - GDBusActionGroup
+;  not implemented              - GMemoryMonitor
+;  gio.menu-model-lisp          - GMenuModel
+;  gio.menu.lisp                - GMenu
+;  not implemented              - GMenuModel exporter
+;  not implemented              - GDBusMenuModel
+;  not implemented              - GNotification
 
-(load "rtest-gio-content-type.lisp")
-(load "rtest-gio-icon.lisp")
-(load "rtest-gio-resource.lisp")
-
-(load "rtest-gio-themed-icon.lisp")

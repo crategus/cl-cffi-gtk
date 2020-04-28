@@ -12,10 +12,16 @@
 ;;;   gdk_keymap_get_for_display
 
 (test gdk-keymap-get-for-display
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (eq 'gdk-keymap (type-of (gdk-keymap-get-for-display display))))))
 
 ;;;   gdk_keymap_lookup_key
+
+; TODO: This test generates a warning
+;
+;   bare references to struct types are deprecated.
+;   Please use (:POINTER (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT)) or
+;   (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT) instead.
 
 (test gdk-keymap-lookup-key
   (let ((keymap (gdk-keymap-get-default))

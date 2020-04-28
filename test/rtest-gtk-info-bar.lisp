@@ -101,41 +101,41 @@
     (is (eq 'gtk-info-bar
             (type-of (setf info-bar
                            (gtk-info-bar-new-with-buttons "gtk-ok" 1)))))
-    (is (= 1 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 1 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is (eq 'gtk-info-bar
             (type-of (setf info-bar
                            (gtk-info-bar-new-with-buttons "gtk-ok" 1 "gtk-cancel" 2)))))
-    (is (= 2 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))))
+    (is (= 2 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))))
 
 ;;;     gtk_info_bar_add_action_widget
 
 (test gtk-info-bar-add-action-widget
   (let ((info-bar (make-instance 'gtk-info-bar)))
-    (is (= 0 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 0 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is-false (gtk-info-bar-add-action-widget info-bar (make-instance 'gtk-button) 1))
-    (is (= 1 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 1 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is-false (gtk-info-bar-add-action-widget info-bar (make-instance 'gtk-button) 2))
-    (is (= 2 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))))
+    (is (= 2 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))))
 
 ;;;     gtk_info_bar_add_button
 
 (test gtk-info-bar-add-button
   (let ((info-bar (make-instance 'gtk-info-bar)))
-    (is (= 0 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 0 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is (eq 'gtk-button (type-of (gtk-info-bar-add-button info-bar "gtk-ok" 1))))
-    (is (= 1 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 1 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is (eq 'gtk-button (type-of (gtk-info-bar-add-button info-bar "gtk-cancel" 2))))
-    (is (= 2 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))))
+    (is (= 2 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))))
 
 ;;;     gtk_info_bar_add_buttons
 
 (test gtk-info-bar-add-buttons
   (let ((info-bar (make-instance 'gtk-info-bar)))
-    (is (= 0 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 0 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is-false (gtk-info-bar-add-buttons info-bar "gtk-ok" 1))
-    (is (= 1 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))
+    (is (= 1 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))
     (is-false (gtk-info-bar-add-buttons info-bar "gtk-cancel" 2 "gtk-no" 3))
-    (is (= 3 (length (gtk-container-get-children (gtk-info-bar-action-area info-bar)))))))
+    (is (= 3 (length (gtk-container-children (gtk-info-bar-action-area info-bar)))))))
 
 ;;;     gtk_info_bar_set_response_sensitive
 

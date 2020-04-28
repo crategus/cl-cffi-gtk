@@ -59,7 +59,7 @@
   (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug" "GtkShortcutsWindow"
  "GtkApplicationWindow")
              (mapcar #'gtype-name (g-type-children "GtkWindow"))))
-             
+
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'gtype-name (g-type-interfaces "GtkWindow"))))
@@ -237,13 +237,15 @@
 
 ;;; --- gtk-window-set-geometry-hints ------------------------------------------
 
-(test gtk-window-set-geometry-hints
-  (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
-    (gtk-widget-show toplevel)
-    (is (eq 'gtk-window (type-of toplevel)))
-    ;; TODO: Find a way to test the settiongs
-    (gtk-window-set-geometry-hints toplevel nil (make-gdk-geometry) '(:min-size :max-size))
-))
+;; TODO: It is a bad idea to try to show the toplevel window
+
+;(test gtk-window-set-geometry-hints
+;  (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
+;    (gtk-widget-show toplevel)
+;    (is (eq 'gtk-window (type-of toplevel)))
+;    ;; TODO: Find a way to test the settiongs
+;    (gtk-window-set-geometry-hints toplevel nil (make-gdk-geometry) '(:min-size :max-size))
+;))
 
 ;;;     gtk_window_set_gravity                             Accessor
 ;;;     gtk_window_get_gravity                             Accessor
@@ -309,7 +311,7 @@
 ;;;     gtk_window_get_position
 ;;;     gtk_window_get_role                                Accessor
 ;;;     gtk_window_get_size
-;;;     gtk_window_get_title                               Accessor     
+;;;     gtk_window_get_title                               Accessor
 ;;;     gtk_window_get_transient_for                       Accessor
 ;;;     gtk_window_get_attached_to                         Accessor
 ;;;     gtk_window_get_type_hint                           Accessor

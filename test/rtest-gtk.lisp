@@ -29,7 +29,7 @@
 ;;;  Layout Containers
 
 (load "rtest-gtk-box.lisp")
-;    gtk.grid.lisp
+(load "rtest-gtk-grid.lisp")
 ;    gtk.revealer.lisp
 ;    gtk.list-box.lisp
 ;    gtk.flow-box.lisp

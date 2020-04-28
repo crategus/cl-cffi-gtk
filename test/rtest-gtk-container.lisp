@@ -111,7 +111,7 @@
  "GtkTextView" "GtkTreeView" "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
  "GtkToolPalette" "GtkSocket" "GtkTable")
              (mapcar #'gtype-name (g-type-children "GtkContainer"))))
-             
+
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'gtype-name (g-type-interfaces "GtkContainer"))))
@@ -199,7 +199,7 @@
     ;; Put a button into the box
     (setf (gtk-container-child box) button)
     (is (equal (list button)
-               (gtk-container-get-children box)))))
+               (gtk-container-children box)))))
 
 ;;; --- gtk-container-resize-mode ----------------------------------------------
 

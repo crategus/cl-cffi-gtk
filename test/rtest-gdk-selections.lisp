@@ -69,7 +69,7 @@
 ;;;   gdk_selection_owner_set_for_display
 
 (test gdk-selection-owner-set-for-display
-  (let ((display (gdk-display-get-default))
+  (let ((display (gdk-display-default))
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
@@ -99,7 +99,7 @@
 ;;;   gdk_selection_owner_get_for_display
 
 (test gdk-selection-owner-get-for-display
-  (let ((display (gdk-display-get-default))
+  (let ((display (gdk-display-default))
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)

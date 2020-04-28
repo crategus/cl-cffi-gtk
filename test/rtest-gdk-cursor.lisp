@@ -173,7 +173,7 @@
 ;;; --- gdk-cursor-properties --------------------------------------------------
 
 (test gdk-cursor-properties
-  (let ((cursor (gdk-cursor-new-for-display (gdk-display-get-default) :hand1)))
+  (let ((cursor (gdk-cursor-new-for-display (gdk-display-default) :hand1)))
     (is (eq 'gdk-display (type-of (gdk-cursor-display cursor))))
     (is (eq :hand1 (gdk-cursor-cursor-type cursor)))))
 
@@ -189,14 +189,14 @@
 
 (test gdk-cursor-new-from-pixbuf
   (let ((pixbuf (gdk-pixbuf-new-from-file "gtk-logo-24.png"))
-        (display (gdk-display-get-default)))
+        (display (gdk-display-default)))
     (is (eq 'gdk-pixbuf (type-of pixbuf)))
     (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-from-pixbuf display pixbuf 12 12))))))
 
 ;;; --- gdk-cursor-new-from-surface --------------------------------------------
 
 (test gdk-cursor-new-from-surface
-  (let* ((display (gdk-display-get-default))
+  (let* ((display (gdk-display-default))
          (cursor (gdk-cursor-new-for-display display :hand1)))
     (multiple-value-bind (surface x-hot y-hot)
         (gdk-cursor-get-surface cursor)
@@ -205,26 +205,26 @@
 ;;; --- gdk-cursor-new-from-name -----------------------------------------------
 
 (test gdk-cursor-new-from-name
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-from-name display "pointer"))))
     (is-false (gdk-cursor-new-from-name display "abc"))))
 
 ;;; --- gdk-cursor-new-for-display ---------------------------------------------
 
 (test gdk-cursor-new-for-display
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-for-display display :hand1))))))
 
 ;;; --- gdk-cursor-get-image ---------------------------------------------------
 
 (test gdk-cursor-get-image
-  (let ((cursor (gdk-cursor-new-for-display (gdk-display-get-default) :hand1)))
+  (let ((cursor (gdk-cursor-new-for-display (gdk-display-default) :hand1)))
     (is (eq 'gdk-pixbuf (type-of (gdk-cursor-get-image cursor))))))
 
 ;;; --- gdk-cursor-get-surface -------------------------------------------------
 
 (test gdk-cursor-get-surface
-  (let ((cursor (gdk-cursor-new-for-display (gdk-display-get-default) :hand1)))
+  (let ((cursor (gdk-cursor-new-for-display (gdk-display-default) :hand1)))
     (multiple-value-bind (surface x-hot y-hot)
       (gdk-cursor-get-surface cursor)
       (is-true (pointerp surface))

@@ -238,8 +238,8 @@
 
 (test gdk-event-get-screen
   (let* ((event (gdk-event-new :button-press))
-         (display (gdk-display-get-default))
-         (screen (gdk-display-get-default-screen display)))
+         (display (gdk-display-default))
+         (screen (gdk-display-default-screen display)))
     (is-false (gdk-event-get-screen event))
     (gdk-event-set-screen event screen)
 ; This does not work as expected
@@ -251,7 +251,7 @@
 
 (test gdk-event-get-device
   (let* ((event (gdk-event-new :button-press))
-         (display (gdk-display-get-default))
+         (display (gdk-display-default))
          (device-manager (gdk-display-get-device-manager display))
          (device (gdk-device-manager-get-client-pointer device-manager)))
     (is-false (gdk-event-get-device event))
@@ -266,7 +266,7 @@
 
 (test gdk-event-get-source-device
   (let* ((event (gdk-event-new :motion-notify))
-         (display (gdk-display-get-default))
+         (display (gdk-display-default))
          (device-manager (gdk-display-get-device-manager display))
          (device (gdk-device-manager-get-client-pointer device-manager)))
     (is-false (gdk-event-get-source-device event))
@@ -276,6 +276,4 @@
 ))
 
 ;;;     gdk_setting_get
-
-
 

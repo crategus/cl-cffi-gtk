@@ -94,29 +94,29 @@
 ;;;     gdk_display_open
 
 (test gdk-display-open
-  (let ((name (gdk-display-get-name (gdk-display-get-default))))
+  (let ((name (gdk-display-get-name (gdk-display-default))))
     (is-true (gdk-display-open name))
     (is-false (gdk-display-open "test"))
 ))
 
 ;;;     gdk_display_get_default
 
-(test gdk-display-get-default
-  (is (eq 'gdk-display (type-of (gdk-display-get-default)))))
+(test gdk-display-default
+  (is (eq 'gdk-display (type-of (gdk-display-default)))))
 
 ;;;     gdk_display_get_name
 
 (test gdk-display-get-name
-  (is (equal ":0" (gdk-display-get-name (gdk-display-get-default)))))
+  (is (equal ":0" (gdk-display-get-name (gdk-display-default)))))
 
 ;;;     gdk_display_get_n_screens                     * deprecated
 ;;;     gdk_display_get_screen                        * deprecated
 
 ;;;     gdk_display_get_default_screen
 
-(test gdk-display-get-default-screen
-  (let ((display (gdk-display-get-default)))
-    (is (eq 'gdk-screen (type-of (gdk-display-get-default-screen display))))))
+(test gdk-display-default-screen
+  (let ((display (gdk-display-default)))
+    (is (eq 'gdk-screen (type-of (gdk-display-default-screen display))))))
 
 ;;;     gdk_display_get_device_manager                * deprecated
 ;;;     gdk_display_pointer_ungrab                    * deprecated
@@ -164,33 +164,33 @@
 
 ;;;     gdk_display_get_default_seat
 
-(test gdk-display-get-default-seat
-  (let ((display (gdk-display-get-default)))
-    (is (eq 'gdk-seat (type-of (gdk-display-get-default-seat display))))))
+(test gdk-display-default-seat
+  (let ((display (gdk-display-default)))
+    (is (eq 'gdk-seat (type-of (gdk-display-default-seat display))))))
 
 ;;;     gdk_display_list_seats
 
 (test gdk-display-list-seats
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (listp (gdk-display-list-seats display)))
     (is (eq 'gdk-seat (type-of (first (gdk-display-list-seats display)))))))
 
 ;;;     gdk_display_get_n_monitors
 
 (test gdk-display-get-n-monitors
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (equal 1 (gdk-display-get-n-monitors display)))))
 
 ;;;     gdk_display_get_monitor
 
 (test gdk-display-get-monitor
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (eq 'gdk-monitor (type-of (gdk-display-get-monitor display 0))))))
 
 ;;;     gdk_display_get_primary_monitor
 
 (test gdk-display-get-primary-monitor
-  (let ((display (gdk-display-get-default)))
+  (let ((display (gdk-display-default)))
     (is (eq 'gdk-monitor (type-of (gdk-display-get-primary-monitor display))))))
 
 ;;;     gdk_display_get_monitor_at_point
