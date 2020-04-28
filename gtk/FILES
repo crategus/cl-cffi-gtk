@@ -31,8 +31,8 @@ GTK+ Widgets and Objects
 
   Layout Containers
 
- +  gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.24
- +  gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.24
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24
  +  gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24
  +  gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
  +  gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &

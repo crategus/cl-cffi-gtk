@@ -291,7 +291,7 @@
       @about-function{gtk-window-set-has-user-ref-count}
       @about-function{gtk-window-set-titlebar}
       @about-function{gtk-window-get-titlebar}
-      @about-function{gtk-window-set-interactive-debugging}
+      @about-function{gtk-window-interactive-debugging}
     @end{subsection}
     @begin[GtkDialog]{subsection}
       Create popup windows.
@@ -448,78 +448,65 @@
       A container box.
 
       @about-class{gtk-box}
-
       @about-generic{gtk-box-baseline-position}
       @about-generic{gtk-box-homogeneous}
       @about-generic{gtk-box-spacing}
-
       @about-function{gtk-box-child-expand}
       @about-function{gtk-box-child-fill}
       @about-function{gtk-box-child-pack-type}
       @about-function{gtk-box-child-padding}
       @about-function{gtk-box-child-position}
-
       @about-function{gtk-box-new}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
-      @about-function{gtk-box-set-child-packing}
-      @about-function{gtk-box-get-center-widget}
-      @about-function{gtk-box-set-center-widget}
+      @about-function{gtk-box-child-packing}
+      @about-function{gtk-box-center-widget}
     @end{subsection}
     @begin[GtkGrid]{subsection}
       Pack widgets in a rows and columns.
 
       @about-class{gtk-grid}
-
       @about-generic{gtk-grid-baseline-row}
       @about-generic{gtk-grid-column-homogeneous}
       @about-generic{gtk-grid-column-spacing}
       @about-generic{gtk-grid-row-homogeneous}
       @about-generic{gtk-grid-row-spacing}
-
       @about-function{gtk-grid-child-height}
       @about-function{gtk-grid-child-left-attach}
       @about-function{gtk-grid-child-top-attach}
       @about-function{gtk-grid-child-width}
-
       @about-function{gtk-grid-new}
       @about-function{gtk-grid-attach}
       @about-function{gtk-grid-attach-next-to}
-      @about-function{gtk-grid-get-child-at}
+      @about-function{gtk-grid-child-at}
       @about-function{gtk-grid-insert-row}
       @about-function{gtk-grid-insert-column}
       @about-function{gtk-grid-remove-row}
       @about-function{gtk-grid-remove-column}
       @about-function{gtk-grid-insert-next-to}
-      @about-function{gtk-grid-get-row-baseline-position}
-      @about-function{gtk-grid-set-row-baseline-position}
+      @about-function{gtk-grid-row-baseline-position}
     @end{subsection}
     @begin[GtkRevealer]{subsection}
       Hide and show with animation.
 
       @about-symbol{gtk-revealer-transition-type}
-
       @about-class{gtk-revealer}
-
       @about-generic{gtk-revealer-child-revealed}
       @about-generic{gtk-revealer-reveal-child}
       @about-generic{gtk-revealer-transition-duration}
       @about-generic{gtk-revealer-transition-type}
-
       @about-function{gtk-revealer-new}
     @end{subsection}
     @begin[GtkListBox]{subsection}
       A list container.
 
       @about-class{gtk-list-box}
-
       @about-generic{gtk-list-box-activate-on-single-click}
       @about-generic{gtk-list-box-selection-mode}
       @about-generic{gtk-list-box-activatable}
       @about-generic{gtk-list-box-selectable}
-
       @about-function{gtk-list-box-new}
       @about-function{gtk-list-box-prepend}
       @about-function{gtk-list-box-insert}
@@ -546,7 +533,6 @@
       @about-function{gtk-list-box-bind-model}
 
       @about-class{gtk-list-box-row}
-
       @about-function{gtk-list-box-row-new}
       @about-function{gtk-list-box-row-changed}
       @about-function{gtk-list-box-row-is-selected}
@@ -4415,8 +4401,7 @@ setup_tree (void)
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
       @about-function{gtk-widget-set-state}
-      @about-function{gtk-widget-set-parent-window}
-      @about-function{gtk-widget-get-parent-window}
+      @about-function{gtk-widget-parent-window}
       @about-function{gtk-widget-add-events}
       @about-function{gtk-widget-set-device-events}
       @about-function{gtk-widget-get-device-events}
@@ -4427,7 +4412,7 @@ setup_tree (void)
       @about-function{gtk-widget-get-ancestor}
       @about-function{gtk-widget-get-visual}
       @about-function{gtk-widget-set-visual}
-      @about-function{gtk-widget-get-pointer}
+      @about-function{gtk-widget-pointer}
       @about-function{gtk-widget-is-ancestor}
       @about-function{gtk-widget-translate-coordinates}
       @about-function{gtk-widget-hide-on-delete}
@@ -4436,10 +4421,8 @@ setup_tree (void)
       @about-function{gtk-widget-get-style}
       @about-function{gtk-widget-reset-rc-styles}
       @about-function{gtk-widget-get-default-style}
-      @about-function{gtk-widget-set-direction}
-      @about-function{gtk-widget-get-direction}
-      @about-function{gtk-widget-set-default-direction}
-      @about-function{gtk-widget-get-default-direction}
+      @about-function{gtk-widget-direction}
+      @about-function{gtk-widget-default-direction}
       @about-function{gtk-widget-shape-combine-region}
       @about-function{gtk-widget-input-shape-combine-region}
       @about-function{gtk-widget-path}
@@ -4492,7 +4475,7 @@ setup_tree (void)
       @about-function{gtk-widget-get-child-visible}
       @about-function{gtk-widget-get-settings}
       @about-function{gtk-widget-get-clipboard}
-      @about-function{gtk-widget-get-display}
+      @about-function{gtk-widget-display}
       @about-function{gtk-widget-get-root-window}
       @about-function{gtk-widget-get-screen}
       @about-function{gtk-widget-has-screen}
@@ -4520,8 +4503,7 @@ setup_tree (void)
       @about-function{gtk-widget-get-can-focus}
       @about-function{gtk-widget-set-can-focus}
       @about-function{gtk-widget-get-double-buffered}
-      @about-function{gtk-widget-get-has-window}
-      @about-function{gtk-widget-set-has-window}
+      @about-function{gtk-widget-has-window}
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-get-state}
       @about-function{gtk-widget-is-visible}
@@ -4591,7 +4573,7 @@ setup_tree (void)
       @about-function{gtk-container-set-resize-mode}
       @about-function{gtk-container-check-resize}
       @about-function{gtk-container-foreach}
-      @about-function{gtk-container-get-children}
+      @about-function{gtk-container-children}
       @about-function{gtk-container-get-path-for-child}
       @about-function{gtk-container-set-reallocate-redraws}
       @about-function{gtk-container-get-focus-child}
