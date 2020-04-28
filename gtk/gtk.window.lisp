@@ -3512,17 +3512,25 @@
 (export 'gtk-window-get-titlebar)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_interactive_debugging ()
-;;;
-;;; void gtk_window_set_interactive_debugging (gboolean enable);
-;;;
-;;; Opens or closes the interactive debugger, which offers access to the widget
-;;; hierarchy of the application and to useful debugging tools.
-;;;
-;;; enable :
-;;;     TRUE to enable interactive debugging
-;;;
-;;; Since 3.14
+;;; gtk_window_set_interactive_debugging () -> gtk-window-interactice-debugging
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-14
+(defcfun ("gtk_window_set_interactive_debugging"
+           gtk-window-interactive-debugging) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-26}
+  @argument[enable]{@em{true} to enable interactice debugging}
+  @begin{short}
+    Opens or closes the interactive debugger, which offers access to the widget
+    hierarchy of the application and to useful debugging tools.
+  @end{short}
+
+  Since 3.14
+  @see-class{gtk-window}"
+  (enable :boolean))
+
+#+gtk-3-14
+(export 'gtk-window-interactive-debugging)
 
 ;;; --- End of file gtk.window.lisp --------------------------------------------
