@@ -20,7 +20,7 @@
 
 (defun show-error-message (info-bar message type)
   (let* ((content (gtk-info-bar-content-area info-bar))
-         (label (first (gtk-container-get-children content))))
+         (label (first (gtk-container-children content))))
     (setf (gtk-label-label label) message)
     (setf (gtk-info-bar-message-type info-bar) type)
     (gtk-widget-show info-bar)))

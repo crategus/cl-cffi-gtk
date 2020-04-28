@@ -9,6 +9,7 @@
                (:file "dialog")
                (:file "file-chooser-dialog")
                (:file "grab")
+               (:file "grid-packing")
                (:file "image-button-press")
                (:file "info-bar")
                (:file "level-bar")
@@ -20,5 +21,7 @@
                (:file "print-operation")
                (:file "show-about-dialog")
                (:file "simple-application")
-               (:file "image-menu-item")))
+               (:file "image-menu-item")
+               (:file "widget-pointer")
+              ))
 
