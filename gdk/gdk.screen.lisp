@@ -248,9 +248,9 @@
   @begin{short}
     Gets the default screen for the default display.
   @end{short}
-  See the @fun{gdk-display-get-default} function.
+  See the function @fun{gdk-display-default}.
   @see-class{gdk-screen}
-  @see-function{gdk-display-get-default}")
+  @see-function{gdk-display-default}")
 
 (export 'gdk-screen-get-default)
 
@@ -893,7 +893,7 @@
   See the @class{gtk-settings} class for the available settings.
   @begin[Example]{dictionary}
     @begin{pre}
- (let ((screen (gdk-display-get-default-screen (gdk-display-get-default)))) 
+ (let ((screen (gdk-display-default-screen (gdk-display-default))))
    (gdk-screen-get-setting screen \"gtk-double-click-time\" \"gint\"))
 => 400
     @end{pre}
