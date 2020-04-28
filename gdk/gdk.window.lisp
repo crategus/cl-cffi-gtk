@@ -77,22 +77,22 @@
 ;;;     gdk_window_maximize
 ;;;     gdk_window_unmaximize
 ;;;     gdk_window_fullscreen
-;;;     gdk_window_fullscreen_on_monitor ()
+;;;     gdk_window_fullscreen_on_monitor
 ;;;     gdk_window_unfullscreen
-;;;     gdk_window_get_fullscreen_mode ()
-;;;     gdk_window_set_fullscreen_mode ()
+;;;     gdk_window_get_fullscreen_mode
+;;;     gdk_window_set_fullscreen_mode
 ;;;     gdk_window_set_keep_above
 ;;;     gdk_window_set_keep_below
 ;;;     gdk_window_set_opacity
 ;;;     gdk_window_set_composited                          * deprecated
 ;;;     gdk_window_get_composited                          * deprecated
-;;;     gdk_window_set_pass_through ()
-;;;     gdk_window_get_pass_through ()
+;;;     gdk_window_set_pass_through
+;;;     gdk_window_get_pass_through
 ;;;     gdk_window_move
 ;;;     gdk_window_resize
 ;;;     gdk_window_move_resize
 ;;;     gdk_window_scroll
-;;;     gdk_window_move_to_rect ()
+;;;     gdk_window_move_to_rect
 ;;;     gdk_window_move_region
 ;;;     gdk_window_flush                                   * deprecated
 ;;;     gdk_window_has_native
@@ -107,22 +107,22 @@
 ;;;     gdk_window_begin_resize_drag_for_device
 ;;;     gdk_window_begin_move_drag
 ;;;     gdk_window_begin_move_drag_for_device
-;;;     gdk_window_show_window_menu ()
+;;;     gdk_window_show_window_menu
 ;;;     gdk_window_constrain_size
 ;;;     gdk_window_beep
-;;;     gdk_window_get_scale_factor ()
-;;;     gdk_window_set_opaque_region ()
-;;;     gdk_window_create_gl_context ()
-;;;     gdk_window_mark_paint_from_clip ()
+;;;     gdk_window_get_scale_factor
+;;;     gdk_window_set_opaque_region
+;;;     gdk_window_create_gl_context
+;;;     gdk_window_mark_paint_from_clip
 ;;;     gdk_window_get_clip_region
 ;;;     gdk_window_begin_paint_rect                        * deprecated
 ;;;     gdk_window_begin_paint_region                      * deprecated
 ;;;     gdk_window_end_paint                               * deprecated
-;;;     gdk_window_begin_draw_frame ()
-;;;     gdk_window_end_draw_frame ()
+;;;     gdk_window_begin_draw_frame
+;;;     gdk_window_end_draw_frame
 ;;;     gdk_window_get_visible_region
 ;;;     GdkWindowInvalidateHandlerFunc
-;;;     gdk_window_set_invalidate_handler ()
+;;;     gdk_window_set_invalidate_handler
 ;;;     gdk_window_invalidate_rect
 ;;;     gdk_window_invalidate_region
 ;;;     GdkWindowChildFunc
@@ -135,7 +135,7 @@
 ;;;     gdk_window_set_debug_updates                       * deprecated
 ;;;     gdk_window_enable_synchronized_configure           * deprecated
 ;;;     gdk_window_configure_finished                      * deprecated
-;;;     gdk_window_get_frame_clock ()
+;;;     gdk_window_get_frame_clock
 ;;;     gdk_window_set_user_data
 ;;;     gdk_window_set_override_redirect
 ;;;     gdk_window_set_accept_focus
@@ -4885,7 +4885,7 @@
 (export 'gdk-window-get-root-coords)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_window_get_pointer ()
+;;; gdk_window_get_pointer () -> gdk-window-pointer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_pointer" %gdk-window-get-pointer)
@@ -4895,30 +4895,31 @@
   (y (:pointer :int))
   (mask (:pointer gdk-modifier-type)))
 
-(defun gdk-window-get-pointer (window)
+(defun gdk-window-pointer (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2020-4-23}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
     @code{win} -- the window containing the pointer as with the
                   @fun{gdk-window-at-pointer} function, or @code{nil} if the
                   window containing the pointer is not known to GDK @br{}
-    @code{x} -- x coordinate of pointer @br{}
-    @code{y} -- y coordinate of pointer @br{}
-    @code{mask} -- modifier mask
+    @code{x} -- an integer with the x coordinate of pointer @br{}
+    @code{y} -- an integer with the y coordinate of pointer @br{}
+    @code{mask} -- modifier mask of type @symbol{gdk-modifier-mask}
   @end{return}
   @begin{short}
     Obtains the current pointer position and modifier state. The position is
     given in coordinates relative to the upper left corner of window.
   @end{short}
   @begin[Warning]{dictionary}
-    The @sym{gdk-window-get-pointer} function has been deprecated since version
-    3.0 and should not be used in newly written code. Use the
-    @fun{gdk-window-get-device-position} function instead.
+    The @sym{gdk-window-pointer} function has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
+    @fun{gdk-window-device-position} instead.
   @end{dictionary}
   @see-class{gdk-window}
+  @see-symbol{gdk-modifier-mask}
   @see-function{gdk-window-at-pointer}
-  @see-function{gdk-window-get-device-position}"
+  @see-function{gdk-window-device-position}"
   (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))
     (let ((w (%gdk-window-get-pointer window x y mask)))
       (values w
@@ -4926,7 +4927,7 @@
               (mem-ref y :int)
               (mem-ref mask 'gdk-modifier-type)))))
 
-(export 'gdk-window-get-pointer)
+(export 'gdk-window-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_device_position ()
@@ -4940,28 +4941,28 @@
   (y (:pointer :int))
   (mask (:pointer gdk-modifier-type)))
 
-(defun gdk-window-get-device-position (window device)
+(defun gdk-window-device-position (window device)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
   @argument[window]{a @class{gdk-window} object}
   @argument[device]{a @class{gdk-device} to query}
   @begin{return}
-    @code{win} -- the window underneath device, as with the
-                  @fun{gdk-device-get-window-at-position} function, or
-                  @code{nil} if the window is not known to GDK @br{}
-    @code{x} -- the x coordinate of device @br{}
-    @code{y} -- the y coordinate of device @br{}
+    @code{win}  -- the window underneath device, as with the
+                   @fun{gdk-device-get-window-at-position} function, or
+                   @code{nil} if the window is not known to GDK @br{}
+    @code{x}    -- the x coordinate of device @br{}
+    @code{y}    -- the y coordinate of device @br{}
     @code{mask} -- the modifier mask
   @end{return}
   @begin{short}
     Obtains the current device position and modifier state. The position is
     given in coordinates relative to the upper left corner of window.
   @end{short}
-  Use the @fun{gdk-window-get-device-position-double} function if you need
+  Use the @fun{gdk-window-device-position-double} function if you need
   subpixel precision.
   @see-class{gdk-window}
   @see-function{gdk-device-get-window-at-position}
-  @see-function{gdk-window-get-device-position-double}"
+  @see-function{gdk-window-device-position-double}"
   (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))
     (let ((win (%gdk-window-get-device-position window device x y mask)))
       (values win
@@ -4969,46 +4970,54 @@
               (mem-ref y :int)
               (mem-ref mask 'gdk-modifier-type)))))
 
-(export 'gdk-window-get-device-position)
+(export 'gdk-window-device-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_device_position_double ()
-;;;
-;;; GdkWindow *
-;;; gdk_window_get_device_position_double (GdkWindow *window,
-;;;                                        GdkDevice *device,
-;;;                                        gdouble *x,
-;;;                                        gdouble *y,
-;;;                                        GdkModifierType *mask);
-;;;
-;;; Obtains the current device position in doubles and modifier state. The
-;;; position is given in coordinates relative to the upper left corner of
-;;; window .
-;;;
-;;; Parameters
-;;;
-;;; window
-;;;     a GdkWindow.
-;;;
-;;; device
-;;;     pointer GdkDevice to query to.
-;;;
-;;; x
-;;;     return location for the X coordinate of device , or NULL.
-;;;
-;;; y
-;;;     return location for the Y coordinate of device , or NULL.
-;;;
-;;; mask
-;;;     return location for the modifier mask, or NULL.
-;;;
-;;; Returns
-;;;     The window underneath device (as with
-;;;     gdk_device_get_window_at_position()), or NULL if the window is not
-;;;     known to GDK.
-;;;
-;;; Since 3.10
+;;; -> gdk-window-device-position-double
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gdk_window_get_device_position_double"
+          %gdk-window-get-device-position-double) (g-object gdk-window)
+  (window (g-object gdk-window))
+  (device (g-object gdk-device))
+  (x (:pointer :double))
+  (y (:pointer :double))
+  (mask (:pointer gdk-modifier-type)))
+
+#+gtk-3-10
+(defun gdk-window-device-position-double (window device)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-4-28}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[device]{a @class{gdk-device} object to query to}
+  @begin{return}
+    @code{win}  -- the @class{gdk-window} object underneath device, as with the
+                   @fun{gdk-device-get-window-at-position} function, or
+                   @code{nil} if the window is not known to GDK @br{}
+    @code{x}    -- a @code{:double} with the x coordinate of the device @br{}
+    @code{y}    -- a @code{:double} with the y coorindate of the device  @br{}
+    @code{mask} -- the flags of type @symbol{gdk-modifer-type}
+  @end{return}
+  @begin{short}
+    Obtains the current device position in doubles and the modifier state.
+  @end{short}
+  The position is given in coordinates relative to the upper left corner of
+  the window.
+
+  Since 3.10
+  @see-class{gdk-window}
+  @see-function{gdk-window-device-position}"
+  (with-foreign-objects ((x :double) (y :double) (mask 'gdk-modifier-type))
+    (let ((win (%gdk-window-get-device-position-double window device x y mask)))
+      (values win
+              (mem-ref x :double)
+              (mem-ref y :double)
+              (mem-ref mask 'gdk-modifier-type)))))
+
+#+gtk-3-10
+(export 'gdk-window-device-position-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_parent ()
