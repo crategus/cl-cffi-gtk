@@ -783,6 +783,14 @@
   for more details.
 
   Since 1.16
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (pango-language-default)
+=> #<PANGO-LANGUAGE {10019E6973@}>
+  (pango-language-to-string *)
+=> \"de-de\"
+    @end{pre}
+  @end{dictionary}
   @see-class{pango-language}
   @see-function{pango-language-sample-string}")
 
@@ -801,8 +809,8 @@
     The sample string.
   @end{return}
   @begin{short}
-    Get a string that is representative of the characters needed to render a
-    particular language.
+    Get a string that is representative of the characters needed to render
+    a particular language.
   @end{short}
 
   The sample text may be a pangram, but is not necessarily. It is chosen to
@@ -810,11 +818,17 @@
   feature requirements unique to the language. It is suitable for use as
   sample text in a font selection dialog.
 
-  If @arg{language} is @code{nil}, the default language as found by the function
-  @fun{pango-language-default} is used.
+  If @arg{language} is @code{nil}, the default language as found by the
+  function @fun{pango-language-default} is used.
 
   If Pango does not have a sample string for @arg{language}, the classic
   \"The quick brown fox...\" is returned.
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (pango-language-sample-string (pango-language-default))
+=> \"Zwölf Boxkämpfer jagen Viktor quer über den großen Sylter Deich.\"
+    @end{pre}
+  @end{dictionary}
   @see-class{pango-language}
   @see-function{pango-language-default}"
   (language (g-boxed-foreign pango-language)))
