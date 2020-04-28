@@ -230,26 +230,29 @@
 (export 'gdk-display-open)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_default ()
+;;; gdk_display_get_default () -> gdk-display-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_display_get_default" gdk-display-get-default)
+(defcfun ("gdk_display_get_default" gdk-display-default)
     (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-4-28}
   @begin{return}
     A @class{gdk-display} object, or @code{nil} if there is no default display.
   @end{return}
   @begin{short}
-    Gets the default @class{gdk-display} object.
+    Gets the default display.
   @end{short}
+
   This is a convenience function for the call
-  @code{(gdk-display-manager-default-display (gdk-display-manager-get))}.
+  @begin{pre}
+ (gdk-display-manager-default-display (gdk-display-manager-get))
+  @end{pre}
   @see-class{gdk-display}
   @see-function{gdk-display-manager-get}
   @see-function{gdk-display-manager-default-display}")
 
-(export 'gdk-display-get-default)
+(export 'gdk-display-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_name ()
@@ -302,23 +305,23 @@
   @begin[Warning]{dictionary}
     The @sym{gdk-display-get-screen} function has been deprecated since version
     3.20 and should not be used in newly-written code. There is only one screen;
-    use the @fun{gdk-display-get-default-screen} function to get it.
+    use the @fun{gdk-display-default-screen} function to get it.
   @end{dictionary}
   @see-class{gdk-display}
-  @see-function{gdk-display-get-default-screen}"
+  @see-function{gdk-display-default-screen}"
   (display (g-object gdk-display))
   (screen-num :int))
 
 (export 'gdk-display-get-screen)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_default_screen ()
+;;; gdk_display_get_default_screen () -> gdk-display-default-screen
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_display_get_default_screen" gdk-display-get-default-screen)
+(defcfun ("gdk_display_get_default_screen" gdk-display-default-screen)
     (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-21}
+ "@version{2020-4-23}
   @argument[display]{a @class{gdk-display} object}
   @return{The default @class{gdk-screen} object for @arg{display}.}
   @short{Get the default screen for the display.}
@@ -326,7 +329,7 @@
   @see-class{gdk-screen}"
   (display (g-object gdk-display)))
 
-(export 'gdk-display-get-default-screen)
+(export 'gdk-display-default-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_device_manager ()
@@ -345,13 +348,13 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gdk-display-get-device-manager} function has been deprecated since
-    version 3.20. and should not be used in newly-written code. Use the
-    @fun{gdk-display-get-default-seat} function and @class{gdk-seat} operations.
+    version 3.20. and should not be used in newly-written code. Use the function
+    @fun{gdk-display-default-seat} and @class{gdk-seat} operations.
   @end{dictionary}
   @see-class{gdk-display}
   @see-class{gdk-device-manager}
   @see-class{gdk-seat}
-  @see-function{gdk-display-get-default-seat}"
+  @see-function{gdk-display-default-seat}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-device-manager)
@@ -846,35 +849,35 @@
 (export 'gdk-display-supports-cursor-alpha)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_default_cursor_size ()
+;;; gdk_display_get_default_cursor_size () -> gdk-display-default-cursor-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_display_get_default_cursor_size"
-           gdk-display-get-default-cursor-size) :uint
+           gdk-display-default-cursor-size) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-4-23}
   @argument[display]{a @class{gdk-display} object}
   @return{The default cursor size of type @code{:uint}.}
   @short{Returns the default size to use for cursors on the display.}
   @see-class{gdk-display}
-  @see-function{gdk-display-get-maximal-cursor-size}"
+  @see-function{gdk-display-maximal-cursor-size}"
   (display (g-object gdk-display)))
 
-(export 'gdk-display-get-default-cursor-size)
+(export 'gdk-display-default-cursor-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_maximal_cursor_size ()
+;;; gdk_display_get_maximal_cursor_size () -> gdk-display-maximal-cursor-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_display_get_maximal_cursor_size"
-          %gdk-display-get-maximal-cursor-size) :void
+          %gdk-display-maximal-cursor-size) :void
   (display (g-object gdk-display))
   (width :pointer)
   (height :pointer))
 
-(defun gdk-display-get-maximal-cursor-size (display)
+(defun gdk-display-maximal-cursor-size (display)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-4-23}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
     @code{width} -- the maximal cursor width of type @code{:uint} @br{}
@@ -882,19 +885,19 @@
   @end{return}
   @short{Gets the maximal size to use for cursors on the display.}
   @see-class{gdk-display}
-  @see-function{gdk-display-get-default-cursor-size}"
+  @see-function{gdk-display-default-cursor-size}"
   (with-foreign-objects ((width :uint) (height :uint))
-    (%gdk-display-get-maximal-cursor-size display width height)
+    (%gdk-display-maximal-cursor-size display width height)
     (values (mem-ref width :uint)
             (mem-ref height :uint))))
 
-(export 'gdk-display-get-maximal-cursor-size)
+(export 'gdk-display-maximal-cursor-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_default_group ()
+;;; gdk_display_get_default_group () -> gdk-display-default-group
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_display_get_default_group" gdk-display-get-default-group)
+(defcfun ("gdk_display_get_default_group" gdk-display-default-group)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-4}
@@ -910,7 +913,7 @@
   @see-function{gdk-window-set-group}"
   (display (g-object gdk-display)))
 
-(export 'gdk-display-get-default-group)
+(export 'gdk-display-default-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_supports_selection_notification ()
@@ -1139,18 +1142,18 @@
 (export 'gdk-display-notify-startup-complete)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_default_seat ()
+;;; gdk_display_get_default_seat () -> gdk-display-default-seat
 ;;; ----------------------------------------------------------------------------
 
 #+gdk-3-20
 (defcfun ("gdk_display_get_default_seat"
-           gdk-display-get-default-seat) (g-object gdk-seat)
+           gdk-display-default-seat) (g-object gdk-seat)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-30}
+ "@version{2020-4-23}
   @argument[display]{a @class{gdk-display} object}
   @return{The default @class{gdk-seat} object.}
   @begin{short}
-    Returns the default @class{gdk-seat} object for this display.
+    Returns the default seat object for this display.
   @end{short}
 
   Since 3.20
@@ -1159,7 +1162,7 @@
   (display (g-object gdk-display)))
 
 #+gdk-3-20
-(export 'gdk-display-get-default-seat)
+(export 'gdk-display-default-seat)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_list_seats ()
