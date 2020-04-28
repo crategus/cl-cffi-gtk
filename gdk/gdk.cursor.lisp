@@ -285,11 +285,11 @@
   @end{short}
   There is a number of standard cursors, but it is also possible to construct
   new cursors from pixbufs. There may be limitations as to what kinds of cursors
-  can be constructed on a given display, see the
+  can be constructed on a given display, see the functions
   @fun{gdk-display-supports-cursor-alpha},
   @fun{gdk-display-supports-cursor-color},
-  @fun{gdk-display-get-default-cursor-size} and
-  @fun{gdk-display-get-maximal-cursor-size} functions.
+  @fun{gdk-display-default-cursor-size} and
+  @fun{gdk-display-maximal-cursor-size}.
 
   Cursors by themselves are not very interesting, they must be bound to a
   window for users to see them. This is done with the @fun{gdk-window-cursor}
@@ -299,8 +299,8 @@
   @see-slot{gdk-cursor-display}
   @see-function{gdk-display-supports-cursor-alpha}
   @see-function{gdk-display-supports-cursor-color}
-  @see-function{gdk-display-get-default-cursor-size}
-  @see-function{gdk-display-get-maximal-cursor-size}
+  @see-function{gdk-display-default-cursor-size}
+  @see-function{gdk-display-maximal-cursor-size}
   @see-function{gdk-window-cursor}
   @see-function{gdk-window-new}")
 
@@ -410,10 +410,9 @@
   monochrome approximation will be displayed. The
   @fun{gdk-display-supports-cursor-alpha} and
   @fun{gdk-display-supports-cursor-color} functions can be used to determine
-  whether RGBA cursors are supported; the
-  @fun{gdk-display-get-default-cursor-size} and
-  @fun{gdk-display-get-maximal-cursor-size} functions give information about
-  cursor sizes.
+  whether RGBA cursors are supported; the functions
+  @fun{gdk-display-default-cursor-size} and
+  @fun{gdk-display-maximal-cursor-size} give information about cursor sizes.
 
   If @arg{x} or @arg{y} are -1, the @arg{pixbuf} must have options named
   \"x_hot\" and \"y_hot\", resp., containing integer values between 0 and the
@@ -426,8 +425,8 @@
   @see-class{gdk-display}
   @see-function{gdk-display-supports-cursor-alpha}
   @see-function{gdk-display-supports-cursor-color}
-  @see-function{gdk-display-get-default-cursor-size}
-  @see-function{gdk-display-get-maximal-cursor-size}"
+  @see-function{gdk-display-default-cursor-size}
+  @see-function{gdk-display-maximal-cursor-size}"
   (display (g-object gdk-display))
   (pixbuf (g-object gdk-pixbuf))
   (x :int)
@@ -458,16 +457,17 @@
   monochrome approximation will be displayed. The
   @fun{gdk-display-supports-cursor-alpha} and
   @fun{gdk-display-supports-cursor-color} functions can be used to determine
-  whether RGBA cursors are supported; the
-  @fun{gdk-display-get-default-cursor-size} and
-  @fun{gdk-display-get-maximal-cursor-size} functions give information about
-  cursor sizes.
+  whether RGBA cursors are supported; the functions
+  @fun{gdk-display-default-cursor-size} and
+  @fun{gdk-display-maximal-cursor-size} give information about cursor sizes.
 
   On the X backend, support for RGBA cursors requires a sufficently new
   version of the X Render extension.
 
   Since 3.10
-  @see-class{gdk-cursor}"
+  @see-class{gdk-cursor}
+  @see-function{gdk-display-default-cursor-size}
+  @see-function{gdk-display-maximal-cursor-size}"
   (display (g-object gdk-display))
   (surface (:pointer (:struct cairo-surface-t)))
   (x :double)

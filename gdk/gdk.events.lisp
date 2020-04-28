@@ -694,12 +694,11 @@
     Request more motion notifies if event is a motion notify hint event.
   @end{short}
 
-  This function should be used instead of the function
-  @fun{gdk-window-get-pointer} to request further motion notifies, because it
-  also works for extension events where motion notifies are provided for devices
-  other than the core pointer. Coordinate extraction, processing and requesting
-  more motion events from a @code{GDK_MOTION_NOTIFY} event usually works like
-  this:
+  This function should be used instead of the function @fun{gdk-window-pointer}
+  to request further motion notifies, because it also works for extension events
+  where motion notifies are provided for devices other than the core pointer.
+  Coordinate extraction, processing and requesting more motion events from a
+  @code{GDK_MOTION_NOTIFY} event usually works like this:
   @begin{pre}
    {
      /* motion_event handler */
@@ -709,7 +708,7 @@
      gdk_event_request_motions (motion_event); /* handles is_hint events */
    @}
   @end{pre}
-  @see-function{gdk-window-get-pointer}"
+  @see-function{gdk-window-pointer}"
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gdk-event-request-motions)

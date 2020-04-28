@@ -321,10 +321,13 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-device-manager-list-devices} has been deprecated since
     version 3.20 and should not be used in newly-written code. Use the functions
-    @fun{gdk-seat-get-pointer}, @fun{gdk-seat-get-keyboard} and
+    @fun{gdk-seat-pointer}, @fun{gdk-seat-get-keyboard} and
     @fun{gdk-seat-get-slaves} instead.
   @end{dictionary}
-  @see-class{gdk-device-manager}"
+  @see-class{gdk-device-manager}
+  @see-function{gdk-seat-pointer}
+  @see-function{gdk-seat-get-keyboard}
+  @see-function{gdk-seat-get-slaves}"
   (device-manager (g-object gdk-device-manager))
   (type gdk-device-type))
 
@@ -354,9 +357,10 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-device-manager-get-client-pointer} has been deprecated
     since version 3.20 and should not be used in newly-written code. Use the
-    function @fun{gdk-seat-get-pointer} instead.
+    function @fun{gdk-seat-pointer} instead.
   @end{dictionary}
-  @see-class{gdk-device-manager}"
+  @see-class{gdk-device-manager}
+  @see-function{gdk-seat-pointer}"
   (device-manager (g-object gdk-device-manager)))
 
 (export 'gdk-device-manager-get-client-pointer)

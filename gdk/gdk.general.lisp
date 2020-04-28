@@ -291,10 +291,10 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-get-display} has been deprecated since version 3.8
     and should not be used in newly-written code. Call
-    @code{(gdk-display-get-name (gdk-display-get-default))} instead.
+    @code{(gdk-display-get-name (gdk-display-default))} instead.
   @end{dictionary}
   @see-function{gdk-display-get-name}
-  @see-function{gdk-display-get-default}")
+  @see-function{gdk-display-default}")
 
 (export 'gdk-get-display)
 
