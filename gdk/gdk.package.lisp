@@ -83,11 +83,11 @@
     @about-class{gdk-display}
 
     @about-function{gdk-display-open}
-    @about-function{gdk-display-get-default}
+    @about-function{gdk-display-default}
     @about-function{gdk-display-get-name}
     @about-function{gdk-display-get-n-screens}
     @about-function{gdk-display-get-screen}
-    @about-function{gdk-display-get-default-screen}
+    @about-function{gdk-display-default-screen}
     @about-function{gdk-display-get-device-manager}
     @about-function{gdk-display-pointer-ungrab}
     @about-function{gdk-display-keyboard-ungrab}
@@ -110,9 +110,9 @@
     @about-function{gdk-display-warp-pointer}
     @about-function{gdk-display-supports-cursor-color}
     @about-function{gdk-display-supports-cursor-alpha}
-    @about-function{gdk-display-get-default-cursor-size}
-    @about-function{gdk-display-get-maximal-cursor-size}
-    @about-function{gdk-display-get-default-group}
+    @about-function{gdk-display-default-cursor-size}
+    @about-function{gdk-display-maximal-cursor-size}
+    @about-function{gdk-display-default-group}
     @about-function{gdk-display-supports-selection-notification}
     @about-function{gdk-display-request-selection-notification}
     @about-function{gdk-display-supports-clipboard-persistence}
@@ -122,7 +122,7 @@
     @about-function{gdk-display-supports-composite}
     @about-function{gdk-display-get-app-launch-context}
     @about-function{gdk-display-notify-startup-complete}
-    @about-function{gdk-display-get-default-seat}
+    @about-function{gdk-display-default-seat}
     @about-function{gdk-display-list-seats}
     @about-function{gdk-display-get-n-monitors}
     @about-function{gdk-display-get-monitor}
@@ -177,7 +177,7 @@
     @about-function{gdk-seat-grab}
     @about-function{gdk-seat-ungrab}
     @about-function{gdk-seat-get-capabilities}
-    @about-function{gdk-seat-get-pointer}
+    @about-function{gdk-seat-pointer}
     @about-function{gdk-seat-get-keyboard}
     @about-function{gdk-seat-get-slaves}
   @end{section}
@@ -544,9 +544,9 @@
     @about-function{gdk-window-get-frame-extents}
     @about-function{gdk-window-get-origin}
     @about-function{gdk-window-get-root-coords}
-    @about-function{gdk-window-get-pointer}
-    @about-function{gdk-window-get-device-position}
-    @about-function{gdk-window-get-device-position-double}
+    @about-function{gdk-window-pointer}
+    @about-function{gdk-window-device-position}
+    @about-function{gdk-window-device-position-double}
     @about-function{gdk-window-get-parent}
     @about-function{gdk-window-get-toplevel}
     @about-function{gdk-window-get-children}
