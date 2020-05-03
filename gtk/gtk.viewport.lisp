@@ -227,20 +227,21 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_get_bin_window ()
+;;; gtk_viewport_get_bin_window () -> gtk-viewport-bin-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_viewport_get_bin_window" gtk-viewport-get-bin-window)
+(defcfun ("gtk_viewport_get_bin_window" gtk-viewport-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-15}
+ "@version{2020-5-3}
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
   @short{Gets the bin window of the @class{gtk-viewport} widget.}
-  @see-class{gtk-viewport}"
+  @see-class{gtk-viewport}
+  @see-class{gdk-window}"
   (viewport (g-object gtk-viewport)))
 
-(export 'gtk-viewport-get-bin-window)
+(export 'gtk-viewport-bin-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_get_view_window ()
