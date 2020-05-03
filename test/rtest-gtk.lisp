@@ -41,8 +41,8 @@
 ;    gtk.overlay.lisp
 ;    gtk.button-box.lisp
 (load "rtest-gtk-paned.lisp")
-;    gtk.layout.lisp
-;    gtk.notebook.lisp
+(load "rtest-gtk-layout.lisp")
+(load "rtest-gtk-notebook.lisp")
 ;    gtk.expander.lisp
 ;    gtk.orientable.lisp
 ;    gtk.aspect-frame.lisp

@@ -575,6 +575,9 @@ scale-factor
                  (gtk-widget-class-find-style-property "GtkFrame"
                                                        "focus-line-pattern")))))
 
+(test gtk-widget-class-find-style-property.4
+  (is-false (gtk-widget-class-find-style-property "GtkFrame" "xxx")))
+
 ;;;   gtk_widget_class_list_style_properties
 
 (test gtk-widget-class-list-style-properties
