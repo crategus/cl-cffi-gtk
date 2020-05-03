@@ -2556,7 +2556,7 @@
   amount of movement per pulse is determined by the function
   @fun{gtk-entry-progress-pulse-step}.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-set-progress-pulse-step}"
+  @see-function{gtk-entry-progress-pulse-step}"
   (entry (g-object gtk-entry)))
 
 (export 'gtk-entry-progress-pulse)
