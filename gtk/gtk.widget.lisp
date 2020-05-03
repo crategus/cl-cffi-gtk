@@ -6330,16 +6330,24 @@
           %gtk-widget-class-find-style-property)
     (:pointer (:struct g-param-spec))
   (class :pointer)
-  (property-name :string))
+  (property-name g-string))
 
 (defun gtk-widget-class-find-style-property (type property-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-23}
-  @argument[class]{a widget class name}
-  @argument[property-name]{the name of the style property to find}
-  @return{The @symbol{g-param-spec} of the style property or @code{nil} if
-    @arg{class} has no style property with that name.}
-  @short{Finds a style property of a widget class by name.}
+ "@version{2020-5-1}
+  @argument[type]{a string with a widget class name}
+  @argument[property-name]{a string with the name of the style property to find}
+  @return{The @symbol{g-param-spec} structure of the style property or
+    @code{nil} if the class has no style property with that property name.}
+  @short{Finds a style property of a widget class by property name.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gtk-widget-class-find-style-property \"GtkNotebook\" \"arrow-spacing\")
+=> #<PROPERTY gint #<GTYPE :name \"GtkNotebook\" :id 24822816> . arrow-spacing (flags: readable)>
+  (gtk-widget-class-find-style-property \"GtkNotebook\" \"xxx\")
+=> NIL
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-symbol{g-param-spec}
   @see-function{gtk-widget-class-list-style-properties}"
@@ -6347,7 +6355,7 @@
     (unwind-protect
       (let ((pspec (%gtk-widget-class-find-style-property class
                                                           property-name)))
-           (parse-g-param-spec pspec))
+        (unless (null-pointer-p pspec) (parse-g-param-spec pspec)))
       (g-type-class-unref class))))
 
 (export 'gtk-widget-class-find-style-property)
@@ -6514,29 +6522,44 @@
 
 (defcfun ("gtk_widget_style_get_property" %gtk-widget-style-get-property) :void
   (widget (g-object gtk-widget))
-  (property-name :string)
+  (property-name g-string)
   (value (:pointer (:struct g-value))))
 
 (defun gtk-widget-style-get-property (widget property-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-5-1}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[property-name]{the name of a style property}
+  @argument[property-name]{a string with the name of a style property}
   @return{The style property value.}
-  @short{Gets the value of a style property of @arg{widget}.}
-  @see-class{gtk-widget}"
-  (let ((type (param-spec-type
-                (gtk-widget-class-find-style-property (g-type-from-instance widget)
-                                                      property-name))))
-    (with-foreign-object (value '(:struct g-value))
-      ;; TODO: Check the implementation of g-value-zero and g-value-init
-      ;;       This can be simplified.
-      (g-value-zero value)
-      (g-value-init value type)
-      (prog2
-        (%gtk-widget-style-get-property widget property-name value)
-        (parse-g-value value)
-        (g-value-unset value)))))
+  @short{Gets the value of a style property of the widget.}
+
+  If the style property does not exist on the widget class @code{nil} is
+  returned.
+  @begin[Example]{dictionary}
+    Get the default value for the @code{arrow-spacing} style property of a
+    notebook container.
+    @begin{pre}
+  (defvar notebook (make-instance 'gtk-notebook))
+=> NOTEBOOK
+  (gtk-widget-style-get-property notebook \"arrow-spacing\")
+=> 0
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-class-find-style-property}"
+  (let* ((gtype (g-type-from-instance widget))
+         (pspec (gtk-widget-class-find-style-property gtype property-name))
+         (type (if pspec (param-spec-type pspec) nil)))
+    ;; TODO: Returns nil for an invalid property. Consider to throw an error.
+    (when type
+      (with-foreign-object (value '(:struct g-value))
+        ;; TODO: Check the implementation of g-value-zero and g-value-init.
+        (g-value-zero value)
+        (g-value-init value type)
+        (prog2
+          (%gtk-widget-style-get-property widget property-name value)
+          (parse-g-value value)
+          (g-value-unset value))))))
 
 (export 'gtk-widget-style-get-property)
 
