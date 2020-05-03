@@ -2,12 +2,12 @@
 ;;; gtk.fixed.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,8 +43,8 @@
 ;;;
 ;;; Child Properties
 ;;;
-;;;     gint  x  Read / Write
-;;;     gint  y  Read / Write
+;;;     gint    x    Read / Write
+;;;     gint    y    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -126,16 +126,18 @@
     @begin[code]{table}
       @begin[x]{entry}
         The @code{x} child property of type @code{:int} (Read / Write) @br{}
-        x position of child widget. @br{}
+        The x position of the child widget. @br{}
         Default value: 0
       @end{entry}
       @begin[y]{entry}
         The @code{y} child property of type @code{:int} (Read / Write) @br{}
-        y position of child widget. @br{}
+        The y position of the child widget. @br{}
         Default value: 0
       @end{entry}
     @end{table}
   @end{dictionary}
+  @see-function{gtk-fixed-child-x}
+  @see-function{gtk-fixed-child-y}
   @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
@@ -152,9 +154,19 @@
 (setf (gethash 'gtk-fixed-child-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-fixed-child-x 'function)
- "@version{2013-8-27}
-  Accessor of the child property @code{x} of the @class{gtk-fixed} class.
-  @see-class{gtk-fixed}")
+ "@version{2020-4-30}
+  @syntax[]{(gtk-fixed-child-x container child) => x}
+  @syntax[]{(setf (gtk-fixed-child-x container child) x)}
+  @argument[container]{a @class{gtk-fixed} container}
+  @argument[child]{a @class{gtk-widget} object}
+  @argument[x]{an integer with the x position of the child}
+  @begin{short}
+    Accessor of the @code{x} child property  of the @class{gtk-fixed} class.
+  @end{short}
+
+  The x position of the child widget in the fixed container.
+  @see-class{gtk-fixed}
+  @see-function{gtk-fixed-child-y}")
 
 ;;; --- gtk-fixed-child-y ------------------------------------------------------
 
@@ -166,9 +178,19 @@
 (setf (gethash 'gtk-fixed-child-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-fixed-child-y 'function)
- "@version{2013-8-27}
-  Accessor of the child property @code{y} of the @class{gtk-fixed} class.
-  @see-class{gtk-fixed}")
+ "@version{2020-4-30}
+  @syntax[]{(gtk-fixed-child-y container child) => y}
+  @syntax[]{(setf (gtk-fixed-child-y container child) y)}
+  @argument[container]{a @class{gtk-fixed} container}
+  @argument[child]{a @class{gtk-widget} object}
+  @argument[y]{an integer with the y position of the child}
+  @begin{short}
+    Accessor of the @code{y} child property of the @class{gtk-fixed} class.
+  @end{short}
+
+  The y position of the child widget in the fixed container.
+  @see-class{gtk-fixed}
+  @see-function{gtk-fixed-child-x}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_fixed_new ()
@@ -178,9 +200,11 @@
 
 (defun gtk-fixed-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-9-7}
+ "@version{2020-4-30}
   @return{A new @class{gtk-fixed} container.}
-  Creates a new @class{gtk-fixed} container.
+  @begin{short}
+    Creates a new fixed container.
+  @end{short}
   @see-class{gtk-fixed}"
   (make-instance 'gtk-fixed))
 
@@ -192,16 +216,20 @@
 
 (defcfun ("gtk_fixed_put" gtk-fixed-put) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-9-7}
+ "@version{2020-4-30}
   @argument[fixed]{a @class{gtk-fixed} container}
-  @argument[widget]{the widget to add}
-  @argument[x]{the horizontal position to place the @arg{widget} at}
-  @argument[y]{the vertical position to place the @arg{widget} at}
-  Adds a widget to a @class{gtk-fixed} container at the given position.
+  @argument[widget]{the @class{gtk-widget} child widget to add}
+  @argument[x]{an integer with the horizontal position to place the child
+    widget at}
+  @argument[y]{an integer with the vertical position to place the child widget
+    at}
+  @begin{short}
+    Adds a child widget to a fixed container at the given position.
+  @end{short}
   @see-class{gtk-fixed}
   @see-function{gtk-fixed-move}"
-  (fixed g-object)
-  (widget g-object)
+  (fixed (g-object gtk-fixed))
+  (widget (g-object gtk-widget))
   (x :int)
   (y :int))
 
@@ -213,16 +241,20 @@
 
 (defcfun ("gtk_fixed_move" gtk-fixed-move) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-9-7}
+ "@version{2020-4-30}
   @argument[fixed]{a @class{gtk-fixed} container}
-  @argument[widget]{the child widget}
-  @argument[x]{the horizontal position to move the @arg{widget} to}
-  @argument[y]{the vertical position to move the @arg{widget} to}
-  Moves a child of a @class{gtk-fixed} container to the given position.
+  @argument[widget]{the @class{gtk-widget} child widget}
+  @argument[x]{an integer with the horizontal position to move the child widget
+    to}
+  @argument[y]{an integer with the vertical position to move the child widget
+    to}
+  @begin{short}
+    Moves a child widget of a fixed container to the given position.
+  @end{short}
   @see-class{gtk-fixed}
   @see-function{gtk-fixed-put}"
   (fixed (g-object gtk-fixed))
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (x :int)
   (y :int))
 
