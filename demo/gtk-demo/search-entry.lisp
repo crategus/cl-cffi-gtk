@@ -434,7 +434,7 @@ do_search_entry (GtkWidget *do_widget)
           (g-signal-connect button "clicked"
              (lambda (button)
                (declare (ignore button))
-               (gtk-notebook-set-current-page notebook 1)
+               (gtk-notebook-current-page notebook 1)
                (setf search-progress-id
                      (g-timeout-add-seconds 1 #'start-search-feedback))
                (setf finish-search-id
@@ -448,7 +448,7 @@ do_search_entry (GtkWidget *do_widget)
              (lambda (button)
                (declare (ignore button))
                (g-source-remove finish-search-id)
-               (gtk-notebook-set-current-page notebook 0)))
+               (gtk-notebook-current-page notebook 0)))
           (gtk-notebook-append-page notebook button nil)
           (gtk-widget-show button))
 

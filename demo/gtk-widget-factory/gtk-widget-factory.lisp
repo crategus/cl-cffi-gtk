@@ -23,6 +23,65 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;; Control the pulse mode of "progressbar3" and "entry1"
+
+(let ((*pulse-time* 250)
+      (*pulse-entry-mode* 0))
+
+  ;; Callback function for the destroy notify handler
+  (defcallback pulse-remove :void ((data :pointer))
+    (g-source-remove (pointer-address data)))
+
+  ;; Function called by the timeout handler
+  (defun pulse-it (widget)
+    ;; Pulse the widget which is an entry or a progress bar
+    (if (eq 'gtk-entry (type-of widget))
+        (gtk-entry-progress-pulse widget)
+        (gtk-progress-bar-pulse widget))
+    ;; Set a timeout handler and store the handler on the property list
+    (g-object-set-data-full widget
+                            "pulse-id"
+                            (make-pointer (g-timeout-add *pulse-time*
+                                                         (lambda ()
+                                                           (pulse-it widget))))
+                            (callback pulse-remove))
+    ;; Remove the source
+    +g-source-remove+)
+
+  (defun pulse-update (adjustment widget)
+    (let ((value (gtk-adjustment-value adjustment))
+          (pulse-id (g-object-get-data widget "pulse-id")))
+      (setf *pulse-time* (truncate (+ 50 (* 4 value))))
+      (if (= 100 value)
+          (g-object-set-data widget "pulse-id" (null-pointer))
+          (when (and (null-pointer-p pulse-id)
+                     (or (eq 'gtk-progress-bar (type-of widget))
+                         (and (eq 'gtk-entry (type-of widget))
+                              (= 3 (mod *pulse-entry-mode* 3)))))
+            (g-object-set-data-full widget
+                                    "pulse-id"
+                                    (make-pointer (g-timeout-add *pulse-time*
+                                                                 (lambda ()
+                                                                   (pulse-it widget))))
+                                    (callback pulse-remove))))))
+
+  (defun on-entry-icon-release (entry icon-pos event)
+    (declare (ignore event))
+    (when (eq :secondary icon-pos)
+      (setf *pulse-entry-mode* (1+ *pulse-entry-mode*))
+      (cond ((= 0 (mod *pulse-entry-mode* 3))
+             (g-object-set-data entry "pulse-id" (null-pointer))
+             (setf (gtk-entry-progress-fraction entry) 0.0d0))
+            ((= 1 (mod *pulse-entry-mode* 3))
+             (setf (gtk-entry-progress-fraction entry) 0.25d0))
+            (t
+             (when (< (- *pulse-time* 50) 400)
+               (setf (gtk-entry-progress-pulse-step entry) 0.1d0)
+               (pulse-it entry))))))
+)
+
+;;; ----------------------------------------------------------------------------
+
 (defun activate-change-theme-state (action state)
   (let ((settings (gtk-settings-get-default)))
     (setf (gtk-settings-gtk-application-prefer-dark-theme settings)
@@ -60,10 +119,10 @@
 
     (setf (gtk-widget-sensitive *application-window*) nil))
 
-(defun activate-background (action parameter))
-(defun activate-open (action parameter))
-(defun activate-record (action parameter))
-(defun activate-lock (action parameter))
+(defun activate-background (action parameter) (declare (ignore action parameter)))
+(defun activate-open (action parameter) (declare (ignore action parameter)))
+(defun activate-record (action parameter) (declare (ignore action parameter)))
+(defun activate-lock (action parameter) (declare (ignore action parameter)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -127,7 +186,11 @@
                         ;; Quit the application
                         (g-application-quit application)))
 
-;  gtk_builder_add_callback_symbol (builder, "on_entry_icon_release", (GCallback)on_entry_icon_release);
+    ;; Connect signal "icon-release" to "entry1"
+    (g-signal-connect (gtk-builder-get-object builder "entry1")
+                      "icon-release"
+                      #'on-entry-icon-release)
+
 ;  gtk_builder_add_callback_symbol (builder, "on_scale_button_value_changed", (GCallback)on_scale_button_value_changed);
 ;  gtk_builder_add_callback_symbol (builder, "on_scale_button_query_tooltip", (GCallback)on_scale_button_query_tooltip);
 ;  gtk_builder_add_callback_symbol (builder, "on_record_button_toggled", (GCallback)on_record_button_toggled);
@@ -148,24 +211,7 @@
       ;; Add actions to the action map of the applicatin window
       (g-action-map-add-action-entries *application-window* entries)
 
-;  struct {
-;    const gchar *action_and_target;
-;    const gchar *accelerators[2];
-;  } accels[] = {
-;    { "app.about", { "F1", NULL } },
-;    { "app.quit", { "<Primary>q", NULL } },
-;    { "win.dark", { "<Primary>d", NULL } },
-;    { "win.search", { "<Primary>s", NULL } },
-;    { "win.delete", { "Delete", NULL } },
-;    { "win.background", { "<Primary>b", NULL } },
-;    { "win.open", { "<Primary>o", NULL } },
-;    { "win.record", { "<Primary>r", NULL } },
-;    { "win.lock", { "<Primary>l", NULL } },
-;  };
-
-;  for (i = 0; i < G_N_ELEMENTS (accels); i++)
-;    gtk_application_set_accels_for_action (GTK_APPLICATION (app), accels[i].action_and_target, accels[i].accelerators);
-
+      ;; Set accels for some actions
       (gtk-application-set-accels-for-action application "app.about" '("F1"))
       (gtk-application-set-accels-for-action application "app.quit" '("<Primary>q"))
       (gtk-application-set-accels-for-action application "win.dark" '("<Primary>d"))
@@ -180,17 +226,32 @@
       (setf *toplevel-stack*
             (gtk-builder-get-object builder "toplevel_stack"))
 
-      ;; Set text on the statusbar
+      ;; Set text and an action on the statusbar
       (let ((statusbar (gtk-builder-get-object builder "statusbar")))
         (gtk-statusbar-push statusbar 0 "All systems are operating normally.")
+        (g-action-map-add-action *application-window*
+                                 (g-property-action-new "statusbar"
+                                                        statusbar
+                                                        "visible")))
+      ;; Set an action on the toolbar
+      (let ((toolbar (gtk-builder-get-object builder "toolbar")))
+        (g-action-map-add-action *application-window*
+                                 (g-property-action-new "toolbar"
+                                                        toolbar
+                                                        "visible")))
 
-      )
-
-;  widget = (GtkWidget *)gtk_builder_get_object (builder, "statusbar");
-;  gtk_statusbar_push (GTK_STATUSBAR (widget), 0, "All systems are operating normally.");
-;  action = G_ACTION (g_property_action_new ("statusbar", widget, "visible"));
-;  g_action_map_add_action (G_ACTION_MAP (window), action);
-
+      ;; Connect entry1 and progressbar3 to adjustment1
+      (let ((adjustment (gtk-builder-get-object builder "adjustment1"))
+            (progressbar (gtk-builder-get-object builder "progressbar3"))
+            (entry (gtk-builder-get-object builder "entry1")))
+        (g-signal-connect adjustment "value-changed"
+                          (lambda (adj)
+                            (pulse-update adj progressbar)))
+        (pulse-update adjustment progressbar)
+        (g-signal-connect adjustment "value-changed"
+                          (lambda (adj)
+                            (pulse-update adj entry)))
+        (pulse-update adjustment entry))
 
 
       ;; Show the application window
