@@ -2105,7 +2105,7 @@
   @end{return}
   @begin{short}
     Finds the path at the point (x, y), relative to bin_window coordinates
-    (please see the function @fun{gtk-tree-view-get-bin-window}).
+    (please see the function @fun{gtk-tree-view-bin-window}).
   @end{short}
   That is, x and y are relative to an events coordinates. x and y must come from
   an event on the @arg{tree-view} only where @code{event->window ==
@@ -2123,7 +2123,7 @@
   @code{GtkWidget::query-tooltip}), please see the function
   @fun{gtk-tree-view-convert-widget-to-bin-window-coords}.
   @see-class{gtk-tree-view}
-  @see-function{gtk-tree-view-get-bin-window}
+  @see-function{gtk-tree-view-bin-window}
   @see-function{gtk-tree-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer)
                          (column :pointer)
@@ -2338,25 +2338,26 @@
 (export 'gtk-tree-view-get-visible-range)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_bin_window ()
+;;; gtk_tree_view_get_bin_window () -> gtk-tree-view-bin-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_view_get_bin_window" gtk-tree-view-get-bin-window)
+(defcfun ("gtk_tree_view_get_bin_window" gtk-tree-view-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2020-5-3}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @return{A @class{gdk-window} object, or @code{nil} when @arg{tree-view}
     has not been realized yet.}
   @begin{short}
-    Returns the window that @arg{tree-view} renders to.
+    Returns the window that the tree view renders to.
   @end{short}
   This is used primarily to compare to @code{event->window} to confirm that the
-  event on @arg{tree-view} is on the right window.
-  @see-class{gtk-tree-view}"
+  event on the tree view is on the right window.
+  @see-class{gtk-tree-view}
+  @see-class{gdk-window}"
   (tree-view (g-object gtk-tree-view)))
 
-(export 'gtk-tree-view-get-bin-window)
+(export 'gtk-tree-view-bin-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_convert_bin_window_to_tree_coords ()
@@ -2416,10 +2417,10 @@
   @end{return}
   @begin{short}
     Converts \"bin-window\" coordinates (see the function
-    @fun{gtk-tree-view-get-bin-window}) to widget relative coordinates.
+    @fun{gtk-tree-view-bin-window}) to widget relative coordinates.
   @end{short}
   @see-class{gtk-tree-view}
-  @see-function{gtk-tree-view-get-bin-window}"
+  @see-function{gtk-tree-view-bin-window}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-bin-window-to-widget-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
@@ -2519,10 +2520,10 @@
   @end{return}
   @begin{short}
     Converts widget coordinates to coordinates for the \"bin-window\" (see the
-    function @fun{gtk-tree-view-get-bin-window}).
+    function @fun{gtk-tree-view-bin-window}).
   @end{short}
   @see-class{gtk-tree-view}
-  @see-function{gtk-tree-view-get-bin-window}"
+  @see-function{gtk-tree-view-bin-window}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-widget-to-bin-window-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
