@@ -424,8 +424,8 @@
 @c GtkNotebook
 
 @set gtk-notebook http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-notebook.html
-@set gtk-notebook-set-tab-pos http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-set-tab-pos.html
-@set gtk-notebook-set-scrollable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-set-scrollable.html
+@set gtk-notebook-tab-pos http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-tab-pos.html
+@set gtk-notebook-scrollable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-scrollable.html
 @set gtk-notebook-popup-enable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-popup-enable.html
 @set gtk-notebook-popup-disable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-notebook-popup-disable.html
 

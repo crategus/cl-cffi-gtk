@@ -944,9 +944,9 @@ pages that can be switched between using tab labels along one edge.
 
 There are many configuration options for @xurl{gtk-notebook}.  Among other
 things, you can choose on which edge the tabs appear (see
-@xurl{gtk-notebook-set-tab-pos}), whether, if there are too many tabs to fit
+@xurl{gtk-notebook-tab-pos}), whether, if there are too many tabs to fit
 the notebook should be made bigger or scrolling arrows added (see
-@xurl{gtk-notebook-set-scrollable}), and whether there will be a popup menu
+@xurl{gtk-notebook-scrollable}), and whether there will be a popup menu
 allowing the users to switch pages (see @xurl{gtk-notebook-popup-enable},
 @xurl{gtk-notebook-popup-disable}).
 
