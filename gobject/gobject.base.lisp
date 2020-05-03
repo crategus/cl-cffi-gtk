@@ -2505,18 +2505,19 @@
 
 (defcfun ("g_object_get_data" g-object-get-data) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[object]{@class{g-object} instance containing the associations}
-  @argument[key]{name of the key for that association}
-  @return{The data if found, or @code{nil} if no such data exists.}
+ "@version{2020-4-29}
+  @argument[object]{a @class{g-object} instance containing the associations}
+  @argument[key]{a string with the name of the key for that association}
+  @return{The data as a pointer if found, or a @code{null-pointer} if no such
+    data exists.}
   @begin{short}
     Gets a named field from the objects table of associations.
   @end{short}
-  See the function @fun{g-object-set-data}.
+  See the function @fun{g-object-set-data} for an example.
   @see-class{g-object}
   @see-function{g-object-set-data}"
   (object g-object)
-  (key :string))
+  (key g-string))
 
 (export 'g-object-get-data)
 
@@ -2526,10 +2527,10 @@
 
 (defcfun ("g_object_set_data" g-object-set-data) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[object]{@class{g-object} instance containing the associations}
-  @argument[key]{name of the key}
-  @argument[data]{data to associate with that key}
+ "@version{2020-4-29}
+  @argument[object]{a @class{g-object} instance containing the associations}
+  @argument[key]{a string with the name of the key}
+  @argument[data]{a pointer as data to associate with that key}
   @begin{short}
     Each object carries around a table of associations from strings to pointers.
     This function lets you set an association.
@@ -2537,6 +2538,18 @@
 
   If the @arg{object} already had an association with that name, the old
   association will be destroyed.
+  @begin[Example]{dictionary}
+    Set an integer as a pointer for a property on a GtkButton.
+    @begin{pre}
+  (defvar button (make-instance 'gtk-button))
+=> BUTTON
+  (g-object-set-data button \"property\" (make-pointer 100))
+  (g-object-get-data button \"property\")
+=> #.(SB-SYS:INT-SAP #X00000064)
+  (pointer-address *)
+=> 100
+    @end{pre}
+  @end{dictionary}
   @see-class{g-object}
   @see-function{g-object-get-data}"
   (object g-object)
@@ -2546,27 +2559,72 @@
 (export 'g-object-set-data)
 
 ;;; ----------------------------------------------------------------------------
+;;; GDestroyNotify ()  from the GLIB documentation
+;;;
+;;; void
+;;; (*GDestroyNotify) (gpointer data);
+;;;
+;;; Specifies the type of function which is called when a data element is
+;;; destroyed. It is passed the pointer to the data element and should free any
+;;; memory and resources allocated for it.
+;;;
+;;; data :
+;;;     the data element.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_object_set_data_full ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_data_full" g-object-set-data-full) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-4-30}
   @argument[object]{@class{g-object} instance containing the associations}
-  @argument[key]{name of the key}
-  @argument[data]{data to associate with that @arg{key}}
-  @argument[destroy]{function to call when the association is destroyed}
+  @argument[key]{a string with the name of the key}
+  @argument[data]{data as a pointer to associate with that @arg{key}}
+  @argument[destroy]{callback function to call when the association is
+    destroyed}
   @begin{short}
     Like the @fun{g-object-set-data} function except it adds notification for
-    when the association is destroyed, either by setting it to a different value
-    or when the object is destroyed.
+    when the association is destroyed, either by setting it to a different
+    value or when the object is destroyed.
   @end{short}
 
   Note that the @arg{destroy} callback is not called if @arg{data} is
   @code{nil}.
+  @begin[Note]{dictionary}
+    You must define a @code{callback}-function and pass the pointer of the
+    callback function. See the example for the syntax to use.
+  @end{dictionary}
+  @begin[Example]{dictionary}
+    This code example shows the usage of the function
+    @sym{g-object-set-data-full} with a destroy notify handler. The code is
+    taken from the @code{gtk-widget-factory} demo.
+    @begin{pre}
+  ;; Callback function for the destroy notify handler
+  (defcallback pulse-remove :void ((data :pointer))
+    (g-source-remove (pointer-address data)))
+
+  ;; Function called by the timeout handler
+  (defun pulse-it (widget)
+    ;; Pulse the widget which is an entry or a progress bar
+    (if (eq 'gtk-entry (type-of widget))
+        (gtk-entry-progress-pulse widget)
+        (gtk-progress-bar-pulse widget))
+    ;; Set a timeout handler and store the handler on the property list
+    (g-object-set-data-full widget
+                            \"pulse-id\"
+                            (make-pointer (g-timeout-add *pulse-time*
+                                                         (lambda ()
+                                                           (pulse-it widget))))
+                            (callback pulse-remove))
+    ;; Remove the source
+    +g-source-remove+)
+    @end{pre}
+  @end{dictionary}
   @see-class{g-object}
   @see-function{g-object-set-data}"
-  (object :pointer)
+  (object g-object)
   (key :string)
   (data :pointer)
   (destroy :pointer))
@@ -2579,13 +2637,18 @@
 
 (defcfun ("g_object_steal_data" g-object-steal-data) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-4-30}
   @argument[object]{@class{g-object} instance containing the associations}
-  @argument[key]{name of the key}
-  @return{The data if found, or @code{nil} if no such data exists.}
-  Remove a specified datum from the @arg{object}'s data associations, without
-  invoking the association's destroy handler.
-  @see-class{g-object}"
+  @argument[key]{a string with the name of the key}
+  @return{The data as a pointer if found, or @code{nil} if no such data exists.}
+  @begin{short}
+    Remove a specified datum from the @arg{object}'s data associations, without
+    invoking the association's destroy handler.
+  @end{short}
+  @see-class{g-object}
+  @see-function{g-object-get-data}
+  @see-function{g-object-set-data}
+  @see-function{g-object-set-data-full}"
   (object :pointer)
   (key :string))
 
