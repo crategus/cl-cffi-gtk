@@ -679,21 +679,12 @@
       A container for arranging buttons
 
       @about-symbol{gtk-button-box-style}
-
       @about-class{gtk-button-box}
-
       @about-generic{gtk-button-box-layout-style}
-
       @about-function{gtk-button-box-child-non-homogeneous}
       @about-function{gtk-button-box-child-secondary}
-
       @about-function{gtk-button-box-new}
-      @about-function{gtk-button-box-get-layout}
-      @about-function{gtk-button-box-get-child-secondary}
-      @about-function{gtk-button-box-get-child-non-homogeneous}
-      @about-function{gtk-button-box-set-layout}
-      @about-function{gtk-button-box-set-child-secondary}
-      @about-function{gtk-button-box-set-child-non-homogeneous}
+      @about-function{gtk-button-box-layout}
     @end{subsection}
     @begin[GtkPaned]{subsection}
       A widget with two adjustable panes.
@@ -719,29 +710,21 @@
       Infinite scrollable area containing child widgets and/or custom drawing.
 
       @about-class{gtk-layout}
-
       @about-generic{gtk-layout-height}
       @about-generic{gtk-layout-width}
-
       @about-function{gtk-layout-child-x}
       @about-function{gtk-layout-child-y}
-
       @about-function{gtk-layout-new}
       @about-function{gtk-layout-put}
       @about-function{gtk-layout-move}
       @about-function{gtk-layout-set-size}
       @about-function{gtk-layout-get-size}
-      @about-function{gtk-layout-get-hadjustment}
-      @about-function{gtk-layout-get-vadjustment}
-      @about-function{gtk-layout-set-hadjustment}
-      @about-function{gtk-layout-set-vadjustment}
-      @about-function{gtk-layout-get-bin-window}
+      @about-function{gtk-layout-bin-window}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
       A tabbed notebook container.
 
       @about-class{gtk-notebook}
-
       @about-generic{gtk-notebook-enable-popup}
       @about-generic{gtk-notebook-group-name}
       @about-generic{gtk-notebook-page}
@@ -749,7 +732,6 @@
       @about-generic{gtk-notebook-show-border}
       @about-generic{gtk-notebook-show-tabs}
       @about-generic{gtk-notebook-tab-pos}
-
       @about-function{gtk-notebook-child-detachable}
       @about-function{gtk-notebook-child-menu-label}
       @about-function{gtk-notebook-child-position}
@@ -757,8 +739,8 @@
       @about-function{gtk-notebook-child-tab-expand}
       @about-function{gtk-notebook-child-tab-fill}
       @about-function{gtk-notebook-child-tab-label}
-
       @about-function{gtk-notebook-new}
+      @about-function{gtk-notebook-add-page}
       @about-function{gtk-notebook-append-page}
       @about-function{gtk-notebook-append-page-menu}
       @about-function{gtk-notebook-prepend-page}
@@ -771,44 +753,23 @@
       @about-function{gtk-notebook-next-page}
       @about-function{gtk-notebook-prev-page}
       @about-function{gtk-notebook-reorder-child}
-      @about-function{gtk-notebook-set-tab-pos}
-      @about-function{gtk-notebook-set-show-tabs}
-      @about-function{gtk-notebook-set-show-border}
-      @about-function{gtk-notebook-set-scrollable}
       @about-function{gtk-notebook-popup-enable}
       @about-function{gtk-notebook-popup-disable}
-      @about-function{gtk-notebook-get-current-page}
-      @about-function{gtk-notebook-get-menu-label}
-      @about-function{gtk-notebook-get-nth-page}
-      @about-function{gtk-notebook-get-n-pages}
-      @about-function{gtk-notebook-get-tab-label}
-      @about-function{gtk-notebook-set-menu-label}
-      @about-function{gtk-notebook-set-menu-label-text}
-      @about-function{gtk-notebook-set-tab-label}
-      @about-function{gtk-notebook-set-tab-label-text}
-      @about-function{gtk-notebook-set-tab-reorderable}
-      @about-function{gtk-notebook-set-tab-detachable}
-      @about-function{gtk-notebook-get-menu-label-text}
-      @about-function{gtk-notebook-get-scrollable}
-      @about-function{gtk-notebook-get-show-border}
-      @about-function{gtk-notebook-get-show-tabs}
-      @about-function{gtk-notebook-get-tab-label-text}
-      @about-function{gtk-notebook-get-tab-pos}
-      @about-function{gtk-notebook-get-tab-reorderable}
-      @about-function{gtk-notebook-get-tab-detachable}
-      @about-function{gtk-notebook-get-tab-hborder}
-      @about-function{gtk-notebook-get-tab-vborder}
-      @about-function{gtk-notebook-set-current-page}
-      @about-function{gtk-notebook-set-group-name}
-      @about-function{gtk-notebook-get-group-name}
-      @about-function{gtk-notebook-set-action-widget}
-      @about-function{gtk-notebook-get-action-widget}
+      @about-function{gtk-notebook-current-page}
+      @about-function{gtk-notebook-menu-label}
+      @about-function{gtk-notebook-nth-page}
+      @about-function{gtk-notebook-n-pages}
+      @about-function{gtk-notebook-tab-label}
+      @about-function{gtk-notebook-menu-label-text}
+      @about-function{gtk-notebook-tab-label-text}
+      @about-function{gtk-notebook-tab-reorderable}
+      @about-function{gtk-notebook-tab-detachable}
+      @about-function{gtk-notebook-action-widget}
     @end{subsection}
     @begin[GtkExpander]{subsection}
       A container which can hide its child.
 
       @about-class{gtk-expander}
-
       @about-generic{gtk-expander-expanded}
       @about-generic{gtk-expander-label}
       @about-generic{gtk-expander-label-fill}
@@ -817,7 +778,6 @@
       @about-generic{gtk-expander-spacing}
       @about-generic{gtk-expander-use-markup}
       @about-generic{gtk-expander-use-underline}
-
       @about-function{gtk-expander-new}
       @about-function{gtk-expander-new-with-mnemonic}
     @end{subsection}
@@ -825,19 +785,16 @@
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
-
       @about-generic{gtk-orientable-orientation}
     @end{subsection}
     @begin[GtkAspectFrame]{subsection}
       A frame that constrains its child to a particular aspect ratio.
 
       @about-class{gtk-aspect-frame}
-
       @about-generic{gtk-aspect-frame-obey-child}
       @about-generic{gtk-aspect-frame-ratio}
       @about-generic{gtk-aspect-frame-xalign}
       @about-generic{gtk-aspect-frame-yalign}
-
       @about-function{gtk-aspect-frame-new}
       @about-function{gtk-aspect-frame-set}
     @end{subsection}
@@ -845,10 +802,8 @@
       A container which allows you to position widgets at fixed coordinates.
 
       @about-class{gtk-fixed}
-
       @about-function{gtk-fixed-child-x}
       @about-function{gtk-fixed-child-y}
-
       @about-function{gtk-fixed-new}
       @about-function{gtk-fixed-put}
       @about-function{gtk-fixed-move}
@@ -2460,7 +2415,7 @@ setup_tree (void)
       @about-function{gtk-tree-view-get-background-area}
       @about-function{gtk-tree-view-get-visible-rect}
       @about-function{gtk-tree-view-get-visible-range}
-      @about-function{gtk-tree-view-get-bin-window}
+      @about-function{gtk-tree-view-bin-window}
       @about-function{gtk-tree-view-convert-bin-window-to-tree-coords}
       @about-function{gtk-tree-view-convert-bin-window-to-widget-coords}
       @about-function{gtk-tree-view-convert-tree-to-bin-window-coords}
@@ -4172,32 +4127,18 @@ setup_tree (void)
       A representation of an adjustable bounded value.
 
       @about-class{gtk-adjustment}
-
       @about-generic{gtk-adjustment-lower}
       @about-generic{gtk-adjustment-page-increment}
       @about-generic{gtk-adjustment-page-size}
       @about-generic{gtk-adjustment-step-increment}
       @about-generic{gtk-adjustment-upper}
       @about-generic{gtk-adjustment-value}
-
       @about-function{gtk-adjustment-new}
-      @about-function{gtk-adjustment-get-value}
-      @about-function{gtk-adjustment-set-value}
       @about-function{gtk-adjustment-clamp-page}
       @about-function{gtk-adjustment-changed}
       @about-function{gtk-adjustment-value-changed}
       @about-function{gtk-adjustment-configure}
-      @about-function{gtk-adjustment-get-lower}
-      @about-function{gtk-adjustment-get-page-increment}
-      @about-function{gtk-adjustment-get-page-size}
-      @about-function{gtk-adjustment-get-step-increment}
-      @about-function{gtk-adjustment-get-minimum-increment}
-      @about-function{gtk-adjustment-get-upper}
-      @about-function{gtk-adjustment-set-lower}
-      @about-function{gtk-adjustment-set-page-increment}
-      @about-function{gtk-adjustment-set-page-size}
-      @about-function{gtk-adjustment-set-step-increment}
-      @about-function{gtk-adjustment-set-upper}
+      @about-function{gtk-adjustment-minimum-increment}
     @end{subsection}
     @begin[GtkCalendar]{subsection}
       Displays a calendar and allows the user to select a date.
@@ -4303,7 +4244,7 @@ setup_tree (void)
       @about-function{gtk-viewport-get-vadjustment}
       @about-function{gtk-viewport-set-hadjustment}
       @about-function{gtk-viewport-set-vadjustment}
-      @about-function{gtk-viewport-get-bin-window}
+      @about-function{gtk-viewport-bin-window}
       @about-function{gtk-viewport-get-view-window}
     @end{subsection}
     @begin[GtkAccessible]{subsection}
@@ -4382,7 +4323,6 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
-      @about-function{gtk-widget-get-frame-clock}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
       @about-generic{gtk-widget-size-request}
@@ -4490,7 +4430,6 @@ setup_tree (void)
       @about-function{gtk-widget-get-tooltip-window}
       @about-function{gtk-widget-set-tooltip-window}
       @about-function{gtk-widget-trigger-tooltip-query}
-      @about-function{gtk-widget-get-window}
       @about-function{gtk-widget-register-window}
       @about-function{gtk-widget-unregister-window}
       @about-function{gtk-cairo-should-draw-window}
