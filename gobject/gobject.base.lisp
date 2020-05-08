@@ -1098,17 +1098,18 @@
 
 (defun g-object-type (object)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-13}
-  @argument[object]{object to return the type ID for}
+ "@version{2020-5-6}
+  @argument[object]{a @class{g-object} instance to return the type ID for}
   @return{Type ID of @arg{object}}
-  @short{Get the type ID of an object.}
+  @short{Get the type ID for the instance of an object.}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-object-type (make-instance 'gtk-label))
+  (g-object-type (make-instance 'gtk-label))
 => #S(GTYPE :NAME \"GtkLabel\" :%ID 134905144)
     @end{pre}
   @end{dictionary}
-  @see-class{g-object}"
+  @see-class{g-object}
+  @see-function{g-object-type-name}"
   (g-type-from-instance object))
 
 (export 'g-object-type)
@@ -1119,17 +1120,18 @@
 
 (defun g-object-type-name (object)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-13}
-  @argument[object]{object to return the type name for}
-  @return{Type name of @arg{object}.}
-  @short{Get the name of an @arg{object}'s type.}
+ "@version{2020-5-6}
+  @argument[object]{a @class{g-object} instance to return the type name for}
+  @return{A string with type name of @arg{object}.}
+  @short{Get the name of the type for an instance.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-object-type-name (make-instance 'gtk-label))
 => \"GtkLabel\"
     @end{pre}
   @end{dictionary}
-  @see-class{g-object}"
+  @see-class{g-object}
+  @see-function{g-object-type}"
   (g-type-name (g-object-type object)))
 
 (export 'g-object-type-name)
