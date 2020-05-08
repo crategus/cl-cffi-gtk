@@ -31,8 +31,8 @@
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-grid.lisp")
 ;    gtk.revealer.lisp
-;    gtk.list-box.lisp
-;    gtk.flow-box.lisp
+(load "rtest-gtk-list-box.lisp")
+(load "rtest-gtk-flow-box.lisp")
 ;    gtk.stack.lisp
 ;    gtk.stack-switcher.lisp
 ;    gtk.stack-sidebar.lisp
