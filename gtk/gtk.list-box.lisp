@@ -2,11 +2,11 @@
 ;;; gtk.list-box.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,7 +37,6 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     (*GtkListBoxFilterFunc)
 ;;;     (*GtkListBoxSortFunc)
 ;;;     (*GtkListBoxUpdateHeaderFunc)
 ;;;
@@ -51,8 +50,8 @@
 ;;;     gtk_list_box_get_selected_row
 ;;;
 ;;;     (*GtkListBoxForeachFunc)
-;;;
 ;;;     gtk_list_box_selected_foreach
+;;;
 ;;;     gtk_list_box_get_selected_rows
 ;;;     gtk_list_box_set_selection_mode                    Accessor
 ;;;     gtk_list_box_get_selection_mode                    Accessor
@@ -66,7 +65,10 @@
 ;;;     gtk_list_box_invalidate_filter
 ;;;     gtk_list_box_invalidate_headers
 ;;;     gtk_list_box_invalidate_sort
+;;;
+;;;     (*GtkListBoxFilterFunc)
 ;;;     gtk_list_box_set_filter_func
+;;;
 ;;;     gtk_list_box_set_header_func
 ;;;     gtk_list_box_set_sort_func
 ;;;     gtk_list_box_drag_highlight_row
@@ -136,7 +138,101 @@
                 "GtkBuildable"
                 "GtkActionable")
    :type-initializer "gtk_list_box_row_get_type")
-  nil)
+  ((activatable
+    gtk-list-box-row-activatable
+    "activatable" "gboolean" t t)
+   (selectable
+    gtk-list-box-row-selectable
+    "selectable" "gboolean" t t)))
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-list-box-row 'type)
+ "@version{2020-5-6}
+  @begin{short}
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"activate\" signal}
+      @begin{pre}
+  lambda (listboxrow)
+      @end{pre}
+      This is a keybinding signal, which will cause this row to be activated.
+      If you want to be notified when the user activates a row (by key or not),
+      use the \"row-activated\" signal on the row’s parent @class{gtk-list-box}.
+      @begin[code]{table}
+        @entry[listboxrow]{The @sym{gtk-list-box-row} container on which the
+          signal is emitted.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-list-box-row-activatable}
+  @see-slot{gtk-list-box-row-selectable}
+  @see-class{gtk-list-box}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property and Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-list-box-row-activatable -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "activatable"
+                                               'gtk-list-box-row) 't)
+ "The @code{activatable} property of type @code{:boolean} (Read / Write) @br{}
+  The property determines whether the \"row-activated\" signal will be emitted
+  for this row. Since 3.14 @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-list-box-row-activatable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-list-box-row-activatable 'function)
+ "@version{2020-5-6}
+  @syntax[]{(gtk-list-box-row-activatable object) => activatable}
+  @syntax[]{(setf (gtk-list-box-row-activatable object) activatable)}
+  @argument[object]{a @class{gtk-list-box-row} container}
+  @argument[activatable]{@em{true} to mark the row as activatable}
+  @begin{short}
+    Accessor of the @slot[gtk-list-box-row]{activatable} slot of the
+    @class{gtk-list-box-row} class.
+  @end{short}
+
+  The slot access function @sym{gtk-list-box-row-activatable} gets the value of
+  the @code{activatable} property for this row. The slot access function
+  @sym{(setf gtk-list-box-row-activatable)} sets the @code{activatable} property
+  for this row.
+
+  Since 3.14
+  @see-class{gtk-list-box-row}")
+
+;;; --- gtk-list-box-row-selectable --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "selectable"
+                                               'gtk-list-box-row) 't)
+ "The @code{selectable} property of type @code{:boolean} (Read / Write) @br{}
+  The property determines whether this row can be selected. Since 3.14 @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-list-box-row-selectable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-list-box-row-selectable 'function)
+ "@version{2020-5-6}
+  @syntax[]{(gtk-list-box-row-selectable object) => selectable}
+  @syntax[]{(setf (gtk-list-box-row-selectable object) selectable)}
+  @argument[object]{a @class{gtk-list-box-row} container}
+  @argument[selectable]{@em{true} to mark the row as selectable}
+  @begin{short}
+    Accessor of the @slot[gtk-list-box-row]{selectable} slot of the
+    @class{gtk-list-box} class.
+  @end{short}
+
+  The slot access function @sym{gtk-list-box-row-selectable} gets the value of
+  the @code{selectable} property for this row. The slot access function
+  @sym{(setf gtk-list-box-row-selectable)} sets the @code{selectable} property
+  for this row.
+
+  Since 3.14
+  @see-class{gtk-list-box-row}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBox
@@ -153,13 +249,7 @@
     "activate-on-single-click" "gboolean" t t)
    (selection-mode
     gtk-list-box-selection-mode
-    "selection-mode" "GtkSelectionMode" t t)
-   (activatable
-    gtk-list-box-activatable
-    "activatable" "gboolean" t t)
-   (selectable
-    gtk-list-box-selectable
-    "selectable" "gboolean" t t)))
+    "selection-mode" "GtkSelectionMode" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-box 'type)
@@ -205,16 +295,18 @@
  lambda (listbox)
       @end{pre}
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
-  lambda (listbox arg1 arg2)
+  lambda (listbox step count)
       @end{pre}
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-        @entry[arg1]{A @symbol{gtk-movement-step}}
-        @entry[arg2]{A integer}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal is
+          emitted.}
+        @entry[step]{A @symbol{gtk-movement-step} value.}
+        @entry[count]{An integer.}
       @end{table}
     @subheading{The \"row-activated\" signal}
       @begin{pre}
@@ -223,8 +315,9 @@
       The \"row-activated\" signal is emitted when a row has been activated by
       the user.
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-        @entry[row]{The activated row.}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal
+          is emitted.}
+        @entry[row]{The activated row of type @class{gtk-list-box-row}.}
       @end{table}
     @subheading{The \"row-selected\" signal}
       @begin{pre}
@@ -237,7 +330,7 @@
       use the \"selected-rows-changed\" signal instead.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-        @entry[row]{The selected row.}
+        @entry[row]{The selected row of type @class{gtk-list-box-row}.}
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
@@ -245,29 +338,28 @@
       @end{pre}
       The \"select-all\" signal is a keybinding signal which gets emitted to
       select all children of the box, if the selection mode permits it.
-      The default bindings for this signal is Ctrl-a.
+      The default bindings for this signal is Ctrl-a. Since 3.14
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal
+          is emitted.}
       @end{table}
-      Since 3.14
-
     @subheading{The \"selected-rows-changed\" signal}
       @begin{pre}
   lambda (listbox)
       @end{pre}
       The \"selected-rows-changed\" signal is emitted when the set of selected
-      rows changes.
+      rows changes. Since 3.14
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal
+          is emitted.}
       @end{table}
-      Since 3.14
-
     @subheading{The \"toggle-cursor-row\" signal}
       @begin{pre}
   lambda (listbox)
       @end{pre}
       @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
+        @entry[listbox]{The @sym{gtk-list-box} container on which the signal
+          is emitted.}
       @end{table}
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
@@ -275,27 +367,13 @@
       @end{pre}
         The \"unselect-all\" signal is a keybinding signal which gets emitted to
         unselect all children of the box, if the selection mode permits it.
-        The default bindings for this signal is Ctrl-Shift-a.
-      @begin[code]{table}
-        @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}
-      Since 3.14
-
-    @subheading{The \"activate\" signal}
-      @begin{pre}
-  lambda (listbox)
-      @end{pre}
-      This is a keybinding signal, which will cause this row to be activated.
-      If you want to be notified when the user activates a row (by key or not),
-      use the \"row-activated\" signal on the row’s parent @class{gtk-list-box}.
+        The default bindings for this signal is Ctrl-Shift-a. Since 3.14
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-list-box-activate-on-single-click}
   @see-slot{gtk-list-box-selection-mode}
-  @see-slot{gtk-list-box-activatable}
-  @see-slot{gtk-list-box-selectable}
   @see-class{gtk-list-box-row}
   @see-class{gtk-tree-view}
   @see-class{gtk-cell-renderer}")
@@ -319,20 +397,22 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-activate-on-single-click 'function)
- "@version{2019-3-10}
-  @argument[object]{a @class{gtk-list-box} widget}
-  @argument[single]{a boolean}
+ "@version{2020-5-4}
   @syntax[]{(gtk-list-box-acivate-on-click object) => single}
   @syntax[]{(setf (gtk-list-box-activate-on-click object) single)}
+  @argument[object]{a @class{gtk-list-box} container}
+  @argument[single]{a boolean wether to activate the row on a single click}
   @begin{short}
-    Accessor of the slot @slot[gtk-list-box]{activate-on-single-click} of the
+    Accessor of the @slot[gtk-list-box]{activate-on-single-click} slot of the
     @class{gtk-list-box} class.
   @end{short}
 
-  The generic function @sym{gtk-list-box-activate-on-single-click} returns
-  whether rows activate on single clicks.
+  The slot access function @sym{gtk-list-box-activate-on-single-click} returns
+  whether rows activate on single clicks. The slot access function
+  @sym{(setf gtk-list-box-activate-on-single-click)} sets wether rows activate
+  on single clicks.
 
-  If single is @em{true}, rows will be activated when you click on them,
+  If @arg{single} is @em{true}, rows will be activated when you click on them,
   otherwise you need to double-click.
   @see-class{gtk-list-box}")
 
@@ -350,92 +430,455 @@
 (setf (gethash 'gtk-list-box-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-selection-mode 'function)
- "@version{2019-3-10}
-  @argument[object]{a @class{gtk-list-box} widget}
-  @argument[mode]{a @symbol{gtk-selection-mode}}
+ "@version{2020-5-4}
   @syntax[]{(gtk-list-box-selection-mode object) => mode}
   @syntax[]{(setf (gtk-list-box-selection-mode object) mode)}
+  @argument[object]{a @class{gtk-list-box} widget}
+  @argument[mode]{a value of the @symbol{gtk-selection-mode} enumeration}
   @begin{short}
-    Accessor of the slot @slot[gtk-list-box]{selection-mode} of the
+    Accessor of the @slot[gtk-list-box]{selection-mode} slot of the
     @class{gtk-list-box} class.
   @end{short}
 
-  The generic function @sym{gtk-list-box-selection-mode} gets the selection mode
-  of the listbox.
-
-  The generic function @sym{(setf gtk-list-box-selection-mode)} sets how
-  selection works in the listbox. See @symbol{gtk-selection-mode} for details.
+  The slot access function @sym{gtk-list-box-selection-mode} gets the selection
+  mode of the listbox. The slot access function
+  @sym{(setf gtk-list-box-selection-mode)} sets how selection works in the
+  listbox. See the @symbol{gtk-selection-mode} enumeration for details.
   @see-class{gtk-list-box}
   @see-symbol{gtk-selection-mode}")
 
-;;; --- gtk-list-box-activatable -----------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_new ()
+;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "activatable"
-                                               'gtk-list-box) 't)
- "The @code{activatable} property of type @code{:boolean}
-  (Read / Write) @br{}
-  The property determines whether the \"row-activated\" signal will be emitted
-  for this row. @br{}
-  Since 3.14@br{}
-  Default value: @em{true}")
+(declaim (inline gtk-list-box-new))
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-list-box-activatable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-list-box-activatable 'function)
- "@version{2019-3-10}
-  @argument[object]{a @class{gtk-list-box} widget}
-  @argument[activatable]{@em{true} to mark the row as activatable}
-  @syntax[]{(gtk-list-box-activatable object) => activatable}
-  @syntax[]{(setf (gtk-list-box-activatable object) activatable)}
+(defun gtk-list-box-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-4}
+  @return{A new @class{gtk-list-box} container.}
   @begin{short}
-    Accessor of the slot @slot[gtk-list-box]{activatable} of the
-    @class{gtk-list-box} class.
+    Creates a new list box container.
   @end{short}
 
-  The generic function @sym{gtk-list-box-activatable} gets the value of the
-  @code{activatable} property for this row.
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (make-instance 'gtk-list-box))
 
-  The generic function @sym{(setf gtk-list-box-activatable)} set the
-  @code{activatable} property for this row.
+(export 'gtk-list-box-new)
 
-  Since 3.14
-  @see-class{gtk-list-box}")
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_prepend ()
+;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-list-box-selectable ------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "selectable"
-                                               'gtk-list-box) 't)
- "The @code{selectable} property of type @code{:boolean}
-  (Read / Write) @br{}
-  The property determines whether this row can be selected. @br{}
-  Since 3.14 @br{}
-  Default value: @em{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-list-box-selectable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-list-box-selectable 'function)
- "@version{2019-3-10}
-  @argument[object]{a @class{gtk-list-box} widget}
-  @argument[selectable]{@em{true} to mark the row as selectable}
-  @syntax[]{(gtk-list-box-selectable object) => selectable}
-  @syntax[]{(setf (gtk-list-box-selectable object) selectable)}
+(defcfun ("gtk_list_box_prepend" gtk-list-box-prepend) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-4}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[child]{a @class{gtk-widget} child to add}
   @begin{short}
-    Accessor of the slot @slot[gtk-list-box]{selectable} of the
-    @class{gtk-list-box} class.
+    Prepend a child widget to the list.
+  @end{short}
+  If a sort function is set, the child widget will actually be inserted at the
+  calculated position and this function has the same effect as the function
+  @fun{gtk-container-add}.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-function{gtk-list-box-insert}"
+  (listbox (g-object gtk-list-box))
+  (child (g-object gtk-widget)))
+
+(export 'gtk-list-box-prepend)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_insert ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_insert" gtk-list-box-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-4}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[child]{a @class{gtk-widget} child to add}
+  @argument[position]{an integer with the position to insert the child widget
+    in}
+  @begin{short}
+    Insert the child widget into the box at the given position.
+  @end{short}
+  If a sort function is set, the widget will actually be inserted at the
+  calculated position and this function has the same effect as the function
+  @fun{gtk-container-add}.
+
+  If the position is -1, or larger than the total number of items in the list
+  box, then the child widget will be appended to the end.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-function{gtk-list-box-prepend}"
+  (listbox (g-object gtk-list-box))
+  (child (g-object gtk-widget))
+  (position :int))
+
+(export 'gtk-list-box-insert)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_select_row ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_select_row" gtk-list-box-select-row) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-6}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @begin{short}
+    Make @arg{row} the currently selected row.
   @end{short}
 
-  The generic function @sym{gtk-list-box-selectable} gets the value of the
-  @code{selectable} property for this row.
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (row (g-object gtk-list-box-row)))
 
-  The generic function @sym{(setf gtk-list-box-selectable)} set the
-  @code{selectable} property for this row.
+(export 'gtk-list-box-select-row)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_unselect_row ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_unselect_row" gtk-list-box-unselect-row) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-6}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @begin{short}
+    Unselects a single row of the list box, if the selection mode allows it.
+  @end{short}
 
   Since 3.14
-  @see-class{gtk-list-box}")
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-unselect-row)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_select_all ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_select_all" gtk-list-box-select-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @begin{short}
+    Select all children of the list box, if the selection mode allows it.
+  @end{short}
+
+  The @slot[gtk-widget]{visible} property must have the value @em{true} for
+  the rows and the selection mode the value @code{:multiple} of the
+  @symbol{gtk-selection-mode} enumeration.
+
+  So that the rows can be selected the @slot[gtk-widget]{visible} property for
+  the rows must have the value @em{true} and the selection mode of the list box
+  must have the value @code{:multiple} of the @symbol{gtk-selection-mode}
+  enumeration.
+
+  Since 3.14
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-select-all)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_unselect_all ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_unselect_all" gtk-list-box-unselect-all) :void
+ "@version{2020-5-4}
+  @argument[box]{a @class{gtk-list-box} container}
+  @begin{short}
+    Unselect all children of the list box, if the selection mode allows it.
+  @end{short}
+
+  Since 3.14
+  @see-class{gtk-list-box}"
+  (box (g-object gtk-list-box)))
+
+(export 'gtk-list-box-unselect-all)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_get_selected_row () -> gtk-list-box-selected-row
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_get_selected_row" gtk-list-box-selected-row)
+    (g-object gtk-list-box-row)
+ "@version{2020-5-6}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @return{The selected @class{gtk-list-box-row} container.}
+  @begin{short}
+    Gets the selected row.
+  @end{short}
+
+  Note that the list box may allow multiple selection, in which case you should
+  use the function @fun{gtk-list-box-selected-rows} to find all selected
+  rows.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-function{gtk-list-box-selected-rows}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-selected-row)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkListBoxForeachFunc ()
+;;;
+;;; void (*GtkListBoxForeachFunc) (GtkListBox *box,
+;;;                                GtkListBoxRow *row,
+;;;                                gpointer user_data);
+;;;
+;;; A function used by gtk_list_box_selected_foreach(). It will be called on
+;;; every selected child of the box .
+;;;
+;;; box :
+;;;     a GtkListBox
+;;;
+;;; row :
+;;;     a GtkListBoxRow
+;;;
+;;; user_data :
+;;;     user data.
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-list-box-foreach-func-cb :void
+    ((listbox (g-object gtk-list-box))
+     (row (g-object gtk-list-box-row))
+     (data :pointer))
+  (restart-case
+      (funcall (glib:get-stable-pointer-value data) listbox row)
+    (return () :report "Error in GtkListBoxForeachFunc function." nil)))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_selected_foreach ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_selected_foreach" %gtk-list-box-selected-foreach) :void
+  (listbox (g-object gtk-list-box))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-list-box-selected-foreach (listbox func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-6}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[func]{a Lisp function which is passed as a callback}
+  @begin{short}
+    Calls a function for each selected child.
+  @end{short}
+
+  Note that the selection cannot be modified from within this function.
+
+  Since 3.14
+  @see-class{gtk-list-box}"
+  (with-stable-pointer (ptr func)
+    (%gtk-list-box-selected-foreach listbox
+                                    (callback gtk-list-box-foreach-func-cb)
+                                    ptr)))
+
+(export 'gtk-list-box-selected-foreach)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_get_selected_rows ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_get_selected_rows" gtk-list-box-selected-rows)
+    (g-list (g-object gtk-widget))
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @returnt{A list containing the @class{gtk-widget} for each selected row.}
+  @begin{short}
+    Creates a list of all selected rows in the list box.
+  @end{short}
+
+  Since 3.14
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-selected-rows)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_get_adjustment ()
+;;; gtk_list_box_set_adjustment () -> gtk-list-box-adjustment
+;;; ----------------------------------------------------------------------------
+
+(defun (setf gtk-list-box-adjustment) (adjustment listbox)
+  (foreign-funcall "gtk_list_box_set_adjustment"
+                   (g-object gtk-list-box) listbox
+                   (g-object gtk-adjustment) adjustment
+                   :void)
+  adjustment)
+
+(defcfun ("gtk_list_box_get_adjustment" gtk-list-box-adjustment)
+    (g-object gtk-adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @syntax[]{(gtk-list-box-adjustment listbox) => adjustment}
+  @syntax[]{(setf (gtk-list-box-adjustment listbox) adjustment)}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[adjustment]{a @class{gtk-adjustment} object}
+  @begin{short}
+    Accessor of the adjustment the list box uses for vertical scrolling.
+  @end{short}
+
+  The function @sym{gtk-list-box-adjustment} gets the adjustment (if any) that
+  the list box uses to for vertical scrolling. The function
+  @sym{(setf gtk-list-box-adjustment)} sets the adjustment that the list box
+  uses to for vertical scrolling.
+
+  For instance, this is used to get the page size for PageUp/Down key handling.
+
+  In the normal case when the list box is packed inside a
+  @class{gtk-scrolled-window} the adjustment from that will be picked up
+  automatically, so there is no need to manually do that.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-class{gtk-scrolled-window}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-adjustment)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_set_placeholder ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_set_placeholder" gtk-list-box-set-placeholder) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[placeholder]{a @class{gtk-widget} object}
+  @begin{short}
+    Sets the placeholder widget that is shown in the list when it does not
+    display any visible children.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (placeholder (g-object gtk-widget)))
+
+(export 'gtk-list-box-set-placeholder)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_get_row_at_index ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_get_row_at_index" gtk-list-box-row-at-index)
+    (g-object gtk-list-box-row)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[index]{an integer with the index of the row}
+  @return{The @class{gtk-list-box-row} container at @arg{index}.}
+  @begin{short}
+    Gets the n-th child in the list box (not counting headers).
+  @end{short}
+  If @arg{index} is negative or larger than the number of items in the list box,
+  @code{nil} is returned.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (index :int))
+
+(export 'gtk-list-box-row-at-index)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_get_row_at_y ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_get_row_at_y" gtk-list-box-row-at-y)
+    (g-object gtk-list-box-row)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[y]{an integer with the position of the row}
+  @return{The @class{gtk-list-box-row} container at position @arg{y}.}
+  @begin{short}
+    Gets the row at the y position in the list box.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (y :int))
+
+(export 'gtk-list-box-row-at-y)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_invalidate_filter ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_invalidate_filter" gtk-list-box-invalidate-filter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @begin{short}
+    Update the filtering for all rows.
+  @end{short}
+  Call this when the result of the filter function on the list box is changed
+  due to an external factor. For instance, this would be used if the filter
+  function just looked for a specific search string and the entry with the
+  search string has changed.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-invalidate-filter)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_invalidate_headers ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_invalidate_headers" gtk-list-box-invalidate-headers)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @begin{short}
+    Update the separators for all rows.
+  @end{short}
+  Call this when the result of the header function on the box is changed due to
+  an external factor.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-invalidate-headers)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_invalidate_sort ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_invalidate_sort" gtk-list-box-invalidate-sort) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @begin{short}
+    Update the sorting for all rows.
+  @end{short}
+  Call this when the result of the sort function on the list box is changed due
+  to an external factor.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-invalidate-sort)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxFilterFunc ()
@@ -457,6 +900,131 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-list-box-filter-func-cb :boolean
+    ((row (g-object gtk-list-box-row))
+     (data :pointer))
+  (funcall (get-stable-pointer-value data) row))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_set_filter_func ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_set_filter_func" %gtk-list-box-set-filter-func) :void
+  (listbox (g-object gtk-list-box))
+  (filter-func :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-list-box-set-filter-func (listbox filter-func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[filter-func]{callback that lets you filter which rows to show}
+  @begin{short}
+    By setting a filter function on the list box one can decide dynamically
+    which of the rows to show.
+  @end{short}
+  For instance, to implement a search function on a list that filters the
+  original list to only show the matching rows.
+
+  The @arg{filter-func} will be called for each row after the call, and it will
+  continue to be called each time a row changes (via
+  @fun{gtk-list-box-row-changed}) or when the function
+  @sym{gtk-list-box-invalidate-filter} is called.
+
+  Note that using a filter function is incompatible with using a model,
+  see the function @fun{gtk-list-box-bind-model}.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (%gtk-list-box-set-filter-func listbox
+                                 (callback gtk-list-box-filter-func-cb)
+                                 (allocate-stable-pointer filter-func)
+                                 (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-list-box-set-filter-func)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkListBoxUpdateHeaderFunc ()
+;;;
+;;; void (*GtkListBoxUpdateHeaderFunc) (GtkListBoxRow *row,
+;;;                                     GtkListBoxRow *before,
+;;;                                     gpointer user_data);
+;;;
+;;; Whenever row changes or which row is before row changes this is called,
+;;; which lets you update the header on row . You may remove or set a new one
+;;; via gtk_list_box_row_set_header() or just change the state of the current
+;;; header widget.
+;;;
+;;; row :
+;;;     the row to update
+;;;
+;;; before :
+;;;     the row before row , or NULL if it is first.
+;;;
+;;; user_data :
+;;;     user data.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-list-box-upate-header-func-cb :void
+    ((row (g-object gtk-list-box-row))
+     (before (g-object gtk-list-box-row))
+     (data :pointer))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr row before)))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_list_box_set_header_func ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_set_header_func" %gtk-list-box-set-header-func) :void
+  (listbox (g-object gtk-list-box))
+  (update-header :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-list-box-set-header-func (listbox update-header)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[update-header]{callback that lets you add row headers}
+  @begin{short}
+    By setting a header function on the list box one can dynamically add headers
+    in front of rows, depending on the contents of the row and its position in
+    the list.
+  @end{short}
+  For instance, one could use it to add headers in front of the first item of a
+  new kind, in a list sorted by the kind.
+
+  The @arg{update-header} callback can look at the current header widget using
+  the function @fun{gtk-list-box-row-header} and either update the state of the
+  widget as needed, or set a new one using the function
+  @sym{(setf gtk-list-box-row-header)}. If no header is needed, set the header
+  to @code{nil}.
+
+  Note that you may get many calls update_header to this for a particular row
+  when e. g. changing things that do not affect the header. In this case it is
+  important for performance to not blindly replace an existing header with an
+  identical one.
+
+  The @arg{update-header} function will be called for each row after the call,
+  and it will continue to be called each time a row changes (via
+  @fun{gtk-list-box-row-changed}) and when the row before changes (either by
+  @fun{gtk-list-box-row-changed} on the previous row, or when the previous row
+  becomes a different row). It is also called for all rows when the function
+  @fun{gtk-list-box-invalidate-headers} is called.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (%gtk-list-box-set-header-func listbox
+                                 (callback gtk-list-box-header-func-cb)
+                                 (allocate-stable-pointer update-header)
+                                 (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-list-box-set-header-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxSortFunc ()
@@ -483,578 +1051,96 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; GtkListBoxUpdateHeaderFunc ()
-;;;
-;;; void (*GtkListBoxUpdateHeaderFunc) (GtkListBoxRow *row,
-;;;                                     GtkListBoxRow *before,
-;;;                                     gpointer user_data);
-;;;
-;;; Whenever row changes or which row is before row changes this is called,
-;;; which lets you update the header on row . You may remove or set a new one
-;;; via gtk_list_box_row_set_header() or just change the state of the current
-;;; header widget.
-;;;
-;;; row :
-;;;     the row to update
-;;;
-;;; before :
-;;;     the row before row , or NULL if it is first.
-;;;
-;;; user_data :
-;;;     user data.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_new ()
-;;;
-;;; GtkWidget * gtk_list_box_new (void);
-;;;
-;;; Creates a new GtkListBox container.
-;;;
-;;; Returns :
-;;;     a new GtkListBox
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-list-box-new))
-
-(defun gtk-list-box-new ()
-  (make-instance 'gtk-list-box))
-
-(export 'gtk-list-box-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_prepend ()
-;;;
-;;; void gtk_list_box_prepend (GtkListBox *box, GtkWidget *child);
-;;;
-;;; Prepend a widget to the list. If a sort function is set, the widget will
-;;; actually be inserted at the calculated position and this function has the
-;;; same effect of gtk_container_add().
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; child
-;;;     the GtkWidget to add
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_prepend" gtk-list-box-prepend) :void
-  (box (g-object gtk-list-box))
-  (child (g-object gtk-widget)))
-
-(export 'gtk-list-box-prepend)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_insert ()
-;;;
-;;; void gtk_list_box_insert (GtkListBox *box,
-;;;                           GtkWidget *child,
-;;;                           gint position);
-;;;
-;;; Insert the child into the box at position . If a sort function is set, the
-;;; widget will actually be inserted at the calculated position and this
-;;; function has the same effect of gtk_container_add().
-;;;
-;;; If position is -1, or larger than the total number of items in the box ,
-;;; then the child will be appended to the end.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; child :
-;;;     the GtkWidget to add
-;;;
-;;; position :
-;;;     the position to insert child in
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_insert" gtk-list-box-insert) :void
-  (box (g-object gtk-list-box))
-  (child (g-object gtk-widget))
-  (position :int))
-
-(export 'gtk-list-box-insert)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_select_row ()
-;;;
-;;; void gtk_list_box_select_row (GtkListBox *box, GtkListBoxRow *row);
-;;;
-;;; Make row the currently selected row.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; row :
-;;;     The row to select or NULL.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_select_row" gtk-list-box-select-row) :void
-  (box (g-object gtk-list-box))
-  (row (g-object gtk-list-box-row)))
-
-(export 'gtk-list-box-select-row)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_unselect_row ()
-;;;
-;;; void gtk_list_box_unselect_row (GtkListBox *box,
-;;;                                 GtkListBoxRow *row);
-;;;
-;;; Unselects a single row of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; row :
-;;;     the row to unselected
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_unselect_row" gtk-list-box-unselect-row) :void
-  (box (g-object gtk-list-box))
-  (row (g-object gtk-list-box-row)))
-
-(export 'gtk-list-box-unselect-row)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_select_all ()
-;;;
-;;; void gtk_list_box_select_all (GtkListBox *box);
-;;;
-;;; Select all children of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_select_all" gtk-list-box-select-all) :void
-  (box (g-object gtk-list-box)))
-
-(export 'gtk-list-box-select-all)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_unselect_all ()
-;;;
-;;; void gtk_list_box_unselect_all (GtkListBox *box);
-;;;
-;;; Unselect all children of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_unselect_all" gtk-list-box-unselect-all) :void
-  (box (g-object gtk-list-box)))
-
-(export 'gtk-list-box-unselect-all)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_get_selected_row ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_get_selected_row" gtk-list-box-get-selected-row)
-    (g-object gtk-list-box-row)
- "@version{2020-1-24}
-  @argument[box]{a @class{gtk-list-box} widget}
-  @return{The selected @class{gtk-list-box-row} widget.}
-  @begin{short}
-    Gets the selected row.
-  @end{short}
-
-  Note that the list box may allow multiple selection, in which case you should
-  use the function @fun{gtk-list-box-selected-foreach} to find all selected
-  rows.
-
-  Since 3.10
-  @see-class{gtk-list-box}"
-  (box (g-object gtk-list-box)))
-
-(export 'gtk-list-box-get-selected-row)
-
-;;; ----------------------------------------------------------------------------
-;;; GtkListBoxForeachFunc ()
-;;;
-;;; void (*GtkListBoxForeachFunc) (GtkListBox *box,
-;;;                                GtkListBoxRow *row,
-;;;                                gpointer user_data);
-;;;
-;;; A function used by gtk_list_box_selected_foreach(). It will be called on
-;;; every selected child of the box .
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; user_data :
-;;;     user data.
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_selected_foreach ()
-;;;
-;;; void gtk_list_box_selected_foreach (GtkListBox *box,
-;;;                                     GtkListBoxForeachFunc func,
-;;;                                     gpointer data);
-;;;
-;;; Calls a function for each selected child.
-;;;
-;;; Note that the selection cannot be modified from within this function.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; func :
-;;;     the function to call for each selected child.
-;;;
-;;; data :
-;;;     user data to pass to the function
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_get_selected_rows ()
-;;;
-;;; GList * gtk_list_box_get_selected_rows (GtkListBox *box);
-;;;
-;;; Creates a list of all selected children.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Returns :
-;;;     A GList containing the GtkWidget for each selected child. Free with
-;;;     g_list_free() when done.
-;;;
-;;; Since: 3.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_get_adjustment ()
-;;;
-;;; GtkAdjustment * gtk_list_box_get_adjustment (GtkListBox *box);
-;;;
-;;; Gets the adjustment (if any) that the widget uses to for vertical scrolling.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Returns :
-;;;     the adjustment.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_get_adjustment" gtk-list-box-get-adjustment)
-    (g-object gtk-adjustment)
-  (box (g-object gtk-list-box)))
-
-(export 'gtk-list-box-get-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_set_adjustment ()
-;;;
-;;; void gtk_list_box_set_adjustment (GtkListBox *box,
-;;;                                   GtkAdjustment *adjustment);
-;;;
-;;; Sets the adjustment (if any) that the widget uses to for vertical scrolling.
-;;; For instance, this is used to get the page size for PageUp/Down key
-;;; handling.
-;;;
-;;; In the normal case when the box is packed inside a GtkScrolledWindow the
-;;; adjustment from that will be picked up automatically, so there is no need to
-;;; manually do that.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; adjustment
-;;;     the adjustment, or NULL.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_set_adjustment" gtk-list-box-set-adjustment) :void
-  (box (g-object gtk-list-box))
-  (adjustment (g-object gtk-adjustment)))
-
-(export 'gtk-list-box-set-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_set_placeholder ()
-;;;
-;;; void gtk_list_box_set_placeholder (GtkListBox *box,
-;;;                                    GtkWidget *placeholder);
-;;;
-;;; Sets the placeholder widget that is shown in the list when it doesn't
-;;; display any visible children.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; placeholder :
-;;;     a GtkWidget or NULL.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_set_placeholder" gtk-list-box-set-placeholder) :void
-  (box (g-object gtk-list-box))
-  (placeholder (g-object gtk-widget)))
-
-(export 'gtk-list-box-set-placeholder)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_get_row_at_index ()
-;;;
-;;; GtkListBoxRow * gtk_list_box_get_row_at_index (GtkListBox *box, gint index_)
-;;;
-;;; Gets the n-th child in the list (not counting headers). If _index is
-;;; negative or larger than the number of items in the list, NULL is returned.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; index_ :
-;;;     the index of the row
-;;;
-;;; Returns :
-;;;     the child GtkWidget or NULL.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_get_row_at_y ()
-;;;
-;;; GtkListBoxRow * gtk_list_box_get_row_at_y (GtkListBox *box, gint y);
-;;;
-;;; Gets the row at the y position.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; y :
-;;;     position
-;;;
-;;; Returns :
-;;;     the row or NULL in case no row exists for the given y coordinate.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_invalidate_filter ()
-;;;
-;;; void gtk_list_box_invalidate_filter (GtkListBox *box);
-;;;
-;;; Update the filtering for all rows. Call this when result of the filter
-;;; function on the box is changed due to an external factor. For instance, this
-;;; would be used if the filter function just looked for a specific search
-;;; string and the entry with the search string has changed.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_invalidate_headers ()
-;;;
-;;; void gtk_list_box_invalidate_headers (GtkListBox *box);
-;;;
-;;; Update the separators for all rows. Call this when result of the header
-;;; function on the box is changed due to an external factor.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_invalidate_sort ()
-;;;
-;;; void gtk_list_box_invalidate_sort (GtkListBox *box);
-;;;
-;;; Update the sorting for all rows. Call this when result of the sort function
-;;; on the box is changed due to an external factor.
-;;;
-;;; box:
-;;;     a GtkListBox
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_set_filter_func ()
-;;;
-;;; void gtk_list_box_set_filter_func (GtkListBox *box,
-;;;                                    GtkListBoxFilterFunc filter_func,
-;;;                                    gpointer user_data,
-;;;                                    GDestroyNotify destroy);
-;;;
-;;; By setting a filter function on the box one can decide dynamically which of
-;;; the rows to show. For instance, to implement a search function on a list
-;;; that filters the original list to only show the matching rows.
-;;;
-;;; The filter_func will be called for each row after the call, and it will
-;;; continue to be called each time a row changes
-;;; (via gtk_list_box_row_changed()) or when gtk_list_box_invalidate_filter()
-;;; is called.
-;;;
-;;; Note that using a filter function is incompatible with using a model
-;;; (see gtk_list_box_bind_model()).
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; filter_func :
-;;;     callback that lets you filter which rows to show.
-;;;
-;;; user_data :
-;;;     user data passed to filter_func
-;;;
-;;; destroy :
-;;;     destroy notifier for user_data
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_set_header_func ()
-;;;
-;;; void gtk_list_box_set_header_func (GtkListBox *box,
-;;;                                    GtkListBoxUpdateHeaderFunc update_header,
-;;;                                    gpointer user_data,
-;;;                                    GDestroyNotify destroy);
-;;;
-;;; By setting a header function on the box one can dynamically add headers in
-;;; front of rows, depending on the contents of the row and its position in the
-;;; list. For instance, one could use it to add headers in front of the first
-;;; item of a new kind, in a list sorted by the kind.
-;;;
-;;; The update_header can look at the current header widget using
-;;; gtk_list_box_row_get_header() and either update the state of the widget as
-;;; needed, or set a new one using gtk_list_box_row_set_header(). If no header
-;;; is needed, set the header to NULL.
-;;;
-;;; Note that you may get many calls update_header to this for a particular row
-;;; when e.g. changing things that don’t affect the header. In this case it is
-;;; important for performance to not blindly replace an existing header with an
-;;; identical one.
-;;;
-;;; The update_header function will be called for each row after the call, and
-;;; it will continue to be called each time a row changes (via
-;;; gtk_list_box_row_changed()) and when the row before changes (either by
-;;; gtk_list_box_row_changed() on the previous row, or when the previous row
-;;; becomes a different row). It is also called for all rows when
-;;; gtk_list_box_invalidate_headers() is called.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; update_header :
-;;;     callback that lets you add row headers.
-;;;
-;;; user_data :
-;;;     user data passed to update_header
-;;;
-;;; destroy :
-;;;     destroy notifier for user_data
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
+(defcallback gtk-list-box-sort-func-cb :int
+    ((row1 (g-object gtk-list-box-row))
+     (row2 (g-object gtk-list-box-row))
+     (data :pointer))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr row1 row2)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_sort_func ()
-;;;
-;;; void gtk_list_box_set_sort_func (GtkListBox *box,
-;;;                                  GtkListBoxSortFunc sort_func,
-;;;                                  gpointer user_data,
-;;;                                  GDestroyNotify destroy);
-;;;
-;;; By setting a sort function on the box one can dynamically reorder the rows
-;;; of the list, based on the contents of the rows.
-;;;
-;;; The sort_func will be called for each row after the call, and will continue
-;;; to be called each time a row changes (via gtk_list_box_row_changed()) and
-;;; when gtk_list_box_invalidate_sort() is called.
-;;;
-;;; Note that using a sort function is incompatible with using a model (see
-;;; gtk_list_box_bind_model()).
-;;;
-;;; box:
-;;;     a GtkListBox
-;;;
-;;; sort_func :
-;;;     the sort function.
-;;;
-;;; user_data :
-;;;     user data passed to sort_func
-;;;
-;;; destroy :
-;;;     destroy notifier for user_data
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_set_sort_func" %gtk-list-box-set-sort-func) :void
+  (listbox (g-object gtk-list-box))
+  (sort-func :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-list-box-set-sort-func (listbox sort-func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[sort-func]{callback for the sort function}
+
+  @begin{short}
+    By setting a sort function on the list box one can dynamically reorder the
+    rows of the list, based on the contents of the rows.
+  @end{short}
+
+  The @arg{sort-func} callback will be called for each row after the call, and
+  will continue to be called each time a row changes (via
+  @fun{gtk-list-box-row-changed}) and when the function
+  @fun{gtk-list-box-invalidate-sort} is called.
+
+  Note that using a sort function is incompatible with using a model. See the
+  function @fun{gtk-list-box-bind-model}.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (%gtk-list-box-set-sort-func listbox
+                               (callback gtk-list-box-sort-func-cb)
+                               (allocate-stable-pointer sort-func)
+                               (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-list-box-set-sort-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_drag_highlight_row ()
-;;;
-;;; void gtk_list_box_drag_highlight_row (GtkListBox *box,
-;;;                                       GtkListBoxRow *row);
-;;;
-;;; This is a helper function for implementing DnD onto a GtkListBox. The passed
-;;; in row will be highlighted via gtk_drag_highlight(), and any previously
-;;; highlighted row will be unhighlighted.
-;;;
-;;; The row will also be unhighlighted when the widget gets a drag leave event.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_drag_highlight_row" gtk-list-box-drag-highlight-row)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @begin{short}
+    This is a helper function for implementing DnD onto a list box.
+  @end{short}
+  The passed in row will be highlighted via the function
+  @fun{gtk-drag-highlight}, and any previously highlighted row will be
+  unhighlighted.
+
+  The row will also be unhighlighted when the widget gets a drag leave event.
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box))
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-drag-highlight-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_drag_unhighlight_row ()
-;;;
-;;; void gtk_list_box_drag_unhighlight_row (GtkListBox *box);
-;;;
-;;; If a row has previously been highlighted via
-;;; gtk_list_box_drag_highlight_row() it will have the highlight removed.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_drag_unhighlight_row" gtk-list-box-drag-unhighlight-row)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[listbox]{a @class{gtk-list-box} container}
+  @begin{short}
+    If a row has previously been highlighted via the function
+    @fun{gtk-list-box-drag-highlight-row} it will have the highlight removed.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-list-box}"
+  (listbox (g-object gtk-list-box)))
+
+(export 'gtk-list-box-drag-unhighlight-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxCreateWidgetFunc ()
@@ -1125,129 +1211,139 @@
 ;;; Since: 3.16
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: GListModel ist not implemented
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_new ()
-;;;
-;;; GtkWidget * gtk_list_box_row_new (void);
-;;;
-;;; Creates a new GtkListBoxRow, to be used as a child of a GtkListBox.
-;;;
-;;; Returns :
-;;;     a new GtkListBoxRow
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-list-box-row-new))
+
+(defun gtk-list-box-row-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @return{A new @class{gtk-list-box-row} container.}
+  @begin{short}
+    Creates a new list box row, to be used as a child of a list box.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}"
+  (make-instance 'gtk-list-box-row))
+
+(export 'gtk-list-box-row-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_changed ()
-;;;
-;;; void gtk_list_box_row_changed (GtkListBoxRow *row);
-;;;
-;;; Marks row as changed, causing any state that depends on this to be updated.
-;;; This affects sorting, filtering and headers.
-;;;
-;;; Note that calls to this method must be in sync with the data used for the
-;;; row functions. For instance, if the list is mirroring some external data
-;;; set, and *two* rows changed in the external data set then when you call
-;;; gtk_list_box_row_changed() on the first row the sort function must only read
-;;; the new data for the first of the two changed rows, otherwise the resorting
-;;; of the rows will be wrong.
-;;;
-;;; This generally means that if you don’t fully control the data model you have
-;;; to duplicate the data that affects the listbox row functions into the row
-;;; widgets themselves. Another alternative is to call
-;;; gtk_list_box_invalidate_sort() on any model change, but that is more
-;;; expensive.
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_row_changed" gtk-list-box-row-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @begin{short}
+    Marks row as changed, causing any state that depends on this to be updated.
+  @end{short}
+  This affects sorting, filtering and headers.
+
+  Note that calls to this method must be in sync with the data used for the row
+  functions. For instance, if the list is mirroring some external data set, and
+  *two* rows changed in the external data set then when you call
+  @sym{gtk-list-box-row-changed} on the first row the sort function must only
+  read the new data for the first of the two changed rows, otherwise the
+  resorting of the rows will be wrong.
+
+  This generally means that if you do not fully control the data model you have
+  to duplicate the data that affects the listbox row functions into the row
+  widgets themselves. Another alternative is to call
+  @fun{gtk-list-box-invalidate-sort} on any model change, but that is more
+  expensive.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}"
+  (row (g-object gtk-list-box-row)))
+
+(export 'gtk-list-box-row-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_is_selected ()
-;;;
-;;; gboolean gtk_list_box_row_is_selected (GtkListBoxRow *row);
-;;;
-;;; Returns whether the child is currently selected in its GtkListBox container.
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; Returns :
-;;;     TRUE if row is selected
-;;;
-;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_list_box_is_selected" gtk-list-box-is-selected) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @begin{short}
+    Returns a boolean whether the child is currently selected in its list box
+    container.
+  @end{short}
+
+  Since 3.14
+  @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}"
+  (row (g-object gtk-list-box-row)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_get_header ()
-;;;
-;;; GtkWidget * gtk_list_box_row_get_header (GtkListBoxRow *row);
-;;;
-;;; Returns the current header of the row . This can be used in a
-;;; GtkListBoxUpdateHeaderFunc to see if there is a header set already, and if
-;;; so to update the state of it.
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; Returns :
-;;;     the current header, or NULL if none.
-;;;
-;;; Since: 3.10
+;;; gtk_list_box_row_set_header () -> gtk-list-box-row-header
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_list_box_row_get_header" gtk-list-box-row-get-header)
+(defun (setf gtk-list-box-row-header) (header row)
+  (foreign-funcall "gtk_list_box_row_set_header"
+                   (g-object gtk-list-box-row) row
+                   (g-object gtk-widget) header
+                   :void)
+  header)
+
+(defcfun ("gtk_list_box_row_get_header" gtk-list-box-row-header)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @syntax[]{(gtk-list-box-row-header row) => header}
+  @syntax[]{(setf (gtk-list-box-row-header row) header)}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @argument[header]{a @class{gtk-widget} object}
+  @begin{short}
+    Accessor of the header widget of a list box row.
+  @end{short}
+
+  The function @sym{gtk-list-box-row-header} returns the current header of the
+  list box row. This can be used in a @code{GtkListBoxUpdateHeaderFunc} to see
+  if there is a header set already, and if so to update the state of it.
+
+  The function @sym{(setf gtk-list-box-row-header)} sets the current header of
+  the list box row. This is only allowed to be called from a
+  @code{GtkListBoxUpdateHeaderFunc}. It will replace any existing header in the
+  row, and be shown in front of the row in the list box.
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
 
-(export 'gtk-list-box-row-get-header)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_list_box_row_set_header ()
-;;;
-;;; void gtk_list_box_row_set_header (GtkListBoxRow *row, GtkWidget *header);
-;;;
-;;; Sets the current header of the row . This is only allowed to be called from
-;;; a GtkListBoxUpdateHeaderFunc. It will replace any existing header in the
-;;; row, and be shown in front of the row in the listbox.
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; header :
-;;;     the header, or NULL.
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_list_box_row_set_header" gtk-list-box-row-set-header) :void
-  (row (g-object gtk-list-box-row))
-  (header (g-object gtk-widget)))
-
-(export 'gtk-list-box-row-set-header)
+(export 'gtk-list-box-row-header)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_get_index ()
-;;;
-;;; gint gtk_list_box_row_get_index (GtkListBoxRow *row);
-;;;
-;;; Gets the current index of the row in its GtkListBox container.
-;;;
-;;; row :
-;;;     a GtkListBoxRow
-;;;
-;;; Returns :
-;;;     the index of the row , or -1 if the row is not in a listbox
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_list_box_row_get_index" gtk-list-box-row-get-index) :int
+(defcfun ("gtk_list_box_row_get_index" gtk-list-box-row-index) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-7}
+  @argument[row]{a @class{gtk-list-box-row} container}
+  @return{an integer with the index of the row in the list box, or -1 if the
+    row is not in the list box}
+  @begin{short}
+    Gets the current index of the row in its list box container.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
 
-(export 'gtk-list-box-row-get-index)
+(export 'gtk-list-box-row-index)
 
 ;;; --- End of file gtk.list-box.lisp ------------------------------------------
