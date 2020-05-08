@@ -505,8 +505,6 @@
       @about-class{gtk-list-box}
       @about-generic{gtk-list-box-activate-on-single-click}
       @about-generic{gtk-list-box-selection-mode}
-      @about-generic{gtk-list-box-activatable}
-      @about-generic{gtk-list-box-selectable}
       @about-function{gtk-list-box-new}
       @about-function{gtk-list-box-prepend}
       @about-function{gtk-list-box-insert}
@@ -514,14 +512,13 @@
       @about-function{gtk-list-box-unselect-row}
       @about-function{gtk-list-box-select-all}
       @about-function{gtk-list-box-unselect-all}
-      @about-function{gtk-list-box-get-selected-row}
+      @about-function{gtk-list-box-selected-row}
       @about-function{gtk-list-box-selected-foreach}
-      @about-function{gtk-list-box-get-selected-rows}
-      @about-function{gtk-list-box-get-adjustment}
-      @about-function{gtk-list-box-set-adjustment}
+      @about-function{gtk-list-box-selected-rows}
+      @about-function{gtk-list-box-adjustment}
       @about-function{gtk-list-box-set-placeholder}
-      @about-function{gtk-list-box-get-row-at-index}
-      @about-function{gtk-list-box-get-row-at-y}
+      @about-function{gtk-list-box-row-at-index}
+      @about-function{gtk-list-box-row-at-y}
       @about-function{gtk-list-box-invalidate-filter}
       @about-function{gtk-list-box-invalidate-headers}
       @about-function{gtk-list-box-invalidate-sort}
@@ -533,12 +530,13 @@
       @about-function{gtk-list-box-bind-model}
 
       @about-class{gtk-list-box-row}
+      @about-generic{gtk-list-box-row-activatable}
+      @about-generic{gtk-list-box-row-selectable}
       @about-function{gtk-list-box-row-new}
       @about-function{gtk-list-box-row-changed}
       @about-function{gtk-list-box-row-is-selected}
-      @about-function{gtk-list-box-row-get-header}
-      @about-function{gtk-list-box-row-set-header}
-      @about-function{gtk-list-box-row-get-index}
+      @about-function{gtk-list-box-row-header}
+      @about-function{gtk-list-box-row-index}
     @end{subsection}
     @begin[GtkFlowBox]{subsection}
       A container that allows reflowing its children.
@@ -4500,27 +4498,20 @@ setup_tree (void)
       Base class for widgets which contain other widgets.
 
       @about-class{gtk-container}
-
       @about-generic{gtk-container-border-width}
       @about-generic{gtk-container-child}
       @about-generic{gtk-container-resize-mode}
-
       @about-function{gtk-container-add}
       @about-function{gtk-container-remove}
       @about-function{gtk-container-add-with-properties}
-      @about-function{gtk-container-get-resize-mode}
-      @about-function{gtk-container-set-resize-mode}
       @about-function{gtk-container-check-resize}
       @about-function{gtk-container-foreach}
       @about-function{gtk-container-children}
-      @about-function{gtk-container-get-path-for-child}
-      @about-function{gtk-container-set-reallocate-redraws}
-      @about-function{gtk-container-get-focus-child}
-      @about-function{gtk-container-set-focus-child}
-      @about-function{gtk-container-get-focus-vadjustment}
-      @about-function{gtk-container-set-focus-vadjustment}
-      @about-function{gtk-container-get-focus-hadjustment}
-      @about-function{gtk-container-set-focus-hadjustment}
+      @about-function{gtk-container-path-for-child}
+      @about-function{gtk-container-reallocate-redraws}
+      @about-function{gtk-container-focus-child}
+      @about-function{gtk-container-focus-vadjustment}
+      @about-function{gtk-container-focus-hadjustment}
       @about-function{gtk-container-resize-children}
       @about-function{gtk-container-child-type}
       @about-function{gtk-container-child-get}
@@ -4530,13 +4521,14 @@ setup_tree (void)
       @about-function{gtk-container-child-get-valist}
       @about-function{gtk-container-child-set-valist}
       @about-function{gtk-container-child-notify}
+      @about-function{gtk-container-child-notify-by-pspec}
       @about-function{gtk-container-forall}
       @about-function{gtk-container-propagate-draw}
-      @about-function{gtk-container-get-focus-chain}
-      @about-function{gtk-container-set-focus-chain}
+      @about-function{gtk-container-focus-chain}
       @about-function{gtk-container-unset-focus-chain}
       @about-function{gtk-container-class-find-child-property}
       @about-function{gtk-container-class-install-child-property}
+      @about-function{gtk-container-class-install-child-properties}
       @about-function{gtk-container-class-list-child-properties}
       @about-function{gtk-container-class-handle-border-width}
     @end{subsection}

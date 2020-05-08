@@ -2,13 +2,13 @@
 ;;; gtk.drag-and-drop.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -522,10 +522,10 @@
 
 (defcfun ("gtk_drag_highlight" gtk-drag-highlight) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
-  @argument[widget]{a widget to highlight}
+ "@version{2020-5-7}
+  @argument[widget]{a @class{gtk-widget} object to highlight}
   @begin{short}
-    Draws a highlight around a @arg{widget}.
+    Draws a highlight around a widget.
   @end{short}
   This will attach handlers to \"draw\", so the highlight will continue to be
   displayed until the function @fun{gtk-drag-unhighlight} is called.
@@ -540,10 +540,12 @@
 
 (defcfun ("gtk_drag_unhighlight" gtk-drag-unhighlight) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
-  @argument[widget]{a widget to remove the highlight from}
-  Removes a highlight set by the function @fun{gtk-drag-highlight} from a
-  widget.
+ "@version{2020-5-7}
+  @argument[widget]{a @class{gtk-widget} object to remove the highlight from}
+  @begin{short}
+    Removes a highlight set by the function @fun{gtk-drag-highlight} from a
+    widget.
+  @end{short}
   @see-function{gtk-drag-highlight}"
   (widget (g-object gtk-widget)))
 

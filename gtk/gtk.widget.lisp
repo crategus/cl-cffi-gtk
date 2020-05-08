@@ -3525,21 +3525,6 @@
   @see-function{gtk-widget-has-window}")
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkCallback ()
-;;;
-;;; void (*GtkCallback) (GtkWidget *widget, gpointer data);
-;;;
-;;; The type of the callback functions used for e.g. iterating over the children
-;;; of a container, see gtk_container_foreach().
-;;;
-;;; widget :
-;;;     the widget to operate on
-;;;
-;;; data :
-;;;     user-supplied data
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GtkWidgetAuxInfo
 ;;;
 ;;; struct GtkWidgetAuxInfo {

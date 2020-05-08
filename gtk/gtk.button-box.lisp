@@ -365,7 +365,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-button-box-layout) (layout-style button-box)
-  (setf (gtk-button-box-layout-style box) layout-style))
+  (setf (gtk-button-box-layout-style button-box) layout-style))
 
 (defun gtk-button-box-layout (button-box)
  #+cl-cffi-gtk-documentation
@@ -389,7 +389,7 @@
     access function @sym{gtk-button-box-layout-style}.
   @end{dictionary}
   @see-class{gtk-button-box}"
-  (gtk-button-box-layout-style box))
+  (gtk-button-box-layout-style button-box))
 
 (export 'gtk-button-box-layout)
 

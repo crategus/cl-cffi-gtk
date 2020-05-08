@@ -726,7 +726,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-selection-mode atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2020-5-7}
   @short{Used to control what selections users are allowed to make.}
   @begin{pre}
 (define-g-enum \"GtkSelectionMode\" gtk-selection-mode
@@ -749,7 +749,8 @@
       be used to enlarge the selection, and the Shift key to select between the
       focus and the child pointed to. Some widgets may also allow Click-drag to
       select a range of elements.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-list-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkShadowType

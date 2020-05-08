@@ -3285,6 +3285,8 @@
 ;;; gtk_window_set_icon_list ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Check the implementation. It is not correct.
+
 (defcfun ("gtk_window_set_icon_list" gtk-window-set-icon-list) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}

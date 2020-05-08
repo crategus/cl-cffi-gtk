@@ -34,7 +34,7 @@ GTK+ Widgets and Objects
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.24
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24
     gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24
- +  gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
+    gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
  +  gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &
  +  gtk.stack.lisp                   - GtkStack                    - GTK+ 3.24
  +  gtk.stack-switcher.lisp          - GtkStackSwitcher            - GTK+ 3.24
@@ -217,7 +217,7 @@ GTK+ Widgets and Objects
   Abstract Base Classes
 
  +  gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
- +  gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
  +  gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
  +  gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24 &
  +  gtk.range.lisp                   - GtkRange                    - GTK+ 3.24
