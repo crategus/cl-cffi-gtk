@@ -2,11 +2,11 @@
 ;;; gtk.flow-box.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,18 +43,18 @@
 ;;;     gtk_flow_box_get_child_at_pos
 ;;;     gtk_flow_box_set_hadjustment
 ;;;     gtk_flow_box_set_vadjustment
-;;;     gtk_flow_box_set_homogeneous
-;;;     gtk_flow_box_get_homogeneous
-;;;     gtk_flow_box_set_row_spacing
-;;;     gtk_flow_box_get_row_spacing
-;;;     gtk_flow_box_set_column_spacing
-;;;     gtk_flow_box_get_column_spacing
-;;;     gtk_flow_box_set_min_children_per_line
-;;;     gtk_flow_box_get_min_children_per_line
-;;;     gtk_flow_box_set_max_children_per_line
-;;;     gtk_flow_box_get_max_children_per_line
-;;;     gtk_flow_box_set_activate_on_single_click
-;;;     gtk_flow_box_get_activate_on_single_click
+;;;     gtk_flow_box_set_homogeneous                       Accessor
+;;;     gtk_flow_box_get_homogeneous                       Accessor
+;;;     gtk_flow_box_set_row_spacing                       Accessor
+;;;     gtk_flow_box_get_row_spacing                       Accessor
+;;;     gtk_flow_box_set_column_spacing                    Accessor
+;;;     gtk_flow_box_get_column_spacing                    Accessor
+;;;     gtk_flow_box_set_min_children_per_line             Accessor
+;;;     gtk_flow_box_get_min_children_per_line             Accessor
+;;;     gtk_flow_box_set_max_children_per_line             Accessor
+;;;     gtk_flow_box_get_max_children_per_line             Accessor
+;;;     gtk_flow_box_set_activate_on_single_click          Accessor
+;;;     gtk_flow_box_get_activate_on_single_click          Accessor
 ;;;     (*GtkFlowBoxForeachFunc)
 ;;;     gtk_flow_box_selected_foreach
 ;;;     gtk_flow_box_get_selected_children
@@ -79,24 +79,24 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean          activate-on-single-click  Read / Write
-;;;     guint             column-spacing            Read / Write
-;;;     gboolean          homogeneous               Read / Write
-;;;     guint             max-children-per-line     Read / Write
-;;;     guint             min-children-per-line     Read / Write
-;;;     guint             row-spacing               Read / Write
-;;;     GtkSelectionMode  selection-mode            Read / Write
+;;;         gboolean    activate-on-single-click    Read / Write
+;;;            guint    column-spacing              Read / Write
+;;;         gboolean    homogeneous                 Read / Write
+;;;            guint    max-children-per-line       Read / Write
+;;;            guint    min-children-per-line       Read / Write
+;;;            guint    row-spacing                 Read / Write
+;;; GtkSelectionMode    selection-mode              Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void      activate-cursor-child      Action
-;;;     void      child-activated            Run Last
-;;;     gboolean  move-cursor                Action
-;;;     void      select-all                 Action
-;;;     void      selected-children-changed  Run First
-;;;     void      toggle-cursor-child        Action
-;;;     void      unselect-all               Action
-;;;     void      activate                   Action
+;;;             void    activate-cursor-child       Action
+;;;             void    child-activated             Run Last
+;;;         gboolean    move-cursor                 Action
+;;;             void    select-all                  Action
+;;;             void    selected-children-changed   Run First
+;;;             void    toggle-cursor-child         Action
+;;;             void    unselect-all                Action
+;;;             void    activate                    Action
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -128,6 +128,27 @@
                 "GtkBuildable")
    :type-initializer "gtk_flow_box_child_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-flow-box-child 'type)
+ "@version{2020-5-8}
+  @begin{short}
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"activate\" signal}
+      @begin{pre}
+ lambda (child)
+      @end{pre}
+      The \"activate\" signal is emitted when the user activates a child widget
+      in a @class{gtk-flow-box}, either by clicking or double-clicking, or by
+      using the Space or Enter key. While this signal is used as a keybinding
+      signal, it can be used by applications for their own purposes. Since 3.12
+      @begin[code]{table}
+        @entry[child]{The @sym{gtk-flow-box-child} widget on which the signal
+        is emitted.}
+      @end{table}
+  @end{dictionary}
+  @see-class{gtk-flow-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFlowBox
@@ -164,7 +185,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-flow-box 'type)
- "@version{2019-3-11}
+ "@version{2020-5-8}
   @begin{short}
     A @sym{gtk-flow-box} positions child widgets in sequence according to its
     orientation.
@@ -178,26 +199,24 @@
   will be requested.
 
   Likewise, with the vertical orientation, the widgets will be arranged from
-  top to bottom, starting a new column to the right when necessary. Reducing the
-  height will require more columns, so a larger width will be requested.
+  top to bottom, starting a new column to the right when necessary. Reducing
+  the height will require more columns, so a larger width will be requested.
 
-  The size request of a @sym{gtk-flow-box} alone may not be what you expect; if
-  you need to be able to shrink it along both axes and dynamically reflow its
-  children, you may have to wrap it in a @class{gtk-scrolled-window} to enable
-  that.
+  The size request of a @sym{gtk-flow-box} container alone may not be what you
+  expect. If you need to be able to shrink it along both axes and dynamically
+  reflow its children, you may have to wrap it in a @class{gtk-scrolled-window}
+  widget to enable that.
 
-  The children of a @sym{gtk-flow-box} can be dynamically sorted and filtered.
+  The children of a @sym{gtk-flow-box} container can be dynamically sorted and
+  filtered.
 
-  Although a @sym{gtk-flow-box} must have only @class{gtk-flow-box-child}
-  children, you can add any kind of widget to it via the function
-  @fun{gtk-container-add}, and a @class{gtk-flow-box-child} widget will
-  automatically be inserted between the box and the widget.
+  Although a @sym{gtk-flow-box} container must have only
+  @class{gtk-flow-box-child} children, you can add any kind of widget to it via
+  the function @fun{gtk-container-add}, and a @class{gtk-flow-box-child} widget
+  will automatically be inserted between the box and the widget.
 
-  Also see @class{gtk-list-box}.
-
-  @sym{gtk-flow-box} was added in GTK+ 3.12.
-
-  @subheading{CSS nodes}
+  Also see @class{gtk-list-box}. @sym{gtk-flow-box} was added in GTK+ 3.12.
+  @begin[CSS nodes]{dictionary}
     @begin{pre}
   flowbox
   ├── flowboxchild
@@ -211,126 +230,98 @@
     @class{gtk-flow-box-child} uses a single CSS node with name
     @code{flowboxchild}. For rubberband selection, a subnode with name
     @code{rubberband} is used.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-child\" signal}
       @begin{pre}
- lambda (box)
+ lambda (flowbox)
       @end{pre}
       The \"activate-cursor-child\" signal is a keybinding signal which gets
-      emitted when the user activates the flow box.
+      emitted when the user activates the flow box. Since 3.12
       @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+          is emitted.}
       @end{table}
-      Since 3.12
-
     @subheading{The \"child-activated\" signal}
       @begin{pre}
- lambda (box child)
+ lambda (flowbox child)
       @end{pre}
       The \"child-activated signal\" is emitted when a child has been activated
-      by the user.
+      by the user. Since 3.12
       @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
-        @entry[child]{The child that is activated.}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+          is emitted.}
+        @entry[child]{The @class{gtk-flow-box-child} widget that is activated.}
       @end{table}
-      Since 3.12
-
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (box step count)
+ lambda (flowbox step count)
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement.
-
-      Applications should not connect to it, but may emit it with
-      the function @fun{g-signal-emit-by-name} if they need to control the
-      cursor programmatically.
+      the user initiates a cursor movement. Applications should not connect to
+      it, but may emit it with the function @fun{g-signal-emit-by-name} if they
+      need to control the cursor programmatically.
 
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the
       Shift modifer does not. There are too many key combinations to list them
-      all here.
-
-      Arrow keys move by individual children.
-      Home/End keys move to the ends of the box.
-      PageUp/PageDown keys move vertically by pages.
-      @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
-        @entry[step]{The granularity to the move, as a
-          @symbol{gtk-movement-step}.}
-        @entry[count]{The number of step units to move.}
-        @entry[Returns]{TRUE to stop other handlers from being invoked for the
-          event. @code{nil} to propagate the event further.}
-      @end{table}
+      all here. Arrow keys move by individual children. Home/End keys move to
+      the ends of the box. PageUp/PageDown keys move vertically by pages.
       Since 3.12
-
+      @begin[code]{table}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+          is emitted.}
+        @entry[step]{The granularity to the move, as a value of the
+          @symbol{gtk-movement-step} enumeration.}
+        @entry[count]{An integer with the number of step units to move.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @em{False} to propagate the event further.}
+      @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
- lambda (box)
+ lambda (flowbox)
       @end{pre}
       The \"select-all\" signal is a keybinding signal which gets emitted to
-      select all children of the box, if the selection mode permits it.
-
-      The default bindings for this signal is Ctrl-a.
+      select all children of the box, if the selection mode permits it. The
+      default bindings for this signal is Ctrl-a. Since 3.12
       @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+        is emitted.}
       @end{table}
-      Since 3.12
-
     @subheading{The \"selected-children-changed\" signal}
       @begin{pre}
- lambda (box)
+ lambda (flowbox)
       @end{pre}
       The \"selected-children-changed\" signal is emitted when the set of
-      selected children changes.
-
-      Use the function @fun{gtk-flow-box-selected-foreach} or
-      @fun{gtk-flow-box-get-selected-children} to obtain the selected children.
+      selected children changes. Use the functions
+      @fun{gtk-flow-box-selected-foreach} or
+      @fun{gtk-flow-box-selected-children} to obtain the selected children.
+      Since 3.12
       @begin[code]{table}
         @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
       @end{table}
-      Since 3.12
-
     @subheading{The \"toggle-cursor-child\" signal}
       @begin{pre}
- lambda (box)
+ lambda (flowbox)
       @end{pre}
       The \"toggle-cursor-child\" signal is a keybinding signal which toggles
-      the selection of the child that has the focus.
-
-      The default binding for this signal is Ctrl-Space.
+      the selection of the child that has the focus. The default binding for
+      this signal is Ctrl-Space. Since 3.12
       @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+        is emitted.}
       @end{table}
-      Since 3.12
-
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
- lambda (box)
+ lambda (flowbox)
       @end{pre}
       The \"unselect-all\" signal is a keybinding signal which gets emitted to
-      unselect all children of the box, if the selection mode permits it.
-
-      The default bindings for this signal is Ctrl-Shift-a.
+      unselect all children of the box, if the selection mode permits it. The
+      default bindings for this signal is Ctrl-Shift-a. Since 3.12
       @begin[code]{table}
-        @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
+        is emitted.}
       @end{table}
-      Since 3.12
-
-    @subheading{The \"activate\" signal}
-      @begin{pre}
- lambda (child)
-      @end{pre}
-      The \"activate\" signal is emitted when the user activates a child widget
-      in a @sym{gtk-flow-box}, either by clicking or double-clicking, or by
-      using the Space or Enter key.
-
-      While this signal is used as a keybinding signal, it can be used by
-      applications for their own purposes.
-      @begin[code]{table}
-        @entry[child]{The child on which the signal is emitted.}
-      @end{table}
-      Since 3.12
   @end{dictionary}
   @see-slot{gtk-flow-box-activate-on-single-click}
   @see-slot{gtk-flow-box-column-spacing}
@@ -338,7 +329,9 @@
   @see-slot{gtk-flow-box-max-children-per-line}
   @see-slot{gtk-flow-box-min-children-per-line}
   @see-slot{gtk-flow-box-row-spacing}
-  @see-slot{gtk-flow-box-selection-mode}")
+  @see-slot{gtk-flow-box-selection-mode}
+  @see-class{gtk-flow-box-child}
+  @see-class{gtk-list-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -352,7 +345,7 @@
  "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether children can be activated with a single click, or require
-  a double-click.@br{}
+  a double-click. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -360,21 +353,22 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-activate-on-single-click 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[single]{@code{Nil} to emit child-activated on a single click.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-acivate-on-click object) => single}
   @syntax[]{(setf (gtk-flow-box-activate-on-click object) single)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[single]{@em{false} to emit the \"child-activated\" signal on
+    a single click}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{activate-on-single-click} of the
+    Accessor of the @slot[gtk-flow-box]{activate-on-single-click} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-activate-on-single-click} returns
+  The slot access function @sym{gtk-flow-box-activate-on-single-click} returns
   whether children activate on single clicks.
 
-  If single is @em{true}, children will be activated when you click on them,
-  otherwise you need to double-click.
+  If @arg{single} is @em{true}, children will be activated when you click on
+  them, otherwise you need to double-click.
 
   Since 3.12
   @see-class{gtk-flow-box}")
@@ -384,8 +378,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-spacing"
                                                'gtk-flow-box) 't)
- "The @code{column-spacing} property of type @code{:uint}
-  (Read / Write) @br{}
+ "The @code{column-spacing} property of type @code{:uint} (Read / Write) @br{}
   The amount of horizontal space between two children. @br{}
   Default value: 0")
 
@@ -393,22 +386,20 @@
 (setf (gethash 'gtk-flow-box-column-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-column-spacing 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[spacing]{The spacing to use.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-column-spacing object) => spacing}
   @syntax[]{(setf (gtk-flow-box-column-spacing object) spacing)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[spacing]{An unsigned integer with the spacing to use.}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{column-spacing} of the
+    Accessor of the @slot[gtk-flow-box]{column-spacing} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-column-spacing} gets the
-  horizontal spacing.
-
-  The generic function @sym{(setf gtk-flow-box-column-spacing)} sets the
-  horizontal space to add between children. See the @code{column-spacing}
-  property.
+  The slot access function @sym{gtk-flow-box-column-spacing} gets the
+  horizontal spacing. The slot access function
+  @sym{(setf gtk-flow-box-column-spacing)} sets the horizontal space to add
+  between children.
 
   Since 3.12
   @see-class{gtk-flow-box}")
@@ -418,32 +409,30 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "homogeneous"
                                                'gtk-flow-box) 't)
- "The @code{homogeneous} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{homogeneous} property of type @code{:boolean} (Read / Write) @br{}
   Determines whether all children should be allocated the same size. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-flow-box-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-homogeneous 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[homogeneous]{@em{{True} to create equal allotments, @code{nil} for
-    variable allotments.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-homogeneous object) => homogeneous}
   @syntax[]{(setf (gtk-flow-box-homogeneous object) homogeneous)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[homogeneous]{@em{true} to create equal allotments, @em{false} for
+    variable allotments}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{homogeneous} of the
+    Accessor of the @slot[gtk-flow-box]{homogeneous} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-column-spacing} returns whether the box
-  is homogeneous (all children are the same size).
-
-  The generic function @sym{(setf gtk-flow-box-column-spacing)} sets the
-  @code{homogeneous} property of the flow box, controlling whether or not all
-  children of box are given equal space in the box.
+  The slot access function @sym{gtk-flow-box-column-spacing} returns whether the
+  box is homogeneous (all children are the same size). The slot access function
+  @sym{(setf gtk-flow-box-column-spacing)} sets the @code{homogeneous} property
+  of the flow box, controlling whether or not all children of box are given
+  equal space in the box.
 
   Since 3.12
   @see-class{gtk-flow-box}")
@@ -455,30 +444,29 @@
                                                'gtk-flow-box) 't)
  "The @code{max-children-per-line} property of type @code{:uint}
   (Read / Write) @br{}
-  The maximum amount of children to request space for consecutively in the given
-  orientation. @br{}
+  The maximum amount of children to request space for consecutively in the
+  given orientation. @br{}
   Default value: 7")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-flow-box-max-children-per-line atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-max-children-per-line 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[n-children]{The maximum number of children per line.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-max-children-per-line object) => n-children}
   @syntax[]{(setf (gtk-flow-box-max-chilren-per-line object) n-children)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[n-children]{an unsigned integer with the maximum number of children
+    per line}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{max-children-per-line} of the
+    Accessor of the @slot[gtk-flow-box]{max-children-per-line} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-max-children-per-llne} gets the
-  maximum number of children per line.
-
-  The generic function @sym{(setf gtk-flow-box-max-children-per-line)}
-  sets the maximum number of children to request and allocate space for in
-  box’s orientation.
+  The slot access function @sym{gtk-flow-box-max-children-per-llne} gets the
+  maximum number of children per line. The slot access function
+  @sym{(setf gtk-flow-box-max-children-per-line)} sets the maximum number of
+  children to request and allocate space for in the orientation of the flow box.
 
   Setting the maximum number of children per line limits the overall natural
   size request to be no more than @arg{n-children} children long in the given
@@ -495,32 +483,29 @@
  "The @code{min-children-per-line} property of type @code{:uint}
   (Read / Write) @br{}
   The minimum number of children to allocate consecutively in the given
-  orientation.
-
-  Setting the minimum children per line ensures that a reasonably small height
-  will be requested for the overall minimum width of the box. @br{}
+  orientation. Setting the minimum children per line ensures that a reasonably
+  small height will be requested for the overall minimum width of the box. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-flow-box-min-children-per-line atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-min-children-per-line 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[n-children]{the minimum number of children per line.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-min-children-per-line object) => n-children}
   @syntax[]{(setf (gtk-flow-box-min-chilren-per-line object) n-children)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[n-children]{an unsigned integer with the minimum number of children
+    per line}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{min-children-per-line} of the
+    Accessor of the @slot[gtk-flow-box]{min-children-per-line} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-max-children-per-llne} gets the
-  minimum number of children per line.
-
-  The generic function @sym{(setf gtk-flow-box-max-children-per-line)}
-  sets the minimum number of children to line up in box’s orientation before
-  flowing.
+  The slot access function @sym{gtk-flow-box-max-children-per-llne} gets the
+  minimum number of children per line. The slot access function
+  @sym{(setf gtk-flow-box-max-children-per-line)} sets the minimum number of
+  children to line up in the orientation of the flow box before flowing.
 
   Since 3.12
   @see-class{gtk-flow-box}")
@@ -538,22 +523,20 @@
 (setf (gethash 'gtk-flow-row-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-row-spacing 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[spacing]{The spacing to use.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-row-spacing object) => spacing}
   @syntax[]{(setf (gtk-flow-box-row-spacing object) spacing)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[spacing]{an unsigned integer with the spacing to use}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{row-spacing} of the
+    Accessor of the @slot[gtk-flow-box]{row-spacing} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-max-children-per-llne} gets the
-  vertical spacing.
-
-  The generic function @sym{(setf gtk-flow-box-max-children-per-line)}
-  sets the vertical space to add between children. See the @code{row-spacing}
-  property.
+  The slot access function @sym{gtk-flow-box-max-children-per-llne} gets the
+  vertical spacing. The slot access function
+  @sym{(setf gtk-flow-box-max-children-per-line)} sets the vertical space to
+  add between children.
 
   Since 3.12
   @see-class{gtk-flow-box}")
@@ -564,7 +547,7 @@
 (setf (documentation (atdoc:get-slot-from-name "selection-mode"
                                                'gtk-flow-box) 't)
  "The @code{selection-mode} property of type @symbol{gtk-selection-mode}
- (Read / Write) @br{}
+  (Read / Write) @br{}
   The selection mode used by the flow box. @br{}
   Default value: @code{:single}")
 
@@ -572,159 +555,181 @@
 (setf (gethash 'gtk-flow-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-selection-mode 'function)
- "@version{2019-3-11}
-  @argument[object]{a @class{gtk-flow-box} widget}
-  @argument[mode]{The new selection mode.}
+ "@version{2020-5-8}
   @syntax[]{(gtk-flow-box-selection-mode object) => mode}
   @syntax[]{(setf (gtk-flow-box-selection-mode object) mode)}
+  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[mode]{the selection mode of type @symbol{gtk-selection-mode}}
   @begin{short}
-    Accessor of the slot @slot[gtk-flow-box]{selection-mode} of the
+    Accessor of the @slot[gtk-flow-box]{selection-mode} slot of the
     @class{gtk-flow-box} class.
   @end{short}
 
-  The generic function @sym{gtk-flow-box-selection-mode} gets the
-  selection mode of box.
-
-  The generic function @sym{(setf gtk-flow-box-selection-mode)}
-  sets how selection works in box . See GtkSelectionMode for details.
+  The slot access function @sym{gtk-flow-box-selection-mode} gets the selection
+  mode of the flow box. The slot access function
+  @sym{(setf gtk-flow-box-selection-mode)} sets how selection works in the flow
+  box.
 
   Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_new ()
-;;;
-;;; GtkWidget * gtk_flow_box_new (void);
-;;;
-;;; Creates a GtkFlowBox.
-;;;
-;;; Returns :
-;;;     a new GtkFlowBox container
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-flow-box-new))
+
+(defun gtk-flow-box-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @return{A new @class{gtk-flow-box} container.}
+  @begin{short}
+    Creates a new flow box container.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (make-instance 'gtk-flow-box))
+
+(export 'gtk-flow-box-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_insert ()
-;;;
-;;; void gtk_flow_box_insert (GtkFlowBox *box, GtkWidget *widget, gint position)
-;;;
-;;; Inserts the widget into box at position .
-;;;
-;;; If a sort function is set, the widget will actually be inserted at the
-;;; calculated position and this function has the same effect as
-;;; gtk_container_add().
-;;;
-;;; If position is -1, or larger than the total number of children in the box ,
-;;; then the widget will be appended to the end.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; widget :
-;;;     the GtkWidget to add
-;;;
-;;; position :
-;;;     the position to insert child in
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_flow_box_get_child_at_index ()
-;;;
-;;; GtkFlowBoxChild * gtk_flow_box_get_child_at_index (GtkFlowBox *box,
-;;;                                                    gint idx);
-;;;
-;;; Gets the nth child in the box .
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; idx :
-;;;     the position of the child
-;;;
-;;; Returns :
-;;;     the child widget, which will always be a GtkFlowBoxChild or NULL in case
-;;;     no child widget with the given index exists.
-;;;
-;;; Since: 3.12
-;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_flow_box_insert" gtk-flow-box-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[child]{a @class{gtk-widget} child to add}
+  @argument[position]{an integer with the position to insert the child in}
+  @begin{short}
+    Inserts the child into the flow box at a given position.
+  @end{short}
+
+  If a sort function is set, the widget will actually be inserted at the
+  calculated position and this function has the same effect as the function
+  @fun{gtk-container-add}.
+
+  If @arg{position} is -1, or larger than the total number of children in the
+  flow box, then the widget will be appended to the end.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box))
+  (widget (g-object gtk-widget))
+  (position :int))
+
+(export 'gtk-flow-box-insert)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_flow_box_get_child_at_pos ()
-;;;
-;;; GtkFlowBoxChild * gtk_flow_box_get_child_at_pos (GtkFlowBox *box,
-;;;                                                  gint x,
-;;;                                                  gint y);
-;;;
-;;; Gets the child in the (x , y ) position.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; x :
-;;;     the x coordinate of the child
-;;;
-;;; y :
-;;;     the y coordinate of the child
-;;;
-;;; Returns :
-;;;     the child widget, which will always be a GtkFlowBoxChild or NULL in case
-;;;     no child widget exists for the given x and y coordinates.
-;;;
-;;; Since: 3.22.6
+;;; gtk_flow_box_get_child_at_index () -> gtk-flow-box-child-at-index
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_get_child_at_index" gtk-flow-box-child-at-index)
+    (g-object gtk-flow-box-child)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[index]{an integer with the position of the child}
+  @return{The child widget, which will always be a @class{gtk-flow-box-child}
+    widget or @code{nil} in case no child widget with the given index exists.}
+  @begin{short}
+    Gets the nth child in the flow box.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}
+  @see-class{gtk-flow-box-child}"
+  (flowbox (g-object gtk-flow-box))
+  (index :int))
+
+(export 'gtk-flow-box-child-at-index)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_flow_box_get_child_at_pos () -> gtk-flow-box-child-at-pos
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_get_child_at_pos" gtk-flow-box-child-at-pos)
+    (g-object gtk-flow-box-child)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[x]{an integer with the x coordinate of the child}
+  @argument[y]{an integer with the y coordinate of the child}
+  @return{The child widget, which will always be a @class{gtk-flow-box-child}
+    widget or @code{nil} in case no child widget exists for the given
+    coordinates.}
+  @begin{short}
+    Gets the child widget in the flow box at the given coordinates.
+  @end{short}
+
+  Since 3.22
+  @see-class{gtk-flow-box}
+  @see-class{gtk-flow-box-child}"
+  (flowbox (g-object gtk-flow-box))
+  (x :int)
+  (y :int))
+
+(export 'gtk-flow-box-child-at-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_set_hadjustment ()
-;;;
-;;; void gtk_flow_box_set_hadjustment (GtkFlowBox *box,
-;;;                                    GtkAdjustment *adjustment);
-;;;
-;;; Hooks up an adjustment to focus handling in box . The adjustment is also
-;;; used for autoscrolling during rubberband selection. See
-;;; gtk_scrolled_window_get_hadjustment() for a typical way of obtaining the
-;;; adjustment, and gtk_flow_box_set_vadjustment()for setting the vertical
-;;; adjustment.
-;;;
-;;; The adjustments have to be in pixel units and in the same coordinate system
-;;; as the allocation for immediate children of the box.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; adjustment :
-;;;     an adjustment which should be adjusted when the focus is moved among the
-;;;     descendents of container
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_set_hadjustment" gtk-flow-box-set-hadjustment) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[adjustment]{a @class{gtk-adjustment} object which should be adjusted
+    when the focus is moved among the descendents of container}
+  @begin{short}
+    Hooks up an adjustment to focus handling in the flow box.
+  @end{short}
+  The adjustment is also used for autoscrolling during rubberband selection.
+  See the function @fun{gtk-scrolled-window-hadjustment} for a typical way of
+  obtaining the adjustment, and the function @fun{gtk-flow-box-vadjustment} for
+  setting the vertical adjustment.
+
+  The adjustments have to be in pixel units and in the same coordinate system
+  as the allocation for immediate children of the box.
+
+  Since 3.12
+  @see-class{gtk-flow-box}
+  @see-function{gtk-scrolled-window-hadjustment}"
+  (flowbox (g-object gtk-flow-box))
+  (adjustment (g-object gtk-adjustment)))
+
+(export 'gtk-flow-box-set-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_set_vadjustment ()
-;;;
-;;; void gtk_flow_box_set_vadjustment (GtkFlowBox *box,
-;;;                                    GtkAdjustment *adjustment);
-;;;
-;;; Hooks up an adjustment to focus handling in box . The adjustment is also
-;;; used for autoscrolling during rubberband selection. See
-;;; gtk_scrolled_window_get_vadjustment() for a typical way of obtaining the
-;;; adjustment, and gtk_flow_box_set_hadjustment()for setting the horizontal
-;;; adjustment.
-;;;
-;;; The adjustments have to be in pixel units and in the same coordinate system
-;;; as the allocation for immediate children of the box.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; adjustment :
-;;;     an adjustment which should be adjusted when the focus is moved among
-;;;     the descendents of container
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_set_vadjustment" gtk-flow-box-set-vadjustment) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[adjustment]{a @class{gtk-adjustment} object which should be adjusted
+    when the focus is moved among the descendents of container}
+  @begin{short}
+    Hooks up an adjustment to focus handling in the flow box.
+  @end{short}
+  The adjustment is also used for autoscrolling during rubberband selection.
+  See the function @fun{gtk-scrolled-window-vadjustment} for a typical way of
+  obtaining the adjustment, and the function @fun{gtk-flow-box-hadjustment} for
+  setting the vertical adjustment.
+
+  The adjustments have to be in pixel units and in the same coordinate system
+  as the allocation for immediate children of the box.
+
+  Since 3.12
+  @see-class{gtk-flow-box}
+  @see-function{gtk-scrolled-window-vadjustment}"
+  (flowbox (g-object gtk-flow-box))
+  (adjustment (g-object gtk-adjustment)))
+
+(export 'gtk-flow-box-set-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFlowBoxForeachFunc ()
@@ -748,103 +753,140 @@
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-flow-box-foreach-func-cb :void
+    ((flowbox (g-object gtk-flow-box))
+     (child (g-object gtk-flow-box-child))
+     (data :pointer))
+  (restart-case
+      (let ((ptr (get-stable-pointer-value data)))
+        (funcall ptr flowbox child))
+    (return () :report "Error in GtkFlowBoxForeachFunc callback." nil)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_selected_foreach ()
-;;;
-;;; void gtk_flow_box_selected_foreach (GtkFlowBox *box,
-;;;                                     GtkFlowBoxForeachFunc func,
-;;;                                     gpointer data);
-;;;
-;;; Calls a function for each selected child.
-;;;
-;;; Note that the selection cannot be modified from within this function.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; func :
-;;;     the function to call for each selected child.
-;;;
-;;; data :
-;;;     user data to pass to the function
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_selected_foreach" %gtk-flow-box-selected-foreach) :void
+  (flowbox (g-object gtk-flow-box))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-flow-box-selected-foreach (flowbox func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[func]{a Lisp function which is passed as a callback}
+  @begin{short}
+    Calls a function for each selected child in the flow box.
+  @end{short}
+
+  Note that the selection cannot be modified from within this function.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (with-stable-pointer (ptr func)
+    (%gtk-flow-box-selected-foreach flowbox
+                                    (callback gtk-flow-box-foreach-func-cb)
+                                    ptr)))
+
+(export 'gtk-flow-box-selected-foreach)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_get_selected_children ()
-;;;
-;;; GList * gtk_flow_box_get_selected_children (GtkFlowBox *box);
-;;;
-;;; Creates a list of all selected children.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; Returns :
-;;;     A GList containing the GtkWidget for each selected child. Free with
-;;;     g_list_free() when done.
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_get_selected_children" gtk-flow-box-selected-children)
+    (g-list (g-object gtk-widget))
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @return{A list containing the @class{gtk-widget} for each selected child.}
+  @begin{short}
+    Creates a list of all selected children.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box)))
+
+(export 'gtk-flow-box-selected-children)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_select_child ()
-;;;
-;;; void gtk_flow_box_select_child (GtkFlowBox *box, GtkFlowBoxChild *child);
-;;;
-;;; Selects a single child of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; child :
-;;;     a child of box
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_select_child" gtk-flow-box-select-child) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[child]{a @class{gtk-widget} child of the flow box}
+  @begin{short}
+    Selects a single child of the flow box, if the selection mode allows it.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box))
+  (child (g-object gtk-flow-box-child)))
+
+(export 'gtk-flow-box-select-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_unselect_child ()
-;;;
-;;; void gtk_flow_box_unselect_child (GtkFlowBox *box, GtkFlowBoxChild *child);
-;;;
-;;; Unselects a single child of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; child :
-;;;     a child of box
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_unselect_child" gtk-flow-box-unselect-child) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[child]{a @class{gtk-widget} child of the flow box}
+  @begin{short}
+    Unselects a single child of the flow box, if the selection mode allows it.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box))
+  (child (g-object gtk-flow-box-child)))
+
+(export 'gtk-flow-box-unselect-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_select_all ()
-;;;
-;;; void gtk_flow_box_select_all (GtkFlowBox *box);
-;;;
-;;; Select all children of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_select_all" gtk-flow-box-select-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @begin{short}
+    Select all children of the flow box, if the selection mode allows it.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box)))
+
+(export 'gtk-flow-box-select-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_unselect_all ()
-;;;
-;;; void gtk_flow_box_unselect_all (GtkFlowBox *box);
-;;;
-;;; Unselect all children of box , if the selection mode allows it.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_unselect_all" gtk-flow-box-unselect-all) :void
+
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @begin{short}
+    Unselect all children of the flow box, if the selection mode allows it.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box)))
+
+(export 'gtk-flow-box-unselect-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFlowBoxFilterFunc ()
@@ -867,58 +909,73 @@
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-flow-box-filter-func-cb :boolean
+    ((child (g-object gtk-flow-box-child))
+     (data :pointer))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr child)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_set_filter_func ()
-;;;
-;;; void gtk_flow_box_set_filter_func (GtkFlowBox *box,
-;;;                                    GtkFlowBoxFilterFunc filter_func,
-;;;                                    gpointer user_data,
-;;;                                    GDestroyNotify destroy);
-;;;
-;;; By setting a filter function on the box one can decide dynamically which of
-;;; the children to show. For instance, to implement a search function that only
-;;; shows the children matching the search terms.
-;;;
-;;; The filter_func will be called for each child after the call, and it will
-;;; continue to be called each time a child changes (via
-;;; gtk_flow_box_child_changed()) or when gtk_flow_box_invalidate_filter() is
-;;; called.
-;;;
-;;; Note that using a filter function is incompatible with using a model (see
-;;; gtk_flow_box_bind_model()).
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; filter_func :
-;;;     callback that lets you filter which children to show.
-;;;
-;;; user_data :
-;;;     user data passed to filter_func
-;;;
-;;; destroy :
-;;;     destroy notifier for user_data
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_set_filter_func" %gtk-flow-box-set-filter-func) :void
+  (flowbox (g-object gtk-flow-box))
+  (filter-func :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-flow-box-set-filter-func (flowbox filter-func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[filter-func]{callback that lets you filter which children to show}
+  @begin{short}
+    By setting a filter function on the flow box one can decide dynamically
+    which of the children to show.
+  @end{short}
+  For instance, to implement a search function that only shows the children
+  matching the search terms.
+
+  The @arg{filter-func} function will be called for each child after the call,
+  and it will continue to be called each time a child changes (via the function
+  @fun{gtk-flow-box-child-changed}) or when the function
+  @fun{gtk-flow-box-invalidate-filter} is called.
+
+  Note that using a filter function is incompatible with using a model. See
+  the function @fun{gtk-flow-box-bind-model}.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (%gtk-flow-box-set-filter-func flowbox
+                                 (callback gtk-flow-box-filter-func-cb)
+                                 (allocate-stable-pointer filter-func)
+                                 (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-flow-box-set-filter-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_invalidate_filter ()
-;;;
-;;; void gtk_flow_box_invalidate_filter (GtkFlowBox *box);
-;;;
-;;; Updates the filtering for all children.
-;;;
-;;; Call this function when the result of the filter function on the box is
-;;; changed due ot an external factor. For instance, this would be used if the
-;;; filter function just looked for a specific search term, and the entry with
-;;; the string has changed.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_invalidate_filter" gtk-flow-box-invalidate-filter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @begin{short}
+    Updates the filtering for all children in the flow box.
+  @end{short}
+
+  Call this function when the result of the filter function on the flow box is
+  changed due ot an external factor. For instance, this would be used if the
+  filter function just looked for a specific search term, and the entry with
+  the string has changed.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box)))
+
+(export 'gtk-flow-box-invalidate-filter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFlowBoxSortFunc ()
@@ -945,55 +1002,70 @@
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-flow-box-sort-func-cb :int
+    ((child1 (g-object gtk-flow-box-child))
+     (child2 (g-object gtk-flow-box-child))
+     (data :pointer))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr child1 child2)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_set_sort_func ()
-;;;
-;;; void gtk_flow_box_set_sort_func (GtkFlowBox *box,
-;;;                                  GtkFlowBoxSortFunc sort_func,
-;;;                                  gpointer user_data,
-;;;                                  GDestroyNotify destroy);
-;;;
-;;; By setting a sort function on the box , one can dynamically reorder the
-;;; children of the box, based on the contents of the children.
-;;;
-;;; The sort_func will be called for each child after the call, and will
-;;; continue to be called each time a child changes (via
-;;; gtk_flow_box_child_changed()) and when gtk_flow_box_invalidate_sort() is
-;;; called.
-;;;
-;;; Note that using a sort function is incompatible with using a model (see
-;;; gtk_flow_box_bind_model()).
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; sort_func :
-;;;     the sort function.
-;;;
-;;; user_data :
-;;;     user data passed to sort_func
-;;;
-;;; destroy :
-;;;     destroy notifier for user_data
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_set_sort_func" %gtk-flow-box-set-sort-func) :void
+  (flowbox (g-object gtk-flow-box))
+  (sort-func :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-flow-box-set-sort-func (flowbox sort-func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @argument[sort-func]{callback for the sort function}
+  @begin{short}
+    By setting a sort function on the flow box, one can dynamically reorder the
+    children of the flow box, based on the contents of the children.
+  @end{short}
+
+  The @arg{sort-func} function will be called for each child after the call,
+  and will continue to be called each time a child changes (via the function
+  @fun{gtk-flow-box-child-changed}) and when the function
+  @fun{gtk-flow-box-invalidate-sort} is called.
+
+  Note that using a sort function is incompatible with using a model. See
+  the function @fun{gtk-flow-box-bind-model}.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (%gtk-flow-box-set-sort-func flowbox
+                               (callback gtk-flow-box-sort-func-cb)
+                               (allocate-stable-pointer sort-func)
+                               (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-flow-box-set-sort-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_invalidate_sort ()
-;;;
-;;; void gtk_flow_box_invalidate_sort (GtkFlowBox *box);
-;;;
-;;; Updates the sorting for all children.
-;;;
-;;; Call this when the result of the sort function on box is changed due to an
-;;; external factor.
-;;;
-;;; box :
-;;;     a GtkFlowBox
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_invalidate_sort" gtk-flow-box-invalidate-sort) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[flowbox]{a @class{gtk-flow-box} container}
+  @begin{short}
+    Updates the sorting for all children in the flow box.
+  @end{short}
+
+  Call this when the result of the sort function on the flow box is changed due
+  to an external factor.
+
+  Since 3.12
+  @see-class{gtk-flow-box}"
+  (flowbox (g-object gtk-flow-box)))
+
+(export 'gtk-flow-box-invalidate-sort)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFlowBoxCreateWidgetFunc ()
@@ -1058,76 +1130,106 @@
 ;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: GListModel ist not implemented
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_child_new ()
-;;;
-;;; GtkWidget * gtk_flow_box_child_new (void);
-;;;
-;;; Creates a new GtkFlowBoxChild, to be used as a child of a GtkFlowBox.
-;;;
-;;; Returns :
-;;;     a new GtkFlowBoxChild
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-flow-box-child-new))
+
+(defun gtk-flow-box-child-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @return{A new @class{gtk-flow-box-child} widget.}
+  @begin{short}
+    Creates a new @class{gtk-flow-box-child} widget, to be used as a child of a
+    @class{gtk-flow-box} container.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flox-box-child}
+  @see-class{gtk-flox-box}"
+  (make-instance 'gtk-flow-box-child))
+
+(export 'gtk-flow-box-child-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_child_get_index ()
-;;;
-;;; gint gtk_flow_box_child_get_index (GtkFlowBoxChild *child);
-;;;
-;;; Gets the current index of the child in its GtkFlowBox container.
-;;;
-;;; child :
-;;;     a GtkFlowBoxChild
-;;;
-;;; Returns :
-;;;     the index of the child , or -1 if the child is not in a flow box.
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_child_get_index" gtk-flow-box-child-index) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[child]{a @class{gtk-flow-box-child} widget}
+  @return{An integer with the index of the child, or -1 if the child is not
+    in a flow box.}
+  @begin{short}
+    Gets the current index of the child in its @class{gtk-flow-box} container.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flox-box-child}
+  @see-class{gtk-flox-box}"
+  (child (g-object gtk-flow-box-child)))
+
+(export 'gtk-flow-box-child-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_child_is_selected ()
-;;;
-;;; gboolean gtk_flow_box_child_is_selected (GtkFlowBoxChild *child);
-;;;
-;;; Returns whether the child is currently selected in its GtkFlowBox container.
-;;;
-;;; child :
-;;;     a GtkFlowBoxChild
-;;;
-;;; Returns :
-;;;     TRUE if child is selected
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_child_is_selected" gtk-flow-box-child-is-selected)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[child]{a @class{gtk-flow-box-child} widget}
+  @return{@em{True} if @arg{child} is selected.}
+  @begin{short}
+    Returns whether the child is currently selected in its @class{gtk-flow-box}
+    container.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-flox-box-child}
+  @see-class{gtk-flox-box}"
+  (child (g-object gtk-flow-box-child)))
+
+(export 'gtk-flow-box-child-is-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_child_changed ()
-;;;
-;;; void gtk_flow_box_child_changed (GtkFlowBoxChild *child);
-;;;
-;;; Marks child as changed, causing any state that depends on this to be
-;;; updated. This affects sorting and filtering.
-;;;
-;;; Note that calls to this method must be in sync with the data used for the
-;;; sorting and filtering functions. For instance, if the list is mirroring some
-;;; external data set, and *two* children changed in the external data set when
-;;; you call gtk_flow_box_child_changed() on the first child, the sort function
-;;; must only read the new data for the first of the two changed children,
-;;; otherwise the resorting of the children will be wrong.
-;;;
-;;; This generally means that if you don’t fully control the data model, you
-;;; have to duplicate the data that affects the sorting and filtering functions
-;;; into the widgets themselves. Another alternative is to call
-;;; gtk_flow_box_invalidate_sort() on any model change, but that is more
-;;; expensive.
-;;;
-;;; child :
-;;;     a GtkFlowBoxChild
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_flow_box_child_changed" gtk-flow-box-child-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-8}
+  @argument[child]{a @class{gtk-flow-box-child} widget}
+  @begin{short}
+    Marks child as changed, causing any state that depends on this to be
+    updated.
+  @end{short}
+  This affects sorting and filtering.
+
+  Note that calls to this method must be in sync with the data used for the
+  sorting and filtering functions. For instance, if the list is mirroring some
+  external data set, and *two* children changed in the external data set when
+  you call @sym{gtk-flow-box-child-changed} on the first child, the sort
+  function must only read the new data for the first of the two changed
+  children, otherwise the resorting of the children will be wrong.
+
+  This generally means that if you do not fully control the data model, you
+  have to duplicate the data that affects the sorting and filtering functions
+  into the widgets themselves. Another alternative is to call
+  @fun{gtk-flow-box-invalidate-sort} on any model change, but that is more
+  expensive.
+
+  Since 3.12
+  @see-class{gtk-flox-box-child}
+  @see-class{gtk-flox-box}
+  @see-function{gtk-flow-box-invalidate-sort}"
+  (child (g-object gtk-flow-box-child)))
+
+(export 'gtk-flow-box-changed)
 
 ;;; --- End of file gtk.flow-box.lisp ------------------------------------------
