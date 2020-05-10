@@ -2,12 +2,12 @@
 ;;; gtk.check-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.14 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.14 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,14 +37,14 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     GtkWidget*  gtk_check_button_new
-;;;     GtkWidget*  gtk_check_button_new_with_label
-;;;     GtkWidget*  gtk_check_button_new_with_mnemonic
+;;;     gtk_check_button_new
+;;;     gtk_check_button_new_with_label
+;;;     gtk_check_button_new_with_mnemonic
 ;;;
 ;;; Style Properties
 ;;;
-;;;     gint  indicator-size       Read
-;;;     gint  indicator-spacing    Read
+;;;     gint    indicator-size       Read
+;;;     gint    indicator-spacing    Read
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -82,7 +82,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-button 'type)
- "@version{2014-11-7}
+ "@version{2020-5-10}
   @begin{short}
     A @sym{gtk-check-button} places a discrete @class{gtk-toggle-button} next
     to a widget, usually a @class{gtk-label}. See the section on
@@ -101,7 +101,7 @@
  ╰── <child>
     @end{pre}
     A @sym{gtk-check-button} with indicator, see the function
-    @fun{gtk-toggle-button-set-mode}, has a main CSS node with name
+    @fun{gtk-toggle-button-mode}, has a main CSS node with name
     @code{checkbutton} and a subnode with name @code{check}.
     @begin{pre}
  button.check
@@ -115,11 +115,13 @@
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[indicator-size]{entry}
-        The @code{indicator-size} style property of type @code{:int} (Read)@br{}
+        The @code{indicator-size} style property of type @code{:int}
+        (Read) @br{}
         Size of check or radio indicator. @br{}
-        @b{Warning:} @code{indicator-size} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use CSS min-width and
-        min-height on the indicator node. @br{}
+        @em{Warning:} The @code{indicator-size} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use CSS @code{min-width} and @code{min-height} on the indicator
+        node. @br{}
         Allowed values: >= 0 @br{}
         Default value: 16
       @end{entry}
@@ -127,9 +129,10 @@
         The @code{indicator-spacing} style property of type @code{:int}
         (Read) @br{}
         Spacing around check or radio indicator. @br{}
-        @b{Warning:} @code{indicator-spacing} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use CSS min-width and
-        min-height on the indicator node. @br{}
+        @em{Warning:} The @code{indicator-spacing} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use CSS @code{min-width} and @code{min-height} on the indicator
+        node. @br{}
         Allowed values: >= 0 @br{}
         Default value: 2
       @end{entry}
@@ -148,9 +151,10 @@
 
 (defun gtk-check-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2020-5-10}
   @return{A @class{gtk-check-button} widget.}
-  @short{Creates a new @class{gtk-check-button} widget.}"
+  @short{Creates a new check button widget.}
+  @see-class{gtk-check-button}"
   (make-instance 'gtk-check-button))
 
 (export 'gtk-check-button-new)
@@ -163,13 +167,14 @@
 
 (defun gtk-check-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
-  @argument[label]{the text for the check button}
+ "@version{2020-5-10}
+  @argument[label]{a string with the text for the check button}
   @return{A @class{gtk-check-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-check-button} widget with a @class{gtk-label}
-    widget to the right of it.
-  @end{short}"
+    Creates a new check button widget with a @class{gtk-label} widget to the
+    right of it.
+  @end{short}
+  @see-class{gtk-check-button}"
   (make-instance 'gtk-check-button
                  :label label))
 
@@ -183,16 +188,17 @@
 
 (defcfun ("gtk_check_button_new_with_mnemonic"
            gtk-check-button-new-with-mnemonic)
-    (g-object gtk-widget)
+    (g-object gtk-check-button)
 #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
-  @argument[label]{the text of the button, with an underscore in front of the
-    mnemonic character}
+ "@version{2020-5-10}
+  @argument[label]{a string with the text of the button, with an underscore in
+    front of the mnemonic character}
   @return{A @class{gtk-check-button} widget.}
-  @short{Creates a new @class{gtk-check-button} widget containing a label.}
+  @short{Creates a new check button widget containing a label.}
   The label will be created using the function
   @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
   mnemonic for the check button.
+  @see-class{gtk-check-button}
   @see-function{gtk-label-new-with-mnemonic}"
   (label :string))
 
