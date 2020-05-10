@@ -914,22 +914,45 @@
   close button only appears on a window that can be closed.
 
   Also note that the setting can be overridden with the @code{decoration-layout}
-  property.@br{}
-  Default value: \"menu:minimize,maximize,close\" @br{}
-  Since 3.12")
+  property. Since 3.12 @br{}
+  Default value: \"menu:minimize,maximize,close\"")
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-settings-gtk-decoration-layout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-decoration-layout 'function)
- "@version{2019-4-19}
+ "@version{2020-5-9}
+  @syntax[]{(gtk-settings-gtk-decoration-layout object) => decoration-layout}
+  @syntax[]{(setf gtk-settings-gtk-decoration-layout object) decoration-layout)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[decoration-layout]{a string with the settings for buttons}
   @begin{short}
     Accessor of the @slot[gtk-settings]{gtk-decoration-layout} slot of the
     @class{gtk-settings} class.
   @end{short}
 
+  This setting determines which buttons should be put in the titlebar of
+  client-side decorated windows, and whether they should be placed at the left
+  of right.
+
+  The format of the string is button names, separated by commas. A colon
+  separates the buttons that should appear on the left from those on the right.
+  Recognized button names are minimize, maximize, close, icon (the window icon)
+  and menu (a menu button for the fallback app menu).
+
+  For example, \"menu:minimize,maximize,close\" specifies a menu on the left,
+  and minimize, maximize and close buttons on the right.
+
+  Note that buttons will only be shown when they are meaningful. E.g. a menu
+  button only appears when the desktop shell does not show the app menu, and a
+  close button only appears on a window that can be closed.
+
+  Also note that the setting can be overridden with the
+  @slot[gtk-header-bar]{decoration-layout} property of a header bar.
+
   Since 3.12
-  @see-class{gtk-settings}")
+  @see-class{gtk-settings}
+  @see-class{gtk-header-bar}")
 
 ;;; --- gtk-settings-gtk-dialogs-use-header ------------------------------------
 
