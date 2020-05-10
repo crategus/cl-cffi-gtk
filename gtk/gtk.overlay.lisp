@@ -39,17 +39,17 @@
 ;;;     gtk_overlay_new
 ;;;     gtk_overlay_add_overlay
 ;;;     gtk_overlay_reorder_overlay
-;;;     gtk_overlay_get_overlay_pass_through
-;;;     gtk_overlay_set_overlay_pass_through
+;;;     gtk_overlay_get_overlay_pass_through   -> gtk-overlay-child-pass-through
+;;;     gtk_overlay_set_overlay_pass_through   -> gtk-overlay-child-pass-through
 ;;;
 ;;; Child Properties
 ;;;
-;;;         gint  index               Read / Write
-;;;     gboolean  pass-through        Read / Write
+;;;         gint    index                 Read / Write
+;;;     gboolean    pass-through          Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     gboolean  get-child-position  Run Last
+;;;     gboolean    get-child-position    Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -71,6 +71,9 @@
 ;;; struct GtkOverlay
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: The "get-child-position" signal handler has an return location
+;; of type GdkRectangle. Check the Lisp implementation of a handler.
+
 (define-g-object-class "GtkOverlay" gtk-overlay
   (:superclass gtk-bin
     :export t
@@ -81,7 +84,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-overlay 'type)
- "@version{2019-3-16}
+ "@version{2020-5-9}
   @begin{short}
     @sym{gtk-overlay} is a container which contains a single main child, on top
     of which it can place overlay widgets.
@@ -99,8 +102,8 @@
   \"get-child-position\" signal.
   @begin[GtkOverlay as GtkBuildable]{dictionary}
     The @sym{gtk-overlay} implementation of the @class{gtk-buildable} interface
-    supports placing a child as an overlay by specifying \"overlay\" as the
-    \"type\" attribute of a <child> element.
+    supports placing a child as an overlay by specifying @code{\"overlay\"} as
+    the @code{\"type\"} attribute of a @code{<child>} element.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
     @sym{gtk-overlay} has a single CSS node with the name @code{overlay}.
@@ -112,24 +115,23 @@
     @begin[code]{table}
       @begin[index]{entry}
         The @code{index} child property of type @code{:int} (Read / Write) @br{}
-        The index of the overlay in the parent, -1 for the main child. @br{}
+        The index of the overlay in the parent, -1 for the main child.
+        Since 3.18 @br{}
         Allowed values: >= -1 @br{}
-        Default value: 0 @br{}
-        Since 3.18
+        Default value: 0
       @end{entry}
       @begin[pass-through]{entry}
         The @code{pass-through} child property of type @code{:boolean}
         (Read / Write) @br{}
-        Pass through input, does not affect main child. @br{}
-        Default value: @code{nil} @br{}
-        Since 3.18
+        Pass through input, does not affect main child. Since 3.18 @br{}
+        Default value: @em{false}
       @end{entry}
     @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"get-child-position\" signal}
       @begin{pre}
- lambda (overlay widget allocation)   : Run Last
+ lambda (overlay widget allocation)    : Run Last
       @end{pre}
       The \"get-child-position\" signal is emitted to determine the position
       and size of any overlay child widgets. A handler for this signal should
@@ -142,9 +144,11 @@
       full-width/height). If the main child is a @class{gtk-scrolled-window},
       the overlays are placed relative to its contents.
       @begin[code]{table}
-        @entry[overlay]{The @class{gtk-overlay}.}
-        @entry[widget]{The child widget to position.}
-        @entry[allocation]{Return location for the allocation.}
+        @entry[overlay]{The @class{gtk-overlay} container which emitted the
+          signal.}
+        @entry[widget]{The @class{gtk-widget} child widget to position.}
+        @entry[allocation]{Return location of type @class{gdk-rectangle} for
+          the allocation.}
         @entry[Return]{@em{True} if the allocation has been filled.}
       @end{table}
   @end{dictionary}
@@ -165,19 +169,23 @@
 (setf (gethash 'gtk-overlay-child-index atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-overlay-child-index 'function)
- "@version{2019-3-16}
+ "@version{2020-5-9}
   @syntax[]{(gtk-overlay-child-index object) => index)}
   @syntax[]{(setf (gtk-overlay-child-index object) index)}
-  @argument[object]{a @class{gtk-overlay} widget}
+  @argument[container]{a @class{gtk-overlay} container}
   @argument[child]{the @class{gtk-widget} child widget}
-  @argument[index]{The index of the overlay in the parent.}
+  @argument[index]{an integer with the index of the child widget in the parent}
   @begin{short}
-    Accessor of the child property @code{index} of the
+    Accessor of the @code{index} child property of the
     @class{gtk-overlay} class.
   @end{short}
 
+  The index of the child widget in the parent, -1 for the main child.
+
   Since 3.18
-  @see-class{gtk-overlay}")
+  @see-class{gtk-overlay}
+  @see-function{gtk-overlay-add-overlay}
+  @see-function{gtk-overlay-reorder-overlay}")
 
 ;;; --- gtk-overlay-child-pass-through -----------------------------------------
 
@@ -189,16 +197,18 @@
 (setf (gethash 'gtk-overlay-child-pass-through atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-overlay-child-pass-through 'function)
- "@version{2019-3-16}
-  @syntax[]{(gtk-overlay-child-index object) => pass-through)}
-  @syntax[]{(setf (gtk-overlay-child-index object) pass-through)}
-  @argument[object]{a @class{gtk-overlay} widget}
-  @argument[child]{the @class{gtk-widget} child widget}
-  @argument[index]{The pass through input.}
+ "@version{2020-5-9}
+  @syntax[]{(gtk-overlay-child-index container child) => pass-through)}
+  @syntax[]{(setf (gtk-overlay-child-index container child) pass-through)}
+  @argument[container]{a @class{gtk-overlay} container}
+  @argument[child]{a @class{gtk-widget} child widget}
+  @argument[pass-through]{a boolean wether to pass through input}
   @begin{short}
-    Accessor of the child property @code{pass-through} of the
+    Accessor of the @code{pass-through} child property of the
     @class{gtk-overlay} class.
   @end{short}
+
+  Pass through input, does not affect main child.
 
   Since 3.18
   @see-class{gtk-overlay}")
@@ -211,9 +221,9 @@
 
 (defun gtk-overlay-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-7-26}
+ "@version{2020-5-9}
   @return{A new @class{gtk-overlay} container.}
-  @short{Creates a new @class{gtk-overlay} container.}
+  @short{Creates a new overlay container.}
 
   Since 3.2
   @see-class{gtk-overlay}"
@@ -227,15 +237,16 @@
 
 (defcfun ("gtk_overlay_add_overlay" gtk-overlay-add-overlay) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-7-26}
+ "@version{2020-5-9}
   @argument[overlay]{a @class{gtk-overlay} container}
-  @argument[widget]{a @class{gtk-widget} to be added to the container}
-  @short{Adds @arg{widget} to @arg{overlay}.}
+  @argument[widget]{a @class{gtk-widget} child widget to be added to the
+    container}
+  @short{Adds a child widget to the overlay container.}
 
-  The widget will be stacked on top of the main widget added with the function
-  @fun{gtk-container-add}.
+  The child widget will be stacked on top of the main widget added with the
+  function @fun{gtk-container-add}.
 
-  The position at which @arg{widget} is placed is determined from its
+  The position at which the child widget is placed is determined from its
   @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties.
 
   Since 3.2
@@ -251,19 +262,21 @@
 
 (defcfun ("gtk_overlay_reorder_overlay" gtk-overlay-reorder-overlay) :void
  #+cl-cffi-gtk-documentation
- "@version{2019-3-16}
+ "@version{2020-5-9}
   @argument[overlay]{a @class{gtk-overlay} container}
-  @argument[child]{the overlaid @class{gtk-widget} to move}
-  @argument[position]{the new index for child in the list of overlay children of
-    @arg{overlay}, starting from 0. If negative, indicates the end of the list}
+  @argument[child]{the overlaid @class{gtk-widget} child widget to move}
+  @argument[position]{the new index for the child widget in the list of overlay
+    children of the overlay container, starting from 0, if negative, indicates
+    the end of the list}
   @begin{short}
-    Moves @arg{child} to a new index in the list of overlay children. The list
-    contains overlays in the order that these were added to @arg{overlay}.
+    Moves a child widget to a new index in the list of overlay children.
   @end{short}
+  The list contains overlays in the order that these were added to the overlay
+  container.
 
-  A widget’s index in the overlay children list determines which order the
-  children are drawn if they overlap. The first child is drawn at the bottom.
-  It also affects the default focus chain order.
+  An index of the widget in the overlay children list determines which order
+  the children are drawn if they overlap. The first child is drawn at the
+  bottom. It also affects the default focus chain order.
 
   Since 3.18
   @see-class{gtk-overlay}"
@@ -275,49 +288,9 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_overlay_get_overlay_pass_through ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_overlay_get_overlay_pass_through"
-          gtk-overlay-get-overlay-pass-through) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2019-3-16}
-  @argument[overlay]{a @class{gtk-overlay} container}
-  @argument[widget]{an overlay child of @class{gtk-overlay}}
-  @return{Whether the widget is a pass through child.}
-  @begin{short}
-    Convenience function to get the value of the @code{pass-through} child
-    property for @arg{widget}.
-  @end{short}
-
-  Since 3.18
-  @see-class{gtk-overlay}"
-  (overlay (g-object gtk-overlay))
-  (widget (g-object gtk-widget)))
-
-(export 'gtk-overlay-get-overlay-pass-through)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_overlay_set_overlay_pass_through ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_overlay_set_overlay_pass_through"
-          gtk-overlay-set-overlay-pass-through) :void
- #+cl-cffi-gtk-documentation
- "@version{2019-3-16}
-  @argument[overlay]{a @class{gtk-overlay} container}
-  @argument[widget]{an overlay child of @class{gtk-overlay}}
-  @argument[pass-through]{whether the child should pass the input through}
-  @begin{short}
-    Convenience function to set the value of the @code{pass-through} child
-    property for @arg{widget}.
-  @end{short}
-
-  Since 3.18
-  @see-class{gtk-overlay}"
-  (overlay (g-object gtk-overlay))
-  (widget (g-object gtk-widget))
-  (pass-through :boolean))
-
-(export 'gtk-overlay-set-overlay-pass-through)
+;; Implemented as the child accessor gtk-overlay-child-pass-through
 
 ;;; --- End of file gtk.overlay.lisp -------------------------------------------
