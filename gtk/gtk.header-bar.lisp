@@ -2,11 +2,11 @@
 ;;; gtk.header-bar.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 - 2019 Dieter Kaiser
+;;; Copyright (C) 2016 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,19 +54,19 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkWidget *  custom-title           Read / Write
-;;;         gchar *  decoration-layout      Read / Write
-;;;        gboolean  decoration-layout-set  Read / Write
-;;;        gboolean  has-subtitle           Read / Write
-;;;        gboolean  show-close-button      Read / Write
-;;;            gint  spacing                Read / Write
-;;;         gchar *  subtitle               Read / Write
-;;;         gchar *  title                  Read / Write
+;;;       GtkWidget*   custom-title             Read / Write
+;;;           gchar*   decoration-layout        Read / Write
+;;;        gboolean    decoration-layout-set    Read / Write
+;;;        gboolean    has-subtitle             Read / Write
+;;;        gboolean    show-close-button        Read / Write
+;;;            gint    spacing                  Read / Write
+;;;           gchar*   subtitle                 Read / Write
+;;;           gchar*   title                    Read / Write
 ;;;
 ;;; Child Properties
 ;;;
-;;;     GtkPackType  pack-type              Read / Write
-;;;            gint  position               Read / Write
+;;;     GtkPackType    pack-type                Read / Write
+;;;            gint    position                 Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -123,7 +123,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-header-bar 'type)
- "@version{2016-1-17}
+ "@version{2020-5-9}
   @begin{short}
     @sym{gtk-header-bar} is similar to a horizontal @class{gtk-box}. It allows
     children to be placed at the start or the end. In addition, it allows a
@@ -147,14 +147,14 @@
       @begin[pack-type]{entry}
         The @code{pack-type} child property of type @symbol{gtk-pack-type}
         (Read / Write) @br{}
-        A @symbol{gtk-pack-type} indicating whether the child is packed with
-        reference to the start or end of the parent. @br{}
+        A value of the @symbol{gtk-pack-type} enumeration indicating whether the
+        child is packed with reference to the start or end of the parent. @br{}
         Default value: @code{:start}
       @end{entry}
       @begin[position]{entry}
-        The @code{position} child property of type @code{:int}
-        (Read / Write) @br{}
-        The index of the child in the parent. @br{}
+        The @code{position} child property of type @code{:int} (Read / Write)
+        @br{}
+        The index of the child widget in the parent. @br{}
         Allowed values: >= -1 @br{}
         Default value: 0
       @end{entry}
@@ -187,21 +187,20 @@
 (setf (gethash 'gtk-header-bar-custom-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-custom-title 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-custom-title object) => title-widget}
   @syntax[]{(setf (gtk-header-bar-custom-title object) title-widget)}
-  @argument[object]{a @class{gtk-header-bar}}
-  @argument[title-widget]{a custom widget to use for a title}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[title-widget]{a @class{gtk-widget} custom widget to use for a title}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{custom-title} of the
+    Accessor of the @slot[gtk-header-bar]{custom-title} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-custom-title} retrieves the custom
-  title widget of the header.
-
-  The generic function @sym{(setf gtk-header-bar-custom-title} sets a custom
-  title for the header bar.
+  The slot access function @sym{gtk-header-bar-custom-title} retrieves the
+  custom title widget of the header. The slot access function
+  @sym{(setf gtk-header-bar-custom-title)} sets a custom title widget for the
+  header bar.
 
   The title should help a user identify the current view. This supersedes any
   title set by the functions @fun{gtk-header-bar-title} or
@@ -224,32 +223,30 @@
  "The @code{decoration-layout} property of type @code{:string}
   (Read / Write / Construct) @br{}
   The decoration layout for buttons. If this property is not set, the
-  \"gtk-decoration-layout\" setting is used.
-  See the function @fun{gtk-header-bar-decoration-layout} for information about
-  the format of this string. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.12")
+  @slot[gtk-settings]{gtk-decoration-layout} setting is used. See the function
+  @fun{gtk-header-bar-decoration-layout} for information about the format of
+  this string. Since 3.12 @br{}
+  Default value: @code{nil}")
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-header-bar-decoration-layout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-decoration-layout 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-decoration-layout object) => layout}
   @syntax[]{(setf (gtk-header-bar-decoration-layout object) layout)}
-  @argument[object]{a @class{gtk-header-bar}}
+  @argument[object]{a @class{gtk-header-bar} container}
   @argument[layout]{a decoration layout, or @code{nil} to unset the layout}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{decoration-layout} of the
+    Accessor of the @slot[gtk-header-bar]{decoration-layout} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-decoration-layout} gets the
-  decoration layout.
-
-  The generic function @sym{(setf gtk-header-bar-decoration-layout} sets the
-  decoration layout for this header bar, overriding the
-  \"gtk-decoration-layout\" setting.
+  The slot access function @sym{gtk-header-bar-decoration-layout} gets the
+  decoration layout. The slot access function
+  @sym{(setf gtk-header-bar-decoration-layout} sets the decoration layout for
+  the header bar, overriding the @slot[gtk-settings]{gtk-decoration-layout}
+  setting.
 
   There can be valid reasons for overriding the setting, such as a header bar
   design that does not allow for buttons to take room on the right, or only
@@ -265,7 +262,8 @@
   and minimize, maximize and close buttons on the right.
 
   Since 3.12
-  @see-class{gtk-header-bar}")
+  @see-class{gtk-header-bar}
+  @see-class{gtk-settings}")
 
 ;;; --- gtk-header-bar-decoration-layout-set -----------------------------------
 
@@ -274,56 +272,59 @@
                                                'gtk-header-bar) 't)
  "The @code{decoration-layout-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Set to @emph{true} if @code{decoration-layout} is set. @br{}
+  Set to @em{true} if the @code{decoration-layout} property is set.
   Since 3.12 @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-header-bar-decoration-layout-set
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-decoration-layout-set 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
+  @syntax[]{(gtk-header-bar-decoration-layout object) => layout-set}
+  @syntax[]{(setf (gtk-header-bar-decoration-layout object) layout-set)}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[layout-set]{a boolean wether a decoration layout is set}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{decoration-layout-set} of the
+    Accessor of the @slot[gtk-header-bar]{decoration-layout-set} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  Since 3.12")
+  Set to @em{true} if the @slot[gtk-header-bar]{decoration-layout} property
+  is set.
+
+  Since 3.12
+  @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-has-subtitle --------------------------------------------
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "has-subtitle"
                                                'gtk-header-bar) 't)
- "The @code{has-subtitle} property of type @code{:boolean}
-  (Read / Write) @br{}
-  If @emph{true}, reserve space for a subtitle, even if none is currently set.
-  @br{}
+ "The @code{has-subtitle} property of type @code{:boolean} (Read / Write) @br{}
+  If @em{true}, reserve space for a subtitle, even if none is currently set.
   Since 3.12 @br{}
-  Default value: @emph{true}")
+  Default value: @em{true}")
 
 #+(and gtk-3-12 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-header-bar-has-subtitle
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-header-bar-has-subtitle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-has-subtitle 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-has-subtitle object) => setting}
   @syntax[]{(setf gtk-header-bar-has-subtitle object) setting)}
-  @argument[object]{a @class{gtk-header-bar}}
-  @argument[setting]{@emph{true} to reserve space for a subtitle}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[setting]{@em{true} to reserve space for a subtitle}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{has-subtitle} of the
+    Accessor of the @slot[gtk-header-bar]{has-subtitle} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-has-subtitle} retrieves whether the
-  header bar reserves space for a subtitle, regardless if one is currently set
-  or not.
-
-  The generic function @sym{gtk-header-bar-has-subtitle} sets whether the header
-  bar should reserve space for a subtitle, even if none is currently set.
+  The slot access function @sym{gtk-header-bar-has-subtitle} retrieves whether
+  the header bar reserves space for a subtitle, regardless if one is currently
+  set or not. The slot access function @sym{(setf gtk-header-bar-has-subtitle)}
+  sets whether the header bar should reserve space for a subtitle.
 
   Since 3.12
   @see-class{gtk-header-bar}")
@@ -335,33 +336,31 @@
                                                'gtk-header-bar) 't)
  "The @code{show-close-button} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to show window decorations.
-  Which buttons are actually shown and where is determined by the
-  @code{decoration-layout} property, and by the state of the window (e. g. a
-  close button will not be shown if the window can not be closed). @br{}
-  Default value: @code{nil}")
+  Whether to show window decorations. Which buttons are actually shown and
+  where is determined by the @code{decoration-layout} property, and by the
+  state of the window, e. g. a close button will not be shown if the window
+  can not be closed. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-header-bar-show-close-button
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-header-bar-show-close-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-show-close-button 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-show-close-button object) => setting}
   @syntax[]{(setf gtk-header-bar-show-close-button object) setting)}
-  @argument[object]{a @class{gtk-header-bar}}
-  @argument[setting]{@emph{true} to show standard window decorations}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[setting]{@em{true} to show standard window decorations}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{show-close-button} of the
+    Accessor of the @slot[gtk-header-bar]{show-close-button} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-show-close-button} returns whether
-  this header bar shows the standard window decorations.
-
-  The generic function @sym{(setf gtk-header-bar-close-button)} sets whether
-  this header bar shows the standard window decorations, including close,
-  maximize, and minimize.
+  The slot access function @sym{gtk-header-bar-show-close-button} returns
+  whether the header bar shows the standard window decorations. The slot access
+  function @sym{(setf gtk-header-bar-close-button)} sets whether the header bar
+  shows the standard window decorations, including close, maximize, and
+  minimize.
 
   Since 3.10
   @see-class{gtk-header-bar}")
@@ -377,15 +376,20 @@
   Default value: 6")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-header-bar-spacing
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-header-bar-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-spacing 'function)
- "@version{2016-1-17}
+ "@version{2020-5-9}
+  @syntax[]{(gtk-header-bar-show-close-button object) => setting}
+  @syntax[]{(setf gtk-header-bar-show-close-button object) setting)}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[spacint]{an integer with the amount of space between children}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{spacing} of the
+    Accessor of the @slot[gtk-header-bar]{spacing} slot of the
     @class{gtk-header-bar} class.
   @end{short}
+
+  The amount of space between children in pixels.
 
   Since 3.10
   @see-class{gtk-header-bar}")
@@ -400,30 +404,27 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-header-bar-subtitle
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-header-bar-subtitle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-subtitle 'function)
- "@version{2016-1-17}
-  @argument[object]{A @class{gtk-header-bar} widget.}
-  @argument[subtitle]{A subtitle, or @code{nil}.}
+ "@version{2020-5-9}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[subtitle]{a string with the subtitle, or @code{nil}}
   @syntax[]{(gtk-header-bar-subtitle object) => subtitle}
   @syntax[]{(setf (gtk-header-bar-subtitle object) subtitle)}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{subtitle} of the
+    Accessor of the @slot[gtk-header-bar]{subtitle} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-subtitle} retrieves the subtitle of
-  the header.
-
-  The generic function @sym{(setf gtk-header-bar-subtitle)} sets the subtitle
-  of the header bar. The title should give a user an additional detail to help
-  him identify the current view.
+  The slot access function @sym{gtk-header-bar-subtitle} retrieves the subtitle
+  of the header. The slot access function @sym{(setf gtk-header-bar-subtitle)}
+  sets the subtitle of the header bar. The title should give a user an
+  additional detail to help him identify the current view.
 
   Note that @class{gtk-header-bar} by default reserves room for the subtitle,
   even if none is currently set. If this is not desired, set the
-  @slot[gtk-header-bar]{has-subtitle} property to @code{nil}.
+  @slot[gtk-header-bar]{has-subtitle} property to @em{false}.
 
   Since: 3.10
   @see-class{gtk-header-bar}")
@@ -438,27 +439,25 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-header-bar-title
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-header-bar-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-title 'function)
- "@version{2016-1-17}
-  @argument[object]{A @class{gtk-header-bar} widget.}
-  @argument[title]{A title, or @code{nil}.}
+ "@version{2020-5-9}
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[title]{a string with the title, or @code{nil}.}
   @syntax[]{(gtk-header-bar-title object) => title}
   @syntax[]{(setf (gtk-header-bar-title object) title)}
   @begin{short}
-    Accessor of the slot @slot[gtk-header-bar]{title} of the
+    Accessor of the @slot[gtk-header-bar]{title} slot of the
     @class{gtk-header-bar} class.
   @end{short}
 
-  The generic function @sym{gtk-header-bar-title} retrieves the title of the
-  header.
+  The slot access function @sym{gtk-header-bar-title} retrieves the title of
+  the header. The slot access function @sym{(setf gtk-header-bar-title)} returns
+  the title of the header, or @code{nil} if none has been set explicitly.
 
-  The generic function @sym{(setf gtk-header-bar-title} returns the title of the
-  header, or @code{nil} if none has been set explicitly. The title should help
-  a user identify the current view. A good title should not include the
-  application name.
+  The title should help a user identify the current view. A good title should
+  not include the application name.
 
   Since: 3.10
   @see-class{gtk-header-bar}")
@@ -477,16 +476,20 @@
 (setf (gethash 'gtk-header-bar-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-child-pack-type 'function)
- "@version{2019-3-16}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-child-pack-type object) => pack-type)}
   @syntax[]{(setf (gtk-header-bar-child-pack-type object) pack-type)}
   @argument[object]{a @class{gtk-header-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
-  @argument[pack-type]{The @symbol{gtk-pack-type} type of the child.}
+  @argument[pack-type]{a value of the @symbol{gtk-pack-type} enumeration for
+    the child widget}
   @begin{short}
-    Accessor of the child property @code{pack-type} of the
+    Accessor of the @code{pack-type} child property of the
     @class{gtk-header-bar} class.
   @end{short}
+
+  A value of the @symbol{gtk-pack-type} enumeration indicating whether the
+  child widget is packed with reference to the start or end of the parent.
 
   Since 3.10
   @see-class{gtk-header-bar}
@@ -502,16 +505,19 @@
 (setf (gethash 'gtk-header-bar-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-child-position 'function)
- "@version{2019-3-16}
+ "@version{2020-5-9}
   @syntax[]{(gtk-header-bar-child-position object) => position)}
   @syntax[]{(setf (gtk-header-bar-child-position object) position)}
   @argument[object]{a @class{gtk-header-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
-  @argument[position]{The index of the child in the parent.}
+  @argument[position]{an integer with the index of the child widget in the
+    header bar}
   @begin{short}
-    Accessor of the child property @code{position} of the
+    Accessor of the @code{position} child property of the
     @class{gtk-header-bar} class.
   @end{short}
+
+  The index of the child widget in the heaer bar.
 
   Since 3.10
   @see-class{gtk-header-bar}")
@@ -520,12 +526,14 @@
 ;;; gtk_header_bar_new ()
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-header-bar-new))
+
 (defun gtk-header-bar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2016-1-30}
-  @return{A new @class{gtk-header-bar} widget.}
+ "@version{2020-5-9}
+  @return{A new @class{gtk-header-bar} container.}
   @begin{short}
-    Creates a new @class{gtk-header-bar} widget.
+    Creates a new @class{gtk-header-bar} container.
   @end{short}
 
   Since 3.10
@@ -540,18 +548,19 @@
 
 (defcfun ("gtk_header_bar_pack_start" gtk-header-bar-pack-start) :void
  #+cl-cffi-gtk-documentation
- "@version{2016-1-30}
-  @argument[bar]{a @class{gtk-header-bar}}
-  @argument[child]{the @class{gtk-widget} to be added to the header bar}
+ "@version{2020-5-9}
+  @argument[header-bar]{a @class{gtk-header-bar} container}
+  @argument[child]{the @class{gtk-widget} child widget to be added to the
+    header bar}
   @begin{short}
-    Adds @arg{child} to the header bar, packed with reference to the start of
-    the header bar.
+    Adds a child widget to the header bar, packed with reference to the start
+    of the header bar.
   @end{short}
 
   Since 3.10
   @see-class{gtk-header-bar}
   @see-function{gtk-header-bar-pack-end}"
-  (bar (g-object gtk-header-bar))
+  (header-bar (g-object gtk-header-bar))
   (child (g-object gtk-widget)))
 
 (export 'gtk-header-bar-pack-start)
@@ -562,18 +571,19 @@
 
 (defcfun ("gtk_header_bar_pack_end" gtk-header-bar-pack-end) :void
  #+cl-cffi-gtk-documentation
- "@version{2016-1-30}
-  @argument[bar]{a @class{gtk-header-bar}}
-  @argument[child]{the @class{gtk-widget} to be added to the header bar}
+ "@version{2020-5-9}
+  @argument[header-bar]{a @class{gtk-header-bar} container}
+  @argument[child]{the @class{gtk-widget} child widget to be added to the
+    header bar}
   @begin{short}
-    Adds @arg{child} to the header bar, packed with reference to the end of
+    Adds a child widget to the header bar, packed with reference to the end of
     the header bar.
   @end{short}
 
   Since 3.10
   @see-class{gtk-header-bar}
   @see-function{gtk-header-bar-pack-start}"
-  (bar (g-object gtk-header-bar))
+  (header-bar (g-object gtk-header-bar))
   (child (g-object gtk-widget)))
 
 (export 'gtk-header-bar-pack-end)
