@@ -2,11 +2,11 @@
 ;;; gtk.stack-switcher.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,23 +82,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-stack-switcher 'type)
- "@version{2019-3-15}
+ "@version{2020-5-8}
   @begin{short}
     The @sym{gtk-stack-switcher} widget acts as a controller for a
-    @class{gtk-stack}; it shows a row of buttons to switch between the various
-    pages of the associated stack widget.
+    @class{gtk-stack} container. It shows a row of buttons to switch between
+    the various pages of the associated stack widget.
   @end{short}
 
   @image[stackswitcher]{}
 
   All the content for the buttons comes from the child properties of the
-  @class{gtk-stack}; the button visibility in a @sym{gtk-stack-switcher}
-  widget is controlled by the visibility of the child in the @class{gtk-stack}.
+  @class{gtk-stack} container. The button visibility in a
+  @sym{gtk-stack-switcher} widget is controlled by the visibility of the child
+  in the @class{gtk-stack} container.
 
-  It is possible to associate multiple @sym{gtk-stack-switcher} widgets with the
-  same @class{gtk-stack} widget.
+  It is possible to associate multiple @sym{gtk-stack-switcher} widgets with
+  the same @class{gtk-stack} container.
 
-  The @sym{gtk-stack-switcher} widget was added in 3.10.
+  The @sym{gtk-stack-switcher} widget was added in GTK+ 3.10.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-stack-switcher} has a single CSS node named @code{stackswitcher}
     and style class @code{.stack-switcher}.
@@ -122,8 +123,7 @@
                      't)
  "The @code{icon-size} property of type @code{:int} (Read / Write) @br{}
   Use the @code{icon-size} property to change the size of the image displayed
-  when a @class{gtk-stack-switcher} is displaying icons. @br{}
-  Since 3.20 @br{}
+  when a @class{gtk-stack-switcher} is displaying icons. Since 3.20 @br{}
   Allowed values: >= 0 @br{}
   Default value: 1")
 
@@ -131,15 +131,18 @@
 (setf (gethash 'gtk-stack-switcher-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-switcher-icon-size 'function)
- "@version{2019-3-16}
+ "@version{2020-5-8}
   @syntax[]{(gtk-stack-switcher-icon-size object) => icon-size}
   @syntax[]{(setf (gtk-stack-switcher-icon-size object) icon-size)}
-  @argument[object]{a @class{gtk-stack-switcher} object}
-  @argument[icon-size]{size of the image}
+  @argument[object]{a @class{gtk-stack-switcher} widget}
+  @argument[icon-size]{an integer with size of the image}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack-switcher]{icon-size} of the
+    Accessor of the @slot[gtk-stack-switcher]{icon-size} slot of the
     @class{gtk-stack-switcher} class.
   @end{short}
+
+  Use the @slot[gtk-stack-switcher]{icon-size} property to change the size of
+  the image displayed when a stack switcher is displaying icons.
 
   Since 3.20
   @see-class{gtk-stack-switcher}")
@@ -150,28 +153,25 @@
 (setf (documentation (atdoc:get-slot-from-name "stack" 'gtk-stack-switcher)
                      't)
  "The @code{stack} property of type @class{gtk-stack} (Read / Write) @br{}
-  The @class{gtk-stack}. @br{}
-  Since 3.10 @br{}")
+  The @class{gtk-stack}. Since 3.10 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-switcher-stack atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-switcher-stack 'function)
- "@version{2019-3-16}
+ "@version{2020-5-8}
   @syntax[]{(gtk-stack-switcher-stack object) => stack}
   @syntax[]{(setf (gtk-stack-switcher-stack object) stack)}
-  @argument[object]{a @class{gtk-stack-switcher} object}
+  @argument[object]{a @class{gtk-stack-switcher} widget}
   @argument[stack]{a @class{gtk-stack} container}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack-switcher]{stack} of the
+    Accessor of the @slot[gtk-stack-switcher]{stack} slot of the
     @class{gtk-stack-switcher} class.
   @end{short}
 
-  The generic function @sym{gtk-stack-switcher-stack}
-  retrieves the stack.
-
-  The generic function @sym{(setf gtk-stack-switcher-stack)}
-  sets the stack to control.
+  The slot access function @sym{gtk-stack-switcher-stack} retrieves the stack.
+  The slot access function @sym{(setf gtk-stack-switcher-stack)} sets the stack
+  to control.
 
   Since 3.10
   @see-class{gtk-stack-switcher}")
@@ -184,8 +184,8 @@
 
 (defun gtk-stack-switcher-new ()
  #+cl-cffi-gtk-documentation
- "@version{2019-3-16}
-  @return{The new @class{gtk-stack-switcher} objekt.}
+ "@version{2020-5-8}
+  @return{The new @class{gtk-stack-switcher} widget.}
   @short{Creates a new stack switcher.}
 
   Since 3.10
