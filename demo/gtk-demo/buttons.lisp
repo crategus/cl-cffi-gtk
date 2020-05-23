@@ -22,15 +22,25 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
+
       ;; Set gtk-button-images to T. This allows buttons with text and image.
       (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+
       ;; These are the standard functions to create a button.
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-label "Label"))
-      (gtk-box-pack-start vbox1
-                          (gtk-button-new-with-mnemonic "_Mnemonic"))
+
+      (let ((button (gtk-button-new-with-mnemonic "_Mnemonic")))
+        (setf (gtk-button-use-underline button) t)
+        (gtk-box-pack-start vbox1 button))
+
+      (let ((button (gtk-button-new-from-icon-name "edit-copy" :button)))
+        (setf (gtk-button-label button) "Kopieren")
+        (gtk-box-pack-start vbox1 button))
+
       (gtk-box-pack-start vbox1
                           (gtk-button-new-from-stock "gtk-apply"))
+
       ;; Create some buttons with make-instance.
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button

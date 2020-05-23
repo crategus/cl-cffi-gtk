@@ -129,7 +129,7 @@
 (defun activate-quit (action parameter)
   (format t "in action activate-quit: ~a, ~a~%" action parameter)
   ;; Destroy all windows of the application
-  (dolist (window (gtk-application-get-windows *application*))
+  (dolist (window (gtk-application-windows *application*))
     (gtk-widget-destroy window)))
 
 (defun activate-about (action parameter)

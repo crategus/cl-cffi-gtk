@@ -44,8 +44,8 @@
         (print-data-number-pages *data*)))
 
 (defun draw-page (operation context page-nr)
-  (let ((text-height 0)
-        (cr (gtk-print-context-get-cairo-context context))
+  (declare (ignore operation))
+  (let ((cr (gtk-print-context-get-cairo-context context))
         (width (floor (gtk-print-context-width context)))
         (layout (gtk-print-context-create-pango-layout context)))
 

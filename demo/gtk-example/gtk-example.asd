@@ -6,6 +6,9 @@
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "gtk-example")
+               (:file "application-inhibit")
+               (:file "application-simple")
+
                (:file "dialog")
                (:file "file-chooser-dialog")
                (:file "grab")
@@ -20,7 +23,6 @@
                (:file "print-dialog")
                (:file "print-operation")
                (:file "show-about-dialog")
-               (:file "simple-application")
                (:file "image-menu-item")
                (:file "widget-pointer")
               ))

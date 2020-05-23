@@ -522,7 +522,7 @@
        (lambda (action parameter)
          (declare (ignore action parameter))
          ;; Destroy all windows of the application
-         (dolist (window (gtk-application-get-windows application))
+         (dolist (window (gtk-application-windows application))
            (gtk-widget-destroy window))
          ;; Quit the main loop
          (leave-gtk-main)
