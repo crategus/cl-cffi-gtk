@@ -282,8 +282,6 @@
 ;;; g_simple_action_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline g-simple-action-new))
-
 (defun g-simple-action-new (name parameter-type)
  #+cl-cffi-gtk-documentation
  "@version{2020-2-7}
@@ -306,8 +304,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_new_stateful ()
 ;;; ----------------------------------------------------------------------------
-
-(declaim (inline g-simple-action-new-stateful))
 
 (defun g-simple-action-new-stateful (name parameter-type state)
  #+cl-cffi-gtk-documentation
