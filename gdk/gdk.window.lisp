@@ -238,54 +238,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkAnchorHints
-;;;
-;;; Positioning hints for aligning a window relative to a rectangle.
-;;;
-;;; These hints determine how the window should be positioned in the case that
-;;; the window would fall off-screen if placed in its ideal position.
-;;;
-;;; For example, GDK_ANCHOR_FLIP_X will replace GDK_GRAVITY_NORTH_WEST with
-;;; GDK_GRAVITY_NORTH_EAST and vice versa if the window extends beyond the left
-;;; or right edges of the monitor.
-;;;
-;;; If GDK_ANCHOR_SLIDE_X is set, the window can be shifted horizontally to fit
-;;; on-screen. If GDK_ANCHOR_RESIZE_X is set, the window can be shrunken
-;;; horizontally to fit.
-;;;
-;;; In general, when multiple flags are set, flipping should take precedence
-;;; over sliding, which should take precedence over resizing.
-;;;
-;;; Members
-;;;
-;;; GDK_ANCHOR_FLIP_X
-;;;     allow flipping anchors horizontally
-;;;
-;;; GDK_ANCHOR_FLIP_Y
-;;;     allow flipping anchors vertically
-;;;
-;;; GDK_ANCHOR_SLIDE_X
-;;;     allow sliding window horizontally
-;;;
-;;; GDK_ANCHOR_SLIDE_Y
-;;;     allow sliding window vertically
-;;;
-;;; GDK_ANCHOR_RESIZE_X
-;;;     allow resizing window horizontally
-;;;
-;;; GDK_ANCHOR_RESIZE_Y
-;;;     allow resizing window vertically
-;;;
-;;; GDK_ANCHOR_FLIP
-;;;     allow flipping anchors on both axes
-;;;
-;;; GDK_ANCHOR_SLIDE
-;;;     allow sliding window on both axes
-;;;
-;;; GDK_ANCHOR_RESIZE
-;;;     allow resizing window on both axes
-;;;
-;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-22
+(define-g-flags "GdkAnchorHints" gdk-anchor-hints
+  (:export t
+   :type-initializer "gdk_anchor_hints_get_type")
+  (:flip-x   #.(ash 1 0))
+  (:flip-y   #.(ash 1 1))
+  (:slide-x  #.(ash 1 2))
+  (:slide-y  #.(ash 1 3))
+  (:resize-x #.(ash 1 4))
+  (:resize-y #.(ash 1 5))
+  (:flip    3)  ; :flip-x   | :flip-y
+  (:slide  12)  ; :slide-x  | :slide-y
+  (:resize 48)) ; :resize-x | :resize-y
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (gethash 'gdk-anchor-hints atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gdk-anchor-hints atdoc:*external-symbols*)
+ "@version{2020-5-19}
+  @begin{short}
+    Positioning hints for aligning a window relative to a rectangle.
+  @end{short}
+
+  These hints determine how the window should be positioned in the case that
+  the window would fall off-screen if placed in its ideal position.
+
+  For example, @code{:flip-x} will replace @code{GDK_GRAVITY_NORTH_WEST} with
+  @code{GDK_GRAVITY_NORTH_EAST} and vice versa if the window extends beyond the
+  left or right edges of the monitor.
+
+  If @code{:slide-x} is set, the window can be shifted horizontally to fit
+  on-screen. If @code{:resize-x} is set, the window can be shrunken
+  horizontally to fit.
+
+  In general, when multiple flags are set, flipping should take precedence
+  over sliding, which should take precedence over resizing.
+  @begin{pre}
+(define-g-enum \"GdkAnchorHints\" gdk-anchor-hints
+  (:export t
+   :type-initializer \"gdk_anchor_hints_get_type\")
+  (:flip-x 0)
+  (:flip-y 1)
+  (:slide-x 2)
+  (:slide-y 3)
+  (:resize-x 4)
+  (:resize-y 5)
+  (:flip 6)
+  (:slide 7)
+  (:resize 8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:flip-x]{Allow flipping anchors horizontally.}
+    @entry[:fliy-y]{Allow flipping anchors vertically.}
+    @entry[:slide-x]{Allow sliding window horizontally.}
+    @entry[:slide-y]{Allow sliding window vertically.}
+    @entry[:resize-x]{Allow resizing window horizontally.}
+    @entry[:resize-y]{Allow resizing window vertically.}
+    @entry[:flip]{Allow flipping anchors on both axes.}
+    @entry[:slide]{Allow sliding window on both axes.}
+    @endtry[:resize]{Allow resizing window on both axes.}
+  @end{table}
+  Since 3.22
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkWindow
