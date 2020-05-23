@@ -652,24 +652,26 @@
 (export 'gtk-toolbar-unset-icon-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_get_relief_style ()
+;;; gtk_toolbar_get_relief_style () -> gtk-toolbar-relief-style
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_toolbar_get_relief_style" gtk-toolbar-get-relief-style)
+(defcfun ("gtk_toolbar_get_relief_style" gtk-toolbar-relief-style)
     gtk-relief-style
  #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2020-5-10}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @return{The relief style of buttons on @arg{toolbar}.}
+  @return{The relief style of type @symbol{gtk-relief-style} of buttons on
+    @arg{toolbar}.}
   @begin{short}
-    Returns the relief style of buttons on @arg{toolbar}.
+    Returns the relief style of buttons on the toolbar.
   @end{short}
-  See the @fun{gtk-button-set-relief} function.
+  See the function @fun{gtk-button-relief}.
   @see-class{gtk-toolbar}
-  @see-function{gtk-toolbar-set-relief-style}"
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-toolbar-relief-style}"
   (toolbar (g-object gtk-toolbar)))
 
-(export 'gtk-toolbar-get-relief-style)
+(export 'gtk-toolbar-relief-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_style ()
