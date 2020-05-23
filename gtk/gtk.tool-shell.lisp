@@ -141,23 +141,24 @@
 ;;; gtk_tool_shell_get_relief_style ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_shell_get_relief_style" gtk-tool-shell-get-relief-style)
+(defcfun ("gtk_tool_shell_get_relief_style" gtk-tool-shell-relief-style)
     gtk-relief-style
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-5-10}
   @argument[shell]{a @class{gtk-tool-shell} object}
-  @return{The relief style of buttons on shell.}
+  @return{The relief style of type @symbol{gtk-relief-style} of buttons on
+    @arg{shell}.}
   @begin{short}
-    Returns the relief style of buttons on @arg{shell}.
+    Returns the relief style of buttons on the tool shell.
   @end{short}
   Tool items must not call this function directly, but rely on the function
-  @fun{gtk-tool-item-get-relief-style} instead.
-  @see-class{gtk-tool-shell-get-relief-style}
+  @fun{gtk-tool-item-relief-style} instead.
+  @see-class{gtk-tool-shell}
   @see-symbol{gtk-relief-style}
-  @see-function{gtk-tool-item-get-relief-style}"
+  @see-function{gtk-tool-item-relief-style}"
   (shell (g-object gtk-tool-shell)))
 
-(export 'gtk-tool-shell-get-relief-style)
+(export 'gtk-tool-shell-relief-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_style ()
