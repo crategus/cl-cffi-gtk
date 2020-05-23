@@ -2,12 +2,12 @@
 ;;; gtk.menu-shell.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,11 +29,14 @@
 ;;;
 ;;; GtkMenuShell
 ;;;
-;;; A base class for menu objects
+;;;     A base class for menu objects
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkMenuShell
+;;;     GtkMenuDirectionType
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_menu_shell_append
 ;;;     gtk_menu_shell_prepend
@@ -50,445 +53,37 @@
 ;;;     gtk_menu_shell_get_parent_shell
 ;;;     gtk_menu_shell_bind_model
 ;;;
-;;;     GtkMenuDirectionType
+;;; Properties
+;;;
+;;;     gboolean    take-focus          Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void    activate-current    Action
+;;;         void    cancel              Action
+;;;         void    cycle-focus         Action
+;;;         void    deactivate          Run First
+;;;         void    insert              Run First
+;;;         void    move-current        Action
+;;;     gboolean    move-selected       Run Last
+;;;         void    selection-done      Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkMenuShell
+;;;                     ├── GtkMenuBar
+;;;                     ╰── GtkMenu
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkMenuShell implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkMenuShell
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkMenuShell" gtk-menu-shell
-  (:superclass gtk-container
-   :export t
-   :interfaces ("AtkImplementorIface"
-                "GtkBuildable")
-   :type-initializer "gtk_menu_shell_get_type")
-  ((take-focus
-    gtk-menu-shell-take-focus
-    "take-focus" "gboolean" t t)))
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-menu-shell 'type)
- "@version{2013-5-26}
-  @begin{short}
-    A @sym{gtk-menu-shell} is the abstract base class used to derive the
-    @class{gtk-menu} and @class{gtk-menu-bar} subclasses.
-  @end{short}
-
-  A @sym{gtk-menu-shell} is a container of @class{gtk-menu-item} objects
-  arranged in a list which can be navigated, selected, and activated by the user
-  to perform application functions. A @class{gtk-menu-item} can have a submenu
-  associated with it, allowing for nested hierarchical menus.
-
-  @begin[Terminology]{dictionary}
-    A menu item can be \"selected\", this means that it is displayed in the
-    prelight state, and if it has a submenu, that submenu will be popped up.
-
-    A menu is \"active\" when it is visible onscreen and the user is selecting
-    from it. A menubar is not active until the user clicks on one of its
-    menuitems. When a menu is active, passing the mouse over a submenu will pop
-    it up.
-
-    There is also is a concept of the current menu and a current menu item. The
-    current menu item is the selected menu item that is furthest down in the
-    hierarchy. (Every active menu shell does not necessarily contain a selected
-    menu item, but if it does, then the parent menu shell must also contain a
-    selected menu item.) The current menu is the menu that contains the current
-    menu item. It will always have a GTK grab and receive all key presses.
-  @end{dictionary}
-  @begin[Signal Details]{dictionary}
-    @subheading{The \"activate-current\" signal}
-      @begin{pre}
- lambda (menushell force-hide)    : Action
-      @end{pre}
-      An action signal that activates the current menu item within the menu
-      shell.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-        @entry[force-hide]{If @em{true}, hide the menu after activating the menu
-          item.}
-      @end{table}
-    @subheading{The \"cancel\" signal}
-      @begin{pre}
- lambda (menushell)    : Action
-      @end{pre}
-      An action signal which cancels the selection within the menu shell. Causes
-      the \"selection-done\" signal to be emitted.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-      @end{table}
-    @subheading{The \"cycle-focus\" signal}
-      @begin{pre}
- lambda (menushell direction)    : Action
-      @end{pre}
-      A keybinding signal which moves the focus in the given direction.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-        @entry[direction]{The direction to cycle in.}
-      @end{table}
-    @subheading{The \"deactivate\" signal}
-      @begin{pre}
- lambda (menushell)
-      @end{pre}
-      This signal is emitted when a menu shell is deactivated.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-      @end{table}
-    @subheading{The \"insert\" signal}
-      @begin{pre}
- lambda (menushell child position)    : Run First
-      @end{pre}
-      The \"insert\" signal is emitted when a new @class{gtk-menu-item} is
-      added to a @sym{gtk-menu-shell}. A separate signal is used instead of
-      \"GtkContainer::add\" signal because of the need for an additional
-      position parameter. @br{}
-      The inverse of this signal is the \"GtkContainer::removed\" signal.
-      @begin[code]{table}
-        @entry[menu-shell]{The object on which the signal is emitted.}
-        @entry[child]{The @class{gtk-menu-item} that is being inserted.}
-        @entry[position]{The position at which the insert occurs.}
-      @end{table}
-    @subheading{The \"move-current\" signal}
-      @begin{pre}
- lambda (menushell direction)    : Action
-      @end{pre}
-      An keybinding signal which moves the current menu item in the direction
-      specified by direction.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-        @entry[direction]{The direction to move.}
-      @end{table}
-    @subheading{The \"move-selected\" signal}
-      @begin{pre}
- lambda (menushell distance)    : Run Last
-      @end{pre}
-      The \"move-selected\" signal is emitted to move the selection to another
-      item.
-      @begin[code]{table}
-        @entry[menushell]{The object on which the signal is emitted.}
-        @entry[distance]{+1 to move to the next item, -1 to move to the
-          previous.}
-        @entry[Returns]{@em{True} to stop the signal emission, @code{nil} to
-          continue.}
-      @end{table}
-    @subheading{The \"selection-done\" signal}
-      @begin{pre}
- lambda (menushell)    : Run First
-      @end{pre}
-      This signal is emitted when a selection has been completed within a menu
-      shell.
-      @begin[code]{table}
-        @entry[menushell]{The object which received the signal.}
-      @end{table}
-  @end{dictionary}
-  @see-slot{gtk-menu-shell-take-focus}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property and Accessor Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-menu-shell-take-focus ----------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "take-focus" 'gtk-menu-shell) 't)
- "The @code{take-focus} property of type @code{:boolean} (Read / Write)@br{}
-  A boolean that determines whether the menu and its submenus grab the
-  keyboard focus. See the @fun{gtk-menu-shell-take-focus} function. @br{}
-  Default value: @em{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-menu-shell-take-focus atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-menu-shell-take-focus 'function)
- "@version{2016-1-16}
-  @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
-  @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[take-focus]{@em{true} if the menu shell should take the keyboard
-    focus on popup}
-  @begin{short}
-    Accessor of the @slot[gtk-menu-shell]{take-focus} slot of the
-    @class{gtk-menu-shell} class.
-  @end{short}
-
-  The @sym{gtk-menu-shell-take-focus} slot access function returns @em{true} if
-  the menu shell will take the keyboard focus on popup.
-
-  If @arg{take-focus} is @em{true} (the default) the menu shell will take the
-  keyboard focus so that it will receive all keyboard events which is needed
-  to enable keyboard navigation in menus.
-
-  Setting @arg{take-focus} to @code{nil} is useful only for special applications
-  like virtual keyboard implementations which should not take keyboard focus.
-
-  The @arg{take-focus} state of a menu or menu bar is automatically propagated
-  to submenus whenever a submenu is popped up, so you do not have to worry about
-  recursively setting it for your entire menu hierarchy. Only when
-  programmatically picking a submenu and popping it up manually, the
-  @arg{take-focus} property of the submenu needs to be set explicitely.
-
-  Note that setting it to @code{nil} has side-effects:
-
-  If the focus is in some other app, it keeps the focus and keynav in the menu
-  does not work. Consequently, keynav on the menu will only work if the focus
-  is on some toplevel owned by the onscreen keyboard.
-
-  To avoid confusing the user, menus with @arg{take-focus} set to @code{nil}
-  should not display mnemonics or accelerators, since it cannot be guaranteed
-  that they will work.
-
-  See also the @fun{gdk-keyboard-grab} function.
-  @see-class{gtk-menu-shell}
-  @see-function{gdk-keyboard-grab}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_append ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_append" gtk-menu-shell-append) :void
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[child]{the @class{gtk-menu-item} to add}
-  Adds a new @class{gtk-menu-item} to the end of the menu shell's item list.
-  @see-class{gtk-menu-shell}
-  @see-function{gtk-menu-shell-prepend}
-  @see-function{gtk-menu-shell-insert}"
-  (menu-shell (g-object gtk-menu-shell))
-  (child (g-object gtk-widget)))
-
-(export 'gtk-menu-shell-append)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_prepend ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_prepend" gtk-menu-shell-prepend) :void
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[child]{the @class{gtk-menu-item} to add}
-  Adds a new @class{gtk-menu-item} to the beginning of the menu shell's item
-  list.
-  @see-class{gtk-menu-shell}
-  @see-function{gtk-menu-shell-append}
-  @see-function{gtk-menu-shell-insert}"
-  (menu-shell (g-object gtk-menu-shell))
-  (child (g-object gtk-widget)))
-
-(export 'gtk-menu-shell-prepend)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_insert ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_insert" gtk-menu-shell-insert) :void
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[child]{the @class{gtk-menu-item} to add}
-  @argument[position]{the position in the item list where child is added,
-    positions are numbered from 0 to n-1}
-  Adds a new @class{gtk-menu-item} to the menu shell's item list at the position
-  indicated by position.
-  @see-class{gtk-menu-shell}
-  @see-function{gtk-menu-shell-append}
-  @see-function{gtk-menu-shell-prepend}"
-  (menu-shell (g-object gtk-menu-shell))
-  (child (g-object gtk-widget))
-  (position :int))
-
-(export 'gtk-menu-shell-insert)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_deactivate ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_deactivate" gtk-menu-shell-deactivate) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @short{Deactivates the menu shell.}
-
-  Typically this results in the menu shell being erased from the screen.
-  @see-class{gtk-menu-shell}"
-  (menu-shell g-object))
-
-(export 'gtk-menu-shell-deactivate)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_select_item ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_select_item" gtk-menu-shell-select-item) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[menu-item]{the @class{gtk-menu-item} to select}
-  Selects the menu item from the menu shell.
-  @see-class{gtk-menu-shell}"
-  (menu-shell g-object)
-  (menu-item g-object))
-
-(export 'gtk-menu-shell-select-item)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_select_first ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_select_first" %gtk-menu-shell-select-first) :void
-  (menu-shell g-object)
-  (search-sensitive :boolean))
-
-(defun gtk-menu-shell-select-first (menu-shell &optional (search-sensitive t))
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[search-sensitive]{if @em{true}, search for the first selectable menu
-    item, otherwise select nothing if the first item is not sensitive. This
-    should be @code{nil} if the menu is being popped up initially}
-  @begin{short}
-    Select the first visible or selectable child of the menu shell; do not
-    select tearoff items unless the only item is a tearoff item.
-  @end{short}
-  @see-class{gtk-menu-shell}"
-  (%gtk-menu-shell-select-first menu-shell search-sensitive))
-
-(export 'gtk-menu-shell-select-first)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_deselect ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_deselect" gtk-menu-shell-deselect) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  Deselects the currently selected item from the menu shell, if any.
-  @see-class{gtk-menu-shell}"
-  (menu-shell g-object))
-
-(export 'gtk-menu-shell-deselect)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_activate_item ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_activate_item" %gtk-menu-shell-activate-item) :void
-  (menu-shell g-object)
-  (menu-item g-object)
-  (force-deactivate :boolean))
-
-(defun gtk-menu-shell-activate-item (menu-shell menu-item
-                                                &optional force-deactivate)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[menu-item]{the @class{gtk-menu-item} to activate}
-  @argument[force-deactivate]{if @em{true}, force the deactivation of the menu
-    shell after the menu item is activated}
-  Activates the menu item within the menu shell.
-  @see-class{gtk-menu-shell}"
-  (%gtk-menu-shell-activate-item menu-shell menu-item force-deactivate))
-
-(export 'gtk-menu-shell-activate-item)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_cancel ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_menu_shell_cancel" gtk-menu-shell-cancel) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @short{Cancels the selection within the menu shell.}
-  @see-class{gtk-menu-shell}"
-  (menu-shell g-object))
-
-(export 'gtk-menu-shell-cancel)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_get_selected_item ()
-;;;
-;;; GtkWidget * gtk_menu_shell_get_selected_item (GtkMenuShell *menu_shell);
-;;;
-;;; Gets the currently selected item.
-;;;
-;;; menu_shell :
-;;;     a GtkMenuShell
-;;;
-;;; Returns :
-;;;     the currently selected item
-;;;
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_get_parent_shell ()
-;;;
-;;; GtkWidget * gtk_menu_shell_get_parent_shell (GtkMenuShell *menu_shell);
-;;;
-;;; Gets the parent menu shell.
-;;;
-;;; The parent menu shell of a submenu is the GtkMenu or GtkMenuBar from which
-;;; it was opened up.
-;;;
-;;; menu_shell :
-;;;     a GtkMenuShell
-;;;
-;;; Returns :
-;;;     the parent GtkMenuShell
-;;;
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_bind_model ()
-;;;
-;;; void gtk_menu_shell_bind_model (GtkMenuShell *menu_shell,
-;;;                                 GMenuModel *model,
-;;;                                 const gchar *action_namespace,
-;;;                                 gboolean with_separators);
-;;;
-;;; Establishes a binding between a GtkMenuShell and a GMenuModel.
-;;;
-;;; The contents of shell are removed and then refilled with menu items
-;;; according to model. When model changes, shell is updated. Calling this
-;;; function twice on shell with different model will cause the first binding to
-;;; be replaced with a binding to the new model. If model is NULL then any
-;;; previous binding is undone and all children are removed.
-;;;
-;;; with_separators determines if toplevel items (eg: sections) have separators
-;;; inserted between them. This is typically desired for menus but doesn't make
-;;; sense for menubars.
-;;;
-;;; If action_namespace is non-NULL then the effect is as if all actions
-;;; mentioned in the model have their names prefixed with the namespace, plus a
-;;; dot. For example, if the action "quit" is mentioned and action_namespace is
-;;; "app" then the effective action name is "app.quit".
-;;;
-;;; For most cases you are probably better off using gtk_menu_new_from_model()
-;;; or gtk_menu_bar_new_from_model() or just directly passing the GMenuModel to
-;;; gtk_application_set_app_menu() or gtk_application_set_menu_bar().
-;;;
-;;; menu_shell :
-;;;     a GtkMenuShell
-;;;
-;;; model :
-;;;     the GMenuModel to bind to or NULL to remove binding
-;;;
-;;; action_namespace :
-;;;     the namespace for actions in model
-;;;
-;;; with_separators :
-;;;     TRUE if toplevel items in shell should have separators between them
-;;;
-;;; Since 3.6
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMenuDirectionType
@@ -505,7 +100,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-direction-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-menu-direction-type atdoc:*external-symbols*)
- "@version{2013-5-26}
+ "@version{2020-5-19}
   @begin{short}
     An enumeration representing directional movements within a menu.
   @end{short}
@@ -525,5 +120,468 @@
     @entry[:prev]{To the previous menu item.}
   @end{table}
   @see-class{gtk-menu-shell}")
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkMenuShell
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkMenuShell" gtk-menu-shell
+  (:superclass gtk-container
+   :export t
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
+   :type-initializer "gtk_menu_shell_get_type")
+  ((take-focus
+    gtk-menu-shell-take-focus
+    "take-focus" "gboolean" t t)))
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-menu-shell 'type)
+ "@version{2020-5-19}
+  @begin{short}
+    A @sym{gtk-menu-shell} is the abstract base class used to derive the
+    @class{gtk-menu} and @class{gtk-menu-bar} subclasses.
+  @end{short}
+
+  A @sym{gtk-menu-shell} widget is a container of @class{gtk-menu-item} widgets
+  arranged in a list which can be navigated, selected, and activated by the user
+  to perform application functions. A @class{gtk-menu-item} widget can have a
+  submenu associated with it, allowing for nested hierarchical menus.
+  @begin[Terminology]{dictionary}
+    A menu item can be \"selected\", this means that it is displayed in the
+    prelight state, and if it has a submenu, that submenu will be popped up.
+
+    A menu is \"active\" when it is visible onscreen and the user is selecting
+    from it. A menubar is not active until the user clicks on one of its
+    menuitems. When a menu is active, passing the mouse over a submenu will pop
+    it up.
+
+    There is also a concept of the current menu and a current menu item. The
+    current menu item is the selected menu item that is furthest down in the
+    hierarchy. Every active menu shell does not necessarily contain a selected
+    menu item, but if it does, then the parent menu shell must also contain a
+    selected menu item. The current menu is the menu that contains the current
+    menu item. It will always have a GTK grab and receive all key presses.
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"activate-current\" signal}
+      @begin{pre}
+ lambda (menushell force-hide)    : Action
+      @end{pre}
+      An action signal that activates the current menu item within the menu
+      shell.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+        @entry[force-hide]{If @em{true}, hide the menu after activating the
+          menu item.}
+      @end{table}
+    @subheading{The \"cancel\" signal}
+      @begin{pre}
+ lambda (menushell)    : Action
+      @end{pre}
+      An action signal which cancels the selection within the menu shell.
+      Causes the \"selection-done\" signal to be emitted.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+      @end{table}
+    @subheading{The \"cycle-focus\" signal}
+      @begin{pre}
+ lambda (menushell direction)    : Action
+      @end{pre}
+      A keybinding signal which moves the focus in the given direction.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+        @entry[direction]{The value of the @symbol{gtk-direction-type} to
+          cycle in.}
+      @end{table}
+    @subheading{The \"deactivate\" signal}
+      @begin{pre}
+ lambda (menushell)    : Run First
+      @end{pre}
+      This signal is emitted when a menu shell is deactivated.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+      @end{table}
+    @subheading{The \"insert\" signal}
+      @begin{pre}
+ lambda (menushell child position)    : Run First
+      @end{pre}
+      The \"insert\" signal is emitted when a new @class{gtk-menu-item} is
+      added to a @sym{gtk-menu-shell}. A separate signal is used instead of
+      \"GtkContainer::add\" signal because of the need for an additional
+      position parameter.  The inverse of this signal is the
+      \"GtkContainer::removed\" signal.
+      @begin[code]{table}
+        @entry[menu-shell]{The object on which the signal is emitted.}
+        @entry[child]{The @class{gtk-menu-item} widget that is being inserted.}
+        @entry[position]{An integer with the position at which the insert
+          occurs.}
+      @end{table}
+    @subheading{The \"move-current\" signal}
+      @begin{pre}
+ lambda (menushell direction)    : Action
+      @end{pre}
+      An keybinding signal which moves the current menu item in the direction
+      specified by direction.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+        @entry[direction]{The value of the @symbol{gtk-direction-type}
+          enumeration to move.}
+      @end{table}
+    @subheading{The \"move-selected\" signal}
+      @begin{pre}
+ lambda (menushell distance)    : Run Last
+      @end{pre}
+      The \"move-selected\" signal is emitted to move the selection to another
+      item.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget on which the signal
+          is emitted.}
+        @entry[distance]{+1 to move to the next item, -1 to move to the
+          previous.}
+        @entry[Returns]{@em{True} to stop the signal emission, @em{false} to
+          continue.}
+      @end{table}
+    @subheading{The \"selection-done\" signal}
+      @begin{pre}
+ lambda (menushell)    : Run First
+      @end{pre}
+      This signal is emitted when a selection has been completed within a menu
+      shell.
+      @begin[code]{table}
+        @entry[menushell]{The @class{gtk-menu-shell} widget which received the
+          signal.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-menu-shell-take-focus}
+  @see-class{gtk-menu}
+  @see-class{gtk-menu-bar}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property and Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-menu-shell-take-focus ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "take-focus" 'gtk-menu-shell) 't)
+ "The @code{take-focus} property of type @code{:boolean} (Read / Write) @br{}
+  A boolean that determines whether the menu and its submenus grab the
+  keyboard focus. @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-shell-take-focus atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-shell-take-focus 'function)
+ "@version{2020-5-19}
+  @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
+  @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[take-focus]{@em{true} if the menu shell should take the keyboard
+    focus on popup}
+  @begin{short}
+    Accessor of the @slot[gtk-menu-shell]{take-focus} slot of the
+    @class{gtk-menu-shell} class.
+  @end{short}
+
+  The slot access function @sym{gtk-menu-shell-take-focus} returns @em{true} if
+  the menu shell will take the keyboard focus on popup.
+
+  If @arg{take-focus} is @em{true}, the default, the menu shell will take the
+  keyboard focus so that it will receive all keyboard events which is needed
+  to enable keyboard navigation in menus.
+
+  Setting @arg{take-focus} to @em{false} is useful only for special applications
+  like virtual keyboard implementations which should not take keyboard focus.
+
+  The @arg{take-focus} state of a menu or menu bar is automatically propagated
+  to submenus whenever a submenu is popped up, so you do not have to worry about
+  recursively setting it for your entire menu hierarchy. Only when
+  programmatically picking a submenu and popping it up manually, the
+  @arg{take-focus} property of the submenu needs to be set explicitely.
+
+  Note that setting it to @em{false} has side-effects:
+
+  If the focus is in some other app, it keeps the focus and keynav in the menu
+  does not work. Consequently, keynav on the menu will only work if the focus
+  is on some toplevel owned by the onscreen keyboard.
+
+  To avoid confusing the user, menus with @arg{take-focus} set to @em{false}
+  should not display mnemonics or accelerators, since it cannot be guaranteed
+  that they will work.
+
+  See also the function @fun{gdk-keyboard-grab}.
+  @see-class{gtk-menu-shell}
+  @see-function{gdk-keyboard-grab}")
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_append ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_append" gtk-menu-shell-append) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[child]{the @class{gtk-widget} child to add}
+  @begin{short}
+    Adds a new menu item to the end of the menu shell's item list.
+  @end{short}
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-prepend}
+  @see-function{gtk-menu-shell-insert}"
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget)))
+
+(export 'gtk-menu-shell-append)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_prepend ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_prepend" gtk-menu-shell-prepend) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[child]{the @class{gtk-widget} child to add}
+  @begin{short}
+    Adds a new menu item to the beginning of the menu shell's item list.
+  @end{short}
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-append}
+  @see-function{gtk-menu-shell-insert}"
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget)))
+
+(export 'gtk-menu-shell-prepend)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_insert ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_insert" gtk-menu-shell-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[child]{the @class{gtk-widget} child to add}
+  @argument[position]{an integer with the position in the item list where child
+    is added, positions are numbered from 0 to n-1}
+  @begin{short}
+    Adds a new menu item to the menu shell's item list at the position
+    indicated by @arg{position}.
+  @end{short}
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-append}
+  @see-function{gtk-menu-shell-prepend}"
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget))
+  (position :int))
+
+(export 'gtk-menu-shell-insert)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_deactivate ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_deactivate" gtk-menu-shell-deactivate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @begin{short}
+    Deactivates the menu shell.
+  @end{short}
+
+  Typically this results in the menu shell being erased from the screen.
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell)))
+
+(export 'gtk-menu-shell-deactivate)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_select_item ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_select_item" gtk-menu-shell-select-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[menu-item]{the @class{gtk-menu-item} to select}
+  @begin{short}
+    Selects the menu item from the menu shell.
+  @end{short}
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell))
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-shell-select-item)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_select_first ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_select_first" gtk-menu-shell-select-first) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[search-sensitive]{if @em{true}, search for the first selectable
+    menu item, otherwise select nothing if the first item is not sensitive,
+    this should be @em{false} if the menu is being popped up initially}
+  @begin{short}
+    Select the first visible or selectable child of the menu shell.
+  @end{short}
+  Do not select tearoff items unless the only item is a tearoff item.
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell))
+  (search-sensitive :boolean))
+
+(export 'gtk-menu-shell-select-first)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_deselect ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_deselect" gtk-menu-shell-deselect) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @begin{short}
+    Deselects the currently selected item from the menu shell, if any.
+  @end{short}
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell)))
+
+(export 'gtk-menu-shell-deselect)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_activate_item ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_activate_item" gtk-menu-shell-activate-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[menu-item]{the @class{gtk-menu-item} widget to activate}
+  @argument[force-deactivate]{if @em{true}, force the deactivation of the menu
+    shell after the menu item is activated}
+  @begin{short}
+    Activates the menu item within the menu shell.
+  @end{short}
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell))
+  (menu-item (g-object gtk-menu-item))
+  (force-deactivate :boolean))
+
+(export 'gtk-menu-shell-activate-item)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_cancel ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_cancel" gtk-menu-shell-cancel) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @short{Cancels the selection within the menu shell.}
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell)))
+
+(export 'gtk-menu-shell-cancel)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_get_selected_item ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_get_selected_item" gtk-menu-shell-selected-item)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @return{The currently selected @class{gtk-menu-item} widget.}
+  @begin{short}
+    Gets the currently selected item.
+  @end{short}
+  @see-class{gtk-menu-shell}"
+  (menu-shell (g-object gtk-menu-shell)))
+
+(export 'gtk-menu-shell-selected-item)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_get_parent_shell ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_get_parent_shell" gtk-menu-shell-parent-shell)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @return{The parent @class{gtk-menu-shell} widget.}
+  @begin{short}
+    Gets the parent menu shell.
+  @end{short}
+
+  The parent menu shell of a submenu is the @class{gtk-menu} or
+  @class{gtk-menu-bar} from which it was opened up.
+  @see-class{gtk-menu-shell}
+  @see-class{gtk-menu}
+  @see-class{gtk-menu-bar}"
+  (menu-shell (g-object gtk-menu-shell)))
+
+(export 'gtk-menu-shell-parent-shell)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_shell_bind_model ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_shell_bind_model" gtk-menu-shell-bind-model) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-5-19}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[model]{the @class{g-menu-model} object to bind to or @code{nil}
+    to remove binding}
+  @argument[action-namespace]{a string with the namespace for actions in the
+    menu model}
+  @argument[with-separators]{@em{true} if toplevel items in shell should have
+    separators between them}
+  @begin{short}
+    Establishes a binding between a menu shell and a menu model.
+  @end{short}
+
+  The contents of the menu shell are removed and then refilled with menu items
+  according to the menu model. When the menu model changes, the menu shell is
+  updated. Calling this function twice on the menu shell with different menu
+  model will cause the first binding to be replaced with a binding to the new
+  menu model. If the menu model is @code{nil} then any previous binding is
+  undone and all children are removed.
+
+  @arg{with-separators} determines if toplevel items, e. g. sections, have
+  separators inserted between them. This is typically desired for menus but
+  does not make sense for menubars.
+
+  If @arg{action-namespace} is non-@code{nil} then the effect is as if all
+  actions mentioned in the model have their names prefixed with the namespace,
+  plus a dot. For example, if the action \"quit\" is mentioned and
+  @arg{action-namespace} is \"app\" then the effective action name is
+  \"app.quit\".
+
+  For most cases you are probably better off using the functions
+  @fun{gtk-menu-new-from-model} or @fun{gtk-menu-bar-new-from-model} or just
+  directly passing the @class{g-menu-model} to the functions
+  @fun{gtk-application-app-menu} or @fun{gtk-application-menu-bar}.
+
+  Since 3.6
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-new-from-model}
+  @see-function{gtk-menu-bar-new-from-model}
+  @see-function{gtk-application-app-menu}
+  @see-function{gtk-application-menu-bar}"
+  (menu-shell (g-object gtk-menu-shell))
+  (model (g-object g-menu-model))
+  (action-namespace g-string)
+  (with-separators :boolean))
 
 ;;; --- End of file gtk.menu-shell.lisp ----------------------------------------
