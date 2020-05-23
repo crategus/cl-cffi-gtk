@@ -293,7 +293,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_menu_item_get_group" gtk-radio-menu-item-get-group)
-    (g-slist (g-object gtk-radio-menu-item))
+    (g-slist (g-object gtk-radio-menu-item) :free-from-foreign nil)
  "@version{2019-6-7}
   @argument[radio-menu-item]{a @class{gtk-radio-menu-item} object}
   @return{the group of @arg{radio-menu-item}}

@@ -2,12 +2,12 @@
 ;;; gtk.radio-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -131,7 +131,7 @@
  ╰── <child>
     @end{pre}
     A @sym{gtk-radio-button} with indicator, see the function
-    @fun{gtk-toggle-button-set-mode}, has a main CSS node with name
+    @fun{gtk-toggle-button-mode}, has a main CSS node with name
     @code{radiobutton} and a subnode with name @code{radio}.
     @begin{pre}
  button.radio
@@ -377,7 +377,7 @@
 ;;; gtk-radio-button-get-group. How can this be combined in a generic function?
 
 (defcfun ("gtk_radio_button_get_group" gtk-radio-button-get-group)
-    (g-slist (g-object gtk-radio-button))
+    (g-slist (g-object gtk-radio-button) :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@version{2014-11-9}
   @argument[radio-button]{a @class{gtk-radio-button} widget}
