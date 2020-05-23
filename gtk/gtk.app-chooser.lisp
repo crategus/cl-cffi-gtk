@@ -2,11 +2,11 @@
 ;;; gtk.app-chooser.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -35,14 +35,14 @@
 ;;;     GtkAppChooser
 ;;;
 ;;; Functions
-
+;;;
 ;;;     gtk_app_chooser_get_app_info
 ;;;     gtk_app_chooser_get_content_type
 ;;;     gtk_app_chooser_refresh
 ;;;
 ;;; Properties
 ;;;
-;;;     gchar*  content-type    Read / Write / Construct Only
+;;;     gchar*   content-type    Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -70,17 +70,18 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-app-chooser 'type)
- "@version{2013-10-31}
+ "@version{2020-5-21}
   @begin{short}
     @sym{gtk-app-chooser} is an interface that can be implemented by widgets
     which allow the user to choose an application, typically for the purpose of
-    opening a file. The main objects that implement this interface are
-    @class{gtk-app-chooser-widget}, @class{gtk-app-chooser-dialog} and
-    @class{gtk-app-chooser-button}.
+    opening a file.
   @end{short}
+  The main objects that implement this interface are
+  @class{gtk-app-chooser-widget}, @class{gtk-app-chooser-dialog} and
+  @class{gtk-app-chooser-button}.
 
-  Applications are represented by GIO @class{g-app-info} objects here. GIO has a
-  concept of recommended and fallback applications for a given content type.
+  Applications are represented by GIO @class{g-app-info} objects here. GIO has
+  a concept of recommended and fallback applications for a given content type.
   Recommended applications are those that claim to handle the content type
   itself, while fallback also includes applications that handle a more generic
   content type. GIO also knows the default and last-used application for a
@@ -89,13 +90,13 @@
   recommended or fallback applications.
 
   To obtain the application that has been selected in a @sym{gtk-app-chooser},
-  use the function @fun{gtk-app-chooser-get-app-info}.
+  use the function @fun{gtk-app-chooser-app-info}.
   @see-slot{gtk-app-chooser-content-type}
   @see-class{g-app-info}
   @see-class{gtk-app-chooser-widget}
   @see-class{gtk-app-chooser-dialog}
   @see-class{gtk-app-chooser-button}
-  @see-function{gtk-app-chooser-get-app-info}")
+  @see-function{gtk-app-chooser-app-info}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -114,52 +115,39 @@
 (setf (gethash 'gtk-app-chooser-content-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-content-type 'function)
- "@version{2013-10-31}
-  Accessor of the slot @slot[gtk-app-chooser]{content-type} of the
-  @class{gtk-app-chooser} interface.
-  @see-class{gtk-app-chooser}
-  @see-function{gtk-app-chooser-get-content-type}")
+ "@version{2020-5-21}
+  @syntax[]{(gtk-app-chooser-content-type object) => content-type}
+  @argument[object]{a @class{gtk-app-chooser} object}
+  @argument[content-type]{a string with the content type}
+  @begin{short}
+    Accessor of the @slot[gtk-app-chooser]{content-type} slot of the
+    @class{gtk-app-chooser} interface.
+  @end{short}
+
+  The slot access function @sym{gtk-app-chooser-content-type} returns the
+  current value of the content type.
+  @see-class{gtk-app-chooser}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_app_chooser_get_app_info ()
+;;; gtk_app_chooser_get_app_info () -> gtk-app-chooser-app-info
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_app_chooser_get_app_info" gtk-app-chooser-get-app-info)
+(defcfun ("gtk_app_chooser_get_app_info" gtk-app-chooser-app-info)
     (g-object g-app-info)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-1}
-  @argument[self]{a @class{gtk-app-chooser} object}
+ "@version{2020-5-21}
+  @argument[object]{a @class{gtk-app-chooser} object}
   @begin{return}
-    A @class{g-app-info} for the currently selected application, or @code{nil}
-    if none is selected.
+    A @class{g-app-info} object for the currently selected application, or
+    @code{nil} if none is selected.
   @end{return}
   @begin{short}
     Returns the currently selected application.
   @end{short}
   @see-class{gtk-app-chooser}"
-  (self (g-object gtk-app-chooser)))
+  (object (g-object gtk-app-chooser)))
 
-(export 'gtk-app-chooser-get-app-info)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_app_chooser_get_content_type ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-app-chooser-get-content))
-
-(defun gtk-app-chooser-get-content-type (self)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-1}
-  @argument[self]{a @class{gtk-app-chooser} object}
-  @return{The content type of @arg{self}.}
-  @begin{short}
-    Returns the current value of the @slot[gtk-app-chooser]{content-type}
-    property.
-  @end{short}
-  @see-class{gtk-app-chooser}"
-  (gtk-app-chooser-content-type self))
-
-(export 'gtk-app-chooser-get-content-type)
+(export 'gtk-app-chooser-app-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_app_chooser_refresh ()
@@ -167,11 +155,11 @@
 
 (defcfun ("gtk_app_chooser_refresh" gtk-app-chooser-refresh) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-1}
-  @argument[self]{a @class{gtk-app-chooser} object}
+ "@version{2020-5-21}
+  @argument[object]{a @class{gtk-app-chooser} object}
   @short{Reloads the list of applications.}
-  @see-class{gtk-app-chooser-refresh}"
-  (self (g-object gtk-app-chooser)))
+  @see-class{gtk-app-chooser}"
+  (object (g-object gtk-app-chooser)))
 
 (export 'gtk-app-chooser-refresh)
 
