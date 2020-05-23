@@ -22,12 +22,17 @@
               (g-signal-connect window "destroy"
                                 (lambda (widget)
                                   (declare (ignore widget))
-                                  ;; Leave the main loop
-                                  (leave-gtk-main)
                                   ;; Quit the application
                                   (g-application-quit app)))
               ;; Show the application window
               (gtk-widget-show-all window))))
+
+      ;; Connect signal "shutdown" to the application
+      (g-signal-connect app "shutdown"
+          (lambda (application)
+            (declare (ignore application))
+            ;; Leave the main loop on shutdown of the application
+            (leave-gtk-main)))
 
       ;; Run the application
       (g-application-run app argv))))
@@ -52,12 +57,17 @@
               (g-signal-connect window "destroy"
                                 (lambda (widget)
                                   (declare (ignore widget))
-                                  ;; Leave the main loop
-                                  (leave-gtk-main)
                                   ;; Quit the application
                                   (g-application-quit app)))
               ;; Show the application window
               (gtk-widget-show-all window))))
+
+      ;; Connect signal "shutdown" to the application
+      (g-signal-connect app "shutdown"
+          (lambda (application)
+            (declare (ignore application))
+            ;; Leave the main loop on shutdown
+            (leave-gtk-main)))
 
       ;; Run the application
       (g-application-run app argv)))
