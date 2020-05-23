@@ -2,11 +2,11 @@
 ;;; gtk.actionable.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,8 +45,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;        gchar*  action-name      Read / Write
-;;;     GVariant*  action-target    Read / Write
+;;;        gchar*   action-name      Read / Write
+;;;     GVariant*   action-target    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -73,7 +73,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-actionable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-actionable 'type)
- "@version{2013-8-11}
+ "@version{*2020-5-15}
   @begin{short}
     This interface provides a convenient way of associating widgets with
     actions on a @class{gtk-application-window} or @class{gtk-application}.
@@ -85,8 +85,8 @@
 
   This interface is presently only meaningful if used on a widget that is, or
   will be, located inside of a @class{gtk-application-window} and can only be
-  used to associate the widget with actions on that window, or its associated
-  @class{gtk-application}.
+  used to associate the widget with actions on that application window, or its
+  associated @class{gtk-application}.
   @see-slot{gtk-actionable-action-name}
   @see-slot{gtk-actionable-action-target}
   @see-class{gtk-application}
@@ -109,37 +109,36 @@
 (setf (gethash 'gtk-actionable-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-name 'function)
- "@version{2014-7-19}
-  @argument[object]{a @class{gtk-actionable} widget}
-  @argument[action-name]{a string with the action name, or @code{nil}}
+ "@version{*2020-5-15}
   @syntax[]{(gtk-actionable-action-name object) => action-name}
   @syntax[]{(setf (gtk-actionable-action-name object) action-name)}
+  @argument[object]{a @class{gtk-actionable} widget}
+  @argument[action-name]{a string with the action name, or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gtk-actionable]{action-name} of the
+    Accessor of the @slot[gtk-actionable]{action-name} slot of the
     @class{gtk-actionable} inferface.
   @end{short}
 
-  The @sym{gtk-actionable-action-name} slot access function gets the action name
-  for @arg{object}, or @code{nil} if none is set.
+  The slot access function @sym{gtk-actionable-action-name} gets the action
+  name for @arg{object}, or @code{nil} if none is set. The slot access function
+  @sym{(setf gtk-actionable-action-name)} specifies the name of the action with
+  which this widget should be associated.
 
-  The @sym{(setf gtk-actionable-action-name)} slot access function specifies the
-  name of the action with which this widget should be associated.
-
-  If the @arg{action-name} argument is @code{nil} then the widget will be
+  If the argument @arg{action-name} is @code{nil} then the widget will be
   unassociated from any previous action.
 
   Usually this function is used when the widget is located, or will be
-  located, within the hierarchy of a @class{gtk-application-window}.
+  located, within the hierarchy of a @class{gtk-application-window} widget.
 
   Names are of the form \"win.save\" or \"app.quit\" for actions on the
-  containing @class{gtk-application-window} or its associated
-  @class{gtk-application}, respectively. This is the same form used for actions
-  in the @class{g-menu} object associated with the window.
+  containing @class{gtk-application-window} widget or its associated
+  @class{gtk-application} object, respectively. This is the same form used
+  for actions in the @class{g-menu} object associated with the window.
   @begin[Example]{dictionary}
     @begin{pre}
  (let ((button (make-instance 'gtk-button)))
    (setf (gtk-actionable-action-name button) \"win.save\")
-         (gtk-actionable-action-name button))
+   (gtk-actionable-action-name button))
  => \"win.save\"
     @end{pre}
   @end{dictionary}
@@ -163,24 +162,23 @@
 (setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-target 'function)
- "@version{2014-7-19}
-  @argument[object]{a @class{gtk-actionable} widget}
-  @argument[target-value]{a @type{g-variant} to set as the target value,
-    or @code{NULL}}
+ "@version{*2020-5-15}
   @syntax[]{(gtk-actionable-action-target object) => target-value}
   @syntax[]{(setf (gtk-actionable-action-target object) target-value)}
+  @argument[object]{a @class{gtk-actionable} widget}
+  @argument[target-value]{a @type{g-variant} to set as the target value,
+    or @code{null-pointer}}
   @begin{short}
-    Accessor of the slot @slot[gtk-actionable]{action-target} of the
+    Accessor of the @slot[gtk-actionable]{action-target} slot of the
     @class{gtk-actionable} inferface.
   @end{short}
 
-  The @sym{gtk-actionable-action-target} slot access function gets the current
-  target value of @arg{object}.
+  The slot access function @sym{gtk-actionable-action-target} gets the current
+  target value of @arg{object}. The slot access function
+  @sym{(setf gtk-actionable-action-target)} sets the target value of an
+  actionable widget.
 
-  The @sym{(setf gtk-actionable-action-target)} slot access function sets the
-  target value of an actionable widget.
-
-  If the @arg{target-value} argument is @code{null-pointer} then the target
+  If the argument @arg{target-value} is @code{null-pointer} then the target
   value is unset.
 
   The target value has two purposes. First, it is used as the parameter to
@@ -242,6 +240,8 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Consider to implement g-variant-new to allow this implementation.
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_detailed_action_name ()
 ;;; ----------------------------------------------------------------------------
@@ -249,21 +249,21 @@
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-7-19}
+ "@version{*2020-5-15}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @argument[detailed-action-name]{a string with the detailed action name}
   @begin{short}
-    Sets the action-name and associated string target value of an actionable
+    Sets the action name and associated string target value of an actionable
     widget.
   @end{short}
 
-  This allows for the effect of both the @fun{gtk-actionable-action-name} and
-  @fun{gtk-actionable-action-target} functions in the common case that the
-  target is string-valued.
+  This allows for the effect of both the functions
+  @fun{gtk-actionable-action-name} and @fun{gtk-actionable-action-target}
+  in the common case that the target is string-valued.
 
-  The @arg{detailed-action-name} argument is a string of the form
-  \"action::target\" where @code{action} is the action name and @code{target}
-  is the string to use as the target.
+  The argument @arg{detailed-action-name} is a string of the form
+  \"action::target\" where \"action\" is the action name and \"target\" is the
+  string to use as the target.
   @begin[Example]{dictionary}
     @begin{pre}
  (let ((button (make-instance 'gtk-button)))
@@ -278,7 +278,7 @@
   @see-function{gtk-actionable-action-name}
   @see-function{gtk-actionable-action-target}"
   (actionable (g-object gtk-actionable))
-  (detailed-action-name :string))
+  (detailed-action-name g-string))
 
 (export 'gtk-actionable-set-detailed-action-name)
 
