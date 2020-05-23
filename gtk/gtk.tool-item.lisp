@@ -174,7 +174,7 @@
       @fun{gtk-tool-shell-get-orientation},
       @fun{gtk-tool-shell-get-style},
       @fun{gtk-tool-shell-get-icon-size}, or
-      @fun{gtk-tool-shell-get-relief-style}
+      @fun{gtk-tool-shell-relief-style}
       to find out what the toolbar should look like and change themselves
       accordingly.
       @begin[code]{table}
@@ -592,29 +592,30 @@
 (export 'gtk-tool-item-get-toolbar-style)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tool_item_get_relief_style ()
+;;; gtk_tool_item_get_relief_style () -> gtk-tool-item-relief-style
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_item_get_relief_style" gtk-tool-item-get-relief-style)
+(defcfun ("gtk_tool_item_get_relief_style" gtk-tool-item-relief-style)
     gtk-relief-style
  #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
+ "@version{2020-5-10}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @symbol{gtk-relief-style} indicating the relief style used for
-    @arg{tool-item}.
+    A value of the @symbol{gtk-relief-style} enumeration indicating the relief
+    style used for @arg{tool-item}.
   @end{return}
   @begin{short}
-    Returns the relief style of @arg{tool-item}.
+    Returns the relief style of the tool item.
   @end{short}
-  See the function @fun{gtk-button-set-relief-style}. Custom subclasses of
-  @class{gtk-tool-item} should call this function in the handler of the
-  \"toolbar-reconfigured\" signal to find out the relief style of buttons.
+
+  Custom subclasses of @class{gtk-tool-item} should call this function in the
+  handler of the \"toolbar-reconfigured\" signal to find out the relief style
+  of buttons. See the function @fun{gtk-button-relief-style}.
   @see-class{gtk-tool-item}
-  @see-function{gtk-button-set-relief-style}"
+  @see-function{gtk-button-relief-style}"
   (tool-item (g-object gtk-tool-item)))
 
-(export 'gtk-tool-item-get-relief-style)
+(export 'gtk-tool-item-relief-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_get_text_alignment ()
