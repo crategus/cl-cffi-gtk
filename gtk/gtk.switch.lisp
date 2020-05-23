@@ -2,11 +2,11 @@
 ;;; gtk.switch.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,23 +39,23 @@
 ;;;     gtk_switch_new
 ;;;     gtk_switch_set_active
 ;;;     gtk_switch_get_active
-;;;     gtk_switch_set_state ()
-;;;     gtk_switch_get_state ()
+;;;     gtk_switch_set_state
+;;;     gtk_switch_get_state
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean  active    Read / Write
-;;;     gboolean  state     Read / Write
+;;;     gboolean    active           Read / Write
+;;;     gboolean    state            Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;     gint  slider-height    Read
-;;;     gint  slider-width     Read
+;;;         gint    slider-height    Read
+;;;         gint    slider-width     Read
 ;;;
 ;;; Signals
 ;;;
-;;;         void  activate     Action
-;;;     gboolean  state-set    Run Last
+;;;         void    activate         Action
+;;;     gboolean    state-set        Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -95,7 +95,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-switch 'type)
- "@version{2013-4-27}
+ "@version{2020-5-12}
   @begin{short}
     @sym{gtk-switch} is a widget that has two states: on or off.
   @end{short}
@@ -117,20 +117,19 @@
     @begin[code]{table}
       @begin[slider-height]{entry}
         The @code{slider-height} style property of type @code{:int} (Read) @br{}
-        The minimum height of the @sym{gtk-switch} handle, in pixels.
-        @em{Warning:} @code{slider-height} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use the CSS
-        min-height property instead. @br{}
+        The minimum height of the @sym{gtk-switch} handle, in pixels. @br{}
+        @em{Warning:} The @code{slider-height} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use the CSS @code{min-height} property instead. @br{}
         Allowed values: >= 22 @br{}
-        Default value: 22 @br{}
-        Since 3.18
+        Default value: 22
       @end{entry}
       @begin[slider-width]{entry}
         The @code{slider-width} style property of type @code{:int} (Read) @br{}
         The minimum width of the @sym{gtk-switch} handle, in pixels. @br{}
-        @em{Warning:} @code{slider-width} has been deprecated since version 3.20
-        and should not be used in newly-written code. Use the CSS min-height
-        property instead. @br{}
+        @em{Warning:} The @code{slider-width} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use the
+        CSS @code{min-height} property instead. @br{}
         Allowed values: >= 36 @br{}
         Default value: 36
       @end{entry}
@@ -139,13 +138,13 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (widget)   : Action
+ lambda (widget)    : Action
       @end{pre}
       The \"activate\" signal on @sym{gtk-switch} is an action signal and
       emitting it causes the switch to animate. Applications should never
       connect to this signal, but use the \"notify::active\" signal.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @class{gtk-switch} widget which received the signal.}
       @end{table}
     @subheading{The \"state-set\" signal}
       @begin{pre}
@@ -165,12 +164,13 @@
       Visually, the underlying state is represented by the trough color of the
       switch, while the @code{active} property is represented by the position of
       the switch.
+
+      Since 3.14
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-switch} widget which received the signal.}
-        @entry[state]{@em{True} to stop the signal emission.}
+        @entry[state]{A boolean with the state of the switch.}
         @entry[Returns]{@em{True} to stop the signal emission.}
       @end{table}
-      Since 3.14
   @end{dictionary}
   @see-slot{gtk-switch-active}")
 
@@ -184,28 +184,27 @@
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-switch) 't)
  "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the @sym{gtk-switch} widget is in its on or off state. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-switch-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-switch-active 'function)
- "@version{2014-4-19}
+ "@version{2020-5-12}
   @syntax[]{(gtk-switch-active object) => is-active)}
   @syntax[]{(setf (gtk-switch-active object) is-active)}
   @argument[object]{a @class{gtk-switch} widget}
   @argument[is-active]{@em{true} if the switch should be active,
-    and @code{nil} otherwise}
+    and @em{false} otherwise}
   @begin{short}
-    Accessor of the slot @slot[gtk-switch]{active} of the @class{gtk-switch}
+    Accessor of the @slot[gtk-switch]{active} slot of the @class{gtk-switch}
     class.
   @end{short}
 
   The slot access function @sym{gtk-switch-active} gets whether the
-  @class{gtk-switch} is in its \"on\" or \"off\" state.
-
-  The slot access function @sym{(setf gtk-switch-active)} changes the state of
-  the switch to the desired one.
+  @class{gtk-switch} is in its \"on\" or \"off\" state. The slot access function
+  @sym{(setf gtk-switch-active)} changes the state of the switch to the desired
+  one.
   @see-class{gtk-switch}")
 
 ;;; --- gtk-switch-state -------------------------------------------------------
@@ -214,33 +213,31 @@
 (setf (documentation (atdoc:get-slot-from-name "state" 'gtk-switch) 't)
  "The @code{state} property of type @code{:boolean} (Read / Write) @br{}
   The backend state that is controlled by the switch. See the \"state-set\"
-  signal for details. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.14")
+  signal for details. Since 3.14 @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-switch-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-switch-state 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
   @syntax[]{(gtk-switch-state object) => state)}
   @syntax[]{(setf (gtk-switch-state object) state)}
   @argument[object]{a @class{gtk-switch} widget}
-  @argument[state]{the state of type @code{:boolean}}
+  @argument[state]{a boolean with the state}
   @begin{short}
-    Accessor of the slot @slot[gtk-switch]{state} of the @class{gtk-switch}
+    Accessor of the @slot[gtk-switch]{state} slot of the @class{gtk-switch}
     class.
   @end{short}
 
-  The slot access function @sym{gtk-switch-active}
-  gets the underlying state of the switch.
+  The slot access function @sym{gtk-switch-active} gets the underlying state of
+  the switch. The slot access function @sym{(setf gtk-switch-active)} sets the
+  underlying state of the switch.
 
-  The slot access function @sym{(setf gtk-switch-active)}
-  sets the underlying state of the switch.
-
-  Normally, this is the same as the @code{active} property, unless the switch is
-  set up for delayed state changes. This function is typically called from a
-  \"state-set\" signal handler. See the \"state-set\" signal for details.
+  Normally, this is the same as the @slot[gtk-switch]{active} property, unless
+  the switch is set up for delayed state changes. This function is typically
+  called from a \"state-set\" signal handler. See the \"state-set\" signal for
+  details.
 
   Since 3.14
   @see-class{gtk-switch}")
@@ -253,9 +250,9 @@
 
 (defun gtk-switch-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-4-19}
+ "@version{2020-5-12}
   @return{The newly created @class{gtk-switch} widget.}
-  @short{Creates a new @class{gtk-switch} widget.}
+  @short{Creates a new switch.}
   @see-class{gtk-switch}"
   (make-instance 'gtk-switch))
 
