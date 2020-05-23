@@ -2,12 +2,12 @@
 ;;; gtk.link-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,19 +39,19 @@
 ;;;
 ;;;     gtk_link_button_new
 ;;;     gtk_link_button_new_with_label
-;;;     gtk_link_button_get_uri ()                         Accessor
-;;;     gtk_link_button_set_uri ()                         Accessor
-;;;     gtk_link_button_get_visited ()                     Accessor
-;;;     gtk_link_button_set_visited ()                     Accessor
+;;;     gtk_link_button_get_uri                            Accessor
+;;;     gtk_link_button_set_uri                            Accessor
+;;;     gtk_link_button_get_visited                        Accessor
+;;;     gtk_link_button_set_visited                        Accessor
 ;;;
 ;;; Properties
 ;;;
-;;;        gchar*  uri        Read / Write
-;;;     gboolean   visited    Read / Write
+;;;        gchar*   uri              Read / Write
+;;;     gboolean    visited          Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     gboolean  activate-link    Run Last
+;;;     gboolean    activate-link    Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -92,7 +92,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-link-button 'type)
- "@version{2014-11-9}
+ "@version{2020-5-12}
   @begin{short}
     A @sym{gtk-link-button} is a @class{gtk-button} with a hyperlink, similar
     to the one used by web browsers, which triggers an action when clicked. It
@@ -106,11 +106,11 @@
   @image[link-button]{}
 
   The URI bound to a @sym{gtk-link-button} can be set specifically or retrieved
-  using the generic function @fun{gtk-link-button-uri}.
+  using the slot access function @fun{gtk-link-button-uri}.
 
   By default, @sym{gtk-link-button} calls the function @fun{gtk-show-uri} when
   the button is clicked. This behaviour can be overridden by connecting to the
-  \"activate-link\" signal and returning @arg{true} from the signal handler.
+  \"activate-link\" signal and returning @em{true} from the signal handler.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-link-button} has a single CSS node with name @code{button}. To
     differentiate it from a plain @class{gtk-button}, it gets the @code{.link}
@@ -121,14 +121,14 @@
       @begin{pre}
  lambda (button)    : Run Last
       @end{pre}
-      The \"activate-link\" signal is emitted each time the
-      @sym{gtk-link-button} has been clicked.
-      The default handler will call the function @fun{gtk-show-uri} with the
-      URI stored inside the @code{uri} property. To override the default
-      behavior, you can connect to the \"activate-link\" signal and stop the
-      propagation of the signal by returning @arg{true} from your handler.
+      The \"activate-link\" signal is emitted each time the link button has been
+      clicked. The default handler will call the function @fun{gtk-show-uri}
+      with the URI stored inside the @code{uri} property. To override the
+      default behavior, you can connect to the \"activate-link\" signal and stop
+      the propagation of the signal by returning @em{true} from your handler.
       @begin[code]{table}
-        @entry[button]{The @sym{gtk-link-button} that emitted the signal.}
+        @entry[button]{The @sym{gtk-link-button} widget that emitted the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-link-button-uri}
@@ -150,21 +150,19 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-uri atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-link-button-uri 'function)
- "@version{2014-4-14}
-  @argument[object]{a @class{gtk-link-button} widget}
-  @argument[uri]{A valid URI.}
+ "@version{2020-5-12}
   @syntax[]{(gtk-link-button-uri object) => uri}
   @syntax[]{(setf (gtk-link-button-uri object) uri)}
+  @argument[object]{a @class{gtk-link-button} widget}
+  @argument[uri]{a string with a valid URI}
   @begin{short}
-    Accessor of the slot @slot[gtk-link-button]{uri} of the
+    Accessor of the @slot[gtk-link-button]{uri} slot of the
     @class{gtk-link-button} class.
   @end{short}
 
-  The generic function @sym{gtk-link-button-uri} retrieves the URI set using
-  the generic function @sym{(setf gtk-link-button-uri)}.
-
-  The generic function @sym{gtk-link-button-uri} sets @arg{uri} as the URI
-  where the @class{gtk-link-button} points.
+  The slot access function @sym{gtk-link-button-uri} retrieves the URI. The
+  slot access function @sym{gtk-link-button-uri} sets @arg{uri} as the URI
+  where the link button points.
 
   As a side-effect this unsets the visited state of the button.
   @see-class{gtk-link-button}")
@@ -174,31 +172,30 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visited" 'gtk-link-button) 't)
  "The @code{visited} property of type @code{:boolean} (Read / Write) @br{}
-  The @code{visited} state of this button. A visited link is drawn in a
-  different color. @br{}
-  Default value: @code{nil}")
+  The visited state of this button. A visited link is drawn in a different
+  color. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-visited atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-link-button-visited 'function)
- "@version{2014-4-14}
-  @argument[object]{a @class{gtk-link-button} widget}
-  @argument[visited]{the new \"visited\" state}
+ "@version{2020-5-12}
   @syntax[]{(gtk-link-button-visited object) => visited}
   @syntax[]{(setf (gtk-link-button-visited object) visited)}
+  @argument[object]{a @class{gtk-link-button} widget}
+  @argument[visited]{a boolean with the \"visited\" state}
   @begin{short}
-    Accessor of the slot @slot[gtk-link-button]{visited} of the
+    Accessor of the @slot[gtk-link-button]{visited} slot of the
     @class{gtk-link-button} class.
   @end{short}
 
-  The generic function @sym{gtk-link-button-visited} retrieves the \"visited\"
-  state of the URI where the @class{gtk-link-button} points.
+  The slot access function @sym{gtk-link-button-visited} retrieves the
+  \"visited\" state of the URI where the link button points. The slot access
+  function @sym{(setf gtk-link-button-visited)} sets the \"visited\" state of
+  the URI.
 
   The button becomes visited when it is clicked. If the URI is changed on the
   button, the visited state is unset again.
-
-  The generic function @sym{(setf gtk-link-button-visited)} sets the \"visited\"
-  state of the URI where the @class{gtk-link-button} points.
   @see-class{gtk-link-button}")
 
 ;;; ----------------------------------------------------------------------------
@@ -209,11 +206,11 @@
 
 (defun gtk-link-button-new (uri)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
-  @argument[uri]{a valid URI}
-  @return{A new link button widget.}
+ "@version{2020-5-12}
+  @argument[uri]{a string with a valid URI}
+  @return{A new @class{gtk-link-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-link-button} widget with the URI as its text.
+    Creates a new link button with the URI as its text.
   @end{short}
   @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
@@ -230,12 +227,12 @@
 
 (defun gtk-link-button-new-with-label (uri label)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
-  @argument[uri]{a valid URI}
-  @argument[label]{the text of the button}
-  @return{A new link button widget.}
+ "@version{2020-5-12}
+  @argument[uri]{a string with a valid URI}
+  @argument[label]{a string with the text of the button}
+  @return{A new @class{gtk-link-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-link-button} widget containing a label.
+    Creates a new link button containing a label.
   @end{short}
   @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
