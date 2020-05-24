@@ -1,11 +1,12 @@
 ﻿;;; ----------------------------------------------------------------------------
 ;;; gio.file.lisp
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.3. The latest version of this documentation can be found
-;;; on-line at http://library.gnome.org/devel/gio/unstable/.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,28 +28,39 @@
 ;;;
 ;;; GFile
 ;;;
-;;; File and Directory Handling
+;;;     File and Directory Handling
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GFile
 ;;;     GFileIface
+;;;
 ;;;     GFileQueryInfoFlags
 ;;;     GFileCreateFlags
 ;;;     GFileCopyFlags
 ;;;     GFileMonitorFlags
+;;;     GFileMeasureFlags
 ;;;     GFilesystemPreviewType
+;;;
+;;; Functions
+;;;
+;;;     GFileProgressCallback
+;;;     GFileReadMoreCallback
+;;;     GFileMeasureProgressCallback
 ;;;
 ;;;     g_file_new_for_path
 ;;;     g_file_new_for_uri
 ;;;     g_file_new_for_commandline_arg
+;;;     g_file_new_for_commandline_arg_and_cwd
 ;;;     g_file_new_tmp
 ;;;     g_file_parse_name
+;;;     g_file_new_build_filename
 ;;;     g_file_dup
 ;;;     g_file_hash
 ;;;     g_file_equal
 ;;;     g_file_get_basename
 ;;;     g_file_get_path
+;;;     g_file_peek_path
 ;;;     g_file_get_uri
 ;;;     g_file_get_parse_name
 ;;;     g_file_get_parent
@@ -82,6 +94,11 @@
 ;;;     g_file_query_filesystem_info_async
 ;;;     g_file_query_filesystem_info_finish
 ;;;     g_file_query_default_handler
+;;;     g_file_query_default_handler_async
+;;;     g_file_query_default_handler_finish
+;;;     g_file_measure_disk_usage
+;;;     g_file_measure_disk_usage_async
+;;;     g_file_measure_disk_usage_finish
 ;;;     g_file_find_enclosing_mount
 ;;;     g_file_find_enclosing_mount_async
 ;;;     g_file_find_enclosing_mount_finish
@@ -92,12 +109,18 @@
 ;;;     g_file_set_display_name_async
 ;;;     g_file_set_display_name_finish
 ;;;     g_file_delete
+;;;     g_file_delete_async
+;;;     g_file_delete_finish
 ;;;     g_file_trash
+;;;     g_file_trash_async
+;;;     g_file_trash_finish
 ;;;     g_file_copy
 ;;;     g_file_copy_async
 ;;;     g_file_copy_finish
 ;;;     g_file_move
 ;;;     g_file_make_directory
+;;;     g_file_make_directory_async
+;;;     g_file_make_directory_finish
 ;;;     g_file_make_directory_with_parents
 ;;;     g_file_make_symbolic_link
 ;;;     g_file_query_settable_attributes
@@ -133,6 +156,9 @@
 ;;;     g_file_monitor_directory
 ;;;     g_file_monitor_file
 ;;;     g_file_monitor
+;;;     g_file_load_bytes
+;;;     g_file_load_bytes_async
+;;;     g_file_load_bytes_finish
 ;;;     g_file_load_contents
 ;;;     g_file_load_contents_async
 ;;;     g_file_load_contents_finish
@@ -140,6 +166,7 @@
 ;;;     g_file_load_partial_contents_finish
 ;;;     g_file_replace_contents
 ;;;     g_file_replace_contents_async
+;;;     g_file_replace_contents_bytes_async
 ;;;     g_file_replace_contents_finish
 ;;;     g_file_copy_attributes
 ;;;     g_file_create_readwrite
@@ -155,12 +182,22 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GInterface
-;;;    +----GFile
+;;;     GEnum
+;;;     ╰── GFilesystemPreviewType
+;;;
+;;;     GFlags
+;;;     ├── GFileCopyFlags
+;;;     ├── GFileCreateFlags
+;;;     ├── GFileMeasureFlags
+;;;     ├── GFileMonitorFlags
+;;;     ╰── GFileQueryInfoFlags
+;;;
+;;;     GInterface
+;;;     ╰── GFile
 ;;;
 ;;; Prerequisites
 ;;;
-;;; GFile requires GObject.
+;;;     GFile requires GObject.
 ;;;
 ;;; Description
 ;;;
@@ -218,11 +255,19 @@
 ;;; operation, producing a GAsyncResult which is then passed to the function's
 ;;; matching _finish() operation.
 ;;;
+;;; It is highly recommended to use asynchronous calls when running within a
+;;; shared main loop, such as in the main thread of an application. This avoids
+;;; I/O operations blocking other sources on the main loop from being
+;;; dispatched. Synchronous I/O operations should be performed from worker
+;;; threads. See the introduction to asynchronous programming section for more.
+;;;
 ;;; Some GFile operations do not have synchronous analogs, as they may take a
 ;;; very long time to finish, and blocking may leave an application unusable.
 ;;; Notable cases include: g_file_mount_mountable() to mount a mountable file.
 ;;; g_file_unmount_mountable_with_operation() to unmount a mountable file.
 ;;; g_file_eject_mountable_with_operation() to eject a mountable file.
+;;;
+;;; Entity Tags
 ;;;
 ;;; One notable feature of GFiles are entity tags, or "etags" for short. Entity
 ;;; tags are somewhat like a more abstract version of the traditional mtime, and
@@ -230,6 +275,8 @@
 ;;; version on the file system. See the HTTP 1.1 specification for HTTP Etag
 ;;; headers, which are a very similar concept.
 ;;; ----------------------------------------------------------------------------
+
+(in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GFile
