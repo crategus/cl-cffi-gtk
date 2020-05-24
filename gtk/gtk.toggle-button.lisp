@@ -2,12 +2,12 @@
 ;;; gtk.toggle-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -329,51 +329,46 @@
 (export 'gtk-toggle-button-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-toggle-button-set-mode
+;;; gtk_toggle_button_get_mode ()
+;;; gtk_toggle_button_set_mode () -> gtk-toggle-button-mode
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-toggle-button-set-mode))
+(defun (setf gtk-toggle-button-mode) (draw-indicator toggle-button)
+  (setf (gtk-toggle-button-draw-indicator toggle-button) draw-indicator))
 
-(defun gtk-toggle-button-set-mode (toggle-button draw-indicator)
+(defun gtk-toggle-button-mode (toggle-button)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
+ "@version{2020-5-10}
+  @syntax[]{(gtk-toggle-button-mode toggle-button) => draw-indicator}
+  @syntax[]{(setf (gtk-toggle-button-mode toggle-button) draw-indicator)}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @argument[draw-indicator]{if @arg{true}, draw the button as a separate
-    indicator and label; if @code{nil}, draw the button like a normal button}
+    indicator and label, if @em{false}, draw the button like a normal button}
   @begin{short}
-    Sets whether the button is displayed as a separate indicator and label.
+    Accessor of the mode of the toggle button.
   @end{short}
-  You can call this function on a check button or a radio button with
-  @code{@arg{draw-indicator} = nil} to make the button look like a normal
-  button.
+
+  The function @sym{gtk-toggle-button-mode} retrieves whether the button is
+  displayed as a separate indicator and label. The function
+  @sym{(setf gtk-toggle-button-mode)} sets whether the button is displayed as
+  a separate indicator and label.
+
+  You can call this function on a check button or a radio button with the
+  value @em{false} for @arg{draw-indicator} to make the button look like a
+  normal button.
 
   This function only affects instances of classes like @class{gtk-check-button}
   and @class{gtk-radio-button} that derive from @class{gtk-toggle-button}, not
   instances of @class{gtk-toggle-button} itself.
-  @see-class{gtk-toggle-button}"
-  (setf (gtk-toggle-button-draw-indicator toggle-button) draw-indicator))
-
-(export 'gtk-toggle-button-set-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_button_get_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-button-get-mode))
-
-(defun gtk-toggle-button-get-mode (toggle-button)
- #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  @return{@em{True} if the toggle button is drawn as a separate indicator and
-    label.}
-  Retrieves whether the button is displayed as a separate indicator and label.
-  See the function @fun{gtk-toggle-button-set-mode}.
+  @begin[Note]{dictionary}
+    The function @sym{gtk-toggle-button-mode} is equivalent to the slot access
+    function @fun{gtk-toggle-button-draw-indicator}.
+  @end{dictionary}
   @see-class{gtk-toggle-button}
-  @see-function{gtk-toggle-button-set-mode}"
+  @see-function{gtk-toggle-button-draw-indicator}"
   (gtk-toggle-button-draw-indicator toggle-button))
 
-(export 'gtk-toggle-button-get-mode)
+(export 'gtk-toggle-button-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_toggled ()
