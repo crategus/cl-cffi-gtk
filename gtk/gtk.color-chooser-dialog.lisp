@@ -2,11 +2,11 @@
 ;;; gtk.color-chooser-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -78,11 +78,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-chooser-dialog 'type)
- "@version{2013-6-3}
+ "@version{2020-5-23}
   @begin{short}
     The @sym{gtk-color-chooser-dialog} widget is a dialog for choosing a color.
     It implements the @class{gtk-color-chooser} interface.
   @end{short}
+
+  @image[colorchooser]{}
   @see-slot{gtk-color-chooser-dialog-show-editor}")
 
 ;;; ----------------------------------------------------------------------------
@@ -92,38 +94,44 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-editor"
                                                'gtk-color-chooser-dialog) 't)
- "The @code{show-editor} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Show editor. @br{}
-  Default value: @code{nil}")
+ "The @code{show-editor} property of type @code{:boolean} (Read / Write) @br{}
+  @em{True} when the color chooser dialog is showing the single-color editor.
+  It can be set to switch the color chooser into single-color editing mode.@br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-dialog-show-editor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-chooser-dialog-show-editor 'function)
- "@version{2013-2-24}
+ "@version{2020-5-23}
+  @syntax[]{(gtk-color-chooser-dialog-show-editor object) => show-editor}
+  @syntax[]{(setf (gtk-color-chooser-dialog-show-editor object) show-editor)}
+  @argument[object]{a @class{gtk-color-chooser-dialog} widget}
+  @argument[show-editor]{a boolean wether to show the single-color editor}
   @begin{short}
     Accessor of the @slot[gtk-color-chooser-dialog]{show-editor} slot of the
     @class{gtk-color-chooser-dialog} class.
   @end{short}
+
+  @em{True} when the color chooser dialog is showing the single-color editor.
+  It can be set to switch the color chooser into single-color editing mode.@br{}
   @see-class{gtk-color-chooser-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_chooser_dialog_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-color-chooser-dialog-new))
-
 (defun gtk-color-chooser-dialog-new (title parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+ "@version{2020-5-23}
+  @argument[title]{a string with the title of the dialog, or @code{nil}}
+  @argument[parent]{a @class{gtk-window} transient parent of the dialog,
+    or @code{nil}}
   @return{A new @class{gtk-color-chooser-dialog} widget.}
-  @short{Creates a new @class{gtk-color-chooser-dialog}.}
+  @short{Creates a new color chooser dialog.}
   @see-class{gtk-color-chooser-dialog}"
   (make-instance 'gtk-color-chooser-dialog
-                 :title title
+                 :title (if title title (null-pointer))
                  :parent parent))
 
 (export 'gtk-color-chooser-dialog-new)
