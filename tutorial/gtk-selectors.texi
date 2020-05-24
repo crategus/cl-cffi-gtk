@@ -318,7 +318,7 @@ possibly new file.  These are the cases in which you may need to use a
       a file chooser dialog.
 @item To save a file for the first time, as for a File/Save command.  Use
       the keyword @code{:save}, and suggest a name such as "Untitled" with
-      @xurl{gtk-file-chooser-set-current-name}.
+      @xurl{gtk-file-chooser-current-name}.
 @item To save a file under a different name, as for a File/Save As command.
       Use the keyword @code{:save}, and set the existing filename with
       @xurl{gtk-file-chooser-set-filename}.

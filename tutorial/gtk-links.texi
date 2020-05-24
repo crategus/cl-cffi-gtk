@@ -248,7 +248,7 @@
 @set gtk-file-chooser-get-preview-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-get-preview-filename.html
 @set gtk-file-chooser-set-preview-widget-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-preview-widget-active.html
 @set gtk-file-chooser-set-extra-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-extra-widget.html
-@set gtk-file-chooser-set-current-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-current-name.html
+@set gtk-file-chooser-current-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-current-name.html
 @set gtk-file-chooser-set-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-filename.html
 
 @c GtkFileChooserButton
