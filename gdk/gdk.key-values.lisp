@@ -184,7 +184,7 @@
       @end{pre}
       The \"state-changed\" signal is emitted when the state of the keyboard
       changes, e. g when Caps Lock is turned on or off. See the function
-      @fun{gdk-keymap-get-caps-lock-state}.
+      @fun{gdk-keymap-caps-lock-state}.
       @begin[code]{table}
         @entry[keymap]{The object on which the signal is emitted.}
       @end{table}
@@ -588,46 +588,46 @@
 (export 'gdk-keymap-have-bidi-layouts)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_caps_lock_state ()
+;;; gdk_keymap_get_caps_lock_state () -> gdk-keymap-caps-lock-state
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_caps_lock_state" gdk-keymap-get-caps-lock-state)
+(defcfun ("gdk_keymap_get_caps_lock_state" gdk-keymap-caps-lock-state)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-13}
+ "@version{2020-5-24}
   @argument[keymap]{a @class{gdk-keymap} object}
   @return{@em{True} if Caps Lock is on.}
   @short{Returns whether the Caps Lock modifer is locked.}
   @see-class{gdk-keymap}"
   (keymap (g-object gdk-keymap)))
 
-(export 'gdk-keymap-get-caps-lock-state)
+(export 'gdk-keymap-caps-lock-state)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_num_lock_state ()
+;;; gdk_keymap_get_num_lock_state () -> gdk-keymap-num-lock-state
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_num_lock_state" gdk-keymap-get-num-lock-state)
+(defcfun ("gdk_keymap_get_num_lock_state" gdk-keymap-num-lock-state)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-13}
+ "@version{2020-5-24}
   @argument[keymap]{a @class{gdk-keymap} object}
   @return{@em{True} if Num Lock is on.}
   @short{Returns whether the Num Lock modifer is locked.}
   @see-class{gdk-keymap}"
   (keymap (g-object gdk-keymap)))
 
-(export 'gdk-keymap-get-num-lock-state)
+(export 'gdk-keymap-num-lock-state)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_scroll_lock_state ()
+;;; gdk_keymap_get_scroll_lock_state () -> gdk-keymap-scroll-lock-state
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-18
-(defcfun ("gdk_keymap_get_scroll_lock_state" gdk-keymap-get-scroll-lock-state)
+(defcfun ("gdk_keymap_get_scroll_lock_state" gdk-keymap-scroll-lock-state)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2019-3-25}
+ "@version{2020-5-24}
   @argument[keymap]{a @class{gdk-keymap} object}
   @return{@em{True} if Scroll Lock is on.}
   @short{Returns whether the Scroll Lock modifer is locked.}
@@ -637,25 +637,25 @@
   (keymap (g-object gdk-keymap)))
 
 #+gtk-3-18
-(export 'gdk-keymap-get-scroll-lock-state)
+(export 'gdk-keymap-scroll-lock-state)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_modifier_state ()
+;;; gdk_keymap_get_modifier_state () -> gdk-keymap-modifier-state
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_modifier_state" gdk-keymap-get-modifier-state)
+(defcfun ("gdk_keymap_get_modifier_state" gdk-keymap-modifier-state)
     gdk-modifier-type
  #+cl-cffi-gtk-documentation
- "@version{2013-6-13}
+ "@version{2020-5-24}
   @argument[keymap]{a @class{gdk-keymap} object}
-  @return{The current modifier state.}
+  @return{The current modifier state of type @symbol{gdk-modifier-type}.}
   @short{Returns the current modifier state.}
 
   Since 3.4
   @see-class{gdk-keymap}"
   (keymap (g-object gdk-keymap)))
 
-(export 'gdk-keymap-get-modifier-state)
+(export 'gdk-keymap-modifier-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_add_virtual_modifiers ()

@@ -1048,10 +1048,10 @@
     @about-function{gdk-keymap-get-entries-for-keycode}
     @about-function{gdk-keymap-get-direction}
     @about-function{gdk-keymap-have-bidi-layouts}
-    @about-function{gdk-keymap-get-caps-lock-state}
-    @about-function{gdk-keymap-get-num-lock-state}
-    @about-function{gdk-keymap-get-scroll-lock-state}
-    @about-function{gdk-keymap-get-modifier-state}
+    @about-function{gdk-keymap-caps-lock-state}
+    @about-function{gdk-keymap-num-lock-state}
+    @about-function{gdk-keymap-scroll-lock-state}
+    @about-function{gdk-keymap-modifier-state}
     @about-function{gdk-keymap-add-virtual-modifiers}
     @about-function{gdk-keymap-map-virtual-modifiers}
     @about-symbol{gdk-modifier-intent}
