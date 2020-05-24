@@ -8,7 +8,7 @@
                                              "gtk-open" :accept)))
     (if (eql (gtk-dialog-run dialog)
              (foreign-enum-value 'gtk-response-type :accept))
-      (let ((filename (gtk-file-chooser-get-filename dialog)))
+      (let ((filename (gtk-file-chooser-filename dialog)))
         (format t "~& OPEN THE FILE ~A~%" filename)
       ))
 
@@ -28,7 +28,7 @@
 
     (if (eql (gtk-dialog-run dialog)
              (foreign-enum-value 'gtk-response-type :accept))
-      (let ((filename (gtk-file-chooser-get-filename dialog)))
+      (let ((filename (gtk-file-chooser-filename dialog)))
         (format t "~& SAVW TO FILE ~A~%" filename)
       ))
 

@@ -24,7 +24,7 @@
                         ;; Convert the symbol :accept to the number value.
                         (foreign-enum-value 'gtk-response-type :accept))
                ;; Get the file name and store it.
-               (setf file-name (gtk-file-chooser-get-filename dialog)))
+               (setf file-name (gtk-file-chooser-filename dialog)))
                (if file-name
                    (format t "Get the file ~A~%" file-name)
                    (format t "The retrieval of a filename failed.~%"))

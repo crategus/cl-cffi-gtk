@@ -258,7 +258,7 @@ documentation for more details about this variable.
 
 @b{Note:}
 This means that while you can pass the result of
-@xurl{gtk-file-chooser-get-filename} to @code{open(2)} or @code{fopen(3)}, you
+@xurl{gtk-file-chooser-filename} to @code{open(2)} or @code{fopen(3)}, you
 may not be able to directly set it as the text of a @xurl{gtk-label} widget
 unless you convert it first to UTF-8, which all GTK+ widgets expect. You should
 use the function @xurl{g-filename-to-utf8} to convert filenames into strings
@@ -321,7 +321,7 @@ possibly new file.  These are the cases in which you may need to use a
       @xurl{gtk-file-chooser-current-name}.
 @item To save a file under a different name, as for a File/Save As command.
       Use the keyword @code{:save}, and set the existing filename with
-      @xurl{gtk-file-chooser-set-filename}.
+      @xurl{gtk-file-chooser-filename}.
 @item To choose a folder instead of a file. Use the keyword
       @code{select-folder}.
 @end itemize
@@ -390,7 +390,7 @@ save.  The dialog is shown in @ref{figure-file-chooser-dialog}.
                                                       "gtk-cancel" :cancel)))
              (when (eq (gtk-dialog-run dialog) :accept)
                (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-get-filename dialog)))
+                       (gtk-file-chooser-filename dialog)))
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
@@ -426,7 +426,7 @@ to open a file.
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "File set: ~A~%"
-                                  (gtk-file-chooser-get-filename button))))
+                                  (gtk-file-chooser-filename button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 @end verbatim

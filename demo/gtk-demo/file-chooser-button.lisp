@@ -20,6 +20,6 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "File set: ~A~%"
-                                  (gtk-file-chooser-get-filename button))))
+                                  (gtk-file-chooser-filename button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))

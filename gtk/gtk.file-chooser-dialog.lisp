@@ -99,7 +99,7 @@
                                              \"gtk-open\" :accept)))
     (if (eql (gtk-dialog-run dialog)
              (foreign-enum-value 'gtk-response-type :accept))
-      (let ((filename (gtk-file-chooser-get-filename dialog)))
+      (let ((filename (gtk-file-chooser-filename dialog)))
         ...
       ))
 
@@ -115,11 +115,11 @@
                                              \"gtk-save\" :accept)))
     (setf (gtk-file-chooser-do-overwrite-confirmation dialog) t)
     (if filename
-        (gtk-file-chooser-set-filename dialog filename)
-        (gtk-file-chooser-set-current-name dialog \"Untitled document\"))
+        (setf (gtk-file-chooser-filename dialog) filename)
+        (setf (gtk-file-chooser-current-name dialog) \"Untitled document\"))
     (if (eql (gtk-dialog-run dialog)
              (foreign-enum-value 'gtk-response-type :accept))
-      (let ((filename (gtk-file-chooser-get-filename dialog)))
+      (let ((filename (gtk-file-chooser-filename dialog)))
         ...
       ))
 
@@ -136,12 +136,12 @@
       @begin{item}
         To save a file for the first time, as for a File/Save command. Use
         @code{:save}, and suggest a name such as \"Untitled\" with the function
-        @fun{gtk-file-chooser-set-current-name}.
+        @fun{gtk-file-chooser-current-name}.
       @end{item}
       @begin{item}
         To save a file under a different name, as for a File/Save As command.
         Use @code{:save}, and set the existing filename with the function
-        @fun{gtk-file-chooser-set-filename}.
+        @fun{gtk-file-chooser-filename}.
       @end{item}
       @begin{item}
         To choose a folder instead of a file. Use @code{:select-folder}.
@@ -154,7 +154,7 @@
     folder. This is no longer considered to be a good policy, as now the file
     chooser is able to make good suggestions on its own. In general, you should
     only cause the file chooser to show a specific folder when it is appropriate
-    to use the function @fun{gtk-file-chooser-set-filename}, i. e. when you are
+    to use the function @fun{gtk-file-chooser-filename}, i. e. when you are
     doing a File/Save As command and you already have a file saved somewhere.
 
   @subheading{Response Codes}
@@ -193,8 +193,8 @@
   @see-class{gtk-dialog}
   @see-class{gtk-file-chooser}
   @see-class{gtk-file-chooser-widget}
-  @see-function{gtk-file-chooser-set-current-name}
-  @see-function{gtk-file-chooser-set-filename}
+  @see-function{gtk-file-chooser-current-name}
+  @see-function{gtk-file-chooser-filename}
   @see-function{gtk-file-chooser-dialog-new}")
 
 ;;; ----------------------------------------------------------------------------

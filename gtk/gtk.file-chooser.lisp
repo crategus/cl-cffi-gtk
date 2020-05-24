@@ -391,7 +391,7 @@
     the GLib documentation for more details about this variable.
 
     This means that while you can pass the result of the
-    @fun{gtk-file-chooser-get-filename} function to @code{open()} or
+    @fun{gtk-file-chooser-filename} function to @code{open()} or
     @code{fopen()}, you may not be able to directly set it as the text of a
     @class{gtk-label} widget unless you convert it first to UTF-8, which all
     GTK+ widgets expect. You should use the @fun{g-filename-to-utf8} function
