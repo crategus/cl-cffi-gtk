@@ -1,4 +1,4 @@
-﻿;;; ----------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 ;;; gio.file.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
@@ -818,39 +818,55 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_equal ()
 ;;;
-;;; gboolean            g_file_equal                        (GFile *file1,
-;;;                                                          GFile *file2);
+;;; gboolean
+;;; g_file_equal (GFile *file1,
+;;;               GFile *file2);
 ;;;
-;;; Checks equality of two given GFiles. Note that two GFiles that differ can still refer to the same file on the filesystem due to various forms of filename aliasing.
+;;; Checks if the two given GFiles refer to the same file.
 ;;;
-;;; This call does no blocking i/o.
+;;; Note that two GFiles that differ can still refer to the same file on the
+;;; filesystem due to various forms of filename aliasing.
+;;;
+;;; This call does no blocking I/O.
 ;;;
 ;;; file1 :
-;;;     the first GFile.
+;;;     the first GFile
 ;;;
 ;;; file2 :
-;;;     the second GFile.
+;;;     the second GFile
 ;;;
 ;;; Returns :
-;;;     TRUE if file1 and file2 are equal. FALSE if either is not a GFile.
+;;;     TRUE if file1 and file2 are equal.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;; g_file_get_basename ()
 ;;;
-;;; char *              g_file_get_basename                 (GFile *file);
+;;; char *
+;;; g_file_get_basename (GFile *file);
 ;;;
 ;;; Gets the base name (the last component of the path) for a given GFile.
 ;;;
-;;; If called for the top level of a system (such as the filesystem root or a uri like sftp://host/) it will return a single directory separator (and on Windows, possibly a drive letter).
+;;; If called for the top level of a system (such as the filesystem root or a
+;;; uri like sftp://host/) it will return a single directory separator (and on
+;;; Windows, possibly a drive letter).
 ;;;
-;;; The base name is a byte string (*not* UTF-8). It has no defined encoding or rules other than it may not contain zero bytes. If you want to use filenames in a user interface you should use the display name that you can get by requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute with g_file_query_info().
+;;; The base name is a byte string (not UTF-8). It has no defined encoding or
+;;; rules other than it may not contain zero bytes. If you want to use filenames
+;;; in a user interface you should use the display name that you can get by
+;;; requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute with
+;;; g_file_query_info().
 ;;;
-;;; This call does no blocking i/o.
+;;; This call does no blocking I/O.
 ;;;
 ;;; file :
-;;;     input GFile.
+;;;     input GFile
 ;;;
 ;;; Returns :
-;;;     string containing the GFile's base name, or NULL if given GFile is invalid. The returned string should be freed with g_free() when no longer needed.
+;;;     string containing the GFile's base name, or NULL if given GFile is
+;;;     invalid. The returned string should be freed with g_free() when no
+;;;     longer needed.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_get_path ()
@@ -964,30 +980,32 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;;g_file_has_parent ()
-;;;gboolean
-;;;g_file_has_parent (GFile *file,
-;;;                   GFile *parent);
-;;;Checks if file has a parent, and optionally, if it is parent .
+;;; g_file_has_parent ()
+;;;
+;;; gboolean
+;;; g_file_has_parent (GFile *file,
+;;;                    GFile *parent);
+;;;
+;;; Checks if file has a parent, and optionally, if it is parent .
+;;;
+;;; If parent is NULL then this function returns TRUE if file has any parent at
+;;; all. If parent is non-NULL then TRUE is only returned if file is an
+;;; immediate child of parent .
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; parent :
+;;;     the parent to check for, or NULL.
+;;;
+;;; Returns :
+;;;     TRUE if file is an immediate child of parent (or any parent in the case
+;;;     that parent is NULL).
+;;;
+;;; Since 2.24
+;;; ----------------------------------------------------------------------------
 
-;;;If parent is NULL then this function returns TRUE if file has any parent at all. If parent is non-NULL then TRUE is only returned if file is an immediate child of parent .
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;parent
-
-;;;the parent to check for, or NULL.
-
-;;;[nullable]
-;;;Returns
-;;;TRUE if file is an immediate child of parent (or any parent in the case that parent is NULL).
-
-;;;Since: 2.24
-
+;;; ----------------------------------------------------------------------------
 ;;;g_file_get_child ()
 ;;;GFile *
 ;;;g_file_get_child (GFile *file,
