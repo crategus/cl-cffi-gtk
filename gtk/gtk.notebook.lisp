@@ -1095,7 +1095,7 @@
   @see-class{gtk-notebook}
   @see-function{gtk-notebook-insert-page}"
   (notebook (g-object gtk-notebook))
-  (child (g-object gtk-notebook))
+  (child (g-object gtk-widget))
   (tab-label (g-object gtk-widget))
   (menu-label (g-object gtk-widget))
   (position :int))
