@@ -292,7 +292,7 @@
 
 #+gtk-3-20
 (defun (setf gtk-application-window-help-overlay) (help-overlay window)
-  (foreign-funcall "gtk_application_window_help_overlay"
+  (foreign-funcall "gtk_application_window_set_help_overlay"
                    (g-object gtk-application-window) window
                    (g-object gtk-shortcuts-window) help-overlay
                    :void)
