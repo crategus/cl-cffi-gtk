@@ -172,6 +172,7 @@
 ;;;     gtk_flow_box_invalidate_sort
 ;;;     (*GtkFlowBoxCreateWidgetFunc)
 ;;;     gtk_flow_box_bind_model
+
 ;;;     gtk_flow_box_child_new
 ;;;     gtk_flow_box_child_get_index
 ;;;     gtk_flow_box_child_is_selected

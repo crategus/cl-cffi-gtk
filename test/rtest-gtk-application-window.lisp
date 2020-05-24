@@ -85,10 +85,10 @@
 
 ;;; --- gtk_application_window_get_id ------------------------------------------
 
-(test gtk-application-window-get-id
+(test gtk-application-window-id
   (let ((window (make-instance 'gtk-application-window)))
     ;; Zero if the window is not added to a GtkApplication
-    (is (= 0 (gtk-application-window-get-id window)))))
+    (is (= 0 (gtk-application-window-id window)))))
 
 ;;; --- gtk_application_window_set_help_overlay --------------------------------
 ;;; --- gtk_application_window_get_help_overlay --------------------------------
@@ -97,8 +97,9 @@
   (let ((window (make-instance 'gtk-application-window))
         (help-overlay (make-instance 'gtk-shortcuts-window)))
     ;; Default value is nil
-    (is-false (gtk-application-window-get-help-overlay window))
+    (is-false (gtk-application-window-help-overlay window))
     ;; Set a GtkShortcutsWindow
-    (gtk-application-window-set-help-overlay window help-overlay)
+    (setf (gtk-application-window-help-overlay window) help-overlay)
     ;; Retrieve the GtkShortcutsWindow
-    (is (eq 'gtk-shortcuts-window (type-of (gtk-application-window-get-help-overlay window))))))
+    (is (eq 'gtk-shortcuts-window (type-of (gtk-application-window-help-overlay window))))))
+

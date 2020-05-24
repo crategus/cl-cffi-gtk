@@ -61,9 +61,9 @@
 
 ;;;  Buttons and Toggles
 
-;    gtk.button.lisp
+(load "rtest-gtk-button.lisp")
 ;    gtk.check-button.lisp
-;    gtk.radio-button.lisp
+(load "rtest-gtk-radio-button.lisp")
 ;    gtk.toggle-button.lisp
 ;    gtk.link-button.lisp
 ;    gtk.menu-button.lisp
@@ -126,7 +126,7 @@
 
 ;    gtk.combo-box.lisp
 ;    gtk.combo-box-text.lisp
-;    gtk.menu.lisp
+(load "rtest-gtk-menu.lisp")
 ;    gtk.menu-bar.lisp
 ;    gtk.menu-item.lisp
 ;    gtk.radio-menu-item.lisp
@@ -214,7 +214,7 @@
 (load "rtest-gtk-widget.lisp")
 (load "rtest-gtk-container.lisp")
 ;    gtk.bin.lisp
-;    gtk.menu-shell.lisp
+(load "rtest-gtk-menu-shell.lisp")
 ;    gtk.range.lisp
 ;    gtk.im-context.lisp
 ;    not implemented                  - GtkNativeDialog
@@ -236,9 +236,8 @@
 ;;;  Choosing from installed applications
 
 (load "rtest-gtk-app-chooser.lisp")
-;    gtk.app-chooser.lisp
-;    gtk.app-chooser-button.lisp
-;    gtk.app-chooser-dialog.lisp
+(load "rtest-gtk-app-chooser-button.lisp")
+(load "rtest-gtk-app-chooser-dialog.lisp")
 ;    gtk.app-chooser-widget.lisp
 
 ;;;  Gestures and event handling
