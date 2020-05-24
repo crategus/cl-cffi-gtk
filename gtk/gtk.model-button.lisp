@@ -2,11 +2,11 @@
 ;;; gtk.model-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,15 +41,15 @@
 ;;;
 ;;; Properties
 ;;;
-;;;          gboolean   active        Read / Write
-;;;          gboolean   centered      Read / Write
-;;;             GIcon*  icon          Read / Write
-;;;          gboolean   iconic        Read / Write
-;;;          gboolean   inverted      Read / Write
-;;;             gchar*  menu-name     Read / Write
-;;;     GtkButtonRole   role          Read / Write
-;;;             gchar*  text          Read / Write
-;;;          gboolean   use-markup    Read / Write
+;;;          gboolean    active        Read / Write
+;;;          gboolean    centered      Read / Write
+;;;             GIcon*   icon          Read / Write
+;;;          gboolean    iconic        Read / Write
+;;;          gboolean    inverted      Read / Write
+;;;             gchar*   menu-name     Read / Write
+;;;     GtkButtonRole    role          Read / Write
+;;;             gchar*   text          Read / Write
+;;;          gboolean    use-markup    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -83,7 +83,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-role atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-button-role atdoc:*external-symbols*)
- "@version{2019-4-2}
+ "@version{2020-5-12}
   @begin{short}
     The role specifies the desired appearance of a @class{gtk-model-button}.
   @end{short}
@@ -146,7 +146,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-model-button 'type)
- "@version{2019-4-2}
+ "@version{2020-5-12}
   @begin{short}
     @sym{gtk-model-button} is a button class that can use a @class{g-action} as
     its model.
@@ -156,14 +156,14 @@
   @sym{gtk-model-button} will adapt its appearance according to the kind of
   action it is backed by, and appear either as a plain, check or radio button.
 
-  Model buttons are used when popovers from a menu model with the function
-  @fun{gtk-popover-new-from-model}; they can also be used manually in a
+  Model buttons are used with popovers from a menu model with the function
+  @fun{gtk-popover-new-from-model}. They can also be used manually in a
   @class{gtk-popover-menu}.
 
   When the action is specified via the @code{action-name} and
   @code{action-target} properties, the role of the button, i. e. whether it is
   a plain, check or radio button, is determined by the type of the action and
-  doesn't have to be explicitly specified with the @code{role} property.
+  does not have to be explicitly specified with the @code{role} property.
 
   The content of the button is specified by the @code{text} and @code{icon}
   properties.
@@ -223,8 +223,8 @@
  ├── <child>
  ╰── arrow
     @end{pre}
-    @sym{gtk-model-button} has a main CSS node with name @code{modelbutton}, and
-    a subnode, which will have the name @code{check}, @code{radio} or
+    @sym{gtk-model-button} has a main CSS node with name @code{modelbutton},
+    and a subnode, which will have the name @code{check}, @code{radio} or
     @code{arrow}, depending on the role of the button and whether it has a menu
     name set.
 
@@ -259,43 +259,57 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-model-button) 't)
- "The @code{active} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   The state of the button. This is reflecting the state of the associated
   @class{g-action}. @br{}
-  Default value: @code{nil} @br{}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-active 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-active object) => active}
+  @syntax[]{(setf (gtk-model-button-active object) active)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[active]{a boolean with the state of the button}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{active} of the
+    Accessor of the @slot[gtk-model-button]{active} slot of the
     @class{gtk-model-button} class.
   @end{short}
-  @see-class{gtk-model-button}")
+
+  The state of the button. This is reflecting the state of the associated
+  @class{g-action}.
+  @see-class{gtk-model-button}
+  @see-class{g-action}")
 
 ;;; --- gtk-model-button-centered ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "centered"
                                                'gtk-model-button) 't)
- "The @code{centered} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{centered} property of type @code{:boolean} (Read / Write) @br{}
   Whether to render the button contents centered instead of left-aligned. This
   property should be set for title-like items. @br{}
-  Default value: @code{nil} @br{}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-centered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-centered 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-centered object) => centered}
+  @syntax[]{(setf (gtk-model-button-centered object) centered)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[active]{a boolean wether to render the button contents centered
+    instead of left-aligned}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{centered} of the
+    Accessor of the @slot[gtk-model-button]{centered} slot of the
     @class{gtk-model-button} class.
   @end{short}
+
+  Whether to render the button contents centered instead of left-aligned. This
+  property should be set for title-like items.
   @see-class{gtk-model-button}")
 
 ;;; --- gtk-model-button-icon --------------------------------------------------
@@ -304,19 +318,26 @@
 (setf (documentation (atdoc:get-slot-from-name "icon"
                                                'gtk-model-button) 't)
  "The @code{icon} property of type @class{g-icon} (Read / Write) @br{}
-  A @class{g-icon} that will be used if iconic appearance for the button is
-  desired. @br{}")
+  An icon that will be used if iconic appearance for the button is desired.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-icon 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-icon object) => icon}
+  @syntax[]{(setf (gtk-model-button-icon object) icon)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[icon]{a @class{g-icon} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{icon} of the
+    Accessor of the @slot[gtk-model-button]{icon} slot of the
     @class{gtk-model-button} class.
   @end{short}
-  @see-class{gtk-model-button}")
+
+  An icon that will be used if iconic appearance for the button is desired.
+  @see-class{gtk-model-button}
+  @see-class{g-icon}
+  @see-function{gtk-model-button-iconic}")
 
 ;;; --- gtk-model-button-iconic ------------------------------------------------
 
@@ -327,18 +348,27 @@
   If this property is set, the button will show an icon if one is set. If no
   icon is set, the text will be used. This is typically used for horizontal
   sections of linked buttons. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-iconic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-iconic 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-iconic object) => iconic}
+  @syntax[]{(setf (gtk-model-button-iconic object) iconic)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[iconic]{a boolean wether the button will show an icon}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{iconic} of the
+    Accessor of the @slot[gtk-model-button]{iconic} slot of the
     @class{gtk-model-button} class.
   @end{short}
-  @see-class{gtk-model-button}")
+
+  If this property is set, the button will show an icon if one is set. If no
+  icon is set, the text will be used. This is typically used for horizontal
+  sections of linked buttons.
+  @see-class{gtk-model-button}
+  @see-function{gtk-model-button-icon}")
 
 ;;; --- gtk-model-button-inverted ----------------------------------------------
 
@@ -348,17 +378,25 @@
  "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
   Whether to show the submenu indicator at the opposite side than normal. This
   property should be set for model buttons that 'go back' to a parent menu.@br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-inverted atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-inverted 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-inverted object) => inverted}
+  @syntax[]{(setf (gtk-model-button-inverted object) inverted)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[inverted]{a boolean wether to show the submenu indicator at the
+    opposite side than normal}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{inverted} of the
+    Accessor of the @slot[gtk-model-button]{inverted} slot of the
     @class{gtk-model-button} class.
   @end{short}
+
+  Whether to show the submenu indicator at the opposite side than normal. This
+  property should be set for model buttons that 'go back' to a parent menu.
   @see-class{gtk-model-button}")
 
 ;;; --- gtk-model-button-menu-name ---------------------------------------------
@@ -368,18 +406,25 @@
                                                'gtk-model-button) 't)
  "The @code{menu-name} property of type @code{:string} (Read / Write) @br{}
   The name of a submenu to open when the button is activated. If this is set,
-  the button should not have an action associated with it.@br{}
+  the button should not have an action associated with it. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-menu-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-menu-name 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-menu-name object) => menu-name}
+  @syntax[]{(setf (gtk-model-button-menu-name object) menu-name)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[menu-name]{a string with the name of a submenu}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{menu-name} of the
+    Accessor of the @slot[gtk-model-button]{menu-name} slot of the
     @class{gtk-model-button} class.
   @end{short}
+
+  The name of a submenu to open when the button is activated. If this is set,
+  the button should not have an action associated with it.
   @see-class{gtk-model-button}")
 
 ;;; --- gtk-model-button-role --------------------------------------------------
@@ -388,21 +433,30 @@
 (setf (documentation (atdoc:get-slot-from-name "role"
                                                'gtk-model-button) 't)
  "The @code{role} property of type @symbol{gtk-button-role} (Read / Write) @br{}
-  Specifies whether the button is a plain, check or radio button. When
-  @code{action-name} is set, the role will be determined from the action and
-  does not have to be set explicitly. @br{}
+  Specifies whether the button is a plain, check or radio button. When the
+  @slot[gtk-actionable]{action-name} property is set, the role will be
+  determined from the action and does not have to be set explicitly. @br{}
   Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-model-button-role atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-role 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-role object) => role}
+  @syntax[]{(setf (gtk-model-button-role object) role)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[role]{a value of the @symbol{gtk-button-role} enumeration}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{role} of the
+    Accessor of the @slot[gtk-model-button]{role} slot of the
     @class{gtk-model-button} class.
   @end{short}
-  @see-class{gtk-model-button}")
+
+  Specifies whether the button is a plain, check or radio button. When the
+  @slot[gtk-actionable]{action-name} property is set, the role will be
+  determined from the action and does not have to be set explicitly.
+  @see-class{gtk-model-button}
+  @see-symbol{gtk-button-role}")
 
 ;;; --- gtk-model-button-text --------------------------------------------------
 
@@ -417,11 +471,17 @@
 (setf (gethash 'gtk-model-button-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-text 'function)
- "@version{2019-4-2}
+ "@version{2020-5-12}
+  @syntax[]{(gtk-model-button-text object) => text}
+  @syntax[]{(setf (gtk-model-button-text object) text)}
+  @argument[object]{a @class{gtk-model-button} widget}
+  @argument[text]{a string with the label for the button}
   @begin{short}
-    Accessor of the slot @slot[gtk-model-button]{text} of the
+    Accessor of the @slot[gtk-model-button]{text} slot of the
     @class{gtk-model-button} class.
   @end{short}
+
+  The label for the button.
   @see-class{gtk-model-button}")
 
 ;;; --- gtk-model-button-use-markup --------------------------------------------
@@ -463,10 +523,10 @@
 
 (defun gtk-model-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2019-4-2}
+ "@version{2020-5-12}
   @return{A new @class{gtk-model-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-model-button} widget.
+    Creates a new model button widget.
   @end{short}
 
   Since 3.16
