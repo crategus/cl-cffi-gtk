@@ -238,6 +238,7 @@
     (join-gtk-main)
     (list in-startup in-activate in-open in-shutdown)))
 
+#+nil ; Causes an error when running the complete testsuite, compare this with gtk-application-signals
 (test g-application-signals
   (is (equal '(t t nil t) (example-application-open)))
   (is (equal '(t nil t t) (example-application-open '("demo" "file1" "file2")))))

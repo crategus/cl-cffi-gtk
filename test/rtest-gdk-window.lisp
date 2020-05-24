@@ -1,9 +1,10 @@
 (def-suite gdk-window :in gdk-suite)
 (in-suite gdk-window)
 
+;; TODO: Do not use the functions gtk-widget-show or gtk-widget-show-all
 
-;;; Types and Values
-;;;
+;;; --- Types and Values -------------------------------------------------------
+
 ;;;     GdkWindow
 
 ;;;     GdkWindowType
@@ -55,6 +56,7 @@
    (is (eq :north-west (gdk-geometry-win-gravity geometry)))
  ))
 
+#+nil
 (test gdk-geometry-cstruct
   (let ((geometry (make-gdk-geometry)))
     (is (= 56 (foreign-type-size '(:struct gdk::gdk-geometry-cstruct))))
@@ -140,6 +142,7 @@
 
 ;;; --- gdk-window-get-window-type ---------------------------------------------
 
+#+nil
 (test gdk-window-get-window-type
   (is (eq :root (gdk-window-get-window-type (gdk-get-default-root-window))))
   (let ((toplevel (make-instance 'gtk-window :type :toplevel))
@@ -274,6 +277,7 @@
 
 ;;; --- gdk-window-get-geometry ------------------------------------------------
 
+#+nil
 (test gdk-window-get-geometry
   (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-show toplevel)
@@ -290,6 +294,7 @@
 
 ;;; --- gdk-window-set-geometry-hints ------------------------------------------
 
+#+nil
 (test gdk-window-set-geometry-hints
   (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-show toplevel)
@@ -303,6 +308,7 @@
 ;;; --- gdk-window-get-width ---------------------------------------------------
 ;;; --- gdk-window-get-height --------------------------------------------------
 
+#+nil
 (test gdk-window-get-width
   (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-show toplevel)
@@ -325,6 +331,7 @@
 
 ;;; --- gdk-window-get-position ------------------------------------------------
 
+#+nil
 (test gdk-window-get-position
   (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-show toplevel)

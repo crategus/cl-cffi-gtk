@@ -54,23 +54,23 @@
 
 ;;;     gdk_keymap_get_caps_lock_state
 
-(test gdk-keymap-get-caps-lock-state
-  (is-false (gdk-keymap-get-caps-lock-state (gdk-keymap-get-default))))
+(test gdk-keymap-caps-lock-state
+  (is-false (gdk-keymap-caps-lock-state (gdk-keymap-get-default))))
 
 ;;;     gdk_keymap_get_num_lock_state
 
-(test gdk-keymap-get-num-lock-state
-  (is-true (gdk-keymap-get-num-lock-state (gdk-keymap-get-default))))
+(test gdk-keymap-num-lock-state
+  (is-false (gdk-keymap-num-lock-state (gdk-keymap-get-default))))
 
 ;;;     gdk_keymap_get_scroll_lock_state
 
-(test gdk-keymap-get-scroll-lock-state
-  (is-false (gdk-keymap-get-scroll-lock-state (gdk-keymap-get-default))))
+(test gdk-keymap-scroll-lock-state
+  (is-false (gdk-keymap-scroll-lock-state (gdk-keymap-get-default))))
 
 ;;;     gdk_keymap_get_modifier_state
 
-(test gdk-keymap-get-modifier-state
-  (is (equal '(:MOD2-MASK) (gdk-keymap-get-modifier-state (gdk-keymap-get-default)))))
+(test gdk-keymap-modifier-state
+  (is (equal '() (gdk-keymap-modifier-state (gdk-keymap-get-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers
 ;;;     gdk_keymap_map_virtual_modifiers
