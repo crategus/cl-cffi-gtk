@@ -54,6 +54,8 @@
    (:file "gio.application-command-line") ; Command-line invocation of an application
    (:file "gio.menu-model")          ; Class representing the contents of a menu
    (:file "gio.menu")                ; Simple implementation of GMenuModel
+   ;; File Operations
+   (:file "gio.file")                ; File and Directory Handling
   )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject))

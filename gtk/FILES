@@ -35,13 +35,13 @@ GTK+ Widgets and Objects
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24
     gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24
     gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
- +  gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &
- +  gtk.stack.lisp                   - GtkStack                    - GTK+ 3.24
- +  gtk.stack-switcher.lisp          - GtkStackSwitcher            - GTK+ 3.24
- +  gtk.stack-sidebar.lisp           - GtkStackSidebar             - GTK+ 3.24
- +  gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.24
- +  gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.24
- +  gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.24
+    gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &
+    gtk.stack.lisp                   - GtkStack                    - GTK+ 3.24
+    gtk.stack-switcher.lisp          - GtkStackSwitcher            - GTK+ 3.24
+    gtk.stack-sidebar.lisp           - GtkStackSidebar             - GTK+ 3.24
+    gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.24
+    gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.24
+    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.24
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.24
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.24
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.24
@@ -64,17 +64,17 @@ GTK+ Widgets and Objects
 
   Buttons and Toggles
 
- +  gtk.button.lisp                  - GtkButton                   - GTK+ 3.24 &
- +  gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.24
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.24
+    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.24
  +  gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.24
  +  gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.24
- +  gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.24
- +  gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.24
- +  gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.24
- +  gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.24
- +  gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.24
+    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.24
+    gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.24
+    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.24
+    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.24
+    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.24
  +  not implemented                  - GtkLockButton
- +  gtk.model-button.lisp            - GtkModelButton              - GTK+ 3.24
+    gtk.model-button.lisp            - GtkModelButton              - GTK+ 3.24
 
   Numeric and Text Data Entry
 
@@ -131,7 +131,7 @@ GTK+ Widgets and Objects
 
  +  gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.24
  +  gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.24
- +  gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24
+ +  gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24 &
  +  gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
  +  gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
  +  gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24 &
@@ -152,10 +152,10 @@ GTK+ Widgets and Objects
 
   Selector Widgets and Dialogs
 
- +  gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.24
- +  gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.24
- +  gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
- +  gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
+    gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.24
+    gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.24
+    gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
+    gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
 
  +  gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24 &
  +  gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
@@ -219,7 +219,7 @@ GTK+ Widgets and Objects
  +  gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
     gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
  +  gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
- +  gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24 &
+    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24
  +  gtk.range.lisp                   - GtkRange                    - GTK+ 3.24
  +  gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.24 &
     not implemented                  - GtkNativeDialog
@@ -240,10 +240,10 @@ GTK+ Widgets and Objects
 
   Choosing from installed applications
 
- +  gtk.app-chooser.lisp             - GtkAppChooser               - GTK+ 3.24
- +  gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.24
- +  gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.24
- +  gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.24
+    gtk.app-chooser.lisp             - GtkAppChooser               - GTK+ 3.24
+    gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.24
+    gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.24
+    gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.24
 
   Gestures and event handling
 

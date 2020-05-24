@@ -83,52 +83,42 @@
 
       @about-symbol{gtk-application-inhibit-flags}
       @about-class{gtk-application}
-
       @about-generic{gtk-application-active-window}
       @about-generic{gtk-application-app-menu}
       @about-generic{gtk-application-menubar}
       @about-generic{gtk-application-register-session}
       @about-generic{gtk-application-screensaver-active}
-
       @about-function{gtk-application-new}
       @about-function{gtk-application-add-window}
       @about-function{gtk-application-remove-window}
-      @about-function{gtk-application-get-windows}
-      @about-function{gtk-application-get-window-by-id}
+      @about-function{gtk-application-windows}
+      @about-function{gtk-application-window-by-id}
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
       @about-function{gtk-application-is-inhibited}
       @about-function{gtk-application-prefers-app-menu}
-      @about-function{gtk-application-get-menu-by-id}
+      @about-function{gtk-application-menu-by-id}
       @about-function{gtk-application-add-accelerator}
       @about-function{gtk-application-remove-accelerator}
       @about-function{gtk-application-list-action-descriptions}
-      @about-function{gtk-application-get-accels-for-action}
-      @about-function{gtk-application-set-accels-for-action}
-      @about-function{gtk-application-get-actions-for-accel}
+      @about-function{gtk-application-accels-for-action}
+      @about-function{gtk-application-actions-for-accel}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
       @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
-
       @about-generic{gtk-application-window-show-menubar}
-
       @about-function{gtk-application-window-new}
-      @about-function{gtk-application-window-get-id}
-      @about-function{gtk-application-window-set-help-overlay}
-      @about-function{gtk-application-window-get-help-overlay}
+      @about-function{gtk-application-window-id}
+      @about-function{gtk-application-window-help-overlay}
     @end{subsection}
     @begin[GtkActionable]{subsection}
       An interface for widgets that can be associated with actions.
 
       @about-class{gtk-actionable}
-
       @about-generic{gtk-actionable-action-name}
       @about-generic{gtk-actionable-action-target}
-
-      @about-function{gtk-actionable-get-action-target-value}
-      @about-function{gtk-actionable-set-action-target-value}
       @about-function{gtk-actionable-set-action-target}
       @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
@@ -542,7 +532,6 @@
       A container that allows reflowing its children.
 
       @about-class{gtk-flow-box}
-
       @about-generic{gtk-flow-box-activate-on-single-click}
       @about-generic{gtk-flow-box-column-spacing}
       @about-generic{gtk-flow-box-homogeneous}
@@ -550,15 +539,14 @@
       @about-generic{gtk-flow-box-min-children-per-line}
       @about-generic{gtk-flow-box-row-spacing}
       @about-generic{gtk-flow-box-selection-mode}
-
       @about-function{gtk-flow-box-new}
       @about-function{gtk-flow-box-insert}
-      @about-function{gtk-flow-box-get-child-at-index}
-      @about-function{gtk-flow-box-get-child-at-pos}
+      @about-function{gtk-flow-box-child-at-index}
+      @about-function{gtk-flow-box-child-at-pos}
       @about-function{gtk-flow-box-set-hadjustment}
       @about-function{gtk-flow-box-set-vadjustment}
       @about-function{gtk-flow-box-selected-foreach}
-      @about-function{gtk-flow-box-get-selected-children}
+      @about-function{gtk-flow-box-selected-children}
       @about-function{gtk-flow-box-select-child}
       @about-function{gtk-flow-box-unselect-child}
       @about-function{gtk-flow-box-select-all}
@@ -570,9 +558,8 @@
       @about-function{gtk-flow-box-bind-model}
 
       @about-class{gtk-flow-box-child}
-
       @about-function{gtk-flow-box-child-new}
-      @about-function{gtk-flow-box-child-get-index}
+      @about-function{gtk-flow-box-child-index}
       @about-function{gtk-flow-box-child-is-selected}
       @about-function{gtk-flow-box-child-changed}
     @end{subsection}
@@ -580,69 +567,57 @@
       A stacking container.
 
       @about-symbol{gtk-stack-transition-type}
-
       @about-class{gtk-stack}
-
-      @about-generic{gtk-stack-visible-child}
-      @about-generic{gtk-stack-visible-child-name}
       @about-generic{gtk-stack-homogeneous}
       @about-generic{gtk-stack-hhomogeneous}
-      @about-generic{gtk-stack-vhomogeneous}
+      @about-generic{gtk-stack-interpolate-size}
       @about-generic{gtk-stack-transition-duration}
       @about-generic{gtk-stack-transition-type}
       @about-generic{gtk-stack-transition-running}
-      @about-generic{gtk-stack-interpolate-size}
-
+      @about-generic{gtk-stack-vhomogeneous}
+      @about-generic{gtk-stack-visible-child}
+      @about-generic{gtk-stack-visible-child-name}
       @about-function{gtk-stack-child-icon-name}
       @about-function{gtk-stack-child-name}
       @about-function{gtk-stack-child-needs-attention}
       @about-function{gtk-stack-child-position}
       @about-function{gtk-stack-child-title}
-
       @about-function{gtk-stack-new}
       @about-function{gtk-stack-add-named}
       @about-function{gtk-stack-add-titled}
-      @about-function{gtk-stack-get-child-by-name}
+      @about-function{gtk-stack-child-by-name}
       @about-function{gtk-stack-set-visible-child-full}
     @end{subsection}
     @begin[GtkStackSwitcher]{subsection}
       A controller for GtkStack.
 
       @about-class{gtk-stack-switcher}
-
       @about-generic{gtk-stack-switcher-stack}
       @about-generic{gtk-stack-switcher-icon-size}
-
       @about-function{gtk-stack-switcher-new}
     @end{subsection}
     @begin[GtkStackSidebar]{subsection}
       An automatic sidebar widget
 
       @about-class{gtk-stack-sidebar}
-
       @about-generic{gtk-stack-sidebar-stack}
-
       @about-function{gtk-stack-sidebar-new}
     @end{subsection}
     @begin[GtkActionBar]{subsection}
       A full width bar for presenting contextual actions
 
       @about-class{gtk-action-bar}
-
       @about-function{gtk-action-bar-child-pack-type}
       @about-function{gtk-action-bar-child-position}
-
       @about-function{gtk-action-bar-new}
       @about-function{gtk-action-bar-pack-start}
       @about-function{gtk-action-bar-pack-end}
-      @about-function{gtk-action-bar-get-center-widget}
-      @about-function{gtk-action-bar-set-center-widget}
+      @about-function{gtk-action-bar-center-widget}
     @end{subsection}
     @begin[GtkHeaderBar]{subsection}
       A box with a centered child.
 
       @about-class{gtk-header-bar}
-
       @about-generic{gtk-header-bar-custom-title}
       @about-generic{gtk-header-bar-decoration-layout}
       @about-generic{gtk-header-bar-decoration-layout-set}
@@ -651,10 +626,8 @@
       @about-generic{gtk-header-bar-spacing}
       @about-generic{gtk-header-bar-subtitle}
       @about-generic{gtk-header-bar-title}
-
       @about-function{gtk-header-bar-child-pack-type}
       @about-function{gtk-header-bar-child-position}
-
       @about-function{gtk-header-bar-new}
       @about-function{gtk-header-bar-pack-start}
       @about-function{gtk-header-bar-pack-end}
@@ -663,15 +636,11 @@
       A container which overlays widgets on top of each other.
 
       @about-class{gtk-overlay}
-
       @about-function{gtk-overlay-child-index}
       @about-function{gtk-overlay-child-pass-through}
-
       @about-function{gtk-overlay-new}
       @about-function{gtk-overlay-add-overlay}
       @about-function{gtk-overlay-reorder-overlay}
-      @about-function{gtk-overlay-get-overlay-pass-through}
-      @about-function{gtk-overlay-set-overlay-pass-through}
     @end{subsection}
     @begin[GtkButtonBox]{subsection}
       A container for arranging buttons
@@ -978,7 +947,6 @@
       A widget that emits a signal when clicked on.
 
       @about-class{gtk-button}
-
       @about-generic{gtk-button-always-show-image}
       @about-generic{gtk-button-focus-on-click}
       @about-generic{gtk-button-image}
@@ -989,7 +957,6 @@
       @about-generic{gtk-button-use-underline}
       @about-generic{gtk-button-xalign}
       @about-generic{gtk-button-yalign}
-
       @about-function{gtk-button-new}
       @about-function{gtk-button-new-with-label}
       @about-function{gtk-button-new-with-mnemonic}
@@ -1000,17 +967,13 @@
       @about-function{gtk-button-clicked}
       @about-function{gtk-button-enter}
       @about-function{gtk-button-leave}
-      @about-function{gtk-button-set-focus-on-click}
-      @about-function{gtk-button-get-focus-on-click}
-      @about-function{gtk-button-set-alignment}
-      @about-function{gtk-button-get-alignment}
-      @about-function{gtk-button-get-event-window}
+      @about-function{gtk-button-alignment}
+      @about-function{gtk-button-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
       Create widgets with a discrete toggle button.
 
       @about-class{gtk-check-button}
-
       @about-function{gtk-check-button-new}
       @about-function{gtk-check-button-new-with-label}
       @about-function{gtk-check-button-new-with-mnemonic}
@@ -1019,9 +982,7 @@
       A choice from multiple check buttons.
 
       @about-class{gtk-radio-button}
-
       @about-generic{gtk-radio-button-group}
-
       @about-function{gtk-radio-button-new}
       @about-function{gtk-radio-button-new-from-widget}
       @about-function{gtk-radio-button-new-with-label}
@@ -1036,26 +997,21 @@
       Create buttons which retain their state.
 
       @about-class{gtk-toggle-button}
-
       @about-generic{gtk-toggle-button-active}
       @about-generic{gtk-toggle-button-draw-indicator}
       @about-generic{gtk-toggle-button-inconsistent}
-
       @about-function{gtk-toggle-button-new}
       @about-function{gtk-toggle-button-new-with-label}
       @about-function{gtk-toggle-button-new-with-mnemonic}
-      @about-function{gtk-toggle-button-set-mode}
-      @about-function{gtk-toggle-button-get-mode}
+      @about-function{gtk-toggle-button-mode}
       @about-function{gtk-toggle-button-toggled}
     @end{subsection}
     @begin[GtkLinkButton]{subsection}
       Create buttons bound to a URL.
 
       @about-class{gtk-link-button}
-
       @about-generic{gtk-link-button-uri}
       @about-generic{gtk-link-button-visited}
-
       @about-function{gtk-link-button-new}
       @about-function{gtk-link-button-new-with-label}
     @end{subsection}
@@ -1063,50 +1019,41 @@
       A widget that shows a popup when clicked on.
 
       @about-symbol{gtk-arrow-type}
-
       @about-class{gtk-menu-button}
-
       @about-generic{gtk-menu-button-align-widget}
       @about-generic{gtk-menu-button-direction}
       @about-generic{gtk-menu-button-menu-model}
       @about-generic{gtk-menu-button-popover}
       @about-generic{gtk-menu-button-popup}
       @about-generic{gtk-menu-button-use-popover}
-
       @about-function{gtk-menu-button-new}
     @end{subsection}
     @begin[GtkSwitch]{subsection}
       A \"light switch\" style toggle.
 
       @about-class{gtk-switch}
-
       @about-generic{gtk-switch-active}
       @about-generic{gtk-switch-state}
-
       @about-function{gtk-switch-new}
     @end{subsection}
     @begin[GtkScaleButton]{subsection}
       A button which pops up a scale.
 
       @about-class{gtk-scale-button}
-
       @about-generic{gtk-scale-button-adjustment}
       @about-generic{gtk-scale-button-icons}
       @about-generic{gtk-scale-button-size}
       @about-generic{gtk-scale-button-value}
-
       @about-function{gtk-scale-button-new}
-      @about-function{gtk-scale-button-get-popup}
-      @about-function{gtk-scale-button-get-plus-button}
-      @about-function{gtk-scale-button-get-minus-button}
+      @about-function{gtk-scale-button-popup}
+      @about-function{gtk-scale-button-plus-button}
+      @about-function{gtk-scale-button-minus-button}
     @end{subsection}
-    @begin[GtkVolumeButton]{subsection}use-symbolic
+    @begin[GtkVolumeButton]{subsection}
       A button which pops up a volume control.
 
       @about-class{gtk-volume-button}
-
-      @about-generic{gtk-volume-use-symbolic}
-
+      @about-generic{gtk-volume-button-use-symbolic}
       @about-function{gtk-volume-button-new}
     @end{subsection}
     @begin[GtkLockButton]{subsection}
@@ -1116,9 +1063,7 @@
       A button that uses a GAction as model.
 
       @about-symbol{gtk-button-role}
-
       @about-class{gtk-model-button}
-
       @about-generic{gtk-model-button-active}
       @about-generic{gtk-model-button-centered}
       @about-generic{gtk-model-button-icon}
@@ -1128,7 +1073,6 @@
       @about-generic{gtk-model-button-role}
       @about-generic{gtk-model-button-text}
       @about-generic{gtk-model-button-use-markup}
-
       @about-function{gtk-model-button-new}
     @end{subsection}
   @end{section}
@@ -3065,69 +3009,51 @@ setup_tree (void)
 
       @about-symbol{gtk-arrow-placement}
       @about-class{gtk-menu}
-
-      @about-generic{gtk-combo-box-accel-group}
-      @about-generic{gtk-combo-box-accel-path}
-      @about-generic{gtk-combo-box-active}
-      @about-generic{gtk-combo-box-anchor-hints}
-      @about-generic{gtk-combo-box-attach-widget}
-      @about-generic{gtk-combo-box-menu-type-hint}
-      @about-generic{gtk-combo-box-monitor}
-      @about-generic{gtk-combo-box-rect-anchor-dx}
-      @about-generic{gtk-combo-box-rect-anchor-dy}
-      @about-generic{gtk-combo-box-reserve-toggle-size}
-      @about-generic{gtk-combo-box-tearoff-state}
-      @about-generic{gtk-combo-box-tearoff-title}
-
+      @about-generic{gtk-menu-accel-group}
+      @about-generic{gtk-menu-accel-path}
+      @about-generic{gtk-menu-active}
+      @about-generic{gtk-menu-anchor-hints}
+      @about-generic{gtk-menu-attach-widget}
+      @about-generic{gtk-menu-menu-type-hint}
+      @about-generic{gtk-menu-monitor}
+      @about-generic{gtk-menu-rect-anchor-dx}
+      @about-generic{gtk-menu-rect-anchor-dy}
+      @about-generic{gtk-menu-reserve-toggle-size}
+      @about-generic{gtk-menu-tearoff-state}
+      @about-generic{gtk-menu-tearoff-title}
+      @about-function{gtk-menu-child-bottom-attach}
       @about-function{gtk-menu-child-left-attach}
       @about-function{gtk-menu-child-right-attach}
       @about-function{gtk-menu-child-top-attach}
-      @about-function{gtk-menu-child-bottom-attach}
-
       @about-function{gtk-menu-new}
       @about-function{gtk-menu-new-from-model}
       @about-function{gtk-menu-set-screen}
       @about-function{gtk-menu-reorder-child}
       @about-function{gtk-menu-attach}
+
+      @about-function{gtk-menu-popup-at-rect}
+      @about-function{gtk-menu-popup-at-widget}
+      @about-function{gtk-menu-popup-at-pointer}
       @about-function{gtk-menu-popup-for-device}
       @about-function{gtk-menu-popup}
-      @about-function{gtk-menu-set-acrcel-group}
-      @about-function{gtk-menu-get-accel-group}
-      @about-function{gtk-menu-set-accel-path}
-      @about-function{gtk-menu-get-accel-path}
-      @about-function{gtk-menu-set-title}
-      @about-function{gtk-menu-get-title}
-      @about-function{gtk-menu-set-monitor}
-      @about-function{gtk-menu-get-monitor}
-      @about-function{gtk-menu-get-tearoff-state}
-      @about-function{gtk-menu-set-reserve-toggle-size}
-      @about-function{gtk-menu-get-reserve-toggle-size}
+      @about-function{gtk-menu-place-on-monitor}
+
       @about-function{gtk-menu-popdown}
       @about-function{gtk-menu-reposition}
-      @about-function{gtk-menu-get-active}
-      @about-function{gtk-menu-set-active}
-      @about-function{gtk-menu-set-tearoff-state}
       @about-function{gtk-menu-attach-to-widget}
       @about-function{gtk-menu-detach}
-      @about-function{gtk-menu-get-attach-widget}
       @about-function{gtk-menu-get-for-attach-widget}
     @end{subsection}
     @begin[GtkMenuBar]{subsection}
       A subclass of @class{gtk-menu-shell} which holds @class{gtk-menu-item}
       widgets.
 
+      @about-symbol{gtk-pack-direction}
       @about-class{gtk-menu-bar}
-
       @about-generic{gtk-menu-bar-child-pack-direction}
       @about-generic{gtk-menu-bar-pack-direction}
-
       @about-function{gtk-menu-bar-new}
       @about-function{gtk-menu-bar-new-from-model}
-      @about-symbol{gtk-pack-direction}
-      @about-function{gtk-menu-bar-set-pack-direction}
-      @about-function{gtk-menu-bar-get-pack-direction}
-      @about-function{gtk-menu-bar-set-child-pack-direction}
-      @about-function{gtk-menu-bar-get-child-pack-direction}
     @end{subsection}
     @begin[GtkMenuItem]{subsection}
       The widget used for item in menus.
@@ -3147,8 +3073,6 @@ setup_tree (void)
       @about-function{gtk-menu-item-get-right-justified}
       @about-function{gtk-menu-item-get-use-underline}
       @about-function{gtk-menu-item-set-use-underline}
-      @about-function{gtk-menu-item-set-accel-path}
-      @about-function{gtk-menu-item-get-accel-path}
       @about-function{gtk-menu-item-select}
       @about-function{gtk-menu-item-deselect}
       @about-function{gtk-menu-item-activate}
@@ -3207,7 +3131,7 @@ setup_tree (void)
       @about-function{gtk-tool-shell-get-ellipsize-mode}
       @about-function{gtk-tool-shell-get-icon-size}
       @about-function{gtk-tool-shell-get-orientation}
-      @about-function{gtk-tool-shell-get-relief-style}
+      @about-function{gtk-tool-shell-relief-style}
       @about-function{gtk-tool-shell-get-style}
       @about-function{gtk-tool-shell-get-text-alignment}
       @about-function{gtk-tool-shell-get-text-orientation}
@@ -3240,7 +3164,7 @@ setup_tree (void)
       @about-function{gtk-toolbar-get-show-arrow}
       @about-function{gtk-toolbar-get-style}
       @about-function{gtk-toolbar-get-icon-size}
-      @about-function{gtk-toolbar-get-relief-style}
+      @about-function{gtk-toolbar-relief-style}
       @about-function{gtk-toolbar-set-style}
       @about-function{gtk-toolbar-set-icon-size}
       @about-function{gtk-toolbar-unset-style}
@@ -3273,7 +3197,7 @@ setup_tree (void)
       @about-function{gtk-tool-item-get-icon-size}
       @about-function{gtk-tool-item-get-orientation}
       @about-function{gtk-tool-item-get-toolbar-style}
-      @about-function{gtk-tool-item-get-relief-style}
+      @about-function{gtk-tool-item-relief-style}
       @about-function{gtk-tool-item-get-text-alignment}
       @about-function{gtk-tool-item-get-text-orientation}
       @about-function{gtk-tool-item-retrieve-proxy-menu-item}
@@ -3459,24 +3383,20 @@ setup_tree (void)
       Interface implemented by widgets for choosing colors.
 
       @about-class{gtk-color-chooser}
-
       @about-generic{gtk-color-chooser-rgba}
       @about-generic{gtk-color-chooser-use-alpha}
-
       @about-function{gtk-color-chooser-add-palette}
     @end{subsection}
     @begin[GtkColorButton]{subsection}
       A button to launch a color selection dialog.
 
       @about-class{gtk-color-button}
-
       @about-generic{gtk-color-button-alpha}
       @about-generic{gtk-color-button-color}
       @about-generic{gtk-color-button-rgba}
       @about-generic{gtk-color-button-show-editor}
       @about-generic{gtk-color-button-title}
       @about-generic{gtk-color-button-use-alpha}
-
       @about-function{gtk-color-button-new}
       @about-function{gtk-color-button-new-with-color}
       @about-function{gtk-color-button-new-with-rgba}
@@ -3485,18 +3405,14 @@ setup_tree (void)
       A widget for choosing colors.
 
       @about-class{gtk-color-chooser-widget}
-
       @about-generic{gtk-color-chooser-widget-show-editor}
-
       @about-function{gtk-color-chooser-widget-new}
     @end{subsection}
     @begin[GtkColorChooserDialog]{subsection}
       A dialog for choosing colors.
 
       @about-class{gtk-color-chooser-dialog}
-
       @about-generic{gtk-color-chooser-dialog-show-editor}
-
       @about-function{gtk-color-chooser-dialog-new}
     @end{subsection}
     @begin[GtkFileChooser]{subsection}
@@ -3507,9 +3423,7 @@ setup_tree (void)
       @about-symbol{gtk-file-chooser-confirmation}
       @about-symbol{GTK_FILE_CHOOSER_ERROR}
       @about-symbol{gtk-file-chooser-error}
-
       @about-class{gtk-file-chooser}
-
       @about-generic{gtk-file-chooser-action}
       @about-generic{gtk-file-chooser-create-folders}
       @about-generic{gtk-file-chooser-do-overwrite-confirmation}
@@ -3521,27 +3435,15 @@ setup_tree (void)
       @about-generic{gtk-file-chooser-select-multiple}
       @about-generic{gtk-file-chooser-show-hidden}
       @about-generic{gtk-file-chooser-use-preview-label}
-
-      @about-function{gtk-file-chooser-set-action}
-      @about-function{gtk-file-chooser-get-action}
-      @about-function{gtk-file-chooser-set-local-only}
-      @about-function{gtk-file-chooser-get-local-only}
-      @about-function{gtk-file-chooser-set-select-multiple}
-      @about-function{gtk-file-chooser-get-select-multiple}
-      @about-function{gtk-file-chooser-set-show-hidden}
-      @about-function{gtk-file-chooser-get-show-hidden}
-      @about-function{gtk-file-chooser-set-create-folders}
-      @about-function{gtk-file-chooser-get-create-folders}
-      @about-function{gtk-file-chooser-set-current-name}
-      @about-function{gtk-file-chooser-get-filename}
-      @about-function{gtk-file-chooser-set-filename}
+      @about-function{gtk-file-chooser-current-name}
+      @about-function{gtk-file-chooser-filename}
       @about-function{gtk-file-chooser-select-filename}
       @about-function{gtk-file-chooser-unselect-filename}
       @about-function{gtk-file-chooser-select-all}
       @about-function{gtk-file-chooser-unselect-all}
-      @about-function{gtk-file-chooser-get-filenames}
-      @about-function{gtk-file-chooser-set-current-folder}
-      @about-function{gtk-file-chooser-get-current-folder}
+      @about-function{gtk-file-chooser-filenames}
+      @about-function{gtk-file-chooser-current-folder}
+
       @about-function{gtk-file-chooser-get-uri}
       @about-function{gtk-file-chooser-set-uri}
       @about-function{gtk-file-chooser-select-uri}
@@ -3549,21 +3451,11 @@ setup_tree (void)
       @about-function{gtk-file-chooser-get-uris}
       @about-function{gtk-file-chooser-set-current-folder-uri}
       @about-function{gtk-file-chooser-get-current-folder-uri}
-      @about-function{gtk-file-chooser-set-preview-widget}
-      @about-function{gtk-file-chooser-get-preview-widget}
-      @about-function{gtk-file-chooser-set-preview-widget-active}
-      @about-function{gtk-file-chooser-get-preview-widget-active}
-      @about-function{gtk-file-chooser-set-use-preview-label}
-      @about-function{gtk-file-chooser-get-use-preview-label}
       @about-function{gtk-file-chooser-get-preview-filename}
       @about-function{gtk-file-chooser-get-preview-uri}
-      @about-function{gtk-file-chooser-set-extra-widget}
-      @about-function{gtk-file-chooser-get-extra-widget}
       @about-function{gtk-file-chooser-add-filter}
       @about-function{gtk-file-chooser-remove-filter}
       @about-function{gtk-file-chooser-list-filters}
-      @about-function{gtk-file-chooser-set-filter}
-      @about-function{gtk-file-chooser-get-filter}
       @about-function{gtk-file-chooser-add-shortcut-folder}
       @about-function{gtk-file-chooser-remove-shortcut-folder}
       @about-function{gtk-file-chooser-list-shortcut-folders}
@@ -4541,10 +4433,9 @@ setup_tree (void)
     @begin[GtkMenuShell]{subsection}
       A base class for menu objects.
 
+      @about-symbol{gtk-menu-direction-type}
       @about-class{gtk-menu-shell}
-
       @about-generic{gtk-menu-shell-take-focus}
-
       @about-function{gtk-menu-shell-append}
       @about-function{gtk-menu-shell-prepend}
       @about-function{gtk-menu-shell-insert}
@@ -4554,10 +4445,9 @@ setup_tree (void)
       @about-function{gtk-menu-shell-deselect}
       @about-function{gtk-menu-shell-activate-item}
       @about-function{gtk-menu-shell-cancel}
-      @about-function{gtk-menu-shell-get-selected-item}
-      @about-function{gtk-menu-shell-get-parent-shell}
+      @about-function{gtk-menu-shell-selected-item}
+      @about-function{gtk-menu-shell-parent-shell}
       @about-function{gtk-menu-shell-bind-model}
-      @about-symbol{gtk-menu-direction-type}
     @end{subsection}
     @begin[GtkRange]{subsection}
       Base class for widgets which visualize an adjustment
@@ -4805,73 +4695,44 @@ setup_tree (void)
       Interface implemented by widgets for choosing an application.
 
       @about-class{gtk-app-chooser}
-
       @about-generic{gtk-app-chooser-content-type}
-
-      @about-function{gtk-app-chooser-get-app-info}
-      @about-function{gtk-app-chooser-get-content-type}
+      @about-function{gtk-app-chooser-app-info}
       @about-function{gtk-app-chooser-refresh}
     @end{subsection}
     @begin[GtkAppChooserButton]{subsection}
       A button to launch an application chooser dialog.
 
       @about-class{gtk-app-chooser-button}
-
       @about-generic{gtk-app-chooser-button-heading}
       @about-generic{gtk-app-chooser-button-show-default-item}
       @about-generic{gtk-app-chooser-button-show-dialog-item}
-
       @about-function{gtk-app-chooser-button-new}
       @about-function{gtk-app-chooser-button-append-custom-item}
       @about-function{gtk-app-chooser-button-append-separator}
       @about-function{gtk-app-chooser-button-set-active-custom-item}
-      @about-function{gtk-app-chooser-button-get-show-default-item}
-      @about-function{gtk-app-chooser-button-set-show-default-item}
-      @about-function{gtk-app-chooser-button-get-show-dialog-item}
-      @about-function{gtk-app-chooser-button-set-show-dialog-item}
-      @about-function{gtk-app-chooser-button-get-heading}
-      @about-function{gtk-app-chooser-button-set-heading}
     @end{subsection}
     @begin[GtkAppChooserDialog]{subsection}
       An application chooser dialog.
 
       @about-class{gtk-app-chooser-dialog}
-
       @about-generic{gtk-app-chooser-dialog-gfile}
       @about-generic{gtk-app-chooser-dialog-heading}
-
       @about-function{gtk-app-chooser-dialog-new}
       @about-function{gtk-app-chooser-dialog-new-for-content-type}
-      @about-function{gtk-app-chooser-dialog-get-widget}
-      @about-function{gtk-app-chooser-dialog-set-heading}
-      @about-function{gtk-app-chooser-dialog-get-heading}
+      @about-function{gtk-app-chooser-dialog-widget}
     @end{subsection}
     @begin[GtkAppChooserWidget]{subsection}
       Application chooser widget that can be embedded in other widgets.
 
       @about-class{gtk-app-chooser-widget}
-
       @about-generic{gtk-app-chooser-widget-default-text}
       @about-generic{gtk-app-chooser-widget-show-all}
       @about-generic{gtk-app-chooser-widget-show-default}
       @about-generic{gtk-app-chooser-widget-show-fallback}
       @about-generic{gtk-app-chooser-widget-show-other}
       @about-generic{gtk-app-chooser-widget-show-recommended}
-
       @about-function{gtk-app-chooser-widget-new}
-      @about-function{gtk-app-chooser-widget-set-show-default}
-      @about-function{gtk-app-chooser-widget-get-show-default}
-      @about-function{gtk-app-chooser-widget-set-show-recommended}
-      @about-function{gtk-app-chooser-widget-get-show-recommended}
-      @about-function{gtk-app-chooser-widget-set-show-fallback}
-      @about-function{gtk-app-chooser-widget-get-show-fallback}
-      @about-function{gtk-app-chooser-widget-set-show-other}
-      @about-function{gtk-app-chooser-widget-get-show-other}
-      @about-function{gtk-app-chooser-widget-set-show-all}
-      @about-function{gtk-app-chooser-widget-get-show-all}
-      @about-function{gtk-app-chooser-widget-set-default-text}
-      @about-function{gtk-app-chooser-widget-get-default-text}
-    @end{subsection}
+     @end{subsection}
   @end{section}
   @begin[Gestures and event handling]{section}
     @begin[GtkEventController]{subsection}
@@ -5377,7 +5238,6 @@ setup_tree (void)
 
       @about-symbol{gtk-accel-flags}
       @about-symbol{gtk-arrow-placement}
-      @about-symbol{gtk-arrow-type}
       @about-symbol{gtk-attach-options}
       @about-symbol{gtk-baseline-position}
       @about-symbol{gtk-corner-type}

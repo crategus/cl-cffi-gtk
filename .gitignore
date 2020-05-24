@@ -92,4 +92,7 @@ TODO
 /gdk/atdoc/.atdoc-html.xml
 /gtk/atdoc/.atdoc-html.xml
 /gtk/atdoc/.atdoc-cleanup.xml
+/test/rtest-templates.lisp
+/test/rtest-resources.gresource
+/test/rtest-gio-resources.gresource
 /test/rtest-gtk-accel-map.rc

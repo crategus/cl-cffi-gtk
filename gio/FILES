@@ -5,6 +5,15 @@ Content from the GIO Reference Manual for Version 2.62
     &   - objects and structures are implemented, some functions are missing
    (**) - deprecated
 
+File Operations
+
+  GFile — File and Directory Handling
+  GFileAttribute — Key-Value Paired File Attributes
+  GFileInfo — File Information and Attributes
+  GFileEnumerator — Enumerated Files Routines
+  GIOError — Error helper functions
+  GMountOperation — Object used for authentication and user interaction
+
 File types and applications
 
   gio.content-type.lisp        - Platform-specific content typing  - GIO 2.40&
