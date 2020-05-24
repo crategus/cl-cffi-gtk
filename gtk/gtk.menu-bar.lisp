@@ -72,6 +72,43 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkPackDirection
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPackDirection" gtk-pack-direction
+  (:export t
+   :type-initializer "gtk_pack_direction_get_type")
+  (:ltr 0)
+  (:rtl 1)
+  (:ttb 2)
+  (:btt 3))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-pack-direction atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-pack-direction atdoc:*external-symbols*)
+ "@version{2020-5-19}
+  @begin{short}
+    Determines how widgets should be packed insided menubars and menuitems
+    contained in menubars.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkPackDirection\" gtk-pack-direction
+  (:export t
+   :type-initializer \"gtk_pack_direction_get_type\")
+  (:ltr 0)
+  (:rtl 1)
+  (:ttb 2)
+  (:btt 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:ltr]{Widgets are packed left-to-right.}
+    @entry[:rtl]{Widgets are packed right-to-left.}
+    @entry[:ttb]{Widgets are packed top-to-bottom.}
+    @entry[:btt]{Widgets are packed bottom-to-top.}
+  @end{table}
+  @see-class{gtk-menu-bar}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkMenuBar
 ;;; ----------------------------------------------------------------------------
 
@@ -90,7 +127,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-bar 'type)
- "@version{2013-12-1}
+ "@version{2020-5-19}
   @begin{short}
     The @sym{gtk-menu-bar} class is a subclass of @class{gtk-menu-shell} which
     contains one or more items of type @class{gtk-menu-item}. The result is a
@@ -102,14 +139,14 @@
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[internal-padding]{entry}
-        The @code{internal-padding} style property of type @code{:int}
-        (Read) @br{}
+        The @code{internal-padding} style property of type @code{:int} (Read)
+        @br{}
         Amount of border space between the menubar shadow and the menu items.
         @br{}
         @em{Warning:} The @code{internal-padding} style property has been
         deprecated since version 3.8 and should not be used in newly-written
         code. Use the standard padding CSS property, through objects like
-        @class{gtk-style-context} and @class{gtk-css-provider}; the value of
+        @class{gtk-style-context} and @class{gtk-css-provider}. The value of
         this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 1
@@ -120,14 +157,16 @@
         Style of bevel around the menubar. @br{}
         @em{Warning:} The @code{shadow-type} style property has been deprecated
         since version 3.20 and should not be used in newly-written code. Use CSS
-        to determine the shadow; the value of this style property is ignored.
+        to determine the shadow. The value of this style property is ignored.
         @br{}
         Default value: @code{:out}
       @end{entry}
     @end{table}
   @end{dictionary}
   @see-slot{gtk-menu-bar-child-pack-direction}
-  @see-slot{gtk-menu-bar-pack-direction}")
+  @see-slot{gtk-menu-bar-pack-direction}
+  @see-class{gtk-menu-shell}
+  @see-class{gtk-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -148,11 +187,12 @@
 (setf (gethash 'gtk-menu-bar-child-pack-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-bar-child-pack-direction 'function)
- "@version{2013-12-1}
+ "@version{2020-5-19}
   @synŧax[]{(gtk-menu-bar-child-pack-direction object) => child-pack-dir}
   @synŧax[]{(setf (gtk-menu-bar-child-pack-direction object) child-pack-dir)}
-  @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @argument[child-pack-dir]{a new @symbol{gtk-pack-direction}}
+  @argument[object]{a @class{gtk-menu-bar} widget}
+  @argument[child-pack-dir]{a value of the @symbol{gtk-pack-direction}
+    enumeration}
   @begin{short}
     Accessor of the @slot[gtk-menu-bar]{child-pack-direction} slot of the
     @class{gtk-menu-bar} class.
@@ -239,41 +279,5 @@
   (model (g-object g-menu-model)))
 
 (export 'gtk-menu-bar-new-from-model)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkPackDirection
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkPackDirection" gtk-pack-direction
-  (:export t
-   :type-initializer "gtk_pack_direction_get_type")
-  (:ltr 0)
-  (:rtl 1)
-  (:ttb 2)
-  (:btt 3))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-pack-direction atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-pack-direction atdoc:*external-symbols*)
- "@version{2013-6-1}
-  @begin{short}
-    Determines how widgets should be packed insided menubars and menuitems
-    contained in menubars.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkPackDirection\" gtk-pack-direction
-  (:export t
-   :type-initializer \"gtk_pack_direction_get_type\")
-  (:ltr 0)
-  (:rtl 1)
-  (:ttb 2)
-  (:btt 3))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:ltr]{Widgets are packed left-to-right.}
-    @entry[:rtl]{Widgets are packed right-to-left.}
-    @entry[:ttb]{Widgets are packed top-to-bottom.}
-    @entry[:btt]{Widgets are packed bottom-to-top.}
-  @end{table}")
 
 ;;; --- End of file gtk.menu-bar.lisp ------------------------------------------
