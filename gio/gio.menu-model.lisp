@@ -103,7 +103,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu-model 'type)
- "@version{2013-8-8}
+ "@version{#2013-8-8}
   @begin{short}
     @sym{g-menu-model} represents the contents of a menu - an ordered list of
     menu items. The items are associated with actions, which can be activated

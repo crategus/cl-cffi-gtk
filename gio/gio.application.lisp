@@ -139,7 +139,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'g-application-flags atdoc:*external-symbols*)
- "@version{2020-2-1}
+ "@version{#2020-2-1}
   @begin{short}
     Flags used to define the behaviour of a @class{g-application} object.
   @end{short}
@@ -234,7 +234,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
- "@version{2020-2-1}
+ "@version{#2020-2-1}
   @begin{short}
     A @sym{g-application} is the foundation of an application.
   @end{short}
@@ -853,7 +853,7 @@
 (setf (gethash 'g-application-resource-base-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-resource-base-path 'function)
- "@version{2020-2-2}
+ "@version{#2020-2-2}
   @syntax[]{(g-application-is-remote object) => resource-path}
   @syntax[]{(setf (g-application-is-remote object) resource-path)}
   @argument[object]{a @class{g-application} object}
@@ -863,9 +863,9 @@
     @class{g-application} class.
   @end{short}
 
-  The slot access function @sym{g-application-resource-path} gets the resource
-  base path of the application. The slot access function
-  @sym{(setf g-application-resource-path)} sets or unsets the base resource
+  The slot access function @sym{g-application-resource-base-path} gets the
+  resource base path of the application. The slot access function
+  @sym{(setf g-application-resource-base-path)} sets or unsets the base resource
   path of the application.
 
   The path is used to automatically load various application resources such as
@@ -907,7 +907,7 @@
 
 (defcfun ("g_application_id_is_valid" g-application-id-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-2-2}
+ "@version{#2020-2-2}
   @argument[application-id]{a potential application identifier}
   @return{@em{True} if @arg{application-id} is valid.}
   @begin{short}

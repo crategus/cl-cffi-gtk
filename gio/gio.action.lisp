@@ -409,7 +409,7 @@
 
 (defun g-action-parse-detailed-name (detailed-name action-name target-value)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{#2020-2-8}
   @argument[detailed-name]{a @code{:string} with a detailed action name}
   @argument[action-name]{a @code{:string} with the action name}
   @argument[target-value]{a @type{g-variant} target value, or @code{nil} for
@@ -455,7 +455,7 @@
 
 (defcfun ("g_action_print_detailed_name" g-action-print-detailed-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{#2020-2-8}
   @argument[action-name]{a @code{:string} with a valid action name}
   @argument[target-value]{a @type{g-variant} target value, or @code{nil}}
   @begin{short}

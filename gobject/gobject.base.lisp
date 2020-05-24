@@ -268,7 +268,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-object 'type)
- "@version{2013-6-5}
+ "@version{#2013-6-5}
   @begin{short}
     @sym{g-object} is the fundamental type providing the common attributes and
     methods for all object types in GTK+, Pango and other libraries based on

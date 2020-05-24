@@ -80,7 +80,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-shortcuts-window 'type)
- "@version{2019-4-12}
+ "@version{#2019-4-12}
   @begin{short}
     A @sym{gtk-shortcuts-window} shows brief information about the keyboard
     shortcuts and gestures of an application.

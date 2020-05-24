@@ -58,7 +58,8 @@
   (blue :uint16 :initform 0))
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-color 'type)
+(setf (gethash 'gdk-color atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gdk-color 'type)
  "@version{2016-1-2}
   @begin{short}
     The @sym{gdk-color} structure is used to describe a color, similar to the

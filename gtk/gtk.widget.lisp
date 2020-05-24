@@ -4253,7 +4253,7 @@
   @code{G_RUN_ACTION}. Accelerators added through this function are not user
   changeable during runtime. If you want to support accelerators that can be
   changed by the user, use the functions @fun{gtk-accel-map-add-entry} and
-  @fun{gtk-widget-set-accel-path} or @fun{gtk-menu-item-set-accel-path}
+  @fun{gtk-widget-set-accel-path} or @fun{gtk-menu-item-accel-path}
   instead.
   @see-class{gtk-widget}
   @see-class{gtk-accel-group}
@@ -4263,7 +4263,7 @@
   @see-function{gtk-window-add-accel-group}
   @see-function{gtk-accel-map-add-entry}
   @see-function{gtk-widget-set-accel-path}
-  @see-function{gtk-menu-item-set-accel-path}"
+  @see-function{gtk-menu-item-accel-path}"
   (widget (g-object gtk-widget))
   (accel-signal :string)
   (accel-group (g-object gtk-accel-group))
@@ -4329,13 +4329,13 @@
   automatically.
 
   Even when you you are not using @class{gtk-ui-manager}, if you only want to
-  set up accelerators on menu items @fun{gtk-menu-item-set-accel-path} provides
+  set up accelerators on menu items @fun{gtk-menu-item-accel-path} provides
   a somewhat more convenient interface.
   @see-class{gtk-widget}
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-map-save}
   @see-class{gtk-ui-manager}
-  @see-function{gtk-menu-item-set-accel-path}"
+  @see-function{gtk-menu-item-accel-path}"
   (widget (g-object gtk-widget))
   (accel-path :string)
   (accel-group (g-object gtk-accel-group)))

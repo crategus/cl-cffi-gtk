@@ -613,7 +613,7 @@
 
 (defun gtk-accelerator-parse (accelerator)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{#2013-4-22}
   @argument[accelerator]{a string representing an accelerator}
   @begin{return}
     @code{accelerator-key} -- an accelerator keyval, or @code{nil} @br{}

@@ -272,21 +272,20 @@
 (setf (gethash 'gtk-tool-item-group-header-relief atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-header-relief 'function)
- "@version{2019-5-11}
+ "@version{2020-5-10}
   @syntax[]{(gtk-tool-item-group-header-relief object) => style}
   @syntax[]{(setf (gtk-tool-item-group-header-relief object) style)}
   @argument[group]{a @class{gtk-tool-item-group} widget}
-  @argument[object]{the @symbol{gtk-relief-style}}
+  @argument[object]{a value of the @symbol{gtk-relief-style} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-tool-item-group]{header-relief} slot of the
     @class{gtk-tool-item-group} class.
   @end{short}
 
-  The @sym{gtk-tool-item-group-header-relief} slot access function
-  gets the relief mode of the header button of the tool item group.
-
-  The @sym{(setf gtk-tool-item-group-header-relief)} slot access function
-  sets the button relief of the group header.
+  The slot acces function @sym{gtk-tool-item-group-header-relief} gets the
+  relief mode of the header button of the tool item group. The slot access
+  function @sym{(setf gtk-tool-item-group-header-relief)} sets the button
+  relief of the group header.
   @see-class{gtk-tool-item-group}")
 
 ;;; --- gtk-tool-item-group-label ----------------------------------------------

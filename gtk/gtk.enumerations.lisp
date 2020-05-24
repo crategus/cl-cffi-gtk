@@ -611,8 +611,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-relief-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-relief-style atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{Indicated the relief to be drawn around a @class{gtk-button} button.}
+ "@version{2020-5-10}
+  @short{Indicated the relief to be drawn around a @class{gtk-button} widget.}
   @begin{pre}
 (define-g-enum \"GtkReliefStyle\" gtk-relief-style
   (:export t

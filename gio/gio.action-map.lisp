@@ -69,7 +69,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-map atdoc:*class-name-alias*) "Interface"
       (documentation 'g-action-map 'type)
- "@version{2020-2-3}
+ "@version{#2020-2-3}
   @begin{short}
     The @sym{g-action-map} interface is implemented by @class{g-action-group}
     implementations that operate by containing a number of named

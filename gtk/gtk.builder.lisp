@@ -180,7 +180,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-builder 'type)
- "@version{2014-7-20}
+ "@version{#2014-7-20}
   @begin{short}
     A @sym{gtk-builder} is an auxiliary object that reads textual descriptions
     of a user interface and instantiates the described objects.

@@ -354,7 +354,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window 'type)
- "@version{2013-7-30}
+ "@version{#2013-7-30}
   @begin{short}
     A @sym{gtk-window} is a toplevel window which can contain other widgets.
   @end{short}

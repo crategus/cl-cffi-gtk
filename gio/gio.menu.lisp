@@ -94,15 +94,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu 'type)
- "@version{2013-10-28}
+ "@version{#2013-10-28}
   @begin{short}
     @sym{g-menu} is a simple implementation of @class{g-menu-model}. You
     populate a @sym{g-menu} by adding @class{g-menu-item} instances to it.
   @end{short}
 
   There are some convenience functions to allow you to directly add items,
-  avoiding @class{g-menu-item}, for the common cases. To add a regular item, use
-  the function @fun{g-menu-insert}. To add a section, use the function
+  avoiding @class{g-menu-item}, for the common cases. To add a regular item,
+  use the function @fun{g-menu-insert}. To add a section, use the function
   @fun{g-menu-insert-section}. To add a submenu, use the function
   @fun{g-menu-insert-submenu}.
 

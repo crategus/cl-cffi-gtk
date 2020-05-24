@@ -656,8 +656,9 @@
      (row (g-object gtk-list-box-row))
      (data :pointer))
   (restart-case
-      (funcall (glib:get-stable-pointer-value data) listbox row)
-    (return () :report "Error in GtkListBoxForeachFunc function." nil)))
+      (let ((ptr (get-stable-pointer-value data)))
+        (funcall ptr listbox row))
+    (return () :report "Error in GtkListBoxForeachFunc callback." nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_selected_foreach ()
@@ -904,7 +905,8 @@
 (defcallback gtk-list-box-filter-func-cb :boolean
     ((row (g-object gtk-list-box-row))
      (data :pointer))
-  (funcall (get-stable-pointer-value data) row))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr row)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_filter_func ()

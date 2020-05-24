@@ -90,7 +90,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-group atdoc:*class-name-alias*) "Interface"
       (documentation 'g-action-group 'type)
- "@version{2013-7-27}
+ "@version{#2013-7-27}
   @begin{short}
     @sym{g-action-group} represents a group of actions. Actions can be used to
     expose functionality in a structured way, either from one part of a program
@@ -492,7 +492,7 @@
 
 (defcfun ("g_action_group_activate_action" g-action-group-activate-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{#2013-5-1}
   @argument[action-group]{a @class{g-action-group} object}
   @argument[action-name]{the name of the action to activate}
   @argument[parameter]{parameters to the activation}

@@ -514,7 +514,7 @@
 (defcfun ("gtk_icon_theme_add_resource_path" gtk-icon-theme-add-resource-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-27}
+ "@version{#2020-2-27}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
   @argument[path]{a @code{:string} with a resource path}
   @begin{short}
