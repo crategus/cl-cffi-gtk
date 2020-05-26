@@ -2,12 +2,12 @@
 ;;; gtk.message-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -97,7 +97,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-message-type atdoc:*external-symbols*)
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @begin{short}
     The type of message being displayed in the dialog.
   @end{short}
@@ -137,12 +137,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-buttons-type atdoc:*external-symbols*)
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @begin{short}
-    Prebuilt sets of buttons for the dialog. If none of these choices are
-    appropriate, simply use @code{:none} and call the
-    @fun{gtk-dialog-add-buttons} function to add your own buttons.
+    Prebuilt sets of buttons for the dialog.
   @end{short}
+  If none of these choices are appropriate, simply use @code{:none} and call
+  the function @fun{gtk-dialog-add-buttons} to add your own buttons.
 
   Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
   discouraged by the Gnome Human Interface Guidelines.
@@ -205,13 +205,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-message-dialog 'type)
- "@version{2013-12-30}
+ "@version{*2020-5-26}
   @begin{short}
     A @sym{gtk-message-dialog} window presents a dialog with an image
     representing the type of message, Error, Question, etc., alongside some
     message text.
   @end{short}
-  It is simply a convenience widget; you could construct the equivalent of a
+  It is simply a convenience widget. You could construct the equivalent of a
   @sym{gtk-message-dialog} window from a @class{gtk-dialog} window without too
   much effort, but @sym{gtk-message-dialog} saves typing.
 
@@ -221,11 +221,11 @@
   the @slot[gtk-window]{skip-taskbar-hint} property to @em{true}, so that the
   dialog is hidden from the taskbar by default.
 
-  The easiest way to do a modal message dialog is to use the
-  @fun{gtk-dialog-run} function, though you can also pass in the @code{:modal}
-  flag of type @symbol{gtk-dialog-flags}, the @fun{gtk-dialog-run} function
+  The easiest way to do a modal message dialog is to use the function
+  @fun{gtk-dialog-run}, though you can also pass in the @code{:modal} flag of
+  type @symbol{gtk-dialog-flags}, the function @fun{gtk-dialog-run}
   automatically makes the dialog modal and waits for the user to respond to it.
-  The @fun{gtk-dialog-run} function returns when any dialog button is clicked.
+  The function @fun{gtk-dialog-run} returns when any dialog button is clicked.
   @begin[Example]{dictionary}
     A modal dialog.
     @begin{pre}
@@ -300,9 +300,14 @@
 (setf (gethash 'gtk-message-dialog-buttons atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-buttons 'function)
- "@version{2014-3-4}
-  Accessor of the @slot[gtk-message-dialog]{buttons} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{*2020-5-26}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{buttons} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    This property is not accessible from the Lisp binding.
+  @end{dictionary}
   @see-class{gtk-message-dialog}")
 
 ;;; --- gtk-message-dialog-image -----------------------------------------------
@@ -319,25 +324,23 @@
 (setf (gethash 'gtk-message-dialog-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-image 'function)
- "@version{2014-2-12}
-  @argument[object]{a @class{gtk-message-dialog} window}
-  @argument[image]{the image of type @class{gtk-widget}}
+ "@version{*2020-5-26}
   @syntax[]{(gtk-message-dialog-image object) => image}
   @syntax[]{(setf (gtk-message-dialog-image object) image)}
+  @argument[object]{a @class{gtk-message-dialog} window}
+  @argument[image]{the image of type @class{gtk-widget}}
   @begin{short}
     Accessor of the @slot[gtk-message-dialog]{image} slot of the
     @class{gtk-message-dialog} class.
   @end{short}
 
-  The @sym{gtk-message-dialog-image} slot access function returns the dialog's
-  image.
-
-  The @sym{(setf gtk-message-dialog-image)} slot access function sets the
-  dialog's image to @arg{image}.
+  The slot access function @sym{gtk-message-dialog-image} returns the dialog's
+  image. The slot access function @sym{(setf gtk-message-dialog-image)} sets
+  the dialog's image to @arg{image}.
   @begin[Warning]{dictionary}
-    The @sym{gtk-message-dialog-image} slot access function has been deprecated
-    since version 3.12 and should not be used in newly-written code.
-    Use @class{gtk-dialog} to create dialogs with images.
+    The function @sym{gtk-message-dialog-image} has been deprecated since
+    version 3.12 and should not be used in newly-written code. Use
+    @class{gtk-dialog} to create dialogs with images.
   @end{dictionary}
   @see-class{gtk-message-dialog}")
 
@@ -348,34 +351,36 @@
                                                'gtk-message-dialog) 't)
  "The @code{message-area} property of type @class{gtk-widget} (Read) @br{}
   The @class{gtk-box} widget of orientation @code{:vertical} that corresponds
-  to the message area of this dialog. See the
-  @fun{gtk-message-dialog-message-area} function for a detailed description of
+  to the message area of this dialog. See the function
+  @fun{gtk-message-dialog-message-area} for a detailed description of
   this area.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-message-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-message-area 'function)
- "@version{2014-3-4}
-  @argument[dialog]{a @class{gtk-message-dialog} window}
+ "@version{*2020-5-26}
   @syntax[]{(gtk-message-dialog-message-area object) => message-area}
+  @argument[dialog]{a @class{gtk-message-dialog} window}
+  @argument[message-area]{a @class{gtk-box} widget of orientation
+    @code{:vertical}}
   @begin{short}
     Accessor of the @slot[gtk-message-dialog]{message-area} slot of the
     @class{gtk-message-dialog} class.
   @end{short}
 
-  The @sym{gtk-message-dialog-message-area} slot access function returns the
+  The slot access function @sym{gtk-message-dialog-message-area} returns the
   @class{gtk-box} widget with orientation @code{:vertical} corresponding to
   the \"message area\" in the message dialog. This is the box where the
   dialog's primary and secondary labels are packed.
 
   You can add your own extra content to that box and it will appear below those
   labels, on the right side of the dialog's image, or on the left for
-  right-to-left languages. See the @fun{gtk-dialog-get-content-area} function
+  right-to-left languages. See the function @fun{gtk-dialog-content-area}
   for the corresponding function in the parent @class{gtk-dialog} class.
   @see-class{gtk-message-dialog}
   @see-class{gtk-dialog}
-  @see-function{gtk-dialog-get-content-area}")
+  @see-function{gtk-dialog-content-area}")
 
 ;;; --- gtk-message-dialog-message-type ----------------------------------------
 
@@ -393,9 +398,18 @@
 (setf (gethash 'gtk-message-dialog-message-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-message-type 'function)
- "@version{2014-3-4}
-  Accessor of the @slot[gtk-message-dialog]{message-type} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{*2020-5-26}
+  @syntax[]{(gtk-message-dialog-message-type object) => message-type}
+  @argument[dialog]{a @class{gtk-message-dialog} window}
+  @argument[message-type]{a value of the @symbol{gtk-message-type} enumeration}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{message-type} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  The type of the message. The type is used to determine the image that is
+  shown in the dialog, unless the image is explicitly set by the
+  @code{image} property.
   @see-class{gtk-message-dialog}")
 
 ;;; --- gtk-message-dialog-secondary-text --------------------------------------
@@ -403,8 +417,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-text"
                                                'gtk-message-dialog) 't)
- "The @code{secondary-text} property of type @code{:string}
-  (Read / Write) @br{}
+ "The @code{secondary-text} property of type @code{:string} (Read / Write) @br{}
   The secondary text of the message dialog. @br{}
   Default value: @code{nil}")
 
@@ -412,9 +425,18 @@
 (setf (gethash 'gtk-message-dialog-secondary-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-text 'function)
- "@version{2014-3-5}
-  Accessor of the @slot[gtk-message-dialog]{secondary-text} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{*2020-5-26}
+  @syntax[]{(gtk-message-dialog-secondary-text object) => secondary-text}
+  @syntax[]{(setf (gtk-message-dialog-secondary-text object) secondary-text)}
+  @argument[object]{a @class{gtk-message-dialog} window}
+  @argument[seconary-text]{a string with the secondary text of the message
+    dialog}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{secondary-text} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  The secondary text of the message dialog.
   @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-format-secondary-text}")
 
@@ -433,7 +455,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-use-markup 'function)
- "@version{2020-4-15}
+ "@version{*2020-5-26}
   @syntax[]{(gtk-message-dialog-secondary-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-message-dialog-secondary-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-message-dialog} widget}
@@ -460,9 +482,18 @@
 (setf (gethash 'gtk-message-dialog-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-text 'function)
- "@version{2014-3-5}
-  Accessor of the @slot[gtk-message-dialog]{text} slot of the
-  @class{gtk-message-dialog} class.
+ "@version{*2020-5-26}
+  @syntax[]{(gtk-message-dialog-text object) => text}
+  @syntax[]{(setf (gtk-message-dialog-text object) text)}
+  @argument[object]{a @class{gtk-message-dialog} widget}
+  @argument[text]{a string with the primary text of the message dialog}
+  @begin{short}
+    Accessor of the @slot[gtk-message-dialog]{text} slot of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  The primary text of the message dialog. If the dialog has a secondary text,
+  this will appear as the title.
   @see-class{gtk-message-dialog}")
 
 ;;; --- gtk-message-dialog-use-markup ------------------------------------------
@@ -478,7 +509,7 @@
 (setf (gethash 'gtk-message-dialog-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-use-markup 'function)
- "@version{2020-4-15}
+ "@version{*2020-5-26}
   @syntax[]{(gtk-message-dialog-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-message-dialog-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-message-dialog} widget}
@@ -497,7 +528,7 @@
 
 (defun gtk-message-dialog-new (parent flags type buttons message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @argument[parent]{transient @class{gtk-window} parent, or @code{nil} for none}
   @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
   @argument[type]{type of message of type @symbol{gtk-message-type}}
@@ -507,8 +538,8 @@
   @return{A new @class{gtk-message-dialog} window.}
   @begin{short}
     Creates a new message dialog, which is a simple dialog with an icon
-    indicating the dialog type (error, warning, etc.) and some text the user may
-    want to see.
+    indicating the dialog type, error, warning, etc., and some text the user
+    may want to see.
   @end{short}
   When the user clicks a button a \"response\" signal is emitted with response
   IDs from the @symbol{gtk-response-type} enumeration. See @class{gtk-dialog}
@@ -542,7 +573,7 @@
 (defun gtk-message-dialog-new-with-markup (parent flags type buttons message
                                            &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-2}
+ "@version{*2020-5-26}
   @argument[parent]{transient @class{gtk-window} parent, or @code{nil} for none}
   @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
   @argument[type]{type of message of type @symbol{gtk-message-type}}
@@ -605,11 +636,11 @@
 
 (defun gtk-message-dialog-set-markup (dialog text)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @argument[text]{markup string, see Pango markup format}
   @begin{short}
-    Sets the text of the message @arg{dialog} to be @arg{text}, which is marked
+    Sets the text of the message dialog to be @arg{text}, which is marked
     up with the Pango text markup language.
   @end{short}
   @see-class{gtk-message-dialog}"
@@ -626,13 +657,13 @@
 
 (defun gtk-message-dialog-format-secondary-text (dialog message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @argument[message]{format string, or @code{nil}}
   @argument[args]{arguments for @arg{message}}
   @begin{short}
     Sets the secondary text of the message dialog to be @arg{message} with
-    the arguments @arg{args}.
+    the arguments in @arg{args}.
   @end{short}
 
   Note that setting a secondary text makes the primary text become bold,
@@ -652,13 +683,13 @@
 
 (defun gtk-message-dialog-format-secondary-markup (dialog message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-26}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @argument[message]{markup string, see Pango markup format, or @code{nil}}
   @argument[args]{arguments for @arg{message}}
   @begin{short}
     Sets the secondary text of the message dialog to be @arg{message} with
-    the arguments @arg{args}, which is marked up with the Pango text markup
+    the arguments in @arg{args}, which is marked up with the Pango text markup
     language.
   @end{short}
 
@@ -666,8 +697,8 @@
   unless you have provided explicit markup.
 
   Due to an oversight in the C implementation, this function does not escape
-  special XML characters like the @fun{gtk-message-dialog-new-with-markup}
-  function does.
+  special XML characters like the function
+  @fun{gtk-message-dialog-new-with-markup} does.
   @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-new-with-markup}
   @see-function{gtk-message-dialog-format-secondary-text}"
