@@ -24,7 +24,7 @@
       (gtk-dialog-add-button dialog "gtk-ok" :ok)
       (gtk-dialog-add-button dialog "gtk-apply" :apply)
       ;; Set the default button.
-      (gtk-widget-grab-default (gtk-dialog-get-widget-for-response dialog :ok))
+      (gtk-widget-grab-default (gtk-dialog-widget-for-response dialog :ok))
       ;; Allow alternative button order. (The default is nil.)
       (setf (gtk-settings-gtk-alternative-button-order
               (gtk-settings-get-default))
@@ -32,7 +32,7 @@
       ;; Set the alternative button order.
       (gtk-dialog-set-alternative-button-order dialog '(:apply :ok :cancel))
       ;; Add the label, and show everything we have added to the dialog.
-      (gtk-container-add (gtk-dialog-get-content-area dialog) label)
+      (gtk-container-add (gtk-dialog-content-area dialog) label)
       (gtk-widget-show-all dialog)))
     (join-gtk-main)
     (when response

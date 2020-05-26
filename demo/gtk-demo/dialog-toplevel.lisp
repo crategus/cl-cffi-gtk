@@ -24,7 +24,7 @@
                           (setf response response-id)
                           (gtk-widget-destroy dialog)))
       ;; Add the label, and show everything we have added to the dialog.
-      (gtk-container-add (gtk-dialog-get-content-area dialog) label)
+      (gtk-container-add (gtk-dialog-content-area dialog) label)
       (gtk-widget-show-all dialog)))
     (join-gtk-main)
     (when response
