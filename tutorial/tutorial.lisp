@@ -1817,7 +1817,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
+      (gtk-box-pack-start (gtk-dialog-content-area window) scrolled)
       (gtk-scrolled-window-add-with-viewport scrolled table)
       (dotimes (i 10)
         (dotimes (j 10)
@@ -1833,7 +1833,7 @@
                           (lambda (widget)
                             (declare (ignore widget))
                             (gtk-widget-destroy window)))
-        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
+        (gtk-box-pack-start (gtk-dialog-action-area window) button)
         (gtk-widget-grab-default button))
       (gtk-widget-show-all window))))
 
@@ -1972,7 +1972,7 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       (gtk-widget-realize dialog)
-      (gtk-box-pack-start (gtk-dialog-get-content-area dialog)
+      (gtk-box-pack-start (gtk-dialog-content-area dialog)
                           handle-box
                           :expand nil
                           :fill nil
@@ -3380,7 +3380,7 @@ happen.")
                                :title "Dialog Window"
                                :has-separator t)))
     ;; Add a border width to the vbox of the content area
-    (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog)) 12)
+    (setf (gtk-container-border-width (gtk-dialog-content-area dialog)) 12)
     ;; Add a label widget with text to the content area
     (let ((vbox (make-instance 'gtk-box
                                :orientation :vertical
@@ -3394,9 +3394,9 @@ happen.")
                                          The action area contains ~
                                          the buttons."))))
       (gtk-box-pack-start vbox label)
-      (gtk-box-pack-start (gtk-dialog-get-content-area dialog) vbox)
+      (gtk-box-pack-start (gtk-dialog-content-area dialog) vbox)
       ;; Show the content area of the dialog
-      (gtk-widget-show-all (gtk-dialog-get-content-area dialog)))
+      (gtk-widget-show-all (gtk-dialog-content-area dialog)))
     ;; Add buttons with a stock id to the action area
     (gtk-dialog-add-button dialog "gtk-yes" :yes)
     (gtk-dialog-add-button dialog "gtk-no" :no)

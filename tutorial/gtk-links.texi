@@ -222,8 +222,8 @@
 @set gtk-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-dialog.html
 @set gtk-dialog-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-new.html
 @set gtk-dialog-new-with-buttons http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-new-with-buttons.html
-@set gtk-dialog-get-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-get-content-area.html
-@set gtk-dialog-get-action-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-get-action-area.html
+@set gtk-dialog-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-content-area.html
+@set gtk-dialog-action-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-action-area.html
 @set gtk-dialog-add-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-add-button.html
 @set gtk-dialog-run http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-run.html
 

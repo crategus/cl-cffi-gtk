@@ -730,7 +730,7 @@ other widgets.
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
+      (gtk-box-pack-start (gtk-dialog-content-area window) scrolled)
       (gtk-scrolled-window-add-with-viewport scrolled table)
       (dotimes (i 10)
         (dotimes (j 10)
@@ -746,7 +746,7 @@ other widgets.
                           (lambda (widget)
                             (declare (ignore widget))
                             (gtk-widget-destroy window)))
-        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
+        (gtk-box-pack-start (gtk-dialog-action-area window) button)
         (gtk-widget-grab-default button))
       (gtk-widget-show window))))
 @end verbatim

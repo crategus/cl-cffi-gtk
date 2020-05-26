@@ -50,10 +50,10 @@ area can be filled with the content of a dialog.  At the button of the window
 the dialog widget has an action area which takes the desired buttons of the
 dialog.
 
-@findex gtk-dialog-get-content-area
-@findex dialog-get-content-area, gtk-dialog-get-content-area
+@findex gtk-dialog-content-area
+@findex dialog-content-area, gtk-dialog-content-area
 
-The function @xurl{gtk-dialog-get-content-area} gets the content area of a
+The function @xurl{gtk-dialog-content-area} gets the content area of a
 dialog.  Because the content area is a vertical box of type @xurl{gtk-box} any
 desired widgets can be added to the content area with the functions
 @xurl{gtk-box-pack-start} or @xurl{gtk-box-pack-end}.  To display the content
@@ -76,14 +76,14 @@ of the button or a stock ID.  The last argument is of the enumeration type
 @xurl{gtk-response-type} and defines the response type of the button.  Possible
 values of @xurl{gtk-response-type} are shown in @ref{table-gtk-response-type}.
 
-@findex gtk-dialog-get-action-area
-@findex dialog-get-action-area, gtk-dialog-get-action-area
+@findex gtk-dialog-action-area
+@findex dialog-action-area, gtk-dialog-action-area
 
 Alternatively to the function @xurl{gtk-dialog-add-button} buttons can be
 added with the functions @xurl{gtk-box-pack-start} or @xurl{gtk-box-pack-end} to
 the action area.  The action area is of type @xurl{gtk-button-box} with a
 @code{:horizontal} orientation and can be get with the function
-@xurl{gtk-dialog-get-action-area}.
+@xurl{gtk-dialog-action-area}.
 
 @float Table, table-gtk-response-type
 @caption{Values of the @xurl{gtk-response-type} enumeration}
@@ -268,7 +268,7 @@ need to know that the 'Close' button returns the @code{:cancel} response ID.
                                :title "Dialog Window"
                                :has-separator t)))
     ;; Add a border width to the vbox of the content area
-    (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog))
+    (setf (gtk-container-border-width (gtk-dialog-content-area dialog))
           12)
     ;; Add a label widget with text to the content area
     (let ((vbox (make-instance 'gtk-box :orientation :vertical :border-width 12))
@@ -282,9 +282,9 @@ need to know that the 'Close' button returns the @code{:cancel} response ID.
                                          the content area with a horizontal ~
                                          line."))))
       (gtk-box-pack-start vbox label)
-      (gtk-box-pack-start (gtk-dialog-get-content-area dialog) vbox)
+      (gtk-box-pack-start (gtk-dialog-content-area dialog) vbox)
       ;; Show the content area of the dialog
-      (gtk-widget-show (gtk-dialog-get-content-area dialog)))
+      (gtk-widget-show (gtk-dialog-content-area dialog)))
     ;; Add buttons with a stock ID to the action area
     (gtk-dialog-add-button dialog "gtk-yes" :yes)
     (gtk-dialog-add-button dialog "gtk-no" :no)
