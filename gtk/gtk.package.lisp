@@ -129,9 +129,7 @@
 
       @about-symbol{gtk-builder-error}
       @about-class{gtk-builder}
-
       @about-generic{gtk-builder-translation-domain}
-
       @about-function{gtk-builder-new}
       @about-function{gtk-builder-new-from-file}
       @about-function{gtk-builder-new-from-resource}
@@ -161,7 +159,6 @@
       Interface for objects that can be built by @class{gtk-builder}.
 
       @about-class{gtk-buildable}
-
       @about-function{gtk-buildable-set-name}
       @about-function{gtk-buildable-get-name}
       @about-function{gtk-buildable-add-child}
@@ -179,7 +176,6 @@
       Toplevel which can contain other widgets.
 
       @about-class{gtk-window}
-
       @about-generic{gtk-window-accept-focus}
       @about-generic{gtk-window-application}
       @about-generic{gtk-window-attached-to}
@@ -200,6 +196,7 @@
       @about-generic{gtk-window-is-maximized}
       @about-generic{gtk-window-mnemonics-visible}
       @about-generic{gtk-window-modal}
+      @about-generic{gtk-window-opacity}
       @about-generic{gtk-window-resizable}
       @about-generic{gtk-window-resize-grip-visible}
       @about-generic{gtk-window-role}
@@ -213,27 +210,23 @@
       @about-generic{gtk-window-type-hint}
       @about-generic{gtk-window-urgency-hint}
       @about-generic{gtk-window-window-position}
-
       @about-function{gtk-window-new}
       @about-function{gtk-window-set-wmclass}
       @about-function{gtk-window-add-accel-group}
       @about-function{gtk-window-remove-accel-group}
       @about-function{gtk-window-activate-focus}
       @about-function{gtk-window-activate-default}
+      @about-function{gtk-window-default-size}
       @about-function{gtk-window-set-default-geometry}
       @about-function{gtk-window-set-geometry-hints}
-      @about-function{gtk-window-set-position}
-      @about-function{gtk-window-is-active}
-      @about-function{gtk-window-has-toplevel-focus}
       @about-function{gtk-window-list-toplevels}
       @about-function{gtk-window-add-mnemonic}
       @about-function{gtk-window-remove-mnemonic}
       @about-function{gtk-window-mnemonic-activate}
       @about-function{gtk-window-activate-key}
       @about-function{gtk-window-propagate-key-event}
-      @about-function{gtk-window-get-focus}
-      @about-function{gtk-window-set-focus}
-      @about-function{gtk-window-get-default-widget}
+      @about-function{gtk-window-focus}
+      @about-function{gtk-window-default-widget}
       @about-function{gtk-window-set-default}
       @about-function{gtk-window-present}
       @about-function{gtk-window-present-with-time}
@@ -251,36 +244,27 @@
       @about-function{gtk-window-set-keep-below}
       @about-function{gtk-window-begin-resize-drag}
       @about-function{gtk-window-begin-move-drag}
-      @about-function{gtk-window-set-mnemonic-modifier}
-      @about-function{gtk-window-get-default-icon-list}
-      @about-function{gtk-window-get-default-icon-name}
-      @about-generic{gtk-window-default-size}
-      @about-function{gtk-window-get-icon-list}
-      @about-function{gtk-window-get-mnemonic-modifier}
-      @about-function{gtk-window-get-position}
-      @about-function{gtk-window-get-size}
-      @about-function{gtk-window-get-group}
+      @about-function{gtk-window-mnemonic-modifier}
+      @about-function{gtk-window-default-icon-list}
+      @about-function{gtk-window-default-icon-name}
+      @about-function{gtk-window-icon-list}
+      @about-function{gtk-window-position}
+      @about-function{gtk-window-size}
+      @about-function{gtk-window-group}
       @about-function{gtk-window-has-group}
-      @about-function{gtk-window-get-window-type}
       @about-function{gtk-window-move}
       @about-function{gtk-window-parse-geometry}
       @about-function{gtk-window-reshow-with-initial-size}
       @about-function{gtk-window-resize}
       @about-function{gtk-window-resize-to-geometry}
-      @about-function{gtk-window-set-default-icon-list}
       @about-function{gtk-window-set-default-icon}
       @about-function{gtk-window-set-default-icon-from-file}
-      @about-function{gtk-window-set-default-icon-name}
-      @about-function{gtk-window-set-icon-list}
       @about-function{gtk-window-set-icon-from-file}
       @about-function{gtk-window-set-auto-startup-notification}
-      @about-function{gtk-window-get-opacity}
-      @about-function{gtk-window-set-opacity}
       @about-function{gtk-window-resize-grip-is-visible}
       @about-function{gtk-window-get-resize-grip-area}
       @about-function{gtk-window-set-has-user-ref-count}
-      @about-function{gtk-window-set-titlebar}
-      @about-function{gtk-window-get-titlebar}
+      @about-function{gtk-window-titlebar}
       @about-function{gtk-window-interactive-debugging}
     @end{subsection}
     @begin[GtkDialog]{subsection}
@@ -288,11 +272,8 @@
 
       @about-symbol{gtk-dialog-flags}
       @about-symbol{gtk-response-type}
-
       @about-class{gtk-dialog}
-
       @about-generic{gtk-dialog-use-header-bar}
-
       @about-function{gtk-dialog-new}
       @about-function{gtk-dialog-new-with-buttons}
       @about-function{gtk-dialog-run}
@@ -302,11 +283,11 @@
       @about-function{gtk-dialog-add-action-widget}
       @about-function{gtk-dialog-set-default-response}
       @about-function{gtk-dialog-set-response-sensitive}
-      @about-function{gtk-dialog-get-response-for-widget}
-      @about-function{gtk-dialog-get-widget-for-response}
-      @about-function{gtk-dialog-get-action-area}
-      @about-function{gtk-dialog-get-content-area}
-      @about-function{gtk-dialog-get-header-bar}
+      @about-function{gtk-dialog-response-for-widget}
+      @about-function{gtk-dialog-widget-for-response}
+      @about-function{gtk-dialog-action-area}
+      @about-function{gtk-dialog-content-area}
+      @about-function{gtk-dialog-header-bar}
       @about-function{gtk-alternative-dialog-button-order}
       @about-function{gtk-dialog-set-alternative-button-order}
       @about-function{gtk-dialog-set-alternative-button-order-from-array}
@@ -316,9 +297,7 @@
 
       @about-symbol{gtk-message-type}
       @about-symbol{gtk-buttons-type}
-
       @about-class{gtk-message-dialog}
-
       @about-generic{gtk-message-dialog-buttons}
       @about-generic{gtk-message-dialog-image}
       @about-generic{gtk-message-dialog-message-area}
@@ -327,20 +306,17 @@
       @about-generic{gtk-message-dialog-secondary-use-markup}
       @about-generic{gtk-message-dialog-text}
       @about-generic{gtk-message-dialog-use-markup}
-
       @about-function{gtk-message-dialog-new}
       @about-function{gtk-message-dialog-new-with-markup}
       @about-function{gtk-message-dialog-set-markup}
       @about-function{gtk-message-dialog-format-secondary-text}
       @about-function{gtk-message-dialog-format-secondary-markup}
-      @about-function{gtk-message-dialog-get-message-area}
     @end{subsection}
     @begin[GtkAboutDialog]{subsection}
       Display information about an application.
 
       @about-symbol{gtk-license}
       @about-class{gtk-about-dialog}
-
       @about-generic{gtk-about-dialog-artists}
       @about-generic{gtk-about-dialog-authors}
       @about-generic{gtk-about-dialog-comments}
@@ -356,7 +332,6 @@
       @about-generic{gtk-about-dialog-website}
       @about-generic{gtk-about-dialog-website-label}
       @about-generic{gtk-about-dialog-wrap-license}
-
       @about-function{gtk-about-dialog-new}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
@@ -366,14 +341,12 @@
 
       @about-symbol{gtk-assistant-page-type}
       @about-class{gtk-assistant}
-
       @about-function{gtk-assistant-child-complete}
       @about-function{gtk-assistant-child-has-padding}
       @about-function{gtk-assistant-child-header-image}
       @about-function{gtk-assistant-child-page-type}
       @about-function{gtk-assistant-child-sidebar-image}
       @about-function{gtk-assistant-child-title}
-
       @about-function{gtk-assistant-new}
       @about-function{gtk-assistant-get-current-page}
       @about-function{gtk-assistant-set-current-page}
@@ -405,9 +378,7 @@
       A widget which is not displayed.
 
       @about-class{gtk-invisible}
-
       @about-generic{gtk-invisible-screen}
-
       @about-function{gtk-invisible-new}
       @about-function{gtk-invisible-new-for-screen}
     @end{subsection}
@@ -415,7 +386,6 @@
       A toplevel widget to manage offscreen rendering of child widgets.
 
       @about-class{gtk-offscreen-window}
-
       @about-function{gtk-offscreen-window-new}
       @about-function{gtk-offscreen-window-get-surface}
       @about-function{gtk-offscreen-window-get-pixbuf}
@@ -424,7 +394,6 @@
       Limit the effect of grabs.
 
       @about-class{gtk-window-group}
-
       @about-function{gtk-window-group-new}
       @about-function{gtk-window-group-add-window}
       @about-function{gtk-window-group-remove-window}
