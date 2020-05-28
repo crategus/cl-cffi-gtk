@@ -1594,47 +1594,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_set_default ()
+;;; g_application_get_default () -> g-application-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_application_set_default" g-application-set-default) :void
+(defun (setf g-application-default) (application)
+  (foreign-funcall "g_application_set_default"
+                   (g-object g-application) application
+                   :void)
+  application)
+
+(defcfun ("g_application_get_default" g-application-default)
+    (g-object g-application)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-2}
-  @argument[application]{the application to set as default, or @code{nil}}
+ "@version{*2020-5-28}
+  @syntax[]{(g-application-default) => application}
+  @syntax[]{(setf (g-application-default) application)}
+  @argument[application]{the @class{g-application} object to set as default,
+    or @code{nil}}
   @begin{short}
-    Sets or unsets the default application for the process, as returned by
-    the function @fun{g-application-get-default}.
+    Accessor of the default application for the process.
   @end{short}
+
+  The function @sym{g-application-default} returns the default application
+  instance for this process. The function @sym{(setf g-application-default)}
+  sets or unsets the default application for the process.
 
   This function does not take its own reference on application. If application
   is destroyed then the default application will revert back to @code{nil}.
-  @see-class{g-application}
-  @see-function{g-application-get-default}"
-  (application (g-object g-application)))
 
-(export 'g-application-set-default)
-
-;;; ----------------------------------------------------------------------------
-;;; g_application_get_default ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_application_get_default" g-application-get-default)
-    (g-object g-application)
- #+cl-cffi-gtk-documentation
- "@version{2020-2-2}
-  @return{The default application for this process, or @code{nil}.}
-  @begin{short}
-    Returns the default @class{g-application} instance for this process.
-  @end{short}
-
-  Normally there is only one @class{g-application} per process and it becomes
-  the default when it is created. You can exercise more control over this by
-  using the function @fun{g-application-set-default}.
+  Normally there is only one application per process and it becomes the default
+  when it is created. You can exercise more control over this by using this
+  function.
 
   If there is no default application then @code{nil} is returned.
-  @see-class{g-application}
-  @see-function{g-application-set-default}")
+  @see-class{g-application}")
 
-(export 'g-application-get-default)
+(export 'g-application-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_mark_busy ()

@@ -190,8 +190,7 @@
       @about-function{g-application-set-option-context-parameter-string}
       @about-function{g-application-set-option-context-summary}
       @about-function{g-application-set-option-context-description}
-      @about-function{g-application-set-default}
-      @about-function{g-application-get-default}
+      @about-function{g-application-default}
       @about-function{g-application-mark-busy}
       @about-function{g-application-unmark-busy}
       @about-function{g-application-bind-busy-property}
