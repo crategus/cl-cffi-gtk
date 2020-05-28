@@ -348,25 +348,22 @@
       @about-function{gtk-assistant-child-sidebar-image}
       @about-function{gtk-assistant-child-title}
       @about-function{gtk-assistant-new}
-      @about-function{gtk-assistant-get-current-page}
-      @about-function{gtk-assistant-set-current-page}
-      @about-function{gtk-assistant-get-n-pages}
-      @about-function{gtk-assistant-get-nth-page}
+      @about-function{gtk-assistant-current-page}
+      @about-function{gtk-assistant-n-pages}
+      @about-function{gtk-assistant-nth-page}
       @about-function{gtk-assistant-prepend-page}
       @about-function{gtk-assistant-append-page}
       @about-function{gtk-assistant-insert-page}
       @about-function{gtk-assistant-remove-page}
       @about-function{gtk-assistant-set-forward-page-func}
-      @about-function{gtk-assistant-set-page-type}
-      @about-function{gtk-assistant-get-page-type}
-      @about-function{gtk-assistant-set-page-title}
-      @about-function{gtk-assistant-get-page-title}
+      @about-function{gtk-assistant-page-type}
+      @about-function{gtk-assistant page-title}
       @about-function{gtk-assistant-set-page-header-image}
       @about-function{gtk-assistant-get-page-header-image}
       @about-function{gtk-assistant-set-page-side-image}
       @about-function{gtk-assistant-get-page-side-image}
-      @about-function{gtk-assistant-set-page-complete}
-      @about-function{gtk-assistant-get-page-complete}
+      @about-function{gtk-assistant-page-complete}
+      @about-function{gtk-assistant-page-has-padding}
       @about-function{gtk-assistant-add-action-widget}
       @about-function{gtk-assistant-remove-action-widget}
       @about-function{gtk-assistant-update-buttons-state}
