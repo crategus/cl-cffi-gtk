@@ -2,7 +2,7 @@
 ;;; gtk.buildable.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -67,10 +67,13 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-buildable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-buildable 'type)
- "@short{Interface for objects that can be built by @class{gtk-builder}.}
+ "@version{2020-6-1}
+  @begin{short}
+    Interface for objects that can be built by @class{gtk-builder}.
+  @end{short}
 
-  The @sym{gtk-buildable} interface allows objects to extend and customize their
-  deserialization from @class{gtk-builder} UI descriptions. The interface
+  The @sym{gtk-buildable} interface allows objects to extend and customize
+  their deserialization from @class{gtk-builder} UI descriptions. The interface
   includes methods for setting names and properties of objects, parsing custom
   tags and constructing child objects.
 
@@ -78,53 +81,47 @@
   the non-widget objects that are provided by GTK+. The main user of this
   interface is @class{gtk-builder}. There should be very little need for
   applications to call any @code{gtk-buildable-...} functions.
-
-  @subheading{Note}
-  An object only needs to implement this interface if it needs to extend the
-  @class{gtk-builder} format or run any extra routines at deserialization
-  time.
+  @begin[Note]{dictionary}
+    An object only needs to implement this interface if it needs to extend the
+    @class{gtk-builder} format or run any extra routines at deserialization
+    time.
+  @end{dictionary}
   @see-class{gtk-builder}
   @see-class{gtk-buildable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_set_name ()
+;;; gtk_buildable_get_name () -> gtk-buildable-name
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_buildable_set_name" gtk-buildable-set-name) :void
+(defun (setf gtk-buildable-name) (name buildable)
+  (foreign-funcall "gtk_buildable_set_name"
+                   (g-object gtk-buildable) buildable
+                   :string name
+                   :void)
+  name)
+
+(defcfun ("gtk_buildable_get_name" gtk-buildable-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
+ "@version{2020-6-1}
+  @syntax[]{(gtk-buildable-name buildable) => name}
+  @syntax[]{(setf (gtk-buildable-name buildable) name)}
   @argument[buildable]{a @class{gtk-buildable} object}
   @argument[name]{a string with the name to set}
   @begin{short}
-    Sets the name of the buildable object.
+    Accessor of the name of the buildable widget.
   @end{short}
-  @see-class{gtk-buildable}
-  @see-function{gtk-buildable-get-name}"
-  (buildable (g-object gtk-buildable))
-  (name :string))
 
-(export 'gtk-buildable-set-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_buildable_get_name ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_buildable_get_name" gtk-buildable-get-name) :string
- #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
-  @argument[buildable]{a @class{gtk-buildable} object}
-  @return{A string with the name of the buildable object.}
-  @begin{short}
-    Gets the name of the buildable object.
-  @end{short}
+  The function @sym{gtk-buildable-name} gets the name of the buildable widget.
+  The function @sym{(setf gtk-buildable-name)} sets the name of the buildable
+  widget.
 
   @class{gtk-builder} sets the name based on the the @class{gtk-builder} UI
   definition used to construct the buildable.
-  @see-class{gtk-buildable}
-  @see-function{gtk-buildable-set-name}"
+  @see-class{gtk-buildable}"
   (buildable (g-object gtk-buildable)))
 
-(export 'gtk-buildable-get-name)
+(export 'gtk-buildable-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_add_child ()
@@ -138,13 +135,13 @@
 
 (defun gtk-buildable-add-child (buildable builder child type)
  #+cl-cffi-gtk-documentation
- "@version{2019-5-31}
-  @argument[buildable]{a @class{gtk-buildable} object}
+ "@version{2020-6-1}
+  @argument[buildable]{a @class{gtk-buildable} widget}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[child]{a child to add}
-  @argument[type]{kind of child or @code{nil}}
+  @argument[child]{a @class{g-object} child to add}
+  @argument[type]{a string with the kind of child or @code{nil}}
   @begin{short}
-    Adds a child to @arg{buildable}.
+    Adds a child to the buildable.
   @end{short}
   @arg{type} is an optional string describing how the child should be added.
   @see-class{gtk-buildable}"
@@ -322,25 +319,25 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_buildable_get_internal_child ()
+;;; gtk_buildable_get_internal_child () -> gtk-buildable-internal-child
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_buildable_get_internal_child" gtk-buildable-get-internal-child)
+(defcfun ("gtk_buildable_get_internal_child" gtk-buildable-internal-child)
     g-object
  #+cl-cffi-gtk-documentation
- "@version{2019-5-31}
-  @argument[buildable]{a @class{gtk-buildable} object}
+ "@version{2020-6-1}
+  @argument[buildable]{a @class{gtk-buildable} widget}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[childname]{name of child}
+  @argument[childname]{a string with the name of the child}
   @return{The internal child of the buildable object.}
   @begin{short}
-    Get the internal child called @arg{childname} of the buildable object.
+    Gets the internal child called @arg{childname} of the buildable object.
   @end{short}
   @see-class{gtk-buildable}"
   (buildable (g-object gtk-buildable))
   (builder (g-object gtk-builder))
   (childname :string))
 
-(export 'gtk-buildable-get-internal-child)
+(export 'gtk-buildable-internal-child)
 
 ;;; --- End of file gtk.buildable.lisp -----------------------------------------
