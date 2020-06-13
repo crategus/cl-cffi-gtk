@@ -2,12 +2,12 @@
 ;;; gtk.bin.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,13 +29,47 @@
 ;;;
 ;;; GtkBin
 ;;;
-;;; A container with just one child
+;;;     A container with just one child
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkBin
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_bin_get_child
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ├── GtkWindow
+;;;                     ├── GtkActionBar
+;;;                     ├── GtkAlignment
+;;;                     ├── GtkComboBox
+;;;                     ├── GtkFrame
+;;;                     ├── GtkButton
+;;;                     ├── GtkMenuItem
+;;;                     ├── GtkEventBox
+;;;                     ├── GtkExpander
+;;;                     ├── GtkFlowBoxChild
+;;;                     ├── GtkHandleBox
+;;;                     ├── GtkListBoxRow
+;;;                     ├── GtkToolItem
+;;;                     ├── GtkOverlay
+;;;                     ├── GtkScrolledWindow
+;;;                     ├── GtkPopover
+;;;                     ├── GtkRevealer
+;;;                     ├── GtkSearchBar
+;;;                     ├── GtkStackSidebar
+;;;                     ╰── GtkViewport
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkBin implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -54,7 +88,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2013-8-1}
+ "@version{2020-6-1}
   @begin{short}
     The @sym{gtk-bin} widget is a container with just one child.
   @end{short}
@@ -71,22 +105,23 @@
   @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_bin_get_child ()
+;;; gtk_bin_get_child () -> gtk-bin-child
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_bin_get_child" gtk-bin-get-child) (g-object gtk-widget)
+(defcfun ("gtk_bin_get_child" gtk-bin-child) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2020-6-1}
   @argument[bin]{a @class{gtk-bin} widget}
-  @return{The child of the @class{gtk-bin}.}
+  @return{The @class{gtk-widget} child of @arg{bin}.}
   @begin{short}
-    Gets the child of the @class{gtk-bin}, or @code{nil} if the @arg{bin}
-    contains no child widget.
+    Gets the child of the bin widget, or @code{nil} if @arg{bin} contains no
+    child widget.
   @end{short}
   The returned widget does not have a reference added, so you do not need to
-  unref it."
+  unref it.
+  @see-class{gtk-bin}"
   (bin (g-object gtk-bin)))
 
-(export 'gtk-bin-get-child)
+(export 'gtk-bin-child)
 
 ;;; --- End of file gtk.bin.lisp -----------------------------------------------
