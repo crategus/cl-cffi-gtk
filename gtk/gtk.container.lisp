@@ -755,13 +755,13 @@
 (export 'gtk-container-path-for-child)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_set_reallocate_redraws ()
+;;; gtk_container_set_reallocate_redraws () -> gtk-container-reallocate-redraws
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_set_reallocate_redraws"
            gtk-container-reallocate-redraws) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-4}
+ "@version{2020-6-2}
   @argument[container]{a @class{gtk-container} container}
   @argument[needs-redraws]{a boolean with the value for the container's
     @code{reallocate-redraws} flag}
@@ -772,7 +772,7 @@
   Containers requesting reallocation redraws get automatically redrawn if any
   of their children changed allocation.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-container-set-reallocate-redraws} has been deprecated
+    The function @sym{gtk-container-reallocate-redraws} has been deprecated
     since version 3.14 and should not be used in newly-written code. Call
     the function @fun{gtk-widget-queue-draw}.
   @end{dictionary}
