@@ -1658,20 +1658,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoFontMap
-;;;
-;;; typedef struct _PangoFontMap PangoFontMap;
-;;;
-;;; The PangoFontMap represents the set of fonts available for a particular
-;;; rendering system. This is a virtual object with implementations being
-;;; specific to particular rendering systems. To create an implementation of a
-;;; PangoFontMap, the rendering-system specific code should allocate a larger
-;;; structure that contains a nested PangoFontMap, fill in the klass member of
-;;; the nested PangoFontMap with a pointer to a appropriate PangoFontMapClass,
-;;; then call pango_font_map_init() on the structure.
-;;;
-;;; The PangoFontMap structure contains one member which the implementation
-;;; fills in.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "PangoFontMap" pango-font-map
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "pango_font_map_get_type")
+  nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'pango-font-map 'type)
+ "@version{2020-6-5}
+  @begin{short}
+    The @sym{pango-font-map} represents the set of fonts available for a
+    particular rendering system.
+  @end{short}
+  This is a virtual object with implementations being specific to particular
+  rendering systems. To create an implementation of a @sym{pango-font-map}, the
+  rendering-system specific code should allocate a larger structure that
+  contains a nested @sym{pango-font-map}, fill in the klass member of the nested
+  @sym{pango-font-map} with a pointer to a appropriate PangoFontMapClass, then
+  call @code{pango_font_map_init()} on the structure.
+
+  The @sym{pango-font-map} structure contains one member which the
+  implementation fills in.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoFontMapClass
