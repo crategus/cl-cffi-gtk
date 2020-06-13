@@ -357,8 +357,8 @@
   @subheading{Note}
   Prior to 2.20, @sym{gtk-builder} was setting the @code{\"name\"} property of
   constructed widgets to the @code{\"id\"} attribute. In GTK+ 2.20 or newer, you
-  have to use the @fun{gtk-buildable-get-name} function instead of the
-  @fun{gtk-widget-name} function to obtain the @code{\"id\"}, or set the
+  have to use the function @fun{gtk-buildable-name} instead of the function
+  @fun{gtk-widget-name} to obtain the @code{\"id\"}, or set the
   @code{\"name\"} property in your UI definition.
 
   Setting properties of objects is pretty straightforward with the
