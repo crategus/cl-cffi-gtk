@@ -2,12 +2,12 @@
 ;;; gtk.font-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,16 +54,16 @@
 ;;;
 ;;; Properties
 ;;;
-;;;        gchar*  font-name     Read / Write
-;;;     gboolean   show-size     Read / Write
-;;;     gboolean   show-style    Read / Write
-;;;        gchar*  title         Read / Write
-;;;     gboolean   use-font      Read / Write
-;;;     gboolean   use-size      Read / Write
+;;;        gchar*   font-name     Read / Write
+;;;     gboolean    show-size     Read / Write
+;;;     gboolean    show-style    Read / Write
+;;;        gchar*   title         Read / Write
+;;;     gboolean    use-font      Read / Write
+;;;     gboolean    use-size      Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;         void   font-set      Run First
+;;;         void    font-set      Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -117,26 +117,33 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-button 'type)
- "@version{2013-6-18}
+ "@version{2020-6-6}
   @begin{short}
     The @sym{gtk-font-button} is a button which displays the currently selected
     font and allows to open a font chooser dialog to change the font. It is a
     suitable widget for selecting a font in a preference dialog.
   @end{short}
+
+  @image[font-button]{}
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-font-button} has a single CSS node with name @code{button} and
+    style class @code{.font}.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"font-set\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
       The \"font-set\" signal is emitted when the user selects a font. When
-      handling this signal, use the @fun{gtk-font-button-font-name} slot access
-      function to find out which font was just selected.
+      handling this signal, use the function @fun{gtk-font-button-font-name} to
+      find out which font was just selected.
 
       Note that this signal is only emitted when the user changes the font. If
       you need to react to programmatic font changes as well, use the
       \"notify::font-name\" signal.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-font-button} widget which received the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-font-button-font-name}
@@ -156,40 +163,40 @@
 (setf (documentation (atdoc:get-slot-from-name "font-name" 'gtk-font-button) 't)
  "The @code{font-name} property of type @code{:string} (Read / Write) @br{}
   The name of the currently selected font. @br{}
-  @em{Warning:} @code{font-name} has been deprecated since version 3.22 and
-  should not be used in newly-written code. Use the @code{font} property
-  instead. @br{}
+  @em{Warning:} The @code{font-name} property has been deprecated since version
+  3.22 and should not be used in newly-written code. Use the
+  @slot[gtk-font-chooser]{font} property instead. @br{}
   Default value: \"Sans 12\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-font-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-font-name 'function)
- "@version{2019-5-14}
+ "@version{2020-6-6}
   @syntax[]{(gtk-font-button-font-name object) => fontname}
   @syntax[]{(setf (gtk-font-button-font-name object) fontname)}
   @argument[object]{a @class{gtk-font-button} widget}
-  @argument[fontname]{name of font to display in the font chooser dialog}
+  @argument[fontname]{a string with the name of the font to display in the font
+    chooser dialog}
   @begin{short}
     Accessor of the @slot[gtk-font-button]{font-name} slot of the
     @class{gtk-font-button} class.
   @end{short}
 
-  The @sym{(setf gtk-font-button-font-name)} slot access function
-  sets or updates the currently displayed font in the font picker dialog.
-
-  The @sym{gtk-font-name-button-font-name} slot access function
-  retrieves the name of the currently selected font.
+  The slot access function @sym{(setf gtk-font-button-font-name)} sets or
+  updates the currently displayed font in the font picker dialog. The slot
+  access function @sym{gtk-font-name-button-font-name} retrieves the name of
+  the currently selected font.
 
   This name includes style and size information as well. If you want to render
-  something with the font, use this string with the
-  @fun{pango-font-description-from-string} function. If you are interested in
-  peeking certain values, family name, style, size, weight, just query these
-  properties from the @class{pango-font-description} structure.
+  something with the font, use this string with the function
+  @fun{pango-font-description-from-string}. If you are interested in peeking
+  certain values, family name, style, size, weight, just query these properties
+  from the @class{pango-font-description} structure.
   @begin[Warning]{dictionary}
-    The @sym{gtk-font-button-font-name} slot access function has been deprecated
-    since version 3.22 and should not be used in newly-written code. Use the
-    @fun{gtk-font-chooser-font} function instead.
+    The function @sym{gtk-font-button-font-name} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gtk-font-chooser-font} instead.
   @end{dictionary}
   @see-class{gtk-font-button}")
 
@@ -207,7 +214,7 @@
 (setf (gethash 'gtk-font-button-show-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-show-size 'function)
- "@version{2019-5-14}
+ "@version{2020-6-6}
   @syntax[]{(gtk-font-button-show-size object) => show-size}
   @syntax[]{(setf (gtk-font-button-show-size object) show-size)}
   @argument[object]{a @class{gtk-font-button} widget}
@@ -224,9 +231,9 @@
 ;;; --- gtk-font-button-show-style ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-style" 'gtk-font-button) 't)
- "The @code{show-style} property of type @code{:boolean}
-  (Read / Write) @br{}
+(setf (documentation (atdoc:get-slot-from-name "show-style"
+                                               'gtk-font-button) 't)
+ "The @code{show-style} property of type @code{:boolean} (Read / Write) @br{}
   If this property is set to @em{true}, the name of the selected font style will
   be shown in the label. For a more WYSIWYG way to show the selected style, see
   the @code{use-font} property. @br{}
@@ -236,7 +243,7 @@
 (setf (gethash 'gtk-font-button-show-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-show-style 'function)
- "@version{2019-5-14}
+ "@version{2020-6-6}
   @syntax[]{(gtk-font-button-show-style object) => show-style}
   @syntax[]{(setf (gtk-font-button-show-style object) show-style)}
   @argument[object]{a @class{gtk-font-button} widget}
@@ -262,7 +269,7 @@
 (setf (gethash 'gtk-font-button-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-title 'function)
- "@version{2019-5-14}
+ "@version{2020-6-6}
   @syntax[]{(gtk-font-button-title object) => title}
   @syntax[]{(setf (gtk-font-button-title object) title)}
   @argument[object]{a @class{gtk-font-button} widget}
@@ -272,11 +279,9 @@
     @class{gtk-font-button} class.
   @end{short}
 
-  The @sym{gtk-font-button-title} slot access function
-  retrieves the title of the font chooser dialog.
-
-  The @sym{(setf gtk-font-button-title)} slot access function
-  sets the title for the font chooser dialog.
+  The slot access function @sym{gtk-font-button-title} retrieves the title of
+  the font chooser dialog. The slot access function
+  @sym{(setf gtk-font-button-title)} sets the title for the font chooser dialog.
   @see-class{gtk-font-button}")
 
 ;;; --- gtk-font-button-use-font -----------------------------------------------
@@ -286,13 +291,13 @@
  "The @code{use-font} property of type  @code{:boolean} (Read / Write) @br{}
   If this property is set to @em{true}, the label will be drawn in the selected
   font. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-use-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-use-font 'function)
- "@version{2019-5-14}
+ "@version{2020-6-6}
   @syntax[]{(gtk-font-button-title object) => use-font}
   @syntax[]{(setf (gtk-font-button-title object) use-font)}
   @argument[object]{a @class{gtk-font-button} widget}
@@ -313,18 +318,18 @@
  "The @code{use-size} property of type @code{:boolean} (Read / Write) @br{}
   If this property is set to @em{true}, the label will be drawn with the
   selected font size. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-use-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-use-size 'function)
- "@version{2019-5-14}
-  @syntax[]{(gtk-font-button-title object) => title}
-  @syntax[]{(setf (gtk-font-button-title object) title)}
+ "@version{2020-6-6}
+  @syntax[]{(gtk-font-button-use-size object) => use-size}
+  @syntax[]{(setf (gtk-font-button-use-size object) use-size)}
   @argument[object]{a @class{gtk-font-button} widget}
-  @argument[use-size]{if @em{true}, font name will be written using the selected
-    size}
+  @argument[use-size]{if @em{true}, the font name will be written using the
+    selected size}
   @begin{short}
     Accessor of the @slot[gtk-font-button]{use-size} slot of the
     @class{gtk-font-button} class.
@@ -342,8 +347,8 @@
 
 (defun gtk-font-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2019-5-14}
-  @return{A new font picker widget.}
+ "@version{2020-6-6}
+  @return{A new @class{gtk-font-button} widget.}
   @short{Creates a new font picker widget.}
   @see-class{gtk-font-button}"
   (make-instance 'gtk-font-button))
@@ -358,9 +363,10 @@
 
 (defun gtk-font-button-new-with-font (fontname)
  #+cl-cffi-gtk-documentation
- "@version{2019-5-14}
-  @argument[fontname]{name of font to display in font chooser dialog}
-  @return{A new font picker widget.}
+ "@version{2020-6-6}
+  @argument[fontname]{a string with the name of the font to display in the font
+    chooser dialog}
+  @return{A new @class{gtk-font-button} widget.}
   @short{Creates a new font picker widget.}
   @see-class{gtk-font-button}"
   (make-instance 'gtk-font-button
