@@ -30,8 +30,8 @@
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-editable-set-editable entry
-                                        (gtk-toggle-button-active check))))
+             (setf (gtk-editable-editable entry)
+                   (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
         (setf (gtk-toggle-button-active check) t)

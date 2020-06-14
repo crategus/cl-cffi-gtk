@@ -128,7 +128,7 @@
         (setf (gtk-combo-box-active combo) 3)
         (g-signal-connect combo "changed"
            (lambda (combobox)
-             (let ((text (gtk-combo-box-text-get-active-text combobox)))
+             (let ((text (gtk-combo-box-text-active-text combobox)))
                (setf (gtk-frame-shadow-type frame) (intern text :keyword)))))
 
         (gtk-container-add action

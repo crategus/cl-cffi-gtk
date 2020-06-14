@@ -87,7 +87,7 @@
         (setf (gtk-combo-box-active combo) 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
-             (let ((pos (gtk-combo-box-text-get-active-text widget)))
+             (let ((pos (gtk-combo-box-text-active-text widget)))
                (format t "type      : ~A~%"
                          (g-type-from-instance (pointer widget)))
                (format t "active is : ~A~%"

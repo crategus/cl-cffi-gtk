@@ -169,7 +169,7 @@
          (g-signal-connect spinner2 "value-changed"
            (lambda (spin-button)
              (setf (gtk-spin-button-digits spinner1)
-                   (gtk-spin-button-get-value-as-int spin-button))))
+                   (gtk-spin-button-value-as-int spin-button))))
          ;; FIXME: The entry does not show the default value.
          ;; What is the problem? We set the value.
         (setf (gtk-entry-text spinner2) (format nil "~d" 2))
@@ -230,7 +230,7 @@
                  (declare (ignore widget))
                  (setf (gtk-label-text label)
                        (format nil "~A"
-                               (gtk-spin-button-get-value-as-int spinner1)))))
+                               (gtk-spin-button-value-as-int spinner1)))))
               (gtk-box-pack-start hbox button))
 
           (let ((button (gtk-button-new-with-label "Value as Float")))

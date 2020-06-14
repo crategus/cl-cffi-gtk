@@ -175,7 +175,7 @@
 
         (g-signal-connect combo "changed"
            (lambda (combobox)
-             (let* ((text (gtk-combo-box-text-get-active-text combobox))
+             (let* ((text (gtk-combo-box-text-active-text combobox))
                     (orientation (cdr (assoc text
                                              '(("Vertical" . :vertical)
                                                ("Horizontal" . :horizontal))
@@ -204,7 +204,7 @@
 
         (g-signal-connect combo "changed"
            (lambda (combobox)
-             (let* ((text (gtk-combo-box-text-get-active-text combobox))
+             (let* ((text (gtk-combo-box-text-active-text combobox))
                     (style (cdr (assoc text
                                              '(("Icons" . :icons)
                                                ("Text" . :text)
@@ -239,7 +239,7 @@
 
         (g-signal-connect combo "changed"
            (lambda (combobox)
-             (let* ((text (gtk-combo-box-text-get-active-text combobox))
+             (let* ((text (gtk-combo-box-text-active-text combobox))
                     (size (cdr (assoc text
                                       '(("Menu" . :menu)
                                         ("Small Toolbar" . :small-toolbar)

@@ -18,7 +18,7 @@
 (defun create-complex-popover (parent pos)
   (let* ((builder (gtk-builder-new-from-file (rel-path "popover.ui")))
          (window (gtk-builder-get-object builder "window"))
-         (content (gtk-bin-get-child window)))
+         (content (gtk-bin-child window)))
     (gtk-container-remove (gtk-widget-parent content) content)
     (gtk-widget-destroy window)
     (create-popover parent content pos)))
@@ -58,7 +58,7 @@
         (g-signal-connect entry "icon-press"
             (lambda (entry icon-pos event)
               (declare (ignore event))
-              (let ((rect (gtk-entry-get-icon-area entry icon-pos)))
+              (let ((rect (gtk-entry-icon-area entry icon-pos)))
                 (setf (gtk-popover-pointing-to popover) rect)
                       (gtk-widget-show popover))))
         (gtk-container-add box entry))

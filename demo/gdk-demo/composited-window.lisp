@@ -70,7 +70,7 @@
          ;; feature to make this work correctly.
          (lambda (widget cr)
            (let* (;; get our child (in this case, the event box)
-                  (child (gtk-bin-get-child widget))
+                  (child (gtk-bin-child widget))
                   ;; create a cairo context to draw to the window
                   (cr (pointer cr))
 ;                  (cr (gdk-cairo-create (gtk-widget-window widget)))
@@ -96,5 +96,4 @@
              (cairo-destroy cr)
              nil)))
 )))
-
 

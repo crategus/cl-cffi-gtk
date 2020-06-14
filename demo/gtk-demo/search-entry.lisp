@@ -331,11 +331,9 @@ do_search_entry (GtkWidget *do_widget)
 (defun search-by-name (item entry)
   (declare (ignore item))
   (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
-  (gtk-entry-set-icon-tooltip-text entry
-                                   :primary
-                                   (format nil
-                                           "Search by name~%~
-                                            Click here to change the search type"))
+  (setf (gtk-entry-icon-tooltip-text entry :primary)
+        (format nil "Search by name~%~
+                     Click here to change the search type"))
   (setf (gtk-entry-placeholder-text entry) "name"))
 
 
@@ -353,11 +351,9 @@ do_search_entry (GtkWidget *do_widget)
          (lambda (item)
            (declare (ignore item))
            (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
-           (gtk-entry-set-icon-tooltip-text entry
-                                            :primary
-                                            (format nil
-                                                    "Search by name~%~
-                                                     Click here to change the search type"))
+           (setf (gtk-entry-icon-tooltip-text entry :primary)
+                 (format nil "Search by name~%~
+                              Click here to change the search type"))
            (setf (gtk-entry-placeholder-text entry) "name")))
       (gtk-menu-shell-append menu item))
 
@@ -371,11 +367,9 @@ do_search_entry (GtkWidget *do_widget)
          (lambda (item)
            (declare (ignore item))
            (gtk-entry-set-icon-from-stock entry :primary "gtk-edit")
-           (gtk-entry-set-icon-tooltip-text entry
-                                            :primary
-                                            (format nil
-                                                    "Search by description~%~
-                                                     Click here to change the search type"))
+           (setf (gtk-entry-icon-tooltip-text entry :primary)
+                 (format nil "Search by description~%~
+                              Click here to change the search type"))
            (setf (gtk-entry-placeholder-text entry) "description")))
       (gtk-menu-shell-append menu item))
 
@@ -390,11 +384,9 @@ do_search_entry (GtkWidget *do_widget)
          (lambda (item)
            (declare (ignore item))
            (gtk-entry-set-icon-from-stock entry :primary "gtk-open")
-           (gtk-entry-set-icon-tooltip-text entry
-                                            :primary
-                                            (format nil
-                                                    "Search by file name~%~
-                                                     Click here to change the search type"))
+           (setf (gtk-entry-icon-tooltip-text entry :primary)
+                 (format nil "Search by file name~%~
+                              Click here to change the search type"))
            (setf (gtk-entry-placeholder-text entry) "file name")))
       (gtk-menu-shell-append menu item))
     (gtk-widget-show-all menu)
