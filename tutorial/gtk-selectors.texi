@@ -270,14 +270,14 @@ that can be passed to GTK+ widgets.
 
 You can add a custom preview widget to a file chooser and then get
 notification about when the preview needs to be updated. To install a
-preview widget, use @xurl{gtk-file-chooser-set-preview-widget}. Then, connect
+preview widget, use @xurl{gtk-file-chooser-preview-widget}. Then, connect
 to the "update-preview" signal to get notified when you need to update the
 contents of the preview.
 
-Your callback should use @xurl{gtk-file-chooser-get-preview-filename} to see
+Your callback should use @xurl{gtk-file-chooser-preview-filename} to see
 what needs previewing.  Once you have generated the preview for the
 corresponding file, you must call
-@xurl{gtk-file-chooser-set-preview-widget-active} with a boolean flag that
+@xurl{gtk-file-chooser-preview-widget-active} with a boolean flag that
 indicates whether your callback could successfully generate a preview.
 
 @need 800
@@ -287,7 +287,7 @@ indicates whether your callback could successfully generate a preview.
 You can add extra widgets to a file chooser to provide options that are not
 present in the default design.  For example, you can add a toggle button to
 give the user the option to open a file in read-only mode. You can use
-@xurl{gtk-file-chooser-set-extra-widget} to insert additional widgets in a
+@xurl{gtk-file-chooser-extra-widget} to insert additional widgets in a
 file chooser.
 
 @b{Note:}

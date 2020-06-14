@@ -91,7 +91,7 @@
 @c GtkBin
 
 @set gtk-bin http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-bin.html
-@set gtk-bin-get-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-bin-get-child.html
+@set gtk-bin-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-bin-child.html
 
 @c GtkBox
 
@@ -138,8 +138,8 @@
 @set gtk-calendar-mark-day http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-mark-day.html
 @set gtk-calendar-unmark-day http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-unmark-day.html
 @set gtk-calendar-clear-marks http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-clear-marks.html
-@set gtk-calendar-set-display-options http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-set-display-options.html
-@set gtk-calendar-get-date http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-get-date.html
+@set gtk-calendar-display-options http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-display-options.html
+@set gtk-calendar-date http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-date.html
 @set gtk-calendar-set-detail-func http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-set-detail-func.html
 
 @c GtkCellEditable
@@ -208,7 +208,7 @@
 @set gtk-combo-box-text-insert-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-insert-text.html
 @set gtk-combo-box-text-prepend-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-prepend-text.html
 @set gtk-combo-box-text-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-remove.html
-@set gtk-combo-box-text-get-active-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-get-active-text.html
+@set gtk-combo-box-text-active-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-active-text.html
 
 @c GtkContainer
 
@@ -244,10 +244,10 @@
 @set gtk-file-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-file-chooser.html
 @set gtk-file-chooser-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-file-chooser-action.html
 @set gtk-file-chooser-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-filename.html
-@set gtk-file-chooser-set-preview-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-preview-widget.html
-@set gtk-file-chooser-get-preview-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-get-preview-filename.html
-@set gtk-file-chooser-set-preview-widget-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-preview-widget-active.html
-@set gtk-file-chooser-set-extra-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-extra-widget.html
+@set gtk-file-chooser-preview-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-preview-widget.html
+@set gtk-file-chooser-preview-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-preview-filename.html
+@set gtk-file-chooser-preview-widget-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-preview-widget-active.html
+@set gtk-file-chooser-extra-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-extra-widget.html
 @set gtk-file-chooser-current-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-current-name.html
 @set gtk-file-chooser-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-filename.html
 
@@ -504,7 +504,7 @@
 @set gtk-scale-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-new.html
 @set gtk-scale-new-with-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-new-with-range.html
 @set gtk-scale-draw-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-draw-value.html
-@set gtk-scale-set-digits http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-set-digits.html
+@set gtk-scale-digits http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-digits.html
 @set gtk-scale-value-pos http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-value-pos.html
 
 @c GtkScrollable
@@ -648,9 +648,9 @@
 @set gtk-text-view-tabs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-tabs.html
 @set gtk-text-view-scroll-mark-onscreen http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-scroll-mark-onscreen.html
 @set gtk-text-view-add-child-at-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-add-child-at-anchor.html
-@set gtk-text-view-get-iter-at-location http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-iter-at-location.html
+@set gtk-text-view-iter-at-location http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-iter-at-location.html
 @set gtk-text-view-buffer-to-window-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-buffer-to-window-coords.html
-@set gtk-text-view-get-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-window.html
+@set gtk-text-view-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-window.html
 @set gtk-text-view-window-to-buffer-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-window-to-buffer-coords.html
 @set gtk-text-view-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-editable.html
 
@@ -704,7 +704,7 @@
 @set gtk-tree-model-iter-nth-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-nth-child.html
 @set gtk-tree-model-iter-parent http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-parent.html
 @set gtk-tree-model-get-flags http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-flags.html
-@set gtk-tree-model-get-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-path.html
+@set gtk-tree-model-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-path.html
 @set gtk-tree-model-foreach http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-foreach.html
 
 @c GtkTreePath
@@ -712,8 +712,8 @@
 @set gtk-tree-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-path.html
 @set gtk-tree-path-new-from-string http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-new-from-string.html
 @set gtk-tree-path-to-string http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-to-string.html
-@set gtk-tree-path-get-depth http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-get-depth.html
-@set gtk-tree-path-get-indices http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-get-indices.html
+@set gtk-tree-path-depth http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-depth.html
+@set gtk-tree-path-indices http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-indices.html
 @set gtk-tree-path-up http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-up.html
 @set gtk-tree-path-down http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-down.html
 @set gtk-tree-path-next http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-next.html

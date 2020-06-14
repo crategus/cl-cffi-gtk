@@ -398,11 +398,11 @@ paths.
 
 Instead of the string notation, @xurl{gtk-tree-path} uses an integer array
 internally.  You can get the depth, i. e. the nesting level, of a tree path with
-the function @xurl{gtk-tree-path-get-depth}.  A depth of 0 is the imaginary
+the function @xurl{gtk-tree-path-depth}.  A depth of 0 is the imaginary
 invisible root node of the tree view and model.  A depth of 1 means that the
 tree path describes a top-level row.  As lists are just trees without child
 nodes, all rows in a list always have tree paths of depth 1.  The function
-@xurl{gtk-tree-path-get-indices} returns the internal integer array of a tree
+@xurl{gtk-tree-path-indices} returns the internal integer array of a tree
 path.  You will rarely need to operate with those either.
 
 If you operate with tree paths, you are most likely to use a given tree path,
@@ -532,7 +532,7 @@ easy to store tree iters in a wrong way.
 @subsubsection Usage
 
 Tree iters can easily be converted into tree paths using the function
-@xurl{gtk-tree-model-get-path}, and tree paths can easily be converted into tree
+@xurl{gtk-tree-model-path}, and tree paths can easily be converted into tree
 iters using the function @xurl{gtk-tree-model-get-iter}.  Here is an example
 that shows how to get the iter from the tree path that is passed to us from the
 tree view in the "row-activated" signal callback.  We need the iter here to
@@ -1801,5 +1801,4 @@ by which to identify the stock icon).
 @c -----------------------------------------------------------------------------
 @node Writing Custom Cell Renderers, , Writing Custom Models
 @section Writing Custom Cell Renderers
-
 

@@ -169,17 +169,17 @@ To place a visual marker on a particular day, use the function
 @xurl{gtk-calendar-unmark-day}.  Alternative, all marks can be cleared with
 the function @xurl{gtk-calendar-clear-marks}.
 
-@findex gtk-calendar-set-display-options
-@findex calendar-set-display-options, gtk-calendar-set-display-options
+@findex gtk-calendar-display-options
+@findex calendar-display-options, gtk-calendar-display-options
 
 The way in which the calendar itself is displayed can be altered using the
-function @xurl{gtk-calendar-set-display-options}.
+function @xurl{gtk-calendar-display-options}.
 
-@findex gtk-calendar-get-date
-@findex calendar-get-date, gtk-calendar-get-date
+@findex gtk-calendar-date
+@findex calendar-date, gtk-calendar-date
 
 The selected date can be retrieved from a @xurl{gtk-calendar} using the function
-@xurl{gtk-calendar-get-date}.
+@xurl{gtk-calendar-date}.
 
 Users should be aware that, although the Gregorian calendar is the legal
 calendar in most countries, it was adopted progressively between 1582 and
@@ -387,7 +387,7 @@ below.
 
 If we do not want the contents of the entry to be changed by someone typing
 into it, we can change its editable state with the function
-@code{gtk-editable-set-editable}.  This function allows us to toggle the
+@code{gtk-editable-editable}.  This function allows us to toggle the
 editable state of the entry widget by passing in a @code{T} or @code{NIL} value
 for the editable argument.
 
@@ -438,9 +438,8 @@ for every character entered or removed.
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-editable-set-editable
-                                      entry
-                                      (gtk-toggle-button-active check))))
+             (setf (gtk-editable-editable entry)
+                   (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
         (setf (gtk-toggle-button-active check) t)
@@ -523,17 +522,16 @@ A spin button can be reconfigured after creation using the function
 that is to be reconfigured.  The other arguments are as specified for the
 function @code{gtk-spin-button-new}.
 
-The adjustment can be set and retrieved independently using the two
-functions @code{gtk-spin-button-set-adjustment} and
-@code{gtk-spin-button-get-adjustment}.
+The adjustment can be set and retrieved independently using the function
+@code{gtk-spin-button-adjustment}.
 
 The number of decimal places can also be altered using the function
-@code{gtk-spin-button-set-digits} and the value that a spin button is currently
-displaying can be changed using the function @code{gtk-spin-button-set-value}.
+@code{gtk-spin-button-digits} and the value that a spin button is currently
+displaying can be changed using the function @code{gtk-spin-button-value}.
 
 The current value of a spin button can be retrieved as either a floating point
 or integer value with the functions @code{gtk-spin-button-value} and
-@code{gtk-spin-button-get-value-as-int}.
+@code{gtk-spin-button-value-as-int}.
 
 If you want to alter the value of a spin button relative to its current value,
 then the function @code{gtk-spin-button-spin} can be used, which has the three
@@ -582,19 +580,19 @@ We move away from functions for setting and retrieving the range attributes of
 the spin button now, and move onto functions that affect the appearance and
 behavior of the spin button widget itself.
 
-The first of these functions is @code{gtk-spin-button-set-numeric}, which is
+The first of these functions is @code{gtk-spin-button-numeric}, which is
 used to constrain the text box of the spin button such that it may only contain
 a numeric value.  This prevents a user from typing anything other than numeric
 values into the text box of a spin button.
 
 You can set whether a Spin Button will wrap around between the upper and lower
-range values with the function @code{gtk-spin-button-set-wrap}.  You can set a
+range values with the function @code{gtk-spin-button-wrap}.  You can set a
 spin button to round the value to the nearest @code{step-increment}, which is
 set within the adjustment object used with the spin button.  This is
-accomplished with the function @code{gtk-spin-button-set-snap-to-ticks}.
+accomplished with the function @code{gtk-spin-button-snap-to-ticks}.
 
 The update policy of a spin button can be changed with the function
-@code{gtk-spin-button-set-update-policy}.  The possible values of policy are
+@code{gtk-spin-button-update-policy}.  The possible values of policy are
 either @code{:always} or @code{:if-valid}.  These policies affect the behavior
 of a Spin Button when parsing inserted text and syncing its value with the
 values of the adjustment.
@@ -746,9 +744,8 @@ function @code{gtk-spin-button-update}.
         (g-signal-connect spinner2 "value-changed"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-spin-button-set-digits
-                               spinner1
-                               (gtk-spin-button-get-value-as-int spinner2))))
+             (setf (gtk-spin-button-digits spinner1)
+                   (gtk-spin-button-value-as-int spinner2))))
         (setq vbox (make-instance 'gtk-box :orientation :vertical))
         (gtk-box-pack-start vbox
                             (make-instance 'gtk-label
@@ -764,18 +761,16 @@ function @code{gtk-spin-button-update}.
                                     :active t)))
           (g-signal-connect check "clicked"
              (lambda (widget)
-               (gtk-spin-button-set-snap-to-ticks
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
+               (setf (gtk-spin-button-snap-to-ticks spinner1)
+                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (let ((check (make-instance 'gtk-check-button
                                     :label "Numeric only input mode"
                                     :active t)))
           (g-signal-connect check "clicked"
              (lambda (widget)
-               (gtk-spin-button-set-numeric
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
+               (setf (gtk-spin-button-numeric spinner1)
+                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
         (setq hbox (make-instance 'gtk-box :orientation :horizontal))
@@ -785,7 +780,7 @@ function @code{gtk-spin-button-update}.
                (declare (ignore widget))
                (setf (gtk-label-text label)
                      (format nil "~A"
-                             (gtk-spin-button-get-value-as-int spinner1)))))
+                             (gtk-spin-button-value-as-int spinner1)))))
             (gtk-box-pack-start hbox button))
         (let ((button (gtk-button-new-with-label "Value as Float")))
           (g-signal-connect button "clicked"
@@ -859,12 +854,12 @@ the tree structure.
 @findex gtk-entry
 @findex entry, gtk-entry
 
-@findex gtk-bin-get-child
-@findex bin-get-child, gtk-bin-get-child
+@findex gtk-bin-child
+@findex bin-child, gtk-bin-child
 
 To allow the user to enter values not in the model, the @code{has-entry}
 property allows the @xurl{gtk-combo-box} to contain a @xurl{gtk-entry}.  This
-entry can be accessed by calling @xurl{gtk-bin-get-child} on the combo box.
+entry can be accessed by calling @xurl{gtk-bin-child} on the combo box.
 
 For a simple list of textual choices, the model-view API of @xurl{gtk-combo-box}
 can be a bit overwhelming.  In this case, @xurl{gtk-combo-box-text} offers a
@@ -996,16 +991,16 @@ You can add items to a @xurl{gtk-combo-box-text} with the functions
 @xurl{gtk-combo-box-text-prepend-text} and remove options with the function
 @xurl{gtk-combo-box-text-remove}.
 
-@findex gtk-combo-box-text-get-active-text
-@findex gtk-bin-get-child
+@findex gtk-combo-box-text-active-text
+@findex gtk-bin-child
 
-@findex combo-box-text-get-active-tect, gtk-combo-box-text-get-active-text
-@findex bin-get-child, gtk-bin-get-child
+@findex combo-box-text-active-text, gtk-combo-box-text-active-text
+@findex bin-child, gtk-bin-child
 
 If the @xurl{gtk-combo-box-text} contains an entry via the @code{has-entry}
 property, its contents can be retrieved using
-@xurl{gtk-combo-box-text-get-active-text}.  The entry itself can be accessed by
-calling @xurl{gtk-bin-get-child} on the combo box.
+@xurl{gtk-combo-box-text-active-text}.  The entry itself can be accessed by
+calling @xurl{gtk-bin-child} on the combo box.
 
 @float Example, example-combo-box-text
 @caption{Combo Box Text}

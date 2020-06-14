@@ -1448,7 +1448,7 @@
         (setf (gtk-combo-box-active combo) 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
-             (let ((pos (gtk-combo-box-text-get-active-text widget)))
+             (let ((pos (gtk-combo-box-text-active-text widget)))
                (format t "type      : ~A~%"
                          (g-type-from-instance (pointer widget)))
                (format t "active is : ~A~%"
@@ -2536,8 +2536,8 @@ happen.")
         (let* ((word (string-trim " " (gtk-text-iter-text start location)))
                (tip-text (get-tip word)))
           (when tip-text
-            (let ((rect (gtk-text-view-get-iter-location text-view location))
-                  (win (gtk-text-view-get-window text-view :widget)))
+            (let ((rect (gtk-text-view-iter-location text-view location))
+                  (win (gtk-text-view-window text-view :widget)))
               (multiple-value-bind (win-x win-y)
                   (gtk-text-view-buffer-to-window-coords text-view
                                                          :widget
@@ -3529,8 +3529,8 @@ happen.")
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-editable-set-editable entry
-                                        (gtk-toggle-button-active check))))
+             (setf (gtk-editable-editable entry)
+                   (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
         (setf (gtk-toggle-button-active check) t)
@@ -3689,9 +3689,8 @@ happen.")
         (g-signal-connect spinner2 "value-changed"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-spin-button-set-digits
-                               spinner1
-                               (gtk-spin-button-get-value-as-int spinner2))))
+             (setf (gtk-spin-button-digits spinner1)
+                   (gtk-spin-button-value-as-int spinner2))))
         (setq vbox (make-instance 'gtk-box :orientation :vertical))
         (gtk-box-pack-start vbox
                             (make-instance 'gtk-label
@@ -3707,18 +3706,16 @@ happen.")
                                     :active t)))
           (g-signal-connect check "clicked"
              (lambda (widget)
-               (gtk-spin-button-set-snap-to-ticks
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
+               (setf (gtk-spin-button-snap-to-ticks spinner1)
+                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (let ((check (make-instance 'gtk-check-button
                                     :label "Numeric only input mode"
                                     :active t)))
           (g-signal-connect check "clicked"
              (lambda (widget)
-               (gtk-spin-button-set-numeric
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
+               (setf (gtk-spin-button-numeric spinner1)
+                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
         (setq hbox (make-instance 'gtk-box :orientation :horizontal))
@@ -3728,7 +3725,7 @@ happen.")
                (declare (ignore widget))
                (setf (gtk-label-text label)
                      (format nil "~A"
-                             (gtk-spin-button-get-value-as-int spinner1)))))
+                             (gtk-spin-button-value-as-int spinner1)))))
             (gtk-box-pack-start hbox button))
         (let ((button (gtk-button-new-with-label "Value as Float")))
           (g-signal-connect button "clicked"

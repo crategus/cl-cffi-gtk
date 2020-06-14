@@ -126,11 +126,11 @@ them.
 @findex position-type, gtk-position-type
 
 @findex gtk-scale-draw-value
-@findex gtk-scale-set-digits
+@findex gtk-scale-digits
 @findex gtk-scale-value-pos
 
 @findex scale-draw-value, gtk-scale-draw-value
-@findex scale-set-digits, gtk-scale-set-digits
+@findex scale-digits, gtk-scale-digits
 @findex scale-value-pos, gtk-scale-value-pos
 
 Scale widgets can display their current value as a number beside the trough.
@@ -142,7 +142,7 @@ consequences for either one.
 
 The value displayed by a scale widget is rounded to one decimal point by
 default, as is the value field in its adjustment.  You can change this with the
-function @xurl{gtk-scale-set-digits}.  The first argument is a widget of type
+function @xurl{gtk-scale-digits}.  The first argument is a widget of type
 @xurl{gtk-scale} and the second argument @code{digits}, where @code{digits} is
 the number of decimal places you want.  You can set digits to anything you like,
 but no more than 13 decimal places will actually be drawn on screen.
@@ -323,7 +323,7 @@ signal being given to the window.
         (setf (gtk-combo-box-active combo) 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
-             (let ((pos (gtk-combo-box-text-get-active-text widget)))
+             (let ((pos (gtk-combo-box-text-active-text widget)))
                (format t "type      : ~A~%"
                          (g-type-from-instance (pointer widget)))
                (format t "active is : ~A~%"

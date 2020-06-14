@@ -1042,7 +1042,7 @@ The procedure is as follows,
   @item A window with the tooltip is displayed at (x1+x2, y1+y2).
 @end itemize
 The buffer coordinates of a particular character in a buffer can be obtained
-using the function @xurl{gtk-text-view-get-iter-at-location} with the argument
+using the function @xurl{gtk-text-view-iter-at-location} with the argument
 @code{iter}.  The function gets the rectangle that contains the character at
 @code{iter} and returns it.  The @code{x} and @code{y} members of
 @code{location} gives us the buffer coordinates.
@@ -1059,7 +1059,7 @@ Each GTK widget has a corresponding @xurl{gdk-window} associated with it.  Once
 we know the @xurl{gdk-window} associated with a widget, we can obtain it's X-Y
 coordinates using @xurl{gdk-window-get-origin}.  The @xurl{gdk-window} of the
 text view widget can be obtained using the function
-@xurl{gtk-text-view-get-window}.  Here again you will have to pass
+@xurl{gtk-text-view-window}.  Here again you will have to pass
 @code{:widget} for the argument @code{win}.
 
 We now know the functions required to display a tooltip under the text cursor.
@@ -1125,8 +1125,8 @@ functions.
                                   (gtk-text-iter-text start location)))
                (tip-text (get-tip word)))
           (when tip-text
-            (let ((rect (gtk-text-view-get-iter-location text-view location))
-                  (win (gtk-text-view-get-window text-view :widget)))
+            (let ((rect (gtk-text-view-iter-location text-view location))
+                  (win (gtk-text-view-window text-view :widget)))
               (multiple-value-bind (win-x win-y)
                   (gtk-text-view-buffer-to-window-coords
                       text-view
@@ -1198,7 +1198,7 @@ Window coordinates can be converted to buffer coordinates using the function
 @xurl{gtk-text-view-window-to-buffer-coords}.
 
 The iter at a buffer coordinate can be obtained using the function
-@xurl{gtk-text-view-get-iter-at-location}.
+@xurl{gtk-text-view-iter-at-location}.
 
 @c -----------------------------------------------------------------------------
 @node Final Notes, , Buffer and Window Coordinates, Top
