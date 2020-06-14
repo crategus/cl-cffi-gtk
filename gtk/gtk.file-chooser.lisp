@@ -404,7 +404,7 @@
     function. Then, connect to the \"update-preview\" signal to get notified
     when you need to update the contents of the preview.
 
-    Your callback should use the @fun{gtk-file-chooser-get-preview-filename}
+    Your callback should use the @fun{gtk-file-chooser-preview-filename}
     function to see what needs previewing. Once you have generated the preview
     for the corresponding file, you must call the
     @fun{gtk-file-chooser-preview-widget-active} slot access function with a
@@ -451,7 +451,7 @@
     You can add extra widgets to a file chooser to provide options that are not
     present in the default design. For example, you can add a toggle button to
     give the user the option to open a file in read-only mode. You can use the
-    @fun{gtk-file-chooser-set-extra-widget} function to insert additional
+    @fun{gtk-file-chooser-extra-widget} function to insert additional
     widgets in a file chooser.
 
     @b{Example:} Sample Usage
@@ -1309,53 +1309,44 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_uri ()
+;;; gtk_file_chooser_set_uri () -> gtk-file-chooser-uri
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_file_chooser_get_uri" gtk-file-chooser-get-uri) :string
+(defun (setf gtk-file-chooser-uri) (uri chooser)
+  (foreign-funcall "gtk_file_chooser_set_uri"
+                   (g-object gtk-file-chooser) chooser
+                   :string uri
+                   :boolean)
+  uri)
+
+(defcfun ("gtk_file_chooser_get_uri" gtk-file-chooser-uri) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
+  @syntax[]{(gtk-file-chooser-uri chooser) => uri}
+  @syntax[]{(setf (gtk-file-chooser-uri chooser) uri)}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @begin{return}
-    The currently selected URI, or @code{nil} if no file is selected.
-  @end{return}
+  @argument[uri]{a string with the URI to set as current}
   @begin{short}
-    Gets the URI for the currently selected file in the file selector.
+    Accessor of the currently selected URI.
   @end{short}
-  If multiple files are selected, one of the filenames will be returned at
-  random.
 
-  If the file chooser is in folder mode, this function returns the selected
-  folder.
-  @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-set-uri}"
-  (chooser (g-object gtk-file-chooser)))
+  The function @sym{gtk-file-chooser-uri} gets the URI for the currently
+  selected file in the file selector. If multiple files are selected, one of the
+  filenames will be returned at random. If the file chooser is in folder mode,
+  this function returns the selected folder.
 
-(export 'gtk-file-chooser-get-uri)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_set_uri ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_file_chooser_set_uri" gtk-file-chooser-set-uri) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
-  @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{the URI to set as current}
-  @return{Not useful.}
-  @begin{short}
-    Sets the file referred to by uri as the current file for the file chooser,
-    by changing to the URI's parent folder and actually selecting the URI in
-    the list.
-  @end{short}
-  If the chooser is in @code{:save} mode, the URI's base name will also appear
-  in the dialog's file name entry.
+  The function @sym{(setf gtk-file-chooser-uri)} sets the file referred to by
+  @arg{uri} as the current file for the file chooser, by changing to the URI's
+  parent folder and actually selecting the URI in the list. If the chooser is in
+  @code{:save} mode, the URI's base name will also appear in the dialog's file
+  name entry.
 
   Note that the URI must exist, or nothing will be done except for the
   directory change.
 
   You should use this function only when implementing a File/Save As... dialog
   for which you already have a file name to which the user may save. For
-  example, whenthe user opens an existing file and then does File/Save As...
+  example, when the user opens an existing file and then does File/Save As...
   on it to save a copy or a modified version. If you do not have a file name
   already - for example, if the user just created a new file and is saving it
   for the first time, do not call this function. Instead, use something
@@ -1375,12 +1366,10 @@
   In the first case, the file chooser will present the user with useful
   suggestions as to where to save his new file. In the second case, the file's
   existing location is already known, so the file chooser will use it.
-  @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-get-uri}"
-  (chooser (g-object gtk-file-chooser))
-  (uri :string))
+  @see-class{gtk-file-chooser}"
+  (chooser (g-object gtk-file-chooser)))
 
-(export 'gtk-file-chooser-set-uri)
+(export 'gtk-file-chooser-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_select_uri ()
@@ -1388,16 +1377,15 @@
 
 (defcfun ("gtk_file_chooser_select_uri" gtk-file-chooser-select-uri) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{the URI to select}
-  @return{Not useful.}
+  @argument[uri]{a string with the URI to select}
   @begin{short}
     Selects the file to by @arg{uri}.
   @end{short}
-  If the URI does not refer to a file in the current folder of @arg{chooser},
-  then the current folder of chooser will be changed to the folder containing
-  filename.
+  If the URI does not refer to a file in the current folder of the file chooser,
+  then the current folder of the file chooser will be changed to the folder
+  containing filename.
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-unselect-uri}"
   (chooser (g-object gtk-file-chooser))
@@ -1411,9 +1399,9 @@
 
 (defcfun ("gtk_file_chooser_unselect_uri" gtk-file-chooser-unselect-uri) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{the URI to unselect}
+  @argument[uri]{a string with the URI to unselect}
   @begin{short}
     Unselects the file referred to by @arg{uri}.
   @end{short}
@@ -1427,132 +1415,124 @@
 (export 'gtk-file-chooser-unselect-uri)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_get_uris ()
+;;; gtk_file_chooser_get_uris () -> gtk-file-chooser-uris
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_file_chooser_get_uris" gtk-file-chooser-get-uris)
+(defcfun ("gtk_file_chooser_get_uris" gtk-file-chooser-uris)
     (g-slist :string)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    A list containing the URIs of all selected files and subfolders in the
-    current folder.
+    A list containing strings with the URIs of all selected files and subfolders
+    in the current folder.
   @end{return}
   @begin{short}
-    Lists all the selected files and subfolders in the current folder of
-    @arg{chooser}. The returned names are full absolute URIs.
+    Lists all the selected files and subfolders in the current folder of the
+    file chooser. The returned names are full absolute URIs.
   @end{short}
   @see-class{gtk-file-chooser}"
   (chooser (g-object gtk-file-chooser)))
 
-(export 'gtk-file-chooser-get-uris)
+(export 'gtk-file-chooser-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_current_folder_uri ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_file_chooser_set_current_folder_uri"
-           gtk-file-chooser-set-current-folder-uri) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
-  @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{the URI for the new current folder}
-  @begin{return}
-    @em{true} if the folder could be changed successfully, @code{nil} otherwise.
-  @end{return}
-  @begin{short}
-    Sets the current folder for chooser from an URI.
-  @end{short}
-  The user will be shown the full contents of the current folder, plus user
-  interface elements for navigating to other folders.
-
-  In general, you should not use this function. See the section on setting up
-  a file chooser dialog for the rationale behind this.
-  @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-get-current-folde-uri}"
-  (chooser (g-object gtk-file-chooser))
-  (uri :string))
-
-(export 'gtk-file-chooser-set-current-folder-uri)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_current_folder_uri ()
+;;;     -> gtk-file-chooser-current-folder-uri
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf gtk-file-chooser-current-folder-uri) (uri chooser)
+  (when (foreign-funcall "gtk_file_chooser_set_current_folder_uri"
+                   (g-object gtk-file-chooser) chooser
+                   :string uri
+                   :boolean)
+    uri))
 
 (defcfun ("gtk_file_chooser_get_current_folder_uri"
-           gtk-file-chooser-get-current-folder-uri) :string
+           gtk-file-chooser-current-folder-uri) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
+  @syntax[]{(gtk-file-chooser-current-folder-uri chooser) => uri}
+  @syntax[]{(setf (gtk-file-chooser-current-folder-uri chooser) uri)}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @begin{return}
-    The URI for the current folder. This function will also return @code{nil}
-    if the file chooser was unable to load the last folder that was requested
-    from it; for example, as would be for calling the function
-    @fun{gtk-file-chooser-set-current-folder-uri} on a nonexistent folder.
-  @end{return}
+  @argument[uri]{a string with the URI for the new current folder}
   @begin{short}
-    Gets the current folder of @arg{chooser} as an URI.
+    Accessor of the URI for the current folder of the file chooser.
   @end{short}
-  See the @fun{gtk-file-chooser-set-current-folder-uri} function.
+
+  The function @sym{gtk-file-chooser-current-folder-uri} gets the current folder
+  of the file chooser as an URI. This function will also return @code{nil}
+  if the file chooser was unable to load the last folder that was requested
+  from it. For example, as would be for calling this function on a nonexistent
+  folder.
 
   Note that this is the folder that the file chooser is currently displaying,
   e. g. \"file:///home/username/Documents\", which is not the same as the
   currently-selected folder if the chooser is in @code{:select-folder}, e. g.
   \"file:///home/username/Documents/selected-folder/\". To get the
   currently-selected folder in that mode, use the function
-  @fun{gtk-file-chooser-get-uri} as the usual way to get the selection.
+  @fun{gtk-file-chooser-uri} as the usual way to get the selection.
+
+  The function @sym{(setf gtk-file-chooser-current-folder-uri)} sets the current
+  folder for the file chooser from an URI. The user will be shown the full
+  contents of the current folder, plus user interface elements for navigating to
+  other folders.
+
+  In general, you should not use this function. See the section on setting up
+  a file chooser dialog for the rationale behind this.
   @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-get-uri}
-  @see-function{gtk-file-chooser-set-current-folder-uri}"
+  @see-function{gtk-file-chooser-uri}"
   (chooser (g-object gtk-file-chooser)))
 
-(export 'gtk-file-chooser-get-current-folder-uri)
+(export 'gtk-file-chooser-current-folder-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_filename ()
+;;;     -> gtk-file-chooser-preview-filename
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_file_chooser_get_preview_filename"
-           gtk-file-chooser-get-preview-filename) (:string :free-from-foreign t)
+           gtk-file-chooser-preview-filename) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    The filename to preview, or @code{nil} if no file is selected, or if the
-    selected file cannot be represented as a local filename.
+    An string with the filename to preview, or @code{nil} if no file is
+    selected, or if the selected file cannot be represented as a local filename.
   @end{return}
   @begin{short}
     Gets the filename that should be previewed in a custom preview widget.
   @end{short}
-  See the @fun{gtk-file-chooser-preview-widget} slot access function.
+  See the function @fun{gtk-file-chooser-preview-widget}.
   @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-set-preview-widget}"
+  @see-function{gtk-file-chooser-preview-widget}"
   (chooser (g-object gtk-file-chooser)))
 
-(export 'gtk-file-chooser-get-preview-filename)
+(export 'gtk-file-chooser-preview-filename)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_file_chooser_get_preview_uri ()
+;;; gtk_file_chooser_get_preview_uri () -> gtk-file-chooser-preview-uri
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_file_chooser_get_preview_uri" gtk-file-chooser-get-preview-uri)
+(defcfun ("gtk_file_chooser_get_preview_uri" gtk-file-chooser-preview-uri)
     :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    The URI for the file to preview, or @code{nil} if no file is selected.
+    An string with the URI for the file to preview, or @code{nil} if no file is
+    selected.
   @end{return}
   @begin{short}
     Gets the URI that should be previewed in a custom preview widget.
   @end{short}
-  See the @fun{gtk-file-chooser-preview-widget} function.
+  See the function @fun{gtk-file-chooser-preview-widget}.
   @see-class{gtk-file-chooser}
-  @see-function{gtk-file-chooser-get-preview-widget}"
+  @see-function{gtk-file-chooser-preview-widget}"
   (chooser (g-object gtk-file-chooser)))
 
-(export 'gtk-file-chooser-get-preview-uri)
+(export 'gtk-file-chooser-preview-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_filter ()
@@ -1560,7 +1540,7 @@
 
 (defcfun ("gtk_file_chooser_add_filter" gtk-file-chooser-add-filter) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[filter]{a @class{gtk-file-filter} object}
   @begin{short}
@@ -1568,9 +1548,6 @@
   @end{short}
   When a filter is selected, only files that are passed by that filter are
   displayed.
-
-  Note that the chooser takes ownership of the filter, so you have to ref and
-  sink it if you want to keep a reference.
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-remove-filter}"
   (chooser (g-object gtk-file-chooser))
@@ -1584,7 +1561,7 @@
 
 (defcfun ("gtk_file_chooser_remove_filter" gtk-file-chooser-remove-filter) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[filter]{a @class{gtk-file-filter} object}
   @begin{short}
@@ -1604,16 +1581,17 @@
 (defcfun ("gtk_file_chooser_list_filters" gtk-file-chooser-list-filters)
     (g-slist (g-object gtk-file-filter))
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    A list containing the current set of user selectable filters.
+    A list containing the current set of user selectable filters of type
+    @class{gtk-filter}.
   @end{return}
   @begin{short}
     Lists the current set of user-selectable filters.
   @end{short}
-  See the @fun{gtk-file-chooser-add-filter} and
-  @fun{gtk-file-chooser-remove-filter} functions.
+  See the functions @fun{gtk-file-chooser-add-filter} and
+  @fun{gtk-file-chooser-remove-filter}.
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-add-filter}
   @see-function{gtk-file-chooser-remove-filter}"
@@ -1633,9 +1611,9 @@
 
 (defun gtk-file-chooser-add-shortcut-folder (chooser folder)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[folder]{filename of the folder to add}
+  @argument[folder]{a string with filename of the folder to add}
   @begin{return}
     @em{True} if the folder could be added successfully, @code{nil} otherwise.
     In the latter case, the error will be set as appropriate.
@@ -1665,9 +1643,9 @@
 
 (defun gtk-file-chooser-remove-shortcut-folder (chooser folder)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[folder]{filename of the folder to remove}
+  @argument[folder]{a string with the filename of the folder to remove}
   @begin{return}
     @em{True} if the operation succeeds, @code{nil} otherwise. In the latter
     case, the error will be set as appropriate. See also the function
@@ -1690,14 +1668,15 @@
 (defcfun ("gtk_file_chooser_list_shortcut_folders"
            gtk-file-chooser-list-shortcut-folders) (g-slist :string)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    A list of folder filenames, or @code{nil} if there are no shortcut folders.
+    A list of strings with the folder filenames, or @code{nil} if there are no
+    shortcut folders.
   @end{return}
   @begin{short}
     Queries the list of shortcut folders in the file chooser, as set by the
-    @fun{gtk-file-chooser-add-shortcut-folder} function.
+    function @fun{gtk-file-chooser-add-shortcut-folder}.
   @end{short}
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-add-shortcut-folder}"
@@ -1717,9 +1696,9 @@
 
 (defun gtk-file-chooser-add-shortcut-folder-uri (chooser uri)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{URI of the folder to add}
+  @argument[uri]{a string with the URI of the folder to add}
   @begin{return}
     @em{True} if the folder could be added successfully, @code{nil} otherwise.
     In the latter case, the error will be set as appropriate.
@@ -1750,9 +1729,9 @@
 
 (defun gtk-file-chooser-remove-shortcut-folder-uri (chooser uri)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[uri]{URI of the folder to remove}
+  @argument[uri]{a string with the URI of the folder to remove}
   @begin{return}
     @em{True} if the operation succeeds, @code{nil} otherwise. In the latter
     case, the error will be set as appropriate. See also the function
@@ -1775,14 +1754,15 @@
 (defcfun ("gtk_file_chooser_list_shortcut_folder_uris"
            gtk-file-chooser-list-shortcut-folder-uris) (g-slist :string)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2020-6-4}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
-    A list of folder URIs, or @code{nil} if there are no shortcut folders.
+    A list of strings with the folder URIs, or @code{nil} if there are no
+    shortcut folders.
   @end{return}
   @begin{short}
     Queries the list of shortcut folders in the file chooser, as set by the
-    @fun{gtk-file-chooser-add-shortcut-folder-uri} function.
+    function @fun{gtk-file-chooser-add-shortcut-folder-uri}.
   @end{short}
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-add-shortcut-folder-uri}"

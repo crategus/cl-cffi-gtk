@@ -2,12 +2,12 @@
 ;;; gtk.file-chooser-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkFileChooserDialog
 ;;;
-;;; A file chooser dialog, suitable for "File/Open" or "File/Save" commands
+;;;     A file chooser dialog, suitable for "File/Open" or "File/Save" commands
 ;;;
 ;;; Types and Values
 ;;;
@@ -73,7 +73,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-dialog 'type)
- "@version{2013-6-18}
+ "@version{2020-6-5}
   @begin{short}
     @sym{gtk-file-chooser-dialog} is a dialog box suitable for use with
     \"File/Open\" or \"File/Save as\" commands. This widget works by putting a
@@ -82,6 +82,8 @@
     @class{gtk-file-chooser} functions on the file chooser dialog as well as
     those for @class{gtk-dialog}.
   @end{short}
+
+  @image[file-chooser-dialog]{}
 
   Note that @sym{gtk-file-chooser-dialog} does not have any methods of its own.
   Instead, you should use the functions that work on a @class{gtk-file-chooser}.
@@ -149,7 +151,7 @@
     @end{itemize}
   @subheading{Note}
     Old versions of the file chooser's documentation suggested using the
-    function @fun{gtk-file-chooser-set-current-folder} in various situations,
+    function @fun{gtk-file-chooser-current-folder} in various situations,
     with the intention of letting the application suggest a reasonable default
     folder. This is no longer considered to be a good policy, as now the file
     chooser is able to make good suggestions on its own. In general, you should
@@ -203,17 +205,19 @@
 
 (defun gtk-file-chooser-dialog-new (title parent action &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
-  @argument[action]{open or save mode for the dialog}
+ "@version{2020-6-5}
+  @argument[title]{a string with title of the dialog, or @code{nil}}
+  @argument[parent]{a @class{gtk-window} transient parent of the dialog,
+    or @code{nil}}
+  @argument[action]{open or save mode for the dialog of type
+    @symbol{gtk-file-chooser-action}}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
     for the button of type @symbol{gtk-response-type}}
   @return{A new @class{gtk-file-chooser-dialog} widget.}
   @begin{short}
-    Creates a new @class{gtk-file-chooser-dialog} widget. This function is
-    analogous to the function @fun{gtk-dialog-new-with-buttons}.
+    Creates a new file chooser dialog.
   @end{short}
+  This function is analogous to the function @fun{gtk-dialog-new-with-buttons}.
   @see-class{gtk-file-chooser-dialog}
   @see-function{gtk-dialog-new-with-buttons}"
   (let ((dialog (make-instance 'gtk-file-chooser-dialog
