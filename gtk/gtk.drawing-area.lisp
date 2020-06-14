@@ -67,16 +67,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-drawing-area 'type)
- "@version{2013-7-1}
+ "@version{2020-6-3}
   @begin{short}
     The @sym{gtk-drawing-area} widget is used for creating custom user interface
-    elements. It is essentially a blank widget; you can draw on it.
+    elements. It is essentially a blank widget. You can draw on it.
   @end{short}
   After creating a drawing area, the application may want to connect to:
   @begin{itemize}
     @begin{item}
       Mouse and button press signals to respond to input from the user. Use the
-      @fun{gtk-widget-add-events} function to enable events you wish to receive.
+      function @fun{gtk-widget-add-events} to enable events you wish to receive.
     @end{item}
     @begin{item}
       The \"realize\" signal to take any necessary actions when the widget is
@@ -131,18 +131,18 @@
   Draw signals are normally delivered when a drawing area first comes
   onscreen, or when it is covered by another window and then uncovered. You can
   also force an expose event by adding to the \"damage region\" of the drawing
-  area's window; the @fun{gtk-widget-queue-draw-area} and
-  @fun{gdk-window-invalidate-rect} functions are equally good ways to do this.
-  You will then get a draw signal for the invalid region.
+  area's window. The functions @fun{gtk-widget-queue-draw-area} and
+  @fun{gdk-window-invalidate-rect} are equally good ways to do this. You will
+  then get a draw signal for the invalid region.
 
   The available routines for drawing are documented on the GDK Drawing
   Primitives page and the cairo documentation.
 
   To receive mouse events on a drawing area, you will need to enable them with
-  the @fun{gtk-widget-add-events} function. To receive keyboard events, you will
+  the function @fun{gtk-widget-add-events}. To receive keyboard events, you will
   need to set the @slot[gtk-widget]{can-focus} property on the drawing area, and
   you should probably draw some user-visible indication that the drawing area is
-  focused. Use the @fun{gtk-widget-has-focus} function in your expose event
+  focused. Use the function @fun{gtk-widget-has-focus} in your expose event
   handler to decide whether to draw the focus indicator. See the function
   @see-function{gtk-render-focus} for one way to draw focus.
   @see-function{gtk-widget-add-events}
@@ -159,9 +159,11 @@
 
 (defun gtk-drawing-area-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-1-22}
+ "@version{2020-6-3}
   @return{A new @class{gtk-drawing-area} widget.}
-  Creates a new drawing area.
+  @begin{short}
+    Creates a new drawing area.
+  @end{short}
   @see-class{gtk-drawing-area}"
   (make-instance 'gtk-drawing-area))
 
