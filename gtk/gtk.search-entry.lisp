@@ -37,14 +37,14 @@
 ;;; Functions
 ;;;
 ;;;     gtk-search-entry-new
-;;;     gtk_search_entry_handle_event ()
+;;;     gtk_search_entry_handle_event
 ;;;
 ;;; Signals
 ;;;
-;;;     void   next-match        Action
-;;;     void   previous-match    Action
-;;;     void   search-changed    Run Last
-;;;     void   stop-search       Action
+;;;     void    next-match        Action
+;;;     void    previous-match    Action
+;;;     void    search-changed    Run Last
+;;;     void    stop-search       Action
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -78,7 +78,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-search-entry 'type)
- "@version{2015-12-28}
+ "@version{2020-6-1}
   @begin{short}
     @sym{gtk-search-entry} is a subclass of @class{gtk-entry} that has been
     tailored for use as a search entry.
@@ -106,13 +106,11 @@
       The \"next-match\" signal is a keybinding signal which gets emitted when
       the user initiates a move to the next match for the current search string.
       Applications should connect to it, to implement moving between matches.
-      The default bindings for this signal is Ctrl-g.
+      The default bindings for this signal is Ctrl-g. Since 3.16
       @begin[code]{table}
-        @entry[entry]{The @class{gtk-entry} object on which the signal was
+        @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
       @end{table}
-      Since: 3.16
-
     @subheading{The \"previous-match\" signal}
       @begin{pre}
  lambda (entry)    : Action
@@ -121,37 +119,33 @@
       when the user initiates a move to the previous match for the current
       search string. Applications should connect to it, to implement moving
       between matches. The default bindings for this signal is Ctrl-Shift-g.
+      Since 3.16
       @begin[code]{table}
-        @entry[entry]{The @class{gtk-entry} object on which the signal was
+        @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
         @end{table}
-        Since: 3.16
-
     @subheading{The \"search-changed\" signal}
       @begin{pre}
  lambda (entry)    : Run Last
       @end{pre}
       The \"search-changed\" signal is emitted with a short delay of 150
-      milliseconds after the last change to the entry text.
+      milliseconds after the last change to the entry text. Since 3.10
       @begin[code]{table}
-        @entry[entry]{The @class{gtk-entry} object on which the signal was
+        @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
       @end{table}
-      Since 3.10
-
     @subheading{The \"stop-search\" signal}
       @begin{pre}
  lambda (entry)    : Action
       @end{pre}
       The \"stop-search\" signal is a keybinding signal which gets emitted when
-      the user stops a search via keyboard input. Applications should connect to
-      it, to implement hiding the search entry in this case. The default
-      bindings for this signal is Escape.
+      the user stops a search via keyboard input. Applications should connect
+      to it, to implement hiding the search entry in this case. The default
+      bindings for this signal is Escape. Since 3.16
       @begin[code]{table}
-        @entry[entry]{The @class{gtk-entry} object on which the signal was
+        @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
       @end{table}
-      Since 3.16
   @end{dictionary}
   @see-class{gtk-entry}")
 
@@ -165,11 +159,11 @@
 #+gtk-3-6
 (defun gtk-search-entry-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-30}
+ "@version{2020-6-1}
   @return{A new @class{gtk-search-entry} widget.}
   @begin{short}
-    Creates a @class{gtk-search-entry}, with a find icon when the search field
-    is empty, and a clear icon when it is not.
+    Creates a search entry, with a find icon when the search field is empty,
+    and a clear icon when it is not.
   @end{short}
 
   Since 3.6
@@ -181,30 +175,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_search_entry_handle_event ()
-;;;
-;;; gboolean
-;;; gtk_search_entry_handle_event (GtkSearchEntry *entry, GdkEvent *event);
-;;;
-;;; This function should be called when the top-level window which contains the
-;;; search entry received a key event. If the entry is part of a GtkSearchBar,
-;;; it is preferable to call gtk_search_bar_handle_event() instead, which will
-;;; reveal the entry in addition to passing the event to this function.
-;;;
-;;; If the key event is handled by the search entry and starts or continues a
-;;; search, GDK_EVENT_STOP will be returned. The caller should ensure that the
-;;; entry is shown in this case, and not propagate the event further.
-;;;
-;;; entry ;
-;;;     a GtkSearchEntry
-;;;
-;;; event :
-;;;     a key event
-;;;
-;;: Returns :
-;;;     GDK_EVENT_STOP if the key press event resulted in a search beginning or
-;;;     continuing, GDK_EVENT_PROPAGATE otherwise.
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-16
+(defcfun ("gtk_search_entry_handle_event" gtk-search-entry-handle-event)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-6-1}
+  @argument[entry]{a @class{gtk-entry-search} widget}
+  @argument[event]{a key event of type @class{gdk-event}}
+  @return{@var{+gdk-event-stop+} if the key press event resulted in a search
+    beginning or continuing, @var{+gdk-event-propagate+} otherwise.}
+  @begin{short}
+    This function should be called when the top-level window which contains the
+    search entry received a key event.
+  @end{short}
+  If the entry is part of a search bar, it is preferable to call the function
+  @fun{gtk-search-bar-handle-event} instead, which will reveal the entry in
+  addition to passing the event to this function.
+
+  If the key event is handled by the search entry and starts or continues a
+  search, @var{+gdk-event-stop+} will be returned. The caller should ensure that
+  the entry is shown in this case, and not propagate the event further.
+
+  Since 3.16
+  @see-class{gtk-search-entry}"
+  (entry (g-object gtk-search-entry))
+  (event (g-boxed-foreign gdk-event)))
+
+#+gtk-3-16
+(export 'gtk-search-entry-handle-event)
 
 ;;; --- End of file gtk.search-entry.lisp --------------------------------------
