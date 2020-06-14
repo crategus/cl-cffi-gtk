@@ -1019,11 +1019,12 @@
     Finds the path at the point (x, y), relative to @code{bin_window}
     coordinates.
   @end{short}
-  See the function @fun{gtk-icon-view-get-item-at-pos}, if you are also
+  See the function @fun{gtk-icon-view-item-at-pos}, if you are also
   interested in the cell at the specified position. See the function
   @fun{gtk-icon-view-convert-widget-to-bin-window-coords} for converting widget
   coordinates to @code{bin_window} coordinates.
-  @see-function{gtk-icon-view-get-item-at-pos}
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-item-at-pos}
   @see-function{gtk-icon-view-convert-widget-to-bin-window-coords}"
   (icon-view g-object)
   (x :int)
@@ -1032,27 +1033,27 @@
 (export 'gtk-icon-view-get-path-at-pos)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_icon_view_get_item_at_pos ()
+;;; gtk_icon_view_get_item_at_pos () -> gtk-icon-view-item-at-pos
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_view_get_item_at_pos" %gtk-icon-view-get-item-at-pos)
+(defcfun ("gtk_icon_view_get_item_at_pos" %gtk-icon-view-item-at-pos)
     :boolean
-  (icon-view g-object)
+  (icon-view (g-object gtk-icon-view))
   (x :int)
   (y :int)
   (path :pointer)
   (cell :pointer))
 
-(defun gtk-icon-view-get-item-at-pos (icon-view x y)
+(defun gtk-icon-view-item-at-pos (icon-view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-19}
+ "@version{2020-6-9}
   @argument[icon-view]{a @class{gtk-icon-view} widget}
-  @argument[x]{the x position to be identified}
-  @argument[y]{the y position to be identified}
+  @argument[x]{an integer with the x position to be identified}
+  @argument[y]{an integer with the y position to be identified}
   @begin{return}
-    @code{path} -- the path, or @code{nil} @br{}
-    @code{cell} -- the renderer responsible for the cell at (x, y),
-                   or @code{nil} @br{}
+    @code{path} -- the tree path, or @code{nil} @br{}
+    @code{cell} -- the @class{gtk-cell-renderer} object responsible for the cell
+                   at (x, y), or @code{nil} @br{}
     or @br{}
     @code{nil} if no item exists at the specified position
   @end{return}
@@ -1060,19 +1061,19 @@
     Finds the path at the point (x, y), relative to @code{bin_window}
     coordinates.
   @end{short}
-  In contrast to the function @fun{gtk-icon-view-get-path-at-pos}, this function
-  also obtains the cell at the specified position. The returned path should be
-  freed with the function @fun{gtk-tree-path-free}. See the function
+  In contrast to the function @fun{gtk-icon-view-path-at-pos}, this function
+  also obtains the cell at the specified position. See the function
   @fun{gtk-icon-view-convert-widget-to-bin-window-coords} for converting widget
   coordinates to @code{bin_window} coordinates.
-  @see-function{gtk-icon-view-get-path-at-pos}
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-path-at-pos}
   @see-function{gtk-icon-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer) (cell :pointer))
-    (when (%gtk-icon-view-get-item-at-pos icon-view x y path cell)
+    (when (%gtk-icon-view-item-at-pos icon-view x y path cell)
       (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
               (mem-ref cell 'g-object)))))
 
-(export 'gtk-icon-view-get-item-at-pos)
+(export 'gtk-icon-view-item-at-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_convert_widget_to_bin_window_coords ()
@@ -1164,9 +1165,6 @@
   @end{short}
   If the cursor is not currently set, then @arg{path} will be @code{nil}. If no
   cell currently has focus, then @arg{cell} will be @code{nil}.
-
-  The returned @class{gtk-tree-path} must be freed with the function
-  @fun{gtk-tree-path-free}.
   @see-class{gtk-icon-view}"
   (with-foreign-objects ((path :pointer) (cell :pointer))
     (when (%gtk-icon-view-get-cursor icon-view path cell)
