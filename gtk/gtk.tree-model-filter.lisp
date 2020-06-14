@@ -408,23 +408,23 @@
 (export 'gtk-tree-model-filter-set-visible-column)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_filter_get_model ()
+;;; gtk_tree_model_filter_get_model () -> gtk-tree-model-filter-model
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_filter_get_model" gtk-tree-model-filter-get-model)
+(defcfun ("gtk_tree_model_filter_get_model" gtk-tree-model-filter-model)
     (g-object gtk-tree-model)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
+ "@version{2020-5-31}
   @argument[filter]{a @class{gtk-tree-model-filter} object}
-  @return{A pointer to a @class{gtk-tree-model}.}
+  @return{A @class{gtk-tree-model} object.}
   @begin{short}
-    Returns a pointer to the child model of @arg{filter}.
+    Returns the child model of the filter.
   @end{short}
   @see-class{gtk-tree-model-filter}
   @see-class{gtk-tree-model}"
   (filter (g-object gtk-tree-model-filter)))
 
-(export 'gtk-tree-model-filter-get-model)
+(export 'gtk-tree-model-filter-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_convert_child_iter_to_iter ()
