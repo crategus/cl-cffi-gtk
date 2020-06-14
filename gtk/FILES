@@ -24,10 +24,10 @@ GTK+ Widgets and Objects
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.24
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.24
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.24
- +  gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.24
- +  gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.24
- +  gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.24
- +  gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.24
+    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.24
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.24
+    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.24
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.24
 
   Layout Containers
 
@@ -66,26 +66,26 @@ GTK+ Widgets and Objects
 
     gtk.button.lisp                  - GtkButton                   - GTK+ 3.24
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.24
- +  gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.24
- +  gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.24
+    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.24
+    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.24
     gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.24
     gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.24
     gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.24
     gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.24
     gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.24
- +  not implemented                  - GtkLockButton
+    not implemented                  - GtkLockButton
     gtk.model-button.lisp            - GtkModelButton              - GTK+ 3.24
 
   Numeric and Text Data Entry
 
- +  gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.24 &
- +  gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.24
- +  gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.24
- +  gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.24
- +  gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.24
- +  gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.24 &
- +  gtk.search-bar.lisp              - GtkSearchBar                - Gtk+ 3.24 &
- +  gtk.editable.lisp                - GtkEditable                 - GTK+ 3.24
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.24
+    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.24
+    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.24
+    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.24
+    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.24
+    gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.24
+    gtk.search-bar.lisp              - GtkSearchBar                - Gtk+ 3.24
+    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.24
 
   Multiline Text Editor
 
@@ -95,7 +95,7 @@ GTK+ Widgets and Objects
  +  gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.24
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.24
- +  gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.24 &
+    gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.24
 
   Tree, List and Icon Grid Widgets
 
@@ -120,17 +120,17 @@ GTK+ Widgets and Objects
  +  gtk.cell-renderer-pixbuf.lisp    - GtkCellRendererPixbuf       - GTK+ 3.24
  +  gtk.cell-renderer-progress-lisp  - GtkCellRendererProgress     - GTK+ 3.24
  +  gtk.cell-renderer-spin.lisp      - GtkCellRendererSpin         - GTK+ 3.24
- +  gtk.cell-renderer-text.lisp      - GtkCellRendererText         - GTK+ 3.24
- +  gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.24
- +  gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.24
+    gtk.cell-renderer-text.lisp      - GtkCellRendererText         - GTK+ 3.24
+    gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.24
+    gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.24
 
  +  gtk.list-store.lisp              - GtkListStore                - GTK+ 3.24 &
  +  gtk.tree-store.lisp              - GtkTreeStore                - GTK+ 3.24 &
 
   Menus, Combo Box, Toolbar
 
- +  gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.24
- +  gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.24
+    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.24
+    gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.24
  +  gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24 &
  +  gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
  +  gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
@@ -157,18 +157,18 @@ GTK+ Widgets and Objects
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
     gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
 
- +  gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24 &
- +  gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24 &
+    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
  +  gtk.file-chooser-native.lisp     - GtkFileChooserNative        - GTK+ 3.24 %
- +  gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.24
- +  gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.24
- +  gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24 &
+    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.24
+    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.24
+    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24 &
 
- +  gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.24
- +  gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.24
- +  gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.24
- +  gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.24
- +  gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.24 &
+    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.24
+    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.24
+    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.24
+    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.24
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.24 &
 
   Ornaments
 
@@ -203,24 +203,24 @@ GTK+ Widgets and Objects
   Miscellaneous
 
     gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.24
- +  gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.24
- +  gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.24
+    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.24
+    gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.24
  +  not implemented                  - GtkGLArea
- +  gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.24
+    gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.24
  +  gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.24 &
  +  gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.24 &
- +  gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.24
- +  gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.24
- +  gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.24
+    gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.24
+    gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.24
+    gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.24
     not implemented                  - GtkAccessible
 
   Abstract Base Classes
 
  +  gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
     gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
- +  gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
+    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24
- +  gtk.range.lisp                   - GtkRange                    - GTK+ 3.24
+    gtk.range.lisp                   - GtkRange                    - GTK+ 3.24
  +  gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.24 &
     not implemented                  - GtkNativeDialog
 
