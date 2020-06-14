@@ -58,17 +58,17 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gdouble   lower             Read / Write
-;;;     gdouble   page-increment    Read / Write
-;;;     gdouble   page-size         Read / Write
-;;;     gdouble   step-increment    Read / Write
-;;;     gdouble   upper             Read / Write
-;;;     gdouble   value             Read / Write
+;;;     gdouble    lower             Read / Write
+;;;     gdouble    page-increment    Read / Write
+;;;     gdouble    page-size         Read / Write
+;;;     gdouble    step-increment    Read / Write
+;;;     gdouble    upper             Read / Write
+;;;     gdouble    value             Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;        void   changed           No Recursion
-;;;        void   value-changed     No Recursion
+;;;        void    changed           No Recursion
+;;;        void    value-changed     No Recursion
 ;;;
 ;;; Object Hierarchy
 ;;;
