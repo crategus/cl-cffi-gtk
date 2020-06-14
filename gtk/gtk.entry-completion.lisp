@@ -2,12 +2,12 @@
 ;;; gtk.entry-completion.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,7 +37,7 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gboolean    GtkEntryCompletionMatchFunc
+;;;     GtkEntryCompletionMatchFunc
 ;;;
 ;;;     gtk_entry_completion_new
 ;;;     gtk_entry_completion_new_with_area
@@ -69,23 +69,23 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkCellArea*  cell-area             Read / Write / Construct Only
-;;;        gboolean   inline-completion     Read / Write
-;;;        gboolean   inline-selection      Read / Write
-;;;            gint   minimum-key-length    Read / Write
-;;;    GtkTreeModel*  model                 Read / Write
-;;;        gboolean   popup-completion      Read / Write
-;;;        gboolean   popup-set-width       Read / Write
-;;;        gboolean   popup-single-match    Read / Write
-;;;            gint   text-column           Read / Write
+;;;     GtkCellArea*   cell-area             Read / Write / Construct Only
+;;;        gboolean    inline-completion     Read / Write
+;;;        gboolean    inline-selection      Read / Write
+;;;            gint    minimum-key-length    Read / Write
+;;;    GtkTreeModel*   model                 Read / Write
+;;;        gboolean    popup-completion      Read / Write
+;;;        gboolean    popup-set-width       Read / Write
+;;;        gboolean    popup-single-match    Read / Write
+;;;            gint    text-column           Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;            void   action-activated      Run Last
-;;;        gboolean   cursor-on-match       Run Last
-;;;        gboolean   insert-prefix         Run Last
-;;;        gboolean   match-selected        Run Last
-;;;            void   no-matches            Run Last
+;;;            void    action-activated      Run Last
+;;;        gboolean    cursor-on-match       Run Last
+;;;        gboolean    insert-prefix         Run Last
+;;;        gboolean    match-selected        Run Last
+;;;            void    no-matches            Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -139,7 +139,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-entry-completion 'type)
- "@version{2013-11-30}
+ "@version{2020-5-31}
   @begin{short}
     @sym{gtk-entry-completion} is an auxiliary object to be used in
     conjunction with @class{gtk-entry} to provide the completion functionality.
@@ -163,7 +163,7 @@
   return @em{true} from the signal handler to suppress the default behaviour.
 
   To add completion functionality to an entry, use the function
-  @fun{gtk-entry-set-completion}.
+  @fun{gtk-entry-completion}.
 
   In addition to regular completion matches, which will be inserted into the
   entry when they are selected, @sym{gtk-entry-completion} also allows to
@@ -179,7 +179,7 @@
   \"apply-attributes\", will generally take the filter model as argument. As
   long as you are only calling the function @fun{gtk-tree-model-get}, this will
   make no difference to you. If for some reason, you need the original model,
-  use the function @fun{gtk-tree-model-filter-get-model}. Do not forget to use
+  use the function @fun{gtk-tree-model-filter-model}. Do not forget to use
   the function @fun{gtk-tree-model-filter-convert-iter-to-child-iter} to
   obtain a matching iter.
   @begin[Signal Details]{dictionary}
@@ -189,8 +189,9 @@
       @end{pre}
       Gets emitted when an action is activated.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[index]{The index of the activated action.}
+        @entry[widget]{The @sym{gtk-entry-completion} object which received
+          the signal.}
+        @entry[index]{An integer with the index of the activated action.}
       @end{table}
     @subheading{The \"cursor-on-match\" signal}
       @begin{pre}
@@ -198,11 +199,12 @@
       @end{pre}
       Gets emitted when a match from the cursor is on a match of the list. The
       default behaviour is to replace the contents of the entry with the
-      contents of the text column in the row pointed to by iter.
-      Note that model is the model that was passed to the function
+      contents of the text column in the row pointed to by iter. Note that model
+      is the model that was passed to the function
       @fun{gtk-entry-completion-model}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-entry-completion} object which received
+          the signal.}
         @entry[model]{The @class{gtk-tree-model} containing the matches.}
         @entry[iter]{A @class{gtk-tree-iter} positioned at the selected match.}
         @entry[Returns]{@em{True} if the signal has been handled.}
@@ -213,27 +215,28 @@
       @end{pre}
       Gets emitted when the inline autocompletion is triggered. The default
       behaviour is to make the entry display the whole prefix and select the
-      newly inserted part.
-      Applications may connect to this signal in order to insert only a smaller
-      part of the prefix into the entry - e. g. the entry used in the
-      @class{gtk-file-chooser} inserts only the part of the prefix up to the
-      next '/'.
+      newly inserted part. Applications may connect to this signal in order to
+      insert only a smaller part of the prefix into the entry - e. g. the entry
+      used in the @class{gtk-file-chooser} inserts only the part of the prefix
+      up to the next '/'.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[prefix]{The common prefix of all possible completions.}
+        @entry[widget]{The @sym{gtk-entry-completion} object which received
+          the signal.}
+        @entry[prefix]{A string with the common prefix of all possible
+          completions.}
         @entry[Returns]{@em{True} if the signal has been handled.}
       @end{table}
     @subheading{The \"match-selected\" signal}
       @begin{pre}
- lambda (widget model  iter)    : Run Last
+ lambda (widget model iter)    : Run Last
       @end{pre}
       Gets emitted when a match from the list is selected. The default behaviour
       is to replace the contents of the entry with the contents of the text
-      column in the row pointed to by iter.
-      Note that model is the model that was passed to the function
-      @fun{gtk-entry-completion-model}.
+      column in the row pointed to by iter. Note that @arg{model} is the model
+      that was passed to the function @fun{gtk-entry-completion-model}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-entry-completion} object which received the
+          signal.}
         @entry[model]{The @class{gtk-tree-model} containing the matches.}
         @entry[iter]{A @class{gtk-tree-iter} positioned at the selected match.}
         @entry[Returns]{@em{True} if the signal has been handled.}
@@ -242,13 +245,11 @@
       @begin{pre}
  lambda (widget)    : Run Last
       @end{pre}
-      Gets emitted when the filter model has zero number of rows in
-      @code{completion_complete} method. In other words when
-      @sym{gtk-entry-completion} is out of suggestions.
+      Gets emitted when the entry completion is out of suggestions. Since 3.14
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-entry-completion} object which received the
+          signal.}
       @end{table}
-      Since: 3.14
   @end{dictionary}
   @see-slot{gtk-entry-completion-cell-area}
   @see-slot{gtk-entry-completion-inline-completion}
@@ -264,9 +265,9 @@
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-model-filter}
   @see-function{gtk-entry-completion-set-match-func}
-  @see-function{gtk-entry-set-completion}
+  @see-function{gtk-entry-completion}
   @see-function{gtk-tree-model-get}
-  @see-function{gtk-tree-model-filter-get-model}
+  @see-function{gtk-tree-model-filter-model}
   @see-function{gtk-tree-model-filter-convert-iter-to-child-iter}")
 
 ;;; ----------------------------------------------------------------------------
@@ -280,9 +281,8 @@
                                                'gtk-entry-completion) 't)
  "The @code{cell-area} property of type @class{gtk-cell-area}
   (Read / Write / Construct) @br{}
-  The @class{gtk-cell-area} used to layout cell renderers in the treeview
-  column.
-  If no area is specified when creating the entry completion with the function
+  The cell area used to layout cell renderers in the treeview column. If no area
+  is specified when creating the entry completion with the function
   @fun{gtk-entry-completion-new-with-area} a horizontally oriented
   @class{gtk-cell-area-box} will be used.")
 
@@ -290,9 +290,20 @@
 (setf (gethash 'gtk-entry-completion-cell-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-cell-area 'function)
- "@version{2014-11-15}
-  Accessor of the slot @slot[gtk-entry-completion]{cell-area} of the
-  @class{gtk-entry-completion} class.
+ "@version{2020-5-31}
+  @syntax[]{(gtk-entry-completion-cell-area object) => cell-area}
+  @syntax[]{(setf (gtk-entry-completion-cell-area object) cell-area)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[cell-area]{a @class{gtk-cell-area} object}
+  @begin{short}
+    Accessor of the @slot[gtk-entry-completion]{cell-area} slot of the
+    @class{gtk-entry-completion} class.
+  @end{short}
+
+  The cell area used to layout cell renderers in the treeview column. If no area
+  is specified when creating the entry completion with the function
+  @fun{gtk-entry-completion-new-with-area} a horizontally oriented
+  @class{gtk-cell-area-box} will be used.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-inline-completion ---------------------------------
@@ -300,38 +311,37 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inline-completion"
                                                'gtk-entry-completion) 't)
- "The @code{inline-completion} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{inline-completion} property of type @code{:boolean} (Read / Write)
+  @br{}
   Determines whether the common prefix of the possible completions should be
   inserted automatically in the entry. Note that this requires the
   @code{text-column} property to be set, even if you are using a custom
   match function. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-inline-completion
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-inline-completion 'function)
- "@version{2014-11-15}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[inline-completion]{@em{true} to do inline completion}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-inline-completion object)
             => inline-completion}
   @syntax[]{(setf (gtk-entry-completion-inline-completion object)
                   inline-completion)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[inline-completion]{@em{true} to do inline completion}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{inline-completion} of the
+    Accessor of the @slot[gtk-entry-completion]{inline-completion} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-inline-completion} returns
+  The slot access function @sym{gtk-entry-completion-inline-completion} returns
   whether the common prefix of the possible completions should be automatically
-  inserted in the entry.
-
-  The generic function @sym{(setf gtk-entry-completion-inline-completion)} sets
-  whether the common prefix of the possible completions should be automatically
-  inserted in the entry.
+  inserted in the entry. The slot access function
+  @sym{(setf gtk-entry-completion-inline-completion)} sets whether the common
+  prefix of the possible completions should be automatically inserted in the
+  entry.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-inline-selection ----------------------------------
@@ -339,35 +349,33 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inline-selection"
                                                'gtk-entry-completion) 't)
- "The @code{inline-selection} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{inline-selection} property of type @code{:boolean} (Read / Write)
+  @br{}
   Determines whether the possible completions on the popup will appear in the
   entry as you navigate through them. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-inline-selection
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-inline-selection 'function)
- "@version{2014-11-15}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[inline-selection]{@em{true} to do inline selection}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-inline-selection object)
             => inline-selection}
   @syntax[]{(setf (gtk-entry-completion-inline-selection object)
                   inline-selection)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[inline-selection]{@em{true} to do inline selection}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{inline-selection} of the
+    Accessor of the @slot[gtk-entry-completion]{inline-selection} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-inline-selection} returns
-  @em{true} if inline selection mode is turned on.
-
-  The generic function @sym{(setf gtk-entry-completion-inline-selection)} sets
-  whether it is possible to cycle through the possible completions inside the
-  entry.
+  The slot access function @sym{gtk-entry-completion-inline-selection} returns
+  @em{true} if inline selection mode is turned on. The slot access function
+  @sym{(setf gtk-entry-completion-inline-selection)} sets whether it is possible
+  to cycle through the possible completions inside the entry.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-minimum-key-length --------------------------------
@@ -375,8 +383,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "minimum-key-length"
                                                'gtk-entry-completion) 't)
- "The @code{minimum-key-length} property of type @code{:int}
-  (Read / Write) @br{}
+ "The @code{minimum-key-length} property of type @code{:int} (Read / Write)
+  @br{}
   Minimum length of the search key in order to look up matches. @br{}
   Allowed values: >= 0 @br{}
   Default value: 1")
@@ -386,21 +394,22 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-minimum-key-length 'function)
- "@version{2014-11-15}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[length]{the minimum length of the key in order to start completing}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-minimum-key-length object) => length}
   @syntax[]{(setf (gtk-entry-completion-minimum-key-length object) length)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[length]{an integer with the minimum length of the key in order to
+    start completing}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{minimum-key-length} of the
+    Accessor of the @slot[gtk-entry-completion]{minimum-key-length} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion} returns the minimum key
-  length as set for the entry completion.
+  The slot access function @sym{gtk-entry-completion} returns the minimum key
+  length as set for the entry completion. The slot access function
+  @sym{(setf gtk-entry-completion-minimum-key-length)} sets the length of the
+  search key for completion to be at least @arg{length}.
 
-  The generic function @sym{(setf gtk-entry-completion-minimum-key-length)}
-  sets the length of the search key for completion to be at least @arg{length}.
   This is useful for long lists, where completing using a small key takes a
   lot of time and will come up with meaningless results anyway, i. e., a too
   large dataset.
@@ -411,31 +420,29 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-entry-completion) 't)
- "The @code{model} property of type @class{gtk-tree-model}
-  (Read / Write) @br{}
+ "The @code{model} property of type @class{gtk-tree-model} (Read / Write) @br{}
   The model to find matches in.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-model 'function)
- "@version{2014-2-16}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[model]{the @class{gtk-tree-model} object}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-model object) => model}
   @syntax[]{(setf (gtk-entry-completion-model object) model)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[model]{the @class{gtk-tree-model} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{model} of the
+    Accessor of the @slot[gtk-entry-completion]{model} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-model} returns the
-  @class{gtk-tree-model}, or @code{nil} if none is currently being used.
-
-  The generic function @sym{(setf gtk-entry-completion-model)} sets the model
-  for a @class{gtk-entry-completion}. If the entry completion already has a
-  model set, it will remove it before setting the new model. If @arg{model} is
-  @code{nil}, then it will unset the model.
+  The slot access function @sym{gtk-entry-completion-model} returns the
+  @class{gtk-tree-model}, or @code{nil} if none is currently being used. The
+  slot access function @sym{(setf gtk-entry-completion-model)} sets the model
+  for a entry completion. If the entry completion already has a model set, it
+  will remove it before setting the new model. If @arg{model} is @code{nil},
+  then it will unset the model.
   @see-class{gtk-entry-completion}
   @see-class{gtk-tree-model}")
 
@@ -444,8 +451,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-completion"
                                                'gtk-entry-completion) 't)
- "The @code{popup-completion} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{popup-completion} property of type @code{:boolean} (Read / Write)
+  @br{}
   Determines whether the possible completions should be shown in a popup
   window. @br{}
   Default value: @em{true}")
@@ -455,21 +462,20 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-popup-completion 'function)
- "@version{2014-12-21}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[popup-completion]{@em{true} to do popup completion}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-popup object) => popup-completion}
   @syntax[]{(setf (gtk-entry-completion-popup object) popup-completion)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[popup-completion]{@em{true} to do popup completion}
   @begin{short}
     Accessor of the @slot[gtk-entry-completition]{popup-completion} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-popup-completion} returns
-  whether the completions should be presented in a popup window.
-
-  The generic function @sym{(setf gtk-entry-completion-popup-completion)} sets
-  whether the completions should be presented in a popup window.
+  The slot access function @sym{gtk-entry-completion-popup-completion} returns
+  whether the completions should be presented in a popup window. The slot access
+  function @sym{(setf gtk-entry-completion-popup-completion)} sets whether the
+  completions should be presented in a popup window.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-popup-set-width -----------------------------------
@@ -477,8 +483,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-set-width"
                                                'gtk-entry-completion) 't)
- "The @code{popup-set-width} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{popup-set-width} property of type @code{:boolean} (Read / Write)
+  @br{}
   Determines whether the completions popup window will be resized to the width
   of the entry. @br{}
   Default value: @em{true}")
@@ -488,22 +494,22 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-popup-set-width 'function)
- "@version{2014-12-21}
+ "@version{2020-5-31}
+  @syntax[]{(gtk-entry-completion-popup-set-width object) => popup-set-width}
+  @syntax[]{(setf (gtk-entry-completion-popup-set-width object) popup-set-width)}
   @argument[object]{a @class{gtk-entry-completion} object}
   @argument[popup-set-width]{@em{true} to make the width of the popup the same
     as the entry}
-  @syntax[]{(gtk-entry-completion-popup-set-width object) => popup-set-width}
-  @syntax[]{(setf (gtk-entry-completion-popup-set-width object) popup-set-width)}
   @begin{short}
     Accessor of the @slot[gtk-entry-completion]{popup-set-width} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-popup-set-width} returns
+  The slot access function @sym{gtk-entry-completion-popup-set-width} returns
   whether the completion popup window will be resized to the width of the entry.
-
-  The generic function @sym{(setf gtk-entry-completion)} sets whether the
-  completion popup window will be resized to be the same width as the entry.
+  The slot access function @sym{(setf gtk-entry-completion-popup-set-width)}
+  sets whether the completion popup window will be resized to be the same width
+  as the entry.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-popup-single-match --------------------------------
@@ -511,10 +517,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-single-match"
                                                'gtk-entry-completion) 't)
- "The @code{popup-single-match} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{popup-single-match} property of type @code{:boolean} (Read / Write)
+  @br{}
   Determines whether the completions popup window will shown for a single
-  possible completion. You probably want to set this to @code{nil} if you are
+  possible completion. You probably want to set this to @em{false} if you are
   using inline completion. @br{}
   Default value: @em{true}")
 
@@ -523,25 +529,24 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-popup-single-match 'function)
- "@version{2015-2-22}
+ "@version{2020-5-31}
+  @syntax[]{(gtk-entry-completion-popup-single-match object) => single-match}
+  @syntax[]{(setf (gtk-entry-completion-popup-single-match object) single-match)}
   @argument[object]{a @class{gtk-entry-completion} object}
   @argument[single-match]{@em{true} if the popup should appear even for a single
     match}
-  @syntax[]{(gtk-entry-completion-popup-single-match) => single-match}
-  @syntax[]{(setf (gtk-entry-completion-popup-single-match object) single-match)}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{popup-single-match}
+    Accessor of the @slot[gtk-entry-completion]{popup-single-match} slot
     of the @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-popup-single-match} returns
-  @em{True} if the popup window will appear regardless of the number of matches.
-
-  The generic function @sym{(setf gtk-entry-completion-popup-single-match)} sets
-  whether the completion popup window will appear even if there is only a
+  The slot access function @sym{gtk-entry-completion-popup-single-match} returns
+  @em{true} if the popup window will appear regardless of the number of matches.
+  The slot access function @sym{(setf gtk-entry-completion-popup-single-match)}
+  sets whether the completion popup window will appear even if there is only a
   single match.
 
-  You may want to set this to @code{nil} if you are using inline completion.
+  You may want to set this to @em{false} if you are using inline completion.
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-text-column ---------------------------------------
@@ -559,35 +564,34 @@
 (setf (gethash 'gtk-entry-completion-text-column atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-completion-text-column 'function)
- "@version{2015-2-22}
-  @argument[object]{a @class{gtk-entry-completion} object}
-  @argument[column]{the column in the model of the completion to get strings
-    from}
+ "@version{2020-5-31}
   @syntax[]{(gtk-entry-completion-text-column) => column}
   @syntax[]{(setf (gtk-entry-completion-text-column object) column)}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[column]{an integer with the column in the model of the completion
+    to get strings from}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry-completion]{text-column} of the
+    Accessor of the @slot[gtk-entry-completion]{text-column} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
-  The generic function @sym{gtk-entry-completion-text-column} returns the column
-  in the model of the completion to get strings from.
+  The slot access function @sym{gtk-entry-completion-text-column} returns the
+  column in the model of the completion to get strings from. The slot access
+  function @sym{(setf gtk-entry-completion-text-column)} is a convenience
+  function for setting up the most used case: a completion list with just
+  strings.
 
-  The generic function @sym{(setf gtk-entry-completion-text-column)} is a
-  convenience function for setting up the most used case of this code: a
-  completion list with just strings.
-
-  This function will set up completion to have a list displaying all (and just)
+  This function will set up completion to have a list displaying all, and just,
   strings in the completion list, and to get those strings from column in the
   model of completion.
 
   This functions creates and adds a @class{gtk-cell-renderer-text} for the
   selected column. If you need to set the text column, but do not want the cell
-  renderer, use the function @fun{g-object-set} to set the
+  renderer, use the function @fun{g-object-set-property} to set the
   @slot[gtk-entry-completion]{text-column} property directly.
   @see-class{gtk-entry-completion}
   @see-class{gtk-cell-renderer-text}
-  @see-function{g-object-set}
+  @see-function{g-object-set-property}
   @see-function{gtk-entry-completion-inline-completion}")
 
 ;;; ----------------------------------------------------------------------------
@@ -598,9 +602,9 @@
 
 (defun gtk-entry-completion-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
+ "@version{2020-5-31}
   @return{A newly created @class{gtk-entry-completion} object.}
-  @short{Creates a new @class{gtk-entry-completion} object.}
+  @short{Creates a new entry completion.}
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-new-with-area}"
   (make-instance 'gtk-entry-completion))
@@ -615,13 +619,12 @@
 
 (defun gtk-entry-completion-new-with-area (area)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
+ "@version{2020-5-31}
   @argument[area]{the @class{gtk-cell-area} used to layout cells}
   @return{A newly created @class{gtk-entry-completion} object.}
   @begin{short}
-    Creates a new @class{gtk-entry-completion} object using the specified area
-    to layout cells in the underlying @class{gtk-tree-view-column} for the
-    drop-down menu.
+    Creates a new entry completion using the specified area to layout cells in
+    the underlying @class{gtk-tree-view-column} for the drop-down menu.
   @end{short}
   @see-class{gtk-entry-completion}
   @see-class{gtk-cell-area}
@@ -633,21 +636,22 @@
 (export 'gtk-entry-completion-new-with-area)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_completion_get_entry ()
+;;; gtk_entry_completion_get_entry () -> gtk-entry-completion-entry
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_entry_completion_get_entry" gtk-entry-completion-get-entry)
+(defcfun ("gtk_entry_completion_get_entry" gtk-entry-completion-entry)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @return{The entry @arg{completion} has been attached to.}
-  @short{Gets the entry @arg{completion} has been attached to.}
+  @return{The @class{gtk-widget} entry the entry completion has been attached
+    to.}
+  @short{Gets the entry the entry completion has been attached to.}
   @see-class{gtk-entry-completion}
   @see-class{gtk-entry}"
   (completion (g-object gtk-entry-completion)))
 
-(export 'gtk-entry-completion-get-entry)
+(export 'gtk-entry-completion-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkEntryCompletionMatchFunc ()
@@ -698,11 +702,11 @@
 
 (defun gtk-entry-completion-set-match-func (completion func)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
   @argument[func]{the @code{GtkEntryCompletionMatchFunc} to use}
   @begin{short}
-    Sets the match function for @arg{completion} to be @arg{func}.
+    Sets the match function for the entry completion to be @arg{func}.
   @end{short}
   The match function is used to determine if a row should or should not be in
   the completion list.
@@ -727,9 +731,9 @@
 (defcfun ("gtk_entry_completion_compute_prefix"
            gtk-entry-completion-compute-prefix) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
-  @argument[completion]{the entry completion}
-  @argument[key]{the text to complete for}
+ "@version{2020-5-31}
+  @argument[completion]{a @class{gtk-entry-completion} object}
+  @argument[key]{a string with the text to complete for}
   @begin{return}
     The common prefix all rows starting with key or @code{nil} if no row matches
     key.
@@ -738,8 +742,8 @@
     Computes the common prefix that is shared by all rows in completion that
     start with @arg{key}.
   @end{short}
-  If no row matches @arg{key}, @code{nil} will be returned. Note that a
-  text column must have been set for this function to work, see the function
+  If no row matches @arg{key}, @code{nil} will be returned. Note that a text
+  column must have been set for this function to work, see the function
   @fun{gtk-entry-completion-text-column} for details.
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-text-column}"
@@ -754,7 +758,7 @@
 
 (defcfun ("gtk_entry_completion_complete" gtk-entry-completion-complete) :void
  #+cl-cffi-gtk-documentation
- "@version{2015-2-22}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
   @begin{short}
     Requests a completion operation, or in other words a refiltering of the
@@ -768,15 +772,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_get_completion_prefix ()
+;;; -> gtk-entry-completion-completion-prefix
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_entry_completion_get_completion_prefix"
-           gtk-entry-completion-get-completion-prefix)
+           gtk-entry-completion-completion-prefix)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-27}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @return{The prefix for the current completion.}
+  @return{A string with the prefix for the current completion.}
   @begin{short}
     Get the original text entered by the user that triggered the completion or
     @code{nil} if there is no completion ongoing.
@@ -784,7 +789,7 @@
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion)))
 
-(export 'gtk-entry-completion-get-completion-prefix)
+(export 'gtk-entry-completion-completion-prefix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_insert_prefix ()
@@ -793,7 +798,7 @@
 (defcfun ("gtk_entry_completion_insert_prefix"
           gtk-entry-completion-insert-prefix) :void
  #+cl-cffi-gtk-documentation
- "@version{2015-2-22}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
   @begin{short}
     Requests a prefix insertion.
@@ -810,13 +815,13 @@
 (defcfun ("gtk_entry_completion_insert_action_text"
           gtk-entry-completion-insert-action-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2015-2-22}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @argument[index]{the index of the item to insert}
-  @argument[text]{text of the item to insert}
+  @argument[index]{an integer with the index of the item to insert}
+  @argument[text]{a string with the text of the item to insert}
   @begin{short}
-    Inserts an action in @arg{completion}'s action item list at position
-    @arg{index} with text @arg{text}.
+    Inserts an action in the entry completion's action item list at position
+    @arg{index} with the given text.
   @end{short}
   If you want the action item to have markup, use the function
   @fun{gtk-entry-completion-insert-action-markup}.
@@ -835,13 +840,13 @@
 (defcfun ("gtk_entry_completion_insert_action_markup"
            gtk-entry-completion-insert-action-markup) :void
  #+cl-cffi-gtk-documentation
- "@version{2015-2-22}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @argument[index]{the index of the item to insert}
-  @argument[markup]{markup of the item to insert}
+  @argument[index]{an integer with the index of the item to insert}
+  @argument[markup]{a string with the markup of the item to insert}
   @begin{short}
-    Inserts an action in @arg{completion}'s action item list at position
-    @arg{index} with markup @arg{markup}.
+    Inserts an action in the entry completion's action item list at position
+    @arg{index} with the given markup.
   @end{short}
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion))
@@ -857,11 +862,11 @@
 (defcfun ("gtk_entry_completion_delete_action"
           gtk-entry-completion-delete-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2015-2-22}
+ "@version{2020-5-31}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @argument[index]{the index of the item to delete}
+  @argument[index]{an integer with the index of the item to delete}
   @begin{short}
-    Deletes the action at @arg{index} from @arg{completion}'s action list.
+    Deletes the action at @arg{index} from the entry completion's action list.
   @end{short}
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion))
