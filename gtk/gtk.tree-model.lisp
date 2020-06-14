@@ -2,12 +2,12 @@
 ;;; gtk.tree-model.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -106,11 +106,11 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void   row-changed              Run Last
-;;;     void   row-deleted              Run First
-;;;     void   row-has-child-toggled    Run Last
-;;;     void   row-inserted             Run First
-;;;     void   rows-reordered           Run First
+;;;     void    row-changed              Run Last
+;;;     void    row-deleted              Run First
+;;;     void    row-has-child-toggled    Run Last
+;;;     void    row-inserted             Run First
+;;;     void    rows-reordered           Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -135,7 +135,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-model 'type)
- "@version{2013-5-12}
+ "@version{2020-6-8}
   @begin{short}
     The @sym{gtk-tree-model} interface defines a generic tree interface for use
     by the @class{gtk-tree-view} widget.
@@ -180,7 +180,7 @@
   specific model. It is a generic structure with an integer and three generic
   pointers. These are filled in by the model in a model-specific way. One can
   convert a path to an iterator by calling the function
-  @fun{gtk-tree-model-get-iter}. These iterators are the primary way of
+  @fun{gtk-tree-model-iter}. These iterators are the primary way of
   accessing a model and are similar to the iterators used by
   @class{gtk-text-buffer}. They are generally statically allocated on the stack
   and only used for a short time. The model interface defines a set of
@@ -323,67 +323,66 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"row-changed\" signal}
       @begin{pre}
- lambda (tree-model path iter)   : Run Last
+ lambda (tree-model path iter)    : Run Last
       @end{pre}
       This signal is emitted when a row in the model has changed.
       @begin[code]{table}
-        @entry[tree-model]{The @class{gtk-tree-model} on which the signal is
-          emitted.}
+        @entry[tree-model]{The @sym{gtk-tree-model} object on which the signal
+          is emitted.}
         @entry[path]{A @class{gtk-tree-path} identifying the changed row.}
         @entry[iter]{A valid @class{gtk-tree-iter} pointing to the changed row.}
       @end{table}
     @subheading{The \"row-deleted\" signal}
       @begin{pre}
- lambda (tree-model path)   : Run First
+ lambda (tree-model path)    : Run First
       @end{pre}
-      This signal is emitted when a row has been deleted.
-      Note that no iterator is passed to the signal handler, since the row is
-      already deleted.
-      This should be called by models after a row has been removed. The location
+      This signal is emitted when a row has been deleted. Note that no iterator
+      is passed to the signal handler, since the row is already deleted. This
+      should be called by models after a row has been removed. The location
       pointed to by path should be the location that the row previously was at.
       It may not be a valid location anymore.
       @begin[code]{table}
-        @entry[tree-model]{The @class{gtk-tree-model} on which the signal is
-          emitted.}
+        @entry[tree-model]{The @sym{gtk-tree-model} object on which the signal
+          is emitted.}
         @entry[path]{A @class{gtk-tree-path} identifying the row.}
       @end{table}
     @subheading{The \"row-has-child-toggled\" signal}
       @begin{pre}
- lambda (tree-model path iter)   : Run Last
+ lambda (tree-model path iter)    : Run Last
       @end{pre}
       This signal is emitted when a row has gotten the first child row or lost
       its last child row.
       @begin[code]{table}
-        @entry[tree-model]{The @class{gtk-tree-model} on which the signal is
-          emitted.}
+        @entry[tree-model]{The @sym{gtk-tree-model} object on which the signal
+          is emitted.}
         @entry[path]{A @class{gtk-tree-path} identifying the row.}
         @entry[iter]{A valid @class{gtk-tree-iter} pointing to the row.}
       @end{table}
     @subheading{The \"row-inserted\" signal}
       @begin{pre}
- lambda (tree-model path iter)   : Run First
+ lambda (tree-model path iter)    : Run First
       @end{pre}
       This signal is emitted when a new row has been inserted in the model.
       Note that the row may still be empty at this point, since it is a common
       pattern to first insert an empty row, and then fill it with the desired
       values.
       @begin[code]{table}
-        @entry[tree-model]{The @class{gtk-tree-model} on which the signal is
+        @entry[tree-model]{The @sym{gtk-tree-model} on which the signal is
           emitted.}
         @entry[path]{A @class{gtk-tree-path} identifying the new row.}
         @entry[iter]{A valid @class{gtk-tree-iter} pointing to the new row.}
       @end{table}
     @subheading{The \"rows-reordered\" signal}
       @begin{pre}
- lambda (tree-model path iter new-order)   : Run First
+ lambda (tree-model path iter new-order)    : Run First
       @end{pre}
       This signal is emitted when the children of a node in the
-      @class{gtk-tree-model} have been reordered.
-      Note that this signal is not emitted when rows are reordered by DND, since
-      this is implemented by removing and then reinserting the row.
+      @class{gtk-tree-model} have been reordered. Note that this signal is not
+      emitted when rows are reordered by DND, since this is implemented by
+      removing and then reinserting the row.
       @begin[code]{table}
-        @entry[tree-model]{The @class{gtk-tree-model} on which the signal is
-          emitted.}
+        @entry[tree-model]{The @sym{gtk-tree-model} object on which the signal
+          is emitted.}
         @entry[path]{A @class{gtk-tree-path} identifying the tree node whose
           children have been reordered.}
         @entry[iter]{A valid @class{gtk-tree-iter} pointing to the node whose.}
@@ -419,7 +418,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-iter 'type)
- "@version{2013-9-18}
+ "@version{2020-6-8}
   @begin{short}
     The @sym{gtk-tree-iter} structure is the primary structure for accessing a
     @class{gtk-tree-model}. Models are expected to put a unique integer in the
@@ -445,17 +444,17 @@
 (export 'gtk-tree-iter)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of slots of the GtkTreeIter structure
-;;;
+;;; Accessors of the slots of the GtkTreeIter structure
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter-stamp atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-iter-stamp 'function)
- "@version{2013-9-18}
-  Accessor of the slot @code{stamp} of the @class{gtk-tree-iter} structure.
+ "@version{2020-6-8}
+  @begin{short}
+    Accessor of the @code{stamp} slot of the @class{gtk-tree-iter} structure.
+  @end{short}
   @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-iter-stamp)
@@ -464,9 +463,11 @@
 (setf (gethash 'gtk-tree-iter-user-data atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-iter-user-data 'function)
- "@version{2013-9-18}
-  Accessor of the slot @code{user-data} of the @class{gtk-tree-iter}
-  structure.
+ "@version{2020-6-8}
+  @begin{short}
+    Accessor of the @code{user-data} slot of the @class{gtk-tree-iter}
+    structure.
+  @end{short}
   @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-iter-user-data)
@@ -483,7 +484,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-path atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-path 'type)
- "@version{2013-9-18}
+ "@version{2020-6-8}
   @short{}
   @begin{pre}
 (define-g-boxed-opaque gtk-tree-path \"GtkTreePath\"
@@ -506,7 +507,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-row-reference atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-row-reference 'type)
- "@version{2013-9-18}
+ "@version{2020-6-8}
   @begin{short}
     A @sym{gtk-tree-row-reference} tracks model changes so that it always refers
     to the same row, a @class{gtk-tree-path} refers to a position, not a fixed
@@ -535,12 +536,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-tree-model-flags atdoc:*external-symbols*)
- "@version{2013-5-12}
+ "@version{2020-6-8}
   @begin{short}
     These flags indicate various properties of a @class{gtk-tree-model}.
   @end{short}
 
-  They are returned by the function @fun{gtk-tree-model-get-flags}, and must be
+  They are returned by the function @fun{gtk-tree-model-flags}, and must be
   static for the lifetime of the object. A more complete description of
   @code{:iters-persist} can be found in the overview of this section.
   @begin{pre}
@@ -555,7 +556,7 @@
     @entry[:list-only]{The model is a list only, and never has children.}
   @end{table}
   @see-class{gtk-tree-model}
-  @see-function{gtk-tree-model-get-flags}")
+  @see-function{gtk-tree-model-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeModelIface
@@ -728,9 +729,11 @@
 (defcfun ("gtk_tree_path_new" gtk-tree-path-new)
     (g-boxed-foreign gtk-tree-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-8}
   @return{A newly created @class{gtk-tree-path} object.}
-  @short{Creates a new @class{gtk-tree-path}. This structure refers to a row.}")
+  @short{Creates a new @class{gtk-tree-path}.
+  This structure refers to a row.}
+  @see-class{gtk-tree-path}")
 
 (export 'gtk-tree-path-new)
 
@@ -741,15 +744,15 @@
 (defcfun ("gtk_tree_path_new_from_string" gtk-tree-path-new-from-string)
     (g-boxed-foreign gtk-tree-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-8}
   @argument[path]{the string representation of a path}
   @return{A newly created @class{gtk-tree-path}, or @code{nil}.}
   @short{Creates a new @class{gtk-tree-path} initialized to @arg{path}.}
 
   @arg{path} is expected to be a colon separated list of numbers. For example,
   the string \"10:4:0\" would create a path of depth 3 pointing to the 11th
-  child of the root node, the 5th child of that 11th child, and the 1st child of
-  that 5th child. If an invalid path string is passed in, @code{nil} is
+  child of the root node, the 5th child of that 11th child, and the 1st child
+  of that 5th child. If an invalid path string is passed in, @code{nil} is
   returned.
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-new}
@@ -765,15 +768,15 @@
 
 (defun gtk-tree-path-new-from-indices (&rest indices)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
-  @argument[indices]{list of integers terminated by -1}
+ "@version{2020-6-9}
+  @argument[indices]{list of integers}
   @return{A newly created @class{gtk-tree-path} object.}
   @begin{short}
     Creates a new path with @arg{indices} as indices.
   @end{short}
   @see-class{gtk-tree-path}"
   (gtk-tree-path-new-from-string
-    (string-right-trim ":" (format nil "~{~D:~}" indices))))
+      (string-right-trim ":" (format nil "~{~D:~}" indices))))
 
 (export 'gtk-tree-path-new-from-indices)
 
@@ -804,9 +807,9 @@
 
 (defcfun ("gtk_tree_path_to_string" gtk-tree-path-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{A string.}
+  @return{A string with the representation of the path.}
   @short{Generates a string representation of the path.}
 
   This string is a ':' separated list of numbers. For example, \"4:10:0:3\"
@@ -824,11 +827,12 @@
 (defcfun ("gtk_tree_path_new_first" gtk-tree-path-new-first)
     (g-boxed-foreign gtk-tree-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-9}
   @return{A new @class{gtk-tree-path} object.}
-  @short{Creates a new @class{gtk-tree-path}.}
+  @short{Creates a new tree path.}
 
-  The string representation of this path is \"0\".")
+  The string representation of this path is \"0\".
+  @see-class{gtk-tree-path}")
 
 (export 'gtk-tree-path-new-first)
 
@@ -844,16 +848,17 @@
 
 (defun gtk-tree-path-append-index (path index)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @argument[index]{the index}
-  @return{The new path.}
-  @short{Appends a new @arg{index} to a @arg{path}.}
+  @argument[index]{an integer with the index}
+  @return{The @class{gtk-tree-path} object.}
+  @short{Appends a new @arg{index} to @arg{path}.}
 
-  As a result, the depth of the @arg{path} is increased."
-  (let ((path (gtk-tree-path-copy path)))
-    (%gtk-tree-path-append-index path index)
-    path))
+  As a result, the depth of the @arg{path} is increased.
+  @see-class{gtk-tree-path}"
+  (let ((path-new (gtk-tree-path-copy path)))
+    (%gtk-tree-path-append-index path-new index)
+    path-new))
 
 (export 'gtk-tree-path-append-index)
 
@@ -869,10 +874,10 @@
 
 (defun gtk-tree-path-prepend-index (path index)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @argument[index]{the index}
-  @return{The new path.}
+  @argument[index]{an integer with the index}
+  @return{The @class{gtk-tree-path} object.}
   @short{Prepends a new @arg{index} to a @arg{path}.}
 
   As a result, the depth of the @arg{path} is increased."
@@ -883,48 +888,48 @@
 (export 'gtk-tree-path-prepend-index)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_path_get_depth ()
+;;; gtk_tree_path_get_depth () -> gtk-tree-path-depth
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_get_depth" gtk-tree-path-get-depth) :int
+(defcfun ("gtk_tree_path_get_depth" gtk-tree-path-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{The depth of @arg{path}.}
-  @short{Returns the current depth of @arg{path}.}
+  @return{An integer with the depth of @arg{path}.}
+  @short{Returns the current depth of the tree path.}
   @see-class{gtk-tree-path}"
   (path (g-boxed-foreign gtk-tree-path)))
 
-(export 'gtk-tree-path-get-depth)
+(export 'gtk-tree-path-depth)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_path_get_indices ()
+;;; gtk_tree_path_get_indices () -> gtk-tree-path-indices
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_get_indices" %gtk-tree-path-get-indices)
+(defcfun ("gtk_tree_path_get_indices" %gtk-tree-path-indices)
     (:pointer :int)
   (path (g-boxed-foreign gtk-tree-path)))
 
-(defun gtk-tree-path-get-indices (path)
+(defun gtk-tree-path-indices (path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
   @return{The current indices, or @code{nil}.}
-  @short{Returns the current indices of @arg{path}.}
+  @short{Returns the current indices of the tree path.}
 
   This is a list of integers, each representing a node in a tree.
 
   The length of the list can be obtained with the function
-  @fun{gtk-tree-path-get-depth}.
+  @fun{gtk-tree-path-depth}.
   @see-class{gtk-tree-path}
-  @see-function{gtk-tree-path-get-depth}"
-  (let ((n (gtk-tree-path-get-depth path))
-        (indices (%gtk-tree-path-get-indices path)))
+  @see-function{gtk-tree-path-depth}"
+  (let ((n (gtk-tree-path-depth path))
+        (indices (%gtk-tree-path-indices path)))
     (loop
       for i from 0 below n
       collect (mem-aref indices :int i))))
 
-(export 'gtk-tree-path-get-indices)
+(export 'gtk-tree-path-indices)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_indices_with_depth ()
@@ -953,14 +958,14 @@
 ;;; gtk_tree_path_free ()
 ;;; ----------------------------------------------------------------------------
 
+;; We do not export this function.
+
 (defcfun ("gtk_tree_path_free" gtk-tree-path-free) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-5-12}
   @argument[path]{a @class{gtk-tree-path} object}
   @short{Frees path. If path is NULL, it simply returns.}"
   (path (g-boxed-foreign gtk-tree-path)))
-
-(export 'gtk-tree-path-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_copy ()
@@ -969,10 +974,10 @@
 (defcfun ("gtk_tree_path_copy" gtk-tree-path-copy)
     (g-boxed-foreign gtk-tree-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-8}
   @argument[path]{a @class{gtk-tree-path} object}
   @return{A new @class{gtk-tree-path} object.}
-  @short{Creates a new @class{gtk-tree-path} object as a copy of @arg{path}.}
+  @short{Creates a new tree path as a copy of @arg{path}.}
   @see-class{gtk-tree-path}"
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -984,17 +989,17 @@
 
 (defcfun ("gtk_tree_path_compare" gtk-tree-path-compare ) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
-  @argument[a]{a @class{gtk-tree-path} object}
-  @argument[b]{a @class{gtk-tree-path} object to compare with}
-  @return{The relative positions of @arg{a} and @arg{b}.}
+ "@version{2020-6-9}
+  @argument[path-1]{a @class{gtk-tree-path} object}
+  @argument[path-2]{a @class{gtk-tree-path} object to compare with}
+  @return{The relative positions of @arg{path-1} and @arg{path-2}.}
   @short{Compares two paths.}
 
-  If @arg{a} appears before @arg{b} in a tree, then -1 is returned. If @arg{b}
-  appears before @arg{a}, then 1 is returned. If the two nodes are equal, then
-  0 is returned."
-  (tree-path-1 (g-boxed-foreign gtk-tree-path))
-  (tree-path-2 (g-boxed-foreign gtk-tree-path)))
+  If @arg{path-1} appears before @arg{path-2} in a tree, then -1 is returned. If
+  @arg{path-2} appears before @arg{path-1}, then 1 is returned. If the two nodes
+  are equal, then 0 is returned."
+  (path-1 (g-boxed-foreign gtk-tree-path))
+  (path-2 (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-path-compare)
 
@@ -1007,14 +1012,15 @@
 
 (defun gtk-tree-path-next (path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{The new path.}
+  @return{The new @class{gtk-tree-path} object.}
   @short{Moves the @arg{path} to point to the next node at the current depth.}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-prev}"
-  (%gtk-tree-path-next path)
-  path)
+  (let ((path-new (gtk-tree-path-copy path)))
+    (%gtk-tree-path-next path-new)
+    path-new))
 
 (export 'gtk-tree-path-next)
 
@@ -1027,15 +1033,19 @@
 
 (defun gtk-tree-path-prev (path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{@em{True} if @arg{path} has a previous node, and the move was made.}
-  Moves the @arg{path} to point to the previous node at the current depth, if it
-  exists.
+  @return{A @class{gtk-tree-path} object to point to the previous node,
+    if it exists, otherwise @code{nil}.}
+  @begin{short}
+    Moves the tree path to point to the previous node at the current depth,
+    if it exists.
+  @end{short}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-next}"
-  (when (%gtk-tree-path-prev path)
-    path))
+  (let ((path-new (gtk-tree-path-copy path)))
+    (when (%gtk-tree-path-prev path-new)
+      path-new)))
 
 (export 'gtk-tree-path-prev)
 
@@ -1048,14 +1058,18 @@
 
 (defun gtk-tree-path-up (path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{@em{True} if @arg{path} has a parent, and the move was made.}
-  Moves the @arg{path} to point to its parent node, if it has a parent.
+  @return{A @class{gtk-tree-path} object to point to the parent node, if it has
+    a parent, otherwise @code{nil}.}
+  @begin{short}
+    Moves the tree path to point to its parent node, if it has a parent.
+  @end{short}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-down}"
-  (when (%gtk-tree-path-up path)
-    path))
+  (let ((path-new (gtk-tree-path-copy path)))
+    (when (%gtk-tree-path-up path-new)
+      path-new)))
 
 (export 'gtk-tree-path-up)
 
@@ -1068,13 +1082,16 @@
 
 (defun gtk-tree-path-down (path)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
-  Moves @arg{path} to point to the first child of the current @arg{path}.
+  @begin{short}
+    Moves @arg{path} to point to the first child of the current @arg{path}.
+  @end{short}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-up}"
-  (%gtk-tree-path-down path)
-  path)
+  (let ((path-new (gtk-tree-path-copy path)))
+    (%gtk-tree-path-down path-new)
+    path-new))
 
 (export 'gtk-tree-path-down)
 
@@ -1084,11 +1101,13 @@
 
 (defcfun ("gtk_tree_path_is_ancestor" gtk-tree-path-is-ancestor) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
   @argument[descendant]{another @class{gtk-tree-path} object}
   @return{@em{True} if @arg{descendant} is contained inside @arg{path}.}
-  Returns @em{true} if @arg{descendant} is a descendant of @arg{path}.
+  @begin{short}
+    Returns @em{true} if @arg{descendant} is a descendant of @arg{path}.
+  @end{short}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-is-descendant}"
   (path (g-boxed-foreign gtk-tree-path))
@@ -1102,11 +1121,13 @@
 
 (defcfun ("gtk_tree_path_is_descendant" gtk-tree-path-is-descendant) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[path]{a @class{gtk-tree-path} object}
   @argument[ancestor]{another @class{gtk-tree-path} object}
   @return{@em{True} if @arg{ancestor} contains @arg{path} somewhere below it.}
-  Returns @em{true} if @arg{path} is a descendant of @arg{ancestor}.
+  @begin{short}
+    Returns @em{true} if @arg{path} is a descendant of @arg{ancestor}.
+  @end{short}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-is-ancestor}"
   (tree-path (g-boxed-foreign gtk-tree-path))
@@ -1362,15 +1383,16 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_get_flags ()
+;;; gtk_tree_model_get_flags () -> gtk-tree-model-flags
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_flags" gtk-tree-model-get-flags)
+(defcfun ("gtk_tree_model_get_flags" gtk-tree-model-flags)
     gtk-tree-model-flags
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[tree-model]{a @class{gtk-tree-model} object}
-  @return{The flags supported by this interface.}
+  @return{The flags supported by this interface of type
+    @symbol{gtk-model-flags}.}
   @begin{short}
     Returns a set of flags supported by this interface.
   @end{short}
@@ -1382,30 +1404,31 @@
   @see-symbol{gtk-tree-model-flags}"
   (tree-model (g-object gtk-tree-model)))
 
-(export 'gtk-tree-model-get-flags)
+(export 'gtk-tree-model-flags)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_get_n_columns ()
+;;; gtk_tree_model_get_n_columns () -> gtk-tree-model-n-columns
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_n_columns" gtk-tree-model-get-n-columns) :int
+(defcfun ("gtk_tree_model_get_n_columns" gtk-tree-model-n-columns) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-8-22}
+ "@version{2020-6-9}
   @argument[tree-model]{a @class{gtk-tree-model} object}
-  @return{The number of columns.}
-  Returns the number of columns supported by @arg{tree-model}.
+  @return{An integer with the number of columns.}
+  @begin{short}
+    Returns the number of columns supported by @arg{tree-model}.
+  @end{short}
   @see-class{gtk-tree-model}
-  @see-function{gtk-tree-model-get-column-type}"
+  @see-function{gtk-tree-model-column-type}"
   (tree-model (g-object gtk-tree-model)))
 
-(export 'gtk-tree-model-get-n-columns)
+(export 'gtk-tree-model-n-columns)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_get_column_type ()
+;;; gtk_tree_model_get_column_type () -> gtk-tree-model-column-type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_column_type" gtk-tree-model-get-column-type)
-    g-type
+(defcfun ("gtk_tree_model_get_column_type" gtk-tree-model-column-type) g-type
  #+cl-cffi-gtk-documentation
  "@version{2013-8-22}
   @argument[tree-model]{a @class{gtk-tree-model} object}
@@ -1413,50 +1436,52 @@
   @return{The type of the column.}
   Returns the type of the column.
   @see-class{gtk-tree-model}
-  @see-function{gtk-tree-model-get-n-columns}"
+  @see-function{gtk-tree-model-n-columns}"
   (tree-model (g-object gtk-tree-model))
   (index :int))
 
-(export 'gtk-tree-model-get-column-type)
+(export 'gtk-tree-model-column-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_iter" %gtk-tree-model-get-iter) :boolean
+(defcfun ("gtk_tree_model_get_iter" %gtk-tree-model-iter) :boolean
   (tree-model g-object)
   (iter (g-boxed-foreign gtk-tree-iter))
   (path (g-boxed-foreign gtk-tree-path)))
 
-(defun gtk-tree-model-get-iter (tree-model path)
+(defun gtk-tree-model-iter (tree-model path)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @argument[path]{the @class{gtk-tree-path} object}
   @return{The @class{gtk-tree-iter} or @code{nil}, if iter is not set.}
-  Returns a valid iterator pointing to @arg{path}. If @arg{path} does not
-  exist, @code{nil} is returned.
+  @begin{short}
+    Returns a valid iterator pointing to @arg{path}.
+  @end{short}
+  If @arg{path} does not exist, @code{nil} is returned.
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}
   @see-class{gtk-tree-path}"
   (let ((iter (make-gtk-tree-iter)))
-    (when (%gtk-tree-model-get-iter tree-model iter path)
+    (when (%gtk-tree-model-iter tree-model iter path)
       iter)))
 
-(export 'gtk-tree-model-get-iter)
+(export 'gtk-tree-model-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter_from_string ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_get_iter_from_string"
-          %gtk-tree-model-get-iter-from-string)
+          %gtk-tree-model-iter-from-string)
     :boolean
   (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter))
   (path-string :string))
 
-(defun gtk-tree-model-get-iter-from-string (tree-model path-string)
+(defun gtk-tree-model-iter-from-string (tree-model path-string)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-15}
   @argument[tree-model]{a @class{gtk-tree-model} object}
@@ -1473,22 +1498,21 @@
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}"
   (let ((iter (make-gtk-tree-iter)))
-    (if (%gtk-tree-model-get-iter-from-string tree-model iter path-string)
-        iter
-        nil)))
+    (when (%gtk-tree-model-iter-from-string tree-model iter path-string)
+      iter)))
 
-(export 'gtk-tree-model-get-iter-from-string)
+(export 'gtk-tree-model-iter-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter_first ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_iter_first" %gtk-tree-model-get-iter-first)
+(defcfun ("gtk_tree_model_get_iter_first" %gtk-tree-model-iter-first)
     :boolean
   (model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
-(defun gtk-tree-model-get-iter-first (tree-model)
+(defun gtk-tree-model-iter-first (tree-model)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[tree-model]{a @class{gtk-tree-model} object}
@@ -1499,36 +1523,32 @@
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-model-get-iter-next}"
   (let ((iter (make-gtk-tree-iter)))
-    (if (%gtk-tree-model-get-iter-first tree-model iter)
-        iter
-        nil)))
+    (when (%gtk-tree-model-iter-first tree-model iter)
+      iter)))
 
-(export 'gtk-tree-model-get-iter-first)
+(export 'gtk-tree-model-iter-first)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_get_path ()
+;;; gtk_tree_model_get_path () -> gtk-tree-model-path
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_get_path" gtk-tree-model-get-path)
+(defcfun ("gtk_tree_model_get_path" gtk-tree-model-path)
      (g-boxed-foreign gtk-tree-path :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
+ "@version{2020-6-9}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @argument[iter]{the @class{gtk-tree-iter} object}
-  @return{A newly-created @class{gtk-tree-path} object.}
+  @return{A newly created @class{gtk-tree-path} object.}
   @begin{short}
-    Returns a newly-created @class{gtk-tree-path} referenced by @arg{iter}.
+    Returns a tree path referenced by @arg{iter}.
   @end{short}
-
-  This path should be freed with the function @fun{gtk-tree-path-free}.
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}
-  @see-class{gtk-tree-path}
-  @see-function{gtk-tree-path-free}"
+  @see-class{gtk-tree-path}"
   (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
-(export 'gtk-tree-model-get-path)
+(export 'gtk-tree-model-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_value ()
