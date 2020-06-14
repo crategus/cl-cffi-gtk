@@ -2,12 +2,12 @@
 ;;; gtk.invisible.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -74,7 +74,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-invisible 'type)
- "@version{2013-9-10}
+ "@version{*2020-5-29}
   @begin{short}
     The @sym{gtk-invisible} widget is used internally in GTK+, and is probably
     not very useful for application developers.
@@ -96,7 +96,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-invisible-screen atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-invisible-screen 'function)
- "@version{2014-2-12}
+ "@version{*2020-5-29}
   @syntax[]{(gtk-invisible-screen object) => screen}
   @syntax[]{(setf (gtk-invisible-screen object) screen)}
   @argument[object]{a @class{gtk-invisible} widget}
@@ -106,12 +106,10 @@
     @class{gtk-invisible} class.
   @end{short}
 
-  The @sym{gtk-invisible-screen} slot access function returns the
-  @class{gdk-screen} object associated with the invisible.
-
-  The @sym{(setf gtk-invisible-screen object)} slot access function
-  sets the @class{gdk-screen} object where the @class{gtk-invisible} widget
-  will be displayed.
+  The slot access function @sym{gtk-invisible-screen} returns the screen
+  associated with the invisible widget. The slot access function
+  @sym{(setf gtk-invisible-screen object)} sets the screen where the invisible
+  widget will be displayed.
   @see-class{gtk-invisible}
   @see-class{gdk-screen}")
 
@@ -123,9 +121,9 @@
 
 (defun gtk-invisible-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-29}
   @return{A new @class{gtk-invisible} widget.}
-  @short{Creates a new @class{gtk-invisible} widget.}
+  @short{Creates a new invisible widget.}
   @see-class{gtk-invisible}"
   (make-instance 'gtk-invisible))
 
@@ -139,12 +137,12 @@
 
 (defun gtk-invisible-new-for-screen (screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{*2020-5-29}
   @argument[screen]{a @class{gdk-screen} object which identifies on which the
     @class{gtk-invisible} widget will be created}
   @return{A newly created @class{gtk-invisible} widget.}
   @begin{short}
-    Creates a new @class{gtk-invisible} widget for a specified @arg{screen}.
+    Creates a new invisible widget for a specified screen.
   @end{short}
   @see-class{gtk-invisible}
   @see-class{gdk-screen}"
