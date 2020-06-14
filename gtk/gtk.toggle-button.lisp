@@ -43,20 +43,20 @@
 ;;;     gtk_toggle_button_set_mode
 ;;;     gtk_toggle_button_get_mode
 ;;;     gtk_toggle_button_toggled
-;;;     gtk_toggle_button_get_active ()                    Accessor
-;;;     gtk_toggle_button_set_active ()                    Accessor
-;;;     gtk_toggle_button_get_inconsistent ()              Accessor
-;;;     gtk_toggle_button_set_inconsistent ()              Accessor
+;;;     gtk_toggle_button_get_active                       Accessor
+;;;     gtk_toggle_button_set_active                       Accessor
+;;;     gtk_toggle_button_get_inconsistent                 Accessor
+;;;     gtk_toggle_button_set_inconsistent                 Accessor
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean  active            Read / Write
-;;;     gboolean  draw-indicator    Read / Write
-;;;     gboolean  inconsistent      Read / Write
+;;;     gboolean    active            Read / Write
+;;;     gboolean    draw-indicator    Read / Write
+;;;     gboolean    inconsistent      Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void	toggled	Run First
+;;;         void    toggled           Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -102,7 +102,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-button 'type)
- "@version{2013-4-27}
+ "@version{2020-6-7}
   @begin{short}
     A @sym{gtk-toggle-button} is a @class{gtk-button} which will remain
     \"pressed-in\" when clicked. Clicking again will cause the toggle button to
@@ -111,17 +111,17 @@
 
   @image[toggle-button]{}
 
-  A toggle button is created by calling either the @fun{gtk-toggle-button-new}
-  or @fun{gtk-toggle-button-new-with-label} functions. If using the former, it
-  is advisable to pack a widget, such as a @class{gtk-label} or a
-  @class{gtk-image}, into the toggle button's container. See @class{gtk-button}
-  for more information.
+  A toggle button is created by calling either the functions
+  @fun{gtk-toggle-button-new} or @fun{gtk-toggle-button-new-with-label}. If
+  using the former, it is advisable to pack a widget, such as a
+  @class{gtk-label} or a @class{gtk-image}, into the toggle button's container.
+  See @class{gtk-button} for more information.
 
   The state of a @sym{gtk-toggle-button} can be set and retrieved using the
-  @fun{gtk-toggle-button-active} slot access function.
+  function @fun{gtk-toggle-button-active}.
 
-  To simply switch the state of a toggle button, use the
-  @fun{gtk-toggle-button-toggled} function.
+  To simply switch the state of a toggle button, use the function
+  @fun{gtk-toggle-button-toggled}.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-toggle-button} has a single CSS node with name @code{button}. To
     differentiate it from a plain @class{gtk-button}, it gets the @code{.toggle}
@@ -164,7 +164,8 @@
       Should be connected if you wish to perform an action whenever the
       @sym{gtk-toggle-button}'s state is changed.
       @begin[code]{table}
-        @entry[togglebutton]{The object which received the signal.}
+        @entry[togglebutton]{The @sym{gtk-toggle-button} widget which received
+          the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toggle-button-active}
@@ -184,34 +185,28 @@
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-button) 't)
 "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   If the toggle button should be pressed in. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
- "@version{2014-4-14}
+ "@version{2020-6-7}
   @syntax[]{(gtk-toggle-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-button-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-button} widget}
-  @argument[is-active]{@em{true} or @code{nil}}
+  @argument[is-active]{@em{true} if the toggle button should be pressed in}
   @begin{short}
     Accessor of the @slot[gtk-toggle-button]{active} slot of the
     @class{gtk-toggle-button} class.
   @end{short}
 
-  The @sym{gtk-toggle-button-active} slot access function queries a
-  @class{gtk-toggle-button} widget and returns its current state.
+  The slot access function @sym{gtk-toggle-button-active} queries a toggle
+  button and returns its current state. Returns @em{true} if the toggle button
+  is pressed in and @em{false} if it is raised. The slot access function
+  @sym{(setf gtk-toggle-button-active)} sets the status of the toggle button.
 
-  Returns @em{true} if the toggle button is pressed in and @code{nil} if it is
-  raised.
-
-  The @sym{(setf gtk-toggle-button-active)} slot access function sets the status
-  of the toggle button.
-
-  Set to @em{true} if you want the @class{gtk-toggle-button} to be 'pressed in',
-  and @code{nil} to raise it. This action causes the toggled signal to be
-  emitted.
+  This action causes the toggled signal to be emitted.
   @see-class{gtk-toggle-button}")
 
 ;;; --- gtk-toggle-button-draw-indicator ---------------------------------------
@@ -219,18 +214,27 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw-indicator"
                                                'gtk-toggle-button) 't)
- "The @code{draw-indicator} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{draw-indicator} property of type @code{:boolean} (Read / Write)
+  @br{}
   If the toggle part of the button is displayed. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-draw-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-draw-indicator 'function)
- "@version{2014-4-14}
-  Accessor of the @slot[gtk-toggle-button]{draw-indicator} slot of the
-  @class{gtk-toggle-button} class.
+ "@version{2020-6-7}
+  @syntax[]{(gtk-toggle-button-draw-indicator object) => indicator}
+  @syntax[]{(setf (gtk-toggle-button-draw-indicator object) indicator)}
+  @argument[object]{a @class{gtk-toggle-button} widget}
+  @argument[indicator]{a boolean wether the toggle part of the button is
+    displayed}
+  @begin{short}
+    Accessor of the @slot[gtk-toggle-button]{draw-indicator} slot of the
+    @class{gtk-toggle-button} class.
+  @end{short}
+
+  If the toggle part of the button is displayed.
   @see-class{gtk-toggle-button}")
 
 ;;; --- gtk-toggle-button-inconsistent -----------------------------------------
@@ -238,18 +242,17 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inconsistent"
                                                'gtk-toggle-button) 't)
- "The @code{inconsistent} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{inconsistent} property of type @code{:boolean} (Read / Write) @br{}
   If the toggle button is in an \"in between\" state. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-inconsistent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-inconsistent 'function)
- "@version{2014-4-14}
-  @syntax[]{(gtk-toggle-button object) => setting}
-  @syntax[]{(setf (gtk-toggle-button object) setting)}
+ "@version{2020-6-7}
+  @syntax[]{(gtk-toggle-button-inconsistent object) => setting}
+  @syntax[]{(setf (gtk-toggle-button-inconsistent object) setting)}
   @argument[object]{a @class{gtk-toggle-button} widget}
   @argument[setting]{@em{true} if state is inconsistent}
   @begin{short}
@@ -262,9 +265,9 @@
   values in that range are inconsistent, you may want to display the toggle in
   an \"in between\" state. This function turns on \"in between\" display.
   Normally you would turn off the inconsistent state again if the user toggles
-  the toggle button. This has to be done manually, the
-  @sym{(setf gtk-toggle-button-inconsistent)} slot access function only affects
-  visual appearance, it does not affect the semantics of the button.
+  the toggle button. This has to be done manually, the function
+  @sym{(setf gtk-toggle-button-inconsistent)} only affects visual appearance,
+  it does not affect the semantics of the button.
   @see-class{gtk-toggle-button}")
 
 ;;; ----------------------------------------------------------------------------
@@ -275,10 +278,13 @@
 
 (defun gtk-toggle-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
-  @return{A new toggle button.}
-  Creates a new toggle button. A widget should be packed into the button, as
-  in the function @fun{gtk-button-new}.
+ "@version{2020-6-7}
+  @return{A new @class{gtk-toggle-button} widget.}
+  @begin{short}
+    Creates a new toggle button.
+  @end{short}
+  A widget should be packed into the button, as in the function
+  @fun{gtk-button-new}.
   @see-class{gtk-toggle-button}
   @see-function{gtk-button-new}"
   (make-instance 'gtk-toggle-button))
@@ -293,11 +299,13 @@
 
 (defun gtk-toggle-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
+ "@version{2020-6-7}
   @argument[label]{a string containing the message to be placed in the toggle
     button}
-  @return{A new toggle button.}
-  Creates a new toggle button with a text label.
+  @return{A new @class{gtk-toggle-button} widget.}
+  @begin{short}
+    Creates a new toggle button with a text label.
+  @end{short}
   @see-class{gtk-toggle-button}"
   (make-instance 'gtk-toggle-button
                  :label label))
@@ -314,11 +322,11 @@
            gtk-toggle-button-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-9}
+ "@version{2020-6-7}
   @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
-  @return{A new toggle button.}
-  @short{Creates a new @class{gtk-toggle-button} widget containing a label.}
+  @return{A new @class{gtk-toggle-button} widget.}
+  @short{Creates a new toggle button containing a label.}
   The label will be created using the function
   @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
   mnemonic for the button.
@@ -376,10 +384,10 @@
 
 (defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-9-1}
+ "@version{2020-6-7}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @begin{short}
-    Emits the \"toggled\" signal on the @class{gtk-toggle-button} widget.
+    Emits the \"toggled\" signal on the toggle button.
   @end{short}
   There is no good reason for an application ever to call this function.
   @see-class{gtk-toggle-button}"
