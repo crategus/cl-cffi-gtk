@@ -2,11 +2,11 @@
 ;;; gtk.font-chooser-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -72,15 +72,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-chooser-dialog 'type)
- "@version{2013-6-18}
+ "@version{2020-6-6}
   @begin{short}
     The @sym{gtk-font-chooser-dialog} widget is a dialog for selecting a font.
     It implements the @class{gtk-font-chooser} interface.
   @end{short}
+
+  @image[font-chooser-dialog]{}
   @begin[GtkFontChooserDialog as GtkBuildable]{dictionary}
     The @sym{gtk-font-chooser-dialog} implementation of the
     @class{gtk-buildable} interface exposes the buttons with the names
-    \"select_button\" and \"cancel_button\".
+    @code{select_button} and @code{cancel_button}.
   @end{dictionary}
   @see-class{gtk-font-chooser}")
 
@@ -92,11 +94,12 @@
 
 (defun gtk-font-chooser-dialog-new (title parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+ "@version{2020-6-6}
+  @argument[title]{a string with the title of the dialog, or @code{nil}}
+  @argument[parent]{a @class{gtk-window} transient parent of the dialog, or
+    @code{nil}}
   @return{A new @class{gtk-font-chooser-dialog} widget.}
-  @short{Creates a new @class{gtk-font-chooser-dialog} widget.}
+  @short{Creates a new font chooser dialog.}
   @see-class{gtk-font-chooser-dialog}"
   (make-instance 'gtk-font-chooser-dialog
                  :title title
