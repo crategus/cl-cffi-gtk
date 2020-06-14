@@ -1230,6 +1230,6 @@
   @see-function{gtk-flow-box-invalidate-sort}"
   (child (g-object gtk-flow-box-child)))
 
-(export 'gtk-flow-box-changed)
+(export 'gtk-flow-box-child-changed)
 
 ;;; --- End of file gtk.flow-box.lisp ------------------------------------------
