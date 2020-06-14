@@ -167,119 +167,114 @@
     (is (string= "/test" (setf (g-application-resource-base-path app) "/test")))
     (is (string= "/test" (g-application-resource-base-path app)))))
 
-;;; Signals
+;;; --- Signals ----------------------------------------------------------------
 
-;;;              void    activate                Run Last
-;;;              gint    command-line            Run Last
-;;;              gint    handle-local-options    Run Last
-;;;          gboolean    name-lost               Run Last
-;;;              void    open                    Run Last
-;;;              void    shutdown                Run Last
-;;;              void    startup                 Run First
-
+;;              void    activate                Run Last
+;;              gint    command-line            Run Last
+;;              gint    handle-local-options    Run Last
+;;          gboolean    name-lost               Run Last
+;;              void    open                    Run Last
+;;              void    shutdown                Run Last
+;;              void    startup                 Run First
 
 (defun example-application-open (&optional (argv nil))
   (let ((in-startup nil) (in-activate nil) (in-open nil) (in-shutdown nil))
-    (within-main-loop
-      (let ((app (make-instance 'g-application
-                                :application-id "com.crategus.application-open"
-                                :inactivity-timeout 2000
-                                :flags :handles-open)))
+    (let ((app (make-instance 'g-application
+                              :application-id "com.crategus.application-open"
+                              :inactivity-timeout 2000
+                              :flags :handles-open)))
 
-        ;; Signal handler "startup"
-        (g-signal-connect app "startup"
-                          (lambda (application)
-                            (declare (ignore application))
-                            (setf in-startup t)
-                            (when *g-application-verbose*
-                              (format t "The application is in startup.~%"))))
+      ;; Signal handler "startup"
+      (g-signal-connect app "startup"
+                        (lambda (application)
+                          (declare (ignore application))
+                          (setf in-startup t)
+                          (when *g-application-verbose*
+                            (format t "The application is in startup.~%"))))
 
-        ;; Signal handler "activate"
-        (g-signal-connect app "activate"
-                          (lambda (application)
-                            (declare (ignore application))
-                            (g-application-hold app)
-                            (setf in-activate t)
-                            (when *g-application-verbose*
-                              (format t "The application is in activate.~%"))
-                            ;; Note: when doing a longer-lasting action that
-                            ;; returns to the mainloop, you should use
-                            ;; g-application-hold and g-application-release to
-                            ;; keep the application alive until the action is
-                            ;; completed.
-                            (g-application-release app)))
+      ;; Signal handler "activate"
+      (g-signal-connect app "activate"
+                        (lambda (application)
+                          (declare (ignore application))
+                          (g-application-hold app)
+                          (setf in-activate t)
+                          (when *g-application-verbose*
+                            (format t "The application is in activate.~%"))
+                          ;; Note: when doing a longer-lasting action that
+                          ;; returns to the mainloop, you should use
+                          ;; g-application-hold and g-application-release to
+                          ;; keep the application alive until the action is
+                          ;; completed.
+                          (g-application-release app)))
 
-        ;; Signal handler "open"
-        (g-signal-connect app "open"
-                          (lambda (application files n-files hint)
-                            (declare (ignore application files n-files hint))
-                            (setf in-open t)
-                            (when *g-application-verbose*
-                              (format t "The application is in open.~%"))
-                            ;; TODO: The argument "files" is a C pointer to an
-                            ;; array of GFiles. The conversion to a list of
-                            ;; strings with the call (convert-from-foreign files
-                            ;; 'g-strv) does not work. Search a better
-                            ;; implementation to get a list of GFiles.
-                          ))
+      ;; Signal handler "open"
+      (g-signal-connect app "open"
+                        (lambda (application files n-files hint)
+                          (declare (ignore application files n-files hint))
+                          (setf in-open t)
+                          (when *g-application-verbose*
+                            (format t "The application is in open.~%"))
+                          ;; TODO: The argument "files" is a C pointer to an
+                          ;; array of GFiles. The conversion to a list of
+                          ;; strings with the call (convert-from-foreign files
+                          ;; 'g-strv) does not work. Search a better
+                          ;; implementation to get a list of GFiles.
+                        ))
 
-        ;; Signal handler "shutdown"
-        (g-signal-connect app "shutdown"
-                          (lambda (application)
-                            (declare (ignore application))
-                            (setf in-shutdown t)
-                            (when *g-application-verbose*
-                              (format t "The application is in shutdown.~%"))
-                            ;; Stop the main loop
-                            (leave-gtk-main)))
+      ;; Signal handler "shutdown"
+      (g-signal-connect app "shutdown"
+                        (lambda (application)
+                          (declare (ignore application))
+                          (setf in-shutdown t)
+                          (when *g-application-verbose*
+                            (format t "The application is in shutdown.~%"))))
 
-        ;; Start the application
-        (g-application-run app argv)))
-    (join-gtk-main)
-    (list in-startup in-activate in-open in-shutdown)))
+      ;; Start the application
+      (g-application-run app argv))
+      ;; Return the results
+      (list in-startup in-activate in-open in-shutdown)))
 
-#+nil ; Causes an error when running the complete testsuite, compare this with gtk-application-signals
+;; Error when running the complete testsuite
+; G-APPLICATION-SIGNALS []:
+;      Unexpected Error: #<TYPE-ERROR expected-type: SB-SYS:SYSTEM-AREA-POINTER
+;                               datum: #<PANGO-TAB-ARRAY {10126E16E3}>>
+;The value
+;  #<PANGO-TAB-ARRAY {10126E16E3}>
+;is not of type
+;  SB-SYS:SYSTEM-AREA-POINTER
+;when binding SB-ALIEN::VALUE..
+
+
 (test g-application-signals
   (is (equal '(t t nil t) (example-application-open)))
   (is (equal '(t nil t t) (example-application-open '("demo" "file1" "file2")))))
 
-;;; Functions
-;;;
+;;; --- Functions --------------------------------------------------------------
+
 ;;;     g_application_id_is_valid
 ;;;     g_application_new
-
-
-;;;
 ;;;     g_application_get_dbus_connection
 ;;;     g_application_get_dbus_object_path
 ;;;     g_application_set_action_group                     deprecated
-;;;     g_application_get_is_registered                    Accessor
-;;;     g_application_get_is_remote                        Accessor
 ;;;     g_application_register
 ;;;     g_application_hold
 ;;;     g_application_release
 ;;;     g_application_quit
 ;;;     g_application_activate
 ;;;     g_application_open
-;;;
 ;;;     g_application_send_notification
 ;;;     g_application_withdraw_notification
-;;;
 ;;;     g_application_run
-;;;
 ;;;     g_application_add_main_option_entries
 ;;;     g_application_add_main_option
 ;;;     g_application_add_option_group
 ;;;     g_application_set_option_context_parameter_string
 ;;;     g_application_set_option_context_summary
 ;;;     g_application_set_option_context_description
-;;;
 ;;;     g_application_set_default
 ;;;     g_application_get_default
-;;;
 ;;;     g_application_mark_busy
 ;;;     g_application_unmark_busy
-;;;     g_application_get_is_busy                          Accessor
 ;;;     g_application_bind_busy_property
 ;;;     g_application_unbind_busy_property
 

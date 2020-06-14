@@ -95,7 +95,7 @@
 
 ;;;  Tree, List and Icon Grid Widgets
 
-;    gtk.tree-model.lisp
+(load "rtest-gtk-tree-model.lisp")
 ;    gtk.tree-selection.lisp
 ;    gtk.tree-view-column.lisp
 ;    gtk.tree-view.lisp

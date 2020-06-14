@@ -22,11 +22,11 @@
 ;;;     gtk_buildable_set_name
 ;;;     gtk_buildable_get_name
 
-(test gtk-buildable-set-names
+(test gtk-buildable-name
   (let ((button (make-instance 'gtk-button)))
-    (is-false (gtk-buildable-get-name button))
-    (gtk-buildable-set-name button "button")
-    (is (string= "button" (gtk-buildable-get-name button)))))
+    (is-false (gtk-buildable-name button))
+    (setf (gtk-buildable-name button) "button")
+    (is (string= "button" (gtk-buildable-name button)))))
 
 (defvar *dialog*
 "<interface>
@@ -83,11 +83,11 @@
 ;;;     gtk_buildable_parser_finished
 ;;;     gtk_buildable_get_internal_child
 
-(test gtk-buildable-get-internal-child
+(test gtk-buildable-internal-child
   (let* ((builder (gtk-builder-new-from-string *dialog*))
          (dialog (gtk-builder-get-object builder "dialog1")))
 
-    (is (eq 'gtk-button-box (type-of (gtk-buildable-get-internal-child dialog builder "action_area"))))
+    (is (eq 'gtk-button-box (type-of (gtk-buildable-internal-child dialog builder "action_area"))))
 
 ))
 

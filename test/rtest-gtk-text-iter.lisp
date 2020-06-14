@@ -45,14 +45,13 @@ dann benutzen Sie es immer noch.")
           (type-of (gobject::get-g-boxed-foreign-info-for-gtype (gtype "GtkTextIter")))))
 )
 
-
+#+nil
 (test gtk-text-iter-boxed.2
   (let* ((buffer (make-instance 'gtk-text-buffer :text "text")))
 
     (dotimes (i 1000000)
       (gtk-text-buffer-start-iter buffer))
 ))
-
 
 ;;;     gtk_text_iter_get_buffer
 

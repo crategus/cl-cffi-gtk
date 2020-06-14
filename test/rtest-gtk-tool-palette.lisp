@@ -1,4 +1,3 @@
-
 (def-suite gtk-tool-palette :in gtk-suite)
 (in-suite gtk-tool-palette)
 
@@ -71,7 +70,7 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkToolPalette"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 1008 
+    (is (= 1008
            (foreign-slot-value query '(:struct g-type-query) :class-size)))
     (is (= 48
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
@@ -118,7 +117,7 @@
                          "toolbar-style" "GtkToolbarStyle" T T)))
              (get-g-type-definition "GtkToolPalette"))))
 
-#+nil             
+#+nil
 (test gtk-frame-properties
   (let ((widget (make-instance 'gtk-frame)))
     (is-false (gtk-frame-label widget))

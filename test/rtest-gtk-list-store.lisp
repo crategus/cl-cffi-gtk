@@ -45,18 +45,18 @@
   (let ((store (make-instance 'gtk-list-store
                               :column-types '("gint" "GString" "GdkPixbuf"))))
     (is (eq 'gtk-list-store (type-of store)))
-    (is (= 3 (gtk-tree-model-get-n-columns store)))
-    (is (string= "gint" (g-type-name (gtk-tree-model-get-column-type store 0))))
-    (is (string= "GString" (g-type-name (gtk-tree-model-get-column-type store 1))))
-    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-get-column-type store 2))))))
+    (is (= 3 (gtk-tree-model-n-columns store)))
+    (is (string= "gint" (g-type-name (gtk-tree-model-column-type store 0))))
+    (is (string= "GString" (g-type-name (gtk-tree-model-column-type store 1))))
+    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-column-type store 2))))))
 
 (test gtk-list-store-new.2
   (let ((store (gtk-list-store-new "gint" "GString" "GdkPixbuf")))
     (is (eq 'gtk-list-store (type-of store)))
-    (is (= 3 (gtk-tree-model-get-n-columns store)))
-    (is (string= "gint" (g-type-name (gtk-tree-model-get-column-type store 0))))
-    (is (string= "GString" (g-type-name (gtk-tree-model-get-column-type store 1))))
-    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-get-column-type store 2))))))
+    (is (= 3 (gtk-tree-model-n-columns store)))
+    (is (string= "gint" (g-type-name (gtk-tree-model-column-type store 0))))
+    (is (string= "GString" (g-type-name (gtk-tree-model-column-type store 1))))
+    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-column-type store 2))))))
 
 ;;;   gtk_list_store_newv                                  Not implemented
 
@@ -65,10 +65,10 @@
 (test gtk-list-store-set-column-types
   (let ((store (make-instance 'gtk-list-store)))
     (is-false (gtk-list-store-set-column-types store "gint" "GString" "GdkPixbuf"))
-    (is (= 3 (gtk-tree-model-get-n-columns store)))
-    (is (string= "gint" (g-type-name (gtk-tree-model-get-column-type store 0))))
-    (is (string= "GString" (g-type-name (gtk-tree-model-get-column-type store 1))))
-    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-get-column-type store 2))))))
+    (is (= 3 (gtk-tree-model-n-columns store)))
+    (is (string= "gint" (g-type-name (gtk-tree-model-column-type store 0))))
+    (is (string= "GString" (g-type-name (gtk-tree-model-column-type store 1))))
+    (is (string= "GdkPixbuf" (g-type-name (gtk-tree-model-column-type store 2))))))
 
 ;;;   gtk_list_store_set
 

@@ -74,7 +74,7 @@
 
   ;; Get the names of the class properties.
   (is (equal '("text" "length" "max-length")
-             (mapcar #'param-spec-name 
+             (mapcar #'param-spec-name
                      (g-object-class-list-properties "GtkEntryBuffer"))))
 
   ;; Get the class definition
@@ -115,13 +115,13 @@
 
 ;;;   gtk_entry_buffer_get_text
 
-(test gtk-entry-buffer-get-text
+(test gtk-entry-buffer-text
   (let ((buffer (gtk-entry-buffer-new "text")))
     (is (equal "text" (gtk-entry-buffer-text buffer)))))
 
 ;;;   gtk_entry_buffer_set_text
 
-(test gtk-entry-buffer-set-text
+(test gtk-entry-buffer-text
   (let ((buffer (gtk-entry-buffer-new "text")))
     (is (equal "text" (gtk-entry-buffer-text buffer)))
     (setf (gtk-entry-buffer-text buffer) "new text")
@@ -130,29 +130,29 @@
 
 ;;;   gtk_entry_buffer_get_bytes
 
-(test gtk-entry-buffer-get-bytes
+(test gtk-entry-buffer-bytes
   (let ((buffer (gtk-entry-buffer-new "text")))
     (is (equal "text" (gtk-entry-buffer-text buffer)))
-    (is (= 4 (gtk-entry-buffer-get-bytes buffer)))
+    (is (= 4 (gtk-entry-buffer-bytes buffer)))
     (setf (gtk-entry-buffer-text buffer) "Äpfel")
     (is (equal "Äpfel" (gtk-entry-buffer-text buffer)))
-    (is (= 6 (gtk-entry-buffer-get-bytes buffer)))))
+    (is (= 6 (gtk-entry-buffer-bytes buffer)))))
 
 ;;;   gtk_entry_buffer_get_length
 
-(test gtk-entry-buffer-get-length
+(test gtk-entry-buffer-length
   (let ((buffer (gtk-entry-buffer-new "Äpfel")))
     (is (= 5 (gtk-entry-buffer-length buffer)))))
 
 ;;;   gtk_entry_buffer_get_max_length
 
-(test gtk-entry-buffer-get-max-length
+(test gtk-entry-buffer-max-length
   (let ((buffer (gtk-entry-buffer-new "This is a text.")))
     (is (= 0 (gtk-entry-buffer-max-length buffer)))))
 
 ;;;   gtk_entry_buffer_set_max_length
 
-(test gtk-entry-buffer-set-max-length
+(test gtk-entry-buffer-max-length
   (let ((buffer (gtk-entry-buffer-new "This is a text.")))
     (setf (gtk-entry-buffer-max-length buffer) 9)
     (is (= 9 (gtk-entry-buffer-max-length buffer)))
