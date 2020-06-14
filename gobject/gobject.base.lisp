@@ -2955,12 +2955,15 @@
 (defun g-object-set-property (object property-name new-value
                                          &optional property-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-5-31}
   @argument[object]{a @class{g-object} instance}
-  @argument[property-name]{the name of the property to set}
-  @argument[value]{the value}
-  Sets a property on an object.
+  @argument[property-name]{a string with the name of the property to set}
+  @argument[value]{the value of type @symbol{g-value}}
+  @begin{short}
+    Sets a property on an object.
+  @end{short}
   @see-class{g-object}
+  @see-symbol{g-value}
   @see-function{g-object-get-property}"
   (unless property-type
     (setf property-type
