@@ -236,13 +236,13 @@
   @argument[path]{a @symbol{gtk-widget-path} structure to query}
   @argument[state]{the @symbol{gtk-state-flags} to query the style property for}
   @argument[pspec]{the @symbol{g-param-spec} to query}
-  @return{Returns the @class{g-value} of the style property.}
+  @return{Returns the @symbol{g-value} of the style property.}
   @begin{short}
     Looks up a widget style property as defined by the provider for the widget
     represented by @arg{path}.
   @end{short}
   @see-class{gtk-style-provider}
-  @see-class{g-value}"
+  @see-symbol{g-value}"
   (let ((type (param-spec-type pspec)))
     (with-foreign-object (value '(:struct g-value))
       (g-value-zero value)
