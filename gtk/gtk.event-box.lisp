@@ -46,8 +46,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean   above-child       Read / Write
-;;;     gboolean   visible-window    Read / Write
+;;;     gboolean    above-child       Read / Write
+;;;     gboolean    visible-window    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -84,10 +84,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-box 'type)
- "@version{2013-8-17}
-  The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also has
-  its own window. It is useful since it allows you to catch events for widgets
-  which do not have their own window.
+ "@version{2020-6-3}
+  @begin{short}
+    The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also
+    has its own window.
+  @end{short}
+  It is useful since it allows you to catch events for widgets which do not
+  have their own window.
   @see-slot{gtk-event-box-above-child}
   @see-slot{gtk-event-box-visible-window}
   @see-class{gtk-bin}")
@@ -103,13 +106,13 @@
  "The @code{above-child} property of type @code{:boolean} (Read / Write) @br{}
   Whether the event-trapping window of the eventbox is above the window of the
   child widget as opposed to below it. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-box-above-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-above-child 'function)
- "@version{2019-5-18}
+ "@version{2020-6-3}
   @syntax[]{(gtk-event-box-above-child object) => above-child}
   @syntax[]{(setf gtk-event-box-above-child object) above-child)}
   @argument[object]{a @class{gtk-event-box} widget}
@@ -119,13 +122,10 @@
     @class{gtk-event-box} class.
   @end{short}
 
-  The @sym{gtk-event-box-above-child} slot access function
-  returns whether the event box window is above or below the windows of its
-  child.
-
-  The @sym{(setf gtk-event-box-above-child)} slot access function
-  sets whether the event box window is positioned above the windows of its
-  child, as opposed to below it.
+  The slot access function @sym{gtk-event-box-above-child} returns whether the
+  event box window is above or below the windows of its child. The slot access
+  function @sym{(setf gtk-event-box-above-child)} sets whether the event box
+  window is positioned above the windows of its child, as opposed to below it.
 
   If the window is above, all events inside the event box will go to the event
   box. If the window is below, events in windows of child widgets will first
@@ -139,8 +139,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-window" 'gtk-event-box)
       't)
- "The @code{visible-window} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{visible-window} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether the event box is visible, as opposed to invisible and only used to
   trap events. @br{}
   Default value: @em{true}")
@@ -149,9 +149,9 @@
 (setf (gethash 'gtk-event-box-visible-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-visible-window 'function)
- "@version{2019-5-18}
-  @syntax[]{(gtk-event-box-above-child object) => above-child}
-  @syntax[]{(setf gtk-event-box-above-child object) above-child)}
+ "@version{2020-6-3}
+  @syntax[]{(gtk-event-box-visible-window object) => visible-window}
+  @syntax[]{(setf gtk-event-box-visible-window object) visible-window)}
   @argument[object]{a @class{gtk-event-box} widget}
   @argument[visible-window]{@em{true} to make the event box have a visible
     window}
@@ -160,16 +160,14 @@
     @class{gtk-event-box} class.
   @end{short}
 
-  The @sym{gtk-event-box-visible-window} slot access function
-  returns whether the event box has a visible window.
-
-  The @sym{(setf gtk-event-box-visisble-window)} slot access function
-  sets whether the event box uses a visible or invisible child window. The
-  default is to use visible windows.
+  The slot access function @sym{gtk-event-box-visible-window} returns whether
+  the event box has a visible window. The slot access function
+  @sym{(setf gtk-event-box-visible-window)} sets whether the event box uses a
+  visible or invisible child window. The default is to use visible windows.
 
   In an invisible window event box, the window that the event box creates is a
-  @code{:input-only} window, which means that it is invisible and only serves to
-  receive events.
+  @code{:input-only} window, which means that it is invisible and only serves
+  to receive events.
 
   A visible window event box creates a visible @code{:input-output} window that
   acts as the parent window for all the widgets contained in the event box.
@@ -182,12 +180,12 @@
   the background to a different color or draw on it.
   @begin[Note]{dictionary}
     There is one unexpected issue for an invisible event box that has its window
-    below the child. See the @fun{gtk-event-box-above-child} function. Since
+    below the child. See the function @fun{gtk-event-box-above-child}. Since
     the input-only window is not an ancestor window of any windows that
     descendent widgets of the event box create, events on these windows are not
     propagated up by the windowing system, but only by GTK+. The practical
     effect of this is if an event is not in the event mask for the descendant
-    window, see the @fun{gtk-widget-add-events} function, it will not be
+    window, see the function @fun{gtk-widget-add-events}, it will not be
     received by the event box.
 
     This problem does not occur for visible event boxes, because in that case,
@@ -204,9 +202,11 @@
 
 (defun gtk-event-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2020-6-3}
   @return{A new @class{gtk-event-box} widget.}
-  Creates a new @class{gtk-event-box} widget.
+  @begin{short}
+    Creates a new event box.
+  @end{short}
   @see-class{gtk-event-box}"
   (make-instance 'gtk-event-box))
 
