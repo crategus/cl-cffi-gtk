@@ -2,12 +2,12 @@
 ;;; gtk.viewport.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,21 +29,42 @@
 ;;;
 ;;; GtkViewport
 ;;;
-;;; An adapter which makes widgets scrollable
+;;;     An adapter which makes widgets scrollable
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkViewport
+;;;     GtkViewportClass
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_viewport_new
-;;;     gtk_viewport_get_hadjustment                     * deprecated
-;;;     gtk_viewport_get_vadjustment                     * deprecated
-;;;     gtk_viewport_set_hadjustment                     * deprecated
-;;;     gtk_viewport_set_vadjustment                     * deprecated
+;;;     gtk_viewport_get_hadjustment                       deprecated
+;;;     gtk_viewport_get_vadjustment                       deprecated
+;;;     gtk_viewport_set_hadjustment                       deprecated
+;;;     gtk_viewport_set_vadjustment                       deprecated
 ;;;     gtk_viewport_set_shadow_type                       Accessor
 ;;;     gtk_viewport_get_shadow_type                       Accessor
 ;;;     gtk_viewport_get_bin_window
 ;;;     gtk_viewport_get_view_window
+;;;
+;;; Properties
+;;;
+;;;     GtkShadowType    shadow-type    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkViewport
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkViewport implements AtkImplementorIface, GtkBuildable and
+;;;     GtkScrollable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -69,13 +90,13 @@
   @begin{short}
     The @sym{gtk-viewport} widget acts as an adaptor class, implementing
     scrollability for child widgets that lack their own scrolling capabilities.
-    Use @sym{gtk-viewport} to scroll child widgets such as @class{gtk-grid},
-    @class{gtk-box}, and so on.
   @end{short}
+  Use @sym{gtk-viewport} to scroll child widgets such as @class{gtk-grid},
+  @class{gtk-box}, and so on.
 
   If a widget has native scrolling abilities, such as @class{gtk-text-view},
   @class{gtk-tree-view} or @class{gtk-icon-view}, it can be added to a
-  @class{gtk-scrolled-window} with the @fun{gtk-container-add} function. If a
+  @class{gtk-scrolled-window} with the function @fun{gtk-container-add}. If a
   widget does not, you must first add the widget to a @sym{gtk-viewport}, then
   add the viewport to the scrolled window. The convenience function
   @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you
@@ -107,21 +128,19 @@
 (setf (gethash 'gtk-viewport-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-viewport-shadow-type 'function)
- "@version{2019-5-18}
+ "@version{2020-6-3}
   @syntax[]{(gtk-viewport-shadow-type object) => type}
   @syntax[]{(setf (gtk-viewport-shadow-type object) type)}
   @argument[viewport]{a @class{gtk-viewport} widget}
-  @argument[type]{the new shadow type}
+  @argument[type]{the new shadow type of type @symbol{gtk-shadow-type}}
   @begin{short}
     Accessor of the @slot[gtk-viewport]{shadow-type} slot of the
     @class{gtk-viewport} class.
   @end{short}
 
-  The @sym{gtk-viewport-shadow-type} slot access function
-  gets the shadow type of the @class{gtk-viewport}.
-
-  The @sym{(setf gtk-viewport-shadow-type)} slot access function
-  sets the shadow type of the viewport.
+  The slot access function @sym{gtk-viewport-shadow-type} gets the shadow type
+  of the @class{gtk-viewport}. The slot access function
+  @sym{(setf gtk-viewport-shadow-type)} sets the shadow type of the viewport.
   @see-class{gtk-viewport}")
 
 ;;; ----------------------------------------------------------------------------
@@ -132,11 +151,13 @@
 
 (defun gtk-viewport-new (&optional (hadjustment nil) (vadjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-15}
-  @argument[hadjustment]{horizontal adjustment}
-  @argument[vadjustment]{vertical adjustment}
+ "@version{2020-6-3}
+  @argument[hadjustment]{horizontal @class{gtk-adjustment} object}
+  @argument[vadjustment]{vertical @class{gtk-adjustment} object}
   @return{A new @class{gtk-viewport} widget.}
-  Creates a new @class{gtk-viewport} widget with the given adjustments.
+  @begin{short}
+    Creates a new viewport widget with the given adjustments.
+  @end{short}
   @see-class{gtk-viewport}"
   (make-instance 'gtk-viewport
                  :hadjustment hadjustment
@@ -236,7 +257,7 @@
  "@version{2020-5-3}
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
-  @short{Gets the bin window of the @class{gtk-viewport} widget.}
+  @short{Gets the bin window of the viewport widget.}
   @see-class{gtk-viewport}
   @see-class{gdk-window}"
   (viewport (g-object gtk-viewport)))
@@ -244,19 +265,19 @@
 (export 'gtk-viewport-bin-window)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_get_view_window ()
+;;; gtk_viewport_get_view_window () -> gtk-viewport-view-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_viewport_get_view_window" gtk-viewport-get-view-window)
+(defcfun ("gtk_viewport_get_view_window" gtk-viewport-view-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-15}
+ "@version{2020-6-3}
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
-  @short{Gets the view window of the @class{gtk-viewport} widget.}
+  @short{Gets the view window of the viewport widget.}
   @see-class{gtk-viewport}"
   (viewport (g-object gtk-viewport)))
 
-(export 'gtk-viewport-get-view-window)
+(export 'gtk-viewport-view-window)
 
 ;;; --- End of file gtk.viewport.lisp ------------------------------------------
