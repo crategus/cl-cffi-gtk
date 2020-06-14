@@ -358,7 +358,7 @@
   @see-constructor{make-gtk-requisition}
   @see-constructor{copy-gtk-requisition}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-preferred-size}")
+  @see-function{gtk-widget-preferred-size}")
 
 (export (boxed-related-symbols 'gtk-requisition))
 
@@ -2415,37 +2415,33 @@
 #+(and gtk-3-20 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-widget) 't)
  "The @code{focus-on-click} property of type @code{:boolean} (Read / Write)@br{}
-  Whether the widget should grab focus when it is clicked with the mouse.
-  This property is only relevant for widgets that can take focus.
-  Before 3.20, several widgets (@class{gtk-button},
-  @class{gtk-file-chooser-button}, @class{gtk-combo-box}) implemented this
-  property individually. @br{}
-  Default value: @em{true} @br{}
-  Since 3.20")
+  Whether the widget should grab focus when it is clicked with the mouse. This
+  property is only relevant for widgets that can take focus. Before 3.20,
+  several widgets, @class{gtk-button}, @class{gtk-file-chooser-button},
+  @class{gtk-combo-box}, implemented this property individually. Since 3.20@br{}
+  Default value: @em{true}")
 
 #+(and gtk-3-20 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-widget-focus-on-click atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-focus-on-click 'function)
- "@version{2019-3-5}
+ "@version{2020-6-1}
+  @syntax[]{(gtk-widget-focus-on-click object) => focus-on-click}
+  @syntax[]{(setf (gtk-widget-focus-on-click object) focus-on-click)}
   @argument[object]{a @class{gtk-widget} object}
-  @syntax[]{(gtk-widget-expand object) => focus-on-click}
-  @syntax[]{(setf (gtk-widget-expand object) focus-on-click)}
+  @argument[focus-on-click]{a boolean wether the widget should grab focus}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{focus-on-click} of the
+    Accessor of the @slot[gtk-widget]{focus-on-click} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{(setf gtk-widget-events)} sets the event mask for
-  @arg{widget}.
+  The slot access function @sym{gtk-widget-focus-on-click} returns @em{true}
+  if the widget should grab focus when it is clicked with the mouse. The slot
+  access function @sym{(setf gtk-widget-focus-on-click)} sets whether the
+  widget should grab focus when it is clicked with the mouse.
 
-  The generic function @sym{gtk-widget-focus-on-click} returns @code{t}
-  if the widget should grab focus when it is clicked with the mouse.
-
-  The generic function @sym{(setf gtk-widget-focus-on-click)} sets whether the
-  widget should grab focus when it is clicked with the mouse. Making mouse
-  clicks not grab focus is useful in places like toolbars where you don’t want
-  the keyboard focus removed from the main area of the application.
+  Making mouse clicks not grab focus is useful in places like toolbars where you
+  do not want the keyboard focus removed from the main area of the application.
 
   Since 3.20
   @see-class{gtk-widget}")
@@ -7006,8 +7002,7 @@
   A value of -1 stored in @arg{width} or @arg{height} indicates that that
   dimension has not been set explicitly and the natural requisition of the
   widget will be used instead. To get the size a widget will actually request,
-  call the function @fun{gtk-widget-get-preferred-size} instead of this
-  function.
+  call the function @fun{gtk-widget-preferred-size} instead of this function.
 
   The generic function @sym{(setf gtk-widget-size-request)} sets the minimum
   size of a widget. That is, the widget's size request will be @arg{width} by
@@ -7043,7 +7038,7 @@
   @slot[gtk-widget]{margin-bottom}, but it does include pretty much all other
   padding or border properties set by any subclass of @class{gtk-widget}.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-preferred-size}
+  @see-function{gtk-widget-preferred-size}
   @see-function{gtk-window-default-size}
   @see-function{gtk-window-set-geometry-hints}")
 
@@ -7295,48 +7290,44 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_tooltip_window ()
+;;; gtk_widget_set_tooltip_window () -> gtk-widget-tooltip-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_tooltip_window" gtk-widget-get-tooltip-window)
+(defun (setf gtk-widget-tooltip-window) (custom-window widget)
+  (foreign-funcall "gtk_widget_set_tooltip_window"
+                   (g-object gtk-widget) widget
+                   (g-object gtk-window) custom-window
+                   :void)
+  custom-window)
+
+(defcfun ("gtk_widget_get_tooltip_window" gtk-widget-tooltip-window)
     (g-object gtk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @class{gtk-window} instance of the current tooltip}
-  @begin{short}
-    Returns the @class{gtk-window} instance of the current tooltip.
-  @end{short}
-  This can be the @class{gtk-window} instance created by default, or the custom
-  tooltip window set using @fun{gtk-widget-set-tooltip-window}.
-  @see-function{gtk-widget-set-tooltip-window}"
-  (widget (g-object gtk-window)))
-
-(export 'gtk-widget-get-tooltip-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_tooltip_window ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_tooltip_window" gtk-widget-set-tooltip-window) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2020-6-3}
+  @syntax[]{(gtk-widget-tooltip-window widget) => custom-window}
+  @syntax[]{(setf (gtk-widget-tooltip-window widget) custom-window)}
   @argument[widget]{a @class{gtk-widget} instance}
   @argument[custom-window]{a @class{gtk-window} instance, or @arg{nil}}
   @begin{short}
-    Replaces the default, usually yellow, window used for displaying tooltips
-    with @arg{custom-window}.
+    Accessor of the custom window of the current tooltip.
   @end{short}
-  GTK+ will take care of showing and hiding @arg{custom-window} at the right
-  moment, to behave likewise as the default tooltip window. If
-  @arg{custom-window} is @arg{nil}, the default tooltip window will be used.
+
+  The function @sym{gtk-widget-tooltip-window} returns the custom windw of the
+  current tooltip. The function @sym{(setf gtk-widget-tooltip-window)} replaces
+  the default, usually yellow, window used for displaying tooltips with the
+  custom window.
+
+  GTK+ will take care of showing and hiding the custom window at the right
+  moment, to behave likewise as the default tooltip window. If the custom
+  window is @code{nil}, the default tooltip window will be used.
 
   If the custom window should have the default theming it needs to have the
-  name \"gtk-tooltip\", see the generic function @fun{gtk-widget-name}.
+  name \"gtk-tooltip\", see the function @fun{gtk-widget-name}.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-name}"
-  (widget (g-object gtk-window))
-  (custom-window (g-object gtk-window)))
+  (widget (g-object gtk-window)))
 
-(export 'gtk-widget-set-tooltip-window)
+(export 'gtk-widget-tooltip-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_trigger_tooltip_query ()
@@ -8245,10 +8236,10 @@
   @end{short}
   GtkContainers may want to use this on a child when reordering it in a way that
   a different style might apply to it. See also the function
-  @fun{gtk-container-get-path-for-child}.
+  @fun{gtk-container-path-for-child}.
   @see-class{gtk-widget}
   @see-class{gtk-widget-path}
-  @see-function{gtk-container-get-path-for-child}"
+  @see-function{gtk-container-path-for-child}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-reset-style)
@@ -8492,7 +8483,7 @@
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-width}
-  @see-function{gtk-widget-get-preferred-size}"
+  @see-function{gtk-widget-preferred-size}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
     (%gtk-widget-get-preferred-height widget minimum-height natural-height)
     (values (mem-ref minimum-height :int)
@@ -8544,7 +8535,7 @@
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-height}
-  @see-function{gtk-widget-get-preferred-size}"
+  @see-function{gtk-widget-preferred-size}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
     (%gtk-widget-get-preferred-width widget minimum-width natural-width)
     (values (mem-ref minimum-width :int)
@@ -8717,13 +8708,15 @@
   (minium-size (g-boxed-foreign gtk-requisition))
   (natural-size (g-boxed-foreign gtk-requisition)))
 
-(defun gtk-widget-get-preferred-size (widget)
+(defun gtk-widget-preferred-size (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-6-4}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{return}
-    @code{minimum-size} -- the minimum size, or @code{nil} @br{}
-    @code{natural-size} -- the natural size, or @code{nil}
+    @code{minimum-size} -- a @class{gtk-requisition} with the minimum size,
+                           or @code{nil} @br{}
+    @code{natural-size} -- a @class{gtk-requistion} with the the natural size,
+                           or @code{nil}
   @end{return}
   @begin{short}
     Retrieves the minimum and natural size of a widget, taking into
@@ -8748,7 +8741,7 @@
     (values minimum-size
             natural-size)))
 
-(export 'gtk-widget-get-preferred-size)
+(export 'gtk-widget-preferred-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_distribute_natural_allocation ()
