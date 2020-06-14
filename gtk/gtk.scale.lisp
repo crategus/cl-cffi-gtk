@@ -2,7 +2,7 @@
 ;;; gtk.scale.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -54,19 +54,19 @@
 ;;;
 ;;; Properties
 ;;;
-;;;                gint   digits           Read / Write
-;;;            gboolean   draw-value       Read / Write
-;;;            gboolean   has-origin       Read / Write
-;;;     GtkPositionType   value-pos        Read / Write
+;;;                gint    digits           Read / Write
+;;;            gboolean    draw-value       Read / Write
+;;;            gboolean    has-origin       Read / Write
+;;;     GtkPositionType    value-pos        Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;                gint   slider-length    Read
-;;;                gint   value-spacing    Read
+;;;                gint    slider-length    Read
+;;;                gint    value-spacing    Read
 ;;;
 ;;; Signals
 ;;;
-;;;               gchar*  format-value     Run Last
+;;;               gchar*   format-value     Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -111,13 +111,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scale 'type)
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @begin{short}
     A @sym{gtk-scale} is a slider control used to select a numeric value. To
     use it, you will probably want to investigate the methods on its base class,
     @class{gtk-range}, in addition to the methods for @sym{gtk-scale} itself.
     To set the value of a scale, you would normally use the function
-    @fun{gtk-range-set-value}. To detect changes to the value, you would
+    @fun{gtk-range-value}. To detect changes to the value, you would
     normally use the \"value-changed\" signal.
   @end{short}
 
@@ -163,7 +163,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"format-value\" signal}
       @begin{pre}
- lambda (scale value)   : Run Last
+ lambda (scale value)    : Run Last
       @end{pre}
       Signal which allows you to change how the scale value is displayed.
       Connect a signal handler which returns an allocated string representing
@@ -180,9 +180,9 @@
  @}
       @end{pre}
       @begin[code]{table}
-        @entry[scale]{The object which received the signal.}
-        @entry[value]{The value to format.}
-        @entry[Returns]{Allocated string representing value.}
+        @entry[scale]{The @sym{gtk-scale} widget which received the signal.}
+        @entry[value]{A @code{:double} with the value to format.}
+        @entry[Returns]{String representing the value.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-scale-digits}
@@ -207,32 +207,30 @@
 (setf (gethash 'gtk-scale-digits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-digits 'function)
- "@version{2015-2-22}
-  @argument[object]{a @class{gtk-scale} widget}
-  @argument[digits]{the number of decimal places to display, e. g. use 1 to
-    display 1.0, 2 to display 1.00, etc}
+ "@version{2020-5-31}
   @syntax[]{(gtk-scale-digits object) => digits}
   @syntax[]{(setf (gtk-scale-digits object) digits)}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[digits]{an integer with the number of decimal places to display,
+    e. g. use 1 to display 1.0, 2 to display 1.00, etc}
   @begin{short}
-    Accessor of the slot @slot[gtk-scale]{digits} of the @class{gtk-scale}
+    Accessor of the @slot[gtk-scale]{digits} slot of the @class{gtk-scale}
     class.
   @end{short}
 
-  The generic function @sym{gtk-scale-digits} returns the number of decimal
-  places that are displayed.
-
-  The generic function @sym{(setf gtk-scale-digits)} sets the number of decimal
-  places that are displayed in the value. Also causes the value of the
-  adjustment to be rounded off to this number of @arg{digits}, so the retrieved
-  value matches the value the user saw.
+  The slot access function @sym{gtk-scale-digits} returns the number of decimal
+  places that are displayed. The slot access function
+  @sym{(setf gtk-scale-digits)} sets the number of decimal places that are
+  displayed in the value. Also causes the value of the adjustment to be rounded
+  off to this number of @arg{digits}, so the retrieved value matches the value
+  the user saw.
   @see-class{gtk-scale}")
 
 ;;; --- gtk-scale-draw-value ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw-value" 'gtk-scale) 't)
- "The @code{draw-value} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{draw-value} property of type @code{:boolean} (Read / Write) @br{}
   Whether the current value is displayed as a string next to the slider. @br{}
   Default value: @em{true}")
 
@@ -240,29 +238,27 @@
 (setf (gethash 'gtk-scale-draw-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-draw-value 'function)
- "@version{2015-2-22}
-  @argument[object]{a @class{gtk-scale} widget}
-  @argument[draw-value]{@em{true} to draw the value}
+ "@version{2020-5-31}
   @syntax[]{(gtk-scale-draw-value object) => draw-value}
   @syntax[]{(setf (gtk-scale-digits object) draw-value)}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[draw-value]{@em{true} to draw the value}
   @begin{short}
-    Accessor of the slot @slot[gtk-scale]{draw-value} of the @class{gtk-scale}
+    Accessor of the @slot[gtk-scale]{draw-value} slot of the @class{gtk-scale}
     class.
   @end{short}
 
-  The generic function @sym{gtk-scale-draw-value} returns whether the current
-  value is displayed as a string next to the slider.
-
-  The generic function @sym{(setf gtk-scale-draw-value)} specifies whether the
-  current value is displayed as a string next to the slider.
+  The slot access function @sym{gtk-scale-draw-value} returns whether the
+  current value is displayed as a string next to the slider. The slot access
+  function @sym{(setf gtk-scale-draw-value)} specifies whether the current value
+  is displayed as a string next to the slider.
   @see-class{gtk-scale}")
 
 ;;; --- gtk-scale-has-origin ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-origin" 'gtk-scale) 't)
- "The @code{has-origin} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{has-origin} property of type @code{:boolean} (Read / Write) @br{}
   Whether the scale has an origin. @br{}
   Default value: @em{true}")
 
@@ -270,22 +266,22 @@
 (setf (gethash 'gtk-scale-has-origin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-has-origin 'function)
- "@version{2015-2-22}
-  @argument[object]{a @class{gtk-scale} widget}
-  @argument[has-origin]{@em{true} if the scale has an origin}
+ "@version{2020-5-31}
   @syntax[]{(gtk-scale-has-origin object) => has-origin}
   @syntax[]{(setf (gtk-scale-digits object) has-origin)}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[has-origin]{@em{true} if the scale has an origin}
   @begin{short}
-    Accessor of the slot @slot[gtk-scale]{has-origin} of the @class{gtk-scale}
+    Accessor of the @slot[gtk-scale]{has-origin} slot of the @class{gtk-scale}
     class.
   @end{short}
 
-  The generic function @sym{gtk-scale-has-origin} returns whether the scale has
-  an origin.
+  The slot access function @sym{gtk-scale-has-origin} returns whether the scale
+  has an origin.
 
-  If @arg{has-origin} is set to @em{true} (the default), the scale will
-  highlight the part of the scale between the origin (bottom or left
-  side) of the scale and the current value.
+  If @arg{has-origin} is set to @em{true}, the default, the scale will
+  highlight the part of the scale between the origin, bottom or left
+  side, of the scale and the current value.
   @see-class{gtk-scale}")
 
 ;;; --- gtk-scale-value-pos ----------------------------------------------------
@@ -301,21 +297,21 @@
 (setf (gethash 'gtk-scale-value-pos atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-value-pos 'function)
- "@version{2015-2-22}
-  @argument[object]{a @class{gtk-scale} widget}
-  @argument[pos]{the position in which the current value is displayed}
+ "@version{2020-5-31}
   @syntax[]{(gtk-scale-value-pos object) => pos}
   @syntax[]{(setf (gtk-scale-digits object) pos)}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[pos]{a @symbol{gtk-position-type} with the position in which the
+    current value is displayed}
   @begin{short}
-    Accessor of the slot @slot[gtk-scale]{value-pos} of the @class{gtk-scale}
+    Accessor of the @slot[gtk-scale]{value-pos} slot of the @class{gtk-scale}
     class.
   @end{short}
 
-  The generic function @sym{gtk-scale-value-pos} gets the position in which the
-  current value is displayed.
-
-  The generic function @sym{gtk-scale-value-pos} sets the position in which the
-  current value is displayed.
+  The slot access function @sym{gtk-scale-value-pos} gets the position in which
+  the current value is displayed. The slot access function
+  @sym{gtk-scale-value-pos} sets the position in which the current value is
+  displayed.
   @see-class{gtk-scale}")
 
 ;;; ----------------------------------------------------------------------------
@@ -326,12 +322,12 @@
 
 (defun gtk-scale-new (orientation adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[orientation]{the scale's orientation.}
+ "@version{2020-5-31}
+  @argument[orientation]{a value of the @symbol{gtk-orientation} enumeration}
   @argument[adjustment]{the @class{gtk-adjustment} object which sets the range
     of the scale, or @code{nil} to create a new adjustment}
   @return{A new @class{gtk-scale} widget.}
-  @short{Creates a new @class{gtk-scale} widget.}
+  @short{Creates a new scale widget.}
   @see-class{gtk-scale}"
   (make-instance 'gtk-scale
                  :orientation orientation
@@ -347,25 +343,26 @@
 
 (defun gtk-scale-new-with-range (orientation min max step)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[orientation]{the scale's orientation}
-  @argument[min]{minimum value}
-  @argument[max]{maximum value}
-  @argument[step]{step increment (tick size) used with keyboard shortcuts}
+ "@version{2020-5-31}
+  @argument[orientation]{a value of the @symbol{gtk-orientation} enumeration}
+  @argument[min]{a @code{:double} with the minimum value}
+  @argument[max]{a @code{:double} with the maximum value}
+  @argument[step]{a @code{:double} with the step increment, tick size, used
+    with keyboard shortcuts}
   @return{A new @class{gtk-scale} widget.}
   @begin{short}
     Creates a new scale widget with the given @arg{orientation} that lets the
-    user input a number between @arg{min} and @arg{max} (including @arg{min}
-    and @arg{max}) with the increment @arg{step}. @arg{step} must be nonzero;
-    it is the distance the slider moves when using the arrow keys to adjust the
-    scale value.
+    user input a number between @arg{min} and @arg{max}, including @arg{min}
+    and @arg{max}, with the increment @arg{step}.
   @end{short}
+  @arg{step} must be nonzero. It is the distance the slider moves when using
+  the arrow keys to adjust the scale value.
 
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
-  use the function @fun{gtk-scale-set-digits} to correct it.
+  use the function @fun{gtk-scale-digits} to correct it.
   @see-class{gtk-scale}
-  @see-function{gtk-scale-set-digits}"
+  @see-function{gtk-scale-digits}"
   (make-instance 'gtk-scale
                  :orientation orientation
                  :adjustment (make-instance 'gtk-adjustment
@@ -376,28 +373,28 @@
 (export 'gtk-scale-new-with-range)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_layout ()
+;;; gtk_scale_get_layout () -> gtk-scale-layout
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_scale_get_layout" gtk-scale-get-layout) (g-object pango-layout)
+(defcfun ("gtk_scale_get_layout" gtk-scale-layout)
+    (g-object pango-layout :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @argument[scale]{a @class{gtk-scale} widget}
   @begin{return}
     The @class{pango-layout} for this scale, or @code{nil} if the
     @slot[gtk-scale]{draw-value} property is @code{nil}.
   @end{return}
   @begin{short}
-    Gets the @class{pango-layout} used to display the scale. The returned object
-    is owned by the scale so does not need to be freed by the caller.
+    Gets the @class{pango-layout} used to display the scale.
   @end{short}
   @see-class{gtk-scale}"
   (scale (g-object gtk-scale)))
 
-(export 'gtk-scale-get-layout)
+(export 'gtk-scale-layout)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_layout_offsets ()
+;;; gtk_scale_get_layout_offsets () -> gtk-scale-layout-offsets
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scale_get_layout_offsets" %gtk-scale-get-layout-offsets) :void
@@ -405,30 +402,31 @@
   (x (:pointer :int))
   (y (:pointer :int)))
 
-(defun gtk-scale-get-layout-offsets (scale)
+(defun gtk-scale-layout-offsets (scale)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @argument[scale]{a @class{gtk-scale} widget}
   @begin{return}
-    @code{x} -- X offset of layout, or @code{nil} @br{}
-    @code{y} -- Y offset of layout, or @code{nil}
+    @code{x} -- an integer with the x offset of layout, or @code{nil} @br{}
+    @code{y} -- an integer with the y offset of layout, or @code{nil}
   @end{return}
   @begin{short}
     Obtains the coordinates where the scale will draw the @class{pango-layout}
-    representing the text in the scale. Remember when using the
-    @class{pango-layout} function you need to convert to and from pixels using
-    @code{PANGO_PIXELS()} or @code{PANGO_SCALE}.
+    representing the text in the scale.
   @end{short}
-
-  If the @slot[gtk-scale]{draw-value} property is @code{nil}, the return values are
-  undefined.
-  @see-class{gtk-scale}"
+  Remember when using the @class{pango-layout} functions you need to convert
+  to and from pixels using the function @fun{pango-pixels} or the constant
+  @var{+pango-scale+}. If the @slot[gtk-scale]{draw-value} property is
+  @code{nil}, the return values are undefined.
+  @see-class{gtk-scale}
+  @see-function{pango-pixels}
+  @see-variable{+pango-scale+}"
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-scale-get-layout-offsets scale x y)
     (values (mem-ref x :int)
             (mem-ref y :int))))
 
-(export 'gtk-scale-get-layout-offsets)
+(export 'gtk-scale-layout-offsets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_add_mark ()
@@ -436,13 +434,13 @@
 
 (defcfun ("gtk_scale_add_mark" gtk-scale-add-mark) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @argument[scale]{a @class{gtk-scale} widget}
-  @argument[value]{the value at which the mark is placed, must be between the
-    lower and upper limits of the scales' adjustment}
-  @argument[position]{where to draw the mark}
-  @argument[markup]{Text to be shown at the mark, using Pango markup,
-    or @code{nil}}
+  @argument[value]{a @code{:double} with the value at which the mark is placed,
+    must be between the lower and upper limits of the scale's adjustment}
+  @argument[position]{a value of the @symbol{gtk-position-type} enumeration}
+  @argument[markup]{a string with the text to be shown at the mark, using Pango
+    markup, or @code{nil}}
   @short{Adds a mark at value.}
 
   A mark is indicated visually by drawing a tick mark next to the scale, and
@@ -469,7 +467,7 @@
 
 (defcfun ("gtk_scale_clear_marks" gtk-scale-clear-marks) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2020-5-31}
   @argument[scale]{a @class{gtk-scale} widget}
   @begin{short}
     Removes any marks that have been added with the function
@@ -533,8 +531,6 @@
 ;;; gtk_hscale_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-hscale-new))
-
 (defun gtk-hscale-new (adjustment)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
@@ -556,8 +552,6 @@
 ;;; gtk_hscale_new_with_range ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-hscale-new-with-range))
-
 (defun gtk-hscale-new-with-range (min max step)
  #+cl-cffi-gtk-documentation
  "@version{2014-1-22}
@@ -574,7 +568,7 @@
 
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
-  use  the function @fun{gtk-scale-set-digits} to correct it.
+  use  the function @fun{gtk-scale-digits} to correct it.
   @begin[Warning]{dictionary}
     @sym{gtk-hscale-new-with-range} has been deprecated since version 3.2 and
     should not be used in newly written code. Use the function
@@ -582,7 +576,7 @@
   @end{dictionary}
   @see-class{gtk-hscale}
   @see-function{gtk-scale-new-with-range}
-  @see-function{gtk-scale-set-digits}"
+  @see-function{gtk-scale-digits}"
   (make-instance 'gtk-scale
                  :orientation :horizontal
                  :adjustment (make-instance 'gtk-adjustment
@@ -641,8 +635,6 @@
 ;;; gtk_vscale_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-vscale-new))
-
 (defun gtk-vscale-new (adjustment)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
@@ -663,8 +655,6 @@
 ;;; gtk_vscale_new_with_range ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-vscale-new-with-range))
-
 (defun gtk-vscale-new-with-range (min max step)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
@@ -681,13 +671,13 @@
 
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
-  use the function @fun{gtk-scale-set-digits} to correct it.
+  use the function @fun{gtk-scale-digits} to correct it.
   @begin[Warning]{dictionary}
     @sym{gtk-vscale-new-with-range} has been deprecated since version 3.2 and
     should not be used in newly written code. Use the function
     @fun{gtk-scale-new-with-range} with @code{:vertical} instead.
   @end{dictionary}
-  @see-function{gtk-scale-set-digits}"
+  @see-function{gtk-scale-digits}"
   (make-instance 'gtk-scale
                  :orientation :vertical
                  :adjustment (make-instance 'gtk-adjustment
