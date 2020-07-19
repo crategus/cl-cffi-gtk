@@ -2,11 +2,11 @@
 ;;; gtk.cell-area.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +33,6 @@
 ;;; Types and Values
 ;;;
 ;;;     GtkCellArea
-;;;     GtkCellAreaClass
 ;;;
 ;;; Functions
 ;;;
@@ -92,16 +91,16 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkCellEditable*  edit-widget        Read
-;;;     GtkCellRenderer*  edited-cell        Read
-;;;     GtkCellRenderer*  focus-cell         Read / Write
+;;;     GtkCellEditable*   edit-widget         Read
+;;;     GtkCellRenderer*   edited-cell         Read
+;;;     GtkCellRenderer*   focus-cell          Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;                void   add-editable       Run First
-;;;                void   apply-attributes   Run First
-;;;                void   focus-changed      Run First
-;;;                void   remove-editable    Run First
+;;;                void    add-editable        Run First
+;;;                void    apply-attributes    Run First
+;;;                void    focus-changed       Run First
+;;;                void    remove-editable     Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -139,10 +138,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-area 'type)
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @begin{short}
     The @sym{gtk-cell-area} is an abstract class for @class{gtk-cell-layout}
-    widgets (also referred to as \"layouting widgets\") to interface with an
+    widgets, also referred to as \"layouting widgets\", to interface with an
     arbitrary number of @class{gtk-cell-renderer}'s and interact with the user
     for a given @class{gtk-tree-model} row.
   @end{short}
@@ -168,19 +167,19 @@
     around, requesting height for more cell areas when allocated less width.
 
     It is also important for areas to maintain some cell alignments with areas
-    rendered for adjacent rows (cells can appear \"columnized\" inside an area
-    even when the size of cells are different in each row). For this reason the
+    rendered for adjacent rows, cells can appear \"columnized\" inside an area
+    even when the size of cells are different in each row. For this reason the
     @sym{gtk-cell-area} uses a @class{gtk-cell-area-context} object to store the
-    alignments and sizes along the way (as well as the overall largest minimum
+    alignments and sizes along the way, as well as the overall largest minimum
     and natural size for all the rows which have been calculated with the said
-    context).
+    context.
 
     The @class{gtk-cell-area-context} is an opaque object specific to the
-    @sym{gtk-cell-area} which created it (see the function
-    @fun{gtk-cell-area-create-context}). The owning cell-layouting widget can
+    @sym{gtk-cell-area} which created it, see the function
+    @fun{gtk-cell-area-create-context}. The owning cell-layouting widget can
     create as many contexts as it wishes to calculate sizes of rows which should
-    receive the same size in at least one orientation (horizontally or
-    vertically), However, it is important that the same
+    receive the same size in at least one orientation, horizontally or
+    vertically. However, it is important that the same
     @class{gtk-cell-area-context} which was used to request the sizes for a
     given @class{gtk-tree-model} row be used when rendering or processing events
     for that row.
@@ -215,8 +214,8 @@
     This can be useful since @class{gtk-cell-layout} widgets usually have to
     support requesting and rendering rows in treemodels with an exceedingly
     large amount of rows. The @class{gtk-cell-layout} widget in that case would
-    calculate the required width of the rows in an idle or timeout source (see
-    the function @fun{g-timeout-add}) and when the widget is requested its
+    calculate the required width of the rows in an idle or timeout source, see
+    the function @fun{g-timeout-add}, and when the widget is requested its
     actual width in @code{get_preferred_width()} it can simply consult the width
     accumulated so far in the @class{gtk-cell-area-context} object.
 
@@ -239,17 +238,18 @@
                                                              natural_size);
  @}
     @end{pre}
-    In the above example the Foo widget has to make sure that some row sizes
-    have been calculated (the amount of rows that Foo judged was appropriate to
-    request space for in a single timeout iteration) before simply returning the
-    amount of space required by the area via the @class{gtk-cell-area-context}.
+    In the above example the @code{Foo} widget has to make sure that some row
+    sizes have been calculated, the amount of rows that @code{Foo} judged was
+    appropriate to request space for in a single timeout iteration, before
+    simply returning the amount of space required by the area via the
+    @class{gtk-cell-area-context}.
 
-    Requesting the height for width (or width for height) of an area is a
+    Requesting the height for width, or width for height, of an area is a
     similar task except in this case the @class{gtk-cell-area-context} does not
-    store the data (actually, it does not know how much space the layouting
+    store the data, actually, it does not know how much space the layouting
     widget plans to allocate it for every row. It is up to the layouting widget
     to render each row of data with the appropriate height and width which was
-    requested by the @sym{gtk-cell-area}).
+    requested by the @sym{gtk-cell-area}.
 
     In order to request the height for width of all the rows at the root level
     of a @class{gtk-tree-model} one would do the following:
@@ -286,17 +286,18 @@
     is intended for the layouting widgets real allocation.
 
     In some cases the layouting widget is requested the height for an arbitrary
-    for_width, this is a special case for layouting widgets who need to request
-    size for tens of thousands of rows. For this case it is only important that
-    the layouting widget calculate one reasonably sized chunk of rows and return
-    that height synchronously. The reasoning here is that any layouting widget
-    is at least capable of synchronously calculating enough height to fill the
-    screen height (or scrolled window height) in response to a single call to
-    @code{get_preferred_height_for_width()}. Returning a perfect height
-    for width that is larger than the screen area is inconsequential since after
-    the layouting receives an allocation from a scrolled window it simply
-    continues to drive the the scrollbar values while more and more height is
-    required for the row heights that are calculated in the background.
+    @code{for_width}, this is a special case for layouting widgets who need to
+    request size for tens of thousands of rows. For this case it is only
+    important that the layouting widget calculate one reasonably sized chunk of
+    rows and return that height synchronously. The reasoning here is that any
+    layouting widget is at least capable of synchronously calculating enough
+    height to fill the screen height, or scrolled window height, in response to
+    a single call to @code{get_preferred_height_for_width()}. Returning a
+    perfect height for width that is larger than the screen area is
+    inconsequential since after the layouting receives an allocation from a
+    scrolled window it simply continues to drive the the scrollbar values while
+    more and more height is required for the row heights that are calculated in
+    the background.
 
   @subheadint{Rendering Areas}
     Once area sizes have been aquired at least for the rows in the visible area
@@ -344,7 +345,7 @@
     API as they come in. Usually @sym{gtk-cell-area} is only interested in
     button events, however some customized derived areas can be implemented who
     are interested in handling other events. Handling an event can trigger the
-    \"focus-changed\" signal to fire; as well as \"add-editable\" in the case
+    \"focus-changed\" signal to fire. As well as \"add-editable\" in the case
     that an editable cell was clicked and needs to start editing. You can call
     the function @fun{gtk-cell-area-stop-editing} at any time to cancel any cell
     editing that is currently in progress.
@@ -456,7 +457,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"add-editable\" signal}
       @begin{pre}
- lambda (area renderer editable cell-area path)   : Run First
+ lambda (area renderer editable cell-area path)    : Run First
       @end{pre}
       Indicates that editing has started on @arg{renderer} and that
       @arg{editable} should be added to the owning cell-layouting widget at
@@ -472,7 +473,7 @@
       @end{table}
     @subheading{The \"apply-attributes\" signal}
       @begin{pre}
- lambda (area model iter is-expander is-expanded)   : Run First
+ lambda (area model iter is-expander is-expanded)    : Run First
       @end{pre}
       This signal is emitted whenever applying attributes to area from model.
       @begin[code]{table}
@@ -486,7 +487,7 @@
       @end{table}
     @subheading{The \"focus-changed\" signal}
       @begin{pre}
- lambda (area renderer path)   : Run First
+ lambda (area renderer path)    : Run First
       @end{pre}
       Indicates that focus changed on this area. This signal is emitted either
       as a result of focus handling or event handling.
@@ -500,7 +501,7 @@
       @end{table}
     @subheading{The \"remove-editable\" signal}
       @begin{pre}
- lambda (area renderer editable)   : Run First
+ lambda (area renderer editable)    : Run First
       @end{pre}
       Indicates that editing finished on @arg{renderer} and that @arg{editable}
       should be removed from the owning cell-layouting widget.
@@ -522,17 +523,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "edit-widget" 'gtk-cell-area) 't)
- "The @code{edit-widget} property of type @class{gtk-cell-editable}
-  (Read) @br{}
+ "The @code{edit-widget} property of type @class{gtk-cell-editable} (Read) @br{}
   The widget currently editing the edited cell. This property is read-only and
-  only changes as a result of a call the @fun{gtk-cell-area-activate-cell}
-  function.")
+  only changes as a result of calling the function
+  @fun{gtk-cell-area-activate-cell}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-edit-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edit-widget 'function)
- "@version{2019-5-6}
+ "@version{2020-6-21}
   @syntax[]{(gtk-cell-area-edit-widget object) => edit-widget}
   @argument[object]{a @class{gtk-cell-area} object}
   @argument[edit-widget]{the @class{gtk-cell-editable} widget}
@@ -541,36 +541,36 @@
     @class{gtk-cell-area} class.
   @end{short}
 
-  The @sym{gtk-cell-area-edit-widget} slot access function
-  gets the @class{gtk-cell-editable} widget currently used to edit the
-  currently edited cell.
-  @see-class{gtk-cell-area}")
+  The slot access function @sym{gtk-cell-area-edit-widget} gets the
+  @class{gtk-cell-editable} widget currently used to edit the currently edited
+  cell.
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-editable}")
 
 ;;; --- gtk-cell-area-edited-cell ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "edited-cell" 'gtk-cell-area) 't)
- "The @code{edited-cell} property of type @class{gtk-cell-renderer}
-  (Read) @br{}
+ "The @code{edited-cell} property of type @class{gtk-cell-renderer} (Read) @br{}
   The cell in the area that is currently edited. This property is read-only and
-  only changes as a result of a call the  @fun{gtk-cell-area-activate-cell}
-  function.")
+  only changes as a result of calling the function
+  @fun{gtk-cell-area-activate-cell}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-edited-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edited-cell 'function)
- "@version{2019-5-6}
-  @syntax[]{(gtk-cell-area-edited-cell object) => cell}
+ "@version{2020-6-21}
+  @syntax[]{(gtk-cell-area-edited-cell object) => renderer}
   @argument[object]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object}
   @begin{short}
-    Accessor of the @slot[gtk-cell-area]{edited-cell} of the
+    Accessor of the @slot[gtk-cell-area]{edited-cell} slot of the
     @class{gtk-cell-area} class.
   @end{short}
 
-  The @sym{gtk-cell-area-edited-cell} slot access function
-  gets the @class{gtk-cell-renderer} in the area that is currently being edited.
+  The slot access function @sym{gtk-cell-area-edited-cell} gets the
+  @class{gtk-cell-renderer} in the area that is currently being edited.
   @see-class{gtk-cell-area}")
 
 ;;; --- gtk-cell-area-focus-cell -----------------------------------------------
@@ -585,225 +585,25 @@
 (setf (gethash 'gtk-cell-area-focus-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-focus-cell 'function)
- "@version{2019-5-6}
+ "@version{2020-6-21}
   @syntax[]{(gtk-cell-area-edited-cell object) => renderer}
   @syntax[]{(setf (gtk-cell-area-edited-cell object) renderer}
-  @argument[area]{a @class{gtk-cell-area} widget}
+  @argument[object]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} to give focus to}
   @begin{short}
-    Accessor of the @slot[gtk-cell-area]{focus-cell} of the
+    Accessor of the @slot[gtk-cell-area]{focus-cell} slot of the
     @class{gtk-cell-area} class.
   @end{short}
 
-  The @sym{gtk-cell-area-focus-cell} slot access function
-  retrieves the currently focused cell for the area.
-
-  The @sym{(setf gtk-cell-area-focus-cell)} slot access function
-  explicitly sets the currently focused cell to @arg{renderer}.
+  The slot access function @sym{gtk-cell-area-focus-cell} retrieves the
+  currently focused cell for the area. The slot access function
+  @sym{(setf gtk-cell-area-focus-cell)} explicitly sets the currently focused
+  cell to @arg{renderer}.
 
   This is generally called by implementations of @code{GtkCellAreaClass.focus()}
   or @code{GtkCellAreaClass.event()}, however it can also be used to implement
   functions such as the function @fun{gtk-tree-view-set-cursor-on-cell}.
   @see-class{gtk-cell-area}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkCellAreaClass
-;;;
-;;; struct GtkCellAreaClass {
-;;;   /* Basic methods */
-;;;   void (* add)              (GtkCellArea             *area,
-;;;                              GtkCellRenderer         *renderer);
-;;;   void (* remove)           (GtkCellArea             *area,
-;;;                              GtkCellRenderer         *renderer);
-;;;   void (* foreach)          (GtkCellArea             *area,
-;;;                              GtkCellCallback          callback,
-;;;                              gpointer                 callback_data);
-;;;   void (* foreach_alloc)    (GtkCellArea             *area,
-;;;                              GtkCellAreaContext      *context,
-;;;                              GtkWidget               *widget,
-;;;                              const GdkRectangle      *cell_area,
-;;;                              const GdkRectangle      *background_area,
-;;;                              GtkCellAllocCallback     callback,
-;;;                              gpointer                 callback_data);
-;;;   gint (* event)            (GtkCellArea             *area,
-;;;                              GtkCellAreaContext      *context,
-;;;                              GtkWidget               *widget,
-;;;                              GdkEvent                *event,
-;;;                              const GdkRectangle      *cell_area,
-;;;                              GtkCellRendererState     flags);
-;;;   void (* render)           (GtkCellArea             *area,
-;;;                              GtkCellAreaContext      *context,
-;;;                              GtkWidget               *widget,
-;;;                              cairo_t                 *cr,
-;;;                              const GdkRectangle      *background_area,
-;;;                              const GdkRectangle      *cell_area,
-;;;                              GtkCellRendererState     flags,
-;;;                              gboolean                 paint_focus);
-;;;   void (* apply_attributes) (GtkCellArea             *area,
-;;;                              GtkTreeModel            *tree_model,
-;;;                              GtkTreeIter             *iter,
-;;;                              gboolean                 is_expander,
-;;;                              gboolean                 is_expanded);
-;;;
-;;;   /* Geometry */
-;;;   GtkCellAreaContext *(* create_context)
-;;;                                        (GtkCellArea        *area);
-;;;   GtkCellAreaContext *(* copy_context) (GtkCellArea        *area,
-;;;                                         GtkCellAreaContext *context);
-;;;   GtkSizeRequestMode (* get_request_mode)
-;;;                                        (GtkCellArea        *area);
-;;;
-;;;   void (* get_preferred_width)         (GtkCellArea        *area,
-;;;                                         GtkCellAreaContext *context,
-;;;                                         GtkWidget          *widget,
-;;;                                         gint               *minimum_width,
-;;;                                         gint               *natural_width);
-;;;   void (* get_preferred_height_for_width)
-;;;                                        (GtkCellArea        *area,
-;;;                                         GtkCellAreaContext *context,
-;;;                                         GtkWidget          *widget,
-;;;                                         gint                width,
-;;;                                         gint               *minimum_height,
-;;;                                         gint               *natural_height);
-;;;   void (* get_preferred_height)        (GtkCellArea        *area,
-;;;                                         GtkCellAreaContext *context,
-;;;                                         GtkWidget          *widget,
-;;;                                         gint               *minimum_height,
-;;;                                         gint               *natural_height);
-;;;   void (* get_preferred_width_for_height)
-;;;                                        (GtkCellArea        *area,
-;;;                                         GtkCellAreaContext *context,
-;;;                                         GtkWidget          *widget,
-;;;                                         gint                height,
-;;;                                         gint               *minimum_width,
-;;;                                         gint               *natural_width);
-;;;
-;;;   /* Cell Properties */
-;;;   void (* set_cell_property)           (GtkCellArea        *area,
-;;;                                         GtkCellRenderer    *renderer,
-;;;                                         guint               property_id,
-;;;                                         const GValue       *value,
-;;;                                         GParamSpec         *pspec);
-;;;   void (* get_cell_property)           (GtkCellArea        *area,
-;;;                                         GtkCellRenderer    *renderer,
-;;;                                         guint               property_id,
-;;;                                         GValue             *value,
-;;;                                         GParamSpec         *pspec);
-;;;
-;;;   /* Focus */
-;;;   gboolean (* focus)                   (GtkCellArea          *area,
-;;;                                         GtkDirectionType      direction);
-;;;   gboolean (* is_activatable)          (GtkCellArea          *area);
-;;;   gboolean (* activate)                (GtkCellArea          *area,
-;;;                                         GtkCellAreaContext   *context,
-;;;                                         GtkWidget            *widget,
-;;;                                         const GdkRectangle   *cell_area,
-;;;                                         GtkCellRendererState  flags,
-;;;                                         gboolean              edit_only);
-;;; };
-;;;
-;;; add ()
-;;;     adds a GtkCellRenderer to the area.
-;;;
-;;; remove ()
-;;;     removes a GtkCellRenderer from the area.
-;;;
-;;; foreach ()
-;;;     calls the GtkCellCallback function on every GtkCellRenderer in the area
-;;;     with the provided user data until the callback returns TRUE.
-;;;
-;;; foreach_alloc ()
-;;;     Calls the GtkCellAllocCallback function on every GtkCellRenderer in the
-;;;     area with the allocated area for the cell and the provided user data
-;;;     until the callback returns TRUE.
-;;;
-;;; event ()
-;;;     Handle an event in the area, this is generally used to activate a cell
-;;;     at the event location for button events but can also be used to
-;;;     generically pass events to GtkWidgets drawn onto the area.
-;;;
-;;; render ()
-;;;     Actually render the area's cells to the specified rectangle,
-;;;     background_area should be correctly distributed to the cells
-;;;     corresponding background areas.
-;;;
-;;; apply_attributes ()
-;;;     Apply the cell attributes to the cells. This is implemented as a signal
-;;;     and generally GtkCellArea subclasses don't need to implement it since it
-;;;     is handled by the base class.
-;;;
-;;; create_context ()
-;;;     Creates and returns a class specific GtkCellAreaContext to store cell
-;;;     alignment and allocation details for a said GtkCellArea class.
-;;;
-;;; copy_context ()
-;;;     Creates a new GtkCellAreaContext in the same state as the passed context
-;;;     with any cell alignment data and allocations intact.
-;;;
-;;; get_request_mode ()
-;;;     This allows an area to tell its layouting widget whether it prefers to
-;;;     be allocated in GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
-;;;     GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
-;;;
-;;; get_preferred_width ()
-;;;     Calculates the minimum and natural width of the areas cells with the
-;;;     current attributes applied while considering the particular layouting
-;;;     details of the said GtkCellArea. While requests are performed over a
-;;;     series of rows, alignments and overall minimum and natural sizes should
-;;;     be stored in the corresponding GtkCellAreaContext.
-;;;
-;;; get_preferred_height_for_width ()
-;;;     Calculates the minimum and natural height for the area if the passed
-;;;     context would be allocated the given width. When implementing this
-;;;     virtual method it is safe to assume that context has already stored the
-;;;     aligned cell widths for every GtkTreeModel row that context will be
-;;;     allocated for since this information was stored at
-;;;     GtkCellAreaClass.get_preferred_width() time. This virtual method should
-;;;     also store any necessary alignments of cell heights for the case that
-;;;     the context is allocated a height.
-;;;
-;;; get_preferred_height ()
-;;;     Calculates the minimum and natural height of the areas cells with the
-;;;     current attributes applied. Essentially this is the same as
-;;;     GtkCellAreaClass.get_preferred_width() only for areas that are being
-;;;     requested as GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT.
-;;;
-;;; get_preferred_width_for_height ()
-;;;     Calculates the minimum and natural width for the area if the passed
-;;;     context would be allocated the given height. The same as
-;;;     GtkCellAreaClass.get_preferred_height_for_width() only for handling
-;;;     requests in the GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
-;;;
-;;; set_cell_property ()
-;;;     This should be implemented to handle changes in child cell properties
-;;;     for a given GtkCellRenderer that were previously installed on the
-;;;     GtkCellAreaClass with gtk_cell_area_class_install_cell_property().
-;;;
-;;; get_cell_property ()
-;;;     This should be implemented to report the values of child cell properties
-;;;     for a given child GtkCellRenderer.
-;;;
-;;; focus ()
-;;;     This virtual method should be implemented to navigate focus from cell to
-;;;     cell inside the GtkCellArea. The GtkCellArea should move focus from cell
-;;;     to cell inside the area and return FALSE if focus logically leaves the
-;;;     area with the following exceptions: When the area contains no
-;;;     activatable cells, the entire area recieves focus. Focus should not be
-;;;     given to cells that are actually "focus siblings" of other sibling cells
-;;;     (see gtk_cell_area_get_focus_from_sibling()). Focus is set by calling
-;;;     gtk_cell_area_set_focus_cell().
-;;;
-;;; is_activatable ()
-;;;     Returns whether the GtkCellArea can respond to
-;;;     GtkCellAreaClass.activate(), usually this does not need to be
-;;;     implemented since the base class takes care of this however it can be
-;;;     enhanced if the GtkCellArea subclass can handle activation in other ways
-;;;     than activating its GtkCellRenderers.
-;;;
-;;; activate ()
-;;;     This is called when the layouting widget rendering the GtkCellArea
-;;;     activates the focus cell (see gtk_cell_area_get_focus_cell()).
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_CELL_AREA_WARN_INVALID_CELL_PROPERTY_ID()
@@ -831,13 +631,15 @@
 
 (defcfun ("gtk_cell_area_add" gtk-cell-area-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object to add to @arg{area}}
   @begin{short}
-    Adds @arg{renderer} to @arg{area} with the default child cell properties.
+    Adds a cell renderer to the cell area with the default child cell
+    properties.
   @end{short}
-  @see-class{gtk-cell-area}"
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-renderer}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
 
@@ -849,10 +651,10 @@
 
 (defcfun ("gtk_cell_area_remove" gtk-cell-area-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object to remove from area}
-  @short{Removes @arg{renderer} from @arg{area}.}
+  @short{Removes a cell renderer from the cell area.}
   @see-class{gtk-cell-area}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
@@ -865,11 +667,11 @@
 
 (defcfun ("gtk_cell_area_has_renderer" gtk-cell-area-has-renderer) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object to check}
   @return{@em{True} if @arg{renderer} is in the @arg{area}.}
-  @short{Checks if @arg{area} contains @arg{renderer}.}
+  @short{Checks if the cell area contains @arg{renderer}.}
   @see-class{gtk-cell-area}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
@@ -989,17 +791,18 @@
 
 (defcfun ("gtk_cell_area_event" gtk-cell-area-event) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[context]{the @class{gtk-cell-area-context} for this row of data}
   @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering to}
   @argument[event]{the @class{gdk-event} to handle}
-  @argument[cell-area]{the widget relative coordinates for @arg{area}}
-  @argument[flags]{the @symbol{gtk-cell-renderer-state} for @arg{area} in this
-    row}
-  @return{@em{True} if the event was handled by @arg{area}.}
+  @argument[cell-area]{a @class{gdk-rectangle} with the widget relative
+    coordinates for @arg{area}}
+  @argument[flags]{a @symbol{gtk-cell-renderer-state} value for @arg{area} in
+    this row}
+  @return{@em{True} if the event was handled by the cell area.}
   @begin{short}
-    Delegates event handling to a @class{gtk-cell-area}.
+    Delegates event handling to a cell area.
   @end{short}
   @see-class{gtk-cell-area}
   @see-class{gtk-cell-area-context}
@@ -1203,27 +1006,28 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_get_preferred_width ()
+;;; gtk_cell_area_get_preferred_width () -> gtk-cell-area-preferred-width
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_area_get_preferred_width"
-          %gtk-cell-area-get-preferred-width) :void
+(defcfun ("gtk_cell_area_get_preferred_width" %gtk-cell-area-preferred-width)
+    :void
   (area (g-object gtk-cell-area))
   (context (g-object gtk-cell-area-context))
   (widget (g-object gtk-widget))
   (minium-width (:pointer :int))
   (natural-width (:pointer :int)))
 
-(defun gtk-cell-area-get-preferred-width (area context widget)
+(defun gtk-cell-area-preferred-width (area context widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-27}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[context]{the @class{gtk-cell-area-context} to perform this request
     with}
   @argument[widget]{the @class{gtk-widget} where area will be rendering}
   @begin{return}
-    @code{minimum-width} -- the minimum width, or @code{nil} @br{}
-    @code{natural-width} -- the natural width, or @code{nil}
+    @code{minimum-width} -- an integer with the minimum width, or
+                            @code{nil} @br{}
+    @code{natural-width} -- an integer with the natural width, or @code{nil}
   @end{return}
   @begin{short}
     Retrieves a cell area's initial minimum and natural width.
@@ -1232,20 +1036,20 @@
   @arg{area} will store some geometrical information in @arg{context} along the
   way, when requesting sizes over an arbitrary number of rows, its not important
   to check the @arg{minimum-width} and @arg{natural-width} of this call but
-  rather to consult @fun{gtk-cell-area-context-get-preferred-width} after a
-  series of requests.
+  rather to consult @fun{gtk-cell-area-context-preferred-width} after a series
+  of requests.
   @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-context-get-preferred-width}"
+  @see-function{gtk-cell-area-context-preferred-width}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
-    (%gtk-cell-area-get-preferred-width area
-                                        context
-                                        widget
-                                        minimum-width
-                                        natural-width)
+    (%gtk-cell-area-preferred-width area
+                                    context
+                                    widget
+                                    minimum-width
+                                    natural-width)
     (values (mem-ref minimum-width :int)
             (mem-ref natural-width :int))))
 
-(export 'gtk-cell-area-get-preferred-width)
+(export 'gtk-cell-area-preferred-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_height_for_width ()
@@ -1294,27 +1098,28 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_get_preferred_height ()
+;;; gtk_cell_area_get_preferred_height () -> gtk-cell-area-preferred-height
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_area_get_preferred_height"
-          %gtk-cell-area-get-preferred-height) :void
+(defcfun ("gtk_cell_area_get_preferred_height" %gtk-cell-area-preferred-height)
+    :void
   (area (g-object gtk-cell-area))
   (context (g-object gtk-cell-area-context))
   (widget (g-object gtk-widget))
   (minium-height (:pointer :int))
   (natural-height (:pointer :int)))
 
-(defun gtk-cell-area-get-preferred-height (area context widget)
+(defun gtk-cell-area-preferred-height (area context widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-27}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[context]{the @class{gtk-cell-area-context} to perform this request
     with}
   @argument[widget]{the @class{gtk-widget} where area will be rendering}
   @begin{return}
-    @code{minimum-height} -- the minimum height, or @code{nil} @br{}
-    @code{natural-height} --  the natural height, or @code{nil}
+    @code{minimum-height} -- an integer with the minimum height, or
+                             @code{nil} @br{}
+    @code{natural-height} --  an integer with the natural height, or @code{nil}
   @end{return}
   @begin{short}
     Retrieves a cell area's initial minimum and natural height.
@@ -1323,20 +1128,20 @@
   @arg{area} will store some geometrical information in @arg{context} along the
   way, when requesting sizes over an arbitrary number of rows, its not important
   to check the @arg{minimum-height} and @arg{natural-height} of this call but
-  rather to consult @fun{gtk-cell-area-context-get-preferred-height} after a
-  series of requests.
+  rather to consult @fun{gtk-cell-area-context-preferred-height} after a series
+  of requests.
   @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-context-get-preferred-height}"
+  @see-function{gtk-cell-area-context-preferred-height}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-cell-area-get-preferred-height area
-                                         context
-                                         widget
-                                         minimum-height
-                                         natural-height)
+    (%gtk-cell-area-preferred-height area
+                                     context
+                                     widget
+                                     minimum-height
+                                     natural-height)
     (values (mem-ref minimum-height :int)
             (mem-ref natural-height :int))))
 
-(export 'gtk-cell-area-get-preferred-height)
+(export 'gtk-cell-area-preferred-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_width_for_height ()
@@ -1776,22 +1581,22 @@
 
 (defcfun ("gtk_cell_area_activate" gtk-cell-area-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[context]{the @class{gtk-cell-area-context} in context with the
     current row data}
   @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering on}
-  @argument[cell-area]{the size and location of @arg{area} relative to widget's
-    allocation}
+  @argument[cell-area]{a @class{gdk-rectangle} with the size and location of
+    @arg{area} relative to widget's allocation}
   @argument[flags]{the @symbol{gtk-cell-renderer-state} flags for area for this
     row of data}
   @argument[edit-only]{if @em{true} then only cell renderers that are
     @code{:editable} will be activated}
-  @return{Whether @arg{area} was successfully activated.}
+  @return{A boolean whether @arg{area} was successfully activated.}
   @begin{short}
     Activates @arg{area}, usually by activating the currently focused cell,
-    however some subclasses which embed widgets in the area can also activate a
-    widget if it currently has the focus.
+    however some subclasses which embed widgets in the area can also activate
+    a widget if it currently has the focus.
   @end{short}
   @see-class{gtk-cell-area}
   @see-class{gtk-cell-area-context}
@@ -1956,15 +1761,15 @@
 
 (defcfun ("gtk_cell_area_activate_cell" gtk-cell-area-activate-cell) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering onto}
   @argument[renderer]{the @class{gtk-cell-renderer} in @arg{area} to activate}
   @argument[event]{the @class{gdk-event} for which cell activation should occur}
   @argument[cell-area]{the @class{gdk-rectangle} in @arg{widget} relative
-    coordinates of @arg{renderer} for the current row.}
+    coordinates of @arg{renderer} for the current row}
   @argument[flags]{the @symbol{gtk-cell-renderer-state} for @arg{renderer}}
-  @return{Whether cell activation was successful.}
+  @return{A boolean whether cell activation was successful.}
   @begin{short}
     This is used by @class{gtk-cell-area} subclasses when handling events to
     activate cells, the base @class{gtk-cell-area} class activates cells for
