@@ -2,7 +2,7 @@
 ;;; gtk.cell-renderer.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -36,7 +36,6 @@
 ;;;     GtkCellRendererState
 ;;;     GtkCellRendererMode
 ;;;     GtkCellRenderer
-;;;     GtkCellRendererClass
 ;;;
 ;;; Functions
 ;;;
@@ -68,27 +67,27 @@
 ;;;
 ;;; Properties
 ;;;
-;;;               gchar*  cell-background         Write
-;;;            GdkColor*  cell-background-gdk     Read / Write
-;;;             GdkRGBA*  cell-background-rgba    Read / Write
-;;;            gboolean   cell-background-set     Read / Write
-;;;            gboolean   editing                 Read
-;;;                gint   height                  Read / Write
-;;;            gboolean   is-expanded             Read / Write
-;;;            gboolean   is-expander             Read / Write
-;;; GtkCellRendererMode   mode                    Read / Write
-;;;            gboolean   sensitive               Read / Write
-;;;            gboolean   visible                 Read / Write
-;;;                gint   width                   Read / Write
-;;;              gfloat   xalign                  Read / Write
-;;;               guint   xpad                    Read / Write
-;;;              gfloat   yalign                  Read / Write
-;;;               guint   ypad                    Read / Write
+;;;               gchar*   cell-background         Write
+;;;            GdkColor*   cell-background-gdk     Read / Write
+;;;             GdkRGBA*   cell-background-rgba    Read / Write
+;;;            gboolean    cell-background-set     Read / Write
+;;;            gboolean    editing                 Read
+;;;                gint    height                  Read / Write
+;;;            gboolean    is-expanded             Read / Write
+;;;            gboolean    is-expander             Read / Write
+;;; GtkCellRendererMode    mode                    Read / Write
+;;;            gboolean    sensitive               Read / Write
+;;;            gboolean    visible                 Read / Write
+;;;                gint    width                   Read / Write
+;;;              gfloat    xalign                  Read / Write
+;;;               guint    xpad                    Read / Write
+;;;              gfloat    yalign                  Read / Write
+;;;               guint    ypad                    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;                void   editing-canceled        Run First
-;;;                void   editing-started         Run First
+;;;                void    editing-canceled        Run First
+;;;                void    editing-started         Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -111,30 +110,30 @@
 (define-g-flags "GtkCellRendererState" gtk-cell-renderer-state
   (:export t
    :type-initializer "gtk_cell_renderer_state_get_type")
-  (:selected 1)
-  (:prelit 2)
-  (:insensitive 4)
-  (:sorted 8)
-  (:focused 16)
-  (:expandable #.(ash 1 5))
-  (:expanded #.(ash 1 6)))
+  (:selected    #.(ash 1 0))
+  (:prelit      #.(ash 1 1))
+  (:insensitive #.(ash 1 2))
+  (:sorted      #.(ash 1 3))
+  (:focused     #.(ash 1 4))
+  (:expandable  #.(ash 1 5))
+  (:expanded    #.(ash 1 6)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-state atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-cell-renderer-state atdoc:*external-symbols*)
- "@version{2013-11-26}
+ "@version{2020-6-20}
   @short{Tells how a cell is to be rendererd.}
   @begin{pre}
 (define-g-flags \"GtkCellRendererState\" gtk-cell-renderer-state
   (:export t
    :type-initializer \"gtk_cell_renderer_state_get_type\")
-  (:selected 1)
-  (:prelit 2)
-  (:insensitive 4)
-  (:sorted 8)
-  (:focused 16)
-  (:expandable #.(ash 1 5))
-  (:expanded #.(ash 1 6)))
+  (:selected    #.(ash 1 0))
+  (:prelit      #.(ash 1 1))
+  (:insensitive #.(ash 1 2))
+  (:sorted      #.(ash 1 3))
+  (:focused     #.(ash 1 4))
+  (:expandable  #.(ash 1 5))
+  (:expanded    #.(ash 1 6)))
   @end{pre}
   @begin[code]{table}
     @entry[:selected]{The cell is currently selected, and probably has a
@@ -179,7 +178,8 @@
       modified.}
     @entry[:activatable]{The cell can be clicked.}
     @entry[:editable]{The cell can be edited or otherwise modified.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-cell-renderer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRenderer
@@ -241,7 +241,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer 'type)
- "@version{2020-1-18}
+ "@version{2020-6-20}
   @begin{short}
     The @sym{gtk-cell-renderer} is a base class of a set of objects used for
     rendering a cell to a @symbol{cairo-t}. These objects are used primarily by
@@ -255,8 +255,8 @@
   to draw many cells on the screen. To this extent, it is not expected that a
   CellRenderer keep any permanent state around. Instead, any state is set just
   prior to use using GObjects property system. Then, the cell is measured using
-  the @fun{gtk-cell-renderer-get-size} function. Finally, the cell is rendered
-  in the correct location using the @fun{gtk-cell-renderer-render} function.
+  the function @fun{gtk-cell-renderer-get-size}. Finally, the cell is rendered
+  in the correct location using the function @fun{gtk-cell-renderer-render}.
 
   There are a number of rules that must be followed when writing a new
   @sym{gtk-cell-renderer}. First and formost, its important that a certain set
@@ -284,10 +284,11 @@
       @end{pre}
       This signal gets emitted when the user cancels the process of editing a
       cell. For example, an editable cell renderer could be written to cancel
-      editing when the user presses Escape.
-      See also the @fun{gtk-cell-renderer-stop-editing} function.
+      editing when the user presses Escape. See also the function
+      @fun{gtk-cell-renderer-stop-editing}.
       @begin[code]{table}
-        @entry[renderer]{The object which received the signal.}
+        @entry[renderer]{The @sym{gtk-cell-renderer} object which received the
+          signal.}
       @end{table}
     @subheading{The \"editing-started\" signal}
       @begin{pre}
@@ -296,11 +297,10 @@
       This signal gets emitted when a cell starts to be edited. The intended use
       of this signal is to do special setup on editable, e. g. adding a
       @class{gtk-entry-completion} or setting up additional columns in a
-      @class{gtk-combo-box}.
-      Note that GTK+ does not guarantee that cell renderers will continue to use
-      the same kind of widget for editing in future releases, therefore you
-      should check the type of editable before doing any specific setup, as in
-      the following example:
+      @class{gtk-combo-box}. Note that GTK+ does not guarantee that cell
+      renderers will continue to use the same kind of widget for editing in
+      future releases, therefore you should check the type of editable before
+      doing any specific setup, as in the following example:
       @begin{pre}
  static void
  text_editing_started (GtkCellRenderer *cell,
@@ -319,9 +319,10 @@
  @}
       @end{pre}
       @begin[code]{table}
-        @entry[renderer]{The object which received the signal.}
+        @entry[renderer]{The @sym{gtk-cell-renderer} object which received the
+          signal.}
         @entry[editable]{The @class{gtk-cell-editable}.}
-        @entry[path]{The path identifying the edited cell.}
+        @entry[path]{A string with the path identifying the edited cell.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-cell-renderer-cell-background}
@@ -358,9 +359,17 @@
 (setf (gethash 'gtk-cell-renderer-cell-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{cell-background} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-cell-background object) => background}
+  @syntax[]{(setf (gtk-cell-renderer-cell-background object) background)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[background]{a string with the cell background color}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{cell-background} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Cell background color as a string.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-cell-background-gdk ----------------------------------
@@ -370,20 +379,27 @@
                                                'gtk-cell-renderer) 't)
  "The @code{cell-background-gdk} property of type @class{gdk-color}
   (Read / Write) @br{}
-  @em{Warning:}
-  @code{cell-background-gdk} has been deprecated since version 3.4
-  and should not be used in newly-written code.
-  Use @code{cell-background-rgba} instead. @br{}
-  Cell background as a @class{gdk-color}")
+  Cell background color. @br{}
+  @em{Warning:} The @code{cell-background-gdk} property has been deprecated
+  since version 3.4 and should not be used in newly-written code. Use the
+  @code{cell-background-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-cell-background-gdk
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-gdk 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{cell-background-gdk} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-cell-background-gdk object) => background}
+  @syntax[]{(setf (gtk-cell-renderer-cell-background-gdk object) background)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[background]{a @class{gdk-color} with the cell background color}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{cell-background-gdk} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Cell background color.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-cell-background-rgba ---------------------------------
@@ -393,16 +409,24 @@
                                                'gtk-cell-renderer) 't)
  "The @code{cell-background-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  Cell background as a @class{gdk-rgba}")
+  Cell background RGBA color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-cell-background-rgba
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-rgba 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{cell-background-rgba} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-cell-background-rgba object) => background}
+  @syntax[]{(setf (gtk-cell-renderer-cell-background-rgba object) background)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[background]{a @class{gdk-rgba} with the cell background color}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{cell-background-rgba} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Cell background RGBA color.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-cell-background-set ----------------------------------
@@ -410,19 +434,28 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cell-background-set"
                                                'gtk-cell-renderer) 't)
- "The @code{cell-background-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{cell-background-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects the cell background color. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-cell-background-set
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-set 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{cell-background-set} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-cell-background-set object) => setting}
+  @syntax[]{(setf (gtk-cell-renderer-cell-background-set object) setting)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[setting]{a boolean wether this tag affects the cell background
+    color}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{cell-background-set} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Whether this tag affects the cell background color.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-editing ----------------------------------------------
@@ -431,15 +464,23 @@
 (setf (documentation (atdoc:get-slot-from-name "editing" 'gtk-cell-renderer) 't)
  "The @code{editing} property of type @code{:boolean} (Read) @br{}
   Whether the cell renderer is currently in editing mode. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-editing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-editing 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{editing} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-editing object) => setting}
+  @syntax[]{(setf (gtk-cell-renderer-editing object) setting)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[setting]{a boolean wether the cell renderer is in editing mode}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{editing} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Whether the cell renderer is currently in editing mode.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-height -----------------------------------------------
@@ -455,9 +496,17 @@
 (setf (gethash 'gtk-cell-renderer-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-height 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{height} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-height object) => height}
+  @syntax[]{(setf (gtk-cell-renderer-height object) height)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[height]{an integer with the fixed height}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{height} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The fixed height.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-is-expanded ------------------------------------------
@@ -465,18 +514,25 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-expanded"
                                                'gtk-cell-renderer) 't)
- "The @code{is-expanded} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{is-expanded} property of type @code{:boolean} (Read / Write) @br{}
   Row is an expander row, and is expanded. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-is-expanded atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-is-expanded 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{is-expanded} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-is-expanded object) => setting}
+  @syntax[]{(setf (gtk-cell-renderer-is-expanded object) setting)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[setting]{a boolean wether the row is expanded}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{is-expanded} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Row is an expander row, and is expanded.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-is-expander ------------------------------------------
@@ -484,18 +540,25 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-expander"
                                                'gtk-cell-renderer) 't)
- "The @code{is-expander} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{is-expander} property of type @code{:boolean} (Read / Write) @br{}
   Row has children. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-is-expander atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-is-expander 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{is-expander} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-is-expander object) => setting}
+  @syntax[]{(setf (gtk-cell-renderer-is-expander object) setting)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[setting]{a boolean wether the row has children}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{is-expander} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Row has children.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-mode -------------------------------------------------
@@ -504,16 +567,24 @@
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-cell-renderer) 't)
  "The @code{mode} property of type @symbol{gtk-cell-renderer-mode}
   (Read / Write) @br{}
-  Editable mode of the CellRenderer. @br{}
+  Editable mode of the cell renderer. @br{}
   Default value: @code{:inert}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-mode 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{mode} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-mode object) => mode}
+  @syntax[]{(setf (gtk-cell-renderer-mode object) mode)}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[mode]{a @symbol{gtk-cell-renderer-mode} value}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{mode} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  Editable mode of the cell renderer.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-sensitive --------------------------------------------
@@ -529,21 +600,19 @@
 (setf (gethash 'gtk-cell-renderer-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-sensitive 'function)
- "@version{2013-11-29}
+ "@version{2020-6-20}
   @syntax[]{(gtk-cell-renderer-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-cell-renderer-sensitive object) sensitive)}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[sensitive]{the sensitivity of the cell}
+  @argument[sensitive]{a boolean with the sensitivity of the cell}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{sensitive} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The @sym{gtk-cell-renderer-sensitive} slot access function
-  returns the cell renderer's sensitivity.
-
-  The @sym{(setf gtk-cell-renderer-sensitive)} slot access function
-  sets the cell renderer's sensitivity.
+  The slot access function @sym{gtk-cell-renderer-sensitive} returns the cell
+  renderer's sensitivity. The slot access function
+  @sym{(setf gtk-cell-renderer-sensitive)} sets the cell renderer's sensitivity.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-visible ----------------------------------------------
@@ -558,21 +627,19 @@
 (setf (gethash 'gtk-cell-renderer-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-visible 'function)
- "@version{2013-11-29}
+ "@version{2020-6-20}
   @syntax[]{(gtk-cell-renderer-visible object) => visible}
   @syntax[]{(setf (gtk-cell-renderer-visible object) visible)}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[visible]{the visibility of the cell}
+  @argument[visible]{a boolean with the visibility of the cell}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{visible} of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The @sym{gtk-cell-renderer-sensitive} slot access function
-  returns the cell renderer's visibility.
-
-  The @sym{(setf gtk-cell-renderer-sensitive)} slot access function
-  sets the cell renderer's visibility.
+  The slot access function @sym{gtk-cell-renderer-sensitive} returns the cell
+  renderer's visibility. The slot access function
+  @sym{(setf gtk-cell-renderer-sensitive)} sets the cell renderer's visibility.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-width ------------------------------------------------
@@ -588,9 +655,17 @@
 (setf (gethash 'gtk-cell-renderer-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-width 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{width} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-width object) => width}
+  @syntax[]{(setf (gtk-cell-renderer-width object) width)}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[width]{an integer with the fixed width}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{width} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The fixed width.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-xalign -----------------------------------------------
@@ -606,9 +681,17 @@
 (setf (gethash 'gtk-cell-renderer-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-xalign 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{xalign} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-xalign object) => align}
+  @syntax[]{(setf (gtk-cell-renderer-xalign object) align)}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[align]{a @code{:float} with the x-align}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{xalign} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The x-align.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-xpad -------------------------------------------------
@@ -623,9 +706,17 @@
 (setf (gethash 'gtk-cell-renderer-xpad atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-xpad 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{xpad} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-xpad object) => padding}
+  @syntax[]{(setf (gtk-cell-renderer-xpad object) padding)}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[padding]{a unsigned integer with the padding}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{xpad} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The xpad.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-yalign -----------------------------------------------
@@ -641,9 +732,17 @@
 (setf (gethash 'gtk-cell-renderer-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-yalign 'function)
- "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{yalign} slot of the
-  @class{gtk-cell-renderer} class.
+ "@version{2020-6-20}
+  @syntax[]{(gtk-cell-renderer-yalign object) => align}
+  @syntax[]{(setf (gtk-cell-renderer-yalign object) align)}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[align]{a @code{:float} with the y-align}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{yalign} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The y-align.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-ypad -------------------------------------------------
@@ -659,8 +758,16 @@
       "Accessor"
       (documentation 'gtk-cell-renderer-ypad 'function)
  "@version{2013-11-29}
-  Accessor of the @slot[gtk-cell-renderer]{ypad} slot of the
-  @class{gtk-cell-renderer} class.
+  @syntax[]{(gtk-cell-renderer-ypad object) => padding}
+  @syntax[]{(setf (gtk-cell-renderer-ypad object) padding)}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[padding]{a unsigned integer with the padding}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-renderer]{ypad} slot of the
+    @class{gtk-cell-renderer} class.
+  @end{short}
+
+  The ypad.
   @see-class{gtk-cell-renderer}")
 
 ;;; ----------------------------------------------------------------------------
@@ -758,13 +865,13 @@
   @begin[Warning]{dictionary}
     The @sym{gtk-cell-renderer-get-size} function has been deprecated since
     version 3.0 and should not be used in newly-written code.
-    Use the @fun{gtk-cell-renderer-get-preferred-size} function instead.
+    Use the function @fun{gtk-cell-renderer-preferred-size} instead.
   @end{dictionary}
   @see-class{gtk-cell-renderer}
   @see-class{gtk-widget}
   @see-class{gdk-rectangle}
   @see-function{gtk-cell-renderer-render}
-  @see-function{gtk-cell-renderer-get-preferred-size}"
+  @see-function{gtk-cell-renderer-preferred-size}"
   (with-foreign-objects ((x-offset :int)
                          (y-offset :int)
                          (width :int)
