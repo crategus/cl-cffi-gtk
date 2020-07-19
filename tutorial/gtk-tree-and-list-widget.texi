@@ -214,7 +214,7 @@ for the row selected:
       (lambda (selection)
         (let* ((model (gtk-tree-view-get-model view))
                (iter (gtk-tree-selection-get-selected selection))
-               (name (gtk-tree-model-get-value model iter 0)))
+               (name (gtk-tree-model-value model iter 0)))
           (format t "You selected the name ~A.~%" name))))
    ... )
 @end verbatim
@@ -552,7 +552,7 @@ retrieve data from the store.
        (when iter
          (format t
                  "The row containing the name ~A has been double-clicked.~%"
-                 (gtk-tree-model-get-value model iter 0))))))
+                 (gtk-tree-model-value model iter 0))))))
 @end verbatim
 
 Tree row references reveal the current path of a row with the function
@@ -740,9 +740,9 @@ us in the foreach callback function:
 
 @verbatim
 (defun foreach-func (model path iter)
-  (let ((first-name (gtk-tree-model-get-value model iter 0))
-        (last-name (gtk-tree-model-get-value model iter 1))
-        (age (gtk-tree-model-get-value model iter 2))
+  (let ((first-name (gtk-tree-model-value model iter 0))
+        (last-name (gtk-tree-model-value model iter 1))
+        (age (gtk-tree-model-value model iter 2))
         (tree-path (gtk-tree-path-to-string path)))
     (format t "Row ~A: ~A ~A, age ~A~%" tree-path first-name last-name age)))
 
@@ -835,7 +835,7 @@ some other criterion:
 
 (let ((rowref-list nil))
   (defun foreach-func (model path iter)
-    (let ((age (gtk-tree-model-get-value model iter 2)))
+    (let ((age (gtk-tree-model-value model iter 2)))
       (when (> age 30)
         (let ((rowref (gtk-tree-row-reference-new model path)))
           (setf rowref-list (cons rowref rowref-list))))

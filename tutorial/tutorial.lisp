@@ -2089,8 +2089,8 @@
       (let ((tag (make-instance 'gtk-text-tag
                                 :name "blue_foreground"
                                 :foreground "blue"))
-            (start (gtk-text-buffer-get-iter-at-offset buffer 7))
-            (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
+            (start (gtk-text-buffer-iter-at-offset buffer 7))
+            (end (gtk-text-buffer-iter-at-offset buffer 12)))
         ;; Add the tag to the tag table of the buffer
         (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer
@@ -2139,7 +2139,7 @@
 
 (defun on-button-clicked (buffer tag)
   (multiple-value-bind (start end)
-      (gtk-text-buffer-get-selection-bounds buffer)
+      (gtk-text-buffer-selection-bounds buffer)
     (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
 
 (defun example-text-view-tags ()
@@ -2308,7 +2308,7 @@ happen.")
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-buffer text-view))
-                  (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
+                  (last-pos (gtk-text-buffer-mark buffer "last-pos")))
              (when last-pos
                (find-text text-view
                           text
@@ -2349,7 +2349,7 @@ happen.")
        (lambda (widget)
          (declare (ignore widget))
          (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                (cursor (gtk-text-buffer-mark buffer "insert"))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (setf (gtk-text-iter-line-offset iter) 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
@@ -2400,7 +2400,7 @@ happen.")
          (lambda (widget)
            (declare (ignore widget))
            (let* ((buffer (gtk-text-view-buffer text-view))
-                  (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                  (cursor (gtk-text-buffer-mark buffer "insert"))
                   (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
 
              (do ((stack '()))
@@ -2671,7 +2671,7 @@ happen.")
          (lambda (selection)
            (let* ((model (gtk-tree-view-model view))
                   (iter (gtk-tree-selection-get-selected selection))
-                  (name (gtk-tree-model-get-value model iter 0)))
+                  (name (gtk-tree-model-value model iter 0)))
              (format t "You selected the name ~A.~%" name))))
 
       (gtk-container-add window view)
@@ -2753,7 +2753,7 @@ happen.")
                 (iter (gtk-tree-model-get-iter model path)))
            (when iter
              (format t "The row containing the name ~A has been double-clicked.~%"
-                       (gtk-tree-model-get-value model iter 0))))))
+                       (gtk-tree-model-value model iter 0))))))
 
     ;; Create renderers for the cells
     (let* ((renderer (gtk-cell-renderer-text-new))
@@ -2824,9 +2824,9 @@ happen.")
 ;;; Retrieving Row Data
 
 (defun foreach-func (model path iter)
-  (let ((first-name (gtk-tree-model-get-value model iter 0))
-        (last-name (gtk-tree-model-get-value model iter 1))
-        (age (gtk-tree-model-get-value model iter 2))
+  (let ((first-name (gtk-tree-model-value model iter 0))
+        (last-name (gtk-tree-model-value model iter 1))
+        (age (gtk-tree-model-value model iter 2))
         (tree-path (gtk-tree-path-to-string path)))
     (format t "Row ~A: ~A ~A, age ~A~%" tree-path first-name last-name age)))
 
@@ -2850,7 +2850,7 @@ happen.")
 
 (let ((rowref-list nil))
   (defun foreach-func-1 (model path iter)
-    (let ((age (gtk-tree-model-get-value model iter 2)))
+    (let ((age (gtk-tree-model-value model iter 2)))
       (when (> age 30)
         (let ((rowref (gtk-tree-row-reference-new model path)))
           (setf rowref-list (cons rowref rowref-list))))

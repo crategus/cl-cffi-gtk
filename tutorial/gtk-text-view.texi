@@ -226,8 +226,8 @@ attributes there are dedicated methods on @xurl{gtk-text-view} such as
       (let ((tag (make-instance 'gtk-text-tag
                                 :name "blue_foreground"
                                 :foreground "blue"))
-            (start (gtk-text-buffer-get-iter-at-offset buffer 7))
-            (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
+            (start (gtk-text-buffer-iter-at-offset buffer 7))
+            (end (gtk-text-buffer-iter-at-offset buffer 12)))
         ;; Add the tag to the tag table of the buffer
         (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer
@@ -273,7 +273,7 @@ to selected regions of text.
 @verbatim
 (defun on-button-clicked (buffer tag)
   (multiple-value-bind (start end)
-      (gtk-text-buffer-get-selection-bounds buffer)
+      (gtk-text-buffer-selection-bounds buffer)
     (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
 
 (defun example-text-view-tags ()
@@ -389,8 +389,8 @@ of text in the buffer.
 @findex gtk-text-iter-search
 @findex text-iter-search, gtk-text-iter-search
 
-@findex gtk-text-buffer-get-selection-bounds
-@findex text-buffer-get-selection-bounds, gtk-text-buffer-get-selection-bounds
+@findex gtk-text-buffer-selection-bounds
+@findex text-buffer-selection-bounds, gtk-text-buffer-selection-bounds
 
 @findex gtk-text-buffer-select-range
 @findex text-buffer-select-range, gtk-text-buffer-select-range
@@ -418,7 +418,7 @@ keyword arguments.  In addition the keyword argument @code{direction} with a
 default value of @code{:forward} indicates the direction of the search.  Set
 the value of @code{direction} to @code{:backward} for backward search.
 
-The function @xurl{gtk-text-buffer-get-selection-bounds} was introduced earlier,
+The function @xurl{gtk-text-buffer-selection-bounds} was introduced earlier,
 to obtain the iterators around the current selection.  To set the current
 selection programmatically the function @xurl{gtk-text-buffer-select-range} with
 the arguments @code{buffer}, @code{start}, @code{end} can be used.  The function
@@ -506,8 +506,8 @@ get invalidated. This takes us to marks.
 @findex gtk-text-buffer-create-mark
 @findex text-buffer-create-mark, gtk-text-buffer-create-mark
 
-@findex gtk-text-buffer-get-mark
-@findex text-buffer-get-mark, gtk-text-buffer-get-mark
+@findex gtk-text-buffer-mark
+@findex text-buffer-mark, gtk-text-buffer-mark
 
 @findex gtk-text-buffer-get-iter-at-mark
 @findex text-buffer-get-iter-at-mark, gtk-text-buffer-get-iter-at-mark
@@ -528,10 +528,10 @@ The iter @code{where} specifies a position in the buffer which has to be marked.
 @code{left-gravity} determines how the mark moves when text is inserted at the
 mark.  The argument @code{mark-name} is a string that can be used to identify
 the mark.  If @code{mark-name} is specified, the mark can be retrieved using the
-function @xurl{gtk-text-buffer-get-mark}
+function @xurl{gtk-text-buffer-mark}
 
 With named tags, you do not have to carry around a pointer to the marker, which
-can be easily retrieved using the function @xurl{gtk-text-buffer-get-mark}.  A
+can be easily retrieved using the function @xurl{gtk-text-buffer-mark}.  A
 mark by itself cannot be used for buffer operations, it has to converted into an
 iter just before buffer operations are to be performed. The function
 @xurl{gtk-text-buffer-get-iter-at-mark} with the arguments @code{buffer} and
@@ -610,7 +610,7 @@ The following example shows the usage of marks to continue the search.
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-buffer text-view))
-                  (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
+                  (last-pos (gtk-text-buffer-mark buffer "last-pos")))
              (when last-pos
                (find-text text-view
                           text
@@ -711,7 +711,7 @@ functions required to implement the first program, here is the code.
        (lambda (widget)
          (declare (ignore widget))
          (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                (cursor (gtk-text-buffer-mark buffer "insert"))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (setf (gtk-text-iter-line-offset iter) 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
@@ -830,7 +830,7 @@ follows.
          (lambda (widget)
            (declare (ignore widget))
            (let* ((buffer (gtk-text-view-buffer text-view))
-                  (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                  (cursor (gtk-text-buffer-mark buffer "insert"))
                   (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
 
              (do ((stack '()))

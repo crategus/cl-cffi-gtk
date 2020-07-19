@@ -590,10 +590,10 @@
 @set gtk-text-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-buffer.html
 @set gtk-text-buffer-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-new.html
 @set gtk-text-buffer-place-cursor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-place-cursor.html
-@set gtk-text-buffer-get-selection-bounds http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-selection-bounds.html
+@set gtk-text-buffer-selection-bounds http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-selection-bounds.html
 @set gtk-text-buffer-select-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-select-range.html
 @set gtk-text-buffer-create-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-create-mark.html
-@set gtk-text-buffer-get-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-mark.html
+@set gtk-text-buffer-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-mark.html
 @set gtk-text-buffer-get-iter-at-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-iter-at-mark.html
 @set gtk-text-buffer-delete-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark.html
 @set gtk-text-buffer-delete-mark-by-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark-by-name.html
