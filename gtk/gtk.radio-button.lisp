@@ -146,30 +146,35 @@
   @begin[Example]{dictionary}
     How to create a group of two radio buttons.
     @begin{pre}
- void create_radio_buttons (void) {
-
-    GtkWidget *window, *radio1, *radio2, *box, *entry;
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    box = gtk_box_new (GTK_ORIENTATION_VERTICAL, TRUE, 2);
-
-    /* Create a radio button with a GtkEntry widget */
-    radio1 = gtk_radio_button_new (NULL);
-    entry = gtk_entry_new ();
-    gtk_container_add (GTK_CONTAINER (radio1), entry);
-
-
-    /* Create a radio button with a label */
-    radio2 = gtk_radio_button_new_with_label_from_widget
-                                            (GTK_RADIO_BUTTON (radio1),
-                                             \"I'm the second radio button.\");
-
-    /* Pack them into a box, then show all the widgets */
-    gtk_box_pack_start (GTK_BOX (box), radio1, TRUE, TRUE, 2);
-    gtk_box_pack_start (GTK_BOX (box), radio2, TRUE, TRUE, 2);
-    gtk_container_add (GTK_CONTAINER (window), box);
-    gtk_widget_show_all (window);
-    return;
- @}
+(defun example-radio-button ()
+  (within-main-loop
+    (let ((radio1 nil)
+          (radio2 nil)
+          (window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title \"Example Radio Button\"
+                                 :border-width 12
+                                 :default-width 300))
+          (box (make-instance 'gtk-box
+                              :orientation :vertical)))
+      ;; Signal handler for the window to handle the signal \"destroy\".
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Create a radio button with a GtkEntry widget
+      (setf radio1 (gtk-radio-button-new nil))
+      (gtk-container-add radio1 (gtk-entry-new))
+      ;; Create a radio button with a label
+      (setf radio2
+            (gtk-radio-button-new-with-label-from-widget radio1
+                                                         \"Second Radio Button\"))
+      ;; Pack them into a box, then show all the widgets
+      (gtk-box-pack-start box radio1 :padding 6)
+      (gtk-box-pack-start box radio2 :padding 6)
+      (gtk-container-add window box)
+      ;; Show the window
+      (gtk-widget-show-all window))))
     @end{pre}
     When an unselected button in the group is clicked the clicked button
     receives the \"toggled\" signal, as does the previously selected button.
@@ -193,7 +198,7 @@
       @end{table}
   @end{dictionary}
   @see-slot{gtk-radio-button-group}
-  @see-class{gtk-combo-box}")
+  @see-class{gtk-check-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -287,8 +292,8 @@
            gtk-radio-button-new-with-label-from-widget) (g-object widget)
  #+cl-cffi-gtk-documentation
  "@version{2020-6-7}
-  @argument[radio-group-member]{a @class{gtk-radio-button} widget to get radio
-    group from or @code{nil}}
+  @argument[radio-group-member]{a @class{gtk-radio-button} widget to get the
+    radio group from or @code{nil}}
   @argument[label]{a text string to display next to the radio button}
   @return{A new @class{gtk-radio-button} widget.}
   @begin{short}
@@ -409,9 +414,9 @@
 
 (defcfun ("gtk_radio_button_join_group" gtk-radio-button-join-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
+ "@version{2020-7-18}
   @argument[radio-button]{the @class{gtk-radio-button} widget}
-  @argument[group-source]{a @class{gtk-radio-button} object whose group we are
+  @argument[group-source]{a @class{gtk-radio-button} widget whose group we are
     joining, or @code{nil} to remove the radio button from its group}
   @begin{short}
     Joins a radio button to the group of another radio button widget.
@@ -420,24 +425,23 @@
   Use this in language bindings instead of the the functions
   @fun{gtk-radio-button-get-group} and @fun{gtk-radio-button-set-group} methods.
 
-  A common way to set up a group of radio buttons is the following:
-  @begin{pre}
- GtkRadioButton *radio_button;
- GtkRadioButton *last_button;
-
- while (/* more buttons to add */)
-   {
-      radio_button = gtk_radio_button_new (...);
-
-      gtk_radio_button_join_group (radio_button, last_button);
-      last_button = radio_button;
-   @}
-  @end{pre}
+  @begin[Example]{dictionary}
+    A common way to set up a group of radio buttons with a label is the
+    following:
+    @begin{pre}
+(let (button lastbutton)
+  ;; Add three buttons to a group
+  (dolist (label '(\"First Button\" \"Second Button\" \"Third Button\"))
+    (setf button (gtk-radio-button-new-with-label nil label))
+    (gtk-radio-button-join-group button lastbutton)
+    (setf lastbutton button)))
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-radio-button}
   @see-function{gtk-radio-button-get-group}
   @see-function{gtk-radio-button-set-group}"
-  (radio-button (g-object radio-button))
-  (group-source (g-slist (g-object radio-button))))
+  (radio-button (g-object gtk-radio-button))
+  (group-source (g-object gtk-radio-button)))
 
 (export 'gtk-radio-button-join-group)
 
