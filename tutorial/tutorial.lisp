@@ -2750,7 +2750,7 @@ happen.")
        (lambda (view path col)
          (declare (ignore col))
          (let* ((model (gtk-tree-view-model view))
-                (iter (gtk-tree-model-get-iter model path)))
+                (iter (gtk-tree-model-iter model path)))
            (when iter
              (format t "The row containing the name ~A has been double-clicked.~%"
                        (gtk-tree-model-value model iter 0))))))
@@ -2809,7 +2809,7 @@ happen.")
          (lambda (button)
            (declare (ignore button))
            (let ((model (gtk-tree-view-model view)))
-             (do ((iter (gtk-tree-model-get-iter-first model)
+             (do ((iter (gtk-tree-model-iter-first model)
                         (gtk-tree-model-iter-next model iter)))
                  ((not iter))
                  (gtk-list-store-set-value model iter 1 0)))))
@@ -2863,7 +2863,7 @@ happen.")
     (dolist (rowref rowref-list)
       (let ((path (gtk-tree-row-reference-get-path rowref)))
       (when path
-        (let ((iter (gtk-tree-model-get-iter model path)))
+        (let ((iter (gtk-tree-model-iter model path)))
           (when iter
             (gtk-list-store-remove model iter))))))))
 
