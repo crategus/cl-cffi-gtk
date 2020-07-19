@@ -2911,6 +2911,7 @@ setup_tree (void)
       @about-function{gtk-radio-menu-item-new-with-mnemonic-from-widget}
       @about-function{gtk-radio-menu-item-set-group}
       @about-function{gtk-radio-menu-item-get-group}
+      @about-function{gtk-radio-menu-item-join-group}
     @end{subsection}
     @begin[GtkCheckMenuItem]{subsection}
       A menu item with a check box.
@@ -3152,9 +3153,7 @@ setup_tree (void)
       A toolbar item that contains a radio button.
 
       @about-class{gtk-radio-tool-button}
-
       @about-generic{gtk-radio-tool-button-group}
-
       @about-function{gtk-radio-tool-button-new}
       @about-function{gtk-radio-tool-button-new-from-stock}
       @about-function{gtk-radio-tool-button-new-from-widget}
