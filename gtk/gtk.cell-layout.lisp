@@ -2,12 +2,12 @@
 ;;; gtk.cell-layout.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,7 +34,6 @@
 ;;; Types and Values
 ;;;
 ;;;     GtkCellLayout
-;;;     GtkCellLayoutIface
 ;;;
 ;;; Functions
 ;;;
@@ -69,10 +68,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-layout 'type)
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @begin{short}
     @sym{gtk-cell-layout} is an interface to be implemented by all objects which
-    want to provide a @class{gtk-tree-view-column}-like API for packing cells,
+    want to provide a @class{gtk-tree-view-column} like API for packing cells,
     setting attributes and data funcs.
   @end{short}
 
@@ -80,22 +79,19 @@
   @sym{gtk-cell-layout} are attributes. Attributes let you set the properties in
   flexible ways. They can just be set to constant values like regular
   properties. But they can also be mapped to a column of the underlying tree
-  model with the function @fun{gtk-cell-layout-set-attributes}, which means that
+  model with the function @fun{gtk-cell-layout-add-attribute}, which means that
   the value of the attribute can change from cell to cell as they are rendered
   by the cell renderer. Finally, it is possible to specify a function with the
   function @fun{gtk-cell-layout-set-cell-data-func} that is called to determine
   the value of the attribute for each cell that is rendered.
-
-  @subheading{GtkCellLayouts as GtkBuildable}
+  @begin[GtkCellLayouts as GtkBuildable]{dictionary}
     Implementations of @sym{gtk-cell-layout} which also implement the
-    @class{gtk-buildable} interface (@class{gtk-cell-view},
-    @class{gtk-icon-view}, @class{gtk-combo-box}, @class{gtk-combo-box-entry},
-    @class{gtk-entry-completion}, @class{gtk-tree-view-column}) accept
-    @class{gtk-cell-renderer} objects as @code{<child>} elements in UI
-    definitions. They support a custom @code{<attributes>} element for their
-    children, which can contain multiple @code{<attribute>} elements. Each
-    @code{<attribute>} element has a name attribute which specifies a property
-    of the cell renderer; the content of the element is the attribute value.
+    @class{gtk-buildable} interface accept @class{gtk-cell-renderer} objects as
+    @code{<child>} elements in UI definitions. They support a custom
+    @code{<attributes>} element for their children, which can contain multiple
+    @code{<attribute>} elements. Each @code{<attribute>} element has a name
+    attribute which specifies a property of the cell renderer. The content of
+    the element is the attribute value.
 
     @b{Example:} A UI definition fragment specifying attributes
     @begin{pre}
@@ -109,8 +105,8 @@
  </object>
     @end{pre}
     Furthermore for implementations of @sym{gtk-cell-layout} that use a
-    @class{gtk-cell-area} to lay out cells (all @sym{gtk-cell-layout}'s in GTK+
-    use a @class{gtk-cell-area}) cell properties can also be defined in the
+    @class{gtk-cell-area} to lay out cells, all @sym{gtk-cell-layout}'s in GTK+
+    use a @class{gtk-cell-area}, cell properties can also be defined in the
     format by specifying the custom @code{<cell-packing>} attribute which can
     contain multiple @code{<property>} elements defined in the normal way.
 
@@ -126,7 +122,8 @@
    </child>
  </object>
     @end{pre}
-  @subheading{Subclassing GtkCellLayout implementations}
+  @end{dictionary}
+  @begin[Subclassing GtkCellLayout implementations]{dictionary}
     When subclassing a widget that implements @sym{gtk-cell-layout} like
     @class{gtk-icon-view} or @class{gtk-combo-box}, there are some
     considerations related to the fact that these widgets internally use a
@@ -141,7 +138,7 @@
     means that using functions which rely on the existence of the cell area in
     your subclass' @code{init()} function will cause the default cell area to be
     instantiated. In this case, a provided construct property value will be
-    ignored (with a warning, to alert you to the problem).
+    ignored, with a warning, to alert you to the problem.
     @begin{pre}
  static void
  my_combo_box_init (MyComboBox *b)
@@ -167,82 +164,21 @@
     If supporting alternative cell areas with your derived widget is not
     important, then this does not have to concern you. If you want to support
     alternative cell areas, you can do so by moving the problematic calls out of
-    @code{init()} and into a @code{constructor()} for your class.")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkCellLayoutIface
-;;;
-;;; struct GtkCellLayoutIface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   /* Virtual Table */
-;;;   void (* pack_start)         (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell,
-;;;                                gboolean               expand);
-;;;   void (* pack_end)           (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell,
-;;;                                gboolean               expand);
-;;;   void (* clear)              (GtkCellLayout         *cell_layout);
-;;;   void (* add_attribute)      (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell,
-;;;                                const gchar           *attribute,
-;;;                                gint                   column);
-;;;   void (* set_cell_data_func) (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell,
-;;;                                GtkCellLayoutDataFunc  func,
-;;;                                gpointer               func_data,
-;;;                                GDestroyNotify         destroy);
-;;;   void (* clear_attributes)   (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell);
-;;;   void (* reorder)            (GtkCellLayout         *cell_layout,
-;;;                                GtkCellRenderer       *cell,
-;;;                                gint                   position);
-;;;   GList* (* get_cells)        (GtkCellLayout         *cell_layout);
-;;;
-;;;   GtkCellArea *(* get_area)   (GtkCellLayout         *cell_layout);
-;;; };
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GtkCellLayoutDataFunc ()
-;;;
-;;; void (*GtkCellLayoutDataFunc) (GtkCellLayout *cell_layout,
-;;;                                GtkCellRenderer *cell,
-;;;                                GtkTreeModel *tree_model,
-;;;                                GtkTreeIter *iter,
-;;;                                gpointer data);
-;;;
-;;; A function which should set the value of cell_layout's cell renderer(s) as
-;;; appropriate.
-;;;
-;;; cell_layout :
-;;;     a GtkCellLayout
-;;;
-;;; cell :
-;;;     the cell renderer whose value is to be set
-;;;
-;;; tree_model :
-;;;     the model
-;;;
-;;; iter :
-;;;     a GtkTreeIter indicating the row to set the value for
-;;;
-;;; data :
-;;;     user data passed to gtk_cell_layout_set_cell_data_func()
-;;; ----------------------------------------------------------------------------
+    @code{init()} and into a @code{constructor()} for your class.
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_layout_pack_start ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_layout_pack_start" %gtk-cell-layout-pack-start) :void
-  (cell-layout g-object)
-  (cell g-object)
+  (cell-layout (g-object gtk-cell-layout))
+  (cell (g-object gtk-cell-renderer))
   (expand :boolean))
 
 (defun gtk-cell-layout-pack-start (cell-layout cell &key (expand t))
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[expand]{@em{true} if @arg{cell} is to be given extra space allocated
@@ -250,12 +186,13 @@
   @begin{short}
     Packs the @arg{cell} into the beginning of @arg{cell-layout}.
   @end{short}
-  If expand is @code{nil}, then the @arg{cell} is allocated no more space than
+  If expand is @em{false}, then the @arg{cell} is allocated no more space than
   it needs. Any unused space is divided evenly between cells for which expand is
   @em{true}.
 
   Note that reusing the same cell renderer is not supported.
-  @see-class{gtk-cell-layout}"
+  @see-class{gtk-cell-layout}
+  @see-function{gtk-cell-layout-pack-end}"
   (%gtk-cell-layout-pack-start cell-layout cell expand))
 
 (export 'gtk-cell-layout-pack-start)
@@ -265,64 +202,68 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_layout_pack_end" %gtk-cell-layout-pack-end) :void
-  (cell-layout g-object)
-  (cell g-object)
+  (cell-layout (g-object gtk-cell-layout))
+  (cell (g-object gtk-cell-renderer))
   (expand :boolean))
 
 (defun gtk-cell-layout-pack-end (cell-layout cell &key (expand t))
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[expand]{@em{true} if @arg{cell} is to be given extra space allocated
     to @arg{cell-layout}}
   @begin{short}
-    Adds the @arg{cell} to the end of @arg{cell-layout}. If expand is
-    @code{nil}, then the cell is allocated no more space than it needs. Any
-    unused space is divided evenly between cells for which @arg{expand} is
-    @em{true}.
+    Adds the @arg{cell} to the end of @arg{cell-layout}.
   @end{short}
+  If expand is @em{false}, then the cell is allocated no more space than it
+  needs. Any unused space is divided evenly between cells for which @arg{expand}
+  is @em{true}.
 
   Note that reusing the same cell renderer is not supported.
-  @see-class{gtk-cell-layout}"
+  @see-class{gtk-cell-layout}
+  @see-function{gtk-cell-layout-pack-start}"
   (%gtk-cell-layout-pack-end cell-layout cell expand))
 
 (export 'gtk-cell-layout-pack-end)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_layout_get_area ()
-;;;
-;;; GtkCellArea * gtk_cell_layout_get_area (GtkCellLayout *cell_layout);
-;;;
-;;; Returns the underlying GtkCellArea which might be cell_layout if called on a
-;;; GtkCellArea or might be NULL if no GtkCellArea is used by cell_layout.
-;;;
-;;; cell_layout :
-;;;     a GtkCellLayout
-;;;
-;;; Returns :
-;;;     the cell area used by cell_layout
-;;;
-;;; Since 3.0
+;;; gtk_cell_layout_get_area () -> gtk-cell-layout-area
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_cell_layout_get_area" gtk-cell-layout-area)
+    (g-object gtk-cell-area)
+ "@version{2020-6-21}
+  @argument[cell-layout]{a @class{gtk-cell-layout} object}
+  @return{The @class{gtk-cell-area} object used by @arg{cell-layout}.}
+  @begin{short}
+    Returns the underlying cell area which might be @arg{cell-layout} if called
+    on a @class{gtk-cell-area} or might be @code{nil} if no
+    @class{gtk-cell-area} is used by @arg{cell-layout}.
+  @end{short}
+  @see-class{gtk-cell-layout}
+  @see-class{gtk-cell-area}"
+  (cell-layout (g-object gtk-cell-layout)))
+
+(export 'gtk-cell-layout-area)
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_layout_get_cells ()
+;;; gtk_cell_layout_get_cells () -> gtk-cell-layout-cells
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_layout_get_cells" gtk-cell-layout-get-cells)
+(defcfun ("gtk_cell_layout_get_cells" gtk-cell-layout-cells)
     (g-list g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
-  @return{A list of cell renderers.}
+  @return{A list of @class{gtk-cell-renderer} objects.}
   @begin{short}
-    Returns the cell renderers which have been added to @arg{cell-layout}.
+    Returns the cell renderers which have been added to the cell layout.
   @end{short}
   @see-class{gtk-cell-layout}"
   (cell-layout (g-object gtk-cell-layout)))
 
-(export 'gtk-cell-layout-get-cells)
+(export 'gtk-cell-layout-cells)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_layout_reorder ()
@@ -330,20 +271,21 @@
 
 (defcfun ("gtk_cell_layout_reorder" gtk-cell-layout-reorder) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} object to reorder}
-  @argument[position]{new position to insert @arg{cell} at}
+  @argument[position]{an integer with the new position to insert @arg{cell} at}
   @begin{short}
-    Re-inserts @arg{cell} at position.
+    Reinserts @arg{cell} at the given position.
   @end{short}
 
   Note that @arg{cell} has already to be packed into @arg{cell-layout} for this
   to function properly.
-  @see-class{gtk-cell-layout}"
-  (cell-layout g-object)
-  (cell g-object)
-  (positin :int))
+  @see-class{gtk-cell-layout}
+  @see-class{gtk-cell-renderer}"
+  (cell-layout (g-object gtk-cell-layout))
+  (cell (g-object gtk-cell-renderer))
+  (position :int))
 
 (export 'gtk-cell-layout-reorder)
 
@@ -353,14 +295,14 @@
 
 (defcfun ("gtk_cell_layout_clear" gtk-cell-layout-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @begin{short}
     Unsets all the mappings on all renderers on @arg{cell-layout} and removes
     all renderers from @arg{cell-layout}.
   @end{short}
   @see-class{gtk-cell-layout}"
-  (cell-layout g-object))
+  (cell-layout (g-object gtk-cell-layout)))
 
 (export 'gtk-cell-layout-clear)
 
@@ -395,11 +337,12 @@
 
 (defcfun ("gtk_cell_layout_add_attribute" gtk-cell-layout-add-attribute) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[attribute]{an attribute on the renderer}
-  @argument[column]{the column position on the model to get the attribute from}
+  @argument[attribute]{a string with an attribute on the renderer}
+  @argument[column]{an integer with the column position on the model to get the
+    attribute from}
   @begin{short}
     Adds an attribute mapping to the list in @arg{cell-layout}.
   @end{short}
@@ -408,19 +351,44 @@
   attribute is the parameter on @arg{cell} to be set from the value. So for
   example if column 2 of the model contains strings, you could have the \"text\"
   attribute of a @class{gtk-cell-renderer-text} get its values from column 2.
-  @see-class{gtk-cell-layout}"
-  (cell-layout g-object)
-  (cell g-object)
+  @see-class{gtk-cell-layout}
+  @see-class{gtk-cell-renderer}"
+  (cell-layout (g-object gtk-cell-layout))
+  (cell (g-object gtk-cell-renderer))
   (attribute (:string :free-to-foreign t))
   (column :int))
 
 (export 'gtk-cell-layout-add-attribute)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_layout_set_cell_data_func ()
+;;; GtkCellLayoutDataFunc ()
+;;;
+;;; void (*GtkCellLayoutDataFunc) (GtkCellLayout *cell_layout,
+;;;                                GtkCellRenderer *cell,
+;;;                                GtkTreeModel *tree_model,
+;;;                                GtkTreeIter *iter,
+;;;                                gpointer data);
+;;;
+;;; A function which should set the value of cell_layout's cell renderer(s) as
+;;; appropriate.
+;;;
+;;; cell_layout :
+;;;     a GtkCellLayout
+;;;
+;;; cell :
+;;;     the cell renderer whose value is to be set
+;;;
+;;; tree_model :
+;;;     the model
+;;;
+;;; iter :
+;;;     a GtkTreeIter indicating the row to set the value for
+;;;
+;;; data :
+;;;     user data passed to gtk_cell_layout_set_cell_data_func()
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-cell-layout-cell-data-func-callback :void
+(defcallback gtk-cell-layout-cell-data-func-cb :void
   ((cell-layout g-object)
    (cell g-object)
    (tree-model g-object)
@@ -430,6 +398,10 @@
       (funcall (glib::get-stable-pointer-value data)
                cell-layout cell tree-model iter)
     (return () nil)))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_cell_layout_set_cell_data_func ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_layout_set_cell_data_func"
           %gtk-cell-layout-set-cell-data-func) :void
@@ -441,7 +413,7 @@
 
 (defun gtk-cell-layout-set-cell-data-func (cell-layout cell func)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[func]{the @code{GtkCellLayoutDataFunc} to use, or @code{nil}}
@@ -456,11 +428,11 @@
   @arg{func} may be @code{nil} to remove a previously set function.
   @see-class{gtk-cell-layout}"
   (%gtk-cell-layout-set-cell-data-func
-      cell-layout
-      cell
-      (callback gtk-cell-layout-cell-data-func-callback)
-      (glib::allocate-stable-pointer func)
-      (callback glib::stable-pointer-destroy-notify-cb)))
+                                   cell-layout
+                                   cell
+                                   (callback gtk-cell-layout-cell-data-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-cell-layout-set-cell-data-func)
 
@@ -471,17 +443,17 @@
 (defcfun ("gtk_cell_layout_clear_attributes" gtk-cell-layout-clear-attributes)
      :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2020-6-21}
   @argument[cell-layout]{a @class{gtk-cell-layout} object}
   @argument[cell]{a @class{gtk-cell-renderer} to clear the attribute mapping on}
   @begin{short}
     Clears all existing attributes previously set with the function
-    @fun{gtk-cell-layout-set-attributes}.
+    @fun{gtk-cell-layout-add-attribute}.
   @end{short}
   @see-class{gtk-cell-layout}
-  @see-function{gtk-cell-layout-set-attributes}"
-  (cell-layout g-object)
-  (cell g-object))
+  @see-function{gtk-cell-layout-add-attribute}"
+  (cell-layout (g-object gtk-cell-layout))
+  (cell (g-object gtk-cell-renderer)))
 
 (export 'gtk-cell-layout-clear-attributes)
 
