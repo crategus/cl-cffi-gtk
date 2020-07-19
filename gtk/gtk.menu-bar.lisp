@@ -2,12 +2,12 @@
 ;;; gtk.menu-bar.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,13 +47,13 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkPackDirection  child-pack-direction    Read / Write
-;;;     GtkPackDirection  pack-direction          Read / Write
+;;;     GtkPackDirection    child-pack-direction    Read / Write
+;;;     GtkPackDirection    pack-direction          Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;              gint  internal-padding    Read
-;;;     GtkShadowType  shadow-type         Read
+;;;                 gint    internal-padding        Read
+;;;        GtkShadowType    shadow-type             Read
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -188,8 +188,8 @@
       "Accessor"
       (documentation 'gtk-menu-bar-child-pack-direction 'function)
  "@version{2020-5-19}
-  @synŧax[]{(gtk-menu-bar-child-pack-direction object) => child-pack-dir}
-  @synŧax[]{(setf (gtk-menu-bar-child-pack-direction object) child-pack-dir)}
+  @syntax[]{(gtk-menu-bar-child-pack-direction object) => child-pack-dir}
+  @syntax[]{(setf (gtk-menu-bar-child-pack-direction object) child-pack-dir)}
   @argument[object]{a @class{gtk-menu-bar} widget}
   @argument[child-pack-dir]{a value of the @symbol{gtk-pack-direction}
     enumeration}
@@ -198,11 +198,10 @@
     @class{gtk-menu-bar} class.
   @end{short}
 
-  The @sym{gtk-menu-bar-child-pack-direction} slot access function
-  retrieves the current child pack direction of the menubar.
-
-  The @sym{(setf gtk-menu-bar-child-pack-direction)} slot access function
-  sets how widgets should be packed inside the children of a menubar.
+  The slot access function @sym{gtk-menu-bar-child-pack-direction} retrieves
+  the current child pack direction of the menubar. The slot access function
+  @sym{(setf gtk-menu-bar-child-pack-direction)} sets how widgets should be
+  packed inside the children of a menubar.
   @see-class{gtk-menu-bar}")
 
 ;;; --- gtk-menu-bar-pack-direction --------------------------------------------
@@ -220,21 +219,20 @@
 (setf (gethash 'gtk-menu-bar-pack-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-bar-pack-direction 'function)
- "@version{2013-12-1}
-  @synŧax[]{(gtk-menu-bar-pack-direction object) => pack-dir}
-  @synŧax[]{(setf (gtk-menu-bar-pack-direction object) pack-dir)}
+ "@version{2020-7-17}
+  @syntax[]{(gtk-menu-bar-pack-direction object) => pack-dir}
+  @syntax[]{(setf (gtk-menu-bar-pack-direction object) pack-dir)}
   @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @argument[pack-dir]{a new @symbol{gtk-pack-direction}}
+  @argument[pack-dir]{a value of the @symbol{gtk-pack-direction} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-menu-bar]{pack-direction} slot of the
     @class{gtk-menu-bar} class.
   @end{short}
 
-  The @sym{gtk-menu-bar-child-pack-direction} slot access function
-  retrieves the current pack direction of the menubar.
-
-  The @sym{(setf gtk-menu-bar-child-pack-direction)} slot access function
-  sets how items should be packed inside a menubar.
+  The slot access function @sym{gtk-menu-bar-child-pack-direction} retrieves the
+  current pack direction of the menubar. The slot access function
+  @sym{(setf gtk-menu-bar-child-pack-direction)} sets how items should be packed
+  inside a menubar.
   @see-class{gtk-menu-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -245,9 +243,11 @@
 
 (defun gtk-menu-bar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @return{The new menu bar.}
-  Creates a new @class{gtk-menu-bar} widget.
+ "@version{2020-7-17}
+  @return{The new @class{gtk-menu-bar} widget.}
+  @begin{short}
+    Creates a new menu bar.
+  @end{short}
   @see-class{gtk-menu-bar}
   @see-function{gtk-menu-new-from-model}"
   (make-instance 'gtk-menu-bar))
@@ -261,18 +261,18 @@
 (defcfun ("gtk_menu_bar_new_from_model" gtk-menu-bar-new-from-model)
     (g-object gtk-menu-bar)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-1}
+ "@version{2020-7-17}
   @argument[model]{a @class{g-menu-model} object}
   @return{A new @class{gtk-menu-bar} widget.}
   @begin{short}
-    Creates a new @class{gtk-menu-bar} and populates it with menu items and
-    submenus according to model.
+    Creates a new menu bar and populates it with menu items and
+    submenus according to the menu model.
   @end{short}
 
   The created menu items are connected to actions found in the
-  @class{gtk-application-window} to which the menu bar belongs - typically by
-  means of being contained within the @class{gtk-application-window} widgets
-  hierarchy.
+  @class{gtk-application-window} widget to which the menu bar belongs -
+  typically by means of being contained within the
+  @class{gtk-application-window} widgets hierarchy.
   @see-class{gtk-menu-bar}
   @see-class{g-menu-model}
   @see-class{gtk-application-window}"
