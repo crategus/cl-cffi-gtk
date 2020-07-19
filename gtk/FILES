@@ -92,14 +92,14 @@ GTK+ Widgets and Objects
     gtk-text-attributes.lisp         - GtkTextAttributes           - Gtk+ 3.24 &
     gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.24
     gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.24
- +  gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
+    gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.24
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.24
     gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.24
 
   Tree, List and Icon Grid Widgets
 
- +  gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24 &
+    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24 &
  +  gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24 &
  +  gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24 &
  +  gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.24 &
@@ -109,17 +109,17 @@ GTK+ Widgets and Objects
  +  gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24 &
  +  gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.24 &
  +  gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.24 &
- +  gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.24 &
- +  gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.24 &
- +  gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.24
- +  gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.24
+    gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.24 &
+    gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.24 &
+    gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.24
+    gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.24
  +  gtk.cell-renderer.lisp           - GtkCellRenderer             - GTK+ 3.24 &
- +  gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.24
- +  gtk.cell-renderer-accel.lisp     - GtkCellRendererAccel        - GTK+ 3.24
- +  gtk.cell-renderer-combo.lisp     - GtkCellRendererCombo        - GTK+ 3.24
- +  gtk.cell-renderer-pixbuf.lisp    - GtkCellRendererPixbuf       - GTK+ 3.24
- +  gtk.cell-renderer-progress-lisp  - GtkCellRendererProgress     - GTK+ 3.24
- +  gtk.cell-renderer-spin.lisp      - GtkCellRendererSpin         - GTK+ 3.24
+    gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.24
+    gtk.cell-renderer-accel.lisp     - GtkCellRendererAccel        - GTK+ 3.24
+    gtk.cell-renderer-combo.lisp     - GtkCellRendererCombo        - GTK+ 3.24
+    gtk.cell-renderer-pixbuf.lisp    - GtkCellRendererPixbuf       - GTK+ 3.24
+    gtk.cell-renderer-progress-lisp  - GtkCellRendererProgress     - GTK+ 3.24
+    gtk.cell-renderer-spin.lisp      - GtkCellRendererSpin         - GTK+ 3.24
     gtk.cell-renderer-text.lisp      - GtkCellRendererText         - GTK+ 3.24
     gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.24
     gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.24
@@ -132,8 +132,8 @@ GTK+ Widgets and Objects
     gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.24
     gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.24
  +  gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24 &
- +  gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
- +  gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
+    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
+    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
  +  gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24 &
  +  gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24
  +  gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.24
