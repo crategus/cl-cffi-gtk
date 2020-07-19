@@ -2,12 +2,12 @@
 ;;; gtk.tree-selection.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -63,11 +63,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkSelectionMode   mode       Read / Write
+;;;     GtkSelectionMode    mode       Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;                 void   changed    Run First
+;;;                 void    changed    Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -92,19 +92,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-selection 'type)
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @begin{short}
     The @sym{gtk-tree-selection} object is a helper object to manage the
-    selection for a @class{gtk-tree-view} widget. The @sym{gtk-tree-selection}
-    object is automatically created when a new @class{gtk-tree-view} widget is
-    created, and cannot exist independentally of this widget. The primary reason
-    the @sym{gtk-tree-selection} objects exists is for cleanliness of code and
-    API. That is, there is no conceptual reason all these functions could not be
-    methods on the @class{gtk-tree-view} widget instead of a separate function.
+    selection for a @class{gtk-tree-view} widget.
   @end{short}
+  The @sym{gtk-tree-selection} object is automatically created when a new
+  @class{gtk-tree-view} widget is created, and cannot exist independentally of
+  this widget. The primary reason the @sym{gtk-tree-selection} objects exists
+  is for cleanliness of code and API. That is, there is no conceptual reason
+  all these functions could not be methods on the @class{gtk-tree-view} widget
+  instead of a separate function.
 
   The @sym{gtk-tree-selection} object is gotten from a @class{gtk-tree-view} by
-  calling the @fun{gtk-tree-view-get-selection} function. It can be manipulated
+  calling the function @fun{gtk-tree-view-get-selection}. It can be manipulated
   to check the selection status of the tree, as well as select and deselect
   individual rows. Selection is done completely view side. As a result, multiple
   views of the same model can have completely different selections.
@@ -119,14 +120,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (treeselection)    : Run First
+ lambda (selection)    : Run First
       @end{pre}
       Emitted whenever the selection has (possibly) changed. Please note that
       this signal is mostly a hint. It may only be emitted once when a range of
       rows are selected, and it may occasionally be emitted when nothing has
       happened.
       @begin[code]{table}
-        @entry[treeselection]{The object which received the signal.}
+        @entry[selection]{The @class{gtk-tree-selection} object which received
+        the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-tree-selection-mode}")
@@ -137,9 +139,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-tree-selection) 't)
- "The @code{mode} property of type @symbol{gtk-selection-mode}
-  (Read / Write) @br{}
-  Selection mode. See the @fun{gtk-tree-selection-mode} function for more
+ "The @code{mode} property of type @symbol{gtk-selection-mode} (Read / Write)
+  @br{}
+  Selection mode. See the function @fun{gtk-tree-selection-mode} for more
   information on this property. @br{}
   Default value: @code{:single}")
 
@@ -147,20 +149,18 @@
 (setf (gethash 'gtk-tree-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-selection-mode 'function)
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @syntax[]{(gtk-tree-selection-mode object) => mode}
   @syntax[]{(setf (gtk-tree-selection-mode object) mode)}
   @argument[object]{a @class{gtk-tree-selection} object}
-  @argument[mode]{the selection mode}
+  @argument[mode]{a @symbol{gtk-selection-mode} value}
   @begin{short}
     Accessor of the @slot[gtk-tree-selection]{mode} slot of the
     @class{gtk-tree-selection} class.
   @end{short}
 
-  The @sym{gtk-tree-selection-mode} slot access function
-  gets the current selection mode.
-
-  The @sym{(setf gtk-tree-selection-mode)} slot access function
+  The slot access function @sym{gtk-tree-selection-mode} gets the current
+  selection mode. The slot access function @sym{(setf gtk-tree-selection-mode)}
   sets the selection mode of the selection. If the previous type was
   @code{:multiple}, then the anchor is kept selected, if it was previously
   selected.
@@ -256,7 +256,7 @@
 
 (defun gtk-tree-selection-set-select-function (selection fn)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[func]{the selection function, may be @code{nil}}
   @short{Sets the selection function.}
@@ -264,12 +264,13 @@
   If set, this function is called before any node is selected or unselected,
   giving some control over which nodes are selected. The select function
   should return @em{true} if the state of the node may be toggled, and
-  @code{nil} if the state of the node should be left unchanged."
+  @code{nil} if the state of the node should be left unchanged.
+  @see-class{gtk-tree-selection}"
   (%gtk-tree-selection-set-select-function
-                             selection
-                             (callback gtk-tree-selection-select-function-cb)
-                             (glib::allocate-stable-pointer fn)
-                             (callback glib::stable-pointer-destroy-notify-cb)))
+                               selection
+                               (callback gtk-tree-selection-select-function-cb)
+                               (allocate-stable-pointer fn)
+                               (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-selection-set-select-function)
 
@@ -281,14 +282,14 @@
 
 (defun gtk-tree-selection-get-select-function (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @return{The function.}
   @short{Returns the current selection function.}
   @see-class{gtk-tree-selection}"
   (let ((ptr (%gtk-tree-selection-get-user-data selection)))
     (unless (null-pointer-p ptr)
-      (glib::get-stable-pointer-value ptr))))
+      (get-stable-pointer-value ptr))))
 
 (export 'gtk-tree-selection-get-select-function)
 
@@ -314,48 +315,53 @@
   (selection (g-object gtk-tree-selection)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_selection_get_tree_view ()
+;;; gtk_tree_selection_get_tree_view () -> gtk-tree-selection-tree-view
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_selection_get_tree_view" gtk-tree-selection-get-tree-view)
+(defcfun ("gtk_tree_selection_get_tree_view" gtk-tree-selection-tree-view)
     (g-object gtk-tree-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @return{A @class{gtk-tree-view} object.}
-  Returns the tree view associated with @arg{selection}."
+  @begin{short}
+    Returns the tree view associated with @arg{selection}.
+  @end{short}
+  @see-class{gtk-tree-selection}"
   (selection (g-object gtk-tree-selection)))
 
-(export 'gtk-tree-selection-get-tree-view)
+(export 'gtk-tree-selection-tree-view)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_selected ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_selection_get_selected"
-          %gtk-tree-selection-get-selected) :boolean
-  (selection g-object)
+(defcfun ("gtk_tree_selection_get_selected" %gtk-tree-selection-selected)
+    :boolean
+  (selection (g-object gtk-tree-selection))
   (model :pointer)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
-(defun gtk-tree-selection-get-selected (selection)
+(defun gtk-tree-selection-selected (selection)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-30}
+ "@version{2020-6-28}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @begin{return}
     The @class{gtk-tree-iter} object of the selected node, or @code{nil}
     if there is no selected node.
   @end{return}
-  Sets iter to the currently selected node if @arg{selection} is set to
-  @code{:single} or @code{:browse}. This function will not work if you use
-  selection is @code{:multiple}.
+  @begin{short}
+    Sets iter to the currently selected node if @arg{selection} is set to
+    @code{:single} or @code{:browse}.
+  @end{short}
+  This function will not work if you use selection is @code{:multiple}.
   @see-class{gtk-tree-selection}
   @see-class{gtk-tree-iter}"
   (let ((iter (make-instance 'gtk-tree-iter)))
-    (when (%gtk-tree-selection-get-selected selection (null-pointer) iter)
+    (when (%gtk-tree-selection-selected selection (null-pointer) iter)
       iter)))
 
-(export 'gtk-tree-selection-get-selected)
+(export 'gtk-tree-selection-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_selected_foreach ()
@@ -369,16 +375,17 @@
 
 (defun gtk-tree-selection-selected-foreach (selection fn)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-6-28}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[func]{the function to call for each selected node}
   @begin{short}
     Calls a function for each selected node.
   @end{short}
   Note that you cannot modify the tree or selection from within this function.
-  As a result, the @fun{gtk-tree-selection-get-selected-rows} function might be
-  more useful.
-  @see-function{gtk-tree-selection-get-selected-rows}"
+  As a result, the functin @fun{gtk-tree-selection-selected-rows} might be more
+  useful.
+  @see-class{gtk-tree-selection}
+  @see-function{gtk-tree-selection-selected-rows}"
   (with-stable-pointer (ptr fn)
     (%gtk-tree-selection-selected-foreach
                                         selection
