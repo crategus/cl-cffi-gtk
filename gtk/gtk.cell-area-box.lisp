@@ -2,11 +2,11 @@
 ;;; gtk.cell-area-box.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,14 +45,14 @@
 ;;;
 ;;; Properties
 ;;;
-;;;            gint   spacing       Read / Write
+;;;            gint    spacing       Read / Write
 ;;;
 ;;; Child Properties
 ;;;
-;;;        gboolean   align         Read / Write
-;;;        gboolean   expand        Read / Write
-;;;        gboolean   fixed-size    Read / Write
-;;;     GtkPackType   pack-type     Read / Write
+;;;        gboolean    align         Read / Write
+;;;        gboolean    expand        Read / Write
+;;;        gboolean    fixed-size    Read / Write
+;;;     GtkPackType    pack-type     Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -88,7 +88,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-area-box 'type)
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @begin{short}
     The @sym{gtk-cell-area-box} renders cell renderers into a row or a column
     depending on its @symbol{gtk-orientation}.
@@ -105,22 +105,22 @@
   Alignments of @class{gtk-cell-renderer}s rendered in adjacent rows can be
   configured by configuring the @code{align} child cell property with the
   @fun{gtk-cell-area-cell-set-property} function or by specifying the
-  @arg{align} argument to the @fun{gtk-cell-area-box-pack-start} and
-  @fun{gtk-cell-area-box-pack-end} functions.
+  @arg{align} argument to the functions @fun{gtk-cell-area-box-pack-start} and
+  @fun{gtk-cell-area-box-pack-end}.
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
       @begin[align]{entry}
-        The @code{align} child property of type @code{:boolean}
-        (Read / Write) @br{}
+        The @code{align} child property of type @code{:boolean} (Read / Write)
+        @br{}
         Whether the cell renderer should be aligned in adjacent rows. @br{}
-        Default value: @code{nil} @br{}
+        Default value: @em{false} @br{}
       @end{entry}
       @begin[expand]{entry}
-        The @code{expand} child property of type @code{:boolean}
-        (Read / Write) @br{}
+        The @code{expand} child property of type @code{:boolean} (Read / Write)
+        @br{}
         Whether the cell renderer should receive extra space when the area
         receives more than its natural size. @br{}
-        Default value: @code{nil} @br{}
+        Default value: @em{false} @br{}
       @end{entry}
       @begin[fixed-size]{entry}
         The @code{fixed-size} child property of type @code{:boolean}
@@ -132,8 +132,8 @@
       @begin[pack-type]{entry}
         The @code{pack-type} child property of type @symbol{gtk-pack-type}
         (Read / Write) @br{}
-        A @symbol{gtk-pack-type} indicating whether the cell renderer is packed
-        with reference to the start or end of the area. @br{}
+        A pack type indicating whether the cell renderer is packed with
+        reference to the start or end of the area. @br{}
         Default value: @code{:start} @br{}
       @end{entry}
     @end{table}
@@ -160,26 +160,28 @@
 (setf (gethash 'gtk-cell-area-box-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-spacing 'function)
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @syntax[]{(gtk-cell-area-box-spacing object) => spacing}
   @syntax[]{(setf (gtk-cell-area-box-spacing object) spacing)}
-  @argument[box]{a @class{gtk-cell-area-box} widget}
-  @argument[spacing]{the space to add between @class{gtk-cell-renderer}s.}
+  @argument[object]{a @class{gtk-cell-area-box} widget}
+  @argument[spacing]{an integer with the space to add between
+    @class{gtk-cell-renderer}s.}
   @begin{short}
-    Accessor of the @slot[gtk-cell-area-box]{spacing} of the
+    Accessor of the @slot[gtk-cell-area-box]{spacing} slot of the
     @class{gtk-cell-area-box} class.
   @end{short}
 
-  The @sym{gtk-cell-area-box-spacing} slot access function
-  gets the spacing added between cell renderers.
-
-  The @sym{(setf gtk-cell-area-box-spacing)} slot access function
-  sets the spacing to add between cell renderers in @arg{box}.
+  The slot access function @sym{gtk-cell-area-box-spacing} gets the spacing
+  added between cell renderers. The slot access function
+  @sym{(setf gtk-cell-area-box-spacing)} sets the spacing to add between cell
+  renderers in @arg{box}.
   @see-class{gtk-cell-area-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-area-box-child-align ------------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-align
@@ -189,10 +191,22 @@
 (setf (gethash 'gtk-cell-area-box-child-align atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-child-align 'function)
- "@version{2013-11-26}
-  Accessor of the @code{align} child property of the
-  @class{gtk-cell-area-box} class.
+ "@version{2020-6-27}
+  @syntax[]{(gtk-cell-area-box-child-align container child) => align}
+  @syntax[]{(setf (gtk-cell-area-box-child-align container child) align)}
+  @argument[container]{a @class{gtk-cell-area-box} object}
+  @argument[child]{a @class{gtk-widget} child}
+  @argument[align]{a boolean wether the cell renderer should be aligned in
+    admacent rows}
+  @begin{short}
+    Accessor of the @code{align} child property of the
+    @class{gtk-cell-area-box} class.
+  @end{short}
+
+  Whether the cell renderer should be aligned in adjacent rows.
   @see-class{gtk-cell-area-box}")
+
+;;; --- gtk-cell-area-box-child-expand -----------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-expand
@@ -202,10 +216,23 @@
 (setf (gethash 'gtk-cell-area-box-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-child-expand 'function)
- "@version{2013-11-26}
-  Accessor of the @code{expand} child property of the
-  @class{gtk-cell-area-box} class.
+ "@version{2020-6-27}
+  @syntax[]{(gtk-cell-area-box-child-expand container child) => expand}
+  @syntax[]{(setf (gtk-cell-area-box-child-expand container child) expand)}
+  @argument[container]{a @class{gtk-cell-area-box} object}
+  @argument[child]{a @class{gtk-widget} child}
+  @argument[expand]{a boolean wether the cell renderer should receive extra
+    space}
+  @begin{short}
+    Accessor of the @code{expand} child property of the
+    @class{gtk-cell-area-box} class.
+  @end{short}
+
+  Whether the cell renderer should receive extra space when the area receives
+  more than its natural size.
   @see-class{gtk-cell-area-box}")
+
+;;; --- gtk-cell-area-box-child-fixed-size -------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-fixed-size
@@ -215,10 +242,23 @@
 (setf (gethash 'gtk-cell-area-box-child-fixed-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-child-fixed-size 'function)
- "@version{2013-11-26}
-  Accessor of the @code{fixed-size} child property of the
-  @class{gtk-cell-area-box} class.
+ "@version{2020-6-27}
+  @syntax[]{(gtk-cell-area-box-child-fixed-size container child) => fixed-size}
+  @syntax[]{(setf (gtk-cell-area-box-child-fixed-size container child) fixed-size)}
+  @argument[container]{a @class{gtk-cell-area-box} object}
+  @argument[child]{a @class{gtk-widget} child}
+  @argument[fixed-size]{a boolean wether the cell renderer should require the
+    same size for all rows}
+  @begin{short}
+    Accessor of the @code{fixed-size} child property of the
+    @class{gtk-cell-area-box} class.
+  @end{short}
+
+  Whether the cell renderer should require the same size for all rows for which
+  it was requested.
   @see-class{gtk-cell-area-box}")
+
+;;; --- gtk-cell-area-box-child-pack-type --------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-pack-type
@@ -228,9 +268,19 @@
 (setf (gethash 'gtk-cell-area-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-child-pack-type 'function)
- "@version{2013-11-26}
-  Accessor of the @code{pack-type} child property of the
-  @class{gtk-cell-area-box} class.
+ "@version{2020-6-27}
+  @syntax[]{(gtk-cell-area-box-child-pack-type container child) => pack-type}
+  @syntax[]{(setf (gtk-cell-area-box-child-pack-type container child) pack-type)}
+  @argument[container]{a @class{gtk-cell-area-box} object}
+  @argument[child]{a @class{gtk-widget} child}
+  @argument[pack-type]{a @symbol{gtk-pack-type} value}
+  @begin{short}
+    Accessor of the @code{pack-type} child property of the
+    @class{gtk-cell-area-box} class.
+  @end{short}
+
+  A @symbol{gtk-pack-type} indicating whether the cell renderer is packed with
+  reference to the start or end of the area.
   @see-class{gtk-cell-area-box}")
 
 ;;; ----------------------------------------------------------------------------
@@ -241,9 +291,9 @@
 
 (defun gtk-cell-area-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
-  @return{A newly created @class{gtk-cell-area-box} widget.}
-  @short{Creates a new @class{gtk-cell-area-box} widget.}
+ "@version{2020-6-27}
+  @return{A newly created @class{gtk-cell-area-box} object.}
+  @short{Creates a new cell area box.}
   @see-class{gtk-cell-area-box}"
   (make-instance 'gtk-cell-area-box))
 
@@ -260,26 +310,28 @@
   (align :boolean)
   (fixed :boolean))
 
-(defun gtk-cell-area-box-pack-start (box child
+(defun gtk-cell-area-box-pack-start (box renderer
                                     &key (expand t) (align t) (fixed t))
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @argument[box]{a @class{gtk-cell-area-box} widget}
   @argument[renderer]{the @class{gtk-cell-renderer} to add}
-  @argument[expand]{whether @arg{renderer} should receive extra space when the
-    area receives more than its natural size}
-  @argument[align]{whether @arg{renderer} should be aligned in adjacent rows}
-  @argument[fixed]{whether @arg{renderer} should have the same size in all rows}
+  @argument[expand]{a boolean whether @arg{renderer} should receive extra space
+    when the area receives more than its natural size}
+  @argument[align]{a boolean whether @arg{renderer} should be aligned in
+    adjacent rows}
+  @argument[fixed]{a boolean whether @arg{renderer} should have the same size
+    in all rows}
   @begin{short}
-    Adds @arg{renderer} to @arg{box}, packed with reference to the start of
-    @arg{box}.
+    Adds a renderer to the cell area box, packed with reference to the start of
+    the box.
   @end{short}
 
   The renderer is packed after any other @class{gtk-cell-renderer} packed with
-  reference to the start of @arg{box}.
+  reference to the start of the box.
   @see-class{gtk-cell-area-box}
   @see-class{gtk-cell-renderer}"
-  (%gtk-cell-area-box-pack-start box child expand align fixed))
+  (%gtk-cell-area-box-pack-start box renderer expand align fixed))
 
 (export 'gtk-cell-area-box-pack-start)
 
@@ -297,20 +349,22 @@
 (defun gtk-cell-area-box-pack-end (box child
                                   &key (expand t) (align t) (fixed t))
  #+cl-cffi-gtk-documentation
- "@version{2013-11-26}
+ "@version{2020-6-27}
   @argument[box]{a @class{gtk-cell-area-box} widget}
   @argument[renderer]{the @class{gtk-cell-renderer} to add}
-  @argument[expand]{whether @arg{renderer} should receive extra space when the
-    area receives more than its natural size}
-  @argument[align]{whether @arg{renderer} should be aligned in adjacent rows}
-  @argument[fixed]{whether @arg{renderer} should have the same size in all rows}
+  @argument[expand]{a boolean whether @arg{renderer} should receive extra space
+    when the area receives more than its natural size}
+  @argument[align]{a boolean whether @arg{renderer} should be aligned in
+    adjacent rows}
+  @argument[fixed]{a boolean whether @arg{renderer} should have the same size
+    in all rows}
   @begin{short}
-    Adds @arg{renderer} to @arg{box}, packed with reference to the end of
-    @arg{box}.
+    Adds a renderer to cell area box, packed with reference to the end of
+    the box.
   @end{short}
 
   The renderer is packed after, away from end of, any other
-  @class{gtk-cell-renderer} packed with reference to the end of @arg{box}.
+  @class{gtk-cell-renderer} packed with reference to the end of the box.
   @see-class{gtk-cell-area-box}
   @see-class{gtk-cell-renderer}
   @see-function{gtk-cell-area-box-pack-start}"
