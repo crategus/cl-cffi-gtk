@@ -29,8 +29,8 @@
       (let ((tag (make-instance 'gtk-text-tag
                                 :name "blue_foreground"
                                 :foreground "blue"))
-            (start (gtk-text-buffer-get-iter-at-offset buffer 7))
-            (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
+            (start (gtk-text-buffer-iter-at-offset buffer 7))
+            (end (gtk-text-buffer-iter-at-offset buffer 12)))
         ;; Add the tag to the tag table of the buffer
         (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer

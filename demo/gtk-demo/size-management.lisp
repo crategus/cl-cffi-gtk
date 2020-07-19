@@ -1,6 +1,6 @@
 ;;;; Size management
 ;;;;
-;;;; 
+;;;;
 
 (in-package #:gtk-demo)
 
@@ -38,7 +38,7 @@
 
       ;; Information about the GtkRequisition of button
       (multiple-value-bind (minimum-size natural-size)
-          (gtk-widget-get-preferred-size button)
+          (gtk-widget-preferred-size button)
         (gtk-container-add action (make-instance 'gtk-label
                                                  :label "GtkRequistion"))
         (gtk-container-add action
@@ -63,20 +63,20 @@
                                           (format nil "natural height: ~A"
                                                   (gtk-requisition-height natural-size))))
         (multiple-value-bind (minimum-width natural-width)
-            (gtk-widget-get-preferred-width button)
+            (gtk-widget-preferred-width button)
           (gtk-container-add action
                              (make-instance 'gtk-label
                                             :label
                                             (format nil "preferred width: ~A, ~A"
                                                     minimum-width natural-width))))
         (multiple-value-bind (minimum-height natural-height)
-            (gtk-widget-get-preferred-height button)
+            (gtk-widget-preferred-height button)
           (gtk-container-add action
                              (make-instance 'gtk-label
                                             :label
                                             (format nil "preferred height: ~A, ~A"
                                                     minimum-height natural-height))))
-                                                 
+
 
       )
 
