@@ -2,12 +2,12 @@
 ;;; gtk.radio-tool-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -46,7 +46,7 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkRadioToolButton*  group    Write
+;;;     GtkRadioToolButton*   group    Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -86,21 +86,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-tool-button 'type)
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @begin{short}
     A @sym{gtk-radio-tool-button} is a @class{gtk-tool-item} that contains a
     radio button, that is, a button that is part of a group of toggle buttons
     where only one button can be active at a time.
   @end{short}
 
-  Use the @fun{gtk-radio-tool-button-new} function to create a new
-  @sym{gtk-radio-tool-button}. Use the
-  @fun{gtk-radio-tool-button-new-from-widget} function to create a new
-  @sym{gtk-radio-tool-button} that is part of the same group as an existing
-  @sym{gtk-radio-tool-button}. Use the
-  @fun{gtk-radio-tool-button-new-from-stock} or
-  @fun{gtk-radio-tool-button-new-with-stock-from-widget} functions create a new
-  @sym{gtk-radio-tool-button} containing a stock item.
+  Use the function @fun{gtk-radio-tool-button-new} to create a new radio tool
+  button. Use the function @fun{gtk-radio-tool-button-new-from-widget} to create
+  a new radio tool button that is part of the same group as an existing radio
+  tool button.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-radio-tool-button} has a single CSS node with name
     @code{toolbutton}.
@@ -114,17 +110,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group"
                                                'gtk-radio-tool-button) 't)
- "The @code{group} property of type @code{gtk-radio-tool-button}
-  (Write) @br{}
+ "The @code{group} property of type @code{gtk-radio-tool-button} (Write) @br{}
   Sets a new group for a radio tool button.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-tool-button-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-tool-button-group 'function)
- "@version{2019-4-6}
+ "@version{2020-7-19}
   @begin{short}
-    Accessor of the slot @slot[gtk-radio-tool-button]{group} of the
+    Accessor of the @slot[gtk-radio-tool-button]{group} slot of the
     @class{gtk-radio-tool-button} class.
   @end{short}
   @see-class{gtk-radio-tool-button}")
@@ -136,12 +131,12 @@
 (defcfun ("gtk_radio_tool_button_new" gtk-radio-tool-button-new)
     (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @argument[group]{an existing radio button group, or @code{nil} if you are
     creating a new group}
   @return{The new @class{gtk-radio-tool-button}.}
   @begin{short}
-    Creates a new @class{gtk-radio-tool-button}, adding it to @arg{group}.
+    Creates a new radio tool button, adding it to @arg{group}.
   @end{short}
   @see-class{gtk-radio-tool-button}"
   (group (g-slist (g-object gtk-radio-button))))
@@ -155,17 +150,23 @@
 (defcfun ("gtk_radio_tool_button_new_from_stock"
            gtk-radio-tool-button-new-from-stock) (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-14}
-  @argument[group]{an existing radio button group, or @code{nil} if you are
-    creating a new group}
-  @argument[stock-id]{the name of a stock item}
-  @return{The new @class{gtk-radio-tool-button}.}
+ "@version{2020-7-19}
+  @argument[group]{an existing @class{gtk-radio-tool-button} group, or
+    @code{nil} if you are creating a new group}
+  @argument[stock-id]{an string with the name of a stock item}
+  @return{The new @class{gtk-radio-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-radio-tool-button}, adding it to @arg{group}. The
-    new @class{gtk-radio-tool-button} will contain an icon and label from the
-    stock item indicated by @arg{stock-id}.
+    Creates a new radio tool button, adding it to @arg{group}.
   @end{short}
-  @see-class{gtk-radio-tool-button}"
+  The new radio tool button will contain an icon and label from the stock item
+  indicated by @arg{stock-id}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-tool-button-new-from-stock} has been deprecated
+    since version 3.10 and should not be used in newly-written code. Use the
+    function @fun{gtk-radio-tool-button-new} instead.
+  @end{dictionary}
+  @see-class{gtk-radio-tool-button}
+  @see-function{gtk-radio-tool-button-new}"
   (group (g-slist (g-object gtk-radio-button)))
   (stock-id :string))
 
@@ -179,12 +180,11 @@
            gtk-radio-tool-button-new-from-widget)
     (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @argument[group]{an existing @class{gtk-radio-tool-button}, or @code{nil}}
-  @return{The new @class{gtk-radio-tool-button}.}
+  @return{The new @class{gtk-radio-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-radio-tool-button} adding it to the same group as
-    @arg{group}.
+    Creates a new radio tool button adding it to the same group as @arg{group}.
   @end{short}
   @see-class{gtk-radio-tool-button}"
   (group (g-object gtk-radio-tool-button)))
@@ -199,16 +199,22 @@
            gtk-radio-tool-button-new-with-stock-from-widget)
     (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @argument[group]{an existing @class{gtk-radio-tool-button} widget}
-  @argument[stock-id]{the name of a stock item}
-  @return{A new @class{gtk-radio-tool-button}.}
+  @argument[stock-id]{a string with the name of a stock item}
+  @return{A new @class{gtk-radio-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-radio-tool-button} adding it to the same group as
-    @arg{group}. The new @class{gtk-radio-tool-button} will contain an icon and
-    label from the stock item indicated by @arg{stock-id}.
+    Creates a new radio tool button adding it to the same group as @arg{group}.
   @end{short}
-  @see-class{gtk-radio-tool-button}"
+  The new radio tool button will contain an icon and label from the stock item
+  indicated by @arg{stock-id}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-radio-tool-button-new-with-stock-from-widget} has
+    been deprecated since version 3.10 and should not be used in newly-written
+    code. Use the function @fun{gtk-radio-tool-button-new-from-widget} instead.
+  @end{dictionary}
+  @see-class{gtk-radio-tool-button}
+  @see-function{gtk-radio-tool-button-new-from-widget}"
   (group (g-object gtk-radio-tool-button))
   (stock-id :string))
 
@@ -221,7 +227,7 @@
 (defcfun ("gtk_radio_tool_button_get_group" gtk-radio-tool-button-get-group)
     (g-slist (g-object gtk-radio-button) :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @argument[button]{a @class{gtk-radio-tool-button} widget}
   @return{The group @arg{button} belongs to.}
   @short{Returns the radio button group @arg{button} belongs to.}
@@ -237,7 +243,7 @@
 (defcfun ("gtk_radio_tool_button_set_group" gtk-radio-tool-button-set-group)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2020-7-19}
   @argument[button]{a @class{gtk-radio-tool-button} widget}
   @argument[group]{an existing radio button group}
   @begin{short}
