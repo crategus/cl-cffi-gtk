@@ -382,7 +382,7 @@
        (lambda (tree-view path column)
          (declare (ignore column))
          (let* ((model (gtk-tree-view-model tree-view))
-                (iter (gtk-tree-model-get-iter model path))
+                (iter (gtk-tree-model-iter model path))
                 (func-name (gtk-tree-model-value model iter 2))
                 (func (find-symbol func-name :gtk-demo)))
            (if func

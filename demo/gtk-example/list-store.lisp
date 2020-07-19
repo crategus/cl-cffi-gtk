@@ -18,7 +18,7 @@
     ;; Modify a particular row
     (let ((path (gtk-tree-path-new-from-string "2")))
       (gtk-list-store-set-value list-store
-                                (gtk-tree-model-get-iter list-store path)
+                                (gtk-tree-model-iter list-store path)
                                 2
                                 t))
     ;; Return the new list store

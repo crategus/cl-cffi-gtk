@@ -24,6 +24,7 @@
            #:example-print-operation
            #:example-print-run-page-setup-dialog
            #:example-print-run-page-setup-dialog-async
+           #:example-radio-button
            #:example-show-about-dialog
            #:example-simple-list-store
            #:example-widget-pointer

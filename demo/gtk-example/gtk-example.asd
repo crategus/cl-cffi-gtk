@@ -22,6 +22,7 @@
                (:file "page-setup-unix-dialog")
                (:file "print-dialog")
                (:file "print-operation")
+               (:file "radio-button")
                (:file "show-about-dialog")
                (:file "image-menu-item")
                (:file "widget-pointer")
