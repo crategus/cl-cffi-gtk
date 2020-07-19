@@ -223,17 +223,17 @@
     To ensure that everything works properly, here are some guidelines to follow
     when implementing height-for-width (or width-for-height) containers.
 
-    Each request mode involves 2 virtual methods. Height-for-width apis run
-    through the @fun{gtk-widget-get-preferred-width} function and then through
-    the @fun{gtk-widget-get-preferred-height-for-width} function. When handling
+    Each request mode involves 2 virtual methods. Height-for-width APIs run
+    through the function @fun{gtk-widget-preferred-width} and then through
+    the function @fun{gtk-widget-preferred-height-for-width}. When handling
     requests in the opposite @symbol{gtk-size-request-mode} it is important that
     every widget request at least enough space to display all of its content at
     all times.
 
-    When the @fun{gtk-widget-get-preferred-height} function is called on a
+    When the function @fun{gtk-widget-preferred-height} is called on a
     container that is height-for-width, the container must return the height for
     its minimum width. This is easily achieved by simply calling the reverse
-    apis implemented for itself as follows:
+    APIs implemented for itself as follows:
     @begin{pre}
   static void
   foo_container_get_preferred_height (GtkWidget *widget,
@@ -259,7 +259,7 @@
        @}
   @}
     @end{pre}
-    Similarly, when the @fun{gtk-widget-get-preferred-width-for-height} function
+    Similarly, when the function @fun{gtk-widget-preferred-width-for-height}
     is called for a container or widget that is height-for-width, it then only
     needs to return the base minimum width like so:
     @begin{pre}
@@ -286,17 +286,17 @@
     allocation of widgets in the input orientation. Assuming an height-for-width
     request mode, a container would implement the
     @code{get_preferred_height_for_width()} virtual function by first calling
-    the @fun{gtk-widget-get-preferred-width} function for each of its children.
+    the function @fun{gtk-widget-preferred-width} for each of its children.
 
     For each potential group of children that are lined up horizontally, the
-    values returned by the @fun{gtk-widget-get-preferred-width} function should
+    values returned by the function @fun{gtk-widget-preferred-width} should
     be collected in an array of @class{gtk-requested-size} structures. Any child
     spacing should be removed from the input for_width and then the collective
     size should be allocated using the @fun{gtk-distribute-natural-allocation}
     convenience function.
 
     The container will then move on to request the preferred height for each
-    child by using the @fun{gtk-widget-get-preferred-height-for-width} function
+    child by using the function @fun{gtk-widget-preferred-height-for-width}
     and using the sizes stored in the @class{gtk-requested-size} array.
 
     To allocate a height-for-width container, it is again important to consider
@@ -407,10 +407,10 @@
   @see-class{gtk-button}
   @see-class{gtk-requested-size}
   @see-symbol{gtk-size-request-mode}
-  @see-function{gtk-widget-get-preferred-width}
-  @see-function{gtk-widget-get-preferred-height}
-  @see-function{gtk-widget-get-preferred-height-for-width}
-  @see-function{gtk-widget-get-preferred-width-for-height}
+  @see-function{gtk-widget-preferred-width}
+  @see-function{gtk-widget-preferred-height}
+  @see-function{gtk-widget-preferred-height-for-width}
+  @see-function{gtk-widget-preferred-width-for-height}
   @see-function{gtk-distribute-natural-allocation}
   @see-function{gtk-container-class-install-child-property}
   @see-function{gtk-container-class-find-child-property}

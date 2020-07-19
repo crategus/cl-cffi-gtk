@@ -575,12 +575,12 @@
     For example, when queried in the normal @code{:height-for-width}
     mode: First, the default minimum and natural width for each widget in the
     interface will be computed using the function
-    @fun{gtk-widget-get-preferred-width}. Because the preferred widths for each
+    @fun{gtk-widget-preferred-width}. Because the preferred widths for each
     container depend on the preferred widths of their children, this information
     propagates up the hierarchy, and finally a minimum and natural width is
     determined for the entire toplevel. Next, the toplevel will use the minimum
     width to query for the minimum height contextual to that width using the
-    function @fun{gtk-widget-get-preferred-height-for-width}, which will also be
+    function @fun{gtk-widget-preferred-height-for-width}, which will also be
     a highly recursive operation. The minimum height for the minimum width is
     normally used to set the minimum size constraint on the toplevel unless the
     function @fun{gtk-window-set-geometry-hints} is explicitly used instead.
@@ -679,7 +679,7 @@
                                &min, &natural);
     @end{pre}
     It will not work to use the wrapper functions, such as the function
-    @fun{gtk-widget-get-preferred-width} inside your own size request
+    @fun{gtk-widget-preferred-width} inside your own size request
     implementation. These return a request adjusted by @class{gtk-size-group}
     and by the @code{GtkWidgetClass.adjust_size_request()} virtual method. If a
     widget used the wrappers inside its virtual method implementations, then the
@@ -2104,8 +2104,8 @@
   @see-symbol{gdk-event-mask}
   @see-symbol{gdk-drag-action}
   @see-symbol{g-param-spec}
-  @see-function{gtk-widget-get-preferred-width}
-  @see-function{gtk-widget-get-preferred-height-for-width}
+  @see-function{gtk-widget-preferred-width}
+  @see-function{gtk-widget-preferred-height-for-width}
   @see-function{gtk-widget-class-install-style-property}
   @see-function{gtk-widget-class-find-style-property}
   @see-function{gtk-widget-class-list-style-properties}
@@ -4097,7 +4097,7 @@
   @subheading{Warning}
     The function @sym{gtk-widget-size-request} has been deprecated since version
     3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-get-preferred-size} instead.
+    @fun{gtk-widget-preferred-size} instead.
 
   @begin{short}
     This function is typically used when implementing a @class{gtk-container}
@@ -4116,7 +4116,7 @@
   will actually be allocated.
   @see-class{gtk-widget}
   @see-class{gtk-requistion}
-  @see-function{gtk-widget-get-preferred-size}
+  @see-function{gtk-widget-preferred-size}
   @see-function{gtk-widget-size-allocate}"
   (let ((requisition (make-gtk-requisition)))
     (%gtk-widget-size-request widget requisition)
@@ -8458,109 +8458,112 @@
 ;;; gtk_widget_get_preferred_height ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_preferred_height" %gtk-widget-get-preferred-height)
-    :void
+(defcfun ("gtk_widget_get_preferred_height" %gtk-widget-preferred-height) :void
   (widget (g-object gtk-widget))
   (minium-height (:pointer :int))
   (natural-height (:pointer :int)))
 
-(defun gtk-widget-get-preferred-height (widget)
+(defun gtk-widget-preferred-height (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-6-27}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@arg{minimum-height} -- the minimum height, or @code{nil} @br{}
-          @arg{natural-height} -- the natural height, or @code{nil}}
+  @return{@arg{minimum-height} -- an integer with the minimum height, or
+                                  @code{nil} @br{}
+          @arg{natural-height} -- an integer with the natural height, or
+                                  @code{nil}}
   @short{Retrieves a widget's initial minimum and natural height.}
 
-  @subheading{note}
-    This call is specific to width-for-height requests.
+  This call is specific to width-for-height requests.
 
-    The returned request will be modified by the
-    @code{GtkWidgetClass::adjust_size_request} virtual method and by any
-    @class{gtk-size-group}'s that have been applied. That is, the returned
-    request is the one that should be used for layout, not necessarily the one
-    returned by the widget itself.
+  The returned request will be modified by the
+  @code{GtkWidgetClass::adjust_size_request} virtual method and by any
+  @class{gtk-size-group}'s that have been applied. That is, the returned
+  request is the one that should be used for layout, not necessarily the one
+  returned by the widget itself.
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
-  @see-function{gtk-widget-get-preferred-width}
+  @see-function{gtk-widget-preferred-width}
   @see-function{gtk-widget-preferred-size}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-widget-get-preferred-height widget minimum-height natural-height)
+    (%gtk-widget-preferred-height widget minimum-height natural-height)
     (values (mem-ref minimum-height :int)
             (mem-ref natural-height :int))))
 
-(export 'gtk-widget-get-preferred-height)
+(export 'gtk-widget-preferred-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_width ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_preferred_width" %gtk-widget-get-preferred-width)
+(defcfun ("gtk_widget_get_preferred_width" %gtk-widget-preferred-width)
     :void
   (widget (g-object gtk-widget))
   (minium-width (:pointer :int))
   (natural-width (:pointer :int)))
 
-(defun gtk-widget-get-preferred-width (widget)
+(defun gtk-widget-preferred-width (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-6-27}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@arg{minimum-width} -- the minimum width, or @code{nil} @br{}
-          @arg{natural-width} -- the natural width, or @code{nil}}
+  @return{@arg{minimum-width} -- an integer with the minimum width, or
+                                 @code{nil} @br{}
+          @arg{natural-width} -- an integer with the natural width,
+                                 or @code{nil}}
   @short{Retrieves a widget's initial minimum and natural width.}
 
-  @subheading{Note}
-    This call is specific to height-for-width requests.
+  This call is specific to height-for-width requests.
 
-    The returned request will be modified by the
-    @code{GtkWidgetClass::adjust_size_request} virtual method and by any
-    @class{gtk-size-group}'s that have been applied. That is, the returned
-    request is the one that should be used for layout, not necessarily the one
-    returned by the widget itself.
+  The returned request will be modified by the
+  @code{GtkWidgetClass::adjust_size_request} virtual method and by any
+  @class{gtk-size-group}'s that have been applied. That is, the returned
+  request is the one that should be used for layout, not necessarily the one
+  returned by the widget itself.
   @begin[Example]{dictionary}
     @begin{pre}
  (setq widget (make-instance 'gtk-button :label \"Hello\"))
 => #<GTK-BUTTON {B1D0079@}>
- (gtk-widget-get-preferred-width widget)
+ (gtk-widget-preferred-width widget)
 => 49
 => 49
 
  (setq widget (make-instance 'gtk-button :label \"Hello, more text\"))
 => #<GTK-BUTTON {B1D60E9@}>
- (gtk-widget-get-preferred-width widget)
+ (gtk-widget-preferred-width widget)
 => 123
 => 123
     @end{pre}
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
-  @see-function{gtk-widget-get-preferred-height}
+  @see-function{gtk-widget-preferred-height}
   @see-function{gtk-widget-preferred-size}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
-    (%gtk-widget-get-preferred-width widget minimum-width natural-width)
+    (%gtk-widget-preferred-width widget minimum-width natural-width)
     (values (mem-ref minimum-width :int)
             (mem-ref natural-width :int))))
 
-(export 'gtk-widget-get-preferred-width)
+(export 'gtk-widget-preferred-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height_for_width ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_preferred_height_for_width"
-          %gtk-widget-get-preferred-height-for-width) :void
+          %gtk-widget-preferred-height-for-width) :void
   (widget (g-object gtk-widget))
   (width :int)
   (minium-height (:pointer :int))
   (natural-height (:pointer :int)))
 
-(defun gtk-widget-get-preferred-height-for-width (widget width)
+(defun gtk-widget-preferred-height-for-width (widget width)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-6-27}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[width]{the width which is available for allocation}
-  @return{@code{minimum-height} -- the minimum height, or @code{nil} @br{}
-          @code{natural-height} -- the natural height, or @code{nil}}
+  @argument[width]{an integer with the width which is available for allocation}
+  @return{@code{minimum-height} -- an integer with the minimum height, or
+                                   @code{nil} @br{}
+          @code{natural-height} -- an integer with the natural height, or
+                                   @code{nil}}
   @begin{short}
     Retrieves a widget's minimum and natural height if it would be given
     the specified @arg{width}.
@@ -8573,35 +8576,38 @@
   the @arg{widget} itself.
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
-  @see-function{gtk-widget-get-preferred-width-for-height}"
+  @see-function{gtk-widget-preferred-width-for-height}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-widget-get-preferred-height-for-width widget
-                                                width
-                                                minimum-height
-                                                natural-height)
+    (%gtk-widget-preferred-height-for-width widget
+                                            width
+                                            minimum-height
+                                            natural-height)
     (values (mem-ref minimum-height :int)
             (mem-ref natural-height :int))))
 
-(export 'gtk-widget-get-preferred-height-for-width)
+(export 'gtk-widget-preferred-height-for-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_width_for_height ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_preferred_width_for_height"
-          %gtk-widget-get-preferred-width-for-height) :void
+          %gtk-widget-preferred-width-for-height) :void
   (widget (g-object gtk-widget))
   (height :int)
   (minium-width (:pointer :int))
   (natural-width (:pointer :int)))
 
-(defun gtk-widget-get-preferred-width-for-height (widget height)
+(defun gtk-widget-preferred-width-for-height (widget height)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-6-27}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[height]{the height which is available for allocation}
-  @return{@code{minimum-width} -- the minimum width, or @code{nil} @br{}
-          @code{natural-width} -- the natural width, or @code{nil}}
+  @argument[height]{an integer with the height which is available for
+    allocation}
+  @return{@code{minimum-width} -- an integer with the minimum width, or
+                                  @code{nil} @br{}
+          @code{natural-width} -- an integer with the natural width, or
+                                  @code{nil}}
   @begin{short}
     Retrieves a widget's minimum and natural width if it would be given
     the specified @arg{height}.
@@ -8614,17 +8620,16 @@
   the @arg{widget} itself.
   @see-class{gtk-widget}
   @see-class{gtk-size-group}
-  @see-function{gtk-widget-get-preferred-height-for-width}"
+  @see-function{gtk-widget-preferred-height-for-width}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
-    (%gtk-widget-get-preferred-width-for-height widget
-                                                height
-                                                minimum-width
-                                                natural-width)
+    (%gtk-widget-preferred-width-for-height widget
+                                            height
+                                            minimum-width
+                                            natural-width)
     (values (mem-ref minimum-width :int)
             (mem-ref natural-width :int))))
 
-(export 'gtk-widget-get-preferred-width-for-height)
-
+(export 'gtk-widget-preferred-width-for-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height_and_baseline_for_width ()
@@ -8703,7 +8708,7 @@
 ;;; gtk_widget_get_preferred_size ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_preferred_size" %gtk-widget-get-preferred-size) :void
+(defcfun ("gtk_widget_get_preferred_size" %gtk-widget-preferred-size) :void
   (widget (g-object gtk-widget))
   (minium-size (g-boxed-foreign gtk-requisition))
   (natural-size (g-boxed-foreign gtk-requisition)))
@@ -8737,7 +8742,7 @@
   @see-class{gtk-requisition}"
  (let ((minimum-size (make-gtk-requisition))
        (natural-size (make-gtk-requisition)))
-    (%gtk-widget-get-preferred-size widget minimum-size natural-size)
+    (%gtk-widget-preferred-size widget minimum-size natural-size)
     (values minimum-size
             natural-size)))
 

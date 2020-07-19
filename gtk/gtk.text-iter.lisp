@@ -292,12 +292,11 @@
   to point to the character offset.
 
   Each character in a text buffer has an offset, starting with 0 for the first
-  character in the buffer. Use the function
-  @fun{gtk-text-buffer-get-iter-at-offset} to convert an offset back into an
-  iterator.
+  character in the buffer. Use the function @fun{gtk-text-buffer-iter-at-offset}
+  to convert an offset back into an iterator.
   @see-class{gtk-text-iter}
   @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-iter-at-offset}"
+  @see-function{gtk-text-buffer-iter-at-offset}"
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-offset)

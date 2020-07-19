@@ -556,11 +556,11 @@
     and should not be used in newly-written code. Combo box formerly used this
     to calculate the sizes for cellviews, now you can achieve this by either
     using the @slot[gtk-cell-view]{fit-model} property or by setting the
-    currently displayed row of the @class{gtk-cell-view} and using the
-    @fun{gtk-widget-get-preferred-size} function.
+    currently displayed row of the @class{gtk-cell-view} and using the function
+    @fun{gtk-widget-preferred-size}.
   @end{dictionary}
   @see-class{gtk-cell-view}
-  @see-function{gtk-widget-get-preferred-size}"
+  @see-function{gtk-widget-preferred-size}"
   (let ((requisition (make-gtk-requisition)))
     (%gtk-cell-view-get-size-of-row cell-view path requisition)
     requisition))
