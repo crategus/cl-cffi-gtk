@@ -73,7 +73,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (= 12 (gtk-text-iter-offset iter)))
     (is (eq #\t (gtk-text-iter-char iter)))
     (is (= 17 (setf (gtk-text-iter-offset iter) 17)))
@@ -85,7 +85,7 @@ dann benutzen Sie es immer noch.")
 (test gtk-text-iter-line
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text *gtk-text-iter-sample-text*))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 100)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 100)))
     (is (= 1 (gtk-text-iter-line iter)))
     (is (eq #\A (gtk-text-iter-char iter)))
     (is (= 5 (setf (gtk-text-iter-line iter) 5)))
@@ -98,7 +98,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (= 12 (gtk-text-iter-line-offset iter)))))
 
 ;;;  gtk_text_iter_get_line_index
@@ -107,7 +107,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (= 12 (gtk-text-iter-line-index iter)))))
 
 ;;;   gtk_text_iter_get_visible_line_index
@@ -116,7 +116,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (= 12 (gtk-text-iter-visible-line-index iter)))))
 
 ;;;   gtk_text_iter_get_visible_line_offset
@@ -125,7 +125,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (= 12 (gtk-text-iter-visible-line-offset iter)))))
 
 ;;;   gtk_text_iter_get_char
@@ -134,7 +134,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (is (eql #\t (gtk-text-iter-char iter)))))
 
 ;;;   gtk_text_iter_get_slice
@@ -143,8 +143,8 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (start (gtk-text-buffer-get-iter-at-offset buffer 12))
-         (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
+         (start (gtk-text-buffer-iter-at-offset buffer 12))
+         (end (gtk-text-buffer-iter-at-offset buffer 16)))
     (is (equal "text" (gtk-text-iter-slice start end)))))
 
 ;;;   gtk_text_iter_get_text
@@ -153,8 +153,8 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (start (gtk-text-buffer-get-iter-at-offset buffer 12))
-         (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
+         (start (gtk-text-buffer-iter-at-offset buffer 12))
+         (end (gtk-text-buffer-iter-at-offset buffer 16)))
     (is (equal "text" (gtk-text-iter-text start end)))))
 
 ;;;   gtk_text_iter_get_visible_slice
@@ -163,8 +163,8 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (start (gtk-text-buffer-get-iter-at-offset buffer 12))
-         (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
+         (start (gtk-text-buffer-iter-at-offset buffer 12))
+         (end (gtk-text-buffer-iter-at-offset buffer 16)))
     (is (equal "text" (gtk-text-iter-visible-slice start end)))))
 
 ;;;   gtk_text_iter_get_visible_text
@@ -173,8 +173,8 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (start (gtk-text-buffer-get-iter-at-offset buffer 12))
-         (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
+         (start (gtk-text-buffer-iter-at-offset buffer 12))
+         (end (gtk-text-buffer-iter-at-offset buffer 16)))
     (is (equal "text" (gtk-text-iter-visible-text start end)))))
 
 ;;;   gtk_text_iter_get_pixbuf
@@ -183,9 +183,9 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (gtk-text-buffer-insert-pixbuf buffer iter (make-instance 'gdk-pixbuf))
-    (let ((iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+    (let ((iter (gtk-text-buffer-iter-at-offset buffer 12)))
       (is (eq 'gdk-pixbuf (type-of (gtk-text-iter-pixbuf iter)))))))
 
 ;;;   gtk_text_iter_get_marks
@@ -194,7 +194,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (gtk-text-buffer-add-mark buffer (gtk-text-mark-new nil t) iter)
     (is (eq 'gtk-text-mark
             (type-of (first (gtk-text-iter-marks iter)))))))
@@ -205,8 +205,8 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (start (gtk-text-buffer-get-iter-at-offset buffer 12))
-         (end (gtk-text-buffer-get-iter-at-offset buffer 16)))
+         (start (gtk-text-buffer-iter-at-offset buffer 12))
+         (end (gtk-text-buffer-iter-at-offset buffer 16)))
     (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                              (make-instance 'gtk-text-tag
                                             :name "bold"
@@ -222,7 +222,7 @@ dann benutzen Sie es immer noch.")
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
                                 "Some sample text for the text buffer."))
-         (iter (gtk-text-buffer-get-iter-at-offset buffer 12)))
+         (iter (gtk-text-buffer-iter-at-offset buffer 12)))
     (gtk-text-buffer-create-child-anchor buffer iter)
     (is (eq 'gtk-text-tag
             (type-of (gtk-text-iter-child-anchor iter))))))

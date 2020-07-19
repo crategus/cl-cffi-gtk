@@ -75,11 +75,11 @@
 (test gtk-list-store-set
   (let* ((store (gtk-list-store-new "gint" "gchararray"))
          (iter (gtk-list-store-set store (gtk-list-store-append store) 99 "string")))
-    (is (= 99 (gtk-tree-model-get-value store iter 0)))
-    (is (equal "string" (gtk-tree-model-get-value store iter 1)))
+    (is (= 99 (gtk-tree-model-value store iter 0)))
+    (is (equal "string" (gtk-tree-model-value store iter 1)))
     (is (eq 'gtk-tree-iter (type-of (gtk-list-store-set store iter 199))))
-    (is (= 199 (gtk-tree-model-get-value store iter 0)))
-    (is (equal "string" (gtk-tree-model-get-value store iter 1)))))
+    (is (= 199 (gtk-tree-model-value store iter 0)))
+    (is (equal "string" (gtk-tree-model-value store iter 1)))))
 
 ;;;   gtk_list_store_set_valist                            Not implemented
 
@@ -89,9 +89,9 @@
   (let* ((store (gtk-list-store-new "gint" "gchararray"))
          (iter (gtk-list-store-append store)))
     (is-false (gtk-list-store-set-value store iter 0 99))
-    (is (= 99 (gtk-tree-model-get-value store iter 0)))
+    (is (= 99 (gtk-tree-model-value store iter 0)))
     (is-false (gtk-list-store-set-value store iter 1 "string"))
-    (is (equal "string" (gtk-tree-model-get-value store iter 1)))))
+    (is (equal "string" (gtk-tree-model-value store iter 1)))))
 
 ;;;   gtk_list_store_set_valuesv                         Not exported
 

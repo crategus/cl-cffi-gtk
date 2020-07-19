@@ -105,7 +105,7 @@
 ;    gtk.tree-sortable.lisp
 ;    gtk.tree-model-sort.lisp
 ;    gtk.tree-model-filter.lisp
-;    gtk.cell-layout.lisp
+(load "rtest-gtk-cell-layout.lisp")
 ;    gtk.cell-area.lisp
 ;    gtk.cell-area-box.lisp
 ;    gtk.cell-area-context.lisp
@@ -129,7 +129,7 @@
 (load "rtest-gtk-menu.lisp")
 ;    gtk.menu-bar.lisp
 ;    gtk.menu-item.lisp
-;    gtk.radio-menu-item.lisp
+(load "rtest-gtk-radio-menu-item.lisp")
 ;    gtk.check-menu-item.lisp
 ;    gtk.separator-menu-item.lisp
 ;    gtk.tool-shell.lisp
