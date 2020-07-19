@@ -141,7 +141,7 @@
 ;    gtk.tool-button.lisp
 ;    gtk.menu-tool-button.lisp
 ;    gtk.toggle-tool-button.lisp
-;    gtk.radio-tool-button.lisp
+(load "rtest-gtk-radio-tool-button.lisp")
 ;    gtk.popover.lisp
 ;    gtk.popover-menu.lisp
 

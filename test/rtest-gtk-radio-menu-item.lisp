@@ -65,7 +65,7 @@
 ;;;     GtkRadioMenuItem*  group    Write
 
 (test gtk-radio-menu-item-properties
-  (let ((menu-item (make-instance 'gtk-radio-menu-item)))
+  (let ((menu-item (gtk-radio-menu-item-new nil)))
     ;; group is not readable
     (signals (error) (gtk-radio-menu-item-group menu-item))
     ;; group is writeable
@@ -75,75 +75,195 @@
 
 ;;;     void  group-changed    Run First
 
+(test gtk-radio-menu-item-signals
+  (let ((result nil)
+        (newitem nil)
+        (item (gtk-radio-menu-item-new nil)))
+    (g-signal-connect item "group-changed"
+                      (lambda (menu-item)
+                        (setf result (cons "group-changed" result))
+                        (is (eq 'gtk-radio-menu-item (type-of menu-item)))))
+    (setf (gtk-radio-menu-item-group item) nil)
+    (setf newitem (gtk-radio-menu-item-new (gtk-radio-menu-item-get-group item)))
+    ;; Check if we called the signal handler two times
+    (is (equal '("group-changed" "group-changed") result))))
+
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_radio_menu_item_new
 
 (test gtk-radio-menu-item-new
-  (let ((menu-item (gtk-radio-menu-item-new nil)))
-
-    (is (eq 'gtk-radio-menu-item (type-of menu-item)))
-    (is-false (gtk-bin-child menu-item))
-
-    (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
-
-
-
-))
+  (let (item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf item (gtk-radio-menu-item-new nil)))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf item (gtk-radio-menu-item-new (gtk-radio-menu-item-get-group item))))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group item))))
+  (is (equal item (first (gtk-radio-menu-item-get-group item))))
+  ;; No bin child
+  (is-false (gtk-bin-child item))))
 
 ;;;     gtk_radio_menu_item_new_with_label
 
 (test gtk-radio-menu-item-new-with-label
-  (let ((menu-item (gtk-radio-menu-item-new-with-label nil "Label")))
-
-    (is (eq 'gtk-radio-menu-item (type-of menu-item)))
-    (is (eq 'gtk-accel-label (type-of (gtk-bin-child menu-item))))
-
-    (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
-
-    (is (string= "Label" (gtk-label-label (gtk-bin-child menu-item))))
-    (is (string= "Label" (gtk-label-text (gtk-bin-child menu-item))))
-
-))
+  (let (item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf item (gtk-radio-menu-item-new-with-label nil "First Menu Item")))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf item
+                         (gtk-radio-menu-item-new-with-label (gtk-radio-menu-item-get-group item)
+                                                          "Second Menu Item")))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group item))))
+  (is (equal item (first (gtk-radio-menu-item-get-group item))))
+  ;; Check bin child
+  (is (eq 'gtk-accel-label (type-of (gtk-bin-child item))))
+  (is (string= "Second Menu Item" (gtk-label-label (gtk-bin-child item))))))
 
 ;;;     gtk_radio_menu_item_new_with_mnemonic
 
 (test gtk-radio-menu-item-new-with-mnemonic
-  (let ((menu-item (gtk-radio-menu-item-new-with-mnemonic nil "_Label")))
-
-    (is (eq 'gtk-radio-menu-item (type-of menu-item)))
-    (is (eq 'gtk-accel-label (type-of (gtk-bin-child menu-item))))
-
-    (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
-
-    (is (string= "_Label" (gtk-label-label (gtk-bin-child menu-item))))
-    (is (string= "Label" (gtk-label-text (gtk-bin-child menu-item))))
-
-))
+  (let (menu-item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item (gtk-radio-menu-item-new-with-mnemonic nil "_First Menu Item")))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item
+                         (gtk-radio-menu-item-new-with-mnemonic (gtk-radio-menu-item-get-group menu-item)
+                                                                "_Second Menu Item")))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))
+  (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
+  ;; Check bin child
+  (is (eq 'gtk-accel-label (type-of (gtk-bin-child menu-item))))
+  (is (string= "_Second Menu Item" (gtk-label-label (gtk-bin-child menu-item))))))
 
 ;;;     gtk_radio_menu_item_new_from_widget
 
 (test gtk-radio-menu-item-new-from-widget
-  (let ((menu-item (gtk-radio-menu-item-new-from-widget nil)))
-
-    (is (eq 'gtk-radio-menu-item (type-of menu-item)))
-    (is-false (gtk-bin-child menu-item))
-
-))
+  (let (menu-item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item (gtk-radio-menu-item-new-from-widget nil)))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item (gtk-radio-menu-item-new-from-widget menu-item)))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))
+  (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
+  ;; No bin child
+  (is-false (gtk-bin-child menu-item))))
 
 ;;;     gtk_radio_menu_item_new_with_label_from_widget
-;;;     gtk_radio_menu_item_new_with_mnemonic_from_widget
-;;;     gtk_radio_menu_item_set_group
 
+(test gtk-radio-menu-item-new-with-label-from-widget
+  (let (menu-item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item (gtk-radio-menu-item-new-with-label-from-widget nil "First Menu Item")))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item
+                         (gtk-radio-menu-item-new-with-label-from-widget menu-item "Second Menu Item")))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))
+  (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
+  ;; Check bin child
+  (is (eq 'gtk-accel-label (type-of (gtk-bin-child menu-item))))
+  (is (string= "Second Menu Item" (gtk-label-label (gtk-bin-child menu-item))))))
+
+;;;     gtk_radio_menu_item_new_with_mnemonic_from_widget
+
+(test gtk-radio-menu-item-new-with-mnemonic-from-widget
+  (let (menu-item)
+  ;; First radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item (gtk-radio-menu-item-new-with-mnemonic-from-widget nil "_First Menu Item")))))
+  ;; Second radio menu item
+  (is (eq 'gtk-radio-menu-item
+          (type-of (setf menu-item
+                         (gtk-radio-menu-item-new-with-mnemonic-from-widget menu-item
+                                                                            "_Second Menu Item")))))
+  ;; Check group list
+  (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))
+  (is (equal menu-item (first (gtk-radio-menu-item-get-group menu-item))))
+  ;; Check bin child
+  (is (eq 'gtk-accel-label (type-of (gtk-bin-child menu-item))))
+  (is (string= "_Second Menu Item" (gtk-label-label (gtk-bin-child menu-item))))))
+
+;;;     gtk_radio_menu_item_set_group
 ;;;     gtk_radio_menu_item_get_group
 
-(test gtk-radio-menu-item-get-group
-  (let ((menu-item (gtk-radio-menu-item-new nil)))
-
-    (is-true (listp (gtk-radio-menu-item-get-group menu-item)))
-    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group menu-item)))))
-
-))
+(test gtk-radio-menu-item-group
+  (let (item)
+    ;; First radio menu item
+    (is (eq 'gtk-radio-menu-item (type-of (setf item (gtk-radio-menu-item-new nil)))))
+    (is (listp (gtk-radio-menu-item-get-group item)))
+    (is (= 1 (length (gtk-radio-menu-item-get-group item))))
+    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group item)))))
+    (is (equal item (first (gtk-radio-menu-item-get-group item))))
+    ;; Second radio menu item
+    (is (eq 'gtk-radio-menu-item
+            (type-of (setf item (gtk-radio-menu-item-new (gtk-radio-menu-item-get-group item))))))
+    (is (listp (gtk-radio-menu-item-get-group item)))
+    (is (= 2 (length (gtk-radio-menu-item-get-group item))))
+    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group item)))))
+    (is (equal item (first (gtk-radio-menu-item-get-group item))))
+    ;; Third radio menu item
+    (is (eq 'gtk-radio-menu-item
+            (type-of (setf item (gtk-radio-menu-item-new (gtk-radio-menu-item-get-group item))))))
+    (is (listp (gtk-radio-menu-item-get-group item)))
+    (is (= 3 (length (gtk-radio-menu-item-get-group item))))
+    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group item)))))
+    (is (equal item (first (gtk-radio-menu-item-get-group item))))))
 
 ;;;     gtk_radio_menu_item_join_group
+
+(test gtk-radio-menu-item-join-group.1
+  (let (menu-item last-menu-item)
+    ;; Add three menu-items to a group
+    (dotimes (i 3)
+      (is (eq 'gtk-radio-menu-item (type-of (setf menu-item (gtk-radio-menu-item-new nil)))))
+      (is-false (gtk-radio-menu-item-join-group menu-item last-menu-item))
+      (is (eq 'gtk-radio-menu-item (type-of (setf last-menu-item menu-item)))))
+    ;; Check radio menu-item group
+    (is (listp (gtk-radio-menu-item-get-group menu-item)))
+    (is (= 3 (length (gtk-radio-menu-item-get-group menu-item))))
+    (is (= 3 (length (gtk-radio-menu-item-get-group last-menu-item))))
+    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group menu-item)))))
+    ;; Remove the secion radio menu-item from group
+    (is-false (gtk-radio-menu-item-join-group (second (gtk-radio-menu-item-get-group menu-item)) nil))
+    (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))))
+
+(test gtk-radio-menu-item-join-group.2
+  (let (menu-item last-menu-item)
+    ;; Add three menu-items to a group
+    (dolist (label '("First menu-item" "Second menu-item" "Third menu-item"))
+      (is (eq 'gtk-radio-menu-item (type-of (setf menu-item (gtk-radio-menu-item-new-with-label nil label)))))
+      (is-false (gtk-radio-menu-item-join-group menu-item last-menu-item))
+      (is (eq 'gtk-radio-menu-item (type-of (setf last-menu-item menu-item)))))
+    ;; Check radio menu-item group
+    (is (listp (gtk-radio-menu-item-get-group menu-item)))
+    (is (= 3 (length (gtk-radio-menu-item-get-group menu-item))))
+    (is (eq 'gtk-radio-menu-item (type-of (first (gtk-radio-menu-item-get-group menu-item)))))
+    ;; Check the bin child
+    (is (string= "Third menu-item"
+                 (gtk-label-label (gtk-bin-child (first (gtk-radio-menu-item-get-group menu-item))))))
+    (is (string= "Second menu-item"
+                 (gtk-label-label (gtk-bin-child (second (gtk-radio-menu-item-get-group menu-item))))))
+    (is (string= "First menu-item"
+                 (gtk-label-label (gtk-bin-child (third (gtk-radio-menu-item-get-group menu-item))))))
+    ;; Remove the secion radio menu-item from group
+    (is-false (gtk-radio-menu-item-join-group (second (gtk-radio-menu-item-get-group menu-item)) nil))
+    (is (= 2 (length (gtk-radio-menu-item-get-group menu-item))))
+    (is (string= "Third menu-item"
+                 (gtk-label-label (gtk-bin-child (first (gtk-radio-menu-item-get-group menu-item))))))
+    (is (string= "First menu-item"
+                 (gtk-label-label (gtk-bin-child (second (gtk-radio-menu-item-get-group menu-item))))))))
 
