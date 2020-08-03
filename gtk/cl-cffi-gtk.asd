@@ -322,12 +322,7 @@
                :cl-cffi-gtk-gdk
                :cl-cffi-gtk-gdk-pixbuf
                :cl-cffi-gtk-pango
-               :cl-cffi-gtk-cairo
-               :cffi
-               :bordeaux-threads
-               :alexandria
-               :iterate
-               :trivial-features)
+               :cl-cffi-gtk-cairo)
 
   :in-order-to ((asdf:test-op (asdf:test-op :cl-cffi-gtk-test))))
 

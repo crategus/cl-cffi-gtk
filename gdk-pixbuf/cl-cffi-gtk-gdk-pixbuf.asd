@@ -46,7 +46,6 @@
                (:file "gdk-pixbuf.interface") ; Extending GdkPixBuf
               )
   :depends-on (:cl-cffi-gtk-gobject
-               :cl-cffi-gtk-glib
-               :cffi))
+               :cl-cffi-gtk-glib))
 
 ;;; --- End of file cl-cffi-gtk-gdk-pixbuf.asd ---------------------------------

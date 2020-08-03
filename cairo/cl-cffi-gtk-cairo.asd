@@ -52,8 +52,6 @@
                (:file "cairo.scaled-font")     ; Font face at particular size
                (:file "cairo.text")            ; Rendering text and glyphs
               )
-  :depends-on (:cffi
-               :cl-cffi-gtk-glib
-               :iterate))
+  :depends-on (:cl-cffi-gtk-glib))
 
 ;;; --- End of file cl-cffi-gtk-cairo.asd --------------------------------------

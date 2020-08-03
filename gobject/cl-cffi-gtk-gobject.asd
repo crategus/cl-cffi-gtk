@@ -55,11 +55,7 @@
                (:file "gobject.utils")
                (:file "gobject.foreign-gobject-subclassing"))
   :depends-on (:cl-cffi-gtk-glib
-               :cffi
                :trivial-garbage
-               :alexandria
-               :iterate
-               :bordeaux-threads
                :closer-mop))
 
 ;;; --- End of file cl-cffi-gtk-gobject.asd ------------------------------------

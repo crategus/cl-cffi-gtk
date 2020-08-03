@@ -48,7 +48,6 @@
               )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject
-               :cl-cffi-gtk-cairo
-               :iterate))
+               :cl-cffi-gtk-cairo))
 
 ;;; --- End of file cl-cffi-gtk-pango.asd --------------------------------------

@@ -123,13 +123,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (cond ((cffi-features:cffi-feature-p :x86-64) (defctype g-size :uint64))
-        ((cffi-features:cffi-feature-p :x86)    (defctype g-size :ulong))
-        ((cffi-features:cffi-feature-p :ppc32)  (defctype g-size :uint32))
-        ((cffi-features:cffi-feature-p :ppc64)  (defctype g-size :uint64))
-        (t
-         (error "Can not define 'g-size', unknown CPU architecture ~
-                (known are x86 and x86-64)"))))
+  #+x86-64 (defctype g-size :uint64)
+  #+x86    (defctype g-size :ulong)
+  #+ppc32  (defctype g-size :uint32)
+  #+ppc64  (defctype g-size :uint64)
+  #+arm64  (defctype g-size :uint64)
+  #-(or x86-64 x86 ppc32 ppc64 arm64)
+  (error "Can not define '~A', unknown CPU architecture" 'g-size))
 
 (export 'g-size)
 

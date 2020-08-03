@@ -75,7 +75,6 @@
                :cl-cffi-gtk-gio
                :cl-cffi-gtk-gdk-pixbuf
                :cl-cffi-gtk-pango
-               :cl-cffi-gtk-cairo
-               :cffi))
+               :cl-cffi-gtk-cairo))
 
 ;;; --- End of file cl-cffi-gtk-gdk.asd ----------------------------------------
