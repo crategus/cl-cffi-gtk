@@ -490,7 +490,7 @@
   @see-class{gdk-window}
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}
-  @see-function{gdk-cursor-get-cursor}
+  @see-function{gdk-window-cursor}
   @see-function{gdk-cursor-new-for-display}
   @see-function{gdk-cursor-new-from-pixbuf}")
 
