@@ -352,21 +352,16 @@
     Standard and pixmap cursors.
 
     @about-symbol{gdk-cursor-type}
-
     @about-class{gdk-cursor}
-
     @about-generic{gdk-cursor-display}
     @about-generic{gdk-cursor-cursor-type}
-
     @about-function{gdk-cursor-new}
     @about-function{gdk-cursor-new-from-pixbuf}
     @about-function{gdk-cursor-new-from-surface}
     @about-function{gdk-cursor-new-from-name}
     @about-function{gdk-cursor-new-for-display}
-    @about-function{gdk-cursor-get-image}
-    @about-function{gdk-cursor-get-surface}
-    @about-function{gdk-cursor-ref}
-    @about-function{gdk-cursor-unref}
+    @about-function{gdk-cursor-image}
+    @about-function{gdk-cursor-surface}
   @end{section}
   @begin[Windows]{section}
     Onscreen display areas in the target window system.
