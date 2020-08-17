@@ -1461,15 +1461,16 @@
 (export 'gtk-text-buffer-mark)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_insert () -> gtk-text-buffer-insert
+;;; gtk_text_buffer_get_insert ()
 ;;; ----------------------------------------------------------------------------
 
-;; FIXME: Check the implementation, we have a second function with this name
+;; It is wrong to implent this as gtk-text-buffer-insert, we have already a
+;; function with this name.
 
 (defcfun ("gtk_text_buffer_get_insert" gtk-text-buffer-get-insert)
     (g-object gtk-text-mark)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-12}
+ "@version{2020-8-17}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{A @class{gtk-text-mark} insertion point mark.}
   @begin{short}
@@ -1481,7 +1482,7 @@
   @see-function{gtk-text-buffer-mark}"
   (buffer (g-object gtk-text-buffer)))
 
-(export 'gtk-text-buffer-insert)
+(export 'gtk-text-buffer-get-insert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_selection_bound () -> gtk-text-buffer-selection-bound
@@ -2119,13 +2120,13 @@
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[clipboard]{the @class{gtk-clipboard} object to paste from}
   @argument[override-location]{a @class{gtk-text-iter} location to insert pasted
-    text, or @code{nil} for at the cursor}
+    text, or @code{nil} to insert at the cursor}
   @argument[editable]{a boolean whether the buffer is editable by default}
   @begin{short}
     Pastes the contents of a clipboard at the insertion point, or at
     @arg{override-location}.
   @end{short}
-  Note: pasting is asynchronous, that is, we will ask for the paste data and
+  Note: Pasting is asynchronous, that is, we will ask for the paste data and
   return, and at some point later after the main loop runs, the paste data will
   be inserted.
   @see-class{gtk-text-buffer}

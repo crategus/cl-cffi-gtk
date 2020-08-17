@@ -189,7 +189,7 @@
   (let* ((count (gtk-text-buffer-char-count buffer))
          (iter (gtk-text-buffer-iter-at-mark
                    buffer
-                   (gtk-text-buffer-insert buffer)))
+                   (gtk-text-buffer-get-insert buffer)))
          (row (gtk-text-iter-line iter))
          (col (gtk-text-iter-line-offset iter))
          (msg (format nil "Row: ~A Col: ~A | Chars: ~A" row col count)))

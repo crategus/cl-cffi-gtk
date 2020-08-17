@@ -1532,7 +1532,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-delete-mark}
       @about-function{gtk-text-buffer-delete-mark-by-name}
       @about-function{gtk-text-buffer-mark}
-      @about-function{gtk-text-buffer-insert}
+      @about-function{gtk-text-buffer-get-insert}
       @about-function{gtk-text-buffer-selection-bound}
       @about-function{gtk-text-buffer-place-cursor}
       @about-function{gtk-text-buffer-select-range}
