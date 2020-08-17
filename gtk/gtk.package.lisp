@@ -3431,7 +3431,6 @@ setup_tree (void)
       A Scrollbar.
 
       @about-class{gtk-scrollbar}
-
       @about-function{gtk-scrollbar-new}
     @end{subsection}
     @begin[GtkScrolledWindow]{subsection}
@@ -3439,9 +3438,7 @@ setup_tree (void)
 
       @about-symbol{gtk-policy-type}
       @about-symbol{gtk-corner-type}
-
       @about-class{gtk-scrolled-window}
-
       @about-generic{gtk-scrolled-window-hadjustment}
       @about-generic{gtk-scrolled-window-hscrollbar-policy}
       @about-generic{gtk-scrolled-window-kinetic-scrolling}
@@ -3457,7 +3454,6 @@ setup_tree (void)
       @about-generic{gtk-scrolled-window-vscrollbar-policy}
       @about-generic{gtk-scrolled-window-window-placement}
       @about-generic{gtk-scrolled-window-window-placement-set}
-
       @about-function{gtk-scrolled-window-new}
       @about-function{gtk-scrolled-window-get-hscrollbar}
       @about-function{gtk-scrolled-window-get-vscrollbar}
@@ -4063,7 +4059,7 @@ setup_tree (void)
       @about-function{gtk-widget-child-notify}
       @about-function{gtk-widget-freeze-child-notify}
       @about-function{gtk-widget-get-child-visible}
-      @about-function{gtk-widget-get-settings}
+      @about-function{gtk-widget-settings}
       @about-function{gtk-widget-get-clipboard}
       @about-function{gtk-widget-display}
       @about-function{gtk-widget-get-root-window}
@@ -4951,8 +4947,8 @@ setup_tree (void)
       @about-generic{gtk-settings-gtk-xft-hintstyle}
       @about-generic{gtk-settings-gtk-xft-rgba}
 
-      @about-function{gtk-settings-get-default}
-      @about-function{gtk-settings-get-for-screen}
+      @about-function{gtk-settings-default}
+      @about-function{gtk-settings-for-screen}
       @about-function{gtk-settings-install-property}
       @about-function{gtk-settings-install-property-parser}
       @about-function{gtk-rc-property-parse-color}
