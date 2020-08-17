@@ -6573,16 +6573,16 @@ bad things will happen.")
    <section id="Inserting_Images">
     <title>Inserting Images</title>
     <para>
-     A text buffer can hold images and anchor location for widgets.  An image can be inserted into a buffer
+     A text buffer can hold images and anchor location for widgets. An image can be inserted into a buffer
      using the function <ulink url="&gtk-text-buffer-insert-pixbuf;">
      <code>gtk-text-buffer-insert-pixbuf</code></ulink> with the arguments <code>buffer</code>,
-     <code>iter</code>, and <code>pixbuf</code>.  An image represented by <code>pixbuf</code> is inserted at
-     <code>iter</code>. The <code>pixbuf</code> can be created from an image file using the function
+     <code>iter</code>, and <code>pixbuf</code>. An image represented by <code>pixbuf</code> is inserted
+     at <code>iter</code>. The <code>pixbuf</code> can be created from an image file using the function
      <ulink url="&gdk-pixbuf-new-from-file;"><code>gdk-pixbuf-new-from-file</code></ulink>. See the API
      documentation for <ulink url="&gdk-pixbuf;"><code>gdk-pixbuf</code></ulink> for more details.
     </para>
     <para>
-     The example program given below takes in an image filename and inserts the corresponding image into a
+     The example program given below takes an image filename and inserts the corresponding image into a
      buffer.
     </para>
     <figure id="figure-text-view-insert-image">
@@ -7180,7 +7180,7 @@ bad things will happen.")
       ;; Get the selection of the view
       (select (gtk-tree-view-get-selection view)))
   ;; Setup the selection handler
-  (gtk-tree-selection-set-mode select :single)
+  (setf (gtk-tree-selection-mode select) :single)
   (g-signal-connect select "changed"
      (lambda (selection)
        (let* ((model (gtk-tree-view-get-model view))
@@ -7891,7 +7891,7 @@ bad things will happen.")
     (setf rowref-list nil)
     (gtk-tree-model-foreach model #'foreach-func)
     (dolist (rowref rowref-list)
-      (let ((path (gtk-tree-row-reference-get-path rowref)))
+      (let ((path (gtk-tree-row-reference-path rowref)))
       (when path
         (let ((iter (gtk-tree-model-get-iter model path)))
           (when iter
@@ -8173,7 +8173,7 @@ bad things will happen.")
     ;; pack cell renderer into tree view column
     (gtk-tree-view-column-pack-start column renderer))
   ;; No selection possible
-  (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view) :none)
+  (setf (gtk-tree-selection-mode (gtk-tree-view-get-selection view)) :none)
   view))
 
 (defun example-cell-renderer-properties ()
@@ -12955,7 +12955,7 @@ lambda (merge widget)
                                        (gtk-text-view-buffer view)
                                        (gtk-widget-get-clipboard view
                                                                  "CLIPBOARD")
-                                       :default-editable t)))))
+                                       :editable t)))))
 
       ;; Add action "fullscreen" to the application window
       (let ((action (g-simple-action-new-stateful
@@ -14146,6 +14146,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 

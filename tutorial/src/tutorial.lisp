@@ -2451,7 +2451,7 @@ happen.")
          (declare (ignore widget))
          (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
                 (buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-insert buffer))
+                (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-iter-at-mark buffer cursor)))
            (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
     (gtk-container-add vbox text-view)
@@ -2484,7 +2484,7 @@ happen.")
        (lambda (widget)
          (declare (ignore widget))
          (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-insert buffer))
+                (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-iter-at-mark buffer cursor))
                 (anchor (gtk-text-buffer-create-child-anchor buffer iter))
                 (button (gtk-button-new-with-label "New Button")))
@@ -2496,6 +2496,8 @@ happen.")
     (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
+
+;; FIXME: The tooltip window does not vanish.
 
 (let ((tooltip nil))
   (defun get-tip (word)
@@ -2519,7 +2521,7 @@ happen.")
           (label (make-instance 'gtk-label
                                 :label tip-text)))
       (gtk-widget-override-font label
-                                (pango-font-description-from-string "Courier"))
+                                (pango-font-description-from-string "Monospace"))
       (gtk-widget-override-background-color win
                                             :normal
                                             (gdk-rgba-parse "Black"))
@@ -2589,7 +2591,7 @@ happen.")
         ;; Change the default font
         (gtk-widget-override-font
             text-view
-            (pango-font-description-from-string "Courier 12"))
+            (pango-font-description-from-string "Monospace 12"))
         ;; Add the widgets to window and show all
         (gtk-container-add scrolled text-view)
         (gtk-container-add window scrolled)
@@ -2860,7 +2862,7 @@ happen.")
     (gtk-tree-model-foreach model #'foreach-func-1)
     (format t "rowrefs : ~A~%" rowref-list)
     (dolist (rowref rowref-list)
-      (let ((path (gtk-tree-row-reference-get-path rowref)))
+      (let ((path (gtk-tree-row-reference-path rowref)))
       (when path
         (let ((iter (gtk-tree-model-iter model path)))
           (when iter
@@ -2924,7 +2926,7 @@ happen.")
     ;; pack cell renderer into tree view column
     (gtk-tree-view-column-pack-start column renderer))
   ;; No selection possible
-  (setf (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view)) :none)
+  (setf (gtk-tree-selection-mode (gtk-tree-view-get-selection view)) :none)
   view))
 
 (defun example-cell-renderer-properties ()
@@ -4365,7 +4367,7 @@ happen.")
                                        (gtk-text-view-buffer view)
                                        (gtk-widget-get-clipboard view
                                                                  "CLIPBOARD")
-                                       :default-editable t)))))
+                                       :editable t)))))
 
       ;; Add action "fullscreen" to the application window
       (let ((action (g-simple-action-new-stateful
