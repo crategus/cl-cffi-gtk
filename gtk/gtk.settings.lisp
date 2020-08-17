@@ -448,13 +448,13 @@
   @begin{pre}
   ;; make sure the type is realized
   (g-type-class-unref (g-type-class-ref \"GtkMenuItem\"))
-  (setf (gtk-settings-gtk-menu-images (gtk-settings-get-default)) t)
+  (setf (gtk-settings-gtk-menu-images (gtk-settings-default)) t)
   @end{pre}
   There is one @sym{gtk-settings} instance per screen. It can be obtained with
-  the @fun{gtk-settings-get-for-screen} function, but in many cases, it is more
-  convenient to use the @fun{gtk-widget-get-settings} function. The
-  @fun{gtk-settings-get-default} function returns the @sym{gtk-settings}
-  instance for the default screen.
+  the function @fun{gtk-settings-for-screen}, but in many cases, it is more
+  convenient to use the function @fun{gtk-widget-settings}. The function
+  @fun{gtk-settings-default} returns the @sym{gtk-settings} instance for the
+  default screen.
   @see-slot{gtk-settings-color-hash}
   @see-slot{gtk-settings-gtk-alternative-button-order}
   @see-slot{gtk-settings-gtk-alternative-sort-arrows}
@@ -2550,32 +2550,35 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_settings_get_default ()
+;;; gtk_settings_get_default () -> gtk-settings-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_settings_get_default" gtk-settings-get-default)
+(defcfun ("gtk_settings_get_default" gtk-settings-default)
     (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-29}
+ "@version{2020-8-16}
   @begin{return}
     A @class{gtk-settings} object. If there is no default screen, then returns
     @code{nil}.
   @end{return}
-  Gets the @class{gtk-settings} object for the default GDK screen, creating it
-  if necessary. See the @fun{gtk-settings-get-for-screen} function.
+  @begin{short}
+    Gets the @class{gtk-settings} object for the default GDK screen, creating it
+    if necessary.
+  @end{short}
+  See the function @fun{gtk-settings-for-screen}.
   @see-class{gtk-settings}
-  @see-function{gtk-settings-get-for-screen}")
+  @see-function{gtk-settings-for-screen}")
 
-(export 'gtk-settings-get-default)
+(export 'gtk-settings-default)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_settings_get_for_screen ()
+;;; gtk_settings_get_for_screen () -> gtk-settings-for-screen
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_settings_get_for_screen" gtk-settings-get-for-screen)
+(defcfun ("gtk_settings_get_for_screen" gtk-settings-for-screen)
     (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-29}
+ "@version{2020-8-16}
   @argument[screen]{a @class{gdk-screen} object}
   @return{A @class{gtk-settings} object.}
   @begin{short}
@@ -2586,7 +2589,7 @@
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
-(export 'gtk-settings-get-for-screen)
+(export 'gtk-settings-for-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_settings_install_property ()
