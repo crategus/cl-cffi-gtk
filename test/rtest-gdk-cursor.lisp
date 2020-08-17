@@ -191,7 +191,8 @@
   (let ((pixbuf (gdk-pixbuf-new-from-file "gtk-logo-24.png"))
         (display (gdk-display-default)))
     (is (eq 'gdk-pixbuf (type-of pixbuf)))
-    (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-from-pixbuf display pixbuf 12 12))))))
+    (is (eq 'gdk-X11-cursor
+            (type-of (gdk-cursor-new-from-pixbuf display pixbuf 12 12))))))
 
 ;;; --- gdk-cursor-new-from-surface --------------------------------------------
 
@@ -199,8 +200,9 @@
   (let* ((display (gdk-display-default))
          (cursor (gdk-cursor-new-for-display display :hand1)))
     (multiple-value-bind (surface x-hot y-hot)
-        (gdk-cursor-get-surface cursor)
-      (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-from-surface display surface x-hot y-hot)))))))
+        (gdk-cursor-surface cursor)
+      (is (eq 'gdk-X11-cursor
+              (type-of (gdk-cursor-new-from-surface display surface x-hot y-hot)))))))
 
 ;;; --- gdk-cursor-new-from-name -----------------------------------------------
 
@@ -213,24 +215,22 @@
 
 (test gdk-cursor-new-for-display
   (let ((display (gdk-display-default)))
-    (is (eq 'gdk-X11-cursor (type-of (gdk-cursor-new-for-display display :hand1))))))
+    (is (eq 'gdk-X11-cursor
+            (type-of (gdk-cursor-new-for-display display :hand1))))))
 
-;;; --- gdk-cursor-get-image ---------------------------------------------------
+;;; --- gdk-cursor-image -------------------------------------------------------
 
-(test gdk-cursor-get-image
+(test gdk-cursor-image
   (let ((cursor (gdk-cursor-new-for-display (gdk-display-default) :hand1)))
-    (is (eq 'gdk-pixbuf (type-of (gdk-cursor-get-image cursor))))))
+    (is (eq 'gdk-pixbuf (type-of (gdk-cursor-image cursor))))))
 
-;;; --- gdk-cursor-get-surface -------------------------------------------------
+;;; --- gdk-cursor-surface -----------------------------------------------------
 
-(test gdk-cursor-get-surface
+(test gdk-cursor-surface
   (let ((cursor (gdk-cursor-new-for-display (gdk-display-default) :hand1)))
     (multiple-value-bind (surface x-hot y-hot)
-      (gdk-cursor-get-surface cursor)
+        (gdk-cursor-surface cursor)
       (is-true (pointerp surface))
       (is (= 11.0d0 x-hot))
       (is (=  7.0d0 y-hot)))))
-
-;;;     gdk_cursor_ref                             deprecated
-;;;     gdk_cursor_unref                           deprecated
 
