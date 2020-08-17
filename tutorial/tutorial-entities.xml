@@ -1,0 +1,708 @@
+<!ENTITY cl-cffi-gtk                   "http://crategus.com/books/cl-cffi-gtk/pages/">
+<!ENTITY api                           "http://crategus.com/books/cl-cffi-gtk/pages/">
+
+<!ENTITY cl-cffi-gtk-build-info        "&api;gtk_fun_cl-cffi-gtk-build-info.html">
+<!ENTITY ref-cl-cffi-gtk-build-info    "<ulink url='&cl-cffi-gtk-build-info;'>cl-cffi-gtk-build-info</ulink>">
+
+<!ENTITY within-main-loop                    "&api;gtk_fun_within-main-loop.html">
+<!ENTITY leave-gtk-main                      "&api;gtk_fun_leave-gtk-main.html">
+
+<!ENTITY g-filename-to-utf8                  "&api;glib_fun_g-filename-to-utf8.html">
+<!ENTITY g-timeout-add                       "&api;glib_fun_g-timeout-add.html">
+
+<!ENTITY g-object                            "&api;gobject_class_g-object.html">
+
+<!ENTITY g-signal-connect                    "&api;gobject_fun_g-signal-connect.html">
+
+<!ENTITY g-action-group-activate-action      "&api;gio_fun_g-action-group-activate-action.html">
+
+<!ENTITY g-action-group                      "&api;gio_class_g-action-group.html">
+<!ENTITY g-action-map                        "&api;gio_class_g-action-map.html">
+<!ENTITY g-application                       "&api;gio_class_g-application.html">
+<!ENTITY g-menu-model                        "&api;gio_class_g-menu-model.html">
+
+<!ENTITY gdk-color                           "&api;gdk_class_gdk-color.html">
+
+<!ENTITY gdk-cursor                          "&api;gdk_class_gdk-cursor.html">
+<!ENTITY gdk-cursor-new                      "&api;gdk_fun_gdk-cursor-new.html">
+<!ENTITY gdk-cursor-new-from-name            "&api;gdk_fun_gdk-cursor-new-from-name.html">
+
+<!ENTITY gdk-cursor-type                     "&api;gdk_sym_gdk-cursor-type.html">
+
+<!ENTITY gdk-display                         "&api;gdk_class_gdk-display.html">
+
+<!ENTITY gdk-event-propagate                 "&api;gdk_var_+gdk-event-propagate+.html">
+<!ENTITY gdk-event-stop                      "&api;gdk_var_+gdk-event-stop+.html">
+
+<!ENTITY gdk-pixbuf                          "&api;gdk-pixbuf_class_gdk-pixbuf.html">
+<!ENTITY gdk-pixbuf-animation                "&api;gdk-pixbuf_class_gdk-pixbuf-animation.html">
+<!ENTITY gdk-pixbuf-loader                   "&api;gdk-pixbuf_class_gdk-pixbuf-loader.html">
+<!ENTITY gdk-pixbuf-new-from-file            "&api;gdk-pixbuf_fun_gdk-pixbuf-new-from-file.html">
+
+<!ENTITY gdk-rectangle                       "&api;gdk_class_gdk-rectangle.html">
+<!ENTITY gdk-rectangle-height                "&api;gdk_fun_gdk-rectangle-height.html">
+<!ENTITY gdk-rectangle-width                 "&api;gdk_fun_gdk-rectangle-width.html">
+
+<!ENTITY gdk-rgba                            "&api;gdk_class_gdk-rgba.html">
+<!ENTITY make-gdk-rgba                       "&api;gdk_fun_make-gdk-rgba.html">
+<!ENTITY gdk-rgba-parse                      "&api;gdk_fun_gdk-rgba-parse.html">
+<!ENTITY gdk-rgba-to-string                  "&api;gdk_fun_gdk-rgba-to-string.html">
+
+<!ENTITY gdk-window                          "&api;gdk_class_gdk-window.html">
+<!ENTITY gdk-window-cursor                   "&api;gdk_fun_gdk-window-cursor.html">
+<!ENTITY gdk-window-get-origin               "&api;gdk_fun_gdk-window-get-origin.html">
+
+<!ENTITY gtk-about-dialog                    "&api;gtk_class_gtk-about-dialog.html">
+
+<!ENTITY gtk-accel-group                     "&api;gtk_class_gtk-accel-group.html">
+
+<!ENTITY gtk-accelerator-parse               "&api;gtk_fun_gtk-accelerator-parse.html">
+
+<!ENTITY gtk-action                          "&api;gtk_class_gtk-action.html">
+<!ENTITY gtk-actionable                      "&api;gtk_class_gtk-actionable.html">
+
+<!ENTITY gtk-action-group                    "&api;gtk_class_gtk-action-group.html">
+<!ENTITY gtk-action-group-add-action         "&api;gtk_fun_gtk-action-group-add-action.html">
+<!ENTITY gtk-action-group-add-actions        "&api;gtk_fun_gtk-action-group-add-actions.html">
+<!ENTITY gtk-action-group-add-radio-actions  "&api;gtk_fun_gtk-action-group-add-radio-actions.html">
+<!ENTITY gtk-action-group-add-toggle-actions "&api;gtk_fun_gtk-action-group-add-toggle-actions.html">
+<!ENTITY gtk-action-group-new                "&api;gtk_fun_gtk-action-group-new.html">
+<!ENTITY gtk-action-group-set-translation-domain
+                                             "&api;gtk_fun_gtk-action-group-set-translation-domain.html">
+
+<!ENTITY gtk-adjustment                      "&api;gtk_class_gtk-adjustment.html">
+<!ENTITY gtk_adjustment_lower                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-lower">
+<!ENTITY gtk_adjustment_page-increment       "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-increment">
+<!ENTITY gtk_adjustment_page-size            "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-size">
+<!ENTITY gtk_adjustment_step-increment       "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-step-increment">
+<!ENTITY gtk_adjustment_upper                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-upper">
+<!ENTITY gtk_adjustment_value                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-value">
+<!ENTITY gtk-adjustment-changed              "&api;gtk_fun_gtk-adjustment-changed.html">
+<!ENTITY gtk-adjustment-new                  "&api;gtk_fun_gtk-adjustment-new.html">
+<!ENTITY gtk-adjustment-value                "&api;gtk_fun_gtk-adjustment-value.html">
+
+<!ENTITY gtk-alignment                       "&api;gtk_class_gtk-alignment.html">
+<!ENTITY gtk-alignment-new                   "&api;gtk_fun_gtk-alignment-new.html">
+<!ENTITY gtk-alignment-get-padding           "&api;gtk_fun_gtk-alignment-get-padding.html">
+<!ENTITY gtk-alignment-set                   "&api;gtk_fun_gtk-alignment-set.html">
+<!ENTITY gtk-alignment-set-padding           "&api;gtk_fun_gtk-alignment-set-padding.html">
+
+<!ENTITY gtk-application                     "&api;gtk_class_gtk-application.html">
+<!ENTITY register-session                    "&api;gtk_class_gtk-application.html#gtk_slot_gtk-application-register-session">
+<!ENTITY gtk-application-app-menu            "&api;gtk_fun_gtk-application-app-menu.html">
+<!ENTITY gtk-application-inhibit             "&api;gtk_fun_gtk-application-inhibit.html">
+<!ENTITY gtk-application-menubar             "&api;gtk_fun_gtk-application-menubar.html">
+
+<!ENTITY gtk-application-window              "&api;gtk_class_gtk-application-window.html">
+<!ENTITY show-menubar                        "&api;gtk_class_gtk-application-window.html#gtk_slot_gtk-application-window-show-menubar">
+
+<!ENTITY gtk-arrow                           "&api;gtk_class_gtk-arrow.html">
+<!ENTITY gtk-arrow-new                       "&api;gtk_fun_gtk-arrow-new.html">
+<!ENTITY gtk-arrow-set                       "&api;gtk_fun_gtk-arrow-set.html">
+
+<!ENTITY gtk-arrow-type                      "&api;gtk_sym_gtk-arrow-type.html">
+
+<!ENTITY gtk-aspect-frame                    "&api;gtk_class_gtk-aspect-frame.html">
+<!ENTITY gtk-aspect-frame-new                "&api;gtk_fun_gtk-aspect-frame-new.html">
+<!ENTITY gtk-aspect-frame-set                "&api;gtk_fun_gtk-aspect-frame-set.html">
+
+<!ENTITY gtk-attach-options                  "&api;gtk_sym_gtk-attach-options.html">
+
+<!ENTITY gtk-bin                             "&api;gtk_class_gtk-bin.html">
+<!ENTITY gtk-bin-child                       "&api;gtk_fun_gtk-bin-child.html">
+
+<!ENTITY gtk-box                             "&api;gtk_class_gtk-box.html">
+<!ENTITY gtk_box_homogeneous                 "&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-homogeneous">
+<!ENTITY gtk_box_spacing                     "&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-spacing">
+<!ENTITY gtk-box-homogeneous                 "&api;gtk_fun_gtk-box-homogeneous.html">
+<!ENTITY gtk-box-spacing                     "&api;gtk_fun_gtk-box-spacing.html">
+<!ENTITY gtk-box-new                         "&api;gtk_fun_gtk-box-new.html">
+<!ENTITY gtk-box-pack-start                  "&api;gtk_fun_gtk-box-pack-start.html">
+<!ENTITY gtk-box-pack-end                    "&api;gtk_fun_gtk-box-pack-end.html">
+
+<!ENTITY gtk-buildable                       "&api;gtk_class_gtk-buildable.html">
+<!ENTITY gtk-builder                         "&api;gtk_class_gtk-builder.html">
+
+<!ENTITY gtk-button                          "&api;gtk_class_gtk-button.html">
+<!ENTITY gtk-button-new                      "&api;gtk_fun_gtk-button-new.html">
+<!ENTITY gtk-button-new-with-label           "&api;gtk_fun_gtk-button-new-with-label.html">
+<!ENTITY gtk-button-new-with-mnemonic        "&api;gtk_fun_gtk-button-new-with-mnemonic.html">
+<!ENTITY gtk-button-new-from-stock           "&api;gtk_fun_gtk-button-new-from-stock.html">
+
+<!ENTITY gtk-button-box                      "&api;gtk_class_gtk-button-box.html">
+<!ENTITY gtk-button-box-new                  "&api;gtk_fun_gtk-button-box-new.html">
+<!ENTITY gtk-button-box-layout               "&api;gtk_fun_gtk-button-box-layout.html">
+
+<!ENTITY gtk-buttons-type                    "&api;gtk_sym_gtk-buttons-type.html">
+
+<!ENTITY gtk-calendar                        "&api;gtk_class_gtk-calendar.html">
+<!ENTITY gtk-calendar-clear-marks            "&api;gtk_fun_gtk-calendar-clear-marks.html">
+<!ENTITY gtk-calendar-date                   "&api;gtk_fun_gtk-calendar-date.html">
+<!ENTITY gtk-calendar-display-options        "&api;gtk_fun_gtk-calendar-display-options.html">
+<!ENTITY gtk-calendar-mark-day               "&api;gtk_fun_gtk-calendar-mark-day.html">
+<!ENTITY gtk-calendar-new                    "&api;gtk_fun_gtk-calendar-new.html">
+<!ENTITY gtk-calendar-select-day             "&api;gtk_fun_gtk-calendar-select-day.html">
+<!ENTITY gtk-calendar-select-month           "&api;gtk_fun_gtk-calendar-select-month.html">
+<!ENTITY gtk-calendar-set-detail-func        "&api;gtk_fun_gtk-calendar-set-detail-func.html">
+<!ENTITY gtk-calendar-unmark-day             "&api;gtk_fun_gtk-calendar-unmark-day.html">
+
+<!ENTITY gtk-cell-editable                   "&api;gtk_class_gtk-cell-editable.html">
+<!ENTITY gtk-cell-layout                     "&api;gtk_class_gtk-cell-layout.html">
+
+<!ENTITY gtk-cell-renderer                   "&api;gtk_class_gtk-cell-renderer.html">
+<!ENTITY gtk-cell-renderer-pixbuf            "&api;gtk_class_gtk-cell-renderer-pixbuf.html">
+<!ENTITY gtk-cell-renderer-text              "&api;gtk_class_gtk-cell-renderer-text.html">
+<!ENTITY gtk-cell-renderer-toggle            "&api;gtk_class_gtk-cell-renderer-toggle.html">
+
+<!ENTITY gtk-color-button                    "&api;gtk_class_gtk-color-button.html">
+
+<!ENTITY gtk-color-chooser                   "&api;gtk_class_gtk-color-chooser.html">
+<!ENTITY gtk-color-chooser-add-palette       "&api;gtk_fun_gtk-color-chooser-add-palette.html">
+<!ENTITY gtk-color-chooser-rgba              "&api;gtk_fun_gtk-color-chooser-rgba.html">
+
+<!ENTITY gtk-color-chooser-dialog            "&api;gtk_class_gtk-color-chooser-dialog.html">
+<!ENTITY gtk-color-chooser-widget            "&api;gtk_class_gtk-color-chooser-widget.html">
+
+<!ENTITY gtk-combo-box                       "&api;gtk_class_gtk-combo-box.html">
+
+<!ENTITY gtk-combo-box-text                  "&api;gtk_class_gtk-combo-box-text.html">
+<!ENTITY gtk-combo-box-text-active-text      "&api;gtk_fun_gtk-combo-box-text-active-text.html">
+<!ENTITY gtk-combo-box-text-append-text      "&api;gtk_fun_gtk-combo-box-text-append-text.html">
+<!ENTITY gtk-combo-box-text-insert-text      "&api;gtk_fun_gtk-combo-box-text-insert-text.html">
+<!ENTITY gtk-combo-box-text-new              "&api;gtk_fun_gtk-combo-box-text-new.html">
+<!ENTITY gtk-combo-box-text-new-with-entry   "&api;gtk_fun_gtk-combo-box-text-new-with-entry.html">
+<!ENTITY gtk-combo-box-text-prepend-text     "&api;gtk_fun_gtk-combo-box-text-prepend-text.html">
+<!ENTITY gtk-combo-box-text-remove           "&api;gtk_fun_gtk-combo-box-text-remove.html">
+
+<!ENTITY gtk-container                       "&api;gtk_class_gtk-container.html">
+<!ENTITY gtk_container_border-width          "&api;gtk_class_gtk-container.html#gtk_slot_gtk-container-border-width">
+<!ENTITY gtk-container-add                   "&api;gtk_fun_gtk-container-add.html">
+<!ENTITY gtk-container-border-width          "&api;gtk_fun_gtk-container-border-width.html">
+
+<!ENTITY gtk-check-button                    "&api;gtk_class_gtk-check-button.html">
+<!ENTITY gtk-check-button-new                "&api;gtk_fun_gtk-check-button-new.html">
+<!ENTITY gtk-check-button-new-with-label     "&api;gtk_fun_gtk-check-button-new-with-label.html">
+<!ENTITY gtk-check-button-new-with-mnemonic  "&api;gtk_fun_gtk-check-button-new-with-mnemonic.html">
+
+<!ENTITY gtk-check-menu-item                 "&api;gtk_class_gtk-check-menu-item.html">
+
+<!ENTITY gtk-dialog                          "&api;gtk_class_gtk-dialog.html">
+<!ENTITY gtk-dialog-action-area              "&api;gtk_fun_gtk-dialog-action-area.html">
+<!ENTITY gtk-dialog-add-button               "&api;gtk_fun_gtk-dialog-add-button.html">
+<!ENTITY gtk-dialog-content-area             "&api;gtk_fun_gtk-dialog-content-area.html">
+<!ENTITY gtk-dialog-new                      "&api;gtk_fun_gtk-dialog-new.html">
+<!ENTITY gtk-dialog-new-with-buttons         "&api;gtk_fun_gtk-dialog-new-with-buttons.html">
+<!ENTITY gtk-dialog-run                      "&api;gtk_fun_gtk-dialog-run.html">
+
+<!ENTITY gtk-drawing-area                    "&api;gtk_class_gtk-drawing-area.html">
+
+<!ENTITY gtk-editable                        "&api;gtk_class_gtk-editable.html">
+<!ENTITY gtk-editable-editable               "&api;gtk_fun_gtk-editable-editable.html">
+<!ENTITY gtk-editable-select-region          "&api;gtk_fun_gtk-editable-select-region.html">
+
+<!ENTITY gtk-entry                           "&api;gtk_class_gtk-entry.html">
+<!ENTITY gtk-entry-new                       "&api;gtk_fun_gtk-entry-new.html">
+<!ENTITY gtk-entry-text                      "&api;gtk_fun_gtk-entry-text.html">
+<!ENTITY gtk-entry-visibility                "&api;gtk_fun_gtk-entry-visibility.html">
+
+<!ENTITY gtk-event-box                       "&api;gtk_class_gtk-event-box.html">
+<!ENTITY gtk-event-box-new                   "&api;gtk_fun_gtk-event-box-new.html">
+
+<!ENTITY gtk-file-chooser                    "&api;gtk_class_gtk-file-chooser.html">
+<!ENTITY gtk-file-chooser-current-name       "&api;gtk_fun_gtk-file-chooser-current-name.html">
+<!ENTITY gtk-file-chooser-extra-widget       "&api;gtk_fun_gtk-file-chooser-extra-widget.html">
+<!ENTITY gtk-file-chooser-filename           "&api;gtk_fun_gtk-file-chooser-filename.html">
+<!ENTITY gtk-file-chooser-preview-filename   "&api;gtk_fun_gtk-file-chooser-preview-filename.html">
+<!ENTITY gtk-file-chooser-preview-widget     "&api;gtk_fun_gtk-file-chooser-preview-widget.html">
+<!ENTITY gtk-file-chooser-preview-widget-active
+                                             "&api;gtk_fun_gtk-file-chooser-preview-widget-active.html">
+
+<!ENTITY gtk-file-chooser-action             "&api;gtk_sym_gtk-file-chooser-action.html">
+
+<!ENTITY gtk-file-chooser-button             "&api;gtk_class_gtk-file-chooser-button.html">
+<!ENTITY gtk-file-chooser-dialog             "&api;gtk_class_gtk-file-chooser-dialog.html">
+<!ENTITY gtk-file-chooser-widget             "&api;gtk_class_gtk-file-chooser-widget.html">
+
+<!ENTITY gtk-font-button                     "&api;gtk_class_gtk-font-button.html">
+
+<!ENTITY gtk-font-chooser                    "&api;gtk_class_gtk-font-chooser.html">
+<!ENTITY gtk-font-chooser-font               "&api;gtk_fun_gtk-font-chooser-font.html">
+<!ENTITY gtk-font-chooser-font-desc          "&api;gtk_fun_gtk-font-chooser-font-desc.html">
+<!ENTITY gtk-font-chooser-preview-text       "&api;gtk_fun_gtk-font-chooser-preview-text.html">
+
+<!ENTITY gtk-font-chooser-dialog             "&api;gtk_class_gtk-font-chooser-dialog.html">
+<!ENTITY gtk-font-chooser-widget             "&api;gtk_class_gtk-font-chooser-widget.html">
+
+<!ENTITY gtk-fixed                           "&api;gtk_class_gtk-fixed.html">
+<!ENTITY gtk-fixed-move                      "&api;gtk_fun_gtk-fixed-move.html">
+<!ENTITY gtk-fixed-new                       "&api;gtk_fun_gtk-fixed-new.html">
+<!ENTITY gtk-fixed-put                       "&api;gtk_fun_gtk-fixed-put.html">
+
+<!ENTITY gtk-frame                           "&api;gtk_class_gtk-frame.html">
+<!ENTITY gtk-frame-new                       "&api;gtk_fun_gtk-frame-new.html">
+<!ENTITY gtk-frame-label                     "&api;gtk_fun_gtk-frame-label.html">
+<!ENTITY gtk-frame-set-label-align           "&api;gtk_fun_gtk-frame-set-label-align.html">
+<!ENTITY gtk-frame-shadow-type               "&api;gtk_fun_gtk-frame-shadow-type.html">
+
+<!ENTITY gtk-grid                            "&api;gtk_class_gtk-grid.html">
+<!ENTITY gtk_grid_column-homogeneous         "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-homogeneous">
+<!ENTITY gtk_grid_column-spacing             "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-spacing">
+<!ENTITY gtk_grid_row-homogeneous            "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-homogeneous">
+<!ENTITY gtk_grid_row-spacing                "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-spacing">
+
+<!ENTITY gtk-icon-view                       "&api;gtk_class_gtk-icon-view.html">
+
+<!ENTITY gtk-image                           "&api;gtk_class_gtk-image.html">
+<!ENTITY gtk-image-new-from-file             "&api;gtk_fun_gtk-image-new-from-file.html">
+<!ENTITY gtk-image-new-from-pixbuf           "&api;gtk_fun_gtk-image-new-from-pixbuf.html">
+
+<!ENTITY gtk-image-menu-item                 "&api;gtk_class_gtk-image-menu-item.html">
+
+<!ENTITY gtk-info-bar                        "&api;gtk_class_gtk-info-bar.html">
+<!ENTITY gtk-info-bar-content-area           "&api;gtk_fun_gtk-info-bar-content-area.html">
+<!ENTITY gtk-info-bar-add-button             "&api;gtk_fun_gtk-info-bar-add-button.html">
+<!ENTITY gtk-info-bar-message-type           "&api;gtk_fun_gtk-info-bar-message-type.html">
+<!ENTITY gtk-info-bar-new-with-buttons       "&api;gtk_fun_gtk-info-bar-new-with-buttons.html">
+<!ENTITY gtk-info-bar-set-response-sensitive "&api;gtk_fun_gtk-info-bar-set-response-sensitive.html">
+
+<!ENTITY gtk-justification                   "&api;gtk_sym_gtk-justification.html">
+
+<!ENTITY gtk-label                           "&api;gtk_class_gtk-label.html">
+<!ENTITY gtk_label_max-width-chars           "&api;gtk_class_gtk-label.html#gtk_slot_gtk-label-max-width-chars">
+<!ENTITY gtk_label_width-chars               "&api;gtk_class_gtk-label.html#gtk_slot_gtk-label-width-chars">
+<!ENTITY gtk-label-attributes                "&api;gtk_fun_gtk-label-attributes.html">
+<!ENTITY gtk-label-current-uri               "&api;gtk_fun_gtk-label-current-uri.html">
+<!ENTITY gtk-label-justify                   "&api;gtk_fun_gtk-label-justify.html">
+<!ENTITY gtk-label-line-wrap                 "&api;gtk_fun_gtk-label-line-wrap.html">
+<!ENTITY gtk-label-mnemonic-widget           "&api;gtk_fun_gtk-label-mnemonic-widget.html">
+<!ENTITY gtk-label-new                       "&api;gtk_fun_gtk-label-new.html">
+<!ENTITY gtk-label-new-with-mnemonic         "&api;gtk_fun_gtk-label-new-with-mnemonic.html">
+<!ENTITY gtk-label-pattern                   "&api;gtk_fun_gtk-label-pattern.html">
+<!ENTITY gtk-label-selectable                "&api;gtk_fun_gtk-label-selectable.html">
+<!ENTITY gtk-label-set-markup                "&api;gtk_fun_gtk-label-set-markup.html">
+<!ENTITY gtk-label-set-text-with-mnemonic    "&api;gtk_fun_gtk-label-set-text-with-mnemonic.html">
+<!ENTITY gtk-label-text                      "&api;gtk_fun_gtk-label-text.html">
+
+<!ENTITY gtk-layout                          "&api;gtk_class_gtk-layout.html">
+<!ENTITY gtk-layout-new                      "&api;gtk_fun_gtk-layout-new.html">
+<!ENTITY gtk-layout-move                     "&api;gtk_fun_gtk-layout-move.html">
+<!ENTITY gtk-layout-put                      "&api;gtk_fun_gtk-layout-put.html">
+<!ENTITY gtk-layout-get-size                 "&api;gtk_fun_gtk-layout-get-size.html">
+<!ENTITY gtk-layout-set-size                 "&api;gtk_fun_gtk-layout-set-size.html">
+
+<!ENTITY gtk-link-button                     "&api;gtk_class_gtk-link-button.html">
+<!ENTITY gtk_link_button_uri                 "&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-uri">
+<!ENTITY gtk_link_button_visited             "&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-visited">
+<!ENTITY gtk-link-button-new                 "&api;gtk_fun_gtk-link-button-new.html">
+<!ENTITY gtk-link-button-new-with-label      "&api;gtk_fun_gtk-link-button-new-with-label.html">
+<!ENTITY gtk-link-button-uri                 "&api;gtk_fun_gtk-link-button-uri.html">
+
+<!ENTITY gtk-list-store                      "&api;gtk_class_gtk-list-store.html">
+<!ENTITY gtk-list-store-append               "&api;gtk_fun_gtk-list-store-append.html">
+<!ENTITY gtk-list-store-clear                "&api;gtk_fun_gtk-list-store-clear.html">
+<!ENTITY gtk-list-store-remove               "&api;gtk_fun_gtk-list-store-remove.html">
+<!ENTITY gtk-list-store-set                  "&api;gtk_fun_gtk-list-store-set.html">
+<!ENTITY gtk-list-store-set-value            "&api;gtk_fun_gtk-list-store-set-value.html">
+
+<!ENTITY gtk-main                            "&api;gtk_fun_gtk-main.html">
+<!ENTITY gtk-main-quit                       "&api;gtk_fun_gtk-main-quit.html">
+
+<!ENTITY gtk-menu                            "&api;gtk_class_gtk-menu.html">
+<!ENTITY gtk-menu-popup                      "&api;gtk_fun_gtk-menu-popup.html">
+
+<!ENTITY gtk-menu-bar                        "&api;gtk_class_gtk-menu-bar.html">
+<!ENTITY gtk-menu-bar-new                    "&api;gtk_fun_gtk-menu-bar-new.html">
+
+<!ENTITY gtk-menu-item                       "&api;gtk_class_gtk-menu-item.html">
+<!ENTITY gtk-menu-item-label                 "&api;gtk_fun_gtk-menu-item-label.html">
+<!ENTITY gtk-menu-item-new                   "&api;gtk_fun_gtk-menu-item-new.html">
+<!ENTITY gtk-menu-item-new-with-label        "&api;gtk_fun_gtk-menu-item-new-with-label.html">
+<!ENTITY gtk-menu-item-new-with-mnemonic     "&api;gtk_fun_gtk-menu-item-new-with-mnemonic.html">
+<!ENTITY gtk-menu-item-submenu               "&api;gtk_fun_gtk-menu-item-submenu.html">
+
+<!ENTITY gtk-menu-shell                      "&api;gtk_class_gtk-menu-shell.html">
+<!ENTITY gtk-menu-shell-append               "&api;gtk_fun_gtk-menu-shell-append.html">
+<!ENTITY gtk-menu-shell-insert               "&api;gtk_fun_gtk-menu-shell-insert.html">
+<!ENTITY gtk-menu-shell-prepend              "&api;gtk_fun_gtk-menu-shell-prepend.html">
+
+<!ENTITY gtk-menu-tool-button                "&api;gtk_class_gtk-menu-tool-button.html">
+
+<!ENTITY gtk-message-dialog                  "&api;gtk_class_gtk-message-dialog.html">
+<!ENTITY gtk-message-dialog-new              "&api;gtk_fun_gtk-message-dialog-new.html">
+<!ENTITY gtk-message-dialog-new-with-markup  "&api;gtk_fun_gtk-message-dialog-new-with-markup.html">
+
+<!ENTITY gtk-message-type                    "&api;gtk_sym_gtk-message-type.html">
+
+<!ENTITY gtk-misc                            "&api;gtk_class_gtk-misc.html">
+<!ENTITY gtk-misc-set-alignment              "&api;gtk_fun_gtk-misc-set-alignment.html">
+
+<!ENTITY gtk-notebook                        "&api;gtk_class_gtk-notebook.html">
+<!ENTITY gtk-notebook-tab-pos                "&api;gtk_fun_gtk-notebook-tab-pos.html">
+<!ENTITY gtk-notebook-scrollable             "&api;gtk_fun_gtk-notebook-scrollable.html">
+<!ENTITY gtk-notebook-popup-enable           "&api;gtk_fun_gtk-notebook-popup-enable.html">
+<!ENTITY gtk-notebook-popup-disable          "&api;gtk_fun_gtk-notebook-popup-disable.html">
+
+<!ENTITY gtk-orientable                      "&api;gtk_class_gtk-orientable.html">
+<!ENTITY gtk_orientable_orientation          "&api;gtk_class_gtk-orientable.html#gtk_slot_gtk-orientable-orientation">
+<!ENTITY gtk-orientable-orientation          "&api;gtk_fun_gtk-orientable-orientation.html">
+
+<!ENTITY gtk-orientation                     "&api;gtk_sym_gtk-orientation.html">
+
+<!ENTITY gtk-policy-type                     "&api;gtk_sym_gtk-policy-type.html">
+
+<!ENTITY gtk-position-type                   "&api;gtk_sym_gtk-position-type.html">
+
+<!ENTITY gtk-paned                           "&api;gtk_class_gtk-paned.html">
+<!ENTITY gtk-paned-new                       "&api;gtk_fun_gtk-paned-new.html">
+<!ENTITY gtk-paned-add1                      "&api;gtk_fun_gtk-paned-add1.html">
+<!ENTITY gtk-paned-add2                      "&api;gtk_fun_gtk-paned-add2.html">
+<!ENTITY gtk-paned-pack1                     "&api;gtk_fun_gtk-paned-pack1.html">
+<!ENTITY gtk-paned-pack2                     "&api;gtk_fun_gtk-paned-pack2.html">
+<!ENTITY gtk-paned-position                  "&api;gtk_fun_gtk-paned-position.html">
+
+<!ENTITY gtk-progress-bar                    "&api;gtk_class_gtk-progress-bar.html">
+<!ENTITY gtk-progress-bar-fraction           "&api;gtk_fun_gtk-progress-bar-fraction.html">
+<!ENTITY gtk-progress-bar-inverted           "&api;gtk_fun_gtk-progress-bar-inverted.html">
+<!ENTITY gtk-progress-bar-new                "&api;gtk_fun_gtk-progress-bar-new.html">
+<!ENTITY gtk-progress-bar-pulse              "&api;gtk_fun_gtk-progress-bar-pulse.html">
+<!ENTITY gtk-progress-bar-pulse-step         "&api;gtk_fun_gtk-progress-bar-pulse-step.html">
+<!ENTITY gtk-progress-bar-text               "&api;gtk_fun_gtk-progress-bar-text.html">
+
+<!ENTITY gtk-radio-button                    "&api;gtk_class_gtk-radio-button.html">
+<!ENTITY gtk-radio-button-new                "&api;gtk_fun_gtk-radio-button-new.html">
+<!ENTITY gtk-radio-button-new-with-label     "&api;gtk_fun_gtk-radio-button-new-with-label.html">
+<!ENTITY gtk-radio-button-new-with-mnemonic  "&api;gtk_fun_gtk-radio-button-new-with-mnemonic.html">
+
+<!ENTITY gtk-radio-button-new-from-widget    "&api;gtk_fun_gtk-radio-button-new-from-widget.html">
+<!ENTITY gtk-radio-button-new-with-label-from-widget
+                                             "&api;gtk_fun_gtk-radio-button-new-with-label-from-widget.html">
+<!ENTITY gtk-radio-button-new-with-mnemonic-from-widget
+                                             "&api;gtk_fun_gtk-radio-button-new-with-mnemonic-from-widget.html">
+<!ENTITY gtk-radio-button-get-group          "&api;gtk_fun_gtk-radio-button-get-group.html">
+
+<!ENTITY gtk-radio-tool-button               "&api;gtk_class_gtk-radio-tool-button.html">
+
+<!ENTITY gtk-range                           "&api;gtk_class_gtk-range.html">
+<!ENTITY gtk-range-adjustment                "&api;gtk_fun_gtk-range-adjustment.html">
+
+<!ENTITY gtk-radio-action                    "&api;gtk_class_gtk-radio-action.html">
+<!ENTITY gtk-recent-action                   "&api;gtk_class_gtk-recent-action.html">
+
+<!ENTITY gtk-response-type                   "&api;gtk_sym_gtk-response-type.html">
+
+<!ENTITY gtk-scale                           "&api;gtk_class_gtk-scale.html">
+<!ENTITY gtk-scale-digits                    "&api;gtk_fun_gtk-scale-digits.html">
+<!ENTITY gtk-scale-draw-value                "&api;gtk_fun_gtk-scale-draw-value.html">
+<!ENTITY gtk-scale-new                       "&api;gtk_fun_gtk-scale-new.html">
+<!ENTITY gtk-scale-new-with-range            "&api;gtk_fun_gtk-scale-new-with-range.html">
+<!ENTITY gtk-scale-value-pos                 "&api;gtk_fun_gtk-scale-value-pos.html">
+
+<!ENTITY gtk-scrollable                      "&api;gtk_class_gtk-scrollable.html">
+<!ENTITY gtk-scrollable-hadjustment          "&api;gtk_fun_gtk-scrollable-hadjustment.html">
+<!ENTITY gtk-scrollable-vadjustment          "&api;gtk_fun_gtk-scrollable-vadjustment.html">
+
+<!ENTITY gtk-scrollbar                       "&api;gtk_class_gtk-scrollbar.html">
+<!ENTITY gtk-scrollbar-new                   "&api;gtk_fun_gtk-scrollbar-new.html">
+
+<!ENTITY gtk-scrolled-window                 "&api;gtk_class_gtk-scrolled-window.html">
+<!ENTITY gtk-scrolled-window-new             "&api;gtk_fun_gtk-scrolled-window-new.html">
+<!ENTITY gtk-scrolled-window-add-with-viewport
+                                             "&api;gtk_fun_gtk-scrolled-window-add-with-viewport.html">
+<!ENTITY gtk-scrolled-window-set-policy      "&api;gtk_fun_gtk-scrolled-window-set-policy.html">
+
+<!ENTITY gtk-separator                       "&api;gtk_class_gtk-separator.html">
+<!ENTITY gtk-separator-new                   "&api;gtk_fun_gtk-separator-new.html">
+
+<!ENTITY gtk-separator-menu-item             "&api;gtk_class_gtk-separator-menu-item.html">
+<!ENTITY gtk-separator-menu-item-new         "&api;gtk_fun_gtk-separator-menu-item-new.html">
+
+<!ENTITY gtk-separator-tool-item             "&api;gtk_class_gtk-separator-tool-item.html">
+<!ENTITY gtk-separator-tool-item-new         "&api;gtk_fun_gtk-separator-tool-item-new.html">
+
+<!ENTITY gtk-settings                        "&api;gtk_class_gtk-settings.html">
+<!ENTITY gtk-shell-shows-app-menu            "&api;gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-app-menu">
+<!ENTITY gtk-shell-shows-menubar             "&api;gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-menubar">
+
+<!ENTITY gtk-shadow-type                     "&api;gtk_sym_gtk-shadow-type.html">
+
+<!ENTITY gtk-show-about-dialog               "&api;gtk_fun_gtk-show-about-dialog.html">
+<!ENTITY gtk-show-uri                        "&api;gtk_fun_gtk-show-uri.html">
+
+<!ENTITY gtk-spin-button                     "&api;gtk_class_gtk-spin-button.html">
+<!ENTITY gtk-spin-button-adjustment          "&api;gtk_fun_gtk-spin-button-adjustment.html">
+<!ENTITY gtk-spin-button-configure           "&api;gtk_fun_gtk-spin-button-configure.html">
+<!ENTITY gtk-spin-button-digits              "&api;gtk_fun_gtk-spin-button-digits.html">
+<!ENTITY gtk-spin-button-new                 "&api;gtk_fun_gtk-spin-button-new.html">
+<!ENTITY gtk-spin-button-numeric             "&api;gtk_fun_gtk-spin-button-numeric.html">
+<!ENTITY gtk-spin-button-snap-to-ticks       "&api;gtk_fun_gtk-spin-button-snap-to-ticks.html">
+<!ENTITY gtk-spin-button-spin                "&api;gtk_fun_gtk-spin-button-spin.html">
+<!ENTITY gtk-spin-button-update              "&api;gtk_fun_gtk-spin-button-update.html">
+<!ENTITY gtk-spin-button-update-policy       "&api;gtk_fun_gtk-spin-button-update-policy.html">
+<!ENTITY gtk-spin-button-value               "&api;gtk_fun_gtk-spin-button-value.html">
+<!ENTITY gtk-spin-button-value-as-int        "&api;gtk_fun_gtk-spin-button-value-as-int.html">
+<!ENTITY gtk-spin-button-wrap                "&api;gtk_fun_gtk-spin-button-wrap.html">
+
+<!ENTITY gtk-statusbar                       "&api;gtk_class_gtk-statusbar.html">
+<!ENTITY gtk-statusbar-context-id            "&api;gtk_fun_gtk-statusbar-context-id.html">
+<!ENTITY gtk-statusbar-new                   "&api;gtk_fun_gtk-statusbar-new.html">
+<!ENTITY gtk-statusbar-pop                   "&api;gtk_fun_gtk-statusbar-pop.html">
+<!ENTITY gtk-statusbar-push                  "&api;gtk_fun_gtk-statusbar-push.html">
+<!ENTITY gtk-statusbar-remove                "&api;gtk_fun_gtk-statusbar-remove.html">
+
+<!ENTITY gtk-switch                          "&api;gtk_class_gtk-switch.html">
+<!ENTITY gtk_switch_active                   "&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-active">
+<!ENTITY gtk_switch_state                    "&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-state">
+<!ENTITY gtk-switch-active                   "&api;gtk_fun_gtk-switch-active.html">
+<!ENTITY gtk-switch-state                    "&api;gtk_fun_gtk-switch-state.html">
+<!ENTITY gtk-switch-new                      "&api;gtk_fun_gtk-switch-new.html">
+
+<!ENTITY gtk-table                           "&api;gtk_class_gtk-table.html">
+<!ENTITY gtk-table-new                       "&api;gtk_fun_gtk-table-new.html">
+<!ENTITY gtk-table-attach                    "&api;gtk_fun_gtk-table-attach.html">
+<!ENTITY gtk-table-attach-defaults           "&api;gtk_fun_gtk-table-attach-defaults.html">
+<!ENTITY gtk-table-set-col-spacing           "&api;gtk_fun_gtk-table-set-col-spacing.html">
+<!ENTITY gtk-table-set-row-spacing           "&api;gtk_fun_gtk-table-set-row-spacing.html">
+<!ENTITY gtk-table-set-col-spacings          "&api;gtk_fun_gtk-table-set-col-spacings.html">
+<!ENTITY gtk-table-set-row-spacings          "&api;gtk_fun_gtk-table-set-row-spacings.html">
+
+<!ENTITY gtk-text-buffer                     "&api;gtk_class_gtk-text-buffer.html">
+<!ENTITY gtk-text-buffer-apply-tag           "&api;gtk_fun_gtk-text-buffer-apply-tag.html">
+<!ENTITY gtk-text-buffer-apply-tag-by-name   "&api;gtk_fun_gtk-text-buffer-apply-tag-by-name.html">
+<!ENTITY gtk-text-buffer-create-child-anchor "&api;gtk_fun_gtk-text-buffer-create-child-anchor.html">
+<!ENTITY gtk-text-buffer-create-mark         "&api;gtk_fun_gtk-text-buffer-create-mark.html">
+<!ENTITY gtk-text-buffer-create-tag          "&api;gtk_fun_gtk-text-buffer-create-tag.html">
+<!ENTITY gtk-text-buffer-delete-mark         "&api;gtk_fun_gtk-text-buffer-delete-mark.html">
+<!ENTITY gtk-text-buffer-delete-mark-by-name "&api;gtk_fun_gtk-text-buffer-delete-mark-by-name.html">
+<!ENTITY gtk-text-buffer-get-text            "&api;gtk_fun_gtk-text-buffer-get-text.html">
+<!ENTITY gtk-text-buffer-get-slice           "&api;gtk_fun_gtk-text-buffer-get-slice.html">
+<!ENTITY gtk-text-buffer-insert              "&api;gtk_fun_gtk-text-buffer-insert.html">
+<!ENTITY gtk-text-buffer-insert-pixbuf       "&api;gtk_fun_gtk-text-buffer-insert-pixbuf.html">
+<!ENTITY gtk-text-buffer-insert-with-tags    "&api;gtk_fun_gtk-text-buffer-insert-with-tags.html">
+<!ENTITY gtk-text-buffer-iter-at-mark        "&api;gtk_fun_gtk-text-buffer-iter-at-mark.html">
+<!ENTITY gtk-text-buffer-mark                "&api;gtk_fun_gtk-text-buffer-mark.html">
+<!ENTITY gtk-text-buffer-new                 "&api;gtk_fun_gtk-text-buffer-new.html">
+<!ENTITY gtk-text-buffer-place-cursor        "&api;gtk_fun_gtk-text-buffer-place-cursor.html">
+<!ENTITY gtk-text-buffer-remove-tag          "&api;gtk_fun_gtk-text-buffer-remove-tag.html">
+<!ENTITY gtk-text-buffer-remove-all-tags     "&api;gtk_fun_gtk-text-buffer-remove-all-tags.html">
+<!ENTITY gtk-text-buffer-selection-bounds    "&api;gtk_fun_gtk-text-buffer-selection-bounds.html">
+<!ENTITY gtk-text-buffer-select-range        "&api;gtk_fun_gtk-text-buffer-select-range.html">
+
+<!ENTITY gtk-text-child-anchor               "&api;gtk_class_gtk-text-child-anchor.html">
+<!ENTITY gtk-text-child-anchor-widgets       "&api;gtk_fun_gtk-text-child-anchor-widgets.html">
+
+<!ENTITY gtk-text-iter                       "&api;gtk_class_gtk-text-iter.html">
+<!ENTITY gtk-text-iter-backward-find-char    "&api;gtk_fun_gtk-text-iter-backward-find-char.html">
+<!ENTITY gtk-text-iter-backward-search       "&api;gtk_fun_gtk-text-iter-backward-search.html">
+<!ENTITY gtk-text-iter-child-anchor          "&api;gtk_fun_gtk-text-iter-child-anchor.html">
+<!ENTITY gtk-text-iter-char                  "&api;gtk_fun_gtk-text-iter-char.html">
+<!ENTITY gtk-text-iter-find-char             "&api;gtk_fun_gtk-text-iter-find-char.html">
+<!ENTITY gtk-text-iter-forward-char          "&api;gtk_fun_gtk-text-iter-forward-char.html">
+<!ENTITY gtk-text-iter-forward-search        "&api;gtk_fun_gtk-text-iter-forward-search.html">
+<!ENTITY gtk-text-iter-forward-to-line-end   "&api;gtk_fun_gtk-text-iter-forward-to-line-end.html">
+<!ENTITY gtk-text-iter-line-offset           "&api;gtk_fun_gtk-text-iter-line-offset.html">
+<!ENTITY gtk-text-iter-pixbuf                "&api;gtk_fun_gtk-text-iter-pixbuf.html">
+<!ENTITY gtk-text-iter-search                "&api;gtk_fun_gtk-text-iter-search.html">
+
+<!ENTITY gtk-text-mark                       "&api;gtk_class_gtk-text-mark.html">
+
+<!ENTITY gtk-text-view                       "&api;gtk_class_gtk-text-view.html">
+<!ENTITY gtk-text-view-add-child-at-anchor   "&api;gtk_fun_gtk-text-view-add-child-at-anchor.html">
+<!ENTITY gtk-text-view-buffer                "&api;gtk_fun_gtk-text-view-buffer.html">
+<!ENTITY gtk-text-view-buffer-to-window-coords
+                                             "&api;gtk_fun_gtk-text-view-buffer-to-window-coords.html">
+<!ENTITY gtk-text-view-iter-at-location      "&api;gtk_fun_gtk-text-view-iter-at-location.html">
+<!ENTITY gtk-text-view-new-with-buffer       "&api;gtk_fun_gtk-text-view-new-with-buffer.html">
+<!ENTITY gtk-text-view-scroll-mark-onscreen  "&api;gtk_fun_gtk-text-view-scroll-mark-onscreen.html">
+<!ENTITY gtk-text-view-tabs                  "&api;gtk_fun_gtk-text-view-tabs.html">
+<!ENTITY gtk-text-view-editable              "&api;gtk_fun_gtk-text-view-editable.html">
+<!ENTITY gtk-text-view-window                "&api;gtk_fun_gtk-text-view-window.html">
+<!ENTITY gtk-text-view-window-to-buffer-coords
+                                             "&api;gtk_fun_gtk-text-view-window-to-buffer-coords.html">
+
+<!ENTITY gtk-tree-view-column                "&api;gtk_class_gtk-tree-view-column.html">
+<!ENTITY gtk-tree-view-column-add-attribute  "&api;gtk_fun_gtk-tree-view-column-add-attribute.html">
+<!ENTITY gtk-tree-view-column-set-cell-data-func
+                                             "&api;gtk_fun_gtk-tree-view-column-set-cell-data-func.html">
+
+<!ENTITY gtk-text-tag                        "&api;gtk_class_gtk-text-tag.html">
+<!ENTITY gtk-text-tag-table                  "&api;gtk_class_gtk-text-tag-table.html">
+
+<!ENTITY gtk-toggle-action                   "&api;gtk_class_gtk-toggle-action.html">
+
+<!ENTITY gtk-toggle-button                   "&api;gtk_class_gtk-toggle-button.html">
+<!ENTITY gtk_toggle_button_active            "&api;gtk_class_gtk-toggle-button.html#gtk_slot_gtk-toggle-button-active">
+<!ENTITY gtk-toggle-button-new               "&api;gtk_fun_gtk-toggle-button-new.html">
+<!ENTITY gtk-toggle-button-new-with-label    "&api;gtk_fun_gtk-toggle-button-new-with-label.html">
+<!ENTITY gtk-toggle-button-new-with-mnemonic "&api;gtk_fun_gtk-toggle-button-new-with-mnemonic.html">
+<!ENTITY gtk-toggle-button-active            "&api;gtk_fun_gtk-toggle-button-active.html">
+
+<!ENTITY gtk-toggle-tool-button              "&api;gtk_class_gtk-toggle-tool-button.html">
+
+<!ENTITY gtk-tool-button                     "&api;gtk_class_gtk-tool-button.html">
+<!ENTITY gtk-tool-button-new                 "&api;gtk_fun_gtk-tool-button-new.html">
+<!ENTITY gtk-tool-button-new-from-stock      "&api;gtk_fun_gtk-tool-button-new-from-stock.html">
+
+<!ENTITY gtk-tool-item                       "&api;gtk_class_gtk-tool-item.html">
+<!ENTITY gtk-tool-item-new                   "&api;gtk_fun_gtk-tool-item-new.html">
+
+<!ENTITY gtk-toolbar                         "&api;gtk_class_gtk-toolbar.html">
+<!ENTITY gtk-toolbar-new                     "&api;gtk_fun_gtk-toolbar-new.html">
+<!ENTITY gtk-toolbar-insert                  "&api;gtk_fun_gtk-toolbar-insert.html">
+
+<!ENTITY gtk-tree-iter                       "&api;gtk_class_gtk-tree-iter.html">
+
+<!ENTITY gtk-tree-model                      "&api;gtk_class_gtk-tree-model.html">
+<!ENTITY gtk-tree-model-flags                "&api;gtk_fun_gtk-tree-model-flags.html">
+<!ENTITY gtk-tree-model-foreach              "&api;gtk_fun_gtk-tree-model-foreach.html">
+<!ENTITY gtk-tree-model-get                  "&api;gtk_fun_gtk-tree-model-get.html">
+<!ENTITY gtk-tree-model-iter                 "&api;gtk_fun_gtk-tree-model-iter.html">
+<!ENTITY gtk-tree-model-iter-first           "&api;gtk_fun_gtk-tree-model-iter-first.html">
+<!ENTITY gtk-tree-model-iter-next            "&api;gtk_fun_gtk-tree-model-iter-next.html">
+<!ENTITY gtk-tree-model-iter-nth-child       "&api;gtk_fun_gtk-tree-model-iter-nth-child.html">
+<!ENTITY gtk-tree-model-iter-prev            "&api;gtk_fun_gtk-tree-model-iter-prev.html">
+<!ENTITY gtk-tree-model-path                 "&api;gtk_fun_gtk-tree-model-path.html">
+
+<!ENTITY gtk-tree-path                       "&api;gtk_class_gtk-tree-path.html">
+<!ENTITY gtk-tree-path-copy                  "&api;gtk_fun_gtk-tree-path-copy.html">
+<!ENTITY gtk-tree-path-depth                 "&api;gtk_fun_gtk-tree-path-depth.html">
+<!ENTITY gtk-tree-path-indices               "&api;gtk_fun_gtk-tree-path-indices.html">
+<!ENTITY gtk-tree-path-new-from-string       "&api;gtk_fun_gtk-tree-path-new-from-string.html">
+<!ENTITY gtk-tree-path-to-string             "&api;gtk_fun_gtk-tree-path-to-string.html">
+<!ENTITY gtk-tree-path-up                    "&api;gtk_fun_gtk-tree-path-up.html">
+<!ENTITY gtk-tree-path-down                  "&api;gtk_fun_gtk-tree-path-down.html">
+<!ENTITY gtk-tree-path-next                  "&api;gtk_fun_gtk-tree-path-next.html">
+<!ENTITY gtk-tree-path-prev                  "&api;gtk_fun_gtk-tree-path-prev.html">
+<!ENTITY gtk-tree-path-is-ancestor           "&api;gtk_fun_gtk-tree-path-is-ancestor.html">
+<!ENTITY gtk-tree-path-is-descendant         "&api;gtk_fun_gtk-tree-path-is-descendant.html">
+
+<!ENTITY gtk-tree-row-reference              "&api;gtk_class_gtk-tree-row-reference.html">
+<!ENTITY gtk-tree-row-reference-new          "&api;gtk_fun_gtk-tree-row-reference-new.html">
+<!ENTITY gtk-tree-row-reference-path         "&api;gtk_fun_gtk-tree-row-reference-path.html">
+<!ENTITY gtk-tree-row-reference-valid        "&api;gtk_fun_gtk-tree-row-reference-valid.html">
+
+<!ENTITY gtk-tree-store                      "&api;gtk_class_gtk-tree-store.html">
+<!ENTITY gtk-tree-store-append               "&api;gtk_fun_gtk-tree-store-append.html">
+<!ENTITY gtk-tree-store-clear                "&api;gtk_fun_gtk-tree-store-clear.html">
+<!ENTITY gtk-tree-store-remove               "&api;gtk_fun_gtk-tree-store-remove.html">
+<!ENTITY gtk-tree-store-set                  "&api;gtk_fun_gtk-tree-store-set.html">
+<!ENTITY gtk-tree-store-set-value            "&api;gtk_fun_gtk-tree-store-set-value.html">
+
+<!ENTITY gtk-tree-view                       "&api;gtk_class_gtk-tree-view.html">
+<!ENTITY gtk-tree-view-expander-column       "&api;gtk_fun_gtk-tree-view-expander-column.html">
+<!ENTITY gtk-tree-view-headers-clickable     "&api;gtk_fun_gtk-tree-view-headers-clickable.html">
+<!ENTITY gtk-tree-view-headers-visible       "&api;gtk_fun_gtk-tree-view-headers-visible.html">
+<!ENTITY gtk-tree-view-model                 "&api;gtk_fun_gtk-tree-view-model.html">
+<!ENTITY gtk-tree-view-new-with-model        "&api;gtk_fun_gtk-tree-view-new-with-model.html">
+<!ENTITY gtk-tree-view-rules-hint            "&api;gtk_fun_gtk-tree-view-rules-hint.html">
+
+<!ENTITY gtk-tree-view-column                "&api;gtk_class_gtk-tree-view-column.html">
+
+<!ENTITY gtk-ui-manager                      "&api;gtk_class_gtk-ui-manager.html">
+<!ENTITY gtk-ui-manager-add-ui               "&api;gtk_fun_gtk-ui-manager-add-ui.html">
+<!ENTITY gtk-ui-manager-add-ui-from-file     "&api;gtk_fun_gtk-ui-manager-add-ui-from-file.html">
+<!ENTITY gtk-ui-manager-add-ui-from-string   "&api;gtk_fun_gtk-ui-manager-add-ui-from-string.html">
+<!ENTITY gtk-ui-manager-add-tearoffs         "&api;gtk_fun_gtk-ui-manager-add-tearoffs.html">
+<!ENTITY gtk-ui-manager-get-accel-group      "&api;gtk_fun_gtk-ui-manager-get-accel-group.html">
+<!ENTITY gtk-ui-manager-get-widget           "&api;gtk_fun_gtk-ui-manager-get-widget.html">
+<!ENTITY gtk-ui-manager-new                  "&api;gtk_fun_gtk-ui-manager-new.html">
+<!ENTITY gtk-ui-manager-new-merge-id         "&api;gtk_fun_gtk-ui-manager-new-merge-id.html">
+<!ENTITY gtk-ui-manager-remove-action-group  "&api;gtk_fun_gtk-ui-manager-remove-action-group.html">
+
+<!ENTITY gtk-ui-manager-item-type            "&api;gtk_sym_gtk-ui-manager-item-type.html">
+
+<!ENTITY gtk-viewport                        "&api;gtk_class_gtk-viewport.html">
+<!ENTITY gtk-viewport-new                    "&api;gtk_fun_gtk-viewport-new.html">
+<!ENTITY gtk-viewport-shadow-type            "&api;gtk_fun_gtk-viewport-shadow-type.html">
+
+<!ENTITY gtk-widget                          "&api;gtk_class_gtk-widget.html">
+<!ENTITY gtk_widget_halign                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-halign">
+<!ENTITY gtk_widget_hexpand                  "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-hexpand">
+<!ENTITY gtk_widget_margin                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin">
+<!ENTITY gtk_widget_margin-bottom            "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-bottom">
+<!ENTITY gtk_widget_margin-end               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-end">
+<!ENTITY gtk_widget_margin-left              "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-left">
+<!ENTITY gtk_widget_margin-right             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-right">
+<!ENTITY gtk_widget_margin-start             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-start">
+<!ENTITY gtk_widget_margin-top               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-top">
+<!ENTITY gtk_widget_valign                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-valign">
+<!ENTITY gtk_widget_vexpand                  "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-vexpand">
+<!ENTITY gtk-widget-destroy                  "&api;gtk_fun_gtk-widget-destroy.html">
+<!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
+<!ENTITY gtk-widget-get-allocation           "&api;gtk_fun_gtk-widget-get-allocation.html">
+<!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">
+<!ENTITY gtk-widget-queue-draw               "&api;gtk_fun_gtk-widget-queue-draw.html">
+<!ENTITY gtk-widget-realize                  "&api;gtk_fun_gtk-widget-realize.html">
+<!ENTITY gtk-widget-show                     "&api;gtk_fun_gtk-widget-show.html">
+<!ENTITY gtk-widget-show-all                 "&api;gtk_fun_gtk-widget-show-all.html">
+<!ENTITY gtk-widget-size-request             "&api;gtk_fun_gtk-widget-size-request.html">
+<!ENTITY gtk-widget-tooltip-text             "&api;gtk_fun_gtk-widget-tooltip-text.html">
+<!ENTITY gtk-widget-window                   "&api;gtk_fun_gtk-widget-window.html">
+
+<!ENTITY gtk-window                          "&api;gtk_class_gtk-window.html">
+<!ENTITY gtk_window_default-height           "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-height">
+<!ENTITY gtk_window_default-width            "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-width">
+<!ENTITY gtk_window_title                    "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-title">
+<!ENTITY gtk_window_type                     "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-type">
+<!ENTITY gtk-window-add-accel-group          "&api;gtk_fun_gtk-window-add-accel-group.html">
+<!ENTITY gtk-window-default-height           "&api;gtk_fun_gtk-window-default-height.html">
+<!ENTITY gtk-window-default-size             "&api;gtk_fun_gtk-window-default-size.html">
+<!ENTITY gtk-window-default-width            "&api;gtk_fun_gtk-window-default-width.html">
+<!ENTITY gtk-window-new                      "&api;gtk_fun_gtk-window-new.html">
+<!ENTITY gtk-window-title                    "&api;gtk_fun_gtk-window-title.html">
+<!ENTITY gtk-window-type                     "&api;gtk_sym_gtk-window-type.html">
+
+<!ENTITY pango-attr-list                     "&api;pango_class_pango-attr-list.html">
+
+<!ENTITY cairo-t                             "&api;cairo_sym_cairo-t.html">
+<!ENTITY cairo-font-options-t                "&api;cairo_sym_cairo-font-options-t.html">
+<!ENTITY cairo-matrix-t                      "&api;cairo_sym_cairo-matrix-t.html">
+<!ENTITY cairo-surface-t                     "&api;cairo_sym_cairo-surface-t.html">
+
+<!ENTITY cairo-arc                           "&api;cairo_fun_cairo-arc.html">
+<!ENTITY cairo-arc-negative                  "&api;cairo_fun_cairo-arc-negative.html">
+<!ENTITY cairo-create                        "&api;cairo_fun_cairo-create.html">
+<!ENTITY cairo-curve-to                      "&api;cairo_fun_cairo-curve-to.html">
+<!ENTITY cairo-device-to-user                "&api;cairo_fun_cairo-device-to-user.html">
+<!ENTITY cairo-device-to-user-distance       "&api;cairo_fun_cairo-device-to-user-distance.html">
+<!ENTITY cairo-fill                          "&api;cairo_fun_cairo-fill.html">
+<!ENTITY cairo-fill-preserve                 "&api;cairo_fun_cairo-fill-preserve.html">
+<!ENTITY cairo-font-extents                  "&api;cairo_fun_cairo-font-extents.html">
+<!ENTITY cairo-get-font-options              "&api;cairo_fun_cairo-get-font-options.html">
+<!ENTITY cairo-image-surface-create          "&api;cairo_fun_cairo-image-surface-create.html">
+<!ENTITY cairo-image-surface-create-from-png "&api;cairo_fun_cairo-image-surface-create-from-png.html">
+<!ENTITY cairo-line-to                       "&api;cairo_fun_cairo-line-to.html">
+<!ENTITY cairo-mask                          "&api;cairo_fun_cairo-mask.html">
+<!ENTITY cairo-mask-surface                  "&api;cairo_fun_cairo-mask-surface.html">
+<!ENTITY cairo-move-to                       "&api;cairo_fun_cairo-move-to.html">
+<!ENTITY cairo-paint                         "&api;cairo_fun_cairo-paint.html">
+<!ENTITY cairo-paint-with-alpha              "&api;cairo_fun_cairo-paint-with-alpha.html">
+<!ENTITY cairo-pattern-add-color-stop-rgb    "&api;cairo_fun_cairo-pattern-add-color-stop-rgb.html">
+<!ENTITY cairo-pattern-add-color-stop-rgba   "&api;cairo_fun_cairo-pattern-add-color-stop-rgba.html">
+<!ENTITY cairo-pattern-set-extend            "&api;cairo_fun_cairo-pattern-set-extend.html">
+<!ENTITY cairo-pop-group                     "&api;cairo_fun_cairo-pop-group.html">
+<!ENTITY cairo-pop-group-to-source           "&api;cairo_fun_cairo-pop-group-to-source.html">
+<!ENTITY cairo-push-group                    "&api;cairo_fun_cairo-push-group.html">
+<!ENTITY cairo-rel-curve-to                  "&api;cairo_fun_cairo-rel-curve-to.html">
+<!ENTITY cairo-rel-line-to                   "&api;cairo_fun_cairo-rel-line-to.html">
+<!ENTITY cairo-rel-move-to                   "&api;cairo_fun_cairo-rel-move-to.html">
+<!ENTITY cairo-scale                         "&api;cairo_fun_cairo-scale.html">
+<!ENTITY cairo-select-font-face              "&api;cairo_fun_cairo-select-font-face.html">
+<!ENTITY cairo-set-dash                      "&api;cairo_fun_cairo-set-dash.html">
+<!ENTITY cairo-set-fill-rule                 "&api;cairo_fun_cairo-set-fill-rule.html">
+<!ENTITY cairo-set-font-options              "&api;cairo_fun_cairo-set-font-options.html">
+<!ENTITY cairo-set-font-size                 "&api;cairo_fun_cairo-set-font-size.html">
+<!ENTITY cairo-set-line-cap                  "&api;cairo_fun_cairo-set-line-cap.html">
+<!ENTITY cairo-set-line-width                "&api;cairo_fun_cairo-set-line-width.html">
+<!ENTITY cairo-set-source                    "&api;cairo_fun_cairo-set-source.html">
+<!ENTITY cairo-set-source-rgb                "&api;cairo_fun_cairo-set-source-rgb.html">
+<!ENTITY cairo-set-source-rgba               "&api;cairo_fun_cairo-set-source-rgba.html">
+<!ENTITY cairo-show-text                     "&api;cairo_fun_cairo-show-text.html">
+<!ENTITY cairo-stroke                        "&api;cairo_fun_cairo-stroke.html">
+<!ENTITY cairo-stroke-preserve               "&api;cairo_fun_cairo-stroke-preserve.html">
+<!ENTITY cairo-transform                     "&api;cairo_fun_cairo-transform.html">
+<!ENTITY cairo-translate                     "&api;cairo_fun_cairo-translate.html">
+<!ENTITY cairo-text-extents                  "&api;cairo_fun_cairo-text-extents.html">
+<!ENTITY cairo-text-path                     "&api;cairo_fun_cairo-text-path.html">
+<!ENTITY cairo-user-to-device                "&api;cairo_fun_cairo-user-to-device.html">
+<!ENTITY cairo-user-to-device-distance       "&api;cairo_fun_cairo-user-to-device-distance.html">
+

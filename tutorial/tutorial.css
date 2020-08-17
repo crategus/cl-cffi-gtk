@@ -1,0 +1,288 @@
+﻿div.sidebar {
+  float: right;
+  min-width: 25%;
+  padding: 0pt 5pt 5pt 5pt;
+  font-family: arial, arial;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+  border-bottom: 1px dotted black;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.nonlink {
+  border-bottom: 1px solid white;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.sidebar a {
+  border-top: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+}
+
+a:hover {
+  color: #000000;
+  border: 1px solid black;
+}
+
+#headerlink {
+  border: none;
+}
+
+#headerlink:hover {
+  border: none;
+}
+
+body {
+  color: #000000;
+  background-color: #ffffff;
+  margin-top: 2em;
+  /* margin-left added */
+  margin-left: 5%;
+  margin-right: 5%;
+  font-family: Arial, sans-serif;
+  line-height: 1.5em;
+}
+
+.main {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.padded {
+  padding-left: 30px;
+  /* Added padding-right */
+  padding-right: 30px;
+}
+
+.padded h1 {
+  margin-left: -30px;
+}
+
+h3 {
+  width: 100%;
+  color: #000000;
+  border-bottom: 1px solid #ff9900;
+  margin-left: -3px;
+  padding-left: 3px;
+}
+
+h4 {
+  width: 100%;
+  margin-left: -3px;
+  padding-left: 3px;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 1.0em;
+}
+
+h5 {
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.75em;
+  font-size: 1.0em;
+}
+
+.grau {
+  padding-top: 1em;
+}
+
+.indent {
+  margin-left: 30px;
+/*  padding-bottom: 1em; */
+}
+
+.def {
+  padding: 1px 1px 1px 1px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  margin-right: 40px;
+}
+
+.nomargin {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.noindent {
+  margin-left: -30px;
+/*  padding-bottom: 1em; */
+}
+
+#header {
+/*  margin-right: 22px; */
+/*  border-bottom: 1px solid black; */
+  border-bottom: 1px solid #ff9900;
+  font-family: arial, arial;
+  font-size: 12pt;
+  padding-bottom: 1px;
+}
+
+/* Add a style for a footer for each page */
+#footer {
+  border-top: 1px solid #ff9900;
+  font-family: arial, arial;
+  font-size: 10pt;
+  padding-top: 3px;
+  margin-top: 10pt;
+  margin-bottom: 20pt;
+}
+
+#version {
+  text-align: right;
+  font-family: arial, arial;
+  font-size: 10pt;
+/*  margin-right: 30px; */
+}
+
+dt {
+  margin-bottom: 0.5em; }
+
+dd {
+  margin-bottom: 0.5em; }
+
+table, th, td { 
+  padding: 1em 1em; 
+}
+
+figure {
+  padding: 5em;
+  margin: 5em;
+}
+
+div.figure-contents {
+  padding-top: 1em;
+  margin: 0em;
+}
+
+div.mediaobject {
+  padding: 0em;
+  margin: 0em;
+}
+
+br.figure-break {
+  border: solid 1px #d0d0d0;
+  padding: 0em;
+  margin: 0em;
+}
+
+pre {
+  background-color: #eeeeee;
+  border: solid 1px #d0d0d0;
+  padding-top: 1em;
+  padding-left: 1em;
+  line-height: normal;
+}
+
+#sp-package-list {
+  /* ... */
+}
+
+#sp-about-packages {
+  /* ... */
+}
+
+/* Das ist der Header für eine Function */
+.sp-lambda-list {
+  width: 90%;
+  border: solid 1px #d0d0d0;
+  background-color: #eeeeee;
+/*  padding: 3px 3px 3px 3px; */
+  padding-top: 0.5em; /* Abstand innerhalb der Box */
+  padding-bottom: 0.5em;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-top: 1em; /* Das sorgt für den Abstand zur letzten Definition */
+}
+
+/* Das ist die Box mit dem Inhalt der Beschreibung einer Funktion */
+.sp-definition {
+  width: 90%;
+  border: 1px solid #d0d0d0;
+  padding: 3px 3px 3px 3px;
+}
+
+/* Das ist der Bereich mit einem kleinen Abstand zur Box der Beschreibung */
+.sp-definition-body {
+/*  padding-left: 10%; */
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 1em;
+}
+
+.sp-definition-body ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sp-return {
+}
+
+.sph3 {
+  padding-top: 1em;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.sph4 {
+  padding-top: 1em;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.sph5 {
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.3em;
+}
+
+.arg {
+/*  color: blue; */
+  font-family: monospace;
+  font-style: italic;
+  font-size: 100% }
+
+.sym {
+/*  color: blue; */
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 100% }
+
+.term {
+/*  color: blue; */
+  font-style: italic;
+  font-size: 100% }
+
+.defterm {
+/*  color: blue; */
+  font-weight: bold;
+  font-style: italic;
+  font-size: 100% }
+
+.code {
+/*  color: blue; */
+  font-family: monospace;
+  font-size: 100% }
+
+/* list of slot access functions should not have a disc,
+   we need a second definition for this case  */
+ul {
+  list-style: none; }
+
+/* class für unordered list with a disc and margins */
+ul.disc {
+  list-style-type: disc;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; }
+
