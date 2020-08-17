@@ -815,15 +815,15 @@
 (defcfun ("gdk_display_supports_cursor_color" gdk-display-supports-cursor-color)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-8-17}
   @argument[display]{a @class{gdk-display} object}
-  @return{A @code{:boolean}, whether cursors can have multiple colors.}
+  @return{A @code{:boolean} whether cursors can have multiple colors.}
   @begin{short}
     Returns @em{true} if multicolored cursors are supported on the display.
   @end{short}
   Otherwise, cursors have only a forground and a background color.
   @see-class{gdk-display}
-  @see-class{gdk-display-supports-cursor-alpha}"
+  @see-function{gdk-display-supports-cursor-alpha}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-cursor-color)
@@ -835,13 +835,13 @@
 (defcfun ("gdk_display_supports_cursor_alpha" gdk-display-supports-cursor-alpha)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-8-17}
   @argument[display]{a @class{gdk-display} object}
-  @return{A @code{:boolean}, whether cursors can have alpha channels.}
+  @return{A @code{:boolean} whether cursors can have alpha channels.}
   @begin{short}
     Returns @em{true} if cursors can use an 8 bit alpha channel on the display.
-    Otherwise, cursors are restricted to bilevel alpha, i. e. a mask.
   @end{short}
+  Otherwise, cursors are restricted to bilevel alpha, i. e. a mask.
   @see-class{gdk-display}
   @see-function{gdk-display-supports-cursor-color}"
   (display (g-object gdk-display)))
@@ -855,10 +855,16 @@
 (defcfun ("gdk_display_get_default_cursor_size"
            gdk-display-default-cursor-size) :uint
  #+cl-cffi-gtk-documentation
- "@version{2020-4-23}
+ "@version{2020-8-17}
   @argument[display]{a @class{gdk-display} object}
   @return{The default cursor size of type @code{:uint}.}
   @short{Returns the default size to use for cursors on the display.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gdk-display-default-cursor-size (gdk-display-default))
+=> 24
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-display}
   @see-function{gdk-display-maximal-cursor-size}"
   (display (g-object gdk-display)))
@@ -877,13 +883,20 @@
 
 (defun gdk-display-maximal-cursor-size (display)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-23}
+ "@version{2020-8-17}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
     @code{width} -- the maximal cursor width of type @code{:uint} @br{}
     @code{height} -- the maximal cursor height of type @code{:uint}
   @end{return}
   @short{Gets the maximal size to use for cursors on the display.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gdk-display-maximal-cursor-size (gdk-display-default))
+=> 128
+=> 128
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-display}
   @see-function{gdk-display-default-cursor-size}"
   (with-foreign-objects ((width :uint) (height :uint))
