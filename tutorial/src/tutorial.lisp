@@ -3324,18 +3324,19 @@ happen.")
                                  :type :toplevel
                                  :title "Example Event Box"
                                  :default-height 150
-                                 :border-width 12))
+                                 :border-width 24))
           (eventbox (make-instance 'gtk-event-box))
           (label (make-instance 'gtk-label
+                                :ellipsize :end
                                 :label
-                                "Click here to quit, and more text, more")))
+                                "Click here to quit this Example Event Box.")))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      ;; Set the events for the event box
+      ;; Set the available events for the event box
       (setf (gtk-widget-events eventbox) :button-press-mask)
-      ;; Connect a signal to the eventbox
+      ;; Connect a signal handler to the eventbox
       (g-signal-connect eventbox "button-press-event"
                         (lambda (widget event)
                           (declare (ignore widget event))
@@ -3347,7 +3348,7 @@ happen.")
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
       (setf (gdk-window-cursor (gtk-widget-window eventbox))
-            (gdk-cursor-new :hand1))
+            (gdk-cursor-new-from-name (gdk-display-default) "pointer"))
       ;; Show the window
       (gtk-widget-show-all window))))
 
