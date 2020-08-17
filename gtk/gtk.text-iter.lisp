@@ -230,10 +230,16 @@
 ;;; gtk_text_iter_copy ()
 ;;; ----------------------------------------------------------------------------
 
-;; Only for internal use and not exported.
+;; FIXME: We have two functions in the tutorial which use this function.
+;;        Do we really need this function?
 
 (defcfun ("gtk_text_iter_copy" %gtk-text-iter-copy) :pointer
   (iter :pointer))
+
+(defcfun ("gtk_text_iter_copy" gtk-text-iter-copy) (g-boxed-foreign gtk-text-iter)
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_assign ()
@@ -889,9 +895,9 @@
 
 (defcfun ("gtk_text_iter_can_insert" gtk-text-iter-can-insert) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-3-13}
+ "@version{2020-8-17}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @argument[default-editability]{@em{true} if text is editable by default}
+  @argument[editabe]{@em{true} if text is editable by default}
   @return{A @code{:boolean} whether text inserted at the iterator would be
     editable.}
   @begin{short}
@@ -907,7 +913,7 @@
   @see-class{gtk-text-iter}
   @see-function{gtk-text-buffer-insert-interactive}"
   (iter (g-boxed-foreign gtk-text-iter))
-  (default-editable :boolean))
+  (editable :boolean))
 
 (export 'gtk-text-iter-can-insert)
 
