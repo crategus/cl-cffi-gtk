@@ -5295,15 +5295,15 @@
 
 (defcfun ("gdk_window_set_startup_id" gdk-window-set-startup-id) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-2}
+ "@version{2020-8-17}
   @argument[window]{a toplevel @class{gdk-window} object}
   @argument[startup-id]{a string with startup-notification identifier}
   @begin{short}
-    When using GTK+, typically you should use the
-    @fun{gtk-window-set-startup-id} function instead of this low-level function.
+    When using GTK+, typically you should use the function
+    @fun{gtk-window-startup-id} instead of this low-level function.
   @end{short}
   @see-class{gdk-window}
-  @see-function{gtk-window-set-startup-id}"
+  @see-function{gtk-window-startup-id}"
   (window (g-object gdk-window))
   (startup-id :string))
 
