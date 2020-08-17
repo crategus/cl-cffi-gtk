@@ -58,7 +58,7 @@
                                        (gtk-text-view-buffer view)
                                        (gtk-widget-get-clipboard view
                                                                  "CLIPBOARD")
-                                       :default-editable t)))))
+                                       :editable t)))))
 
       ;; Add action "fullscreen" to the application window
       (let ((action (g-simple-action-new-stateful
