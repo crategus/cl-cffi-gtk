@@ -83,7 +83,7 @@
   @end{short}
 
   You can convert the mark to an iterator using the function
-  @fun{gtk-text-buffer-get-iter-at-mark}. Unlike iterators, marks remain valid
+  @fun{gtk-text-buffer-iter-at-mark}. Unlike iterators, marks remain valid
   across buffer mutations, because their behavior is defined when text is
   inserted or deleted. When text containing a mark is deleted, the mark remains
   in the position originally occupied by the deleted text. When text is inserted
@@ -104,7 +104,7 @@
   @see-slot{gtk-text-mark-name}
   @see-function{gtk-text-buffer-create-mark}
   @see-function{gtk-text-buffer-delete-mark}
-  @see-function{gtk-text-buffer-get-iter-at-mark}")
+  @see-function{gtk-text-buffer-iter-at-mark}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

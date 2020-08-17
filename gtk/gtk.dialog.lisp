@@ -982,7 +982,7 @@
 
    ;; Allow alternative button order for the default screen.
    (setf (gtk-settings-gtk-alternative-button-order
-           (gtk-settings-get-default))
+           (gtk-settings-default))
          t)
 
    ;; Set the alternative button order.

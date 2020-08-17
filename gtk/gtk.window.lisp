@@ -1049,7 +1049,7 @@
   @end{short}
 
   The slot access function @sym{gtk-window-icon} gets the icon or if you have
-  called the function @fun{gtk-window-set-icon-list}, gets the first icon in
+  called the function @fun{gtk-window-icon-list}, gets the first icon in
   the icon list. The slot access function @sym{(setf gtk-window-icon)} sets up
   the icon representing the window. This icon is used when the window is
   minimized, also known as iconified. Some window managers or desktop
@@ -1061,15 +1061,15 @@
   the last minute, when the desired final size is known, to allow best quality.
 
   If you have your icon hand drawn in multiple sizes, use the function
-  @fun{gtk-window-set-icon-list}. Then the best size will be used. This function
-  is equivalent to calling the function @fun{gtk-window-set-icon-list} with a
+  @fun{gtk-window-icon-list}. Then the best size will be used. This function
+  is equivalent to calling the function @fun{gtk-window-icon-list} with a
   1-element list.
 
-  See also the function @fun{gtk-window-set-default-icon-list} to set the icon
+  See also the function @fun{gtk-window-default-icon-list} to set the icon
   for all windows in your application in one go.
   @see-class{gtk-window}
-  @see-function{gtk-window-set-icon-list}
-  @see-function{gtk-window-set-default-icon-list}")
+  @see-function{gtk-window-icon-list}
+  @see-function{gtk-window-default-icon-list}")
 
 ;;; --- gtk-window-icon-name ---------------------------------------------------
 

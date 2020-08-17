@@ -811,7 +811,7 @@
   The title is displayed in the header area of the assistant when the page is
   the current page.
   @see-class{gtk-assistant}
-  @see-function{gtk-assistant-set-page-title}"
+  @see-function{gtk-assistant-page-title}"
   (gtk-assistant-child-title assistant page))
 
 (export 'gtk-assistant-page-title)

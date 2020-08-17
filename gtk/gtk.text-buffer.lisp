@@ -1464,6 +1464,8 @@
 ;;; gtk_text_buffer_get_insert () -> gtk-text-buffer-insert
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: Check the implementation, we have a second function with this name
+
 (defcfun ("gtk_text_buffer_get_insert" gtk-text-buffer-get-insert)
     (g-object gtk-text-mark)
  #+cl-cffi-gtk-documentation

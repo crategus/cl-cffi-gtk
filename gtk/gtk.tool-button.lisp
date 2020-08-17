@@ -195,8 +195,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-icon-name 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-icon-name object) => icon-name}
-  @synŧax[]{(setf (gtk-tool-button-icon-name object) icon-name)}
+  @syntax[]{(gtk-tool-button-icon-name object) => icon-name}
+  @syntax[]{(setf (gtk-tool-button-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-tool-button} widget}
   @argument[icon-name]{the name of the themed icon}
   @begin{short}
@@ -230,8 +230,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-icon-widget 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-icon-widget object) => icon-widget}
-  @synŧax[]{(setf (gtk-tool-button-icon-widget object) icon-widget)}
+  @syntax[]{(gtk-tool-button-icon-widget object) => icon-widget}
+  @syntax[]{(setf (gtk-tool-button-icon-widget object) icon-widget)}
   @argument[button]{a @class{gtk-tool-button} widget}
   @argument[icon-widget]{the widget used as icon, or @code{nil}}
   @begin{short}
@@ -263,8 +263,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-label 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-label object) => label}
-  @synŧax[]{(setf (gtk-tool-button-label object) label)}
+  @syntax[]{(gtk-tool-button-label object) => label}
+  @syntax[]{(setf (gtk-tool-button-label object) label)}
   @argument[button]{a @class{gtk-tool-button} widget}
   @argument[label]{a string that will be used as label, or @code{nil}}
   @begin{short}
@@ -301,8 +301,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-label-widget 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-label object) => label}
-  @synŧax[]{(setf (gtk-tool-button-label object) label)}
+  @syntax[]{(gtk-tool-button-label object) => label}
+  @syntax[]{(setf (gtk-tool-button-label object) label)}
   @argument[button]{a @class{gtk-tool-button} widget}
   @argument[label-widget]{the widget used as label, or @code{nil}}
   @begin{short}
@@ -339,8 +339,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-stock-id 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-stock-id object) => stock-id}
-  @synŧax[]{(setf (gtk-tool-button-stock-id object) stock-id)}
+  @syntax[]{(gtk-tool-button-stock-id object) => stock-id}
+  @syntax[]{(setf (gtk-tool-button-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-tool-button} widget}
   @argument[stock-id]{a name of a stock item, or @code{nil}}
   @begin{short}
@@ -381,8 +381,8 @@
       "Accessor"
       (documentation 'gtk-tool-button-use-underline 'function)
  "@version{2019-5-11}
-  @synŧax[]{(gtk-tool-button-use-underline object) => use-underline}
-  @synŧax[]{(setf (gtk-tool-button-use-underline) use-underline)}
+  @syntax[]{(gtk-tool-button-use-underline object) => use-underline}
+  @syntax[]{(setf (gtk-tool-button-use-underline) use-underline)}
   @argument[button]{a @class{gtk-tool-button} widget}
   @argument[use-underline]{whether the button label has the form \"_Open\"}
   @begin{short}
@@ -411,17 +411,16 @@
 
 (defun gtk-tool-button-new (icon-widget label)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[label]{a string that will be used as label, or @code{nil}}
+ "@version{2020-8-16}
   @argument[icon-widget]{a widget that will be used as the button contents,
     or @code{nil}}
-  @return{A new @class{gtk-tool-button} widget}
+  @argument[label]{a string that will be used as label, or @code{nil}}
+  @return{A new @class{gtk-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-tool-button} using @arg{icon-widget} as contents
+    Creates a new tool button using @arg{icon-widget} as contents
     and @arg{label} as label.
   @end{short}
-  @see-class{gtk-tool-button}
-  @see-function{gtk-tool-button-new-from-stock}"
+  @see-class{gtk-tool-button}"
   (let ((tool-button (make-instance 'gtk-tool-button)))
     (when icon-widget
       (setf (gtk-tool-button-icon-widget tool-button) icon-widget))
@@ -437,23 +436,23 @@
 
 (defun gtk-tool-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[stock-id]{the name of the stock item}
+ "@version{2020-8-16}
+  @argument[stock-id]{a string with the name of the stock item}
   @return{A new @class{gtk-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-tool-button} containing the image and text from a
-    stock item.
+    Creates a new tool button containing the image and text from a stock item.
   @end{short}
 
   It is an error if @arg{stock-id} is not a name of a stock item.
   @begin[Warning]{dictionary}
-    The @sym{gtk-tool-button-new-from-stock} function has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the
-    @fun{gtk-tool-button-new} function together with the
-    @fun{gtk-image-new-from-icon-name} function instead.
+    The function @sym{gtk-tool-button-new-from-stock} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-tool-button-new} together with the function
+    @fun{gtk-image-new-from-icon-name} instead.
   @end{dictionary}
   @see-class{gtk-tool-button}
-  @see-function{gtk-tool-button-new}"
+  @see-function{gtk-tool-button-new}
+  @see-function{gtk-image-new-from-icon-name}"
   (make-instance 'gtk-tool-button
                  :stock-id stock-id))
 
