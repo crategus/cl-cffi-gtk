@@ -6823,25 +6823,24 @@
 ;;; gtk_widget_get_settings ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_settings" gtk-widget-get-settings)
-    (g-object gtk-settings)
+(defcfun ("gtk_widget_get_settings" gtk-widget-settings) (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
+ "@version{2020-8-16}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The relevant @class{gtk-settings} object.}
   @begin{short}
     Gets the settings object holding the settings used for this widget.
   @end{short}
 
-  Note that this function can only be called when the @class{gtk-widget} is
-  attached to a toplevel, since the settings object is specific to a particular
-  @class{gdk-screen}.
+  Note that this function can only be called when the widget is attached to a
+  toplevel, since the settings object is specific to a particular
+  @class{gdk-screen} object.
   @see-class{gtk-widget}
   @see-class{gtk-settings}
   @see-class{gdk-screen}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-settings)
+(export 'gtk-widget-settings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_clipboard ()
