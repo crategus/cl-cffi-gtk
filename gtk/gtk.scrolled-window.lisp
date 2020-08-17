@@ -2,12 +2,12 @@
 ;;; gtk.scrolled-window.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,33 +75,33 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkAdjustment*  hadjustment                 Read / Write / Construct
-;;;     GtkPolicyType   hscrollbar-policy           Read / Write
-;;;          gboolean   kinetic-scrolling           Read / Write
-;;;              gint   max-content-height          Read / Write
-;;;              gint   max-content-width           Read / Write
-;;;              gint   min-content-height          Read / Write
-;;;              gint   min-content-width           Read / Write
-;;;          gboolean   overlay-scrolling           Read / Write
-;;;          gboolean   propagate-natural-height    Read / Write
-;;;          gboolean   propagate-natural-width     Read / Write
-;;;     GtkShadowType   shadow-type                 Read / Write
-;;;     GtkAdjustment*  vadjustment                 Read / Write / Construct
-;;;     GtkPolicyType   vscrollbar-policy           Read / Write
-;;;     GtkCornerType   window-placement            Read / Write
-;;;          gboolean   window-placement-set        Read / Write
+;;;     GtkAdjustment*   hadjustment                 Read / Write / Construct
+;;;     GtkPolicyType    hscrollbar-policy           Read / Write
+;;;          gboolean    kinetic-scrolling           Read / Write
+;;;              gint    max-content-height          Read / Write
+;;;              gint    max-content-width           Read / Write
+;;;              gint    min-content-height          Read / Write
+;;;              gint    min-content-width           Read / Write
+;;;          gboolean    overlay-scrolling           Read / Write
+;;;          gboolean    propagate-natural-height    Read / Write
+;;;          gboolean    propagate-natural-width     Read / Write
+;;;     GtkShadowType    shadow-type                 Read / Write
+;;;     GtkAdjustment*   vadjustment                 Read / Write / Construct
+;;;     GtkPolicyType    vscrollbar-policy           Read / Write
+;;;     GtkCornerType    window-placement            Read / Write
+;;;          gboolean    window-placement-set        Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;              gint   scrollbar-spacing           Read
-;;;          gboolean   scrollbars-within-bevel     Read
+;;;              gint    scrollbar-spacing           Read
+;;;          gboolean    scrollbars-within-bevel     Read
 ;;;
 ;;; Signals
 ;;;
-;;;              void   edge-overshot               Run Last
-;;;              void   edge-reached                Run Last
-;;;              void   move-focus-out              Action
-;;;          gboolean   scroll-child                Action
+;;;              void    edge-overshot               Run Last
+;;;              void    edge-reached                Run Last
+;;;              void    move-focus-out              Action
+;;;          gboolean    scroll-child                Action
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -183,59 +183,72 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrolled-window 'type)
- "@version{2013-6-20}
+ "@version{2020-7-20}
+
   @begin{short}
-    @sym{gtk-scrolled-window} is a @class{gtk-bin} subclass: it is a container
-    the accepts a single child widget. @sym{gtk-scrolled-window} adds scrollbars
-    to the child widget and optionally draws a beveled frame around the child
-    widget.
+    @sym{gtk-scrolled-window} is a container that accepts a single child widget,
+    makes that child scrollable using either internally added scrollbars or
+    externally associated adjustments, and optionally draws a frame around the
+    child.
   @end{short}
 
-  The scrolled window can work in two ways. Some widgets have native scrolling
-  support; these widgets implement the @class{gtk-scrollable} interface. Widgets
-  with native scroll support include @class{gtk-tree-view},
-  @class{gtk-text-view}, and @class{gtk-layout}.
+  @image[scrolledwindow]{}
 
-  For widgets that lack native scrolling support, the @class{gtk-viewport}
-  widget acts as an adaptor class, implementing scrollability for child widgets
-  that lack their own scrolling capabilities. Use @class{gtk-viewport} to scroll
-  child widgets such as @class{gtk-grid}, @class{gtk-box}, and so on.
+  Widgets with native scrolling support, i.e. those whose classes implement the
+  @class{gtk-scrollable} interface, are added directly. For other types of
+  widget, the class @class{gtk-viewport} acts as an adaptor, giving
+  scrollability to other widgets. @sym{gtk-scrolled-window}’s implementation of
+  @fun{gtk-container-add} intelligently accounts for whether or not the added
+  child is a @class{gtk-scrollable}. If it isn’t, @sym{gtk-scrolled-window}
+  wraps the child in a @class{gtk-viewport} and adds that for you. Therefore,
+  you can just add any child widget and not worry about the details.
 
-  If a widget has native scrolling abilities, it can be added to the
-  @sym{gtk-scrolled-window} with the @fun{gtk-container-add} function. If a
-  widget does not, you must first add the widget to a @class{gtk-viewport}, then
-  add the @class{gtk-viewport} to the scrolled window. The convenience function
-  @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you can
-  ignore the presence of the viewport.
+  If @fun{gtk-container-add} has added a @class{gtk-viewport} for you, you can
+  remove both your added child widget from the @class{gtk-viewport}, and the
+  @class{gtk-viewport} from the @sym{gtk-scrolled-window}, like this:
+  @begin{pre}
+GtkWidget *scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+GtkWidget *child_widget = gtk_button_new ();
 
-  The position of the scrollbars is controlled by the scroll adjustments. See
-  the @class{gtk-adjustment} class for the fields in an adjustment - for
-  @class{gtk-scrollbar}, used by @sym{gtk-scrolled-window}, the @code{value}
-  slot represents the position of the scrollbar, which must be between the
-  @code{lower} slot and @code{upper} - @code{page-size}. The @code{page-size}
-  slot represents the size of the visible scrollable area. The
-  @code{step-increment} and @code{page-increment} slot are used when the user
-  asks to step down (using the small stepper arrows) or page down (using for
-  example the PageDown key).
+// GtkButton is not a GtkScrollable, so GtkScrolledWindow will automatically
+// add a GtkViewport.
+gtk_container_add (GTK_CONTAINER (scrolled_window),
+                   child_widget);
+
+// Either of these will result in child_widget being unparented:
+gtk_container_remove (GTK_CONTAINER (scrolled_window),
+                      child_widget);
+// or
+gtk_container_remove (GTK_CONTAINER (scrolled_window),
+                      gtk_bin_get_child (GTK_BIN (scrolled_window)));
+  @end{pre}
+  Unless @code{policy} is @code{:never} or @code{:external},
+  @class{gtk-scrolled-window} adds internal @class{gtk-scrollbar} widgets around
+  its child. The scroll position of the child, and if applicable the scrollbars,
+  is controlled by the @code{hadjustment} and @code{vadjustment} properties that
+  are associated with the @sym{gtk-scrolled-window}. See the docs on
+  @class{gtk-scrollbar} for the details, but note that the @code{step-increment}
+  and @code{page-increment} fields are only effective if the policy causes
+  scrollbars to be present.
 
   If a @sym{gtk-scrolled-window} does not behave quite as you would like, or
   does not have exactly the right layout, it is very possible to set up your own
   scrolling with @class{gtk-scrollbar} and for example a @class{gtk-grid}.
 
-  @bsubheading{Touch support}
+  @subheading{Touch support}
   @sym{gtk-scrolled-window} has built-in support for touch devices. When a
   touchscreen is used, swiping will move the scrolled window, and will expose
-  'kinetic' behavior. This can be turned off with the \"kinetic-scrolling\"
+  'kinetic' behavior. This can be turned off with the @code{kinetic-scrolling}
   property if it is undesired.
 
   @sym{gtk-scrolled-window} also displays visual 'overshoot' indication when the
   content is pulled beyond the end, and this situation can be captured with the
-  \"edge-overshot\" signal.
+  @code{edge-overshot} signal.
 
   If no mouse device is present, the scrollbars will overlayed as narrow,
   auto-hiding indicators over the content. If traditional scrollbars are desired
   although no mouse is present, this behaviour can be turned off with the
-  \"overlay-scrolling\" property.
+  @code{overlay-scrolling} property.
   @begin[CSS nodes]{dictionary}
     @sym{gtk-scrolled-window} has a main CSS node with name
     @code{scrolledwindow}.

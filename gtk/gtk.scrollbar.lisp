@@ -2,7 +2,7 @@
 ;;; gtk.scrollbar.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -41,12 +41,12 @@
 ;;;
 ;;; Style Properties
 ;;;
-;;;     gboolean   fixed-slider-length               Read
-;;;     gboolean   has-backward-stepper              Read
-;;;     gboolean   has-forward-stepper               Read
-;;;     gboolean   has-secondary-backward-stepper    Read
-;;;     gboolean   has-secondary-forward-stepper     Read
-;;;         gint   min-slider-length                 Read
+;;;     gboolean    fixed-slider-length               Read
+;;;     gboolean    has-backward-stepper              Read
+;;;     gboolean    has-forward-stepper               Read
+;;;     gboolean    has-secondary-backward-stepper    Read
+;;;     gboolean    has-secondary-forward-stepper     Read
+;;;         gint    min-slider-length                 Read
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -57,6 +57,11 @@
 ;;;                 ╰── GtkScrollbar
 ;;;                     ├── GtkHScrollbar
 ;;;                     ╰── GtkVScrollbar
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkScrollbar implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -76,11 +81,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrollbar 'type)
- "@version{2013-5-20}
+ "@version{2020-7-20}
   @begin{short}
     The @sym{gtk-scrollbar} widget is a horizontal or vertical scrollbar,
     depending on the value of the @slot[gtk-orientable]{orientation} property.
   @end{short}
+
+  @image[scrollbar]{}
 
   The position of the thumb in a scrollbar is controlled by the scroll
   adjustments. See @class{gtk-adjustment} for the properties in an adjustment -
@@ -125,7 +132,7 @@
         The @code{fixed-slider-length} style property of type @code{:boolean}
         (Read) @br{}
         Don't change slider size, just lock it to the minimum length. @br{}
-        Default value: @code{nil}
+        Default value: @em{false}
       @end{entry}
       @begin[has-backward-stepper]{entry}
         The @code{has-backward-stepper} style property of type @code{:boolean}
@@ -144,23 +151,23 @@
         @code{:boolean} (Read) @br{}
         Display a second backward arrow button on the opposite end of the
         scrollbar. @br{}
-        Default value: @code{nil}
+        Default value: @em{false}
       @end{entry}
       @begin[has-secondary-forward-stepper]{entry}
         The @code{has-secondary-forward-stepper} style property of type
         @code{:boolean} (Read) @br{}
         Display a second forward arrow button on the opposite end of the
         scrollbar. @br{}
-        Default value: @code{nil}
+        Default value: @em{false}
       @end{entry}
       @begin[min-slider-length]{entry}
-        The @code{min-slider-length} style property of type @code{:int}
-        (Read) @br{}
+        The @code{min-slider-length} style property of type @code{:int} (Read)
+        @br{}
         Minimum length of scrollbar slider. @br{}
-        @em{Warning:} @code{min-slider-length} has been deprecated since version
-        3.20 and should not be used in newly-written code. Use
-        min-height/min-width CSS properties on the slider element instead. The
-        value of this style property is ignored. @br{}
+        @em{Warning:} The @code{min-slider-length} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use min-height/min-width CSS properties on the slider element
+        instead. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 21
       @end{entry}
@@ -177,13 +184,16 @@
 
 (defun gtk-scrollbar-new (orientation adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[orientation]{the scrollbar's orientation}
+ "@version{2020-7-20}
+  @argument[orientation]{the scrollbar's orientation of type
+    @symbol{gtk-orientation}}
   @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
     create a new adjustment}
   @return{The new @class{gtk-scrollbar} widget.}
   @short{Creates a new scrollbar with the given @arg{orientation}.}
-  @see-cass{gtk-scrollbar}"
+  @see-class{gtk-scrollbar}
+  @see-class{gtk-adjustment}
+  @see-symbol{gtk-orientation}"
   (make-instance 'gtk-scrollbar
                  :orientation orientation
                  :adjustment adjustment))
