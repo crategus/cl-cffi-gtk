@@ -30,20 +30,20 @@
                                 :activate-defaults t)))
       (g-signal-connect entry "changed"
          (lambda (widget)
-           (let* ((page-number (gtk-assistant-get-current-page assistant))
-                  (current-page (gtk-assistant-get-nth-page assistant page-number))
+           (let* ((page-number (gtk-assistant-current-page assistant))
+                  (current-page (gtk-assistant-nth-page assistant page-number))
                   (text (gtk-entry-text widget)))
              (if text
-                 (gtk-assistant-set-page-complete assistant current-page t)
-                 (gtk-assistant-set-page-complete assistant current-page nil)))))
+                 (setf (gtk-assistant-page-complete assistant current-page) t)
+                 (setf (gtk-assistant-page-complete assistant current-page) nil)))))
 
       (gtk-box-pack-start box label :expand nil :fill nil :padding 0)
       (gtk-box-pack-start box entry :expand t   :fill t   :padding 0)
 
       (gtk-widget-show-all box)
       (gtk-assistant-append-page assistant box)
-      (gtk-assistant-set-page-title assistant box "Page 1")
-      (gtk-assistant-set-page-type assistant box :intro)))
+      (setf (gtk-assistant-page-title assistant box) "Page 1")
+      (setf (gtk-assistant-page-type assistant box) :intro)))
 
   (defun create-page-2 (assistant)
     (let ((box (make-instance 'gtk-box
@@ -58,27 +58,27 @@
       (gtk-box-pack-start box checkbutton :expand nil :fill nil :padding 0)
       (gtk-widget-show-all box)
       (gtk-assistant-append-page assistant box)
-      (gtk-assistant-set-page-complete assistant box t)
-      (gtk-assistant-set-page-title assistant box "Page 2")))
+      (setf (gtk-assistant-page-complete assistant box) t)
+      (setf (gtk-assistant-page-title assistant box) "Page 2")))
 
   (defun create-page-3 (assistant)
     (let ((label (gtk-label-new "This is a confirmation page, press 'Apply' to apply changes")))
       (gtk-widget-show label)
       (gtk-assistant-append-page assistant label)
-      (gtk-assistant-set-page-type assistant label :confirm)
-      (gtk-assistant-set-page-complete assistant label t)
-      (gtk-assistant-set-page-title assistant label "Confirmation")))
+      (setf (gtk-assistant-page-type assistant label) :confirm)
+      (setf (gtk-assistant-page-complete assistant label) t)
+      (setf (gtk-assistant-page-title assistant label) "Confirmation")))
 
   (defun create-page-4 (assistant)
     (setf progress-bar
           (make-instance 'gtk-progress-bar :halign :center :valign :center))
     (gtk-widget-show progress-bar)
     (gtk-assistant-append-page assistant progress-bar)
-    (gtk-assistant-set-page-type assistant progress-bar :progress)
-    (gtk-assistant-set-page-title assistant progress-bar "Applying changes")
+    (setf (gtk-assistant-page-type assistant progress-bar) :progress)
+    (setf (gtk-assistant-page-title assistant progress-bar) "Applying changes")
     ;; This prevents the assistant window from being closed while we are
     ;; busy applying changes.
-    (gtk-assistant-set-page-complete assistant progress-bar nil))
+    (setf (gtk-assistant-page-complete assistant progress-bar) nil))
 
   (defun demo-assistant ()
     (within-main-loop
@@ -97,8 +97,8 @@
       (g-signal-connect assistant "prepare"
         (lambda (assistant page)
           (declare (ignore page))
-          (let ((current-page (gtk-assistant-get-current-page assistant))
-                (n-pages (gtk-assistant-get-n-pages assistant)))
+          (let ((current-page (gtk-assistant-current-page assistant))
+                (n-pages (gtk-assistant-n-pages assistant)))
             (setf (gtk-window-title assistant)
                   (format nil "Sample assistant (~A of ~A)"
                               (+ current-page 1)

@@ -25,11 +25,11 @@
 ;                   (gtk-font-chooser-font button))
 ;           (format t "   Font family : ~A~%"
 ;                   (pango-font-family-get-name
-;                     (gtk-font-chooser-get-font-family button)))
+;                     (gtk-font-chooser-font-family button)))
 ;           (format t "   Font face   : ~A~%"
 ;                   (pango-font-face-get-face-name
-;                     (gtk-font-chooser-get-font-face button)))
+;                     (gtk-font-chooser-font-face button)))
 ;           (format t "   Font size   : ~A~%"
-;                   (gtk-font-chooser-get-font-size button))))
+;                   (gtk-font-chooser-font-size button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))

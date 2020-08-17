@@ -24,7 +24,7 @@
                                          type)))
     (cond ((string= name "DarkTheme")
            (let ((value (gtk-toggle-action-active action))
-                 (settings (gtk-settings-get-default)))
+                 (settings (gtk-settings-default)))
              (g-object-set-property settings
                                     "gtk-application-prefer-dark-theme"
                                     value)))
@@ -187,9 +187,9 @@
 
 (defun update-statusbar (buffer statusbar)
   (let* ((count (gtk-text-buffer-char-count buffer))
-         (iter (gtk-text-buffer-get-iter-at-mark
+         (iter (gtk-text-buffer-iter-at-mark
                    buffer
-                   (gtk-text-buffer-get-insert buffer)))
+                   (gtk-text-buffer-insert buffer)))
          (row (gtk-text-iter-line iter))
          (col (gtk-text-iter-line-offset iter))
          (msg (format nil "Row: ~A Col: ~A | Chars: ~A" row col count)))
@@ -231,9 +231,9 @@
                                    :no-show-all t
                                    :halign :fill))
            (message (make-instance 'gtk-label)))
-      (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+      (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
             nil)
-      (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+      (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
             nil)
       (register-stock-icons)
       ;; Store global widgets

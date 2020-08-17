@@ -58,11 +58,11 @@
       (g-signal-connect provider "parsing-error"
                         (lambda (provider section error)
                           (declare (ignore provider error))
-                          (let ((start (gtk-text-buffer-get-iter-at-line-index
+                          (let ((start (gtk-text-buffer-iter-at-line-index
                                            text
                                            (gtk-css-section-get-start-line section)
                                            (gtk-css-section-get-start-position section)))
-                                (end (gtk-text-buffer-get-iter-at-line-index
+                                (end (gtk-text-buffer-iter-at-line-index
                                          text
                                          (gtk-css-section-get-end-line section)
                                          (gtk-css-section-get-end-position section))))

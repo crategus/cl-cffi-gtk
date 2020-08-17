@@ -83,7 +83,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun activate-change-theme-state (action state)
-  (let ((settings (gtk-settings-get-default)))
+  (let ((settings (gtk-settings-default)))
     (setf (gtk-settings-gtk-application-prefer-dark-theme settings)
           (g-variant-get-boolean state))
     (setf (g-simple-action-state action) state)))

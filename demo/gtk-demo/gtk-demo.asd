@@ -24,6 +24,7 @@
                (:file "color-chooser-dialog")
                (:file "combo-box")
                (:file "combo-box-text")
+               (:file "cursor")
                (:file "drag-and-drop")
                (:file "css-accordion")
                (:file "css-basics")

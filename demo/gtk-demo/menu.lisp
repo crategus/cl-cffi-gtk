@@ -4,9 +4,9 @@
 
 (defun example-menu ()
   (within-main-loop
-    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
           nil)
-    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
           nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel

@@ -2,9 +2,9 @@
 
 (defun example-menu-builder ()
   (within-main-loop
-      (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+      (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
             nil)
-      (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+      (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
             nil)
     (let ((builder (make-instance 'gtk-builder)))
 

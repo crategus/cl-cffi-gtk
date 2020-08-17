@@ -27,7 +27,7 @@
       (gtk-widget-grab-default (gtk-dialog-widget-for-response dialog :ok))
       ;; Allow alternative button order. (The default is nil.)
       (setf (gtk-settings-gtk-alternative-button-order
-              (gtk-settings-get-default))
+              (gtk-settings-default))
             t)
       ;; Set the alternative button order.
       (gtk-dialog-set-alternative-button-order dialog '(:apply :ok :cancel))

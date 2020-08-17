@@ -34,7 +34,7 @@
 
 (defun clear-buffer (buffer)
   (multiple-value-bind (start end)
-      (gtk-text-buffer-get-bounds buffer)
+      (gtk-text-buffer-bounds buffer)
     (gtk-text-buffer-delete buffer start end)))
 
 (defun load-file (filename)
@@ -357,7 +357,7 @@
                                 "calendar.lisp"
                                 "EXAMPLE-CALENDAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "The Event Box"
+                                "Event Box"
                                 "event-box.lisp"
                                 "EXAMPLE-EVENT-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
@@ -392,7 +392,7 @@
     ;; The selection has changed.
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
-         (let* ((iter (gtk-tree-selection-get-selected tree-selection))
+         (let* ((iter (gtk-tree-selection-selected tree-selection))
                 (filename (gtk-tree-model-value model iter 1))
                 (ui-file (gtk-tree-model-value model iter 3))
                 (css-file (gtk-tree-model-value model iter 4)))
@@ -434,7 +434,7 @@
       ;; Set an icon for the application
       (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
         (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
-        (gtk-window-set-default-icon-list (list pixbuf)))
+        (setf (gtk-window-default-icon-list) (list pixbuf)))
       ;; Add the widgets to the content of the window
       (gtk-container-add scroller view)
       (gtk-paned-add1 content scroller)
