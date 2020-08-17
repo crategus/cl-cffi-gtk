@@ -338,7 +338,7 @@ It includes all code snippets shown above. The output is shown in
   (within-main-loop
     ;; We set the "gtk-shell-shows-menubar" property to NIL to display the
     ;; menubar by the application itself and not by the desktop environment.
-    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
           nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -1182,7 +1182,7 @@ define a UI definition in a string.
 @end example
 This would then be added to the UI manager with the fragment
 @example
-(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager 
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager
                                                    ui-constant)))
   (when (eql 0 merge-id)
     (error-message "Could not load UI Manager definition"))

@@ -213,7 +213,7 @@ for the row selected:
    (g-signal-connect select "changed"
       (lambda (selection)
         (let* ((model (gtk-tree-view-get-model view))
-               (iter (gtk-tree-selection-get-selected selection))
+               (iter (gtk-tree-selection-selected selection))
                (name (gtk-tree-model-value model iter 0)))
           (format t "You selected the name ~A.~%" name))))
    ... )

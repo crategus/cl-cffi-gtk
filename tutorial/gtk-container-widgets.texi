@@ -828,7 +828,7 @@ layout settings for button boxes.
                                :homogeneous nil
                                :spacing 12)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

@@ -146,7 +146,7 @@ both a label and an image the global setting of the property
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       ;; These are the standard functions to create a button.
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-label "Label"))

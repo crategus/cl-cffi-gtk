@@ -474,9 +474,9 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
 
 (defun bloat-pad-new ()
   (g-set-application-name "Bloatpad")
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
         nil)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
         nil)
   (make-instance 'bloat-pad
                  :application-id "com.crategus.bloatpad"

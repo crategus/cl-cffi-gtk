@@ -738,7 +738,7 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       ;; These are the standard functions to create a button.
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-label "Label"))
@@ -1874,7 +1874,7 @@
                                :homogeneous nil
                                :spacing 12)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2312,8 +2312,7 @@ happen.")
              (when last-pos
                (find-text text-view
                           text
-                          (gtk-text-buffer-get-iter-at-mark buffer
-                                                            last-pos))))))
+                          (gtk-text-buffer-iter-at-mark buffer last-pos))))))
       (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
             *some-text*)
       (gtk-container-add scrolled text-view)
@@ -2350,7 +2349,7 @@ happen.")
          (declare (ignore widget))
          (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-mark buffer "insert"))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+                (iter (gtk-text-buffer-iter-at-mark buffer cursor)))
            (setf (gtk-text-iter-line-offset iter) 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
@@ -2401,7 +2400,7 @@ happen.")
            (declare (ignore widget))
            (let* ((buffer (gtk-text-view-buffer text-view))
                   (cursor (gtk-text-buffer-mark buffer "insert"))
-                  (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+                  (iter (gtk-text-buffer-iter-at-mark buffer cursor)))
 
              (do ((stack '()))
                  ((not (gtk-text-iter-find-char iter
@@ -2452,8 +2451,8 @@ happen.")
          (declare (ignore widget))
          (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
                 (buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-insert buffer))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+                (cursor (gtk-text-buffer-insert buffer))
+                (iter (gtk-text-buffer-iter-at-mark buffer cursor)))
            (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
     (gtk-container-add vbox text-view)
     (gtk-container-add vbox button)
@@ -2485,8 +2484,8 @@ happen.")
        (lambda (widget)
          (declare (ignore widget))
          (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-insert buffer))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor))
+                (cursor (gtk-text-buffer-insert buffer))
+                (iter (gtk-text-buffer-iter-at-mark buffer cursor))
                 (anchor (gtk-text-buffer-create-child-anchor buffer iter))
                 (button (gtk-button-new-with-label "New Button")))
            (gtk-text-view-add-child-at-anchor text-view button anchor)
@@ -2670,7 +2669,7 @@ happen.")
       (g-signal-connect select "changed"
          (lambda (selection)
            (let* ((model (gtk-tree-view-model view))
-                  (iter (gtk-tree-selection-get-selected selection))
+                  (iter (gtk-tree-selection-selected selection))
                   (name (gtk-tree-model-value model iter 0)))
              (format t "You selected the name ~A.~%" name))))
 
@@ -3211,12 +3210,12 @@ happen.")
                    (gtk-font-chooser-font button))
            (format t "   Font family : ~A~%"
                    (pango-font-family-get-name
-                     (gtk-font-chooser-get-font-family button)))
+                     (gtk-font-chooser-font-family button)))
            (format t "   Font face   : ~A~%"
                    (pango-font-face-get-face-name
-                     (gtk-font-chooser-get-font-face button)))
+                     (gtk-font-chooser-font-face button)))
            (format t "   Font size   : ~A~%"
-                   (gtk-font-chooser-get-font-size button))))
+                   (gtk-font-chooser-font-size button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 
@@ -3347,7 +3346,7 @@ happen.")
       ;; Realize the event box
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
-      (setf (gdk-window-set-cursor (gtk-widget-window eventbox))
+      (setf (gdk-window-cursor (gtk-widget-window eventbox))
             (gdk-cursor-new :hand1))
       ;; Show the window
       (gtk-widget-show-all window))))
@@ -3946,7 +3945,7 @@ happen.")
   (within-main-loop
     ;; We set the "gtk-shell-shows-menubar" property to NIL to display the
     ;; menubar by the application itself and not by the desktop environment.
-    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
           nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -4118,9 +4117,9 @@ happen.")
 
 (defun example-menu ()
   (within-main-loop
-    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
           nil)
-    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
           nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -4598,9 +4597,9 @@ happen.")
 
 (defun bloat-pad-new ()
   (g-set-application-name "Bloatpad")
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
         nil)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))
         nil)
   (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
