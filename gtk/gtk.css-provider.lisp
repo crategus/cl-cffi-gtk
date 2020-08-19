@@ -399,8 +399,8 @@
   (:keyframes 8))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-corner-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-corner-type atdoc:*external-symbols*)
+(setf (gethash 'gtk-css-section-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-css-section-type atdoc:*external-symbols*)
  "@version{2020-2-29}
   @begin{short}
     The different types of sections indicate parts of a CSS document as parsed
