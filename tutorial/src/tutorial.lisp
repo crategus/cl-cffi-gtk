@@ -2525,7 +2525,7 @@ happen.")
       (gtk-widget-override-background-color win
                                             :normal
                                             (gdk-rgba-parse "Black"))
-      (gtk-widget-override-color win :normal (gdk-rgba-parse "Blue"))
+      (gtk-widget-override-color win :normal (gdk-rgba-parse "White"))
       (gtk-container-add event-box label)
       (gtk-container-add win event-box)
       win))
