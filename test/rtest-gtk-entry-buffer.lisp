@@ -183,6 +183,7 @@
 
 ;;;   gtk_entry_buffer_emit_deleted_text
 
+#+nil
 (test gtk-entry-buffer-emit-deleted-text
   (let ((buffer (gtk-entry-buffer-new "first second third")))
     (g-signal-connect buffer "deleted-text"
@@ -195,6 +196,7 @@
 
 ;;;   gtk_entry_buffer_emit_inserted_text
 
+#+nil
 (test gtk-entry-buffer-emit-inserted-text
   (let ((buffer (gtk-entry-buffer-new "first second third")))
     (g-signal-connect buffer "inserted-text"

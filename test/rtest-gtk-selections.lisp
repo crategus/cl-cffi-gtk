@@ -266,6 +266,7 @@
 
 ;;;   gtk_selection_owner_set_for_display
 
+#+nil
 (test gtk-selection-owner-set-for-display
   (let ((display (gdk-display-default))
         (widget (make-instance 'gtk-window :type :toplevel)))
@@ -311,6 +312,7 @@
 
 ;;;   gtk_selection_clear_targets
 
+#+nil
 (test gtk-selection-clear-targets
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
 
@@ -331,6 +333,7 @@
 
 ;;;   gtk_selection_convert
 
+#+nil
 (test gtk-selection-convert
   (let ((window (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-realize window)

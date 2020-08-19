@@ -80,6 +80,7 @@
 
 ;;; --- Properties and Accessors -----------------------------------------------
 
+#+nil
 (test gtk-application-properties
   (let ((message nil)
         (application (make-instance 'gtk-application
@@ -128,6 +129,7 @@
 
 ;;; --- Signals ----------------------------------------------------------------
 
+#+nil
 (test gtk-application-signals
   (let ((message nil)
         (application (make-instance 'gtk-application
@@ -206,6 +208,7 @@
 ;;;     gtk_application_get_windows
 ;;;     gtk_application_get_window_by_id
 
+#+nil
 (test gtk-application-add-window
   (let ((message nil)
         (application (make-instance 'gtk-application

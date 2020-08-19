@@ -108,6 +108,7 @@
 ;;;     g_action_change_state
 ;;;     g_action_activate
 
+#+nil
 (test g-action-signals
   (let ((param nil)
         (action (g-simple-action-new-stateful "simple"

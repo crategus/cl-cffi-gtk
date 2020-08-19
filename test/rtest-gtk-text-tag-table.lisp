@@ -96,6 +96,7 @@
 ;;;     void   tag-changed    Run Last
 ;;;     void   tag-removed    Run Last
 
+#+nil
 (test gtk-text-tag-table-signals
   (let ((result nil)
         (table (gtk-text-tag-table-new)))

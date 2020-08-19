@@ -177,6 +177,7 @@
 ;;              void    shutdown                Run Last
 ;;              void    startup                 Run First
 
+#+nil
 (defun example-application-open (&optional (argv nil))
   (let ((in-startup nil) (in-activate nil) (in-open nil) (in-shutdown nil))
     (let ((app (make-instance 'g-application
@@ -244,7 +245,7 @@
 ;  SB-SYS:SYSTEM-AREA-POINTER
 ;when binding SB-ALIEN::VALUE..
 
-
+#+nil
 (test g-application-signals
   (is (equal '(t t nil t) (example-application-open)))
   (is (equal '(t nil t t) (example-application-open '("demo" "file1" "file2")))))

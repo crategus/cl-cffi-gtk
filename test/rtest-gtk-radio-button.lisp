@@ -75,6 +75,7 @@
 
 ;;;     void    group-changed    Run First
 
+#+nil
 (test gtk-radio-button-signals
   (let ((result nil)
         (newbutton nil)

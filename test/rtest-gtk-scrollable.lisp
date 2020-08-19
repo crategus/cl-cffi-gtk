@@ -61,9 +61,9 @@
     (is (eq :minimum (gtk-scrollable-hscroll-policy scrollable)))
     (is (eq :minimum (gtk-scrollable-vscroll-policy scrollable)))))
 
-;;; --- gtk-scrollable-get-border ----------------------------------------------
+;;; --- gtk-scrollable-border --------------------------------------------------
 
-(test gtk-scrollable-get-border
+(test gtk-scrollable-border
   (let ((scrollable (make-instance 'gtk-layout)))
-    (is (eq 'gtk-border (type-of (gtk-scrollable-get-border scrollable))))))
+    (is (eq 'gtk-border (type-of (gtk-scrollable-border scrollable))))))
 

@@ -3,6 +3,9 @@
 (def-suite gtk-suite :in gtk-testsuite)
 (in-suite gtk-suite)
 
+#+sbcl
+(sb-ext:gc :full t)
+
 ;;;  Application support
 
 (load "rtest-gtk-application.lisp")
@@ -86,16 +89,16 @@
 
 ;;;  Multiline Text Editor
 
-(load "rtest-gtk-text-iter.lisp")
-(load "rtest-gtk-text-mark.lisp")
-(load "rtest-gtk-text-buffer.lisp")
-(load "rtest-gtk-text-tag.lisp")
-(load "rtest-gtk-text-tag-table.lisp")
-(load "rtest-gtk-text-view.lisp")
+;(load "rtest-gtk-text-iter.lisp")
+;(load "rtest-gtk-text-mark.lisp")
+;(load "rtest-gtk-text-buffer.lisp")
+;(load "rtest-gtk-text-tag.lisp")
+;(load "rtest-gtk-text-tag-table.lisp")
+;(load "rtest-gtk-text-view.lisp")
 
 ;;;  Tree, List and Icon Grid Widgets
 
-(load "rtest-gtk-tree-model.lisp")
+;(load "rtest-gtk-tree-model.lisp")
 ;    gtk.tree-selection.lisp
 ;    gtk.tree-view-column.lisp
 ;    gtk.tree-view.lisp
@@ -105,7 +108,7 @@
 ;    gtk.tree-sortable.lisp
 ;    gtk.tree-model-sort.lisp
 ;    gtk.tree-model-filter.lisp
-(load "rtest-gtk-cell-layout.lisp")
+;(load "rtest-gtk-cell-layout.lisp")
 ;    gtk.cell-area.lisp
 ;    gtk.cell-area-box.lisp
 ;    gtk.cell-area-context.lisp
@@ -119,7 +122,7 @@
 ;    gtk.cell-renderer-text.lisp
 ;    gtk.cell-renderer-toggle.lisp
 ;    gtk.cell-renderer-spinner.lisp
-(load "rtest-gtk-list-store.lisp")
+;(load "rtest-gtk-list-store.lisp")
 ;    gtk.tree-store.lisp
 
 ;;;  Menus, Combo Box, Toolbar
@@ -172,8 +175,8 @@
 
 ;;;  Scrolling
 
-;    gtk.scrollbar.lisp
-;    gtk.scrolled-window.lisp
+(load "rtest-gtk-scrollbar.lisp")
+(load "rtest-gtk-scrolled-window.lisp")
 (load "rtest-gtk-scrollable.lisp")
 
 ;;;  Printing

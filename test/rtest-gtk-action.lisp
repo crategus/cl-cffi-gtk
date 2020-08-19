@@ -21,8 +21,8 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkAction"))))
   ;; Check the class properties
   (is (equal '("action-group" "always-show-image" "gicon" "hide-if-empty" "icon-name"
- "is-important" "label" "name" "sensitive" "short-label" "stock-id" "tooltip"
- "visible" "visible-horizontal" "visible-overflown" "visible-vertical")
+               "is-important" "label" "name" "sensitive" "short-label" "stock-id" "tooltip"
+               "visible" "visible-horizontal" "visible-overflown" "visible-vertical")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkAction"))
                           #'string-lessp)))
@@ -64,23 +64,23 @@
 
 (test gtk-action-new.1
   (let ((action (gtk-action-new "action")))
-    (is (equal "action" (gtk-action-name action)))
+    (is (string= "action" (gtk-action-name action)))
     (is-false (gtk-action-label action))
     (is-false (gtk-action-tooltip action))
     (is-false (gtk-action-stock-id action))))
 
 (test gtk-action-new.2
   (let ((action (gtk-action-new "action" "label" "tooltip" "stock-id")))
-    (is (equal "action" (gtk-action-name action)))
-    (is (equal "label" (gtk-action-label action)))
-    (is (equal "tooltip" (gtk-action-tooltip action)))
-    (is (equal "stock-id" (gtk-action-stock-id action)))))
+    (is (string= "action" (gtk-action-name action)))
+    (is (string= "label" (gtk-action-label action)))
+    (is (string= "tooltip" (gtk-action-tooltip action)))
+    (is (string= "stock-id" (gtk-action-stock-id action)))))
 
 ;;;   gtk-action-name
 
 (test gtk-action-name
   (let ((action (gtk-action-new "action")))
-    (is (equal "action" (gtk-action-name action)))))
+    (is (string= "action" (gtk-action-name action)))))
 
 ;;;   gtk-action-is-sensitive
 ;;;   gtk-action-sensitive
@@ -107,16 +107,17 @@
 ;;;   gtk-action-activate
 
 (test gtk-action-activate
-  (let ((action (gtk-action-new "action"))
-        (message nil))
-
-    (g-signal-connect action "activate"
-       (lambda (action)
-         (setf message "ACTIVATE CALLED")
-         (when *verbose-gtk-action*
-           (format t "~&Signal ACTIVATE for ~A~%" (gtk-action-name action)))))
-
-    (gtk-action-activate action)
+  (let ((message nil))
+    (within-main-loop
+      (let ((action (gtk-action-new "action")))
+        (g-signal-connect action "activate"
+           (lambda (action)
+             (setf message "ACTIVATE CALLED")
+             (when *verbose-gtk-action*
+               (format t "~&Signal ACTIVATE for ~A~%" (gtk-action-name action)))
+             (leave-gtk-main)))
+        (gtk-action-activate action)))
+    (join-gtk-main)
     (is (equal "ACTIVATE CALLED" message))))
 
 ;;;   gtk-action-create-icon

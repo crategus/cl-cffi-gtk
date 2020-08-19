@@ -75,6 +75,7 @@
 
 ;;;     void  group-changed    Run First
 
+#+nil
 (test gtk-radio-menu-item-signals
   (let ((result nil)
         (newitem nil)

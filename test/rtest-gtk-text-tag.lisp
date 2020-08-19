@@ -388,6 +388,7 @@
 ;;;     gtk_text_tag_event
 ;;;     gtk_text_tag_changed
 
+#+nil
 (test gtk-text-tag-signals
   (let* ((tag (gtk-text-tag-new "bold"))
          (buffer (make-instance 'gtk-text-buffer :text "Some text."))

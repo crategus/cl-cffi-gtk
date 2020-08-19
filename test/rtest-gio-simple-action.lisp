@@ -114,6 +114,7 @@
 ;;;   g_action_change_state
 ;;;   g_action_activate
 
+#+nil
 (test g-simple-action-signals
   (let ((action (g-simple-action-new-stateful "simple"
                                               (g-variant-type-new "b")
@@ -142,6 +143,7 @@
 
 ;;;   g_simple_action_enabled
 
+#+nil
 (test g-simple-action-enabled
   (let ((action (g-simple-action-new-stateful "simple"
                                               (g-variant-type-new "b")
@@ -184,6 +186,7 @@
 
 ;;;   Example from the API documentation
 
+#+nil
 (test change-volume-state
   (let ((action (g-simple-action-new-stateful "volume"
                                               (g-variant-type-new "i") ; int32

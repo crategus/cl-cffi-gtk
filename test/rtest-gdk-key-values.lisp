@@ -17,7 +17,7 @@
 
 ;;;   gdk_keymap_lookup_key
 
-; TODO: This test generates a warning
+; FIXME: This test generates a warning
 ;
 ;   bare references to struct types are deprecated.
 ;   Please use (:POINTER (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT)) or
@@ -34,13 +34,15 @@
 
 (test gdk-keymap-get-entries-for-keyvals
   (let ((keymap (gdk-keymap-get-default)))
-    (is (eq 'gdk-keymap-key (type-of (first (gdk-keymap-get-entries-for-keyval keymap 65470)))))))
+    (is (eq 'gdk-keymap-key
+            (type-of (first (gdk-keymap-get-entries-for-keyval keymap 65470)))))))
 
 ;;;     gdk_keymap_get_entries_for_keycode
 
 (test gdk-keymap-get-entries-for-keycode
   (let ((keymap (gdk-keymap-get-default)))
-    (is (eq 'gdk-keymap-key (type-of (first (gdk-keymap-get-entries-for-keycode keymap 67)))))))
+    (is (eq 'gdk-keymap-key
+            (type-of (first (gdk-keymap-get-entries-for-keycode keymap 67)))))))
 
 ;;;     gdk_keymap_get_direction
 
@@ -60,7 +62,7 @@
 ;;;     gdk_keymap_get_num_lock_state
 
 (test gdk-keymap-num-lock-state
-  (is-false (gdk-keymap-num-lock-state (gdk-keymap-get-default))))
+  (is-true (gdk-keymap-num-lock-state (gdk-keymap-get-default))))
 
 ;;;     gdk_keymap_get_scroll_lock_state
 
@@ -70,7 +72,8 @@
 ;;;     gdk_keymap_get_modifier_state
 
 (test gdk-keymap-modifier-state
-  (is (equal '() (gdk-keymap-modifier-state (gdk-keymap-get-default)))))
+  (is (equal '(:MOD2-MASK)
+             (gdk-keymap-modifier-state (gdk-keymap-get-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers
 ;;;     gdk_keymap_map_virtual_modifiers

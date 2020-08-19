@@ -19,7 +19,7 @@
   (is (equal '("activate" "clicked" "pressed" "released" "enter" "leave")
              (mapcar #'signal-info-name (list-signals "GtkButton")))))
 
-#+nil             
+#+nil
 (test signal-info-flags
   (is (equal '((:RUN-FIRST :ACTION)
                (:RUN-FIRST)
@@ -36,7 +36,7 @@
 (test signal-info-detail
   (is (equal '(nil nil nil nil nil nil)
              (mapcar #'signal-info-detail (list-signals "GtkButton")))))
-             
+
 
 ;;;     GSignalInvocationHint
 ;;;     GSignalCMarshaller
@@ -100,6 +100,7 @@
 
 ;;;   g_signal_emit
 
+#+nil
 (test g-signal-emit
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -134,6 +135,7 @@
 ;;;   g_signal_handler_block
 ;;;   g_signal_handler_unblock
 
+#+nil
 (test g-signal-handler-block
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -144,7 +146,7 @@
     ;; Block the handler
     (g-signal-handler-block button handler-id)
     (is-false (g-signal-has-handler-pending button signal-id (null-pointer) nil))
-    (is-true (g-signal-has-handler-pending button signal-id (null-pointer) t))    
+    (is-true (g-signal-has-handler-pending button signal-id (null-pointer) t))
     ;; Unblock the handler
     (g-signal-handler-unblock button handler-id)
     (is-true (g-signal-has-handler-pending button signal-id (null-pointer) nil))
@@ -154,6 +156,7 @@
 
 ;;;   g_signal_handler_find
 
+#+nil
 (test g-signal-handler-find
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -169,6 +172,7 @@
 
 ;;;   g_signal_handler_is_connected
 
+#+nil
 (test g-signal-handler-is-connected
   (let* ((button (make-instance 'gtk-button))
 ;         (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -186,6 +190,7 @@
 
 ;;;   g_signal_has_handler_pending
 
+#+nil
 (test g-signal-has-handler-pending
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -214,5 +219,5 @@
 ;;;     g_signal_get_invocation_hint
 ;;;     g_signal_type_cclosure_new
 ;;;     g_signal_accumulator_first_wins
-;;;     g_signal_accumulator_true_handled             
+;;;     g_signal_accumulator_true_handled
 
