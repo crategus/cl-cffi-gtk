@@ -3455,16 +3455,13 @@ setup_tree (void)
       @about-generic{gtk-scrolled-window-window-placement}
       @about-generic{gtk-scrolled-window-window-placement-set}
       @about-function{gtk-scrolled-window-new}
-      @about-function{gtk-scrolled-window-get-hscrollbar}
-      @about-function{gtk-scrolled-window-get-vscrollbar}
-      @about-function{gtk-scrolled-window-get-policy}
-      @about-function{gtk-scrolled-window-set-policy}
+      @about-function{gtk-scrolled-window-hscrollbar}
+      @about-function{gtk-scrolled-window-vscrollbar}
+      @about-function{gtk-scrolled-window-policy}
       @about-function{gtk-scrolled-window-add-with-viewport}
-      @about-function{gtk-scrolled-window-get-placement}
-      @about-function{gtk-scrolled-window-set-placement}
+      @about-function{gtk-scrolled-window-placement}
       @about-function{gtk-scrolled-window-unset-placement}
-      @about-function{gtk-scrolled-window-get-capture-button-press}
-      @about-function{gtk-scrolled-window-set-capture-button-press}
+      @about-function{gtk-scrolled-window-capture-button-press}
     @end{subsection}
     @begin[GtkScrollable]{subsection}
       An interface for scrollable widgets.
@@ -3475,7 +3472,7 @@ setup_tree (void)
       @about-generic{gtk-scrollable-vadjustment}
       @about-generic{gtk-scrollable-hscroll-policy}
       @about-generic{gtk-scrollable-vscroll-policy}
-      @about-function{gtk-scrollable-get-border}
+      @about-function{gtk-scrollable-border}
     @end{subsection}
   @end{section}
   @begin[Printing]{section}
@@ -4971,7 +4968,6 @@ setup_tree (void)
       @about-symbol{gtk-arrow-placement}
       @about-symbol{gtk-attach-options}
       @about-symbol{gtk-baseline-position}
-      @about-symbol{gtk-corner-type}
       @about-symbol{gtk-delete-type}
       @about-symbol{gtk-direction-type}
       @about-symbol{gtk-expander-style}
@@ -4983,7 +4979,6 @@ setup_tree (void)
       @about-symbol{gtk-pack-type}
       @about-symbol{gtk-path-priority-type}
       @about-symbol{gtk-path-type}
-      @about-symbol{gtk-policy-type}
       @about-symbol{gtk-position-type}
       @about-symbol{gtk-relief-style}
       @about-symbol{gtk-resize-mode}
