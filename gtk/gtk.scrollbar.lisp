@@ -180,11 +180,9 @@
 ;;; gtk_scrollbar_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-scrollbar-new))
-
-(defun gtk-scrollbar-new (orientation adjustment)
+(defun gtk-scrollbar-new (orientation &optional (adjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2020-7-20}
+ "@version{2020-8-19}
   @argument[orientation]{the scrollbar's orientation of type
     @symbol{gtk-orientation}}
   @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
