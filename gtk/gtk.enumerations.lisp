@@ -53,13 +53,11 @@
 ;;; TODO: Move these implementations to other files
 ;;;
 ;;;     GtkDragResult
-;;;     GtkCornerType
 ;;;     GtkExpanderStyle
 ;;;     GtkIMPreeditStyle
 ;;;     GtkIMStatusStyle
 ;;;     GtkPathPriorityType
 ;;;     GtkPathType
-;;;     GtkPolicyType
 ;;;     GtkResizeMode
 ;;;     GtkStateType
 ;;;     GtkWindowPosition
@@ -107,48 +105,6 @@
   @end{table}
   Since 3.10
   @see-class{gtk-box}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkCornerType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkCornerType" gtk-corner-type
-  (:export t
-   :type-initializer "gtk_corner_type_get_type")
-  (:top-left 0)
-  (:bottom-left 1)
-  (:top-right 2)
-  (:bottom-right 3))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-corner-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-corner-type atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Specifies which corner a child widget should be placed in when packed into a
-    @class{gtk-scrolled-window} widget. This is effectively the opposite of
-    where the scroll bars are placed.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkCornerType\" gtk-corner-type
-  (:export t
-   :type-initializer \"gtk_corner_type_get_type\")
-  (:top-left 0)
-  (:bottom-left 1)
-  (:top-right 2)
-  (:bottom-right 3))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:top-left]{Place the scrollbars on the right and bottom of the widget
-      (default behaviour).}
-    @entry[:bottom-left]{Place the scrollbars on the top and right of the
-      widget.}
-    @entry[:top-right]{Place the scrollbars on the left and bottom of the
-      widget.}
-    @entry[:bottom-right]{Place the scrollbars on the top and left of the
-      widget.}
-  @end{table}
-  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkDeleteType
@@ -202,8 +158,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-direction-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-direction-type atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
+ "@version{2020-8-18}
+  @short{Focus movement types.}
   @begin{pre}
 (define-g-enum \"GtkDirectionType\" gtk-direction-type
   (:export t
@@ -214,7 +170,15 @@
   (:down 3)
   (:left 4)
   (:right 5))
-  @end{pre}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:tab-forward]{Move forward.}
+    @entry[:tab-backward]{Move backward.}
+    @entry[:up]{Move up.}
+    @entry[:down]{Move down.}
+    @entry[:left]{Move left.}
+    @entry[:right]{Move right.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkExpanderStyle
@@ -530,36 +494,6 @@
   @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkPolicyType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkPolicyType" gtk-policy-type
-  (:export t
-   :type-initializer "gtk_policy_type_get_type")
-  (:always 0)
-  (:automatic 1)
-  (:never 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-policy-type atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{Determines when a scroll bar will be visible.}
-  @begin{pre}
-(define-g-enum \"GtkPolicyType\" gtk-policy-type
-  (:export t
-   :type-initializer \"gtk_policy_type_get_type\")
-  (:always 0)
-  (:automatic 1)
-  (:never 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:always]{The scrollbar is always visible.}
-    @entry[:automatic]{The scrollbar will appear and disappear as necessary.}
-    @entry[:never]{The scrollbar will never appear.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkPositionType
 ;;; ----------------------------------------------------------------------------
 
@@ -687,8 +621,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scroll-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scroll-type atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
+ "@version{2020-8-19}
+  @short{Scrolling types.}
   @begin{pre}
 (define-g-enum \"GtkScrollType\" gtk-scroll-type
   (:export t
@@ -768,11 +702,15 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2020-8-18}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.
   @end{short}
+
+  Note that many themes do not differentiate the appearance of the various
+  shadow types: Either their is no visible shadow :none, or there is any other
+  value.
   @begin{pre}
 (define-g-enum \"GtkShadowType\" gtk-shadow-type
   (:export t
