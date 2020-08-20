@@ -408,7 +408,7 @@
 <!ENTITY gtk-scrolled-window-new             "&api;gtk_fun_gtk-scrolled-window-new.html">
 <!ENTITY gtk-scrolled-window-add-with-viewport
                                              "&api;gtk_fun_gtk-scrolled-window-add-with-viewport.html">
-<!ENTITY gtk-scrolled-window-set-policy      "&api;gtk_fun_gtk-scrolled-window-set-policy.html">
+<!ENTITY gtk-scrolled-window-policy          "&api;gtk_fun_gtk-scrolled-window-policy.html">
 
 <!ENTITY gtk-separator                       "&api;gtk_class_gtk-separator.html">
 <!ENTITY gtk-separator-new                   "&api;gtk_fun_gtk-separator-new.html">

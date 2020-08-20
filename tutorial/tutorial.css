@@ -152,8 +152,8 @@ dt {
 dd {
   margin-bottom: 0.5em; }
 
-table, th, td { 
-  padding: 1em 1em; 
+table, th, td {
+  padding: 0.5em 0.5em;
 }
 
 figure {

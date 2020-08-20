@@ -5280,17 +5280,18 @@ int main( int argc, char *argv[] )
     <code>NIL</code>.
    </para>
    <para>
-    The function <ulink url="&gtk-scrolled-window-set-policy;">
-    <code>gtk-scrolled-window-set-policy</code></ulink> sets the policy to be used with respect to the
-    scrollbars.  The first argument is the scrolled window you wish to change.  The second sets the policy
-    for the horizontal scrollbar, and the third the policy for the vertical scrollbar.
+    The function <ulink url="&gtk-scrolled-window-policy;"><code>gtk-scrolled-window-policy</code></ulink>
+    sets the policy to be used with respect to the scrollbars. The first argument is the scrolled window you
+    wish to change. The second argument is a list with the policy for the horizontal scrollbar, and the
+    policy for the vertical scrollbar.
    </para>
    <para>
-    The policy is of the enumeration type @xurl{gtk-policy-type} and may be one of <code>:automatic</code> or
-    <code>:always</code>.  <code>:automatic</code> will automatically decide whether you need scrollbars,
-    whereas <code>:always</code> will always leave the scrollbars there.  All possible values of
-    <ulink url="&gtk-policy-type;"><code>gtk-policy-type</code></ulink> are listed in the table
-    <link linkend="table-gtk-policy-type">GtkPolicyType</link>.
+    The policy is of the enumeration type <ulink url="&gtk-policy-type;"><code>gtk-policy-type</code></ulink>
+    and may be one of <code>:automatic</code> or <code>:always</code>. <code>:automatic</code> will
+    automatically decide whether you need scrollbars, whereas <code>:always</code> will always leave the
+    scrollbars there. All possible values of <ulink url="&gtk-policy-type;">
+    <code>gtk-policy-type</code></ulink> are listed in the table <link linkend="table-gtk-policy-type">
+    GtkPolicyType</link>.
    </para>
    <table id="table-gtk-policy-type" frame='all'>
     <title>The values of the enumeration of type GtkPolicyType</title>
@@ -5316,6 +5317,13 @@ int main( int argc, char *argv[] )
       <row>
        <entry valign="top"><code>:never</code></entry>
        <entry valign="top">The scrollbar will never appear.</entry>
+      </row>
+      <row>
+       <entry valign="top"><code>:external</code></entry>
+       <entry valign="top">
+        Do not show a scrollbar, but do not force the size to follow the content. This can be used e.g. to
+        make multiple scrolled windows share a scrollbar. Since 3.16
+       </entry>
       </row>
      </tbody>
     </tgroup>
@@ -14146,6 +14154,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 
