@@ -171,7 +171,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2020-5-9}
+ "@version{2020-8-20}
   @short{A widget that emits a signal when clicked on.}
 
   @image[button]{}
@@ -286,7 +286,7 @@
       emitting it causes the button to animate press then release. Applications
       should never connect to this signal, but use the \"clicked\" signal.
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
     @subheading{The \"clicked\" signal}
       @begin{pre}
@@ -294,7 +294,7 @@
       @end{pre}
       Emitted when the button has been activated (pressed and released).
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
     @subheading{The \"enter\" signal}
       @begin{pre}
@@ -305,7 +305,7 @@
       and should not be used in newly written code. Use the
       \"enter-notify-event\" signal.
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
     @subheading{The \"leave\" signal}
       @begin{pre}
@@ -316,19 +316,18 @@
       and should not be used in newly written code. Use the
       \"leave-notify-event\" signal.
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
     @subheading{The \"pressed\" signal}
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
       Emitted when the button is pressed. @br{}
-      @em{Warning:}
-      The \"pressed\" signal has been deprecated since version 2.8 and should
-      not be used in newly-written code. Use the \"button-press-event\"
-      signal.
+      @em{Warning:} The \"pressed\" signal has been deprecated since version
+      2.8 and should not be used in newly-written code. Use the
+      \"button-press-event\" signal.
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
     @subheading{The \"released\" signal}
       @begin{pre}
@@ -339,7 +338,7 @@
       2.8 and should not be used in newly written code. Use the
       \"button-release-event\" signal.
       @begin[code]{table}
-        @entry[button]{The @class{gtk-button} widget which received the signal.}
+        @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-button-always-show-image}
