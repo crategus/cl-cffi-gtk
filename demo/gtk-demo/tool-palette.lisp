@@ -183,9 +183,8 @@
                (format t "Signal CHANGED text = ~A, orientation = ~A~%" text orientation)
                (setf (gtk-orientable-orientation palette) orientation)
                (if (eq orientation :horizontal)
-                   (gtk-scrolled-window-set-policy scroller :automatic :never)
-                   (gtk-scrolled-window-set-policy scroller :never :automatic))
-           )))
+                   (setf (gtk-scrolled-window-policy scroller) '(:automatic :never))
+                   (setf (gtk-scrolled-window-policy scroller) '(:never :automatic))))))
 
         (gtk-combo-box-text-append-text combo "Vertical")
         (gtk-combo-box-text-append-text combo "Horizontal")
