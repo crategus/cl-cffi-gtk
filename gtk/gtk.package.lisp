@@ -3993,8 +3993,8 @@ setup_tree (void)
       @about-function{gtk-widget-add-device-events}
       @about-function{gtk-widget-set-device-enabled}
       @about-function{gtk-widget-get-device-enabled}
-      @about-function{gtk-widget-get-toplevel}
-      @about-function{gtk-widget-get-ancestor}
+      @about-function{gtk-widget-toplevel}
+      @about-function{gtk-widget-ancestor}
       @about-function{gtk-widget-get-visual}
       @about-function{gtk-widget-set-visual}
       @about-function{gtk-widget-pointer}
