@@ -357,6 +357,10 @@
                                 "calendar.lisp"
                                 "EXAMPLE-CALENDAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cursor"
+                                "cursor.lisp"
+                                "DEMO-CURSOR")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Event Box"
                                 "event-box.lisp"
                                 "EXAMPLE-EVENT-BOX")
