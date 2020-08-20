@@ -4763,13 +4763,12 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_toplevel ()
+;;; gtk_widget_get_toplevel () -> gtk-widget-toplevel
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_toplevel" gtk-widget-get-toplevel)
-    (g-object gtk-widget)
+(defcfun ("gtk_widget_get_toplevel" gtk-widget-toplevel) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-8-20}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The topmost ancestor of @arg{widget}, or @arg{widget} itself if
     there is no ancestor}
@@ -4781,60 +4780,59 @@
   widget. No reference will be added to the returned widget; it should not be
   unreferenced.
 
-  Note the difference in behavior vs. the function
-  @fun{gtk-widget-get-ancestor}; @code{(gtk-widget-get-ancestor widget :window)}
-  would return @code{nil} if @arg{widget} was not inside a toplevel window, and
-  if the window was inside a @sym{gtk-window} derived widget which was in turn
-  inside the toplevel @class{gtk-window}. While the second case may seem
-  unlikely, it actually happens when a @class{gtk-plug} is embedded inside a
-  @class{gtk-socket} within the same application.
+  Note the difference in behavior vs. the function @fun{gtk-widget-ancestor}.
+  @code{(gtk-widget-ancestor widget :window)} would return @code{nil} if
+  @arg{widget} was not inside a toplevel window, and if the window was inside a
+  @sym{gtk-window} derived widget which was in turn inside the toplevel
+  @class{gtk-window}. While the second case may seem unlikely, it actually
+  happens when a @class{gtk-plug} is embedded inside a @class{gtk-socket}
+  within the same application.
 
   To reliably find the toplevel @class{gtk-window}, use the function
-  @sym{gtk-widget-get-toplevel} and check if the @code{:toplevel} flags is set
+  @sym{gtk-widget-toplevel} and check if the @code{:toplevel} flags is set
   on the result.
   @begin{pre}
- (let ((toplevel (gtk-widget-get-toplevel widget)))
+ (let ((toplevel (gtk-widget-toplevel widget)))
    (when (gtk-widget-is-toplevel toplevel)
      ;; Perform action on toplevel
      ... ))
   @end{pre}
   @see-class{gtk-widget}
   @see-function{gtk-widget-is-toplevel}
-  @see-function{gtk-widget-get-ancestor}"
+  @see-function{gtk-widget-ancestor}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-toplevel)
+(export 'gtk-widget-toplevel)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_ancestor ()
+;;; gtk_widget_get_ancestor () -> gtk-widget-ancestor
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_ancestor" gtk-widget-get-ancestor)
-    (g-object gtk-widget)
+(defcfun ("gtk_widget_get_ancestor" gtk-widget-ancestor) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-8-20}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[widget-type]{ancestor type}
+  @argument[widget-type]{ancestor type as a @class{g-type}}
   @return{The ancestor widget, or @arg{nil} if not found.}
   @begin{short}
     Gets the first ancestor of @arg{widget} with type @arg{widget-type}.
   @end{short}
-  For example, @code{(gtk-widget-get-ancestor widget \"GtkBbox\")} gets the
-  first @class{gtk-box} that is an ancestor of @arg{widget}. No reference will
-  be added to the returned widget; it should not be unreferenced. See note about
-  checking for a toplevel @class{gtk-window} in the docs for
-  @fun{gtk-widget-get-toplevel}.
+  For example, @code{(gtk-widget-ancestor widget \"GtkBbox\")} gets the first
+  @class{gtk-box} that is an ancestor of @arg{widget}. No reference will be
+  added to the returned widget; it should not be unreferenced. See note about
+  checking for a toplevel @class{gtk-window} in the docs for the function
+  @fun{gtk-widget-toplevel}.
 
-  Note that unlike the function @fun{gtk-widget-is-ancestor},
-  @sym{gtk-widget-get-ancestor} considers @arg{widget} to be an ancestor of
+  Note that unlike the function @fun{gtk-widget-is-ancestor}, the function
+  @sym{gtk-widget-ancestor} considers @arg{widget} to be an ancestor of
   itself.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-toplevel}
+  @see-function{gtk-widget-toplevel}
   @see-function{gtk-widget-is-ancestor}"
   (widget (g-object gtk-widget))
   (type g-type))
 
-(export 'gtk-widget-get-ancestor)
+(export 'gtk-widget-ancestor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_visual ()
@@ -4928,15 +4926,17 @@
 
 (defcfun ("gtk_widget_is_ancestor" gtk-widget-is-ancestor) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-8-20}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[ancestor]{another @class{gtk-widget} object}
   @return{@em{True} if @arg{ancestor} contains @arg{widget} as a child,
     grandchild, great grandchild, etc.}
-  Determines whether @arg{widget} is somewhere inside @arg{ancestor}, possibly
-  with intermediate containers.
+  @begin{short}
+    Determines whether @arg{widget} is somewhere inside @arg{ancestor},
+    possibly with intermediate containers.
+  @end{short}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-ancestor}"
+  @see-function{gtk-widget-ancestor}"
   (widget (g-object gtk-widget))
   (container (g-object gtk-widget)))
 
