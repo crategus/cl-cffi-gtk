@@ -4630,7 +4630,7 @@ setup_tree (void)
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
 
-      Before using GTK+, it needs to be initialized; initialization connects to
+      Before using GTK+, it needs to be initialized. Initialization connects to
       the window system display, and parses some standard command line
       arguments. In the C library the macro @code{gtk_init()} initializes GTK+.
       In the Lisp binding to GTK+, GTK+ is initialized, when loading the
@@ -4646,9 +4646,9 @@ setup_tree (void)
       In the C library the main loop is executed with the function
       @code{gtk_main()}. In the Lisp binding this function is implemented as
       the function @fun{gtk-main}, but in general it is not used. The function
-      @code{gtk_main()} is replaced with the macro @fun{within-main-loop}, which
-      does all necessary work to run the main loop. See the example for a
-      typical main function in the Lisp binding.
+      @code{gtk_main()} is replaced with the macro @fun{within-main-loop},
+      which does all necessary work to run the main loop. See the example for
+      a typical main function in the Lisp binding.
 
       When widgets receive an event, they frequently emit one or more signals.
       Signals notify your program that \"something interesting happened\" by
@@ -4676,12 +4676,13 @@ setup_tree (void)
       @end{pre}
 
       @about-function{gtk-disable-setlocale}
-      @about-function{gtk-get-default-language}
+      @about-function{gtk-default-language}
+      @about-function{gtk-locale-direction}
       @about-function{gtk-parse-args}
       @about-function{gtk-init}
       @about-function{gtk-init-check}
       @about-function{gtk-init-with-args}
-      @about-function{gtk-get-option-group}
+      @about-function{gtk-option-group}
       @about-function{gtk-events-pending}
       @about-function{gtk-main}
       @about-function{gtk-main-level}
@@ -4692,18 +4693,17 @@ setup_tree (void)
       @about-function{gtk-true}
       @about-function{gtk-false}
       @about-function{gtk-grab-add}
-      @about-function{gtk-grab-get-current}
+      @about-function{gtk-grab-current}
       @about-function{gtk-grab-remove}
       @about-function{gtk-device-grab-add}
       @about-function{gtk-device-grab-remove}
-      @about-function{gtk-priority-resize}
       @about-function{gtk-key-snooper-install}
       @about-function{gtk-key-snooper-remove}
-      @about-function{gtk-get-current-event}
-      @about-function{gtk-get-current-event-time}
-      @about-function{gtk-get-current-event-state}
-      @about-function{gtk-get-current-event-device}
-      @about-function{gtk-get-event-widget}
+      @about-function{gtk-current-event}
+      @about-function{gtk-current-event-time}
+      @about-function{gtk-current-event-state}
+      @about-function{gtk-current-event-device}
+      @about-function{gtk-event-widget}
       @about-function{gtk-propagate-event}
     @end{subsection}
     @begin[Version Information]{subsection}
@@ -4711,17 +4711,13 @@ setup_tree (void)
       for builds that have a configure script. Applications will not typically
       use the features described here.
 
-      @about-function{gtk-get-major-version}
-      @about-function{gtk-get-minor-version}
-      @about-function{gtk-get-micro-version}
-      @about-function{gtk-get-binary-age}
-      @about-function{gtk-get-interface-age}
+      @about-function{gtk-major-version}
+      @about-function{gtk-minor-version}
+      @about-function{gtk-micro-version}
+      @about-function{gtk-binary-age}
+      @about-function{gtk-interface-age}
       @about-function{gtk-check-version}
       @about-function{cl-cffi-gtk-build-info}
-      @about-variable{+gtk-minor-version+}
-      @about-variable{+gtk-micro-version+}
-      @about-variable{+gtk-binary-age+}
-      @about-variable{+gtk-interface-age+}
     @end{subsection}
     @begin[Accelerator Groups]{subsection}
       Groups of global keyboard accelerators for an entire @class{gtk-window}
@@ -4745,12 +4741,11 @@ setup_tree (void)
       @about-function{gtk-accelerator-valid}
       @about-function{gtk-accelerator-parse}
       @about-function{gtk-accelerator-name}
-      @about-function{gtk-accelerator-get-label}
+      @about-function{gtk-accelerator-label}
       @about-function{gtk-accelerator-parse-with-keycode}
       @about-function{gtk-accelerator-name-with-keycode}
       @about-function{gtk-accelerator-get-label-with-keycode}
-      @about-function{gtk-accelerator-set-default-mod-mask}
-      @about-function{gtk-accelerator-get-default-mod-mask}
+      @about-function{gtk-accelerator-default-mod-mask}
     @end{subsection}
     @begin[Accelerator Maps]{subsection}
       Loadable keyboard accelerator specifications.

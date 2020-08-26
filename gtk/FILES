@@ -265,8 +265,8 @@ GTK+ Widgets and Objects
 
 GTK+ Core Reference
 
- +  gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.24 &
- +  gtk.version.lisp                 - Version Information         - GTK+ 3.24
+    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.24 &
+    gtk.version.lisp                 - Version Information         - GTK+ 3.24
  +  gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.24 &
  +  gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.24 &
  +  gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24 &
