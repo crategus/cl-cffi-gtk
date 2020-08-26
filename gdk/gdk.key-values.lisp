@@ -120,13 +120,13 @@
 
   @subheading{Groups}
   One @sym{gdk-keymap} object exists for each user display. The function
-  @fun{gdk-keymap-get-default} returns the @sym{gdk-keymap} for the default
-  display; to obtain keymaps for other displays, use the function
-  @fun{gdk-keymap-get-for-display}. A keymap is a mapping from
+  @fun{gdk-keymap-default} returns the @sym{gdk-keymap} for the default display.
+  To obtain keymaps for other displays, use the function
+  @fun{gdk-keymap-for-display}. A keymap is a mapping from
   @class{gdk-keymap-key} to key values. You can think of a
   @class{gdk-keymap-key} as a representation of a symbol printed on a physical
   keyboard key. That is, it contains three pieces of information. First, it
-  contains the hardware keycode; this is an identifying number for a physical
+  contains the hardware keycode. This is an identifying number for a physical
   key. Second, it contains the \"level\" of the key. The level indicates which
   symbol on the key will be used, in a vertical direction. So on a standard US
   keyboard, the key with the number \"1\" on it also has the exclamation point
@@ -135,9 +135,9 @@
   level 0, and an uppercase letter at level 1, though only the uppercase letter
   is printed. Third, the @class{gdk-keymap-key} contains a group; groups are not
   used on standard US keyboards, but are used in many other countries. On a
-  keyboard with groups, there can be 3 or 4 symbols printed on a single key. The
-  group indicates movement in a horizontal direction. Usually groups are used
-  for two different languages. In group 0, a key might have two English
+  keyboard with groups, there can be 3 or 4 symbols printed on a single key.
+  The group indicates movement in a horizontal direction. Usually groups are
+  used for two different languages. In group 0, a key might have two English
   characters, and in group 1 it might have two Hebrew characters. The Hebrew
   characters will be printed on the key next to the English characters.
 
@@ -286,42 +286,42 @@
   @see-class{gdk-keymap-key}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_default ()
+;;; gdk_keymap_get_default () -> gdk-keymap-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_default" gdk-keymap-get-default)
-    (g-object gdk-keymap)
+(defcfun ("gdk_keymap_get_default" gdk-keymap-default) (g-object gdk-keymap)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-25}
-  @return{The @class{gdk-keymap} attached to the default display.}
+ "@version{2020-8-26}
+  @return{The @class{gdk-keymap} object attached to the default display.}
   @begin{short}
-    Returns the @class{gdk-keymap} attached to the default display.
+    Returns the keymap attached to the default display.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-keymap-get-default} has been deprecated since version
-    3.22 and should not be used in newly-written code.
-    Use the function @fun{gdk-keymap-get-for-display} instead
+    The function @sym{gdk-keymap-default} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-keymap-for-display} instead.
   @end{dictionary}
   @see-class{gdk-keymap}
-  @see-functon{gdk-keymap-get-for-display}")
+  @see-functon{gdk-keymap-for-display}")
 
-(export 'gdk-keymap-get-default)
+(export 'gdk-keymap-default)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_for_display ()
+;;; gdk_keymap_get_for_display () -> gdk-keymap-for-display
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_for_display" gdk-keymap-get-for-display)
+(defcfun ("gdk_keymap_get_for_display" gdk-keymap-for-display)
     (g-object gdk-keymap)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-13}
-  @argument[display]{the @class{gdk-display} object}
-  @return{The @class{gdk-keymap} attached to @arg{display}.}
-  @short{Returns the @class{gdk-keymap} attached to @arg{display}.}
-  @see-class{gdk-keymap}"
+ "@version{2020-8-26}
+  @argument[display]{a @class{gdk-display} object}
+  @return{The @class{gdk-keymap} object attached to @arg{display}.}
+  @short{Returns the keymap attached to the display.}
+  @see-class{gdk-keymap}
+  @see-function{gdk-keymap-default}"
   (display (g-object gdk-display)))
 
-(export 'gdk-keymap-get-for-display)
+(export 'gdk-keymap-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_lookup_key ()
@@ -729,9 +729,9 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-modifier-intent atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-modifier-intent atdoc:*external-symbols*)
- "@version{2013-9-26}
+ "@version{2020-8-25}
   @begin{short}
-    This enum is used with the functions @fun{gdk-keymap-get-modifier-mask} in
+    This enum is used with the functions @fun{gdk-keymap-modifier-mask} in
     order to determine what modifiers the currently used windowing system
     backend uses for particular purposes.
   @end{short}
@@ -766,41 +766,41 @@
     @entry[:shift-group]{The modifier that switches between keyboard groups
       (AltGr on X11/Windows and Option/Alt on OS X).}
   @end{table}
-  Since 3.4
   @see-symbol{gdk-modifier-type}
-  @see-function{gdk-keymap-get-modifier-mask}")
+  @see-function{gdk-keymap-modifier-mask}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_modifier_mask ()
+;;; gdk_keymap_get_modifier_mask () -> gdk-keymap-modifier-mask
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_keymap_get_modifier_mask" gdk-keymap-get-modifier-mask)
-   gdk-modifier-type
+(defcfun ("gdk_keymap_get_modifier_mask" gdk-keymap-modifier-mask)
+    gdk-modifier-type
  #+cl-cffi-gtk-documentation
- "@version{2013-9-26}
+ "@version{2020-8-25}
   @argument[keymap]{a @class{gdk-keymap} object}
-  @argument[intent]{the use case for the modifier mask}
-  @return{The modifier mask used for @arg{intent}.}
+  @argument[intent]{the use case of type @symbol{gdk-modifier-intent} for the
+    modifier mask}
+  @return{The modifier mask of type @symbol{gdk-modifier-type} used for
+    @arg{intent}.}
   @begin{short}
     Returns the modifier mask the keymap's windowing system backend uses for a
     particular purpose.
   @end{short}
 
   Note that this function always returns real hardware modifiers, not virtual
-  ones (e. g. it will return @code{:mod1-mask} rather than @code{:meta-mask} if
+  ones (e.g. it will return @code{:mod1-mask} rather than @code{:meta-mask} if
   the backend maps @code{MOD1} to @code{META}), so there are use cases where
   the return value of this function has to be transformed by the function
   @fun{gdk-keymap-add-virtual-modifiers} in order to contain the expected
   result.
-
-  Since 3.4
   @see-class{gdk-keymap}
   @see-symbol{gdk-modifier-type}
+  @see-symbol{gdk-modifier-intent}
   @see-function{gdk-keymap-add-virtual-modifiers}"
   (keymap (g-object gdk-keymap))
   (intent gdk-modifier-intent))
 
-(export 'gdk-keymap-get-modifier-mask)
+(export 'gdk-keymap-modifier-mask)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_name ()
