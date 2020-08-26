@@ -2,12 +2,12 @@
 ;;; gtk.main-loop.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,11 @@
 ;;;
 ;;;     Library initialization, main event loop, and events
 ;;;
-;;; Synopsis
+;;; Types and Values
+;;;
+;;;     GTK_PRIORITY_RESIZE
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_disable_setlocale                    * not exported *
 ;;;     gtk_get_default_language
@@ -56,8 +60,6 @@
 ;;;     gtk_device_grab_add
 ;;;     gtk_device_grab_remove
 ;;;
-;;;     GTK_PRIORITY_RESIZE
-;;;
 ;;;     gtk_key_snooper_install                  * deprecated *
 ;;;     gtk_key_snooper_remove                   * deprecated *
 ;;;
@@ -70,6 +72,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_PRIORITY_RESIZE
+;;;
+;;; #define GTK_PRIORITY_RESIZE (G_PRIORITY_HIGH_IDLE + 10)
+;;;
+;;; Use this priority for functionality related to size allocation.
+;;;
+;;; It is used internally by GTK+ to compute the sizes of widgets. This priority
+;;; is higher than GDK_PRIORITY_REDRAW to avoid resizing a widget which was just
+;;; redrawn.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_disable_setlocale ()
@@ -99,27 +113,26 @@
   @see-function{%gtk-init-check}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_default_language ()
+;;; gtk_get_default_language () -> gtk-default-language
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_default_language" gtk-get-default-language)
+(defcfun ("gtk_get_default_language" gtk-default-language)
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
+ "@version{2020-8-21}
   @return{The default language as a @class{pango-language} structure.}
   @begin{short}
-    Returns the @class{pango-language} structure for the default language
-    currently in effect. The default language is derived from the current
-    locale.
+    Returns the Pango language structure for the default language currently in
+    effect.
   @end{short}
-  Note that this can change over the life of an application. It determines, for
-  example, whether GTK+ uses the right-to-left or left-to-right text direction.
+  The default language is derived from the current locale. Note that this can
+  change over the life of an application. It determines, for example, whether
+  GTK+ uses the right-to-left or left-to-right text direction.
 
   This function is equivalent to the function @fun{pango-language-default}.
-  See that function for details.
   @begin[Example]{dictionary}
     @begin{pre}
- (setq lang (gtk-get-default-language))
+ (setq lang (gtk-default-language))
 => #<PANGO-LANGUAGE {C7B3C51@}>
  (pango-language-to-string lang)
 => \"de-de\"
@@ -128,38 +141,51 @@
   @see-class{pango-language}
   @see-function{pango-language-default}")
 
-(export 'gtk-get-default-language)
+(export 'gtk-default-language)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_locale_direction ()
-;;;
-;;; GtkTextDirection gtk_get_locale_direction (void);
-;;;
-;;; Get the direction of the current locale. This is the expected reading
-;;; direction for text and UI.
-;;;
-;;; This function depends on the current locale being set with setlocale() and
-;;; will default to setting the GTK_TEXT_DIR_LTR direction otherwise.
-;;; GTK_TEXT_DIR_NONE will never be returned.
-;;;
-;;; GTK+ sets the default text direction according to the locale during
-;;; gtk_init(), and you should normally use gtk_widget_get_direction() or
-;;; gtk_widget_get_default_direction() to obtain the current direcion.
-;;;
-;;; This function is only needed rare cases when the locale is changed after
-;;; GTK+ has already been initialized. In this case, you can use it to update
-;;; the default text direction as follows:
-;;;
-;;; setlocale (LC_ALL, new_locale);
-;;;
-;;; direction = gtk_get_locale_direction ();
-;;; gtk_widget_set_default_direction (direction);
-;;;
-;;; Returns :
-;;;     the GtkTextDirection of the current locale
-;;;
-;;; Since 3.12
+;;; gtk_get_locale_direction () -> gtk-locale-direction
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_get_locale_direction" gtk-locale-direction) gtk-text-direction
+ #+cl-cffi-gtk-documentation
+ "@version{2020-8-21}
+  @begin{return}
+    The value of the @symbol{gtk-text-direction} enumeration of the current
+    locale.
+  @end{return}
+  @begin{short}
+    Gets the direction of the current locale.
+  @end{short}
+  This is the expected reading direction for text and UI.
+
+  This function depends on the current locale and will default to setting the
+  @code{:ltr} direction of type @symbol{gtk-text-direction} otherwise. The value
+  @code{:none} will never be returned.
+
+  GTK+ sets the default text direction according to the locale during
+  @code{gtk_init()}, and you should normally use the function
+  @fun{gtk-widget-direction} or @fun{gtk-widget-default-direction} to obtain
+  the current direction.
+
+  This function is only needed rare cases when the locale is changed after GTK+
+  has already been initialized.
+
+  Since 3.12
+  @begin[Example]{dictionary}
+    You can use the function @sym{gtk-locale-direction} to update the default
+    text direction as follows:
+    @begin{pre}
+ (setf (gtk-widget-default-direction) (gtk-locale-direction))
+=> :LTR
+    @end{pre}
+  @end{dictionary}
+  @see-symbol{gtk-text-direction}
+  @see-function{gtk-widget-default-direction}")
+
+#+gtk-3-12
+(export 'gtk-locale-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_parse_args ()
@@ -219,7 +245,7 @@
   Note that there are some alternative ways to initialize GTK+: if you are
   calling @code{gtk_parse_args()}, @fun{%gtk-init-check},
   @code{gtk_init_with_args()} or @code{g_option_context_parse()} with the option
-  group returned by the function @fun{gtk-get-option-group}, you do not have to
+  group returned by the function @fun{gtk-option-group}, you do not have to
   call @code{gtk_init()}.
   @begin[Notes]{dictionary}
     This function will terminate your program if it was unable to initialize the
@@ -335,25 +361,27 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_option_group ()
+;;; gtk_get_option_group () -> gtk-option-group
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_option_group" gtk-get-option-group)
+;; TODO: We have not a full implementation of GOptionGroup
+
+(defcfun ("gtk_get_option_group" gtk-option-group)
     (:pointer (:struct g-option-group))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[open-default-display]{whether to open the default display when
-    parsing the commandline arguments}
+ "@version{2020-8-21}
+  @argument[open-default-display]{a @code{:boolean} whether to open the default
+    display when parsing the commandline arguments}
   @begin{return}
     A @type{g-option-group} for the commandline arguments recognized by GTK+.
   @end{return}
   @begin{short}
-    Returns a @type{g-option-group} for the commandline arguments recognized
-    by GTK+ and GDK.
+    Returns a option group for the commandline arguments recognized by GTK+ and
+    GDK.
   @end{short}
 
-  You should add this group to your @class{g-option-context} with
-  the function @fun{g-option-context-add-group}, if you are using the function
+  You should add this group to your @class{g-option-context} with the function
+  @fun{g-option-context-add-group}, if you are using the function
   @fun{g-option-context-parse} to parse your commandline arguments.
   @see-type{g-option-group}
   @see-class{g-option-context}
@@ -361,7 +389,7 @@
   @see-function{g-option-context-parse}"
   (open-default-display :boolean))
 
-(export 'gtk-get-option-group)
+(export 'gtk-option-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_events_pending ()
@@ -371,19 +399,20 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-21}
   @return{@em{True} if any events are pending, @code{nil} otherwise.}
-  @short{Checks if any events are pending.}
-
+  @begin{short}
+    Checks if any events are pending.
+  @end{short}
   This can be used to update the UI and invoke timeouts etc. while doing some
   time intensive computation.
   @begin[Example]{dictionary}
     Updating the UI during a long computation.
     @begin{pre}
- ;; computation going on ...
+;; computation going on ...
 
- (loop while (gtk-events-pending)
-       do (gtk-main-iteration))
+(loop while (gtk-events-pending)
+      do (gtk-main-iteration))
 
- ;; ... computation continued
+;; ... computation continued
   @end{pre}
   @end{dictionary}
   @see-function{gtk-main-iteration}
@@ -399,20 +428,20 @@
 
 (defun gtk-main ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
-  @short{Runs the main loop until the function @fun{gtk-main-quit} is called.}
-
+ "@version{2020-8-22}
+  @begin{short}
+    Runs the main loop until the function @fun{gtk-main-quit} is called.
+  @end{short}
   You can nest calls to the function @sym{gtk-main}. In that case the function
   @fun{gtk-main-quit} will make the innermost invocation of the main loop
   return.
-
-  @subheading{Lisp Implementation}
+  @begin[Lisp Implementation]{dictionary}
     In the Lisp binding to GTK+ the function @sym{gtk-main} is not called
     directly but through the macro @fun{within-main-loop}. The macro
     @fun{within-main-loop} does some additional bookkeeping, to run the Lisp
     program in a separate thread.
-
-  @subheading{Example}
+  @end{dictionary}
+  @begin[Example]{dictionary}
     In this example an idle source is excecuted from the main loop. The
     function @fun{gtk-main-quit} is called in the idle callback to quit the
     main loop.
@@ -431,6 +460,7 @@
   ;; We return when gtk-main-quit is called in the idle callback.
   (gtk-main))
     @end{pre}
+  @end{dictionary}
   @see-function{within-main-loop}
   @see-function{gtk-main-quit}"
   (with-gdk-threads-lock
@@ -444,9 +474,12 @@
 
 (defcfun ("gtk_main_level" gtk-main-level) :uint
  #+cl-cffi-gtk-documentation
- "@version{2012-12-20}
-  @return{The nesting level of the current invocation of the main loop.}
-  Asks for the current nesting level of the main loop.
+ "@version{2020-8-22}
+  @return{An unsigned integer with the nesting level of the current invocation
+    of the main loop.}
+  @begin{short}
+    Asks for the current nesting level of the main loop.
+  @end{short}
   @see-function{gtk-main}")
 
 (export 'gtk-main-level)
@@ -457,18 +490,18 @@
 
 (defcfun ("gtk_main_quit" gtk-main-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
+ "@version{2020-8-22}
   @begin{short}
     Makes the innermost invocation of the main loop return when it regains
     control.
   @end{short}
   See the function @fun{gtk-main} for an example.
-
-  @subheading{Lisp Implementation}
+  @begin[Lisp Implementation]{dictionary}
     In the Lisp binding to GTK+ the function @sym{gtk-main-quit} is not called,
     but the function @fun{leave-gtk-main}. The function @fun{leave-gtk-main}
     does some additional bookkeeping, which is necessary to destroy the separate
     thread for a Lisp program.
+  @end{dictionary}
   @see-function{gtk-main}
   @see-function{within-main-loop}
   @see-function{leave-gtk-main}")
@@ -481,7 +514,7 @@
 
 (defcfun ("gtk_main_iteration" gtk-main-iteration) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-8-10}
+ "@version{2020-8-22}
   @return{@em{True} if the function @fun{gtk-main-quit} has been called for the
     innermost main loop.}
   @short{Runs a single iteration of the main loop.}
@@ -502,13 +535,16 @@
 
 (defcfun ("gtk_main_iteration_do" gtk-main-iteration-do) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2012-12-20}
+ "@version{2020-8-22}
   @argument[blocking]{@em{true} if you want GTK+ to block if no events are
     pending}
   @return{@arg{True} if the function @fun{gtk-main-quit} has been called for the
     innermost main loop.}
-  Runs a single iteration of the main loop. If no events are available either
-  return or block depending on the value of @arg{blocking}.
+  @begin{short}
+    Runs a single iteration of the main loop.
+  @end{short}
+  If no events are available either return or block depending on the value of
+  @arg{blocking}.
   @see-function{gtk-main-iteration}
   @see-function{gtk-main-quit}"
   (blocking :boolean))
@@ -521,10 +557,12 @@
 
 (defcfun ("gtk_main_do_event" gtk-main-do-event) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[event]{an event to process normally passed by GDK}
-  @short{Processes a single GDK event.}
-
+ "@version{2020-8-22}
+  @argument[event]{a @class{gdk-event} structure to process normally passed by
+    GDK}
+  @begin{short}
+    Processes a single GDK event.
+  @end{short}
   This is public only to allow filtering of events between GDK and GTK+. You
   will not usually need to call this function directly.
 
@@ -546,7 +584,7 @@
     @end{item}
     @begin{item}
       Then the event is pushed onto a stack so you can query the currently
-      handled event with the function @fun{gtk-get-current-event}.
+      handled event with the function @fun{gtk-current-event}.
     @end{item}
     @begin{item}
       The event is sent to a widget. If a grab is active all events for
@@ -580,7 +618,9 @@
       After finishing the delivery the event is popped from the event stack.
     @end{item}
   @end{itemize}
-  @see-function{gtk-get-current-event}"
+  @see-function{gtk-main-iteration}
+  @see-function{gtk-main-iteration-do}
+  @see-function{gtk-current-event}"
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gtk-main-do-event)
@@ -676,8 +716,9 @@
 
 (defcfun ("gtk_grab_add" gtk-grab-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
-  @argument[widget]{the widget that grabs keyboard and pointer events}
+ "@version{2020-8-22}
+  @argument[widget]{the @class{gtk-widget} object that grabs keyboard and
+    pointer events}
   @short{Makes @arg{widget} the current grabbed widget.}
   This means that interaction with other widgets in the same application is
   blocked and mouse as well as keyboard events are delivered to this
@@ -686,27 +727,29 @@
   If @arg{widget} is not sensitive, it is not set as the current grabbed widget
   and this function does nothing.
   @see-function{gtk-grab-remove}
-  @see-function{gtk-grab-get-current}
+  @see-function{gtk-grab-current}
   @see-function{gtk-device-grab-add}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-grab-add)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_grab_get_current ()
+;;; gtk_grab_get_current () -> gtk-grab-current
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_grab_get_current" gtk-grab-get-current) (g-object gtk-widget)
+(defcfun ("gtk_grab_get_current" gtk-grab-current) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
-  @return{The widget which currently has the grab or @code{nil} if no grab is
-    active.}
-  Queries the current grab of the default window group.
+ "@version{2020-8-22}
+  @return{The @class{gtk-widget} object which currently has the grab or
+    @code{nil} if no grab is active.}
+  @begin{short}
+    Queries the current grab of the default window group.
+  @end{short}
   @see-function{gtk-grab-add}
   @see-function{gtk-grab-remove}
   @see-function{gtk-device-grab-add}")
 
-(export 'gtk-grab-get-current)
+(export 'gtk-grab-current)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grab_remove ()
@@ -714,15 +757,15 @@
 
 (defcfun ("gtk_grab_remove" gtk-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-8-25}
-  @argument[widget]{the widget which gives up the grab}
+ "@version{2020-8-22}
+  @argument[widget]{the @class{gtk-widget} object which gives up the grab}
   @short{Removes the grab from the given @arg{widget}.}
   You have to pair calls to the functions @fun{gtk-grab-add} and
   @sym{gtk-grab-remove}.
 
   If @arg{widget} does not have the grab, this function does nothing.
   @see-function{gtk-grab-add}
-  @see-function{gtk-grab-get-current}"
+  @see-function{gtk-grab-current}"
   (widget g-object))
 
 (export 'gtk-grab-remove)
@@ -733,21 +776,19 @@
 
 (defcfun ("gtk_device_grab_add" gtk-device-grab-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
+ "@version{2020-8-22}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[device]{a @class{gdk-device} object to grab on}
   @argument[block-others]{@em{true} to prevent other devices to interact with
     @arg{widget}}
   @begin{short}
-    Adds a grab on @arg{device}, so all the events on @arg{device} and its
-    associated pointer or keyboard (if any) are delivered to @arg{widget}.
+    Adds a grab on the device, so all the events on the device and its
+    associated pointer or keyboard (if any) are delivered to the widget.
   @end{short}
   If the @arg{block-others} parameter is @em{true}, any other devices will be
   unable to interact with @arg{widget} during the grab.
-
-  Since 3.0
   @see-function{gtk-grab-add}
-  @see-function{gtk-grab-get-current}
+  @see-function{gtk-grab-current}
   @see-function{gtk-device-grab-remove}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device))
@@ -761,34 +802,20 @@
 
 (defcfun ("gtk_device_grab_remove" gtk-device-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
+ "@version{2020-8-22}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[device]{a @class{gdk-device} object}
   @begin{short}
-    Removes a @arg{device} grab from the given @arg{widget}.
+    Removes a device grab from the given widget.
   @end{short}
   You have to pair calls to the functions @fun{gtk-device-grab-add} and
   @sym{gtk-device-grab-remove}.
-
-  Since 3.0
   @see-function{gtk-device-grab-add}
-  @see-function{gtk-grab-get-current}"
+  @see-function{gtk-grab-current}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device)))
 
 (export 'gtk-device-grab-remove)
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_PRIORITY_RESIZE
-;;;
-;;; #define GTK_PRIORITY_RESIZE (G_PRIORITY_HIGH_IDLE + 10)
-;;;
-;;; Use this priority for functionality related to size allocation.
-;;;
-;;; It is used internally by GTK+ to compute the sizes of widgets. This priority
-;;; is higher than GDK_PRIORITY_REDRAW to avoid resizing a widget which was just
-;;; redrawn.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_key_snooper_install ()
@@ -855,95 +882,132 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_current_event ()
+;;; gtk_get_current_event () -> gtk-current-event
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_current_event" gtk-get-current-event)
+(defcfun ("gtk_get_current_event" gtk-current-event)
     (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
-  @return{A copy of the current event, or @code{nil} if there is no current
-    event.}
+ "@version{2020-8-22}
+  @return{A copy of the current @class{gdk-event} structure, or @code{nil} if
+    there is no current event.}
   @short{Obtains a copy of the event currently being processed by GTK+.}
 
   For example, if you are handling a \"clicked\" signal, the current event will
   be the @class{gdk-event-button} event that triggered the \"clicked\" signal.
-  @see-function{gtk-get-current-event-time}
-  @see-function{gtk-get-current-event-state}
-  @see-function{gtk-get-current-event-device}")
+  @begin[Example]{dictionary}
+    In this example the function @sym{gtk-current-event} is used in a signal
+    handler to check for a button press event. This code is part of the GTK+
+    demo for popovers.
+    @begin{pre}
+(g-signal-connect calendar \"day-selected\"
+    (lambda (calendar)
+      (let ((event (gtk-current-event)))
+        (when (eq :button-press (gdk-event-type event))
+          (multiple-value-bind (x y)
+              (gdk-window-coords-to-parent (gdk-event-button-window event)
+                                           (gdk-event-button-x event)
+                                           (gdk-event-button-y event))
+            (let ((rect (gtk-widget-get-allocation calendar)))
+              (setf (gdk-rectangle-x rect)
+                    (- (truncate x) (gdk-rectangle-x rect)))
+              (setf (gdk-rectangle-y rect)
+                    (- (truncate y) (gdk-rectangle-y rect)))
+              (setf (gdk-rectangle-width rect) 1)
+              (setf (gdk-rectangle-height rect) 1)
+              (let ((popover (create-popover calendar
+                                             (make-instance 'gtk-entry)
+                                             :bottom)))
+                (setf (gtk-popover-pointing-to popover) rect)
+                (gtk-widget-show popover))))))))
+    @end{pre}
+  @end{dictionary}
+  @see-function{gtk-current-event-time}
+  @see-function{gtk-current-event-state}
+  @see-function{gtk-current-event-device}")
 
-(export 'gtk-get-current-event)
+(export 'gtk-current-event)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_current_event_time ()
+;;; gtk_get_current_event_time () -> gtk-current-event-time
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_current_event_time" gtk-get-current-event-time) :uint32
+(defcfun ("gtk_get_current_event_time" gtk-current-event-time) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
-  @return{The timestamp from the current event, or the value
-    @var{+gdk-current-time+}.}
-  If there is a current event and it has a timestamp, return that timestamp,
-  otherwise return the value @var{+gdk-current-time+}.
-  @see-function{gtk-get-current-event}
+ "@version{2020-8-22}
+  @return{An unsigned integer with the timestamp from the current event, or the
+    value @var{+gdk-current-time+}.}
+  @begin{short}
+    If there is a current event and it has a timestamp, return that timestamp.
+  @end{short}
+  Otherwise return the value @var{+gdk-current-time+}.
+  @see-function{gtk-current-event}
   @see-variable{+gdk-current-time+}")
 
-(export 'gtk-get-current-event-time)
+(export 'gtk-current-event-time)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_current_event_state ()
+;;; gtk_get_current_event_state () -> gtk-current-event-state
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_current_event_state" %gtk-get-current-event-state) :boolean
+(defcfun ("gtk_get_current_event_state" %gtk-current-event-state) :boolean
   (state (:pointer gdk-modifier-type)))
 
-(defun gtk-get-current-event-state ()
+(defun gtk-current-event-state ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2020-8-22}
   @begin{return}
-    The state of the current event or @code{nil} if there is no current event.
+    The state as a value of the @symbol{gdk-modifier-type} flags of the current
+    event or @code{nil} if there is no current event.
   @end{return}
-  If there is a current event and it has a state field, return that state
-  field, otherwise return @code{nil}.
-  @see-function{gtk-get-current-event}"
+  @begin{short}
+    If there is a current event and it has a state field, return that state
+    field, otherwise return @code{nil}.
+  @end{short}
+  @see-function{gtk-current-event}"
   (with-foreign-object (state 'gdk-modifier-type)
-    (when (%gtk-get-current-event-state state)
+    (when (%gtk-current-event-state state)
       (mem-ref state 'gdk-modifier-type))))
 
-(export 'gtk-get-current-event-state)
+(export 'gtk-current-event-state)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_current_event_device ()
+;;; gtk_get_current_event_device () -> gtk-current-event-device
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_current_event_device" gtk-get-current-event-device)
+(defcfun ("gtk_get_current_event_device" gtk-current-event-device)
     (g-object gdk-device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2020-8-22}
   @return{A @class{gdk-device} object, or @code{nil}.}
-  If there is a current event and it has a device, return that device,
-  otherwise return @code{nil}.
-  @see-function{gtk-get-current-event}")
+  @begin{short}
+    If there is a current event and it has a device, return that device,
+    otherwise return @code{nil}.
+  @end{short}
+  @see-function{gtk-current-event}")
 
-(export 'gtk-get-current-event-device)
+(export 'gtk-current-event-device)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_get_event_widget ()
+;;; gtk_get_event_widget () -> gtk-event-widget
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_event_widget" gtk-get-event-widget) g-object
+(defcfun ("gtk_get_event_widget" gtk-event-widget) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-17}
-  @argument[event]{a @class{gdk-event} event}
-  @return{The widget that originally received @arg{event}, or @code{nil}.}
-  If @arg{event} is @code{nil} or @arg{event} was not associated with any
-  widget, returns @code{nil}, otherwise returns the widget that received
-  @arg{event} originally.
+ "@version{2020-8-22}
+  @argument[event]{a @class{gdk-event} structure}
+  @return{The @class{gtk-widget} object that originally received @arg{event},
+    or @code{nil}.}
+  @begin{short}
+    If @arg{event} is @code{nil} or @arg{event} was not associated with any
+    widget, returns @code{nil}, otherwise returns the widget that received
+    @arg{event} originally.
+  @end{short}
   @see-class{gdk-event}
   @see-function{gtk-progate-event}"
   (event (g-boxed-foreign gdk-event)))
 
-(export 'gtk-get-event-widget)
+(export 'gtk-event-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_propagate_event ()
@@ -951,12 +1015,12 @@
 
 (defcfun ("gtk_propagate_event" gtk-propagate-event) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2020-8-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[event]{a @class{gdk-event} event}
+  @argument[event]{a @class{gdk-event} structure}
   @begin{short}
-    Sends an @arg{event} to a @arg{widget}, propagating the @arg{event} to
-    parent widgets if the @arg{event} remains unhandled.
+    Sends an event to a widget, propagating the event to parent widgets if the
+    event remains unhandled.
   @end{short}
 
   Events received by GTK+ from GDK normally begin in the function
