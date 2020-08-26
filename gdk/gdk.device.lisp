@@ -333,7 +333,7 @@
 (define-g-enum "GdkDeviceToolType" gdk-device-tool-type
   (:export t
    :type-initializer "gdk_device_tool_type_get_type")
-  :unkown
+  :unknown
   :pen
   :eraser
   :brush
@@ -343,18 +343,20 @@
   :lens)
 
 #+(and gdk-3-22 cl-cffi-gtk-documentation)
-(setf (gethash 'gdk-axis-use atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gdk-axis-use atdoc:*external-symbols*)
- "@version{2019-3-28}
+(setf (gethash 'gdk-device-tool-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-device-tool-type atdoc:*external-symbols*)
+ "@version{2020-8-25}
   @begin{short}
     Indicates the specific type of tool being used being a tablet. Such as an
     airbrush, pencil, etc.
   @end{short}
+
+  Since 3.22
   @begin{pre}
 (define-g-enum \"GdkDeviceToolType\" gdk-device-tool-type
   (:export t
    :type-initializer \"gdk_device_tool_type_get_type\")
-  :unkown
+  :unknown
   :pen
   :eraser
   :brush
@@ -373,7 +375,6 @@
     @entry[:mouse]{Tool is a mouse.}
     @entry[:lens]{Tool is a lens cursor.}
   @end{table}
-  Since 3.22
   @see-class{gdk-device}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1353,11 +1354,11 @@ get_device_settings (GdkDevice *device)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-21}
   @argument[device]{a @class{gdk-device} object. To get the device you can use
-    the functions @fun{gtk-get-current-event-device} or
-    @fun{gdk-event-get-device} if the grab is in reaction to an event. Also, you
-    can use the function @fun{gdk-device-manager-get-client-pointer} but only in
-    code that is not triggered by a @class{gdk-event} and there are not other
-    means to get a meaningful @class{gdk-device} to operate on.}
+    the functions @fun{gtk-current-event-device} or @fun{gdk-event-device}
+    if the grab is in reaction to an event. Also, you can use the function
+    @fun{gdk-device-manager-get-client-pointer} but only in code that is not
+    triggered by a @class{gdk-event} and there are not other means to get a
+    meaningful @class{gdk-device} to operate on.}
   @argument[window]{the @class{gdk-window} which will own the grab, the grab
     window}
   @argument[grab-ownership]{specifies the grab ownership}
@@ -1405,8 +1406,8 @@ get_device_settings (GdkDevice *device)
   @see-class{gdk-event}
   @see-class{gdk-event-grab-broken}
   @see-function{gdk-device-ungrab}
-  @see-function{gdk-event-get-device}
-  @see-function{gtk-get-current-event-device}
+  @see-function{gdk-event-device}
+  @see-function{gtk-current-event-device}
   @see-function{gdk-device-manager-get-client-pointer}
   @see-variable{+gdk-current-time+}"
   (device (g-object gdk-device))

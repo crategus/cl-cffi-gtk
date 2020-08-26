@@ -2728,7 +2728,7 @@
   @argument[root-x]{root window x coordinate of mouse click that began the drag}
   @argument[root-y]{root window y coordinate of mouse click that began the drag}
   @argument[timestamp]{timestamp of mouse click that began the drag,
-     use the @fun{gdk-event-get-time} function}
+     use the function @fun{gdk-event-time}}
   @begin{short}
     Begins a window resize operation for a toplevel window.
   @end{short}
@@ -2737,7 +2737,7 @@
   device, use the @fun{gdk-window-begin-resize-drag-for-device} function to
   begin a drag with a different device.
   @see-class{gdk-window}
-  @see-function{gdk-event-get-time}
+  @see-function{gdk-event-time}
   @see-function{gdk-window-begin-resize-drag-for-device}"
   (window (g-object gdk-window))
   (edge gdk-window-edge)
@@ -2763,7 +2763,7 @@
   @argument[root-x]{root window x coordinate of mouse click that began the drag}
   @argument[root-y]{root window Y coordinate of mouse click that began the drag}
   @argument[timestamp]{timestamp of mouse click that began the drag,
-    use the @fun{gdk-event-get-time} function}
+    use the function @fun{gdk-event-time}}
   @begin{short}
     Begins a window resize operation for a toplevel window.
   @end{short}
@@ -2774,7 +2774,7 @@
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-class{gtk-statusbar}
-  @see-function{gdk-event-get-time}"
+  @see-function{gdk-event-time}"
   (window (g-object gdk-window))
   (edge gdk-window-edge)
   (device (g-object gdk-device))
@@ -5899,24 +5899,28 @@
 
 (defun gdk-window-coords-from-parent (window parent-x parent-y)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-2}
-  @argument[window]{a child window}
-  @argument[parent-x]{x coordinate in parent's coordinate system}
-  @argument[parent-y]{y coordinate in parent's coordinate system}
+ "@version{2020-8-22}
+  @argument[window]{a @class{gdk-window} child window}
+  @argument[parent-x]{a number with the x coordinate in parent's coordinate
+    system}
+  @argument[parent-y]{a number with the y coordinate in parent's coordinate
+    system}
   @begin{return}
-    @code{x} -- x coordinate in child's coordinate system @br{}
-    @code{y} -- y coordinate in child's coordinate system
+    @code{x} -- a @code{:dobule} with the x coordinate in child's coordinate
+                system @br{}
+    @code{y} -- a @code{:double} with the y coordinate in child's coordinate
+                system
   @end{return}
   @begin{short}
     Transforms window coordinates from a parent window to a child window, where
-    the parent window is the normal parent as returned by the
-    @fun{gdk-window-get-parent} function for normal windows, and the window's
-    embedder as returned by the @fun{gdk-offscreen-window-get-embedder} function
-    for offscreen windows.
+    the parent window is the normal parent as returned by the function
+    @fun{gdk-window-get-parent} for normal windows, and the window's embedder
+    as returned by the function @fun{gdk-offscreen-window-get-embedder} for
+    offscreen windows.
   @end{short}
 
   For normal windows, calling this function is equivalent to subtracting the
-  return values of the @fun{gdk-window-get-position} function from the parent
+  return values of the function @fun{gdk-window-get-position} from the parent
   coordinates. For offscreen windows however, which can be arbitrarily
   transformed, this function calls the \"from-embedder\" signal to translate
   the coordinates.
@@ -5924,13 +5928,17 @@
   You should always use this function when writing generic code that walks
   down a window hierarchy.
 
-  See also the @fun{gdk-window-coords-to-parent} function.
+  See also the function @fun{gdk-window-coords-to-parent}.
   @see-function{gdk-window}
   @see-function{gdk-window-get-parent}
   @see-function{gdk-offscreen-window-get-embedder}
   @see-function{gdk-window-get-position}"
   (with-foreign-objects ((x :double) (y :double))
-    (%gdk-window-coords-from-parent window parent-x parent-y x y)
+    (%gdk-window-coords-from-parent window
+                                    (coerce parent-x 'double-float)
+                                    (coerce parent-y 'double-float)
+                                    x
+                                    y)
     (values (mem-ref x :double)
             (mem-ref y :double))))
 
@@ -5949,39 +5957,44 @@
 
 (defun gdk-window-coords-to-parent (window x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-2}
-  @argument[window]{a child window}
-  @argument[x]{x coordinate in child's coordinate system}
-  @argument[y]{y coordinate in child's coordinate system}
+ "@version{2020-8-22}
+  @argument[window]{a @class{gdk-window} child window}
+  @argument[x]{a number with the x coordinate in child's coordinate system}
+  @argument[y]{a number with the y coordinate in child's coordinate system}
   @begin{return}
-    @code{parent-x} -- x coordinate in parent's coordinate system,
-                       or @code{nil} @br{}
-    @code{parent-y} -- y coordinate in parent's coordinate system, or @code{nil}
+    @code{parent-x} -- a @code{:double} with the x coordinate in parent's
+                       coordinate system, or @code{nil} @br{}
+    @code{parent-y} -- a @code{:double} with the y coordinate in parent's
+                       coordinate system, or @code{nil}
   @end{return}
   @begin{short}
     Transforms window coordinates from a child window to its parent window,
-    where the parent window is the normal parent as returned by the
-    @fun{gdk-window-get-parent} function for normal windows, and the window's
-    embedder as returned by the @fun{gdk-offscreen-window-get-embedder} function
-    for offscreen windows.
+    where the parent window is the normal parent as returned by the function
+    @fun{gdk-window-get-parent} for normal windows, and the window's embedder
+    as returned by the function @fun{gdk-offscreen-window-get-embedder} for
+    offscreen windows.
   @end{short}
 
   For normal windows, calling this function is equivalent to adding the return
-  values of the @fun{gdk-window-get-position} function to the child coordinates.
+  values of the function @fun{gdk-window-get-position} to the child coordinates.
   For offscreen windows however, which can be arbitrarily transformed, this
   function calls the \"to-embedder\" signal to translate the coordinates.
 
   You should always use this function when writing generic code that walks up
   a window hierarchy.
 
-  See also the @fun{gdk-window-coords-from-parent} function.
+  See also the function @fun{gdk-window-coords-from-parent}.
   @see-class{gdk-window}
   @see-function{gdk-window-get-parent}
   @see-function{gdk-offscreen-window-get-embedder}
   @see-function{gdk-window-get-position}
   @see-function{gdk-window-coords-from-parent}"
   (with-foreign-objects ((parent-x :double) (parent-y :double))
-    (%gdk-window-coords-to-parent window x y parent-x parent-y)
+    (%gdk-window-coords-to-parent window
+                                  (coerce x 'double-float)
+                                  (coerce y 'double-float)
+                                  parent-x
+                                  parent-y)
     (values (mem-ref parent-x :double)
             (mem-ref parent-y :double))))
 

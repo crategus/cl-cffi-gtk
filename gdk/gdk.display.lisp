@@ -550,18 +550,19 @@
 (defcfun ("gdk_display_get_event" gdk-display-get-event)
     (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
+ "@version{2020-8-25}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
-    The next @class{gdk-event} event to be processed, or @code{nil} if no events
-    are pending.
+    The next @class{gdk-event} structure to be processed, or @code{nil} if no
+    events are pending.
   @end{return}
   @begin{short}
-    Gets the next @class{gdk-event} event to be processed for the display,
-    fetching events from the windowing system if necessary.
+    Gets the next event to be processed for the display, fetching events from
+    the windowing system if necessary.
   @end{short}
   @see-class{gdk-display}
-  @see-class{gdk-event}"
+  @see-class{gdk-event}
+  @see-function{gdk-event-get}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-event)
@@ -573,20 +574,21 @@
 (defcfun ("gdk_display_peek_event" gdk-display-peek-event)
          (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
+ "@version{2020-8-25}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
-    A copy of the first @class{gdk-event} event on the event queue, or
+    A copy of the first @class{gdk-event} structure on the event queue, or
     @code{nil} if no events are in the queue.
   @end{return}
   @begin{short}
-    Gets a copy of the first @class{gdk-event} event in the display's
-    event queue, without removing the event from the queue.
+    Gets a copy of the first event in the display's event queue, without
+    removing the event from the queue.
   @end{short}
   Note that this function will not get more events from the windowing system. It
   only checks the events that have already been moved to the GDK event queue.
   @see-class{gdk-display}
-  @see-class{gdk-event}"
+  @see-class{gdk-event}
+  @see-function{gdk-event-peek}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-peek-event)
@@ -597,15 +599,16 @@
 
 (defcfun ("gdk_display_put_event" gdk-display-put-event) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-8-25}
   @argument[display]{a @class{gdk-display} object}
-  @argument[event]{a @class{gdk-event} event}
+  @argument[event]{a @class{gdk-event} structure}
   @begin{short}
-    Appends a copy of the given @arg{event} onto the front of the event queue
-    for the display.
+    Appends a copy of the given event onto the front of the event queue for the
+    display.
   @end{short}
   @see-class{gdk-display}
-  @see-class{gdk-event}"
+  @see-class{gdk-event}
+  @see-function{gdk-event-put}"
   (display (g-object gdk-display))
   (event (g-boxed-foreign gdk-event)))
 

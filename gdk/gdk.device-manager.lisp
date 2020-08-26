@@ -155,7 +155,7 @@
   @code{:drag-status}, @code{:drop-start}, @code{:drop-finished} and
   @code{:grab-broken}. When dealing with an event on a master device, it is
   possible to get the source (slave) device that the event originated from via
-  the function @fun{gdk-event-get-source-device}.
+  the function @fun{gdk-event-source-device}.
 
   In order to listen for events coming from devices other than a virtual
   device, the function @fun{gdk-window-set-device-events} must be called.
@@ -222,7 +222,7 @@
   @see-function{gdk-disable-multidevice}
   @see-function{gdk-device-manager-get-client-pointer}
   @see-function{gdk-device-get-associated-device}
-  @see-function{gdk-event-get-source-device}
+  @see-function{gdk-event-source-device}
   @see-function{gdk-window-set-device-events}
   @see-function{gdk-device-get-axis}
   @see-function{gdk-device-list-axes}
