@@ -6,14 +6,14 @@
 
 ;;;   gdk_keymap_get_default
 
-(test gdk-keymap-get-default
-  (is (eq 'gdk-keymap (type-of (gdk-keymap-get-default)))))
+(test gdk-keymap-default
+  (is (eq 'gdk-keymap (type-of (gdk-keymap-default)))))
 
 ;;;   gdk_keymap_get_for_display
 
-(test gdk-keymap-get-for-display
+(test gdk-keymap-for-display
   (let ((display (gdk-display-default)))
-    (is (eq 'gdk-keymap (type-of (gdk-keymap-get-for-display display))))))
+    (is (eq 'gdk-keymap (type-of (gdk-keymap-for-display display))))))
 
 ;;;   gdk_keymap_lookup_key
 
@@ -23,8 +23,9 @@
 ;   Please use (:POINTER (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT)) or
 ;   (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT) instead.
 
+#+nil
 (test gdk-keymap-lookup-key
-  (let ((keymap (gdk-keymap-get-default))
+  (let ((keymap (gdk-keymap-default))
         (key (make-gdk-keymap-key :keycode 67 :group 0 :level 0)))
     (is (= 65470 (gdk-keymap-lookup-key keymap key)))))
 
@@ -33,47 +34,47 @@
 ;;;     gdk_keymap_get_entries_for_keyval
 
 (test gdk-keymap-get-entries-for-keyvals
-  (let ((keymap (gdk-keymap-get-default)))
+  (let ((keymap (gdk-keymap-default)))
     (is (eq 'gdk-keymap-key
             (type-of (first (gdk-keymap-get-entries-for-keyval keymap 65470)))))))
 
 ;;;     gdk_keymap_get_entries_for_keycode
 
 (test gdk-keymap-get-entries-for-keycode
-  (let ((keymap (gdk-keymap-get-default)))
+  (let ((keymap (gdk-keymap-default)))
     (is (eq 'gdk-keymap-key
             (type-of (first (gdk-keymap-get-entries-for-keycode keymap 67)))))))
 
 ;;;     gdk_keymap_get_direction
 
 (test gdk-keymap-get-direction
-  (is (eq :ltr (gdk-keymap-get-direction (gdk-keymap-get-default)))))
+  (is (eq :ltr (gdk-keymap-get-direction (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_have_bidi_layouts
 
 (test gdk-keymap-have-bidi-layouts
-  (is-false (gdk-keymap-have-bidi-layouts (gdk-keymap-get-default))))
+  (is-false (gdk-keymap-have-bidi-layouts (gdk-keymap-default))))
 
 ;;;     gdk_keymap_get_caps_lock_state
 
 (test gdk-keymap-caps-lock-state
-  (is-false (gdk-keymap-caps-lock-state (gdk-keymap-get-default))))
+  (is-false (gdk-keymap-caps-lock-state (gdk-keymap-default))))
 
 ;;;     gdk_keymap_get_num_lock_state
 
 (test gdk-keymap-num-lock-state
-  (is-true (gdk-keymap-num-lock-state (gdk-keymap-get-default))))
+  (is-false (gdk-keymap-num-lock-state (gdk-keymap-default))))
 
 ;;;     gdk_keymap_get_scroll_lock_state
 
 (test gdk-keymap-scroll-lock-state
-  (is-false (gdk-keymap-scroll-lock-state (gdk-keymap-get-default))))
+  (is-false (gdk-keymap-scroll-lock-state (gdk-keymap-default))))
 
 ;;;     gdk_keymap_get_modifier_state
 
 (test gdk-keymap-modifier-state
-  (is (equal '(:MOD2-MASK)
-             (gdk-keymap-modifier-state (gdk-keymap-get-default)))))
+  (is (equal '()
+             (gdk-keymap-modifier-state (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers
 ;;;     gdk_keymap_map_virtual_modifiers

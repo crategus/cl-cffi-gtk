@@ -1,148 +1,7 @@
 (def-suite gdk-events :in gdk-suite)
 (in-suite gdk-events)
 
-;;; enum GdkEventType
-
-(test gdk-event-type
-  ;; Type checks
-  (is-false (g-type-is-object "GdkEventType"))
-  (is-false (g-type-is-abstract "GdkEventType"))
-  (is-true  (g-type-is-derived "GdkEventType"))
-  (is-false (g-type-is-fundamental "GdkEventType"))
-  (is-true  (g-type-is-value-type "GdkEventType"))
-  (is-true  (g-type-has-value-table "GdkEventType"))
-  (is-true  (g-type-is-classed "GdkEventType"))
-  (is-false (g-type-is-instantiatable "GdkEventType"))
-  (is-true  (g-type-is-derivable "GdkEventType"))
-  (is-false (g-type-is-deep-derivable "GdkEventType"))
-  (is-false (g-type-is-interface "GdkEventType"))
-
-  ;; Check the registered name
-;  (is (eq 'gtk-frame
-;          (registered-object-type-by-name "GdkEventType")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GdkEventType"))))
-    (is (equal (gtype "GdkEventType") (g-type-from-class class)))
-    (is (equal (gtype "GdkEventType") (g-object-class-type class)))
-    (is (equal "GdkEventType" (g-object-class-name class)))
-    (is (equal (gtype "GdkEventType")
-               (g-type-from-class  (g-type-class-peek "GdkEventType"))))
-    (is (equal (gtype "GdkEventType")
-               (g-type-from-class  (g-type-class-peek-static "GdkEventType"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  ;; no Lisp class implementation for an Enum
-
-  ;; Check some more GType information
-  (is (equal (gtype "GEnum") (g-type-parent "GdkEventType")))
-  (is (= 2 (g-type-depth "GdkEventType")))
-  (is (equal (gtype "GdkEventType")
-             (g-type-next-base "GdkEventType" "GEnum")))
-  (is-false (g-type-is-a "GdkEventType" "GtkWidget"))
-  (is-true  (g-type-is-a "GdkEventType" "GEnum"))
-  (is-false (g-type-is-a "GdkEventType" "gboolean"))
-  (is-false (g-type-is-a "GdkEventType" "GtkWindow"))
-
-  ;; Check the children
-  (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GdkEventType"))))
-  ;; Check the interfaces
-  (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GdkEventType"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GdkEventType" query)
-    (is (equal (gtype "GdkEventType")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GdkEventType"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 32  (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  0  (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the names of the class properties.
-  ;; no class properties for an Enum
-
-  ;; Get the names of the style properties.
-  ;; no style properties for an Enum
-
-  ;; Get the names to the child properties
-  ;; no child properties for an Enum
-
-  ;; Get the class definition
-  (is (equal '(DEFINE-G-ENUM "GdkEventType"
-    GDK-EVENT-TYPE
-    (:EXPORT T :TYPE-INITIALIZER "gdk_event_type_get_type")
-  (:NOTHING -1)
-  (:DELETE 0)
-  (:DESTROY 1)
-  (:EXPOSE 2)
-  (:MOTION-NOTIFY 3)
-  (:BUTTON-PRESS 4)
-  (:2BUTTON-PRESS 5)
-  (:DOUBLE-BUTTON-PRESS 5)
-  (:3BUTTON-PRESS 6)
-  (:TRIPLE-BUTTON-PRESS 6)
-  (:BUTTON-RELEASE 7)
-  (:KEY-PRESS 8)
-  (:KEY-RELEASE 9)
-  (:ENTER-NOTIFY 10)
-  (:LEAVE-NOTIFY 11)
-  (:FOCUS-CHANGE 12)
-  (:CONFIGURE 13)
-  (:MAP 14)
-  (:UNMAP 15)
-  (:PROPERTY-NOTIFY 16)
-  (:SELECTION-CLEAR 17)
-  (:SELECTION-REQUEST 18)
-  (:SELECTION-NOTIFY 19)
-  (:PROXIMITY-IN 20)
-  (:PROXIMITY-OUT 21)
-  (:DRAG-ENTER 22)
-  (:DRAG-LEAVE 23)
-  (:DRAG-MOTION 24)
-  (:DRAG-STATUS 25)
-  (:DROP-START 26)
-  (:DROP-FINISHED 27)
-  (:CLIENT-EVENT 28)
-  (:VISIBILITY-NOTIFY 29)
-  (:SCROLL 31)
-  (:WINDOW-STATE 32)
-  (:SETTING 33)
-  (:OWNER-CHANGE 34)
-  (:GRAB-BROKEN 35)
-  (:DAMAGE 36)
-  (:TOUCH-BEGIN 37)
-  (:TOUCH-UPDATE 38)
-  (:TOUCH-END 39)
-  (:TOUCH-CANCEL 40)
-  (:TOUCHPAD-SWIPE 41)
-  (:TOUCHPAD-PINCH 42)
-  (:PAD-BUTTON-PRESS 43)
-  (:PAD-BUTTON-RELEASE 44)
-  (:PAD-RING 45)
-  (:PAD-STRIP 46)
-  (:PAD-GROUP-MODE 47)
-  (:EVENT-LAST 48))
-             (get-g-type-definition "GdkEventType")))
-)
-
-(test gdk-event-type-value
-  (is (= -1 (foreign-enum-value 'gdk-event-type :nothing)))
-  (is (=  5 (foreign-enum-value 'gdk-event-type :2button-press)))
-  (is (=  5 (foreign-enum-value 'gdk-event-type :double-button-press)))
-  (is (=  6 (foreign-enum-value 'gdk-event-type :3button-press)))
-  (is (=  6 (foreign-enum-value 'gdk-event-type :triple-button-press))))
-
-(test gdk-event-type-keyword
-  (is (eq :nothing (foreign-enum-keyword 'gdk-event-type -1)))
-  (is (eq :double-button-press (foreign-enum-keyword 'gdk-event-type 5)))
-  (is (eq :triple-button-press (foreign-enum-keyword 'gdk-event-type 6))))
-
-
-;;;     GdkEventMask --> gdk.event-structures.lisp
+(defvar *verbose-gdk-events* nil)
 
 ;;;   GDK_CURRENT_TIME
 
@@ -150,94 +9,298 @@
   (is (= 0 +gdk-current-time+)))
 
 ;;;     GDK_PRIORITY_EVENTS
+
 ;;;     GDK_PRIORITY_REDRAW
+
+(test +gdk-priority-redraw+
+  (is (= 120 +gdk-priority-redraw+)))
+
 ;;;     GDK_EVENT_PROPAGATE
+
+(test +gdk-event-propagate+
+  (is-false +gdk-event-propagate+))
+
 ;;;     GDK_EVENT_STOP
+
+(test +gdk-event-stop+
+  (is-true +gdk-event-stop+))
+
 ;;;     GDK_BUTTON_PRIMARY
 ;;;     GDK_BUTTON_MIDDLE
 ;;;     GDK_BUTTON_SECONDARY
 
-;;;   gdk_events_pending
+;;; --- Functions --------------------------------------------------------------
+
+;;;     gdk_events_pending
+
+(defun my-event-handler (event)
+  (when *verbose-gdk-events*
+    (format t "~&in MY-EVENT-HANDLER~%")
+    (format t "~a~%" event))
+  ;; Pass the event to GTK event handler
+  (gtk-main-do-event event))
+
+;; Install an event handler to inspect the main loop
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (gdk-event-handler-set #'my-event-handler))
+
+(defun clear-event-loop ()
+  (let ((*verbose-gdk-events* t))
+    (loop while (gdk-events-pending)
+          do (when *verbose-gdk-events*
+               (format t "~&in CLEAR-EVENT-LOOP~%"))
+               (gtk-main-iteration-do nil))))
+
+(defun events-pending-callback ()
+  (let ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default)))))
+    (is (= 1 (gtk-main-level)))
+    ;; Put two events on the main loop, the following code find these events
+    (gdk-event-put (gdk-event-new :button-press :device device))
+    (gdk-event-put (gdk-event-new :key-press))
+    ;; Look for pending events
+    (loop while (gdk-events-pending)
+          do (format t "~&Event is pending.~%")
+             (gtk-main-iteration-do nil))
+    ;; Quit the callback
+    (gtk-main-quit)
+    +g-source-remove+))
 
 (test gdk-events-pending
-  (let ((event (gdk-event-new :key-press)))
-    ;; We have to set the slot string to a non-nil value
-    (setf (gdk-event-key-string event) "")
-    (gdk-event-put event)
-    (is-true (gdk-events-pending))
-    (gdk-event-get)))
+  (let ((*verbose-gdk-events* t))
+    (is (= 0 (gtk-main-level)))
+    (g-timeout-add 100 #'events-pending-callback)
+    (gtk-main)
+    (is (= 0 (gtk-main-level)))))
 
-;;;   gdk_event_peek
+;;;     gdk_event_peek
 
-#+nil ; a second run changes the result
 (test gdk-event-peek
-  (let ((event (gdk-event-new :key-press)))
-    ;; We have to set the slot string to a non-nil value
-    (setf (gdk-event-key-string event) "")
-    (gdk-event-put event)
-    (is (eq 'gdk-event-key (type-of (gdk-event-peek))))))
+  (let ((*verbose-gdk-events* t)
+        (event (gdk-event-new :key-press)))
+    (is-false (gdk-event-put event))
+    (is (eq 'gdk-event-key (type-of (gdk-event-peek))))
+    (clear-event-loop)
+    (is-false (gdk-event-peek))))
 
-;;;   gdk_event_get
-;;;   gdk_event_put
+;;;     gdk_event_get
+;;;     gdk_event_put
 
-#+nil ; a second run changes the result
 (test gdk-event-get
-  (let ((event (gdk-event-new :key-press)))
-    ;; We have to set the slot string to a non-nil value
-    (setf (gdk-event-key-string event) "")
-    (gdk-event-put event)
-    (is (eq 'gdk-event-key (type-of (gdk-event-get))))))
+  (let ((*verbose-gdk-events* t)
+        (event (gdk-event-new :key-press)))
+    (is-false (gdk-event-put event))
+    (is (eq 'gdk-event-key (type-of (gdk-event-get))))
+    (clear-event-loop)))
 
 ;;;   gdk_event_new
 
 (test gdk-event-new
+  (is (eq 'gdk-event (type-of (gdk-event-new :nothing))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :delete))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :destroy))))
+  (is (eq 'gdk-event-expose (type-of (gdk-event-new :expose))))
+  (is (eq 'gdk-event-motion (type-of (gdk-event-new :motion-notify))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :button-press))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :2button-press))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :double-button-press))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :3button-press))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :triple-button-press))))
+  (is (eq 'gdk-event-button (type-of (gdk-event-new :button-release))))
   (is (eq 'gdk-event-key (type-of (gdk-event-new :key-press))))
-  (is (eq 'gdk-event-button (type-of (gdk-event-new :button-press)))))
+  (is (eq 'gdk-event-key (type-of (gdk-event-new :key-release))))
+  (is (eq 'gdk-event-crossing (type-of (gdk-event-new :enter-notify))))
+  (is (eq 'gdk-event-crossing (type-of (gdk-event-new :leave-notify))))
+  (is (eq 'gdk-event-focus (type-of (gdk-event-new :focus-change))))
+  (is (eq 'gdk-event-configure (type-of (gdk-event-new :configure))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :map))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :unmap))))
+  (is (eq 'gdk-event-property (type-of (gdk-event-new :property-notify))))
+  (is (eq 'gdk-event-selection (type-of (gdk-event-new :selection-clear))))
+  (is (eq 'gdk-event-selection (type-of (gdk-event-new :selection-request))))
+  (is (eq 'gdk-event-selection (type-of (gdk-event-new :selection-notify))))
+  (is (eq 'gdk-event-proximity (type-of (gdk-event-new :proximity-in))))
+  (is (eq 'gdk-event-proximity (type-of (gdk-event-new :proximity-out))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drag-enter))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drag-leave))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drag-motion))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drag-status))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drop-start))))
+  (is (eq 'gdk-event-dnd (type-of (gdk-event-new :drop-finished))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :client-event))))
+  (is (eq 'gdk-event-visibility (type-of (gdk-event-new :visibility-notify))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :not-used))))
+  (is (eq 'gdk-event-scroll (type-of (gdk-event-new :scroll))))
+  (is (eq 'gdk-event-window-state (type-of (gdk-event-new :window-state))))
+  (is (eq 'gdk-event-setting (type-of (gdk-event-new :setting))))
+  (is (eq 'gdk-event-owner-change (type-of (gdk-event-new :owner-change))))
+  (is (eq 'gdk-event-grab-broken (type-of (gdk-event-new :grab-broken))))
+  (is (eq 'gdk-event (type-of (gdk-event-new :damage))))
+  (is (eq 'gdk-event-touch (type-of (gdk-event-new :touch-begin))))
+  (is (eq 'gdk-event-touch (type-of (gdk-event-new :touch-update))))
+  (is (eq 'gdk-event-touch (type-of (gdk-event-new :touch-end))))
+  (is (eq 'gdk-event-touch (type-of (gdk-event-new :touch-cancel))))
+  (is (eq 'gdk-event-touchpad-swipe (type-of (gdk-event-new :touchpad-swipe))))
+  (is (eq 'gdk-event-touchpad-pinch (type-of (gdk-event-new :touchpad-pinch))))
+  (is (eq 'gdk-event-pad-button (type-of (gdk-event-new :pad-button-press))))
+  (is (eq 'gdk-event-pad-button (type-of (gdk-event-new :pad-button-release))))
+  (is (eq 'gdk-event-pad-axis (type-of (gdk-event-new :pad-ring))))
+  (is (eq 'gdk-event-pad-axis (type-of (gdk-event-new :pad-strip))))
+  (is (eq 'gdk-event-pad-group-mode (type-of (gdk-event-new :pad-group-mode)))))
 
-;;;   gdk_event_copy
+;;;     gdk_event_copy
 
 (test gdk-event-copy
   (let ((event (gdk-event-new :key-press)))
     (is (eq 'gdk-event-key (type-of (gdk-event-copy event))))))
 
-;;;   gdk_event_free
-;;;   gdk_event_get_axis
+;;;     gdk_event_free
+
+;;;     gdk_event_get_axis
+
+(test gdk-event-axis
+  (let ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default)))))
+    (is (= 0.0d0 (gdk-event-axis (gdk-event-new :button-press :device device) :ignore)))
+    (is (= 0.0d0 (gdk-event-axis (gdk-event-new :button-press :device device) :x)))
+    (is (= 0.0d0 (gdk-event-axis (gdk-event-new :button-press :device device) :y)))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :pressure))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :xtilt))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :ytilt))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :wheel))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :distance))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :rotation))
+    (is-false (gdk-event-axis (gdk-event-new :button-press :device device) :slider))))
 
 ;;;     gdk_event_get_button
 
-(test gdk-event-get-button
-  (let ((event (gdk-event-new :button-press)))
-    (is (= 0 (gdk-event-get-button event)))
-    (setf (gdk-event-button-button event) 1)
-    (is (= 1 (gdk-event-get-button event)))))
+(test gdk-event-button
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :button-press :device device)))
+    (is (= 0 (gdk-event-button event)))
+    (is (= 1 (setf (gdk-event-button-button event) 1)))
+    (is (= 1 (gdk-event-button event)))))
 
 ;;;     gdk_event_get_click_count
+
+(test gdk-event-click-count
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :button-press :device device)))
+    (is (= 1 (gdk-event-click-count event)))))
+
 ;;;     gdk_event_get_coords
+
+(test gdk-event-coords
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :button-press :device device)))
+
+    (is (equal '(0.0d0 0.0d0) (multiple-value-list (gdk-event-coords event))))
+
+))
+
 ;;;     gdk_event_get_keycode
 ;;;     gdk_event_get_keyval
+
+(test gdk-event-key
+  (let ((event (gdk-event-new :key-press :keyval 12 :hardware-keycode 13)))
+    (is (= 12 (gdk-event-keyval event)))
+    (is (= 13 (gdk-event-keycode event)))))
+
 ;;;     gdk_event_get_root_coords
+
+(test gdk-event-root-coords
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :button-press :device device)))
+
+    (is (equal '(0.0d0 0.0d0) (multiple-value-list (gdk-event-root-coords event))))
+
+))
+
 ;;;     gdk_event_get_scroll_direction
+
+(test gdk-event-get-scroll-direction
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :scroll :device device :direction :smooth)))
+    (is (eq :smooth (gdk-event-scroll-direction event)))
+    ;; FIXME: Should be :smooth
+    (is-false (gdk-event-get-scroll-direction event))
+))
+
 ;;;     gdk_event_get_scroll_deltas
+
+(test gdk-event-scroll-deltas
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :scroll :device device :direction :smooth)))
+    (is (eq :scroll (gdk-event-type event)))
+    (is (eq :smooth (gdk-event-scroll-direction event)))
+    (is (= 0.0d0 (gdk-event-scroll-delta-x event)))
+    (is (= 0.0d0 (gdk-event-scroll-delta-y event)))
+    (is (equal '(0.0d0 0.0d0)
+                (multiple-value-list (gdk-event-scroll-deltas event))))))
+
+;;;     gdk_event_is_scroll_stop_event
+
+(test gdk-event-is-scroll-stop-event
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :scroll :device device :direction :smooth)))
+
+    (is-false (gdk-event-is-scroll-stop-event event))
+))
+
 ;;;     gdk_event_get_state
+
+(test gdk-event-state
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :scroll :device device :state '(:shift-mask))))
+
+  (is (= 0 (gdk-event-state nil)))
+  (is (equal '(:shift-mask) (gdk-event-state event)))
+
+))
+
 ;;;     gdk_event_get_time
-;;;
-;;;     GdkEventSequence  --> gdk.event-structures.lisp
-;;;
+
+(test gdk-event-state
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :scroll :device device :state '(:shift-mask))))
+
+  (is (= 0 (gdk-event-time event)))
+
+))
+
+
+;;;     gdk_event_get_window
+;;;     gdk_event_get_event_type
+
 ;;;     gdk_event_get_event_sequence
+
+(test gdk-event-event-sequence
+  (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
+         (event (gdk-event-new :touch-begin :device device)))
+
+  (is (eq 'gdk-event-sequence (type-of (gdk-event-event-sequence event))))
+
+))
+
 ;;;     gdk_event_request_motions
+
+
+
 ;;;     gdk_events_get_angle
 ;;;     gdk_events_get_center
 ;;;     gdk_events_get_distance
 ;;;     gdk_event_triggers_context_menu
-;;;
+;;;     gdk_event_get_seat
+;;;     gdk_event_get_scancode
+;;;     gdk_event_get_pointer_emulated
+
 ;;;     gdk_event_handler_set
-;;;
+
 ;;;     gdk_get_show_events
 ;;;     gdk_set_show_events
 
 ;;;     gdk_event_set_screen
 ;;;     gdk_event_get_screen
 
+#+nil
 (test gdk-event-get-screen
   (let* ((event (gdk-event-new :button-press))
          (display (gdk-display-default))
@@ -251,6 +314,7 @@
 ;;;     gdk_event_get_device
 ;;;     gdk_event_set_device
 
+#+nil
 (test gdk-event-get-device
   (let* ((event (gdk-event-new :button-press))
          (display (gdk-display-default))
@@ -266,6 +330,7 @@
 ;;;     gdk_event_get_source_device
 ;;;     gdk_event_set_source_device
 
+#+nil
 (test gdk-event-get-source-device
   (let* ((event (gdk-event-new :motion-notify))
          (display (gdk-display-default))
@@ -277,5 +342,7 @@
 ;    (is (eq 'gdk-device (type-of (gdk-event-get-source-device event))))
 ))
 
+;;;     gdk_event_get_device_tool
+;;;     gdk_event_set_device_tool
 ;;;     gdk_setting_get
 

@@ -111,8 +111,6 @@
                          "gchararray" T T)))
              (get-g-type-definition "GtkMenu"))))
 
-
-
 ;;; --- Properties -------------------------------------------------------------
 
 (test gtk-menu-properties
@@ -167,7 +165,8 @@
 ;;;     gtk_menu_new_from_model
 
 (test gtk-menu-new-from-model
-  (is (eq 'gtk-menu (type-of (gtk-menu-new-from-model (make-instance 'g-menu))))))
+  (is (eq 'gtk-menu
+          (type-of (gtk-menu-new-from-model (make-instance 'g-menu))))))
 
 ;;;     gtk_menu_set_screen
 

@@ -393,19 +393,47 @@
 
 ;;; --- gdk-window-coords-from-parent ------------------------------------------
 
-(test gdk-window-coords-from-parent
+(test gdk-window-coords-from-parent.1
   (let ((window (gdk-get-default-root-window)))
     (multiple-value-bind (x y)
       (gdk-window-coords-from-parent window 20.0d0 10.0d0)
       (is (= 20.0d0 x))
       (is (= 10.0d0 y)))))
 
+(test gdk-window-coords-from-parent.2
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-from-parent window 20.0 10.0)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
+(test gdk-window-coords-from-parent.3
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-from-parent window 20 10)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
 ;;; --- gdk-window-coords-to-parent --------------------------------------------
 
-(test gdk-window-coords-to-parent
+(test gdk-window-coords-to-parent.1
   (let ((window (gdk-get-default-root-window)))
     (multiple-value-bind (x y)
       (gdk-window-coords-to-parent window 20.0d0 10.0d0)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
+(test gdk-window-coords-to-parent.2
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-to-parent window 20.0 10.0)
+      (is (= 20.0d0 x))
+      (is (= 10.0d0 y)))))
+
+(test gdk-window-coords-to-parent.3
+  (let ((window (gdk-get-default-root-window)))
+    (multiple-value-bind (x y)
+      (gdk-window-coords-to-parent window 20 10)
       (is (= 20.0d0 x))
       (is (= 10.0d0 y)))))
 
