@@ -1199,10 +1199,10 @@
   @end{short}
 
   If no tags affecting language apply to the iterator, the return value is
-  identical to that of the function @fun{gtk-get-default-language}.
+  identical to that of the function @fun{gtk-default-language}.
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-attributes}
-  @see-function{gtk-get-default-language}"
+  @see-function{gtk-default-language}"
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-language)

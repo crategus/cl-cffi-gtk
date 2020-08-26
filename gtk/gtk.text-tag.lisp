@@ -1076,7 +1076,7 @@
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If not set, an appropriate default will be used.
   Note that the initial value of this property depends on the current locale,
-  see also the @fun{gtk-get-default-language} function. @br{}
+  see also the function @fun{gtk-default-language}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation

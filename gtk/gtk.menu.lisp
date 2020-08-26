@@ -1377,7 +1377,7 @@
   concurrent requests for mouse/keyboard grab requests. To function properly,
   this needs to be the time stamp of the user event, such as a mouse click or
   key press, that caused the initiation of the popup. Only if no such event is
-  available, the @fun{gtk-get-current-event-time} function can be used instead.
+  available, the function @fun{gtk-current-event-time} can be used instead.
   @begin[Warning]{dictionary}
     The @sym{gtk-menu-popup-for-device} function has been deprecated since
     version 3.22 and should not be used in newly-written code. Please use the
@@ -1387,7 +1387,7 @@
   @see-class{gtk-menu}
   @see-class{gdk-device}
   @see-class{gtk-widget}
-  @see-function{gtk-get-current-event-time}"
+  @see-function{gtk-current-event-time}"
   (%gtk-menu-popup-for-device menu
                               device
                               parent-menu-shell
@@ -1417,7 +1417,7 @@
                                  parent-menu-item
                                  position-func
                                  (button 0)
-                                 (activate-time (gtk-get-current-event-time)))
+                                 (activate-time (gtk-current-event-time)))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-16}
   @argument[menu]{a @class{gtk-menu} widget}
@@ -1448,7 +1448,7 @@
   concurrent requests for mouse/keyboard grab requests. To function properly,
   this needs to be the timestamp of the user event, such as a mouse click or
   key press, that caused the initiation of the popup. Only if no such event is
-  available, the @fun{gtk-get-current-event-time} function can be used instead.
+  available, the function @fun{gtk-current-event-time} can be used instead.
   @begin[Warning]{dictionary}
     The @sym{gtk-menu-popup} function has been deprecated since version 3.22 and
     should not be used in newly-written code. Please use the
@@ -1457,7 +1457,7 @@
   @end{dictionary}
   @see-class{gtk-menu}
   @see-class{gtk-widget}
-  @see-function{gtk-get-current-event-time}"
+  @see-function{gtk-current-event-time}"
   (if position-func
       (with-stable-pointer (ptr position-func)
         (%gtk-menu-popup menu
