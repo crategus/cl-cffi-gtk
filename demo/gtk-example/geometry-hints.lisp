@@ -5,7 +5,7 @@
           (window (gtk-window-new :toplevel))
           (box (make-instance 'gtk-box :orientation :vertical))
           ;; Define a geometry for the size hints
-          (size-hints (make-gdk-geometry :min-width        600         
+          (size-hints (make-gdk-geometry :min-width        600
                                          :min-height       500
                                          :max-width          0
                                          :max-height         0

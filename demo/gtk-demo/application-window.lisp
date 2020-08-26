@@ -57,9 +57,9 @@
   (gtk-show-about-dialog (app-window *app*)
                          :program-name "GTK+ Lisp Code Demos"
                          :version (format nil "Running against GTK+ ~D.~D.~D"
-                                              (gtk-get-major-version)
-                                              (gtk-get-minor-version)
-                                              (gtk-get-micro-version))
+                                              (gtk-major-version)
+                                              (gtk-minor-version)
+                                              (gtk-micro-version))
                          :copyright "(C) 2014 Dieter Kaiser"
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"

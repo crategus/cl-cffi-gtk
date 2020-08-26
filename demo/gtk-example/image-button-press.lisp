@@ -9,6 +9,13 @@
     (g-signal-connect event-box "button-press-event"
                       (lambda (box event)
                         (declare (ignore box))
+                        ;; Print infos about the event
+                        (format t "~&in Signal Handler BUTTON-PRESS-EVENT~%")
+                        (format t "~a~%" (gtk-current-event))
+                        (format t "~a~%" (gtk-current-event-time))
+                        (format t "~a~%" (gtk-current-event-state))
+                        (format t "~a~%" (gtk-current-event-device))
+                        ;; Print position of mouse click
                         (format t "Event box clicked at : ~6,2f, ~6,2f~%"
                                   (gdk-event-button-x event)
                                   (gdk-event-button-y event))

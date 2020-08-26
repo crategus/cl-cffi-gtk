@@ -138,9 +138,9 @@
   (gtk-show-about-dialog (gtk-application-active-window *application*)
                          :program-name "GTK Widget Factory"
                          :version (format nil "Running against GTK+ ~d.~d.~d"
-                                          (gtk-get-major-version)
-                                          (gtk-get-minor-version)
-                                          (gtk-get-micro-version))
+                                          (gtk-major-version)
+                                          (gtk-minor-version)
+                                          (gtk-micro-version))
                          :copyright "© 2020 Dieter Kaiser"
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"

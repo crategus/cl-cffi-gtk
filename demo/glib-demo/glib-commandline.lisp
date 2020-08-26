@@ -37,7 +37,7 @@
         (context (g-option-context-new "- test tree model perfomance")))
     (format t "in main(): ~A~%" argv)
     (g-option-context-add-main-entries context entries nil)
-    (g-option-context-add-group context (gtk-get-option-group t))
+    (g-option-context-add-group context (gtk-option-group t))
     (when (not (g-option-context-parse context argv))
       (error "option parsing failed"))))
 
