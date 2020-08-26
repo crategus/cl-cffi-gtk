@@ -417,9 +417,7 @@
     @about-function{gdk-geometry-win-gravity}
 
     @about-class{gdk-window}
-
     @about-generic{gdk-window-cursor}
-
     @about-function{gdk-window-new}
     @about-function{gdk-window-destroy}
     @about-function{gdk-window-get-window-type}
@@ -652,11 +650,6 @@
     functions are rarely needed. Though some of the fields in the Event
     Structures are useful.
 
-    @about-symbol{gdk-event-type}
-    @about-symbol{gdk-event-mask}
-
-    @about-class{gdk-event-sequence}
-
     @about-variable{+gdk-current-time+}
     @about-variable{+gdk-priority-events+}
     @about-variable{+gdk-priority-redraw+}
@@ -665,7 +658,9 @@
     @about-variable{+gdk-button-primary+}
     @about-variable{+gdk-button-middle+}
     @about-variable{+gdk-button-secondary+}
-
+    @about-symbol{gdk-event-type}
+    @about-symbol{gdk-event-mask}
+    @about-class{gdk-event-sequence}
     @about-function{gdk-events-pending}
     @about-function{gdk-event-peek}
     @about-function{gdk-event-get}
@@ -673,39 +668,34 @@
     @about-function{gdk-event-new}
     @about-function{gdk-event-copy}
     @about-function{gdk-event-free}
-    @about-function{gdk-event-get-axis}
-    @about-function{gdk-event-get-button}
-    @about-function{gdk-event-get-click-count}
-    @about-function{gdk-event-get-coords}
-    @about-function{gdk-event-get-keycode}
-    @about-function{gdk-event-get-keyval}
-    @about-function{gdk-event-get-root-coords}
+    @about-function{gdk-event-axis}
+    @about-function{gdk-event-button}
+    @about-function{gdk-event-click-count}
+    @about-function{gdk-event-coords}
+    @about-function{gdk-event-keycode}
+    @about-function{gdk-event-keyval}
+    @about-function{gdk-event-root-coords}
     @about-function{gdk-event-get-scroll-direction}
-    @about-function{gdk-event-get-scroll-deltas}
-    @about-function{gdk-event-get-state}
-    @about-function{gdk-event-get-time}
+    @about-function{gdk-event-scroll-deltas}
+    @about-function{gdk-event-state}
+    @about-function{gdk-event-time}
     @about-function{gdk-event-get-window}
     @about-function{gdk-event-get-event-type}
-    @about-function{gdk-event-get-event-sequence}
+    @about-function{gdk-event-event-sequence}
     @about-function{gdk-event-request-motions}
-    @about-function{gdk-event-get-angle}
-    @about-function{gdk-event-get-center}
-    @about-function{gdk-events-get-distance}
+    @about-function{gdk-events-angle}
+    @about-function{gdk-events-center}
+    @about-function{gdk-events-distance}
     @about-function{gdk-event-triggers-context-menu}
-    @about-function{gdk-event-get-seat}
-    @about-function{gdk-event-get-scancode}
-    @about-function{gdk-event-get-pointer-emulated}
+    @about-function{gdk-event-seat}
+    @about-function{gdk-event-scancode}
+    @about-function{gdk-event-pointer-emulated}
     @about-function{gdk-event-handler-set}
-    @about-function{gdk-get-show-events}
-    @about-function{gdk-set-show-events}
-    @about-function{gdk-event-set-screen}
-    @about-function{gdk-event-get-screen}
-    @about-function{gdk-event-get-device}
-    @about-function{gdk-event-set-device}
-    @about-function{gdk-event-get-source-device}
-    @about-function{gdk-event-set-source-device}
-    @about-function{gdk-event-get-device-tool}
-    @about-function{gdk-event-set-device-tool}
+    @about-function{gdk-show-events}
+    @about-function{gdk-event-screen}
+    @about-function{gdk-event-device}
+    @about-function{gdk-event-source-device}
+    @about-function{gdk-event-device-tool}
     @about-function{gdk-setting-get}
   @end{section}
   @begin[Event Structures]{section}
@@ -1026,17 +1016,16 @@
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes.
 
+    @about-symbol{gdk-modifier-intent}
     @about-class{gdk-keymap}
-
     @about-struct{gdk-keymap-key}
     @about-function{copy-gdk-keymap-key}
     @about-function{make-gdk-keymap-key}
     @about-function{gdk-keymap-key-keycode}
     @about-function{gdk-keymap-key-group}
     @about-function{gdk-keymap-key-level}
-
-    @about-function{gdk-keymap-get-default}
-    @about-function{gdk-keymap-get-for-display}
+    @about-function{gdk-keymap-default}
+    @about-function{gdk-keymap-for-display}
     @about-function{gdk-keymap-lookup-key}
     @about-function{gdk-keymap-translate-keyboard-state}
     @about-function{gdk-keymap-get-entries-for-keyval}
@@ -1049,9 +1038,7 @@
     @about-function{gdk-keymap-modifier-state}
     @about-function{gdk-keymap-add-virtual-modifiers}
     @about-function{gdk-keymap-map-virtual-modifiers}
-    @about-symbol{gdk-modifier-intent}
-    @about-function{gdk-keymap-get-modifier-mask}
-
+    @about-function{gdk-keymap-modifier-mask}
     @about-function{gdk-keyval-name}
     @about-function{gdk-keyval-from-name}
     @about-function{gdk-keyval-convert-case}
