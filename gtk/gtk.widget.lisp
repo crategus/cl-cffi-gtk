@@ -5091,40 +5091,7 @@
 ;;; enum GtkTextDirection
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Implement a base-type for defining an enumeration
-
-(define-g-enum "GtkTextDirection" gtk-text-direction
-  (:export t
-   :type-initializer "gtk_text_direction_get_type")
-  (:dummy -1) ; Workaround to ensure the base-type is :int for the enumeration
-  (:none 0)
-  (:ltr 1)
-  (:rtl 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-direction atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-text-direction atdoc:*external-symbols*)
- "@version{2020-4-22}
-  @begin{short}
-    This direction controls the primary direction for widgets containing text,
-    and also the direction in which the children of a container are packed.
-  @end{short}
-  The ability to set the direction is present in order so that correct
-  localization into languages with right-to-left reading directions can be done.
-  Generally, applications will let the default reading direction present, except
-  for containers where the containers are arranged in an order that is
-  explicitely visual rather than logical, such as buttons for text
-  justification.
-  @begin{pre}
-(define-g-enum \"GtkTextDirection\" gtk-text-direction
-  (:export t
-   :type-initializer \"gtk_text_direction_get_type\")
-  (:none 0)
-  (:ltr 1)
-  (:rtl 2))
-  @end{pre}
-  @see-function{gtk-widget-direction}
-  @see-function{gtk-widget-default-direction}")
+;; --> gtk.enumerations.lisp
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()
@@ -5185,7 +5152,7 @@
 (defcfun ("gtk_widget_get_default_direction" gtk-widget-default-direction)
     gtk-text-direction
  #+cl-cffi-gtk-documentation
- "@version{2020-4-22}
+ "@version{2020-8-21}
   @syntax[]{(gtk-widget-default-direction) => direction}
   @syntax[]{(setf (gtk-widget-default-direction) direction)}
   @argument[direction]{the default direction of type
@@ -5197,9 +5164,10 @@
   The function @sym{gtk-widget-default-direction} obtains the current default
   reading direction. The function @sym{(setf gtk-widget-default-direction)} sets
   the default reading direction for widgets where the direction has not
-  been explicitly set by the fucntion @fun{gtk-widget-direction}.
+  been explicitly set by the function @fun{gtk-widget-direction}.
+  @see-class{gtk-widget}
   @see-symbol{gtk-text-direction}
-  @see-function{gtk-widget-directiton}")
+  @see-function{gtk-widget-direction}")
 
 (export 'gtk-widget-default-direction)
 
