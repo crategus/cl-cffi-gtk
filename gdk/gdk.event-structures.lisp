@@ -141,8 +141,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-scroll-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-scroll-direction atdoc:*external-symbols*)
- "@version{2013-9-20}
-  @short{Specifies the direction for @class{gdk-event-scroll}.}
+ "@version{2020-8-24}
+  @short{Specifies the direction for an event of type @class{gdk-event-scroll}.}
   @begin{pre}
 (define-g-enum \"GdkScrollDirection\" gdk-scroll-direction
   (:export t
@@ -159,11 +159,10 @@
     @entry[:left]{The window is scrolled to the left.}
     @entry[:right]{The window is scrolled to the right.}
     @entry[:smooth]{The scrolling is determined by the delta values in
-      @class{gdk-event-scroll}. See the function
-      @fun{gdk-event-get-scroll-deltas}.}
+      @class{gdk-event-scroll}. See the function @fun{gdk-event-scroll-deltas}.}
   @end{table}
   @see-class{gdk-event-scroll}
-  @see-function{gdk-event-get-scroll-delta}")
+  @see-function{gdk-event-scroll-deltas}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkVisibilityState
@@ -203,7 +202,7 @@
 ;;; enum GdkCrossingMode
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkCrosssingMode" gdk-crossing-mode
+(define-g-enum "GdkCrossingMode" gdk-crossing-mode
   (:export t
    :type-initializer "gdk_crossing_mode_get_type")
   :normal
@@ -866,7 +865,7 @@
   touch-enabled devices. Those will come as sequences of @class{gdk-event-touch}
   with type @code{:touch-update}, enclosed by two events with type
   @code{:touch-begin} and @code{:touch-end}, or @code{:touch-cancel}.
-  The function @fun{gdk-event-get-event-sequence} returns the event sequence
+  The function @fun{gdk-event-event-sequence} returns the event sequence
   for these events, so different sequences may be distinguished.
   @begin{pre}
 (define-g-flags \"GdkEventMask\" gdk-event-mask
@@ -938,7 +937,7 @@
   @see-symbol{gdk-event-type}
   @see-class{gdk-event-touch}
   @see-function{gdk-event-request-motions}
-  @see-function{gdk-event-get-event-sequence}")
+  @see-function{gdk-event-event-sequence}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkEventSequence
@@ -949,9 +948,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-sequence 'type)
- "@version{2013-6-17}
-  See the function @fun{gdk-event-get-event-sequence}.
-  @see-function{gdk-event-get-event-sequence}")
+ "@version{2020-8-25}
+  @begin{short}
+    See the function @fun{gdk-event-event-sequence}.
+  @end{short}
+  @see-function{gdk-event-event-sequence}")
 
 (export (boxed-related-symbols 'gdk-event-sequence))
 
@@ -966,15 +967,16 @@
   (:variant type
             ;; GdkEventKey
             ((:key-press :key-release) gdk-event-key
-             (time :uint32)
-             (state gdk-modifier-type)
-             (keyval :uint)
-             (length :int)
+             (time :uint32 :initform 0)
+             (state gdk-modifier-type :initform 0)
+             (keyval :uint :initform 0)
+             (length :int :initform 0)
              (string (:string :free-from-foreign nil
-                              :free-to-foreign nil))
-             (hardware-keycode :uint16)
-             (group :uint8)
-             (is-modifier :uint))
+                              :free-to-foreign nil)
+                     :initform "")
+             (hardware-keycode :uint16 :initform 0)
+             (group :uint8 :initform 0)
+             (is-modifier :uint :initform 0))
             ;; GdkEventButton
             ((:button-press
               :2button-press
@@ -982,95 +984,96 @@
               :3button-press
               :triple-button-press
               :button-release) gdk-event-button
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state gdk-modifier-type)
-             (button :uint)
-             (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (axes (fixed-array :double 2) :initform '(0.0d0 0.0d0))
+             (state gdk-modifier-type :initform 0)
+             (button :uint :initform 0)
+             (device (g-object gdk-device) :initform (null-pointer))
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0))
             ;; GdkEventTouch
             ((:touch-begin
               :touch-update
               :touch-end
               :touch-cancel) gdk-event-touch
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (axes (fixed-array :double 2) :initform '(0.0d0 0.0d0))
              (state gdk-modifier-type)
+             ;; FIXME: We can not initialize sequence from the Lisp side.
              (sequence (g-boxed-foreign gdk-event-sequence))
              (emulating-pointer :boolean)
              (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0))
             ;; GdkEventScroll
             ((:scroll) gdk-event-scroll
-             (time :uint32)
-             (x :double)
-             (y :double)
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
              (state gdk-modifier-type)
-             (direction gdk-scroll-direction)
+             (direction gdk-scroll-direction :initform :up)
              (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double)
-             (delta-x :double)
-             (delta-y :double))
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0)
+             (delta-x :double :initform 0.0d0)
+             (delta-y :double :initform 0.0d0))
             ;; GdkEventMotion
             ((:motion-notify) gdk-event-motion
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state gdk-modifier-type)
-             (is-hint :int16)
-             (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (axes (fixed-array :double 2) :initform '(0.0d0 0.0d0))
+             (state gdk-modifier-type :initform 0)
+             (is-hint :int16 :initform 0)
+             (device (g-object gdk-device) :initform (null-pointer))
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0))
             ;; GdkEventExpose
             ((:expose) gdk-event-expose
-             (area gdk-rectangle :inline t)
-             (region (:pointer (:struct cairo-region-t)))
-             (count :int))
-            ;; GdkEventVisibity
+             (area gdk-rectangle :inline t :initform (make-gdk-rectangle))
+             (region (:pointer (:struct cairo-region-t)) :initform (null-pointer))
+             (count :int :initform 0))
+            ;; GdkEventVisibility
             ((:visibility-notify) gdk-event-visibility
-             (state gdk-visibility-state))
+             (state gdk-visibility-state :initform :unobscured))
             ;; GdkEventCrossing
             ((:enter-notify :leave-notify) gdk-event-crossing
-             (subwindow (g-object gdk-window))
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (x-root :double)
-             (y-root :double)
-             (mode gdk-crossing-mode)
-             (detail gdk-notify-type)
-             (focus :boolean)
-             (state gdk-modifier-type))
+             (subwindow (g-object gdk-window) :initform (null-pointer))
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0)
+             (mode gdk-crossing-mode :initform :normal)
+             (detail gdk-notify-type :initform :ancestor)
+             (focus :boolean :initform nil)
+             (state gdk-modifier-type :initform 0))
             ;; GdkEventFocus
             ((:focus-change) gdk-event-focus
-             (in :int16))
+             (in :int16 :initform 0))
             ;; GdkEventConfigure
             ((:configure) gdk-event-configure
-             (x :int)
-             (y :int)
-             (width :int)
-             (height :int))
+             (x :int :initform 0)
+             (y :int :initform 0)
+             (width :int :initform 0)
+             (height :int :initform 0))
             ;; GdkEventProperty
             ((:property-notify) gdk-event-property
-             (atom gdk-atom)
-             (time :uint32)
-             (state gdk-property-state))
+             (atom gdk-atom :initform (null-pointer))
+             (time :uint32 :initform 0)
+             (state gdk-property-state :initform :new-value))
             ;; GdkEventSelection
             ((:selection-clear
               :selection-notify
               :selection-request) gdk-event-selection
-             (selection gdk-atom)
-             (target gdk-atom)
-             (property gdk-atom)
-             (time :uint32)
+             (selection gdk-atom :initform (null-pointer))
+             (target gdk-atom :initform (null-pointer))
+             (property gdk-atom :initform (null-pointer))
+             (time :uint32 :initform 0)
              (requestor (g-object gdk-window)))
             ;; GdkEventDND
             ((:drag-enter
@@ -1080,13 +1083,13 @@
               :drop-start
               :drop-finished) gdk-event-dnd
              (context (g-object gdk-drag-context))
-             (time :uint32)
-             (x-root :short)
-             (y-root :short))
+             (time :uint32 :initform 0)
+             (x-root :short :initform 0)
+             (y-root :short :initform 0))
             ;; GdkEventProximity
             ((:proximity-in
               :proximity-out) gdk-event-proximity
-             (time :uint32)
+             (time :uint32 :initform 0)
              (device (g-object gdk-device)))
             ;; GdkEventWindowState
             ((:window-state) gdk-event-window-state
@@ -1094,15 +1097,15 @@
              (new-window-state gdk-window-state))
             ;; GdkEventSetting
             ((:setting) gdk-event-setting
-             (action gdk-setting-action)
+             (action gdk-setting-action :initform :new)
              (name (:string :free-from-foreign nil :free-to-foreign nil)))
             ;; GdkEventOwnerChange
             ((:owner-change) gdk-event-owner-change
              (owner (g-object gdk-window))
-             (reason gdk-owner-change)
-             (selection gdk-atom)
-             (time :uint32)
-             (selection-time :uint32))
+             (reason gdk-owner-change :initform :new-owner)
+             (selection gdk-atom :initform (null-pointer))
+             (time :uint32 :initform 0)
+             (selection-time :uint32 :initform 0))
             ;; GdkEventGrabBroken
             ((:grab-broken) gdk-event-grab-broken
              (keyboard :boolean)
@@ -1111,52 +1114,52 @@
             ;; GdkEventTouchpadSwipe
             #+gdk-3-18
             ((:touchpad-swipe) gdk-event-touchpad-swipe
-             (phase :int8)
-             (n-fingers :int8)
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (dx :double)
-             (dy :double)
-             (x-root :double)
-             (y-root :double)
+             (phase :int8 :initform 0)
+             (n-fingers :int8 :initform 0)
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (dx :double :initform 0.0d0)
+             (dy :double :initform 0.0d0)
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0)
              (state gdk-modifier-type))
             ;; GdkEventTouchpadPinch
             #+gdk-3-18
             ((:touchpad-pinch) gdk-event-touchpad-pinch
-             (phase :int8)
-             (n-fingers :int8)
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (dx :double)
-             (dy :double)
-             (angle-delta :double)
-             (scale :double)
-             (x-root :double)
-             (y-root :double)
+             (phase :int8 :initform 0)
+             (n-fingers :int8 :initform 0)
+             (time :uint32 :initform 0)
+             (x :double :initform 0.0d0)
+             (y :double :initform 0.0d0)
+             (dx :double :initform 0.0d0)
+             (dy :double :initform 0.0d0)
+             (angle-delta :double :initform 0.0d0)
+             (scale :double :initform 0.0d0)
+             (x-root :double :initform 0.0d0)
+             (y-root :double :initform 0.0d0)
              (state gdk-modifier-type))
             ;; GdkEventPadButton
             #+gdk-3-22
             ((:pad-button-press :pad-button-release) gdk-event-pad-button
-             (time :uint32)
-             (group :uint)
-             (button :uint)
-             (mode :uint)) ; TODO: Check the type of mode
+             (time :uint32 :initform 0)
+             (group :uint :initform 0)
+             (button :uint :initform 0)
+             (mode :uint :initform 0)) ; TODO: Check the type of mode
             ;; GdkEventPadAxis
             #+gdk-3-22
             ((:pad-ring :pad-strip) gdk-event-pad-axis
-             (time :uint32)
-             (group :uint)
-             (index :uint)
-             (mode :uint)
-             (value :double))
+             (time :uint32 :initform 0)
+             (group :uint :initform 0)
+             (index :uint :initform 0)
+             (mode :uint :initform 0)
+             (value :double :initform 0.0d0))
             ;; GdkEventPadGroupMode
             #+gdk-3-22
             ((:pad-group-mode) gdk-event-pad-group-mode
-             (time :uint32)
-             (group :uint)
-             (mode :uint))
+             (time :uint32 :initform 0)
+             (group :uint :initform 0)
+             (mode :uint :initform 0))
   ))
 
 (export (boxed-related-symbols 'gdk-event))
@@ -1922,11 +1925,11 @@
   @end{short}
 
   Touch events are grouped into sequences by means of the sequence field,
-  which can also be obtained with the function
-  @fun{gdk-event-get-event-sequence}. Each sequence begins with a
-  @code{:touch-begin}, followed by any number of @code{:touch-update}, and ends
-  with a @code{:touch-end} or @code{:touch-cancel} event. With multitouch
-  devices, there may be several active sequences at the same time.
+  which can also be obtained with the function @fun{gdk-event-event-sequence}.
+  Each sequence begins with a @code{:touch-begin}, followed by any number of
+  @code{:touch-update}, and ends with a @code{:touch-end} or
+  @code{:touch-cancel} event. With multitouch devices, there may be several
+  active sequences at the same time.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
   (type gdk-event-type)
@@ -1989,7 +1992,7 @@
   @see-slot{gdk-event-touch-device}
   @see-slot{gdk-event-touch-x-root}
   @see-slot{gdk-event-touch-y-root}
-  @see-function{gdk-event-get-event-sequence}")
+  @see-function{gdk-event-event-sequence}")
 
 ;;; --- copy-gdk-event-touch ---------------------------------------------------
 
@@ -2159,7 +2162,7 @@
 
   Some GDK backends can also generate 'smooth' scroll events, which can be
   recognized by the @code{:smooth} direction. For these, the scroll deltas can
-  be obtained with the function @fun{gdk-event-get-scroll-deltas}.
+  be obtained with the function @fun{gdk-event-scroll-deltas}.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
   (type gdk-event-type)
@@ -2218,7 +2221,7 @@
   @see-slot{gdk-event-scroll-y-root}
   @see-slot{gdk-event-scroll-delta-x}
   @see-slot{gdk-event-scroll-delta-y}
-  @see-function{gdk-event-get-scroll-deltas}")
+  @see-function{gdk-event-scroll-deltas}")
 
 ;;; --- copy-gdk-event-scroll --------------------------------------------------
 
@@ -2318,10 +2321,54 @@
 (setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-direction 'function)
- "@version{2014-1-31}
-  Accessor of the slot @code{direction} of the @class{gdk-event-scroll}
-  structure.
-  @see-class{gdk-event-scroll}")
+ "@version{2020-8-25}
+  @syntax[]{(gdk-event-scroll-direction instance) => direction}
+  @syntax[]{(setf (gdk-event-scroll-direction instance) direction)}
+  @argument[instance]{a @class{gdk-event-scroll} structure}
+  @argument[direction]{a value of the @symbol{gdk-scroll-direction} enumeration}
+  @begin{short}
+    Accessor of the @code{direction} slot of the @class{gdk-event-scroll}
+    structure.
+  @end{short}
+
+  The function @sym{gdk-scroll-direction} extracts the scroll direction from a
+  scroll event.
+
+  If you wish to handle both discrete and smooth scrolling, you should check
+  the return value of this function, or of the function
+  @fun{gdk-event-scroll-deltas}. For instance:
+  @begin{pre}
+GdkScrollDirection direction;
+double vscroll_factor = 0.0;
+double x_scroll, y_scroll;
+
+if (gdk_event_get_scroll_direction (event, &direction))
+  {
+    // Handle discrete scrolling with a known constant delta;
+    const double delta = 12.0;
+
+    switch (direction)
+      {
+      case GDK_SCROLL_UP:
+        vscroll_factor = -delta;
+        break;
+      case GDK_SCROLL_DOWN:
+        vscroll_factor = delta;
+        break;
+      default:
+        // no scrolling
+        break;
+      @}
+  @}
+else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
+  {
+    // Handle smooth scrolling directly
+    vscroll_factor = y_scroll;
+  @}
+  @end{pre}
+  @see-class{gdk-event-scroll}
+  @see-symbol{gdk-scroll-direction}
+  @see-function{gdk-event-scroll-deltas}")
 
 ;;; --- gdk-event-scroll-device ------------------------------------------------
 
