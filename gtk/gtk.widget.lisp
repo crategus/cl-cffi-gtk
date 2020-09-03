@@ -8083,26 +8083,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_insert_action_group ()
-;;;
-;;; void gtk_widget_insert_action_group (GtkWidget *widget,
-;;;                                      const gchar *name,
-;;;                                      GActionGroup *group);
-;;;
-;;; Inserts group into widget. Children of widget that implement GtkActionable
-;;; can then be associated with actions in group by setting their 'action-name'
-;;; to prefix.action-name.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; name :
-;;;     the prefix for actions in group
-;;;
-;;; group :
-;;;     a GActionGroup
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_insert_action_group" gtk-widget-insert-action-group) :void
+ "@version{2020-9-3}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[name]{a @code{:string} with the prefix for actions in @arg{group}}
+  @argument[group]{a @class{g-action-group} object}
+  @begin{short}
+    Inserts @arg{group} into @arg{widget}.
+  @end{short}
+  Children of @arg{widget} that implement the @class{gtk-actionable} interface
+  can then be associated with actions in @arg{group} by setting their
+  @code{action-name} to @code{prefix.action-name}.
+  @see-class{gtk-widget}
+  @see-class{g-action-group}"
+  (widget (g-object gtk-widget))
+  (name :string)
+  (group (g-object g-action-group)))
+
+(export 'gtk-widget-insert-action-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_action_prefixes ()
