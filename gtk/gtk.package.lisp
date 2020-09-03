@@ -3165,7 +3165,6 @@ setup_tree (void)
       Context dependent bubbles.
 
       @about-symbol{gtk-popover-constraint}
-
       @about-class{gtk-popover}
       @about-generic{gtk-popover-constrain-to}
       @about-generic{gtk-popover-modal}
@@ -3173,19 +3172,18 @@ setup_tree (void)
       @about-generic{gtk-popover-position}
       @about-generic{gtk-popover-relative-to}
       @about-generic{gtk-popover-transitions-enabled}
-
       @about-function{gtk-popover-new}
       @about-function{gtk-popover-new-from-model}
       @about-function{gtk-popover-bind-model}
       @about-function{gtk-popover-popup}
       @about-function{gtk-popover-popdown}
-      @about-function{gtk-popover-set-default-widget}
-      @about-function{gtk-popover-get-default-widget}
+      @about-function{gtk-popover-default-widget}
     @end{subsection}
     @begin[GtkPopoverMenu]{subsection}
+      Popovers to use as menus.
 
       @about-class{gtk-popover-menu}
-      @about-generic{gtk-popover-visible-submenu}
+      @about-generic{gtk-popover-menu-visible-submenu}
       @about-function{gtk-popover-menu-child-position}
       @about-function{gtk-popover-menu-child-submenu}
       @about-function{gtk-popover-menu-new}

@@ -135,7 +135,7 @@ GTK+ Widgets and Objects
     gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24
     gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24
- +  gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24
+    gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24
  +  gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.24
  +  gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.24
  +  gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.24
@@ -147,8 +147,8 @@ GTK+ Widgets and Objects
  +  gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.24
  +  gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.24
     gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.24
- +  gtk.popover.lisp                 - GtkPopover                  - GTK+ 3.24 &
- +  gtk.popover-menu.lisp            - GtkPopoverMenu              - GTK+ 3.24 &
+    gtk.popover.lisp                 - GtkPopover                  - GTK+ 3.24
+    gtk.popover-menu.lisp            - GtkPopoverMenu              - GTK+ 3.24
 
   Selector Widgets and Dialogs
 
