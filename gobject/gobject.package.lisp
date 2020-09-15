@@ -467,198 +467,88 @@
     characters can be letters, numbers or a '-'. All other characters are
     replaced by a '-' during construction.
 
-    @about-function{G_IS_PARAM_SPEC_BOOLEAN}
-    @about-function{G_PARAM_SPEC_BOOLEAN}
-    @about-function{G_VALUE_HOLDS_BOOLEAN}
-    @about-variable{g-type-param-boolean}
     @about-symbol{g-param-spec-boolean}
     @about-function{g-param-spec-boolean}
-    @about-function{g-value-set-boolean}
-    @about-function{g-value-get-boolean}
-    @about-function{G_IS_PARAM_SPEC_CHAR}
-    @about-function{G_PARAM_SPEC_CHAR}
-    @about-function{G_VALUE_HOLDS_CHAR}
-    @about-variable{g-type-param-char}
+    @about-function{g-value-boolean}
     @about-symbol{g-param-spec-char}
     @about-function{g-param-spec-char}
-    @about-function{g-value-set-char}
-    @about-function{g-value-get-char}
-    @about-function{g-value-get-schar}
-    @about-function{g-value-set-schar}
-    @about-function{G_IS_PARAM_SPEC_UCHAR}
-    @about-function{G_PARAM_SPEC_UCHAR}
-    @about-function{G_VALUE_HOLDS_UCHAR}
-    @about-variable{g-type-param-uchar}
+    @about-function{g-value-char}
+    @about-function{g-value-schar}
     @about-symbol{g-param-spec-uchar}
     @about-function{g-param-spec-uchar}
-    @about-function{g-value-set-uchar}
-    @about-function{g-value-get-uchar}
-    @about-function{G_IS_PARAM_SPEC_INT}
-    @about-function{G_PARAM_SPEC_INT}
-    @about-function{G_VALUE_HOLDS_INT}
-    @about-variable{g-type-param-int}
+    @about-function{g-value-uchar}
     @about-symbol{g-param-spec-int}
     @about-function{g-param-spec-int}
-    @about-function{g-value-set-int}
-    @about-function{g-value-get-int}
-    @about-function{G_IS_PARAM_SPEC_UINT}
-    @about-function{G_PARAM_SPEC_UINT}
-    @about-function{G_VALUE_HOLDS_UINT}
-    @about-variable{g-type-param-uint}
+    @about-function{g-value-int}
     @about-symbol{g-param-spec-uint}
     @about-function{g-param-spec-uint}
-    @about-function{g-value-set-uint}
-    @about-function{g-value-get-uint}
-    @about-function{G_IS_PARAM_SPEC_LONG}
-    @about-function{G_PARAM_SPEC_LONG}
-    @about-function{G_VALUE_HOLDS_LONG}
-    @about-variable{g-type-param-long}
+    @about-function{g-value-uint}
     @about-symbol{g-param-spec-long}
     @about-function{g-param-spec-long}
-    @about-function{g-value-set-long}
-    @about-function{g-value-get-long}
-    @about-function{G_IS_PARAM_SPEC_ULONG}
-    @about-function{G_PARAM_SPEC_ULONG}
-    @about-function{G_VALUE_HOLDS_ULONG}
-    @about-variable{g-type-param-ulong}
+    @about-function{g-value-long}
     @about-symbol{g-param-spec-ulong}
     @about-function{g-param-spec-ulong}
-    @about-function{g-value-set-ulong}
-    @about-function{g-value-get-ulong}
-    @about-function{G_IS_PARAM_SPEC_INT64}
-    @about-function{G_PARAM_SPEC_INT64}
-    @about-function{G_VALUE_HOLDS_INT64}
-    @about-variable{g-type-param-int64}
+    @about-function{g-value-ulong}
     @about-symbol{g-param-spec-int64}
     @about-function{g-param-spec-int64}
-    @about-function{g-value-set-int64}
-    @about-function{g-value-get-int64}
-    @about-function{G_IS_PARAM_SPEC_UINT64}
-    @about-function{G_PARAM_SPEC_UINT64}
-    @about-function{G_VALUE_HOLDS_UINT64}
-    @about-variable{g-type-param-uint64}
+    @about-function{g-value-int64}
     @about-symbol{g-param-spec-uint64}
     @about-function{g-param-spec-uint64}
-    @about-function{g-value-set-uint64}
-    @about-function{g-value-get-uint64}
-    @about-function{G_IS_PARAM_SPEC_FLOAT}
-    @about-function{G_PARAM_SPEC_FLOAT}
-    @about-function{G_VALUE_HOLDS_FLOAT}
-    @about-variable{g-type-param-float}
+    @about-function{g-value-uint64}
     @about-symbol{g-param-spec-float}
     @about-function{g-param-spec-float}
-    @about-function{g-value-set-float}
-    @about-function{g-value-get-float}
-    @about-function{G_IS_PARAM_SPEC_DOUBLE}
-    @about-function{G_PARAM_SPEC_DOUBLE}
-    @about-function{G_VALUE_HOLDS_DOUBLE}
-    @about-variable{g-type-param-double}
+    @about-function{g-value-float}
     @about-symbol{g-param-spec-double}
     @about-function{g-param-spec-double}
-    @about-function{g-value-set-double}
-    @about-function{g-value-get-double}
-    @about-function{G_IS_PARAM_SPEC_ENUM}
-    @about-function{G_PARAM_SPEC_ENUM}
-    @about-function{G_VALUE_HOLDS_ENUM}
-    @about-variable{g-type-param-enum}
+    @about-function{g-value-double}
     @about-symbol{g-param-spec-enum}
     @about-function{g-param-spec-enum}
-    @about-function{g-value-set-enum}
-    @about-function{g-value-get-enum}
-    @about-function{G_IS_PARAM_SPEC_FLAGS}
-    @about-function{G_PARAM_SPEC_FLAGS}
-    @about-function{G_VALUE_HOLDS_FLAGS}
-    @about-variable{g-type-param-flags}
+    @about-function{g-value-enum}
     @about-symbol{g-param-spec-flags}
     @about-function{g-param-spec-flags}
-    @about-function{g-value-set-flags}
-    @about-function{g-value-get-flags}
-    @about-function{G_IS_PARAM_SPEC_STRING}
-    @about-function{G_PARAM_SPEC_STRING}
-    @about-function{G_VALUE_HOLDS_STRING}
-    @about-variable{g-type-param-string}
+    @about-function{g-value-flags}
     @about-symbol{g-param-spec-string}
     @about-function{g-param-spec-string}
-    @about-function{g-value-set-string}
+    @about-function{g-value-string}
     @about-function{g-value-set-static-string}
     @about-function{g-value-take-string}
     @about-function{g-value-set-string-take-ownership}
-    @about-function{g-value-get-string}
     @about-function{g-value-dup-string}
-    @about-function{G_IS_PARAM_SPEC_PARAM}
-    @about-function{G_PARAM_SPEC_PARAM}
-    @about-function{G_VALUE_HOLDS_PARAM}
-    @about-variable{g-type-param-param}
     @about-symbol{g-param-spec-param}
     @about-function{g-param-spec-param}
-    @about-function{g-value-set-param}
+    @about-function{g-value-param}
     @about-function{g-value-take-param}
     @about-function{g-value-set-param-take-ownership}
-    @about-function{g-value-get-param}
     @about-function{g-value-dup-param}
-    @about-function{G_IS_PARAM_SPEC_BOXED}
-    @about-function{G_PARAM_SPEC_BOXED}
-    @about-function{G_VALUE_HOLDS_BOXED}
-    @about-variable{g-type-param-boxed}
     @about-symbol{g-param-spec-boxed}
     @about-function{g-param-spec-boxed}
-    @about-function{g-value-set-boxed}
+    @about-function{g-value-boxed}
     @about-function{g-value-set-static-boxed}
     @about-function{g-value-take-boxed}
     @about-function{g-value-set-boxed-take-ownership}
-    @about-function{g-value-get-boxed}
     @about-function{g-value-dup-boxed}
-    @about-function{G_IS_PARAM_SPEC_POINTER}
-    @about-function{G_PARAM_SPEC_POINTER}
-    @about-function{G_VALUE_HOLDS_POINTER}
-    @about-variable{g-type-param-pointer}
     @about-symbol{g-param-spec-pointer}
     @about-function{g-param-spec-pointer}
-    @about-function{g-value-set-pointer}
-    @about-function{g-value-get-pointer}
-    @about-function{G_IS_PARAM_SPEC_OBJECT}
-    @about-function{G_PARAM_SPEC_OBJECT}
-    @about-function{G_VALUE_HOLDS_OBJECT}
-    @about-variable{g-type-param-object}
+    @about-function{g-value-pointer}
     @about-symbol{g-param-spec-object}
     @about-function{g-param-spec-object}
-    @about-function{g-value-set-object}
+    @about-function{g-value-object}
     @about-function{g-value-take-object}
     @about-function{g-value-set-object-take-ownership}
-    @about-function{g-value-get-object}
     @about-function{g-value-dup-object}
-    @about-function{G_IS_PARAM_SPEC_UNICHAR}
-    @about-function{G_PARAM_SPEC_UNICHAR}
-    @about-variable{g-type-param-unichar}
     @about-symbol{g-param-spec-unichar}
     @about-function{g-param-spec-unichar}
-    @about-function{G_IS_PARAM_SPEC_VALUE_ARRAY}
-    @about-function{G_PARAM_SPEC_VALUE_ARRAY}
-    @about-variable{g-type-param-value-array}
     @about-symbol{g-param-spec-value-array}
     @about-function{g-param-spec-value-array}
-    @about-function{G_IS_PARAM_SPEC_OVERRIDE}
-    @about-function{G_PARAM_SPEC_OVERRIDE}
-    @about-variable{g-type-param-override}
     @about-symbol{g-param-spec-override}
     @about-function{g-param-spec-override}
-    @about-function{G_IS_PARAM_SPEC_GTYPE}
-    @about-function{G_PARAM_SPEC_GTYPE}
-    @about-function{G_VALUE_HOLDS_GTYPE}
-    @about-variable{g-type-param-gtype}
     @about-symbol{g-param-spec-g-type}
     @about-function{g-param-spec-g-type}
-    @about-function{g-value-get-g-type}
-    @about-function{g-value-set-g-type}
-    @about-function{G_IS_PARAM_SPEC_VARIANT}
-    @about-function{G_PARAM_SPEC_VARIANT}
-    @about-function{G_VALUE_HOLDS_VARIANT}
-    @about-variable{g-type-param-variant}
+    @about-function{g-value-g-type}
     @about-symbol{g-param-spec-variant}
     @about-function{g-param-spec-variant}
-    @about-function{g-value-get-variant}
+    @about-function{g-value-variant}
     @about-function{g-value-dup-variant}
-    @about-function{g-value-set-variant}
     @about-function{g-value-take-variant}
   @end{section}
   @begin[GParamSpec]{section}

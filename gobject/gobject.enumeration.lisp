@@ -474,7 +474,7 @@
          (enum-type (registered-enum-type (g-type-name gtype))))
     (unless enum-type
       (error "Enum ~A is not registered" (g-type-name gtype)))
-    (convert-from-foreign (g-value-get-enum gvalue) enum-type)))
+    (convert-from-foreign (g-value-enum gvalue) enum-type)))
 
 ;; This function is called from set-g-value to set a GEnum Value.
 
@@ -484,7 +484,7 @@
          (enum-type (registered-enum-type type-name)))
     (unless enum-type
       (error "Enum ~A is not registered" type-name))
-    (g-value-set-enum gvalue (convert-to-foreign value enum-type))))
+    (setf (g-value-enum gvalue) (convert-to-foreign value enum-type))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_enum_get_value_by_name ()
@@ -552,7 +552,7 @@
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
       (error "Flags ~A is not registered" type-name))
-    (convert-from-foreign (g-value-get-flags gvalue) flags-type)))
+    (convert-from-foreign (g-value-flags gvalue) flags-type)))
 
 ;; This function is called from set-g-value to set a GFlag value.
 
@@ -562,7 +562,7 @@
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
       (error "Flags ~A is not registered" type-name))
-    (g-value-set-flags gvalue (convert-to-foreign value flags-type))))
+    (setf (g-value-flags gvalue) (convert-to-foreign value flags-type))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_flags_get_value_by_name ()

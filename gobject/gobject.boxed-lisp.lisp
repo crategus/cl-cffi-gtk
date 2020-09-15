@@ -767,7 +767,7 @@
                                    parse-kind)
   (declare (ignore parse-kind))
   (if (g-type= (g-value-type gvalue-ptr) (g-type-strv))
-      (convert-from-foreign (g-value-get-boxed gvalue-ptr)
+      (convert-from-foreign (g-value-boxed gvalue-ptr)
                             '(g-strv :free-from-foreign nil))
       (let ((boxed-type
              (get-g-boxed-foreign-info-for-gtype (g-value-type gvalue-ptr))))
@@ -781,10 +781,8 @@
                                 (type-numeric (eql (gtype "GBoxed")))
                                 value)
   (if (g-type= (g-value-type gvalue-ptr) (g-type-strv))
-      (g-value-set-boxed gvalue-ptr
-                         (convert-to-foreign value
-                                             '(g-strv
-                                               :free-from-foreign nil)))
+      (setf (g-value-boxed gvalue-ptr)
+            (convert-to-foreign value '(g-strv :free-from-foreign nil)))
       (let ((boxed-type
              (get-g-boxed-foreign-info-for-gtype (g-value-type gvalue-ptr))))
         (boxed-set-g-value gvalue-ptr boxed-type value))))
@@ -792,7 +790,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-cstruct-wrapper-info))
-  (translate-from-foreign (g-value-get-boxed gvalue-ptr)
+  (translate-from-foreign (g-value-boxed gvalue-ptr)
                           (make-foreign-type info :return-p nil)))
 
 (defmethod boxed-set-g-value (gvalue-ptr
@@ -804,7 +802,7 @@
                                                               :return-p nil))))
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-variant-cstruct-info))
-  (translate-from-foreign (g-value-get-boxed gvalue-ptr)
+  (translate-from-foreign (g-value-boxed gvalue-ptr)
                           (make-foreign-type info :return-p nil)))
 
 (defmethod boxed-set-g-value (gvalue-ptr
@@ -816,16 +814,14 @@
                                                              :return-p nil))))
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-opaque-wrapper-info))
-  (translate-from-foreign (boxed-copy-fn info (g-value-get-boxed gvalue-ptr))
+  (translate-from-foreign (boxed-copy-fn info (g-value-boxed gvalue-ptr))
                           (make-foreign-type info :return-p nil)))
 
 (defmethod boxed-set-g-value (gvalue-ptr
                               (info g-boxed-opaque-wrapper-info)
                               proxy)
-  (g-value-set-boxed gvalue-ptr
-                     (translate-to-foreign proxy
-                                           (make-foreign-type info
-                                                              :return-p nil))))
+  (setf (g-value-boxed gvalue-ptr)
+        (translate-to-foreign proxy (make-foreign-type info :return-p nil))))
 
 ;;; ----------------------------------------------------------------------------
 

@@ -777,16 +777,16 @@
 
 (defcfun ("g_param_spec_internal" g-param-spec-internal) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
-  @argument[param-type]{the @class{g-type} for the property; must be derived
-    from @code{G_TYPE_PARAM}}
-  @argument[name]{the canonical name of the property}
-  @argument[nick]{the nickname of the property}
-  @argument[blurb]{a short description of the property}
-  @argument[flags]{a combination of @symbol{g-param-flags}}
+ "@version{2020-8-27}
+  @argument[param-type]{the @class{g-type} for the property, must be derived
+    from @var{+g-type-param+}}
+  @argument[name]{a @code{:string} with the canonical name of the property}
+  @argument[nick]{a @code{:string} with the nickname of the property}
+  @argument[blurb]{a @code{:string} with a short description of the property}
+  @argument[flags]{a combination of flags of type @symbol{g-param-flags}}
   @return{A newly allocated @symbol{g-param-spec} instance.}
   @begin{short}
-    Creates a new @symbol{g-param-spec} instance.
+    Creates a new parameter specification instance.
   @end{short}
 
   A property @arg{name} consists of segments consisting of ASCII letters and
@@ -801,8 +801,12 @@
   Beyond the @arg{name}, @symbol{g-param-spec}'s have two more descriptive
   strings associated with them, the @arg{nick}, which should be suitable for use
   as a label for the property in a property editor, and the @arg{blurb}, which
-  should be a somewhat longer description, suitable for e. g. a tooltip. The
-  @arg{nick} and @arg{blurb} should ideally be localized."
+  should be a somewhat longer description, suitable for e.g. a tooltip. The
+  @arg{nick} and @arg{blurb} should ideally be localized.
+  @see-symbol{g-param-spec}
+  @see-symbol{g-param-flags}
+  @see-class{g-type}
+  @see-variable{+g-type-param+}"
   (param-type g-type)
   (name :string)
   (nick :string)

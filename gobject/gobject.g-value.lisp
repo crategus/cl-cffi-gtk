@@ -82,31 +82,31 @@
                                    (type (eql (gtype +g-type-pointer+)))
                                    parse-kind)
   (declare (ignore parse-kind))
-  (g-value-get-pointer gvalue-ptr))
+  (g-value-pointer gvalue-ptr))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
                                    (type (eql (gtype +g-type-param+)))
                                    parse-kind)
   (declare (ignore parse-kind))
-  (parse-g-param-spec (g-value-get-param gvalue-ptr)))
+  (parse-g-param-spec (g-value-param gvalue-ptr)))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
                                    (type (eql (gtype +g-type-object+)))
                                    parse-kind)
   (declare (ignore parse-kind))
-  (g-value-get-object gvalue-ptr))
+  (g-value-object gvalue-ptr))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
                                    (type (eql (gtype +g-type-interface+)))
                                    parse-kind)
   (declare (ignore parse-kind))
-  (g-value-get-object gvalue-ptr))
+  (g-value-object gvalue-ptr))
 
 ;;; ----------------------------------------------------------------------------
 ;;; parse-g-value (gvalue parse-kind)
 ;;;
 ;;; Parses the g-value structure and returns the corresponding Lisp object.
-;;; This is a more general function which replaces the functions g-value-get-...
+;;; This is a more general function which replaces the functions g-value-...
 ;;; The function is not part of the GObject library.
 ;;;
 ;;; Note:
@@ -128,21 +128,21 @@
       ((gtype +g-type-invalid+)
        (error "GValue is of invalid type (~A)" (gtype-name gtype)))
       ((gtype +g-type-none+) nil)
-      ((gtype +g-type-char+) (g-value-get-char gvalue))
-      ((gtype +g-type-uchar+) (g-value-get-uchar gvalue))
-      ((gtype +g-type-boolean+) (g-value-get-boolean gvalue))
-      ((gtype +g-type-int+) (g-value-get-int gvalue))
-      ((gtype +g-type-uint+) (g-value-get-uint gvalue))
-      ((gtype +g-type-long+) (g-value-get-long gvalue))
-      ((gtype +g-type-ulong+) (g-value-get-ulong gvalue))
-      ((gtype +g-type-int64+) (g-value-get-int64 gvalue))
-      ((gtype +g-type-uint64+) (g-value-get-uint64 gvalue))
+      ((gtype +g-type-char+) (g-value-char gvalue))
+      ((gtype +g-type-uchar+) (g-value-uchar gvalue))
+      ((gtype +g-type-boolean+) (g-value-boolean gvalue))
+      ((gtype +g-type-int+) (g-value-int gvalue))
+      ((gtype +g-type-uint+) (g-value-uint gvalue))
+      ((gtype +g-type-long+) (g-value-long gvalue))
+      ((gtype +g-type-ulong+) (g-value-ulong gvalue))
+      ((gtype +g-type-int64+) (g-value-int64 gvalue))
+      ((gtype +g-type-uint64+) (g-value-uint64 gvalue))
       ((gtype +g-type-enum+) (parse-g-value-enum gvalue))
       ((gtype +g-type-flags+) (parse-g-value-flags gvalue))
-      ((gtype +g-type-float+) (g-value-get-float gvalue))
-      ((gtype +g-type-double+) (g-value-get-double gvalue))
-      ((gtype +g-type-string+) (g-value-get-string gvalue))
-      ((gtype +g-type-variant+) (g-value-get-variant gvalue))
+      ((gtype +g-type-float+) (g-value-float gvalue))
+      ((gtype +g-type-double+) (g-value-double gvalue))
+      ((gtype +g-type-string+) (g-value-string gvalue))
+      ((gtype +g-type-variant+) (g-value-variant gvalue))
       (t (parse-g-value-for-type gvalue gtype parse-kind)))))
 
 ;;; ----------------------------------------------------------------------------
@@ -164,7 +164,7 @@
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-pointer+)))
                                 value)
-  (g-value-set-pointer gvalue-ptr value))
+  (setf (g-value-pointer gvalue-ptr) value))
 
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-param+)))
@@ -175,18 +175,18 @@
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-object+)))
                                 value)
-  (g-value-set-object gvalue-ptr value))
+  (setf (g-value-object gvalue-ptr) value))
 
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-interface+)))
                                 value)
-  (g-value-set-object gvalue-ptr value))
+  (setf (g-value-object gvalue-ptr) value))
 
 ;;; ----------------------------------------------------------------------------
 ;;; set-g-value (gvalue value type zero-g-value unset-g-value g-value-init)
 ;;;
 ;;; Assigns the GValue structure gvalue the value value of GType type. This is
-;;; a more general function which replaces the functions g-value-set-...
+;;; a more general function which replaces the functions (setf g-value-...)
 ;;; The function is not part of the GObject library.
 ;;;
 ;;; Note :
@@ -226,25 +226,25 @@
     (ev-case fundamental-type
       ((gtype +g-type-invalid+) (error "Invalid type (~A)" type))
       ((gtype +g-type-none+) nil)
-      ((gtype +g-type-char+) (g-value-set-char gvalue value))
-      ((gtype +g-type-uchar+) (g-value-set-uchar gvalue value))
-      ((gtype +g-type-boolean+) (g-value-set-boolean gvalue value))
-      ((gtype +g-type-int+) (g-value-set-int gvalue value))
-      ((gtype +g-type-uint+) (g-value-set-uint gvalue value))
-      ((gtype +g-type-long+) (g-value-set-long gvalue value))
-      ((gtype +g-type-ulong+) (g-value-set-ulong gvalue value))
-      ((gtype +g-type-int64+) (g-value-set-int64 gvalue value))
-      ((gtype +g-type-uint64+) (g-value-set-uint64 gvalue value))
+      ((gtype +g-type-char+) (setf (g-value-char gvalue) value))
+      ((gtype +g-type-uchar+) (setf (g-value-uchar gvalue) value))
+      ((gtype +g-type-boolean+) (setf (g-value-boolean gvalue) value))
+      ((gtype +g-type-int+) (setf (g-value-int gvalue) value))
+      ((gtype +g-type-uint+) (setf (g-value-uint gvalue) value))
+      ((gtype +g-type-long+) (setf (g-value-long gvalue) value))
+      ((gtype +g-type-ulong+) (setf (g-value-ulong gvalue) value))
+      ((gtype +g-type-int64+) (setf (g-value-int64 gvalue) value))
+      ((gtype +g-type-uint64+) (setf (g-value-uint64 gvalue) value))
       ((gtype +g-type-enum+) (set-gvalue-enum gvalue value))
       ((gtype +g-type-flags+) (set-gvalue-flags gvalue value))
       ((gtype +g-type-float+)
        (unless (realp value) (error "~A is not a real number" value))
-       (g-value-set-float gvalue (coerce value 'single-float)))
+       (setf (g-value-float gvalue) (coerce value 'single-float)))
       ((gtype +g-type-double+)
        (unless (realp value) (error "~A is not a real number" value))
-       (g-value-set-double gvalue (coerce value 'double-float)))
-      ((gtype +g-type-string+) (g-value-set-string gvalue value))
-      ((gtype +g-type-variant+) (g-value-set-variant gvalue value))
+       (setf (g-value-double gvalue) (coerce value 'double-float)))
+      ((gtype +g-type-string+) (setf (g-value-string gvalue) value))
+      ((gtype +g-type-variant+) (setf (g-value-variant gvalue) value))
       (t (set-gvalue-for-type gvalue type value)))))
 
 ;;; ----------------------------------------------------------------------------
@@ -276,7 +276,7 @@
   (:data (:union g-value-data)
          ;; Generalized calculation of the offset
          :offset #.(foreign-type-size 'g-type) :count 2)) ; Not a pointer. Is this correct?
-       
+
 #+windows
 (defcstruct g-value
   (:type g-type)
@@ -305,9 +305,9 @@
 ;; A transformation from an integer to a string
 (defcallback int2string :void ((src-value (:pointer g-value))
                                (dest-value (:pointer g-value)))
-  (if (eql (g-value-get-int src-value) 42)
-      (g-value-set-string dest-value \"An important number\")
-      (g-value-set-string dest-value \"What is that?\")))
+  (if (eql (g-value-int src-value) 42)
+      (setf (g-value-string dest-value) \"An important number\")
+      (setf (g-value-string dest-value) \"What is that?\")))
 
 (defun example-g-value ()
   ;; Declare two variables of type g-value.
@@ -315,8 +315,8 @@
 
     ;; Initialization, setting and reading a value of type g-value
     (g-value-init value1 +g-type-string+)
-    (g-value-set-string value1 \"string\")
-    (format t \"value1 = ~A~%\" (g-value-get-string value1))
+    (setf (g-value-string value1) \"string\")
+    (format t \"value1 = ~A~%\" (g-value-string value1))
     (format t \"type   = ~A~%\" (g-value-type value1))
     (format t \"name   = ~A~%~%\" (g-value-type-name value1))
 
@@ -329,7 +329,7 @@
     ;; Reuse value1 for an integer value.
     (g-value-unset value1)
     (g-value-init value1 +g-type-int+)
-    (g-value-set-int value1 42)
+    (setf (g-value-int value1) 42)
     (format t \"value1 = ~A~%\" (parse-g-value value1))
     (format t \"type   = ~A~%\" (g-value-type value1))
     (format t \"name   = ~A~%~%\" (g-value-type-name value1))
@@ -350,7 +350,7 @@
     ;; Reuse value2 again for a string.
     (g-value-unset value2)
     (g-value-init value2 +g-type-string+)
-    (g-value-set-string value2 \"string\")
+    (setf (g-value-string value2) \"string\")
     (format t \"value2 = ~A~%\" (parse-g-value value2))
 
     ;; Register the transformation int2string
