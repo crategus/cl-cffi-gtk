@@ -389,7 +389,7 @@
   @see-function{gdk-pango-context-get-for-screen}
   @see-function{gtk-widget-get-pango-context}"
   (make-instance 'pango-context))
-  
+
 (export 'pango-context-new)
 
 ;;; ----------------------------------------------------------------------------
