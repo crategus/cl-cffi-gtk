@@ -79,15 +79,13 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-region-t atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'cairo-region-t atdoc:*external-symbols*)
- "@version{2013-7-29}
+ "@version{2020-9-6}
   @begin{short}
     A @sym{cairo-region-t} structure represents a set of integer-aligned
     rectangles.
   @end{short}
-
-  It allows set-theoretical operations like the functions
-  @fun{cairo-region-union} and @fun{cairo-region-intersect} to be performed on
-  them.
+  It allows operations like the functions @fun{cairo-region-union} and
+  @fun{cairo-region-intersect} to be performed on them.
 
   Memory management of @sym{cairo-region-t} is done with the functions
   @fun{cairo-region-reference} and @fun{cairo-region-destroy}.
