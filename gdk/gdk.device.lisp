@@ -37,8 +37,9 @@
 ;;;     GdkInputSource
 ;;;     GdkInputMode
 ;;;     GdkAxisUse
-;;;     GdkAxisFlags                     neu 3.22
-;;;     GdkDeviceToolType                neu 3.22
+;;;     GdkAxisFlags                     Since 3.22
+;;;     GdkDeviceTool                    Since 3.22
+;;;     GdkDeviceToolType                Since 3.22
 ;;;     GdkDeviceType
 ;;;     GdkGrabOwnership
 ;;;     GdkTimeCoord
@@ -558,6 +559,36 @@
     @entry[:frozen]{The resource is frozen by an active grab of another client.}
   @end{table}
   @see-class{gdk-device}")
+
+;;; ----------------------------------------------------------------------------
+;;; GdkDeviceTool
+;;; ----------------------------------------------------------------------------
+
+;; TODO: Implement the functions for GdkDeviceTool
+
+#+gdk-3-22
+(define-g-object-class "GdkDeviceTool" gdk-device-tool
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_device_tool_get_type")
+  ((axes
+    gdk-device-tool-axes
+    "axes" "GdkAxisFlags" t nil)
+   (hardware-id
+    gdk-device-tool-hardware-id
+    "hardware-id" "guint64" t nil)
+   (serial
+    gdk-device-tool-serial
+    "serial" "guint64" t nil)
+   (tool-type
+    gdk-device-tool-tool-type
+    "tool-type" "GdkDeviceToolType" t nil)))
+
+#+(and gdk-3-22 cl-cffi-gtk-documentation)
+(setf (documentation 'gdk-device-tool 'type)
+ "@version{2020-9-11}
+  @short{No documentation.}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkDevice
