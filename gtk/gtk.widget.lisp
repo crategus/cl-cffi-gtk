@@ -8173,21 +8173,21 @@
 (export 'gtk-widget-get-path)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_style_context ()
+;;; gtk_widget_get_style_context () -> gtk-widget-style-context
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_style_context" gtk-widget-get-style-context)
+(defcfun ("gtk_widget_get_style_context" gtk-widget-style-context)
     (g-object gtk-style-context)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2020-9-5}
   @argument[widget]{a @class{gtk-widget} object}
   @return{A @class{gtk-style-context} object.}
-  Returns the style context associated to widget.
+  @short{Returns the style context associated to widget.}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-style-context)
+(export 'gtk-widget-style-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reset_style ()
