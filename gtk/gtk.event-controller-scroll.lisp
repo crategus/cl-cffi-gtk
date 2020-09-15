@@ -2,11 +2,11 @@
 ;;; gtk.event-controller-scroll.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,14 +43,14 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkEventControllerScrollFlags  flags  Read / Write
+;;;  GtkEventControllerScrollFlags    flags           Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void  decelerate    Run First
-;;;     void  scroll        Run First
-;;;     void  scroll-begin  Run First
-;;;     void  scroll-end     Run First
+;;;                           void    decelerate      Run First
+;;;                           void    scroll          Run First
+;;;                           void    scroll-begin    Run First
+;;;                           void    scroll-end      Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -65,7 +65,6 @@
 ;;; enum GtkEventControllerScrollFlags
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-24
 (define-g-flags "GtkEventControllerScrollFlags"
                 gtk-event-controller-scroll-flags
   (:export t
@@ -77,14 +76,15 @@
   (:kinetic 8)
   (:both-axes 16))
 
-#+(and gtk-3-24 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-controller-scroll-flags atdoc:*symbol-name-alias*)
       "Flags"
       (gethash 'gtk-event-controller-scroll-flags atdoc:*external-symbols*)
- "@version{2019-3-17}
+ "@version{2020-9-8}
   @begin{short}
     Describes the behavior of a @class{gtk-event-controller-scroll}.
   @end{short}
+  Since 3.24
   @begin{pre}
 (define-g-flags \"GtkEventControllerScrollFlags\"
                 gtk-event-controller-scroll-flags
@@ -98,21 +98,19 @@
   (:both-axes 16))
   @end{pre}
   @begin[code]{table}
-    @entry[:none]{Don't emit scroll.}
+    @entry[:none]{Do not emit scroll.}
     @entry[:vertical]{Emit scroll with vertical deltas.}
     @entry[:horizontal]{Emit scroll with horizontal deltas.}
     @entry{:discrete]{Only emit deltas that are multiples of 1.}
     @entry[:kinetic]{Emit \"decelerate\" after continuous scroll finishes.}
     @entry[:both-axes]{Emit scroll on both axes.}
   @end{table}
-  Since 3.24
   @see-class{gtk-event-controller-scroll}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkEventControllerScroll
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-24
 (define-g-object-class "GtkEventControllerScroll" gtk-event-controller-scroll
   (:superclass gtk-event-controller
    :export t
@@ -122,16 +120,16 @@
     gtk-event-controller-scroll-flags
     "flags" "GtkEventControllerScrollFlags" t t)))
 
-#+(and gtk-3-24 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-controller-scroll 'type)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @begin{short}
     @sym{gtk-event-controller-scroll} is an event controller meant to handle
     scroll events from mice and touchpads.
   @end{short}
   It is capable of handling both discrete and continuous scroll events,
-  abstracting them both on the \"scroll\" signal (deltas in the discrete case
-  are multiples of 1).
+  abstracting them both on the \"scroll\" signal. Deltas in the discrete case
+  are multiples of 1.
 
   In the case of continuous scroll events, @sym{gtk-event-controller-scroll}
   encloses all \"scroll\" events between two \"scroll-begin\" and \"scroll-end\"
@@ -150,14 +148,13 @@
 
   The event controller can also be forced to emit discrete events on all devices
   through @code{:discrete}. This can be used to implement discrete actions
-  triggered through scroll events, e. g. switching across combobox options.
+  triggered through scroll events, e.g. switching across combobox options.
 
   The @code{:kinetic} flag toggles the emission of the \"decelerate\" signal,
   emitted at the end of scrolling with two X/Y velocity arguments that are
   consistent with the motion that was received.
 
   This object was added in 3.24.
-
   @begin[Signal Details]{dictionary}
     @subheading{The \"decelerate\" signal}
       @begin{pre}
@@ -166,56 +163,46 @@
       Emitted after scroll is finished if the @code{:kinetic} flag is set.
       @code{vel-x} and @code{vel-y} express the initial velocity that was
       imprinted by the scroll events. @code{vel-x} and @code{vel-y} are
-      expressed in pixels/ms.
+      expressed in pixels/ms. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-scroll} object that
           received the signal.}
-        @entry[vel-x]{x velocity}
-        @entry[vel-y]{y velocity}
+        @entry[vel-x]{a @code{:double} with the x velocity}
+        @entry[vel-y]{a @code{:double} with the y velocity}
       @end{table}
-      Since 3.24
-
     @subheading{The \"scroll\" signal}
       @begin{pre}
   lambda (controller dx dy)    : Run First
       @end{pre}
       Signals that the widget should scroll by the amount specified by
-      @code{dx} and @code{dy}.
+      @code{dx} and @code{dy}. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-scroll} object that
           received the signal.}
-        @entry[dx]{x delta}
-        @entry[dy]{y delta}
+        @entry[dx]{a @code{:double} with the x delta}
+        @entry[dy]{a @code{:double} with the y delta}
       @end{table}
-      Since 3.24
-
     @subheading{The \"scroll-begin\" signal}
       @begin{pre}
-  lambda (controller dx dy)    : Run First
+  lambda (controller)    : Run First
       @end{pre}
       Signals that a new scrolling operation has begun. It will only be emitted
-      on devices capable of it.
-      @code{dx} and @code{dy}.
+      on devices capable of it. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-scroll} object that
           received the signal.}
       @end{table}
-      Since 3.24
-
     @subheading{The \"scroll-end\" signal}
       @begin{pre}
-  lambda (controller dx dy)    : Run First
+  lambda (controller)    : Run First
       @end{pre}
       Signals that a new scrolling operation has finished. It will only be
-      emitted on devices capable of it.
-      @code{dx} and @code{dy}.
+      emitted on devices capable of it. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-scroll} object that
           received the signal.}
       @end{table}
-      Since 3.24
   @end{dictionary}
-
   @see-slot{gtk-event-controller-scroll-flags}
   @see-class{gtk-event-controller}")
 
@@ -225,50 +212,47 @@
 
 ;;; --- gtk-event-controller-scroll-flags --------------------------------------
 
-#+(and gtk-3-24 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "Flags"
                                                'gtk-event-controller-scroll) 't)
  "The @code{flags} property of type
   @symbol{gtk-event-controller-scroll-flags} (Read / Write) @br{}
-  The flags affecting event controller behavior. @br{}
-  Since 3.24")
+  The flags affecting event controller behavior. Since 3.24")
 
-#+(and gtk-3-24 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-controller-scroll-flags
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-controller-scroll-flags 'function)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @syntax[]{(gtk-event-controller-scroll-flags object) => flags)}
   @syntax[]{(setf (gtk-event-controller-scroll-flags object) flags)}
   @argument[object]{a @class{gtk-event-controller-scroll} object}
-  @argument[flags]{behavior flags}
-
+  @argument[flags]{behavior flags of type
+    @symbol{gtk-event-controller-scroll-flags}}
   @begin{short}
-    Accessor of the slot @slot[gtk-event-controller-scroll]{flags} of the
+    Accessor of the @slot[gtk-event-controller-scroll]{flags} slot of the
     @class{gtk-event-controller-scroll} class.
   @end{short}
 
-  The generic function @sym{gtk-event-controller-scroll-flags}
-  gets the flags conditioning the scroll controller behavior.
-
-  The generic function @sym{(setf gtk-event-controller-scroll-flags)}
-  sets the flags conditioning scroll controller behavior.
+  The slot access function @sym{gtk-event-controller-scroll-flags} gets the
+  flags conditioning the scroll controller behavior. The slot access function
+  @sym{(setf gtk-event-controller-scroll-flags)} sets the flags conditioning
+  scroll controller behavior.
 
   Since 3.24
-  @see-class{gtk-event-controller-scroll}")
+  @see-class{gtk-event-controller-scroll}
+  @see-symbol{gtk-event-controller-scroll-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_controller_scroll_new ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-24
 (declaim (inline gtk-event-controller-scroll-new))
 
-#+gtk-3-24
 (defun gtk-event-controller-scroll-new (widget flags)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[flags]{@symbol{gtk-event-controller-scroll-flags} behavior flags}
   @return{The new @class{gtk-event-controller-scroll} objekt.}
@@ -284,7 +268,6 @@
                  :widget widget
                  :flags flags))
 
-#+gtk-3-24
 (export 'gtk-event-controller-scroll-new)
 
 ;;; --- End of file gtk.event-controller-scroll.lisp ---------------------------
