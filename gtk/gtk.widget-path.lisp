@@ -141,7 +141,7 @@
 
   If you are using GTK+ widgets, you probably will not need to use this API
   directly, as there is the function @fun{gtk-widget-get-path}, and the style
-  context returned by the function @fun{gtk-widget-get-style-context} will be
+  context returned by the function @fun{gtk-widget-style-context} will be
   automatically updated on widget hierarchy changes.
   @begin[Example]{dictionary}
     Defining a button within a window:
