@@ -2,11 +2,11 @@
 ;;; gtk.event-controller.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,6 +30,11 @@
 ;;;
 ;;;     Self-contained handler of series of events
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkEventController
+;;;     GtkPropagationPhase
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk_event_controller_get_propagation_phase         Accessor
@@ -40,13 +45,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkPropagationPhase  propagation-phase  Read / Write
-;;;             GtkWidget *  widget             Read / Write / Construct Only
-;;;
-;;; Types and Values
-;;;
-;;;     GtkEventController
-;;;     GtkPropagationPhase
+;;;   GtkPropagationPhase    propagation-phase    Read / Write
+;;;             GtkWidget*   widget               Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -76,11 +76,13 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-propagation-phase atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-propagation-phase atdoc:*external-symbols*)
- "@version{2019-3-16}
+ "@version{2020-9-10}
   @begin{short}
     Describes the stage at which events are fed into a
     @class{gtk-event-controller}.
   @end{short}
+
+  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkPropagationPhase\" gtk-propagation-phase
   (:export t
@@ -92,9 +94,9 @@
   @end{pre}
   @begin[code]{table}
     @entry[:phase-none]{Events are not delivered automatically. Those can be
-      manually fed through gtk_event_controller_handle_event(). This should
-      only be used when full control about when, or whether the controller
-      handles the event is needed.}
+      manually fed through the function @fun{gtk-event-controller-handle-event}.
+      This should only be used when full control about when, or whether the
+      controller handles the event is needed.}
     @entry[:phase-capture]{Events are delivered in the capture phase. The
       capture phase happens before the bubble phase, runs from the toplevel down
       to the event widget. This option should only be used on containers that
@@ -107,8 +109,8 @@
       motion, touch and grab broken handlers for controllers in this phase to
       be run.}
   @end{table}
-  Since 3.14
-  @see-class{gtk-event-controller}")
+  @see-class{gtk-event-controller}
+  @see-function{gtk-event-controller-handle-event}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkEventController
@@ -128,7 +130,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-controller 'type)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @begin{short}
     @sym{gtk-event-controller} is a base, low-level implementation for event
     controllers.
@@ -140,7 +142,8 @@
   @see-slot{gtk-event-controller-propagate-phase}
   @see-slot{gtk-event-controller-widget}
   @see-class{gdk-event}
-  @see-class{gtk-gesture}")
+  @see-class{gtk-gesture}
+  @see-symbol{gtk-propagation-phase}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -153,8 +156,8 @@
                                                'gtk-event-controller) 't)
  "The @code{propagation-phase} property of type
   @symbol{gtk-propagation-phase} (Read / Write) @br{}
-  The propagation phase at which this controller will handle events. @br{}
-  Since 3.14 @br{}
+  The propagation phase at which this controller will handle events. Since 3.14
+  @br{}
   Default value: @code{:phase-bubble}")
 
 #+cl-cffi-gtk-documentation
@@ -162,28 +165,29 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-controller-propagation-phase 'function)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @syntax[]{(gtk-event-controller-propagation-phase object) => phase)}
   @syntax[]{(setf (gtk-event-controller-propagation-phase object) phase)}
   @argument[object]{a @class{gtk-event-controller} object}
-  @argument[phase]{the propagation phase}
+  @argument[phase]{the propagation phase of type @symbol{gtk-propagation-phase}}
   @begin{short}
-    Accessor of the slot @slot[gtk-event-controller]{propagation-phase} of the
+    Accessor of the @slot[gtk-event-controller]{propagation-phase} slot of the
     @class{gtk-event-controller} class.
   @end{short}
 
-  The generic function @sym{gtk-event-controller-proppagation-phase}
-  gets the propagation phase at which controller handles events.
+  The slot access function @sym{gtk-event-controller-propagation-phase} gets
+  the propagation phase at which controller handles events. The slot access
+  function @sym{(setf gtk-event-controller-propagation-phase)} sets the
+  propagation phase at which a controller handles events.
 
-  The generic function @sym{(setf gtk-event-controller-propagation-phase)}
-  sets the propagation phase at which a controller handles events.
-
-  If phase is @code{:phase-none}, no automatic event handling will be performed,
-  but other additional gesture maintenance will. In that phase, the events can
-  be managed by calling the function @fun{gtk-event-controller-handle-event}.
+  If @arg{phase} is @code{:phase-none}, no automatic event handling will be
+  performed, but other additional gesture maintenance will. In that phase, the
+  events can be managed by calling the function
+  @fun{gtk-event-controller-handle-event}.
 
   Since 3.14
   @see-class{gtk-event-controller}
+  @see-symbol{gtk-propagation-phase}
   @see-function{gtk-event-controller-handle-event}")
 
 ;;; --- gtk-event-controller-widget --------------------------------------------
@@ -199,16 +203,17 @@
 (setf (gethash 'gtk-event-controller-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-controller-widget 'function)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @syntax[]{(gtk-event-controller-widget object) => widget)}
+  @syntax[]{(setf (gtk-event-controller-widget object) widget)}
   @argument[object]{a @class{gtk-event-controller} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-event-controller]{widget} of the
+    Accessor of the @slot[gtk-event-controller]{widget} slot of the
     @class{gtk-event-controller} class.
   @end{short}
 
-  The generic function @sym{gtk-event-controller-widget}
-  returns the @class{gtk-widget} this controller relates to.
+  The slot access function @sym{gtk-event-controller-widget} returns the
+  @class{gtk-widget} this controller relates to.
 
   Since 3.14
   @see-class{gtk-event-controller}")
@@ -220,18 +225,19 @@
 (defcfun ("gtk_event_controller_handle_event"
            gtk-event-controller-handle-event) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @argument[controller]{a @class{gtk-event-controller} object}
   @argument[event]{a @class{gdk-event}}
-  @return{@em{true} if the @arg{event} was potentially useful to trigger the
+  @return{@em{True} if @arg{event} was potentially useful to trigger the
     controller action}
   @begin{short}
-    Feeds an events into @arg{controller}, so it can be interpreted and the
+    Feeds an events into the controller, so it can be interpreted and the
     controller actions triggered.
   @end{short}
 
   Since 3.14
-  @see-class{gtk-event-controller}"
+  @see-class{gtk-event-controller}
+  @see-class{gdk-event}"
   (controller (g-object gtk-event-controller))
   (event (g-object gdk-event)))
 
@@ -243,7 +249,7 @@
 
 (defcfun ("gtk_event_controller_reset" gtk-event-controller-reset) :void
  #+cl-cffi-gtk-documentation
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @argument[controller]{a @class{gtk-event-controller} object}
   @begin{short}
     Resets the controller to a clean state.
