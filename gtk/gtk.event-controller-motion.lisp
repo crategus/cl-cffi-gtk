@@ -2,11 +2,11 @@
 ;;; gtk.event-controller-motion.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,9 +40,9 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void  enter   Run First
-;;;     void  leave   Run First
-;;;     void  motion  Run First
+;;;     void    enter     Run First
+;;;     void    leave     Run First
+;;;     void    motion    Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -57,7 +57,6 @@
 ;;; struct GtkEventControllerMotion
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-24
 (define-g-object-class "GtkEventControllerMotion" gtk-event-controller-motion
   (:superclass gtk-event-controller
    :export t
@@ -65,53 +64,47 @@
    :type-initializer "gtk_event_controller_motion_get_type")
   nil)
 
-#+(and gtk-3-24 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-controller-motion 'type)
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @begin{short}
     @sym{gtk-event-controller-motion} is an event controller meant for
     situations where you need to track the position of the pointer.
   @end{short}
 
   This object was added in 3.24.
-
   @begin[Signal Details]{dictionary}
     @subheading{The \"enter\" signal}
       @begin{pre}
   lambda (controller x y)    : Run First
       @end{pre}
-      Signals that the pointer has entered the widget.
+      Signals that the pointer has entered the widget. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
-        @entry[x]{the x coordinate}
-        @entry[y]{the y coordinate}
+        @entry[x]{a @code{:double} with the x coordinate}
+        @entry[y]{a @code{:double} with the y coordinate}
       @end{table}
-      Since 3.24
-
     @subheading{The \"leave\" signal}
       @begin{pre}
   lambda (controller)    : Run First
       @end{pre}
-      Signals that pointer has left the widget.
+      Signals that pointer has left the widget. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
       @end{table}
-      Since 3.24
-
     @subheading{The \"motion\" signal}
       @begin{pre}
   lambda (controller x y)    : Run First
       @end{pre}
-      Emitted when the pointer moves inside the widget.
+      Emitted when the pointer moves inside the widget. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
-        @entry[x]{the x coordinate}
-        @entry[y]{the y coordinate}
+        @entry[x]{a @code{:double} with the x coordinate}
+        @entry[y]{a @code{:double} with the y coordinate}
       @end{table}
-      Since 3.24
   @end{dictionary}
   @see-class{gtk-event-controller}")
 
@@ -119,13 +112,11 @@
 ;;; gtk_event_controller_motion_new ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-24
 (declaim (inline gtk-event-controller-motion-new))
 
-#+gtk-3-24
 (defun gtk-event-controller-motion-new (widget)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-17}
+ "@version{2020-9-10}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The new @class{gtk-event-controller-motion} objekt.}
   @begin{short}
@@ -138,7 +129,6 @@
   (make-instance 'gtk-event-controller-motion
                  :widget widget))
 
-#+gtk-3-24
 (export 'gtk-event-controller-motion-new)
 
 ;;; --- End of file gtk.event-controller-motion.lisp ---------------------------
