@@ -2,11 +2,11 @@
 ;;; gtk.gesture-pan.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,11 +43,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkOrientation  orientation  Read / Write
+;;;     GtkOrientation    orientation    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void  pan  Run Last
+;;;               void    pan            Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -76,10 +76,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pan-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pan-direction atdoc:*external-symbols*)
- "@version{2019-3-23}
+ "@version{2020-9-11}
   @begin{short}
     Describes the panning direction of a @class{gtk-gesture-pan}.
   @end{short}
+  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkPanDirection\" gtk-pan-direction
   (:export t
@@ -95,7 +96,6 @@
     @entry[:up]{Panned upwards.}
     @entry[:down]{Panned downwards.}
   @end{table}
-  Since 3.14
   @see-class{gtk-gesture-pan}")
 
 ;;; ----------------------------------------------------------------------------
@@ -113,7 +113,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-gesture-pan 'type)
- "@version{2019-3-23}
+ "@version{2020-9-11}
   @begin{short}
     @sym{gtk-gesture-pan} is a @class{gtk-gesture} implementation able to
     recognize pan gestures, those are drags that are locked to happen along one
@@ -130,24 +130,25 @@
   Once a panning gesture along the expected axis is recognized, the \"pan\"
   signal will be emitted as input events are received, containing the offset in
   the given axis.
-
   @begin[Signal Details]{dictionary}
     @subheading{The \"pan\" signal}
     @begin{pre}
-  lambda (gesture n-press x y)    : Run Last
+ lambda (gesture n-press x y)    : Run Last
     @end{pre}
     This signal is emitted once a panning gesture along the expected axis is
-    detected.
+    detected. Since 3.14
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-pan} object which received the
+      @entry[gesture]{The @sym{gtk-gesture-pan} object which received the
         signal.}
-      @entry[direction]{}
-      @entry[offset]{}
+      @entry[direction]{Current direction of the pan gesture of type
+        @symbol{gtk-pan-direction}.}
+      @entry[offset]{A @code{:double} with the offset along the gesture
+        orientation.}
     @end{table}
   @end{dictionary}
-  Since 3.14
   @see-slot{gtk-gesture-pan-orientation}
-  @see-class{gtk-gesture}")
+  @see-class{gtk-gesture}
+  @see-symbol{gtk-pan-direction}")
 
 ;;; --- gtk-gesture-pan-orientation --------------------------------------------
 
@@ -156,29 +157,27 @@
       't)
  "The @code{orientation} property of type @symbol{gtk-orientation}
   (Read / Write) @br{}
-  The expected orientation of pan gestures. @br{}
-  Default value: @code{:horizontal} @br{}
-  Since 3.14")
+  The expected orientation of pan gestures. Since 3.14 @br{}
+  Default value: @code{:horizontal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-gesture-pan-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-gesture-pan-orientation 'function)
- "@version{2019-3-23}
+ "@version{2020-9-11}
   @syntax[]{(gtk-gesture-pan-orientation object) => orientation)}
   @syntax[]{(setf (gtk-gesture-pan-orientation object) orientation)}
   @argument[object]{a @class{gtk-gesture} object}
   @argument[orientation]{expected orientation of type @symbol{gtk-orientation}}
   @begin{short}
-    Accessor of the slot @slot[gtk-gesture-pan]{orientation} of the
+    Accessor of the @slot[gtk-gesture-pan]{orientation} slot of the
     @class{gtk-gesture-pan} class.
   @end{short}
 
-  The slot access function @sym{gtk-gesture-pan-orientation}
-  returns the orientation of the pan gestures that this gesture expects.
-
-  The slot access function @sym{(setf gtk-gesture-pan-orientation)}
-  sets the orientation to be expected on pan gestures.
+  The slot access function @sym{gtk-gesture-pan-orientation} returns the
+  orientation of the pan gestures that this gesture expects. The slot access
+  function @sym{(setf gtk-gesture-pan-orientation)} sets the orientation to be
+  expected on pan gestures.
 
   Since 3.14
   @see-class{gtk-gesture-pan}")
@@ -191,12 +190,12 @@
 
 (defun gtk-gesture-pan-new (widget orientation)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-23}
+ "@version{2020-9-1}
   @argument[widget]{a @class{gtk-widget}}
   @argument[orientation]{expected orientation of type @symbol{gtk-orientation}}
   @return{A newly created @class{gtk-gesture-pan}.}
   @begin{short}
-    Returns a newly created @class{gtk-gesture} that recognizes pan gestures.
+    Returns a newly created gesture that recognizes pan gestures.
   @end{short}
 
   Since 3.14

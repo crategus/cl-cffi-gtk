@@ -66,7 +66,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-gesture-rotate 'type)
- "@version{2019-3-23}
+ "@version{2020-9-11}
   @begin{short}
     @sym{gtk-gesture-rotate} is a @class{gtk-gesture} implementation able to
     recognize 2-finger rotations, whenever the angle between both handled
@@ -75,14 +75,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"angle-changed\" signal}
     @begin{pre}
-  lambda (gesture angle angle-delta)    : Run First
+ lambda (gesture angle angle-delta)    : Run First
     @end{pre}
     This signal is emitted when the angle between both tracked points changes.
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-rotate} object which
-        received the signal.}
-      @entry[angle]{Current angle in radians.}
-      @entry[angle-delta]{Difference with the starting angle, in radians.}
+      @entry[gesture]{The @sym{gtk-gesture-rotate} object which received the
+        signal.}
+      @entry[angle]{A @code{:double} with the current angle in radians.}
+      @entry[angle-delta]{A @code{:double} with the difference with the
+        starting angle, in radians.}
     @end{table}
   @end{dictionary}
   @see-class{gtk-gesture-zoom}")
@@ -95,12 +96,11 @@
 
 (defun gtk-gesture-rotate-new (widget)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-23}
-  @argument[widget]{a @class{gtk-widget}}
-  @return{A newly created @class{gtk-gesture-rotate}.}
+ "@version{2020-9-11}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{A newly created @class{gtk-gesture-rotate} object.}
   @begin{short}
-    Returns a newly created @class{gtk-gesture} that recognizes 2-touch rotation
-    gestures.
+    Returns a newly created gesture that recognizes 2-touch rotation gestures.
   @end{short}
 
   Since 3.14
@@ -114,11 +114,11 @@
 ;;; gtk_gesture_rotate_get_angle_delta ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_gesture_rotate_get_angle_delta"
-          gtk-gesture-rotate-get-angle-delta) :double
+(defcfun ("gtk_gesture_rotate_get_angle_delta" gtk-gesture-rotate-angle-delta)
+    :double
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[gesture]{A @class{gtk-gesture-rotate} object.}
+ "@version{2020-9-11}
+  @argument[gesture]{a @class{gtk-gesture-rotate} object}
   @return{The angle delta of type @code{:double} in radians.}
   @begin{short}
     If the gesture is active, this function returns the angle difference in
@@ -130,6 +130,6 @@
   @see-class{gtk-gesture-rotate}"
   (gesture (g-object gtk-gesture-rotate)))
 
-(export 'gtk-gesture-rotate-get-angle-delta)
+(export 'gtk-gesture-rotate-angle-delta)
 
 ;;; --- End of file gtk.gesture-rotate.lisp ------------------------------------

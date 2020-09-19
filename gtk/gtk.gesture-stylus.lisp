@@ -2,11 +2,11 @@
 ;;; gtk.gesture-stylus.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,10 +43,10 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void  down       Run Last
-;;;     void  motion     Run Last
-;;;     void  proximity  Run Last
-;;;     void  up         Run Last
+;;;     void    down         Run Last
+;;;     void    motion       Run Last
+;;;     void    proximity    Run Last
+;;;     void    up           Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -72,7 +72,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-gesture-stylus 'type)
- "@version{2019-3-23}
+ "@version{2020-9-11}
   @begin{short}
     @sym{gtk-gesture-stylus} is a @class{gtk-gesture} implementation specific
     to stylus input.
@@ -80,104 +80,99 @@
   The provided signals just provide the basic information.
 
   Since 3.14
-
-
   @begin[Signal Details]{dictionary}
-
     @subheading{The \"down\" signal}
     @begin{pre}
-  lambda (gesture arg1 arg2)    : Run Last
+ lambda (gesture arg1 arg2)    : Run Last
     @end{pre}
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-stylus} object on which the signal
+      @entry[gesture]{The @sym{gtk-gesture-stylus} object on which the signal
         is emitted.}
       @entry[arg1]{A not documented @code{:double}.}
       @entry[arg2]{A not documented @code{:double}.}
     @end{table}
-    Since 3.14
-
     @subheading{The \"motion\" signal}
     @begin{pre}
   lambda (gesture arg1 arg2)    : Run Last
     @end{pre}
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-stylus} object on which the signal
+      @entry[gesture]{The @sym{gtk-gesture-stylus} object on which the signal
         is emitted.}
       @entry[arg1]{A not documented @code{:double}.}
       @entry[arg2]{A not documented @code{:double}.}
     @end{table}
-    Since 3.14
-
     @subheading{The \"proximity\" signal}
     @begin{pre}
   lambda (gesture arg1 arg2)    : Run Last
     @end{pre}
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-stylus} object on which the signal
+      @entry[gesture]{The @sym{gtk-gesture-stylus} object on which the signal
         is emitted.}
       @entry[arg1]{A not documented @code{:double}.}
       @entry[arg2]{A not documented @code{:double}.}
     @end{table}
-    Since 3.14
-
     @subheading{The \"up\" signal}
     @begin{pre}
   lambda (gesture arg1 arg2)    : Run Last
     @end{pre}
     @begin[code]{table}
-      @entry[gesture]{The @class{gtk-gesture-stylus} object on which the signal
+      @entry[gesture]{The @sym{gtk-gesture-stylus} object on which the signal
         is emitted.}
       @entry[arg1]{A not documented @code{:double}.}
       @entry[arg2]{A not documented @code{:double}.}
     @end{table}
-    Since 3.14
   @end{dictionary}
-
   @see-class{gtk-gesture}
   @see-class{gtk-gesture-single}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_gesture_stylus_new ()
-;;;
-;;; GtkGesture *
-;;; gtk_gesture_stylus_new (GtkWidget *widget);
-;;;
-;;; Creates a new GtkGestureStylus.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     a newly created stylus gesture
-;;;
-;;; Since: 3.24
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-gesture-stylus-new (widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-9-11}
+  @argument[widget]{a @class{gtk-gesture-stylus} object}
+  @return{A newly created @class{gtk-gesture-stylus} object.}
+  @begin{short}
+    Creates a new stylus gesture.
+  @end{short}
+
+  Since 3.24
+  @see-class{gtk-gesture-stylus}"
+  (make-instance 'gtk-gesture-stylus
+                 :widget widget))
+
+(export 'gtk-gesture-stylus-new)
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk_gesture_stylus_get_axis ()
-;;;
-;;; gboolean
-;;; gtk_gesture_stylus_get_axis (GtkGestureStylus *gesture,
-;;;                              GdkAxisUse axis,
-;;;                              gdouble *value);
-;;;
-;;; Returns the current value for the requested axis . This function must be
-;;; called from either the “down”, “motion”, “up” or “proximity” signals.
-;;;
-;;; gesture :
-;;;     a GtkGestureStylus
-;;;
-;;; axis :
-;;;     requested device axis
-;;;
-;;; value :
-;;;     return location for the axis value.
-;;;
-;;; Returns :
-;;;     TRUE if there is a current value for the axis
-;;;
-;;; Since: 3.24
+;;; gtk_gesture_stylus_get_axis () -> gtk-gesture-stylus-axis
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_gesture_stylus_get_axis" %gtk-gesture-stylus-axis) :boolean
+  (gesture (g-object gtk-gesture-stylus))
+  (axis gdk-axis-use)
+  (value (:pointer :double)))
+
+(defun gtk-gesture-stylus-axis (gesture axis)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-9-11}
+  @argument[gesture]{a @class{gtk-gesture-stylus} object}
+  @argument[axis]{requested device axis of type @symbol{gdk-axis-use}}
+  @return{A @code{:double} with the current value for the axis.}
+  @begin{short}
+    Returns the current value for the requested axis.
+  @end{short}
+  This function must be called from either the \"down\", \"motion\", \"up\" or
+  \"proximity\" signals.
+
+  Since 3.24
+  @see-class{gtk-gesture-stylus}"
+  (with-foreign-object (value :double)
+    (when (%gtk-gesture-stylus-axis gesture axis value)
+      (mem-ref value :double))))
+
+(export 'gtk-gesture-stylus-axis)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_gesture_stylus_get_axes ()
@@ -205,23 +200,28 @@
 ;;; Since: 3.24
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Implement the function
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk_gesture_stylus_get_device_tool ()
-;;;
-;;; GdkDeviceTool *
-;;; gtk_gesture_stylus_get_device_tool (GtkGestureStylus *gesture);
-;;;
-;;; Returns the GdkDeviceTool currently driving input through this gesture. This
-;;; function must be called from either the “down”, “motion”, “up” or
-;;; “proximity” signal handlers.
-;;;
-;;; gesture :
-;;;     a GtkGestureStylus
-;;;
-;;; Returns :
-;;;     The current stylus tool.
-;;;
-;;; Since: 3.24
+;;; gtk_gesture_stylus_get_device_tool () -> gtk-gesture-stylus-device-tool
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_gesture_stylus_get_device_tool" gtk-gesture-stylus-device-tool)
+    (g-object gdk-device-tool)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-9-11}
+  @argument[gesture]{a @class{gtk-gesture-stylus} object}
+  @return{The current @class{gdk-device-tool} object.}
+  @begin{short}
+    Returns the device tool currently driving input through this gesture.
+  @end{short}
+  This function must be called from either the \"down\", \"motion\", \"up\" or
+  \"proximity\" signal handlers.
+
+  Since 3.24
+  @see-class{gtk-gesture-stylus}"
+  (gesture (g-object gtk-gesture-stylus)))
+
+(export 'gtk-gesture-stylus-device-tool)
 
 ;;; --- End of file gtk.gesture-stylus.lisp ------------------------------------

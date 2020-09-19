@@ -2,11 +2,11 @@
 ;;; gtk.gesture-drag.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,9 +42,9 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void	drag-begin	Run Last
-;;;     void	drag-end	Run Last
-;;;     void	drag-update	Run Last
+;;;     void    drag-begin	   Run Last
+;;;     void    drag-end	   Run Last
+;;;     void    drag-update    Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -71,55 +71,56 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-gesture-drag 'type)
- "@version{2019-3-22}
+ "@version{2020-9-11}
   @begin{short}
     @sym{gtk-gesture-drag} is a @class{gtk-gesture} implementation that
     recognizes drag operations.
   @end{short}
   The drag operation itself can be tracked throught the \"drag-begin\",
   \"drag-update\" and \"drag-end\" signals, or the relevant coordinates be
-  extracted through the functions @fun{gtk-gesture-drag-get-offset} and
-  @fun{gtk-gesture-drag-get-start-point}.
+  extracted through the functions @fun{gtk-gesture-drag-offset} and
+  @fun{gtk-gesture-drag-start-point}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"drag-begin\" signal}
       @begin{pre}
-  lambda (gesture start-x start-y)    : Run Last
+ lambda (gesture start-x start-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever dragging starts.
+      This signal is emitted whenever dragging starts. Since 3.14
       @begin[code]{table}
-        @entry[gesture]{The @class{gtk-gesture-drag} object which received the
+        @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
-        @entry[start-x]{X coordinate, relative to the widget allocation.}
-        @entry[start-y]{Y coordinate, relative to the widget allocation.}
+        @entry[start-x]{A @code{:double} with the x coordinate, relative to the
+          widget allocation.}
+        @entry[start-y]{A @code{:double} with the y coordinate, relative to the
+          widget allocation.}
       @end{table}
-      Since 3.14
-
     @subheading{The \"drag-end\" signal}
       @begin{pre}
-  lambda (gesture offset-x offset-y)    : Run Last
+ lambda (gesture offset-x offset-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever the dragging is finished.
+      This signal is emitted whenever the dragging is finished. Since 3.14
       @begin[code]{table}
-        @entry[gesture]{The @class{gtk-gesture-drag} object which received the
+        @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
-        @entry[offset-x]{X offset, relative to the start point.}
-        @entry[offset-y]{Y offset, relative to the start point.}
+        @entry[offset-x]{A @code{:double} with the x offset, relative to the
+          start point.}
+        @entry[offset-y]{A @code{:double} with the y offset, relative to the
+          start point.}
       @end{table}
-      Since 3.14
-
     @subheading{The \"drag-update\" signal}
       @begin{pre}
-  lambda (gesture offset-x offset-y)    : Run Last
+ lambda (gesture offset-x offset-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever the dragging point moves.
+      This signal is emitted whenever the dragging point moves. Since 3.14
       @begin[code]{table}
-        @entry[gesture]{The @class{gtk-gesture-drag} object which received the
+        @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
-        @entry[offset-x]{X offset, relative to the start point.}
-        @entry[offset-y]{Y offset, relative to the start point.}
+        @entry[offset-x]{A @code{:double} with the x offset, relative to the
+          start point.}
+        @entry[offset-y]{A @code{:double} with the y offset, relative to the
+          start point.}
       @end{table}
   @end{dictionary}
-  Since 3.14
   @see-class{gtk-gesture-swipe}")
 
 ;;; ----------------------------------------------------------------------------
@@ -130,10 +131,10 @@
 
 (defun gtk-gesture-drag-new (widget)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-22}
-  @argument[widget]{a @class{gtk-widget}}
+ "@version{2020-9-11}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{A newly created @class{gtk-gesture-drag}.}
-  @short{Returns a newly created @class{gtk-gesture} that recognizes drags.}
+  @short{Returns a newly created gesture that recognizes drags.}
 
   Since 3.14
   @see-class{gtk-gesture-drag}"
@@ -143,54 +144,66 @@
 (export 'gtk-gesture-drag-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_gesture_drag_get_start_point ()
+;;; gtk_gesture_drag_get_start_point () -> gtk-gesture-drag-start-point
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_gesture_drag_get_start_point"
-           gtk-gesture-drag-get-start-point) :boolean
+(defcfun ("gtk_gesture_drag_get_start_point" %gtk-gesture-drag-start-point)
+    :boolean
+  (gesture (g-object gtk-gesture-drag))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun gtk-gesture-drag-start-point (gesture)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-22}
+ "@version{2020-9-11}
   @argument[gesture]{a @class{gtk-gesture-drag} object}
-  @argument[x]{X coordinate for the drag start point.}
-  @argument[y]{Y coordinate for the drag start point.}
-  @return{@em{True} if the gesture is active.}
+  @begin{return}
+    x -- a @code{:double} with the x coordinate for the drag start point @br{}
+    y -- a @code{:double} with the y coordinate for the drag start point
+  @end{return}
   @begin{short}
-    If the gesture is active, this function returns @em{true} and fills in x
-    and y with the drag start coordinates, in window-relative coordinates.
+    If the gesture is active, this function returns the drag start coordinates,
+    in window-relative coordinates.
   @end{short}
 
   Since 3.14
   @see-class{gtk-gesture-drag}"
+  (with-foreign-objects ((x :double) (y :double))
+    (when (%gtk-gesture-drag-start-point gesture x y)
+      (values (mem-ref x :double)
+              (mem-ref y :double)))))
+
+(export 'gtk-gesture-drag-start-point)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_gesture_drag_get_offset () -> gtk-gesture-drag-offset
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_gesture_drag_get_offset" %gtk-gesture-drag-offset) :boolean
   (gesture (g-object gtk-gesture-drag))
-  (x :double)
-  (y :double))
+  (x (:pointer :double))
+  (y (:pointer :double)))
 
-(export 'gtk-gesture-drag-get-start-point)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_gesture_drag_get_offset ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_gesture_drag_get_offset"
-           gtk-gesture-drag-get-offset) :boolean
+(defun gtk-gesture-drag-offset (gesture)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-22}
+ "@version{2020-9-11}
   @argument[gesture]{a @class{gtk-gesture-drag} object}
-  @argument[x]{X offset for the current point.}
-  @argument[y]{Y offset for the current point.}
-  @return{@em{True} if the gesture is active.}
+  @begin{return}
+    x -- a @code{:double} with the x offset for the current point @br{}
+    y -- a @code{:double} with the y offset for the current point.
+  @end{return}
   @begin{short}
-    If the gesture is active, this function returns @em{true} and fills in x
-    and y with the coordinates of the current point, as an offset to the
-    starting drag point.
+    If the gesture is active, this function returns the coordinates of the
+    current point, as an offset to the starting drag point.
   @end{short}
 
   Since 3.14
   @see-class{gtk-gesture-drag}"
-  (gesture (g-object gtk-gesture-drag))
-  (x :double)
-  (y :double))
+  (with-foreign-objects ((x :double) (y :double))
+    (when (%gtk-gesture-drag-offset gesture x y)
+      (values (mem-ref x :double)
+              (mem-ref y :double)))))
 
-(export 'gtk-gesture-drag-get-offset)
+(export 'gtk-gesture-drag-offset)
 
 ;;; --- End of file gtk.gesture-drag.lisp --------------------------------------
