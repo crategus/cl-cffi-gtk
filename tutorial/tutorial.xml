@@ -1076,8 +1076,8 @@ int main( int argc, char *argv[] )
                    (gdk-window-create-similar-surface
                                    (gtk-widget-window widget)
                                    :color
-                                   (gtk-widget-get-allocated-width widget)
-                                   (gtk-widget-get-allocated-height widget)))
+                                   (gtk-widget-allocated-width widget)
+                                   (gtk-widget-allocated-height widget)))
              ;; Clear surface
              (let ((cr (cairo-create surface)))
                (cairo-set-source-rgb cr 1.0 1.0 1.0)
@@ -4773,12 +4773,12 @@ int main( int argc, char *argv[] )
     should be aware of the tradeoffs.
    </para>
    <para>
-    The following example illustrates how to use a fixed container.  In this example three buttons are put
-    into the fixed widget at random positions.  A click on a button moves the button to a new random
-    position.  To retrieve the size of the fixed widget the function
-    <ulink url="&gtk-widget-get-allocation;"><code>gtk-widget-get-allocation</code></ulink> is used, which
-    returns a rectangle of type <ulink url="&gdk-rectangle;"><code>gdk-rectangle</code></ulink>.  The width
-    and the height of the fixed widget are then get with the functions <ulink url="&gdk-rectangle-width;">
+    The following example illustrates how to use a fixed container. In this example three buttons are put
+    into the fixed widget at random positions. A click on a button moves the button to a new random position.
+    To retrieve the size of the fixed widget the function <ulink url="&gtk-widget-allocation;">
+    <code>gtk-widget-allocation</code></ulink> is used, which returns a rectangle of type
+    <ulink url="&gdk-rectangle;"><code>gdk-rectangle</code></ulink>. The width and the height of the fixed
+    widget are then get with the functions <ulink url="&gdk-rectangle-width;">
     <code>gdk-rectangle-width</code></ulink> and <ulink url="&gdk-rectangle-height;">
     <code>gdk-rectangle-height</code></ulink>.
    </para>
@@ -4786,7 +4786,7 @@ int main( int argc, char *argv[] )
     <title>Fixed Container</title>
     <programlisting>
 (defun move-button (button fixed)
-  (let* ((allocation (gtk-widget-get-allocation fixed))
+  (let* ((allocation (gtk-widget-allocation fixed))
          (width (- (gdk-rectangle-width allocation) 20))
          (height (- (gdk-rectangle-height allocation) 10)))
     (gtk-fixed-move fixed button (random width) (random height))))
@@ -12948,8 +12948,7 @@ lambda (merge widget)
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-buffer view)
-                                  (gtk-widget-get-clipboard view
-                                                            "CLIPBOARD"))))))
+                                  (gtk-widget-clipboard view "CLIPBOARD"))))))
 
       ;; Add action "paste" to the application window
       (let ((action (g-simple-action-new "paste" nil)))
@@ -12961,8 +12960,7 @@ lambda (merge widget)
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
                                        (gtk-text-view-buffer view)
-                                       (gtk-widget-get-clipboard view
-                                                                 "CLIPBOARD")
+                                       (gtk-widget-clipboard view "CLIPBOARD")
                                        :editable t)))))
 
       ;; Add action "fullscreen" to the application window
@@ -14154,6 +14152,10 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
+
+
 
 
 

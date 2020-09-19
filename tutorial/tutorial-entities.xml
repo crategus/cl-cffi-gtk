@@ -628,7 +628,7 @@
 <!ENTITY gtk_widget_vexpand                  "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-vexpand">
 <!ENTITY gtk-widget-destroy                  "&api;gtk_fun_gtk-widget-destroy.html">
 <!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
-<!ENTITY gtk-widget-get-allocation           "&api;gtk_fun_gtk-widget-get-allocation.html">
+<!ENTITY gtk-widget-allocation               "&api;gtk_fun_gtk-widget-allocation.html">
 <!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">
 <!ENTITY gtk-widget-queue-draw               "&api;gtk_fun_gtk-widget-queue-draw.html">
 <!ENTITY gtk-widget-realize                  "&api;gtk_fun_gtk-widget-realize.html">

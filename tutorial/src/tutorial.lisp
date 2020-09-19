@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; tutorial.lisp
 ;;;
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -268,8 +268,8 @@
                    (gdk-window-create-similar-surface
                                    (gtk-widget-window widget)
                                    :color
-                                   (gtk-widget-get-allocated-width widget)
-                                   (gtk-widget-get-allocated-height widget)))
+                                   (gtk-widget-allocated-width widget)
+                                   (gtk-widget-allocated-height widget)))
              ;; Clear surface
              (let ((cr (cairo-create surface)))
                (cairo-set-source-rgb cr 1.0 1.0 1.0)
@@ -1687,7 +1687,7 @@
 ;;; Fixed Container
 
 (defun move-button (button fixed)
-  (let* ((allocation (gtk-widget-get-allocation fixed))
+  (let* ((allocation (gtk-widget-allocation fixed))
          (width (- (gdk-rectangle-width allocation) 50))
          (height (- (gdk-rectangle-height allocation) 25)))
     (gtk-fixed-move fixed button (random width) (random height))))
@@ -4352,8 +4352,7 @@ happen.")
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-buffer view)
-                                  (gtk-widget-get-clipboard view
-                                                            "CLIPBOARD"))))))
+                                  (gtk-widget-clipboard view "CLIPBOARD"))))))
 
       ;; Add action "paste" to the application window
       (let ((action (g-simple-action-new "paste" nil)))
@@ -4365,8 +4364,7 @@ happen.")
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
                                        (gtk-text-view-buffer view)
-                                       (gtk-widget-get-clipboard view
-                                                                 "CLIPBOARD")
+                                       (gtk-widget-clipboard view "CLIPBOARD")
                                        :editable t)))))
 
       ;; Add action "fullscreen" to the application window
