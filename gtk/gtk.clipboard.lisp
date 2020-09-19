@@ -348,22 +348,22 @@
     persistent and, since it is owned by GTK+, must not be freed or unrefed.
   @end{return}
   @short{Returns the clipboard object for the given selection.}
-  See the function @fun{gtk-clipboard-get-for-display} for complete details.
-  @see-function{gtk-clipboard-get-for-display}"
+  See the function @fun{gtk-clipboard-for-display} for complete details.
+  @see-function{gtk-clipboard-for-display}"
   (selection gdk-atom-as-string))
 
 (export 'gtk-clipboard-get)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_clipboard_get_for_display ()
+;;; gtk_clipboard_get_for_display () -> gtk-clipboard-for-display
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_clipboard_get_for_display" gtk-clipboard-get-for-display)
+(defcfun ("gtk_clipboard_get_for_display" gtk-clipboard-for-display)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[display]{the display for which the clipboard is to be retrieved
-    or created}
+ "@version{2020-9-18}
+  @argument[display]{the @class{gdk-display} object for which the clipboard is
+    to be retrieved or created}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
     use}
   @begin{return}
@@ -395,7 +395,7 @@
   (display (g-object gdk-display))
   (selection gdk-atom-as-string))
 
-(export 'gtk-clipboard-get-for-display)
+(export 'gtk-clipboard-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get_display ()
