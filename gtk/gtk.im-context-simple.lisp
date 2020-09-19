@@ -72,7 +72,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-im-context-simple 'type)
- "@version{2013-3-28}
+ "@version{2020-9-15}
   @begin{short}
     @sym{gtk-im-context-simple} is a simple input method context supporting
     table-based input methods.
@@ -89,7 +89,8 @@
   @sym{gtk-im-context-simple} also supports numeric entry of Unicode characters
   by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint. For
   example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER G WITH
-  CEDILLA, i.e. ģ.")
+  CEDILLA, i.e. ģ.
+  @see-class{gtk-im-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_im_context_simple_new ()
