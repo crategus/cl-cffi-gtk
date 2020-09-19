@@ -2,12 +2,12 @@
 ;;; gtk.recent-filter.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -66,76 +66,6 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkRecentFilter
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkRecentFilter" gtk-recent-filter
-  (:superclass g-initially-unowned
-   :export t
-   :interfaces ("GtkBuildable")
-   :type-initializer "gtk_recent_filter_get_type")
-  nil)
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-recent-filter 'type)
- "@version{2013-11-27}
-  @begin{short}
-    A @sym{gtk-recent-filter} can be used to restrict the files being shown in a
-    @class{gtk-recent-chooser}. Files can be filtered based on their name with
-    the function @fun{gtk-recent-filter-add-pattern}, on their mime type with
-    the function @fun{gtk-file-filter-add-mime-type}, on the application that
-    has registered them with the function
-    @fun{gtk-recent-filter-add-application}, or by a custom filter function
-    with the function @fun{gtk-recent-filter-add-custom}.
-  @end{short}
-
-  Filtering by mime type handles aliasing and subclassing of mime types; e. g.
-  a filter for text/plain also matches a file with mime type application/rtf,
-  since application/rtf is a subclass of text/plain. Note that
-  @sym{gtk-recent-filter} allows wildcards for the subtype of a mime type, so
-  you can e. g. filter for image/*.
-
-  Normally, filters are used by adding them to a @class{gtk-recent-chooser}, see
-  the function @fun{gtk-recent-chooser-add-filter}, but it is also possible to
-  manually use a filter on a file with the function
-  @fun{gtk-recent-filter-filter}.
-
-  Recently used files are supported since GTK+ 2.10.
-
-  @subheading{GtkRecentFilter as GtkBuildable}
-    The @sym{gtk-recent-filter} implementation of the @class{gtk-buildable}
-    interface supports adding rules using the <mime-types>, <patterns> and
-    <applications> elements and listing the rules within. Specifying a
-    <mime-type>, <pattern> or <application> is the same as calling the functions
-    @fun{gtk-recent-filter-add-mime-type}, @fun{gtk-recent-filter-add-pattern}
-    or @fun{gtk-recent-filter-add-application}.
-
-    @b{Example:} A UI definition fragment specifying @sym{gtk-recent-filter}
-    rules
-    @begin{pre}
- <object class=\"GtkRecentFilter\">
-   <mime-types>
-     <mime-type>text/plain</mime-type>
-     <mime-type>image/png</mime-type>
-   </mime-types>
-   <patterns>
-     <pattern>*.txt</pattern>
-     <pattern>*.png</pattern>
-   </patterns>
-   <applications>
-     <application>gimp</application>
-     <application>gedit</application>
-     <application>glade</application>
-   </applications>
- </object>
-    @end{pre}
-  @see-class{gtk-recent-chooser}
-  @see-function{gtk-recent-filter-add-pattern}
-  @see-function{gtk-file-filter-add-mime-type}
-  @see-function{gtk-recent-filter-add-application}
-  @see-function{gtk-recent-filter-add-custom}")
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkRecentFilterFlags
 ;;; ----------------------------------------------------------------------------
 
@@ -152,7 +82,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-filter-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-recent-filter-flags atdoc:*external-symbols*)
- "@version{2013-11-27}
+ "@version{2020-9-13}
   @begin{short}
     These flags indicate what parts of a @symbol{gtk-recent-filter-info}
     structure are filled or need to be filled.
@@ -195,7 +125,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-filter-info atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'gtk-recent-filter-info atdoc:*external-symbols*)
- "@version{2013-10-28}
+ "@version{2020-9-13}
   @begin{short}
     A @sym{gtk-recent-filter-info} structure is used to pass information about
     the tested file to the function @fun{gtk-recent-filter-filter}.
@@ -213,6 +143,76 @@
   @see-function{gtk-recent-filter-filter}")
 
 (export 'gtk-recent-filter-info)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkRecentFilter
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkRecentFilter" gtk-recent-filter
+  (:superclass g-initially-unowned
+   :export t
+   :interfaces ("GtkBuildable")
+   :type-initializer "gtk_recent_filter_get_type")
+  nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-filter 'type)
+ "@version{2020-9-13}
+  @begin{short}
+    A @sym{gtk-recent-filter} can be used to restrict the files being shown in
+    a @class{gtk-recent-chooser}.
+  @end{short}
+  Files can be filtered based on their name with the function
+  @fun{gtk-recent-filter-add-pattern}, on their mime type with the function
+  @fun{gtk-file-filter-add-mime-type}, on the application that has registered
+  them with the function @fun{gtk-recent-filter-add-application}, or by a
+  custom filter function with the function @fun{gtk-recent-filter-add-custom}.
+
+  Filtering by mime type handles aliasing and subclassing of mime types; e.g.
+  a filter for text/plain also matches a file with mime type application/rtf,
+  since application/rtf is a subclass of text/plain. Note that
+  @sym{gtk-recent-filter} allows wildcards for the subtype of a mime type, so
+  you can e.g. filter for image/*.
+
+  Normally, filters are used by adding them to a @class{gtk-recent-chooser},
+  see the function @fun{gtk-recent-chooser-add-filter}, but it is also possible
+  to manually use a filter on a file with the function
+  @fun{gtk-recent-filter-filter}.
+
+  @begin[GtkRecentFilter as GtkBuildable]{dictionary}
+    The @sym{gtk-recent-filter} implementation of the @class{gtk-buildable}
+    interface supports adding rules using the @code{<mime-types>},
+    @code{<patterns>} and @code{<applications>} elements and listing the rules
+    within. Specifying a a@code{<mime-type>}, @code{<pattern>} or
+    @code{<application>} is the same as calling the functions
+    @fun{gtk-recent-filter-add-mime-type}, @fun{gtk-recent-filter-add-pattern}
+    or @fun{gtk-recent-filter-add-application}.
+
+    @b{Example:} A UI definition fragment specifying @sym{gtk-recent-filter}
+    rules
+    @begin{pre}
+<object class=\"GtkRecentFilter\">
+  <mime-types>
+    <mime-type>text/plain</mime-type>
+    <mime-type>image/png</mime-type>
+  </mime-types>
+  <patterns>
+    <pattern>*.txt</pattern>
+    <pattern>*.png</pattern>
+  </patterns>
+  <applications>
+    <application>gimp</application>
+    <application>gedit</application>
+    <application>glade</application>
+  </applications>
+</object>
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-recent-chooser}
+  @see-function{gtk-recent-filter-add-pattern}
+  @see-function{gtk-file-filter-add-mime-type}
+  @see-function{gtk-recent-filter-add-application}
+  @see-function{gtk-recent-filter-add-custom}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_new ()
@@ -279,9 +279,9 @@
 (defcfun ("gtk_recent_filter_add_mime_type" gtk-recent-filter-add-mime-type)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-27}
+ "@version{2020-9-13}
   @argument[filter]{a @class{gtk-recent-filter} object}
-  @argument[mime-type]{a MIME type}
+  @argument[mime-type]{a @code{:string} with the MIME type}
   @begin{short}
     Adds a rule that allows resources based on their registered MIME type.
   @end{short}
@@ -297,9 +297,9 @@
 
 (defcfun ("gtk_recent_filter_add_pattern" gtk-recent-filter-add-pattern) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-28}
+ "@version{2020-9-13}
   @argument[filter]{a @class{gtk-recent-filter} object}
-  @argument[pattern]{a file pattern}
+  @argument[pattern]{a @code{:string} wiht the file pattern}
   @begin{short}
     Adds a rule that allows resources based on a pattern matching their display
     name.
@@ -330,9 +330,9 @@
 (defcfun ("gtk_recent_filter_add_application" gtk-recent-filter-add-application)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-27}
+ "@version{2020-9-13}
   @argument[filter]{a @class{gtk-recent-filter} object}
-  @argument[application]{an application name}
+  @argument[application]{a @code{:string} with an application name}
   @begin{short}
     Adds a rule that allows resources based on the name of the application that
     has registered them.
@@ -401,7 +401,7 @@
 (defcallback gtk-recent-filter-func-cb :boolean
     ((filter-info (:pointer (:struct gtk-recent-filter-info)))
      (data :pointer))
-  (funcall (glib:get-stable-pointer-value data) filter-info))
+  (funcall (get-stable-pointer-value data) filter-info))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_add_custom ()
@@ -417,11 +417,11 @@
 
 (defun gtk-recent-filter-add-custom (filter needed func)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-28}
+ "@version{2020-9-13}
   @argument[filter]{a @class{gtk-recent-filter} object}
   @argument[needed]{bitfield of flags of type @symbol{gtk-recent-filter-flags}
     indicating the information that the custom filter function needs}
-  @argument[func]{callback function; if the function returns @em{true}, then the
+  @argument[func]{callback function, if the function returns @em{true}, then the
     file will be displayed}
   @begin{short}
     Adds a rule to a @arg{filter} that allows resources based on a custom
@@ -433,12 +433,11 @@
   filter.
   @see-class{gtk-recent-filter}
   @see-symbol{gtk-recent-filter-flags}"
-  (%gtk-recent-filter-add-custom
-                              filter
-                              needed
-                              (callback gtk-recent-filter-func-cb)
-                              (glib:allocate-stable-pointer func)
-                              (callback glib:stable-pointer-destroy-notify-cb)))
+  (%gtk-recent-filter-add-custom filter
+                                 needed
+                                 (callback gtk-recent-filter-func-cb)
+                                 (allocate-stable-pointer func)
+                                 (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-recent-filter-add-custom)
 
@@ -469,7 +468,7 @@
 
 (defcfun ("gtk_recent_filter_filter" gtk-recent-filter-filter) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-27}
+ "@version{2020-9-13}
   @argument[filter]{a @class{gtk-recent-filter} object}
   @argument[filter-info]{a @symbol{gtk-recent-filter-info} structure containing
     information about a recently used resource}

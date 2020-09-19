@@ -2,12 +2,12 @@
 ;;; gtk.recent-chooser-dialog.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,45 +75,44 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-chooser-dialog 'type)
- "@version{2013-5-26}
+ "@version{2020-9-13}
   @image[recentchooserdialog]{}
   @begin{short}
     @sym{gtk-recent-chooser-dialog} is a dialog box suitable for displaying the
-    recently used documents. This widgets works by putting a
-    @class{gtk-recent-chooser-widget} inside a @class{gtk-dialog}. It exposes
-    the @class{gtk-recent-chooser} interface, so you can use all the
-    @class{gtk-recent-chooser} functions on the recent chooser dialog as
-    well as those for @class{gtk-dialog}.
+    recently used documents.
   @end{short}
+  This widgets works by putting a @class{gtk-recent-chooser-widget} inside a
+  @class{gtk-dialog}. It exposes the @class{gtk-recent-chooser} interface, so
+  you can use all the @class{gtk-recent-chooser} functions on the recent chooser
+  dialog as well as those for @class{gtk-dialog}.
+
   Note that @sym{gtk-recent-chooser-dialog} does not have any methods of its
   own. Instead, you should use the functions that work on a
   @class{gtk-recent-chooser}.
+  @begin[Example]{dictionary}
+    In the simplest of cases, you can use the following code to use a
+    @sym{gtk-recent-chooser-dialog} to select a recently used file:
+    @begin{pre}
+GtkWidget *dialog;
 
-  @b{Example:} Typical usage.
-  In the simplest of cases, you can use the following code to use a
-  @sym{gtk-recent-chooser-dialog} to select a recently used file:
-  @begin{pre}
- GtkWidget *dialog;
+dialog = gtk_recent_chooser_dialog_new (\"Recent Documents\",
+                                        parent_window,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+                                        NULL);
 
- dialog = gtk_recent_chooser_dialog_new
-                                      (\"Recent Documents\",
-                                       parent_window,
-                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                       GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                                       NULL);
+if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+  {
+    GtkRecentInfo *info;
 
- if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
-   {
-     GtkRecentInfo *info;
+    info= gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
+    open_file (gtk_recent_info_get_uri (info));
+    gtk_recent_info_unref (info);
+  @}
 
-     info= gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
-     open_file (gtk_recent_info_get_uri (info));
-     gtk_recent_info_unref (info);
-   @}
-
- gtk_widget_destroy (dialog);
-  @end{pre}
-  Recently used files are supported since GTK+ 2.10.
+gtk_widget_destroy (dialog);
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-recent-chooser}
   @see-class{gtk-dialog}")
 
@@ -123,9 +122,10 @@
 
 (defun gtk-recent-chooser-dialog-new (title parent &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+ "@version{2020-9-13}
+  @argument[title]{a @code{:string} with the title of the dialog, or @code{nil}}
+  @argument[parent]{transient @class{gtk-window} parent of the dialog, or
+    @code{nil}}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
     for the button of type @symbol{gtk-response-type}}
   @return{A new @class{gtk-recent-chooser-dialog} object.}
@@ -134,8 +134,8 @@
   @end{short}
   This function is analogous to the function @fun{gtk-dialog-new-with-buttons}.
   @see-class{gtk-recent-chooser-dialog}
-  @see-function{gtk-dialog-new-with-buttons}
-  @see-function{gtk-recent-chooser-dialog-new-with-buttons}"
+  @see-class{gtk-window}
+  @see-function{gtk-dialog-new-with-buttons}"
   (let ((dialog (make-instance 'gtk-recent-chooser-dialog)))
     (when title
       (setf (gtk-window-title dialog) title))
@@ -154,9 +154,10 @@
 (defun gtk-recent-chooser-dialog-new-for-manager (title parent manager
                                                   &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+ "@version{2020-9-13}
+  @argument[title]{a @code{:string} with the title of the dialog, or @code{nil}}
+  @argument[parent]{transient @class{gtk-window} parent of the dialog, or
+    @code{nil}}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
     for the button of type @symbol{gtk-response-type}}

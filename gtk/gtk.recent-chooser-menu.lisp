@@ -2,12 +2,12 @@
 ;;; gtk.recent-chooser-menu.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,7 +44,7 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean   show-numbers    Read / Write
+;;;     gboolean    show-numbers    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -85,14 +85,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-chooser-menu 'type)
- "@version{2013-5-28}
+ "@version{2020-9-13}
   @begin{short}
     @sym{gtk-recent-chooser-menu} is a widget suitable for displaying recently
-    used files inside a menu. It can be used to set a sub-menu of a
-    @class{gtk-menu-item} using the generic function
-    @fun{gtk-menu-item-submenu}, or as the menu of a
-    @class{gtk-menu-tool-button}.
+    used files inside a menu.
   @end{short}
+  It can be used to set a sub-menu of a @class{gtk-menu-item} using the slot
+  access function @fun{gtk-menu-item-submenu}, or as the menu of a
+  @class{gtk-menu-tool-button}.
 
   Note that @sym{gtk-recent-chooser-menu} does not have any methods of its own.
   Instead, you should use the functions that work on a
@@ -103,14 +103,13 @@
   @class{gtk-recent-chooser-widget} and @class{gtk-recent-chooser-dialog}
   widgets do. Thus using the function @fun{gtk-recent-chooser-add-filter} on a
   @sym{gtk-recent-chooser-menu} widget will yield the same effects as using the
-  function @fun{gtk-recent-chooser-set-filter}, replacing any currently set
+  function @fun{gtk-recent-chooser-filter}, replacing any currently set
   filter with the supplied filter; the function
   @fun{gtk-recent-chooser-remove-filter} will remove any currently set
   @class{gtk-recent-filter} object and will unset the current filter; the
   function @fun{gtk-recent-chooser-list-filters} will return a list containing
   a single @class{gtk-recent-filter} object.
-
-  Recently used files are supported since GTK+ 2.10.")
+  @see-class{gtk-recent-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -121,22 +120,34 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-numbers"
                                                'gtk-recent-chooser-menu) 't)
- "The @code{show-numbers} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{show-numbers} property of type @code{:boolean} (Read / Write) @br{}
   Whether the first ten items in the menu should be prepended by a number
   acting as a unique mnemonic. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-choose-menu-show-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-menu-show-numbers 'function)
- "@version{2013-11-23}
-  Accessor of the slot @slot[gtk-recent-chooser-menu-show-numbers]{show-numbers}
-  of the @class{gtk-recent-chooser-menu} class.
-  @see-class{gtk-recent-chooser-menu}
-  @see-function{gtk-recent-chooser-menu-get-show-numbers}
-  @see-function{gtk-recent-chooser-menu-set-show-numbers}")
+ "@version{2020-9-13}
+  @syntax[]{(gtk-recent-chooser-menu-show-numbers object) => show-numbers}
+  @syntax[]{(setf (gtk-recent-chooser-menu-show-numbers object) show-numbers)}
+  @argument[obect]{a @class{gtk-recent-chooser-menu} widget}
+  @argument[show-numbers]{a @code{:boolean} whether to show numbers}
+  @begin{short}
+    Accessor of the @slot[gtk-recent-chooser-menu-show-numbers]{show-numbers}
+    slot of the @class{gtk-recent-chooser-menu} class.
+  @end{short}
+
+  The slot access function @sym{gtk-recent-chooser-menu-show-numbers} returns
+  wether a number should be added to the items of menu. The slot access function
+  @sym{(setf gtk-recent-chooser-menu-show-numbers)} sets whether a number should
+  be added to the items of menu.
+
+  The numbers are shown to provide a unique character for a mnemonic to be used
+  inside ten menu item's label. Only the first the items get a number to avoid
+  clashes.
+  @see-class{gtk-recent-chooser-menu}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -169,8 +180,8 @@
 
 (defun gtk-recent-chooser-menu-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @return{A new @class{gtk-recent-chooser-menu} widget}
+ "@version{2020-9-13}
+  @return{A new @class{gtk-recent-chooser-menu} widget.}
   @begin{short}
     Creates a new @class{gtk-recent-chooser-menu} widget.
   @end{short}
@@ -201,7 +212,7 @@
 
 (defun gtk-recent-chooser-menu-new-for-manager (manager)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
+ "@version{2020-9-13}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @return{A new @class{gtk-recent-chooser-menu}, bound to @arg{manager}.}
   @begin{short}
@@ -220,49 +231,5 @@
                  :recent-manager manager))
 
 (export 'gtk-recent-chooser-menu-new-for-manager)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_recent_chooser_menu_get_show_numbers ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-recent-chooser-menu-get-show-numbers))
-
-(defun gtk-recent-chooser-menu-get-show-numbers (menu)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @argument[menu]{a @class{gtk-recent-chooser-menu} widget}
-  @return{@em{True} if numbers should be shown.}
-  @begin{short}
-    Returns the value set by the function
-    @fun{gtk-recent-chooser-menu-set-show-numbers}.
-  @end{short}
-  @see-class{gtk-recent-chooser-menu}
-  @see-function{gtk-recent-chooser-menu-set-show-numbers}"
-  (gtk-recent-chooser-menu-show-numbers menu))
-
-(export 'gtk-recent-chooser-menu-get-show-numbers)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_recent_chooser_menu_set_show_numbers ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-recent-chooser-menu-set-show-numbers))
-
-(defun gtk-recent-chooser-menu-set-show-numbers (menu show-numbers)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @argument[menu]{a @class{gtk-recent-chooser-menu} widget}
-  @argument[show-numbers]{whether to show numbers}
-  @begin{short}
-    Sets whether a number should be added to the items of menu.
-  @end{short}
-  The numbers are shown to provide a unique character for a mnemonic to be used
-  inside ten menu item's label. Only the first the items get a number to avoid
-  clashes.
-  @see-class{gtk-recent-chooser-menu}
-  @see-function{gtk-recent-chooser-menu-get-show-numbers}"
-  (setf (gtk-recent-chooser-menu-show-numbers menu) show-numbers))
-
-(export 'gtk-recent-chooser-menu-set-show-numbers)
 
 ;;; --- End of file gtk.recent-chooser-menu.lisp -------------------------------

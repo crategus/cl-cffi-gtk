@@ -2,12 +2,12 @@
 ;;; gtk.recent-chooser-widget.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -76,20 +76,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-chooser-widget 'type)
- "@version{2013-5-28}
+ "@version{2020-9-13}
   @begin{short}
     @sym{gtk-recent-chooser-widget} is a widget suitable for selecting recently
-    used files. It is the main building block of a
-    @class{gtk-recent-chooser-dialog}. Most applications will only need to use
-    the latter; you can use @sym{gtk-recent-chooser-widget} as part of a larger
-    window if you have special needs.
+    used files.
   @end{short}
+  It is the main building block of a @class{gtk-recent-chooser-dialog}. Most
+  applications will only need to use the latter; you can use
+  @sym{gtk-recent-chooser-widget} as part of a larger window if you have special
+  needs.
 
   Note that @sym{gtk-recent-chooser-widget} does not have any methods of its
   own. Instead, you should use the functions that work on a
   @class{gtk-recent-chooser}.
-
-  Recently used files are supported since GTK+ 2.10.")
+  @see-class{gtk-recent-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -126,10 +126,10 @@
 
 (defun gtk-recent-chooser-widget-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
-  @return{A new @class{gtk-recent-chooser-widget}.}
+ "@version{2020-9-13}
+  @return{A new @class{gtk-recent-chooser-widget} widget.}
   @begin{short}
-    Creates a new @class{gtk-recent-chooser-widget} object.
+    Creates a new @class{gtk-recent-chooser-widget} widget.
   @end{short}
   This is an embeddable widget used to access the recently used resources list.
   @see-class{gtk-recent-chooser-widget}
@@ -146,7 +146,7 @@
 
 (defun gtk-recent-chooser-widget-new-for-manager (manager)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
+ "@version{2020-9-13}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @return{A new @class{gtk-recent-chooser-widget} widget.}
   @begin{short}
