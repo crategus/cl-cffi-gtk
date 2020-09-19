@@ -2,12 +2,12 @@
 ;;; gtk.plug.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,12 +47,12 @@
 ;;;
 ;;; Properties
 ;;;
-;;;      gboolean   embedded         Read
-;;;     GdkWindow*  socket-window    Read
+;;;      gboolean    embedded         Read
+;;;     GdkWindow*   socket-window    Read
 ;;;
 ;;; Signals
 ;;;
-;;;          void   embedded         Run Last
+;;;          void    embedded         Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -90,7 +90,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-plug 'type)
- "@version{2013-5-26}
+ "@version{2020-9-15}
   @begin{short}
     Together with @class{gtk-socket}, @sym{gtk-plug} provides the ability to
     embed widgets from one process into another process in a fashion that is
@@ -103,7 +103,7 @@
 
   The communication between a @class{gtk-socket} and a @sym{gtk-plug} follows
   the XEmbed protocol. This protocol has also been implemented in other
-  toolkits, e. g. Qt, allowing the same level of integration when embedding a Qt
+  toolkits, e.g. Qt, allowing the same level of integration when embedding a Qt
   widget in GTK+ or vice versa.
 
   The @sym{gtk-plug} and @class{gtk-socket} widgets are only available when GTK+
@@ -116,7 +116,7 @@
       @end{pre}
       Gets emitted when the plug becomes embedded in a socket.
       @begin[code]{table}
-        @entry[plug]{The object on which the signal was emitted.}
+        @entry[plug]{The @sym{gtk-plug} object on which the signal was emitted.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-plug-embedded}
@@ -133,15 +133,16 @@
 (setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-plug) 't)
  "The @code{embedded} property of type @code{:boolean} (Read) @br{}
   @em{True} if the plug is embedded in a socket. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-plug-embedded atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-plug-embedded 'function)
- "@version{2014-2-12}
+ "@version{2020-9-15}
+  @syntax[]{(gtk-plug-embedded object) => embedded}
   @argument[object]{a @class{gtk-plug} widget}
-  @return{@em{True} if the plug is embedded in a socket.}
+  @argument[embedded]{a @code{:boolean} wether the plug is embedded in a socket}
   @begin{short}
     Accessor of the @slot[gtk-plug]{embedded} slot of the @class{gtk-plug}
     class.
@@ -161,9 +162,10 @@
 (setf (gethash 'gtk-plug-socket-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-plug-socket-window 'function)
- "@version{2014-2-12}
-  @argument[plug]{a @class{gtk-plug} widget}
-  @return{The window of the socket, or @code{nil}.}
+ "@version{2020-9-15}
+  @syntax[]{(gtk-plug-socket-window object) => socket-window}
+  @argument[object]{a @class{gtk-plug} widget}
+  @argument[socket-window]{a @class{gdk-window} of the socket}
   @begin{short}
     Accessor of the @slot[gtk-plug]{socket-window} slot of the @class{gtk-plug}
     class.
@@ -217,15 +219,15 @@
 
 (defcfun ("gtk_plug_new" gtk-plug-new) (g-object gtk-plug)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
-  @argument[socket-id]{the window ID of the socket, or 0}
+ "@version{2020-9-15}
+  @argument[socket-id]{a @code{:pointer} with the window ID of the socket, or 0}
   @return{The new @class{gtk-plug} widget.}
   @begin{short}
     Creates a new plug widget inside the @class{gtk-socket} identified by
     @arg{socket-id}.
   @end{short}
   If @arg{socket-id} is 0, the plug is left \"unplugged\" and can later be
-  plugged into a @class{gtk-socket} by the @fun{gtk-socket-add-id} function.
+  plugged into a @class{gtk-socket} by the function @fun{gtk-socket-add-id}.
   @see-class{gtk-plug}
   @see-class{gtk-socket}
   @see-function{gtk-socket-add-id}"
@@ -253,23 +255,23 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_plug_get_id ()
+;;; gtk_plug_get_id () -> gtk-plug-id
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_plug_get_id" gtk-plug-get-id) :pointer
+(defcfun ("gtk_plug_get_id" gtk-plug-id) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2014-2-12}
+ "@version{2020-9-15}
   @argument[plug]{a @class{gtk-plug} widget}
-  @return{the window ID for the plug}
+  @return{A @code{:pointer} with the window ID for the plug.}
   @begin{short}
     Gets the window ID of a @class{gtk-plug} widget, which can then be used to
     embed this window inside another window, for instance with the function
     @fun{gtk-socket-add-id}.
   @end{short}
-  @see-class{gtk-plug} 
+  @see-class{gtk-plug}
   @see-function{gtk-socket-add-id}"
   (plug (g-object gtk-plug)))
 
-(export 'gtk-plug-get-id)
+(export 'gtk-plug-id)
 
 ;;; --- End of file gtk.plug.lisp ----------------------------------------------
