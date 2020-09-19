@@ -96,12 +96,12 @@
 
 (test gtk-progress-bar-style-properties
   (let ((progress-bar (make-instance 'gtk-progress-bar)))
-    (is (=   6 (gtk-widget-style-get-property progress-bar "min-horizontal-bar-height")))
-    (is (= 150 (gtk-widget-style-get-property progress-bar "min-horizontal-bar-width")))
-    (is (=  80 (gtk-widget-style-get-property progress-bar "min-vertical-bar-height")))
-    (is (=   7 (gtk-widget-style-get-property progress-bar "min-vertical-bar-width")))
-    (is (=   2 (gtk-widget-style-get-property progress-bar "xspacing")))
-    (is (=   2 (gtk-widget-style-get-property progress-bar "yspacing")))))
+    (is (=   6 (gtk-widget-style-property progress-bar "min-horizontal-bar-height")))
+    (is (= 150 (gtk-widget-style-property progress-bar "min-horizontal-bar-width")))
+    (is (=  80 (gtk-widget-style-property progress-bar "min-vertical-bar-height")))
+    (is (=   7 (gtk-widget-style-property progress-bar "min-vertical-bar-width")))
+    (is (=   2 (gtk-widget-style-property progress-bar "xspacing")))
+    (is (=   2 (gtk-widget-style-property progress-bar "yspacing")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

@@ -69,7 +69,7 @@
                "GtkFontChooserDialog" "GtkFontSelectionDialog"
                "GtkRecentChooserDialog" "GtkAppChooserDialog")
              (mapcar #'gtype-name (g-type-children "GtkDialog"))))
-             
+
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'gtype-name (g-type-interfaces "GtkDialog"))))
@@ -135,27 +135,27 @@
 
 (test gtk-dialog-style-properties
   (let ((widget (make-instance 'gtk-dialog)))
-    (is (= 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio")))
-    (is-false (gtk-widget-style-get-property widget "cursor-color"))
-    (is (equal "" (gtk-widget-style-get-property widget "focus-line-pattern")))
-    (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
-    (is-true (integerp (gtk-widget-style-get-property widget "focus-padding")))
-    (is-true (gtk-widget-style-get-property widget "interior-focus"))
-    (is-false (gtk-widget-style-get-property widget "link-color"))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
-    (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is-true (integerp (gtk-widget-style-get-property widget "separator-height")))
-    (is-true (integerp (gtk-widget-style-get-property widget "separator-width")))
-    (is (= 24 (gtk-widget-style-get-property widget "text-handle-height")))
-    (is (= 20 (gtk-widget-style-get-property widget "text-handle-width")))
-    (is-false (gtk-widget-style-get-property widget "visited-link-color"))
-    (is-false  (gtk-widget-style-get-property widget "wide-separators"))
-    (is-false (gtk-widget-style-get-property widget "window-dragging"))
-    (is (= 0 (gtk-widget-style-get-property widget "action-area-border")))
-    (is (= 4 (gtk-widget-style-get-property widget "button-spacing")))
-    (is (= 2 (gtk-widget-style-get-property widget "content-area-border")))
-    (is (= 0 (gtk-widget-style-get-property widget "content-area-spacing")))))
+    (is (= 0.04 (gtk-widget-style-property widget "cursor-aspect-ratio")))
+    (is-false (gtk-widget-style-property widget "cursor-color"))
+    (is (equal "" (gtk-widget-style-property widget "focus-line-pattern")))
+    (is (= 1 (gtk-widget-style-property widget "focus-line-width")))
+    (is-true (integerp (gtk-widget-style-property widget "focus-padding")))
+    (is-true (gtk-widget-style-property widget "interior-focus"))
+    (is-false (gtk-widget-style-property widget "link-color"))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-hlength")))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-vlength")))
+    (is-false (gtk-widget-style-property widget "secondary-cursor-color"))
+    (is-true (integerp (gtk-widget-style-property widget "separator-height")))
+    (is-true (integerp (gtk-widget-style-property widget "separator-width")))
+    (is (= 24 (gtk-widget-style-property widget "text-handle-height")))
+    (is (= 20 (gtk-widget-style-property widget "text-handle-width")))
+    (is-false (gtk-widget-style-property widget "visited-link-color"))
+    (is-false  (gtk-widget-style-property widget "wide-separators"))
+    (is-false (gtk-widget-style-property widget "window-dragging"))
+    (is (= 0 (gtk-widget-style-property widget "action-area-border")))
+    (is (= 4 (gtk-widget-style-property widget "button-spacing")))
+    (is (= 2 (gtk-widget-style-property widget "content-area-border")))
+    (is (= 0 (gtk-widget-style-property widget "content-area-spacing")))))
 
 ;;;     GtkDialogFlags
 ;;;     GtkResponseType

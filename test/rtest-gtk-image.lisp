@@ -359,7 +359,7 @@
 ;;;     gtk_image_new_from_surface ()
 
 (test gtk-image-new-from-surface
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (surface (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))
          (image (gtk-image-new-from-surface surface)))
     (is (eq 'gtk-image (type-of image)))
@@ -570,7 +570,7 @@
 ;;;     gtk_image_set_from_surface ()
 
 (test gtk-image-set-from-surface
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (surface (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))
          (image (make-instance 'gtk-image)))
     ;; Set image from surface

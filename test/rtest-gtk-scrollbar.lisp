@@ -61,12 +61,12 @@
 
 (test gtk-scrollbar-properties
   (let ((window (make-instance 'gtk-scrollbar)))
-    (is-false (gtk-widget-style-get-property window "fixed-slider-length"))
-    (is-false (gtk-widget-style-get-property window "has-backward-stepper"))
-    (is-false (gtk-widget-style-get-property window "has-forward-stepper"))
-    (is-false (gtk-widget-style-get-property window "has-secondary-backward-stepper"))
-    (is-false (gtk-widget-style-get-property window "has-secondary-forward-stepper"))
-    (is (= 21 (gtk-widget-style-get-property window "min-slider-length")))))
+    (is-false (gtk-widget-style-property window "fixed-slider-length"))
+    (is-false (gtk-widget-style-property window "has-backward-stepper"))
+    (is-false (gtk-widget-style-property window "has-forward-stepper"))
+    (is-false (gtk-widget-style-property window "has-secondary-backward-stepper"))
+    (is-false (gtk-widget-style-property window "has-secondary-forward-stepper"))
+    (is (= 21 (gtk-widget-style-property window "min-slider-length")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

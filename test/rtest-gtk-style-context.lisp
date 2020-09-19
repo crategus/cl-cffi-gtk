@@ -47,7 +47,7 @@
 
 (test gtk-style-context-properties
   (let* ((widget (make-instance 'gtk-button))
-         (context (gtk-widget-get-style-context widget)))
+         (context (gtk-widget-style-context widget)))
   ;; gtk-style-context-direction
   (is (eq :ltr (gtk-style-context-direction context)))
   (is (eq :rtl (setf (gtk-style-context-direction context) :rtl)))
@@ -349,7 +349,7 @@
 
 (test gtk-style-context-get-junction-sides
   (let* ((widget (make-instance 'gtk-button))
-         (context (gtk-widget-get-style-context widget)))
+         (context (gtk-widget-style-context widget)))
     (is-false (gtk-style-context-get-junction-sides context))
     (is-false (gtk-style-context-set-junction-sides context :top))
     (is (equal '(:corner-topleft :corner-topright) (gtk-style-context-get-junction-sides context)))))
@@ -359,8 +359,8 @@
 
 (test gtk-style-context-get-path
   (let* ((widget (make-instance 'gtk-button))
-         (context (gtk-widget-get-style-context widget))
-         (path (gtk-widget-get-path widget)))
+         (context (gtk-widget-style-context widget))
+         (path (gtk-widget-path widget)))
     (is (eq 'gtk-widget-path (type-of (gtk-style-context-get-path context))))
     (is (string= "button:dir-ltr" (gtk-widget-path-to-string (gtk-style-context-get-path context))))
     (is (eq 'gtk-widget-path (type-of path)))
@@ -416,7 +416,7 @@
 
 (test gtk-style-context-get-style-property
   (let* ((message (make-instance 'gtk-message-dialog))
-         (context (gtk-widget-get-style-context message)))
+         (context (gtk-widget-style-context message)))
     (is (= 12 (gtk-style-context-get-style-property context message "message-border")))))
 
 ;;;     gtk_style_context_get_style_valist
@@ -557,7 +557,7 @@
 
 (test gtk-style-context-to-string
   (let* ((window (make-instance 'gtk-message-dialog))
-         (context (gtk-widget-get-style-context window)))
+         (context (gtk-widget-style-context window)))
     (is-true (stringp (gtk-style-context-to-string context :recurse)))
     (is-true (string= (gtk-style-context-to-string context :recurse)
 "[messagedialog.background.csd:dir(ltr)]

@@ -12,8 +12,10 @@
 (load "rtest-gdk-general.lisp")
 (load "rtest-gdk-key-values.lisp")
 (load "rtest-gdk-monitor.lisp")
+(load "rtest-gdk-rectangle.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-seat.lisp")
 (load "rtest-gdk-selections.lisp")
 (load "rtest-gdk-visual.lisp")
 (load "rtest-gdk-window.lisp")
+

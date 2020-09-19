@@ -44,7 +44,7 @@
 
 (test gtk-widget-path-iter-get-name
   (let* ((widget (make-instance 'gtk-button))
-         (path (gtk-widget-get-path widget)))
+         (path (gtk-widget-path widget)))
     ;; TODO: Why is this false.
     (is-false (gtk-widget-path-iter-get-name path -1))))
 
@@ -52,14 +52,14 @@
 
 (test gtk-widget-path-iter-get-object-name
   (let* ((widget (make-instance 'gtk-button))
-         (path (gtk-widget-get-path widget)))
+         (path (gtk-widget-path widget)))
     (is (string= "button" (gtk-widget-path-iter-get-object-name path -1)))))
 
 ;;;     gtk_widget_path_iter_get_object_type
 
 (test gtk-widget-path-iter-get-object-type
   (let* ((widget (make-instance 'gtk-button))
-         (path (gtk-widget-get-path widget)))
+         (path (gtk-widget-path widget)))
     (is (string= "GtkButton" (g-type-name (gtk-widget-path-iter-get-object-type path -1))))))
 
 ;;;     gtk_widget_path_iter_get_siblings

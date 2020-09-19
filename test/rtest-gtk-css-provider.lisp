@@ -82,8 +82,8 @@
 
 ;;;     gtk_css_provider_get_default
 
-(test gtk-css-provider-get-default
-  (is (eq 'gtk-css-provider (type-of (gtk-css-provider-get-default)))))
+(test gtk-css-provider-default
+  (is (eq 'gtk-css-provider (type-of (gtk-css-provider-default)))))
 
 ;;;     gtk_css_provider_get_named
 ;;;     gtk_css_provider_load_from_data

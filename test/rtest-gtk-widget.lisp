@@ -1,8 +1,12 @@
 (def-suite gtk-widget :in gtk-suite)
 (in-suite gtk-widget)
 
-;;;     GtkRequisition
+;;;  	GtkRequisition
 ;;;     GtkAllocation
+;;;     GtkWidgetHelpType
+;;;     GtkSizeRequestMode
+;;;     GtkRequestedSize
+;;;     GtkAlign
 
 ;;; --- GtkWidget --------------------------------------------------------------
 
@@ -20,8 +24,8 @@
   ;; Check the children
   ;; TODO: The class GtkIcon is not documented.
   (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
-               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch" "GtkCellView"
-               "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea" "GtkIcon")
+               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
+               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
              (mapcar #'gtype-name (g-type-children "GtkWidget"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
@@ -385,12 +389,8 @@ scale-factor
   @see-slot{gtk-widget-window}
 |#
 
-;;; ----------------------------------------------------------------------------
+;;; --- Functions --------------------------------------------------------------
 
-;;;     GtkSelectionData
-;;;     GtkWidgetAuxInfo
-;;;     GtkWidgetHelpType
-;;;
 ;;;     gtk_widget_new
 ;;;     gtk_widget_destroy
 ;;;     gtk_widget_in_destruction
@@ -598,19 +598,19 @@ scale-factor
 
 ;;;   gtk_widget_style_get_property
 
-(test gtk-widget-style-get-property
+(test gtk-widget-style-property
   (let ((widget (make-instance 'gtk-frame)))
-    (is (= 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio")))
-    (is-false (gtk-widget-style-get-property widget "cursor-color"))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
-    (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is (=  0 (gtk-widget-style-get-property widget "separator-height")))
-    (is (=  0 (gtk-widget-style-get-property widget "separator-width")))
-    (is (= 24 (gtk-widget-style-get-property widget "text-handle-height")))
-    (is (= 20 (gtk-widget-style-get-property widget "text-handle-width")))
-    (is-false  (gtk-widget-style-get-property widget "wide-separators"))
-    (is-false (gtk-widget-style-get-property widget "window-dragging"))))
+    (is (= 0.04 (gtk-widget-style-property widget "cursor-aspect-ratio")))
+    (is-false (gtk-widget-style-property widget "cursor-color"))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-hlength")))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-vlength")))
+    (is-false (gtk-widget-style-property widget "secondary-cursor-color"))
+    (is (=  0 (gtk-widget-style-property widget "separator-height")))
+    (is (=  0 (gtk-widget-style-property widget "separator-width")))
+    (is (= 24 (gtk-widget-style-property widget "text-handle-height")))
+    (is (= 20 (gtk-widget-style-property widget "text-handle-width")))
+    (is-false  (gtk-widget-style-property widget "wide-separators"))
+    (is-false (gtk-widget-style-property widget "window-dragging"))))
 
 ;;;     gtk_widget_style_get_valist
 ;;;     gtk_widget_style_attach
@@ -669,9 +669,27 @@ scale-factor
 ;;;     gtk_widget_get_state
 ;;;     gtk_widget_get_visible
 ;;;     gtk_widget_set_visible
-;;;     gtk_widget_set_state_flags
-;;;     gtk_widget_unset_state_flags
+
 ;;;     gtk_widget_get_state_flags
+;;;     gtk_widget_set_state_flags
+
+(test gtk-widget-state-flags
+  (let ((button (make-instance 'gtk-button)))
+    (is (equal '(:dir-ltr) (gtk-widget-state-flags button)))
+    (is (equal '(:ACTIVE :SELECTED)
+               (setf (gtk-widget-state-flags button nil) '(:active :selected))))
+    (is (equal '(:ACTIVE :SELECTED :DIR-LTR)
+               (gtk-widget-state-flags button)))
+    (is (equal '(:focused)
+               (setf (gtk-widget-state-flags button t) '(:focused))))
+    (is (equal '(:FOCUSED :DIR-LTR)
+               (gtk-widget-state-flags button)))
+    (is (equal '(:ACTIVE :SELECTED)
+               (setf (gtk-widget-state-flags button) '(:active :selected))))
+    (is (equal '(:ACTIVE :SELECTED :FOCUSED :DIR-LTR)
+               (gtk-widget-state-flags button)))))
+
+;;;     gtk_widget_unset_state_flags
 ;;;     gtk_widget_has_default
 ;;;     gtk_widget_has_focus
 ;;;     gtk_widget_has_visible_focus
@@ -700,8 +718,6 @@ scale-factor
 ;;;     gtk_requisition_copy
 ;;;     gtk_requisition_free
 ;;;
-;;;     GtkSizeRequestMode
-;;;     GtkRequestedSize
 ;;;
 ;;;     gtk_widget_get_preferred_height
 ;;;     gtk_widget_get_preferred_width
@@ -710,19 +726,16 @@ scale-factor
 
 ;;; --- gtk_widget_get_request_mode --------------------------------------------
 
-(test gtk-widget-get-request-mode.1
+(test gtk-widget-request-mode.1
   (is (eql :constant-size
-           (gtk-widget-get-request-mode (make-instance 'gtk-button)))))
+           (gtk-widget-request-mode (make-instance 'gtk-button)))))
 
-(test gtk-widget-get-request-mode.2
+(test gtk-widget-request-mode.2
   (is (eql :constant-size
-           (gtk-widget-get-request-mode (make-instance 'gtk-button
-                                                       :label "Hello")))))
+           (gtk-widget-request-mode (make-instance 'gtk-button :label "Hello")))))
 
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
-;;;
-;;;     GtkAlign
 ;;;
 ;;;     gtk_widget_get_halign
 ;;;     gtk_widget_set_halign

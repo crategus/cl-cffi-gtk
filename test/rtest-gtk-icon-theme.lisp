@@ -45,18 +45,18 @@
 
 ;;;     gtk_icon_theme_get_default
 
-(test gtk-icon-theme-get-default
-  (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-get-default)))))
+(test gtk-icon-theme-default
+  (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-default)))))
 
 ;;;     gtk_icon_theme_get_for_screen
 ;;;     gtk_icon_theme_set_screen
 
 (test gtk-icon-theme-screen
   (let ((screen (gdk-screen-get-default))
-        (theme (gtk-icon-theme-get-default)))
-    (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-get-for-screen screen))))
+        (theme (gtk-icon-theme-default)))
+    (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-for-screen screen))))
     (is-false (gtk-icon-theme-set-screen theme screen))
-    (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-get-for-screen screen))))))
+    (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-for-screen screen))))))
 
 ;;;     gtk_icon_theme_set_search_path
 ;;;     gtk_icon_theme_get_search_path
@@ -75,7 +75,7 @@
 ;;;     gtk_icon_theme_add_resource_path
 
 (test gtk-icon-theme-add-resource-path
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-false (gtk-icon-theme-add-resource-path theme "path"))))
 
 ;;;     gtk_icon_theme_set_custom_theme
@@ -87,32 +87,32 @@
 ;;;     gtk_icon_theme_has_icon
 
 (test gtk-icon-theme-has-icon
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-has-icon theme "gtk-ok"))
     (is-false (gtk-icon-theme-has-icon theme "xxxx"))))
 
 ;;;     gtk_icon_theme_lookup_icon
 
 (test gtk-icon-theme-lookup-icon
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-lookup-icon theme "gtk-ok" 48 :use-builtin))))
 
 ;;;     gtk_icon_theme_lookup_icon_for_scale
 
 (test gtk-icon-theme-lookup-icon-for-scale
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-lookup-icon-for-scale theme "gtk-ok" 48 1 :use-builtin))))
 
 ;;;     gtk_icon_theme_choose_icon
 
 (test gtk-icon-theme-choose-icon
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-choose-icon theme '("gtk-ok") 48 :use-builtin))))
 
 ;;;     gtk_icon_theme_choose_icon_for_scale
 
 (test gtk-icon-theme-choose-icon
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-choose-icon-for-scale theme '("gtk-ok") 48 1 :use-builtin))))
 
 ;;;     gtk_icon_theme_lookup_by_gicon
@@ -121,25 +121,25 @@
 ;;;     gtk_icon_theme_load_icon
 
 (test gtk-icon-theme-load-icon
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is (eq 'gdk-pixbuf (type-of (gtk-icon-theme-load-icon theme "gtk-ok" 48 :use-builtin))))))
 
 ;;;     gtk_icon_theme_load_icon_for_scale
 
 (test gtk-icon-theme-load-icon-for-scale
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is (eq 'gdk-pixbuf (type-of (gtk-icon-theme-load-icon-for-scale theme "gtk-ok" 48 1 :use-builtin))))))
 
 ;;;     gtk_icon_theme_load_surface
 
 (test gtk-icon-theme-load-surface
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))))
 
 ;;;     gtk_icon_theme_list_contexts
 
 (test gtk-icon-theme-list-contexts
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is (equal '("Emotes" "UI" "Emblems" "Actions" "Legacy" "Animations"
                  "Stock" "Categories" "Devices" "Places" "stock" "Applications"
                  "Status" "MimeTypes")
@@ -148,28 +148,28 @@
 ;;;     gtk_icon_theme_list_icons
 
 (test gtk-icon-theme-list-icons
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-true (member "gtk-ok" (gtk-icon-theme-list-icons theme "Actions") :test 'string=))))
 
 ;;;     gtk_icon_theme_get_icon_sizes
 
-(test gtk-icon-theme-get-icon-sizes
-  (let ((theme (gtk-icon-theme-get-default)))
-    (is-true (gtk-icon-theme-get-icon-sizes theme "gtk-ok"))
-    (is-true (gtk-icon-theme-get-icon-sizes theme "battery"))
-    (is-true (gtk-icon-theme-get-icon-sizes theme "add"))
-    (is-true (gtk-icon-theme-get-icon-sizes theme "directory-x-normal"))))
+(test gtk-icon-theme-icon-sizes
+  (let ((theme (gtk-icon-theme-default)))
+    (is-true (gtk-icon-theme-icon-sizes theme "gtk-ok"))
+    (is-true (gtk-icon-theme-icon-sizes theme "battery"))
+    (is-true (gtk-icon-theme-icon-sizes theme "add"))
+    (is-true (gtk-icon-theme-icon-sizes theme "directory-x-normal"))))
 
 ;;;     gtk_icon_theme_get_example_icon_name
 
 (test gtk-icon-theme-get-example-icon-name
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is (string= "directory-x-normal" (gtk-icon-theme-get-example-icon-name theme)))))
 
 ;;;     gtk_icon_theme_rescan_if_needed
 
 (test gtk-icon-theme-resan-if-needed
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is-false (gtk-icon-theme-rescan-if-needed theme))))
 
 ;;;     gtk_icon_theme_add_builtin_icon
@@ -180,28 +180,28 @@
 ;;;     gtk_icon_info_new_for_pixbuf
 
 (test gtk-icon-info-new-for-pixbuf
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (pixbuf (gtk-icon-theme-load-icon theme "battery" 0 0)))
       (is-true (pointerp (gtk-icon-info-new-for-pixbuf theme pixbuf)))))
 
 ;;;     gtk_icon_info_get_base_size
 
 (test gtk-icon-info-get-base-size
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
     (is (= 24 (gtk-icon-info-get-base-size icon-info)))))
 
 ;;;     gtk_icon_info_get_base_scale
 
 (test gtk-icon-info-get-base-scale
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
     (is (= 1 (gtk-icon-info-get-base-scale icon-info)))))
 
 ;;;     gtk_icon_info_get_filename
 
 (test gtk-icon-info-get-filename
-  (let ((theme (gtk-icon-theme-get-default)))
+  (let ((theme (gtk-icon-theme-default)))
     (is (string= "/usr/share/icons/Humanity/devices/24/battery.svg"
                  (gtk-icon-info-get-filename (gtk-icon-theme-lookup-icon theme "battery" 0 0))))
     (is (string= "/usr/share/icons/Humanity/actions/16/edit-cut.svg"
@@ -210,21 +210,21 @@
 ;;;     gtk_icon_info_get_builtin_pixbuf
 
 (test gtk-icon-info-get-builtin-pixbuf
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 :use-builtin)))
     (is-false (gtk-icon-info-get-builtin-pixbuf icon-info))))
 
 ;;;     gtk_icon_info_load_icon
 
 (test gtk-icon-info-load-icon
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
     (is (eq 'gdk-pixbuf (type-of (gtk-icon-info-load-icon icon-info))))))
 
 ;;;     gtk_icon_info_load_surface
 
 (test gtk-icon-info-load-surface
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
     (is-true (pointerp (gtk-icon-info-load-surface icon-info nil)))))
 
@@ -234,7 +234,7 @@
 ;;;     gtk_icon_info_load_symbolic
 
 (test gtk-icon-info-load-symbolic
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
     (is (eq 'gdk-pixbuf (type-of (gtk-icon-info-load-symbolic icon-info (make-gdk-rgba) nil nil nil))))))
 
@@ -254,7 +254,7 @@
 ;;;     gtk_icon_info_is_symbolic
 
 (test gtk-icon-info-is-symbolic
-  (let* ((theme (gtk-icon-theme-get-default))
+  (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 :force-symbolic)))
     (is-true (gtk-icon-info-is-symbolic icon-info))))
 

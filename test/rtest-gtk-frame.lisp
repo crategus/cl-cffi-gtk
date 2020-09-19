@@ -67,7 +67,7 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkFrame"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 1048 
+    (is (= 1048
            (foreign-slot-value query '(:struct g-type-query) :class-size)))
     (is (= 56
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
@@ -83,8 +83,8 @@
  "resize-mode" "child" "label" "label-xalign" "label-yalign" "shadow-type"
  "label-widget")
              (mapcar #'param-spec-name
-                     (g-object-class-list-properties "GtkFrame"))))             
-             
+                     (g-object-class-list-properties "GtkFrame"))))
+
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
  "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
@@ -125,25 +125,25 @@
 
 (test gtk-frame-style-properties
   (let ((widget (make-instance 'gtk-frame)))
-    (is (= 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio")))
-    (is-false (gtk-widget-style-get-property widget "cursor-color"))
-    (is (equal "" (gtk-widget-style-get-property widget "focus-line-pattern")))
-    (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
-    (is-true (integerp (gtk-widget-style-get-property widget "focus-padding")))
-    (is-true (gtk-widget-style-get-property widget "interior-focus"))
+    (is (= 0.04 (gtk-widget-style-property widget "cursor-aspect-ratio")))
+    (is-false (gtk-widget-style-property widget "cursor-color"))
+    (is (equal "" (gtk-widget-style-property widget "focus-line-pattern")))
+    (is (= 1 (gtk-widget-style-property widget "focus-line-width")))
+    (is-true (integerp (gtk-widget-style-property widget "focus-padding")))
+    (is-true (gtk-widget-style-property widget "interior-focus"))
     #-windows
-    (is-false (gtk-widget-style-get-property widget "link-color"))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
-    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
-    (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is-true (integerp (gtk-widget-style-get-property widget "separator-height")))
-    (is-true (integerp (gtk-widget-style-get-property widget "separator-width")))
-    (is (= 24 (gtk-widget-style-get-property widget "text-handle-height")))
-    (is (= 20 (gtk-widget-style-get-property widget "text-handle-width")))
+    (is-false (gtk-widget-style-property widget "link-color"))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-hlength")))
+    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-vlength")))
+    (is-false (gtk-widget-style-property widget "secondary-cursor-color"))
+    (is-true (integerp (gtk-widget-style-property widget "separator-height")))
+    (is-true (integerp (gtk-widget-style-property widget "separator-width")))
+    (is (= 24 (gtk-widget-style-property widget "text-handle-height")))
+    (is (= 20 (gtk-widget-style-property widget "text-handle-width")))
     #-windows
-    (is-false (gtk-widget-style-get-property widget "visited-link-color"))
-    (is-false (gtk-widget-style-get-property widget "wide-separators"))
-    (is-false (gtk-widget-style-get-property widget "window-dragging"))
+    (is-false (gtk-widget-style-property widget "visited-link-color"))
+    (is-false (gtk-widget-style-property widget "wide-separators"))
+    (is-false (gtk-widget-style-property widget "window-dragging"))
   ))
 
 ;;;     gtk_frame_new

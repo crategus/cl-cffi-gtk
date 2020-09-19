@@ -1,24 +1,19 @@
-
 (def-suite gobject-param :in gobject-suite)
 (in-suite gobject-param)
 
 ;;;     G_IS_PARAM_SPEC_BOOLEAN
 ;;;     G_PARAM_SPEC_BOOLEAN
 ;;;     G_VALUE_HOLDS_BOOLEAN
+;;;     G_TYPE_PARAM_BOOLEAN
 
-;;;   G_TYPE_PARAM_BOOLEAN
-
-(test g-type-param-boolean
-  (is (equal (gtype "GParamBoolean") g-type-param-boolean)))
-
-;;;   GParamSpecBoolean
+;;;     GParamSpecBoolean
 
 (test g-param-spec-boolean-struct
   (is (= 16 (foreign-type-size '(:struct g-param-spec-boolean))))
   (is (equal '(:parent-instance :default-value)
              (foreign-slot-names '(:struct g-param-spec-boolean)))))
 
-;;;   g_param_spec_boolean
+;;;     g_param_spec_boolean
 
 #-ccl
 (test g-param-spec-boolean
@@ -74,34 +69,30 @@
                                   '(:struct g-param-spec-boolean)
                                   :default-value)))))
 
-;;;   g_value_set_boolean
-;;;   g_value_get_boolean
+;;;     g_value_set_boolean
+;;;     g_value_get_boolean
 
-(test g-value-set/get-boolean
+(test g-value-boolean
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "gboolean")
-    (g-value-set-boolean value t)
-    (is-true (g-value-get-boolean value))
-    (g-value-set-boolean value nil)
-    (is-false (g-value-get-boolean value))))
+    (setf (g-value-boolean value) t)
+    (is-true (g-value-boolean value))
+    (setf (g-value-boolean value) nil)
+    (is-false (g-value-boolean value))))
 
 ;;;     G_IS_PARAM_SPEC_CHAR
 ;;;     G_PARAM_SPEC_CHAR
 ;;;     G_VALUE_HOLDS_CHAR
-
 ;;;     G_TYPE_PARAM_CHAR
 
-(test g-type-param-char
-  (is (equal (gtype "GParamChar") g-type-param-char)))
-
-;;;   GParamSpecChar
+;;;     GParamSpecChar
 
 (test g-param-spec-char-struct
   (is (= 16 (foreign-type-size '(:struct g-param-spec-char))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-char)))))
 
-;;;   g_param_spec_char
+;;;     g_param_spec_char
 
 #-ccl
 (test g-param-spec-char
@@ -141,7 +132,7 @@
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :flags)))
       (is (equal (gtype "gchar")
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :value-type)))
-      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))  
+      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))
     )
 
     ;; TODO: The values of :minimum, :maximum, and :default-value change per run.
@@ -157,33 +148,29 @@
 ;;;     g_value_set_char
 ;;;     g_value_get_char
 
-(test g-value-set/get-char
+(test g-value-char
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "gchar")
-    (g-value-set-char value 65)
-    (is (= 65 (g-value-get-char value)))
-    (g-value-set-char value 66)
-    (is (= 66 (g-value-get-char value)))))
+    (setf (g-value-char value) 65)
+    (is (= 65 (g-value-char value)))
+    (setf (g-value-char value) 66)
+    (is (= 66 (g-value-char value)))))
 
 ;;;     g_value_get_schar
 ;;;     g_value_set_schar
 
-(test g-value-set/get-schar
+(test g-value-schar
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "gchar")
-    (g-value-set-schar value 65)
-    (is (= 65 (g-value-get-schar value)))
-    (g-value-set-schar value 66)
-    (is (= 66 (g-value-get-schar value)))))
+    (setf (g-value-schar value) 65)
+    (is (= 65 (g-value-schar value)))
+    (setf (g-value-schar value) 66)
+    (is (= 66 (g-value-schar value)))))
 
 ;;;     G_IS_PARAM_SPEC_UCHAR
 ;;;     G_PARAM_SPEC_UCHAR
 ;;;     G_VALUE_HOLDS_UCHAR
-
 ;;;     G_TYPE_PARAM_UCHAR
-
-(test g-type-param-uchar
-  (is (equal (gtype "GParamUChar") g-type-param-uchar)))
 
 ;;;     GParamSpecUChar
 
@@ -232,7 +219,7 @@
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :flags)))
       (is (equal (gtype "guchar")
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :value-type)))
-      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))  
+      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))
     )
 
     ;; TODO: The values of :minimum, :maximum, and :default-value change per run.
@@ -248,22 +235,18 @@
 ;;;     g_value_set_uchar
 ;;;     g_value_get_uchar
 
-(test g-value-set/get-uchar
+(test g-value-uchar
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "guchar")
-    (g-value-set-uchar value 65)
-    (is (= 65 (g-value-get-uchar value)))
-    (g-value-set-uchar value 66)
-    (is (= 66 (g-value-get-uchar value)))))
+    (setf (g-value-uchar value) 65)
+    (is (= 65 (g-value-uchar value)))
+    (setf (g-value-uchar value) 66)
+    (is (= 66 (g-value-uchar value)))))
 
 ;;;     G_IS_PARAM_SPEC_INT
 ;;;     G_PARAM_SPEC_INT
 ;;;     G_VALUE_HOLDS_INT
-
 ;;;     G_TYPE_PARAM_INT
-
-(test g-type-param-int
-  (is (equal (gtype "GParamInt") g-type-param-int)))
 
 ;;;     GParamSpecInt
 
@@ -312,7 +295,7 @@
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :flags)))
       (is (equal (gtype "gint")
                  (foreign-slot-value parent-instance '(:struct g-param-spec) :value-type)))
-      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))  
+      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))
     )
 
 #|
