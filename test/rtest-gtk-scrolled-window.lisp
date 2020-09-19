@@ -190,8 +190,8 @@
 
 (test gtk-scrolled-window-style-properties
   (let ((window (make-instance 'gtk-scrolled-window)))
-    (is (= 0 (gtk-widget-style-get-property window "scrollbar-spacing")))
-    (is-false (gtk-widget-style-get-property window "scrollbar-within-bevel"))))
+    (is (= 0 (gtk-widget-style-property window "scrollbar-spacing")))
+    (is-false (gtk-widget-style-property window "scrollbar-within-bevel"))))
 
 ;;; --- Signals ----------------------------------------------------------------
 

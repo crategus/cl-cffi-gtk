@@ -144,13 +144,13 @@
 
 (test gtk-menu-style-properties
   (let ((menu (make-instance 'gtk-menu)))
-    (is (eq :both (gtk-widget-style-get-property menu "arrow-placement")))
-    (is (= 0.7 (gtk-widget-style-get-property menu "arrow-scaling")))
-    (is-true (gtk-widget-style-get-property menu "double-arrows"))
-    (is-true (gtk-widget-style-get-property menu "horizontal-offset"))
-    (is (= 0 (gtk-widget-style-get-property menu "horizontal-padding")))
-    (is-true (gtk-widget-style-get-property menu "vertical-offset"))
-    (is (= 1 (gtk-widget-style-get-property menu "vertical-padding")))))
+    (is (eq :both (gtk-widget-style-property menu "arrow-placement")))
+    (is (= 0.7 (gtk-widget-style-property menu "arrow-scaling")))
+    (is-true (gtk-widget-style-property menu "double-arrows"))
+    (is-true (gtk-widget-style-property menu "horizontal-offset"))
+    (is (= 0 (gtk-widget-style-property menu "horizontal-padding")))
+    (is-true (gtk-widget-style-property menu "vertical-offset"))
+    (is (= 1 (gtk-widget-style-property menu "vertical-padding")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

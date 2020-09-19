@@ -82,10 +82,10 @@
 
 (test gtk-info-bar-style-properties
   (let ((info-bar (make-instance 'gtk-info-bar)))
-    (is (=  5 (gtk-widget-style-get-property info-bar "action-area-border")))
-    (is (=  6 (gtk-widget-style-get-property info-bar "button-spacing")))
-    (is (=  8 (gtk-widget-style-get-property info-bar "content-area-border")))
-    (is (= 16 (gtk-widget-style-get-property info-bar "content-area-spacing")))))
+    (is (=  5 (gtk-widget-style-property info-bar "action-area-border")))
+    (is (=  6 (gtk-widget-style-property info-bar "button-spacing")))
+    (is (=  8 (gtk-widget-style-property info-bar "content-area-border")))
+    (is (= 16 (gtk-widget-style-property info-bar "content-area-spacing")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

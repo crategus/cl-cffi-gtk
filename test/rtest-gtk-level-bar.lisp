@@ -118,8 +118,8 @@
 
 (test gtk-level-bar-style-properties
   (let ((level-bar (make-instance 'gtk-level-bar)))
-    (is (= 3 (gtk-widget-style-get-property level-bar "min-block-height")))
-    (is (= 3 (gtk-widget-style-get-property level-bar "min-block-width")))))
+    (is (= 3 (gtk-widget-style-property level-bar "min-block-height")))
+    (is (= 3 (gtk-widget-style-property level-bar "min-block-width")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

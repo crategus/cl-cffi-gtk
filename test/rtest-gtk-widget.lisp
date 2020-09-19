@@ -25,7 +25,8 @@
   ;; TODO: The class GtkIcon is not documented.
   (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
                "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
-               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
+               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea"
+               "GtkIcon")
              (mapcar #'gtype-name (g-type-children "GtkWidget"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")

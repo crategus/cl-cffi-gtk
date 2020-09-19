@@ -58,7 +58,7 @@
 
 (test gtk-statusbar-style-properties
   (let ((statusbar (make-instance 'gtk-statusbar)))
-    (is (eq :in (gtk-widget-style-get-property statusbar "shadow-type")))))
+    (is (eq :in (gtk-widget-style-property statusbar "shadow-type")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

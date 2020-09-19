@@ -344,147 +344,144 @@
 
 ;;;     gtk_style_context_get
 
-;;;     gtk_style_context_get_junction_sides
-;;;     gtk_style_context_set_junction_sides
+;;;     gtk-style-context-junction-sides
 
-(test gtk-style-context-get-junction-sides
+(test gtk-style-context-junction-sides
   (let* ((widget (make-instance 'gtk-button))
          (context (gtk-widget-style-context widget)))
-    (is-false (gtk-style-context-get-junction-sides context))
-    (is-false (gtk-style-context-set-junction-sides context :top))
-    (is (equal '(:corner-topleft :corner-topright) (gtk-style-context-get-junction-sides context)))))
+    (is-false (gtk-style-context-junction-sides context))
+    (is (eq :top (setf (gtk-style-context-junction-sides context) :top)))
+    (is (equal '(:corner-topleft :corner-topright) (gtk-style-context-junction-sides context)))))
 
-;;;     gtk_style_context_get_path
-;;;     gtk_style_context_set_path
+;;;     gtk-style-context-path
 
-(test gtk-style-context-get-path
+(test gtk-style-context-path
   (let* ((widget (make-instance 'gtk-button))
          (context (gtk-widget-style-context widget))
          (path (gtk-widget-path widget)))
-    (is (eq 'gtk-widget-path (type-of (gtk-style-context-get-path context))))
-    (is (string= "button:dir-ltr" (gtk-widget-path-to-string (gtk-style-context-get-path context))))
+    (is (eq 'gtk-widget-path (type-of (gtk-style-context-path context))))
+    (is (string= "button:dir-ltr" (gtk-widget-path-to-string (gtk-style-context-path context))))
     (is (eq 'gtk-widget-path (type-of path)))
     ;; TODO: Find an example
 ;    (is-false (gtk-style-context-set-path context path))
   ))
 
-;;;     gtk_style_context_get_property
+;;;     gtk-style-context-property
 
-(test gtk-style-context-get-property
+(test gtk-style-context-property
   (let ((context (gtk-style-context-new)))
     (with-foreign-object (value '(:struct g-value))
       (g-value-zero value)
-      (is-false (gtk::%gtk-style-context-get-property context "color" :normal value))
+      (is-false (gtk::%gtk-style-context-property context "color" :normal value))
       (is-true value)
       (is (equal (gtype "GdkRGBA") (g-value-type value)))
       (is (string= "GdkRGBA" (g-value-type-name value)))
       (g-value-unset value)))
   (let ((context (gtk-style-context-new)))
     (is (eq 'gdk-rgba
-            (type-of (gtk-style-context-get-property context "color" :normal))))
+            (type-of (gtk-style-context-property context "color" :normal))))
     (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0  :alpha 1.0d0)
-                             (gtk-style-context-get-property context "color" :normal)))
+                             (gtk-style-context-property context "color" :normal)))
     (is (eq 'double-float
-            (type-of (gtk-style-context-get-property context "opacity" :normal))))
-    (is (= 1.0d0 (gtk-style-context-get-property context "opacity" :normal)))
+            (type-of (gtk-style-context-property context "opacity" :normal))))
+    (is (= 1.0d0 (gtk-style-context-property context "opacity" :normal)))
     (is (eq 'gdk-rgba
-            (type-of (gtk-style-context-get-property context "background-color" :normal))))
+            (type-of (gtk-style-context-property context "background-color" :normal))))
     (is-true (gdk-rgba-equal (make-gdk-rgba)
-                             (gtk-style-context-get-property context "background-color" :normal)))
+                             (gtk-style-context-property context "background-color" :normal)))
     (is (eq 'pango-font-description
-            (type-of (gtk-style-context-get-property context "font" :normal))))
+            (type-of (gtk-style-context-property context "font" :normal))))
     (is (string= "Ubuntu 11"
-                 (pango-font-description-to-string (gtk-style-context-get-property context "font" :normal))))))
+                 (pango-font-description-to-string (gtk-style-context-property context "font" :normal))))))
 
 ;;;     gtk_style_context_get_frame_clock
 ;;;     gtk_style_context_set_frame_clock
 
-;;;     gtk_style_context_get_state
-;;;     gtk_style_context_set_state
+;;;     gtk-style-context-state
 
 (test gtk-style-context-state
   (let ((context (gtk-style-context-new)))
-    (is (equal '(:dir-ltr) (gtk-style-context-get-state context)))
-    (is-false (gtk-style-context-set-state context :active))
-    (is (equal '(:active) (gtk-style-context-get-state context)))
-    (is-false (gtk-style-context-set-state context '(:active :dir-ltr)))
-    (is (equal '(:active :dir-ltr) (gtk-style-context-get-state context)))))
+    (is (equal '(:dir-ltr) (gtk-style-context-state context)))
+    (is (eq :active (setf (gtk-style-context-state context) :active)))
+    (is (equal '(:active) (gtk-style-context-state context)))
+    (is (equal '(:active :dir-ltr) (setf (gtk-style-context-state context) '(:active :dir-ltr))))
+    (is (equal '(:active :dir-ltr) (gtk-style-context-state context)))))
 
 ;;;     gtk_style_context_get_style
 
-;;;     gtk_style_context_get_style_property
+;;;     gtk-style-context-style-property
 
-(test gtk-style-context-get-style-property
+(test gtk-style-context-style-property
   (let* ((message (make-instance 'gtk-message-dialog))
          (context (gtk-widget-style-context message)))
-    (is (= 12 (gtk-style-context-get-style-property context message "message-border")))))
+    (is (= 12 (gtk-style-context-style-property context message "message-border")))))
 
 ;;;     gtk_style_context_get_style_valist
 ;;;     gtk_style_context_get_valist
 
 ;;;     gtk_style_context_get_section
 
-;;;     gtk_style_context_get_color
+;;;     gtk-style-context-color
 
-(test gtk-style-context-get-color
+(test gtk-style-context-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-get-color context :normal))))
+    (is (eq 'gdk-rgba (type-of (gtk-style-context-color context :normal))))
     (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0 :alpha 1.0d0)
-                             (gtk-style-context-get-color context :normal)))))
+                             (gtk-style-context-color context :normal)))))
 
-;;;     gtk_style_context_get_background_color
+;;;     gtk-style-context-background-color
 
-(test gtk-style-context-get-background-color
+(test gtk-style-context-background-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-get-background-color context :normal))))
+    (is (eq 'gdk-rgba (type-of (gtk-style-context-background-color context :normal))))
     (is-true (gdk-rgba-equal (make-gdk-rgba)
-                             (gtk-style-context-get-background-color context :normal)))))
+                             (gtk-style-context-background-color context :normal)))))
 
-;;;     gtk_style_context_get_border_color
+;;;     gtk-style-context-border-color
 
-(test gtk-style-context-get-border-color
+(test gtk-style-context-border-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-get-border-color context :normal))))
+    (is (eq 'gdk-rgba (type-of (gtk-style-context-border-color context :normal))))
     (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0 :alpha 1.0d0)
-                             (gtk-style-context-get-border-color context :normal)))))
+                             (gtk-style-context-border-color context :normal)))))
 
-;;;     gtk_style_context_get_border
+;;;     gtk-style-context-border
 
-(test gtk-style-context-get-border
+(test gtk-style-context-border
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-get-border context :normal))))
-    (is (= 0 (gtk-border-left (gtk-style-context-get-border context :normal))))
-    (is (= 0 (gtk-border-right (gtk-style-context-get-border context :normal))))
-    (is (= 0 (gtk-border-top (gtk-style-context-get-border context :normal))))
-    (is (= 0 (gtk-border-bottom (gtk-style-context-get-border context :normal))))))
+    (is (eq 'gtk-border (type-of (gtk-style-context-border context :normal))))
+    (is (= 0 (gtk-border-left (gtk-style-context-border context :normal))))
+    (is (= 0 (gtk-border-right (gtk-style-context-border context :normal))))
+    (is (= 0 (gtk-border-top (gtk-style-context-border context :normal))))
+    (is (= 0 (gtk-border-bottom (gtk-style-context-border context :normal))))))
 
-;;;     gtk_style_context_get_padding
+;;;     gtk-style-context-padding
 
-(test gtk-style-context-get-padding
+(test gtk-style-context-padding
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-get-padding context :normal))))
-    (is (= 0 (gtk-border-left (gtk-style-context-get-padding context :normal))))
-    (is (= 0 (gtk-border-right (gtk-style-context-get-padding context :normal))))
-    (is (= 0 (gtk-border-top (gtk-style-context-get-padding context :normal))))
-    (is (= 0 (gtk-border-bottom (gtk-style-context-get-padding context :normal))))))
+    (is (eq 'gtk-border (type-of (gtk-style-context-padding context :normal))))
+    (is (= 0 (gtk-border-left (gtk-style-context-padding context :normal))))
+    (is (= 0 (gtk-border-right (gtk-style-context-padding context :normal))))
+    (is (= 0 (gtk-border-top (gtk-style-context-padding context :normal))))
+    (is (= 0 (gtk-border-bottom (gtk-style-context-padding context :normal))))))
 
-;;;     gtk_style_context_get_margin
+;;;     gtk-style-context-margin
 
-(test gtk-style-context-get-margin
+(test gtk-style-context-margin
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-get-margin context :normal))))
-    (is (= 0 (gtk-border-left (gtk-style-context-get-margin context :normal))))
-    (is (= 0 (gtk-border-right (gtk-style-context-get-margin context :normal))))
-    (is (= 0 (gtk-border-top (gtk-style-context-get-margin context :normal))))
-    (is (= 0 (gtk-border-bottom (gtk-style-context-get-margin context :normal))))))
+    (is (eq 'gtk-border (type-of (gtk-style-context-margin context :normal))))
+    (is (= 0 (gtk-border-left (gtk-style-context-margin context :normal))))
+    (is (= 0 (gtk-border-right (gtk-style-context-margin context :normal))))
+    (is (= 0 (gtk-border-top (gtk-style-context-margin context :normal))))
+    (is (= 0 (gtk-border-bottom (gtk-style-context-margin context :normal))))))
 
-;;;     gtk_style_context_get_font
+;;;     gtk-style-context-font
 
-(test gtk-style-context-get-font
+(test gtk-style-context-font
   (let ((context (gtk-style-context-new)))
-    (is (eq 'pango-font-description (type-of (gtk-style-context-get-font context :normal))))
+    (is (eq 'pango-font-description (type-of (gtk-style-context-font context :normal))))
     (is (string= "Ubuntu 11"
-                 (pango-font-description-to-string (gtk-style-context-get-font context :normal))))))
+                 (pango-font-description-to-string (gtk-style-context-font context :normal))))))
 
 ;;;     gtk_style_context_invalidate
 ;;;     gtk_style_context_state_is_running
@@ -544,14 +541,13 @@
     (is-false (gtk-style-context-remove-region context "row"))
     (is (equal '() (gtk-style-context-list-regions context)))))
 
-;;;     gtk_style_context_set_scale
-;;;     gtk_style_context_get_scale
+;;;     gtk-style-context-scale
 
-(test gtk-style-context-set-scale
+(test gtk-style-context-scale
   (let ((context (gtk-style-context-new)))
-    (is (= 1 (gtk-style-context-get-scale context)))
-    (is-false (gtk-style-context-set-scale context 10))
-    (is (= 10 (gtk-style-context-get-scale context)))))
+    (is (=  1 (gtk-style-context-scale context)))
+    (is (= 10 (setf (gtk-style-context-scale context) 10)))
+    (is (= 10 (gtk-style-context-scale context)))))
 
 ;;;     gtk_style_context_to_string
 

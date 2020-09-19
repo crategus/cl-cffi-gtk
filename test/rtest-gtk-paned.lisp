@@ -117,7 +117,7 @@
 
 (test gtk-paned-style-properties
   (let ((paned (make-instance 'gtk-paned :orientation :horizontal)))
-    (is (= 5 (gtk-widget-style-get-property paned "handle-size")))))
+    (is (= 5 (gtk-widget-style-property paned "handle-size")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

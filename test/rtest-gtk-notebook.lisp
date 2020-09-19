@@ -104,15 +104,15 @@
 
 (test gtk-notebook-style-properties
   (let ((notebook (make-instance 'gtk-notebook)))
-    (is (= 0 (gtk-widget-style-get-property notebook "arrow-spacing")))
-    (is-true (gtk-widget-style-get-property notebook "has-backward-stepper"))
-    (is-true (gtk-widget-style-get-property notebook "has-forward-stepper"))
-    (is-false (gtk-widget-style-get-property notebook "has-secondary-backward-stepper"))
-    (is-false (gtk-widget-style-get-property notebook "has-secondary-forward-stepper"))
-    (is-true (gtk-widget-style-get-property notebook "has-tab-gap"))
-    (is (= 0 (gtk-widget-style-get-property notebook "initial-gap")))
-    (is (= 1 (gtk-widget-style-get-property notebook "tab-curvature")))
-    (is (= 2 (gtk-widget-style-get-property notebook "tab-overlap")))))
+    (is (= 0 (gtk-widget-style-property notebook "arrow-spacing")))
+    (is-true (gtk-widget-style-property notebook "has-backward-stepper"))
+    (is-true (gtk-widget-style-property notebook "has-forward-stepper"))
+    (is-false (gtk-widget-style-property notebook "has-secondary-backward-stepper"))
+    (is-false (gtk-widget-style-property notebook "has-secondary-forward-stepper"))
+    (is-true (gtk-widget-style-property notebook "has-tab-gap"))
+    (is (= 0 (gtk-widget-style-property notebook "initial-gap")))
+    (is (= 1 (gtk-widget-style-property notebook "tab-curvature")))
+    (is (= 2 (gtk-widget-style-property notebook "tab-overlap")))))
 
 ;;; --- Functions --------------------------------------------------------------
 

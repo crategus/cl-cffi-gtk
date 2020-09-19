@@ -580,7 +580,7 @@
   ;; Check the parent
   (is (equal (gtype "GObject") (g-type-parent "GdkWindow")))
   ;; Check the children
-  (is (equal '("GdkX11Window")
+  (is (equal '("GdkX11Window" "GdkBroadwayWindow" "GdkWaylandWindow")
              (mapcar #'gtype-name (g-type-children "GdkWindow"))))
   ;; Check the interfaces
   (is (equal '()
