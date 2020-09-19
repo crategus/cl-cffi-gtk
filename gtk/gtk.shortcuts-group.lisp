@@ -2,11 +2,11 @@
 ;;; gtk.shortcuts-group.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,11 +36,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkSizeGroup*  accel-size-group    Write
-;;;            guint   height              Read
-;;;            gchar*  title               Read / Write
-;;;     GtkSizeGroup*  title-size-group    Write
-;;;            gchar*  view                Read / Write
+;;;     GtkSizeGroup*   accel-size-group    Write
+;;;            guint    height              Read
+;;;            gchar*   title               Read / Write
+;;;     GtkSizeGroup*   title-size-group    Write
+;;;            gchar*   view                Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -102,15 +102,16 @@
   @see-slot{gtk-shortcuts-group-height}
   @see-slot{gtk-shortcuts-group-title}
   @see-slot{gtk-shortcuts-group-title-size-group}
-  @see-slot{gtk-shortcuts-group-view}")
+  @see-slot{gtk-shortcuts-group-view}
+  @see-class{gtk-shortcuts-window}")
 
 ;;; --- gtk-shortcuts-group-accel-size-group -----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-size-group"
                       'gtk-shortcuts-group) 't)
- "The @code{accel-size-group} property of type @symbol{gtk-size-group}
-  (Write) @br{}
+ "The @code{accel-size-group} property of type @class{gtk-size-group} (Write)
+  @br{}
   The size group for the accelerator portion of shortcuts in this group.
   This is used internally by GTK+, and must not be modified by applications.")
 
@@ -119,19 +120,26 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-shortcuts-group-accel-size-group 'function)
- "@version{2019-4-12}
+ "@version{2020-9-14}
+  @syntax[]{(gtk-shortcuts-group-accel-size-group object) => size-group}
+  @syntax[]{(setf (gtk-shortcuts-group-accel-size-group object) size-group)}
+  @argument[object]{a @class{gtk-shortcuts-group} widget}
+  @argument[size-group]{a @class{gtk-size-group} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-group]{accel-size-group} of the
+    Accessor of the @slot[gtk-shortcuts-group]{accel-size-group} slot of the
     @class{gtk-shortcuts-group} class.
   @end{short}
+
+  The size group for the accelerator portion of shortcuts in this group.
+  This is used internally by GTK+, and must not be modified by applications.
   @see-class{gtk-shortcuts-group}")
 
 ;;; --- gtk-shortcuts-group-height ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "height"
-                      'gtk-shortcuts-group) 't)
- "The @code{height} property of type @symbol{gtk-size-group} (Read) @br{}
+(setf (documentation (atdoc:get-slot-from-name "height" 'gtk-shortcuts-group)
+                     't)
+ "The @code{height} property of type @code{:uint} (Read) @br{}
   A rough measure for the number of lines in this group.
   This is used internally by GTK+, and is not useful for applications. @br{}
   Default value: 1")
@@ -140,11 +148,18 @@
 (setf (gethash 'gtk-shortcuts-group-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-shortcuts-group-height 'function)
- "@version{2019-4-12}
+ "@version{2020-9-14}
+  @syntax[]{(gtk-shortcuts-group-height object) => height}
+  @syntax[]{(setf (gtk-shortcuts-group-height object) height)}
+  @argument[object]{a @class{gtk-shortcuts-group} widget}
+  @argument[height]{a @code{:uint} with the measure for the number of lines}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-group]{height} of the
+    Accessor of the @slot[gtk-shortcuts-group]{height} slot of the
     @class{gtk-shortcuts-group} class.
   @end{short}
+
+  A rough measure for the number of lines in this group. This is used
+  internally by GTK+, and is not useful for applications.
   @see-class{gtk-shortcuts-group}")
 
 ;;; --- gtk-shortcuts-group-title ----------------------------------------------
@@ -160,11 +175,17 @@
 (setf (gethash 'gtk-shortcuts-group-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-shortcuts-group-title 'function)
- "@version{2019-4-12}
+ "@version{2020-9-14}
+  @syntax[]{(gtk-shortcuts-group-title object) => title}
+  @syntax[]{(setf (gtk-shortcuts-group-title object) title)}
+  @argument[object]{a @class{gtk-shortcuts-group} widget}
+  @argument[title]{a @code{:string} with the title for this group of shortcuts}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-group]{title} of the
+    Accessor of the @slot[gtk-shortcuts-group]{title} slot of the
     @class{gtk-shortcuts-group} class.
   @end{short}
+
+  The title for this group of shortcuts.
   @see-class{gtk-shortcuts-group}")
 
 ;;; --- gtk-shortcuts-group-title-size-group -----------------------------------
@@ -172,19 +193,28 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title-size-group"
                       'gtk-shortcuts-group) 't)
- "The @code{title-size-group} property of type @code{:string} (Write) @br{}
+ "The @code{title-size-group} property of type @class{gtk-size-group} (Write)
+  @br{}
   The size group for the textual portion of shortcuts in this group. This is
   used internally by GTK+, and must not be modified by applications.")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-shortcuts-group-title-size-group atdoc:*function-name-alias*)
+(setf (gethash 'gtk-shortcuts-group-title-size-group
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-shortcuts-group-title-size-group 'function)
- "@version{2019-4-12}
+ "@version{2020-9-14}
+  @syntax[]{(gtk-shortcuts-group-title-size-group object) => size-group}
+  @syntax[]{(setf (gtk-shortcuts-group-title-size-group object) size-group)}
+  @argument[object]{a @class{gtk-shortcuts-group} widget}
+  @argument[title]{a @class{gtk-size-group} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-group]{title-size-group} of the
+    Accessor of the @slot[gtk-shortcuts-group]{title-size-group} slot of the
     @class{gtk-shortcuts-group} class.
   @end{short}
+
+  The size group for the textual portion of shortcuts in this group. This is
+  used internally by GTK+, and must not be modified by applications.
   @see-class{gtk-shortcuts-group}")
 
 ;;; --- gtk-shortcuts-group-view -----------------------------------------------
@@ -195,19 +225,26 @@
  "The @code{view} property of type @code{:string} (Read / Write) @br{}
   An optional view that the shortcuts in this group are relevant for. The group
   will be hidden if the @code{view-name} property does not match the view of
-  this group.
-  Set this to NULL to make the group always visible. @br{}
+  this group. Set this to @code{nil} to make the group always visible. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-shortcuts-group-view atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-shortcuts-group-view 'function)
- "@version{2019-4-12}
+ "@version{2020-9-14}
+  @syntax[]{(gtk-shortcuts-group-view object) => view}
+  @syntax[]{(setf (gtk-shortcuts-group-view object) view)}
+  @argument[object]{a @class{gtk-shortcuts-group} widget}
+  @argument[view]{a @code{:string} with an optional view}
   @begin{short}
-    Accessor of the slot @slot[gtk-shortcuts-group]{view} of the
+    Accessor of the @slot[gtk-shortcuts-group]{view} slot of the
     @class{gtk-shortcuts-group} class.
   @end{short}
+
+  An optional view that the shortcuts in this group are relevant for. The group
+  will be hidden if the @code{view-name} property does not match the view of
+  this group. Set this to @code{nil} to make the group always visible.
   @see-class{gtk-shortcuts-group}")
 
 ;;; --- End of file gtk.shortcuts-group.lisp -----------------------------------
