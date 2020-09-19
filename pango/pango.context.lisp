@@ -381,13 +381,12 @@
 
   If you are using Pango as part of a higher-level system, that system may
   have it's own way of create a @class{pango-context}. For instance, the GTK+
-  toolkit has, among others, the functions
-  @fun{gdk-pango-context-get-for-screen}, and
-  @fun{gtk-widget-get-pango-context}. Use those instead.
+  toolkit has, among others, the functions @fun{gdk-pango-context-for-screen},
+  and @fun{gtk-widget-pango-context}. Use those instead.
   @see-class{pango-context}
   @see-function{pango-context-set-font-map}
-  @see-function{gdk-pango-context-get-for-screen}
-  @see-function{gtk-widget-get-pango-context}"
+  @see-function{gdk-pango-context-for-screen}
+  @see-function{gtk-widget-pango-context}"
   (make-instance 'pango-context))
 
 (export 'pango-context-new)
