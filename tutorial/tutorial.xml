@@ -7186,7 +7186,7 @@ bad things will happen.")
      <programlisting>
 (let ((view (create-view-and-model))
       ;; Get the selection of the view
-      (select (gtk-tree-view-get-selection view)))
+      (select (gtk-tree-view-selection view)))
   ;; Setup the selection handler
   (setf (gtk-tree-selection-mode select) :single)
   (g-signal-connect select "changed"
@@ -8181,7 +8181,7 @@ bad things will happen.")
     ;; pack cell renderer into tree view column
     (gtk-tree-view-column-pack-start column renderer))
   ;; No selection possible
-  (setf (gtk-tree-selection-mode (gtk-tree-view-get-selection view)) :none)
+  (setf (gtk-tree-selection-mode (gtk-tree-view-selection view)) :none)
   view))
 
 (defun example-cell-renderer-properties ()
@@ -14152,6 +14152,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 
