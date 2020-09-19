@@ -105,7 +105,7 @@
   instead of a separate function.
 
   The @sym{gtk-tree-selection} object is gotten from a @class{gtk-tree-view} by
-  calling the function @fun{gtk-tree-view-get-selection}. It can be manipulated
+  calling the function @fun{gtk-tree-view-selection}. It can be manipulated
   to check the selection status of the tree, as well as select and deselect
   individual rows. Selection is done completely view side. As a result, multiple
   views of the same model can have completely different selections.
@@ -127,11 +127,13 @@
       rows are selected, and it may occasionally be emitted when nothing has
       happened.
       @begin[code]{table}
-        @entry[selection]{The @class{gtk-tree-selection} object which received
+        @entry[selection]{The @sym{gtk-tree-selection} object which received
         the signal.}
       @end{table}
   @end{dictionary}
-  @see-slot{gtk-tree-selection-mode}")
+  @see-slot{gtk-tree-selection-mode}
+  @see-class{gtk-tree-view}
+  @see-function{gtk-tree-view-selection}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -164,7 +166,8 @@
   sets the selection mode of the selection. If the previous type was
   @code{:multiple}, then the anchor is kept selected, if it was previously
   selected.
-  @see-class{gtk-tree-selection}")
+  @see-class{gtk-tree-selection}
+  @see-symbol{gtk-selection-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSelectionFunc ()
@@ -205,7 +208,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (path-currently-selected :boolean)
      (data :pointer))
-  (let ((fn (glib::get-stable-pointer-value data)))
+  (let ((fn (get-stable-pointer-value data)))
     (restart-case
         (funcall fn selection model path path-currently-selected)
       (return-true () t)
@@ -240,7 +243,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (glib::get-stable-pointer-value data)))
+  (let ((fn (get-stable-pointer-value data)))
     (funcall fn model path iter)))
 
 ;;; ----------------------------------------------------------------------------
@@ -433,12 +436,12 @@
 (defcfun ("gtk_tree_selection_count_selected_rows"
            gtk-tree-selection-count-selected-rows) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @return{The number of rows selected.}
-  @short{Returns the number of rows that have been selected in tree.}
+  @return{A @code{:int} with the number of rows selected.}
+  @short{Returns the number of rows that have been selected in the tree.}
   @see-class{gtk-tree-selection}"
-  (selection g-object))
+  (selection (g-object gtk-tree-selection)))
 
 (export 'gtk-tree-selection-count-selected-rows)
 
@@ -446,14 +449,17 @@
 ;;; gtk_tree_selection_select_path ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_selection_select_path" gtk-tree-selection-select-path)
-    :void
+(defcfun ("gtk_tree_selection_select_path" gtk-tree-selection-select-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[path]{the @class{gtk-tree-path} to be selected}
-  Select the row at @arg{path}."
-  (selection g-object)
+  @begin{short}
+    Select the row at @arg{path}.
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-path}"
+  (selection (g-object gtk-tree-selection))
   (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-selection-select-path)
@@ -465,11 +471,15 @@
 (defcfun ("gtk_tree_selection_unselect_path" gtk-tree-selection-unselect-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[path]{the @class{gtk-tree-path} to be unselected}
-  Unselects the row at @arg{path}."
-  (selection g-object)
+  @begin{short}
+    Unselects the row at @arg{path}.
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-path}"
+  (selection (g-object gtk-tree-selection))
   (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-selection-unselect-path)
@@ -481,15 +491,17 @@
 (defcfun ("gtk_tree_selection_path_is_selected"
            gtk-tree-selection-path-is-selected) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[path]{a @class{gtk-tree-path} object to check selection on}
-  @return{@em{True} if path is selected.}
+  @return{@em{True} if @arg{path} is selected.}
   @begin{short}
     Returns @em{true} if the row pointed to by @arg{path} is currently selected.
     If @arg{path} does not point to a valid location, @code{nil} is returned.
-  @end{short}"
-  (selection g-object)
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-path}"
+  (selection (g-object gtk-tree-selection))
   (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-selection-path-is-selected)
@@ -500,11 +512,15 @@
 
 (defcfun ("gtk_tree_selection_select_iter" gtk-tree-selection-select-iter) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[iter]{the @class{gtk-tree-iter} object to be selected}
-  Selects the specified iterator."
-  (selection g-object)
+  @begin{short}
+    Selects the specified iterator.
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-iter}"
+  (selection (g-object gtk-tree-selection))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-selection-select-iter)
@@ -516,11 +532,15 @@
 (defcfun ("gtk_tree_selection_unselect_iter" gtk-tree-selection-unselect-iter)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[iter]{the @class{gtk-tree-iter} object to be unselected}
-  Unselects the specified iterator."
-  (selection g-object)
+  @begin{short}
+    Unselects the specified iterator.
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-iter}"
+  (selection (g-object gtk-tree-selection))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-selection-unselect-iter)
@@ -532,12 +552,16 @@
 (defcfun ("gtk_tree_selection_iter_is_selected"
            gtk-tree-selection-iter-is-selected) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[iter]{a valid @class{gtk-tree-iter} object}
   @return{@em{True}, if @arg{iter} is selected.}
-  Returns @em{true} if the row at @arg{iter} is currently selected."
-  (selection g-object)
+  @begin{short}
+    Returns @em{true} if the row at @arg{iter} is currently selected.
+  @end{short}
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-iter}"
+  (selection (g-object gtk-tree-selection))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-selection-iter-is-selected)
@@ -548,12 +572,14 @@
 
 (defcfun ("gtk_tree_selection_select_all" gtk-tree-selection-select-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @begin{short}
-    Selects all the nodes. @arg{selection} must be set to @code{:multiple} mode.
-  @end{short}"
-  (selection g-object))
+    Selects all the nodes.
+  @end{short}
+  @arg{selection} must be set to @code{:multiple} mode.
+  @see-class{gtk-tree-selection}"
+  (selection (g-object gtk-tree-selection)))
 
 (export 'gtk-tree-selection-select-all)
 
@@ -564,10 +590,11 @@
 (defcfun ("gtk_tree_selection_unselect_all" gtk-tree-selection-unselect-all)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @short{Unselects all the nodes.}"
-  (selection g-object))
+  @short{Unselects all the nodes.}
+  @see-class{gtk-tree-selection}"
+  (selection (g-object gtk-tree-selection)))
 
 (export 'gtk-tree-selection-unselect-all)
 
@@ -578,15 +605,18 @@
 (defcfun ("gtk_tree_selection_select_range" gtk-tree-selection-select-range)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @argument[start-path]{the initial node of the range}
-  @argument[end-path]{the final node of the range}
+  @argument[start-path]{the initial @class{gtk-tree-path} node of the range}
+  @argument[end-path]{the final @class{gtk-tree-path} node of the range}
   @begin{short}
     Selects a range of nodes, determined by @arg{start-path} and @arg{end-path}
-    inclusive. @arg{selection} must be set to @code{:multiple} mode.
-  @end{short}"
-  (selection g-object)
+    inclusive.
+  @end{short}
+  @arg{selection} must be set to @code{:multiple} mode.
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-path}"
+  (selection (g-object gtk-tree-selection))
   (start-path (g-boxed-foreign gtk-tree-path))
   (end-path (g-boxed-foreign gtk-tree-path)))
 
@@ -599,16 +629,17 @@
 (defcfun ("gtk_tree_selection_unselect_range" gtk-tree-selection-unselect-range)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-11}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @argument[start-path]{the initial node of the range}
-  @argument[end-path]{the initial node of the range}
+  @argument[start-path]{the initial @class{gtk-tree-path} node of the range}
+  @argument[end-path]{the initial @class{gtk-tree-path} node of the range}
   @begin{short}
     Unselects a range of nodes, determined by @arg{start-path} and
     @arg{end-path} inclusive.
   @end{short}
-  @see-class{gtk-tree-selection}"
-  (selection g-object)
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-path}"
+  (selection (g-object gtk-tree-selection))
   (start-path (g-boxed-foreign gtk-tree-path))
   (end-path (g-boxed-foreign gtk-tree-path)))
 
