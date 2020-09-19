@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,8 +44,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GActionGroup *  action-group  Read / Write / Construct Only
-;;;     GdkDevice *     pad           Read / Write / Construct Only
+;;;     GActionGroup*   action-group    Read / Write / Construct Only
+;;;        GdkDevice*   pad             Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -70,7 +70,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pad-action-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pad-action-type atdoc:*external-symbols*)
- "@version{2019-3-24}
+ "@version{2020-9-11}
   @begin{short}
     The type of a pad action.
   @end{short}
@@ -103,9 +103,9 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pad-action-entry atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'gtk-pad-action-entry atdoc:*external-symbols*)
- "@version{2019-3-24}
+ "@version{2020-9-11}
   @begin{short}
-    Struct defining a pad action entry.
+    Structure defining a pad action entry.
   @end{short}
   @begin{pre}
 (defcstruct gtk-pad-action-entry
@@ -149,7 +149,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-pad-controller 'type)
- "@version{2019-3-24}
+ "@version{2020-9-11}
   @begin{short}
     @sym{gtk-pad-controller} is an event controller for the pads found in
     drawing tablets (The collection of buttons and tactile sensors often found
@@ -165,9 +165,9 @@
   @code{:tablet-pad} devices feature multiple \"modes\", all these input
   elements have one current mode, which may determine the final action being
   triggered. Pad devices often divide buttons and sensors into groups, all
-  elements in a group share the same current mode, but different groups may have
-  different modes. See the functions @fun{gdk-device-pad-get-n-groups} and
-  @fun{gdk-device-pad-get-group-n-modes}.
+  elements in a group share the same current mode, but different groups may
+  have different modes. See the functions @fun{gdk-device-pad-n-groups} and
+  @fun{gdk-device-pad-group-n-modes}.
 
   Each of the actions that a given button/strip/ring performs for a given mode
   is defined by @symbol{gtk-pad-action-entry}, it contains an action name that
@@ -198,7 +198,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
   Since 3.22
   @see-slot{gtk-pad-controller-action-group}
   @see-slot{gtk-pad-controller-pad}
-  @see-class{gdk-event-conroller}
+  @see-class{gtk-event-conroller}
   @see-class{gdk-device-pad}")
 
 ;;; ----------------------------------------------------------------------------
@@ -212,21 +212,19 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
                                                'gtk-pad-controller) 't)
  "The @code{action-group} property of type @class{g-action-group}
   (Read / Write / Construct Only) @br{}
-  Action group to launch actions from. @br{}
-  Since 3.22 @br{}")
+  Action group to launch actions from. Since 3.22")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-pad-controller-action-group
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-pad-controller-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-pad-controller-action-group 'function)
- "@version{2019-3-24}
+ "@version{2020-9-11}
   @syntax[]{(gtk-pad-controller-action-group object) => group)}
   @syntax[]{(setf (gtk-pad-controller-action-group object) group)}
   @argument[object]{a @class{gtk-pad-controller} object}
-  @argument[group]{the @class{g-action-group}}
+  @argument[group]{the @class{g-action-group} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-pad-controller]{action-group} of the
+    Accessor of the @slot[gtk-pad-controller]{action-group} slot of the
     @class{gtk-pad-controller} class.
   @end{short}
 
@@ -240,21 +238,19 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
                                                'gtk-pad-controller) 't)
  "The @code{pad} property of type @class{gdk-device}
   (Read / Write / Construct Only) @br{}
-  Pad device to control. @br{}
-  Since 3.22 @br{}")
+  Pad device to control. Since 3.22")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-pad-controller-pad
-               atdoc:*function-name-alias*)
+(setf (gethash 'gtk-pad-controller-pad atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-pad-controller-pad 'function)
- "@version{2019-3-24}
+ "@version{2020-9-11}
   @syntax[]{(gtk-pad-controller-pad object) => pad)}
   @syntax[]{(setf (gtk-pad-controller-pad object) pad)}
   @argument[object]{a @class{gtk-pad-controller} object}
   @argument[pad]{the @class{gdk-device} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-pad-controller]{pad} of the
+    Accessor of the @slot[gtk-pad-controller]{pad} slot of the
     @class{gtk-pad-controller} class.
   @end{short}
 
@@ -293,6 +289,8 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;;
 ;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Implement the functions for GtkPadController
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_pad_controller_set_action_entries ()
