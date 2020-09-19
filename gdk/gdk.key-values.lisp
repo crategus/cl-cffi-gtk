@@ -250,15 +250,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-keymap-key 'function)
- "@version{2013-11-29}
-  Creates a @class{gdk-keymap-key} structure.
-  @see-class{gdk-keymap-key}
-  @see-function{copy-gdk-geometry}")
+ "@version{2020-9-7}
+  @argument[keycode]{a @code{:uint} with the hardware keycode}
+  @argument[group]{a @code{:int} which indicates movement in a horizontal
+    direction}
+  @argument[level]{a @code{:int} which indicates which symbol on the key will be
+    used, in a vertical direction}
+  @begin{short}
+    Creates a @class{gdk-keymap-key} structure.
+  @end{short}
+  See @symbol{gdk-keymap-key} for more information.
+  @see-class{gdk-keymap-key}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of the GdkKeymapKey structure
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation

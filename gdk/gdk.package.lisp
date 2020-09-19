@@ -142,7 +142,7 @@
     @about-function{gdk-screen-get-system-visual}
     @about-function{gdk-screen-get-rgba-visual}
     @about-function{gdk-screen-is-composited}
-    @about-function{gdk-screen-get-root-window}
+    @about-function{gdk-screen-root-window}
     @about-function{gdk-screen-get-display}
     @about-function{gdk-screen-get-number}
     @about-function{gdk-screen-get-width}
@@ -218,6 +218,7 @@
     @about-symbol{gdk-device-type}
     @about-symbol{gdk-grab-ownership}
 
+    @about-class{gdk-device-tool}
     @about-class{gdk-device}
     @about-generic{gdk-device-name}
     @about-generic{gdk-device-vendor-id}
@@ -267,19 +268,12 @@
     @about-function{gdk-device-pad-get-n-features}
     @about-function{gdk-device-pad-get-feature-group}
   @end{section}
-  @begin[Points and Rectangles]{section}
+  @begin[Rectangles]{section}
     Simple graphical data types.
 
-    GDK provides the @class{gdk-point} and @class{gdk-rectangle} data types for
-    representing pixels and sets of pixels on the screen. Together with Cairo's
-    @symbol{cairo-region-t} data type, they make up the central types for
-    representing graphical data.
-
-    @about-struct{gdk-point}
-    @about-function{make-gdk-point}
-    @about-function{copy-gdk-point}
-    @about-function{gdk-point-x}
-    @about-function{gdk-point-y}
+    GDK provides the @class{gdk-rectangle} data type for representing sets of
+    pixels on the screen. Together with Cairo's @symbol{cairo-region-t} data
+    type, they make up the central types for representing graphical data.
 
     @about-struct{gdk-rectangle}
     @about-function{make-gdk-rectangle}
@@ -367,63 +361,31 @@
     Onscreen display areas in the target window system.
 
     @about-variable{+gdk-parent-relative+}
-
     @about-symbol{gdk-window-type}
     @about-symbol{gdk-window-window-class}
     @about-symbol{gdk-window-hints}
     @about-symbol{gdk-gravity}
+    @about-symbol{gdk-geometry}
+    @about-function{make-gdk-geometry}
     @about-symbol{gdk-anchor-hints}
     @about-symbol{gdk-window-edge}
     @about-symbol{gdk-window-type-hint}
-
-    @about-struct{gdk-window-attr}
-    @about-function{copy-gdk-window-attr}
+    @about-symbol{gdk-window-attr}
     @about-function{make-gdk-window-attr}
-    @about-function{gdk-window-attr-title}
-    @about-function{gdk-window-attr-event-mask}
-    @about-function{gdk-window-attr-x}
-    @about-function{gdk-window-attr-y}
-    @about-function{gdk-window-attr-width}
-    @about-function{gdk-window-attr-height}
-    @about-function{gdk-window-attr-window-class}
-    @about-function{gdk-window-attr-visual}
-    @about-function{gdk-window-attr-window-type}
-    @about-function{gdk-window-attr-cursor}
-    @about-function{gdk-window-attr-wmclass-name}
-    @about-function{gdk-window-attr-wmclass-class}
-    @about-function{gdk-window-attr-override-redirect}
-    @about-function{gdk-window-attr-type-hint}
-
     @about-symbol{gdk-window-attributes-type}
     @about-symbol{gdk-fullscreen-mode}
     @about-symbol{gdk-filter-return}
     @about-symbol{gdk-modifier-intent}
     @about-symbol{gdk-wm-decoration}
     @about-symbol{gdk-wm-function}
-
-    @about-struct{gdk-geometry}
-    @about-function{make-gdk-geometry}
-    @about-function{copy-gdk-geometry}
-    @about-function{gdk-geometry-min-width}
-    @about-function{gdk-geometry-min-height}
-    @about-function{gdk-geometry-max-width}
-    @about-function{gdk-geometry-max-height}
-    @about-function{gdk-geometry-base-width}
-    @about-function{gdk-geometry-base-height}
-    @about-function{gdk-geometry-width-increment}
-    @about-function{gdk-geometry-height-increment}
-    @about-function{gdk-geometry-min-aspect}
-    @about-function{gdk-geometry-max-aspect}
-    @about-function{gdk-geometry-win-gravity}
-
     @about-class{gdk-window}
     @about-generic{gdk-window-cursor}
     @about-function{gdk-window-new}
     @about-function{gdk-window-destroy}
-    @about-function{gdk-window-get-window-type}
-    @about-function{gdk-window-get-display}
-    @about-function{gdk-window-get-screen}
-    @about-function{gdk-window-get-visual}
+    @about-function{gdk-window-window-type}
+    @about-function{gdk-window-display}
+    @about-function{gdk-window-screen}
+    @about-function{gdk-window-visual}
     @about-function{gdk-window-at-pointer}
     @about-function{gdk-window-show}
     @about-function{gdk-window-show-unraised}
@@ -433,7 +395,7 @@
     @about-function{gdk-window-is-viewable}
     @about-function{gdk-window-is-input-only}
     @about-function{gdk-window-is-shaped}
-    @about-function{gdk-window-get-state}
+    @about-function{gdk-window-state}
     @about-function{gdk-window-withdraw}
     @about-function{gdk-window-iconify}
     @about-function{gdk-window-deiconify}
@@ -444,8 +406,10 @@
     @about-function{gdk-window-fullscreen}
     @about-function{gdk-window-fullscreen-on-monitor}
     @about-function{gdk-window-unfullscreen}
+
     @about-function{gdk-window-get-fullscreen-mode}
     @about-function{gdk-window-set-fullscreen-mode}
+
     @about-function{gdk-window-set-keep-above}
     @about-function{gdk-window-set-keep-below}
     @about-function{gdk-window-set-opacity}
@@ -519,10 +483,10 @@
     @about-function{gdk-window-set-background-pattern}
     @about-function{gdk-window-get-background-patter}
     @about-function{gdk-window-get-user-data}
-    @about-function{gdk-window-get-geometry}
+    @about-function{gdk-window-geometry}
     @about-function{gdk-window-set-geometry-hints}
-    @about-function{gdk-window-get-width}
-    @about-function{gdk-window-get-height}
+    @about-function{gdk-window-width}
+    @about-function{gdk-window-height}
     @about-function{gdk-window-set-icon-list}
     @about-function{gdk-window-set-modal-hint}
     @about-function{gdk-window-get-modal-hint}
@@ -532,7 +496,7 @@
     @about-function{gdk-window-set-skip-taskbar-hint}
     @about-function{gdk-window-set-skip-pager-hint}
     @about-function{gdk-window-set-urgency-hint}
-    @about-function{gdk-window-get-position}
+    @about-function{gdk-window-position}
     @about-function{gdk-window-get-root-origin}
     @about-function{gdk-window-get-frame-extents}
     @about-function{gdk-window-get-origin}
@@ -540,13 +504,12 @@
     @about-function{gdk-window-pointer}
     @about-function{gdk-window-device-position}
     @about-function{gdk-window-device-position-double}
-    @about-function{gdk-window-get-parent}
-    @about-function{gdk-window-get-toplevel}
-    @about-function{gdk-window-get-children}
-    @about-function{gdk-window-get-children-with-user-data}
+    @about-function{gdk-window-parent}
+    @about-function{gdk-window-toplevel}
+    @about-function{gdk-window-children}
+    @about-function{gdk-window-children-with-user-data}
     @about-function{gdk-window-peek-children}
-    @about-function{gdk-window-get-events}
-    @about-function{gdk-window-set-events}
+    @about-function{gdk-window-events}
     @about-function{gdk-window-set-icon-name}
     @about-function{gdk-window-set-transient-for}
     @about-function{gdk-window-set-role}
@@ -556,9 +519,8 @@
     @about-function{gdk-window-set-decorations}
     @about-function{gdk-window-get-decorations}
     @about-function{gdk-window-set-functions}
-    @about-function{gdk-get-default-root-window}
-    @about-function{gdk-window-get-support-multidevice}
-    @about-function{gdk-window-set-support-multidevice}
+    @about-function{gdk-default-root-window}
+    @about-function{gdk-window-support-multidevice}
     @about-function{gdk-window-get-device-cursor}
     @about-function{gdk-window-set-device-cursor}
     @about-function{gdk-window-get-device-events}
@@ -573,8 +535,8 @@
     @about-function{gdk-window-geometry-changed}
     @about-function{gdk-window-coords-from-parent}
     @about-function{gdk-window-coords-to-parent}
-    @about-function{gdk-window-get-effective-parent}
-    @about-function{gdk-window-get-effective-toplevel}
+    @about-function{gdk-window-effective-parent}
+    @about-function{gdk-window-effective-toplevel}
   @end{section}
   @begin[Frame Clock]{section}
     A @sym{gdk-frame-clock} tells the application when to update and repaint a
@@ -1278,10 +1240,9 @@
 
     Creating a @class{pango-layout} object is the first step in rendering text,
     and requires getting a handle to a @class{pango-context}. For GTK+ programs,
-    you will usually want to use the functions
-    @fun{gtk-widget-get-pango-context}, or @fun{gtk-widget-create-pango-layout},
-    rather than using the lowlevel function
-    @fun{gdk-pango-context-get-for-screen}. Once you have a
+    you will usually want to use the functions @fun{gtk-widget-pango-context},
+    or @fun{gtk-widget-create-pango-layout}, rather than using the lowlevel
+    function @fun{gdk-pango-context-for-screen}. Once you have a
     @class{pango-layout} object, you can set the text and attributes of it with
     Pango functions like @fun{pango-layout-text} and get its size with
     @fun{pango-layout-get-size}. Note that Pango uses a fixed point system
@@ -1316,8 +1277,8 @@
            (let* ((cr (pointer cr))
                   ;; Get the GdkWindow for the widget
                   (window (gtk-widget-window widget))
-                  (width (gdk-window-get-width window))
-                  (height (gdk-window-get-height window))
+                  (width (gdk-window-width window))
+                  (height (gdk-window-height window))
                   (radius (- (/ (min width height) 2) 20)))
              ;; Set up a transformation matrix so that the user space
              ;; coordinates for where we are drawing are [-RADIUS, RADIUS],
@@ -1333,7 +1294,7 @@
 
            ;; Create a PangoLayout, set the font and text
            (let* ((screen (gdk-window-get-screen window))
-                  (context (gdk-pango-context-get-for-screen screen))
+                  (context (gdk-pango-context-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))
              (setf (pango-layout-text layout) \"Text\")
@@ -1367,8 +1328,8 @@
     @about-function{gdk-pango-layout-get-clip-region}
     @about-function{gdk-pango-layout-line-get-clip-region}
     @about-function{gdk-pango-context-get}
-    @about-function{gdk-pango-context-get-for-screen}
-    @about-function{gdk-pango-context-get-for-display}
+    @about-function{gdk-pango-context-for-screen}
+    @about-function{gdk-pango-context-for-display}
   @end{section}
   @begin[Cairo Interaction]{section}
     Functions to support using Cairo.

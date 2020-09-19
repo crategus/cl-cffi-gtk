@@ -95,9 +95,9 @@
   GDK defaults to a compatibility mode in which it will emit just one
   enter/leave event pair for all devices on a window. To enable per-device
   enter/leave events and other multi-pointer interaction features, the function
-  @fun{gdk-window-set-support-multidevice} must be called on @class{gdk-window}
-  objects (or the function @fun{gtk-widget-set-support-multidevice} on widgets).
-  See the @fun{gdk-window-set-support-multidevice} documentation for more
+  @fun{gdk-window-support-multidevice} must be called on @class{gdk-window}
+  objects (or the function @fun{gtk-widget-support-multidevice} on widgets).
+  See the @fun{gdk-window-support-multidevice} documentation for more
   information.
 
   On X11, multi-device support is implemented through XInput 2. Unless the
@@ -217,8 +217,8 @@
   @see-class{gdk-event}
   @see-function{gdk-disable-multidevice}
   @see-function{gdk-display-open}
-  @see-function{gdk-window-set-support-multidevice}
-  @see-function{gtk-widget-set-support-multidevice}
+  @see-function{gdk-window-support-multidevice}
+  @see-function{gtk-widget-support-multidevice}
   @see-function{gdk-disable-multidevice}
   @see-function{gdk-device-manager-get-client-pointer}
   @see-function{gdk-device-get-associated-device}

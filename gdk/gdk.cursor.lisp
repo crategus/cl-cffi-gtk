@@ -378,10 +378,11 @@
   Cursors by themselves are not very interesting, they must be bound to a
   window for users to see them. This is done with the function
   @fun{gdk-window-cursor} or by setting the cursor member of the
-  @class{gdk-window-attr} structure passed to the function @fun{gdk-window-new}.
+  @symbol{gdk-window-attr} structure passed to the function
+  @fun{gdk-window-new}.
   @see-slot{gdk-cursor-cursor-type}
   @see-slot{gdk-cursor-display}
-  @see-class{gdk-window-attr}
+  @see-symbol{gdk-window-attr}
   @see-function{gdk-window-new}
   @see-function{gdk-window-cursor}
   @see-function{gdk-display-supports-cursor-alpha}

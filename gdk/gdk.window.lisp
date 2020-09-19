@@ -3134,15 +3134,15 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   programmer, so you can avoid doing that work yourself.
 
   When using GTK+, the widget system automatically places calls to the
-  @sym{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} functions
+  functions @sym{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint}
   around emissions of the \"expose-event\" signal. That is, if you are writing
   an expose event handler, you can assume that the exposed area in
-  @class{gdk-event-expose} has already been cleared to the window background, is
-  already set as the clip region, and already has a backing store. Therefore in
-  most cases, application code need not call the
-  @sym{gdk-window-begin-paint-region} function. You can disable the automatic
+  @class{gdk-event-expose} has already been cleared to the window background,
+  is already set as the clip region, and already has a backing store. Therefore
+  in most cases, application code need not call the function
+  @sym{gdk-window-begin-paint-region}. You can disable the automatic
   calls around expose events on a widget-by-widget basis by calling the
-  @fun{gtk-widget-set-double-buffered} function.
+  function @fun{gtk-widget-double-buffered}.
 
   If you call this function multiple times before calling the matching
   @fun{gdk-window-end-paint} function, the backing stores are pushed onto a
@@ -3160,7 +3160,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @see-class{gdk-window}
   @see-class{gdk-event-expose}
   @see-function{gdk-window-end-paint}
-  @see-function{gtk-widget-set-double-buffered}"
+  @see-function{gtk-widget-double-buffered}"
   (window (g-object gdk-window))
   (region (:pointer (:struct cairo-region-t))))
 
@@ -5391,47 +5391,38 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_support_multidevice ()
+;;; gdk_window_set_support_multidevice () -> gdk-window-support-multidevice
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_get_support_multidevice"
-           gdk-window-get-support-multidevice) :boolean
+(defun (setf gdk-window-support-multidevice) (support-multidevice window)
+  (foreign-funcall "gdk_window_set_support_multidevice"
+                   (g-object gdk-window) window
+                   :boolean support-multidevice
+                   :void)
+  support-multidevice)
+
+(defcfun ("gdk_window_get_support_multidevice" gdk-window-support-multidevice)
+    :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-9-2}
-  @argument[window]{a @class{gdk-window} object}
-  @return{@em{True} if the window handles multidevice features.}
-  @begin{short}
-    Returns @em{true} if the window is aware of the existence of multiple
-    devices.
-  @end{short}
-  @see-class{gdk-window}
-  @see-function{gdk-window-set-support-multidevice}"
-  (window (g-object gdk-window)))
-
-(export 'gdk-window-get-support-multidevice)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_window_set_support_multidevice ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_window_set_support_multidevice"
-           gdk-window-set-support-multidevice) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-9-2}
+ "@version{2020-9-18}
+  @syntax[]{(gdk-window-support-multidevice window) => support-multidevice}
+  @syntax[]{(setf (gdk-window-support-multidevice window) support-multidevice)}
   @argument[window]{a @class{gdk-window} object}
   @argument[support-multidevice]{@em{true} to enable multidevice support in
     @arg{window}}
   @begin{short}
-    This function will enable multidevice features in @arg{window}.
+    The function @sym{gdk-window-support-multidevice} returns @em{true} if the
+    window is aware of the existence of multiple devices.
   @end{short}
+  The function @sym{(setf gdk-window-support-multidevice)} will enable
+  multidevice features in @arg{window}.
 
   Multidevice aware windows will need to handle properly multiple, per device
   enter/leave events, device grabs and grab ownerships.
-  @see-class{gdk-window}
-  @see-function{gdk-window-get-support-multidevice}"
-  (window (g-object gdk-window))
-  (support-multidevice :boolean))
+  @see-class{gdk-window}"
+  (window (g-object gdk-window)))
 
-(export 'gdk-window-set-support-multidevice)
+(export 'gdk-window-support-multidevice)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_device_cursor ()

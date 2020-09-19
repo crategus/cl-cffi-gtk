@@ -176,28 +176,27 @@
 (setf (gethash 'gdk-screen-font-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-font-options 'function)
- "@version{2015-12-30}
+ "@version{2020-9-18}
   @syntax[]{(gdk-screen-font-options object) => options}
   @syntax[]{(setf (gdk-screen-font-options object) options)}
   @argument[object]{a @class{gdk-screen} object}
   @argument[options]{a @symbol{cairo-font-options-t} structure, or @code{nil}
     to unset any previously set default font options}
   @begin{short}
-    Accessor of the slot @slot[gdk-screen]{font-options} of the
+    Accessor of the @slot[gdk-screen]{font-options} slot of the
     @class{gdk-screen} class.
   @end{short}
 
   The slot access function @sym{gdk-screen-font-options} returns the current
-  font options, or @code{nil} if no default font options have been set.
+  font options, or @code{nil} if no default font options have been set. The slot
+  access function @sym{(setf gdk-screen-font-options)} sets the default font
+  options for the screen.
 
-  The slot access function @sym{(setf gdk-screen-font-options)} sets the default
-  font options for the screen.
-
-  These options will be set on any Pango context's newly created with
-  the @fun{gdk-pango-context-get-for-screen} function. Changing the default set
+  These options will be set on any Pango context's newly created with the
+  function @fun{gdk-pango-context-for-screen}. Changing the default set
   of font options does not affect contexts that have already been created.
   @see-class{gdk-screen}
-  @see-function{gdk-pango-context-get-for-screen}")
+  @see-function{gdk-pango-context-for-screen}")
 
 ;;; --- gdk-screen-resolution --------------------------------------------------
 
@@ -331,13 +330,13 @@
 (export 'gdk-screen-is-composited)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_screen_get_root_window ()
+;;; gdk_screen_get_root_window () -> gdk-screen-root-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_screen_get_root_window" gdk-screen-get-root-window)
+(defcfun ("gdk_screen_get_root_window" gdk-screen-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2020-9-18}
   @argument[screen]{a @class{gdk-screen} object}
   @return{The root @class{gdk-window} object.}
   @short{Gets the root window of the screen.}
@@ -345,7 +344,7 @@
   @see-class{gdk-window}"
   (screen (g-object gdk-screen)))
 
-(export 'gdk-screen-get-root-window)
+(export 'gdk-screen-root-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_display ()
@@ -517,10 +516,10 @@
   @begin{short}
     Obtains a list of all toplevel windows known to GDK on the screen.
   @end{short}
-  A toplevel window is a child of the root window. See the
-  @fun{gdk-get-default-root-window} function.
+  A toplevel window is a child of the root window. See the function
+  @fun{gdk-default-root-window}.
   @see-class{gdk-screen}
-  @see-function{gdk-get-default-root-window}"
+  @see-function{gdk-default-root-window}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-toplevel-windows)
