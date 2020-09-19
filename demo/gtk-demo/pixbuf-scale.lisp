@@ -33,8 +33,8 @@
 
       (g-signal-connect area "draw"
          (lambda (widget cr)
-           (let ((width (gtk-widget-get-allocated-width widget))
-                 (height (gtk-widget-get-allocated-height widget)))
+           (let ((width (gtk-widget-allocated-width widget))
+                 (height (gtk-widget-allocated-height widget)))
              (cairo-arc (pointer cr)
                         (/ width 2.0d0)
                         (/ height 2.0d0)
@@ -43,8 +43,8 @@
                         (* 2.0d0 3.14))
              (gdk-cairo-set-source-rgba
                (pointer cr)
-               (gtk-style-context-get-color
-                 (gtk-widget-get-style-context widget) :normal))
+               (gtk-style-context-color (gtk-widget-style-context widget)
+                                        :normal))
              (cairo-fill (pointer cr))
              (cairo-paint (pointer cr))
              nil)))

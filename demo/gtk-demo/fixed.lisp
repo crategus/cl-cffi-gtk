@@ -3,7 +3,7 @@
 (in-package #:gtk-demo)
 
 (defun move-button (button fixed)
-  (let* ((allocation (gtk-widget-get-allocation fixed))
+  (let* ((allocation (gtk-widget-allocation fixed))
          (width (- (gdk-rectangle-width allocation) 50))
          (height (- (gdk-rectangle-height allocation) 25)))
     (gtk-fixed-move fixed button (random width) (random height))))

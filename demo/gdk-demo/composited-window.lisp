@@ -18,8 +18,8 @@
       (gtk-widget-modify-bg window :normal (gdk-color-parse "red"))
       ;; Set the colourmap for the event box.
       ;; Must be done before the event box is realised.
-      (gtk-widget-set-visual event
-        (gdk-screen-get-rgba-visual (gtk-widget-get-screen event)))
+      (setf (gtk-widget-visual event)
+            (gdk-screen-get-rgba-visual (gtk-widget-screen event)))
 
       ;; Set our event box to have a fully-transparent background
       ;; drawn on it. Currently there is no way to simply tell GTK+
@@ -78,12 +78,12 @@
              ;; the source data is the (composited) event box
              (gdk-cairo-set-source-window cr
                                           (gtk-widget-window child)
-                                          (coerce (gdk-rectangle-x (gtk-widget-get-allocation child))
+                                          (coerce (gdk-rectangle-x (gtk-widget-allocation child))
                                                   'long-float)
-                                          (coerce (gdk-rectangle-y (gtk-widget-get-allocation child))
+                                          (coerce (gdk-rectangle-y (gtk-widget-allocation child))
                                                   'long-float))
              ;; draw no more than our expose event intersects our child
-;             (let ((region (cairo-region-create-rectangle (gtk-widget-get-allocation child))))
+;             (let ((region (cairo-region-create-rectangle (gtk-widget-allocation child))))
 ;               (cairo-region-intersect region (gdk-event-expose-region event))
 ;               (gdk-cairo-region cr region)
 ;               (cairo-clip cr)

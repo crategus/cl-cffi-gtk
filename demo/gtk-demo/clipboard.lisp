@@ -107,14 +107,14 @@ button_press (GtkWidget      *widget,
       (g-signal-connect button1 "clicked"
                         (lambda (button)
                           (declare (ignore button))
-                          (let ((clipboard (gtk-widget-get-clipboard entry1 "CLIPBOARD")))
+                          (let ((clipboard (gtk-widget-clipboard entry1 "CLIPBOARD")))
                             (gtk-clipboard-set-text clipboard (gtk-entry-text entry1)))))
 
       (g-signal-connect button2 "clicked"
                         (lambda (button)
                           (declare (ignore button))
                           (let ( ;; Get the clipboard object
-                                (clipboard (gtk-widget-get-clipboard entry2 "CLIPBOARD")))
+                                (clipboard (gtk-widget-clipboard entry2 "CLIPBOARD")))
                             (gtk-clipboard-request-text clipboard
                                                         (lambda (clipboard text)
                                                           (declare (ignore clipboard))

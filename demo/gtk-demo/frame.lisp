@@ -94,19 +94,17 @@
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
              (multiple-value-bind (xalign yalign)
-                 (gtk-frame-get-label-align frame)
+                 (gtk-frame-label-align frame)
                (declare (ignore xalign))
-               (gtk-frame-set-label-align frame
-                                          (gtk-spin-button-value spin)
-                                          yalign))))
+               (setf (gtk-frame-label-align frame)
+                     (list (gtk-spin-button-value spin) yalign)))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
              (multiple-value-bind (xalign yalign)
-                 (gtk-frame-get-label-align frame)
+                 (gtk-frame-label-align frame)
                (declare (ignore yalign))
-               (gtk-frame-set-label-align frame
-                                          xalign
-                                          (gtk-spin-button-value spin)))))
+               (setf (gtk-frame-label-align frame)
+                     (list xalign (gtk-spin-button-value spin))))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t

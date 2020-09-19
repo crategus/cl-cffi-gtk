@@ -63,7 +63,7 @@
 
 (defun palette-drop-item (drag-item drop-group x y)
   (let ((drag-group (gtk-widget-parent drag-item))
-        (drop-item (gtk-tool-item-group-get-drop-item drop-group x y))
+        (drop-item (gtk-tool-item-group-drop-item drop-group x y))
         (drop-position -1))
     (format t "PALETTE-DROP-ITEM~%")
     (format t "   drag-group = ~A~%" drag-group)
@@ -72,7 +72,7 @@
 
     (when drop-item
       (setf drop-position
-            (gtk-tool-item-group-get-item-position drop-group drop-item)))
+            (gtk-tool-item-group-child-position drop-group drop-item)))
 
     (format t "   drop-pos   = ~A~%" drop-position)
 
@@ -122,7 +122,7 @@
 
           )
         )
-        (gtk-tool-item-group-set-item-position drop-group drag-item drop-position))
+        (setf (gtk-tool-item-group-child-position drop-group drag-item) drop-position))
 
     ))
 
@@ -215,7 +215,7 @@
                (if (eq style :default)
                    ;; TODO: This seems to not work.
                    (gtk-tool-palette-unset-style palette)
-                   (gtk-tool-palette-set-style palette style))
+                   (setf (gtk-tool-palette-toolbar-style palette) style))
              )))
 
         (gtk-combo-box-text-append-text combo "Icons")
@@ -317,8 +317,8 @@
              (format t "   drag-palette = ~A~%" drag-palette)
 
              (when drag-palette
-               (let ((drag-item (gtk-tool-palette-get-drag-item drag-palette selection))
-                     (drop-group (gtk-tool-palette-get-drop-group widget x y)))
+               (let ((drag-item (gtk-tool-palette-drag-item drag-palette selection))
+                     (drop-group (gtk-tool-palette-drop-group widget x y)))
                  (format t "   drag-item    = ~A~%" drag-item)
                  (format t "   drop-group   = ~A~%" drop-group)
 
@@ -328,7 +328,7 @@
                    ((and (g-type-is-a (g-object-type drag-item) "GtkToolItem")
                          drop-group)
                     (format t "PALETTE DROP ITEM~%")
-                    (let ((allocation (gtk-widget-get-allocation drop-group)))
+                    (let ((allocation (gtk-widget-allocation drop-group)))
                       (format t "   allocation = ~A~%" allocation)
                       (palette-drop-item drag-item drop-group
                                          (- x (gdk-rectangle-x allocation))

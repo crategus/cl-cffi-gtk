@@ -43,8 +43,7 @@
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-buffer view)
-                                  (gtk-widget-get-clipboard view
-                                                            "CLIPBOARD"))))))
+                                  (gtk-widget-clipboard view "CLIPBOARD"))))))
 
       ;; Add action "paste" to the application window
       (let ((action (g-simple-action-new "paste" nil)))
@@ -56,8 +55,7 @@
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
                                        (gtk-text-view-buffer view)
-                                       (gtk-widget-get-clipboard view
-                                                                 "CLIPBOARD")
+                                       (gtk-widget-clipboard view "CLIPBOARD")
                                        :editable t)))))
 
       ;; Add action "fullscreen" to the application window

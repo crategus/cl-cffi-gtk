@@ -30,8 +30,8 @@
        ;; Clear surface
        (cairo-set-source-rgb cr 1.0 1.0 1.0)
        (cairo-paint cr)
-       (let* ((x (/ (gdk-window-get-width window) 2))
-              (y (/ (gdk-window-get-height window) 2))
+       (let* ((x (/ (gdk-window-width window) 2))
+              (y (/ (gdk-window-height window) 2))
               (radius (- (min x y) 12)))
          ;; Clock back
          (cairo-arc cr x y radius 0 (* 2 pi))

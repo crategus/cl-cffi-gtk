@@ -29,8 +29,8 @@
            (cairo-paint cr)
            ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-line-width cr 0.1)
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
@@ -64,8 +64,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
            (cairo-rectangle cr 0.25 0.25 0.5 0.5)
@@ -98,8 +98,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0.0 0.0 0.0)
            (cairo-select-font-face cr "Georgia" :normal :bold)
@@ -141,8 +141,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0.0 0.0 0.0)
            (cairo-paint-with-alpha cr 0.5d0)
@@ -174,8 +174,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (let ((linpat (cairo-pattern-create-linear 0 0 1 1))
                  (radpat (cairo-pattern-create-radial 0.5 0.5 0.25 0.5 0.5 0.75)))
@@ -215,8 +215,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0 0 0)
            (cairo-move-to cr 0 0)
@@ -265,8 +265,8 @@
            (cairo-paint cr)
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (let ((radpat (cairo-pattern-create-radial 0.25 0.25 0.10 0.50 0.50 0.50))
                  (linpat (cairo-pattern-create-linear 0.25 0.35 0.75 0.65)))
@@ -318,8 +318,8 @@
            (cairo-paint (pointer cr))
 	   ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale (pointer cr)
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-line-width (pointer cr) 0.01d0)
            (cairo-set-source-rgb (pointer cr) 1.0d0 0.0d0 0.0d0)
@@ -365,8 +365,8 @@
            (cairo-paint cr)
            ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (let* ((scale 500)
                   (dashes (list (/ 50.0 scale)

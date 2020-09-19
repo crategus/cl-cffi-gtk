@@ -25,8 +25,8 @@
            (let* ((cr (pointer cr))
                   ;; Get the GdkWindow for the widget
                   (window (gtk-widget-window widget))
-                  (width (gdk-window-get-width window))
-                  (height (gdk-window-get-height window))
+                  (width (gdk-window-width window))
+                  (height (gdk-window-height window))
                   (radius (- (/ (min width height) 2) 20)))
              ;; Set up a transformation matrix so that the user space
              ;; coordinates for where we are drawing are [-RADIUS, RADIUS],
@@ -42,7 +42,7 @@
 
            ;; Create a PangoLayout, set the font and text
            (let* ((screen (gdk-window-get-screen window))
-                  (context (gdk-pango-context-get-for-screen screen))
+                  (context (gdk-pango-context-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))
              (setf (pango-layout-text layout) "Text")

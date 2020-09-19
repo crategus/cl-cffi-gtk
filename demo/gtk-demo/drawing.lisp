@@ -34,8 +34,8 @@
                    (gdk-window-create-similar-surface
                                    (gtk-widget-window widget)
                                    :color
-                                   (gtk-widget-get-allocated-width widget)
-                                   (gtk-widget-get-allocated-height widget)))
+                                   (gtk-widget-allocated-width widget)
+                                   (gtk-widget-allocated-height widget)))
              ;; Clear surface
              (let ((cr (cairo-create surface)))
                (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)

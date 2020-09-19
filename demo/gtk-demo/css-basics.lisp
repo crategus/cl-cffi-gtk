@@ -6,7 +6,7 @@
 (in-package :gtk-demo)
 
 (defun apply-css-basics (widget provider)
-  (gtk-style-context-add-provider (gtk-widget-get-style-context widget)
+  (gtk-style-context-add-provider (gtk-widget-style-context widget)
                                   provider
                                   +gtk-style-provider-priority-user+)
   (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
