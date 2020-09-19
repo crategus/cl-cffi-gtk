@@ -184,7 +184,7 @@
     In the case where the default screen is being used, looking up an icon can
     be as simple as:
     @begin{pre}
-(let ((icon-theme (gtk-icon-theme-get-default))
+(let ((icon-theme (gtk-icon-theme-default))
       (pixbuf (gtk-icon-theme-load-icon icon-theme
                                         \"gtk-ok\"    ; icon name
                                         48          ; size
@@ -321,23 +321,23 @@
   @end{short}
   Icon theme objects are used to lookup up an icon by name in a particular icon
   theme. Usually, you will want to use the functions
-  @fun{gtk-icon-theme-get-default} or @fun{gtk-icon-theme-get-for-screen}
-  rather than creating a new icon theme object for scratch.
+  @fun{gtk-icon-theme-default} or @fun{gtk-icon-theme-for-screen} rather than
+  creating a new icon theme object for scratch.
   @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-get-default}
-  @see-function{gtk-icon-theme-get-for-screen}"
+  @see-function{gtk-icon-theme-default}
+  @see-function{gtk-icon-theme-for-screen}"
   (make-instance 'gtk-icon-theme))
 
 (export 'gtk-icon-theme-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_icon_theme_get_default ()
+;;; gtk_icon_theme_get_default () -> gtk-icon-theme-default
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_theme_get_default" gtk-icon-theme-get-default)
+(defcfun ("gtk_icon_theme_get_default" gtk-icon-theme-default)
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-3}
+ "@version{2020-9-5}
   @begin{return}
     A unique @class{gtk-icon-theme} object associated with the default screen.
   @end{return}
@@ -345,20 +345,20 @@
     Gets the icon theme for the default screen.
   @end{short}
   This icon theme is associated with the screen and can be used as long as the
-  screen is open. See the function @fun{gtk-icon-theme-get-for-screen}.
+  screen is open. See the function @fun{gtk-icon-theme-for-screen}.
   @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-get-for-screen}")
+  @see-function{gtk-icon-theme-for-screen}")
 
-(export 'gtk-icon-theme-get-default)
+(export 'gtk-icon-theme-default)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_icon_theme_get_for_screen ()
+;;; gtk_icon_theme_get_for_screen () -> gtk-icon-theme-for-screen
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_theme_get_for_screen" gtk-icon-theme-get-for-screen)
+(defcfun ("gtk_icon_theme_get_for_screen" gtk-icon-theme-for-screen)
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-3}
+ "@version{2020-9-5}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
     A unique @class{gtk-icon-theme} object associated with the given
@@ -374,13 +374,13 @@
   icon theme object will be created and associated with the screen. Icon theme
   objects are fairly expensive to create, so using this function is usually a
   better choice than calling the function @fun{gtk-icon-theme-new} and setting
-  the screen yourself; by using this function a single icon theme object will
+  the screen yourself. By using this function a single icon theme object will
   be shared between users.
   @see-class{gtk-icon-theme}
   @see-function{gtk-icon-theme-new}"
   (screen (g-object gdk-screen)))
 
-(export 'gtk-icon-theme-get-for-screen)
+(export 'gtk-icon-theme-for-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_set_screen ()
@@ -554,11 +554,10 @@
     system configuration.
   @end{short}
   This function cannot be called on the icon theme objects returned from the
-  functions @fun{gtk-icon-theme-get-default} and
-  @fun{gtk-icon-theme-get-for-screen}.
+  functions @fun{gtk-icon-theme-default} and @fun{gtk-icon-theme-for-screen}.
   @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-get-default}
-  @see-function{gtk-icon-theme-get-for-screen}"
+  @see-function{gtk-icon-theme-default}
+  @see-function{gtk-icon-theme-for-screen}"
   (icon-theme (g-object gtk-icon-theme))
   (theme-name g-string))
 
@@ -978,7 +977,7 @@
   @end{short}
   @begin[example]{dictionary}
     @begin{pre}
- (gtk-icon-theme-list-contexts (gtk-icon-theme-get-default))
+ (gtk-icon-theme-list-contexts (gtk-icon-theme-default))
 => (\"International\" \"Emotes\" \"Places\" \"stock\" \"FileSystems\"
     \"Devices\" \"Applications\" \"Actions\" \"Categories\" \"Animations\"
     \"MimeTypes\" \"Stock\" \"Status\" \"Emblems\")
@@ -1018,19 +1017,18 @@
 (export 'gtk-icon-theme-list-icons)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_icon_theme_get_icon_sizes ()
+;;; gtk_icon_theme_get_icon_sizes () -> gtk-icon-theme-icon-sizes
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_theme_get_icon_sizes" %gtk-icon-theme-get-icon-sizes)
-    :pointer
+(defcfun ("gtk_icon_theme_get_icon_sizes" %gtk-icon-theme-icon-sizes) :pointer
   (icon-theme (g-object gtk-icon-theme))
-  (icon-name g-string))
+  (icon-name :string))
 
-(defun gtk-icon-theme-get-icon-sizes (icon-theme icon-name)
+(defun gtk-icon-theme-icon-sizes (icon-theme icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
+ "@version{2020-9-5}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-name]{a string with the name of an icon}
+  @argument[icon-name]{a @code{:string} with the name of an icon}
   @return{An Lisp array of integer with the sizes at which the icon is
     available.}
   @begin{short}
@@ -1039,10 +1037,10 @@
   @end{short}
   A size of -1 means that the icon is available in a scalable format.
   @see-class{gtk-icon-theme}"
-  (let ((ptr (%gtk-icon-theme-get-icon-sizes icon-theme icon-name)))
+  (let ((ptr (%gtk-icon-theme-icon-sizes icon-theme icon-name)))
     (cffi:foreign-array-to-lisp ptr '(:array :int 1 ) :adjustable t)))
 
-(export 'gtk-icon-theme-get-icon-sizes)
+(export 'gtk-icon-theme-icon-sizes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_get_example_icon_name ()
@@ -1207,7 +1205,7 @@
   attached.
   @begin[Example]{dictionary}
     @begin{pre}
- (gtk-icon-theme-lookup-icon (gtk-icon-theme-get-default) \"battery\" 0 0)
+ (gtk-icon-theme-lookup-icon (gtk-icon-theme-default) \"battery\" 0 0)
 => #.(SB-SYS:INT-SAP #X01D3F840)
  (gtk-icon-info-get-base-size *)
 => 24
@@ -1238,7 +1236,7 @@
   Since 3.10
   @begin[Example]{dictionary}
     @begin{pre}
- (gtk-icon-theme-lookup-icon (gtk-icon-theme-get-default) \"battery\" 0 0)
+ (gtk-icon-theme-lookup-icon (gtk-icon-theme-default) \"battery\" 0 0)
 => #.(SB-SYS:INT-SAP #X01D3F840)
  (gtk-icon-info-get-base-scale *)
 => 1
@@ -1271,7 +1269,7 @@
   @fun{gtk-icon-info-get-builtin-pixbuf}.
   @begin[Example]{dictionary}
     @begin{pre}
- (gtk-icon-theme-lookup-icon (gtk-icon-theme-get-default) \"battery\" 0 0)
+ (gtk-icon-theme-lookup-icon (gtk-icon-theme-default) \"battery\" 0 0)
 => #.(SB-SYS:INT-SAP #X01D3F840)
  (gtk-icon-info-get-filename *)
 => \"/usr/share/icons/Humanity/devices/24/battery.svg\"
