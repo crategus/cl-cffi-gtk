@@ -36,9 +36,8 @@
 ;;;     GtkWidget
 ;;;  	GtkRequisition
 ;;;     GtkAllocation
-;;;     GtkWidgetAuxInfo
 ;;;     GtkWidgetHelpType
-;;;     GtkTextDirection
+;;;     GtkTextDirection                                -> gtk.emumerations.lisp
 ;;;     GtkStateType                                    -> gtk.enumerations.lisp
 ;;;     GtkSizeRequestMode
 ;;;     GtkRequestedSize
@@ -314,7 +313,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-context atdoc:*class-name-alias*) "CStruct"
       (documentation 'cairo-context 'type)
- "@version{2013-8-20}
+ "@version{2020-9-16}
   @begin{short}
     @sym{cairo-context} represents the type @symbol{cairo-t} in GTK+.
   @end{short}
@@ -338,7 +337,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-requisition 'type)
- "@version{2013-10-29}
+ "@version{2020-9-16}
   @begin{short}
     A @sym{gtk-requisition} represents the desired size of a widget.
   @end{short}
@@ -350,8 +349,8 @@
   (height :int :initform 0))
   @end{pre}
   @begin[code]{table}
-    @entry[width]{The widget's desired width.}
-    @entry[height]{The widget's desired height.}
+    @entry[width]{A  @code{:int} with the widget's desired width.}
+    @entry[height]{A @code{:int} with the widget's desired height.}
   @end{table}
   @see-slot{gtk-requisition-width}
   @see-slot{gtk-requisition-height}
@@ -368,17 +367,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-requisition 'function)
- "@version{2013-10-29}
-  @argument[width]{the desired width}
-  @argument[height]{the desired height}
-  Creates a @class{gtk-requisition} structure.
+ "@version{2020-9-16}
+  @argument[width]{a @code{:int} with the desired width}
+  @argument[height]{a @code{:int} with the desired height}
+  @short{Creates a @class{gtk-requisition} structure.}
   @see-class{gtk-requisition}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-requisition 'function)
- "@version{2013-10-29}
+ "@version{2020-9-16}
   @argument[instance]{a @class{gtk-requisition} structure}
-  Copy constructor of a @class{gtk-requisition} structure.
+  @short{Copy constructor of a @class{gtk-requisition} structure.}
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
@@ -388,17 +387,47 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2013-10-29}
+ "@version{2020-9-16}
+  @syntax[]{(gtk-requisition-width instance) => width}
+  @syntax[]{(setf (gtk-requisition-width instance) width)}
   @argument[instance]{a @class{gtk-requisition} structure}
-  Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
+  @argument[instance]{a @code{:int} with the width}
+  @begin{short}
+    Accessor of the @arg{width} slot of the @class{gtk-requisition} structure.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (defvar requistion (make-gtk-requisition))
+=> REQUISTION
+  (setf (gtk-requisition-width requistion) 100)
+=> 100
+  (gtk-requisition-width requistion)
+=> 100
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-requisition}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-height 'function)
- "@version{2013-10-29}
+ "@version{2020-9-16}
+  @syntax[]{(gtk-requisition-height instance) => height}
+  @syntax[]{(setf (gtk-requisition-height instance) height)}
   @argument[instance]{a @class{gtk-requisition} structure}
-  Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
+  @argument[instance]{a @code{:int} with the height}
+  @begin{short}
+    Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (defvar requistion (make-gtk-requisition))
+=> REQUISTION
+  (setf (gtk-requisition-height requistion) 100)
+=> 100
+  (gtk-requisition-height requistion)
+=> 100
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
@@ -407,6 +436,223 @@
 
 ;;; GtkAllocation is not implemented. In the C implementation it is a synonym
 ;;; for GdkRectangle
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkWidgetHelpType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkWidgetHelpType" gtk-widget-help-type
+  (:export t
+   :type-initializer "gtk_widget_help_type_get_type")
+  (:tooltip 0)
+  (:whats-this 1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-widget-help-type atdoc:*external-symbols*)
+ "@version{2020-9-16}
+  @short{Used in the \"show-help\" signal handler.}
+  @begin{pre}
+(define-g-enum \"GtkWidgetHelpType\" gtk-widget-help-type
+  (:export t
+   :type-initializer \"gtk_widget_help_type_get_type\")
+  (:tooltip 0)
+  (:whats-this 1))
+  @end{pre}
+  @class{gtk-widget}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkTextDirection
+;;; ----------------------------------------------------------------------------
+
+;; --> gtk.enumerations.lisp
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkSizeRequestMode
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkSizeRequestMode" gtk-size-request-mode
+  (:export t
+   :type-initializer "gtk_size_request_mode_get_type")
+  (:height-for-width 0)
+  (:width-for-height 1)
+  (:constant-size 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-size-request-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-size-request-mode atdoc:*external-symbols*)
+ "@version{2013-10-29}
+  @begin{short}
+    Specifies a preference for height-for-width or width-for-height geometry
+    management.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkSizeRequestMode\" gtk-size-request-mode
+  (:export t
+   :type-initializer \"gtk_size_request_mode_get_type\")
+  (:height-for-width 0)
+  (:width-for-height 1)
+  (:constant-size 2))
+  @end{pre}
+  @begin{table}
+    @entry[:height-for-width]{Prefer height-for-width geometry management.}
+    @entry[:width-for-height]{Prefer width-for-height geometry management.}
+    @entry[:constant-size]{Dont trade height-for-width or width-for-height.}
+  @end{table}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-request-mode}")
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkRequestedSize
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-cstruct gtk-requested-size "GtkRequestedSize"
+  (data :pointer)
+  (minimum-size :int)
+  (natural-size :int))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "Struct"
+      (documentation 'gtk-requested-size 'type)
+ "@version{2013-8-27}
+  @begin{short}
+    Represents a request of a screen object in a given orientation.
+  @end{short}
+  These are primarily used in container implementations when allocating a
+  natural size for children calling. See the function
+  @fun{gtk-distribute-natural-allocation}.
+  @begin{pre}
+(define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
+  (data :pointer)
+  (minimum-size :int)
+  (natural-size :int))
+  @end{pre}
+  @begin[code]{table}
+    @entry[data]{A client pointer.}
+    @entry[minimum-size]{The minimum size needed for allocation in a given
+      orientation.}
+    @entry[natural-size]{The natural size for allocation in a given
+      orientation.}
+  @end{table}
+  @see-slot{gtk-requested-size-data}
+  @see-slot{gtk-requested-size-minimum-size}
+  @see-slot{gtk-requested-size-natural-size}
+  @see-constructor{copy-gtk-requested-size}
+  @see-constructor{make-gtk-requested-size}
+  @see-function{gtk-distribute-natural-allocation}")
+
+(export (boxed-related-symbols 'gtk-requested-size))
+
+;;; ----------------------------------------------------------------------------
+;;; Constructors for GtkRequestedSize
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-requested-size 'function)
+ "@version{2013-8-27}
+  @argument[instance]{a @class{gtk-requested-size} structure}
+  Copy constructor of a @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}
+  @see-function{make-gtk-requested-size}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gtk-requested-size 'function)
+ "@version{2013-8-27}
+  @argument[data]{a client pointer}
+  @argument[minimum-size]{The minimum size needed for allocation in a given
+    orientation}
+  @argument[natural-size]{The natural size for allocation in a given
+    orientation}
+  Creates a @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}
+  @see-function{copy-gtk-requested-size}")
+
+;;; ----------------------------------------------------------------------------
+;;; Accessors for GtkRequestedSize
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-data atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-requested-size-data 'function)
+ "@version{2013-8-27}
+  Accessor of the slot @code{data} of the @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-minimum-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-requested-size-minimum-size 'function)
+ "@version{2013-8-27}
+  Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
+  structure.
+  @see-class{gtk-requested-size}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-natural-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-requested-size-natural-size 'function)
+ "@version{2013-8-27}
+  Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
+  structure.
+  @see-class{gtk-requested-size}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkAlign
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkAlign" gtk-align
+  (:export t
+   :type-initializer "gtk_align_get_type")
+  (:fill 0)
+  (:start 1)
+  (:end 2)
+  (:center 3)
+  #+gtk-3-10
+  (:baseline 4)
+  )
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-align atdoc:*external-symbols*)
+ "@version{2014-7-26}
+  @begin{short}
+    Controls how a widget deals with extra space in a single (x or y) dimension.
+  @end{short}
+
+  Alignment only matters if the widget receives a \"too large\" allocation, for
+  example if you packed the widget with the \"expand\" flag inside a
+  @class{gtk-box}, then the widget might get extra space. If you have for
+  example a 16 x 16 icon inside a 32 x 32 space, the icon could be scaled and
+  stretched, it could be centered, or it could be positioned to one side of the
+  space.
+
+  Note that in horizontal context @code{:start} and @code{:end} are
+  interpreted relative to text direction.
+
+  @code{:baseline} support is optional for containers and widgets, and it is
+  only supported for vertical alignment. When its not supported by a child or
+  a container it is treated as @code{:fill}.
+  @begin{pre}
+(define-g-enum \"GtkAlign\" gtk-align
+  (:export t
+   :type-initializer \"gtk_align_get_type\")
+  (:fill 0)
+  (:start 1)
+  (:end 2)
+  (:center 3)
+  (:baseline 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:fill]{Stretch to fill all space if possible, center if no meaningful
+      way to stretch.}
+    @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
+    @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
+    @entry[:center]{Center natural width of widget inside the allocation.}
+    @entry[:baseline]{Align the widget according to the baseline. Since 3.10.}
+  @end{table}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-halign}
+  @see-function{gtk-widget-valign}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
@@ -543,7 +789,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2015-12-29}
+ "@version{2020-9-16}
   @begin{short}
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
@@ -558,12 +804,12 @@
     needs less height. Height-for-width geometry management is implemented in
     GTK+ by way of six virtual methods:
     @begin{pre}
- GtkWidgetClass.get_request_mode()
- GtkWidgetClass.get_preferred_width()
- GtkWidgetClass.get_preferred_height()
- GtkWidgetClass.get_preferred_height_for_width()
- GtkWidgetClass.get_preferred_width_for_height()
- GtkWidgetClass.get_preferred_height_and_baseline_for_width()
+GtkWidgetClass.get_request_mode()
+GtkWidgetClass.get_preferred_width()
+GtkWidgetClass.get_preferred_height()
+GtkWidgetClass.get_preferred_height_for_width()
+GtkWidgetClass.get_preferred_width_for_height()
+GtkWidgetClass.get_preferred_height_and_baseline_for_width()
     @end{pre}
     There are some important things to keep in mind when implementing
     height-for-width and when using it in container implementations.
@@ -619,53 +865,53 @@
     deals with width-for-height requests, for
     @code{GtkWidgetClass.get_preferred_height()} it will do:
     @begin{pre}
- static void
- foo_widget_get_preferred_height (GtkWidget *widget,
-                                  gint *min_height, gint *nat_height)
- {
-    if (i_am_in_height_for_width_mode)
-      {
-        gint min_width;
+static void
+foo_widget_get_preferred_height (GtkWidget *widget,
+                                 gint *min_height, gint *nat_height)
+{
+   if (i_am_in_height_for_width_mode)
+     {
+       gint min_width;
 
-        GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
-                                                            &min_width,
-                                                            NULL);
-        GTK_WIDGET_GET_CLASS (widget)->
-                 get_preferred_height_for_width (widget,
-                                                 min_width,
-                                                 min_height,
-                                                 nat_height);
-      @}
-    else
-      {
-         ... some widgets do both. For instance, if a GtkLabel is rotated to
-         90 degrees it will return the minimum and natural height for the
-         rotated label here.
-      @}
- @}
+       GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
+                                                           &min_width,
+                                                           NULL);
+       GTK_WIDGET_GET_CLASS (widget)->
+                get_preferred_height_for_width (widget,
+                                                min_width,
+                                                min_height,
+                                                nat_height);
+     @}
+   else
+     {
+        ... some widgets do both. For instance, if a GtkLabel is rotated to
+        90 degrees it will return the minimum and natural height for the
+        rotated label here.
+     @}
+@}
     @end{pre}
     And in @code{GtkWidgetClass.get_preferred_width_for_height()} it will simply
     return the minimum and natural width:
     @begin{pre}
- static void
- foo_widget_get_preferred_width_for_height (GtkWidget *widget,
-                                            gint for_height,
-                                            gint *min_width,
-                                            gint *nat_width)
- {
-    if (i_am_in_height_for_width_mode)
-      {
-        GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
-                                                            min_width,
-                                                            nat_width);
-      @}
-    else
-      {
-         ... again if a widget is sometimes operating in width-for-height
-         mode (like a rotated GtkLabel) it can go ahead and do its real width
-         for height calculation here.
-      @}
- @}
+static void
+foo_widget_get_preferred_width_for_height (GtkWidget *widget,
+                                           gint for_height,
+                                           gint *min_width,
+                                           gint *nat_width)
+{
+   if (i_am_in_height_for_width_mode)
+     {
+       GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
+                                                           min_width,
+                                                           nat_width);
+     @}
+   else
+     {
+        ... again if a widget is sometimes operating in width-for-height
+        mode (like a rotated GtkLabel) it can go ahead and do its real width
+        for height calculation here.
+     @}
+@}
     @end{pre}
     Often a widget needs to get its own request during size request or
     allocation. For example, when computing height it may need to also compute
@@ -675,8 +921,7 @@
 
     @b{Example:} Widget calling its own size request method.
     @begin{pre}
- GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
-                               &min, &natural);
+GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
     @end{pre}
     It will not work to use the wrapper functions, such as the function
     @fun{gtk-widget-preferred-width} inside your own size request
@@ -697,20 +942,20 @@
     container that supports baselines and has a natural \"row\" that it aligns
     to the baseline, or a baseline assigned to it by the grandparent.
 
-    Baseline alignment support for a widget is done by the
-    @code{GtkWidgetClass.get_preferred_height_and_baseline_for_width()} virtual
-    function. It allows you to report a baseline in combination with the minimum
-    and natural height. If there is no baseline you can return -1 to indicate
-    this. The default implementation of this virtual function calls into the
+    Baseline alignment support for a widget is done by the virtual function
+    @code{GtkWidgetClass.get_preferred_height_and_baseline_for_width()}. It
+    allows you to report a baseline in combination with the minimum and natural
+    height. If there is no baseline you can return -1 to indicate this. The
+    default implementation of this virtual function calls into the functions
     @code{GtkWidgetClass.get_preferred_height()} and
     @code{GtkWidgetClass.get_preferred_height_for_width()}, so if baselines are
-    not supported it doesn’t need to be implemented.
+    not supported it does not need to be implemented.
 
     If a widget ends up baseline aligned it will be allocated all the space in
     the parent as if it was @code{:fill}, but the selected baseline can be found
-    via @fun{gtk-widget-get-allocated-baseline}. If this has a value other than
-    -1 you need to align the widget such that the baseline appears at the
-    position.
+    via the function @fun{gtk-widget-allocated-baseline}. If this has a value
+    other than -1 you need to align the widget such that the baseline appears at
+    the position.
 
   @subheading{Style Properties}
     @sym{gtk-widget} introduces style properties - these are basically object
@@ -724,9 +969,8 @@
     style properties for a widget class, the functions
     @fun{gtk-widget-class-find-style-property} or
     @fun{gtk-widget-class-list-style-properties} to get information about
-    existing style properties and the functions
-    @fun{gtk-widget-style-get-property} or @fun{gtk-widget-style-get}
-    to obtain the value of a style property.
+    existing style properties and the functions @fun{gtk-widget-style-property}
+    or @fun{gtk-widget-style-get} to obtain the value of a style property.
 
   @subheading{GtkWidget as GtkBuildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
@@ -736,9 +980,9 @@
 
     @b{Example:} A UI definition fragment specifying an accelerator
     @begin{pre}
- <object class=\"GtkButton\">
-   <accelerator key=\"q\" modifiers=\"GDK_CONTROL_MASK\" signal=\"clicked\"/>
- </object>
+<object class=\"GtkButton\">
+  <accelerator key=\"q\" modifiers=\"GDK_CONTROL_MASK\" signal=\"clicked\"/>
+</object>
     @end{pre}
     In addition to accelerators, @sym{gtk-widget} also support a custom
     @code{<accessible>} element, which supports actions and relations.
@@ -747,33 +991,33 @@
 
     @b{Example:} A UI definition fragment specifying an accessible
     @begin{pre}
- <object class=\"GtkButton\" id=\"label1\"/>
-   <property name=\"label\">I am a Label for a Button</property>
- </object>
- <object class=\"GtkButton\" id=\"button1\">
-   <accessibility>
-     <action action_name=\"click\"
-             translatable=\"yes\">Click the button.</action>
-     <relation target=\"label1\" type=\"labelled-by\"/>
-   </accessibility>
-   <child internal-child=\"accessible\">
-     <object class=\"AtkObject\" id=\"a11y-button1\">
-       <property name=\"AtkObject::name\">Clickable Button</property>
-     </object>
-   </child>
- </object>
+<object class=\"GtkButton\" id=\"label1\"/>
+  <property name=\"label\">I am a Label for a Button</property>
+</object>
+<object class=\"GtkButton\" id=\"button1\">
+  <accessibility>
+    <action action_name=\"click\"
+            translatable=\"yes\">Click the button.</action>
+    <relation target=\"label1\" type=\"labelled-by\"/>
+  </accessibility>
+  <child internal-child=\"accessible\">
+    <object class=\"AtkObject\" id=\"a11y-button1\">
+      <property name=\"AtkObject::name\">Clickable Button</property>
+    </object>
+  </child>
+</object>
     @end{pre}
     Finally, @sym{gtk-widget} allows style information such as style classes to
     be associated with widgets, using the custom @code{<style>} element:
 
     @b{Example:} A UI definition fragment specifying an style class
     @begin{pre}
- <object class=\"GtkButton\" id=\"button1\">
-   <style>
-     <class name=\"my-special-button-class\"/>
-     <class name=\"dark-button\"/>
-   </style>
- </object>
+<object class=\"GtkButton\" id=\"button1\">
+  <style>
+    <class name=\"my-special-button-class\"/>
+    <class name=\"dark-button\"/>
+  </style>
+</object>
     @end{pre}
 
   @subheading{Building composite widgets from template XML}
@@ -1408,14 +1652,13 @@
       This signal is emitted when a widget is supposed to render itself. The
       widget's top left corner must be painted at the origin of the passed in
       context and be sized to the values returned by the functions
-      @fun{gtk-widget-get-allocated-width} and
-      @fun{gtk-widget-get-allocated-height}. Signal handlers connected to this
-      signal can modify the cairo context passed as @arg{cr} in any way they
-      like and do not need to restore it. The signal emission takes care of
-      calling the functions @fun{cairo-save} before and @fun{cairo-restore}
-      after invoking the handler.
+      @fun{gtk-widget-allocated-width} and @fun{gtk-widget-allocated-height}.
+      Signal handlers connected to this signal can modify the cairo context
+      passed as @arg{cr} in any way they like and do not need to restore it.
+      The signal emission takes care of calling the functions @fun{cairo-save}
+      before and @fun{cairo-restore} after invoking the handler.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @class{gtk-widget} object which received the signal.}
         @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
       @end{table}
     @subheading{The \"enter-notify-event\" signal}
@@ -1914,10 +2157,11 @@
  lambda (widget flags)    : Run First
       @end{pre}
       The \"state-flags-changed\" signal is emitted when the widget state
-      changes, see the function @fun{gtk-widget-get-state-flags}.
+      changes, see the function @fun{gtk-widget-state-flags}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[flags]{The previous state flags.}
+        @entry[widget]{The @class{gtk-widget} object which received the signal.}
+        @entry[flags]{The previous state flags of type
+          @symbol{gtk-state-flags}.}
       @end{table}
     @subheading{The \"style-set\" signal}
       @begin{pre}
@@ -2109,13 +2353,13 @@
   @see-function{gtk-widget-class-install-style-property}
   @see-function{gtk-widget-class-find-style-property}
   @see-function{gtk-widget-class-list-style-properties}
-  @see-function{gtk-widget-style-get-property}
+  @see-function{gtk-widget-style-property}
   @see-function{gtk-widget-style-get}
   @see-function{gtk-widget-hide-on-delete}
-  @see-function{gtk-widget-get-allocated-width}
-  @see-function{gtk-widget-get-allocated-height}
+  @see-function{gtk-widget-allocated-width}
+  @see-function{gtk-widget-allocated-height}
   @see-function{gtk-widget-keynav-failed}
-  @see-function{gtk-widget-get-state-flags}
+  @see-function{gtk-widget-state-flags}
   @see-function{gtk-widget-modify-base}
   @see-function{gtk-widget-override-color}
   @see-function{gtk-window-default-size}
@@ -2784,10 +3028,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-end" 'gtk-widget) 't)
  "The @code{margin-end} property of type @code{:int} (Read / Write) @br{}
-  Margin on end of widget, horizontally. This property supports left-to-right
-  text directions. This property adds margin outside of the widget's normal
-  size request, the margin will be added in addition to the size from
-  @fun{gtk-widget-size-request} for example. Since 3.12. @br{}
+  Margin on end of the widget, horizontally. This property supports
+  left-to-right text directions. This property adds margin outside of the
+  widget's normal size request, the margin will be added in addition to the size
+  from the function @fun{gtk-widget-size-request} for example. Since 3.12. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
 
@@ -2818,7 +3062,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
  "The @code{margin-left} property of type @code{:int} (Read / Write) @br{}
-  Margin on left side of widget. This property adds margin outside of the
+  Margin on left side of the widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
   from the function @fun{gtk-widget-size-request} for example. @br{}
   @em{Warning:} The @code{margin-left} property has been deprecated since
@@ -2858,7 +3102,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-right" 'gtk-widget) 't)
  "The @code{margin-right} property of type @code{:int} (Read / Write) @br{}
-  Margin on right side of widget. This property adds margin outside of the
+  Margin on right side of the widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
   @em{Warning:} The @code{margin-right} property has been deprecated since
@@ -2901,10 +3145,10 @@
   Margin on start of the widget, horizontally. This property supports
   left-to-right and right-to-left text directions. This property adds margin
   outside of the widget's normal size request, the margin will be added in
-  addition to the size from @fun{gtk-widget-size-request} for example. @br{}
+  addition to the size from the function @fun{gtk-widget-size-request} for
+  example. Since 3.12 @br{}
   Allowed values: [0,32767] @br{}
-  Default value: 0 @br{}
-  Since 3.12")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-start atdoc:*function-name-alias*) "Accessor"
@@ -2933,7 +3177,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-top" 'gtk-widget) 't)
  "The @code{margin-top} property of type @code{:int} (Read / Write) @br{}
-  Margin on top side of widget. This property adds margin outside of the
+  Margin on top side of the widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
@@ -3519,44 +3763,6 @@
   @see-class{gdk-window}
   @see-function{gtk-widget-parent-window}
   @see-function{gtk-widget-has-window}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkWidgetAuxInfo
-;;;
-;;; struct GtkWidgetAuxInfo {
-;;;   gint width;
-;;;   gint height;
-;;;
-;;;   guint   halign : 4;
-;;;   guint   valign : 4;
-;;;
-;;;   GtkBorder margin;
-;;; };
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkWidgetHelpType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkWidgetHelpType" gtk-widget-help-type
-  (:export t
-   :type-initializer "gtk_widget_help_type_get_type")
-  (:tooltip 0)
-  (:whats-this 1))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-widget-help-type atdoc:*external-symbols*)
- "@version{2013-10-29}
-  @short{Used in the \"show-help\" signal handler.}
-  @begin{pre}
-(define-g-enum \"GtkWidgetHelpType\" gtk-widget-help-type
-  (:export t
-   :type-initializer \"gtk_widget_help_type_get_type\")
-  (:tooltip 0)
-  (:whats-this 1))
-  @end{pre}
-  @class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_new ()
@@ -4550,33 +4756,46 @@
 (export 'gtk-widget-grab-default)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_state ()
+;;; gtk_widget_get_state ()
+;;; gtk_widget_set_state () -> gtk-widget-state
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_state" gtk-widget-set-state) :void
+(defun (setf gtk-widget-state) (state widget)
+  (foreign-funcall "gtk-widget_set_state"
+                   (g-object gtk-widget) state
+                   gtk-state-type state
+                   :void)
+  state)
+
+(defcfun ("gtk_widget_get_state" gtk-widget-state) gtk-state-type
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-state widget) => state}
+  @syntax[]{(setf (gtk-widget-state widget) state)}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[state]{new state of type @symbol{gtk-state-type} for @arg{widget}}
+  @argument[state]{state of type @symbol{gtk-state-type} for @arg{widget}}
   @begin{short}
-    This function is for use in widget implementations. Sets the state of a
-    widget, insensitive, prelighted, etc.
+    Accessor of the state of the widget.
   @end{short}
+
+  The function @sym{gtk-widget-state} returns the widget's state. The function
+  @sym{(setf gtk-widget-state)} sets the state of a widget, insensitive,
+  prelighted, etc. This function is for use in widget implementations.
+
   Usually you should set the state using wrapper functions such as the function
   @fun{gtk-widget-sensitive}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-set-state} is deprecated and should not be used
-    in newly-written code. Use the function @fun{gtk-widget-set-state-flags}
+    The function @sym{gtk-widget-state} is deprecated and should not be used
+    in newly-written code. Use the function @fun{gtk-widget-state-flags}
     instead.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-symbol{gtk-state-type}
-  @see-function{gtk-widget-set-state-flags}
+  @see-function{gtk-widget-state-flags}
   @see-function{gtk-widget-sensitive}"
-  (widget (g-object gtk-widget))
-  (state gtk-state-type))
+  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-set-state)
+(export 'gtk-widget-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_parent_window ()
@@ -4836,50 +5055,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_visual ()
+;;; gtk_widget_set_visual () -> gtk-widget-visual
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_visual" gtk-widget-get-visual) (g-object gdk-visual)
+(defun (setf gtk-widget-visual) (visual widget)
+  (foreign-funcall "gtk_widget_set_visual"
+                   (g-object gtk-widget) widget
+                   (g-object gdk-visual) visual
+                   :void)
+  visual)
+
+(defcfun ("gtk_widget_get_visual" gtk-widget-visual) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-visual object) => visual}
+  @syntax[]{(setf (gtk-widget-visual object) visual)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The visual for @arg{widget}.}
-  @short{Gets the visual that will be used to render @arg{widget}.}
+  @argument[visual]{a @class{gdk-visual} object to be used or @code{nil} to
+    unset a previous one}
+  @begin{short}
+    Accessor of the visual be used to render the widget.
+  @end{short}
+
+  The function @sym{gtk-widget-visual} gets the visual that will be used to
+  render the widget. The function @sym{(setf gtk-widget-visual)} sets the
+  visual that should be used for by the widget and its children for creating
+  @class{gdk-window} objects.
+
+  The visual must be on the same @class{gdk-screen} object as returned by the
+  function @fun{gtk-widget-screen}, so handling the \"screen-changed\" signal
+  is necessary.
+
+  Setting a new visual will not cause the widget to recreate its windows, so
+  you should call this function before the widget is realized.
   @see-class{gtk-widget}
   @see-class{gdk-visual}
-  @see-function{gtk-widget-set-visual}"
+  @see-class{gdk-window}
+  @see-class{gdk-screen}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-visual)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_visual ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_visual" gtk-widget-set-visual) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
-  @argument[widget]{a @arg{gtk-widget} object}
-  @argument[visual]{visual to be used or @code{nil} to unset a previous one}
-  @begin{short}
-    Sets the @arg{visual} that should be used for by @arg{widget} and its
-    children for creating @class{gdk-window}'s.
-  @end{short}
-  The @arg{visual} must be on the same @class{gdk-screen} as returned by the
-  function @fun{gtk-widget-get-screen}, so handling the \"screen-changed\"
-  signal is necessary.
-
-  Setting a new @arg{visual} will not cause @arg{widget} to recreate its
-  windows, so you should call this function before @arg{widget} is realized.
-  @see-class{gtk-widget}
-  @see-class{gdk-window}
-  @see-class{gdk-screen}
-  @see-class{gdk-visual}
-  @see-function{gtk-widget-get-visual}
-  @see-function{gtk-widget-get-screen}"
-  (widget (g-object gtk-widget))
-  (visual (g-object gdk-visual)))
-
-(export 'gtk-widget-set-visual)
+(export 'gtk-widget-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_pointer () -> gtk-widget-pointer
@@ -5062,36 +5277,30 @@
 (export 'gtk-widget-reset-rc-styles)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_default_style ()
+;;; gtk_widget_get_default_style () -> gtk-widget-default-style
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_default_style" gtk-widget-get-default-style)
+(defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
+ "@version{2020-9-18}
   @begin{return}
-    The deprecated default style.
+    The deprecated default @class{gtk-style} object.
   @end{return}
   @short{Returns the default style used by all widgets initially.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-get-default-style} has been deprecated since
+    The function @sym{gtk-widget-default-style} has been deprecated since
     version 3.0 and should not be used in newly-written code. Use
     @class{gtk-style-context} instead, and the function
-    @fun{gtk-css-provider-get-default} to obtain a @class{gtk-style-provider}
-    with the default widget style information.
+    @fun{gtk-css-provider-default} to obtain a @class{gtk-style-provider}
+    object with the default widget style information.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
-  @see-function{gtk-css-provider-get-default}")
+  @see-function{gtk-css-provider-default}")
 
-(export 'gtk-widget-get-default-style)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkTextDirection
-;;; ----------------------------------------------------------------------------
-
-;; --> gtk.enumerations.lisp
+(export 'gtk-widget-default-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()
@@ -5212,14 +5421,17 @@
 ;;; gtk_widget_path ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: This function does not implement the argument path_reversed.
+;; This deprecated function is not not implemented, but the function
+;; gtk_widget_get_path with the Lisp name gtk-widget-path
 
+#+nil
 (defcfun ("gtk_widget_path" %gtk-widget-path) :void
   (widget (g-object gtk-widget))
   (path-length (:pointer :uint))
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
 
+#+nil
 (defun gtk-widget-path (widget &key (path-type :name))
  #+cl-cffi-gtk-documentation
  "@version{2013-11-25}
@@ -5245,10 +5457,10 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-path} has been deprecated since version 3.0 and
     should not be used in newly-written code. Use the function
-    @fun{gtk-widget-get-path} instead.
+    @fun{gtk-widget-path} instead.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-path}
+  @see-function{gtk-widget-path}
   @see-function{gtk-widget-name}"
   (assert (typep path-type '(member :name :class)))
   (with-foreign-object (path :pointer)
@@ -5259,8 +5471,6 @@
                                       path
                                       (null-pointer))))
     (mem-ref path '(g-string :free-from-foreign t))))
-
-(export 'gtk-widget-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_path ()
@@ -5294,6 +5504,7 @@
 
 ;;; Implemented only for use of gtk-widget-path and not exported
 
+#+nil
 (defcfun ("gtk_widget_class_path" %gtk-widget-class-path) :void
   (widget (g-object gtk-widget))
   (path-length (:pointer :uint))
@@ -5302,25 +5513,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_composite_name ()
+;;; gtk_widget_set_composite_name () -> gtk-widget-composite-name
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
+(defun (setf gtk-widget-composite-name) (name widget)
+  (foreign-funcall "gtk_widget_set_composite_name"
+                   (g-object gtk-widget) widget
+                   :string name
+                   :void)
+  name)
+
+(defcfun ("gtk_widget_get_composite_name" gtk-widget-composite-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-composite-name widget) => name}
+  @syntax[]{(setf gtk-widget-composite-name widget) name)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The composite name of @arg{widget}, or @code{nil} if @arg{widget} is
-    not a composite child.}
-  Obtains the composite name of a widget.
+  @argument[name]{a string with the name to set}
+  @begin{short}
+    Accessor of the composite name of the widget.
+  @end{short}
+
+  The function @sym{gtk-widget-composite-name} obtains the composite name of a
+  widget. The function @sym{(setf gtk-widget-composite-name)} sets a widgets
+  composite name. The widget must be a composite child of its parent. See the
+  function @fun{gtk-widget-push-composite-child}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-get-composite-name} has been deprecated since
+    The function @sym{gtk-widget-composite-name} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-class-set-template}, or don not use this API at all.
+    @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-set-composite-name}"
+  @see-function{gtk-widget-push-composite-child}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-composite-name)
+(export 'gtk-widget-composite-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_override_background_color ()
@@ -5807,34 +6034,34 @@
 (defcfun ("gtk_widget_create_pango_context" gtk-widget-create-pango-context)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The new @class{pango-context}.}
+  @return{The new @class{pango-context} object.}
   @begin{short}
-    Creates a new @class{pango-context} with the appropriate font map, font
-    description, and base direction for drawing text for this widget.
+    Creates a new Pango context with the appropriate font map, font description,
+    and base direction for drawing text for this widget.
   @end{short}
-  See also the function @fun{gtk-widget-get-pango-context}.
+  See also the function @fun{gtk-widget-pango-context}.
   @see-class{gtk-widget}
   @see-class{pango-context}
-  @see-function{gtk-widget-get-pango-context}"
+  @see-function{gtk-widget-pango-context}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-create-pango-context)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_pango_context ()
+;;; gtk_widget_get_pango_context () -> gtk-widget-pango-context
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_pango_context" gtk-widget-get-pango-context)
+(defcfun ("gtk_widget_get_pango_context" gtk-widget-pango-context)
     (g-object pango-context)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The @class{pango-context} for the widget.}
+  @return{The @class{pango-context} object for the widget.}
   @begin{short}
-    Gets a @class{pango-context} with the appropriate font map, font
-    description, and base direction for this widget.
+    Gets a Pango context with the appropriate font map, font description, and
+    base direction for this widget.
   @end{short}
   Unlike the context returned by the function
   @fun{gtk-widget-create-pango-context}, this context is owned by the widget, it
@@ -5852,7 +6079,7 @@
   @see-function{pango-layout-context-changed}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-pango-context)
+(export 'gtk-widget-pango-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_font_options ()
@@ -6186,28 +6413,6 @@
 (export 'gtk-widget-set-redraw-on-allocate)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_composite_name ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_composite_name" gtk-widget-set-composite-name) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[name]{the name to set}
-  @begin{short}
-    Sets a widgets composite name.
-  @end{short}
-  The widget must be a composite child of its parent; see the function
-  @fun{gtk-widget-push-composite-child}.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-push-composite-child}
-  @see-function{gtk-widget-get-composite-name}"
-  (widget (g-object gtk-widget))
-  (name :string))
-
-(export 'gtk-widget-set-composite-name)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_mnemonic_activate ()
 ;;; ----------------------------------------------------------------------------
 
@@ -6351,7 +6556,7 @@
 (defcfun ("gtk_widget_region_intersect" gtk-widget-region-intersect)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[region]{a @symbol{cairo-region-t}, in the same coordinate system as
     @code{widget->allocation}. That is, relative to @code{widget->window} for
@@ -6365,16 +6570,19 @@
     Computes the intersection of a widget's area and @arg{region},
     returning the intersection.
   @end{short}
-  The result may be empty, use @fun{cairo-region-is-empty} to check.
-  @begin[Warnin]{dictionary}
+  The result may be empty, use the function @fun{cairo-region-is-empty} to
+  check.
+  @begin[Warning]{dictionary}
     The function @sym{gtk-widget-region-intersect} has been deprecated since
     version 3.14 and should not be used in newly-written code. Use the functions
-    @fun{gtk-widget-get-allocation} and @fun{cairo-region-intersect-rectangle}
+    @fun{gtk-widget-allocation} and @fun{cairo-region-intersect-rectangle}
     to get the same behavior.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-symbol{cairo-region-t}
-  @see-function{cairo-region-is-empty}"
+  @see-function{cairo-region-is-empty}
+  @see-function{gtk-widget-allocation}
+  @see-function{cairo-region-intersect-rectangle}"
   (widget (g-object gtk-widget))
   (region (:pointer (:struct cairo-region-t))))
 
@@ -6466,15 +6674,15 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_style_get_property ()
+;;; gtk_widget_style_get_property () -> gtk-widget-style-property
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_style_get_property" %gtk-widget-style-get-property) :void
+(defcfun ("gtk_widget_style_get_property" %gtk-widget-style-property) :void
   (widget (g-object gtk-widget))
   (property-name g-string)
   (value (:pointer (:struct g-value))))
 
-(defun gtk-widget-style-get-property (widget property-name)
+(defun gtk-widget-style-property (widget property-name)
  #+cl-cffi-gtk-documentation
  "@version{2020-5-1}
   @argument[widget]{a @class{gtk-widget} object}
@@ -6490,7 +6698,7 @@
     @begin{pre}
   (defvar notebook (make-instance 'gtk-notebook))
 => NOTEBOOK
-  (gtk-widget-style-get-property notebook \"arrow-spacing\")
+  (gtk-widget-style-property notebook \"arrow-spacing\")
 => 0
     @end{pre}
   @end{dictionary}
@@ -6506,11 +6714,11 @@
         (g-value-zero value)
         (g-value-init value type)
         (prog2
-          (%gtk-widget-style-get-property widget property-name value)
+          (%gtk-widget-style-property widget property-name value)
           (parse-g-value value)
           (g-value-unset value))))))
 
-(export 'gtk-widget-style-get-property)
+(export 'gtk-widget-style-property)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -6547,7 +6755,7 @@
   (with-foreign-object (gvalue '(:struct g-value))
     (g-value-zero gvalue)
     (g-value-init gvalue property-type)
-    (prog1 (%gtk-widget-style-get-property widget property-name gvalue)
+    (prog1 (%gtk-widget-style-property widget property-name gvalue)
       (g-value-unset gvalue))))
 
 ;(export 'gtk-widget-style-property-value)
@@ -6650,12 +6858,12 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_accessible ()
+;;; gtk_widget_get_accessible () -> gtk-widget-accessible
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_accessible" gtk-widget-get-accessible) g-object
+(defcfun ("gtk_widget_get_accessible" gtk-widget-accessible) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @code{AtkObject} associated with widget.}
   @begin{short}
@@ -6674,7 +6882,7 @@
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-accessible)
+(export 'gtk-widget-accessible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_child_focus ()
@@ -6766,29 +6974,56 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_child_visible ()
+;;; gtk_widget_set_child_visible () -> gtk-widget-child-visible
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_child_visible" gtk-widget-get-child-visible) :boolean
+(defun (setf gtk-widget-child-visible) (is-visible widget)
+  (foreign-funcall "gtk_widget_set_child_visible"
+                   (g-object gtk-widget) widget
+                   :boolean is-visible
+                   :void)
+  is-visible)
+
+(defcfun ("gtk_widget_get_child_visible" gtk-widget-child-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-child-visible widget) => is-visible}
+  @syntax[]{(setf (gtk-widget-child-visible widget) is-visible)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the widget is mapped with the parent.}
+  @argument[is-visible]{if @em{true}, @arg{widget} should be mapped along with
+    its parent}
   @begin{short}
-    Gets the value set with the function @fun{gtk-widget-set-child-visible}.
+    The function @sym{gtk-widget-child-visible} returns @em{true} if the widget
+    is mapped with the parent.
   @end{short}
-  If you feel a need to use this function, your code probably needs
-  reorganization.
+  The function @sym{(setf gtk-widget-child-visible)} sets whether @arg{widget}
+  should be mapped along with its parent when its parent is mapped and the
+  widget has been shown with the function @fun{gtk-widget-show}.
+
+  This function is only useful for container implementations and never should
+  be called by an application.
+
+  The child visibility can be set for the widget before it is added to a
+  container with the function @fun{gtk-widget-parent}, to avoid mapping children
+  unnecessary before immediately unmapping them. However it will be reset to its
+  default state of @em{true} when the widget is removed from a container.
+
+  Note that changing the child visibility of a widget does not queue a resize
+  on the widget. Most of the time, the size of a widget is computed from all
+  visible children, whether or not they are mapped. If this is not the case,
+  the container can queue a resize itself.
 
   This function is only useful for container implementations and never should
   be called by an application.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-set-child-visible}"
+  @see-function{gtk-widget-show}
+  @see-function{gtk-widget-parent}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-child-visible)
+(export 'gtk-widget-child-visible)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_settings ()
+;;; gtk_widget_get_settings () -> gtk-widget-settings
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_settings" gtk-widget-settings) (g-object gtk-settings)
@@ -6811,17 +7046,17 @@
 (export 'gtk-widget-settings)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_clipboard ()
+;;; gtk_widget_get_clipboard () -> gtk-widget-clipboard
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_clipboard" gtk-widget-get-clipboard)
+(defcfun ("gtk_widget_get_clipboard" gtk-widget-clipboard)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
-    use. @code{\"CLIPBOARD\"} gives the default clipboard. Another common value
-    is @code{\"PRIMARY\"}, which gives the primary X selection.}
+    use, @code{\"CLIPBOARD\"} gives the default clipboard, another common value
+    is @code{\"PRIMARY\"}, which gives the primary X selection}
   @return{The appropriate clipboard object. If no clipboard already exists, a
     new one will be created. Once a clipboard object has been created, it is
     persistent for all time.}
@@ -6829,8 +7064,8 @@
     Returns the clipboard object for the given selection to be used with
     @arg{widget}.
   @end{short}
-  @arg{widget} must have a @class{gdk-display} associated with it, so must be
-  attached to a toplevel window.
+  @arg{widget} must have a @class{gdk-display} object associated with it, so
+  must be attached to a toplevel window.
   @see-class{gtk-widget}
   @see-class{gtk-clipboard}
   @see-class{gdk-display}
@@ -6838,7 +7073,7 @@
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string))
 
-(export 'gtk-widget-get-clipboard)
+(export 'gtk-widget-clipboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_display () -> gtk-widget-display
@@ -6867,13 +7102,13 @@
 (export 'gtk-widget-display)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_root_window ()
+;;; gtk_widget_get_root_window () -> gtk-widget-root-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window)
+(defcfun ("gtk_widget_get_root_window" gtk-widget-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @class{gdk-window} root window for the toplevel for this widget.}
   @begin{short}
@@ -6887,29 +7122,28 @@
   create display specific resources when a widget has been realized, and you
   should free those resources when the widget is unrealized.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-get-root-window} has been deprecated since
-    version 3.12 and should not be used in newly-written code. Use the function
-    @fun{gdk-screen-get-root-window} instead.
+    The function @sym{gtk-widget-root-window} has been deprecated since version
+    3.12 and should not be used in newly-written code. Use the function
+    @fun{gdk-screen-root-window} instead.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-window}
-  @see-function{gdk-screen-get-root-window}"
+  @see-function{gdk-screen-root-window}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-root-window)
+(export 'gtk-widget-root-window)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_screen ()
+;;; gtk_widget_get_screen () -> gtk-widget-screen
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_screen" gtk-widget-get-screen) g-object
+(defcfun ("gtk_widget_get_screen" gtk-widget-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The @class{gdk-screen} for the toplevel for this widget.}
+  @return{The @class{gdk-screen} object for the toplevel for this widget.}
   @begin{short}
-    Get the @class{gdk-screen} from the toplevel window associated with this
-    widget.
+    Get the screen from the toplevel window associated with this widget.
   @end{short}
   This function can only be called after the widget has been added to a widget
   hierarchy with a @class{gtk-window} at the top.
@@ -6922,7 +7156,7 @@
   @see-class{gdk-screen}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-screen)
+(export 'gtk-widget-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_screen ()
@@ -6947,23 +7181,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_size_request ()
+;;; gtk_widget_set_size_request () -> gtk-widget-size-request
 ;;; ----------------------------------------------------------------------------
 
-(defgeneric gtk-widget-size-request (widget)
-  (:method ((widget gtk-widget))
-    (values (gtk-widget-width-request widget)
-            (gtk-widget-height-request widget))))
+(defun (setf gtk-widget-size-request) (size widget)
+  (destructuring-bind (width height) size
+    (foreign-funcall "gtk_widget_set_size_request"
+                     (g-object gtk-widget) widget
+                     :int width
+                     :int height
+                     :void)
+    size))
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-widget-size-request 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+(defcfun ("gtk_widget_get_size_request" %gtk-widget-size-request) :void
+  (widget (g-object gtk-widget))
+  (width (:pointer :int))
+  (height (:pointer :int)))
+
+(defun gtk-widget-size-request (widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-9-18}
   @syntax[]{(gtk-widget-size-request object) => width, height}
   @syntax[]{(setf (gtk-widget-size-request object) (list width height))}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[width]{a @code{:int} with the width}
+  @argument[height]{a @code{:int} with the height}
   @begin{short}
-    The generic function @sym{gtk-widget-size-request} gets the size request
-    that was explicitly set for the widget using the generic function
-    @sym{(setf gtk-widget-size-request)}.
+    Accessor of the size request of the widget.
   @end{short}
 
   A value of -1 stored in @arg{width} or @arg{height} indicates that that
@@ -6971,16 +7215,16 @@
   widget will be used instead. To get the size a widget will actually request,
   call the function @fun{gtk-widget-preferred-size} instead of this function.
 
-  The generic function @sym{(setf gtk-widget-size-request)} sets the minimum
-  size of a widget. That is, the widget's size request will be @arg{width} by
+  The function @sym{(setf gtk-widget-size-request)} sets the minimum size of a
+  widget. That is, the widget's size request will be @arg{width} by
   @arg{height}. You can use this function to force a widget to be either larger
   or smaller than it normally would be.
 
-  In most cases, the function @fun{gtk-window-default-size} is a better
-  choice for toplevel windows than this function; setting the default size will
-  still allow users to shrink the window. Setting the size request will force
-  them to leave the window at least as large as the size request. When dealing
-  with window sizes, the function @fun{gtk-window-set-geometry-hints} can be a
+  In most cases, the function @fun{gtk-window-default-size} is a better choice
+  for toplevel windows than this function; setting the default size will still
+  allow users to shrink the window. Setting the size request will force them to
+  leave the window at least as large as the size request. When dealing with
+  window sizes, the function @fun{gtk-window-set-geometry-hints} can be a
   useful function as well.
 
   Note the inherent danger of setting any fixed size - themes, translations
@@ -7007,53 +7251,13 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-preferred-size}
   @see-function{gtk-window-default-size}
-  @see-function{gtk-window-set-geometry-hints}")
+  @see-function{gtk-window-set-geometry-hints}"
+  (with-foreign-objects ((width :int) (height :int))
+    (%gtk-widget-size-request widget width height)
+    (values (mem-ref width :int)
+            (mem-ref height :int))))
 
 (export 'gtk-widget-size-request)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_child_visible ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_child_visible" gtk-widget-set-child-visible) :void
- #+cl-cffi-gtk-documentation
- "@version{2014-3-7}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[is-visible]{if @em{true}, @arg{widget} should be mapped along with
-    its parent.}
-  @begin{short}
-    Sets whether @arg{widget} should be mapped along with its when its parent
-    is mapped and widget has been shown with the function @fun{gtk-widget-show}.
-  @end{short}
-
-  The child visibility can be set for widget before it is added to a container
-  with the generic function @fun{gtk-widget-parent}, to avoid mapping children
-  unnecessary before immediately unmapping them. However it will be reset to its
-  default state of @em{true} when the widget is removed from a container.
-
-  Note that changing the child visibility of a widget does not queue a resize
-  on the widget. Most of the time, the size of a widget is computed from all
-  visible children, whether or not they are mapped. If this is not the case,
-  the container can queue a resize itself.
-
-  This function is only useful for container implementations and never should
-  be called by an application.
-  @see-function{gtk-widget-show}
-  @see-function{gtk-widget-parent}"
-  (widget (g-object gtk-widget))
-  (is-visible :boolean))
-
-(export 'gtk-widget-set-child-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_size_request ()
-;;; ----------------------------------------------------------------------------
-
-(defgeneric (setf gtk-widget-size-request) (size widget)
-  (:method (size (widget gtk-widget))
-    (destructuring-bind (width height) size
-      (values (setf (gtk-widget-width-request widget) width)
-              (setf (gtk-widget-height-request widget) height)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_thaw_child_notify ()
@@ -7416,146 +7620,140 @@
 (export 'gtk-cairo-transform-to-window)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_allocated_width ()
+;;; gtk_widget_get_allocated_width () -> gtk-widget-allocated-width
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_allocated_width" gtk-widget-get-allocated-width) :int
+(defcfun ("gtk_widget_get_allocated_width" gtk-widget-allocated-width) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
-  @argument[widget]{the widget to query}
-  @return{The width of the widget.}
+ "@version{2020-9-18}
+  @argument[widget]{the @class{gtk-widget} object to query}
+  @return{An integer with the width of the widget.}
   @begin{short}
     Returns the width that has currently been allocated to @arg{widget}.
   @end{short}
   This function is intended to be used when implementing handlers for the
   \"draw\" function.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-allocated-height}"
+  @see-function{gtk-widget-allocated-height}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-allocated-width)
+(export 'gtk-widget-allocated-width)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_allocated_height ()
+;;; gtk_widget_get_allocated_height () -> gtk-widget-allocated-height
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_allocated_height" gtk-widget-get-allocated-height)
+(defcfun ("gtk_widget_get_allocated_height" gtk-widget-allocated-height)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
-  @argument[widget]{the widget to query}
-  @return{The height of the widget.}
+ "@version{2020-9-18}
+  @argument[widget]{the @class{gtk-widget} object to query}
+  @return{An integer witt the height of the widget.}
   @begin{short}
     Returns the height that has currently been allocated to @arg{widget}.
   @end{short}
   This function is intended to be used when implementing handlers for the
   \"draw\" function.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-allocated-width}"
+  @see-function{gtk-widget-allocated-width}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-allocated-height)
+(export 'gtk-widget-allocated-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_allocation ()
+;;; gtk_widget_set_allocation () -> gtk-widget-allocation
 ;;; ----------------------------------------------------------------------------
 
 ;; With the type gtk-allocation we get an error.
 ;; It works with the type gdk-rectangle. In the C implementation the
 ;; new type GtkAllocation is a synonym for GdkRectangle
 
-(defcfun ("gtk_widget_get_allocation" %gtk-widget-get-allocation) :void
+(defun (setf gtk-widget-allocation) (allocation widget)
+  (foreign-funcall "gtk_widget_set_allocation"
+                   (g-object gtk-widget) widget
+                   (g-boxed-foreign gdk-rectangle) allocation
+                   :void)
+  allocation)
+
+(defcfun ("gtk_widget_get_allocation" %gtk-widget-allocation) :void
   (widget (g-object gtk-widget))
   (allocation (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-widget-get-allocation (widget)
+(defun gtk-widget-allocation (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-allocation widget) => allocation}
+  @syntax[]{(setf (gtk-widget-allocation widget) allocation}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{A @class{gdk-rectangle} structure.}
+  @argument[allocation]{a @class{gdk-rectangle} structure}
   @begin{short}
-    Retrieves the widget's allocation.
+    Accessor of the allocation of the widget.
   @end{short}
 
-  Note, when implementing a @class{gtk-container}: a widget's allocation will be
-  its \"adjusted\" allocation, that is, the widget's parent container typically
-  calls the function @fun{gtk-widget-size-allocate} with an allocation, and that
-  allocation is then adjusted, to handle margin and alignment for example,
-  before assignment to the widget. @sym{gtk-widget-get-allocation} returns the
-  adjusted allocation that was actually assigned to the widget. The adjusted
-  allocation is guaranteed to be completely contained within the
-  @fun{gtk-widget-size-allocate} allocation, however. So a @class{gtk-container}
-  is guaranteed that its children stay inside the assigned bounds, but not that
-  they have exactly the bounds the container assigned. There is no way to get
-  the original allocation assigned by the function
+  The function @sym{gtk-widget-allocation} retrieves the widget's allocation.
+  The function @sym{(setf gtk-widget-allocation)} sets the widget's allocation.
+  This should not be used directly, but from within a widget's
+  @code{size_allocate} method.
+
+  Note, when implementing a @class{gtk-container}: a widget's allocation will
+  be its \"adjusted\" allocation, that is, the widget's parent container
+  typically calls the function @fun{gtk-widget-size-allocate} with an
+  allocation, and that allocation is then adjusted, to handle margin and
+  alignment for example, before assignment to the widget. The function
+  @sym{gtk-widget-allocation} returns the adjusted allocation that was actually
+  assigned to the widget. The adjusted allocation is guaranteed to be completely
+  contained within the @fun{gtk-widget-size-allocate} allocation, however. So a
+  @class{gtk-container} is guaranteed that its children stay inside the assigned
+  bounds, but not that they have exactly the bounds the container assigned.
+  There is no way to get the original allocation assigned by the function
   @fun{gtk-widget-size-allocate}, since it is not stored; if a container
   implementation needs that information it will have to track it itself.
 
-  @subheading{Note}
+  The allocation set should be the \"adjusted\" or actual allocation. If you
+  are implementing a @class{gtk-container}, you want to use the function
+  @fun{gtk-widget-size-allocate} instead of @sym{gtk-widget-allocation}.
+  The @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
+  allocation inside the function @fun{gtk-widget-size-allocate} to create an
+  adjusted allocation.
+  @begin[Note]{dictionary}
     In the Lisp binding to GTK+ this function does not return an allocation
-    of type @code{GtkAllocation}, but the type is @class{gdk-recangle}. In the
+    of type @code{GtkAllocation}, but the type is @class{gdk-rectangle}. In the
     C implementation @code{GtkAllocation} is a synonym for
     @class{gdk-rectangle}.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-class{gdk-rectangle}
   @see-function{gtk-widget-size-allocate}"
   (let ((allocation (make-gdk-rectangle)))
-    (%gtk-widget-get-allocation widget allocation)
+    (%gtk-widget-allocation widget allocation)
     allocation))
 
-(export 'gtk-widget-get-allocation)
+(export 'gtk-widget-allocation)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_allocation ()
+;;; gtk_widget_get_allocated_baseline () -> gtk-widget-allocated-baseline
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_allocation" gtk-widget-set-allocation) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[allocation]{a @class{gdk-rectangle} structure}
+#+gtk-3-10
+(defcfun ("gtk_widget_get_allocated_baseline" gtk-widget-allocated-baseline)
+    :int
+ "@version{2020-9-16}
+  @argument[widget]{a @class{gtk-widget} object to query}
+  @return{an integer with the baseline of the widget, or -1 if none}
   @begin{short}
-    Sets the widget's allocation. This should not be used directly, but from
-    within a widget's @code{size_allocate} method.
+    Returns the baseline that has currently been allocated to the widget.
   @end{short}
+  This function is intended to be used when implementing handlers for the
+  \"draw\" function, and when allocating child widgets in \"size_allocate\".
 
-  The allocation set should be the \"adjusted\" or actual allocation. If you
-  are implementing a @class{gtk-container}, you want to use the function
-  @fun{gtk-widget-size-allocate} instead of @sym{gtk-widget-set-allocation}.
-  The @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
-  allocation inside the function @fun{gtk-widget-size-allocate} to create an
-  adjusted allocation.
-  @see-class{gtk-widget}
-  @see-class{gtk-container}
-  @see-class{gdk-rectangle}
-  @see-function{gtk-widget-size-allocate}"
-  (widget (g-object gtk-widget))
-  (allocation (g-boxed-foreign gdk-rectangle)))
+  Since 3.10
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-set-allocation)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_allocated_baseline ()
-;;;
-;;; int gtk_widget_get_allocated_baseline (GtkWidget *widget);
-;;;
-;;; Returns the baseline that has currently been allocated to widget. This
-;;; function is intended to be used when implementing handlers for the "draw"
-;;; function, and when allocating child widgets in "size_allocate".
-;;;
-;;; Parameters
-;;;
-;;; widget :
-;;;
-;;;     the widget to query
-;;;
-;;; Returns
-;;;
-;;;     the baseline of the widget , or -1 if none
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
+#+gtk-3-10
+(export 'gtk-widget-allocated-baseline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_clip ()
@@ -7675,27 +7873,6 @@
 (export 'gtk-widget-is-sensitive)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_state ()
-;;;
-;;; GtkStateType gtk_widget_get_state (GtkWidget *widget);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_get_state is deprecated and should not be used in newly-written
-;;; code. 3.0. Use gtk_widget_get_state_flags() instead.
-;;;
-;;; Returns the widget's state. See gtk_widget_set_state().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     the state of widget.
-;;;
-;;; Since 2.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_visible ()
 ;;; ----------------------------------------------------------------------------
 
@@ -7722,33 +7899,49 @@
 (export 'gtk-widget-is-visible)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_state_flags ()
+;;; gtk_widget_get_state_flags ()
+;;; gtk_widget_set_state_flags () -> gtk-widget-state-flags
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_state_flags" gtk-widget-set-state-flags) :void
+(defun (setf gtk-widget-state-flags) (flags widget &optional (clear nil))
+  (foreign-funcall "gtk_widget_set_state_flags"
+                   (g-object gtk-widget) widget
+                   gtk-state-flags flags
+                   :boolean clear
+                   :void)
+  flags)
+
+(defcfun ("gtk_widget_get_state_flags" gtk-widget-state-flags) gtk-state-flags
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-state-flags widget) => flags}
+  @syntax[]{(setf (gtk-widget-state-flags widget clear) flags)}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[flags]{State flags to turn on}
-  @argument[clear]{Whether to clear state before turning on @arg{flags}}
+  @argument[flags]{state flags of type @symbol{gtk-state-flags}}
+  @argument[clear]{an optional boolean whether to clear state before turning on
+    flags}
   @begin{short}
-    This function is for use in widget implementations. Turns on flag values in
-    the current widget state (insensitive, prelighted, etc.).
+    Accessor of the stage flags of the widget.
   @end{short}
 
-  It is worth mentioning that any other state than @code{:insensitive},
-  will be propagated down to all non-internal children if widget is a
+  The function @sym{gtk-widget-state-flags} returns the widget state as a flag
+  set. The function @sym{setf gtk-widget-state-flags)} sets the widget state
+  flags.
+
+  This function is for use in widget implementations. Turns on flag values in
+  the current widget state (insensitive, prelighted, etc.).
+
+  It is worth mentioning that any other state than @code{:insensitive}, will be
+  propagated down to all non-internal children if the widget is a
   @class{gtk-container}, while @code{:insensitive} itself will be propagated
   down to all @class{gtk-container} children by different means than turning on
-  the state flag down the hierarchy, both @fun{gtk-widget-get-state-flags} and
-  @fun{gtk-widget-is-sensitive} will make use of these.
-  @see-function{gtk-widget-get-state-flags}
+  the state flag down the hierarchy, both functions @sym{gtk-widget-state-flags}
+  and @fun{gtk-widget-is-sensitive} will make use of these.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-is-sensitive}"
-  (widget (g-object gtk-widget))
-  (flags gtk-state-flags)
-  (clear :boolean))
+  (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-set-state-flags)
+(export 'gtk-widget-state-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_unset_state_flags ()
@@ -7767,26 +7960,6 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_state_flags ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_get_state_flags" gtk-widget-get-state-flags)
-    gtk-state-flags
- #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
-  @argument[widget]{a @class{gtk-widget} widget}
-  @return{The state flags for @arg{widget}.}
-  @begin{short}
-    Returns the @arg{widget} state as a flag set. It is worth mentioning that
-    the effective @code{:insensitive} state will be returned, that is, also
-    based on parent insensitivity, even if @arg{widget} itself is sensitive.
-  @end{short}
-  @see-class{gtk-widget}"
-  (widget (g-object gtk-widget)))
-
-(export 'gtk-widget-get-state-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_visible_focus ()
@@ -7888,58 +8061,48 @@
 (export 'gtk-widget-is-toplevel)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_support_multidevice ()
+;;; gtk_widget_get_support_multidevice ()
+;;; gtk_widget_set_support_multidevice () -> gtk-widget-support-multidevice
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_support_multidevice"
-           gtk-widget-set-support-multidevice) :void
+(defun (setf gtk-widget-support-multidevice) (support-multidevice widget)
+  (foreign-funcall "gtk_widget_set_support_multidevice"
+                   (g-object gtk-widget) widget
+                   :boolean support-multidevice
+                   :void)
+  support-multidevice)
+
+(defcfun ("gtk_widget_get_support_multidevice" gtk-widget-support-multidevice)
+    :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-support-multidecice widget) => support-multidevice}
+  @syntax[]{(setf (gtk-widget-support-multidevice widget) support-multidevice)}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[support-multidevice]{@em{true} to support input from multiple
     devices}
   @begin{short}
-    Enables or disables multiple pointer awareness.
+    The function @sym{gtk-widget-support-multidevice} returns @em{true} if
+    @arg{widget} is multidevice aware.
   @end{short}
+  The function @sym{(setf gtk-widget-support-multidevice)} enables or disables
+  multiple pointer awareness.
+
   If this setting is @em{true}, @arg{widget} will start receiving multiple,
   per device enter/leave events. Note that if custom @class{gdk-window}'s are
-  created in \"realize\", the function @sym{gdk-window-set-support-multidevice}
+  created in \"realize\", the function @sym{gdk-window-support-multidevice}
   will have to be called manually on them.
-  @see-function{gtk-widget-get-support-multidevice}"
-  (widget (g-object gtk-widget))
-  (support-multidevice :boolean))
-
-(export 'gtk-widget-set-support-multidevice)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_support_multidevice ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_get_support_multidevice"
-           gtk-widget-get-support-multidevice) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} is multidevice aware.}
-  @begin{short}
-    Returns @em{true} if @arg{widget} is multiple pointer aware.
-  @end{short}
-  See the function @fun{gtk-widget-set-support-multidevice} for more
-  information.
-  @see-function{gtk-widget-set-support-multidevice}"
+  @see-class{gtk-widget}
+  @see-function{gdk-window-support-multidevice}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-support-multidevice)
+(export 'gtk-widget-support-multidevice)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_realized ()
 ;;;
 ;;; void gtk_widget_set_realized (GtkWidget *widget, gboolean realized);
 ;;;
-;;; Marks the widget as being realized.
-;;;
-;;; This function should only ever be called in a derived widget's "realize" or
-;;; "unrealize" implementation.
 ;;;
 ;;; widget :
 ;;;     a GtkWidget
@@ -7954,54 +8117,65 @@
 ;;; gtk_widget_get_realized ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_realized" gtk-widget-get-realized) :boolean
+(defun (setf gtk-widget-realized) (realized widget)
+  (foreign-funcall "gtk_widget_set_realized"
+                   (g-object gtk-widget) widget
+                   :boolean realized
+                   :void)
+  realized)
+
+(defcfun ("gtk_widget_get_realized" gtk-widget-realized) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2015-12-30}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-realized widget) => realized}
+  @syntax[]{(setf (gtk-widget-realized widget) realized)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} is realized, @code{nil} otherwise.}
+  @argument[realized]{@em{true} to mark the widget as realized}
   @begin{short}
-    Determines whether @arg{widget} is realized.
+    The function @sym{gtk-widget-realized} determines wether the widget is
+    realized.
   @end{short}
+  The function @sym{(setf gtk-widget-realized)} marks the widget as being
+  realized.
+
+  This function should only ever be called in a derived widget's \"realize\" or
+  \"unrealize\" implementation.
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-realized)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_mapped ()
-;;;
-;;; void gtk_widget_set_mapped (GtkWidget *widget, gboolean mapped);
-;;;
-;;; Marks the widget as being realized.
-;;;
-;;; This function should only ever be called in a derived widget's "map" or
-;;; "unmap" implementation.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; mapped :
-;;;     TRUE to mark the widget as mapped
-;;;
-;;; Since 2.20
-;;; ----------------------------------------------------------------------------
+(export 'gtk-widget-realized)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_mapped ()
+;;; gtk_widget_set_mapped () -> gtk-widget-mapped
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_mapped" gtk-widget-get-mapped) :boolean
+(defun (setf gtk-widget-mapped) (mapped widget)
+  (foreign-funcall "gtk_widget_set_mapped"
+                   (g-object gtk-widget) widget
+                   :boolean mapped
+                   :void)
+  mapped)
+
+(defcfun ("gtk_widget_get_mapped" gtk-widget-mapped) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2015-12-30}
+ "@version{2020-9-18}
+  @syntax[]{(gtk-widget-mapped widget) => mapped}
+  @syntax[]{(setf (gtk-widget-mapped widget) mapped)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} is mapped, @code{nil} otherwise.}
+  @argument[mapped]{@em{true} to mark the widget as mapped}
   @begin{short}
-    Determines whether @arg{widget} is mapped.
+    The function @sym{gtk-widget-mapped} determines whether the widget is
+    mapped.
   @end{short}
+  The function @sym{(setf gtk-widget-mapped)} marks the widget as being mapped.
+
+  This function should only ever be called in a derived widget's \"map\" or
+  \"unmap\" implementation.
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-mapped)
+(export 'gtk-widget-mapped)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_requisition ()
@@ -8152,17 +8326,17 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_path ()
+;;; gtk_widget_get_path () -> gtk-widget-path
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_path" gtk-widget-get-path)
+(defcfun ("gtk_widget_get_path" gtk-widget-path)
     (g-boxed-foreign gtk-widget-path)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-29}
+ "@version{2020-9-18}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @class{gtk-widget-path} structure representing the widget.}
   @begin{short}
-    Returns the @class{gtk-widget-path} representing the widget.
+    Returns the widget path representing the widget.
   @end{short}
   If the widget is not connected to a toplevel widget, a partial path will be
   created.
@@ -8170,7 +8344,7 @@
   @see-class{gtk-widget-path}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-path)
+(export 'gtk-widget-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context () -> gtk-widget-style-context
@@ -8287,139 +8461,6 @@
 ;;; requisition :
 ;;;     a GtkRequisition
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkSizeRequestMode
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkSizeRequestMode" gtk-size-request-mode
-  (:export t
-   :type-initializer "gtk_size_request_mode_get_type")
-  (:height-for-width 0)
-  (:width-for-height 1)
-  (:constant-size 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-size-request-mode atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-size-request-mode atdoc:*external-symbols*)
- "@version{2013-10-29}
-  @begin{short}
-    Specifies a preference for height-for-width or width-for-height geometry
-    management.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkSizeRequestMode\" gtk-size-request-mode
-  (:export t
-   :type-initializer \"gtk_size_request_mode_get_type\")
-  (:height-for-width 0)
-  (:width-for-height 1)
-  (:constant-size 2))
-  @end{pre}
-  @begin{table}
-    @entry[:height-for-width]{Prefer height-for-width geometry management.}
-    @entry[:width-for-height]{Prefer width-for-height geometry management.}
-    @entry[:constant-size]{Dont trade height-for-width or width-for-height.}
-  @end{table}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-request-mode}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkRequestedSize
-;;; ----------------------------------------------------------------------------
-
-(define-g-boxed-cstruct gtk-requested-size "GtkRequestedSize"
-  (data :pointer)
-  (minimum-size :int)
-  (natural-size :int))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "Struct"
-      (documentation 'gtk-requested-size 'type)
- "@version{2013-8-27}
-  @begin{short}
-    Represents a request of a screen object in a given orientation.
-  @end{short}
-  These are primarily used in container implementations when allocating a
-  natural size for children calling. See the function
-  @fun{gtk-distribute-natural-allocation}.
-  @begin{pre}
-(define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
-  (data :pointer)
-  (minimum-size :int)
-  (natural-size :int))
-  @end{pre}
-  @begin[code]{table}
-    @entry[data]{A client pointer.}
-    @entry[minimum-size]{The minimum size needed for allocation in a given
-      orientation.}
-    @entry[natural-size]{The natural size for allocation in a given
-      orientation.}
-  @end{table}
-  @see-slot{gtk-requested-size-data}
-  @see-slot{gtk-requested-size-minimum-size}
-  @see-slot{gtk-requested-size-natural-size}
-  @see-constructor{copy-gtk-requested-size}
-  @see-constructor{make-gtk-requested-size}
-  @see-function{gtk-distribute-natural-allocation}")
-
-(export (boxed-related-symbols 'gtk-requested-size))
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for GtkRequestedSize
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-requested-size 'function)
- "@version{2013-8-27}
-  @argument[instance]{a @class{gtk-requested-size} structure}
-  Copy constructor of a @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}
-  @see-function{make-gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-requested-size 'function)
- "@version{2013-8-27}
-  @argument[data]{a client pointer}
-  @argument[minimum-size]{The minimum size needed for allocation in a given
-    orientation}
-  @argument[natural-size]{The natural size for allocation in a given
-    orientation}
-  Creates a @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}
-  @see-function{copy-gtk-requested-size}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors for GtkRequestedSize
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-data atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-requested-size-data 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{data} of the @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-minimum-size atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-requested-size-minimum-size 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
-  structure.
-  @see-class{gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-natural-size atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-requested-size-natural-size 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
-  structure.
-  @see-class{gtk-requested-size}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height ()
@@ -8646,15 +8687,15 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_request_mode ()
+;;; gtk_widget_get_request_mode () -> gtk-widget-request-mode
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_request_mode" gtk-widget-get-request-mode)
+(defcfun ("gtk_widget_get_request_mode" gtk-widget-request-mode)
     gtk-size-request-mode
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2020-9-16}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The @symbol{gtk-size-request-mode} preferred by @arg{widget}.}
+  @return{The @symbol{gtk-size-request-mode} value preferred by @arg{widget}.}
   @begin{short}
     Gets whether the widget prefers a height-for-width layout or a
     width-for-height layout.
@@ -8669,7 +8710,7 @@
   @see-symbol{gtk-size-request-mode}"
   (widget (g-object gtk-widget)))
 
-(export 'gtk-widget-get-request-mode)
+(export 'gtk-widget-request-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_size ()
@@ -8743,64 +8784,6 @@
 ;;; Returns :
 ;;;     The remainder of extra_space after redistributing space to sizes.
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkAlign
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkAlign" gtk-align
-  (:export t
-   :type-initializer "gtk_align_get_type")
-  (:fill 0)
-  (:start 1)
-  (:end 2)
-  (:center 3)
-  #+gtk-3-10
-  (:baseline 4)
-  )
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2014-7-26}
-  @begin{short}
-    Controls how a widget deals with extra space in a single (x or y) dimension.
-  @end{short}
-
-  Alignment only matters if the widget receives a \"too large\" allocation, for
-  example if you packed the widget with the \"expand\" flag inside a
-  @class{gtk-box}, then the widget might get extra space. If you have for
-  example a 16 x 16 icon inside a 32 x 32 space, the icon could be scaled and
-  stretched, it could be centered, or it could be positioned to one side of the
-  space.
-
-  Note that in horizontal context @code{:start} and @code{:end} are
-  interpreted relative to text direction.
-
-  @code{:baseline} support is optional for containers and widgets, and it is
-  only supported for vertical alignment. When its not supported by a child or
-  a container it is treated as @code{:fill}.
-  @begin{pre}
-(define-g-enum \"GtkAlign\" gtk-align
-  (:export t
-   :type-initializer \"gtk_align_get_type\")
-  (:fill 0)
-  (:start 1)
-  (:end 2)
-  (:center 3)
-  (:baseline 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:fill]{Stretch to fill all space if possible, center if no meaningful
-      way to stretch.}
-    @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
-    @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
-    @entry[:center]{Center natural width of widget inside the allocation.}
-    @entry[:baseline]{Align the widget according to the baseline. Since 3.10.}
-  @end{table}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-halign}
-  @see-function{gtk-widget-valign}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_valign_with_baseline ()
