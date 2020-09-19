@@ -908,7 +908,7 @@
               (gdk-window-coords-to-parent (gdk-event-button-window event)
                                            (gdk-event-button-x event)
                                            (gdk-event-button-y event))
-            (let ((rect (gtk-widget-get-allocation calendar)))
+            (let ((rect (gtk-widget-allocation calendar)))
               (setf (gdk-rectangle-x rect)
                     (- (truncate x) (gdk-rectangle-x rect)))
               (setf (gdk-rectangle-y rect)

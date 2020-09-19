@@ -170,8 +170,8 @@
         attribute is optional.}
       @entry[direction]{Direction of the source, a @symbol{gtk-text-direction}
         enum value. This attribute is optional.}
-      @entry[state]{State of the source, a @symbol{gtk-state-type} enum value.
-        This attribute is optional.}
+      @entry[state]{A value of the @symbol{gtk-state-type} eumeration with the
+        state of the source. This attribute is optional.}
     @end{table}
     @b{Example:} A @class{gtk-icon-factory} UI definition fragment.
     @begin{pre}
@@ -600,7 +600,8 @@
   @argument[style]{a @class{gtk-style} object associated with @arg{widget},
     or @code{nil}}
   @argument[direction]{text direction}
-  @argument[state]{@arg{widget} state}
+  @argument[state]{a value of the @symbol{gtk-state-type} enumeration with the
+    state of the widget}
   @argument[size]{icon size, a size of @code{(GtkIconSize)-1} means render at
     the size of the source and do not scale}
   @argument[widget]{widget that will display the icon, or @code{nil}, the only

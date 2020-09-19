@@ -2,7 +2,7 @@
 ;;; gtk.separator.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -74,7 +74,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-separator 'type)
- "@version{2013-1-29}
+ "@version{2020-9-5}
   @begin{short}
     The @sym{gtk-separator} widget is a horizontal or vertical separator widget,
     depending on the value of the @slot[gtk-orientable]{orientation} property of
@@ -98,13 +98,12 @@
 
 (defun gtk-separator-new (orientation)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-29}
+ "@version{2020-9-5}
   @argument[orientation]{the separator's orientation of type
   @symbol{gtk-orientation}}
   @return{A new @class{gtk-separator} widget.}
   @begin{short}
-    Creates a new @class{gtk-separator} widget with the given @arg{orientation}
-    @code{:horizontal} or @code{:vertical} of type @symbol{gtk-orientation}.
+    Creates a new separator widget with the given @arg{orientation}.
   @end{short}
   See also the @class{gtk-orientable} interface.
   @see-class{gtk-separator}
@@ -167,8 +166,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hseparator_new ()
 ;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-hseparator-new))
 
 (defun gtk-hseparator-new ()
  #+cl-cffi-gtk-documentation
@@ -233,8 +230,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vseparator_new ()
 ;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-vseparator-new))
 
 (defun gtk-vseparator-new ()
  #+cl-cffi-gtk-documentation

@@ -2280,10 +2280,21 @@
 (setf (gethash 'gtk-settings-gtk-toolbar-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-toolbar-icon-size 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-toolbar-icon-size} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2020-9-5}
+  @syntax[]{(gtk-settings-gtk-toolbar-icon-size object) => icon-size}
+  @syntax[]{(setf (gtk-settings-gtk-toolbar-icon-size object) icon-size)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[icon-size]{a icon size of type @symbol{gtk-icon-size}}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-toolbar-icon-size} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @code{gtk-toolbar-icon-size} property has been deprecated since version
+    3.10 and should not be used in newly-written code. This setting is ignored.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-class{gtk-toolbar-icon-size}")
 
 ;;; --- gtk-settings-gtk-toolbar-style -----------------------------------------
 
@@ -2302,10 +2313,22 @@
 (setf (gethash 'gtk-settings-gtk-toolbar-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-toolbar-style 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-toolbar-style} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2020-9-5}
+  @syntax[]{(gtk-settings-gtk-toolbar-style object) => style}
+  @syntax[]{(setf (gtk-settings-gtk-toolbar-style object) style)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[style]{the size of icons of type @symbol{gtk-toolbar-style}}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-toolbar-style} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @code{gtk-toolbar-style} property has been deprecated since version
+    3.10 and should not be used in newly-written code. This setting is ignored.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-toolbar-style}")
 
 ;;; --- gtk-settings-gtk-tooltip-browse-mode-timeout ---------------------------
 

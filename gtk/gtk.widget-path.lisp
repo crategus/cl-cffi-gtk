@@ -140,7 +140,7 @@
   the real widget in order to query style information.
 
   If you are using GTK+ widgets, you probably will not need to use this API
-  directly, as there is the function @fun{gtk-widget-get-path}, and the style
+  directly, as there is the function @fun{gtk-widget-path}, and the style
   context returned by the function @fun{gtk-widget-style-context} will be
   automatically updated on widget hierarchy changes.
   @begin[Example]{dictionary}
@@ -544,7 +544,7 @@
     @begin{pre}
  (setq widget (make-instance 'gtk-button))
 => #<GTK-BUTTON {10027EB373@}>
- (gtk-widget-path-iter-get-object-type (gtk-widget-get-path *) -1)
+ (gtk-widget-path-iter-get-object-type (gtk-widget-path *) -1)
 => #<GTYPE :name \"GtkButton\" :id 23267040>
     @end{pre}
   @end{dictionary}

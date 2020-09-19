@@ -149,10 +149,10 @@
     and feel for a widget.
   @end{short}
 
-  Each @class{gtk-widget} has an associated @sym{gtk-style} object that is used
-  when rendering that widget. Also, a @sym{gtk-style} object holds information
-  for the five possible widget states though not every widget supports all five
-  states; see the function @symbol{gtk-state-type}.
+  Each @class{gtk-widget} object has an associated @sym{gtk-style} object that
+  is used when rendering that widget. Also, a @sym{gtk-style} object holds
+  information for the five possible widget states though not every widget
+  supports all five states. See the @symbol{gtk-state-type} enumeration.
 
   Usually the @sym{gtk-style} for a widget is the same as the default style that
   is set by GTK+ and modified the theme engine.
