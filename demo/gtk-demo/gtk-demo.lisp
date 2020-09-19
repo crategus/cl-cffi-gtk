@@ -375,7 +375,7 @@
   (let* ((model (create-and-fill-model))
          (view (make-instance 'gtk-tree-view
                               :model model))
-         (selection (gtk-tree-view-get-selection view)))
+         (selection (gtk-tree-view-selection view)))
     ;; Create renderers for the cells
     (let* ((renderer (gtk-cell-renderer-text-new))
            (column (gtk-tree-view-column-new-with-attributes "Example"
