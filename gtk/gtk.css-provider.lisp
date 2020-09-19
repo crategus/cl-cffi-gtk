@@ -157,24 +157,24 @@
 ;;; gtk_css_provider_get_default ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_css_provider_get_default" gtk-css-provider-get-default)
+(defcfun ("gtk_css_provider_get_default" gtk-css-provider-default)
     (g-object gtk-css-provider)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
-  @return{The @class{gtk-css-provider} used for fallback styling.}
+ "@version{2020-9-18}
+  @return{The @class{gtk-css-provider} object used for fallback styling.}
   @begin{short}
     Returns the provider containing the style settings used as a fallback for
     all widgets.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-css-provider-get-default} has been deprecated since
+    The function @sym{gtk-css-provider-default} has been deprecated since
     version 3.24 and should not be used in newly-written code. Use the
     @fun{gtk-css-provider-new} function instead.
   @end{dictionary}
   @see-class{gtk-css-provider}
   @see-function{gtk-css-provider-new}")
 
-(export 'gtk-css-provider-get-default)
+(export 'gtk-css-provider-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_get_named ()
