@@ -2,12 +2,12 @@
 ;;; gtk.separator-tool-item.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,7 +43,7 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean  draw    Read / Write
+;;;     gboolean    draw    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -80,20 +80,23 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-separator-tool-item 'type)
- "@version{2014-1-26}
+ "@version{2020-9-5}
   @begin{short}
     A @sym{gtk-separator-tool-item} is a @class{gtk-tool-item} that separates
-    groups of other @class{gtk-tool-item}'s. Depending on the theme, a
-    @sym{gtk-separator-tool-item} will often look like a vertical line on
-    horizontally docked toolbars.
+    groups of other @class{gtk-tool-item}'s.
   @end{short}
+  Depending on the theme, a @sym{gtk-separator-tool-item} will often look like
+  a vertical line on horizontally docked toolbars.
 
-  If the @class{gtk-toolbar} @code{expand} child property is @em{true} and
-  the @code{draw} property is @code{nil}, a @sym{gtk-separator-tool-item}
-  will act as a \"spring\" that forces other items to the ends of the toolbar.
+  If the @code{expand} child property of the @class{gtk-toolbar} instance is
+  @em{true} and the @code{draw} property is @em{false}, a
+  @sym{gtk-separator-tool-item} will act as a \"spring\" that forces other items
+  to the ends of the toolbar.
 
   Use the function @fun{gtk-separator-tool-item-new} to create a new
   @sym{gtk-separator-tool-item}.
+  @see-slot{gtk-separator-tool-item-draw}
+  @see-class{gtk-tool-item}
   @see-function{gtk-separator-tool-item-new}
   @see-function{gtk-separator-tool-item-draw}")
 
@@ -112,25 +115,25 @@
 (setf (gethash 'gtk-separator-tool-item-draw atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-separator-tool-item-draw 'function)
- "@version{2014-1-26}
+ "@version{2020-9-5}
   @syntax[]{(gtk-separator-tool-item-draw object) => draw)}
   @syntax[]{(setf (gtk-separator-tool-item-draw object) draw)}
   @argument[object]{a @class{gtk-separator-tool-item} widget}
-  @argument[draw]{whether item is drawn as a vertical line}
+  @argument[draw]{a @code{:boolean} whether @arg{object} is drawn as a vertical
+    line}
   @begin{short}
     Accessor of the @slot[gtk-separator-tool-item]{draw} slot of the
     @class{gtk-separator-tool-item} class.
   @end{short}
 
-  The @sym{gtk-separator-tool-item-draw} slot access function
-  returns whether item is drawn as a line, or just blank.
+  The slot access function @sym{gtk-separator-tool-item-draw} returns whether
+  item is drawn as a line, or just blank. The slot access function
+  @sym{(setf gtk-separator-tool-item-draw)} returns whether item is drawn as a
+  vertical line, or just blank.
 
-  The @sym{(setf gtk-separator-tool-item-draw)} slot access function
-  returns whether item is drawn as a vertical line, or just blank.
-
-  Setting this to @code{nil} along with the @fun{gtk-tool-item-set-expand}
-  is useful to create an item that forces following items to the end of the
-  toolbar.
+  Setting this to @em{false} along with the function
+  @fun{gtk-tool-item-expand} is useful to create an item that forces following
+  items to the end of the toolbar.
   @see-class{gtk-separator-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -141,9 +144,9 @@
 
 (defun gtk-separator-tool-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
+ "@version{2020-9-5}
   @return{The new @class{gtk-separator-tool-item} widget.}
-  @short{Create a new @class{gtk-separator-tool-item} widget.}
+  @short{Create a new separator tool item.}
   @see-class{gtk-separator-tool-item}"
   (make-instance 'gtk-separator-tool-item-new))
 

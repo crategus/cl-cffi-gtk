@@ -150,10 +150,10 @@
 (defcfun ("gtk_radio_tool_button_new_from_stock"
            gtk-radio-tool-button-new-from-stock) (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-19}
+ "@version{2020-9-5}
   @argument[group]{an existing @class{gtk-radio-tool-button} group, or
     @code{nil} if you are creating a new group}
-  @argument[stock-id]{an string with the name of a stock item}
+  @argument[stock-id]{a @code{:string} with the name of a stock item}
   @return{The new @class{gtk-radio-tool-button} widget.}
   @begin{short}
     Creates a new radio tool button, adding it to @arg{group}.

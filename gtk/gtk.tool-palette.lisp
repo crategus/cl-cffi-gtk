@@ -2,11 +2,11 @@
 ;;; gtk.tool-palette.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -64,14 +64,14 @@
 ;;;
 ;;; Properties
 ;;;
-;;;         GtkIconSize  icon-size        Read / Write
-;;;            gboolean  icon-size-set    Read / Write
-;;;     GtkToolbarStyle  toolbar-style    Read / Write
+;;;         GtkIconSize    icon-size        Read / Write
+;;;            gboolean    icon-size-set    Read / Write
+;;;     GtkToolbarStyle    toolbar-style    Read / Write
 ;;;
-;;;     Child Properties
+;;; Child Properties
 ;;;
-;;;     gboolean  exclusive    Read / Write
-;;;     gboolean  expand       Read / Write
+;;;            gboolean    exclusive        Read / Write
+;;;            gboolean    expand           Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -88,6 +88,36 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkToolPaletteDragTargets
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkToolPaletteDragTargets" gtk-tool-palette-drag-targets
+  (:export t
+   :type-initializer "gtk_tool_palette_drag_targets_get_type")
+  (:items 1)
+  (:groups 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-drag-targets atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-tool-palette-drag-targets atdoc:*external-symbols*)
+ "@version{2020-9-5}
+  @begin{short}
+    Flags used to specify the supported drag targets.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkToolPaletteDragTargets\" gtk-tool-palette-drag-targets
+  (:export t
+   :type-initializer \"gtk_tool_palette_drag_targets_get_type\")
+  (:items 1)
+  (:groups 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:items]{Support drag of items.}
+    @entry[:groups]{Support drag of groups.}
+  @end{table}
+  @see-class{gtk-tool-palette}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkToolPalette
@@ -116,15 +146,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-palette 'type)
- "@version{2013-6-1}
+ "@version{2020-9-5}
   @begin{short}
     A @sym{gtk-tool-palette} allows you to add @class{gtk-tool-item} widgets to
     a palette-like container with different categories and drag and drop
     support.
   @end{short}
 
-  A @sym{gtk-tool-palette} is created with a call to the
-  @fun{gtk-tool-palette-new} function.
+  @image[toolpalette]{}
+
+  A @sym{gtk-tool-palette} is created with a call to the function
+  @fun{gtk-tool-palette-new}.
 
   @class{gtk-tool-item} widgets cannot be added directly to a
   @sym{gtk-tool-palette} - instead they are added to a
@@ -132,56 +164,56 @@
   @sym{gtk-tool-palette}. To add a @class{gtk-tool-item-group} to a
   @sym{gtk-tool-palette}, use the function @fun{gtk-container-add}.
   @begin{pre}
- GtkWidget *palette, *group;
- GtkToolItem *item;
+GtkWidget *palette, *group;
+GtkToolItem *item;
 
- palette = gtk_tool_palette_new ();
- group = gtk_tool_item_group_new (_(\"Test Category\"));
- gtk_container_add (GTK_CONTAINER (palette), group);
+palette = gtk_tool_palette_new ();
+group = gtk_tool_item_group_new (_(\"Test Category\"));
+gtk_container_add (GTK_CONTAINER (palette), group);
 
- item = gtk_tool_button_new_from_stock (GTK_STOCK_OK);
- gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
+item = gtk_tool_button_new_from_stock (GTK_STOCK_OK);
+gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
   @end{pre}
   The easiest way to use drag and drop with @sym{gtk-tool-palette} is to call
-  the function @fun{gtk-tool-palette-add-drag-dest} with the desired drag source
-  palette and the desired drag target widget. Then the function
-  @fun{gtk-tool-palette-get-drag-item} can be used to get the dragged
+  the function @fun{gtk-tool-palette-add-drag-dest} with the desired drag
+  source palette and the desired drag target widget. Then the function
+  @fun{gtk-tool-palette-drag-item} can be used to get the dragged
   item in the \"drag-data-received\" signal handler of the drag target.
   @begin{pre}
- static void
- passive_canvas_drag_data_received (GtkWidget        *widget,
-                                    GdkDragContext   *context,
-                                    gint              x,
-                                    gint              y,
-                                    GtkSelectionData *selection,
-                                    guint             info,
-                                    guint             time,
-                                    gpointer          data)
- {
-   GtkWidget *palette;
-   GtkWidget *item;
+static void
+passive_canvas_drag_data_received (GtkWidget        *widget,
+                                   GdkDragContext   *context,
+                                   gint              x,
+                                   gint              y,
+                                   GtkSelectionData *selection,
+                                   guint             info,
+                                   guint             time,
+                                   gpointer          data)
+{
+  GtkWidget *palette;
+  GtkWidget *item;
 
-   /* Get the dragged item */
-   palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
-                                      GTK_TYPE_TOOL_PALETTE);
-   if (palette != NULL)
-     item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
-                                            selection);
+  /* Get the dragged item */
+  palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
+                                     GTK_TYPE_TOOL_PALETTE);
+  if (palette != NULL)
+    item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
+                                           selection);
 
-   /* Do something with item */
- @}
+  /* Do something with item */
+@}
 
- GtkWidget *target, palette;
+GtkWidget *target, palette;
 
- palette = gtk_tool_palette_new ();
- target = gtk_drawing_area_new ();
+palette = gtk_tool_palette_new ();
+target = gtk_drawing_area_new ();
 
- g_signal_connect (G_OBJECT (target), \"drag-data-received\",
-                   G_CALLBACK (passive_canvas_drag_data_received), NULL);
- gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
-                                 GTK_DEST_DEFAULT_ALL,
-                                 GTK_TOOL_PALETTE_DRAG_ITEMS,
-                                 GDK_ACTION_COPY);
+g_signal_connect (G_OBJECT (target), \"drag-data-received\",
+                  G_CALLBACK (passive_canvas_drag_data_received), NULL);
+gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
+                                GTK_DEST_DEFAULT_ALL,
+                                GTK_TOOL_PALETTE_DRAG_ITEMS,
+                                GDK_ACTION_COPY);
   @end{pre}
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-tool-palette} class has a single CSS node named
@@ -194,14 +226,14 @@
         (Read / Write) @br{}
         Whether the item group should be the only one that is expanded at a
         given time. @br{}
-        Default value: @code{nil}
+        Default value: @em{false}
       @end{entry}
       @begin[expand]{entry}
         The @code{expand} child property of type @code{:boolean}
         (Read / Write) @br{}
-        Whether the item group should receive extra space when the palette grows
-        at a given time. @br{}
-        Default value: @code{nil}
+        Whether the item group should receive extra space when the palette
+        grows at a given time. @br{}
+        Default value: @em{false}
       @end{entry}
     @end{table}
   @end{dictionary}
@@ -213,7 +245,7 @@
   @see-function{gtk-tool-palette-new}
   @see-function{gtk-container-add}
   @see-function{gtk-tool-palette-add-drag-dest}
-  @see-function{gtk-tool-palette-get-drag-item}")
+  @see-function{gtk-tool-palette-drag-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -224,13 +256,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size"
                                                'gtk-tool-palette) 't)
- "The @code{icon-size} property of type @symbol{gtk-icon-size}
-  (Read / Write) @br{}
+ "The @code{icon-size} property of type @symbol{gtk-icon-size} (Read / Write)
+  @br{}
   The size of the icons in a tool palette is normally determined by the
-  @code{toolbar-icon-size} setting. When this property is set, it overrides
-  the setting. This should only be used for special-purpose tool palettes,
-  normal application tool palettes should respect the user preferences for the
-  size of icons. @br{}
+  @slot[gtk-settings]{gtk-toolbar-icon-size} setting. When this property is set,
+  it overrides the setting. This should only be used for special-purpose tool
+  palettes, normal application tool palettes should respect the user preferences
+  for the size of icons. @br{}
   Default value: @code{:small-toolbar}")
 
 #+cl-cffi-gtk-documentation
@@ -260,21 +292,28 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size-set"
                                                'gtk-tool-palette) 't)
- "The @code{icon-size-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{icon-size-set} property of type @code{:boolean} (Read / Write) @br{}
   Is @em{true} if the @code{icon-size} property has been set. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-palette-icon-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-icon-size-set 'function)
- "@version{2013-11-17}
+ "@version{2020-9-5}
+  @syntax[]{(gtk-tool-palette-icon-size.set object) => setting}
+  @syntax[]{(setf (gtk-tool-palette-icon-size-set object) setting)}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[setting]{a @code{:boolean} wether the
+    @slot[gtk-tool-palette]{icon-size} property has been set}
   @begin{short}
     Accessor of the @slot[gtk-tool-palette]{icon-size-set} slot of the
     @class{gtk-tool-palette} class.
   @end{short}
+
+  Is @em{true} if the @slot[gtk-tool-palette]{icon-size} property has been set.
   @see-class{gtk-tool-palette}
+  @see-function{gtk-tool-palette-icon-set}
   @see-function{gtk-tool-palette-unset-icon-size}")
 
 ;;; --- gtk-tool-palette-toolbar-style -----------------------------------------
@@ -291,18 +330,29 @@
 (setf (gethash 'gtk-tool-palette-toolbar-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-toolbar-style 'function)
- "@version{2013-11-17}
+ "@version{2020-9-5}
+  @syntax[]{(gtk-tool-palette-toolbar-style object) => style}
+  @syntax[]{(setf (gtk-tool-palette-toolbar-style object) style)}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[style]{the @symbol{gtk-toolbar-style} that items in the tool
+    palette shall have}
   @begin{short}
     Accessor of the @slot[gtk-tool-palette]{toolbar-style} slot of the
     @class{gtk-tool-palette} class.
   @end{short}
+
+  The slot access function @sym{gtk-tool-palette-toolbar-style} gets the style,
+  icons, text or both, of items in the tool palette. The slot access function
+  @sym{(setf gtk-tool-palette-toolbar-style)} sets the style, text, icons or
+  both, of items in the tool palette.
   @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-get-style}
-  @see-function{gtk-tool-palette-set-style}")
+  @see-function{gtk-tool-palette-unset-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tool-palette-child-exclusive ---------------------------------------
 
 (define-child-property "GtkToolPalette"
                        gtk-tool-palette-child-exclusive
@@ -312,12 +362,29 @@
 (setf (gethash 'gtk-tool-palette-child-exclusive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-child-exclusive 'function)
- "@version{2013-11-17}
-  Accessor of the @code{exclusive} child property of the
-  @class{gtk-tool-palette} class.
+ "@version{2020-9-5}
+  @syntax[]{(gtk-tool-palette-child-exclusive container child) => exclusive}
+  @syntax[]{(setf (gtk-tool-palette-child-exclusive container child) exclusive)}
+  @argument[container]{a @class{gtk-tool-palette} widget}
+  @argument[child]{a @class{gtk-tool-item-group} widget which is a child of
+    @arg{container}}
+  @argument[exclusive]{a @code{:boolean} whether the tool item group should be
+    exclusive or not}
+  @begin{short}
+    Accessor of the @code{exclusive} child property of the
+    @class{gtk-tool-palette} class.
+  @end{short}
+
+  The function @sym{gtk-tool-palette-child-exclusive} gets whether the tool
+  item group is exclusive or not. The function
+  @sym{(setf gtk-tool-palette-child-exclusive)} sets whether the tool item
+  group should be exclusive or not.
+
+  If an exclusive tool item group is expanded all other groups are collapsed.
   @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-get-exclusive}
-  @see-function{gtk-tool-palette-set-exclusive}")
+  @see-class{gtk-tool-item-group}")
+
+;;; --- gtk-tool-palette-child-expand ------------------------------------------
 
 (define-child-property "GtkToolPalette"
                        gtk-tool-palette-child-expand
@@ -327,12 +394,25 @@
 (setf (gethash 'gtk-tool-palette-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-child-expand 'function)
- "@version{2013-11-17}
-  Accessor of the @code{expand} child property of the
-  @class{gtk-tool-palette} class.
+ "@version{2020-9-5}
+  @syntax[]{(gtk-tool-palette-child-expand container child) => expand}
+  @syntax[]{(setf (gtk-tool-palette-child-expand container child) expand)}
+  @argument[container]{a @class{gtk-tool-palette} widget}
+  @argument[child]{a @class{gtk-tool-item-group} widget which is a child of
+    @arg{container}}
+  @argument[expand]{a @code{:boolean} whether the tool item group should be
+    given extra space}
+  @begin{short}
+    Accessor of the @code{expand} child property of the
+    @class{gtk-tool-palette} class.
+  @end{short}
+
+  The function @sym{gtk-tool-palette-child-expand} gets whether the tool item
+  group should be given extra space. The function
+  @sym{(setf gtk-tool-palette-child-expand)} sets whether the tool item group
+  should be given extra space.
   @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-get-expand}
-  @see-function{gtk-tool-palette-set-expand}")
+  @see-class{gtk-tool-item-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_new ()
@@ -354,150 +434,64 @@
 ;;; gtk_tool_palette_get_exclusive ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-get-exclusive))
-
-(defun gtk-tool-palette-get-exclusive (palette group)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[group]{a @class{gtk-tool-item-group} widget which is a child of
-    @arg{palette}}
-  @return{@em{True} if @arg{group} is exclusive.}
-  @begin{short}
-    Gets whether @arg{group} is exclusive or not.
-  @end{short}
-  See the function @fun{gtk-tool-palette-set-exclusive}.
-  @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-set-exclusive}"
-  (gtk-tool-palette-child-exclusive palette group))
-
-(export 'gtk-tool-palette-get-exclusive)
+;; Implemented as gtk-tool-palette-child-exclusive
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_exclusive ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-set-exclusive))
-
-(defun gtk-tool-palette-set-exclusive (palette group exclusive)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[group]{a @class{gtk-tool-item-group} widget which is a child of
-    @arg{palette}}
-  @argument[exclusive]{whether the group should be exclusive or not}
-  @begin{short}
-    Sets whether the group should be exclusive or not.
-  @end{short}
-  If an exclusive group is expanded all other groups are collapsed.
-  @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-get-exclusive}"
-  (setf (gtk-tool-palette-child-exclusive palette group) exclusive))
-
-(export 'gtk-tool-palette-set-exclusive)
+;; Implemented as (setf gtk-tool-palette-child-exclusive
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_expand ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-get-expand))
-
-(defun gtk-tool-palette-get-expand (palette group)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[group]{a @class{gtk-tool-item-group} widget which is a child of
-    @arg{palette}}
-  @begin{return}
-    @em{True} if @arg{group} should be given extra space, @code{nil} otherwise.
-  @end{return}
-  @begin{short}
-    Gets whether @arg{group} should be given extra space.
-  @end{short}
-  See the function @fun{gtk-tool-palette-set-expand}.
-  @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-set-expand}"
-  (gtk-tool-palette-child-expand palette group))
-
-(export 'gtk-tool-palette-get-expand)
+;; Implemented as gtk-tool-palette-child-expand
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_expand ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-set-expand))
-
-(defun gtk-tool-palette-set-expand (palette group expand)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[group]{a @class{gtk-tool-item-group} widget which is a child of
-    @arg{palette}}
-  @argument[expand]{whether the group should be given extra space}
-  @begin{short}
-    Sets whether the group should be given extra space.
-  @end{short}
-  @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-get-expand}"
-  (setf (gtk-tool-palette-child-expand palette group) expand))
-
-(export 'gtk-tool-palette-set-expand)
+;; Implemented as (setf gtk-tool-palette-child-expand)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_group_position ()
+;;; gtk_tool_palette_set_group_position () -> gtk-tool-palette-group-position
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_palette_get_group_position"
-           gtk-tool-palette-get-group-position) :int
+(defun (setf gtk-tool-palette-group-position) (position palette group)
+  (foreign-funcall "gtk_tool_palette_set_group_positon"
+                   (g-object gtk-tool-palette) palette
+                   (g-object gtk-tool-item-group) group
+                   :int position
+                   :void)
+  position)
+
+(defcfun ("gtk_tool_palette_get_group_position" gtk-tool-palette-group-position)
+    :int
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[group]{a @class{gtk-tool-item-group} widget}
-  @begin{return}
-    The index of @arg{group} or -1 if @arg{group} is not a child of
-    @arg{palette}.
-  @end{return}
-  @begin{short}
-    Gets the position of @arg{group} in @arg{palette} as index.
-  @end{short}
-  See the function @fun{gtk-tool-palette-set-group-position}.
-  @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-set-group-position}"
-  (palette (g-object gtk-tool-palette))
-  (group (g-object gtk-tool-item-group)))
-
-(export 'gtk-tool-palette-get-group-position)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_set_group_position ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_tool_palette_set_group_position"
-           gtk-tool-palette-set-group-position) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @argument[group]{a @class{gtk-tool-item-group} widget which is a child of
-    palette}
-  @argument[position]{a new index for @arg{group}}
+    @arg{palette}}
+  @argument[position]{a @code{:int} with an index for @arg{group}}
   @begin{short}
-    Sets the position of the group as an index of the tool palette.
+    Accessor of the index of the tool item group in the tool palette.
   @end{short}
+
+  The function @sym{gtk-tool-palette-group-position} gets the position of
+  @arg{group} in @arg{palette} as index. The function
+  @sym{(setf gtk-tool-palette-group-position)} sets the position of the tool
+  item group as an index of the tool palette.
+
   If @arg{position} is 0 the group will become the first child, if
   @arg{position} is -1 it will become the last child.
   @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-function{gtk-tool-palette-get-group-position}"
+  @see-class{gtk-tool-item-group}"
   (palette (g-object gtk-tool-palette))
-  (group (g-object gtk-tool-item-group))
-  (position :int))
+  (group (g-object gtk-tool-item-group)))
 
-(export 'gtk-tool-palette-set-group-position)
+(export 'gtk-tool-palette-group-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_unset_icon_size ()
@@ -506,12 +500,12 @@
 (defcfun ("gtk_tool_palette_unset_icon_size" gtk-tool-palette-unset-icon-size)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @begin{short}
-    Unsets the tool palette icon size set with the
-    @fun{gtk-tool-palette-icon-size} slot access function, so that user
-    preferences will be used to determine the icon size.
+    Unsets the tool palette icon size set with the function
+    @fun{gtk-tool-palette-icon-size}, so that user preferences will be used to
+    determine the icon size.
   @end{short}
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-icon-size}"
@@ -523,45 +517,13 @@
 ;;; gtk_tool_palette_get_style ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-get-style))
-
-(defun gtk-tool-palette-get-style (palette)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @return{The @symbol{gtk-toolbar-style} of items in the tool palette.}
-  @begin{short}
-    Gets the style, icons, text or both, of items in the tool palette.
-  @end{short}
-  @see-class{gtk-tool-palette}
-  @see-symbol{gtk-toolbar-style}
-  @see-function{gtk-tool-palette-set-style}"
-  (gtk-tool-palette-toolbar-style palette))
-
-(export 'gtk-tool-palette-get-style)
+;; Implemented as gtk-tool-palette-toolbar-style
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_style ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tool-palette-set-style))
-
-(defun gtk-tool-palette-set-style (palette style)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[style]{the @symbol{gtk-toolbar-style} that items in the tool
-    palette shall have}
-  @begin{short}
-    Sets the style, text, icons or both, of items in the tool palette.
-  @end{short}
-  @see-class{gtk-tool-palette}
-  @see-symbol{gtk-toolbar-style}
-  @see-function{gtk-tool-palette-get-style}
-  @see-function{gtk-tool-palette-unset-style}"
-  (setf (gtk-tool-palette-toolbar-style palette) style))
-
-(export 'gtk-tool-palette-set-style)
+;; Implemented as (setf gtk-tool-palette-toolbar-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_unset_style ()
@@ -569,49 +531,18 @@
 
 (defcfun ("gtk_tool_palette_unset_style" gtk-tool-palette-unset-style) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @begin{short}
     Unsets a toolbar style set with the function
-    @fun{gtk-tool-palette-set-style}, so that user preferences will be used to
-    determine the toolbar style.
+    @fun{gtk-tool-palette-toolbar-style}, so that user preferences will be used
+    to determine the toolbar style.
   @end{short}
   @see-class{gtk-tool-palette}
-  @see-function{gtk-tool-palette-get-style}
-  @see-function{gtk-tool-palette-set-style}"
+  @see-function{gtk-tool-palette-toolbar-style}"
   (palette (g-object gtk-tool-palette)))
 
 (export 'gtk-tool-palette-unset-style)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkToolPaletteDragTargets
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkToolPaletteDragTargets" gtk-tool-palette-drag-targets
-  (:export t
-   :type-initializer "gtk_tool_palette_drag_targets_get_type")
-  (:items 1)
-  (:groups 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tool-palette-drag-targets atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-tool-palette-drag-targets atdoc:*external-symbols*)
- "@version{2013-11-17}
-  @begin{short}
-    Flags used to specify the supported drag targets.
-  @end{short}
-  @begin{pre}
-(define-g-flags \"GtkToolPaletteDragTargets\" gtk-tool-palette-drag-targets
-  (:export t
-   :type-initializer \"gtk_tool_palette_drag_targets_get_type\")
-  (:items 1)
-  (:groups 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:items]{Support drag of items.}
-    @entry[:groups]{Support drag of groups.}
-  @end{table}
-  @see-class{gtk-tool-palette}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_add_drag_dest ()
@@ -619,22 +550,22 @@
 
 (defcfun ("gtk_tool_palette_add_drag_dest" gtk-tool-palette-add-drag-dest) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @argument[widget]{a @class{gtk-widget} which should be a drag destination for
     @arg{palette}}
-  @argument[flags]{the flags that specify what actions GTK+ should take for
-    drops on that @arg{widget}}
+  @argument[flags]{the flags of type @symbol{gtk-dest-defaults} that specify
+    what actions GTK+ should take for drops on that @arg{widget}}
   @argument[targets]{the @symbol{gtk-tool-palette-drag-targets} which the
     @arg{widget} should support}
   @argument[actions]{the @symbol{gdk-drag-action} flags which the @arg{widget}
     should suppport}
   @begin{short}
-    Sets @arg{palette} as drag source (see the function
-    @fun{gtk-tool-palette-set-drag-source}) and sets @arg{widget} as a drag
-    destination for drags from palette. See the function
-    @fun{gtk-drag-dest-set}.
+    Sets the tool palette as drag source and sets a widget as a drag
+    destination for drags from the tool palette.
   @end{short}
+  See the functions @fun{gtk-tool-palette-set-drag-source} and
+  @fun{gtk-drag-dest-set}.
   @see-class{gtk-tool-palette}
   @see-function{gtk-drag-dest-set}
   @see-function{gtk-tool-palette-set-drag-source}"
@@ -647,20 +578,20 @@
 (export 'gtk-tool-palette-add-drag-dest)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_get_drag_item ()
+;;; gtk_tool_palette_get_drag_item () -> gtk-tool-palette-drag-item
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_palette_get_drag_item" gtk-tool-palette-get-drag-item)
+(defcfun ("gtk_tool_palette_get_drag_item" gtk-tool-palette-drag-item)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[selection]{a @class{gtk-selection-data}}
+  @argument[selection]{a @class{gtk-selection-data} object}
   @return{The dragged item in @arg{selection}.}
   @begin{short}
-    Get the dragged item from the @arg{selection}. This could be a
-    @class{gtk-tool-item} widget or a @class{gtk-tool-item-group}.
+    Get the dragged item from @arg{selection}.
   @end{short}
+  This could be a @class{gtk-tool-item} or a @class{gtk-tool-item-group} widget.
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item}
   @see-class{gtk-tool-item-group}
@@ -668,18 +599,19 @@
   (palette (g-object gtk-tool-palette))
   (selection (g-boxed-foreign gtk-selection-data)))
 
-(export 'gtk-tool-palette-get-drag-item)
+(export 'gtk-tool-palette-drag-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drag_target_group ()
+;;; -> gtk-tool-palette-drag-target-group
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_palette_get_drag_target_group"
-           gtk-tool-palette-get-drag-target-group)
+           gtk-tool-palette-drag-target-group)
     (g-boxed-foreign gtk-target-entry)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @return{The @class{gtk-target-entry} for a dragged group.}
+ "@version{2020-9-5}
+  @return{The @class{gtk-target-entry} structure for a dragged group.}
   @begin{short}
     Get the target entry for a dragged @class{gtk-tool-item-group} widget.
   @end{short}
@@ -687,39 +619,41 @@
   @see-class{gtk-tool-item-group}
   @see-class{gtk-target-entry}")
 
-(export 'gtk-tool-palette-get-drag-target-group)
+(export 'gtk-tool-palette-drag-target-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drag_target_item ()
+;;; -> gtk-tool-palette-drag-target-item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_palette_get_drag_target_item"
-           gtk-tool-palette-get-drag-target-item)
+           gtk-tool-palette-drag-target-item)
     (g-boxed-foreign gtk-target-entry)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
-  @return{The @class{gtk-target-entry} for a dragged item.}
+ "@version{2020-9-5}
+  @return{The @class{gtk-target-entry} structure for a dragged item.}
   @begin{short}
     Gets the target entry for a dragged @class{gtk-tool-item} widget.
   @end{short}
   @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item}")
+  @see-class{gtk-tool-item}
+  @see-class{gtk-target-entry}")
 
-(export 'gtk-tool-palette-get-drag-target-item)
+(export 'gtk-tool-palette-drag-target-item)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_get_drop_group ()
+;;; gtk_tool_palette_get_drop_group () -> gtk-tool-palette-drop-group
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_palette_get_drop_group" gtk-tool-palette-get-drop-group)
+(defcfun ("gtk_tool_palette_get_drop_group" gtk-tool-palette-drop-group)
     (g-object gtk-tool-item-group)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[x]{the x position}
-  @argument[y]{the y position}
-  @return{The @class{gtk-tool-item-group} widget at position or @code{nil} if
-    there is no such group.}
+  @argument[x]{a @code{:int} with the x position}
+  @argument[y]{a @code{:int} with the y position}
+  @return{The @class{gtk-tool-item-group} widget at position
+    (@arg{x}, @arg{y}) or @code{nil} if there is no such group.}
   @begin{short}
     Gets the group at position (@arg{x}, @arg{y}).
   @end{short}
@@ -729,35 +663,35 @@
   (x :int)
   (y :int))
 
-(export 'gtk-tool-palette-get-drop-group)
+(export 'gtk-tool-palette-drop-group)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tool_palette_get_drop_item ()
+;;; gtk_tool_palette_get_drop_item () -> gtk-tool-palette-drop-item
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tool_palette_get_drop_item" gtk-tool-palette-get-drop-item)
+(defcfun ("gtk_tool_palette_get_drop_item" gtk-tool-palette-drop-item)
     (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[x]{the x position}
-  @argument[y]{the y position}
+  @argument[x]{a @code{:int} with the x position}
+  @argument[y]{a @code{:int} with the y position}
   @begin{return}
-    The @class{gtk-tool-item} widget at position or @code{nil} if there is no
-    such item.
+    The @class{gtk-tool-item} widget at position (@arg{x}, @arg{y}) or
+    @code{nil} if there is no such item.
   @end{return}
   @begin{short}
     Gets the item at position (@arg{x}, @arg{y}).
   @end{short}
-  See the function @fun{gtk-tool-palette-get-drop-group}.
+  See also the function @fun{gtk-tool-palette-drop-group}.
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item}
-  @see-function{gtk-tool-palette-get-drop-group}"
+  @see-function{gtk-tool-palette-drop-group}"
   (palette (g-object gtk-tool-palette))
   (x :int)
   (y :int))
 
-(export 'gtk-tool-palette-get-drop-item)
+(export 'gtk-tool-palette-drop-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_drag_source ()
@@ -766,7 +700,7 @@
 (defcfun ("gtk_tool_palette_set_drag_source" gtk-tool-palette-set-drag-source)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-17}
+ "@version{2020-9-5}
   @argument[palette]{a @class{gtk-tool-palette} widget}
   @argument[targets]{the @symbol{gtk-tool-palette-drag-targets} which the widget
     should support}

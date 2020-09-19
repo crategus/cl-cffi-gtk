@@ -90,7 +90,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-tool-button 'type)
- "@version{2020-1-20}
+ "@version{2020-9-5}
   @begin{short}
     A @sym{gtk-menu-tool-button} is a @class{gtk-tool-item} that contains a
     button and a small additional button with an arrow.
@@ -120,17 +120,21 @@
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
-      The \"show-menu\" signal is emitted before the menu is shown.
-      It can be used to populate the menu on demand, using the function
-      @fun{gtk-menu-tool-button-get-menu}.
-      Note that even if you populate the menu dynamically in this way, you must
-      set an empty menu on the @sym{gtk-menu-tool-button} beforehand, since the
-      arrow is made insensitive if the menu is not set.
+      The \"show-menu\" signal is emitted before the menu is shown. It can be
+      used to populate the menu on demand, using the function
+      @fun{gtk-menu-tool-button-menu}. Note that even if you populate the menu
+      dynamically in this way, you must set an empty menu on the
+      @sym{gtk-menu-tool-button} beforehand, since the arrow is made
+      insensitive if the menu is not set.
       @begin[code]{table}
-        @entry[button]{The object on which the signal is emitted.}
+        @entry[button]{The @sym{gtk-menu-tool-button} widget on which the
+          signal is emitted.}
       @end{table}
   @end{dictionary}
-  @see-slot{gtk-menu-tool-button-menu}")
+  @see-slot{gtk-menu-tool-button-menu}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-button}
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -138,15 +142,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "menu" 'gtk-menu-tool-button) 't)
- "The @code{menu} property of type @class{gtk-menu-tool-button}
-  (Read / Write) @br{}
+ "The @code{menu} property of type @class{gtk-menu-tool-button} (Read / Write)
+  @br{}
   The dropdown menu.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-tool-button-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tool-button-menu 'function)
- "@version{2020-1-20}
+ "@version{2020-9-5}
   @syntax[]{(gtk-menu-tool-button-menu object) => menu}
   @syntax[]{(setf (gtk-menu-tool-button-menu object) menu)}
   @argument[object]{a @class{gtk-menu-tool-button} widget}
@@ -156,14 +160,14 @@
     @class{gtk-menu-tool-button} class.
   @end{short}
 
-  The @sym{gtk-menu-tool-button-menu} slot access function
-  gets the @class{gtk-menu} associated with @arg{button}.
-
-  The @sym{(setf gtk-menu-tool-button-menu)} slot access function
-  sets the @class{gtk-menu} that is popped up when the user clicks on the arrow.
+  The slot access function @sym{gtk-menu-tool-button-menu} gets the menu
+  associated with @arg{button}. The slot access function
+  @sym{(setf gtk-menu-tool-button-menu)} sets the menu that is popped up when
+  the user clicks on the arrow.
 
   If @arg{menu} is @code{nil}, the arrow button becomes insensitive.
-  @see-class{gtk-menu-tool-button}")
+  @see-class{gtk-menu-tool-button}
+  @see-class{gtk-menu}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_new ()
@@ -171,14 +175,14 @@
 
 (defun gtk-menu-tool-button-new (icon-widget label)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[icon-widget]{a widget that will be used as icon widget,
-    or @code{nil}}
-  @argument[label]{a string that will be used as label, or @code{nil}}
-  @return{The new @class{gtk-menu-tool-button} widget}
+ "@version{2020-9-5}
+  @argument[icon-widget]{a @class{gtk-widget} object that will be used as icon
+    widget, or @code{nil}}
+  @argument[label]{a @coce{:string} that will be used as label, or @code{nil}}
+  @return{The new @class{gtk-menu-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-menu-tool-button} using @arg{icon-widget} as icon
-    and @arg{label} as label.
+    Creates a new menu tool button using @arg{icon-widget} as icon and
+    @arg{label} as label.
   @end{short}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-new-from-stock}"
@@ -199,18 +203,18 @@
 
 (defun gtk-menu-tool-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation
- "@version{2019-4-5}
-  @argument[stock-id]{the name of a stock item}
+ "@version{2020-9-5}
+  @argument[stock-id]{a @code{:string} with the name of a stock item}
   @return{The new @class{gtk-menu-tool-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-menu-tool-button}.
+    Creates a new menu tool button.
   @end{short}
-  The new @class{gtk-menu-tool-button} will contain an icon and label from the
-  stock item indicated by @arg{stock-id}.
+  The new menu tool button will contain an icon and label from the stock item
+  indicated by @arg{stock-id}.
   @begin[Warning]{dictionary}
-    The @sym{gtk-menu-tool-button-new-from-stock} function has been deprecated
+    The function @sym{gtk-menu-tool-button-new-from-stock} has been deprecated
     since version 3.10 and should not be used in newly-written code. Use the
-    @fun{gtk-menu-tool-button-new} function instead.
+    function @fun{gtk-menu-tool-button-new} instead.
   @end{dictionary}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-new}"
@@ -226,16 +230,16 @@
 (defcfun ("gtk_menu_tool_button_set_arrow_tooltip_text"
            gtk-menu-tool-button-set-arrow-tooltip-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
+ "@version{2020-9-5}
   @argument[button]{a @class{gtk-menu-tool-button} widget}
-  @argument[text]{text to be used as tooltip text for @arg{button}'s
-    arrow button}
+  @argument[text]{a @code{:string} with the text to be used as tooltip text for
+    @arg{button}'s arrow button}
   @begin{short}
     Sets the tooltip text to be used as tooltip for the arrow button which pops
     up the menu.
   @end{short}
-  See the @fun{gtk-tool-item-set-tooltip-text} function for setting a tooltip
-  on the whole @class{gtk-menu-tool-button}.
+  See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip
+  on the whole menu tool button.
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-tool-item-set-tooltip-text}"
   (button (g-object gtk-menu-tool-button))
@@ -250,16 +254,16 @@
 (defcfun ("gtk_menu_tool_button_set_arrow_tooltip_markup"
            gtk-menu-tool-button-set-arrow-tooltip-markup) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
+ "@version{2020-9-5}
   @argument[button]{a @class{gtk-menu-tool-button} widget}
-  @argument[markup]{markup text to be used as tooltip text for @arg{button}'s
-    arrow button}
+  @argument[markup]{a @code{:string} with the markup text to be used as tooltip
+    text for @arg{button}'s arrow button}
   @begin{short}
     Sets the tooltip markup text to be used as tooltip for the arrow button
     which pops up the menu.
   @end{short}
-  See the @fun{gtk-tool-item-set-tooltip-text} function for setting a tooltip
-  on the whole @class{gtk-menu-tool-button}.
+  See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip
+  on the whole menu tool button.
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-tool-item-set-tooltip-text}"
   (button (g-object gtk-menu-tool-button))
