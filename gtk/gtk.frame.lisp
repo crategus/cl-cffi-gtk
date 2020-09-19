@@ -176,7 +176,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label 'function)
- "@version{2020-9-5}
+ "@version{2020-9-19}
   @syntax[]{(gtk-frame-label object) => label}
   @syntax[]{(setf (gtk-frame-label object) label)}
   @argument[object]{a @class{gtk-frame} widget}
@@ -193,8 +193,9 @@
   removed.
 
   The frame will have a @class{gtk-label} widget for the label widget if a
-  non-@code{nil} argument was passed to the @fun{gtk-frame-new} funcion.
+  non-@code{nil} argument was passed to the function @fun{gtk-frame-new}.
   @see-class{gtk-frame}
+  @see-function{gtk-frame-new}
   @see-function{gtk-frame-label-widget}")
 
 ;;; --- gtk-frame-label-widget -------------------------------------------------
