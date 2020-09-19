@@ -749,7 +749,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-state-type atdoc:*external-symbols*)
- "@version{2020-1-18}
+ "@version{2020-9-18}
   @begin{short}
     This type indicates the current state of a widget.
   @end{short}
@@ -757,6 +757,12 @@
   enumeration is also used to identify different colors in a deprecated
   @code{GtkStyle} object for drawing, so states can be used for subparts of a
   widget as well as entire widgets.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-state-type} enumeration has been deprecated since version 3.14
+    and should not be used in newly-written code. All APIs that are using this
+    enumeration have been deprecated in favor of alternatives using the
+    @symbol{gtk-state-flags} flags.
+  @end{dictionary}
   @begin{pre}
 (define-g-enum \"GtkStateType\" gtk-state-type
   (:export t
@@ -784,12 +790,6 @@
       buttons requiring the user attention.}
     @entry[:focused]{The widget has the keyboard focus.}
   @end{table}
-  @begin[Warning:]{dictionary}
-    The @sym{gtk-state-type} enumeration has been deprecated since version 3.14
-    and should not be used in newly-written code. All APIs that are using this
-    enumeration have been deprecated in favor of alternatives using the
-    @symbol{gtk-state-flags} enumeration.
-  @end{dictionary}
   @see-symbol{gtk-state-flags}")
 
 ;;; ----------------------------------------------------------------------------
