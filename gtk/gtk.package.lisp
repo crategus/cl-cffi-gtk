@@ -2138,9 +2138,7 @@ setup_tree (void)
       A visible column in a @class{gtk-tree-view} widget.
 
       @about-symbol{gtk-tree-view-column-sizing}
-
       @about-class{gtk-tree-view-column}
-
       @about-generic{gtk-tree-view-column-alignment}
       @about-generic{gtk-tree-view-column-cell-area}
       @about-generic{gtk-tree-view-column-clickable}
@@ -2160,7 +2158,6 @@ setup_tree (void)
       @about-generic{gtk-tree-view-column-widget}
       @about-generic{gtk-tree-view-column-width}
       @about-generic{gtk-tree-view-column-x-offset}
-
       @about-function{gtk-tree-view-column-new}
       @about-function{gtk-tree-view-column-new-with-area}
       @about-function{gtk-tree-view-column-new-with-attributes}
@@ -2186,9 +2183,8 @@ setup_tree (void)
 
       @about-symbol{gtk-tree-view-drop-position}
       @about-symbol{gtk-tree-view-private}
-
+      @about-symbol{gtk-tree-view-grid-lines}
       @about-class{gtk-tree-view}
-
       @about-generic{gtk-tree-view-activate-on-single-click}
       @about-generic{gtk-tree-view-enable-grid-lines}
       @about-generic{gtk-tree-view-enable-search}
@@ -2207,10 +2203,9 @@ setup_tree (void)
       @about-generic{gtk-tree-view-search-column}
       @about-generic{gtk-tree-view-show-expanders}
       @about-generic{gtk-tree-view-tooltip-column}
-
       @about-function{gtk-tree-view-new}
       @about-function{gtk-tree-view-new-with-model}
-      @about-function{gtk-tree-view-get-selection}
+      @about-function{gtk-tree-view-selection}
       @about-function{gtk-tree-view-get-hadjustment}
       @about-function{gtk-tree-view-set-hadjustment}
       @about-function{gtk-tree-view-get-vadjustment}
@@ -2221,9 +2216,9 @@ setup_tree (void)
       @about-function{gtk-tree-view-insert-column}
       @about-function{gtk-tree-view-insert-column-with-attributes}
       @about-function{gtk-tree-view-insert-column-with-data-func}
-      @about-function{gtk-tree-view-get-n-columns}
-      @about-function{gtk-tree-view-get-column}
-      @about-function{gtk-tree-view-get-columns}
+      @about-function{gtk-tree-view-n-columns}
+      @about-function{gtk-tree-view-column}
+      @about-function{gtk-tree-view-columns}
       @about-function{gtk-tree-view-move-column-after}
       @about-function{gtk-tree-view-set-column-drag-function}
       @about-function{gtk-tree-view-scroll-to-point}
@@ -2239,12 +2234,12 @@ setup_tree (void)
       @about-function{gtk-tree-view-collapse-row}
       @about-function{gtk-tree-view-map-expanded-rows}
       @about-function{gtk-tree-view-row-expanded}
-      @about-function{gtk-tree-view-get-path-at-pos}
+      @about-function{gtk-tree-view-path-at-pos}
       @about-function{gtk-tree-view-is-blank-at-pos}
-      @about-function{gtk-tree-view-get-cell-area}
-      @about-function{gtk-tree-view-get-background-area}
-      @about-function{gtk-tree-view-get-visible-rect}
-      @about-function{gtk-tree-view-get-visible-range}
+      @about-function{gtk-tree-view-cell-area}
+      @about-function{gtk-tree-view-background-area}
+      @about-function{gtk-tree-view-visible-rect}
+      @about-function{gtk-tree-view-visible-range}
       @about-function{gtk-tree-view-bin-window}
       @about-function{gtk-tree-view-convert-bin-window-to-tree-coords}
       @about-function{gtk-tree-view-convert-bin-window-to-widget-coords}
@@ -2270,14 +2265,10 @@ setup_tree (void)
       @about-function{gtk-tree-view-get-row-separator-func}
       @about-function{gtk-tree-view-set-row-separator-func}
       @about-function{gtk-tree-view-is-rubber-banding-active}
-
-      @about-symbol{gtk-tree-view-grid-lines}
-
-      @about-function{gtk-tree-view-get-grid-lines}
-      @about-function{gtk-tree-view-set-grid-lines}
+      @about-function{gtk-tree-view-grid-lines}
       @about-function{gtk-tree-view-set-tooltip-row}
       @about-function{gtk-tree-view-set-tooltip-cell}
-      @about-function{gtk-tree-view-get-tooltip-context}
+      @about-function{gtk-tree-view-tooltip-context}
     @end{subsection}
     @begin[GtkTreeView drag and drop]{subsection}
       Interfaces for drag-and-drop support in @class{gtk-tree-view}.
@@ -2854,19 +2845,17 @@ setup_tree (void)
       @about-function{gtk-menu-set-screen}
       @about-function{gtk-menu-reorder-child}
       @about-function{gtk-menu-attach}
-
       @about-function{gtk-menu-popup-at-rect}
       @about-function{gtk-menu-popup-at-widget}
       @about-function{gtk-menu-popup-at-pointer}
       @about-function{gtk-menu-popup-for-device}
       @about-function{gtk-menu-popup}
       @about-function{gtk-menu-place-on-monitor}
-
       @about-function{gtk-menu-popdown}
       @about-function{gtk-menu-reposition}
       @about-function{gtk-menu-attach-to-widget}
       @about-function{gtk-menu-detach}
-      @about-function{gtk-menu-get-for-attach-widget}
+      @about-function{gtk-menu-for-attach-widget}
     @end{subsection}
     @begin[GtkMenuBar]{subsection}
       A subclass of @class{gtk-menu-shell} which holds @class{gtk-menu-item}
@@ -2943,190 +2932,125 @@ setup_tree (void)
       Interface for containers containing GtkToolItem widgets.
 
       @about-class{gtk-tool-shell}
-      @about-class{gtk-tool-shell-iface}
-      @about-function{gtk-tool-shell-get-ellipsize-mode}
-      @about-function{gtk-tool-shell-get-icon-size}
-      @about-function{gtk-tool-shell-get-orientation}
+      @about-function{gtk-tool-shell-ellipsize-mode}
+      @about-function{gtk-tool-shell-icon-size}
+      @about-function{gtk-tool-shell-orientation}
       @about-function{gtk-tool-shell-relief-style}
-      @about-function{gtk-tool-shell-get-style}
-      @about-function{gtk-tool-shell-get-text-alignment}
-      @about-function{gtk-tool-shell-get-text-orientation}
+      @about-function{gtk-tool-shell-style}
+      @about-function{gtk-tool-shell-text-alignment}
+      @about-function{gtk-tool-shell-text-orientation}
       @about-function{gtk-tool-shell-rebuild-menu}
-      @about-function{gtk-tool-shell-get-text-size-group}
+      @about-function{gtk-tool-shell-text-size-group}
     @end{subsection}
     @begin[GtkToolbar]{subsection}
       Create bars of buttons and other widgets.
 
       @about-symbol{gtk-toolbar-space-style}
       @about-class{gtk-toolbar}
-
       @about-generic{gtk-toolbar-icon-size}
       @about-generic{gtk-toolbar-icon-size-set}
       @about-generic{gtk-toolbar-show-arrow}
       @about-generic{gtk-toolbar-toolbar-style}
-
       @about-function{gtk-toolbar-child-expand}
       @about-function{gtk-toolbar-child-homogeneous}
-
       @about-function{gtk-toolbar-new}
       @about-function{gtk-toolbar-insert}
-      @about-function{gtk-toolbar-get-item-index}
-      @about-function{gtk-toolbar-get-n-items}
-      @about-function{gtk-toolbar-get-nth-item}
-      @about-function{gtk-toolbar-get-drop-index}
+      @about-function{gtk-toolbar-item-index}
+      @about-function{gtk-toolbar-n-items}
+      @about-function{gtk-toolbar-nth-item}
+      @about-function{gtk-toolbar-drop-index}
       @about-function{gtk-toolbar-set-drop-highlight-item}
-      @about-function{gtk-toolbar-set-show-arrow}
       @about-function{gtk-toolbar-unset-icon-size}
-      @about-function{gtk-toolbar-get-show-arrow}
-      @about-function{gtk-toolbar-get-style}
-      @about-function{gtk-toolbar-get-icon-size}
       @about-function{gtk-toolbar-relief-style}
-      @about-function{gtk-toolbar-set-style}
-      @about-function{gtk-toolbar-set-icon-size}
       @about-function{gtk-toolbar-unset-style}
     @end{subsection}
     @begin[GtkToolItem]{subsection}
       The base class of widgets that can be added to @class{gtk-tool-shell}.
 
       @about-class{gtk-tool-item}
-
       @about-generic{gtk-tool-item-is-important}
       @about-generic{gtk-tool-item-visible-horizontal}
       @about-generic{gtk-tool-item-visible-vertical}
-
       @about-function{gtk-tool-item-new}
-      @about-function{gtk-tool-item-set-homogeneous}
-      @about-function{gtk-tool-item-get-homogeneous}
-      @about-function{gtk-tool-item-set-expand}
-      @about-function{gtk-tool-item-get-expand}
+      @about-function{gtk-tool-item-homogeneous}
+      @about-function{gtk-tool-item-expand}
       @about-function{gtk-tool-item-set-tooltip-text}
       @about-function{gtk-tool-item-set-tooltip-markup}
-      @about-function{gtk-tool-item-set-use-drag-window}
-      @about-function{gtk-tool-item-get-use-drag-window}
-      @about-function{gtk-tool-item-set-visible-horizontal}
-      @about-function{gtk-tool-item-get-visible-horizontal}
-      @about-function{gtk-tool-item-set-visible-vertical}
-      @about-function{gtk-tool-item-get-visible-vertical}
-      @about-function{gtk-tool-item-set-is-important}
-      @about-function{gtk-tool-item-get-is-important}
-      @about-function{gtk-tool-item-get-ellipsize-mode}
-      @about-function{gtk-tool-item-get-icon-size}
-      @about-function{gtk-tool-item-get-orientation}
-      @about-function{gtk-tool-item-get-toolbar-style}
+      @about-function{gtk-tool-item-use-drag-window}
+      @about-function{gtk-tool-item-ellipsize-mode}
+      @about-function{gtk-tool-item-icon-size}
+      @about-function{gtk-tool-item-orientation}
+      @about-function{gtk-tool-item-toolbar-style}
       @about-function{gtk-tool-item-relief-style}
-      @about-function{gtk-tool-item-get-text-alignment}
-      @about-function{gtk-tool-item-get-text-orientation}
+      @about-function{gtk-tool-item-text-alignment}
+      @about-function{gtk-tool-item-text-orientation}
       @about-function{gtk-tool-item-retrieve-proxy-menu-item}
-      @about-function{gtk-tool-item-get-proxy-menu-item}
-      @about-function{gtk-tool-item-set-proxy-menu-item}
+      @about-function{gtk-tool-item-proxy-menu-item}
       @about-function{gtk-tool-item-rebuild-menu}
       @about-function{gtk-tool-item-toolbar-reconfigured}
-      @about-function{gtk-tool-item-get-text-size-group}
+      @about-function{gtk-tool-item-text-size-group}
     @end{subsection}
     @begin[GtkToolPalette]{subsection}
       A tool palette with categories.
 
+      @about-symbol{gtk-tool-palette-drag-targets}
       @about-class{gtk-tool-palette}
-
       @about-generic{gtk-tool-palette-icon-size}
       @about-generic{gtk-tool-palette-icon-size-set}
       @about-generic{gtk-tool-palette-toolbar-style}
-
       @about-function{gtk-tool-palette-child-exclusive}
       @about-function{gtk-tool-palette-child-expand}
-
       @about-function{gtk-tool-palette-new}
-      @about-function{gtk-tool-palette-get-exclusive}
-      @about-function{gtk-tool-palette-set-exclusive}
-      @about-function{gtk-tool-palette-get-expand}
-      @about-function{gtk-tool-palette-set-expand}
-      @about-function{gtk-tool-palette-get-group-position}
-      @about-function{gtk-tool-palette-set-group-position}
+      @about-function{gtk-tool-palette-group-position}
       @about-function{gtk-tool-palette-unset-icon-size}
-      @about-function{gtk-tool-palette-get-style}
-      @about-function{gtk-tool-palette-set-style}
       @about-function{gtk-tool-palette-unset-style}
       @about-function{gtk-tool-palette-add-drag-dest}
-      @about-function{gtk-tool-palette-get-drag-item}
-      @about-function{gtk-tool-palette-get-drag-target-group}
-      @about-function{gtk-tool-palette-get-drag-target-item}
-      @about-function{gtk-tool-palette-get-drop-group}
-      @about-function{gtk-tool-palette-get-drop-item}
-      @about-symbol{gtk-tool-palette-drag-targets}
+      @about-function{gtk-tool-palette-drag-item}
+      @about-function{gtk-tool-palette-drag-target-group}
+      @about-function{gtk-tool-palette-drag-target-item}
+      @about-function{gtk-tool-palette-drop-group}
+      @about-function{gtk-tool-palette-drop-item}
       @about-function{gtk-tool-palette-set-drag-source}
-      @about-function{gtk-tool-palette-get-hadjustment}
-      @about-function{gtk-tool-palette-get-vadjustment}
     @end{subsection}
     @begin[GtkToolItemGroup]{subsection}
       A sub container used in a tool palette.
 
       @about-class{gtk-tool-item-group}
-
       @about-generic{gtk-tool-item-group-collapsed}
       @about-generic{gtk-tool-item-group-ellipsize}
       @about-generic{gtk-tool-item-group-header-relief}
       @about-generic{gtk-tool-item-group-label}
       @about-generic{gtk-tool-item-group-label-widget}
-
       @about-function{gtk-tool-item-group-child-expand}
       @about-function{gtk-tool-item-group-child-fill}
       @about-function{gtk-tool-item-group-child-homogeneous}
       @about-function{gtk-tool-item-group-child-new-row}
       @about-function{gtk-tool-item-group-child-position}
-
-      @about-function{gtk-tool-item-group-get-collapsed}
-      @about-function{gtk-tool-item-group-get-drop-item}
-      @about-function{gtk-tool-item-group-get-ellipsize}
-      @about-function{gtk-tool-item-group-get-item-position}
-      @about-function{gtk-tool-item-group-get-n-items}
-      @about-function{gtk-tool-item-group-get-label}
-      @about-function{gtk-tool-item-group-get-label-widget}
-      @about-function{gtk-tool-item-group-get-nth-item}
-      @about-function{gtk-tool-item-group-get-header-relief}
-      @about-function{gtk-tool-item-group-insert}
       @about-function{gtk-tool-item-group-new}
-      @about-function{gtk-tool-item-group-set-collapsed}
-      @about-function{gtk-tool-item-group-set-ellipsize}
-      @about-function{gtk-tool-item-group-set-item-position}
-      @about-function{gtk-tool-item-group-set-label}
-      @about-function{gtk-tool-item-group-set-label-widget}
-      @about-function{gtk-tool-item-group-set-header-relief}
+      @about-function{gtk-tool-item-group-drop-item}
+      @about-function{gtk-tool-item-group-n-items}
+      @about-function{gtk-tool-item-group-nth-item}
+      @about-function{gtk-tool-item-group-insert}
     @end{subsection}
     @begin[GtkSeparatorToolItem]{subsection}
       A toolbar item that separates groups of other toolbar items.
 
       @about-class{gtk-separator-tool-item}
-
       @about-generic{gtk-separator-tool-item-draw}
-
       @about-function{gtk-separator-tool-item-new}
     @end{subsection}
     @begin[GtkToolButton]{subsection}
       A @class{gtk-tool-item} subclass that displays buttons.
 
       @about-class{gtk-tool-button}
-
       @about-generic{gtk-tool-button-icon-name}
       @about-generic{gtk-tool-button-icon-widget}
       @about-generic{gtk-tool-button-label}
       @about-generic{gtk-tool-button-label-widget}
       @about-generic{gtk-tool-button-stock-id}
       @about-generic{gtk-tool-button-use-underline}
-
       @about-function{gtk-tool-button-new}
       @about-function{gtk-tool-button-new-from-stock}
-      @about-function{gtk-tool-button-set-label}
-      @about-function{gtk-tool-button-get-label}
-      @about-function{gtk-tool-button-set-use-underline}
-      @about-function{gtk-tool-button-get-use-underline}
-      @about-function{gtk-tool-button-set-stock-id}
-      @about-function{gtk-tool-button-get-stock-id}
-      @about-function{gtk-tool-button-set-icon-name}
-      @about-function{gtk-tool-button-get-icon-name}
-      @about-function{gtk-tool-button-set-icon-widget}
-      @about-function{gtk-tool-button-get-icon-widget}
-      @about-function{gtk-tool-button-set-label-widget}
-      @about-function{gtk-tool-button-get-label-widget}
     @end{subsection}
     @begin[GtkMenuToolButton]{subsection}
       A @class{gtk-tool-item} containing a button with an additional dropdown
@@ -3139,13 +3063,11 @@ setup_tree (void)
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-text}
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-markup}
     @end{subsection}
-    @begin[GtkToogleToolButton]{subsection}
+    @begin[GtkToggleToolButton]{subsection}
       A @class{gtk-tool-item} containing a toggle button.
 
       @about-class{gtk-toggle-tool-button}
-
       @about-generic{gtk-toggle-tool-button-active}
-
       @about-function{gtk-toggle-tool-button-new}
       @about-function{gtk-toggle-tool-button-new-from-stock}
     @end{subsection}
@@ -3414,8 +3336,7 @@ setup_tree (void)
       @about-generic{gtk-frame-label-yalign}
       @about-generic{gtk-frame-shadow-type}
       @about-function{gtk-frame-new}
-      @about-function{gtk-frame-set-label-align}
-      @about-function{gtk-frame-get-label-align}
+      @about-function{gtk-frame-label-align}
     @end{subsection}
     @begin[GtkSeparator]{subsection}
       A separator widget.
@@ -3734,7 +3655,6 @@ setup_tree (void)
       Toplevel which shows help for shortcuts
 
       @about-class{gtk-shortcuts-window}
-
       @about-generic{gtk-shortcuts-window-section-name}
       @about-generic{gtk-shortcuts-window-view-name}
     @end{subsection}
@@ -3742,7 +3662,6 @@ setup_tree (void)
       Represents an application mode in a GtkShortcutsWindow
 
       @about-class{gtk-shortcuts-section}
-
       @about-generic{gtk-shortcuts-section-max-height}
       @about-generic{gtk-shortcuts-section-section-name}
       @about-generic{gtk-shortcuts-section-title}
@@ -3752,7 +3671,6 @@ setup_tree (void)
       Represents a group of shortcuts in a GtkShortcutsWindow
 
       @about-class{gtk-shortcuts-group}
-
       @about-generic{gtk-shortcuts-group-accel-size-group}
       @about-generic{gtk-shortcuts-group-height}
       @about-generic{gtk-shortcuts-group-title}
@@ -3764,7 +3682,6 @@ setup_tree (void)
 
       @about-symbol{gtk-shortcut-type}
       @about-class{gtk-shortcuts-shortcut}
-
       @about-generic{gtk-shortcuts-shortcut-accel-size-group}
       @about-generic{gtk-shortcuts-shortcut-accelerator}
       @about-generic{gtk-shortcuts-shortcut-action-name}
@@ -3968,7 +3885,7 @@ setup_tree (void)
       @about-function{gtk-widget-queue-resize-no-redraw}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
-      @about-generic{gtk-widget-size-request}
+      @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
       @about-function{gtk-widget-add-accelerator}
@@ -3983,18 +3900,19 @@ setup_tree (void)
       @about-function{gtk-widget-is-focus}
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
-      @about-function{gtk-widget-set-state}
+      @about-function{gtk-widget-state}
       @about-function{gtk-widget-parent-window}
       @about-function{gtk-widget-add-events}
+
       @about-function{gtk-widget-set-device-events}
       @about-function{gtk-widget-get-device-events}
+
       @about-function{gtk-widget-add-device-events}
       @about-function{gtk-widget-set-device-enabled}
       @about-function{gtk-widget-get-device-enabled}
       @about-function{gtk-widget-toplevel}
       @about-function{gtk-widget-ancestor}
-      @about-function{gtk-widget-get-visual}
-      @about-function{gtk-widget-set-visual}
+      @about-function{gtk-widget-visual}
       @about-function{gtk-widget-pointer}
       @about-function{gtk-widget-is-ancestor}
       @about-function{gtk-widget-translate-coordinates}
@@ -4003,14 +3921,12 @@ setup_tree (void)
       @about-function{gtk-widget-ensure-style}
       @about-function{gtk-widget-get-style}
       @about-function{gtk-widget-reset-rc-styles}
-      @about-function{gtk-widget-get-default-style}
+      @about-function{gtk-widget-default-style}
       @about-function{gtk-widget-direction}
       @about-function{gtk-widget-default-direction}
       @about-function{gtk-widget-shape-combine-region}
       @about-function{gtk-widget-input-shape-combine-region}
-      @about-function{gtk-widget-path}
-      @about-function{gtk-widget-class-path}
-      @about-function{gtk-widget-get-composite-name}
+      @about-function{gtk-widget-composite-name}
       @about-function{gtk-widget-override-background-color}
       @about-function{gtk-widget-override-color}
       @about-function{gtk-widget-override-font}
@@ -4025,7 +3941,7 @@ setup_tree (void)
       @about-function{gtk-widget-modify-font}
       @about-function{gtk-widget-modify-cursor}
       @about-function{gtk-widget-create-pango-context}
-      @about-function{gtk-widget-get-pango-context}
+      @about-function{gtk-widget-pango-context}
       @about-function{gtk-widget-create-pango-layout}
       @about-function{gtk-widget-render-icon}
       @about-function{gtk-widget-render-icon-pixbuf}
@@ -4034,7 +3950,6 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw-area}
       @about-function{gtk-widget-queue-draw-region}
       @about-function{gtk-widget-set-redraw-on-allocate}
-      @about-function{gtk-widget-set-composite-name}
       @about-function{gtk-widget-mnemonic-activate}
       @about-function{gtk-widget-class-install-style-property}
       @about-function{gtk-widget-class-install-style-property-parser}
@@ -4044,23 +3959,22 @@ setup_tree (void)
       @about-function{gtk-widget-send-expose}
       @about-function{gtk-widget-send-focus-change}
       @about-function{gtk-widget-style-get}
-      @about-function{gtk-widget-style-get-property}
+      @about-function{gtk-widget-style-property}
       @about-function{gtk-widget-style-get-valist}
       @about-function{gtk-widget-style-attach}
       @about-function{gtk-widget-class-set-accessible-type}
       @about-function{gtk-widget-class-set-accessible-role}
-      @about-function{gtk-widget-get-accessible}
+      @about-function{gtk-widget-accessible}
       @about-function{gtk-widget-child-focus}
       @about-function{gtk-widget-child-notify}
       @about-function{gtk-widget-freeze-child-notify}
-      @about-function{gtk-widget-get-child-visible}
+      @about-function{gtk-widget-child-visible}
       @about-function{gtk-widget-settings}
-      @about-function{gtk-widget-get-clipboard}
+      @about-function{gtk-widget-clipboard}
       @about-function{gtk-widget-display}
-      @about-function{gtk-widget-get-root-window}
-      @about-function{gtk-widget-get-screen}
+      @about-function{gtk-widget-root-window}
+      @about-function{gtk-widget-screen}
       @about-function{gtk-widget-has-screen}
-      @about-function{gtk-widget-set-child-visible}
       @about-function{gtk-widget-thaw-child-notify}
       @about-function{gtk-widget-list-mnemonic-labels}
       @about-function{gtk-widget-add-mnemonic-label}
@@ -4074,18 +3988,18 @@ setup_tree (void)
       @about-function{gtk-widget-unregister-window}
       @about-function{gtk-cairo-should-draw-window}
       @about-function{gtk-cairo-transform-to-window}
-      @about-function{gtk-widget-get-allocated-width}
-      @about-function{gtk-widget-get-allocated-height}
-      @about-function{gtk-widget-get-allocation}
-      @about-function{gtk-widget-set-allocation}
+      @about-function{gtk-widget-allocated-width}
+      @about-function{gtk-widget-allocated-height}
+      @about-function{gtk-widget-allocation}
+      @about-function{gtk-widget-allocated-baseline}
+      @about-function{gtk-widget-get-clip}
+      @about-function{gtk-widget-set-clip}
       @about-function{gtk-widget-has-window}
       @about-function{gtk-widget-is-sensitive}
-      @about-function{gtk-widget-get-state}
       @about-function{gtk-widget-is-visible}
       @about-function{gtk-widget-set-visible}
-      @about-function{gtk-widget-set-state-flags}
+      @about-function{gtk-widget-state-flags}
       @about-function{gtk-widget-unset-state-flags}
-      @about-function{gtk-widget-get-state-flags}
       @about-function{gtk-widget-has-default}
       @about-function{gtk-widget-has-focus}
       @about-function{gtk-widget-has-visible-focus}
@@ -4093,18 +4007,15 @@ setup_tree (void)
       @about-function{gtk-widget-has-rc-style}
       @about-function{gtk-widget-is-drawable}
       @about-function{gtk-widget-is-toplevel}
-      @about-function{gtk-widget-set-support-multidevice}
-      @about-function{gtk-widget-get-support-multidevice}
-      @about-function{gtk-widget-set-realized}
-      @about-function{gtk-widget-get-realized}
-      @about-function{gtk-widget-set-mapped}
-      @about-function{gtk-widget-get-mapped}
+      @about-function{gtk-widget-support-multidevice}
+      @about-function{gtk-widget-realized}
+      @about-function{gtk-widget-mapped}
       @about-function{gtk-widget-get-requisition}
       @about-function{gtk-widget-device-is-shadowed}
       @about-function{gtk-widget-get-modifier-mask}
       @about-function{gtk-widget-insert-action-group}
-      @about-function{gtk-widget-get-path}
-      @about-function{gtk-widget-get-style-context}
+      @about-function{gtk-widget-path}
+      @about-function{gtk-widget-style-context}
       @about-function{gtk-widget-reset-style}
       @about-function{gtk-requisition-new}
       @about-function{gtk-requisition-copy}
@@ -4120,7 +4031,7 @@ setup_tree (void)
       @about-function{gtk-widget-preferred-width}
       @about-function{gtk-widget-preferred-height-for-width}
       @about-function{gtk-widget-preferred-width-for-height}
-      @about-function{gtk-widget-get-request-mode}
+      @about-function{gtk-widget-request-mode}
       @about-function{gtk-widget-preferred-size}
       @about-function{gtk-distribute-natural-allocation}
       @about-function{gtk-widget-get-valign}
@@ -4221,12 +4132,9 @@ setup_tree (void)
       Base class for input method contexts.
 
       @about-class{gtk-im-context}
-
       @about-generic{gtk-im-context-input-hints}
       @about-generic{gtk-im-context-input-purpose}
-
       @about-symbol{gtk-im-contextInfo}
-
       @about-function{gtk-im-context-set-client-window}
       @about-function{gtk-im-context-get-preedit-string}
       @about-function{gtk-im-context-filter-keypress}
@@ -4245,25 +4153,22 @@ setup_tree (void)
       Toplevel for embedding into other processes.
 
       @about-class{gtk-plug}
-
       @about-generic{gtk-plug-embedded}
       @about-generic{gtk-plug-socket-window}
-
       @about-function{gtk-plug-construct}
       @about-function{gtk-plug-construct-for-display}
       @about-function{gtk-plug-new}
       @about-function{gtk-plug-new-for-display}
-      @about-function{gtk-plug-get-id}
+      @about-function{gtk-plug-id}
     @end{subsection}
     @begin[GtkSocket]{subsection}
       Container for widgets from other processes.
 
       @about-class{gtk-socket}
-
       @about-function{gtk-socket-new}
       @about-function{gtk-socket-add-id}
-      @about-function{gtk-socket-get-id}
-      @about-function{gtk-socket-get-plug-window}
+      @about-function{gtk-socket-id}
+      @about-function{gtk-socket-plug-window}
     @end{subsection}
   @end{section}
   @begin[Recently Used Documents]{section}
@@ -4273,45 +4178,41 @@ setup_tree (void)
       @about-class{gtk-recent-info}
       @about-class{gtk-recent-data}
       @about-symbol{gtk-recent-manager-error}
-
       @about-class{gtk-recent-manager}
-
       @about-generic{gtk-recent-manager-filename}
       @about-generic{gtk-recent-manager-size}
-
       @about-function{gtk-recent-manager-new}
-      @about-function{gtk-recent-manager-get-default}
+      @about-function{gtk-recent-manager-default}
       @about-function{gtk-recent-manager-add-item}
       @about-function{gtk-recent-manager-add-full}
       @about-function{gtk-recent-manager-remove-item}
       @about-function{gtk-recent-manager-lookup-item}
       @about-function{gtk-recent-manager-has-item}
       @about-function{gtk-recent-manager-move-item}
-      @about-function{gtk-recent-manager-get-items}
+      @about-function{gtk-recent-manager-items}
       @about-function{gtk-recent-manager-purge-items}
-
       @about-function{gtk-recent-info-ref}
       @about-function{gtk-recent-info-unref}
-      @about-function{gtk-recent-info-get-uri}
-      @about-function{gtk-recent-info-get-display-name}
-      @about-function{gtk-recent-info-get-description}
-      @about-function{gtk-recent-info-get-mime-type}
-      @about-function{gtk-recent-info-get-added}
-      @about-function{gtk-recent-info-get-modified}
-      @about-function{gtk-recent-info-get-visited}
-      @about-function{gtk-recent-info-get-private-hint}
-      @about-function{gtk-recent-info-get-application-info}
-      @about-function{gtk-recent-info-get-applications}
+      @about-function{gtk-recent-info-uri}
+      @about-function{gtk-recent-info-display-name}
+      @about-function{gtk-recent-info-description}
+      @about-function{gtk-recent-info-mime-type}
+      @about-function{gtk-recent-info-added}
+      @about-function{gtk-recent-info-modified}
+      @about-function{gtk-recent-info-visited}
+      @about-function{gtk-recent-info-private-hint}
+      @about-function{gtk-recent-info-application-info}
+      @about-function{gtk-recent-info-applications}
       @about-function{gtk-recent-info-last-application}
       @about-function{gtk-recent-info-has-application}
       @about-function{gtk-recent-info-create-app-info}
-      @about-function{gtk-recent-info-get-groups}
+      @about-function{gtk-recent-info-groups}
       @about-function{gtk-recent-info-has-group}
-      @about-function{gtk-recent-info-get-icon}
-      @about-function{gtk-recent-info-get-gicon}
-      @about-function{gtk-recent-info-get-short-name}
-      @about-function{gtk-recent-info-get-uri-display}
-      @about-function{gtk-recent-info-get-age}
+      @about-function{gtk-recent-info-icon}
+      @about-function{gtk-recent-info-gicon}
+      @about-function{gtk-recent-info-short-name}
+      @about-function{gtk-recent-info-uri-display}
+      @about-function{gtk-recent-info-age}
       @about-function{gtk-recent-info-is-local}
       @about-function{gtk-recent-info-exists}
       @about-function{gtk-recent-info-match}
@@ -4319,12 +4220,10 @@ setup_tree (void)
     @begin[GtkRecentChooser]{subsection}
       Interface implemented by widgets displaying recently used files.
 
-      @about-symbol{gtk-recent-sort-type}
       @about-symbol{GTK_RECENT_CHOOSER_ERROR}
       @about-symbol{gtk-recent-chooser-error}
-
+      @about-symbol{gtk-recent-sort-type}
       @about-class{gtk-recent-chooser}
-
       @about-generic{gtk-recent-chooser-filter}
       @about-generic{gtk-recent-chooser-limit}
       @about-generic{gtk-recent-chooser-local-only}
@@ -4335,45 +4234,23 @@ setup_tree (void)
       @about-generic{gtk-recent-chooser-show-private}
       @about-generic{gtk-recent-chooser-show-tips}
       @about-generic{gtk-recent-chooser-sort-type}
-
-      @about-function{gtk-recent-chooser-set-show-private}
-      @about-function{gtk-recent-chooser-get-show-private}
-      @about-function{gtk-recent-chooser-set-show-not-found}
-      @about-function{gtk-recent-chooser-get-show-not-found}
-      @about-function{gtk-recent-chooser-set-show-icons}
-      @about-function{gtk-recent-chooser-get-show-icons}
-      @about-function{gtk-recent-chooser-set-select-multiple}
-      @about-function{gtk-recent-chooser-get-select-multiple}
-      @about-function{gtk-recent-chooser-set-local-only}
-      @about-function{gtk-recent-chooser-get-local-only}
-      @about-function{gtk-recent-chooser-set-limit}
-      @about-function{gtk-recent-chooser-get-limit}
-      @about-function{gtk-recent-chooser-set-show-tips}
-      @about-function{gtk-recent-chooser-get-show-tips}
-
-      @about-function{gtk-recent-chooser-set-sort-type}
-      @about-function{gtk-recent-chooser-get-sort-type}
       @about-function{gtk-recent-chooser-set-sort-func}
-      @about-function{gtk-recent-chooser-set-current-uri}
-      @about-function{gtk-recent-chooser-get-current-uri}
-      @about-function{gtk-recent-chooser-get-current-item}
+      @about-function{gtk-recent-chooser-current-uri}
+      @about-function{gtk-recent-chooser-current-item}
       @about-function{gtk-recent-chooser-select-uri}
       @about-function{gtk-recent-chooser-unselect-uri}
       @about-function{gtk-recent-chooser-select-all}
       @about-function{gtk-recent-chooser-unselect-all}
-      @about-function{gtk-recent-chooser-get-items}
-      @about-function{gtk-recent-chooser-get-uris}
+      @about-function{gtk-recent-chooser-items}
+      @about-function{gtk-recent-chooser-uris}
       @about-function{gtk-recent-chooser-add-filter}
       @about-function{gtk-recent-chooser-remove-filter}
       @about-function{gtk-recent-chooser-list-filters}
-      @about-function{gtk-recent-chooser-set-filter}
-      @about-function{gtk-recent-chooser-get-filter}
     @end{subsection}
     @begin[GtkRecentChooserDialog]{subsection}
       Displays recently used files in a dialog.
 
       @about-class{gtk-recent-chooser-dialog}
-
       @about-function{gtk-recent-chooser-dialog-new}
       @about-function{gtk-recent-chooser-dialog-new-for-manager}
     @end{subsection}
@@ -4381,17 +4258,13 @@ setup_tree (void)
       Displays recently used files in a menu.
 
       @about-class{gtk-recent-chooser-menu}
-
       @about-function{gtk-recent-chooser-menu-new}
       @about-function{gtk-recent-chooser-menu-new-for-manager}
-      @about-function{gtk-recent-chooser-menu-get-show-numbers}
-      @about-function{gtk-recent-chooser-menu-set-show-numbers}
     @end{subsection}
     @begin[GtkRecentChooserWidget]{subsection}
       Displays recently used files.
 
       @about-class{gtk-recent-chooser-widget}
-
       @about-function{gtk-recent-chooser-widget-new}
       @about-function{gtk-recent-chooser-widget-new-for-manager}
     @end{subsection}
@@ -4401,7 +4274,6 @@ setup_tree (void)
       @about-symbol{gtk-recent-filter-info}
       @about-symbol{gtk-recent-filter-flags}
       @about-class{gtk-recent-filter}
-
       @about-function{gtk-recent-filter-new}
       @about-function{gtk-recent-filter-get-name}
       @about-function{gtk-recent-filter-set-name}
@@ -4462,43 +4334,37 @@ setup_tree (void)
   @end{section}
   @begin[Gestures and event handling]{section}
     @begin[GtkEventController]{subsection}
-      Self-contained handler of series of events
+      Self-contained handler of series of events.
 
       @about-symbol{gtk-propagation-phase}
       @about-class{gtk-event-controller}
-
       @about-generic{gtk-event-controller-propagation-phase}
       @about-generic{gtk-event-controller-widget}
-
       @about-function{gtk-event-controller-handle-event}
       @about-function{gtk-event-controller-reset}
     @end{subsection}
     @begin[GtkEventControllerKey]{subsection}
-      Event controller for key events
+      Event controller for key events.
 
       @about-class{gtk-event-controller-key}
       @about-function{gtk-event-controller-key-new}
     @end{subsection}
     @begin[GtkEventControllerScroll]{subsection}
-      Event controller for scroll events
+      Event controller for scroll events.
 
       @about-symbol{gtk-event-controller-scroll-flags}
       @about-class{gtk-event-controller-scroll}
-
       @about-generic{gtk-event-controller-scroll-flags}
-
       @about-function{gtk-event-controller-scroll-new}
     @end{subsection}
-
     @begin[GtkEventControllerMotion]{subsection}
       Event controller for motion events
 
       @about-class{gtk-event-controller-motion}
-
       @about-function{gtk-event-controller-motion-new}
     @end{subsection}
     @begin[GtkGesture]{subsection}
-      Base class for gestures
+      Base class for gestures.
 
       @about-symbol{gtk-event-sequence-state}
       @about-class{gtk-gesture}
@@ -4529,96 +4395,77 @@ setup_tree (void)
       @about-generic{gtk-gesture-single-button}
       @about-generic{gtk-gesture-single-exclusive}
       @about-generic{gtk-gesture-single-touch-only}
-      @about-function{gtk-gesture-single-get-current-button}
-      @about-function{gtk-gesture-single-get-current-sequence}
+      @about-function{gtk-gesture-single-current-button}
+      @about-function{gtk-gesture-single-current-sequence}
     @end{subsection}
-
     @begin[GtkGestureDrag]{subsection}
       Drag gesture
 
       @about-class{gtk-gesture-drag}
-
       @about-function{gtk-gesture-drag-new}
-      @about-function{gtk-gesture-drag-get-start-point}
-      @about-function{gtk-gesture-drag-get-offset}
+      @about-function{gtk-gesture-drag-start-point}
+      @about-function{gtk-gesture-drag-offset}
     @end{subsection}
-
     @begin[GtkGestureLongPress]{subsection}
       \"Press and Hold\" gesture
 
       @about-class{gtk-gesture-long-press}
-
       @about-generic{gtk-gesture-long-press-delay-factor}
-
       @about-function{gtk-gesture-long-press-new}
     @end{subsection}
-
     @begin[GtkGestureMultiPress]{subsection}
       Multipress gesture.
 
       @about-class{gtk-gesture-multi-press}
-
       @about-function{gtk-gesture-multi-press-new}
-      @about-function{gtk-gesture-multi-press-set-area}
-      @about-function{gtk-gesture-multi-press-get-area}
+      @about-function{gtk-gesture-multi-press-area}
     @end{subsection}
-
     @begin[GtkGesturePan]{subsection}
       Pan gesture
 
       @about-symbol{gtk-pan-direction}
       @about-class{gtk-gesture-pan}
-
       @about-generic{gtk-gesture-pan-orientation}
-
       @about-function{gtk-gesture-pan-new}
     @end{subsection}
-
     @begin[GtkGestureSwipe]{subsection}
       Swipe gesture
 
       @about-class{gtk-gesture-swipe}
-
       @about-function{gtk-gesture-swipe-new}
-      @about-function{gtk-gesture-swipe-get-velocity}
+      @about-function{gtk-gesture-swipe-velocity}
     @end{subsection}
     @begin[GtkGestureRotate]{subsection}
       Rotate gesture.
 
       @about-class{gtk-gesture-rotate}
       @about-function{gtk-gesture-rotate-new}
-      @about-function{gtk-gesture-rotate-get-angle-delta}
+      @about-function{gtk-gesture-rotate-angle-delta}
     @end{subsection}
     @begin[GtkGestureZoom]{subsection}
       Zoom gesture.
 
       @about-class{gtk-gesture-zoom}
-
       @about-function{gtk-gesture-zoom-new}
-      @about-function{gtk-gesture-zoom-get-scale-delta}
+      @about-function{gtk-gesture-zoom-scale-delta}
     @end{subsection}
-
     @begin[GtkGestureStylus]{subsection}
       Gesture for stylus input
 
       @about-class{gtk-gesture-stylus}
-
       @about-function{gtk-gesture-stylus-new}
-      @about-function{gtk-gesture-stylus-get-axis}
-      @about-function{gtk-gesture-stylus-get-axes}
-      @about-function{gtk-gesture-stylus-get-device-tool}
+      @about-function{gtk-gesture-stylus-axis}
+      @about-function{gtk-gesture-stylus-axes}
+      @about-function{gtk-gesture-stylus-device-tool}
     @end{subsection}
-
     @begin[GtkPadController]{subsection}
       Controller for drawing tablet pads
 
       @about-symbol{gtk-pad-action-type}
       @about-symbol{gtk-pad-action-entry}
       @about-class{gtk-pad-controller}
-
       @about-generic{gtk-pad-controller-action-group}
       @about-generic{gtk-pad-controller-pad}
-
       @about-function{gtk-pad-controller-new}
       @about-function{gtk-pad-controller-set-action-entries}
       @about-function{gtk-pad-controller-set-action}
@@ -4769,7 +4616,7 @@ setup_tree (void)
 
       @about-class{gtk-clipboard}
       @about-function{gtk-clipboard-get}
-      @about-function{gtk-clipboard-get-for-display}
+      @about-function{gtk-clipboard-for-display}
       @about-function{gtk-clipboard-get-display}
       @about-function{gtk-clipboard-set-with-data}
       @about-function{gtk-clipboard-set-with-owner}
@@ -5093,35 +4940,32 @@ setup_tree (void)
       @about-symbol{gtk-region-flags}
       @about-symbol{gtk-style-context-print-flags}
       @about-symbol{gtk-border-style}
-
       @about-class{gtk-style-context}
-
       @about-generic{gtk-style-context-direction}
       @about-generic{gtk-style-context-paint-clock}
       @about-generic{gtk-style-context-parent}
       @about-generic{gtk-style-context-screen}
-
       @about-function{gtk-style-context-new}
       @about-function{gtk-style-context-add-provider}
       @about-function{gtk-style-context-add-provider-for-screen}
       @about-function{gtk-style-context-get}
-      @about-function{gtk-style-context-get-junction-sides}
-      @about-function{gtk-style-context-get-path}
-      @about-function{gtk-style-context-get-property}
-      @about-function{gtk-style-context-get-frame-clock}
-      @about-function{gtk-style-context-get-state}
-      @about-function{gtk-style-context-get-style}
-      @about-function{gtk-style-context-get-style-property}
-      @about-function{gtk-style-context-get-style-valist}
-      @about-function{gtk-style-context-get-valist}
-      @about-function{gtk-style-context-get-section}
-      @about-function{gtk-style-context-get-color}
-      @about-function{gtk-style-context-get-background-color}
-      @about-function{gtk-style-context-get-border-color}
-      @about-function{gtk-style-context-get-border}
-      @about-function{gtk-style-context-get-padding}
-      @about-function{gtk-style-context-get-margin}
-      @about-function{gtk-style-context-get-font}
+      @about-function{gtk-style-context-junction-sides}
+      @about-function{gtk-style-context-path}
+      @about-function{gtk-style-context-property}
+      @about-function{gtk-style-context-frame-clock}
+      @about-function{gtk-style-context-state}
+      @about-function{gtk-style-context-style}
+      @about-function{gtk-style-context-style-property}
+      @about-function{gtk-style-context-style-valist}
+      @about-function{gtk-style-context-valist}
+      @about-function{gtk-style-context-section}
+      @about-function{gtk-style-context-color}
+      @about-function{gtk-style-context-background-color}
+      @about-function{gtk-style-context-border-color}
+      @about-function{gtk-style-context-border}
+      @about-function{gtk-style-context-padding}
+      @about-function{gtk-style-context-margin}
+      @about-function{gtk-style-context-font}
       @about-function{gtk-style-context-invalidate}
       @about-function{gtk-style-context-state-is-running}
       @about-function{gtk-style-context-lookup-color}
@@ -5137,8 +4981,6 @@ setup_tree (void)
       @about-function{gtk-style-context-set-background}
       @about-function{gtk-style-context-restore}
       @about-function{gtk-style-context-save}
-      @about-function{gtk-style-context-set-junction-sides}
-      @about-function{gtk-style-context-set-path}
       @about-function{gtk-style-context-add-class}
       @about-function{gtk-style-context-remove-class}
       @about-function{gtk-style-context-has-class}
@@ -5147,12 +4989,8 @@ setup_tree (void)
       @about-function{gtk-style-context-remove-region}
       @about-function{gtk-style-context-has-region}
       @about-function{gtk-style-context-list-regions}
-      @about-function{gtk-style-context-set-frame-clock}
-      @about-function{gtk-style-context-set-state}
-      @about-function{gtk-style-context-set-scale}
-      @about-function{gtk-style-context-get-scale}
+      @about-function{gtk-style-context-scale}
       @about-function{gtk-style-context-to-string}
-
       @about-struct{gtk-border}
       @about-function{make-gtk-border}
       @about-function{copy-gtk-border}
@@ -5163,7 +5001,6 @@ setup_tree (void)
       @about-function{gtk-border-new}
       @about-function{gtk-border-copy}
       @about-function{gtk-border-free}
-
       @about-function{gtk-render-arrow}
       @about-function{gtk-render-background}
       @about-function{gtk-render-background-get-clip}
@@ -5191,7 +5028,7 @@ setup_tree (void)
       @about-class{gtk-css-section}
       @about-symbol{gtk-css-section-type}
       @about-class{gtk-css-provider}
-      @about-function{gtk-css-provider-get-default}
+      @about-function{gtk-css-provider-default}
       @about-function{gtk-css-provider-get-named}
       @about-function{gtk-css-provider-load-from-data}
       @about-function{gtk-css-provider-load-from-file}
@@ -5275,8 +5112,8 @@ setup_tree (void)
       @about-class{gtk-icon-theme}
 
       @about-function{gtk-icon-theme-new}
-      @about-function{gtk-icon-theme-get-default}
-      @about-function{gtk-icon-theme-get-for-screen}
+      @about-function{gtk-icon-theme-default}
+      @about-function{gtk-icon-theme-for-screen}
       @about-function{gtk-icon-theme-set-screen}
       @about-function{gtk-icon-theme-set-search-path}
       @about-function{gtk-icon-theme-get-search-path}
@@ -5296,7 +5133,7 @@ setup_tree (void)
       @about-function{gtk-icon-theme-load-surface}
       @about-function{gtk-icon-theme-list-contexts}
       @about-function{gtk-icon-theme-list-icons}
-      @about-function{gtk-icon-theme-get-icon-sizes}
+      @about-function{gtk-icon-theme-icon-sizes}
       @about-function{gtk-icon-theme-get-example-icon-name}
       @about-function{gtk-icon-theme-rescan-if-needed}
       @about-function{gtk-icon-theme-add-builtin-icon}
