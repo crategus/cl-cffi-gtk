@@ -417,9 +417,9 @@
 
 (defcfun ("gtk_accel_group_activate" gtk-accel-group-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2020-9-19}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  @argument[accel-quark]{the quark for the accelerator name}
+  @argument[accel-quark]{the @type{g-quark} ID for the accelerator name}
   @argument[acceleratable]{the @class{g-object}, usually a @class{gtk-window}
     widget, on which to activate the accelerator}
   @argument[accel-key]{accelerator keyval of type @code{:uint} from a key event}
@@ -447,18 +447,18 @@
 
 (defcfun ("gtk_accel_group_lock" gtk-accel-group-lock) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
+ "@version{2020-9-19}
   @argument[accel-group]{a @class{gtk-accel-group} object}
   @begin{short}
     Locks the given accelerator group.
   @end{short}
 
   Locking an acelerator group prevents the accelerators contained within it to
-  be changed during runtime. Refer to the @fun{gtk-accel-map-change-entry}
-  function about runtime accelerator changes.
+  be changed during runtime. Refer to the function
+  @fun{gtk-accel-map-change-entry} about runtime accelerator changes.
 
   If called more than once, @arg{accel-group} remains locked until the
-  @fun{gtk-accel-group-unlock} function has been called an equivalent number of
+  function @fun{gtk-accel-group-unlock} has been called an equivalent number of
   times.
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-unlock}
@@ -473,10 +473,10 @@
 
 (defcfun ("gtk_accel_group_unlock" gtk-accel-group-unlock) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
+ "@version{2020-9-19}
   @argument[accel-group]{a @class{gtk-accel-group} object}
   @begin{short}
-    Undoes the last call to the @fun{gtk-accel-group-lock} function on this
+    Undoes the last call to the function @fun{gtk-accel-group-lock} on this
     @arg{accel-group}.
   @end{short}
   @see-class{gtk-accel-group}
@@ -579,7 +579,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-key atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'gtk-accel-key atdoc:*external-symbols*)
- "@version{2013-11-29}
+ "@version{2020-9-19}
   @short{}
   @begin{pre}
 (defcstruct gtk-accel-key
@@ -587,6 +587,11 @@
   (accel-mods gdk-modifier-type)
   (accel-flags :uint))
   @end{pre}
+  @begin[code]{table}
+    @entry[accel-key]{The accelerator keyval.}
+    @entry[accel-mods]{The accelerator modifiers.}
+    @entry[accel-flags]{The accelerator flags.}
+  @end{table}
   @see-class{gtk-accel-group}")
 
 (export 'gtk-accel-key)
