@@ -2,11 +2,11 @@
 ;;; gtk.mount-operation.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,9 +47,9 @@
 ;;;
 ;;; Properties
 ;;;
-;;;      gboolean   is-showing    Read
-;;;     GtkWindow*  parent        Read / Write
-;;;     GdkScreen*  screen        Read / Write
+;;;      gboolean    is-showing    Read
+;;;     GtkWindow*   parent        Read / Write
+;;;     GdkScreen*   screen        Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -224,18 +224,19 @@
 
 (defun gtk-show-uri (screen uri timestamp)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-8}
-  @argument[screen]{screen to show the uri on or @code{nil} for the default
-    screen}
-  @argument[uri]{the uri to show}
-  @argument[timestamp]{a timestamp to prevent focus stealing}
+ "@version{2020-9-20}
+  @argument[screen]{a @class{gdk-screen} object to show the URi on or
+    @code{nil} for the default screen}
+  @argument[uri]{a string with the URI to show}
+  @argument[timestamp]{a @code{:uint} with the timestamp to prevent focus
+    stealing}
   @return{@arg{True} on success, @code{nil} on error.}
   @begin{short}
-    This is a convenience function for launching the default application to show
-    the uri.
+    This is a convenience function for launching the default application to
+    show the URI.
   @end{short}
-  The @arg{uri} must be of a form understood by GIO (i. e. you need to install
-  @code{gvfs} to get support for uri schemes such as @code{http://} or
+  The @arg{uri} must be of a form understood by GIO (i.e. you need to install
+  @code{gvfs} to get support for URI schemes such as @code{http://} or
   @code{ftp://}, as only local files are handled by GIO itself). Typical
   examples are @code{file:///home/gnome/pict.jpg},
   @code{http://www.gnome.org mailto:me@@gnome.org}.
@@ -244,8 +245,9 @@
   @sym{gtk-show-uri} call. If @arg{timestamp} is not known you can take
   @var{+gdk-current-time+}.
 
-  This function can be used as a replacement for @code{gnome_vfs_url_show()} and
-  @code{gnome_url_show()}."
+  This function can be used as a replacement for @code{gnome_vfs_url_show()}
+  and @code{gnome_url_show()}.
+  @see-class{gdk-screen}"
   (with-g-error (err)
     (%gtk-show-uri screen uri timestamp err)))
 

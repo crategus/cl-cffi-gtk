@@ -142,7 +142,7 @@
                  </interface>\"))
    ;; Set the menubar
    (setf (gtk-application-menubar application)
-         (gtk-builder-get-object builder \"menubar\"))
+         (gtk-builder-object builder \"menubar\"))
    ... )
   @end{pre}
 
