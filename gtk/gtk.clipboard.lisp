@@ -2,12 +2,12 @@
 ;;; gtk.clipboard.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -70,7 +70,7 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void   owner-change    Run First
+;;;     void    owner-change    Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -93,17 +93,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
- "@version{2013-4-22}
+ "@version{2020-9-20}
   @begin{short}
     The @sym{gtk-clipboard} object represents a clipboard of data shared between
-    different processes or between different widgets in the same process. Each
-    clipboard is identified by a name encoded as a @symbol{gdk-atom}.
-    Conversion to and from strings can be done with the functions
-    @fun{gdk-atom-intern} and @fun{gdk-atom-name}. The default clipboard
-    corresponds to the @code{\"CLIPBOARD\"} atom; another commonly used
-    clipboard is the @code{\"PRIMARY\"} clipboard, which, in X, traditionally
-    contains the currently selected text.
+    different processes or between different widgets in the same process.
   @end{short}
+  Each clipboard is identified by a name encoded as a @symbol{gdk-atom}.
+  Conversion to and from strings can be done with the functions
+  @fun{gdk-atom-intern} and @fun{gdk-atom-name}. The default clipboard
+  corresponds to the @code{\"CLIPBOARD\"} atom. Another commonly used clipboard
+  is the @code{\"PRIMARY\"} clipboard, which, in X, traditionally contains the
+  currently selected text.
 
   To support having a number of different formats on the clipboard at the same
   time, the clipboard mechanism allows providing callbacks instead of the
@@ -115,7 +115,7 @@
   to make copies of the data when it is not needed.
 
   The functions @fun{gtk-clipboard-set-with-data} and
-  @fun{gtk-clipboard-set-with-owner} are quite similar; the choice between the
+  @fun{gtk-clipboard-set-with-owner} are quite similar. The choice between the
   two depends mostly on which is more convenient in a particular situation. The
   former is most useful when you want to have a blob of data with callbacks to
   convert it into the various data types that you advertise. When the
@@ -147,8 +147,8 @@
   @fun{gtk-clipboard-request-text} and @fun{gtk-clipboard-wait-for-text}. These
   functions take care of determining which formats are advertised by the
   clipboard provider, asking for the clipboard in the best available format
-  and converting the results into the UTF-8 encoding, which is the standard form
-  for representing strings in GTK+.
+  and converting the results into the UTF-8 encoding, which is the standard
+  form for representing strings in GTK+.
   @begin[Signal Details]{dictionary}
     @subheading{The \"owner-change\" signal}
       @begin{pre}
@@ -210,7 +210,7 @@
     ((clipboard (g-object gtk-clipboard))
      (text :string)
      (data :pointer))
-  (let ((fn (glib::get-stable-pointer-value data)))
+  (let ((fn (get-stable-pointer-value data)))
     (restart-case
         (funcall fn clipboard text)
       (return-from-gtk-clipboard-text-received-func-cb () nil))))
@@ -339,7 +339,7 @@
 
 (defcfun ("gtk_clipboard_get" gtk-clipboard-get) (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2020-9-20}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
     use}
   @begin{return}
@@ -349,6 +349,7 @@
   @end{return}
   @short{Returns the clipboard object for the given selection.}
   See the function @fun{gtk-clipboard-for-display} for complete details.
+  @see-class{gtk-clipboard}
   @see-function{gtk-clipboard-for-display}"
   (selection gdk-atom-as-string))
 
@@ -535,7 +536,7 @@
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2020-9-20}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @begin{short}
     Clears the contents of the @arg{clipboard}.
@@ -544,6 +545,7 @@
   @fun{gtk-clipboard-set-with-owner} or @fun{gtk-clipboard-set-with-data}, and
   when the @code{clear_func} you supplied is called. Otherwise, the clipboard
   may be owned by someone else.
+  @see-class{gtk-clipboard}
   @see-function{gtk-clipboard-set-with-owner}
   @see-function{gtk-clipboard-set-with-data}"
   (clipboard (g-object gtk-clipboard)))
@@ -561,16 +563,17 @@
 
 (defun gtk-clipboard-set-text (clipboard text)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2020-9-20}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @argument[text]{a UTF-8 string}
   @begin{short}
-   Sets the contents of the @arg{clipboard} to the given UTF-8 string
+    Sets the contents of the clipboard to the given UTF-8 string
    @arg{text}.
   @end{short}
   GTK+ will make a copy of the @arg{text} and take responsibility for responding
-  for requests for the @arg{text}, and for converting the @arg{text} into the
-  requested format."
+  for requests for the text, and for converting the text into the requested
+  format.
+  @see-class{gtk-clipboard}"
   (%gtk-clipboard-set-text clipboard text -1))
 
 (export 'gtk-clipboard-set-text)
@@ -631,12 +634,12 @@
 
 (defun gtk-clipboard-request-text (clipboard func)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2020-9-20}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @argument[func]{a function to call when the text is received, or the
-    retrieval fails. It will always be called one way or the other.}
+    retrieval fails, it will always be called one way or the other}
   @begin{short}
-    Requests the contents of the @arg{clipboard} as text. When the text is later
+    Requests the contents of the clipboard as text. When the text is later
     received, it will be converted to UTF-8 if necessary, and callback will be
     called.
   @end{short}
@@ -648,7 +651,7 @@
   @see-class{gtk-clipboard}"
   (%gtk-clipboard-request-text clipboard
                                (callback gtk-clipboard-text-received-func-cb)
-                               (glib::allocate-stable-pointer func)))
+                               (allocate-stable-pointer func)))
 
 (export 'gtk-clipboard-request-text)
 
