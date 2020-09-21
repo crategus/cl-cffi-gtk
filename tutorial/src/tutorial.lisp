@@ -2661,7 +2661,7 @@ happen.")
                                   :default-height 200))
           (view (create-view-and-model))
           ;; Get the selection of the view
-          (select (gtk-tree-view-get-selection view)))
+          (select (gtk-tree-view-selection view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2926,7 +2926,7 @@ happen.")
     ;; pack cell renderer into tree view column
     (gtk-tree-view-column-pack-start column renderer))
   ;; No selection possible
-  (setf (gtk-tree-selection-mode (gtk-tree-view-get-selection view)) :none)
+  (setf (gtk-tree-selection-mode (gtk-tree-view-selection view)) :none)
   view))
 
 (defun example-cell-renderer-properties ()
@@ -4244,11 +4244,11 @@ happen.")
   (within-main-loop
     (let ((builder (make-instance 'gtk-builder)))
       (gtk-builder-add-from-file builder "example-menu-builder.ui")
-      (g-signal-connect (gtk-builder-get-object builder "window") "destroy"
+      (g-signal-connect (gtk-builder-object builder "window") "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-widget-show-all (gtk-builder-get-object builder "window")))))
+      (gtk-widget-show-all (gtk-builder-object builder "window")))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -4574,10 +4574,10 @@ happen.")
     (gtk-builder-add-from-string builder *menu*)
     ;; Set the application menu
     (setf (gtk-application-app-menu application)
-          (gtk-builder-get-object builder "app-menu"))
+          (gtk-builder-object builder "app-menu"))
     ;; Set the menubar
     (setf (gtk-application-menubar application)
-          (gtk-builder-get-object builder "menubar"))))
+          (gtk-builder-object builder "menubar"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))
