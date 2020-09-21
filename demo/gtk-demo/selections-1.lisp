@@ -12,7 +12,7 @@
          (format t "Selection 'Targets' was not returned as atoms.~%"))
         (t
           (format t "All is fine: ~A~%" (gtk-selection-data-data selection-data))
-          (format t " targets = ~A~%" (gtk-selection-data-get-targets selection-data))))
+          (format t " targets = ~A~%" (gtk-selection-data-targets selection-data))))
 
   )
 

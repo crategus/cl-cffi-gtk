@@ -162,7 +162,7 @@ button_press (GtkWidget      *widget,
            (lambda (widget context selection-data info time)
              (declare (ignore widget context info time))
              (let ((pixbuf (get-image-pixbuf image)))
-               (if (gtk-selection-data-set-pixbuf selection-data pixbuf)
+               (if (setf (gtk-selection-data-pixbuf selection-data) pixbuf)
                    (format t "DRAG-DATA-GET for image1 ~a~%" selection-data)))
              nil))
 
@@ -185,7 +185,7 @@ button_press (GtkWidget      *widget,
              (lambda (widget context x y selection-data info time)
                (declare (ignore widget context x y info time))
                (format t "DRAG-DATA-RECEIVED ~a~%" selection-data)
-               (let ((pixbuf (gtk-selection-data-get-pixbuf selection-data)))
+               (let ((pixbuf (gtk-selection-data-pixbuf selection-data)))
                  (gtk-image-set-from-pixbuf image pixbuf))))
 
 ;          (g-signal-connect ebox "drag-drop"

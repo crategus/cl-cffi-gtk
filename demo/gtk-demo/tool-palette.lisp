@@ -299,7 +299,7 @@
 
       (g-signal-connect palette "drag-data-received"
          (lambda (widget context x y selection info time)
-           (let ((drag-palette (gtk-drag-get-source-widget context)))
+           (let ((drag-palette (gtk-drag-source-widget context)))
              (format t "   DRAG-DATA-RECEIVED~%")
              (format t "   widget    = ~A~%" widget)
              (format t "   context   = ~A~%" context)

@@ -45,7 +45,7 @@
              (declare (ignore widget info time))
              (format t "~&DRAG-DATA-GET context = ~A~%" context)
              (let ((pixbuf (get-image-pixbuf image)))
-               (if (gtk-selection-data-set-pixbuf selection-data pixbuf)
+               (if (setf (gtk-selection-data-pixbuf selection-data) pixbuf)
                    (format t "     ~a~%" selection-data)))
              t))
 
@@ -73,7 +73,7 @@
               (declare (ignore x y info time))
               (format t "~&DRAG-DATA-RECEIVED context = ~A~%" context)
               (format t "     ~a~%" selection-data)
-              (let* ((pixbuf (gtk-selection-data-get-pixbuf selection-data))
+              (let* ((pixbuf (gtk-selection-data-pixbuf selection-data))
                      (image (gtk-image-new-from-pixbuf pixbuf)))
                 (format t "pixbuf = ~A~%" pixbuf)
                 (setf (gtk-button-image widget) image)))))
