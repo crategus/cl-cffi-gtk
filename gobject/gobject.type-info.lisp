@@ -2597,7 +2597,8 @@
 (export 'g-type-interface-prerequisites)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_type_set_qdata ()
+;;; g_type_get_qdata ()
+;;; g_type_set_qdata () -> g-type-qdata
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_set_qdata" %g-type-set-qdata) :void
@@ -2605,74 +2606,63 @@
   (quark g-quark)
   (data :pointer))
 
-(defun g-type-set-qdata (type quark data)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
-  @argument[type]{a @class{g-type}}
-  @argument[quark]{a @type{g-quark} id to identify the data}
-  @argument[data]{the data}
-  @short{Attaches arbitrary data to a @arg{type}.}
-  @begin[Examples]{dictionary}
-    @begin{pre}
- (g-type-set-qdata \"gboolean\" \"mydata\" \"a string\")
-=>
- (g-type-get-qdata \"gboolean\" \"mydata\")
-=> \"a string\"
- (g-type-set-qdata \"gboolean\" \"mydata\" '(a b c))
-=>
- (g-type-get-qdata \"gboolean\" \"mydata\")
-=> (A B C)
- (g-type-set-qdata \"gboolean\" \"mydata\" nil)
-=> NIL
- (g-type-get-qdata \"gboolean\" \"mydata\")
-=> NIL
-    @end{pre}
-  @end{dictionary}
-  @see-function{g-type-get-qdata}"
+(defun (setf g-type-qdata) (data type quark)
   (let ((ptr (%g-type-get-qdata type quark)))
     (cond ((null data)
            (when (not (null-pointer-p ptr))
              (%g-type-set-qdata type quark (null-pointer))
-             (glib::free-stable-pointer ptr)))
+             (free-stable-pointer ptr)))
           ((null-pointer-p ptr)
            (setq ptr (glib::allocate-stable-pointer data))
            (%g-type-set-qdata type quark ptr))
           (t
-           (glib::set-stable-pointer-value ptr data)
-           (%g-type-set-qdata type quark ptr)))))
-
-(export 'g-type-set-qdata)
-
-;;; ----------------------------------------------------------------------------
-;;; g_type_get_qdata ()
-;;; ----------------------------------------------------------------------------
+           (set-stable-pointer-value ptr data)
+           (%g-type-set-qdata type quark ptr)))
+    data))
 
 (defcfun ("g_type_get_qdata" %g-type-get-qdata) :pointer
   (type g-type)
   (quark g-quark))
 
-(defun g-type-get-qdata (type quark)
+(defun g-type-qdata (type quark)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
+ "@version{2020-9-20}
+  @syntax[]{(g-type-qdata type quark) => data}
+  @syntax[]{(setf (g-type-qdata type quark) data)}
   @argument[type]{a @class{g-type}}
-  @argument[quark]{a @type{g-quark} id to identify the data}
-  @return{The data, or @code{NULL} if no data was found.}
+  @argument[quark]{a @type{g-quark} ID to identify the data}
+  @argument[data]{the data}
   @begin{short}
-    Obtains data which has previously been attached to @arg{type} with
-    @fun{g-type-set-qdata}.
+    The function @sym{g-type-qdata} obtains data which has previously been
+    attached to @arg{type} with the function @sym{(setf g-type-qdata)}.
   @end{short}
-  See @fun{g-type-set-qdata} for an example.
 
-  Note that this does not take subtyping into account; data attached to one
-  type with @fun{g-type-set-qdata} cannot be retrieved from a subtype using
-  @sym{g-type-get-qdata}.
-  @see-function{g-type-set-qdata}"
+  Note that this does not take subtyping into account. Data attached to one
+  type cannot be retrieved from a subtype.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (setf (g-type-qdata \"gboolean\" \"mydata\") \"a string\")
+=> \"a string\"
+ (g-type-qdata \"gboolean\" \"mydata\")
+=> \"a string\"
+ (setf (g-type-qdata \"gboolean\" \"mydata\") '(a b c))
+=> (A B C)
+ (g-type-qdata \"gboolean\" \"mydata\")
+=> (A B C)
+ (setf (g-type-qdata \"gboolean\" \"mydata\") nil)
+=> NIL
+ (g-type-qdata \"gboolean\" \"mydata\")
+=> NIL
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-type}
+  @see-type{g-quark}"
   (let ((ptr (%g-type-get-qdata type quark)))
     (if (null-pointer-p ptr)
         nil
-        (glib::get-stable-pointer-value ptr))))
+        (get-stable-pointer-value ptr))))
 
-(export 'g-type-get-qdata)
+(export 'g-type-qdata)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeQuery
