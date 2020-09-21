@@ -321,7 +321,7 @@
          (declare (ignorable widget selection-data time))
 ;         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
 ;         (format t "  selection = ~A~%" selection-data)
-;         (format t "targets = ~A~%" (gtk-selection-data-get-targets selection-data))
+;         (format t "targets = ~A~%" (gtk-selection-data-targets selection-data))
     ))
 
     (gtk-widget-realize widget)
@@ -343,7 +343,7 @@
           (declare (ignorable widget selection-data time))
 ;         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
 ;         (format t "  selection = ~A~%" selection-data)
-;         (format t "    targets = ~A~%" (gtk-selection-data-get-targets selection-data))
+;         (format t "    targets = ~A~%" (gtk-selection-data-targets selection-data))
     ))
 
     (gtk-selection-add-target window "CLIPBOARD" "STRING" 0)
