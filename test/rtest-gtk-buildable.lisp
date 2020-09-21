@@ -55,12 +55,12 @@
 
 (test gtk-buildable-add-childname-
   (let* ((builder (gtk-builder-new-from-string *dialog*))
-         (button-box (gtk-builder-get-object builder "hbuttonbox1"))
+         (button-box (gtk-builder-object builder "hbuttonbox1"))
          (button1 (make-instance 'gtk-button))
          (label (make-instance 'gtk-label)))
 
     (is (equal '(GTK-DIALOG GTK-BOX GTK-BUTTON-BOX GTK-BUTTON)
-               (mapcar 'type-of (gtk-builder-get-objects builder))))
+               (mapcar 'type-of (gtk-builder-objects builder))))
 
     (is (eq 'gtk-button-box (type-of button-box)))
 
@@ -68,7 +68,7 @@
     (gtk-buildable-add-child button-box builder label nil)
 
     (is (equal '(GTK-DIALOG GTK-BOX GTK-BUTTON-BOX GTK-BUTTON)
-               (mapcar 'type-of (gtk-builder-get-objects builder))))
+               (mapcar 'type-of (gtk-builder-objects builder))))
   )
 )
 
@@ -85,7 +85,7 @@
 
 (test gtk-buildable-internal-child
   (let* ((builder (gtk-builder-new-from-string *dialog*))
-         (dialog (gtk-builder-get-object builder "dialog1")))
+         (dialog (gtk-builder-object builder "dialog1")))
 
     (is (eq 'gtk-button-box (type-of (gtk-buildable-internal-child dialog builder "action_area"))))
 

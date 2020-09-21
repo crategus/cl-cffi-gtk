@@ -624,9 +624,26 @@
 ;;;     g_type_children
 ;;;     g_type_interfaces
 ;;;     g_type_interface_prerequisites
-;;;     g_type_set_qdata
-;;;     g_type_get_qdata
-;;;
+
+;;;     g-type-qdata
+
+(test g-type-qdata
+  ;; Attach and read data for a "gboolean" type
+  (is (string= "a string" (setf (g-type-qdata "gboolean" "mydata") "a string")))
+  (is (string= "a string" (g-type-qdata "gboolean" "mydata")))
+  (is (equal '(A B C) (setf (g-type-qdata "gboolean" "mydata") '(a b c))))
+  (is (equal '(A B C) (g-type-qdata "gboolean" "mydata")))
+  (is-false (setf (g-type-qdata "gboolean" "mydata") nil))
+  (is-false (g-type-qdata "gboolean" "mydata"))
+
+  ;; Attach and read data for a "GtkButton" type
+  (is (string= "a string" (setf (g-type-qdata "GtkButton" "mydata") "a string")))
+  (is (string= "a string" (g-type-qdata "GtkButton" "mydata")))
+  (is (equal '(A B C) (setf (g-type-qdata "GtkButton" "mydata") '(a b c))))
+  (is (equal '(A B C) (g-type-qdata "GtkButton" "mydata")))
+  (is-false (setf (g-type-qdata "GtkButton" "mydata") nil))
+  (is-false (g-type-qdata "GtkButton" "mydata")))
+
 ;;;     GTypeQuery
 ;;;
 ;;;     g_type_query
@@ -795,10 +812,10 @@
   (is-false (g-type-interfaces id))
   (is-false (g-type-interfaces name))
   ;; g-type-interace-prerequisites
-  ;; g-type-set-qdata
-  (g-type-set-qdata gtype "myData" (null-pointer))
-  ;; g-type-get-qdata
-  (is-true  (null-pointer-p (g-type-get-qdata gtype "myData")))
+  ;; (setf g-type-qdata)
+  (setf (g-type-qdata gtype "myData") (null-pointer))
+  ;; g-type-qdata
+  (is-true  (null-pointer-p (g-type-qdata gtype "myData")))
   ;; g-type-query
   ;; FIXME: This does not work for the type "gchar" or other basic types like
   ;; "gboolean". But it is not a problem for "GObject" and derived classes.
@@ -946,10 +963,10 @@
     (is (equal '("AtkImplementorIface" "GtkBuildable")
                   (mapcar #'gtype-name (g-type-interfaces name))))
     ;; g-type-interace-prerequisites
-    ;; g-type-set-qdata
-    (g-type-set-qdata gtype "myData" (null-pointer))
-    ;; g-type-get-qdata
-    (is-true  (null-pointer-p (g-type-get-qdata gtype "myData")))
+    ;; (setf g-type-qdata)
+    (setf (g-type-qdata gtype "myData") (null-pointer))
+    ;; g-type-qdata
+    (is-true  (null-pointer-p (g-type-qdata gtype "myData")))
     ;; g-type-query
     (with-foreign-object (query 'g-type-query)
       (g-type-query name query)
