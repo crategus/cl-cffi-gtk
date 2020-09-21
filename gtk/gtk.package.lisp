@@ -144,8 +144,8 @@
       @about-function{gtk-builder-add-objects-from-string}
       @about-function{gtk-builder-add-objects-from-resource}
       @about-function{gtk-builder-extend-with-template}
-      @about-function{gtk-builder-get-object}
-      @about-function{gtk-builder-get-objects}
+      @about-function{gtk-builder-object}
+      @about-function{gtk-builder-objects}
       @about-function{gtk-builder-expose-object}
       @about-function{gtk-builder-connect-signals}
       @about-function{gtk-builder-connect-signals-full}
@@ -2169,14 +2169,14 @@ setup_tree (void)
       @about-function{gtk-tree-view-column-set-cell-data-func}
       @about-function{gtk-tree-view-column-clear-attributes}
       @about-function{gtk-tree-view-column-clicked}
-      @about-function{gtk-tree-view-column-get-button}
+      @about-function{gtk-tree-view-column-button}
       @about-function{gtk-tree-view-column-cell-set-cell-data}
-      @about-function{gtk-tree-view-column-cell-get-size}
-      @about-function{gtk-tree-view-column-cell-get-position}
+      @about-function{gtk-tree-view-column-cell-size}
+      @about-function{gtk-tree-view-column-cell-position}
       @about-function{gtk-tree-view-column-cell-is-visible}
       @about-function{gtk-tree-view-column-focus-cell}
       @about-function{gtk-tree-view-column-queue-resize}
-      @about-function{gtk-tree-view-column-get-tree-view}
+      @about-function{gtk-tree-view-column-tree-view}
     @end{subsection}
     @begin[GtkTreeView]{subsection}
       A widget for displaying both trees and lists.
@@ -2275,14 +2275,11 @@ setup_tree (void)
 
       @about-class{gtk-tree-drag-source}
       @about-class{gtk-tree-drag-source-iface}
-
       @about-function{gtk-tree-drag-source-drag-data-delete}
       @about-function{gtk-tree-drag-source-drag-data-get}
       @about-function{gtk-tree-drag-source-drag-row-draggable}
-
       @about-class{gtk-tree-drag-dest}
       @about-class{gtk-tree-drag-dest-iface}
-
       @about-function{gtk-tree-drag-dest-drag-data-received}
       @about-function{gtk-tree-drag-dest-row-drop-possible}
       @about-function{gtk-tree-set-row-drag-data}
@@ -2292,7 +2289,6 @@ setup_tree (void)
       A widget displaying a single row of a @class{gtk-tree-model}.
 
       @about-class{gtk-cell-view}
-
       @about-generic{gtk-cell-view-background}
       @about-generic{gtk-cell-view-background-gdk}
       @about-generic{gtk-cell-view-background-rgba}
@@ -2302,7 +2298,6 @@ setup_tree (void)
       @about-generic{gtk-cell-view-draw-sensitive}
       @about-generic{gtk-cell-view-fit-model}
       @about-generic{gtk-cell-view-model}
-
       @about-function{gtk-cell-view-new}
       @about-function{gtk-cell-view-new-with-context}
       @about-function{gtk-cell-view-new-with-text}
@@ -2318,7 +2313,6 @@ setup_tree (void)
       A widget which displays a list of icons in a grid.
 
       @about-class{gtk-icon-view}
-
       @about-generic{gtk-icon-view-activate-on-single-click}
       @about-generic{gtk-icon-view-cell-area}
       @about-generic{gtk-icon-view-column-spacing}
@@ -2336,7 +2330,6 @@ setup_tree (void)
       @about-generic{gtk-icon-view-spacing}
       @about-generic{gtk-icon-view-text-column}
       @about-generic{gtk-icon-view-tooltip-column}
-
       @about-function{gtk-icon-view-new}
       @about-function{gtk-icon-view-new-with-area}
       @about-function{gtk-icon-view-new-with-model}
@@ -2361,9 +2354,7 @@ setup_tree (void)
       @about-function{gtk-icon-view-get-tooltip-context}
       @about-function{gtk-icon-view-get-item-row}
       @about-function{gtk-icon-view-get-item-column}
-
       @about-symbol{gtk-icon-view-drop-position}
-
       @about-function{gtk-icon-view-enable-model-drag-source}
       @about-function{gtk-icon-view-enable-model-drag-dest}
       @about-function{gtk-icon-view-unset-model-drag-source}
@@ -2378,7 +2369,6 @@ setup_tree (void)
 
       @about-class{gtk-tree-sortable}
       @about-class{gtk-tree-sortable-iface}
-
       @about-function{gtk-tree-sortable-sort-column-changed}
       @about-function{gtk-tree-sortable-get-sort-column-id}
       @about-function{gtk-tree-sortable-set-sort-column-id}
@@ -2390,9 +2380,7 @@ setup_tree (void)
       A @class{gtk-tree-model} which makes an underlying tree model sortable.
 
       @about-class{gtk-tree-model-sort}
-
       @about-generic{gtk-tree-model-sort-model}
-
       @about-function{gtk-tree-model-sort-new-with-model}
       @about-function{gtk-tree-model-sort-convert-child-path-to-path}
       @about-function{gtk-tree-model-sort-convert-child-iter-to-iter}
@@ -2713,7 +2701,6 @@ setup_tree (void)
       @class{gtk-tree-view}.
 
       @about-class{gtk-list-store}
-
       @about-function{gtk-list-store-new}
       @about-function{gtk-list-store-newv}
       @about-function{gtk-list-store-set-column-types}
@@ -2741,7 +2728,6 @@ setup_tree (void)
       @class{gtk-tree-view}.
 
       @about-class{gtk-tree-store}
-
       @about-function{gtk-tree-store-new}
       @about-function{gtk-tree-store-newv}
       @about-function{gtk-tree-store-set-column-types}
@@ -4660,16 +4646,14 @@ setup_tree (void)
       @about-function{gtk-drag-dest-set-proxy}
       @about-function{gtk-drag-dest-unset}
       @about-function{gtk-drag-dest-find-target}
-      @about-function{gtk-drag-dest-get-target-list}
-      @about-function{gtk-drag-dest-set-target-list}
+      @about-function{gtk-drag-dest-target-list}
       @about-function{gtk-drag-dest-add-text-targets}
       @about-function{gtk-drag-dest-add-image-targets}
       @about-function{gtk-drag-dest-add-uri-targets}
-      @about-function{gtk-drag-dest-set-track-motion}
-      @about-function{gtk-drag-dest-get-track-motion}
+      @about-function{gtk-drag-dest-track-motion}
       @about-function{gtk-drag-finish}
-      @about-function{gtk-drag-get-data}
-      @about-function{gtk-drag-get-source-widget}
+      @about-function{gtk-drag-data}
+      @about-function{gtk-drag-source-widget}
       @about-function{gtk-drag-highlight}
       @about-function{gtk-drag-unhighlight}
       @about-function{gtk-drag-begin}
@@ -4687,8 +4671,7 @@ setup_tree (void)
       @about-function{gtk-drag-source-set-icon-name}
       @about-function{gtk-drag-source-set-icon-gicon}
       @about-function{gtk-drag-source-unset}
-      @about-function{gtk-drag-source-set-target-list}
-      @about-function{gtk-drag-source-get-target-list}
+      @about-function{gtk-drag-source-target-list}
       @about-function{gtk-drag-source-add-text-targets}
       @about-function{gtk-drag-source-add-image-targets}
       @about-function{gtk-drag-source-add-uri-targets}
@@ -4697,9 +4680,7 @@ setup_tree (void)
       Sharing settings between applications.
 
       @about-symbol{GtkSettingsValue}
-
       @about-class{gtk-settings}
-
       @about-generic{gtk-settings-color-hash}
       @about-generic{gtk-settings-gtk-alternative-button-order}
       @about-generic{gtk-settings-gtk-alternative-sort-arrows}
@@ -4783,7 +4764,6 @@ setup_tree (void)
       @about-generic{gtk-settings-gtk-xft-hinting}
       @about-generic{gtk-settings-gtk-xft-hintstyle}
       @about-generic{gtk-settings-gtk-xft-rgba}
-
       @about-function{gtk-settings-default}
       @about-function{gtk-settings-for-screen}
       @about-function{gtk-settings-install-property}
@@ -4857,18 +4837,19 @@ setup_tree (void)
       @about-function{copy-gtk-selection-data}
       @about-function{gtk-selection-data-selection}
       @about-function{gtk-selection-data-target}
-      @about-function{make-gtk-target-entry}
-      @about-function{copy-gtk-target-entry}
-      @about-function{gtk-target-entry-target}
-      @about-function{gtk-target-entry-flags}
-      @about-function{gtk-target-entry-info}
       @about-function{gtk-selection-data-type}
       @about-function{gtk-selection-data-format}
       @about-function{gtk-selection-data-data}
       @about-function{gtk-selection-data-length}
       @about-function{gtk-selection-data-display}
       @about-struct{gtk-target-entry}
+      @about-function{make-gtk-target-entry}
+      @about-function{copy-gtk-target-entry}
+      @about-function{gtk-target-entry-target}
+      @about-function{gtk-target-entry-flags}
+      @about-function{gtk-target-entry-info}
       @about-class{gtk-target-list}
+      @about-class{gtk-target-pair}
       @about-function{gtk-target-entry-new}
       @about-function{gtk-target-entry-copy}
       @about-function{gtk-target-entry-free}
@@ -4892,25 +4873,15 @@ setup_tree (void)
       @about-function{gtk-selection-clear-targets}
       @about-function{gtk-selection-convert}
       @about-function{gtk-selection-data-set}
-      @about-function{gtk-selection-data-set-text}
-      @about-function{gtk-selection-data-get-text}
-      @about-function{gtk-selection-data-set-pixbuf}
-      @about-function{gtk-selection-data-get-pixbuf}
-      @about-function{gtk-selection-data-set-uris}
-      @about-function{gtk-selection-data-get-uris}
-      @about-function{gtk-selection-data-get-targets}
+      @about-function{gtk-selection-data-text}
+      @about-function{gtk-selection-data-pixbuf}
+      @about-function{gtk-selection-data-uris}
+      @about-function{gtk-selection-data-targets}
       @about-function{gtk-selection-data-targets-include-image}
       @about-function{gtk-selection-data-targets-include-text}
       @about-function{gtk-selection-data-targets-include-uri}
       @about-function{gtk-selection-data-targets-include-rich-text}
-      @about-function{gtk-selection-data-get-selection}
-      @about-function{gtk-selection-data-get-data}
-      @about-function{gtk-selection-data-get-length}
-      @about-function{gtk-selection-data-get-data-with-length}
-      @about-function{gtk-selection-data-get-data-type}
-      @about-function{gtk-selection-data-get-display}
-      @about-function{gtk-selection-data-get-format}
-      @about-function{gtk-selection-data-get-target}
+      @about-function{gtk-selection-data-data-with-length}
       @about-function{gtk-targets-include-image}
       @about-function{gtk-targets-include-text}
       @about-function{gtk-targets-include-uri}

@@ -100,11 +100,11 @@ GTK+ Widgets and Objects
   Tree, List and Icon Grid Widgets
 
     gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24 &
- +  gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24 &
- +  gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24 &
+    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24 &
+    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24 &
     gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.24 &
- +  gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24 &
- +  gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24 &
+    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24 &
+    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24 &
  +  gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.24
  +  gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24 &
  +  gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.24 &
@@ -267,15 +267,15 @@ GTK+ Core Reference
 
     gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.24 &
     gtk.version.lisp                 - Version Information         - GTK+ 3.24
- +  gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.24 &
- +  gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.24 &
- +  gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24 &
- +  gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.24 &
- +  gtk.settings.lisp                - GtkSettings                 - GTK+ 3.24 &
- +  gtk.bindings.lisp                - Bindings                    - GTK+ 3.24 %
- +  gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.24
- +  gtk.selections.lisp              - Selections                  - GTK+ 3.24 &
- +  gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.24 %
+    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.24 &
+    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.24 &
+    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24 &
+    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.24 &
+    gtk.settings.lisp                - GtkSettings                 - GTK+ 3.24 &
+    gtk.bindings.lisp                - Bindings                    - GTK+ 3.24 %
+    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.24
+    gtk.selections.lisp              - Selections                  - GTK+ 3.24 &
+    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.24 %
 
 Theming in GTK+
 
