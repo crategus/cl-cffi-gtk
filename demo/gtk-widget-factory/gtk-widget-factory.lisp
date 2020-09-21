@@ -177,7 +177,7 @@
                         (list "lock" #'activate-lock nil nil nil))))
 
     (setf *application-window*
-          (gtk-builder-get-object builder "window"))
+          (gtk-builder-object builder "window"))
 
     ;; Connect signal "destroy" to the application window
     (g-signal-connect *application-window* "destroy"
@@ -187,7 +187,7 @@
                         (g-application-quit application)))
 
     ;; Connect signal "icon-release" to "entry1"
-    (g-signal-connect (gtk-builder-get-object builder "entry1")
+    (g-signal-connect (gtk-builder-object builder "entry1")
                       "icon-release"
                       #'on-entry-icon-release)
 
@@ -224,26 +224,26 @@
 
       ;; Save the toplevel stack in a global variable
       (setf *toplevel-stack*
-            (gtk-builder-get-object builder "toplevel_stack"))
+            (gtk-builder-object builder "toplevel_stack"))
 
       ;; Set text and an action on the statusbar
-      (let ((statusbar (gtk-builder-get-object builder "statusbar")))
+      (let ((statusbar (gtk-builder-object builder "statusbar")))
         (gtk-statusbar-push statusbar 0 "All systems are operating normally.")
         (g-action-map-add-action *application-window*
                                  (g-property-action-new "statusbar"
                                                         statusbar
                                                         "visible")))
       ;; Set an action on the toolbar
-      (let ((toolbar (gtk-builder-get-object builder "toolbar")))
+      (let ((toolbar (gtk-builder-object builder "toolbar")))
         (g-action-map-add-action *application-window*
                                  (g-property-action-new "toolbar"
                                                         toolbar
                                                         "visible")))
 
       ;; Connect entry1 and progressbar3 to adjustment1
-      (let ((adjustment (gtk-builder-get-object builder "adjustment1"))
-            (progressbar (gtk-builder-get-object builder "progressbar3"))
-            (entry (gtk-builder-get-object builder "entry1")))
+      (let ((adjustment (gtk-builder-object builder "adjustment1"))
+            (progressbar (gtk-builder-object builder "progressbar3"))
+            (entry (gtk-builder-object builder "entry1")))
         (g-signal-connect adjustment "value-changed"
                           (lambda (adj)
                             (pulse-update adj progressbar)))

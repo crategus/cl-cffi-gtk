@@ -16,7 +16,7 @@
                                               </menu> ~
                                             </interface>"))
       (setf (gtk-application-menubar app)
-            (gtk-builder-get-object builder "menubar"))
+            (gtk-builder-object builder "menubar"))
       (let ((window (gtk-application-window-new app)))
         (gtk-widget-show-all window)
         ))))

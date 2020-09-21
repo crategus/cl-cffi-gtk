@@ -507,7 +507,7 @@
   (let ((builder (make-instance 'gtk-builder)))
     (gtk-builder-add-from-string builder *appmenu*)
     (setf (gtk-application-app-menu application)
-          (gtk-builder-get-object builder "appmenu")))
+          (gtk-builder-object builder "appmenu")))
 
   ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))

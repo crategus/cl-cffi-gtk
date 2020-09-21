@@ -32,7 +32,7 @@
     (let* ((builder (gtk-builder-new-from-file (rel-path "css-blendmodes.ui")))
            (provider (make-instance 'gtk-css-provider))
            (listbox (make-instance 'gtk-list-box))
-           (window (gtk-builder-get-object builder "window")))
+           (window (gtk-builder-object builder "window")))
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -65,6 +65,6 @@
         (g-signal-emit normal-row "activate")
         (gtk-widget-grab-focus normal-row))
       ;; Add listbox to scrolled window
-      (gtk-container-add (gtk-builder-get-object builder "scrolledwindow") listbox)
+      (gtk-container-add (gtk-builder-object builder "scrolledwindow") listbox)
       ;; Show the window
       (gtk-widget-show-all window))))
