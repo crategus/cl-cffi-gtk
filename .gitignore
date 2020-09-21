@@ -86,4 +86,4 @@ TODO
 /test/rtest-templates.lisp
 /test/rtest-resources.gresource
 /test/rtest-gio-resources.gresource
-/test/rtest-gtk-accel-map.rc
+/test/*.rc
