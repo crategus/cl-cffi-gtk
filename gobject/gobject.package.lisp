@@ -213,8 +213,7 @@
     @about-function{g-type-children}
     @about-function{g-type-interfaces}
     @about-function{g-type-interface-prerequisites}
-    @about-function{g-type-set-qdata}
-    @about-function{g-type-get-qdata}
+    @about-function{g-type-qdata}
     @about-symbol{g-type-query}
     @about-function{g-type-query}
     @about-function{g-type-register-static}
