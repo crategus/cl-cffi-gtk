@@ -203,15 +203,15 @@
   responsibility of the user to call the @fun{gtk-widget-destroy} function to
   get rid of them and all the widgets they contain.
 
-  The @fun{gtk-builder-get-object} and @fun{gtk-builder-get-objects} functions
-  can be used to access the widgets in the interface by the names assigned to
-  them inside the UI description. Toplevel windows returned by these functions
-  will stay around until the user explicitly destroys them with the
-  @fun{gtk-widget-destroy} function. Other widgets will either be part of a
-  larger hierarchy constructed by the builder, in which case you should not have
-  to worry about their lifecycle, or without a parent, in which case they have
+  The functions @fun{gtk-builder-object} and @fun{gtk-builder-objects} can be
+  used to access the widgets in the interface by the names assigned to them
+  inside the UI description. Toplevel windows returned by these functions will
+  stay around until the user explicitly destroys them with the function
+  @fun{gtk-widget-destroy}. Other widgets will either be part of a larger
+  hierarchy constructed by the builder, in which case you should not have to
+  worry about their lifecycle, or without a parent, in which case they have
   to be added to some container to make use of them. Non-widget objects need
-  to be reffed with the @fun{g-object-ref} function to keep them beyond the
+  to be reffed with the function @fun{g-object-ref} to keep them beyond the
   lifespan of the builder.
 
   The @fun{gtk-builder-connect-signals} function and variants thereof can be
@@ -349,10 +349,10 @@
   the ID of the @class{gtk-ui-manager} in the @code{\"constructor\"} attribute
   and the name of the object in the @code{\"id\"} attribute.
 
-  Objects must be given a name with the @code{\"id\"} attribute, which allows
-  the application to retrieve them from the builder with the
-  @fun{gtk-builder-get-object} function. An ID is also necessary to use the
-  object as property value in other parts of the UI definition.
+  Objects must be given a name with the @code{\"ID\"} attribute, which allows
+  the application to retrieve them from the builder with the function
+  @fun{gtk-builder-object}. An ID is also necessary to use the object as
+  property value in other parts of the UI definition.
 
   @subheading{Note}
   Prior to 2.20, @sym{gtk-builder} was setting the @code{\"name\"} property of
@@ -459,8 +459,8 @@
   Apart from the language for UI descriptions that has been explained in the
   previous section, @sym{gtk-builder} can also parse XML fragments of
   @code{GMenu} markup. The resulting @code{GMenu} object and its named
-  submenus are available via the @fun{gtk-builder-get-object} function like
-  other constructed objects.
+  submenus are available via the function @fun{gtk-builder-object} like other
+  constructed objects.
   @see-slot{gtk-builder-translation-domain}")
 
 ;;; ----------------------------------------------------------------------------
@@ -929,35 +929,35 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_builder_get_object ()
+;;; gtk_builder_get_object () -> gtk-builder-object
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_builder_get_object" gtk-builder-get-object) g-object
+(defcfun ("gtk_builder_get_object" gtk-builder-object) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-12-1}
+ "@version{2020-9-20}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[name]{a string with the name of object to get}
-  @return{The object named @arg{name} or @code{nil} if it could not be found in
-   the object tree.}
+  @return{The @class{g-object} named @arg{name} or @code{nil} if it could not
+    be found in the object tree.}
   @begin{short}
     Gets the object named @arg{name}.
   @end{short}
   Note that this function does not increment the reference count of the
   returned object.
   @see-class{gtk-builder}
-  @see-function{gtk-builder-get-objects}"
+  @see-function{gtk-builder-objects}"
   (builder (g-object gtk-builder))
   (name :string))
 
-(export 'gtk-builder-get-object)
+(export 'gtk-builder-object)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_builder_get_objects ()
+;;; gtk_builder_get_objects () -> gtk-builder-objects
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_builder_get_objects" gtk-builder-get-objects) (g-slist g-object)
+(defcfun ("gtk_builder_get_objects" gtk-builder-objects) (g-slist g-object)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-1}
+ "@version{2020-9-20}
   @argument[builder]{a @class{gtk-builder} object}
   @begin{return}
     A list containing all the objects constructed by the @class{gtk-builder}
@@ -969,10 +969,10 @@
   Note that this function does not increment the reference counts of the
   returned objects.
   @see-class{gtk-builder}
-  @see-function{gtk-builder-get-object}"
+  @see-function{gtk-builder-object}"
   (builder (g-object gtk-builder)))
 
-(export 'gtk-builder-get-objects)
+(export 'gtk-builder-objects)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_expose_object ()
