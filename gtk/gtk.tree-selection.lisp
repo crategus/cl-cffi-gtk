@@ -398,36 +398,37 @@
 (export 'gtk-tree-selection-selected-foreach)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_selection_get_selected_rows ()
+;;; gtk_tree_selection_get_selected_rows () -> gtk-tree-selection-selected-rows
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_selection_get_selected_rows"
-          %gtk-tree-selection-get-selected-rows)
+          %gtk-tree-selection-selected-rows)
     (g-list (g-boxed-foreign gtk-tree-path) :free-from-foreign t)
   (selection g-object)
   (model :pointer))
 
-(defun gtk-tree-selection-get-selected-rows (selection)
+(defun gtk-tree-selection-selected-rows (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2020-9-20}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[model]{a pointer to set to the @class{gtk-tree-model} object,
     or @code{nil}}
   @return{A list containing a @class{gtk-tree-path} for each selected row.}
   @begin{short}
-    Creates a list of path of all selected rows. Additionally, if you are
-    planning on modifying the model after calling this function, you may want to
-    convert the returned list into a list of @class{gtk-tree-row-reference}'s.
-    To do this, you can use the @fun{gtk-tree-row-reference-new} function.
+    Creates a list of path of all selected rows.
   @end{short}
+  Additionally, if you are planning on modifying the model after calling this
+  function, you may want to convert the returned list into a list of
+  @class{gtk-tree-row-reference}'s. To do this, you can use the function
+  @fun{gtk-tree-row-reference-new}.
 
   To free the return value, use:
   @code{g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);}
   @see-class{gtk-tree-selection}
   @see-function{gtk-tree-row-reference-new}"
-  (%gtk-tree-selection-get-selected-rows selection (null-pointer)))
+  (%gtk-tree-selection-selected-rows selection (null-pointer)))
 
-(export 'gtk-tree-selection-get-selected-rows)
+(export 'gtk-tree-selection-selected-rows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_count_selected_rows ()
