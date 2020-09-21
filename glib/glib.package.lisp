@@ -29,7 +29,9 @@
   (:use :cl :cffi :iter)
   (:export ;; Symbols from glib.stable-pointer.lisp
            #:allocate-stable-pointer
+           #:free-stable-pointer
            #:get-stable-pointer-value
+           #:set-stable-pointer-value
            #:stable-pointer-destroy-notify-cb
            #:with-stable-pointer
            ;; Symbols from glib.error.lisp
