@@ -2,12 +2,12 @@
 ;;; gtk.accel-map.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,7 +54,7 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void   changed    Has Details
+;;;     void    changed    Has Details
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -77,7 +77,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-map 'type)
- "@version{2013-11-29}
+ "@version{2020-9-20}
   @begin{short}
     Accelerator maps are used to define runtime configurable accelerators.
   @end{short}
@@ -95,11 +95,11 @@
   The accelerator path must consist of
   @code{\"<WINDOWTYPE>/Category1/Category2/.../Action\"}, where
   @code{WINDOWTYPE} should be a unique application specific identifier that
-  corresponds to the kind of window the accelerator is being used in, e. g.
+  corresponds to the kind of window the accelerator is being used in, e.g.
   @code{\"Gimp-Image\"}, @code{\"Abiword-Document\"} or
   @code{\"Gnumeric-Settings\"}. The @code{\"Category1/.../Action\"} portion is
-  most appropriately chosen by the action the accelerator triggers, i. e. for
-  accelerators on menu items, choose the item's menu path, e. g.
+  most appropriately chosen by the action the accelerator triggers, i.e. for
+  accelerators on menu items, choose the item's menu path, e.g.
   @code{\"File/Save As\"}, @code{\"Image/View/Zoom\"} or
   @code{\"Edit/Select All\"}. So a full valid accelerator path may look like:
   @code{\"<Gimp-Toolbox>/File/Dialogs/Tool Options...\"}.
@@ -115,8 +115,8 @@
     accelerators should be done using the function
     @fun{gtk-accel-map-change-entry}.
 
-    In order to avoid having some accelerators changed, they can be locked using
-    the function @fun{gtk-accel-map-lock-path}. Unlocking is done using
+    In order to avoid having some accelerators changed, they can be locked
+    using the function @fun{gtk-accel-map-lock-path}. Unlocking is done using
     the function @fun{gtk-accel-map-unlock-path}.
 
   @subheading{Saving and loading accelerator maps}
@@ -129,11 +129,10 @@
     accelerators. By connecting to the \"changed\" signal, one can monitor
     changes of all accelerators. It is also possible to monitor only a single
     accelerator path by using it as a detail of the \"changed\" signal.
-
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (object accel-path accel-key accel-mods)   : Has Details
+ lambda (object accel-path accel-key accel-mods)    : Has Details
       @end{pre}
       Notifies of a change in the global accelerator map. The path is also used
       as the detail for the signal, so it is possible to connect to
@@ -165,7 +164,7 @@
 
 (defcfun ("gtk_accel_map_add_entry" gtk-accel-map-add-entry) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @argument[accel-path]{valid accelerator path of type @code{:string}}
   @argument[accel-key]{the accelerator key of type @code{:uint}}
   @argument[accel-mods]{the accelerator modifiers of type
@@ -196,16 +195,18 @@
 
 (defun gtk-accel-map-lookup-entry (accel-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @argument[accel-path]{a valid accelerator path of @code{:string}}
   @begin{return}
     @code{accel-key} -- the accelerator key of type @code{:uint} @br{}
     @code{accel-mods} -- the accelerator modifiers @symbol{gdk-modifier-type}
     @br{}
-    @code{accel-flags} -- the accelerator flags of type @code{:uint} @br{}
-    if @arg{accel-path} is known, @code{nil} otherwise
+    @code{accel-flags} -- the accelerator flags of type @code{:uint} if
+                          @arg{accel-path} is known, @code{nil} otherwise
   @end{return}
-  Looks up the accelerator entry for @arg{accel-path}.
+  @begin{short}
+    Looks up the accelerator entry for @arg{accel-path}.
+  @end{short}
   @see-class{gtk-accel-map}
   @see-function{gtk-accel-map-add-entry}
   @see-function{gtk-accel-map-change-entry}"
@@ -223,7 +224,7 @@
 
 (defcfun ("gtk_accel_map_change_entry" gtk-accel-map-change-entry) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @argument[accel-path]{a valid accelerator path of type @code{:string}}
   @argument[accel-key]{the new accelerator key of type @code{:uint}}
   @argument[accel-mods]{the new accelerator modifiers of type
@@ -258,11 +259,13 @@
 
 (defcfun ("gtk_accel_map_load" gtk-accel-map-load) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[filename]{a file containing accelerator specifications, in the GLib
-    file name encoding}
-  Parses a file previously saved with the function @fun{gtk-accel-map-save}
-  for accelerator specifications, and propagates them accordingly.
+ "@version{2020-9-20}
+  @argument[filename]{a @code{:string} with a file containing accelerator
+    specifications, in the GLib file name encoding}
+  @begin{short}
+    Parses a file previously saved with the function @fun{gtk-accel-map-save}
+    for accelerator specifications, and propagates them accordingly.
+  @end{short}
   @see-class{gtk-accel-map}
   @see-function{gtk-accel-map-save}"
   (filename :string))
@@ -275,9 +278,9 @@
 
 (defcfun ("gtk_accel_map_save" gtk-accel-map-save) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[filename]{the name of the file to contain accelerator
-    specifications, in the GLib file name encoding}
+ "@version{2020-9-20}
+  @argument[filename]{a @code{:string} with the name of the file to contain
+    accelerator specifications, in the GLib file name encoding}
   @begin{short}
     Saves current accelerator specifications, accelerator path, key and
     modifiers, to @arg{filename}.
@@ -415,13 +418,13 @@
 
 (defcfun ("gtk_accel_map_get" gtk-accel-map-get) (g-object gtk-accel-map)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @return{The global @class{gtk-accel-map} object.}
   @begin{short}
     Gets the singleton global @class{gtk-accel-map} object.
   @end{short}
   This object is useful only for notification of changes to the accelerator map
-  via the \"changed\" signal; it is not a parameter to the other accelerator
+  via the \"changed\" signal. It is not a parameter to the other accelerator
   map functions.
   @see-class{gtk-accel-map}")
 
@@ -433,7 +436,7 @@
 
 (defcfun ("gtk_accel_map_lock_path" gtk-accel-map-lock-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @argument[accel-path]{a valid accelerator path of type @code{:string}}
   @begin{short}
     Locks the given accelerator path.
@@ -468,7 +471,7 @@
 
 (defcfun ("gtk_accel_map_unlock_path" gtk-accel-map-unlock-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-19}
+ "@version{2020-9-20}
   @argument[accel-path]{a valid accelerator path of type @code{:string}}
   @begin{short}
     Undoes the last call to the function @fun{gtk-accel-map-lock-path} on this
