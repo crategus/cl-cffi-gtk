@@ -61,8 +61,8 @@
     (is (equal "b" (g-variant-type-dup-string (g-simple-action-parameter-type action))))
     ;; Slot state
     (is-true (pointerp (g-simple-action-state action)))
-    (is (string= "s" (g-variant-type-dup-string (g-variant-get-type (g-simple-action-state action)))))
-    (is (string= "text" (g-variant-get-string (g-simple-action-state action))))
+    (is (string= "s" (g-variant-type-dup-string (g-variant-type (g-simple-action-state action)))))
+    (is (string= "text" (g-variant-string (g-simple-action-state action))))
     ;; Slot state-type
     (is (eq 'g-variant-type (type-of (g-simple-action-state-type action))))
     (is (string= "s" (g-variant-type-dup-string (g-simple-action-state-type action))))
@@ -90,7 +90,7 @@
     (is (equal "simple" (g-action-name action)))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
     (is (equal "b" (g-variant-type-peek-string (g-action-parameter-type action))))
-    (is-true (g-variant-get-boolean (g-action-state action)))))
+    (is-true (g-variant-boolean (g-action-state action)))))
 
 ;;; --- Functions from the interface -------------------------------------------
 
@@ -109,7 +109,7 @@
     ;; g-action-enabled
     (is-true (g-action-enabled action))
     ;; g-action-state
-    (is-true (g-variant-get-boolean (g-action-state action)))))
+    (is-true (g-variant-boolean (g-action-state action)))))
 
 ;;;   g_action_change_state
 ;;;   g_action_activate
@@ -137,7 +137,7 @@
            (format t "~&    value  : ~A~%" value))))
     ;; g-action-change-state
     (g-action-change-state action (g-variant-new-boolean nil))
-    (is-false (g-variant-get-boolean (g-action-state action)))
+    (is-false (g-variant-boolean (g-action-state action)))
     ;; g-action-activate
     (g-action-activate action (g-variant-new-boolean t))))
 
@@ -180,9 +180,9 @@
                                               (g-variant-new-boolean t))))
     ;;g-simple-action-state
     (setf (g-simple-action-state action) (g-variant-new-boolean nil))
-    (is-false (g-variant-get-boolean (g-action-state action)))
+    (is-false (g-variant-boolean (g-action-state action)))
     (setf (g-simple-action-state action) (g-variant-new-boolean t))
-    (is-true (g-variant-get-boolean (g-action-state action)))))
+    (is-true (g-variant-boolean (g-action-state action)))))
 
 ;;;   Example from the API documentation
 
@@ -193,18 +193,18 @@
                                               (g-variant-new-int32 0))))
     (g-signal-connect action "change-state"
                       (lambda (simple-action value)
-                        (let ((requested (g-variant-get-int32 value)))
+                        (let ((requested (g-variant-int32 value)))
                           ;; Volume only goes from 0 to 10
                           (when (and (>= requested 0) (<= requested 10))
                             (setf (g-simple-action-state simple-action) value)))))
 
     ;; Emit the "change-state" signal on action
     (g-action-change-state action (g-variant-new-int32 5))
-    (is (= 5 (g-variant-get-int32 (g-action-state action))))
+    (is (= 5 (g-variant-int32 (g-action-state action))))
     ;; Emit the "change-state" signal for 10
     (g-action-change-state action (g-variant-new-int32 10))
-    (is (= 10 (g-variant-get-int32 (g-action-state action))))
+    (is (= 10 (g-variant-int32 (g-action-state action))))
     ;; Emit the "change-state" signal for 20
     (g-action-change-state action (g-variant-new-int32 20))
     ;; The state has not changed.
-    (is (= 10 (g-variant-get-int32 (g-action-state action))))))
+    (is (= 10 (g-variant-int32 (g-action-state action))))))

@@ -398,7 +398,7 @@
     (format t \"     action name : ~A~%\" name)
     (format t \"  parameter type : ~A~%\" param-type)
     (unless (null-pointer-p state)
-      (format t \"      state type : ~A~%\" (g-variant-get-type-string state)))
+      (format t \"      state type : ~A~%\" (g-variant-type-string state)))
     (format t \"           state : ~A~%\" state)
     (format t \"         enabled : ~A~%~%\" enabled)
     ;; Activate the action
@@ -430,7 +430,7 @@
             (lambda (action parameter)
               (declare (ignore parameter))
               (format t \"Action ~A is activated.~%\" (g-action-name action))
-              (let ((state (g-variant-get-boolean (g-action-state action))))
+              (let ((state (g-variant-boolean (g-action-state action))))
                 (if state
                     (setf (g-simple-action-state action)
                           (g-variant-new-boolean nil))

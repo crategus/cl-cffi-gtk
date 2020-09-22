@@ -71,9 +71,9 @@
   (signals (error) (g-simple-action-new-stateful "stateful" nil nil))
   ;; Initialize state with an integer
   (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-int32 123))))
-    (is (= 123 (g-variant-get-int32 (g-action-state action))))
+    (is (= 123 (g-variant-int32 (g-action-state action))))
     (setf (g-action-state action) (g-variant-new-int32 321))
-    (is (= 321 (g-variant-get-int32 (g-action-state action))))
+    (is (= 321 (g-variant-int32 (g-action-state action))))
     ;; TODO: It is an error to pass a wrong type, but no Lisp error
 ;    (signals (error) (setf (g-action-state action) (g-variant-new-int64 123)))
   ))
@@ -84,11 +84,11 @@
   (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-int32 123))))
     (is (eq 'g-variant-type (type-of (g-action-state-type action))))
     (is (string= "i" (g-variant-type-dup-string (g-action-state-type action))))
-    (is (= 123 (g-variant-get-int32 (g-action-state action)))))
+    (is (= 123 (g-variant-int32 (g-action-state action)))))
   (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-string "test"))))
     (is (eq 'g-variant-type (type-of (g-action-state-type action))))
     (is (string= "s" (g-variant-type-dup-string (g-action-state-type action))))
-    (is (string= "test" (g-variant-get-string (g-action-state action))))))
+    (is (string= "test" (g-variant-string (g-action-state action))))))
 
 ;;; --- Functions --------------------------------------------------------------
 
@@ -117,13 +117,13 @@
     ;; Connect available signals
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (setf param (g-variant-get-int32 parameter))
+         (setf param (g-variant-int32 parameter))
          (when *g-action-verbose*
            (format t "~%")
            (format t "~&GAction signal : 'activate'~%")
            (format t "~&        action : ~A~%" action)
            (format t "~&          name : ~A~%" (g-action-name action))
-           (format t "~&     parameter : ~A~%" (g-variant-get-int32 parameter)))))
+           (format t "~&     parameter : ~A~%" (g-variant-int32 parameter)))))
     (g-signal-connect action "change-state"
        (lambda (action value)
          (setf (g-simple-action-state action) value)
@@ -132,11 +132,11 @@
            (format t "~&GAction signal : 'change-state'~%")
            (format t "~&        action : ~A~%" action)
            (format t "~&          name : ~A~%" (g-action-name action))
-           (format t "~&         value : ~A~%" (g-variant-get-string value)))))
+           (format t "~&         value : ~A~%" (g-variant-string value)))))
     ;; g-action-change-state
-    (is (string= "text" (g-variant-get-string (g-action-state action))))
+    (is (string= "text" (g-variant-string (g-action-state action))))
     (g-action-change-state action (g-variant-new-string "new"))
-    (is (string= "new" (g-variant-get-string (g-action-state action))))
+    (is (string= "new" (g-variant-string (g-action-state action))))
     ;; g-action-activate
     (g-action-activate action (g-variant-new-int32 123))
     (is (= 123 param))

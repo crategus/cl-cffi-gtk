@@ -54,7 +54,7 @@
   ;; Check the children
   (is (equal '()
              (mapcar #'gtype-name (g-type-children "GtkActionable"))))
-             
+
   ;; Check the interfaces
   ;; No interfaces
 
@@ -92,8 +92,7 @@
     ;; Set the name and the target
     (gtk-actionable-set-detailed-action-name button "app::save")
     (is (equal "app"  (gtk-actionable-action-name button)))
-    (is (equal "save" (g-variant-get-string (gtk-actionable-action-target button))))
-))
+    (is (equal "save" (g-variant-string (gtk-actionable-action-target button))))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; Functions

@@ -514,7 +514,7 @@
     @about-variable{+g-variant-type-bytestring+}
     @about-variable{+g-variant-type-bytestring-array+}
     @about-variable{+g-variant-type-vardict+}
-    @about-function{g-variant-type}
+    @about-function{g-variant-type-checked}
     @about-function{g-variant-type-free}
     @about-function{g-variant-type-copy}
     @about-function{g-variant-type-new}
@@ -555,14 +555,13 @@
     @about-symbol{g-variant-builder}
     @about-symbol{g-variant-dict}
     @about-symbol{g-variant-parse-error}
-
     @about-function{g-variant-unref}
     @about-function{g-variant-ref}
     @about-function{g-variant-ref-sink}
     @about-function{g-variant-is-floating}
     @about-function{g-variant-take-ref}
-    @about-function{g-variant-get-type}
-    @about-function{g-variant-get-type-string}
+    @about-function{g-variant-type}
+    @about-function{g-variant-type-string}
     @about-function{g-variant-is-of-type}
     @about-function{g-variant-is-container}
     @about-function{g-variant-compare}
@@ -594,26 +593,25 @@
     @about-function{g-variant-new-objv}
     @about-function{g-variant-new-bytestring}
     @about-function{g-variant-new-bytestring-array}
-    @about-function{g-variant-get-boolean}
-    @about-function{g-variant-get-byte}
-    @about-function{g-variant-get-int16}
-    @about-function{g-variant-get-uint16}
-    @about-function{g-variant-get-int32}
-    @about-function{g-variant-get-uint32}
-    @about-function{g-variant-get-int64}
-    @about-function{g-variant-get-int64}
-    @about-function{g-variant-get-handle}
-    @about-function{g-variant-get-double}
-    @about-function{g-variant-get-string}
-    @about-function{g-variant-dup-string}
-    @about-function{g-variant-get-variant}
-    @about-function{g-variant-get-strv}
+    @about-function{g-variant-boolean}
+    @about-function{g-variant-byte}
+    @about-function{g-variant-int16}
+    @about-function{g-variant-uint16}
+    @about-function{g-variant-int32}
+    @about-function{g-variant-uint32}
+    @about-function{g-variant-int64}
+    @about-function{g-variant-int64}
+    @about-function{g-variant-handle}
+    @about-function{g-variant-double}
+    @about-function{g-variant-string}
+    @about-function{g-variant-variant}
+    @about-function{g-variant-strv}
     @about-function{g-variant-dup-strv}
-    @about-function{g-variant-get-objv}
+    @about-function{g-variant-objv}
     @about-function{g-variant-dup-objv}
-    @about-function{g-variant-get-bytestring}
+    @about-function{g-variant-bytestring}
     @about-function{g-variant-dup-bytestring}
-    @about-function{g-variant-get-bytestring_array}
+    @about-function{g-variant-bytestring_array}
     @about-function{g-variant-dup-bytestring-array}
     @about-function{g-variant-new-maybe}
     @about-function{g-variant-new-array}
@@ -639,7 +637,7 @@
     @about-function{g-variant-hash}
     @about-function{g-variant-equal}
     @about-function{g-variant-print}
-    @about-function{g-variant-string}
+    @about-function{g-variant-print-string}
     @about-function{g-variant-iter-copy}
     @about-function{g-variant-iter-free}
     @about-function{g-variant-iter-init}

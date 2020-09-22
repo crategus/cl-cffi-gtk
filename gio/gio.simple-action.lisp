@@ -132,7 +132,7 @@
       @begin{pre}
 (g-signal-connect action \"change-state\"
                   (lambda (simple-action value)
-                    (let ((requested (g-variant-get-int32 value)))
+                    (let ((requested (g-variant-int32 value)))
                       ;; Volume only goes from 0 to 10
                       (when (and (>= requested 0) (<= requested 10))
                         (setf (g-simple-action-state simple-action) value)))))

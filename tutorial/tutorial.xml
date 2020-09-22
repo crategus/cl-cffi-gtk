@@ -12973,12 +12973,12 @@ lambda (merge widget)
            (lambda (action parameter)
              (declare (ignore parameter))
              (let* ((state (g-action-state action))
-                    (value (g-variant-get-boolean state)))
+                    (value (g-variant-boolean state)))
                (g-action-change-state action
                                       (g-variant-new-boolean (not value))))))
         (g-signal-connect action "change-state"
            (lambda (action parameter)
-             (if (g-variant-get-boolean parameter)
+             (if (g-variant-boolean parameter)
                  (gtk-window-fullscreen window)
                  (gtk-window-unfullscreen window))
              (setf (g-simple-action-state action) parameter))))
@@ -12996,7 +12996,7 @@ lambda (merge widget)
            (lambda (action parameter)
              (let ((view (gobject::get-g-object-for-pointer
                            (g-object-get-data window "bloatpad-text")))
-                   (str (g-variant-get-string parameter)))
+                   (str (g-variant-string parameter)))
                (cond ((equal str "left")
                       (setf (gtk-text-view-justification view) :left))
                      ((equal str "center")
@@ -14152,6 +14152,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 

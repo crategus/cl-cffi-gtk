@@ -85,12 +85,12 @@
 (defun activate-change-theme-state (action state)
   (let ((settings (gtk-settings-default)))
     (setf (gtk-settings-gtk-application-prefer-dark-theme settings)
-          (g-variant-get-boolean state))
+          (g-variant-boolean state))
     (setf (g-simple-action-state action) state)))
 
 (defun activate-change-transition-state (action state)
   (setf (gtk-stack-transition-type *toplevel-stack*)
-        (if (g-variant-get-boolean state)
+        (if (g-variant-boolean state)
             :slide-left-right
             :none))
   (setf (g-simple-action-state action) state))

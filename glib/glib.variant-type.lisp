@@ -153,13 +153,13 @@
   An indefinite type is similar in spirit to what may be called an abstract
   type in other type systems. No value can exist that has an indefinite type
   as its type, but values can exist that have types that are subtypes of
-  indefinite types. That is to say, @fun{g-variant-get-type} will never return
-  an indefinite type, but calling @fun{g-variant-is-of-type} with an indefinite
-  type may return @em{true}. For example, you cannot have a value that
-  represents \"an array of no particular type\", but you can have an \"array of
-  integers\" which certainly matches the type of \"an array of no particular
-  type\", since \"array of integers\" is a subtype of \"array of no particular
-  type\".
+  indefinite types. That is to say, the function @fun{g-variant-type} will never
+  return an indefinite type, but calling the function @fun{g-variant-is-of-type}
+  with an indefinite type may return @em{true}. For example, you cannot have a
+  value that represents \"an array of no particular type\", but you can have an
+  \"array of integers\" which certainly matches the type of \"an array of no
+  particular type\", since \"array of integers\" is a subtype of \"array of no
+  particular type\".
 
   This is similar to how instances of abstract classes may not directly exist
   in other type systems, but instances of their non-abstract subtypes may. For
@@ -263,7 +263,7 @@
     Two types may not be compared by value; use @fun{g-variant-type-equal} or
     @fun{g-variant-type-is-subtype-of}. May be copied using
     @fun{g-variant-type-copy} and freed using @fun{g-variant-type-free}.
-  @see-function{g-variant-get-type}
+  @see-function{g-variant-type}
   @see-function{g-variant-is-of-type}
   @see-function{g-variant-type-is-basic}
   @see-function{g-variant-type-equal}
@@ -999,8 +999,8 @@
   characters ('*', '?', or 'r').
 
   A @type{g-variant} instance may not have an indefinite type, so calling this
-  function on the result of @fun{g-variant-get-type} will always result in
-  @em{true} being returned. Calling this function on an indefinite type like
+  function on the result of the function @fun{g-variant-type} will always result
+  in @em{true} being returned. Calling this function on an indefinite type like
   @var{+g-variant-type-array+}, however, will result in @code{nil} being
   returned.
 

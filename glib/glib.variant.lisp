@@ -376,16 +376,16 @@
 
     If calls are made to start accessing the other values then @sym{g-variant}
     instances will exist for those values only for as long as they are in use
-    (i. e.: until you call @fun{g-variant-unref}). The type information is
-    shared. The serialised data and the buffer management structure for that
-    serialised data is shared by the child.
+    (i.e. until you call the function @fun{g-variant-unref}). The type
+    information is shared. The serialised data and the buffer management
+    structure for that serialised data is shared by the child.
 
   @subheading{Summary}
     To put the entire example together, for our dictionary mapping strings to
     variants (with two entries, as given above), we are using 91 bytes of memory
     for type information, 29 byes of memory for the serialised data, 16 bytes
     for buffer management and 24 bytes for the @sym{g-variant} instance, or a
-    total of 160 bytes, plus malloc overhead. If we were to use
+    total of 160 bytes, plus malloc overhead. If we were to use the function
     @fun{g-variant-get-child-value} to access the two dictionary entries, we
     would use an additional 48 bytes. If we were to have other dictionaries of
     the same type, we would use more memory for the serialised data and buffer
@@ -544,48 +544,47 @@
 (export 'g-variant-take-ref)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_type ()
+;;; g_variant_get_type () -> g-variant-type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_type" g-variant-get-type)
+(defcfun ("g_variant_get_type" g-variant-type)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a @type{g-variant}}
-  @return{A @class{g-variant-type}.}
+ "@version{2020-9-22}
+  @argument[value]{a @type{g-variant} instance}
+  @return{A @class{g-variant-type} structure.}
   @begin{short}
     Determines the type of @arg{value}.
   @end{short}
-
   The return value is valid for the lifetime of @arg{value} and must not be
   freed.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-type)
+(export 'g-variant-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_type_string ()
+;;; g_variant_get_type_string () -> g-variant-type-string
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_type_string" g-variant-get-type-string) :string
+(defcfun ("g_variant_get_type_string" g-variant-type-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a @type{g-variant}}
+ "@version{2020-9-22}
+  @argument[value]{a @type{g-variant} instance}
   @return{The type string for the type of @arg{value}.}
   @begin{short}
     Returns the type string of @arg{value}.
   @end{short}
-  Unlike the result of calling @fun{g-variant-type-peek-string}, this string is
-  nul-terminated. This string belongs to @type{g-variant} and must not be
-  freed.
+  Unlike the result of calling the function @fun{g-variant-type-peek-string},
+  this string is nul-terminated. This string belongs to @type{g-variant} and
+  must not be freed.
 
-  Since 2.24
+  @see-type{g-variant}
   @see-function{g-variant-type-peek-string}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-type-string)
+(export 'g-variant-type-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_of_type ()
@@ -1398,214 +1397,208 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_boolean ()
+;;; g_variant_get_boolean () -> g-variant-boolean
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_boolean" g-variant-get-boolean) :boolean
+(defcfun ("g_variant_get_boolean" g-variant-boolean) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-9-21}
   @argument[value]{a boolean @type{g-variant} instance}
-  @return{The boolean values @em{true} or @code{nil}.}
+  @return{The boolean values @em{true} or @em{false}.}
   @short{Returns the boolean value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-boolean+}.
-
-  Since 2.24"
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (g-variant-boolean (g-variant-new-boolean nil))
+=> NIL
+  (g-variant-boolean (g-variant-new-boolean t))
+=> T
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-boolean+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-boolean)
+(export 'g-variant-boolean)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_byte ()
+;;; g_variant_get_byte () -> g-variant-byte
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_byte" g-variant-get-byte) :uchar
+(defcfun ("g_variant_get_byte" g-variant-byte) :uchar
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-9-21}
   @argument[value]{a byte @type{g-variant} instance}
-  @return{A @code{guchar}.}
+  @return{A @code{:uchar} value.}
   @short{Returns the byte value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-byte+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-byte}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-byte)
+(export 'g-variant-byte)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_int16 ()
+;;; g_variant_get_int16 () -> g-variant-int16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_int16" g-variant-get-int16) :int16
+(defcfun ("g_variant_get_int16" g-variant-int16) :int16
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a int16 @type{g-variant} instance}
-  @return{A @code{gint16}.}
+ "@version{2020-9-21}
+  @argument[value]{a 16-bit signed integer @type{g-variant} instance}
+  @return{A @code{:int16} value.}
   @short{Returns the 16-bit signed integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-int16+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-int16}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-int16)
+(export 'g-variant-int16)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_uint16 ()
+;;; g_variant_get_uint16 () -> g-variant-uint16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_uint16" g-variant-get-uint16) :uint16
+(defcfun ("g_variant_get_uint16" g-variant-uint16) :uint16
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a uint16 @type{g-variant} instance}
-  @return{A @code{guint16}.}
+ "@version{2020-9-21}
+  @argument[value]{a 16-bit unsigned integer @type{g-variant} instance}
+  @return{A @code{:uint16} value.}
   @short{Returns the 16-bit unsigned integer value of value.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-uint16+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-uint16+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-uint16)
+(export 'g-variant-uint16)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_int32 ()
+;;; g_variant_get_int32 () -> g-variant-int32
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_int32" g-variant-get-int32) :int32
+(defcfun ("g_variant_get_int32" g-variant-int32) :int32
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[value]{a int32 @type{g-variant} instance}
-  @return{A @code{gint32}.}
+ "@version{2020-9-21}
+  @argument[value]{a 32-bit signed integer @type{g-variant} instance}
+  @return{A @code{:int32} value.}
   @short{Returns the 32-bit signed integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-int32+}.
-
-  Since 2.24
   @see-type{g-variant}
   @see-variable{+g-variant-type-int32+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-int32)
+(export 'g-variant-int32)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_uint32 ()
+;;; g_variant_get_uint32 () -> g-variant-uint32
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_uint32" g-variant-get-uint32) :uint32
+(defcfun ("g_variant_get_uint32" g-variant-uint32) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @arguemnt[value]{a uint32 @type{g-variant} instance}
-  @return{A @code{guint32}.}
+ "@version{2020-9-21}
+  @argument[value]{a 32-bit unsigned integer @type{g-variant} instance}
+  @return{A @code{:uint32} value.}
   @short{Returns the 32-bit unsigned integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-uint32+}.
-
-  Since 2.24
   @see-symbol{g-variant}
   @see-variable{+g-variant-type-uint32+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-uint32)
+(export 'g-variant-uint32)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_int64 ()
+;;; g_variant_get_int64 () -> g-variant-int64
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_int64" g-variant-get-int64) :int64
+(defcfun ("g_variant_get_int64" g-variant-int64) :int64
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
-  @argument[value]{a int64 @type{g-variant} instance}
-  @return{A @code{gint64}.}
+ "@version{2020-9-21}
+  @argument[value]{a 64-bit signed integer @type{g-variant} instance}
+  @return{A @code{:int64} value.}
   @short{Returns the 64-bit signed integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-int64+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-int64+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-int64)
+(export 'g-variant-int64)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_uint64 ()
+;;; g_variant_get_uint64 () -> g-variant-uint64
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_uint64" g-variant-get-uint64) :uint64
+(defcfun ("g_variant_get_uint64" g-variant-uint64) :uint64
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a uint64 @type{g-variant} instance}
-  @return{A @code{guint64}.}
+ "@version{2020-9-22}
+  @argument[value]{a 64-bit unsigned integer @type{g-variant} instance}
+  @return{A @code{:uint64} value.}
   @short{Returns the 64-bit unsigned integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-uint64+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-uint64}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-uint64)
+(export 'g-variant-uint64)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_handle ()
+;;; g_variant_get_handle () -> g-variant-handle
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_handle" g-variant-get-handle) :int32
+(defcfun ("g_variant_get_handle" g-variant-handle) :int32
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-9-22}
   @argument[value]{a handle @type{g-variant} instance}
-  @return{A @code{gint32}.}
+  @return{A @code{:int32} value.}
   @short{Returns the 32-bit signed integer value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-handle+}.
 
   By convention, handles are indexes into an array of file descriptors that
   are sent alongside a D-Bus message. If you are not interacting with D-Bus,
   you probably do not need them.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-handle+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-handle)
+(export 'g-variant-handle)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_double ()
+;;; g_variant_get_double () -> g-variant-double
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_double" g-variant-get-double) :double
+(defcfun ("g_variant_get_double" g-variant-double) :double
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-9-22}
   @argument[value]{a double @type{g-variant} instance}
-  @return{A @code{gdouble}.}
+  @return{A @code{:double} value.}
   @short{Returns the double precision floating point value of @arg{value}.}
-
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-double+}.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-double+}"
   (value (:pointer (:struct g-variant))))
 
-(export 'g-variant-get-double)
+(export 'g-variant-double)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_get_string ()
+;;; g_variant_get_string () -> g-variant-string
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_string" %g-variant-get-string) :string
+(defcfun ("g_variant_get_string" %g-variant-string) :string
   (value (:pointer (:struct g-variant)))
   (length :pointer))
 
-(defun g-variant-get-string (value)
+(defun g-variant-string (value)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-9-22}
   @argument[value]{a string @type{g-variant} instance}
   @return{The constant string, utf8 encoded.}
   @begin{short}
@@ -1613,22 +1606,17 @@
     type. This includes the types @var{+g-variant-type-string+},
     @var{+g-variant-type-object-path+} and @var{+g-variant-type-signature+}.
   @end{short}
-
   The string will always be utf8 encoded.
 
-  If length is non-@code{NULL} then the length of the string (in bytes) is
-  returned there. For trusted values, this information is already known. For
-  untrusted values, a @code{strlen()} will be performed.
-
   It is an error to call this function with a value of any type other than
-  those three.
+  those three. The return value remains valid as long as @arg{value} exists.
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-string+}
+  @see-variable{+g-variant-type-object-path+}
+  @see-variable{+g-variant-type-signature+}"
+  (%g-variant-string value (null-pointer)))
 
-  The return value remains valid as long as value exists.
-
-  Since 2.24"
-  (%g-variant-get-string value (null-pointer)))
-
-(export 'g-variant-get-string)
+(export 'g-variant-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_dup_string ()

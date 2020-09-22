@@ -8,18 +8,18 @@
 
 (test g-variant-unref
   (let ((bool (g-variant-new-boolean t)))
-    (is-true (g-variant-get-boolean bool))
+    (is-true (g-variant-boolean bool))
     (g-variant-unref bool)))
 
 ;;;   g_variant_ref
 
 (test g-variant-ref
   (let ((bool (g-variant-new-boolean t)))
-    (is-true (g-variant-get-boolean bool))
+    (is-true (g-variant-boolean bool))
     (setf bool (g-variant-ref bool))
-    (is-true (g-variant-get-boolean bool))
+    (is-true (g-variant-boolean bool))
     (g-variant-unref bool)
-    (is-true (g-variant-get-boolean bool))
+    (is-true (g-variant-boolean bool))
     (g-variant-unref bool)))
 
 ;;;   g_variant_ref_sink
@@ -38,18 +38,17 @@
 
 ;;;   g_variant_take_ref
 
-;;;   g_variant_get_type
+;;;   g-variant-type
 
-(test g-variant-get-type
+(test g-variant-type
   (let ((bool (g-variant-new-boolean t)))
-    (is (equal "b" (g-variant-type-dup-string (g-variant-get-type bool))))
-))
+    (is (equal "b" (g-variant-type-dup-string (g-variant-type bool))))))
 
-;;;   g_variant_get_type_string
+;;;   g-variant-type-string
 
-(test g-variant-get-type-string
+(test g-variant-type-string
   (let ((bool (g-variant-new-boolean t)))
-    (is (equal "b" (g-variant-get-type-string bool)))))
+    (is (equal "b" (g-variant-type-string bool)))))
 
 ;;;     g_variant_is_of_type
 

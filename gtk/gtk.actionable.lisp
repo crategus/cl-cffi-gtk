@@ -198,7 +198,7 @@
     @begin{pre}
  (let ((button (make-instance 'gtk-button)))
    (setf (gtk-actionable-action-target button) (g-variant-new-int16 128))
-   (g-variant-get-int16 (gtk-actionable-action-target button)))
+   (g-variant-int16 (gtk-actionable-action-target button)))
  => 128
     @end{pre}
   @end{dictionary}
@@ -269,7 +269,7 @@
  (let ((button (make-instance 'gtk-button)))
    (gtk-actionable-set-detailed-action-name button \"app::save\")
    (values (gtk-actionable-action-name button)
-           (g-variant-get-string (gtk-actionable-action-target button))))
+           (g-variant-string (gtk-actionable-action-target button))))
   => \"app\"
   => \"save\"
     @end{pre}
