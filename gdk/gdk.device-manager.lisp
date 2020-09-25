@@ -157,10 +157,9 @@
   possible to get the source (slave) device that the event originated from via
   the function @fun{gdk-event-source-device}.
 
-  In order to listen for events coming from devices other than a virtual
-  device, the function @fun{gdk-window-set-device-events} must be called.
-  Generally, this function can be used to modify the event mask for any given
-  device.
+  In order to listen for events coming from devices other than a virtual device,
+  the function @fun{gdk-window-device-events} must be called. Generally, this
+  function can be used to modify the event mask for any given device.
 
   Input devices may also provide additional information besides x/y. For
   example, graphics tablets may also provide pressure and x/y tilt
@@ -223,7 +222,7 @@
   @see-function{gdk-device-manager-get-client-pointer}
   @see-function{gdk-device-get-associated-device}
   @see-function{gdk-event-source-device}
-  @see-function{gdk-window-set-device-events}
+  @see-function{gdk-window-device-events}
   @see-function{gdk-device-get-axis}
   @see-function{gdk-device-list-axes}
   @see-function{gdk-device-set-key}")

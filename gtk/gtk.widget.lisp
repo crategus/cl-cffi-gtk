@@ -3402,28 +3402,29 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gtk-widget) 't)
  "The @code{scale-factor} property of type @code{:int} (Read) @br{}
   The scale factor of the widget. See the function @fun{gtk-widget-scale-factor}
-  for more details about widget scaling. @br{}
+  for more details about widget scaling. Since 3.10 @br{}
   Allowed values: >= 1 @br{}
-  Default value: 1 @br{}
-  Since 3.10")
+  Default value: 1")
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-widget-scale-factor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-scale-factor 'function)
- "@version{2015-12-29}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-25}
   @syntax[]{(gtk-widget-scale-factor object) => scale-factor}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[scale-factor]{a @code{:int} with the scale factor}
   @begin{short}
-    The generic function @sym{gtk-widget-scale-factor} retrieves the internal
-    scale factor that maps from window coordinates to the actual device pixels.
+    The slot access function function @sym{gtk-widget-scale-factor} retrieves
+    the internal scale factor that maps from window coordinates to the actual
+    device pixels.
   @end{short}
   On traditional systems this is 1, on high density outputs, it can be a higher
   value (typically 2).
 
   Since 3.10
   @see-class{gtk-widget}
-  @see-function{gdk-window-get-scale-factor}")
+  @see-function{gdk-window-scale-factor}")
 
 ;;; --- gtk-widget-sensitive ---------------------------------------------------
 
@@ -7367,21 +7368,21 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_is_composited" gtk-widget-is-composited) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2020-9-25}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} can rely on its alpha channel being
-    drawn correctly.}
+  @return{@em{True} if @arg{widget} can rely on its alpha channel being drawn
+    correctly.}
   @begin{short}
-    Whether @arg{widget} can rely on having its alpha channel drawn correctly.
+    Whether the widget can rely on having its alpha channel drawn correctly.
   @end{short}
   On X11 this function returns whether a compositing manager is running for
   widget's screen.
 
   Please note that the semantics of this call will change in the future if
-  used on a @arg{widget} that has a composited window in its hierarchy as set
-  by the function @fun{gdk-window-set-composited}.
+  used on a widget that has a composited window in its hierarchy as set by the
+  function @fun{gdk-window-composited}.
   @see-class{gtk-widget}
-  @see-function{gdk-window-set-composited}"
+  @see-function{gdk-window-composited}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-composited)

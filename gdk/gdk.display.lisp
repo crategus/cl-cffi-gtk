@@ -916,17 +916,17 @@
 (defcfun ("gdk_display_get_default_group" gdk-display-default-group)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2020-9-25}
   @argument[display]{a @class{gdk-display} object}
   @return{The default group leader @class{gdk-window} object for @arg{display}.}
   @begin{short}
     Returns the default group leader window for all toplevel windows on the
     display.
   @end{short}
-  This window is implicitly created by GDK. See the @fun{gdk-window-set-group}
-  function.
+  This window is implicitly created by GDK. See the function
+  @fun{gdk-window-group}.
   @see-class{gdk-display}
-  @see-function{gdk-window-set-group}"
+  @see-function{gdk-window-group}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-default-group)
@@ -1085,23 +1085,23 @@
 (defcfun ("gdk_display_supports_composite" gdk-display-supports-composite)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2019-3-26}
+ "@version{2020-9-25}
   @argument[display]{a @class{gdk-display} object}
   @return{A @code{:boolean} that is @em{true} if windows may be composited.}
   @begin{short}
-    Returns @em{true} if the @fun{gdk-window-set-composited} function can be
-    used to redirect drawing on the window using compositing.
+    Returns @em{true} if the function @fun{gdk-window-composited} can be used
+    to redirect drawing on the window using compositing.
   @end{short}
 
   Currently this only works on X11 with XComposite and XDamage extensions
   available.
   @begin[Warning]{dictionary}
-    The @sym{gdk-display-supports-composite} function has been deprecated since
+    The function @sym{gdk-display-supports-composite} has been deprecated since
     version 3.16 and should not be used in newly-written code. Compositing is an
     outdated technology that only ever worked on X11.
   @end{dictionary}
   @see-class{gdk-display}
-  @see-function{gdk-window-set-composited}"
+  @see-function{gdk-window-composited}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-composite)

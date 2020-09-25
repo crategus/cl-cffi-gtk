@@ -856,9 +856,9 @@
   application needs to asks for more, by calling the function
   @fun{gdk-event-request-motions}.
 
-  Since GTK 3.8, motion events are already compressed by default, independent of
-  this mechanism. This compression can be disabled with the function
-  @fun{gdk-window-set-event-compression}. See the documentation of that function
+  Since GTK 3.8, motion events are already compressed by default, independent
+  of this mechanism. This compression can be disabled with the function
+  @fun{gdk-window-event-compression}. See the documentation of that function
   for details.
 
   If @code{:touch-mask} is enabled, the window will receive touch events from

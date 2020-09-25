@@ -225,7 +225,7 @@
     The function @sym{gdk-query-depths} has been deprecated since version 3.22
     and should not be used in newly-written code. Visual selection should be
     done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-list-visuals}"
@@ -260,7 +260,7 @@
     The function @sym{gdk-query-visual-types} has been deprecated since version
     3.22 and should not be used in newly-written code. Visual selection should
     be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-list-visuals}"
@@ -534,7 +534,7 @@
     The function @sym{gdk-visual-get-best-depth} has been deprecated since
     version 3.22 and should not be used in newly-written code. Visual selection
     should be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-best-type}")
@@ -556,7 +556,7 @@
     The function @sym{gdk-visual-get-best-type} has been deprecated since
     version 3.22 and should not be used in newly-written code. Visual selection
     should be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-best-depth}")
@@ -600,7 +600,7 @@
     The function @sym{gdk-visual-get-best} has been deprecated since version
     3.22 and should not be used in newly-written code. Visual selection should
     be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
@@ -630,7 +630,7 @@
     The function @sym{gdk-visual-get-best-with-depth} has been deprecated since
     version 3.22 and should not be used in newly-written code. Visual selection
     should be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
@@ -661,7 +661,7 @@
     The function @sym{gdk-visual-get-best-with-type} has been deprecated since
     version 3.22 and should not be used in newly-written code. Visual selection
     should be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
@@ -690,7 +690,7 @@
     The function @sym{gdk-visual-get-best-with-both} has been deprecated since
     version 3.22 and should not be used in newly-written code. Visual selection
     should be done using the functions @fun{gdk-screen-get-system-visual} and
-    @fun{gdk-screen-get-rgba-visual}.
+    @fun{gdk-screen-rgba-visual}.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}

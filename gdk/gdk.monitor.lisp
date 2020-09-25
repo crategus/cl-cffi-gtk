@@ -379,21 +379,20 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gdk-monitor) 't)
  "The @code{scale-factor} property of type @code{:int} (Read) @br{}
-  The scale factor. @br{}
+  The scale factor. Since 3.22 @br{}
   Allowed values: >= 0 @br{}
-  Default value: 1 @br{}
-  Since 3.22")
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-scale-factor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-scale-factor 'function)
- "@version{2019-3-25}
-  @syntax[]{(gdk-monitor-model object) => scale-factor}
+ "@version{2019-9-25}
+  @syntax[]{(gdk-monitor-scale-factor object) => scale-factor}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[scale-factor]{the scale factor}
+  @argument[scale-factor]{a @code{:int} with the scale factor}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{scale-factor} of the
+    Accessor of the @slot[gdk-monitor]{scale-factor} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
@@ -403,11 +402,12 @@
   density outputs this can be a higher value (often 2).
 
   This can be used if you want to create pixel based data for a particular
-  monitor, but most of the time you’re drawing to a window where it is better
-  to use the function @fun{gdk-window-get-scale-factor} instead.
+  monitor, but most of the time you are drawing to a window where it is better
+  to use the function @fun{gdk-window-scale-factor} instead.
 
   Since 3.22
-  @see-class{gdk-monitor}")
+  @see-class{gdk-monitor}
+  @see-function{gdk-window-scale-factor}")
 
 ;;; --- gdk-monitor-subpixel-layout --------------------------------------------
 
