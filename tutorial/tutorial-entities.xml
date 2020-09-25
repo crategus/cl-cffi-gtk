@@ -50,7 +50,7 @@
 
 <!ENTITY gdk-window                          "&api;gdk_class_gdk-window.html">
 <!ENTITY gdk-window-cursor                   "&api;gdk_fun_gdk-window-cursor.html">
-<!ENTITY gdk-window-get-origin               "&api;gdk_fun_gdk-window-get-origin.html">
+<!ENTITY gdk-window-origin                   "&api;gdk_fun_gdk-window-origin.html">
 
 <!ENTITY gtk-about-dialog                    "&api;gtk_class_gtk-about-dialog.html">
 

@@ -6798,8 +6798,8 @@ bad things will happen.")
    <para>
     Each GTK widget has a corresponding <ulink url="&gdk-window;"><code>gdk-window</code></ulink> associated
     with it.  Once we know the <ulink url="&gdk-window;"><code>gdk-window</code></ulink> associated with a
-    widget, we can obtain it's X-Y coordinates using <ulink url="&gdk-window-get-origin;">
-    <code>gdk-window-get-origin</code></ulink>.  The <ulink url="&gdk-window;">
+    widget, we can obtain it's X-Y coordinates using <ulink url="&gdk-window-origin;">
+    <code>gdk-window-origin</code></ulink>.  The <ulink url="&gdk-window;">
     <code>gdk-window</code></ulink> of the text view widget can be obtained using the function
     <ulink url="&gtk-text-view-window;"><code>gtk-text-view-window</code></ulink>.  Here again you will have
     to pass <code>:widget</code> for the argument <code>win</code>.
@@ -6877,7 +6877,7 @@ bad things will happen.")
                       (gdk-rectangle-x rect)
                       (gdk-rectangle-y rect))
                 (multiple-value-bind (x y)
-                    (gdk-window-get-origin win)
+                    (gdk-window-origin win)
                   ;; Destroy any previous tool tip window
                   (when tooltip
                     (gtk-widget-destroy tooltip)
@@ -12945,7 +12945,7 @@ lambda (merge widget)
            (lambda (action parameter)
              (declare (ignore action parameter))
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text"))))
+                           (g-object-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-buffer view)
                                   (gtk-widget-clipboard view "CLIPBOARD"))))))
@@ -12957,7 +12957,7 @@ lambda (merge widget)
            (lambda (action parameter)
              (declare (ignore action parameter))
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text"))))
+                           (g-object-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
                                        (gtk-text-view-buffer view)
                                        (gtk-widget-clipboard view "CLIPBOARD")
@@ -12995,7 +12995,7 @@ lambda (merge widget)
         (g-signal-connect action "change-state"
            (lambda (action parameter)
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text")))
+                           (g-object-data window "bloatpad-text")))
                    (str (g-variant-string parameter)))
                (cond ((equal str "left")
                       (setf (gtk-text-view-justification view) :left))
@@ -13039,7 +13039,7 @@ lambda (merge widget)
                                      :hexpand t
                                      :vexpand t))
             (view (make-instance 'gtk-text-view)))
-        (g-object-set-data window "bloatpad-text" (pointer view))
+        (setf (g-object-data window "bloatpad-text") (pointer view))
         (gtk-container-add scrolled view)
         (gtk-grid-attach grid scrolled 0 1 1 1))
       (gtk-container-add window grid)
@@ -13388,8 +13388,8 @@ lambda (merge widget)
            (cairo-paint cr)
            ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
-                        (gdk-window-get-width window)
-                        (gdk-window-get-height window))
+                        (gdk-window-width window)
+                        (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-line-width cr 0.1)
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
@@ -14003,8 +14003,8 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
        ;; Clear surface
        (cairo-set-source-rgb cr 1.0 1.0 1.0)
        (cairo-paint cr)
-       (let* ((x (/ (gdk-window-get-width window) 2))
-              (y (/ (gdk-window-get-height window) 2))
+       (let* ((x (/ (gdk-window-width window) 2))
+              (y (/ (gdk-window-height window) 2))
               (radius (- (min x y) 12)))
          ;; Clock back
          (cairo-arc cr x y radius 0 (* 2 pi))
@@ -14152,6 +14152,9 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
+
 
 
 
