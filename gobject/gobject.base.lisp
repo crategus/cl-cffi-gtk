@@ -2503,62 +2503,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_get_data ()
+;;; g_object_set_data () -> g-object-data
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_get_data" g-object-get-data) :pointer
+(defun (setf g-object-data) (data object key)
+  (foreign-funcall "g_object_set_data"
+                   g-object object
+                   :string key
+                   :pointer data
+                   :void)
+  data)
+
+(defcfun ("g_object_get_data" g-object-data) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2020-4-29}
-  @argument[object]{a @class{g-object} instance containing the associations}
-  @argument[key]{a string with the name of the key for that association}
-  @return{The data as a pointer if found, or a @code{null-pointer} if no such
-    data exists.}
-  @begin{short}
-    Gets a named field from the objects table of associations.
-  @end{short}
-  See the function @fun{g-object-set-data} for an example.
-  @see-class{g-object}
-  @see-function{g-object-set-data}"
-  (object g-object)
-  (key g-string))
-
-(export 'g-object-get-data)
-
-;;; ----------------------------------------------------------------------------
-;;; g_object_set_data ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_object_set_data" g-object-set-data) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-4-29}
+ "@version{2020-9-23}
+  @syntax[]{(g-object-data object key) => data}
+  @syntax[]{(setf (g-object-data object key) data)}
   @argument[object]{a @class{g-object} instance containing the associations}
   @argument[key]{a string with the name of the key}
   @argument[data]{a pointer as data to associate with that key}
   @begin{short}
     Each object carries around a table of associations from strings to pointers.
-    This function lets you set an association.
   @end{short}
+  The function @sym{g-object-data} gets a named field from the objects table of
+  associations. The function @sym{(setf g-object-data)} sets an association.
 
-  If the @arg{object} already had an association with that name, the old
+  If @arg{object} already had an association with that name, the old
   association will be destroyed.
   @begin[Example]{dictionary}
     Set an integer as a pointer for a property on a GtkButton.
     @begin{pre}
   (defvar button (make-instance 'gtk-button))
 => BUTTON
-  (g-object-set-data button \"property\" (make-pointer 100))
-  (g-object-get-data button \"property\")
+  (setf (g-object-data button \"property\") (make-pointer 100))
+=> #.(SB-SYS:INT-SAP #X00000064)
+  (g-object-data button \"property\")
 => #.(SB-SYS:INT-SAP #X00000064)
   (pointer-address *)
 => 100
     @end{pre}
   @end{dictionary}
-  @see-class{g-object}
-  @see-function{g-object-get-data}"
+  @see-class{g-object}"
   (object g-object)
-  (key :string)
-  (data :pointer))
+  (key :string))
 
-(export 'g-object-set-data)
+(export 'g-object-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDestroyNotify ()  from the GLIB documentation
@@ -2587,7 +2576,7 @@
   @argument[destroy]{callback function to call when the association is
     destroyed}
   @begin{short}
-    Like the @fun{g-object-set-data} function except it adds notification for
+    Like the function @fun{g-object-data} except it adds notification for
     when the association is destroyed, either by setting it to a different
     value or when the object is destroyed.
   @end{short}
@@ -2625,7 +2614,7 @@
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
-  @see-function{g-object-set-data}"
+  @see-function{g-object-data}"
   (object g-object)
   (key :string)
   (data :pointer)
@@ -2648,8 +2637,7 @@
     invoking the association's destroy handler.
   @end{short}
   @see-class{g-object}
-  @see-function{g-object-get-data}
-  @see-function{g-object-set-data}
+  @see-function{g-object-data}
   @see-function{g-object-set-data-full}"
   (object :pointer)
   (key :string))

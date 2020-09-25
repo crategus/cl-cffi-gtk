@@ -320,8 +320,7 @@
     @about-function{g-object-notify-by-pspec}
     @about-function{g-object-freeze-notify}
     @about-function{g-object-thaw-notify}
-    @about-function{g-object-get-data}
-    @about-function{g-object-set-data}
+    @about-function{g-object-data}
     @about-function{g-object-set-data-full}
     @about-function{g-object-steal-data}
     @about-function{g-object-dup-data}
