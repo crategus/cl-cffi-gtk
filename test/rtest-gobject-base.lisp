@@ -178,23 +178,18 @@
 ;;;    g_object_freeze_notify
 ;;;    g_object_thaw_notify
 
-;;;    g_object_get_data
-;;;    g_object_set_data
+;;;    g-object-data
 
 (test g-object-data
   (let ((button (make-instance 'gtk-button)))
-
-    (is (null-pointer-p (g-object-get-data button "property")))
-    (is (= 0 (pointer-address (g-object-get-data button "property"))))
-
-    (is-false (g-object-set-data button "property" (make-pointer 100)))
-    (is (pointerp (g-object-get-data button "property")))
-    (is (= 100 (pointer-address (g-object-get-data button "property"))))
-
-    (is-false (g-object-set-data button "property" (pointer (make-instance 'gtk-label))))
-    (is (pointerp (g-object-get-data button "property")))
-    (is (eq 'gtk-label (type-of (gobject::get-g-object-for-pointer (g-object-get-data button "property")))))
-))
+    (is (null-pointer-p (g-object-data button "property")))
+    (is (= 0 (pointer-address (g-object-data button "property"))))
+    (is (pointerp (setf (g-object-data button "property") (make-pointer 100))))
+    (is (pointerp (g-object-data button "property")))
+    (is (= 100 (pointer-address (g-object-data button "property"))))
+    (is (pointerp (setf (g-object-data button "property") (pointer (make-instance 'gtk-label)))))
+    (is (pointerp (g-object-data button "property")))
+    (is (eq 'gtk-label (type-of (gobject::get-g-object-for-pointer (g-object-data button "property")))))))
 
 ;;;    g_object_set_data_full
 
@@ -215,7 +210,7 @@
     ;; Clear the status
     (is-false (setf *status* nil))
     ;; Destroy the data, the callback will be executed
-    (is-false (g-object-set-data button "property" (null-pointer)))
+    (is (pointerp (setf (g-object-data button "property") (null-pointer))))
     ;; Check status
     (is (string= "destroy-notify-cb" *status*))))
 
