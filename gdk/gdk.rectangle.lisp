@@ -33,7 +33,6 @@
 ;;;
 ;;; Types and Values
 ;;;
-;;;     GdkPoint
 ;;;     GdkRectangle
 ;;;
 ;;; Functions
@@ -61,75 +60,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GdkPoint
-;;; ----------------------------------------------------------------------------
-
-;; There is no implementation of code in the C liberary for GdkPoint and
-;; we have no code which needed GdkPoint in the Lisp binding. We dot not export
-;; any symbols for GdkPoint.
-
-(define-g-boxed-cstruct gdk-point "GdkPoint"
-  (x :int :initform 0)
-  (y :int :initform 0))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-point atdoc:*class-name-alias*) "CStruct"
-      (documentation 'gdk-point 'type)
- "@version{2013-7-3}
-  @begin{short}
-    @sym{gdk-point} is a simple structure containing an x and y coordinate
-    of a point.
-  @end{short}
-
-  Defines the x and y coordinates of a point.
-  @begin{pre}
-(define-g-boxed-cstruct gdk-point \"GdkPoint\"
-  (x :int :initform 0)
-  (y :int :initform 0))
-  @end{pre}
-  @begin[code]{table}
-    @entry[x]{The x coordinate of the point.}
-    @entry[y]{The y coordinate of the point.}
-  @end{table}
-  @see-constructor{make-gdk-point}
-  @see-constructor{copy-gdk-point}
-  @see-slot{gdk-point-x}
-  @see-slot{gdk-point-y}")
-
-#+nil
-(export (boxed-related-symbols 'gdk-point))
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-point-x atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gdk-point-x 'function)
- "@version{2013-7-3}
-  Accessor of the slot @code{x} of the @class{gdk-point} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-point-y atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gdk-point-y 'function)
- "@version{2013-7-3}
-  Accessor of the slot @code{y} of the @class{gdk-point} structure.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gdk-point 'function)
- "@version{2013-7-3}
-  @argument[x]{value for the slot @code{x}}
-  @argument[y]{value for the slot @code{y}}
-  Returns a @class{gdk-point} structure with the initial values given to
-  @arg{x} and @arg{y}.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gdk-point 'function)
- "@version{2013-7-3}
-  @argument[instance]{a @class{gdk-point} instance}
-  Copy constructor of a @class{gdk-point} structure.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkRectangle
