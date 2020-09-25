@@ -873,7 +873,7 @@
     future invocations of this function.
     @see-class{gtk-about-dialog}"
     (let ((dialog (if parent
-                      (g-object-get-data parent "gtk-about-dialog")
+                      (g-object-data parent "gtk-about-dialog")
                       about-dialog)))
       (when (null-pointer-p (if (pointerp dialog) dialog (pointer dialog)))
         (setf dialog (apply 'make-instance (cons 'gtk-about-dialog args)))
@@ -895,7 +895,7 @@
               (setf (gtk-window-modal dialog) t)
               (setf (gtk-window-transient-for dialog) parent)
               (setf (gtk-window-destroy-with-parent dialog) t)
-              (g-object-set-data parent "gtk-about-dialog" (pointer dialog)))
+              (setf (g-object-data parent "gtk-about-dialog") (pointer dialog)))
             (setf about-dialog dialog)))
       (gtk-window-present dialog))))
 
