@@ -41,7 +41,7 @@
            (cairo-paint cr)
 
            ;; Create a PangoLayout, set the font and text
-           (let* ((screen (gdk-window-get-screen window))
+           (let* ((screen (gdk-window-screen window))
                   (context (gdk-pango-context-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))

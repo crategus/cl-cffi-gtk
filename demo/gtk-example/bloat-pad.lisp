@@ -40,7 +40,7 @@
            (lambda (action parameter)
              (declare (ignore action parameter))
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text"))))
+                           (g-object-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-buffer view)
                                   (gtk-widget-clipboard view "CLIPBOARD"))))))
@@ -52,7 +52,7 @@
            (lambda (action parameter)
              (declare (ignore action parameter))
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text"))))
+                           (g-object-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
                                        (gtk-text-view-buffer view)
                                        (gtk-widget-clipboard view "CLIPBOARD")
@@ -90,7 +90,7 @@
         (g-signal-connect action "change-state"
            (lambda (action parameter)
              (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-get-data window "bloatpad-text")))
+                           (g-object-data window "bloatpad-text")))
                    (str (g-variant-string parameter)))
                (cond ((equal str "left")
                       (setf (gtk-text-view-justification view) :left))
@@ -146,7 +146,7 @@
                                      :hexpand t
                                      :vexpand t))
             (view (make-instance 'gtk-text-view)))
-        (g-object-set-data window "bloatpad-text" (pointer view))
+        (setf (g-object-data window "bloatpad-text") (pointer view))
         (gtk-container-add scrolled view)
         (gtk-grid-attach grid scrolled 0 1 1 1))
 

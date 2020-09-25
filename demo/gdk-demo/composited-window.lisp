@@ -19,7 +19,7 @@
       ;; Set the colourmap for the event box.
       ;; Must be done before the event box is realised.
       (setf (gtk-widget-visual event)
-            (gdk-screen-get-rgba-visual (gtk-widget-screen event)))
+            (gdk-screen-rgba-visual (gtk-widget-screen event)))
 
       ;; Set our event box to have a fully-transparent background
       ;; drawn on it. Currently there is no way to simply tell GTK+
@@ -52,7 +52,7 @@
 
       ;; Set the event box GdkWindow to be composited.
       ;; Obviously must be performed after event box is realised.
-      (gdk-window-set-composited (gtk-widget-window event) t)
+      (setf (gdk-window-composited (gtk-widget-window event)) t)
 
       ;; Set up the compositing handler.
       ;; Note that we do _after_ so that the normal (red) background is drawn
