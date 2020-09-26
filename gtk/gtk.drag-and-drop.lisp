@@ -121,15 +121,15 @@
       and action are acceptable.}
     @entry[:drop]{If set for a widget, when a drop occurs, GTK+ will will check
       if the drag matches this widget's list of possible targets and actions.
-      If so, GTK+ will call the function @fun{gtk-drag-get-data} on behalf of
-      the widget. Whether or not the drop is successful, GTK+ will call the
+      If so, GTK+ will call the function @fun{gtk-drag-data} on behalf of the
+      widget. Whether or not the drop is successful, GTK+ will call the
       function @fun{gtk-drag-finish}. If the action was a move, then if the
       drag was successful, then @em{true} will be passed for the delete
       parameter to the function @fun{gtk-drag-finish}.}
     @entry[:all]{If set, specifies that all default actions should be taken.}
   @end{table}
   @see-function{gdk-drag-status}
-  @see-function{gtk-drag-get-data}
+  @see-function{gtk-drag-data}
   @see-function{gtk-drag-finish}")
 
 ;;; ----------------------------------------------------------------------------
@@ -174,8 +174,8 @@
   of the function @fun{gdk-drag-status} in the context of the \"drag-motion\"
   signal, and invokations of the function @fun{gtk-drag-finish} in the
   \"drag-data-received\" handler. Especially the later is dramatic, when your
-  own \"drag-motion\" handler calls the function @fun{gtk-drag-get-data} to
-  inspect the dragged data.
+  own \"drag-motion\" handler calls the function @fun{gtk-drag-data} to inspect
+  the dragged data.
 
   There is no way to set a default action here, you can use the the
   \"drag-motion\" callback for that. Here is an example which selects the action
@@ -202,7 +202,7 @@ drag_motion (GtkWidget *widget,
   @see-function{gtk-drag-dest-find-target}
   @see-function{gdk-drag-status}
   @see-function{gtk-drag-finish}
-  @see-function{gtk-drag-get-data}"
+  @see-function{gtk-drag-data}"
   (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
     (%gtk-drag-dest-set widget
                         flags

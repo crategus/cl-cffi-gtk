@@ -1497,8 +1497,8 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       function @fun{gtk-drag-finish} is called to let the source know that the
       drop is done. The call to the function @fun{gtk-drag-finish} can be done
       either directly or in a \"drag-data-received\" signal handler which gets
-      triggered by calling the function @fun{gtk-drag-get-data} to receive the
-      data for one or more of the supported targets.
+      triggered by calling the function @fun{gtk-drag-data} to receive the data
+      for one or more of the supported targets.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
@@ -1563,7 +1563,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       If the decision whether the drop will be accepted or rejected cannot be
       made based solely on the cursor position and the type of the data, the
       handler may inspect the dragged data by calling the function
-      @fun{gtk-drag-get-data} and defer the @fun{gdk-drag-status} call to the
+      @fun{gtk-drag-data} and defer the @fun{gdk-drag-status} call to the
       \"drag-data-received\" signal handler. Note that you cannot not pass
       @code{:drop}, @code{:motion} or @code{:all} of the
       @symbol{gtk-dest-defaults} enumeration to the function
@@ -2372,7 +2372,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @see-function{gtk-drag-source-set-icon-pixbuf}
   @see-function{gdk-drag-status}
   @see-function{gtk-drag-finish}
-  @see-function{gtk-drag-get-data}
+  @see-function{gtk-drag-data}
   @see-function{gtk-drag-highlight}
   @see-function{gtk-drag-unhighlight}
   @see-function{gtk-drag-dest-set}

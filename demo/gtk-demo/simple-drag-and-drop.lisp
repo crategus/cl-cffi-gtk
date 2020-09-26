@@ -65,8 +65,7 @@
              (lambda (widget drag-context x y time)
                (declare (ignore x y))
                (format t "~&DRAG-DROP context = ~A~%" drag-context)
-               (gtk-drag-get-data widget drag-context "image/png" time)
- ))
+               (gtk-drag-data widget drag-context "image/png" time)))
 
           (g-signal-connect drag-dest "drag-data-received"
             (lambda (widget context x y selection-data info time)

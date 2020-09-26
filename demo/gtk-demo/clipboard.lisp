@@ -193,7 +193,7 @@ button_press (GtkWidget      *widget,
 ;               (let ((target (gtk-drag-dest-find-target widget drag-context)))
 ;                 (format t "DRAG-DROP on image2 ~A~%" drag-context)
 ;                 (format t " target = ~a~%" target)
-;                 (gtk-drag-get-data widget drag-context target time))
+;                 (gtk-drag-data widget drag-context target time))
 ;               nil))
 
         )
