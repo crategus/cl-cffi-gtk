@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,32 +37,32 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gdk_init                                 * not implemented
-;;;     gdk_init_check                           * not implemented
-;;;     gdk_parse_args                           * not implemented
+;;;     gdk_init                                   not implemented
+;;;     gdk_init_check                             not implemented
+;;;     gdk_parse_args                             not implemented
 ;;;     gdk_get_display_arg_name
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;     gdk_set_allowed_backends                 * not implemented
+;;;     gdk_set_allowed_backends                   not implemented
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
 ;;;
-;;;     gdk_get_display                          * deprecated
-;;;     gdk_flush                                * deprecated
-;;;     gdk_screen_width                         * deprecated
-;;;     gdk_screen_height                        * deprecated
-;;;     gdk_screen_width_mm                      * deprecated
-;;;     gdk_screen_height_mm                     * dprecateed
-;;;     gdk_pointer_grab                         * deprecated
-;;;     gdk_pointer_ungrab                       * deprecated
-;;;     gdk_pointer_is_grabbed                   * deprecated
-;;;     gdk_set_double_click_time                * deprecated
-;;;     gdk_keyboard_grab                        * deprecated
-;;;     gdk_keyboard_ungrab                      * deprecated
-;;;     gdk_beep                                 * deprecated
-;;;     gdk_error_trap_push                      * deprecated
-;;;     gdk_error_trap_pop                       * deprecated
-;;;     gdk_error_trap_pop_ignored               * deprecated
+;;;     gdk_get_display                            deprecated
+;;;     gdk_flush                                  deprecated
+;;;     gdk_screen_width                           deprecated -> gdk.screen.lisp
+;;;     gdk_screen_height                          deprecated -> gdk.screen.lisp
+;;;     gdk_screen_width_mm                        deprecated -> gdk.screen.lisp
+;;;     gdk_screen_height_mm                       dprecateed -> gdk.screen.lisp
+;;;     gdk_pointer_grab                           deprecated
+;;;     gdk_pointer_ungrab                         deprecated
+;;;     gdk_pointer_is_grabbed                     deprecated
+;;;     gdk_set_double_click_time                  deprecated
+;;;     gdk_keyboard_grab                          deprecated
+;;;     gdk_keyboard_ungrab                        deprecated
+;;;     gdk_beep                                   deprecated
+;;;     gdk_error_trap_push                        deprecated
+;;;     gdk_error_trap_pop                         deprecated
+;;;     gdk_error_trap_pop_ignored                 deprecated
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -321,6 +321,9 @@
 ;;; gdk_screen_width ()
 ;;; ----------------------------------------------------------------------------
 
+;; Implemented in gdk.screen.lisp
+
+#+nil
 (defcfun ("gdk_screen_width" gdk-screen-width) :int
  #+cl-cffi-gtk-documentation
  "@version{2019-3-26}
@@ -336,12 +339,16 @@
   @see-function{gdk-screen-width-mm}
   @see-function{gdk-screen-height-mm}")
 
+#+nil
 (export 'gdk-screen-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height ()
 ;;; ----------------------------------------------------------------------------
 
+;; Implemented in gdk.screen.lisp
+
+#+nil
 (defcfun ("gdk_screen_height" gdk-screen-height) :int
  #+cl-cffi-gtk-documentation
  "@version{2019-3-26}
@@ -357,12 +364,16 @@
   @see-function{gdk-screen-width-mm}
   @see-function{gdk-screen-height-mm}")
 
+#+nil
 (export 'gdk-screen-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_width_mm ()
 ;;; ----------------------------------------------------------------------------
 
+;; Implemented in gdk.screen.lisp
+
+#+nil
 (defcfun ("gdk_screen_width_mm" gdk-screen-width-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2019-3-26}
@@ -380,12 +391,16 @@
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-height-mm}")
 
+#+nil
 (export 'gdk-screen-width-mm)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height_mm ()
 ;;; ----------------------------------------------------------------------------
 
+;; Implemented in gdk.screen.lisp
+
+#+nil
 (defcfun ("gdk_screen_height_mm" gdk-screen-height-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
@@ -403,6 +418,7 @@
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-width-mm}")
 
+#+nil
 (export 'gdk-screen-height-mm)
 
 ;;; ----------------------------------------------------------------------------
