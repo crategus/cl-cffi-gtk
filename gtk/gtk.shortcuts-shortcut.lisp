@@ -292,7 +292,7 @@
  "The @code{action-name} property of type @code{:string} (Read / Write) @br{}
   A detailed action name. If this is set for a shortcut of type
   @code{:accelerator}, then GTK+ will use the accelerators that are associated
-  with the action via the function @fun{gtk-application-set-accels-for-action},
+  with the action via the function @fun{gtk-application-accels-for-action},
   and setting @code{accelerator} is not necessary. Since 3.22 @br{}
   Default value: @code{nil}")
 
@@ -313,7 +313,7 @@
 
   A detailed action name. If this is set for a shortcut of type
   @code{:accelerator}, then GTK+ will use the accelerators that are associated
-  with the action via the function @fun{gtk-application-set-accels-for-action},
+  with the action via the function @fun{gtk-application-accels-for-action},
   and setting @code{accelerator} is not necessary.
 
   Since 3.22

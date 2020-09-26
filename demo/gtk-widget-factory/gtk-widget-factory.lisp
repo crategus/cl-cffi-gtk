@@ -212,15 +212,15 @@
       (g-action-map-add-action-entries *application-window* entries)
 
       ;; Set accels for some actions
-      (gtk-application-set-accels-for-action application "app.about" '("F1"))
-      (gtk-application-set-accels-for-action application "app.quit" '("<Primary>q"))
-      (gtk-application-set-accels-for-action application "win.dark" '("<Primary>d"))
-      (gtk-application-set-accels-for-action application "win.search" '("<Primary>s"))
-      (gtk-application-set-accels-for-action application "win.delete" '("Delete"))
-      (gtk-application-set-accels-for-action application "win.background" '("<Primary>b"))
-      (gtk-application-set-accels-for-action application "win.open" '("<Primary>o"))
-      (gtk-application-set-accels-for-action application "win.record" '("<Primary>r"))
-      (gtk-application-set-accels-for-action application "win.lock" '("<Primary>l"))
+      (setf (gtk-application-accels-for-action application "app.about") '("F1"))
+      (setf (gtk-application-accels-for-action application "app.quit") '("<Primary>q"))
+      (setf (gtk-application-accels-for-action application "win.dark") '("<Primary>d"))
+      (setf (gtk-application-accels-for-action application "win.search") '("<Primary>s"))
+      (setf (gtk-application-accels-for-action application "win.delete") '("Delete"))
+      (setf (gtk-application-accels-for-action application "win.background") '("<Primary>b"))
+      (setf (gtk-application-accels-for-action application "win.open") '("<Primary>o"))
+      (setf (gtk-application-accels-for-action application "win.record") '("<Primary>r"))
+      (setf (gtk-application-accels-for-action application "win.lock") '("<Primary>l"))
 
       ;; Save the toplevel stack in a global variable
       (setf *toplevel-stack*
