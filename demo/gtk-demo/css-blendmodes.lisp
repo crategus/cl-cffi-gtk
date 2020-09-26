@@ -39,7 +39,7 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Setup the CSS provider for window
-      (gtk-style-context-add-provider-for-screen (gdk-screen-get-default)
+      (gtk-style-context-add-provider-for-screen (gdk-screen-default)
                                                  provider
                                                  +gtk-style-provider-priority-application+)
       ;; Signal handler for listbox

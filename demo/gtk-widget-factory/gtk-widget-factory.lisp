@@ -160,7 +160,7 @@
   (let ((provider (gtk-css-provider-new)))
     (gtk-css-provider-load-from-path provider
                                      (rel-path "gtk-widget-factory.css"))
-    (gtk-style-context-add-provider-for-screen (gdk-screen-get-default)
+    (gtk-style-context-add-provider-for-screen (gdk-screen-default)
                                                provider
                                                +gtk-style-provider-priority-application+))
 
