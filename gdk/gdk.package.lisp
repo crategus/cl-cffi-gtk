@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -51,10 +51,6 @@
     @about-function{gdk-set-program-class}
     @about-function{gdk-get-display}
     @about-function{gdk-flush}
-    @about-function{gdk-screen-width}
-    @about-function{gdk-screen-height}
-    @about-function{gdk-screen-width-mm}
-    @about-function{gdk-screen-height-mm}
     @about-function{gdk-pointer-grab}
     @about-function{gdk-pointer-ungrab}
     @about-function{gdk-pointer-is-grabbed}
@@ -70,9 +66,7 @@
     Maintains a list of all open GdkDisplays.
 
     @about-class{gdk-display-manager}
-
     @about-generic{gdk-display-manager-default-display}
-
     @about-function{gdk-display-manager-get}
     @about-function{gdk-display-manager-list-displays}
     @about-function{gdk-display-manager-open-display}
@@ -81,7 +75,6 @@
     Controls a set of GdkScreens and their associated input devices.
 
     @about-class{gdk-display}
-
     @about-function{gdk-display-open}
     @about-function{gdk-display-default}
     @about-function{gdk-display-get-name}
@@ -134,46 +127,42 @@
     Object representing a physical screen.
 
     @about-class{gdk-screen}
-
     @about-generic{gdk-screen-font-options}
     @about-generic{gdk-screen-resolution}
-
-    @about-function{gdk-screen-get-default}
-    @about-function{gdk-screen-get-system-visual}
-    @about-function{gdk-screen-get-rgba-visual}
+    @about-function{gdk-screen-default}
+    @about-function{gdk-screen-system-visual}
+    @about-function{gdk-screen-rgba-visual}
     @about-function{gdk-screen-is-composited}
     @about-function{gdk-screen-root-window}
-    @about-function{gdk-screen-get-display}
-    @about-function{gdk-screen-get-number}
-    @about-function{gdk-screen-get-width}
-    @about-function{gdk-screen-get-height}
-    @about-function{gdk-screen-get-width-mm}
-    @about-function{gdk-screen-get-height-mm}
+    @about-function{gdk-screen-display}
+    @about-function{gdk-screen-number}
+    @about-function{gdk-screen-width}
+    @about-function{gdk-screen-height}
+    @about-function{gdk-screen-width-mm}
+    @about-function{gdk-screen-height-mm}
     @about-function{gdk-screen-list-visuals}
-    @about-function{gdk-screen-get-toplevel-windows}
+    @about-function{gdk-screen-toplevel-windows}
     @about-function{gdk-screen-make-display-name}
-    @about-function{gdk-screen-get-n-monitors}
-    @about-function{gdk-screen-get-primary-monitor}
-    @about-function{gdk-screen-get-monitor-geometry}
-    @about-function{gdk-screen-get-monitor-workarea}
-    @about-function{gdk-screen-get-monitor-at-point}
-    @about-function{gdk-screen-get-monitor-at-window}
-    @about-function{gdk-screen-get-monitor-height-mm}
-    @about-function{gdk-screen-get-monitor-width-mm}
-    @about-function{gdk-screen-get-monitor-plug-name}
-    @about-function{gdk-screen-get-monitor-scale-factor}
-    @about-function{gdk-screen-get-setting}
-    @about-function{gdk-screen-get-active-window}
-    @about-function{gdk-screen-get-window-stack}
+    @about-function{gdk-screen-n-monitors}
+    @about-function{gdk-screen-primary-monitor}
+    @about-function{gdk-screen-monitor-geometry}
+    @about-function{gdk-screen-monitor-workarea}
+    @about-function{gdk-screen-monitor-at-point}
+    @about-function{gdk-screen-monitor-at-window}
+    @about-function{gdk-screen-monitor-height-mm}
+    @about-function{gdk-screen-monitor-width-mm}
+    @about-function{gdk-screen-monitor-plug-name}
+    @about-function{gdk-screen-monitor-scale-factor}
+    @about-function{gdk-screen-setting}
+    @about-function{gdk-screen-active-window}
+    @about-function{gdk-screen-window-stack}
   @end{section}
   @begin[GdkSeat]{section}
     Object representing an user seat.
 
     @about-symbol{gdk-seat-capabilities}
     @about-class{gdk-seat}
-
     @about-generic{gdk-seat-display}
-
     @about-function{gdk-seat-grab}
     @about-function{gdk-seat-ungrab}
     @about-function{gdk-seat-get-capabilities}
@@ -186,7 +175,6 @@
 
     @about-symbol{gdk-subpixel-layout}
     @about-class{gdk-monitor}
-
     @about-generic{gdk-monitor-display}
     @about-generic{gdk-monitor-geometry}
     @about-generic{gdk-monitor-workarea}
@@ -208,7 +196,6 @@
     @about-function{make-gdk-time-coord}
     @about-function{gdk-time-coord-time}
     @about-function{gdk-time-coord-axes}
-
     @about-symbol{gdk-grab-status}
     @about-symbol{gdk-input-source}
     @about-symbol{gdk-input-mode}
@@ -217,7 +204,6 @@
     @about-symbol{gdk-device-tool-type}
     @about-symbol{gdk-device-type}
     @about-symbol{gdk-grab-ownership}
-
     @about-class{gdk-device-tool}
     @about-class{gdk-device}
     @about-generic{gdk-device-name}
@@ -230,7 +216,6 @@
     @about-generic{gdk-device-n-axes}
     @about-generic{gdk-device-axes}
     @about-generic{gdk-device-seat}
-
     @about-function{gdk-device-get-source}
     @about-function{gdk-device-set-mode}
     @about-function{gdk-device-get-mode}
@@ -262,7 +247,6 @@
 
     @about-symbol{gdk-device-pad-feature}
     @about-class{gdk-device-pad}
-
     @about-function{gdk-device-pad-get-n-groups}
     @about-function{gdk-device-pad-get-group-n-modes}
     @about-function{gdk-device-pad-get-n-features}
@@ -321,26 +305,25 @@
     @about-symbol{gdk-visual-type}
     @about-symbol{gdk-byte-order}
     @about-class{gdk-visual}
-
     @about-function{gdk-query-depths}
     @about-function{gdk-query-visual-types}
     @about-function{gdk-list-visuals}
-    @about-function{gdk-visual-get-bits-per-rgb}
-    @about-function{gdk-visual-get-blue-pixel-details}
-    @about-function{gdk-visual-get-byte-order}
-    @about-function{gdk-visual-get-colormap-size}
-    @about-function{gdk-visual-get-depth}
-    @about-function{gdk-visual-get-green-pixel-details}
-    @about-function{gdk-visual-get-red-pixel-details}
-    @about-function{gdk-visual-get-visual-type}
-    @about-function{gdk-visual-get-best-depth}
-    @about-function{gdk-visual-get-best-type}
-    @about-function{gdk-visual-get-system}
-    @about-function{gdk-visual-get-best}
-    @about-function{gdk-visual-get-best-with-depth}
-    @about-function{gdk-visual-get-best-with-type}
-    @about-function{gdk-visual-get-best-with-both}
-    @about-function{gdk-visual-get-screen}
+    @about-function{gdk-visual-bits-per-rgb}
+    @about-function{gdk-visual-blue-pixel-details}
+    @about-function{gdk-visual-green-pixel-details}
+    @about-function{gdk-visual-red-pixel-details}
+    @about-function{gdk-visual-byte-order}
+    @about-function{gdk-visual-colormap-size}
+    @about-function{gdk-visual-depth}
+    @about-function{gdk-visual-visual-type}
+    @about-function{gdk-visual-best-depth}
+    @about-function{gdk-visual-best-type}
+    @about-function{gdk-visual-system}
+    @about-function{gdk-visual-best}
+    @about-function{gdk-visual-best-with-depth}
+    @about-function{gdk-visual-best-with-type}
+    @about-function{gdk-visual-best-with-both}
+    @about-function{gdk-visual-screen}
   @end{section}
   @begin[Cursors]{section}
     Standard and pixmap cursors.
@@ -360,7 +343,6 @@
   @begin[Windows]{section}
     Onscreen display areas in the target window system.
 
-    @about-variable{+gdk-parent-relative+}
     @about-symbol{gdk-window-type}
     @about-symbol{gdk-window-window-class}
     @about-symbol{gdk-window-hints}
@@ -406,17 +388,12 @@
     @about-function{gdk-window-fullscreen}
     @about-function{gdk-window-fullscreen-on-monitor}
     @about-function{gdk-window-unfullscreen}
-
-    @about-function{gdk-window-get-fullscreen-mode}
-    @about-function{gdk-window-set-fullscreen-mode}
-
+    @about-function{gdk-window-fullscreen-mode}
     @about-function{gdk-window-set-keep-above}
     @about-function{gdk-window-set-keep-below}
     @about-function{gdk-window-set-opacity}
-    @about-function{gdk-window-set-composited}
-    @about-function{gdk-window-get-composited}
-    @about-function{gdk-window-set-pass-through}
-    @about-function{gdk-window-get-pass-through}
+    @about-function{gdk-window-composited}
+    @about-function{gdk-window-pass-through}
     @about-function{gdk-window-move}
     @about-function{gdk-window-resize}
     @about-function{gdk-window-move-resize}
@@ -439,21 +416,24 @@
     @about-function{gdk-window-show-window-menu}
     @about-function{gdk-window-constrain-size}
     @about-function{gdk-window-beep}
-    @about-function{gdk-window-get-scale-factor}
+    @about-function{gdk-window-scale-factor}
     @about-function{gdk-window-set-opaque-region}
     @about-function{gdk-window-create-gl-context}
     @about-function{gdk-window-mark-paint-from-clip}
-    @about-function{gdk-window-get-clip-region}
+    @about-function{gdk-window-clip-region}
     @about-function{gdk-window-begin-paint-rect}
     @about-function{gdk-window-begin-paint-region}
     @about-function{gdk-window-end-paint}
     @about-function{gdk-window-begin-draw-frame}
     @about-function{gdk-window-end-draw-frame}
-    @about-function{gdk-window-get-visible-region}
+    @about-function{gdk-window-visible-region}
+    @about-function{GdkWindowInvalidateHandlerFunc}
+    @about-function{gdk-window-set-invalidate-handler}
     @about-function{gdk-window-invalidate-rect}
     @about-function{gdk-window-invalidate-region}
+    @about-function{GdkWindowChildFunc}
     @about-function{gdk-window-invalidate-maybe-recurse}
-    @about-function{gdk-window-get-update-area}
+    @about-function{gdk-window-update-area}
     @about-function{gdk-window-freeze-updates}
     @about-function{gdk-window-thaw-updates}
     @about-function{gdk-window-process-all-updates}
@@ -461,13 +441,11 @@
     @about-function{gdk-window-set-debug-updates}
     @about-function{gdk-window-enable-synchronized-configure}
     @about-function{gdk-window-configure-finished}
-    @about-function{gdk-window-get-frame-clock}
-    @about-function{gdk-window-set-user-data}
+    @about-function{gdk-window-frame-clock}
+    @about-function{gdk-window-user-data}
     @about-function{gdk-window-set-override-redirect}
-    @about-function{gdk-window-set-accept-focus}
-    @about-function{gdk-window-get-accept-focus}
-    @about-function{gdk-window-set-focus-on-map}
-    @about-function{gdk-window-get-focus-on-map}
+    @about-function{gdk-window-accept-focus}
+    @about-function{gdk-window-focus-on-map}
     @about-function{gdk-window-add-filter}
     @about-function{gdk-window-remove-filter}
     @about-function{gdk-window-shape-combine-region}
@@ -480,27 +458,23 @@
     @about-function{gdk-window-set-title}
     @about-function{gdk-window-set-background}
     @about-function{gdk-window-set-background-rgba}
-    @about-function{gdk-window-set-background-pattern}
-    @about-function{gdk-window-get-background-patter}
-    @about-function{gdk-window-get-user-data}
+    @about-function{gdk-window-background-pattern}
     @about-function{gdk-window-geometry}
     @about-function{gdk-window-set-geometry-hints}
     @about-function{gdk-window-width}
     @about-function{gdk-window-height}
     @about-function{gdk-window-set-icon-list}
-    @about-function{gdk-window-set-modal-hint}
-    @about-function{gdk-window-get-modal-hint}
-    @about-function{gdk-window-set-type-hint}
-    @about-function{gdk-window-get-type-hint}
+    @about-function{gdk-window-modal-hint}
+    @about-function{gdk-window-type-hint}
     @about-function{gdk-window-set-shadow-width}
     @about-function{gdk-window-set-skip-taskbar-hint}
     @about-function{gdk-window-set-skip-pager-hint}
     @about-function{gdk-window-set-urgency-hint}
     @about-function{gdk-window-position}
-    @about-function{gdk-window-get-root-origin}
-    @about-function{gdk-window-get-frame-extents}
-    @about-function{gdk-window-get-origin}
-    @about-function{gdk-window-get-root-coords}
+    @about-function{gdk-window-root-origin}
+    @about-function{gdk-window-frame-extents}
+    @about-function{gdk-window-origin}
+    @about-function{gdk-window-root-coords}
     @about-function{gdk-window-pointer}
     @about-function{gdk-window-device-position}
     @about-function{gdk-window-device-position-double}
@@ -514,24 +488,17 @@
     @about-function{gdk-window-set-transient-for}
     @about-function{gdk-window-set-role}
     @about-function{gdk-window-set-startup-id}
-    @about-function{gdk-window-set-group}
-    @about-function{gdk-window-get-group}
-    @about-function{gdk-window-set-decorations}
-    @about-function{gdk-window-get-decorations}
+    @about-function{gdk-window-group}
+    @about-function{gdk-window-decorations}
     @about-function{gdk-window-set-functions}
     @about-function{gdk-default-root-window}
     @about-function{gdk-window-support-multidevice}
-    @about-function{gdk-window-get-device-cursor}
-    @about-function{gdk-window-set-device-cursor}
-    @about-function{gdk-window-get-device-events}
-    @about-function{gdk-window-set-device-events}
-    @about-function{gdk-window-get-source-events}
-    @about-function{gdk-window-set-source-events}
-    @about-function{gdk-window-get-event-compression}
-    @about-function{gdk-window-set-event-compression}
-    @about-function{gdk-offscreen-window-get-surface}
-    @about-function{gdk-offscreen-window-set-embedder}
-    @about-function{gdk-offscreen-window-get-embedder}
+    @about-function{gdk-window-device-cursor}
+    @about-function{gdk-window-device-events}
+    @about-function{gdk-window-source-events}
+    @about-function{gdk-window-event-compression}
+    @about-function{gdk-offscreen-window-surface}
+    @about-function{gdk-offscreen-window-embedder}
     @about-function{gdk-window-geometry-changed}
     @about-function{gdk-window-coords-from-parent}
     @about-function{gdk-window-coords-to-parent}
@@ -544,7 +511,6 @@
 
     @about-symbol{gdk-frame-clock-phase}
     @about-class{gdk-frame-clock}
-
     @about-function{gdk-frame-clock-get-frame-time}
     @about-function{gdk-frame-clock-request-phase}
     @about-function{gdk-frame-clock-begin-updating}
@@ -572,10 +538,8 @@
     Drawing context for GDK windows.
 
     @about-class{gdk-drawing-context}
-
     @about-generic{gdk-drawing-context-window}
     @about-generic{gdk-drawing-context-clip}
-
     @about-function{gdk-drawing-context-get-cairo-context}
     @about-function{gdk-drawing-context-is-valid}
   @end{section}
@@ -588,7 +552,6 @@
     @about-generic{gdk-gl-context-display}
     @about-generic{gdk-gl-context-shared-context}
     @about-generic{gdk-gl-context-window}
-
     @about-function{gdk-gl-context-get-version}
     @about-function{gdk-gl-context-set-required-version}
     @about-function{gdk-gl-context-get-required-version}
@@ -679,16 +642,13 @@
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-modifier-type}
     @about-symbol{gdk-event-mask}
-
     @about-struct{gdk-event}
     @about-function{copy-gdk-event}
     @about-function{make-gdk-event}
     @about-function{gdk-event-type}
     @about-function{gdk-event-window}
     @about-function{gdk-event-send-event}
-
     @about-struct{gdk-event-any}
-
     @about-struct{gdk-event-key}
     @about-function{copy-gdk-event-key}
     @about-function{make-gdk-event-key}
@@ -703,7 +663,6 @@
     @about-function{gdk-event-key-hardware-keycode}
     @about-function{gdk-event-key-group}
     @about-function{gdk-event-key-is-modifier}
-
     @about-struct{gdk-event-button}
     @about-function{copy-gdk-event-button}
     @about-function{make-gdk-event-button}
@@ -719,7 +678,6 @@
     @about-function{gdk-event-button-device}
     @about-function{gdk-event-button-x-root}
     @about-function{gdk-event-button-y-root}
-
     @about-struct{gdk-event-touch}
     @about-function{copy-gdk-event-touch}
     @about-function{make-gdk-event-touch}
@@ -736,7 +694,6 @@
     @about-function{gdk-event-touch-device}
     @about-function{gdk-event-touch-x-root}
     @about-function{gdk-event-touch-y-root}
-
     @about-struct{gdk-event-scroll}
     @about-function{copy-gdk-event-scroll}
     @about-function{make-gdk-event-scroll}
@@ -753,7 +710,6 @@
     @about-function{gdk-event-scroll-y-root}
     @about-function{gdk-event-scroll-delta-x}
     @about-function{gdk-event-scroll-delta-y}
-
     @about-struct{gdk-event-motion}
     @about-function{copy-gdk-event-motion}
     @about-function{make-gdk-event-motion}
@@ -769,7 +725,6 @@
     @about-function{gdk-event-motion-device}
     @about-function{gdk-event-motion-x-root}
     @about-function{gdk-event-motion-y-root}
-
     @about-struct{gdk-event-expose}
     @about-function{copy-gdk-event-expose}
     @about-function{make-gdk-event-expose}
@@ -779,7 +734,6 @@
     @about-function{gdk-event-expose-area}
     @about-function{gdk-event-expose-region}
     @about-function{gdk-event-expose-count}
-
     @about-struct{gdk-event-visibility}
     @about-function{copy-gdk-event-visibility}
     @about-function{make-gdk-event-visibility}
@@ -787,7 +741,6 @@
     @about-function{gdk-event-visibility-window}
     @about-function{gdk-event-visibility-send-event}
     @about-function{gdk-event-visibility-state}
-
     @about-struct{gdk-event-crossing}
     @about-function{copy-gdk-event-crossing}
     @about-function{make-gdk-event-crossing}
@@ -804,7 +757,6 @@
     @about-function{gdk-event-crossing-detail}
     @about-function{gdk-event-crossing-focus}
     @about-function{gdk-event-crossing-state}
-
     @about-struct{gdk-event-focus}
     @about-function{copy-gdk-event-focus}
     @about-function{make-gdk-event-focus}
@@ -812,7 +764,6 @@
     @about-function{gdk-event-focus-window}
     @about-function{gdk-event-focus-send-event}
     @about-function{gdk-event-focus-in}
-
     @about-struct{gdk-event-configure}
     @about-function{copy-gdk-event-configure}
     @about-function{make-gdk-event-configure}
@@ -823,7 +774,6 @@
     @about-function{gdk-event-configure-y}
     @about-function{gdk-event-configure-width}
     @about-function{gdk-event-configure-height}
-
     @about-struct{gdk-event-property}
     @about-function{copy-gdk-event-property}
     @about-function{make-gdk-event-property}
@@ -833,7 +783,6 @@
     @about-function{gdk-event-property-atom}
     @about-function{gdk-event-property-time}
     @about-function{gdk-event-property-state}
-
     @about-struct{gdk-event-selection}
     @about-function{copy-gdk-event-selection}
     @about-function{make-gdk-event-selection}
@@ -845,7 +794,6 @@
     @about-function{gdk-event-selection-property}
     @about-function{gdk-event-selection-time}
     @about-function{gdk-event-selection-requestor}
-
     @about-struct{gdk-event-dnd}
     @about-function{copy-gdk-event-dnd}
     @about-function{make-gdk-event-dnd}
@@ -856,7 +804,6 @@
     @about-function{gdk-event-dnd-time}
     @about-function{gdk-event-dnd-x-root}
     @about-function{gdk-event-dnd-y-root}
-
     @about-struct{gdk-event-proximity}
     @about-function{copy-gdk-event-proximity}
     @about-function{make-gdk-event-proximity}
@@ -865,7 +812,6 @@
     @about-function{gdk-event-proximity-send-event}
     @about-function{gdk-event-proximity-time}
     @about-function{gdk-event-proximity-device}
-
     @about-struct{gdk-event-window-state}
     @about-function{copy-gdk-event-window-state}
     @about-function{make-gdk-event-window-state}
@@ -874,7 +820,6 @@
     @about-function{gdk-event-window-state-send-event}
     @about-function{gdk-event-window-state-changed-mask}
     @about-function{gdk-event-window-state-new-window-state}
-
     @about-struct{gdk-event-setting}
     @about-function{copy-gdk-event-setting}
     @about-function{make-gdk-event-setting}
@@ -883,7 +828,6 @@
     @about-function{gdk-event-setting-send-event}
     @about-function{gdk-event-setting-action}
     @about-function{gdk-event-setting-name}
-
     @about-struct{gdk-event-owner-change}
     @about-function{copy-gdk-event-owner-change}
     @about-function{make-gdk-event-owner-change}
@@ -895,7 +839,6 @@
     @about-function{gdk-event-owner-change-selection}
     @about-function{gdk-event-owner-change-time}
     @about-function{gdk-event-owner-change-selection-time}
-
     @about-struct{gdk-event-grab-broken}
     @about-function{copy-gdk-event-grab-broken}
     @about-function{make-gdk-event-grab-broken}
@@ -905,7 +848,6 @@
     @about-function{gdk-event-grab-broken-keyboard}
     @about-function{gdk-event-grab-broken-implicit}
     @about-function{gdk-event-grab-broken-grab-window}
-
     @about-struct{gdk-event-touchpad-swipe}
     @about-function{copy-gdk-event-touchpad-swipe}
     @about-function{make-gdk-event-touchpad-swipe}
@@ -922,7 +864,6 @@
     @about-function{gdk-event-touchpad-swipe-x-root}
     @about-function{gdk-event-touchpad-swipe-y-root}
     @about-function{gdk-event-touchpad-swipe-state}
-
     @about-struct{gdk-event-touchpad-pinch}
     @about-function{copy-gdk-event-touchpad-pinch}
     @about-function{make-gdk-event-touchpad-pinch}
@@ -941,7 +882,6 @@
     @about-function{gdk-event-touchpad-pinch-x-root}
     @about-function{gdk-event-touchpad-pinch-y-root}
     @about-function{gdk-event-touchpad-pinch-state}
-
     @about-struct{gdk-event-pad-button}
     @about-function{copy-gdk-event-pad-button}
     @about-function{make-gdk-event-pad-button}
@@ -952,7 +892,6 @@
     @about-function{gdk-event-pad-button-group}
     @about-function{gdk-event-pad-button-button}
     @about-function{gdk-event-pad-button-mode}
-
     @about-struct{gdk-event-pad-axis}
     @about-function{copy-gdk-event-pad-axis}
     @about-function{make-gdk-event-pad-axis}
@@ -964,7 +903,6 @@
     @about-function{gdk-event-pad-axis-index}
     @about-function{gdk-event-pad-axis-mode}
     @about-function{gdk-event-pad-axis-value}
-
     @about-struct{gdk-event-pad-group-mode}
     @about-function{copy-gdk-event-pad-group-mode}
     @about-function{make-gdk-event-pad-group-mode}
@@ -1067,7 +1005,6 @@
     @about-symbol{gdk-drag-protocol}
     @about-symbol{gdk-drag-action}
     @about-class{gdk-drag-context}
-
     @about-function{gdk-drag-get-selection}
     @about-function{gdk-drag-abort}
     @about-function{gdk-drop-reply}
@@ -1293,7 +1230,7 @@
            (cairo-paint cr)
 
            ;; Create a PangoLayout, set the font and text
-           (let* ((screen (gdk-window-get-screen window))
+           (let* ((screen (gdk-window-screen window))
                   (context (gdk-pango-context-for-screen screen))
                   (layout (pango-layout-new context))
                   (desc (pango-font-description-from-string font)))
@@ -1366,9 +1303,7 @@
     Startup notification for applications.
 
     @about-class{gdk-app-launch-context}
-
     @about-generic{gdk-app-launch-context-display}
-
     @about-function{gdk-app-launch-context-new}
     @about-function{gdk-app-launch-context-set-screen}
     @about-function{gdk-app-launch-context-set-desktop}
@@ -1381,15 +1316,12 @@
       Manipulation of colors
 
       @about-struct{gdk-color}
-
       @about-function{copy-gdk-color}
       @about-function{make-gdk-color}
-
       @about-function{gdk-color-blue}
       @about-function{gdk-color-green}
       @about-function{gdk-color-red}
       @about-function{gdk-color-pixel}
-
       @about-function{gdk-color-copy}
       @about-function{gdk-color-free}
       @about-function{gdk-color-parse}
@@ -1401,9 +1333,7 @@
       Functions for handling input devices.
 
       @about-class{gdk-device-manager}
-
       @about-generic{gdk-device-manager-display}
-
       @about-function{gdk-disable-multidevice}
       @about-function{gdk-device-manager-list-devices}
       @about-function{gdk-device-manager-get-client-pointer}
