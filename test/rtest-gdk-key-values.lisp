@@ -63,7 +63,7 @@
 ;;;     gdk_keymap_get_num_lock_state
 
 (test gdk-keymap-num-lock-state
-  (is-false (gdk-keymap-num-lock-state (gdk-keymap-default))))
+  (is-true (gdk-keymap-num-lock-state (gdk-keymap-default))))
 
 ;;;     gdk_keymap_get_scroll_lock_state
 
@@ -73,7 +73,7 @@
 ;;;     gdk_keymap_get_modifier_state
 
 (test gdk-keymap-modifier-state
-  (is (equal '()
+  (is (equal '(:MOD2-MASK)
              (gdk-keymap-modifier-state (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers

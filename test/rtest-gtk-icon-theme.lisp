@@ -52,7 +52,7 @@
 ;;;     gtk_icon_theme_set_screen
 
 (test gtk-icon-theme-screen
-  (let ((screen (gdk-screen-get-default))
+  (let ((screen (gdk-screen-default))
         (theme (gtk-icon-theme-default)))
     (is (eq 'gtk-icon-theme (type-of (gtk-icon-theme-for-screen screen))))
     (is-false (gtk-icon-theme-set-screen theme screen))

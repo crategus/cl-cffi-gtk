@@ -47,34 +47,19 @@
 
 ;;;   gdk_flush
 
-;;;   gdk_screen_width
+;;;   gdk_screen_width                                deprecated
+;;;   gdk_screen_height                               deprecated
+;;;   gdk_screen_width_mm                             deprecated
+;;;   gdk_screen_height_mm                            deprecated
 
-(test gdk-screen-width
-  (is-true (integerp (gdk-screen-width))))
-
-;;;   gdk_screen_height
-
-(test gdk-screen-height
-  (is-true (integerp (gdk-screen-height))))
-
-;;;   gdk_screen_width_mm
-
-(test gdk-screen-width-mm
-  (is-true (integerp (gdk-screen-width-mm))))
-
-;;;   gdk_screen_height_mm
-
-(test gdk-screen-height-mm
-  (is-true (integerp (gdk-screen-height-mm))))
-
-;;;   gdk_pointer_grab                           * deprecated *
-;;;   gdk_pointer_ungrab                         * deprecated *
-;;;   gdk_pointer_is_grabbed                     * deprecated *
+;;;   gdk_pointer_grab                                deprecated
+;;;   gdk_pointer_ungrab                              deprecated
+;;;   gdk_pointer_is_grabbed                          deprecated
 
 ;;;   gdk_set_double_click_time
 
-;;;   gdk_keyboard_grab                          * deprecated *
-;;;   gdk_keyboard_ungrab                        * deprecated *
+;;;   gdk_keyboard_grab                               deprecated
+;;;   gdk_keyboard_ungrab                             deprecated
 
 ;;;   gdk_beep
 

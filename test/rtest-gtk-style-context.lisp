@@ -337,7 +337,7 @@
 ;;;     gtk_style_context_remove_provider_for_screen
 
 (test gtk-style-context-add-provider-for-screen
-  (let ((screen (gdk-screen-get-default))
+  (let ((screen (gdk-screen-default))
         (provider (make-instance 'gtk-css-provider)))
     (is-false (gtk-style-context-add-provider-for-screen screen provider +gtk-style-provider-priority-user+))
     (is-false (gtk-style-context-remove-provider-for-screen screen provider))))
