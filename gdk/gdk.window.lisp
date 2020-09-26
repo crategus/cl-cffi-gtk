@@ -5292,7 +5292,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 (defun (setf gdk-window-decorations) (decorations window)
   (foreign-funcall "gdk_window_set_decorations"
                    (g-object gdk-window) window
-                   gdk-wm-decorations decorations
+                   gdk-wm-decoration decorations
                    :void)
   decorations)
 
