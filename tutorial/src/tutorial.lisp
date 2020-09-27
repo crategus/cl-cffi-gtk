@@ -4075,7 +4075,7 @@ happen.")
         (gtk-toolbar-insert toolbar save-button -1)
         (gtk-toolbar-insert toolbar separator -1)
         (gtk-toolbar-insert toolbar quit-button -1)
-        (gtk-tool-item-set-expand separator t)
+        (setf (gtk-tool-item-expand separator) t)
         (gtk-box-pack-start vbox toolbar :fill nil :expand nil :padding 3)
         ;; Connect a signal handler to the quit button
         (g-signal-connect quit-button "clicked"
@@ -4423,7 +4423,7 @@ happen.")
         (gtk-container-add toolbar button))
       (let ((button (make-instance 'gtk-separator-tool-item
                                    :draw nil)))
-        (gtk-tool-item-set-expand button t)
+        (setf (gtk-tool-item-expand button) t)
         (gtk-container-add toolbar button))
       (let ((button (make-instance 'gtk-tool-item))
             (box (make-instance 'gtk-box

@@ -11758,8 +11758,8 @@ main (int argc, char **argv)
 (let (...
       (separator (gtk-separator-tool-item-new))
       ...)
-  (gtk-separator-tool-item-set-draw separator nil)
-  (gtk-tool-item-set-expand separator t)
+  (setf (gtk-separator-tool-item-draw separator) nil)
+  (setf (gtk-tool-item-expand separator) t)
   ... )
    </programlisting>
    <para>
@@ -11774,7 +11774,7 @@ main (int argc, char **argv)
       (separator (make-instance 'gtk-separator-tool-item
                                 :draw nil))
       ...)
-  (gtk-tool-item-set-expand separator t)
+  (setf (gtk-tool-item-expand separator) t)
   ... )
    </programlisting>
    <para>
@@ -11816,7 +11816,7 @@ main (int argc, char **argv)
         (gtk-toolbar-insert toolbar save-button -1)
         (gtk-toolbar-insert toolbar separator -1)
         (gtk-toolbar-insert toolbar quit-button -1)
-        (gtk-tool-item-set-expand separator t)
+        (setf (gtk-tool-item-expand separator) t)
         (gtk-box-pack-start vbox toolbar :fill nil :expand nil :padding 3)
         ;; Connect a signal handler to the quit button
         (g-signal-connect quit-button "clicked"
@@ -13020,7 +13020,7 @@ lambda (merge widget)
         (gtk-container-add toolbar button))
       (let ((button (make-instance 'gtk-separator-tool-item
                                    :draw nil)))
-        (gtk-tool-item-set-expand button t)
+        (setf (gtk-tool-item-expand button) t)
         (gtk-container-add toolbar button))
       (let ((button (make-instance 'gtk-tool-item))
             (box (make-instance 'gtk-box
@@ -14152,6 +14152,8 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
 
 
 

@@ -121,7 +121,7 @@
       ;; Invisible separator which shift the next tool item to the right
       (let ((button (make-instance 'gtk-separator-tool-item
                                    :draw nil)))
-        (gtk-tool-item-set-expand button t)
+        (setf (gtk-tool-item-expand button) t)
         (gtk-container-add toolbar button))
 
       ;; A label and a switch on the right of the toolbar
