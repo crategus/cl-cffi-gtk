@@ -54,17 +54,17 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkBaselinePosition  baseline-position    Read / Write
-;;;                gboolean  homogeneous          Read / Write
-;;;                    gint  spacing              Read / Write
+;;;     GtkBaselinePosition    baseline-position    Read / Write
+;;;                gboolean    homogeneous          Read / Write
+;;;                    gint    spacing              Read / Write
 ;;;
 ;;; Child Properties
 ;;;
-;;;                gboolean  expand               Read / Write
-;;;                gboolean  fill                 Read / Write
-;;;             GtkPackType  pack-type            Read / Write
-;;;                   guint  padding              Read / Write
-;;;                    gint  position             Read / Write
+;;;                gboolean    expand               Read / Write
+;;;                gboolean    fill                 Read / Write
+;;;             GtkPackType    pack-type            Read / Write
+;;;                   guint    padding              Read / Write
+;;;                    gint    position             Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -125,97 +125,103 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-box 'type)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @begin{short}
-    The @sym{gtk-box} widget arranges child widgets into a single row or column,
-    depending upon the value @code{:horizontal} or @code{:vertical} of its
-    inherited @slot[gtk-orientable]{orientation} property.
+    The @sym{gtk-box} widget arranges child widgets into a single row or
+    column, depending upon the value @code{:horizontal} or @code{:vertical}
+    of its inherited @slot[gtk-orientable]{orientation} property.
   @end{short}
   Within the other dimension, all children are allocated the same size. Of
   course, the @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign}
   properties can be used on the children to influence their allocation.
 
-  @sym{gtk-box} uses a notion of packing. Packing refers to adding widgets
-  with reference to a particular position in a @class{gtk-container}. For a
-  @sym{gtk-box}, there are two reference positions: the start and the end of
-  the box. For a vertical @sym{gtk-box}, the start is defined as the top of
-  the box and the end is defined as the bottom. For a horizontal @sym{gtk-box}
-  the start is defined as the left side and the end is defined as the right
-  side.
+  The @sym{gtk-box} widget uses a notion of packing. Packing refers to adding
+  widgets with reference to a particular position in a @class{gtk-container}
+  widget. For a box, there are two reference positions: the start and the end
+  of the box. For a vertical box, the start is defined as the top of the box
+  and the end is defined as the bottom. For a horizontal box the start is
+  defined as the left side and the end is defined as the right side.
 
   Use repeated calls to the function @fun{gtk-box-pack-start} to pack widgets
-  into a @sym{gtk-box} from start to end. Use the function
-  @fun{gtk-box-pack-end} to add widgets from end to start. You may intersperse
-  these calls and add widgets from both ends of the same @sym{gtk-box}.
+  into a box from start to end. Use the function @fun{gtk-box-pack-end} to add
+  widgets from end to start. You may intersperse these calls and add widgets
+  from both ends of the same box.
 
-  Because @sym{gtk-box} is a @class{gtk-container}, you may also use the
+  Because @sym{gtk-box} is a @class{gtk-container} widget, you may also use the
   function @fun{gtk-container-add} to insert widgets into the box, and they
   will be packed with the default values for the @code{expand} and @code{fill}
   child properties. Use the function @fun{gtk-container-remove} to remove
-  widgets from the @sym{gtk-box}.
+  widgets from the box.
 
   Use the slot access function @fun{gtk-box-homogeneous} to specify whether or
-  not all children of the @sym{gtk-box} are forced to get the same amount of
-  space.
+  not all children of the box are forced to get the same amount of space.
 
-  Use the slot access function @fun{gtk-box-spacing} to determine how much space
-  will be minimally placed between all children in the @sym{gtk-box}. Note that
+  Use the slot access function @fun{gtk-box-spacing} to determine how much
+  space will be minimally placed between all children in the box. Note that
   spacing is added between the children, while padding added by the functions
   @fun{gtk-box-pack-start} or @fun{gtk-box-pack-end} is added on either side of
   the widget it belongs to.
 
   Use the function @fun{gtk-box-reorder-child} to move a @sym{gtk-box} child
-  to a different place in the box.
+  widget to a different place in the box.
 
   Use the function @fun{gtk-box-child-packing} to reset the @code{expand},
   @code{fill} and @code{padding} child properties and use the function
   @fun{gtk-box-query-child-packing} to query these properties.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-box} uses a single CSS node with name @code{box}.
-    In horizontal orientation, the nodes of the children are always arranged
-    from left to right. So @code{:first-child} will always select the leftmost
-    child, regardless of text direction.
+    The @sym{gtk-box} widget uses a single CSS node with name @code{box}. In
+    horizontal orientation, the nodes of the children are always arranged from
+    left to right. So @code{:first-child} will always select the leftmost child
+    widget, regardless of text direction.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
       @begin[expand]{entry}
         The @code{expand} child property of type @code{:boolean} (Read / Write)
         @br{}
-        Whether the child should receive extra space when the parent grows.
-        Note that the default value for this property is @em{false} for
-        @sym{gtk-box}. Note that the @slot[gtk-widget]{halign},
-        @slot[gtk-widget]{valign}, @slot[gtk-widget]{hexpand} and
-        @slot[gtk-widget]{vexpand} properties are the preferred way to
-        influence child size allocation in containers. @br{}
+        Whether the child widget should receive extra space when the parent
+        widget grows. The @slot[gtk-widget]{hexpand} or
+        @slot[gtk-widget]{vexpand} properties are the preferred way to influence
+        whether the child widget receives extra space, by setting the child
+        widget’s expand property corresponding to the box’s orientation. In
+        contrast to the @slot[gtk-widget]{hexpand} property, the @code{expand}
+        child property does not cause the box to expand itself. @br{}
         Default value: @em{false}
       @end{entry}
       @begin[fill]{entry}
         The @code{fill} child property of type @code{:boolean} (Read / Write)
         @br{}
-        Whether the child should receive extra space when the parent grows.
-        Note that the @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign},
-        @slot[gtk-widget]{hexpand} and @slot[gtk-widget]{vexpand} properties
-        are the preferred way to influence child size allocation in containers.
-        @br{}
+        Whether the child widget should fill extra space or use it as padding.
+        The @slot[gtk-widget]{halign} or @slot[gtk-widget]{valign} properties
+        are the preferred way to influence whether the child widget fills
+        available space, by setting the child widget's align property
+        corresponding to the box’s orientation to the value @code{:fill} of the
+        @symbol{gtk-align} enumeration to fill, or to something else to refrain
+        from filling. @br{}
         Default value: @em{true}
       @end{entry}
       @begin[pack-type]{entry}
         The @code{pack-type} child property of type @symbol{gtk-pack-type}
         (Read / Write) @br{}
-        A pack type indicating whether the child is packed with reference to
-        the start or end of the parent. @br{}
+        A pack type indicating whether the child widget is packed with
+        reference to the start or end of the parent widget. @br{}
         Default value: @code{:start}
       @end{entry}
       @begin[padding]{entry}
         The @code{padding} child property of type @code{:uint} (Read / Write)
         @br{}
-        Extra space to put between the child and its neighbors, in pixels. @br{}
+        Extra space to put between the child widget and its neighbors, in
+        pixels. The CSS padding properties are the preferred way to add space
+        among widgets, by setting the paddings corresponding to the box’s
+        orientation. @br{}
+        Allowed values: <= @code{G_MAXINT} @br{}
         Default value: 0
       @end{entry}
       @begin[position]{entry}
         The @code{position} child property of type @code{:int} (Read / Write)
         @br{}
-        The index of the child in the parent. @br{}
+        The index of the child widget in the parent widget. @br{}
+        Allowed values: >= -1 @br{}
         Default value: 0
       @end{entry}
     @end{table}
@@ -224,9 +230,10 @@
   @see-slot{gtk-box-homogeneous}
   @see-slot{gtk-box-spacing}
   @see-class{gtk-orientable}
+  @see-class{gtk-container}
   @see-symbol{gtk-orientation}
   @see-symbol{gtk-pack-type}
-  @see-class{gtk-container}
+  @see-symbol{gtk-align}
   @see-function{gtk-container-add}
   @see-function{gtk-container-remove}
   @see-function{gtk-box-pack-start}
@@ -253,10 +260,10 @@
 (setf (gethash 'gtk-box-baseline-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-baseline-position 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-baseline-position object) => position}
   @syntax[]{(setf (gtk-box-baseline-position object) position)}
-  @argument[object]{a @class{gtk-box} container}
+  @argument[object]{a @class{gtk-box} container widget}
   @argument[position]{a baseline position of type
     @symbol{gtk-baseline-position}}
   @begin{short}
@@ -264,14 +271,14 @@
     @class{gtk-box} class.
   @end{short}
 
-  The slot access function @sym{gtk-box-baseline-position}  gets the baseline
+  The slot access function @sym{gtk-box-baseline-position} gets the baseline
   position of a box. The slot access function
-  @sym{(setf gtk-box-baseline-position)}  sets the baseline position of a box.
+  @sym{(setf gtk-box-baseline-position)} sets the baseline position of a box.
 
-  This affects only horizontal boxes with at least one baseline aligned child.
-  If there is more vertical space available than requested, and the baseline
-  is not allocated by the parent then @arg{position} is used to allocate the
-  baseline wrt the extra space available.
+  This affects only horizontal boxes with at least one baseline aligned child
+  widget. If there is more vertical space available than requested, and the
+  baseline is not allocated by the parent widget then @arg{position} is used
+  to allocate the baseline wrt the extra space available.
 
   Since 3.10
   @see-class{gtk-box}
@@ -289,10 +296,10 @@
 (setf (gethash 'gtk-box-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-homogeneous 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-homogeneous object) => homogeneous}
   @syntax[]{(setf (gtk-box-homogeneous object) homogeneous)}
-  @argument[object]{a @class{gtk-box} container}
+  @argument[object]{a @class{gtk-box} container widget}
   @argument[homogeneous]{@em{true} to create equal allotments, @em{false}
     for variable allotments}
   @begin{short}
@@ -319,10 +326,10 @@
 (setf (gethash 'gtk-box-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-spacing 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-spacing object) => spacing}
   @syntax[]{(setf (gtk-box-spacing object) spacing)}
-  @argument[object]{a @class{gtk-box} container}
+  @argument[object]{a @class{gtk-box} container widget}
   @argument[spacing]{an integer with the number of pixels to put between
     children}
   @begin{short}
@@ -349,22 +356,26 @@
 (setf (gethash 'gtk-box-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-expand 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-child-expand container child) => expand}
   @syntax[]{(setf (gtk-box-child-expand container child) expand)}
-  @argument[container]{a @class{gtk-box} container}
+  @argument[container]{a @class{gtk-box} container widget}
   @argument[child]{a @class{gtk-widget} child widget}
   @argument[expand]{@em{true}, if @arg{child} is to be given extra space}
   @begin{short}
     Accessor of the @code{expand} child property of the @class{gtk-box} class.
   @end{short}
 
-  Whether the child should receive extra space when the parent grows. Note that
-  the default value for this property is @em{false} for @sym{gtk-box}. Note
-  that the @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign},
-  @slot[gtk-widget]{hexpand} and @slot[gtk-widget]{vexpand} properties are the
-  preferred way to influence child size allocation in containers.
-  @see-class{gtk-box}")
+  Whether the child widget should receive extra space when the parent widget
+  grows. The @slot[gtk-widget]{hexpand} or @slot[gtk-widget]{vexpand} properties
+  are the preferred way to influence whether the child widget receives extra
+  space, by setting the child widget’s expand property corresponding to the
+  box’s orientation. In contrast to the @slot[gtk-widget]{hexpand} property,
+  the @code{expand} child property does not cause the box to expand itself.
+  @see-class{gtk-box}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-hexpand}
+  @see-function{gtk-widget-vexpand}")
 
 ;;; --- gtk-box-child-fill -----------------------------------------------------
 
@@ -376,21 +387,27 @@
 (setf (gethash 'gtk-box-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-fill 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-child-expand container child) => fill}
   @syntax[]{(setf (gtk-box-child-expand container child) fill)}
-  @argument[container]{a @class{gtk-box} container}
+  @argument[container]{a @class{gtk-box} container widget}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[fill]{@em{true}, if space given to @arg{child} by the expand option}
   @begin{short}
     Accessor of the @code{fill} child property of the @class{gtk-box} class.
   @end{short}
 
-  Whether the child should receive extra space when the parent grows. Note that
-  the @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign},
-  @slot[gtk-widget]{hexpand} and @slot[gtk-widget]{vexpand} properties are the
-  preferred way to influence child size allocation in containers.
-  @see-class{gtk-box}")
+  Whether the child widget should fill extra space or use it as padding. The
+  @slot[gtk-widget]{halign} or @slot[gtk-widget]{valign} properties are the
+  preferred way to influence whether the child widget fills available space, by
+  setting the child widget's align property corresponding to the box’s
+  orientation to the value @code{:fill} of the @symbol{gtk-align} enumeration
+  to fill, or to something else to refrain from filling.
+  @see-class{gtk-box}
+  @see-class{gtk-widget}
+  @see-symbol{gtk-align}
+  @see-function{gtk-widget-halign}
+  @see-function{gtk-widget-valign}")
 
 ;;; --- gtk-box-child-pack-type ------------------------------------------------
 
@@ -402,18 +419,21 @@
 (setf (gethash 'gtk-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-pack-type 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-child-pack-type container child) => pack-type}
   @syntax[]{(setf (gtk-box-child-pack-type container child) pack-type)}
-  @argument[container]{a @class{gtk-box} container}
+  @argument[container]{a @class{gtk-box} container widget}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[pack-type]{a value of the @symbol{gtk-pack-type} enumeration}
   @begin{short}
-    Accessor of the @code{pack-type} child property of the @class{gtk-box} class.
+    Accessor of the @code{pack-type} child property of the @class{gtk-box}
+    class.
   @end{short}
 
-  Whether the child is packed with reference to the start or end of the parent.
+  A pack type indicating whether the child widget is packed with reference to
+  the start or end of the parent widget.
   @see-class{gtk-box}
+  @see-class{gtk-widget}
   @see-symbol{gtk-pack-type}")
 
 ;;; --- gtk-box-child-padding --------------------------------------------------
@@ -426,10 +446,10 @@
 (setf (gethash 'gtk-box-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-padding 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-child-padding container child) => padding}
   @syntax[]{(setf (gtk-box-child-padding container child) padding)}
-  @argument[container]{a @class{gtk-box} container}
+  @argument[container]{a @class{gtk-box} container widget}
   @argument[child]{a @class{gtk-widget} child widget}
   @argument[padding]{an unsigned integer with extra space in pixels to put
     between childs}
@@ -437,8 +457,11 @@
     Accessor of the @code{padding} child property of the @class{gtk-box} class.
   @end{short}
 
-  Extra space to put between the child and its neighbors, in pixels.
-  @see-class{gtk-box}")
+  Extra space to put between the child widget and its neighbors, in pixels. The
+  CSS padding properties are the preferred way to add space among widgets, by
+  setting the paddings corresponding to the box’s orientation.
+  @see-class{gtk-box}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-box-child-position -------------------------------------------------
 
@@ -450,18 +473,19 @@
 (setf (gethash 'gtk-box-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-position 'function)
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-child-position container child) => position}
   @syntax[]{(setf (gtk-box-child-position container child) position)}
-  @argument[container]{a @class{gtk-box} container}
+  @argument[container]{a @class{gtk-box} container widget}
   @argument[child]{a @class{gtk-widget} child widget}
   @argument[position]{an integer with the position of @arg{child} in a box}
   @begin{short}
     Accessor of the @code{position} child property of the @class{gtk-box} class.
   @end{short}
 
-  The index of the child in the parent.
-  @see-class{gtk-box}")
+  The index of the child widget in the parent widget.
+  @see-class{gtk-box}
+  @see-class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_new ()
@@ -469,14 +493,18 @@
 
 (declaim (inline gtk-box-new))
 
-(defun gtk-box-new (orientation spacing)
+(defun gtk-box-new (orientation &optional (spacing 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
+ "@version{2020-9-27}
   @argument[orientation]{the box's orientation of type @symbol{gtk-orientation}}
-  @argument[spacing]{an integer with the number of pixels to place by default
-    between children}
-  @return{A new @class{gtk-box} container.}
-  @short{Creates a new @class{gtk-box} container.}
+  @argument[spacing]{an optional integer with the number of pixels to place by
+    default between children}
+  @return{A new @class{gtk-box} container widget.}
+  @begin{short}
+    Creates a new box with the given @arg{orientation} and an optional value
+    for the @slot[gtk-box]{spacing} property.
+  @end{short}
+  The default value for @arg{spacing} is 0.
   @see-class{gtk-box}
   @see-symbol{gtk-orientation}
   @see-function{gtk-box-spacing}"
@@ -499,10 +527,10 @@
 
 (defun gtk-box-pack-start (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
-  @argument[expand]{@em{true} if the new @arg{child} is to be given extra space
+ "@version{2020-9-27}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[child]{the @class{gtk-widget} child widget to be added to @arg{box}}
+  @argument[expand]{@em{true} if @arg{child} is to be given extra space
     allocated to @arg{box}}
   @argument[fill]{@em{true} if space given to @arg{child} by the expand option
     is actually allocated to @arg{child}, rather than just padding it}
@@ -518,21 +546,26 @@
   all children that use this option. The default value is @em{true}.
 
   The @arg{fill} parameter has no effect if @arg{expand} is set to @em{false}.
-  A child is always allocated the full height of a horizontal box and the full
-  width of a vertical box. This option affects the other dimension. The default
-  value is @em{true}.
+  A child widget is always allocated the full height of a horizontal box and
+  the full width of a vertical box. This option affects the other dimension.
+  The default value is @em{true}.
 
   The @arg{padding} parameter is the extra space in pixels to put between this
   child widget and its neighbors, over and above the global amount specified by
   the @slot[gtk-box]{spacing} property. If the child widget is a widget at one
   of the reference ends of the box, then padding pixels are also put between
   the child widget and the reference edge of the box. The default value is 0.
-  @begin[Note]{dictionary}
+  @begin[Lisp implementation]{dictionary}
     In the Lisp binding the arguments @arg{expand}, @arg{fill}, and
     @arg{padding} are keyword arguments, which have default values.
   @end{dictionary}
   @see-class{gtk-box}
-  @see-function{gtk-box-pack-end}"
+  @see-class{gtk-widget}
+  @see-function{gtk-box-pack-end}
+  @see-function{gtk-box-spacing}
+  @see-function{gtk-box-child-expand}
+  @see-function{gtk-box-child-fill}
+  @see-function{gtk-box-child-padding}"
   (%gtk-box-pack-start box child expand fill padding))
 
 (export 'gtk-box-pack-start)
@@ -550,12 +583,12 @@
 
 (defun gtk-box-pack-end (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2014-2-21}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
-  @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
+ "@version{2020-9-27}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[child]{the @class{gtk-widget} child widget to be added to @arg{box}}
+  @argument[expand]{@em{true} if @arg{child} is to be given extra space
     allocated to @arg{box}}
-  @argument[fill]{@arg{true} if space given to @arg{child} by the @arg{expand}
+  @argument[fill]{@em{true} if space given to @arg{child} by the @arg{expand}
     option is actually allocated to @arg{child}, rather than just padding it}
   @argument[padding]{an unsigned integer with extra space in pixels}
   @begin{short}
@@ -568,21 +601,26 @@
   all children that use this option. The default value is @em{true}.
 
   The @arg{fill} parameter has no effect if @arg{expand} is set to @em{false}.
-  A child is always allocated the full height of a horizontal box and the full
-  width of a vertical box. This option affects the other dimension. The default
-  value is @em{true}.
+  A child widget is always allocated the full height of a horizontal box and
+  the full width of a vertical box. This option affects the other dimension.
+  The default value is @em{true}.
 
   The @arg{padding} parameter is the extra space in pixels to put between this
   child widget and its neighbors, over and above the global amount specified by
   the @slot[gtk-box]{spacing} property. If the child widget is a widget at one
   of the reference ends of the box, then padding pixels are also put between
   the child widget and the reference edge of the box. The default value is 0.
-  @begin[Note]{dictionary}
+  @begin[Lisp implementation]{dictionary}
     In the Lisp binding the arguments @arg{expand}, @arg{fill}, and
     @arg{padding} are keyword arguments, which have default values.
   @end{dictionary}
   @see-class{gtk-box}
-  @see-function{gtk-box-pack-start}"
+  @see-class{gtk-widget}
+  @see-function{gtk-box-pack-start}
+  @see-function{gtk-box-spacing}
+  @see-function{gtk-box-child-expand}
+  @see-function{gtk-box-child-fill}
+  @see-function{gtk-box-child-padding}"
   (%gtk-box-pack-end box child expand fill padding))
 
 (export 'gtk-box-pack-end)
@@ -593,9 +631,9 @@
 
 (defcfun ("gtk_box_reorder_child" gtk-box-reorder-child) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} to move}
+ "@version{2020-9-27}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[child]{the @class{gtk-widget} child widget to move}
   @argument[position]{an integer with the position for @arg{child} in the
     list of children of @arg{box}, starting from 0, if negative, indicates the
     end of the list}
@@ -610,7 +648,9 @@
   packed into the box. A child widget at some position in the list will be
   packed just after all other widgets of the same packing type that appear
   earlier in the list.
-  @see-class{gtk-box}"
+  @see-class{gtk-box}
+  @see-class{gtk-widget}
+  @see-symbol{gtk-pack-type}"
   (box (g-object gtk-box))
   (child (g-object gtk-widget))
   (position :int))
@@ -625,9 +665,9 @@
 
 (defun gtk-box-query-child-packing (box child)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} of the child to query}
+ "@version{2020-9-27}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[child]{the @class{gtk-widget} child widget to query}
   @begin{return}
     @code{expand} -- a boolean with the @code{expand} child property @br{}
     @code{fill} -- a boolean with the @code{fill} child property @br{}
@@ -637,8 +677,20 @@
   @begin{short}
     Obtains information about how the child widget is packed into the box.
   @end{short}
+  @begin[Lisp implementation]{dictionary}
+    In the Lisp binding you can use the functions @fun{gtk-box-child-expand},
+    @fun{gtk-box-child-fill}, @fun{gkt-box-child-padding}, and
+    @fun{gtk-box-child-pack-type} to retrieve the child properties. This
+    function is implemented with these child accessor functions.
+  @end{dictionary}
   @see-class{gtk-box}
-  @see-function{gtk-box-child-packing}"
+  @see-class{gtk-widget}
+  @see-symbol{gtk-pack-type}
+  @see-function{gtk-box-child-packing}
+  @see-function{gtk-box-child-expand}
+  @see-function{gtk-box-child-fill}
+  @see-function{gtk-box-child-padding}
+  @see-function{gtk-box-child-pack-type}"
   (values (gtk-box-child-expand box child)
           (gtk-box-child-fill box child)
           (gtk-box-child-padding box child)
@@ -652,9 +704,9 @@
 
 (defun gtk-box-child-packing (box child expand fill padding pack-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} of the child to set}
+ "@version{2020-9-27}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[child]{the @class{gtk-widget} child widget to set}
   @argument[expand]{a boolean with the value of the @code{expand} child
     property}
   @argument[fill]{a boolean with the value of the @code{fill} child property}
@@ -664,8 +716,20 @@
   @begin{short}
     Sets the way the child widget is packed into the box.
   @end{short}
+  @begin[Lisp implementation]{dictionary}
+    In the Lisp binding you can use the functions @fun{gtk-box-child-expand},
+    @fun{gtk-box-child-fill}, @fun{gkt-box-child-padding}, and
+    @fun{gtk-box-child-pack-type} to set the child properties. This function is
+    implemented with these child accessor functions.
+  @end{dictionary}
   @see-class{gtk-box}
-  @see-function{gtk-box-query-child-packing}"
+  @see-class{gtk-widget}
+  @see-symbol{gtk-pack-type}
+  @see-function{gtk-box-query-child-packing}
+  @see-function{gtk-box-child-expand}
+  @see-function{gtk-box-child-fill}
+  @see-function{gtk-box-child-padding}
+  @see-function{gtk-box-child-pack-type}"
   (setf (gtk-box-child-expand box child) expand
         (gtk-box-child-fill box child) fill
         (gtk-box-child-padding box child) padding
@@ -690,11 +754,11 @@
 (defcfun ("gtk_box_get_center_widget" gtk-box-center-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-20}
+ "@version{2020-9-27}
   @syntax[]{(gtk-box-center-widget box) => widget}
   @syntax[]{(setf (gtk-box-center-widget box) widget)}
-  @argument[box]{a @class{gtk-box} container}
-  @argument[widget]{a @class{gtk-widget} to center}
+  @argument[box]{a @class{gtk-box} container widget}
+  @argument[widget]{a @class{gtk-widget} child widget to center}
   @begin{short}
     Accessor of the center widget of the @class{gtk-box} class.
   @end{short}
@@ -706,7 +770,8 @@
   space.
 
   Since 3.12
-  @see-class{gtk-box}"
+  @see-class{gtk-box}
+  @see-class{gtk-widget}"
   (box (g-object gtk-box)))
 
 #+gtk-3-12
