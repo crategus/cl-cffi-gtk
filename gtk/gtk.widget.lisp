@@ -3282,29 +3282,26 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
  "The @code{opacity} property of type @code{:double} (Read / Write) @br{}
   The requested opacity of the widget. See the function @fun{gtk-widget-opacity}
   for more details about window opacity. Before version 3.8 this was only
-  available in @class{gtk-window}. @br{}
+  available in @class{gtk-window}. Since 3.8 @br{}
   Allowed values: [0,1] @br{}
-  Default value: 1 @br{}
-  Since 3.8")
+  Default value: 1")
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-widget-opacity atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-opacity 'function)
- "@version{2014-2-9}
+ "@version{2020-9-26}
   @argument[object]{a @class{gtk-widget} object}
   @syntax[]{(gtk-widget-opacity object) => opacity}
   @syntax[]{(setf (gtk-widget-opacity object) opacity)}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{opacity} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{opacity} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-opacity} fetches the requested opacity
-  for this widget.
-
-  The generic function @sym{(setf gtk-widget-opacity)} request the widget to be
-  rendered partially transparent, with opacity 0 being fully transparent and 1
-  fully opaque.
+  The slot access function @sym{gtk-widget-opacity} fetches the requested
+  opacity for the widget. The slot access function
+  @sym{(setf gtk-widget-opacity)} request the widget to be rendered partially
+  transparent, with opacity 0 being fully transparent and 1 fully opaque.
 
   Opacity values are clamped to the [0,1] range. This works on both toplevel
   widget, and child widgets, although there are some limitations:
