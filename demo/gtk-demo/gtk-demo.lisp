@@ -295,6 +295,10 @@
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Layout Containers")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Simple Box"
+                                "box-simple.lisp"
+                                "DEMO-BOX-SIMPLE")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Box packing"
                                 "box-packing.lisp"
                                 "EXAMPLE-BOX-PACKING")

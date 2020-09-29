@@ -23,7 +23,7 @@ button:last-child label {
     background-color : green;
 }")
 
-(defun apply-css-button (widget provider)
+(defun apply-css-to-widget (widget provider)
   (gtk-style-context-add-provider (gtk-widget-style-context widget)
                                   provider
                                   +gtk-style-provider-priority-user+)
@@ -32,7 +32,7 @@ button:last-child label {
                           (lambda (widget)
                             (apply-css widget provider)))))
 
-(defun demo-box ()
+(defun demo-box-simple ()
   (within-main-loop
     (let (;; Create a toplevel window
           (window (make-instance 'gtk-window
@@ -78,8 +78,8 @@ button:last-child label {
       ;; Load CSS from data into the provider
       (gtk-css-provider-load-from-data provider +css-button+)
       ;; Apply CSS to the widgets
-      (apply-css-button box provider)
+      (apply-css-to-widget box provider)
       ;; Show the window.
       (gtk-widget-show-all window))))
 
-;;; 2020-9-27
+;;; 2020-9-28
