@@ -614,7 +614,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2014-7-26}
+ "@version{2020-9-27}
   @begin{short}
     Controls how a widget deals with extra space in a single (x or y) dimension.
   @end{short}
@@ -648,7 +648,7 @@
     @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
     @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
     @entry[:center]{Center natural width of widget inside the allocation.}
-    @entry[:baseline]{Align the widget according to the baseline. Since 3.10.}
+    @entry[:baseline]{Align the widget according to the baseline. Since 3.10}
   @end{table}
   @see-class{gtk-widget}
   @see-function{gtk-widget-halign}
@@ -2636,23 +2636,29 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
  "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to expand in both directions. Setting @code{expand} sets both
-  properties @code{hexpand} and @code{vexpand}. @br{}
-  Default value: @code{nil}")
+  Whether to expand in both directions. Setting the @code{expand} property sets
+  both properties @code{hexpand} and @code{vexpand}. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-expand atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-expand 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-28}
   @syntax[]{(gtk-widget-expand object) => expand}
   @syntax[]{(setf (gtk-widget-expand object) expand)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[expand]{a boolean wether to expand in both directions}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{expand} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{expand} slot of the @class{gtk-widget}
     class.
   @end{short}
-  See the slot description for @slot[gtk-widget]{expand} for more information.
-  @see-class{gtk-widget}")
+
+  Whether to expand the widget in both directions. Setting the @code{expand}
+  property sets both properties @slot[gtk-widget]{hexpand} and
+  @slot[gtk-widget]{vexpand}.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-hexpand}
+  @see-function{gtk-widget-vexpand}")
 
 ;;; --- gtk-widget-focus-on-click ----------------------------------------------
 
@@ -2695,26 +2701,25 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "halign" 'gtk-widget) 't)
  "The @code{halign} property of type @symbol{gtk-align} (Read / Write) @br{}
-  How to distribute horizontal space if widget gets extra space. @br{}
+  How to distribute horizontal space if the widget gets extra space. @br{}
   Default value: @code{:fill}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-halign 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-27}
   @syntax[]{(gtk-widget-halign object) => align}
   @syntax[]{(setf (gtk-widget-halign object) align)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[align]{a value of the @symbol{gtk-align} enumeration}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{halign} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{halign} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-halign} returns the horizontal alignment
-  of type @symbol{gtk-align} of @arg{widget}.
-
-  The generic function @sym{(setf gtk-widget-halign)} sets the horizontal
-  alignment of @arg{widget}.
+  The slot access function @sym{gtk-widget-halign} returns the horizontal
+  alignment of the widget. The slot access function
+  @sym{(setf gtk-widget-halign)} sets the horizontal alignment.
   @see-class{gtk-widget}
   @see-symbol{gtk-align}
   @see-function{gtk-widget-valign}")
@@ -2843,42 +2848,31 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand" 'gtk-widget) 't)
  "The @code{hexpand} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to expand horizontally.
-  See the function @fun{gtk-widget-hexpand}. @br{}
-  Default value: @code{nil}")
+  Whether to expand horizontally. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-hexpand atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-hexpand 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-28}
   @syntax[]{(gtk-widget-hexpand object) => expand}
   @syntax[]{(setf (gtk-widget-hexpand object) expand)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[expand]{a boolean wether to expand horizontally}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{hexpand} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{hexpand} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-hexpand} gets whether the widget would
-  like any available extra horizontal space.
+  The slot access function @sym{gtk-widget-hexpand} gets whether the widget
+  would like any available extra horizontal space. This function only looks at
+  the widget's own @slot[gtk-widget]{hexpand} flag, rather than computing
+  whether the entire widget tree rooted at this widget wants to expand.
 
-  When a user resizes a @class{gtk-window}, widgets with expand = @em{true}
-  generally receive the extra space. For example, a list or scrollable area or
-  document in your window would often be set to expand.
-
-  Containers should use the function @fun{gtk-widget-compute-expand} rather than
-  this function, to see whether a widget, or any of its children, has the expand
-  flag set. If any child of a widget wants to expand, the parent may ask to
-  expand also.
-
-  This function only looks at the widget's own @slot[gtk-widget]{hexpand} flag,
-  rather than computing whether the entire widget tree rooted at this widget
-  wants to expand.
-
-  The generic function @sym{(setf gtk-widget-hexpand)} sets whether the widget
-  would like any available extra horizontal space. Call this function to set the
-  expand flag if you would like your widget to become larger horizontally when
-  the window has extra room.
+  The slot access function @sym{(setf gtk-widget-hexpand)} sets whether the
+  widget would like any available extra horizontal space. Call this function to
+  set the expand flag if you would like your widget to become larger
+  horizontally when the window has extra room.
 
   By default, widgets automatically expand if any of their children want to
   expand. To see if a widget will automatically expand given its current
@@ -2888,14 +2882,12 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @class{gtk-widget}.
 
   Setting @slot[gtk-widget]{hexpand} explicitly with this function will
-  override the automatic expand behavior.
-
-  This function forces the widget to expand or not to expand, regardless of
-  children. The override occurs because the function
-  @sym{gtk-widget-hexpand} sets the @slot[gtk-widget]{hexpand-set} property,
-  see the function @fun{gtk-widget-hexpand-set}, which causes the widget's
-  @slot[gtk-widget]{hexpand} value to be used, rather than looking at children
-  and widget state.
+  override the automatic expand behavior. This function forces the widget to
+  expand or not to expand, regardless of children. The override occurs because
+  the function @sym{gtk-widget-hexpand} sets the @slot[gtk-widget]{hexpand-set}
+  property, see the function @fun{gtk-widget-hexpand-set}, which causes the
+  widget's @slot[gtk-widget]{hexpand} value to be used, rather than looking at
+  children and widget state.
   @see-class{gtk-widget}
   @see-function{gtk-widget-expand}
   @see-function{gtk-widget-vexpand}
@@ -2906,41 +2898,37 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
- "The @code{hexpand-set} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether to use the @code{hexpand} property. See the function
-  @fun{gtk-widget-hexpand-set}.@br{}
-  Default value: @code{nil}")
+ "The @code{hexpand-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether to use the @code{hexpand} property. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-hexpand-set atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-hexpand-set 'function)
- "@version{2014-2-25}
+ "@version{2020-9-28}
+  @syntax[]{(gtk-widget-hexpand-set object) => setting}
+  @syntax[]{(setf (gtk-widget-hexpand-set object) setting)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[set]{value for the @slot[gtk-widget]{hexpand-set} property}
-  @syntax[]{(gtk-widget-hexpand-set object) => set}
-  @syntax[]{(setf (gtk-widget-hexpand-set object) set)}
+  @argument[set]{a boolean wether to use the @code{hexpand} property}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{hexpand-set} of the
+    Accessor of the @slot[gtk-widget]{hexpand-set} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-hexpand-set} gets whether the generic
-  function @fun{gtk-widget-hexpand} has been used to explicitly set
+  The slot access function @sym{gtk-widget-hexpand-set} gets whether the slot
+  access function @fun{gtk-widget-hexpand} has been used to explicitly set
   the expand flag on this widget.
 
-  If @slot[gtk-widget]{hexpand} is set, then it overrides any computed expand
-  value based on child widgets. If @slot[gtk-widget]{hexpand} is not set, then
-  the expand value depends on whether any children of the widget would like to
-  expand.
-
-  There are few reasons to use this function, but it is here for completeness
-  and consistency.
+  If the @slot[gtk-widget]{hexpand} property is set, then it overrides any
+  computed expand value based on child widgets. If the
+  @slot[gtk-widget]{hexpand} property is not set, then the expand value depends
+  on whether any children of the widget would like to expand. There are few
+  reasons to use this function, but it is here for completeness and consistency.
 
   The @slot[gtk-widget]{hexpand-set} property will be set automatically when you
-  call the function @fun{gtk-widget-hexpand} to set @slot[gtk-widget]{hexpand},
-  so the most likely reason to use this function would be to unset an explicit
-  expand flag.
+  call the function @fun{gtk-widget-hexpand} to set the
+  @slot[gtk-widget]{hexpand} property, so the most likely reason to use this
+  function would be to unset an explicit expand flag.
   @see-class{gtk-widget}
   @see-function{gtk-widget-hexpand}")
 
@@ -3578,27 +3566,27 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "valign" 'gtk-widget) 't)
  "The @code{valign} property of type @symbol{gtk-align} (Read / Write) @br{}
-  How to distribute vertical space if widget gets extra space. @br{}
+  How to distribute vertical space if the widget gets extra space. @br{}
   Default value: @code{:fill}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-valign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-valign 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-27}
   @syntax[]{(gtk-widget-valign object) => align}
   @syntax[]{(setf (gtk-widget-valign object) align)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[align]{a value of the @symbol{gtk-align} enumeration}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{valign} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{valign} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-valign} gets the value of the
-  @slot[gtk-widget]{valign} property.
-
-  The generic function @sym{(setf gtk-widget-valign)} sets the vertical
-  alignment of widget. See the @slot[gtk-widget]{valign} property.
+  The slot access function @sym{gtk-widget-valign} gets the vertical alignment
+  of the widget. The slot access function @sym{(setf gtk-widget-valign)} sets
+  the vertical alignment.
   @see-class{gtk-widget}
+  @see-symbol{gtk-align}
   @see-function{gtk-widget-halign}")
 
 ;;; --- gtk-widget-vexpand -----------------------------------------------------
@@ -3606,59 +3594,58 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand" 'gtk-widget) 't)
  "The @code{vexpand} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to expand vertically. See the function @fun{gtk-widget-vexpand}.
-  @br{}
-  Default value: @code{nil}")
+  Whether to expand vertically. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-vexpand atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-vexpand 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-9-28}
   @syntax[]{(gtk-widget-vexpand object) => expand}
   @syntax[]{(setf (gtk-widget-vexpand object) expand)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[expand]{a boolean wether to expand vertically}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{vexpand} of the
+    Accessor of the @slot[gtk-widget]{vexpand} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-vexpand} gets whether the widget would
-  like any available extra vertical space.
-
-  The generic function @sym{(setf gtk-widget-vexpand)} sets whether the widget
-  would like any available extra vertical space.
+  The slot access function function @sym{gtk-widget-vexpand} gets whether the
+  widget would like any available extra vertical space. The slot access
+  function @sym{(setf gtk-widget-vexpand)} sets whether the widget would like
+  any available extra vertical space.
 
   See the function @fun{gtk-widget-hexpand} for more detail.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-hexpand}")
+  @see-function{gtk-widget-expand}
+  @see-function{gtk-widget-hexpand}
+  @see-function{gtk-widget-vexpand-set}")
 
 ;;; --- gtk-widget-vexpand-set -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
- "The @code{vexpand-set} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether to use the @code{vexpand} property. See the function
-  @fun{gtk-widget-vexpand-set}.@br{}
-  Default value: @code{nil}")
+ "The @code{vexpand-set} property of type @code{:boolean} (Read / Write) @br{}
+  Whether to use the @code{vexpand} property. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-vexpand-set atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-vexpand-set 'function)
- "@version{2014-2-8}
+ "@version{2020-9-28}
+  @syntax[]{(gtk-widget-vexpand-set object) => setting}
+  @syntax[]{(setf (gtk-widget-vexpand-set object) setting)}
   @argument[object]{a @class{gtk-widget} object}
-  @syntax[]{(gtk-widget-vexpand-set object) => set}
-  @syntax[]{(setf (gtk-widget-vexpand-set object) set)}
+  @argument[setting]{a boolean wether to use the @code{vexpand} property}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{vexpand-set} of the
+    Accessor of the @slot[gtk-widget]{vexpand-set} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-vexpand-set} gets whether the generic
-  function @sym{(setf gtk-widget-vexpand)} has been used to explicitly set the
-  expand flag on this widget.
-
-  The generic function @sym{(setf gtk-widget-vexpand-set)} sets whether the
+  The slot access function function @sym{gtk-widget-vexpand-set} gets whether
+  the slot access function @sym{(setf gtk-widget-vexpand)} has been used to
+  explicitly set the expand flag on this widget. The slot access function
+  @sym{(setf gtk-widget-vexpand-set)} sets whether the
   @slot[gtk-widget]{vexpand} property will be used.
 
   See the function @fun{gtk-widget-hexpand-set} for more detail.

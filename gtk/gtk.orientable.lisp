@@ -42,7 +42,7 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GtkOrientation  orientation  Read / Write
+;;;     GtkOrientation    orientation    Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -66,15 +66,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-orientable 'type)
- "@version{2020-4-30}
+ "@version{2020-9-27}
   @short{An interface for flippable widgets.}
 
   The @sym{gtk-orientable} interface is implemented by all widgets that can be
   oriented horizontally or vertically. Historically, such widgets have been
-  realized as subclasses of a common base class, e. g. GtkBox, GtkHBox, GtkVBox.
-  @sym{gtk-orientable} is more flexible in that it allows the orientation to be
-  changed at runtime, allowing the widgets to \"flip\".
-  @see-slot{gtk-orientable-orientation}")
+  realized as subclasses of a common base class, e.g. GtkBox, GtkHBox, GtkVBox.
+  The @sym{gtk-orientable} interface is more flexible in that it allows the
+  orientation to be changed at runtime, allowing the widgets to \"flip\".
+  @see-slot{gtk-orientable-orientation}
+  @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -87,7 +88,7 @@
                                                'gtk-orientable) 't)
  "The @code{orientation} property of type @symbol{gtk-orientation}
   (Read / Write) @br{}
-  The orientation of the orientable. @br{}
+  The orientation of the orientable widget. @br{}
   Default value: @code{:horizontal}")
 
 #+cl-cffi-gtk-documentation
@@ -105,9 +106,9 @@
   @end{short}
 
   The slot access function @sym{gtk-orientable-orientation} returns the
-  orientation of the orientable. The slot access
+  orientation of the orientable widget. The slot access
   function @sym{(setf gtk-orientable-orientation)} sets the orientation of the
-  orientable.
+  orientable widget.
   @see-class{gtk-orientable}
   @see-symbol{gtk-orientation}")
 
