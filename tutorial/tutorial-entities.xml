@@ -1,8 +1,10 @@
 <!ENTITY cl-cffi-gtk                   "http://crategus.com/books/cl-cffi-gtk/pages/">
 <!ENTITY api                           "http://crategus.com/books/cl-cffi-gtk/pages/">
 
-<!ENTITY cl-cffi-gtk-build-info        "&api;gtk_fun_cl-cffi-gtk-build-info.html">
-<!ENTITY ref-cl-cffi-gtk-build-info    "<ulink url='&cl-cffi-gtk-build-info;'>cl-cffi-gtk-build-info</ulink>">
+<!ENTITY cl-cffi-gtk-build-info
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_cl-cffi-gtk-build-info.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>cl-cffi-gtk-build-info</code></ulink>">
 
 <!ENTITY within-main-loop                    "&api;gtk_fun_within-main-loop.html">
 <!ENTITY leave-gtk-main                      "&api;gtk_fun_leave-gtk-main.html">
@@ -106,19 +108,46 @@
 <!ENTITY gtk-aspect-frame-new                "&api;gtk_fun_gtk-aspect-frame-new.html">
 <!ENTITY gtk-aspect-frame-set                "&api;gtk_fun_gtk-aspect-frame-set.html">
 
-<!ENTITY gtk-attach-options                  "&api;gtk_sym_gtk-attach-options.html">
+<!ENTITY gtk-attach-options
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-attach-options.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-attach-options</code></ulink>">
 
 <!ENTITY gtk-bin                             "&api;gtk_class_gtk-bin.html">
 <!ENTITY gtk-bin-child                       "&api;gtk_fun_gtk-bin-child.html">
 
-<!ENTITY gtk-box                             "&api;gtk_class_gtk-box.html">
-<!ENTITY gtk_box_homogeneous                 "&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-homogeneous">
-<!ENTITY gtk_box_spacing                     "&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-spacing">
-<!ENTITY gtk-box-homogeneous                 "&api;gtk_fun_gtk-box-homogeneous.html">
-<!ENTITY gtk-box-spacing                     "&api;gtk_fun_gtk-box-spacing.html">
-<!ENTITY gtk-box-new                         "&api;gtk_fun_gtk-box-new.html">
-<!ENTITY gtk-box-pack-start                  "&api;gtk_fun_gtk-box-pack-start.html">
-<!ENTITY gtk-box-pack-end                    "&api;gtk_fun_gtk-box-pack-end.html">
+<!ENTITY gtk-box
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-box.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box</code></ulink>">
+<!ENTITY gtk_box_homogeneous
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-homogeneous'>
+          <code xmlns='http://docbook.org/ns/docbook'>homogeneous</code></ulink>">
+<!ENTITY gtk_box_spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-box.html#gtk_slot_gtk-box-spacing'>
+          <code xmlns='http://docbook.org/ns/docbook'>spacing</code></ulink>">
+<!ENTITY gtk-box-homogeneous
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-box-homogeneous.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box-homogeneous</code></ulink>">
+<!ENTITY gtk-box-spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-box-spacing.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box-spacing</code></ulink>">
+<!ENTITY gtk-box-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-box-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box-new</code></ulink>">
+<!ENTITY gtk-box-pack-start
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-box-pack-start.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box-pack-start</code></ulink>">
+<!ENTITY gtk-box-pack-end
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-box-pack-end.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-box-pack-end</code></ulink>">
 
 <!ENTITY gtk-buildable                       "&api;gtk_class_gtk-buildable.html">
 <!ENTITY gtk-builder                         "&api;gtk_class_gtk-builder.html">
@@ -176,7 +205,12 @@
 
 <!ENTITY gtk-container                       "&api;gtk_class_gtk-container.html">
 <!ENTITY gtk_container_border-width          "&api;gtk_class_gtk-container.html#gtk_slot_gtk-container-border-width">
-<!ENTITY gtk-container-add                   "&api;gtk_fun_gtk-container-add.html">
+
+<!ENTITY gtk-container-add
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-container-add.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-container-add</code></ulink>">
+
 <!ENTITY gtk-container-border-width          "&api;gtk_fun_gtk-container-border-width.html">
 
 <!ENTITY gtk-check-button                    "&api;gtk_class_gtk-check-button.html">
@@ -244,10 +278,23 @@
 <!ENTITY gtk-frame-set-label-align           "&api;gtk_fun_gtk-frame-set-label-align.html">
 <!ENTITY gtk-frame-shadow-type               "&api;gtk_fun_gtk-frame-shadow-type.html">
 
-<!ENTITY gtk-grid                            "&api;gtk_class_gtk-grid.html">
-<!ENTITY gtk_grid_column-homogeneous         "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-homogeneous">
+<!ENTITY gtk-grid
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-grid.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-grid</code></ulink>">
+
+<!ENTITY gtk_grid_column-homogeneous
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-homogeneous'>
+          <code xmlns='http://docbook.org/ns/docbook'>column-homogeneous</code></ulink>">
+
 <!ENTITY gtk_grid_column-spacing             "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-spacing">
-<!ENTITY gtk_grid_row-homogeneous            "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-homogeneous">
+
+<!ENTITY gtk_grid_row-homogeneous
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-homogeneous'>
+          <code xmlns='http://docbook.org/ns/docbook'>row-homogeneous</code></ulink>">
+
 <!ENTITY gtk_grid_row-spacing                "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-spacing">
 
 <!ENTITY gtk-icon-view                       "&api;gtk_class_gtk-icon-view.html">
@@ -267,7 +314,11 @@
 
 <!ENTITY gtk-justification                   "&api;gtk_sym_gtk-justification.html">
 
-<!ENTITY gtk-label                           "&api;gtk_class_gtk-label.html">
+<!ENTITY gtk-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-label</code></ulink>">
+
 <!ENTITY gtk_label_max-width-chars           "&api;gtk_class_gtk-label.html#gtk_slot_gtk-label-max-width-chars">
 <!ENTITY gtk_label_width-chars               "&api;gtk_class_gtk-label.html#gtk_slot_gtk-label-width-chars">
 <!ENTITY gtk-label-attributes                "&api;gtk_fun_gtk-label-attributes.html">
@@ -342,11 +393,23 @@
 <!ENTITY gtk-notebook-popup-enable           "&api;gtk_fun_gtk-notebook-popup-enable.html">
 <!ENTITY gtk-notebook-popup-disable          "&api;gtk_fun_gtk-notebook-popup-disable.html">
 
-<!ENTITY gtk-orientable                      "&api;gtk_class_gtk-orientable.html">
-<!ENTITY gtk_orientable_orientation          "&api;gtk_class_gtk-orientable.html#gtk_slot_gtk-orientable-orientation">
-<!ENTITY gtk-orientable-orientation          "&api;gtk_fun_gtk-orientable-orientation.html">
+<!ENTITY gtk-orientable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-orientable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-orientable</code></ulink>">
+<!ENTITY gtk_orientable_orientation
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-orientable.html#gtk_slot_gtk-orientable-orientation'>
+          <code xmlns='http://docbook.org/ns/docbook'>orientation</code></ulink>">
+<!ENTITY gtk-orientable-orientation
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-orientable-orientation.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-orientable-orientation</code></ulink>">
 
-<!ENTITY gtk-orientation                     "&api;gtk_sym_gtk-orientation.html">
+<!ENTITY gtk-orientation
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-orientation.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-orientation</code></ulink>">
 
 <!ENTITY gtk-policy-type                     "&api;gtk_sym_gtk-policy-type.html">
 
@@ -410,8 +473,15 @@
                                              "&api;gtk_fun_gtk-scrolled-window-add-with-viewport.html">
 <!ENTITY gtk-scrolled-window-policy          "&api;gtk_fun_gtk-scrolled-window-policy.html">
 
-<!ENTITY gtk-separator                       "&api;gtk_class_gtk-separator.html">
-<!ENTITY gtk-separator-new                   "&api;gtk_fun_gtk-separator-new.html">
+<!ENTITY gtk-separator
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-separator.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-separator</code></ulink>">
+<!ENTITY gtk-separator-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-separator-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-separator-new</code></ulink>">
+
 
 <!ENTITY gtk-separator-menu-item             "&api;gtk_class_gtk-separator-menu-item.html">
 <!ENTITY gtk-separator-menu-item-new         "&api;gtk_fun_gtk-separator-menu-item-new.html">
@@ -456,14 +526,38 @@
 <!ENTITY gtk-switch-state                    "&api;gtk_fun_gtk-switch-state.html">
 <!ENTITY gtk-switch-new                      "&api;gtk_fun_gtk-switch-new.html">
 
-<!ENTITY gtk-table                           "&api;gtk_class_gtk-table.html">
-<!ENTITY gtk-table-new                       "&api;gtk_fun_gtk-table-new.html">
-<!ENTITY gtk-table-attach                    "&api;gtk_fun_gtk-table-attach.html">
-<!ENTITY gtk-table-attach-defaults           "&api;gtk_fun_gtk-table-attach-defaults.html">
-<!ENTITY gtk-table-set-col-spacing           "&api;gtk_fun_gtk-table-set-col-spacing.html">
-<!ENTITY gtk-table-set-row-spacing           "&api;gtk_fun_gtk-table-set-row-spacing.html">
-<!ENTITY gtk-table-set-col-spacings          "&api;gtk_fun_gtk-table-set-col-spacings.html">
-<!ENTITY gtk-table-set-row-spacings          "&api;gtk_fun_gtk-table-set-row-spacings.html">
+<!ENTITY gtk-table
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-table.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table</code></ulink>">
+<!ENTITY gtk-table-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-new</code></ulink>">
+<!ENTITY gtk-table-attach
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-attach.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-attach</code></ulink>">
+<!ENTITY gtk-table-attach-defaults
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-attach-defaults.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-attach-defaults</code></ulink>">
+<!ENTITY gtk-table-set-col-spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-set-col-spacing.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-set-col-spacing</code></ulink>">
+<!ENTITY gtk-table-set-row-spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-set-row-spacing.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-set-row-spacing</code></ulink>">
+<!ENTITY gtk-table-set-col-spacings
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-set-col-spacings.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-set-col-spacings</code></ulink>">
+<!ENTITY gtk-table-set-row-spacings
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-table-set-row-spacings.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-table-set-row-spacings</code></ulink>">
 
 <!ENTITY gtk-text-buffer                     "&api;gtk_class_gtk-text-buffer.html">
 <!ENTITY gtk-text-buffer-apply-tag           "&api;gtk_fun_gtk-text-buffer-apply-tag.html">
@@ -615,8 +709,16 @@
 <!ENTITY gtk-viewport-shadow-type            "&api;gtk_fun_gtk-viewport-shadow-type.html">
 
 <!ENTITY gtk-widget                          "&api;gtk_class_gtk-widget.html">
-<!ENTITY gtk_widget_halign                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-halign">
-<!ENTITY gtk_widget_hexpand                  "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-hexpand">
+
+<!ENTITY gtk_widget_halign
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-halign'>
+          <code xmlns='http://docbook.org/ns/docbook'>halign</code></ulink>">
+<!ENTITY gtk_widget_hexpand
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-hexpand'>
+          <code xmlns='http://docbook.org/ns/docbook'>hexpand</code></ulink>">
+
 <!ENTITY gtk_widget_margin                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin">
 <!ENTITY gtk_widget_margin-bottom            "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-bottom">
 <!ENTITY gtk_widget_margin-end               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-end">
@@ -624,8 +726,16 @@
 <!ENTITY gtk_widget_margin-right             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-right">
 <!ENTITY gtk_widget_margin-start             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-start">
 <!ENTITY gtk_widget_margin-top               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-top">
-<!ENTITY gtk_widget_valign                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-valign">
-<!ENTITY gtk_widget_vexpand                  "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-vexpand">
+
+<!ENTITY gtk_widget_valign
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-valign'>
+          <code xmlns='http://docbook.org/ns/docbook'>valign</code></ulink>">
+<!ENTITY gtk_widget_vexpand
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-vexpand'>
+          <code xmlns='http://docbook.org/ns/docbook'>vexpand</code></ulink>">
+
 <!ENTITY gtk-widget-destroy                  "&api;gtk_fun_gtk-widget-destroy.html">
 <!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
 <!ENTITY gtk-widget-allocation               "&api;gtk_fun_gtk-widget-allocation.html">

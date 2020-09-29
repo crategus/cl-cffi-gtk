@@ -25,38 +25,38 @@
   <title>Introduction</title>
   <para>
    The <code>cl-cffi-gtk</code> library is a Lisp binding to GTK+ (GIMP Toolkit) which is a library for
-   creating graphical user interfaces.  GTK+ is licensed using the LGPL which has been adopted for the
+   creating graphical user interfaces. GTK+ is licensed using the LGPL which has been adopted for the
    <code>cl-cffi-gtk</code> library with a preamble that clarifies the terms for use with Lisp programs and
    is referred as the LLGPL.
   </para>
   <para>
    This work is based on the <code>cl-gtk2</code> library which has been developed by Kalyanov Dmitry and
-   already is a fairly complete Lisp binding to GTK+.  The focus of the <code>cl-cffi-gtk</code> library is
+   already is a fairly complete Lisp binding to GTK+. The focus of the <code>cl-cffi-gtk</code> library is
    to document the Lisp library much more complete and to do the implementation as consistent as possible.
    Most informations about GTK+ can be gained by reading the C documentation. Therefore, the C documentation
    from <ulink url="http://gtk.org">www.gtk.org</ulink> is included into the Lisp files as an API
-   documentation to document the Lisp binding to the GTK+ library.  This way the calling conventions are
-   easier to determine and missing functionality is easier to detect.  The API documentation is available
+   documentation to document the Lisp binding to the GTK+ library. This way the calling conventions are
+   easier to determine and missing functionality is easier to detect. The API documentation is available
    online at <ulink url="http://crategus.com/books/cl-cffi-gtk">www.crategus.com/books/cl-cffi-gtk</ulink>.
   </para>
   <para>
    The GTK+ library is called the GIMP toolkit because GTK+ was originally written for developing the GNU
    Image Manipulation Program (GIMP), but GTK+ has now been used in a large number of software projects,
-   including the GNU Network Object Model Environment (GNOME) project.  GTK+ is built on top of GDK (GIMP
+   including the GNU Network Object Model Environment (GNOME) project. GTK+ is built on top of GDK (GIMP
    Drawing Kit) which is basically a wrapper around the low-level functions for accessing the underlying
    windowing functions (Xlib in the case of the X windows system), and GdkPixbuf, a library for client-side
    image manipulation.
   </para>
   <para>
-   GTK+ is essentially an object oriented application programmers interface (API).  Although written
+   GTK+ is essentially an object oriented application programmers interface (API). Although written
    completely in C, GTK+ is implemented using the idea of classes and callback functions (pointers to
    functions).
   </para>
   <para>
    A third component is called GLib which contains replacements for standard calls, as well as additional
-   functions for handling linked lists, etc.  The replacement functions are used to increase the portability
+   functions for handling linked lists, etc. The replacement functions are used to increase the portability
    of GTK+, as some of the functions implemented here are not available or are non standard on other Unixes
-   such as <code>g_strerror()</code>.  Some also contain enhancements to the libc versions, such as
+   such as <code>g_strerror()</code>. Some also contain enhancements to the libc versions, such as
    <code>g_malloc()</code> that has enhanced debugging utilities.
   </para>
   <para>
@@ -71,8 +71,8 @@
    network programming and DBus communication.
   </para>
   <para>
-   This tutorial describes the Lisp interface to GTK+.  It includes a lot of material and code from different
-   sources.  See <link linkend="Licenses">Licences</link> for more information.
+   This tutorial describes the Lisp interface to GTK+. It includes a lot of material and code from different
+   sources. See <link linkend="Licenses">Licences</link> for more information.
   </para>
  </preface>
 
@@ -86,19 +86,19 @@
    </sectioninfo>
    <title>Installation</title>
    <para>
-    The first thing to do is to download the <code>cl-cffi-gtk</code> source and to install it.  The latest
+    The first thing to do is to download the <code>cl-cffi-gtk</code> source and to install it. The latest
     version is available from the repository at <ulink url="http://github.com/crategus/cl-cffi-gtk">
-    github.com/crategus/cl-cffi-gtk</ulink>.  The <code>cl-cffi-gtk</code> library is ASDF installable and
-    can be loaded with the command <code>(asdf:load-system :cl-cffi-gtk)</code> from the Lisp prompt.  The
-    library is developed with the Lisp SBCL 1.2.14 on a Linux system and GTK+ 3.16.  Furthermore, the
-    library runs successfully with Clozure Common Lisp and CLISP on Linux.  The library compiles and the
-    demos run with Windows 7.
+    github.com/crategus/cl-cffi-gtk</ulink>. The <code>cl-cffi-gtk</code> library is ASDF installable and
+    can be loaded with the command <code>(asdf:load-system :cl-cffi-gtk)</code> from the Lisp prompt. The
+    library is developed with the Lisp SBCL 2.0 on a Linux system and GTK+ 3.24. Furthermore, the
+    library runs successfully with Clozure Common Lisp and CLISP on Linux. The library compiles and the
+    demos run with Windows 10.
    </para>
    <para>
     The minimum version requirements are GTK+ 3.4 and GLIB 2.32.
    </para>
    <para>
-    GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and Cairo.  These libraries
+    GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and Cairo. These libraries
     can be loaded separately with the following commands:
    </para>
    <programlisting>
@@ -138,7 +138,7 @@
      <listitem>
       <para>
        provides a portable API to finalizers, weak hash-tables and weak pointers on all major CL
-       implementations.  See <ulink url="http://common-lisp.net/project/trivial-garbage/">
+       implementations. See <ulink url="http://common-lisp.net/project/trivial-garbage/">
        common-lisp.net/project/trivial-garbage</ulink>.
       </para>
      </listitem>
@@ -147,8 +147,8 @@
      <term>Iterate</term>
      <listitem>
       <para>
-       is a lispy and extensible replacement for the LOOP macro.  See
-       <ulink url="http://common-lisp.net/project/iterate/">common-lisp.net/project/iterate/</ulink>.
+       is a lispy and extensible replacement for the LOOP macro.
+       See <ulink url="http://common-lisp.net/project/iterate/">common-lisp.net/project/iterate/</ulink>.
       </para>
      </listitem>
     </varlistentry>
@@ -156,8 +156,8 @@
      <term>Bordeaux-Threads</term>
      <listitem>
       <para>
-       lets you write multi-threaded applications in a portable way.  See
-       <ulink url="http://common-lisp.net/project/bordeaux-threads/">
+       lets you write multi-threaded applications in a portable way.
+       See <ulink url="http://common-lisp.net/project/bordeaux-threads/">
        common-lisp.net/project/bordeaux-threads/</ulink>.
       </para>
      </listitem>
@@ -167,7 +167,7 @@
      <listitem>
       <para>
        Closer to MOP is a compatibility layer that rectifies many of the absent or incorrect MOP features as
-       detected by MOP Feature Tests.  See
+       detected by MOP Feature Tests. See
        <ulink url="http://common-lisp.net/project/closer/closer-mop.html">
        common-lisp.net/project/closer/closer-mop.html</ulink>.
       </para>
@@ -175,26 +175,25 @@
     </varlistentry>
    </variablelist>
    <para>
-    Information about the installation can be obtained with the function
-    <ulink url="&cl-cffi-gtk-build-info;"><code>cl-cffi-gtk-build-info</code></ulink>.  This is an example
-    for the output, when calling the function from the Lisp prompt after loading the library:
+    Information about the installation can be obtained with the function &cl-cffi-gtk-build-info;. This is an
+    example for the output, when calling the function from the Lisp prompt after loading the library:
    </para>
    <programlisting>
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 20:55 1/5/2016
-GTK+ version: 3.16.7
-GLIB version: 2.46.1
-GDK-Pixbuf version: 2.32.1
-Pango version: 1.36.8
-Cairo version: 1.14.2
+cl-cffi-gtk build date: 21:3 9/28/2020
+GTK+ version: 3.24.20
+GLIB version: 2.64.3
+GDK-Pixbuf version: 2.40.0
+Pango version: 1.44.7
+Cairo version: 1.16.0
 Machine type: X86-64
 Machine version: Intel(R) Core(TM) i5-4210U CPU @ 1.70GHz
 Software type: Linux
-Software version: 4.2.0-22-generic
+Software version: 5.4.0-48-generic
 Lisp implementation type: SBCL
-Lisp implementation version: 1.2.14.debian
+Lisp implementation version: 2.0.1.debian
    </programlisting>
   </section>
 
@@ -677,7 +676,7 @@ int main( int argc, char *argv[] )
     application is continued.  To close the window, the user has to press the button in this example.  There
     is a second constant <ulink url="&gdk-event-propagate;"><code>+gdk-event-propagate+</code></ulink> which
     is used to make sure that the propagation of the event is continued.  At last, the function
-    <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink> is used to put the button into
+    &gtk-container-add; is used to put the button into
     the toplevel window.  The section <link linkend="Packing_Widgets"> Packing Widgets</link> shows how it
     is possible to put more than one widget into a window.
    </para>
@@ -907,7 +906,7 @@ int main( int argc, char *argv[] )
     The Lisp implementation in example <link linkend="example-upgraded-hello-world">
     Upgraded Hello World</link> tries to be close to the C program.  Therefore, the window and the box are
     created with the functions <ulink url="&gtk-window-new;"><code>gtk-window-new</code></ulink> and
-    <ulink url="&gtk-box-new;"><code>gtk-box-new</code></ulink>.  Various properties like the title of the
+    &gtk-box-new;.  Various properties like the title of the
     window, the default size or the border width are set with the functions <ulink url="&gtk-window-title;">
     <code>gtk-window-title</code></ulink>, <ulink url="&gtk-window-default-size;">
     <code>gtk-window-default-size</code></ulink> and <ulink url="&gtk-container-border-width;">
@@ -916,12 +915,12 @@ int main( int argc, char *argv[] )
     <code>gtk-widget-show-all</code></ulink> is used to display the window including all child widgets.
    </para>
    <para>
-    One main difference of the Lisp implementation is the use of the function <ulink url="&gtk-box-new;">
-    <code>gtk-box-new</code></ulink> with an argument <code>:horizontal</code> to create a horizontal box.
+    One main difference of the Lisp implementation is the use of the function &gtk-box-new;
+    with an argument <code>:horizontal</code> to create a horizontal box.
     The <code>GtkHBox</code> widget which is used in the
     <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html">
     GTK+ 3 Reference Manual</ulink> is deprecated and is replaced by <code>GtkBox</code> with the property
-    <ulink url="&gtk_orientable_orientation;"><code>orientation</code></ulink>.  More about boxes and their
+    &gtk_orientable_orientation;.  More about boxes and their
     usages follows in <link linkend="Packing_Widgets">Packing Widgets</link>.
    </para>
    <example id="example-upgraded-hello-world">
@@ -960,11 +959,11 @@ int main( int argc, char *argv[] )
     Upgraded Hello World</link> makes more use of a Lisp style.  The window is created with the Lisp
     function <code>make-instance</code>.  All desired properties of the window are initialized by assigning
     values to the slots of the classes <ulink url="&gtk-window;"><code>gtk-window</code></ulink> and
-    <ulink url="&gtk-box;"><code>gtk-box</code></ulink>.  The Lisp implementation uses a lot keywords
+    &gtk-box;.  The Lisp implementation uses a lot keywords
     arguments with default values for long lists of arguments.  In example
     <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> the keyword arguments
-    <code>expand</code>, <code>fill</code>, and <code>padding</code> of the function
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> take their default values.
+    <code>expand</code>, <code>fill</code>, and <code>padding</code> of the function "&gtk-box-pack-start;
+    take their default values.
     In future examples of this tutorial the style shown in example
     <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> is preferred.  Furthermore,
     the C code is no longer presented for comparison.
@@ -1138,44 +1137,28 @@ int main( int argc, char *argv[] )
  <chapter id="Packing_Widgets">
   <title>Packing Widgets</title>
   <section id="Packing_Boxes">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Packing_Boxes"><primary>box, gtk-box</primary></indexterm>
-     <indexterm zone="Packing_Boxes"><primary>box-new, gtk-box-new</primary></indexterm>
-     <indexterm zone="Packing_Boxes"><primary>box-pack-start, gtk-box-pack-start</primary></indexterm>
-     <indexterm zone="Packing_Boxes"><primary>box-pack-end, gtk-box-pack-end</primary></indexterm>
-     <indexterm zone="Packing_Boxes"><primary>orientation, gtk-orientation</primary></indexterm>
-     <indexterm zone="Packing_Boxes"><primary>orientable, gtk-orientable</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Packing Boxes</title>
    <para>
-    When creating an application, it is necessary to put more than one widget inside a window.  The first
-    Hello world example only used one button so it could simply use the function
-    <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink> to "pack" the button into the
-    window.  But when more than one widget must be put into a window packing comes in.
+    When creating an application, it is necessary to put more than one widget inside a window. The first
+    Hello world example only used one button so it could simply use the function &gtk-container-add; to
+    "pack" the button into the window. But when more than one widget must be put into a window packing comes
+    in.
    </para>
    <para>
-    Packing is done by creating boxes or grids.  Grids are more general and powerful than boxes.  Grids are
-    explained later in this tutorial.  Boxes are invisible widget containers that can pack widgets into,
-    which come in two forms, a horizontal box, and a vertical box.  When packing widgets into a horizontal
+    Packing is done by creating boxes or grids. Grids are more general and powerful than boxes. Grids are
+    explained later in this tutorial. Boxes are invisible widget containers that can pack widgets into,
+    which come in two forms, a horizontal box, and a vertical box. When packing widgets into a horizontal
     box, the objects are inserted horizontally from left to right or right to left depending on the call
-    used.  In a vertical box, widgets are packed from top to bottom or vice versa.  You may use any
+    used. In a vertical box, widgets are packed from top to bottom or vice versa. You may use any
     combination of boxes inside or beside other boxes to create the desired effect.
    </para>
    <para>
-    To create a new box of the type <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, the function
-    <ulink url="&gtk-box-new;"><code>gtk-box-new</code></ulink> or the call
-    <code>(make-instance 'gtk-box)</code> is used.  The first argument of the function
-    <ulink url="&gtk-box-new;"><code>gtk-box-new</code></ulink> takes a keyword of the enumeration type
-    <code>GtkOrientation</code>, which, in the Lisp binding, is implemented as
-    <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink> with the values
-    <code>:horizontal</code> or <code>:vertical</code> to determine a horizontal or a vertical box.  Because
-    <ulink url="&gtk-box;"><code>gtk-box</code></ulink> implements the interface
-    <ulink url="&gtk-orientable;"><code>gtk-orientable</code></ulink> an instance of
-    <ulink url="&gtk-box;"><code>gtk-box</code></ulink> has the property
-    <ulink url="&gtk_orientable_orientation;"><code>orientation</code></ulink> of type
-    <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink>.
+    To create a new box of the type &gtk-box;, the function &gtk-box-new; or the call
+    <code>(make-instance 'gtk-box)</code> is used. The first argument of the function &gtk-box-new; takes a
+    keyword of the enumeration type <code>GtkOrientation</code>, which, in the Lisp binding, is implemented
+    as the &gtk-orientation; enumeration with the values <code>:horizontal</code> or <code>:vertical</code>
+    to determine a horizontal or a vertical box. Because &gtk-box; implements the interface &gtk-orientable;
+    an instance of &gtk-box; has the property &gtk_orientable_orientation; of type &gtk-orientation;.
    </para>
    <table id="table-gtk-box" frame='all'>
     <title>Functions for GtkBox</title>
@@ -1211,11 +1194,10 @@ int main( int argc, char *argv[] )
     </tgroup>
    </table>
    <para>
-    The following examples show two equivalent ways to create an instance of a horizontal box.  The first
-    argument of the function <ulink url="&gtk-box-new;"><code>gtk-box-new</code></ulink> takes the value of
-    the property <ulink url="&gtk_orientable_orientation;"><code>orientation</code></ulink>.  The second
-    argument is the value of the property <ulink url="&gtk_box_spacing;"><code>spacing</code></ulink>, which
-    is described in section <link linkend="Details_of_Boxes">Details of Boxes</link>
+    The following examples show two equivalent ways to create an instance of a horizontal box. The first
+    argument of the function &gtk-box-new; takes the value of the property &gtk_orientable_orientation;. The
+    second argument is the value of the property &gtk_box_spacing;, which is described in section
+    <link linkend="Details_of_Boxes">Details of Boxes</link>
    </para>
    <programlisting>
 (let ((box (gtk-box-new :horizontal 3)))
@@ -1229,18 +1211,15 @@ int main( int argc, char *argv[] )
   ... )
    </programlisting>
    <para>
-    The functions <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> and
-    <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink> are used to place widgets inside
-    of boxes.  The function <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink>
-    function starts at the top and works its way down in a vertical box, and packs left to right in a
-    horizontal box.  The function <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink> does
-    the opposite, packing from bottom to top in a vertical box, and right to left in a horizontal box.  The
-    widgets, which are packed into a box, can be containers, which are composed of other widgets.  Using the
-    functions for packing widgets in boxes allows to right justify or left justify the widgets.  The
-    functions can be mixed in any way to achieve the desired effect.  Most of the examples in this tutorial
-    use the function <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink>.  In the
-    following example a vertical box is created.  Then two label widgets are packed into the box with the
-    function <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink>.
+    The functions &gtk-box-pack-start; and &gtk-box-pack-end; are used to place widgets inside of boxes. The
+    function &gtk-box-pack-start; starts at the top and works its way down in a vertical box, and packs left
+    to right in a horizontal box. The function &gtk-box-pack-end; does the opposite, packing from bottom to
+    top in a vertical box, and right to left in a horizontal box. The widgets, which are packed into a box,
+    can be containers, which are composed of other widgets. Using the functions for packing widgets in boxes
+    allows to right justify or left justify the widgets. The functions can be mixed in any way to achieve the
+    desired effect. Most of the examples in this tutorial use the function &gtk-box-pack-start;>. In the
+    following example a vertical box is created. Then two label widgets are packed into the box with the
+    function &gtk-box-pack-start;.
    </para>
    <programlisting>
 (let ((box (gtk-box-new :vertical 3)))
@@ -1250,49 +1229,32 @@ int main( int argc, char *argv[] )
    </programlisting>
    <para>
     By using boxes, GTK+ knows where to place the widgets so GTK+ can do automatic resizing and other nifty
-    things.  A number of options control as to how the widgets should be packed into boxes.  This method of
+    things. A number of options control as to how the widgets should be packed into boxes. This method of
     packing boxes gives the user quite a bit of flexibility when placing widgets.
    </para>
    <note>
     <para>
      The classes GtkHBox for horizontal and GtkVBox for vertical boxes are deprecated, but still present in
-     GTK+ 3.  In this tutorial these classes are not used.  In addition a single-row or single-column
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> provides exactly the same functionality as
-     <ulink url="&gtk-box;"><code>gtk-box</code></ulink>. See section <link linkend="Packing_Using_Grids">
-     Packing Using Grids</link> for examples to replace <ulink url="&gtk-box;"><code>gtk-box</code></ulink>
-     with <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink>.
+     GTK+ 3. In this tutorial these classes are not used. In addition a single-row or single-column &gtk-grid;
+     provides exactly the same functionality as &gtk-box;. See section <link linkend="Packing_Using_Grids">
+     Packing Using Grids</link> for examples to replace &gtk-box; with &gtk-grid;.
     </para>
    </note>
   </section>
 
   <section id="Details_of_Boxes">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Details_of_Boxes"><primary>homogeneous</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>spacing</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>expand</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>fill</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>padding</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>separator, gtk-separator</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>separator-new, gtk-separator-new</primary></indexterm>
-     <indexterm zone="Details_of_Boxes"><primary>orientation, gtk-orientation</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Details of Boxes</title>
    <para>
-    Because of the flexibility, packing boxes in GTK+ can be confusing at first.  A lot of options control
-    the packing of boxes, and it is not immediately obvious how the options all fit together.  In the end,
+    Because of the flexibility, packing boxes in GTK+ can be confusing at first. A lot of options control
+    the packing of boxes, and it is not immediately obvious how the options all fit together. In the end,
     however, basically five different styles are available.
    </para>
    <para>
-    Boxes have the properties <ulink url="&gtk_box_homogeneous;"><code>homogeneous</code></ulink> and
-    <ulink url="&gtk_box_spacing;"><code>spacing</code></ulink>.  The functions
-    <ulink url="&gtk-box-homogeneous;"><code>gtk-box-homogeneous</code></ulink> and
-    <ulink url="&gtk-box-spacing;"><code>gtk-box-spacing</code></ulink> are used to write and read the
-    properties.  The property <ulink url="&gtk_box_homogeneous;"><code>homogeneous</code></ulink> controls
-    whether each widget in the box has the same width in a horizontal box or the same height in a vertical
-    box.  The property <ulink url="&gtk_box_spacing;"><code>spacing</code></ulink> controls the amount of
-    space between children in the box.  A complete example for creating a box is therefore
+    Boxes have the properties &gtk_box_homogeneous; and &gtk_box_spacing;. The functions &gtk-box-homogeneous;
+    and &gtk-box-spacing; are used to write and read the properties. The property &gtk_box_homogeneous;
+    controls whether each widget in the box has the same width in a horizontal box or the same height in a
+    vertical box. The property &gtk_box_spacing; controls the amount of space between children in the box. A
+    complete example for creating a box is therefore
    </para>
    <programlisting>
 (let ((box (make-instance 'gtk-box
@@ -1311,33 +1273,29 @@ int main( int argc, char *argv[] )
    </figure>
    <para>
     Figure <link linkend="figure-box-packing">Box Packing</link> shows an example of packing buttons into
-    horizontal boxes.  The buttons have a small spacing of 3.  Each line of the example contains one
-    horizontal box with several buttons.  The first button represents the call of the function
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> and the following buttons
-    represent the arguments of the function.  The first two arguments are <code>box</code> for the box and
-    <code>child</code> for the child widgets to put into the box, which are in our example buttons.  The
-    further arguments of <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> are in the
-    C implementation <code>expand</code>, <code>fill</code> and <code>padding</code>.  In the Lisp binding to
+    horizontal boxes. The buttons have a small spacing of 3. Each line of the example contains one
+    horizontal box with several buttons. The first button represents the call of the function
+    &gtk-box-pack-start; and the following buttons represent the arguments of the function. The first two
+    arguments are <code>box</code> for the box and <code>child</code> for the child widgets to put into the
+    box, which are in our example buttons. The further arguments of &gtk-box-pack-start; are in the C
+    implementation <code>expand</code>, <code>fill</code> and <code>padding</code>. In the Lisp binding to
     GTK+ these arguments are defined as the keyword arguments <code>:expand</code> and <code>:fill</code>,
     which both have a default value of <emphasis>true</emphasis>, and <code>:padding</code> with a default
-    value of <code>0</code>.  The keyword arguments can be omitted, in which case the default values will
+    value of <code>0</code>. The keyword arguments can be omitted, in which case the default values will
     be used.
    </para>
    <para>
     The keyword argument <code>:expand</code> with a value <emphasis>true</emphasis> to the functions
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> and
-    <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink> controls whether the widgets are
-    laid out in the box to fill in all the extra space in the box so the box is expanded to fill the area
-    allotted to it; or with a value <code>nil</code> the box is shrunk to just fit the widgets.  Setting
-    expand to <code>nil</code> allows to do right and left justification of the widgets.  Otherwise, the
-    widgets expand to fit into the box.  The same effect can be achieved by using only one of the functions
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> or
-    <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink>.
+    &gtk-box-pack-start; and &gtk-box-pack-end; controls whether the widgets are laid out in the box to fill
+    in all the extra space in the box so the box is expanded to fill the area allotted to it; or with a value
+    <code>nil</code> the box is shrunk to just fit the widgets. Setting expand to <code>nil</code> allows to
+    do right and left justification of the widgets. Otherwise, the widgets expand to fit into the box. The
+    same effect can be achieved by using only one of the functions &gtk-box-pack-start; or &gtk-box-pack-end;.
    </para>
    <para>
     The keyword argument <code>:fill</code> with a value <emphasis>true</emphasis> to the
     <code>gtk-box-pack</code> functions control whether the extra space is allocated to the objects
-    themselves, or with a value <code>nil</code> as extra padding in the box around these objects.  It only
+    themselves, or with a value <code>nil</code> as extra padding in the box around these objects. It only
     has an effect if the keyword argument <code>expand</code> is also <emphasis>true</emphasis>.
    </para>
    <para>
@@ -1346,19 +1304,17 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     The code for figure <link linkend="figure-box-packing">Box Packing</link> is shown in example
-    <link linkend="example-box-packing">Box Packing</link>.  The function <code>example-box-packing</code>
+    <link linkend="example-box-packing">Box Packing</link>. The function <code>example-box-packing</code>
     takes an optional argument <code>spacing</code>, which has the default value <code>0</code> and controls
     the spacing of the buttons in the boxes.
    </para>
    <para>
-    The example uses two widgets which are not introduced up to now.  The first one is the
-    <ulink url="&gtk-label;"><code>gtk-label</code></ulink> widget, which is described in
-    <link linkend="Labels">Labels</link> and is used to display text.  The second one is the
-    <ulink url="&gtk-separator;"><code>gtk-separator</code></ulink> widget, which draws a horizontal or
-    vertical line.  The orientation of the line depends on the only argument to the function
-    <ulink url="&gtk-separator-new;"><code>gtk-separator-new</code></ulink>, which is of the enumeration
-    type <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink> with the values
-    <code>:horizontal</code> for a horizontal line and <code>:vertical</code> for a vertical line.
+    The example uses two widgets which are not introduced up to now. The first one is the &gtk-label; widget,
+    which is described in <link linkend="Labels">Labels</link> and is used to display text. The second one is
+    the &gtk-separator; widget, which draws a horizontal or vertical line. The orientation of the line depends
+    on the only argument to the function &gtk-separator-new;, which is of the enumeration type
+    &gtk-orientation; with the values <code>:horizontal</code> for a horizontal line and
+    <code>:vertical</code> for a vertical line.
    </para>
    <example id="example-box-packing">
     <title>Packing Boxes</title>
@@ -1477,37 +1433,23 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Packing_Using_Tables">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Packing_Using_Tables"><primary>GtkTable</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>table, gtk-table</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>table-new, gtk-table-new</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>table-attach, gtk-table-attach</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>attach-options, gtk-attach-options</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>table-attach-defaults, gtk-table-attach-defaults</primary></indexterm>
-    </itermset>
-     <indexterm zone="Packing_Using_Tables"><primary>table-set-row-spacing, gtk-table-set-row-spacing</primary></indexterm>
-     <indexterm zone="Packing_Using_Tables"><primary>table-set-col-spacing, gtk-table-set-col-spacing</primary></indexterm>
-   </sectioninfo>
    <title>Packing Using Tables</title>
    <para>
-    Tables are another way of packing widgets and can be extremely useful in certain situations.  Using
-    tables a grid is created that widgets can placed in.  The widgets may take up as many spaces as
-    specified.  Tables can be created with the function <ulink url="&gtk-table-new;">
-    <code>gtk-table-new</code></ulink>.  The function takes three arguments which set the properties of a
-    table.  Alternatively, the table is created with the function <code>make-instance</code>.
+    Tables are another way of packing widgets and can be extremely useful in certain situations. Using tables
+    a grid is created that widgets can placed in. The widgets may take up as many spaces as specified. Tables
+    can be created with the function &gtk-table-new;. The function takes three arguments which set the
+    properties of a table. Alternatively, the table is created with the function <code>make-instance</code>.
    </para>
    <para>
-    The first argument of <ulink url="&gtk-table-new;"><code>gtk-table-new</code></ulink> is the number of
-    rows to make in the table, while the second is the number of columns.  The last argument
-    <code>homogeneous</code> has to do with how the boxes of the table are sized.  If
-    <code>homogeneous</code> is <code>T</code>, the table boxes are resized to the size of the largest widget
-    in the table.  If <code>homogeneous</code> is <code>NIL</code>, the size of a table boxes is dictated by
-    the tallest widget in its same row, and the widest widget in its column.  The rows and columns are laid
-    out from <code>0</code> to <code>n</code>, where <code>n</code> is the number specified in the call to
-    the function <ulink url="&gtk-table-new;"><code>gtk-table-new</code></ulink>.  For <code>rows = 2</code>
-    and <code>columns = 2</code>, the layout is shown in figure <link linkend="figure-table-layout">
-    Layout of a 2 x 2 Table</link>.  Note that the coordinate system starts in the upper left hand corner.
+    The first argument of &gtk-table-new; is the number of rows to make in the table, while the second is the
+    number of columns. The last argument <code>homogeneous</code> has to do with how the boxes of the table
+    are sized. If <code>homogeneous</code> is <code>T</code>, the table boxes are resized to the size of the
+    largest widget in the table. If <code>homogeneous</code> is <code>NIL</code>, the size of a table boxes is
+    dictated by the tallest widget in its same row, and the widest widget in its column. The rows and columns
+    are laid out from <code>0</code> to <code>n</code>, where <code>n</code> is the number specified in the
+    call to the function &gtk-table-new;. For <code>rows = 2</code> and <code>columns = 2</code>, the layout
+    is shown in figure <link linkend="figure-table-layout"> Layout of a 2 x 2 Table</link>. Note that the
+    coordinate system starts in the upper left hand corner.
    </para>
    <figure id="figure-table-layout">
     <title>Layout of a 2 x 2 Table</title>
@@ -1521,15 +1463,14 @@ int main( int argc, char *argv[] )
     </programlisting>
    </figure>
    <para>
-    To place a widget into a table, the function <ulink url="&gtk-table-attach;">
-    <code>gtk-table-attach</code></ulink> can be used.  The arguments are listed in the table
-    <link linkend="table-gtk-table-attach">Table Attach</link>.  The first argument <code>table</code> is the
-    table you have created and the second <code>child</code> the widget you wish to place into the table.
-    The left and right attach arguments specify where to place the widget, and how many boxes to use.  If you
-    want a button in the lower right table entry of a 2 x 2 table, and want it to fill that entry only,
-    <code>left-attach</code> is <code>= 1</code>, <code>right-attach = 2</code>, <code>top-attach = 1</code>, 
-    <code>bottom-attach = 2</code>.  Now, if you wanted a widget to take up the whole top row of a 2 x 2
-    table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
+    To place a widget into a table, the function &gtk-table-attach; can be used. The arguments are listed in
+    the table <link linkend="table-gtk-table-attach">Table Attach</link>. The first argument
+    <code>table</code> is the table you have created and the second <code>child</code> the widget you wish to
+    place into the table. The left and right attach arguments specify where to place the widget, and how many
+    boxes to use. If you want a button in the lower right table entry of a 2 x 2 table, and want it to fill
+    that entry only, <code>left-attach</code> is <code>= 1</code>, <code>right-attach = 2</code>,
+    <code>top-attach = 1</code>, <code>bottom-attach = 2</code>. Now, if you wanted a widget to take up the
+    whole top row of a 2 x 2 table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
     <code>top-attach = 0</code>, <code>bottom-attach = 1</code>.
    </para>
    <table id="table-gtk-table-attach" frame='all'>
@@ -1576,15 +1517,15 @@ int main( int argc, char *argv[] )
       <row>
        <entry valign="top"><code>:yoptions</code></entry>
        <entry valign="top">
-        The same as <code>xoptions</code>, except this field determines behavior of vertical
-        resizing.  The default value is <code>'(:expand :fill)</code>.
+        The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
+        The default value is <code>'(:expand :fill)</code>.
        </entry>
       </row>
       <row>
        <entry valign="top"><code>:xpadding</code></entry>
        <entry valign="top">
-        An integer value specifying the padding on the left and right of the widget being added to
-        the table.  The default value is <code>0</code>.
+        An integer value specifying the padding on the left and right of the widget being added to the table.
+        The default value is <code>0</code>.
        </entry>
       </row>
      </tbody>
@@ -1592,10 +1533,9 @@ int main( int argc, char *argv[] )
    </table>
    <para>
     The arguments <code>:xoptions</code> and <code>:yoptions</code> are of the enumeration type
-    <ulink url="&gtk-attach-options;"><code>gtk-attach-options</code></ulink> and used to specify packing
-    options.  The packing options can be OR'ed together to allow multiple options.  In the Lisp binding a
-    list of options is used to combine multiple options.  Possible values of the enumeration type
-    <ulink url="&gtk-attach-options;"><code>gtk-attach-options</code></ulink> are listed in the table
+    &gtk-attach-options; and used to specify packing options. The packing options can be OR'ed together to
+    allow multiple options. In the Lisp binding a list of options is used to combine multiple options.
+    Possible values of the enumeration type &gtk-attach-options; are listed in the table
     <link linkend="table-gtk-attach-options">GtkAttachOptions</link>.
    </para>
    <para>
@@ -1638,38 +1578,30 @@ int main( int argc, char *argv[] )
    </table>
    <para>
     In the Lisp binding the arguments <code>:xoptions</code>, <code>:yoptions</code>, <code>:xpadding</code>,
-    and <code>:ypadding</code> of the function <ulink url="&gtk-table-attach;">
-    <code>gtk-table-attach</code></ulink> are defined as keyword arguments with default values as shown in
-    table <link linkend="table-gtk-table-attach">GtkTableAttach</link>.  In the C library this is realized
-    with a second function <code>gtk_table_attach_defaults()</code>.  In the Lisp binding the function
-    <ulink url="&gtk-table-attach-defaults;"><code>gtk-table-attach-defaults</code></ulink> is a second
-    equivalent implementation of <ulink url="&gtk-table-attach;"><code>gtk-table-attach</code></ulink>, when
-    using the default values of the keyword arguments.
+    and <code>:ypadding</code> of the function &gtk-table-attach; are defined as keyword arguments with
+    default values as shown in table <link linkend="table-gtk-table-attach">GtkTableAttach</link>. In the C
+    library this is realized with a second function <code>gtk_table_attach_defaults()</code>. In the Lisp
+    binding the function &gtk-table-attach-defaults; is a second equivalent implementation of
+    &gtk-table-attach;, when using the default values of the keyword arguments.
    </para>
    <para>
-    The functions <ulink url="&gtk-table-set-row-spacing;"><code>gtk-table-set-row-spacing</code></ulink>
-    and <ulink url="&gtk-table-set-col-spacing;"><code>gtk-table-set-col-spacing</code></ulink> places
-    spacing between the rows at the specified row or column.  The first argument of the functions is a
-    <ulink url="&gtk-table;"><code>gtk-table</code></ulink>, the second argument a row or a column and the
-    third argument the spacing.  Note that for columns, the space goes to the right of the column, and for
-    rows, the space goes below the row.
+    The functions &gtk-table-set-row-spacing; and &gtk-table-set-col-spacing; places spacing between the rows
+    at the specified row or column. The first argument of the functions is a &gtk-table;, the second argument
+    a row or a column and the third argument the spacing. Note that for columns, the space goes to the right
+    of the column, and for rows, the space goes below the row.
    </para>
    <para>
-    You can also set a consistent spacing of all rows and columns with the functions 
-    <ulink url="&gtk-table-set-row-spacings;"><code>gtk-table-set-row-spacings</code></ulink> and
-    <ulink url="&gtk-table-set-col-spacings;"><code>gtk-table-set-col-spacings</code></ulink>.  Both
-    functions take a <ulink url="&gtk-table;"><code>gtk-table</code></ulink> as the first argument and the
-    desired spacing <code>spacing</code> as the second argument.  Note that with these calls, the last row
-    and last column do not get any spacing.
+    You can also set a consistent spacing of all rows and columns with the functions
+    &gtk-table-set-row-spacings; and &gtk-table-set-col-spacings;. Both functions take a &gtk-table; as the
+    first argument and the desired spacing <code>spacing</code> as the second argument. Note that with these
+    calls, the last row and last column do not get any spacing.
    </para>
    <note>
     <para>
-     <ulink url="&gtk-table;"><code>gtk-table</code></ulink> has been deprecated since GTK+ 3.4.  It is
-     recommended to use <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> instead.
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> provides the same capabilities as
-     <ulink url="&gtk-table;"><code>gtk-table</code></ulink> for arranging widgets in a rectangular grid,
-     but does support height-for-width geometry management, which is newly introduced for widgets in GTK+ 3.
-     This chapter will vanish in the near future.
+     &gtk-table; has been deprecated since GTK+ 3.4. It is recommended to use &gtk-grid; instead. &gtk-grid;
+     provides the same capabilities as &gtk-table; for arranging widgets in a rectangular grid, but does
+     support height-for-width geometry management, which is newly introduced for widgets in GTK+ 3. This
+     chapter will vanish in the near future.
     </para>
    </note>
   </section>
@@ -1678,8 +1610,8 @@ int main( int argc, char *argv[] )
    <title>Table Packing Example</title>
    <para>
     The figure <link linkend="figure-table-packing">Table Packing</link> is a window with three buttons in a
-    2 x 2 table.  The first two buttons are placed in the upper row.  A third, quit button, is placed in the
-    lower row, spanning both columns.  The code of this example is shown in the example
+    2 x 2 table. The first two buttons are placed in the upper row. A third, quit button, is placed in the
+    lower row, spanning both columns. The code of this example is shown in the example
     <link linkend="example-table-packing">Table Packing</link>.
    </para>
    <figure id="figure-table-packing">
@@ -1727,9 +1659,9 @@ int main( int argc, char *argv[] )
    </example>
    <para>
     Figure <link linkend="figure-table-packing-2">Table Packing</link> is an extended example to show the
-    possibility to increase the spacing of the rows and columns.  This is implemented through two toggle
-    buttons which increase and decrease the spacings.  Toggle buttons are described in
-    <link linkend="Toggle_Buttons">Toggle Buttons</link> later in this tutorial.  The code of
+    possibility to increase the spacing of the rows and columns. This is implemented through two toggle
+    buttons which increase and decrease the spacings. Toggle buttons are described in
+    <link linkend="Toggle_Buttons">Toggle Buttons</link> later in this tutorial. The code of
     <link linkend="figure-table-packing-2">Table Packing</link> is shown in example
     <link linkend="example-table-packing-2">Table Packing</link>.
    </para>
@@ -1797,31 +1729,22 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Packing_Using_Grids">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Packing_Using_Grids"><primary>GtkGrid</primary></indexterm>
-     <indexterm zone="Packing_Using_Grids"><primary>grid, gtk-grid</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Packing Using Grids</title>
    <para>
-    <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> is an attempt to write a comprehensive,
-    legacy-free, box-layout container that is flexible enough to replace <ulink url="&gtk-box;">
-    <code>gtk-box</code></ulink>, <ulink url="&gtk-table;"><code>gtk-table</code></ulink> and the like.
+    &gtk-grid; is an attempt to write a comprehensive, legacy-free, box-layout container that is flexible
+    enough to replace &gtk-box;, &gtk-table; and the like.
    </para>
    <para>
-    The layout model of <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> is to arrange its children in
-    rows and columns.  This is done by assigning positions on a two-dimensions grid that stretches
-    arbitrarily far in all directions.  Children can span multiple rows or columns.
+    The layout model of &gtk-grid; is to arrange its children in rows and columns. This is done by assigning
+    positions on a two-dimensions grid that stretches arbitrarily far in all directions. Children can span
+    multiple rows or columns.
    </para>
 
    <section id="GtkBox_versus_GtkGrid_packing">
     <title>GtkBox versus GtkGrid - packing</title>
     <para>
-     <ulink url="&gtk-box;"><code>gtk-box</code></ulink> works by arranging child widgets in a single line,
-     either horizontally or vertically.  It allows packing children from the beginning or end, using
-     <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> and
-     <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink>.
+     &gtk-box; works by arranging child widgets in a single line, either horizontally or vertically. It allows
+     packing children from the beginning or end, using &gtk-box-pack-start; and &gtk-box-pack-end;.
     </para>
     <para>
      The following code creates a simple box with two labels:
@@ -1833,7 +1756,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> as follows:
+     This can be done with &gtk-grid; as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -1844,69 +1767,57 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     And similarly for <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink>.
-     In that case, you would use <code>:left</code> to place the grid children from left to right.
+     And similarly for &gtk-box-pack-end;. In that case, you would use <code>:left</code> to place the grid
+     children from left to right.
     </para>
     <para>
-     If you only need to pack children from the start, using <ulink url="&gtk-container-add;">
-     <code>gtk-container-add</code></ulink> is an even simpler alternative.  <ulink url="&gtk-grid;">
-     <code>gtk-grid</code></ulink> places children added with <ulink url="&gtk-container-add;">
-     <code>gtk-container-add</code></ulink> in a single row or column according to its "orientation".
+     If you only need to pack children from the start, using the function &gtk-container-add; is an even
+     simpler alternative. &gtk-grid; places children added with &gtk-container-add; in a single row or column
+     according to its "orientation".
     </para>
     <para>
-     One difference to keep in mind is that the <ulink url="&gtk-box-pack-start;">
-     <code>gtk-box-pack-start</code></ulink> and <ulink url="&gtk-box-pack-end;">
-     <code>gtk-box-pack-end</code></ulink> functions allow you to place an arbitrary number of children from
-     either end without ever 'colliding in the middle'.  With <ulink url="&gtk-grid;">
-     <code>gtk-grid</code></ulink>, you have to leave enough space between the two ends, if you want to
-     combine packing from both ends towards the middle.  In practice, this should be easy to avoid; and
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> simply ignores entirely empty rows or columns
-     for layout and spacing.
+     One difference to keep in mind is that the &gtk-box-pack-start; and &gtk-box-pack-end; functions allow
+     you to place an arbitrary number of children from either end without ever 'colliding in the middle'. With
+     &gtk-grid;, you have to leave enough space between the two ends, if you want to combine packing from both
+     ends towards the middle. In practice, this should be easy to avoid; and &gtk-grid; simply ignores
+     entirely empty rows or columns for layout and spacing.
     </para>
     <para>
-     On the other hand, <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> is more flexible in that its
-     grid extends indefinitively in both directions - there is no problem with using negative numbers for the
-     grid positions.  So, if you discover that you need to place a widget before your existing arrangement,
-     you always can.
+     On the other hand, &gtk-grid; is more flexible in that its grid extends indefinitively in both directions
+     - there is no problem with using negative numbers for the grid positions. So, if you discover that you
+     need to place a widget before your existing arrangement, you always can.
     </para>
    </section>
 
    <section id="GtkBox_versus_GtkGrid_sizing">
-    <title>GtkBox versus GtkGrid - sizing</title>   
+    <title>GtkBox versus GtkGrid - sizing</title>
     <para>
-     When adding a child to a <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, there are two
-     hard-to-remember parameters (child properties, more exactly) named <code>expand</code> and
-     <code>fill</code> that determine how the child size behaves in the main direction of the box. If
-     <code>expand</code> is set, the box allows the position occupied by the child to grow when extra space
-     is available.  If <code>fill</code> is also set, the extra space is allocated to the child widget
-     itself.  Otherwise it is left 'free'.  There is no control about the 'minor' direction; children are
-     always given the full size in the minor direction.
+     When adding a child to a &gtk-box;, there are two hard-to-remember parameters (child properties, more
+     exactly) named <code>expand</code> and <code>fill</code> that determine how the child size behaves in
+     the main direction of the box. If <code>expand</code> is set, the box allows the position occupied by
+     the child to grow when extra space is available. If <code>fill</code> is also set, the extra space is
+     allocated to the child widget itself. Otherwise it is left 'free'. There is no control about the 'minor'
+     direction; children are always given the full size in the minor direction.
     </para>
     <para>
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> does not have any custom child properties for
-     controlling size allocation to children.  Instead, it fully supports the newly introduced
-     <ulink url="&gtk_widget_hexpand;"><code>hexpand</code></ulink>, <ulink url="&gtk_widget_vexpand;">
-     <code>vexpand</code></ulink>, <ulink url="&gtk_widget_halign;"><code>halign</code></ulink>, and
-     <ulink url="&gtk_widget_valign;"><code>valign</code></ulink> properties for widgets.
+     &gtk-grid; does not have any custom child properties for controlling size allocation to children.
+     Instead, it fully supports the newly introduced &gtk_widget_hexpand;, &gtk_widget_vexpand;,
+     &gtk_widget_halign;, and &gtk_widget_valign; properties for widgets.
     </para>
     <para>
-     The <ulink url="&gtk_widget_hexpand;"><code>hexpand</code></ulink> and
-     <ulink url="&gtk_widget_vexpand;"><code>vexpand</code></ulink> properties operate in a similar way to
-     the expand child properties of <ulink url="&gtk-box;"><code>gtk-box</code></ulink>.  As soon as a column
-     contains a hexpanding child, <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> allows the column to
-     grow when extra space is available (similar for rows and <ulink url="&gtk_widget_vexpand;">
-     <code>vexpand</code></ulink>).  In contrast to <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, all
-     the extra space is always allocated to the child widget, there are no 'free' areas.
+     The &gtk_widget_hexpand; and &gtk_widget_vexpand; properties operate in a similar way to the expand child
+     properties of &gtk-box;. As soon as a column contains a hexpanding child, &gtk-grid; allows the column to
+     grow when extra space is available (similar for rows and &gtk_widget_vexpand;). In contrast to &gtk-box;,
+     all the extra space is always allocated to the child widget, there are no 'free' areas.
     </para>
     <para>
      To replace the functionality of the <code>fill</code> child properties, you can set the
-     <ulink url="&gtk_widget_halign;"><code>halign</code></ulink> and <ulink url="&gtk_widget_valign;">
-     <code>valign</code></ulink> properties.  An align value of <code>:fill</code> has the same effect as
-     setting <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code> has the same
-     effect as setting <code>fill</code> to <code>nil</code>.
+     &gtk_widget_halign; and &gtk_widget_valign; properties. An align value of <code>:fill</code> has the same
+     effect as setting <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code> has the
+     same effect as setting <code>fill</code> to <code>nil</code>.
     </para>
     <para>
-     Expansion and alignment with <ulink url="&gtk-box;"><code>gtk-box</code></ulink>:
+     Expansion and alignment with &gtk-box;:
     </para>
     <programlisting>
 (let ((box (gtk-box-new :horizontal 0)))
@@ -1915,7 +1826,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> as follows:
+     This can be done with &gtk-grid; as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -1933,42 +1844,38 @@ int main( int argc, char *argv[] )
     </programlisting>
     <para>
      One difference between the new <ulink url="&gtk-widget;"><code>gtk-widget</code></ulink> expand
-     properties and the <ulink url="&gtk-box;"><code>gtk-box</code></ulink> child property of the same name
-     is that widget expandability is 'inherited' from children.  What this means is that a container will
-     become itself expanding as soon as it has an expanding child.  This is typically what you want, it lets
-     you e. g. mark the content pane of your application window as expanding, and all the intermediate
-     containers between the content pane and the toplevel window will automatically do the right thing.
-     This automatism can be overridden at any point by setting the expand flags on a container explicitly.
+     properties and the &gtk-box; child property of the same name is that widget expandability is 'inherited'
+     from children. What this means is that a container will become itself expanding as soon as it has an
+     expanding child. This is typically what you want, it lets you e.g. mark the content pane of your
+     application window as expanding, and all the intermediate containers between the content pane and the
+     toplevel window will automatically do the right thing. This automatism can be overridden at any point by
+     setting the expand flags on a container explicitly.
     </para>
     <para>
-     Another difference between <ulink url="&gtk-box;"><code>gtk-box</code></ulink> and
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> with respect to expandability is when there are
-     no expanding children at all.  In this case, <ulink url="&gtk-box;"><code>gtk-box</code></ulink> will
-     forcibly expand all children whereas <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> will not.
-     In practice, the effect of this is typically that a grid will 'stick to the corner' when the toplevel
-     containing it is grown, instead of spreading out its children over the entire area.  The problem can be
-     fixed by setting some or all of the children to expand.
+     Another difference between &gtk-box; and &gtk-grid; with respect to expandability is when there are no
+     expanding children at all. In this case, &gtk-box; will forcibly expand all children whereas &gtk-grid;
+     will not. In practice, the effect of this is typically that a grid will 'stick to the corner' when the
+     toplevel containing it is grown, instead of spreading out its children over the entire area. The problem
+     can be fixed by setting some or all of the children to expand.
     </para>
     <para>
-     When you set the <ulink url="&gtk_box_homogeneous;"><code>homogeneous</code></ulink> property on a
-     <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, it reserves the same space for all its children.  
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> does this in a very similar way, with
-     <ulink url="&gtk_grid_row-homogeneous;"><code>row-homogeneous</code></ulink> and
-     <ulink url="&gtk_grid_column-homogeneous;"><code>column-homogeneous</code></ulink> properties which
-     control whether all rows have the same height and whether all columns have the same width.
+     When you set the &gtk_box_homogeneous; property on a &gtk-box;, it reserves the same space for all its
+     children. &gtk-grid; does this in a very similar way, with &gtk_grid_row-homogeneous; and
+     &gtk_grid_column-homogeneous; properties which control whether all rows have the same height and whether
+     all columns have the same width.
     </para>
    </section>
 
    <section id="GtkBox_versus_GtkGrid_spacing">
     <title>GtkBox versus GtkGrid - spacing</title>
     <para>
-     With <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, you have to specify the "spacing" when you
+     With &gtk-box;, you have to specify the "spacing" when you
      construct it.  This property specifies the space that separates the children from each other.
      Additionally, you can specify extra space to put around each child individually, using the
      <code>padding</code> child property.
     </para>
     <para>
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> is very similar when it comes to spacing between
+     &gtk-grid; is very similar when it comes to spacing between
      the children, except that it has two separate properties, <ulink url="&gtk_grid_row-spacing;">
      <code>row-spacing</code></ulink> and <ulink url="&gtk_grid_column-spacing;">
      <code>column-spacing</code></ulink>, for the space to leave between rows and columns.  Note that
@@ -1977,7 +1884,7 @@ int main( int argc, char *argv[] )
      <ulink url="&gtk_grid_column-spacing;"><code>column-spacing</code></ulink>.
     </para>
     <para>
-     <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> does not have any custom child properties to
+     &gtk-grid; does not have any custom child properties to
      specify per-child padding; instead you can use the <ulink url="&gtk_widget_margin;">
      <code>margin</code></ulink> property.  You can also set different padding on each side with the
      <ulink url="&gtk_widget_margin-start;"><code>margin-start</code></ulink>,
@@ -1995,7 +1902,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink> as follows:
+     This can be done with &gtk-grid; as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -2014,10 +1921,8 @@ int main( int argc, char *argv[] )
     We repeat the implementation of the example <link linkend="example-box-packing">Box Packing</link> and
     the example <link linkend="example-table-packing">Table Packing</link> using <code>GtkGrid</code>.  The
     first example <link linkend="example-grid-packing">Grid Packing</link> shows how to replace
-    <ulink url="&gtk-box;"><code>gtk-box</code></ulink> with <ulink url="&gtk-grid;">
-    <code>gtk-grid</code></ulink> to create vertical and horizontal boxes.  In the second example
-    <link linkend="example-grid-packing-2">Grid Packing</link> <ulink url="&gtk-table;">
-    <code>gtk-table</code></ulink> is replaced with <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink>.
+    &gtk-box; with &gtk-grid; to create vertical and horizontal boxes.  In the second example
+    <link linkend="example-grid-packing-2">Grid Packing</link> &gtk-table; is replaced with &gtk-grid;.
     See the figure <link linkend="figure-box-packing">Box Packing</link> and
     <link linkend="figure-table-packing">Table Packing</link> for the output of the example programs.
    </para>
@@ -2188,9 +2093,9 @@ int main( int argc, char *argv[] )
     <code>gtk-button-new-from-stock</code></ulink> to create a button containing the image and text from a
     stock item or use <ulink url="&gtk-button-new;"><code>gtk-button-new</code></ulink> to create a blank
     button.  It is then up to you to pack a label or pixmap into this new button. To do this, create a new
-    box, and then pack your objects into this box using the function <ulink url="&gtk-box-pack-start;">
-    <code>gtk-box-pack-start</code></ulink>, and then use the function
-    <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink> to pack the box into the button.
+    box, and then pack your objects into this box using the function &gtk-box-pack-start;, and then use the
+    function &gtk-container-add; to pack the box
+    into the button.
    </para>
    <figure id="figure-button">
     <title>Button with an image from a file</title>
@@ -2756,8 +2661,8 @@ int main( int argc, char *argv[] )
    </sectioninfo>
    <title>Labels</title>
    <para>
-    Labels are used a lot in GTK+, and are relatively simple.  The <ulink url="&gtk-label;">
-    <code>gtk-label</code></ulink> widget displays a small amount of text.  As the name implies, most labels
+    Labels are used a lot in GTK+, and are relatively simple. The &gtk-label; widget displays a small amount
+    of text.  As the name implies, most labels
     are used to label another widget such as a <ulink url="&gtk-button;"><code>gtk-button</code></ulink>, a
     <ulink url="&gtk-menu-item;"><code>gtk-menu-item</code></ulink>, or a <ulink url="&gtk-combo-box;">
     <code>gtk-combo-box</code></ulink>.  Labels emit no signals as they do not have an associated X window.
@@ -2765,8 +2670,8 @@ int main( int argc, char *argv[] )
     <code>gtk-event-box</code></ulink> widget or a button widget.
    </para>
    <para>
-    To create a new label, use <code>make-instance</code> with the class name <ulink url="&gtk-label;">
-    <code>gtk-label</code></ulink> or the functions <ulink url="&gtk-label-new;">
+    To create a new label, use <code>make-instance</code> with the class name &gtk-label; or the functions
+    <ulink url="&gtk-label-new;">
     <code>gtk-label-new</code></ulink> or <ulink url="&gtk-label-new-with-mnemonic;">
     <code>gtk-label-new-with-mnemonic</code></ulink>.  The sole argument of the functions is the string you
     wish the label to display.  To change the text of the label after creation, use the function
@@ -3020,7 +2925,7 @@ int main( int argc, char *argv[] )
    <section id="GtkLabel as GtkBuildable">
     <title>GtkLabel as GtkBuildable</title>
     <para>
-     The <ulink url="&gtk-label;"><code>gtk-label</code></ulink> implementation of the
+     The &gtk-label; implementation of the
      <ulink url="&gtk-buildable;"><code>gtk-buildable</code></ulink> interface supports a custom
      <code>&#x3C;attributes></code> element, which supports any number of <code>&#x3C;attribute></code> 
      elements.  The <code>&#x3C;attribute></code> element has attributes named <code>name</code>,
@@ -3590,9 +3495,9 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     A progress bar may be set to one of a number of orientations using the function
-    <ulink url="&gtk-orientable-orientation;"><code>gtk-orientable-orientation</code></ulink>.  The second
+    &gtk-orientable-orientation;.  The second
     argument is the orientation and may take one of the values of <code>:horizontal</code> or
-    <code>:vertical</code> of the <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink>
+    <code>:vertical</code> of the &gtk-orientation;
     enumeration.  Progress bars normally grow from top to bottom or left to right. With the function
     <ulink url="&gtk-progress-bar-inverted;"><code>gtk-progress-bar-inverted</code></ulink> can be set to
     grow in the opposite direction.
@@ -4138,8 +4043,8 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     The <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink> widget is a horizontal or vertical
-    scrollbar, depending on the value of the <ulink url="&gtk_orientable_orientation;">
-    <code>orientation</code></ulink> property.  A scrollbar can be created with the function
+    scrollbar, depending on the value of the &gtk_orientable_orientation;
+    property.  A scrollbar can be created with the function
     <ulink url="&gtk-scrollbar-new;"><code>gtk-scrollbar-new</code></ulink>, which takes two arguments.  The
     first argument gives the direction <code>:horizontal</code> or <code>:vertical</code> and the second a
     <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.  The second argument can be
@@ -4187,8 +4092,8 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     As with scrollbars, the <ulink url="&gtk-scale;"><code>gtk-scale</code></ulink> widget is a horizontal or
-    vertical scale, depending on the value of the <ulink url="&gtk_orientable_orientation;">
-    <code>orientation</code></ulink> property.  A scale can be created with the function
+    vertical scale, depending on the value of the &gtk_orientable_orientation;
+    property.  A scale can be created with the function
     <ulink url="&gtk-scale-new;"><code>gtk-scale-new</code></ulink>, which takes two arguments.  The first
     argument gives the direction <code>:horizontal</code> or <code>:vertical</code> and the second a
     <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.
@@ -4580,7 +4485,7 @@ int main( int argc, char *argv[] )
     an existing <ulink url="&gtk-alignment;"><code>gtk-alignment</code></ulink> container the properties can
     be set with the function <ulink url="&gtk-alignment-set;"><code>gtk-alignment-set</code></ulink>. A child
     widget can be added to the <ulink url="&gtk-alignment;"><code>gtk-alignment</code></ulink> container
-    using the function <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink>.
+    using the function &gtk-container-add;.
    </para>
    <para>
     In addition, the <ulink url="&gtk-alignment;"><code>gtk-alignment</code></ulink> container has the
@@ -5085,7 +4990,7 @@ int main( int argc, char *argv[] )
    <para>
     A paned window can be created with the function <ulink url="&gtk-paned-new;">
     <code>gtk-paned-new</code></ulink>, which takes as an argument a value of type
-    <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink>.  With the value
+    &gtk-orientation;.  With the value
     <code>:horizontal</code> a horizontal paned window is created, and with the value <code>:vertical</code>
     a vertical paned window.
    </para>
@@ -5178,17 +5083,15 @@ int main( int argc, char *argv[] )
     The <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> widget acts as an adaptor class,
     implementing scrollability for child widgets that lack their own scrolling capabilities.  Use
     <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> to scroll child widgets such as
-    <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink>, <ulink url="&gtk-box;">
-    <code>gtk-box</code></ulink>, and so on.
+    &gtk-grid;, &gtk-box;, and so on.
    </para>
    <para>
     If a widget has native scrolling abilities, such as <ulink url="&gtk-text-view;">
     <code>gtk-text-view</code></ulink>, <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>
     or <ulink url="&gtk-icon-view;"><code>gtk-icon-view</code></ulink>, it can be added to a
-    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> with
-    <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink>.  If a widget does not, you must
-    first add the widget to a <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink>, then add the
-    viewport to the scrolled window.  The convenience function
+    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> with the function
+    &gtk-container-add;. If a widget does not, you must first add the widget to a <ulink url="&gtk-viewport;">
+    <code>gtk-viewport</code></ulink>, then add the viewport to the scrolled window. The convenience function
     <ulink url="&gtk-scrolled-window-add-with-viewport;">
     <code>gtk-scrolled-window-add-with-viewport</code></ulink> does exactly this, so you can ignore the
     presence of the viewport.
@@ -5244,16 +5147,14 @@ int main( int argc, char *argv[] )
     For widgets that lack native scrolling support, the <ulink url="&gtk-viewport;">
     <code>gtk-viewport</code></ulink> widget acts as an adaptor class, implementing scrollability for child
     widgets that lack their own scrolling capabilities.  Use <ulink url="&gtk-viewport;">
-    <code>gtk-viewport</code></ulink> to scroll child widgets such as <ulink url="&gtk-grid;">
-    <code>gtk-grid</code></ulink>, <ulink url="&gtk-box;"><code>gtk-box</code></ulink>, and so on.
+    <code>gtk-viewport</code></ulink> to scroll child widgets such as &gtk-grid; &gtk-box;, and so on.
    </para>
    <para>
     If a widget has native scrolling abilities, it can be added to the <ulink url="&gtk-scrolled-window;">
-    <code>gtk-scrolled-window</code></ulink> with <ulink url="&gtk-container-add;">
-    <code>gtk-container-add</code></ulink>.  If a widget does not, you must first add the widget to a
-    <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink>, then add the <ulink url="&gtk-viewport;">
-    <code>gtk-viewport</code></ulink> to the scrolled window.  The convenience function
-    <ulink url="&gtk-scrolled-window-add-with-viewport;">
+    <code>gtk-scrolled-window</code></ulink> with the function &gtk-container-add;. If a widget does not, you
+    must first add the widget to a <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink>, then add
+    the <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> to the scrolled window. The convenience
+    function <ulink url="&gtk-scrolled-window-add-with-viewport;">
     <code>gtk-scrolled-window-add-with-viewport</code></ulink> does exactly this, so you can ignore the
     presence of the viewport.
    </para>
@@ -5271,7 +5172,7 @@ int main( int argc, char *argv[] )
     If a <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> does not behave quite as
     you would like, or does not have exactly the right layout, it is very possible to set up your own
     scrolling with <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink> and for example a
-    <ulink url="&gtk-grid;"><code>gtk-grid</code></ulink>.
+    &gtk-grid;.
    </para>
    <para>
     The function <ulink url="&gtk-scrolled-window-new;"><code>gtk-scrolled-window-new</code></ulink> is used
@@ -5419,8 +5320,7 @@ int main( int argc, char *argv[] )
     <code>:vertical</code>, respectively.
    </para>
    <para>
-    Buttons are added to a Button Box using the usual function <ulink url="&gtk-container-add;">
-    <code>gtk-container-add</code></ulink>.
+    Buttons are added to a Button Box using the usual function &gtk-container-add;.
    </para>
    <para>
     <link linkend="example-button-box">Button Box</link> is an example that illustrates all the different 
@@ -5552,9 +5452,9 @@ int main( int argc, char *argv[] )
     A toolbar can contain instances of a subclass of <ulink url="&gtk-tool-item;">
     <code>gtk-tool-item</code></ulink>.  To add a <ulink url="&gtk-tool-item;">
     <code>gtk-tool-item</code></ulink> to the a toolbar, use <ulink url="&gtk-toolbar-insert;">
-    <code>gtk-toolbar-insert</code></ulink>.  To remove an item from the toolbar use
-    <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink>.  To add a button to the toolbar,
-    add an instance of <ulink url="&gtk-tool-button;"><code>gtk-tool-button</code></ulink>.
+    <code>gtk-toolbar-insert</code></ulink>.  To remove an item from the toolbar use the function
+    &gtk-container-add;. To add a button to the toolbar, add an instance of
+    <ulink url="&gtk-tool-button;"><code>gtk-tool-button</code></ulink>.
    </para>
    <para>
     Toolbar items can be visually grouped by adding instances of <ulink url="&gtk-separator-tool-item;">
@@ -8012,8 +7912,7 @@ bad things will happen.")
     and you need at least one tree view column in order to display something in the tree view.  Tree view
     columns, however, do not display anything by themselves, this is done by specialised
     <ulink url="&gtk-cell-renderer;"><code>gtk-cell-renderer</code></ulink> objects.  Cell renderers are
-    packed into tree view columns much like widgets are packed into <ulink url="&gtk-box;">
-    <code>gtk-box</code></ulink> widgets.
+    packed into tree view columns much like widgets are packed into &gtk-box; widgets.
    </para>
    <para>
     Here is a diagram (courtesy of Owen Taylor) that pictures the relationship between tree view columns and
@@ -8957,18 +8856,17 @@ main (int argc, char **argv)
     It allows you to set the dialog title, some convenient flags, and add simple buttons.
    </para>
    <para>
-    The dialog widget consists of an content area which is of type <ulink url="&gtk-box;">
-    <code>gtk-box</code></ulink> with the value <code>:vertical</code> of type
-    <ulink url="&gtk-orientation;"><code>gtk-orientation</code></ulink>.  The content area can be filled with
+    The dialog widget consists of an content area which is of type &gtk-box; with the value
+    <code>:vertical</code> of type
+    &gtk-orientation;.  The content area can be filled with
     the content of a dialog.  At the button of the window the dialog widget has an action area which takes
     the desired buttons of the dialog.
    </para>
    <para>
     The function <ulink url="&gtk-dialog-content-area;"><code>gtk-dialog-content-area</code></ulink> gets the
-    content area of a dialog.  Because the content area is a vertical box of type <ulink url="&gtk-box;">
-    <code>gtk-box</code></ulink> any desired widgets can be added to the content area with the functions
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> or
-    <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink>.  To display the content area it is
+    content area of a dialog.  Because the content area is a vertical box of type &gtk-box; any desired
+    widgets can be added to the content area with the functions &gtk-box-pack-start; or
+    &gtk-box-pack-end;. To display the content area it is
     necessary to call the function <ulink url="&gtk-widget-show;"><code>gtk-widget-show</code></ulink>
     explicitly. The function <code>create-dialog</code> in example <link linkend="example-dialog-window">
     Dialog Window</link> shows how to fill widgets into a dialog widget.
@@ -8986,8 +8884,7 @@ main (int argc, char **argv)
    <para>
     Alternatively to the function <ulink url="&gtk-dialog-add-button;">
     <code>gtk-dialog-add-button</code></ulink> buttons can be added with the functions
-    <ulink url="&gtk-box-pack-start;"><code>gtk-box-pack-start</code></ulink> or
-    <ulink url="&gtk-box-pack-end;"><code>gtk-box-pack-end</code></ulink> to the action area.  The action
+    &gtk-box-pack-start; or &gtk-box-pack-end; to the action area.  The action
     area is of type <ulink url="&gtk-button-box;"><code>gtk-button-box</code></ulink> with a
     <code>:horizontal</code> orientation and can be get with the function
     <ulink url="&gtk-dialog-action-area;"><code>gtk-dialog-action-area</code></ulink>.
@@ -9662,7 +9559,7 @@ main (int argc, char **argv)
     <emphasis>Note:</emphasis> This means that while you can pass the result of
     <ulink url="&gtk-file-chooser-filename;"><code>gtk-file-chooser-filename</code></ulink> to
     <code>open(2)</code> or <code>fopen(3)</code>, you may not be able to directly set it as the text of a
-    <ulink url="&gtk-label;"><code>gtk-label</code></ulink> widget unless you convert it first to UTF-8,
+    &gtk-label; widget unless you convert it first to UTF-8,
     which all GTK+ widgets expect. You should use the function <ulink url="&g-filename-to-utf8;">
     <code>g-filename-to-utf8</code></ulink> to convert filenames into strings that can be passed to GTK+
     widgets.
@@ -9693,8 +9590,8 @@ main (int argc, char **argv)
    </para>
    <para>
     <emphasis>Note:</emphasis> If you want to set more than one extra widget in the file chooser, you can use
-    a container such as a <ulink url="&gtk-box;"><code>gtk-box</code></ulink> or a <ulink url="&gtk-table;">
-    <code>gtk-table</code></ulink> and include your widgets in it.  Then, set the container as the whole
+    a container such as a &gtk-box; or a &gtk-table; and include your widgets in it.  Then, set the container
+    as the whole
     extra widget.
    </para>
    <para>
@@ -10268,7 +10165,7 @@ main (int argc, char **argv)
     To create a new <ulink url="&gtk-event-box;"><code>gtk-event-box</code></ulink> widget, use the call
     <code>(make-instance 'gtk-event-box)</code> or the function <ulink url="&gtk-event-box-new;">
     <code>gtk-event-box-new</code></ulink>. A child widget can then be added to this event box with the
-    function <ulink url="&gtk-container-add;"><code>gtk-container-add</code></ulink>. With the function
+    function &gtk-container-add;. With the function
     <ulink url="&gtk-widget-events;"><code>gtk-widget-events</code></ulink> the events are set for the event
     box which can be connected to a signal handler. To create the resources associated with an event box,
     the function <ulink url="&gtk-widget-realize;"><code>gtk-widget-realize</code></ulink> has to be called
@@ -11763,7 +11660,7 @@ main (int argc, char **argv)
   ... )
    </programlisting>
    <para>
-    The "expand" property is inherited from <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink>
+    The "expand" property is inherited from <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink>  
     whereas the "draw" property is specific to the separator.  Because "draw" is a property of the
     <ulink url="&gtk-separator-tool-item;"><code>gtk-separator-tool-item</code></ulink> class, we can save
     one function call, when using the function <code>make-instance</code> to create a
@@ -12493,7 +12390,7 @@ JustifyLeft
   ... )
     </programlisting>
     <para>
-     We could then pack these into a <ulink url="&gtk-box;"><code>gtk-box</code></ulink> one below the other
+     We could then pack these into a &gtk-box; one below the other
      in our main window, and we would be finished, except of course for defining all of the required callback
      functions.
     </para>
@@ -12678,7 +12575,7 @@ lambda (merge widget)
     </programlisting>
     <para>
      This will pack the menubar or toolbar after any other widgets in the parent, assuming that menu-box is
-     a <ulink url="&gtk-box;"><code>gtk-box</code></ulink> of some kind that the menu or toolbar should be
+     a &gtk-box; of some kind that the menu or toolbar should be
      packed into. It must show the widget to realize it.
     </para>
    </section>
@@ -14152,6 +14049,8 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
 
 
 
