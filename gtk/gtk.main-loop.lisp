@@ -268,8 +268,19 @@
   @see-function{%gtk-init-check}"
   (%gtk-init-check (foreign-alloc :int :initial-element 0)
                    (foreign-alloc :string :initial-contents '("/usr/bin/sbcl")))
+  ;; SBCL starting with version 2.0.9 does not use SIGPIPE internally,
+  ;; so implementation may ignore it as GTK does. Here I check if the
+  ;; handler for SIGPIPE is present in SB-UNIX package (we have an old
+  ;; SBCL version), and if it does, install it back.
   #+(and sbcl (not win32))
-  (sb-unix::enable-interrupt sb-unix:sigpipe #'sb-unix::sigpipe-handler)
+  (let ((sbcl-handler
+         (find-symbol
+          (symbol-name '#:sigpipe-handler)
+          (find-package :sb-unix))))
+    (when (and sbcl-handler (fboundp sbcl-handler))
+      (sb-unix::enable-interrupt
+       sb-unix:sigpipe
+       (symbol-function sbcl-handler))))
   #+nil(with-foreign-objects ((argc :int)
                          (argv '(:pointer :string) 1))
     (setf (mem-ref argc :int) 0
