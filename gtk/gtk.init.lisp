@@ -133,14 +133,34 @@
 
 (defmacro within-main-loop (&body body)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  The macro @sym{within-main-loop} is a wrapper around a GTK+ program. The
-  functionality of the macro corresponds to the C functions @code{gtk_init()}
-  and @code{gtk_main()} which initialize and start a GTK+ program. Both
-  functions have corresponding Lisp functions. The function
+ "@version{2020-9-30}
+  @begin{short}
+  The macro @sym{within-main-loop} is a wrapper around a GTK+ program.
+  @end{short}
+  The functionality of the macro corresponds to the C functions
+  @code{gtk_init()} and @code{gtk_main()} which initialize and start a GTK+
+  program. Both functions have corresponding Lisp functions. The function
   @code{gtk_main()} is exported as the Lisp function @fun{gtk-main}. The
   corresponding Lisp function to @code{gtk_init()} is called internally when
   loading the library, but is not exported.
+  @begin[Example]{dictionary}
+    An example with a simple window from the
+    @url[http://www.crategus.com/books/cl-gtk/gtk-tutorial.html]{GTK+ Lisp tutorial}
+    which shows the usage of the macro @sym{within-main-loop}:
+    @begin{pre}
+(defun example-simple-window ()
+  (within-main-loop
+    (let (;; Create a toplevel window.
+          (window (gtk-window-new :toplevel)))
+      ;; Signal handler for the window to handle the signal \"destroy\".
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Show the window.
+      (gtk-widget-show-all window))))
+    @end{pre}
+  @end{dictionary}
   @see-function{gtk-main}"
   `(call-from-gtk-main-loop (lambda () ,@body)))
 
