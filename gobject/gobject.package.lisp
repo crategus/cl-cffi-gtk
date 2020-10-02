@@ -603,12 +603,17 @@
     The basic concept of the signal system is that of the emission of a signal.
     Signals are introduced per-type and are identified through strings. Signals
     introduced for a parent type are available in derived types as well, so
-    basically they are a per-type facility that is inherited. A signal emission
-    mainly involves invocation of a certain set of callbacks in precisely
-    defined manner. There are two main categories of such callbacks, per-object
-    [10] ones and user provided ones. The per-object callbacks are most often
+    basically they are a per-type facility that is inherited.
+
+    A signal emission mainly involves invocation of a certain set of callbacks
+    in precisely defined manner. There are two main categories of such
+    callbacks, per-object ones and user provided ones. (Although signals can
+    deal with any kind of instantiatable type, I am referring to those types as
+    \"object types\" in the following, simply because that is the context most
+    users will encounter signals in.) The per-object callbacks are most often
     referred to as \"object method handler\" or \"default (signal) handler\",
     while user provided callbacks are usually just called \"signal handler\".
+
     The object method handler is provided at signal creation time (this most
     frequently happens at the end of an object class' creation), while user
     provided handlers are frequently connected and disconnected to/from a
@@ -616,43 +621,85 @@
 
     A signal emission consists of five stages, unless prematurely stopped:
     @begin{enumerate}
-      @item{Invocation of the object method handler for G_SIGNAL_RUN_FIRST
-        signals}
-      @item{Invocation of normal user-provided signal handlers (after flag
-        FALSE)}
-      @item{Invocation of the object method handler for G_SIGNAL_RUN_LAST
-        signals}
-      @item{Invocation of user provided signal handlers, connected with an after
-        flag of TRUE}
-      @item{Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP
-        signals}
+      @begin{item}
+        Invocation of the object method handler for @code{:run-first} signals.
+      @end{item}
+      @begin{item}
+        Invocation of normal user-provided signal handlers (where the after
+        flag is not set).
+      @end{item}
+      @begin{item}
+        Invocation of the object method handler for @code{:run-last} signals.
+      @end{item}
+      @begin{item}
+        Invocation of user provided signal handlers (where the after flag is
+        set).
+      @end{item}
+      @begin{item}
+        Invocation of the object method handler for @code{:run-cleanup} signals.
+      @end{item}
     @end{enumerate}
     The user-provided signal handlers are called in the order they were
-    connected in. All handlers may prematurely stop a signal emission, and any
-    number of handlers may be connected, disconnected, blocked or unblocked
-    during a signal emission. There are certain criteria for skipping user
-    handlers in stages 2 and 4 of a signal emission. First, user handlers may
-    be blocked, blocked handlers are omitted during callback invocation, to
-    return from the \"blocked\" state, a handler has to get unblocked exactly
-    the same amount of times it has been blocked before. Second, upon emission
-    of a G_SIGNAL_DETAILED signal, an additional \"detail\" argument passed in
-    to g_signal_emit() has to match the detail argument of the signal handler
-    currently subject to invocation. Specification of no detail argument for
-    signal handlers (omission of the detail part of the signal specification
-    upon connection) serves as a wildcard and matches any detail argument
-    passed in to emission.
+    connected in.
+
+    All handlers may prematurely stop a signal emission, and any number of
+    handlers may be connected, disconnected, blocked or unblocked during a
+    signal emission.
+
+    There are certain criteria for skipping user handlers in stages 2 and 4 of
+    a signal emission.
+
+    First, user handlers may be blocked. Blocked handlers are omitted during
+    callback invocation, to return from the blocked state, a handler has to get
+    unblocked exactly the same amount of times it has been blocked before.
+
+    Second, upon emission of a @code{:detailed} signal, an additional detail
+    argument passed in to the functin @fun{g-signal-emit} has to match the
+    detail argument of the signal handler currently subject to invocation.
+    Specification of no detail argument for signal handlers (omission of the
+    detail part of the signal specification upon connection) serves as a
+    wildcard and matches any detail argument passed in to emission.
+
+    While the detail argument is typically used to pass an object property name
+    (as with \"notify\"), no specific format is mandated for the detail string,
+    other than that it must be non-empty.
+
+    @subheading{Memory management of signal handlers}
+    If you are connecting handlers to signals and using a @class{g-object}
+    instance as your signal handler user data, you should remember to pair calls
+    to the function @fun{g-signal-connect} with calls to the function
+    @fun{g-signal-handler-disconnect}. While signal handlers are automatically
+    disconnected when the object emitting the signal is finalised, they are not
+    automatically disconnected when the signal handler user data is destroyed.
+    If this user data is a @class{g-object} instance, using it from a signal
+    handler after it has been finalised is an error.
+
+    There are two strategies for managing such user data. The first is to
+    disconnect the signal handler (using the function
+    @fun{g-signal-handler-disconnect}) when the user data (object) is finalised;
+    this has to be implemented manually. For non-threaded programs, the function
+    @fun{g-signal-connect-object} can be used to implement this automatically.
+    Currently, however, it is unsafe to use in threaded programs.
+
+    The second is to hold a strong reference on the user data until after the
+    signal is disconnected for other reasons. This can be implemented
+    automatically using the function @fun{g-signal-connect-data}.
+
+    The first approach is recommended, as the second approach can result in
+    effective memory leaks of the user data if the signal handler is never
+    disconnected for some reason.
 
     @about-symbol{g-signal-invocation-hint}
     @about-symbol{g-signal-cmarshaller}
+    @about-symbol{g-signal-cvamarshaller}
     @about-symbol{g-signal-flags}
     @about-symbol{g-signal-match-type}
     @about-symbol{g-signal-query}
-    @about-function{G_SIGNAL_TYPE_STATIC_SCOPE}
-    @about-function{G_SIGNAL_MATCH_MASK}
-    @about-function{G_SIGNAL_FLAGS_MASK}
+    @about-symbol{g-connect-flags}
     @about-function{g-signal-new}
     @about-function{g-signal-newv}
     @about-function{g-signal-new-valist}
+    @about-function{g-signal-set-va-marshaller}
     @about-function{g-signal-query}
     @about-function{g-signal-lookup}
     @about-function{g-signal-name}
@@ -665,7 +712,6 @@
     @about-function{g-signal-connect-after}
     @about-function{g-signal-connect-swapped}
     @about-function{g-signal-connect-object}
-    @about-symbol{g-connect-flags}
     @about-function{g-signal-connect-data}
     @about-function{g-signal-connect-closure}
     @about-function{g-signal-connect-closure-by-id}
@@ -691,11 +737,13 @@
     @about-function{g-signal-chain-from-overridden-handler}
     @about-function{g-signal-add-emission-hook}
     @about-function{g-signal-remove-emission-hook}
+    @about-function{g-signal-is-valid-name}
     @about-function{g-signal-parse-name}
     @about-function{g-signal-get-invocation-hint}
     @about-function{g-signal-type-cclosure-new}
     @about-function{g-signal-accumulator-first-wins}
     @about-function{g-signal-accumulator-true-handled}
+    @about-function{g-clear-signal-handler}
   @end{section}
   @begin[Closures]{section}
     Functions as first-class objects

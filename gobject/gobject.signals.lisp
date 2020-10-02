@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.signals.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
+;;; Version 2.62 and modified to document the Lisp binding to the GObject
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,57 +29,62 @@
 ;;;
 ;;; Signals
 ;;;
-;;; A means for customization of object behaviour and a general purpose
-;;; notification mechanism
+;;;     A means for customization of object behaviour and a general purpose
+;;;     notification mechanism.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GSignalInvocationHint
 ;;;     GSignalCMarshaller
-;;;     GSignalFlags
-;;;     GSignalMatchType
+;;;     GSignalCVaMarshaller
+;;;     GSignalFlags                                       exported
+;;;     GSignalMatchType                                   internal
 ;;;     GSignalQuery
+;;;     GConnectFlags
 ;;;
 ;;;     G_SIGNAL_TYPE_STATIC_SCOPE
 ;;;     G_SIGNAL_MATCH_MASK
 ;;;     G_SIGNAL_FLAGS_MASK
 ;;;
+;;; Functions
+;;;
+;;;     (*GSignalAccumulator)
+;;;     (*GSignalEmissionHook)
+;;;
 ;;;     g_signal_new
 ;;;     g_signal_newv
 ;;;     g_signal_new_valist
-;;;     g_signal_query
-;;;     g_signal_lookup
-;;;     g_signal_name
-;;;     g_signal_list_ids
-;;;     g_signal_emit
+;;;     g_signal_set_va_marshaller
+;;;     g_signal_query                                     exported
+;;;     g_signal_lookup                                    exported
+;;;     g_signal_name                                      exported
+;;;     g_signal_list_ids                                  exported
+;;;     g_signal_emit                                      exported
 ;;;     g_signal_emit_by_name
-;;;     g_signal_emitv
+;;;     g_signal_emitv                                     internal
 ;;;     g_signal_emit_valist
-;;;     g_signal_connect
-;;;     g_signal_connect_after
+;;;     g_signal_connect                                   exported
+;;;     g_signal_connect_after                             exported
 ;;;     g_signal_connect_swapped
 ;;;     g_signal_connect_object
-;;;
-;;;     GConnectFlags
-;;;
 ;;;     g_signal_connect_data
-;;;     g_signal_connect_closure
+;;;     g_signal_connect_closure                           internal
 ;;;     g_signal_connect_closure_by_id
-;;;     g_signal_handler_block
-;;;     g_signal_handler_unblock
-;;;     g_signal_handler_disconnect
-;;;     g_signal_handler_find
+;;;     g_signal_handler_block                             exported
+;;;     g_signal_handler_unblock                           exported
+;;;     g_signal_handler_disconnect                        exported
+;;;     g_signal_handler_find                              exported
 ;;;     g_signal_handlers_block_matched
 ;;;     g_signal_handlers_unblock_matched
 ;;;     g_signal_handlers_disconnect_matched
-;;;     g_signal_handler_is_connected
+;;;     g_signal_handler_is_connected                      exported
 ;;;     g_signal_handlers_block_by_func
 ;;;     g_signal_handlers_unblock_by_func
 ;;;     g_signal_handlers_disconnect_by_func
 ;;;     g_signal_handlers_disconnect_by_data
-;;;     g_signal_has_handler_pending
-;;;     g_signal_stop_emission
-;;;     g_signal_stop_emission_by_name
+;;;     g_signal_has_handler_pending                       exported
+;;;     g_signal_stop_emission                             exported
+;;;     g_signal_stop_emission_by_name                     exported
 ;;;     g_signal_override_class_closure
 ;;;     g_signal_chain_from_overridden
 ;;;     g_signal_new_class_handler
@@ -90,55 +92,94 @@
 ;;;     g_signal_chain_from_overridden_handler
 ;;;     g_signal_add_emission_hook
 ;;;     g_signal_remove_emission_hook
-;;;     g_signal_parse_name
+;;;     g_signal_is_valid_name
+;;;     g_signal_parse_name                                internal
 ;;;     g_signal_get_invocation_hint
 ;;;     g_signal_type_cclosure_new
 ;;;     g_signal_accumulator_first_wins
 ;;;     g_signal_accumulator_true_handled
+;;;     g_clear_signal_handler
 ;;;
 ;;; Description
 ;;;
 ;;; The basic concept of the signal system is that of the emission of a signal.
 ;;; Signals are introduced per-type and are identified through strings. Signals
 ;;; introduced for a parent type are available in derived types as well, so
-;;; basically they are a per-type facility that is inherited. A signal emission
-;;; mainly involves invocation of a certain set of callbacks in precisely
-;;; defined manner. There are two main categories of such callbacks, per-object
-;;; [10] ones and user provided ones. The per-object callbacks are most often
+;;; basically they are a per-type facility that is inherited.
+;;;
+;;; A signal emission mainly involves invocation of a certain set of callbacks
+;;; in precisely defined manner. There are two main categories of such
+;;; callbacks, per-object ones and user provided ones. (Although signals can
+;;; deal with any kind of instantiatable type, I'm referring to those types as
+;;; "object types" in the following, simply because that is the context most
+;;; users will encounter signals in.) The per-object callbacks are most often
 ;;; referred to as "object method handler" or "default (signal) handler", while
-;;; user provided callbacks are usually just called "signal handler". The object
-;;; method handler is provided at signal creation time (this most frequently
-;;; happens at the end of an object class' creation), while user provided
-;;; handlers are frequently connected and disconnected to/from a certain signal
-;;; on certain object instances.
+;;; user provided callbacks are usually just called "signal handler".
+;;;
+;;; The object method handler is provided at signal creation time (this most
+;;; frequently happens at the end of an object class' creation), while user
+;;; provided handlers are frequently connected and disconnected to/from a
+;;; certain signal on certain object instances.
 ;;;
 ;;; A signal emission consists of five stages, unless prematurely stopped:
 ;;;
-;;; 1 - Invocation of the object method handler for G_SIGNAL_RUN_FIRST signals
-;;;
-;;; 2 - Invocation of normal user-provided signal handlers (after flag FALSE)
-;;;
-;;; 3 - Invocation of the object method handler for G_SIGNAL_RUN_LAST signals
-;;;
-;;; 4 - Invocation of user provided signal handlers, connected with an after
-;;;     flag of TRUE
-;;;
-;;; 5 - Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP signals
+;;; 1. Invocation of the object method handler for G_SIGNAL_RUN_FIRST signals
+;;; 2. Invocation of normal user-provided signal handlers (where the after flag
+;;;    is not set)
+;;; 3. Invocation of the object method handler for G_SIGNAL_RUN_LAST signals
+;;; 4. Invocation of user provided signal handlers (where the after flag is set)
+;;; 5. Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP signals
 ;;;
 ;;; The user-provided signal handlers are called in the order they were
-;;; connected in. All handlers may prematurely stop a signal emission, and any
-;;; number of handlers may be connected, disconnected, blocked or unblocked
-;;; during a signal emission. There are certain criteria for skipping user
-;;; handlers in stages 2 and 4 of a signal emission. First, user handlers may be
-;;; blocked, blocked handlers are omitted during callback invocation, to return
-;;; from the "blocked" state, a handler has to get unblocked exactly the same
-;;; amount of times it has been blocked before. Second, upon emission of a
-;;; G_SIGNAL_DETAILED signal, an additional "detail" argument passed in to
-;;; g_signal_emit() has to match the detail argument of the signal handler
-;;; currently subject to invocation. Specification of no detail argument for
-;;; signal handlers (omission of the detail part of the signal specification
-;;; upon connection) serves as a wildcard and matches any detail argument passed
-;;; in to emission.
+;;; connected in.
+;;;
+;;; All handlers may prematurely stop a signal emission, and any number of
+;;; handlers may be connected, disconnected, blocked or unblocked during a
+;;; signal emission.
+;;;
+;;; There are certain criteria for skipping user handlers in stages 2 and 4 of
+;;; a signal emission.
+;;;
+;;; First, user handlers may be blocked. Blocked handlers are omitted during
+;;; callback invocation, to return from the blocked state, a handler has to get
+;;; unblocked exactly the same amount of times it has been blocked before.
+;;;
+;;; Second, upon emission of a G_SIGNAL_DETAILED signal, an additional detail
+;;; argument passed in to g_signal_emit() has to match the detail argument of
+;;; the signal handler currently subject to invocation. Specification of no
+;;; detail argument for signal handlers (omission of the detail part of the
+;;; signal specification upon connection) serves as a wildcard and matches any
+;;; detail argument passed in to emission.
+;;;
+;;; While the detail argument is typically used to pass an object property name
+;;; (as with “notify”), no specific format is mandated for the detail string,
+;;; other than that it must be non-empty.
+;;;
+;;; Memory management of signal handlers
+;;;
+;;; If you are connecting handlers to signals and using a GObject instance as
+;;; your signal handler user data, you should remember to pair calls to
+;;; g_signal_connect() with calls to g_signal_handler_disconnect() or
+;;; g_signal_handlers_disconnect_by_func(). While signal handlers are
+;;; automatically disconnected when the object emitting the signal is finalised,
+;;; they are not automatically disconnected when the signal handler user data is
+;;; destroyed. If this user data is a GObject instance, using it from a signal
+;;; handler after it has been finalised is an error.
+;;;
+;;; There are two strategies for managing such user data. The first is to
+;;; disconnect the signal handler (using g_signal_handler_disconnect() or
+;;; g_signal_handlers_disconnect_by_func()) when the user data (object) is
+;;; finalised; this has to be implemented manually. For non-threaded programs,
+;;; g_signal_connect_object() can be used to implement this automatically.
+;;; Currently, however, it is unsafe to use in threaded programs.
+;;;
+;;; The second is to hold a strong reference on the user data until after the
+;;; signal is disconnected for other reasons. This can be implemented
+;;; automatically using g_signal_connect_data().
+;;;
+;;; The first approach is recommended, as the second approach can result in
+;;; effective memory leaks of the user data if the signal handler is never
+;;; disconnected for some reason.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -274,6 +315,59 @@
     nil))
 
 ;;; ----------------------------------------------------------------------------
+
+(defstruct signal-info
+  id
+  name
+  owner-type
+  flags
+  return-type
+  param-types
+  detail)
+
+(export 'signal-info)
+(export 'signal-info-id)
+(export 'signal-info-name)
+(export 'signal-info-owner-type)
+(export 'signal-info-flags)
+(export 'signal-info-return-type)
+(export 'signal-info-param-types)
+(export 'signal-info-detail)
+
+(defmethod print-object ((instance signal-info) stream)
+  (if *print-readably*
+      (call-next-method)
+      (print-unreadable-object (instance stream)
+         (format stream
+                 "Signal [#~A] ~A ~A.~A~@[::~A~] (~{~A~^, ~})~@[ [~{~A~^, ~}]~]"
+                 (signal-info-id instance)
+                 (gtype-name (signal-info-return-type instance))
+                 (gtype-name (signal-info-owner-type instance))
+                 (signal-info-name instance)
+                 (signal-info-detail instance)
+                 (mapcar #'gtype-name (signal-info-param-types instance))
+                 (signal-info-flags instance)))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Utility function to list all signals of a given type.
+
+(defun list-signals (type &key include-inherited)
+  (unless (g-type= type +g-type-invalid+)
+    (let ((signals (with-foreign-object (n-ids :uint)
+                     (with-unwind (ids (%g-signal-list-ids type n-ids) g-free)
+                       (iter (for i from 0 below (mem-ref n-ids :uint))
+                             (collect
+                               (g-signal-query (mem-aref ids :uint i))))))))
+      (if include-inherited
+          (nconc
+            (list-signals (g-type-parent type) :include-inherited t)
+            (iter (for interface in (g-type-interfaces type))
+                  (nconcing (list-signals interface :include-inherited t)))
+                  signals)
+          signals))))
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GSignalInvocationHint
 ;;;
 ;;; struct GSignalInvocationHint {
@@ -297,40 +391,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GSignalAccumulator ()
-;;;
-;;; gboolean (*GSignalAccumulator) (GSignalInvocationHint *ihint,
-;;;                                 GValue *return_accu,
-;;;                                 const GValue *handler_return,
-;;;                                 gpointer data);
-;;;
-;;; The signal accumulator is a special callback function that can be used to
-;;; collect return values of the various callbacks that are called during a
-;;; signal emission. The signal accumulator is specified at signal creation
-;;; time, if it is left NULL, no accumulation of callback return values is
-;;; performed. The return value of signal emissions is then the value returned
-;;; by the last callback.
-;;;
-;;; ihint :
-;;;     Signal invocation hint, see GSignalInvocationHint.
-;;;
-;;; return_accu :
-;;;     Accumulator to collect callback return values in, this is the return
-;;;     value of the current signal emission.
-;;;
-;;; handler_return :
-;;;     A GValue holding the return value of the signal handler.
-;;;
-;;; data :
-;;;     Callback data that was specified when creating the signal.
-;;;
-;;; Returns :
-;;;     The accumulator function returns whether the signal emission should be
-;;;     aborted. Returning FALSE means to abort the current emission and TRUE is
-;;;     returned for continuation.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; GSignalCMarshaller
 ;;;
 ;;; typedef GClosureMarshal GSignalCMarshaller;
@@ -343,36 +403,13 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GSignalEmissionHook ()
+;;; GSignalCVaMarshaller
 ;;;
-;;; gboolean (*GSignalEmissionHook) (GSignalInvocationHint *ihint,
-;;;                                  guint n_param_values,
-;;;                                  const GValue *param_values,
-;;;                                  gpointer data);
+;;; typedef GVaClosureMarshal GSignalCVaMarshaller;
 ;;;
-;;; A simple function pointer to get invoked when the signal is emitted. This
-;;; allows you to tie a hook to the signal type, so that it will trap all
-;;; emissions of that signal, from any object.
-;;;
-;;; You may not attach these to signals created with the G_SIGNAL_NO_HOOKS flag.
-;;;
-;;; ihint :
-;;;     Signal invocation hint, see GSignalInvocationHint.
-;;;
-;;; n_param_values :
-;;;     the number of parameters to the function, including the instance on
-;;;     which the signal was emitted.
-;;;
-;;; param_values :
-;;;     the instance on which the signal was emitted, followed by the parameters
-;;;     of the emission
-;;;
-;;; data :
-;;;     user data associated with the hook.
-;;;
-;;; Returns :
-;;;     whether it wants to stay connected. If it returns FALSE, the signal hook
-;;;     is disconnected (and destroyed).
+;;; This is the signature of va_list marshaller functions, an optional
+;;; marshaller that can be used in some situations to avoid marshalling the
+;;; signal argument into GValues.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -393,7 +430,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-signal-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-signal-flags atdoc:*external-symbols*)
- "@version{2013-6-30}
+ "@version{2020-10-2}
   @begin{short}
     The signal flags are used to specify a signal's behaviour, the overall
     signal description outlines how especially the RUN flags control the stages
@@ -430,17 +467,21 @@
       of as object methods which can be called generically by third-party code.}
     @entry[:no-hooks]{No emissions hooks are supported for this signal.}
     @entry[:must-collect]{Varargs signal emission will always collect the
-      arguments, even if there are no signal handlers connected. Since 2.30.}
+      arguments, even if there are no signal handlers connected. Since 2.30}
     @entry[:deprecated]{The signal is deprecated and will be removed in a future
       version. A warning will be generated if it is connected while running with
-      @code{G_ENABLE_DIAGNOSTIC = 1}. Since 2.32.}
-  @end{table}")
+      @code{G_ENABLE_DIAGNOSTIC = 1}. Since 2.32}
+  @end{table}
+  @see-function{g-signal-emit}")
 
 (export 'g-signal-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GSignalMatchType
 ;;; ----------------------------------------------------------------------------
+
+;; Only the value :id is used in the function g-signal-handler-find
+;; Consider to remove the implementation. We do not export this bitfield.
 
 (defbitfield g-signal-match-type
   :id
@@ -480,8 +521,6 @@
   @see-function{g-signal-handlers-block-matched}
   @see-function{g-signal-handlers-unblock-matched}
   @see-function{g-signal-handlers-disconnect-matched}")
-
-(export 'g-signal-match-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GSignalQuery
@@ -538,58 +577,57 @@
   (:n-params :uint)
   (:param-types (:pointer (g-type :mangled-p t))))
 
-;;; ----------------------------------------------------------------------------
-
-(defstruct signal-info
-  id
-  name
+(defstruct g-signal-query
+  signal-id
+  signal-name
   owner-type
-  flags
+  signal-flags
   return-type
   param-types
-  detail)
+  signal-detail)
 
-(export 'signal-info)
-(export 'signal-info-id)
-(export 'signal-info-name)
-(export 'signal-info-owner-type)
-(export 'signal-info-flags)
-(export 'signal-info-return-type)
-(export 'signal-info-param-types)
-(export 'signal-info-detail)
-
-(defmethod print-object ((instance signal-info) stream)
+(defmethod print-object ((instance g-signal-query) stream)
   (if *print-readably*
       (call-next-method)
       (print-unreadable-object (instance stream)
          (format stream
                  "Signal [#~A] ~A ~A.~A~@[::~A~] (~{~A~^, ~})~@[ [~{~A~^, ~}]~]"
-                 (signal-info-id instance)
-                 (gtype-name (signal-info-return-type instance))
-                 (gtype-name (signal-info-owner-type instance))
-                 (signal-info-name instance)
-                 (signal-info-detail instance)
-                 (mapcar #'gtype-name (signal-info-param-types instance))
-                 (signal-info-flags instance)))))
+                 (g-signal-query-signal-id instance)
+                 (gtype-name (g-signal-query-return-type instance))
+                 (gtype-name (g-signal-query-owner-type instance))
+                 (g-signal-query-signal-name instance)
+                 (g-signal-query-signal-detail instance)
+                 (mapcar #'gtype-name (g-signal-query-param-types instance))
+                 (g-signal-query-signal-flags instance)))))
+
+(export 'g-signal-query)
+(export 'g-signal-query-signal-id)
+(export 'g-signal-query-signal-name)
+(export 'g-signal-query-owner-type)
+(export 'g-signal-query-signal-flags)
+(export 'g-signal-query-return-type)
+(export 'g-signal-query-param-types)
+(export 'g-signal-query-signal-detail)
 
 ;;; ----------------------------------------------------------------------------
-
-;; Utility function to list all signals of a given type.
-
-(defun list-signals (type &key include-inherited)
-  (unless (g-type= type +g-type-invalid+)
-    (let ((signals (with-foreign-object (n-ids :uint)
-                     (with-unwind (ids (%g-signal-list-ids type n-ids) g-free)
-                       (iter (for i from 0 below (mem-ref n-ids :uint))
-                             (collect
-                               (g-signal-query (mem-aref ids :uint i))))))))
-      (if include-inherited
-          (nconc
-            (list-signals (g-type-parent type) :include-inherited t)
-            (iter (for interface in (g-type-interfaces type))
-                  (nconcing (list-signals interface :include-inherited t)))
-                  signals)
-          signals))))
+;;; enum GConnectFlags
+;;;
+;;; typedef enum {
+;;;   G_CONNECT_AFTER   = 1 << 0,
+;;;   G_CONNECT_SWAPPED = 1 << 1
+;;; } GConnectFlags;
+;;;
+;;; The connection flags are used to specify the behaviour of a signal's
+;;; connection.
+;;;
+;;; G_CONNECT_AFTER
+;;;     whether the handler should be called before or after the default handler
+;;;     of the signal.
+;;;
+;;; G_CONNECT_SWAPPED
+;;;     whether the instance and data should be swapped when calling the
+;;;     handler.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SIGNAL_TYPE_STATIC_SCOPE
@@ -627,6 +665,73 @@
 ;;; #define G_SIGNAL_FLAGS_MASK  0x1ff
 ;;;
 ;;; A mask for all GSignalFlags bits.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GSignalAccumulator ()
+;;;
+;;; gboolean (*GSignalAccumulator) (GSignalInvocationHint *ihint,
+;;;                                 GValue *return_accu,
+;;;                                 const GValue *handler_return,
+;;;                                 gpointer data);
+;;;
+;;; The signal accumulator is a special callback function that can be used to
+;;; collect return values of the various callbacks that are called during a
+;;; signal emission. The signal accumulator is specified at signal creation
+;;; time, if it is left NULL, no accumulation of callback return values is
+;;; performed. The return value of signal emissions is then the value returned
+;;; by the last callback.
+;;;
+;;; ihint :
+;;;     Signal invocation hint, see GSignalInvocationHint.
+;;;
+;;; return_accu :
+;;;     Accumulator to collect callback return values in, this is the return
+;;;     value of the current signal emission.
+;;;
+;;; handler_return :
+;;;     A GValue holding the return value of the signal handler.
+;;;
+;;; data :
+;;;     Callback data that was specified when creating the signal.
+;;;
+;;; Returns :
+;;;     The accumulator function returns whether the signal emission should be
+;;;     aborted. Returning FALSE means to abort the current emission and TRUE is
+;;;     returned for continuation.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GSignalEmissionHook ()
+;;;
+;;; gboolean (*GSignalEmissionHook) (GSignalInvocationHint *ihint,
+;;;                                  guint n_param_values,
+;;;                                  const GValue *param_values,
+;;;                                  gpointer data);
+;;;
+;;; A simple function pointer to get invoked when the signal is emitted. This
+;;; allows you to tie a hook to the signal type, so that it will trap all
+;;; emissions of that signal, from any object.
+;;;
+;;; You may not attach these to signals created with the G_SIGNAL_NO_HOOKS flag.
+;;;
+;;; ihint :
+;;;     Signal invocation hint, see GSignalInvocationHint.
+;;;
+;;; n_param_values :
+;;;     the number of parameters to the function, including the instance on
+;;;     which the signal was emitted.
+;;;
+;;; param_values :
+;;;     the instance on which the signal was emitted, followed by the parameters
+;;;     of the emission
+;;;
+;;; data :
+;;;     user data associated with the hook.
+;;;
+;;; Returns :
+;;;     whether it wants to stay connected. If it returns FALSE, the signal hook
+;;;     is disconnected (and destroyed).
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -706,7 +811,10 @@
 ;;; g_signal_newv ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_newv" g-signal-newv) :uint
+;; This function is not used in the cl-cffi-gtk library. We dot not export
+;; the function.
+
+(defcfun ("g_signal_newv" %g-signal-newv) :uint
  #+cl-cffi-gtk-documentation
  "@version{2013-6-30}
   @argument[signal-name]{the name for the signal}
@@ -746,8 +854,6 @@
   (return-type g-type)
   (n-params :uint)
   (param-types (:pointer g-type)))
-
-(export 'g-signal-newv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_new_valist ()
@@ -810,6 +916,31 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_signal_set_va_marshaller ()
+;;;
+;;; void
+;;; g_signal_set_va_marshaller (guint signal_id,
+;;;                             GType instance_type,
+;;;                             GSignalCVaMarshaller va_marshaller);
+;;;
+;;; Change the GSignalCVaMarshaller used for a given signal. This is a
+;;; specialised form of the marshaller that can often be used for the common
+;;; case of a single connected signal handler and avoids the overhead of GValue.
+;;; Its use is optional.
+;;;
+;;; signal_id:
+;;;     the signal id
+;;;
+;;; instance_type:
+;;;     the instance type on which to set the marshaller.
+;;;
+;;; va_marshaller:
+;;;     the marshaller to set.
+;;;
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_signal_query ()
 ;;; ----------------------------------------------------------------------------
 
@@ -819,8 +950,9 @@
 
 (defun g-signal-query (signal-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[signal-id]{the signal ID of the signal to query information for}
+ "@version{2020-10-2}
+  @argument[signal-id]{a @code{:uint} with the signal ID of the signal to query
+    information for}
   @begin{return}
     @code{query} -- the signal info
   @end{return}
@@ -951,9 +1083,7 @@
   @short{Emits a signal.}
 
   Note that the function @sym{g-signal-emit} resets the return value to the
-  default if no handlers are connected, in contrast to the function
-  @fun{g-signal-emitv}.
-  @see-function{g-signal-emitv}"
+  default if no handlers are connected."
   (let* ((object-type (g-type-from-instance (pointer object)))
          (signal-info (g-signal-parse-name object-type signal-name)))
     (unless signal-info
@@ -975,19 +1105,19 @@
           (if (eq (signal-info-return-type signal-info)
                   (gtype +g-type-none+))
               ;; Emit a signal which has no return value
-              (g-signal-emitv params
-                              (signal-info-id signal-info)
-                              signal-name
-                              (null-pointer))
+              (%g-signal-emitv params
+                               (signal-info-id signal-info)
+                               signal-name
+                               (null-pointer))
               ;; Emit a signal which has a return value
               (with-foreign-object (return-value '(:struct g-value)) ;
                 (g-value-zero return-value)
                 (g-value-init return-value
                               (signal-info-return-type signal-info))
-                (g-signal-emitv params
-                                (signal-info-id signal-info)
-                                signal-name
-                                return-value)
+                (%g-signal-emitv params
+                                 (signal-info-id signal-info)
+                                 signal-name
+                                 return-value)
                 (prog1
                   ;; Return value of the signal
                   (parse-g-value return-value)
@@ -1025,7 +1155,9 @@
 ;;; g_signal_emitv ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_emitv" g-signal-emitv) :void
+;; Called from g-signal-emit. For internal use and not exported.
+
+(defcfun ("g_signal_emitv" %g-signal-emitv) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
   @argument[instance-and-params]{argument list for the signal emission. The
@@ -1049,8 +1181,6 @@
   (signal-id :uint)
   (detail g-quark)
   (return-value (:pointer (:struct g-value))))
-
-(export 'g-signal-emitv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_emit_valist ()
@@ -1086,25 +1216,66 @@
 
 (defun g-signal-connect (instance detailed-signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @argument[instance]{the instance to connect to}
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
-  @argument[handler]{the callback function to connect}
-  @argument[key]{if @em{true} the @arg{handler} is called after the default
-    handler}
-  @return{The handler ID.}
+  @argument[handler]{the Lisp callback function to connect}
+  @argument[key]{if @em{true} the handler is called after the default handler}
+  @return{A @code{:ulong} with the handler ID.}
   @begin{short}
-    Connects a callback function to a signal for a particular object.
+    Connects a Lisp callback function to a signal for a particular object.
   @end{short}
-
   The handler will be called before the default handler of the signal. If the
-  keyword argument @arg{after} is @em{true}, the @arg{handler} will be called
-  after the default handler of the signal.
+  keyword argument @arg{after} is @em{true}, the handler will be called after
+  the default handler of the signal.
+  @begin[Lisp implmentation]{dictionary}
+    The C library knows in addition the function
+    @code{g_signal_connect_after()}, which is implemented as the function
+    @fun{g-signal-connect-after} and is equivalent to this function with a
+    value @em{true} for the keyword argument @arg{after}.
+  @end{dictionary}
+  @begin[Example]{dictionary}
+    Connect a Lisp lambda function to the signal \"destroy\" of a window:
+    @begin{pre}
+(g-signal-connect window \"destroy\"
+                  (lambda (widget)
+                    (declare (ignore widget))
+                    (leave-gtk-main)))
+    @end{pre}
+    Connect a Lisp lambda function to the signal \"toggled\" of a toggle button:
+    @begin{pre}
+(g-signal-connect button \"toggled\"
+   (lambda (widget)
+     (if (gtk-toggle-button-active widget)
+         (progn
+           ;; If control reaches here, the toggle button is down
+         )
+        (progn
+           ;; If control reaches here, the toggle button is up
+         ))))
+    @end{pre}
+    If it is necessary to have a separate function which needs user data, the
+    following implementation is possible:
+    @begin{pre}
+(defun separate-event-handler (widget arg1 arg2 arg3)
+  [ here is the code of the event handler ] )
+
+(g-signal-connect window \destroy\"
+                  (lambda (widget)
+                    (separate-event-handler widget arg1 arg2 arg3)))
+    @end{pre}
+    If no extra data is needed, but the callback function should be separated
+    out than it is also possible to implement something like:
+    @begin{pre}
+(g-signal-connect window \"destroy\" #'separate-event-handler)
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-object}
   @see-function{g-signal-connect-after}"
-  (g-signal-connect-closure (pointer instance)
-                            detailed-signal
-                            (create-closure instance handler)
-                            after))
+  (%g-signal-connect-closure (pointer instance)
+                             detailed-signal
+                             (create-closure instance handler)
+                             after))
 
 (export 'g-signal-connect)
 
@@ -1116,20 +1287,23 @@
 
 (defun g-signal-connect-after (instance detailed-signal handler)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @argument[instance]{the instance to connect to.}
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
-  @argument[handler]{the callback function to connect}
-  @return{The handler ID.}
+  @argument[handler]{the Lisp callback function to connect}
+  @return{A @code{:ulong} with the handler ID.}
   @begin{short}
-    Connects a callback function to a signal for a particular object.
+    Connects a Lisp callback function to a signal for a particular object.
   @end{short}
-
-  The @arg{handler} will be called after the default handler of the signal.
-
-  @subheading{Lisp implementation}
+  The handler will be called after the default handler of the signal.
+  @begin[Lisp implementation]{dictionary}
     In the Lisp implementation the function @fun{g-signal-connect} has a
-    keyword argument @arg{after}.
+    keyword argument @arg{after}. This function is implemented as:
+    @begin{pre}
+ (g-signal-connect instance detailed-signal handler :after t)
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-object}
   @see-function{g-signal-connect}"
   (g-signal-connect instance detailed-signal handler :after t))
 
@@ -1210,26 +1384,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GConnectFlags
-;;;
-;;; typedef enum {
-;;;   G_CONNECT_AFTER   = 1 << 0,
-;;;   G_CONNECT_SWAPPED = 1 << 1
-;;; } GConnectFlags;
-;;;
-;;; The connection flags are used to specify the behaviour of a signal's
-;;; connection.
-;;;
-;;; G_CONNECT_AFTER
-;;;     whether the handler should be called before or after the default handler
-;;;     of the signal.
-;;;
-;;; G_CONNECT_SWAPPED
-;;;     whether the instance and data should be swapped when calling the
-;;;     handler.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect_data ()
 ;;;
 ;;; gulong g_signal_connect_data (gpointer instance,
@@ -1271,22 +1425,28 @@
 ;;; g_signal_connect_closure ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_connect_closure" g-signal-connect-closure) :ulong
+;; Called from g-signal-connect. For internal use and not exported.
+
+(defcfun ("g_signal_connect_closure" %g-signal-connect-closure) :ulong
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[instance]{the instance to connect to}
+ "@version{2020-10-1}
+  @argument[instance]{a @code{:pointer} to the instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
-  @argument[closure]{the closure to connect}
-  @argument[after]{whether the handler should be called before or after the
-    default handler of the signal}
-  @return{The handler ID.}
-  Connects a closure to a signal for a particular object."
+  @argument[closure]{the @symbol{g-closure} callback function to connect}
+  @argument[after]{a boolean whether the handler should be called before or
+    after the default handler of the signal}
+  @return{A @code{:ulong} with the handler ID.}
+  @begin{short}
+    Connects a callback function to a signal for a particular object.
+  @end{short}
+  This is a low level function which is called from the function
+  @fun{g-signal-connect} to connect a Lisp callback function to a signal.
+  @see-symbol{g-closure}
+  @see-function{g-signal-connect}"
   (instance :pointer)
   (detailed-signal :string)
   (closure (:pointer (:struct g-closure)))
   (after :boolean))
-
-(export 'g-signal-connect-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect_closure_by_id ()
@@ -1397,44 +1557,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_find ()
-;;;
-;;; gulong g_signal_handler_find (gpointer instance,
-;;;                               GSignalMatchType mask,
-;;;                               guint signal_id,
-;;;                               GQuark detail,
-;;;                               GClosure *closure,
-;;;                               gpointer func,
-;;;                               gpointer data);
-;;;
-;;; Finds the first signal handler that matches certain selection criteria. The
-;;; criteria mask is passed as an OR-ed combination of GSignalMatchType flags,
-;;; and the criteria values are passed as arguments. The match mask has to be
-;;; non-0 for successful matches. If no handler was found, 0 is returned.
-;;;
-;;; instance :
-;;;     The instance owning the signal handler to be found.
-;;;
-;;; mask :
-;;;     Mask indicating which of signal_id, detail, closure, func and/or data
-;;;     the handler has to match.
-;;;
-;;; signal_id :
-;;;     Signal the handler has to be connected to.
-;;;
-;;; detail :
-;;;     Signal detail the handler has to be connected to.
-;;;
-;;; closure :
-;;;     The closure the handler will invoke.
-;;;
-;;; func :
-;;;     The C closure callback of the handler (useless for non-C closures).
-;;;
-;;; data :
-;;;     The closure data of the handler's closure.
-;;;
-;;; Returns :
-;;;     A valid non-0 signal handler id for a successful match.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_handler_find" %g-signal-handler-find) :ulong
@@ -1447,6 +1569,24 @@
   (data :pointer))
 
 (defun g-signal-handler-find (instance signal-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance owning the signal handler
+    to be found}
+  @argument[signal-id]{a @code{:unit} with a signal the handler has to be
+    connected to}
+  @return{A valid non-0 signal handler ID of type @code{:ulong} for a
+    successful match.}
+  @begin{short}
+    Finds the first signal handler that matches the given @arg{signal-id}.
+  @end{short}
+  If no handler was found, 0 is returned.
+  @begin[Lisp implementation]{dictionary}
+    In the Lisp implementation only the match type @code{:id} of the
+    @symbol{g-signal-match-type} flags is implemented.
+  @end{dictionary}
+  @see-class{g-object}
+  @see-function{g-signal-match-type}"
   (%g-signal-handler-find instance
                           :id
                           signal-id
@@ -1472,8 +1612,8 @@
 ;;; The criteria mask is passed as an OR-ed combination of GSignalMatchType
 ;;; flags, and the criteria values are passed as arguments. Passing at least one
 ;;; of the G_SIGNAL_MATCH_CLOSURE, G_SIGNAL_MATCH_FUNC or G_SIGNAL_MATCH_DATA
-;;; match flags is required for successful matches. If no handlers were found, 0
-;;; is returned, the number of blocked handlers otherwise.
+;;; match flags is required for successful matches. If no handlers were found,
+;;; 0 is returned, the number of blocked handlers otherwise.
 ;;;
 ;;; instance :
 ;;;     The instance to block handlers from.
@@ -1594,24 +1734,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_is_connected ()
-;;;
-;;; gboolean g_signal_handler_is_connected (gpointer instance,
-;;;                                         gulong handler_id);
-;;;
-;;; Returns whether handler_id is the id of a handler connected to instance.
-;;;
-;;; instance :
-;;;     The instance where a signal handler is sought.
-;;;
-;;; handler_id :
-;;;     the handler id.
-;;;
-;;; Returns :
-;;;     whether handler_id identifies a handler connected to instance.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_handler_is_connected" g-signal-handler-is-connected)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance where a signal handler is
+    sought}
+  @argument[handler-id]{a @code{:ulong} with the handler ID}
+  @return{A boolean whether @arg{handler-id} identifies a handler connected to
+    instance.}
+  @begin{short}
+    Returns whether @arg{handler-id} is the ID of a handler connected to
+    instance.
+  @end{short}
+  @see-class{g-object}"
   (instance g-object)
   (handler-id :ulong))
 
@@ -1698,37 +1836,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_has_handler_pending ()
-;;;
-;;; gboolean g_signal_has_handler_pending (gpointer instance,
-;;;                                        guint signal_id,
-;;;                                        GQuark detail,
-;;;                                        gboolean may_be_blocked);
-;;;
-;;; Returns whether there are any handlers connected to instance for the given
-;;; signal id and detail.
-;;;
-;;; One example of when you might use this is when the arguments to the signal
-;;; are difficult to compute. A class implementor may opt to not emit the signal
-;;; if no one is attached anyway, thus saving the cost of building the
-;;; arguments.
-;;;
-;;; instance :
-;;;     the object whose signal handlers are sought.
-;;;
-;;; signal_id :
-;;;     the signal id.
-;;;
-;;; detail :
-;;;     the detail.
-;;;
-;;; may_be_blocked :
-;;;     whether blocked handlers should count as match.
-;;;
-;;; Returns :
-;;;     TRUE if a handler is connected to the signal, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_has_handler_pending" g-signal-has-handler-pending) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance whose signal handlers are
+    sought}
+  @argument[signal-id]{a @code{:uint} with the signal ID}
+  @argument[detail]{a string with the detail}
+  @argument[may-be-blocked]{a boolean whether blocked handlers should count as
+    match}
+  @return{@em{True} if a handler is connected to the signal, @em{false}
+    otherwise.}
+  @begin{short}
+    Returns whether there are any handlers connected to @arg{instance} for the
+    given signal ID and detail.
+  @end{short}
+
+  If detail is 0 then it will only match handlers that were connected without
+  detail. If detail is non-zero then it will match handlers connected both
+  without detail and with the given detail. This is consistent with how a
+  signal emitted with detail would be delivered to those handlers.
+
+  Since 2.46 this also checks for a non-default class closure being installed,
+  as this is basically always what you want.
+
+  One example of when you might use this is when the arguments to the signal
+  are difficult to compute. A class implementor may opt to not emit the signal
+  if no one is attached anyway, thus saving the cost of building the arguments.
+  @see-class{g-object}
+  @see-type{g-quark}"
   (instance g-object)
   (signal-id :uint)
   (detail g-quark)
@@ -1738,30 +1876,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_stop_emission ()
-;;;
-;;; void g_signal_stop_emission (gpointer instance,
-;;;                              guint signal_id,
-;;;                              GQuark detail);
-;;;
-;;; Stops a signal's current emission.
-;;;
-;;; This will prevent the default method from running, if the signal was
-;;; G_SIGNAL_RUN_LAST and you connected normally (i.e. without the "after"
-;;; flag).
-;;;
-;;; Prints a warning if used on a signal which isn't being emitted.
-;;;
-;;; instance :
-;;;     the object whose signal handlers you wish to stop.
-;;;
-;;; signal_id :
-;;;     the signal identifier, as returned by g_signal_lookup().
-;;;
-;;; detail :
-;;;     the detail which the signal was emitted with.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_stop_emission" g-signal-stop-emission) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance whose signal handlers you
+    wish to stop}
+  @argument[signal-id]{a @code{:uint} with the signal identifier, as returned
+    by the function @fun{g-signal-lookup}}
+  @argument[detail]{a @type{g-quark} with the detail which the signal was
+    emitted with}
+  @begin{short}
+    Stops a signal's current emission.
+  @end{short}
+  This will prevent the default method from running, if the signal was
+  @code{:run-last} and you connected normally (i.e. without the \"after\"
+  flag).
+
+  Prints a warning if used on a signal which is not being emitted.
+  @see-class{g-object}
+  @see-type{g-quark}
+  @see-function{g-signal-stop-emission-by-name}"
   (instance g-object)
   (signal-id :uint)
   (detail g-quark))
@@ -1770,23 +1906,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_stop_emission_by_name ()
-;;;
-;;; void g_signal_stop_emission_by_name (gpointer instance,
-;;;                                      const gchar *detailed_signal);
-;;;
-;;; Stops a signal's current emission.
-;;;
-;;; This is just like g_signal_stop_emission() except it will look up the signal
-;;; id for you.
-;;;
-;;; instance :
-;;;     the object whose signal handlers you wish to stop.
-;;;
-;;; detailed_signal :
-;;;     a string of the form "signal-name::detail".
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_stop_emission_by_name" g-signal-stop-emission-by-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-1}
+  @argument[instance]{the @class{g-object} instance whose signal handlers you
+    wish to stop}
+  @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
+  @begin{short}
+    Stops a signal's current emission.
+  @end{short}
+  This is just like the function @fun{g-signal-stop-emission} except it will
+  look up the signal ID for you.
+  @see-class{g-object}
+  @see-function{g-signal-stop-emission}"
   (instance g-object)
   (detailed-signal :string))
 
@@ -2003,6 +2137,28 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_signal_is_valid_name ()
+;;;
+;;; gboolean
+;;; g_signal_is_valid_name (const gchar *name);
+;;;
+;;; Validate a signal name. This can be useful for dynamically-generated signals
+;;; which need to be validated at run-time before actually trying to create
+;;; them.
+;;;
+;;; See canonical parameter names for details of the rules for valid names. The
+;;; rules for signal names are the same as those for property names.
+;;;
+;;; name:
+;;;     the canonical name of the signal
+;;;
+;;; Returns:
+;;;     TRUE if name is a valid signal name, FALSE otherwise.
+;;;
+;;; Since 2.66
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_signal_parse_name ()
 ;;;
 ;;; gboolean g_signal_parse_name (const gchar *detailed_signal,
@@ -2041,9 +2197,8 @@
  (detail-p (:pointer g-quark))
  (force-detail-quark :boolean))
 
-;; TODO: The Lisp function does not work as documented
-;;       The return value is a complete signal-info structure.
-;;       The function is used in g-signal-emit.
+;; The Lisp function does not work as documented. The function is used in
+;; g-signal-emit and not exported.
 
 (defun g-signal-parse-name (owner-type signal-name)
   (with-foreign-objects ((signal-id :uint) (detail 'g-quark))
@@ -2051,8 +2206,6 @@
       (let ((signal-info (g-signal-query (mem-ref signal-id :uint))))
         (setf (signal-info-detail signal-info) (mem-ref detail 'g-quark))
         signal-info))))
-
-(export 'g-signal-parse-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_get_invocation_hint ()
@@ -2081,8 +2234,8 @@
 ;;;     the GType identifier of an interface or classed type
 ;;;
 ;;; struct_offset :
-;;;     the offset of the member function of itype's class structure which is to
-;;;     be invoked by the new closure
+;;;     the offset of the member function of itype's class structure which is
+;;;     to be invoked by the new closure
 ;;;
 ;;; Returns :
 ;;;     a new GCClosure
@@ -2156,6 +2309,33 @@
 ;;;     standard GSignalAccumulator result
 ;;;
 ;;; Since 2.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_clear_signal_handler ()
+;;;
+;;; void
+;;; g_clear_signal_handler (gulong *handler_id_ptr,
+;;;                         gpointer instance);
+;;;
+;;; Disconnects a handler from instance so it will not be called during any
+;;; future or currently ongoing emissions of the signal it has been connected
+;;; to. The handler_id_ptr is then set to zero, which is never a valid handler
+;;; ID value (see g_signal_connect()).
+;;;
+;;; If the handler ID is 0 then this function does nothing.
+;;;
+;;; A macro is also included that allows this function to be used without
+;;; pointer casts.
+;;;
+;;; handler_id_ptr:
+;;;     A pointer to a handler ID (of type gulong) of the handler to be
+;;;     disconnected.
+;;;
+;;; instance:
+;;;     The instance to remove the signal handler from.
+;;;
+;;; Since 2.62
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gobject.signals.lisp ---------------------------------------
