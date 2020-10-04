@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.quark.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; The documentation of this file is taken from the GLib 2.62 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; Quarks
 ;;;
-;;; A 2-way association between a string and a unique integer identifier
+;;;     A 2-way association between a string and a unique integer identifier
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GQuark
+;;;
+;;; Functions
 ;;;
 ;;;     G_DEFINE_QUARK
 ;;;     g_quark_from_string
@@ -53,45 +52,65 @@
 ;;; GQuark
 ;;; ----------------------------------------------------------------------------
 
-(defctype %g-quark :uint32)
+;; A GQuark is implemented in the C Library as guint32.
 
 (define-foreign-type g-quark-type ()
   ()
-  (:actual-type %g-quark)
+  (:actual-type :uint32)
   (:simple-parser g-quark))
 
 (defmethod translate-to-foreign (value (type g-quark-type))
-  (g-quark-from-string value))
+  (foreign-funcall "g_quark_from_string"
+                   :string (if value value (null-pointer))
+                   :uint32))
 
 (defmethod translate-from-foreign (value (type g-quark-type))
-  (g-quark-to-string value))
+  (foreign-funcall "g_quark_to_string"
+                   :uint32 value
+                   :string))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-quark 'type)
- "@version{2013-9-15}
+ "@version{2020-10-4}
   @begin{short}
-    A @sym{g-quark} is a non-zero integer which uniquely identifies a particular
-    string. A @sym{g-quark} value of zero is associated to @code{nil}.
+    Quarks are associations between strings and integer identifiers.
   @end{short}
+  Given either the string or the @code{GQuark} identifier it is possible to
+  retrieve the other.
+  @begin[Lisp binding]{dictionary}
+    In the Lisp binding the type @sym{g-quark} translates a string argument to
+    the corresponding @code{GQuark} identifier and a @code{GQuark} return value
+    is translated to the corresponding Lisp string. No further functions are
+    implemented for the @sym{g-quark} type.
 
-  Quarks are associations between strings and integer identifiers. Given
-  either the string or the @sym{g-quark} identifier it is possible to retrieve
-  the other.
+    If the Lisp string does not currently have an associated @code{GQuark}, a
+    new @code{GQuark} is created. A @code{GQuark} value of zero is associated
+    to @code{nil} in Lisp.
 
-  Quarks are used for both Datasets and Keyed Data Lists.
-
-  To create a new quark from a string, use the functions
-  @fun{g-quark-from-string} or @fun{g-quark-from-static-string}.
-
-  To find the string corresponding to a given @sym{g-quark}, use the
-  @fun{g-quark-to-string} function.
-
-  To find the @sym{g-quark} corresponding to a given string, use the
-  @fun{g-quark-try-string} function.
-  @see-function{g-quark-from-string}
-  @see-function{g-quark-from-static-string}
-  @see-function{g-quark-to-string}
-  @see-function{g-quark-try-string}")
+    See the function @fun{g-type-qdata} for attaching a @code{GQuark} identifier
+    to a @class{g-type}.
+  @end{dictionary}
+  @begin[example]{dictionary}
+    Translate a Lisp String to a @code{GQuark} identifier:
+    @begin{pre}
+  (convert-to-foreign \"GtkWidget\" 'g-quark)
+=> 232
+  (convert-to-foreign \"gboolean\" 'g-quark)
+=> 9
+  (convert-to-foreign nil 'g-quark)
+=> 0
+     @end{pre}
+     Translate a @code{GQuark} identifier to a Lisp string:
+     @begin{pre}
+  (convert-from-foreign 232 'g-quark)
+=> \"GtkWidget\"
+  (convert-from-foreign 9 'g-quark)
+=> \"gboolean\"
+  (convert-from-foreign 0 'g-quark)
+=> NIL
+     @end{pre}
+  @end{dictionary}
+  @see-function{g-type-qdata}")
 
 (export 'g-quark)
 
@@ -118,22 +137,27 @@
 ;;; g_quark_from_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_quark_from_string" g-quark-from-string) %g-quark
-  (string :string))
+;(defcfun ("g_quark_from_string" %g-quark-from-string) %g-quark
+;  (str :string))
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'g-quark-from-string 'function)
- "@version{2013-6-1}
-  @argument[string]{a string}
-  @return{The @type{g-quark} identifying the @arg{string}, or 0 if @arg{string}
-    is @code{nil}.}
-  @begin{short}
-    Gets the @type{g-quark} identifying the given @arg{string}.
-  @end{short}
-  If the @arg{string} does not currently have an associated @type{g-quark}, a
-  new @type{g-quark} is created, using a copy of the @arg{string}.")
+;(defun g-quark-from-string (str)
+;  (%g-quark-from-string (if str str (null-pointer))))
 
-(export 'g-quark-from-string)
+;#+cl-cffi-gtk-documentation
+;(setf (documentation 'g-quark-from-string 'function)
+; "@version{2020-10-3}
+;  @argument[str]{a string}
+;  @return{The @type{g-quark} identifying @arg{str}, or 0 if @arg{str}
+;    is @code{nil}.}
+;  @begin{short}
+;    Gets the @type{g-quark} identifying the given @arg{str}.
+;  @end{short}
+;  If @arg{str} does not currently have an associated @type{g-quark}, a
+;  new @type{g-quark} is created, using a copy of the @arg{str}.
+;  @see-type{g-quark}
+;  @see-function{g-quark-from-string}")
+
+;(export 'g-quark-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_from_static_string ()
@@ -163,14 +187,14 @@
 ;;; g_quark_to_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_quark_to_string" g-quark-to-string) :string
- "@version{2013-6-1}
-  @argument[quark]{a @type{g-quark}}
-  @return{The string associated with the @type{g-quark}.}
-  Gets the string associated with the given @type{g-quark}."
-  (quark %g-quark))
+;(defcfun ("g_quark_to_string" g-quark-to-string) :string
+; "@version{2013-6-1}
+;  @argument[quark]{a @type{g-quark}}
+;  @return{The string associated with the @type{g-quark}.}
+;  Gets the string associated with the given @type{g-quark}."
+;  (quark %g-quark))
 
-(export 'g-quark-to-string)
+;(export 'g-quark-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_try_string ()

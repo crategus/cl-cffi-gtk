@@ -1,14 +1,15 @@
-
 (def-suite glib-quark :in glib-suite)
 (in-suite glib-quark)
 
-(test g-quark-from-string
-  (is-true (integerp (g-quark-from-string "string1")))
-  (is-true (integerp (g-quark-from-string "string2"))))
+(test g-quark-convert-to-foreign
+  (is (= 0 (convert-to-foreign nil 'g-quark)))
+  (is (= 0 (convert-to-foreign (null-pointer) 'g-quark)))
+  (is (integerp (convert-to-foreign "gboolean" 'g-quark))))
 
-(test g-quark-to-string
-  (let ((id-1 (g-quark-from-string "string1"))
-        (id-2 (g-quark-from-string "string2")))
-    (is (equal "string1" (g-quark-to-string id-1)))
-    (is (equal "string2" (g-quark-to-string id-2)))))
+(test g-quark-convert-from-foreign
+  (let ((id (convert-to-foreign "string1" 'g-quark)))
+    (is (string= "string1" (convert-from-foreign id 'g-quark))))
+  (is-false (convert-from-foreign 0 'g-quark))
+  (is (stringp (convert-from-foreign 9 'g-quark))))
 
+;;; 2020-10-3
