@@ -269,13 +269,13 @@
  lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the
-      currently focused item.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control activation
-      programmatically.
-      The default bindings for this signal are Space, Return and Enter.
+      currently focused item. Applications should not connect to it, but may
+      emit it with the function @fun{g-signal-emit} if they need to control
+      activation programmatically. The default bindings for this signal are
+      Space, Return and Enter.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"item-activated\" signal}
       @begin{pre}
@@ -286,7 +286,8 @@
       item. It is also emitted when a non-editable item is selected and one of
       the keys: Space, Return or Enter is pressed.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
         @entry[path]{The @class{gtk-tree-path} for the activated item.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
@@ -294,11 +295,10 @@
  lambda (iconview step count)    : Action
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control the cursor
-      programmatically.
-      The default bindings for this signal include
+      the user initiates a cursor movement. Applications should not connect to
+      it, but may emit it with the function @fun{g-signal-emit} if they need to
+      control the cursor programmatically. The default bindings for this signal
+      include
       @begin{itemize}
         @item{Arrow keys which move by individual steps.}
         @item{Home/End keys which move to the first/last item.}
@@ -307,7 +307,8 @@
       All of these will extend the selection when combined with the Shift
       modifier.
       @begin[code]{table}
-        @entry[iconview]{The object which received the signal.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget which received the
+          signal.}
         @entry[step]{The granularity of the move, as a
           @symbol{gtk-movement-step}.}
         @entry[count]{The number of step units to move.}
@@ -318,24 +319,23 @@
       @end{pre}
       A keybinding signal which gets emitted when the user selects all items.
       Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control selection
-      programmatically.
+      @fun{g-signal-emit} if they need to control selection programmatically.
       The default binding for this signal is Ctrl-a.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"select-cursor-item\" signal}
       @begin{pre}
  lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user selects the item that
-      is currently focused.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control selection
-      programmatically.
-      There is no default binding for this signal.
+      is currently focused. Applications should not connect to it, but may emit
+      it with the function @fun{g-signal-emit} if they need to control selection
+      programmatically. There is no default binding for this signal.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"selection-changed\" signal}
       @begin{pre}
@@ -344,7 +344,8 @@
      The \"selection-changed\" signal is emitted when the selection (i. e. the
      set of selected items) changes.
      @begin[code]{table}
-       @entry[iconview]{The object on which the signal is emitted.}
+       @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+         emitted.}
      @end{table}
     @subheading{The \"toggle-cursor-item\" signal}
       @begin{pre}
@@ -352,13 +353,13 @@
       @end{pre}
       A keybinding signal which gets emitted when the user toggles whether the
       currently focused item is selected or not. The exact effect of this depend
-      on the selection mode.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control selection
-      programmatically.
-      There is no default binding for this signal is Ctrl-Space.
+      on the selection mode. Applications should not connect to it, but may emit
+      it with the function @fun{g-signal-emit} if they need to control selection
+      programmatically. There is no default binding for this signal is
+      Ctrl-Space.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
@@ -366,11 +367,11 @@
       @end{pre}
       A keybinding signal which gets emitted when the user unselects all items.
       Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control selection
-      programmatically.
+      @fun{g-signal-emit} if they need to control selection programmatically.
       The default binding for this signal is Ctrl-Shift-a.
       @begin[code]{table}
-        @entry[iconview]{The object on which the signal is emitted.}
+        @entry[iconview]{The @sym{gtk-icon-view} widget on which the signal is
+          emitted.}
       @end{table}
   @end{dictionary}
   @see-slot{gzk-icon-view-activate-on-single-click}

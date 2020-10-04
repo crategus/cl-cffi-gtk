@@ -417,9 +417,10 @@
 
 (defcfun ("gtk_accel_group_activate" gtk-accel-group-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-19}
+ "@version{2020-10-4}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  @argument[accel-quark]{the @type{g-quark} ID for the accelerator name}
+  @argument[accel-quark]{a string with the @type{g-quark} ID for the accelerator
+    name}
   @argument[acceleratable]{the @class{g-object}, usually a @class{gtk-window}
     widget, on which to activate the accelerator}
   @argument[accel-key]{accelerator keyval of type @code{:uint} from a key event}

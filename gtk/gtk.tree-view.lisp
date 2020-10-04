@@ -534,11 +534,11 @@
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user presses one of the cursor keys. Applications should not connect
-      to it, but may emit it with the function @fun{g-signal-emit-by-name} if
-      they need to control the cursor programmatically. In contrast to the
-      functions @fun{gtk-tree-view-cursor} and
-      @fun{gtk-tree-view-set-cursor-on-cell} when moving horizontally
-      \"move-cursor\" does not reset the current selection.
+      to it, but may emit it with the function @fun{g-signal-emit} if they need
+      to control the cursor programmatically. In contrast to the functions
+      @fun{gtk-tree-view-cursor} and @fun{gtk-tree-view-set-cursor-on-cell}
+      when moving horizontally \"move-cursor\" does not reset the current
+      selection.
       @begin[code]{table}
         @entry[tree-view]{The @sym{gtk-tree-view} widget on which the signal is
           emitted.}

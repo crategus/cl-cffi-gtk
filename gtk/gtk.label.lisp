@@ -387,12 +387,13 @@
  lambda (label)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user activates a link in
-      the label.
-      Applications may also emit the signal with @fun{g-signal-emit-by-name} if
-      they need to control activation of URIs programmatically.
-      The default bindings for this signal are all forms of the Enter key.
+      the label. Applications may also emit the signal with the function
+      @fun{g-signal-emit} if they need to control activation of URIs
+      programmatically. The default bindings for this signal are all forms of
+      the Enter key.
       @begin[code]{table}
-        @entry[label]{The label on which the signal was emitted.}
+        @entry[label]{The @sym{gtk-label} widget on which the signal was
+          emitted.}
       @end{table}
     @subheading{The \"activate-link\" signal}
       @begin{pre}
@@ -402,7 +403,8 @@
       to it to override the default behaviour, which is to call the function
       @fun{gtk-show-uri}.
       @begin[code]{table}
-        @entry[label]{The label on which the signal was emitted.}
+        @entry[label]{The @sym{gtk-label} widget on which the signal was
+          emitted.}
         @entry[uri]{The URI that is activated.}
         @entry[Returns]{@em{True} if the link has been activated.}
       @end{table}
@@ -411,10 +413,10 @@
  lambda (label)    : Action
       @end{pre}
       The \"copy-clipboard\" signal is a keybinding signal which gets emitted to
-      copy the selection to the clipboard.
-      The default binding for this signal is Ctrl-c.
+      copy the selection to the clipboard. The default binding for this signal
+      is Ctrl-c.
       @begin[code]{table}
-        @entry[label]{The object which received the signal.}
+        @entry[label]{The @sym{gtk-label} widget which received the signal.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
@@ -422,10 +424,9 @@
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement. If the cursor is not visible in
-      entry, this signal causes the viewport to be moved instead.
-      Applications should not connect to it, but may emit it with
-      @fun{g-signal-emit-by-name} if they need to control the cursor
-      programmatically.
+      entry, this signal causes the viewport to be moved instead. Applications
+      should not connect to it, but may emit it with the function
+      @fun{g-signal-emit} if they need to control the cursor programmatically.
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the
       Shift modifer does not. There are too many key combinations to list them
@@ -436,7 +437,7 @@
         @item{Home/End keys move to the ends of the buffer.}
       @end{itemize}
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-label} widget which received the signal.}
         @entry[step]{The granularity of the move, as a value of the
           @symbol{gtk-movement-step} enumeration.}
         @entry[count]{The number of step units to move.}
@@ -452,7 +453,8 @@
       If you need to add items to the context menu, connect to this signal and
       append your menuitems to the menu.
       @begin[code]{table}
-        @entry[label]{The label on which the signal is emitted.}
+        @entry[label]{The @sym{gtk-label} widget on which the signal is
+          emitted.}
         @entry[menu]{The menu that is being populated.}
       @end{table}
   @end{dictionary}

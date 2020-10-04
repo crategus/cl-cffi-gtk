@@ -285,9 +285,9 @@
       @end{pre}
       The \"change-value\" signal is a keybinding signal which gets emitted when
       the user initiates a value change. Applications should not connect to it,
-      but may emit it with @fun{g-signal-emit-by-name} if they need to control
-      the cursor programmatically. The default bindings for this signal are
-      Up/Down and PageUp and/PageDown.
+      but may emit it with the function @fun{g-signal-emit} if they need to
+      control the cursor programmatically. The default bindings for this signal
+      are Up/Down and PageUp and/PageDown.
       @begin[code]{table}
         @entry[spin-button]{The @sym{gtk-spin-button} widget on which the signal
           was emitted.}

@@ -259,8 +259,8 @@
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement. Applications should not connect to
-      it, but may emit it with the function @fun{g-signal-emit-by-name} if they
-      need to control the cursor programmatically.
+      it, but may emit it with the function @fun{g-signal-emit} if they need to
+      control the cursor programmatically.
 
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the

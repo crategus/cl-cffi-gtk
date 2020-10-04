@@ -665,9 +665,8 @@
       @end{pre}
       A keybinding signal which gets emitted when the user activates the entry.
       Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control activation
-      programmatically. The default bindings for this signal are all forms of
-      the Enter key.
+      @fun{g-signal-emit} if they need to control activation programmatically.
+      The default bindings for this signal are all forms of the Enter key.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget on which the signal is
           emitted.}
@@ -772,11 +771,11 @@
       the user initiates a cursor movement. If the cursor is not visible in
       entry, this signal causes the viewport to be moved instead. Applications
       should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control the cursor
-      programmatically. The default bindings for this signal come in two
-      variants, the variant with the Shift modifier extends the selection, the
-      variant without the Shift modifer does not. There are too many key
-      combinations to list them all here.
+      @fun{g-signal-emit} if they need to control the cursor programmatically.
+      The default bindings for this signal come in two variants, the variant
+      with the Shift modifier extends the selection, the variant without the
+      Shift modifer does not. There are too many key combinations to list them
+      all here.
       @begin{itemize}
         @item{Arrow keys move by individual characters/lines.}
         @item{Ctrl-arrow key combinations move by words/paragraphs.}

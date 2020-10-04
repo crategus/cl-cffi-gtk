@@ -558,14 +558,14 @@
       the user initiates a cursor movement. If the cursor is not visible in the
       text view, this signal causes the viewport to be moved instead.
       Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control the cursor
-      programmatically. The default bindings for this signal come in two
-      variants, the variant with the Shift modifier extends the selection, the
-      variant without the Shift modifer does not. There are too many key
-      combinations to list them all here. Arrow keys move by individual
-      characters/lines Ctrl-arrow key combinations move by words/paragraphs
-      Home/End keys move to the ends of the buffer PageUp/PageDown keys move
-      vertically by pages Ctrl-PageUp/PageDown keys move horizontally by pages.
+      @fun{g-signal-emit} if they need to control the cursor programmatically.
+      The default bindings for this signal come in two variants, the variant
+      with the Shift modifier extends the selection, the variant without the
+      Shift modifer does not. There are too many key combinations to list them
+      all here. Arrow keys move by individual characters/lines Ctrl-arrow key
+      combinations move by words/paragraphs Home/End keys move to the ends of
+      the buffer PageUp/PageDown keys move vertically by pages
+      Ctrl-PageUp/PageDown keys move horizontally by pages.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
         @entry[step]{The granularity of the move, as a

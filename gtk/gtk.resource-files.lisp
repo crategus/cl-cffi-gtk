@@ -484,10 +484,9 @@
 
     The action that is bound to the key is a sequence of signal names
     (strings) followed by parameters for each signal. The signals must be
-    action signals. (See the function @fun{g-signal-new}). Each parameter can
-    be a float, integer, string, or unquoted string representing an enumeration
-    value. The types of the parameters specified must match the types of
-    the parameters of the signal.
+    action signals. Each parameter can be a float, integer, string, or unquoted
+    string representing an enumeration value. The types of the parameters
+    specified must match the types of the parameters of the signal.
 
     Binding sets are connected to widgets in the same manner as styles,
     with one difference: Binding sets override other binding sets first by
