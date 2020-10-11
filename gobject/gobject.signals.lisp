@@ -315,59 +315,6 @@
     nil))
 
 ;;; ----------------------------------------------------------------------------
-
-(defstruct signal-info
-  id
-  name
-  owner-type
-  flags
-  return-type
-  param-types
-  detail)
-
-(export 'signal-info)
-(export 'signal-info-id)
-(export 'signal-info-name)
-(export 'signal-info-owner-type)
-(export 'signal-info-flags)
-(export 'signal-info-return-type)
-(export 'signal-info-param-types)
-(export 'signal-info-detail)
-
-(defmethod print-object ((instance signal-info) stream)
-  (if *print-readably*
-      (call-next-method)
-      (print-unreadable-object (instance stream)
-         (format stream
-                 "Signal [#~A] ~A ~A.~A~@[::~A~] (~{~A~^, ~})~@[ [~{~A~^, ~}]~]"
-                 (signal-info-id instance)
-                 (gtype-name (signal-info-return-type instance))
-                 (gtype-name (signal-info-owner-type instance))
-                 (signal-info-name instance)
-                 (signal-info-detail instance)
-                 (mapcar #'gtype-name (signal-info-param-types instance))
-                 (signal-info-flags instance)))))
-
-;;; ----------------------------------------------------------------------------
-
-;; Utility function to list all signals of a given type.
-
-(defun list-signals (type &key include-inherited)
-  (unless (g-type= type +g-type-invalid+)
-    (let ((signals (with-foreign-object (n-ids :uint)
-                     (with-unwind (ids (%g-signal-list-ids type n-ids) g-free)
-                       (iter (for i from 0 below (mem-ref n-ids :uint))
-                             (collect
-                               (g-signal-query (mem-aref ids :uint i))))))))
-      (if include-inherited
-          (nconc
-            (list-signals (g-type-parent type) :include-inherited t)
-            (iter (for interface in (g-type-interfaces type))
-                  (nconcing (list-signals interface :include-inherited t)))
-                  signals)
-          signals))))
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GSignalInvocationHint
 ;;;
 ;;; struct GSignalInvocationHint {
@@ -472,6 +419,7 @@
       version. A warning will be generated if it is connected while running with
       @code{G_ENABLE_DIAGNOSTIC = 1}. Since 2.32}
   @end{table}
+  @see-function{g-signal-query}
   @see-function{g-signal-emit}")
 
 (export 'g-signal-flags)
@@ -524,48 +472,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GSignalQuery
-;;;
-;;; struct GSignalQuery {
-;;;   guint        signal_id;
-;;;   const gchar  *signal_name;
-;;;   GType        itype;
-;;;   GSignalFlags signal_flags;
-;;;   /* mangled with G_SIGNAL_TYPE_STATIC_SCOPE flag */
-;;;   GType        return_type;
-;;;   guint        n_params;
-;;;   /* mangled with G_SIGNAL_TYPE_STATIC_SCOPE flag */
-;;;   const GType  *param_types;
-;;; };
-;;;
-;;; A structure holding in-depth information for a specific signal. It is filled
-;;; in by the g_signal_query() function.
-;;;
-;;; guint signal_id;
-;;;     The signal id of the signal being queried, or 0 if the signal to be
-;;;     queried was unknown.
-;;;
-;;; const gchar *signal_name;
-;;;     The signal name.
-;;;
-;;; GType itype;
-;;;     The interface/instance type that this signal can be emitted for.
-;;;
-;;; GSignalFlags signal_flags;
-;;;     The signal flags as passed in to g_signal_new().
-;;;
-;;; GType return_type;
-;;;     The return type for user callbacks.
-;;;
-;;; guint n_params;
-;;;     The number of parameters that user callbacks take.
-;;;
-;;; const GType *param_types;
-;;;     The individual parameter types for user callbacks, note that the
-;;;     effective callback signature is:
-;;;
-;;;     @return_type callback (gpointer     data1,
-;;;                            [param_types param_names,]
-;;;                            gpointer     data2);
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %g-signal-query
@@ -578,6 +484,38 @@
   (:param-types (:pointer (g-type :mangled-p t))))
 
 (defstruct g-signal-query
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-2}
+  @begin{short}
+    A structure holding in-depth information for a specific signal.
+  @end{short}
+  It is filled in by the function @fun{g-signal-query}.
+  @begin{pre}
+(defstruct g-signal-query
+  signal-id
+  signal-name
+  owner-type
+  signal-flags
+  return-type
+  param-types
+  signal-detail)
+  @end{pre}
+  @begin[code]{table}
+    @entry[signal-id]{A @code{:uint} with the signal ID of the signal being
+      queried, or 0 if the signal to be queried was unknown.}
+    @entry[signal-name]{A string with the signal name.}
+    @entry[owner-type]{The interface/instance @class{g-object} type that this
+      signal can be emitted for.}
+    @entry[signal-flags]{The signal flags of type @symbol{g-signal-flags}.}
+    @entry[return-type]{The return @class{g-type} for user callbacks.}
+    @entry[param-types]{A list with the individual parameter types for user
+      callbacks.}
+    @enrtry[signal-detail]{A string with the signal detail.}
+  @end{table}
+  @see-class{g-type}
+  @see-class{g-object}
+  @see-symbol{g-signal-flags}
+  @see-function{g-signal-query}"
   signal-id
   signal-name
   owner-type
@@ -601,12 +539,147 @@
                  (g-signal-query-signal-flags instance)))))
 
 (export 'g-signal-query)
+
+;;; ----------------------------------------------------------------------------
+;;; Accessor details
+;;; ----------------------------------------------------------------------------
+
+;;; --- g-signal-query-signal-id -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-signal-id atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-signal-id 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-signal-id instance) => signal-id}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[signal-id]{a @code{:uint} with the signal ID of the signal being
+      queried, or 0 if the signal to be queried was unknown}
+  @begin{short}
+    Accessor of the @code{signal-id} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-signal-id)
+
+;;; --- g-signal-query-signal-name ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-signal-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-signal-name 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-signal-name instance) => signal-name}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[signal-name]{a string with the signal name}
+  @begin{short}
+    Accessor of the @code{signal-name} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-signal-name)
+
+;;; --- g-signal-query-owner-type ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-owner-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-owner-type 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-owner-type instance) => owner-type}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[owner-type]{the interface/instance @class{g-object} type that this
+    signal can be emitted for}
+  @begin{short}
+    Accessor of the @code{owner-type} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-class{g-object}
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-owner-type)
+
+;;; --- g-signal-query-signal-flags ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-signal-flags atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-signal-flags 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-signal-flags instance) => signal-flags}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[signal-flags]{the signal flags of type @symbol{g-signal-flags}}
+  @begin{short}
+    Accessor of the @code{signal-flags} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-symbol{g-signal-flags}
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-signal-flags)
+
+;;; --- g-signal-query-return-type ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-return-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-return-type 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-return-type instance) => return-type}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[return-type]{the return @class{g-type} for user callbacks}
+  @begin{short}
+    Accessor of the @code{return-type} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-return-type)
+
+;;; --- g-signal-query-param-types ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-param-types atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-param-types 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-param-types instance) => param-types}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[param-types]{a list with the individual parameter types for user
+    callbacks}
+  @begin{short}
+    Accessor of the @code{param-types} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-param-types)
+
+;;; --- g-signal-query-signal-detail -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-query-signal-detail atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-signal-query-signal-detail 'function)
+ "@version{2020-10-3}
+  @syntax[]{(g-signal-query-signal-detail instance) => signal-detail}
+  @argument[instance]{a @struct{g-signal-query} structure}
+  @argument[signal-detail]{a string with the signal detail}
+  @begin{short}
+    Accessor of the @code{signal-detail} slot of the @class{g-signal-query}
+    structure.
+  @end{short}
+  See the function @fun{g-signal-query}.
+  @see-function{g-signal-query}")
+
 (export 'g-signal-query-signal-detail)
 
 ;;; ----------------------------------------------------------------------------
@@ -950,49 +1023,94 @@
 
 (defun g-signal-query (signal-id)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-2}
+ "@version{2020-10-3}
   @argument[signal-id]{a @code{:uint} with the signal ID of the signal to query
     information for}
-  @begin{return}
-    @code{query} -- the signal info
-  @end{return}
+  @return{A @struct{g-signal-query} structure with the signal info.}
   @begin{short}
     Returns the signal info.
   @end{short}
-
   Queries the signal system for in-depth information about a specific signal.
-  This function will return signal-specific information. If an invalid signal ID
-  is passed in, the @arg{signal-id} member is 0."
+  This function will return signal-specific information. If an invalid signal
+  ID is passed in, the @arg{signal-id} member is 0.
+  @begin[Example]{dictionary}
+    Retrieve information for the \"draw\" signal of a widget:
+    @begin{pre}
+  (setq query (g-signal-query (g-signal-lookup \"show\" \"GtkWidget\")))
+=> #<Signal [#36] void GtkWidget.show () [RUN-FIRST]>
+  (g-signal-query-signal-id query)
+=> 36
+  (g-signal-query-signal-name query)
+=> \"show\"
+  (g-signal-query-owner-type query)
+=> #<GTYPE :name \"GtkWidget\" :id 18826464>
+  (g-signal-query-signal-flags query)
+=> (:RUN-FIRST)
+  (g-signal-query-return-type query)
+=> #<GTYPE :name \"void\" :id 4>
+  (g-signal-query-param-types query)
+=> NIL
+  (g-signal-query-signal-detail query)
+=> NIL
+    @end{pre}
+    A second example for the \"drag-drop\" signal of a widget:
+    @begin{pre}
+  (setq query (g-signal-query (g-signal-lookup \"drag-drop\" \"GtkWidget\")))
+=> #<Signal [#91] gboolean GtkWidget.drag-drop (GdkDragContext, gint, gint, guint) [RUN-LAST]>
+  (g-signal-query-signal-id query)
+=> 91
+  (g-signal-query-signal-name query)
+=> \"drag-drop\"
+  (g-signal-query-owner-type query)
+=> #<GTYPE :name \"GtkWidget\" :id 18826464>
+  (g-signal-query-signal-flags query)
+=> (:RUN-LAST)
+  (g-signal-query-return-type query)
+=> #<GTYPE :name \"gboolean\" :id 20>
+  (g-signal-query-param-types query)
+=> (#<GTYPE :name \"GdkDragContext\" :id 18798624> #<GTYPE :name \"gint\" :id 24>
+ #<GTYPE :name \"gint\" :id 24> #<GTYPE :name \"guint\" :id 28>)
+  (g-signal-query-signal-detail query)
+=> NIL
+    @end{pre}
+  @end{dictionary}
+  @see-struct{g-signal-query}"
   (with-foreign-object (query '(:struct %g-signal-query))
     (%g-signal-query signal-id query)
     (assert (not (zerop (foreign-slot-value query
                                             '(:struct %g-signal-query)
                                             :signal-id))))
     (let ((param-types
-           (iter (with param-types = (foreign-slot-value query
-                                                         '(:struct %g-signal-query)
-                                                         :param-types))
-                 (for i from 0 below (foreign-slot-value query
-                                                         '(:struct %g-signal-query)
-                                                         :n-params))
-                 (for param-type = (mem-aref param-types
-                                             '(g-type :mangled-p t)
-                                             i))
-                 (collect param-type))))
-      (make-signal-info :id signal-id
-                        :name (foreign-slot-value query
-                                                  '(:struct %g-signal-query)
-                                                  :signal-name)
-                        :owner-type (foreign-slot-value query
-                                                        '(:struct %g-signal-query)
-                                                        :owner-type)
-                        :flags (foreign-slot-value query
-                                                   '(:struct %g-signal-query)
-                                                   :signal-flags)
-                        :return-type (foreign-slot-value query
-                                                         '(:struct %g-signal-query)
-                                                         :return-type)
-                        :param-types param-types))))
+            (iter
+              (with param-types = (foreign-slot-value query
+                                                      '(:struct %g-signal-query)
+                                                      :param-types))
+              (for i from 0 below (foreign-slot-value query
+                                                      '(:struct %g-signal-query)
+                                                      :n-params))
+              (for param-type = (mem-aref param-types
+                                          '(g-type :mangled-p t)
+                                          i))
+              (collect param-type))))
+      (make-g-signal-query :signal-id
+                           signal-id
+                           :signal-name
+                           (foreign-slot-value query
+                                               '(:struct %g-signal-query)
+                                               :signal-name)
+                           :owner-type
+                           (foreign-slot-value query
+                                               '(:struct %g-signal-query)
+                                               :owner-type)
+                           :signal-flags
+                           (foreign-slot-value query
+                                               '(:struct %g-signal-query)
+                                               :signal-flags)
+                           :return-type
+                           (foreign-slot-value query
+                                               '(:struct %g-signal-query)
+                                               :return-type)
+                           :param-types param-types))))
 
 (export 'g-signal-query)
 
@@ -1002,21 +1120,31 @@
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[name]{the signal's name}
-  @argument[itype]{the type that the signal operates on}
-  @return{The signal's identifying number, or 0 if no signal was found.}
+ "@version{2020-10-2}
+  @argument[name]{a string with the signal's name}
+  @argument[itype]{the @class{g-type} that the signal operates on}
+  @return{A @code{:uint} with the signal's identifying number, or 0 if no
+    signal was found.}
   @begin{short}
-    Given the name of the signal and the type of object it connects to, gets the
-    signal's identifying integer.
+    Given the name of the signal and the type of object it connects to, gets
+    the signal's identifying integer.
   @end{short}
   Emitting the signal by number is somewhat faster than using the name each
-  time.
-
-  Also tries the ancestors of the given type.
-
-  See the function @fun{g-signal-new} for details on allowed signal names.
-  @see-function{g-signal-new}"
+  time. Also tries the ancestors of the given type.
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (g-signal-lookup \"notify\" \"GObject\")
+=> 1
+  (g-signal-lookup \"notify\" \"GtkWidget\")
+=> 1
+  (g-signal-lookup \"unknown\" \"GObject\")
+=> 0
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-type}
+  @see-function{g-signal-name}
+  @see-function{g-signal-query}
+  @see-function{g-signal-list-ids}"
   (name :string)
   (itype g-type))
 
@@ -1028,14 +1156,33 @@
 
 (defcfun ("g_signal_name" g-signal-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[signal-id]{the signal's identifying number}
-  @return{The signal name, or @code{nil} if the signal number was invalid.}
+ "@version{2020-10-3}
+  @argument[signal-id]{a @code{:uint} with the signal's identifying number}
+  @return{A string with the signal name, or @code{nil} if the signal number was
+    invalid.}
   @begin{short}
     Given the signal's identifier, finds its name.
   @end{short}
-
-  Two different signals may have the same name, if they have differing types."
+  Two different signals may have the same name, if they have differing types.
+  @begin[Example]{dictionary}
+    Get the signal ID for the \"draw\" signal and then get the name for the ID:
+    @begin{pre}
+  (g-signal-lookup \"draw\" \"GtkWidget\")
+=> 52
+  (g-signal-name *)
+=> \"draw\"
+    @end{pre}
+    List the IDs for a button widget and retrieves the names of the signals:
+    @begin{pre}
+  (g-signal-list-ids \"GtkButton\")
+=> (230 227 225 226 228 229)
+  (mapcar #'g-signal-name *)
+=> (\"activate\" \"clicked\" \"pressed\" \"released\" \"enter\" \"leave\")
+    @end{pre}
+  @end{dictionary}
+  @see-function{g-signal-query}
+  @see-function{g-signal-lookup}
+  @see-function{g-signal-list-ids}"
   (signal-id :uint))
 
 (export 'g-signal-name)
@@ -1048,18 +1195,24 @@
   (itype g-type)
   (n-ids (:pointer :uint)))
 
-;; Returns a list of signal ids for itype
-
 (defun g-signal-list-ids (itype)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[itype]{instance or interface type}
-  @return{A list of signal IDs.}
+ "@version{2020-10-3}
+  @argument[itype]{a instance or interface @class{g-type}}
+  @return{A list of signal IDs of type @code{:uint}.}
   @begin{short}
     Lists the signals by ID that a certain instance or interface type created.
   @end{short}
   Further information about the signals can be acquired through the function
   @fun{g-signal-query}.
+  @begin[Example]{dictionary}
+    Get the IDs for a window widget and show the names of the signals:
+    @begin{pre}
+  (mapcar #'g-signal-name (g-signal-list-ids \"GtkWindow\"))
+=> (\"keys-changed\" \"set-focus\" \"activate-focus\" \"activate-default\"
+    \"enable-debugging\")
+    @end{pre}
+  @end{dictionary}
   @see-function{g-signal-query}"
   (when (g-type-is-object itype) ; itype must be of type GObject
     (with-foreign-object (n-ids :uint)
@@ -1073,57 +1226,70 @@
 ;;; g_signal_emit ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-signal-emit (object signal-name &rest args)
+(defun g-signal-emit (instance detailed-signal &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[instance]{the instance the signal is being emitted on}
-  @argument[signal-name]{the signal name}
+ "@version{2020-10-3}
+  @argument[instance]{the @class{g-object} instance the signal is being emitted
+    on}
+  @argument[detailed-signal]{a string with the detailed signal name}
   @argument[args]{parameters to be passed to the signal}
   @return{The return value of the signal.}
   @short{Emits a signal.}
-
   Note that the function @sym{g-signal-emit} resets the return value to the
-  default if no handlers are connected."
-  (let* ((object-type (g-type-from-instance (pointer object)))
-         (signal-info (g-signal-parse-name object-type signal-name)))
-    (unless signal-info
-      (error "Signal ~A not found on object ~A" signal-name object))
-    (let ((params-count (length (signal-info-param-types signal-info))))
-      (with-foreign-object (params '(:struct g-value) (1+ params-count)) ;
-        (set-g-value (mem-aptr params '(:struct g-value) 0)              ;
-                     object
-                     object-type
+  default if no handlers are connected.
+  @begin[Lisp implementation]{dictionary}
+    In the Lisp implementation this function takes not the signal ID but the
+    detailed signal name as an argument. For this case the C library has the
+    function @code{g_signal_emit_by_name()}, which is not implemented in the
+    Lisp binding.
+
+    At this time setting a @code{GParam} value is not implemented in the
+    Lisp binding. Therefore, you can not emit a \"notify::<property>\"
+    signal on an instance.
+  @end{dictionary}
+  @see-class{g-object}"
+  (let* ((instance-type (g-type-from-instance (pointer instance)))
+         (query (g-signal-parse-name instance-type detailed-signal)))
+    (unless query
+      (error "Signal ~A not found on instance ~A" detailed-signal instance))
+    (let ((params-count (length (g-signal-query-param-types query))))
+      (assert (= params-count (length args)))
+      (with-foreign-object (params '(:struct g-value) (1+ params-count))
+        (set-g-value (mem-aptr params '(:struct g-value) 0)
+                     instance
+                     instance-type
                      :zero-g-value t)
         (iter (for i from 0 below params-count)
               (for arg in args)
-              (for type in (signal-info-param-types signal-info))
-              (set-g-value (mem-aptr params '(:struct g-value) (1+ i)) ;
+              (for type in (g-signal-query-param-types query))
+              (set-g-value (mem-aptr params '(:struct g-value) (1+ i))
                            arg
                            type
                            :zero-g-value t))
         (prog1
-          (if (eq (signal-info-return-type signal-info)
-                  (gtype +g-type-none+))
+          (if (equal (g-signal-query-return-type query)
+                     (gtype +g-type-none+))
               ;; Emit a signal which has no return value
-              (%g-signal-emitv params
-                               (signal-info-id signal-info)
-                               signal-name
-                               (null-pointer))
-              ;; Emit a signal which has a return value
-              (with-foreign-object (return-value '(:struct g-value)) ;
-                (g-value-zero return-value)
-                (g-value-init return-value
-                              (signal-info-return-type signal-info))
+              (let ((detail (g-signal-query-signal-detail query)))
                 (%g-signal-emitv params
-                                 (signal-info-id signal-info)
-                                 signal-name
-                                 return-value)
+                                 (g-signal-query-signal-id query)
+                                 (if detail detail (null-pointer))
+                                 (null-pointer)))
+              ;; Emit a signal which has a return value
+              (with-foreign-object (return-value '(:struct g-value))
+                (g-value-init return-value
+                              (g-signal-query-return-type query))
+                (let ((detail (g-signal-query-signal-detail query)))
+                  (%g-signal-emitv params
+                                   (g-signal-query-signal-id query)
+                                   (if detail detail (null-pointer))
+                                   return-value))
                 (prog1
                   ;; Return value of the signal
                   (parse-g-value return-value)
                   (g-value-unset return-value))))
           (iter (for i from 0 below (1+ params-count))
-                (g-value-unset (mem-aptr params '(:struct g-value) i))))))))  ;
+                (g-value-unset (mem-aptr params '(:struct g-value) i))))))))
 
 (export 'g-signal-emit)
 
@@ -1485,19 +1651,22 @@
 
 (defcfun ("g_signal_handler_block" g-signal-handler-block) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[instance]{the instance to block the signal handler of}
-  @argument[handler-id]{handler ID of the handler to be blocked}
+ "@version{2020-10-3}
+  @argument[instance]{the @class{g-object} instance to block the signal handler
+    of}
+  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be blocked}
   @begin{short}
     Blocks a handler of an instance so it will not be called during any signal
     emissions unless it is unblocked again.
   @end{short}
-  Thus \"blocking\" a signal handler means to temporarily deactive it, a signal
+  Thus \"blocking\" a signal handler means to temporarily deactive it. A signal
   handler has to be unblocked exactly the same amount of times it has been
   blocked before to become active again.
 
   The @arg{handler-id} has to be a valid signal handler ID, connected to a
-  signal of instance."
+  signal of instance.
+  @see-class{g-object}
+  @see-function{g-signal-handler-unblock}"
   (instance g-object)
   (handler-id :ulong))
 
@@ -1509,11 +1678,14 @@
 
 (defcfun ("g_signal_handler_unblock" g-signal-handler-unblock) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[instance]{the instance to unblock the signal handler of}
-  @argument[handler-id]{handler ID of the handler to be unblocked}
+ "@version{2020-10-3}
+  @argument[instance]{the @class{g-object} instance to unblock the signal
+    handler of}
+  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be
+    unblocked}
   @begin{short}
-    Undoes the effect of a previous @fun{g-signal-handler-block} call.
+    Undoes the effect of a previous call of the function
+    @fun{g-signal-handler-block}.
   @end{short}
   A blocked handler is skipped during signal emissions and will not be invoked,
   unblocking it (for exactly the amount of times it has been blocked before)
@@ -1524,8 +1696,9 @@
   of a currently ongoing emission depends on how far that emission has
   proceeded yet).
 
-  The @arg{handler-id} has to be a valid id of a signal handler that is
+  The @arg{handler-id} has to be a valid ID of a signal handler that is
   connected to a signal of instance and is currently blocked.
+  @see-class{g-object}
   @see-function{g-signal-handler-block}"
   (instance g-object)
   (handler-id :ulong))
@@ -1538,9 +1711,11 @@
 
 (defcfun ("g_signal_handler_disconnect" g-signal-handler-disconnect) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[instance]{the instance to remove the signal handler from}
-  @argument[handler-id]{handler ID of the handler to be disconnected}
+ "@version{2020-10-3}
+  @argument[instance]{the @class{g-object} instance to remove the signal
+    handler from}
+  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be
+    disconnected}
   @begin{short}
     Disconnects a handler from an instance so it will not be called during any
     future or currently ongoing emissions of the signal it has been connected
@@ -1548,8 +1723,10 @@
   @end{short}
   The @arg{handler-id} becomes invalid and may be reused.
 
-  The @arg{handler-id} has to be a valid signal handler id, connected to a
-  signal of instance."
+  The @arg{handler-id} has to be a valid signal handler ID, connected to a
+  signal of instance.
+  @see-class{g-object}
+  @see-function{g-signal-connect}"
   (object g-object)
   (handler-id :ulong))
 
@@ -1749,7 +1926,8 @@
     Returns whether @arg{handler-id} is the ID of a handler connected to
     instance.
   @end{short}
-  @see-class{g-object}"
+  @see-class{g-object}
+  @see-function{g-signal-connect}"
   (instance g-object)
   (handler-id :ulong))
 
@@ -1866,7 +2044,8 @@
   are difficult to compute. A class implementor may opt to not emit the signal
   if no one is attached anyway, thus saving the cost of building the arguments.
   @see-class{g-object}
-  @see-type{g-quark}"
+  @see-type{g-quark}
+  @see-function{g-signal-connect}"
   (instance g-object)
   (signal-id :uint)
   (detail g-quark)
@@ -2203,9 +2382,9 @@
 (defun g-signal-parse-name (owner-type signal-name)
   (with-foreign-objects ((signal-id :uint) (detail 'g-quark))
     (when (%g-signal-parse-name signal-name owner-type signal-id detail t)
-      (let ((signal-info (g-signal-query (mem-ref signal-id :uint))))
-        (setf (signal-info-detail signal-info) (mem-ref detail 'g-quark))
-        signal-info))))
+      (let ((query (g-signal-query (mem-ref signal-id :uint))))
+        (setf (g-signal-query-signal-detail query) (mem-ref detail 'g-quark))
+        query))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_get_invocation_hint ()
