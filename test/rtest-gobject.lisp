@@ -8,7 +8,9 @@
 (load "rtest-gobject-g-value.lisp")
 (load "rtest-gobject-enumeration.lisp")
 (load "rtest-gobject-param.lisp")
+(load "rtest-gobject-param-spec.lisp")
 (load "rtest-gobject-base.lisp")
 (load "rtest-gobject-utils.lisp")
 (load "rtest-gobject-signals.lisp")
 
+;;; 2020-10-10

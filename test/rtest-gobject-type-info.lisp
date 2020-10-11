@@ -635,7 +635,6 @@
   (is (equal '(A B C) (g-type-qdata "gboolean" "mydata")))
   (is-false (setf (g-type-qdata "gboolean" "mydata") nil))
   (is-false (g-type-qdata "gboolean" "mydata"))
-
   ;; Attach and read data for a "GtkButton" type
   (is (string= "a string" (setf (g-type-qdata "GtkButton" "mydata") "a string")))
   (is (string= "a string" (g-type-qdata "GtkButton" "mydata")))

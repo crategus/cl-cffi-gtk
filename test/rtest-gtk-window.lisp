@@ -1,7 +1,12 @@
 (def-suite gtk-window :in gtk-suite)
 (in-suite gtk-window)
 
-;;; --- GtkWindow --------------------------------------------------------------
+;;; --- Types and Values -------------------------------------------------------
+
+;;;     GtkWindowType                                  --> gtk.enumerations.lisp
+;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
+
+;;;     GtkWindow
 
 (test gtk-window-class
   ;; Type checks
@@ -176,13 +181,7 @@
                          "window-position" "GtkWindowPosition" T T)))
              (get-g-type-definition "GtkWindow"))))
 
-;;; Types and Values
-;;;
-;;;     GtkWindow
-;;;     GtkWindowType                                  --> gtk.enumerations.lisp
-;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
-
-;;; --- gtk-window-properties --------------------------------------------------
+;;; --- Properties -------------------------------------------------------------
 
 (test gtk-window-properties
   (let ((window (make-instance 'gtk-window)))
@@ -221,6 +220,82 @@
     (is-false (gtk-window-urgency-hint window))
     (is (eq :none (gtk-window-window-position window)))
 ))
+
+;;; --- Style Properties -------------------------------------------------------
+
+;;;              gchar*  decoration-button-layout    Read
+;;;               gint   decoration-resize-handle    Read / Write
+
+;;; --- Signals ----------------------------------------------------------------
+
+;;;               void   activate-default            Action
+;;;               void   activate-focus              Action
+;;;           gboolean   enable-debugging            Action
+;;;               void   keys-changed                Run First
+;;;               void   set-focus                   Run Last
+
+(test gtk-window-signals
+  ;; Check the list of signals
+  (is (equal '("keys-changed" "set-focus" "activate-focus" "activate-default"
+               "enable-debugging")
+             (mapcar #'g-signal-name (g-signal-list-ids "GtkWindow"))))
+
+  ;; Query info for "activate-default"
+  (let ((query (g-signal-query (g-signal-lookup "activate-default" "GtkWindow"))))
+    (is (string= "activate-default" (g-signal-query-signal-name query)))
+    (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-LAST :ACTION)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '()
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query)))
+
+  ;; Query info for "activate-focus"
+  (let ((query (g-signal-query (g-signal-lookup "activate-focus" "GtkWindow"))))
+    (is (string= "activate-focus" (g-signal-query-signal-name query)))
+    (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-LAST :ACTION)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '()
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query)))
+
+  ;; Query info for "enable-debugging"
+  (let ((query (g-signal-query (g-signal-lookup "enable-debugging" "GtkWindow"))))
+    (is (string= "enable-debugging" (g-signal-query-signal-name query)))
+    (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-LAST :ACTION)
+               (g-signal-query-signal-flags query)))
+    (is (string= "gboolean" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '("gboolean")
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query)))
+
+  ;; Query info for "keys-changed"
+  (let ((query (g-signal-query (g-signal-lookup "keys-changed" "GtkWindow"))))
+    (is (string= "keys-changed" (g-signal-query-signal-name query)))
+    (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-FIRST)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '()
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query)))
+
+  ;; Query info for "set-focus"
+  (let ((query (g-signal-query (g-signal-lookup "set-focus" "GtkWindow"))))
+    (is (string= "set-focus" (g-signal-query-signal-name query)))
+    (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-LAST)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '("GtkWidget")
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query))))
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_window_new
 ;;;     gtk_window_set_title                               Accessor
@@ -353,44 +428,5 @@
 ;;;     gtk_window_set_titlebar
 ;;;     gtk_window_get_titlebar
 ;;;     gtk_window_set_interactive_debugging
-;;
-;;; Properties
-;;;
-;;;           gboolean   accept-focus                   Read / Write
-;;;     GtkApplication*  application                    Read / Write
-;;;          GtkWidget*  attached-to                    Read / Write / Construct
-;;;           gboolean   decorated                      Read / Write
-;;;               gint   default-height                 Read / Write
-;;;               gint   default-width                  Read / Write
-;;;           gboolean   deletable                      Read / Write
-;;;           gboolean   destroy-with-parent            Read / Write
-;;;           gboolean   focus-on-map                   Read / Write
-;;;           gboolean   focus-visible                  Read / Write
-;;;         GdkGravity   gravity                        Read / Write
-;;;           gboolean   has-resize-grip                Read / Write
-;;;           gboolean   has-toplevel-focus             Read
-;;;           gboolean   hide-titlebar-when-maximized   Read / Write
-;;;          GdkPixbuf*  icon                           Read / Write
-;;;              gchar*  icon-name                      Read / Write
-;;;           gboolean   is-active                      Read
-;;;           gboolean   is-maximized                   Read
-;;;           gboolean   mnemonics-visible              Read / Write
-;;;           gboolean   modal                          Read / Write
-;;;           gboolean   resizable                      Read / Write
-;;;           gboolean   resize-grip-visible            Read
-;;;              gchar*  role                           Read / Write
-;;;          GdkScreen*  screen                         Read / Write
-;;;           gboolean   skip-pager-hint                Read / Write
-;;;           gboolean   skip-taskbar-hint              Read / Write
-;;;              gchar*  startup-id                     Write
-;;;              gchar*  title                          Read / Write
-;;;          GtkWindow*  transient-for                  Read / Write / Construct
-;;;      GtkWindowType   type                           Read / Write / Construct
-;;;  GdkWindowTypeHint   type-hint                      Read / Write
-;;;           gboolean   urgency-hint                   Read / Write
-;;;  GtkWindowPosition   window-position                Read / Write
-;;;
-;;; Style Properties
-;;;
-;;;              gchar*  decoration-button-layout    Read
-;;;               gint   decoration-resize-handle    Read / Wr
+
+;;; 2020-10-2

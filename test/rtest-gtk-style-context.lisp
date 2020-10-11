@@ -371,7 +371,7 @@
 (test gtk-style-context-property
   (let ((context (gtk-style-context-new)))
     (with-foreign-object (value '(:struct g-value))
-      (g-value-zero value)
+      (g-value-init value)
       (is-false (gtk::%gtk-style-context-property context "color" :normal value))
       (is-true value)
       (is (equal (gtype "GdkRGBA") (g-value-type value)))
