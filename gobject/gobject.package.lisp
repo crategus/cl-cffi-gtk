@@ -555,6 +555,8 @@
     @about-symbol{g-param-flags}
     @about-symbol{g-param-spec}
     @about-symbol{g-param-spec-class}
+    @about-symbol{g-param-spec-type-info}
+    @about-symbol{g-param-spec-pool}
     @about-function{g-type-is-param}
     @about-function{g-param-spec}
     @about-function{g-is-param-spec}
@@ -572,23 +574,24 @@
     @about-function{g-param-spec-unref}
     @about-function{g-param-spec-sink}
     @about-function{g-param-spec-ref-sink}
+    @about-function{g-param-spec-default-value}
     @about-function{g-param-value-set-default}
     @about-function{g-param-value-defaults}
     @about-function{g-param-value-validate}
     @about-function{g-param-value-convert}
     @about-function{g-param-values-cmp}
-    @about-function{g-param-spec-get-name}
-    @about-function{g-param-spec-get-nick}
-    @about-function{g-param-spec-get-blurb}
+    @about-function{g-param-spec-is-valid-name}
+    @about-function{g-param-spec-name}
+    @about-function{g-param-spec-name-quark}
+    @about-function{g-param-spec-nick}
+    @about-function{g-param-spec-blurb}
     @about-function{g-param-spec-get-qdata}
     @about-function{g-param-spec-set-qdata}
     @about-function{g-param-spec-set-qdata-full}
     @about-function{g-param-spec-steal-qdata}
     @about-function{g-param-spec-get-redirect-target}
     @about-function{g-param-spec-internal}
-    @about-symbol{g-param-spec-type-info}
     @about-function{g-param-type-register-static}
-    @about-symbol{g-param-spec-pool}
     @about-function{g-param-spec-pool-new}
     @about-function{g-param-spec-pool-insert}
     @about-function{g-param-spec-pool-remove}
@@ -678,12 +681,12 @@
     disconnect the signal handler (using the function
     @fun{g-signal-handler-disconnect}) when the user data (object) is finalised;
     this has to be implemented manually. For non-threaded programs, the function
-    @fun{g-signal-connect-object} can be used to implement this automatically.
-    Currently, however, it is unsafe to use in threaded programs.
+    @code{g_signal_connect_object()} can be used to implement this
+    automatically. Currently, however, it is unsafe to use in threaded programs.
 
     The second is to hold a strong reference on the user data until after the
     signal is disconnected for other reasons. This can be implemented
-    automatically using the function @fun{g-signal-connect-data}.
+    automatically using the function @code{g_signal_connect_data()}.
 
     The first approach is recommended, as the second approach can result in
     effective memory leaks of the user data if the signal handler is never
@@ -694,7 +697,14 @@
     @about-symbol{g-signal-cvamarshaller}
     @about-symbol{g-signal-flags}
     @about-symbol{g-signal-match-type}
-    @about-symbol{g-signal-query}
+    @about-struct{g-signal-query}
+    @about-function{g-signal-query-signal-id}
+    @about-function{g-signal-query-signal-name}
+    @about-function{g-signal-query-owner-type}
+    @about-function{g-signal-query-signal-flags}
+    @about-function{g-signal-query-return-type}
+    @about-function{g-signal-query-param-types}
+    @about-function{g-signal-query-signal-detail}
     @about-symbol{g-connect-flags}
     @about-function{g-signal-new}
     @about-function{g-signal-newv}

@@ -303,7 +303,7 @@
     @about-function{g-source-remove-by-user-data}
   @end{section}
   @begin[Quarks]{section}
-    A 2-way association between a string and a unique integer identifier
+    A 2-way association between a string and a unique integer identifier.
 
     @about-type{g-quark}
     @about-function{g-quark-from-string}

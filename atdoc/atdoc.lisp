@@ -87,14 +87,6 @@
 
 (unexport 'gobject:lisp-closure :gobject)
 
-(unexport 'gobject:signal-info-detail :gobject)
-(unexport 'gobject:signal-info-flags :gobject)
-(unexport 'gobject:signal-info-id :gobject)
-(unexport 'gobject:signal-info-name :gobject)
-(unexport 'gobject:signal-info-owner-type :gobject)
-(unexport 'gobject:signal-info-param-types :gobject)
-(unexport 'gobject:signal-info-return-type :gobject)
-
 (unexport 'gobject:gtype :gobject)
 (unexport 'gobject:gtype-from-id :gobject)
 (unexport 'gobject:gtype-from-name :gobject)
