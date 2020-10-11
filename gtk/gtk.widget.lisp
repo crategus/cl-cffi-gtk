@@ -6691,13 +6691,11 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @see-function{gtk-widget-class-find-style-property}"
   (let* ((gtype (g-type-from-instance widget))
          (pspec (gtk-widget-class-find-style-property gtype property-name))
-         (type (if pspec (param-spec-type pspec) nil)))
+         (gtype (if pspec (param-spec-type pspec) nil)))
     ;; TODO: Returns nil for an invalid property. Consider to throw an error.
-    (when type
+    (when gtype
       (with-foreign-object (value '(:struct g-value))
-        ;; TODO: Check the implementation of g-value-zero and g-value-init.
-        (g-value-zero value)
-        (g-value-init value type)
+        (g-value-init value gtype)
         (prog2
           (%gtk-widget-style-property widget property-name value)
           (parse-g-value value)
@@ -6738,7 +6736,6 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
           (gtk-widget-style-property-type widget property-name)))
   (setf property-type (gtype property-type))
   (with-foreign-object (gvalue '(:struct g-value))
-    (g-value-zero gvalue)
     (g-value-init gvalue property-type)
     (prog1 (%gtk-widget-style-property widget property-name gvalue)
       (g-value-unset gvalue))))

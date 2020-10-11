@@ -1581,12 +1581,12 @@
   @end{short}
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}"
-  (with-foreign-object (v '(:struct g-value))
-    (g-value-zero v)
-    (%gtk-tree-model-value tree-model iter column v)
+  (with-foreign-object (value '(:struct g-value))
+    (g-value-init value)
+    (%gtk-tree-model-value tree-model iter column value)
     (prog1
-      (parse-g-value v)
-      (g-value-unset v))))
+      (parse-g-value value)
+      (g-value-unset value))))
 
 (export 'gtk-tree-model-value)
 

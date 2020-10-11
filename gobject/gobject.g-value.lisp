@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.g-value.lisp
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GObject Reference Manual
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,33 +29,43 @@
 ;;;
 ;;; Generic values
 ;;;
-;;; A polymorphic type that can hold values of any other type
+;;;     A polymorphic type that can hold values of any other type
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GValue
 ;;;
-;;;     G_VALUE_INIT                             * not implemented *
+;;; Functions
+;;;
+;;;     G_VALUE_INIT                                       not implemented
 ;;;     G_VALUE_HOLDS
 ;;;     G_VALUE_TYPE
 ;;;     G_VALUE_TYPE_NAME
 ;;;     G_TYPE_IS_VALUE
 ;;;     G_TYPE_IS_VALUE_ABSTRACT
-;;;     G_IS_VALUE                               * not implemented *
+;;;     G_IS_VALUE                                         not implemented
 ;;;     G_TYPE_VALUE
-;;;     G_TYPE_VALUE_ARRAY                       * not implemented *
+;;;     G_TYPE_VALUE_ARRAY                                 not implemented
+
 ;;;     g_value_init
 ;;;     g_value_copy
 ;;;     g_value_reset
 ;;;     g_value_unset
+;;;     g_value_init_from_instance
 ;;;     g_value_set_instance
-;;;     g_value_fits_pointer                     * not implemented *
-;;;     g_value_peek_pointer                     * not implemented *
+;;;     g_value_fits_pointer                               not implemented
+;;;     g_value_peek_pointer                               not implemented
 ;;;     g_value_type_compatible
 ;;;     g_value_type_transformable
 ;;;     g_value_transform
+;;;     GValueTransform
 ;;;     g_value_register_transform_func
 ;;;     g_strdup_value_contents
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GBoxed
+;;;     ╰── GValue
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -219,7 +229,7 @@
                                            unset-g-value
                                            (g-value-init t))
   (setf type (gtype type))
-  (cond (zero-g-value (g-value-zero gvalue))
+  (cond (zero-g-value (%g-value-zero gvalue))
         (unset-g-value (g-value-unset gvalue)))
   (when g-value-init (g-value-init gvalue type))
   (let ((fundamental-type (g-type-fundamental type)))
@@ -563,11 +573,9 @@
 ;;; g_value_init ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_init" %g-value-init) (:pointer (:struct g-value))
-  (value (:pointer (:struct g-value)))
-  (gtype g-type))
+;; Called from g-value-init to initialize a GValue to zero
 
-(defun g-value-zero (value)
+(defun %g-value-zero (value)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-21}
   This function is called from the function @fun{g-value-init} to initialize
@@ -579,20 +587,26 @@
      for i from 0 below (foreign-type-size '(:struct g-value))
      do (setf (mem-ref value :uchar i) 0)))
 
-(export 'g-value-zero)
+(defcfun ("g_value_init" %g-value-init) (:pointer (:struct g-value))
+  (value (:pointer (:struct g-value)))
+  (gtype g-type))
 
-(defun g-value-init (value &optional (type nil))
+(defun g-value-init (value &optional (gtype nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
-  @argument[value]{a zero-filled (uninitialized) @symbol{g-value} structure}
-  @argument[type]{the type the @symbol{g-value} should hold values of}
+ "@version{2020-10-11}
+  @argument[value]{an uninitialized @symbol{g-value} structure}
+  @argument[gtype]{the @class{g-type} @arg{value} should hold values of}
   @return{The @symbol{g-value} structure that has been passed in.}
-  Initializes @arg{value} with the default value of @arg{type}."
-  (cond ((null type)
-         (g-value-zero value))
+  @begin{short}
+    Initializes @arg{value} with the default value of @arg{gtype}.
+  @end{short}
+  @see-symbol{g-value}
+  @see-class{g-type}"
+  (cond ((null gtype)
+         (%g-value-zero value))
         (t
-         (g-value-zero value)
-         (%g-value-init value type)))
+         (%g-value-zero value)
+         (%g-value-init value gtype)))
   value)
 
 (export 'g-value-init)
@@ -645,6 +659,28 @@
   (value (:pointer (:struct g-value))))
 
 (export 'g-value-unset)
+
+;;; ----------------------------------------------------------------------------
+;;; g_value_init_from_instance ()
+;;;
+;;; void
+;;; g_value_init_from_instance (GValue *value, gpointer instance);
+;;;
+;;; Initializes and sets value from an instantiatable type via the value_table's
+;;; collect_value() function.
+;;;
+;;; Note: The value will be initialised with the exact type of instance . If you
+;;; wish to set the value 's type to a different GType (such as a parent class
+;;; GType), you need to manually call g_value_init() and g_value_set_instance().
+;;;
+;;; value:
+;;;     An uninitialized GValue structure.
+;;;
+;;; instance:
+;;;     the instance.
+;;;
+;;; Since 2.42
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_set_instance ()

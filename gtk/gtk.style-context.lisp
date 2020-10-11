@@ -970,7 +970,7 @@
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}"
   (with-foreign-object (value '(:struct g-value))
-    (g-value-zero value)
+    (g-value-init value)
     (prog2
       (%gtk-style-context-property context property state value)
       ;; TODO: Handle the case für an invalid property
@@ -1105,13 +1105,12 @@
     @end{pre}
   @end{dictionary}
   @see-class{gtk-style-context}"
-  (let ((type (param-spec-type
-                    (gtk-widget-class-find-style-property
-                        (g-type-from-instance widget)
-                        property))))
+  (let ((gtype (param-spec-type
+                   (gtk-widget-class-find-style-property
+                       (g-type-from-instance widget)
+                       property))))
     (with-foreign-object (value '(:struct g-value))
-      (g-value-zero value)
-      (g-value-init value type)
+      (g-value-init value gtype)
       (prog2
         (%gtk-style-context-style-property context property value)
         (parse-g-value value)

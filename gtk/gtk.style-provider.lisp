@@ -243,10 +243,9 @@
   @end{short}
   @see-class{gtk-style-provider}
   @see-symbol{g-value}"
-  (let ((type (param-spec-type pspec)))
+  (let ((gtype (param-spec-type pspec)))
     (with-foreign-object (value '(:struct g-value))
-      (g-value-zero value)
-      (g-value-init value type)
+      (g-value-init value gtype)
       (prog2
         (%gtk-style-provider-get-style-property provider path state pspec value)
         (parse-g-value value)

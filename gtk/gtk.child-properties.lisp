@@ -34,10 +34,9 @@
            (parse-g-param-spec g-param-spec))
       (g-type-class-unref class))))
 
-(defun container-call-get-property (container child property-name type)
+(defun container-call-get-property (container child property-name gtype)
   (with-foreign-object (gvalue '(:struct g-value))
-    (g-value-zero gvalue)
-    (g-value-init gvalue (gtype type))
+    (g-value-init gvalue (gtype gtype))
     (%gtk-container-child-get-property container child property-name gvalue)
     (prog1 (parse-g-value gvalue)
       (g-value-unset gvalue))))

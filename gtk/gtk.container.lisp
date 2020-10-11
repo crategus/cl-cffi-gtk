@@ -1014,12 +1014,11 @@
   @end{short}
   @see-class{gtk-container}
   @see-function{gtk-container-set-property}"
-  (let ((type (param-spec-type
-                (container-child-property-info (g-type-from-instance container)
-                                               property-name))))
+  (let ((gtype (param-spec-type
+                 (container-child-property-info (g-type-from-instance container)
+                                                property-name))))
     (with-foreign-object (gvalue '(:struct g-value))
-      (g-value-zero gvalue)
-      (g-value-init gvalue type)
+      (g-value-init gvalue gtype)
       (%gtk-container-child-get-property container child property-name gvalue)
       (prog1
         (parse-g-value gvalue)
