@@ -1,20 +1,27 @@
-<!ENTITY cl-cffi-gtk                   "http://crategus.com/books/cl-cffi-gtk/pages/">
-<!ENTITY api                           "http://crategus.com/books/cl-cffi-gtk/pages/">
+<!ENTITY api "http://crategus.com/books/cl-cffi-gtk/pages/">
 
 <!ENTITY cl-cffi-gtk-build-info
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_cl-cffi-gtk-build-info.html'>
           <code xmlns='http://docbook.org/ns/docbook'>cl-cffi-gtk-build-info</code></ulink>">
-
-<!ENTITY within-main-loop                    "&api;gtk_fun_within-main-loop.html">
-<!ENTITY leave-gtk-main                      "&api;gtk_fun_leave-gtk-main.html">
+<!ENTITY within-main-loop
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_within-main-loop.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>within-main-loop</code></ulink>">
+<!ENTITY leave-gtk-main
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_leave-gtk-main.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>leave-gtk-main</code></ulink>">
 
 <!ENTITY g-filename-to-utf8                  "&api;glib_fun_g-filename-to-utf8.html">
 <!ENTITY g-timeout-add                       "&api;glib_fun_g-timeout-add.html">
 
 <!ENTITY g-object                            "&api;gobject_class_g-object.html">
 
-<!ENTITY g-signal-connect                    "&api;gobject_fun_g-signal-connect.html">
+<!ENTITY g-signal-connect
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gobject_fun_g-signal-connect.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>g-signal-connect</code></ulink>">
 
 <!ENTITY g-action-group-activate-action      "&api;gio_fun_g-action-group-activate-action.html">
 
@@ -113,7 +120,11 @@
                  url='&api;gtk_sym_gtk-attach-options.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-attach-options</code></ulink>">
 
-<!ENTITY gtk-bin                             "&api;gtk_class_gtk-bin.html">
+<!ENTITY gtk-bin
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-bin.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-bin</code></ulink>">
+
 <!ENTITY gtk-bin-child                       "&api;gtk_fun_gtk-bin-child.html">
 
 <!ENTITY gtk-box
@@ -203,7 +214,11 @@
 <!ENTITY gtk-combo-box-text-prepend-text     "&api;gtk_fun_gtk-combo-box-text-prepend-text.html">
 <!ENTITY gtk-combo-box-text-remove           "&api;gtk_fun_gtk-combo-box-text-remove.html">
 
-<!ENTITY gtk-container                       "&api;gtk_class_gtk-container.html">
+<!ENTITY gtk-container
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-container.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-container</code></ulink>">
+
 <!ENTITY gtk_container_border-width          "&api;gtk_class_gtk-container.html#gtk_slot_gtk-container-border-width">
 
 <!ENTITY gtk-container-add
@@ -355,8 +370,14 @@
 <!ENTITY gtk-list-store-set                  "&api;gtk_fun_gtk-list-store-set.html">
 <!ENTITY gtk-list-store-set-value            "&api;gtk_fun_gtk-list-store-set-value.html">
 
-<!ENTITY gtk-main                            "&api;gtk_fun_gtk-main.html">
-<!ENTITY gtk-main-quit                       "&api;gtk_fun_gtk-main-quit.html">
+<!ENTITY gtk-main
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-main.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-main</code></ulink>">
+<!ENTITY gtk-main-quit
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-main-quit.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-main-quit</code></ulink>">
 
 <!ENTITY gtk-menu                            "&api;gtk_class_gtk-menu.html">
 <!ENTITY gtk-menu-popup                      "&api;gtk_fun_gtk-menu-popup.html">
@@ -708,8 +729,10 @@
 <!ENTITY gtk-viewport-new                    "&api;gtk_fun_gtk-viewport-new.html">
 <!ENTITY gtk-viewport-shadow-type            "&api;gtk_fun_gtk-viewport-shadow-type.html">
 
-<!ENTITY gtk-widget                          "&api;gtk_class_gtk-widget.html">
-
+<!ENTITY gtk-widget
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget</code></ulink>">
 <!ENTITY gtk_widget_halign
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-halign'>
@@ -742,24 +765,67 @@
 <!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">
 <!ENTITY gtk-widget-queue-draw               "&api;gtk_fun_gtk-widget-queue-draw.html">
 <!ENTITY gtk-widget-realize                  "&api;gtk_fun_gtk-widget-realize.html">
-<!ENTITY gtk-widget-show                     "&api;gtk_fun_gtk-widget-show.html">
-<!ENTITY gtk-widget-show-all                 "&api;gtk_fun_gtk-widget-show-all.html">
+
+<!ENTITY gtk-widget-show
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-show.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-show</code></ulink>">
+<!ENTITY gtk-widget-show-all
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-show-all.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-show-all</code></ulink>">
+
 <!ENTITY gtk-widget-size-request             "&api;gtk_fun_gtk-widget-size-request.html">
 <!ENTITY gtk-widget-tooltip-text             "&api;gtk_fun_gtk-widget-tooltip-text.html">
 <!ENTITY gtk-widget-window                   "&api;gtk_fun_gtk-widget-window.html">
 
-<!ENTITY gtk-window                          "&api;gtk_class_gtk-window.html">
-<!ENTITY gtk_window_default-height           "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-height">
-<!ENTITY gtk_window_default-width            "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-width">
-<!ENTITY gtk_window_title                    "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-title">
-<!ENTITY gtk_window_type                     "&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-type">
+<!ENTITY gtk-window
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-window.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window</code></ulink>">
+<!ENTITY gtk_window_default-height
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-height'>
+          <code xmlns='http://docbook.org/ns/docbook'>default-height</code></ulink>">
+<!ENTITY gtk_window_default-width
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-default-width'>
+          <code xmlns='http://docbook.org/ns/docbook'>default-width</code></ulink>">
+<!ENTITY gtk_window_title
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-title'>
+          <code xmlns='http://docbook.org/ns/docbook'>title</code></ulink>">
+<!ENTITY gtk_window_type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-window.html#gtk_slot_gtk-window-type'>
+          <code xmlns='http://docbook.org/ns/docbook'>type</code></ulink>">
+
 <!ENTITY gtk-window-add-accel-group          "&api;gtk_fun_gtk-window-add-accel-group.html">
-<!ENTITY gtk-window-default-height           "&api;gtk_fun_gtk-window-default-height.html">
-<!ENTITY gtk-window-default-size             "&api;gtk_fun_gtk-window-default-size.html">
-<!ENTITY gtk-window-default-width            "&api;gtk_fun_gtk-window-default-width.html">
-<!ENTITY gtk-window-new                      "&api;gtk_fun_gtk-window-new.html">
-<!ENTITY gtk-window-title                    "&api;gtk_fun_gtk-window-title.html">
-<!ENTITY gtk-window-type                     "&api;gtk_sym_gtk-window-type.html">
+
+<!ENTITY gtk-window-default-height
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-window-default-height.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-default-height</code></ulink>">
+<!ENTITY gtk-window-default-size
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-window-default-size.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-default-size</code></ulink>">
+<!ENTITY gtk-window-default-width
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-window-default-width.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-default-width</code></ulink>">
+<!ENTITY gtk-window-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-window-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-new</code></ulink>">
+<!ENTITY gtk-window-title
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-window-title.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-title</code></ulink>">
+<!ENTITY gtk-window-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-window-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-window-type</code></ulink>">
 
 <!ENTITY pango-attr-list                     "&api;pango_class_pango-attr-list.html">
 
