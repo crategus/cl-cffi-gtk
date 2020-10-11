@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.param.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; Parameters and Values
 ;;;
-;;; Standard Parameter and Value Types
+;;;     Standard Parameter and Value Types
 ;;;
 ;;; Synopsis
 ;;;
@@ -184,7 +181,9 @@
 ;;;     G_IS_PARAM_SPEC_STRING
 ;;;     G_PARAM_SPEC_STRING
 ;;;     G_VALUE_HOLDS_STRING
+;;;     G_VALUE_IS_INTERNED_STRING
 ;;;     G_TYPE_PARAM_STRING
+;;;     G_VALUE_INTERNED_STRING
 ;;;
 ;;;     GParamSpecString
 ;;;     gchararray
@@ -196,6 +195,7 @@
 ;;;     g_value_set_string_take_ownership
 ;;;     g_value_get_string
 ;;;     g_value_dup_string
+;;;     g_value_set_interned_string
 ;;;
 ;;;     G_IS_PARAM_SPEC_PARAM
 ;;;     G_PARAM_SPEC_PARAM
@@ -2163,6 +2163,10 @@
 ;;; g_param_spec_enum ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO:
+;; This accepts any integer for default-value, but does not check for a valid
+;; enum parameter. Can this be implemented much better?
+
 (defcfun ("g_param_spec_enum" g-param-spec-enum)
     (:pointer (:struct g-param-spec-enum))
  #+cl-cffi-gtk-documentation
@@ -2199,6 +2203,10 @@
 ;;; g_value_get_enum ()
 ;;; g_value_set_enum () -> g-value-enum
 ;;; ----------------------------------------------------------------------------
+
+;; TODO:
+;; This accepts any integer, but does not check for a valid enum parameter.
+;; Can this be implemented much better?
 
 (defun (setf g-value-enum) (value gvalue)
   (foreign-funcall "g_value_set_enum"
@@ -2426,11 +2434,42 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; G_VALUE_IS_INTERNED_STRING()
+;;;
+;;; #define G_VALUE_IS_INTERNED_STRING(value)
+;;;         (G_VALUE_HOLDS_STRING
+;;;           (value) && ((value)->data[1].v_uint
+;;;                   & G_VALUE_INTERNED_STRING)) GLIB_AVAILABLE_MACRO_IN_2_66
+;;;
+;;; Checks whether value contains a string which is canonical.
+;;;
+;;; value:
+;;;     a valid GValue structure
+;;;
+;;; Returns:
+;;;     TRUE if the value contains a string in its canonical representation, as
+;;;     returned by g_intern_string(). See also g_value_set_interned_string().
+;;;
+;;; Since 2.66
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM_STRING
 ;;;
 ;;; #define G_TYPE_PARAM_STRING (g_param_spec_types[14])
 ;;;
 ;;; The GType of GParamSpecString.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_VALUE_INTERNED_STRING
+;;;
+;;; #define G_VALUE_INTERNED_STRING (1 << 28) GLIB_AVAILABLE_MACRO_IN_2_66
+;;;
+;;; For string values, indicates that the string contained is canonical and will
+;;; exist for the duration of the process. See g_value_set_interned_string().
+;;;
+;;; Since 2.66
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2652,6 +2691,26 @@
 ;;;
 ;;; Returns :
 ;;;     a newly allocated copy of the string content of value
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_value_set_interned_string ()
+;;;
+;;; void
+;;; g_value_set_interned_string (GValue *value,
+;;;                              const gchar *v_string);
+;;;
+;;; Set the contents of a G_TYPE_STRING GValue to v_string . The string is
+;;; assumed to be static and interned (canonical, for example from
+;;; g_intern_string()), and is thus not duplicated when setting the GValue.
+;;;
+;;; value:
+;;;     a valid GValue of type G_TYPE_STRING
+;;;
+;;; v_string:
+;;;     static string to be set
+;;;
+;;; Since 2.66
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.param-spec.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,13 +29,22 @@
 ;;;
 ;;; GParamSpec
 ;;;
-;;; Metadata for parameter specifications
+;;;     Metadata for parameter specifications
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     GParamFlags
 ;;;     GParamSpec
 ;;;     GParamSpecClass
+;;;     GParamFlags
+;;;
+;;;     G_PARAM_STATIC_STRINGS
+;;;     G_PARAM_MASK
+;;;     G_PARAM_USER_SHIFT
+;;;
+;;;     GParamSpecTypeInfo
+;;;     GParamSpecPool
+;;;
+;;; Functions
 ;;;
 ;;;     G_TYPE_IS_PARAM
 ;;;     G_PARAM_SPEC
@@ -50,21 +56,19 @@
 ;;;     G_PARAM_SPEC_TYPE_NAME
 ;;;     G_PARAM_SPEC_VALUE_TYPE
 ;;;
-;;;     G_PARAM_READWRITE
-;;;     G_PARAM_STATIC_STRINGS
-;;;     G_PARAM_MASK
-;;;     G_PARAM_USER_SHIFT
-;;;
 ;;;     g_param_spec_ref
 ;;;     g_param_spec_unref
 ;;;     g_param_spec_sink
 ;;;     g_param_spec_ref_sink
+;;;     g_param_spec_get_default_value
 ;;;     g_param_value_set_default
 ;;;     g_param_value_defaults
 ;;;     g_param_value_validate
 ;;;     g_param_value_convert
 ;;;     g_param_values_cmp
+;;;     g_param_spec_is_valid_name
 ;;;     g_param_spec_get_name
+;;;     g_param_spec_get_name_quark
 ;;;     g_param_spec_get_nick
 ;;;     g_param_spec_get_blurb
 ;;;     g_param_spec_get_qdata
@@ -73,12 +77,7 @@
 ;;;     g_param_spec_steal_qdata
 ;;;     g_param_spec_get_redirect_target
 ;;;     g_param_spec_internal
-;;;
-;;;     GParamSpecTypeInfo
-;;;
 ;;;     g_param_type_register_static
-;;;
-;;;     GParamSpecPool
 ;;;
 ;;;     g_param_spec_pool_new
 ;;;     g_param_spec_pool_insert
@@ -108,7 +107,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-param-flags atdoc:*external-symbols*)
- "@version{2013-2-7}
+ "@version{2020-10-10}
   @begin{short}
     Through the @sym{g-param-flags} flag values, certain aspects of parameters
     can be configured.
@@ -126,26 +125,27 @@
   (:deprecated #.(ash 1 31)))
   @end{pre}
   @begin[code]{table}
-    @entry[:readable]{the parameter is readable}
-    @entry[:writable]{the parameter is writable}
-    @entry[:construct]{the parameter will be set upon object construction}
-    @entry[:construct-only]{the parameter will only be set upon object
-      construction}
-    @entry[:lax-validation]{upon parameter conversion (see
-      g_param_value_convert()) strict validation is not required}
-    @entry[:static-name]{the string used as name when constructing the parameter
+    @entry[:readable]{The parameter is readable.}
+    @entry[:writable]{The parameter is writable.}
+    @entry[:construct]{The parameter will be set upon object construction.}
+    @entry[:construct-only]{The parameter will only be set upon object
+      construction.}
+    @entry[:lax-validation]{Upon parameter conversion (see
+      @code{g_param_value_convert()}) strict validation is not required.}
+    @entry[:static-name]{The string used as name when constructing the parameter
       is guaranteed to remain valid and unmodified for the lifetime of the
-      parameter. Since 2.8}
-    @entry[:static-nick]{the string used as nick when constructing the parameter
+      parameter.}
+    @entry[:static-nick]{The string used as nick when constructing the parameter
       is guaranteed to remain valid and unmmodified for the lifetime of the
-      parameter. Since 2.8}
-    @entry[:static-blurb]{the string used as blurb when constructing the
+      parameter.}
+    @entry[:static-blurb]{The string used as blurb when constructing the
       parameter is guaranteed to remain valid and unmodified for the lifetime of
-      the parameter. Since 2.8}
-    @entry[:deprecated]{the parameter is deprecated and will be removed in a
+      the parameter.}
+    @entry[:deprecated]{The parameter is deprecated and will be removed in a
       future version. A warning will be generated if it is used while running
-      with @code{G_ENABLE_DIAGNOSTIC=1}. Since 2.26}
-  @end{table}")
+      with @code{G_ENABLE_DIAGNOSTIC=1}.}
+  @end{table}
+  @see-symbol{g-param-spec}")
 
 (export 'g-param-flags)
 
@@ -163,10 +163,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec atdoc:*external-symbols*)
- "@version{2013-7-14}
+ "@version{2020-10-10}
   @begin{short}
     @sym{g-param-spec} is an object structure that encapsulates the metadata
-    required to specify parameters, such as e. g. @class{g-object} properties.
+    required to specify parameters, such as e.g. @class{g-object} properties.
   @end{short}
 
   Parameter names need to start with a letter (a-z or A-Z). Subsequent
@@ -186,8 +186,7 @@
     @entry[:name]{Name of this parameter: always an interned string.}
     @entry[:flags]{The @symbol{g-param-flags} flags for this parameter.}
     @entry[:value-type]{The @symbol{g-value} type for this parameter.}
-    @entry[:owner-type]{The @class{g-type} that uses (introduces) this
-      parameter.}
+    @entry[:owner-type]{The @class{g-type} that uses this parameter.}
   @end{table}
   @see-symbol{g-type-instance}
   @see-symbol{g-param-flags}
@@ -283,20 +282,21 @@
       @fun{g-param-values-cmp}.}
   @end{table}")
 
-(export 'g-param-spec-class)
-
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_PARAM()
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-param (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[type]{a @class{g-type} ID}
+ "@version{2020-10-10}
+  @argument[gtype]{a @class{g-type} ID}
   @begin{short}
-    Checks whether type \"is a\" @code{G_TYPE_PARAM}.
-  @end{short}"
-  (eql (gtype-id (g-type-fundamental gtype)) +g-type-param+))
+    Checks whether @arg{gtype} \"is a\" @var{+g-type-param+}.
+  @end{short}
+  @see-symbol{g-param-spec}
+  @see-class{g-type}
+  @see-variable{+g-type-param+}"
+  (= +g-type-param+ (gtype-id (g-type-fundamental gtype))))
 
 (export 'g-type-is-param)
 
@@ -319,12 +319,14 @@
 
 (defun g-is-param-spec (pspec)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[spec]{a GParamSpec}
+ "@version{2020-10-10}
+  @argument[pspec]{a @symbol{g-param-spec} structure}
   @begin{short}
-    Checks whether pspec \"is a\" valid GParamSpec structure of type
-    G_TYPE_PARAM or derived.
-  @end{short}"
+    Checks whether @arg{pspec} \"is a\" valid @symbol{g-param-spec} structure
+    of type @var{+g-type-param+} or derived.
+  @end{short}
+  @see-symbol{g-param-spec}
+  @see-variable{+g-type-param+}"
   (g-type-is-param (g-type-from-instance pspec)))
 
 (export 'g-is-param-spec)
@@ -372,9 +374,11 @@
 
 (defun g-param-spec-type (pspec)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @short{Retrieves the GType of this pspec.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @short{Retrieves the @class{g-type} of this @arg{pspec}.}
+  @see-symbol{g-param-spec}
+  @see-class{g-type}"
   (g-type-from-instance pspec))
 
 (export 'g-param-spec-type)
@@ -385,9 +389,11 @@
 
 (defun g-param-spec-type-name (pspec)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @short{Retrieves the @class{g-type} name of this @arg{pspec}.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @short{Retrieves the @class{g-type} name of this @arg{pspec}.}
+  @see-symbol{g-param-spec}
+  @see-class{g-type}"
   (g-type-name (g-param-spec-type pspec)))
 
 (export 'g-param-spec-type-name)
@@ -398,20 +404,16 @@
 
 (defun g-param-spec-value-type (pspec)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @short{Retrieves the GType to initialize a GValue for this parameter.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @short{Retrieves the @class{g-type} to initialize a @symbol{g-value} for this
+    parameter.}
+  @see-symbol{g-param-spec}
+  @see-class{g-type}
+  @see-symbol{g-value}"
   (foreign-slot-value pspec '(:struct g-param-spec) :value-type))
 
 (export 'g-param-spec-value-type)
-
-;;; ----------------------------------------------------------------------------
-;;; G_PARAM_READWRITE
-;;;
-;;; #define G_PARAM_READWRITE (G_PARAM_READABLE | G_PARAM_WRITABLE)
-;;;
-;;; GParamFlags value alias for G_PARAM_READABLE | G_PARAM_WRITABLE.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PARAM_STATIC_STRINGS
@@ -460,14 +462,12 @@
 ;;; g_param_spec_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_unref" g-param-spec-unref) :void
+(defcfun ("g_param_spec_unref" %g-param-spec-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-2-7}
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @short{Decrements the reference count of a pspec.}"
   (pspec (:pointer (:struct g-param-spec))))
-
-(export 'g-param-spec-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_sink ()
@@ -489,7 +489,7 @@
 ;;; g_param_spec_ref_sink ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_ref_sink" g-param-spec-ref-sink)
+(defcfun ("g_param_spec_ref_sink" %g-param-spec-ref-sink)
     (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-2-7}
@@ -499,7 +499,26 @@
   Since 2.10"
   (pspec (:pointer (:struct g-param-spec))))
 
-(export 'g-param-spec-ref-sink)
+;;; ----------------------------------------------------------------------------
+;;; g_param_spec_get_default_value () -> g-param-spec-default-value
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_param_spec_get_default_value" g-param-spec-default-value)
+    (:pointer (:struct g-value))
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @return{A pointer to a @symbol{g-value}.}
+  @begin{short}
+    Gets the default value of @arg{pspec} as a pointer to a @symbol{g-value}.
+  @end{short}
+
+  Since 2.38
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}"
+  (pspec (:pointer (:struct g-param-spec))))
+
+(export 'g-param-spec-default-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_value_set_default ()
@@ -507,10 +526,12 @@
 
 (defcfun ("g_param_value_set_default" g-param-value-set-default) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @argument[value]{a GValue of correct type for pspec}
-  @short{Sets value to its default value as specified in pspec.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @argument[value]{a @symbol{g-value} of correct type for @arg{pspec}}
+  @short{Sets @arg{value} to its default value as specified in @arg{pspec}.}
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}"
   (pspec (:pointer (:struct g-param-spec)))
   (value (:pointer (:struct g-value))))
 
@@ -522,13 +543,17 @@
 
 (defcfun ("g_param_value_defaults" g-param-value-defaults) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @argument[value]{a GValue of correct type for pspec}
-  @return{Whether value contains the canonical default for this pspec.}
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @argument[value]{a @symbol{g-value} of correct type for @arg{pspec}}
+  @return{A boolean whether @arg{value} contains the canonical default for this
+    @arg{pspec}.}
   @begin{short}
-    Checks whether value contains the default value as specified in pspec.
-  @end{short}"
+    Checks whether @arg{value} contains the default value as specified in
+    @arg{pspec}.
+  @end{short}
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}"
   (pspec (:pointer (:struct g-param-spec)))
   (value (:pointer (:struct g-value))))
 
@@ -540,18 +565,23 @@
 
 (defcfun ("g_param_value_validate" g-param-value-validate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
   @argument[value]{a @symbol{g-value} of correct type for @arg{pspec}}
-  @return{Whether modifying value was necessary to ensure validity.}
+  @return{A boolean whether modifying @arg{value} was necessary to ensure
+    validity.}
   @begin{short}
-    Ensures that the contents of value comply with the specifications set out by
-    pspec.
+    Ensures that the contents of @arg{value} comply with the specifications set
+    out by @arg{pspec}.
   @end{short}
-  For example, a GParamSpecInt might require that integers stored in
-  value may not be smaller than -42 and not be greater than +42. If value
-  contains an integer outside of this range, it is modified accordingly, so
-  the resulting value will fit into the range -42 .. +42."
+
+  For example, a @symbol{g-param-spec-int} might require that integers stored
+  in @arg{value} may not be smaller than -42 and not be greater than +42. If
+  @arg{value} contains an integer outside of this range, it is modified
+  accordingly, so the resulting value will fit into the range -42 .. +42.
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}
+  @see-symbol{g-param-spec-int}"
   (pspec (:pointer (:struct g-param-spec)))
   (value (:pointer (:struct g-value))))
 
@@ -594,67 +624,108 @@
 ;;; g_param_values_cmp ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_values_cmp" g-param-values-cmp) :int
+(defcfun ("g_param_values_cmp" %g-param-values-cmp) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-5-21}
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @argument[value1]{a @symbol{g-value} of correct type for @arg{pspec}}
   @argument[value2]{a @symbol{g-value} of correct type for @arg{pspec}}
   @return{-1, 0 or +1, for a less than, equal to or greater than result}
-  Compares @arg{value1} with @arg{value2} according to pspec, and return -1, 0
-  or +1, if @arg{value1} is found to be less than, equal to or greater than
-  value2, respectively."
+  @begin{short}
+    Compares @arg{value1} with @arg{value2} according to @arg{pspec}, and return
+    -1, 0 or +1, if @arg{value1} is found to be less than, equal to or greater
+    than @arg{value2}, respectively.
+  @end{short}
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}"
   (pspec (:pointer (:struct g-param-spec)))
   (value1 (:pointer (:struct g-value)))
   (value2 (:pointer (:struct g-value))))
 
-(export 'g-param-values-cmp)
+;;; ----------------------------------------------------------------------------
+;;; g_param_spec_is_valid_name ()
+;;;
+;;; gboolean
+;;; g_param_spec_is_valid_name (const gchar *name);
+;;;
+;;; Validate a property name for a GParamSpec. This can be useful for
+;;; dynamically-generated properties which need to be validated at run-time
+;;; before actually trying to create them.
+;;;
+;;; See canonical parameter names for details of the rules for valid names.
+;;;
+;;; name:
+;;;     the canonical name of the property
+;;;
+;;; Returns:
+;;;     TRUE if name is a valid property name, FALSE otherwise.
+;;;
+;;; Since 2.66
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_param_spec_get_name ()
+;;; g_param_spec_get_name () -> g-param-spec-name
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_get_name" g-param-spec-get-name) :string
+(defcfun ("g_param_spec_get_name" g-param-spec-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @return{The name of pspec.}
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @return{A string with the name of @arg{pspec}.}
   @begin{short}
-    Get the name of a GParamSpec.
-  @end{short}@break{}
-  The name is always an \"interned\" string (as per g_intern_string()). This
-  allows for pointer-value comparisons."
+    Get the name of a @symbol{g-param-spec} structure.
+  @end{short}
+  @see-symbol{g-param-spec}"
   (pspec (:pointer (:struct g-param-spec))))
 
-(export 'g-param-spec-get-name)
+(export 'g-param-spec-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_param_spec_get_nick ()
+;;; g_param_spec_get_name_quark ()
+;;;
+;;; GQuark
+;;; g_param_spec_get_name_quark (GParamSpec *pspec);
+;;;
+;;; Gets the GQuark for the name.
+;;;
+;;; pspec:
+;;;     a GParamSpec
+;;;
+;;; Returns:
+;;;     the GQuark for pspec->name .
+;;;
+;;; Since 2.46
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_get_nick" g-param-spec-get-nick) :string
+;;; ----------------------------------------------------------------------------
+;;; g_param_spec_get_nick () -> g-param-spec-nick
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_param_spec_get_nick" g-param-spec-nick) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @return{The nickname of @arg{pspec}.}
-  @short{Get the nickname of a GParamSpec.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @return{A string with the nickname of @arg{pspec}.}
+  @short{Get the nickname of a @symbol{g-param-spec} structure.}
+  @see-symbol{g-param-spec}"
   (pspec (:pointer (:struct g-param-spec))))
 
-(export 'g-param-spec-get-nick)
+(export 'g-param-spec-nick)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_param_spec_get_blurb ()
+;;; g_param_spec_get_blurb () -> g-param-spec-blurb
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_get_blurb" g-param-spec-get-blurb) :string
+(defcfun ("g_param_spec_get_blurb" g-param-spec-blurb) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-7}
-  @argument[pspec]{a valid @symbol{g-param-spec}}
-  @return{The short description of @arg{pspec}.}
-  @short{Get the short description of a GParamSpec.}"
+ "@version{2020-10-10}
+  @argument[pspec]{a valid @symbol{g-param-spec} structure}
+  @return{A string with the short description of @arg{pspec}.}
+  @short{Gets the short description of a @symbol{g-param-spec} structure.}
+  @see-symbol{g-param-spec}"
   (pspec (:pointer (:struct g-param-spec))))
 
-(export 'g-param-spec-get-blurb)
+(export 'g-param-spec-blurb)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_get_qdata ()
@@ -744,7 +815,7 @@
 ;;; g_param_spec_get_redirect_target ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_get_redirect_target" g-param-spec-get-redirect-target)
+(defcfun ("g_param_spec_get_redirect_target" %g-param-spec-get-redirect-target)
     (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2014-11-13}
@@ -769,15 +840,13 @@
   @see-function{g-object-class-override-property}"
   (pspec (:pointer (:struct g-param-spec))))
 
-(export 'g-param-spec-get-redirect-target)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_internal ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_internal" g-param-spec-internal) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2020-8-27}
+ "@version{2020-10-10}
   @argument[param-type]{the @class{g-type} for the property, must be derived
     from @var{+g-type-param+}}
   @argument[name]{a @code{:string} with the canonical name of the property}
@@ -789,20 +858,28 @@
     Creates a new parameter specification instance.
   @end{short}
 
-  A property @arg{name} consists of segments consisting of ASCII letters and
-  digits, separated by either the '-' or '_' character. The first character of
-  a property @arg{name} must be a letter. Names which violate these rules lead
-  to undefined behaviour.
+  A property name consists of segments consisting of ASCII letters and digits,
+  separated by either the '-' or '_' character. The first character of a
+  property name must be a letter. Names which violate these rules lead to
+  undefined behaviour.
 
   When creating and looking up a @symbol{g-param-spec}, either separator can be
   used, but they cannot be mixed. Using '-' is considerably more efficient and
   in fact required when using property names as detail strings for signals.
 
-  Beyond the @arg{name}, @symbol{g-param-spec}'s have two more descriptive
-  strings associated with them, the @arg{nick}, which should be suitable for use
-  as a label for the property in a property editor, and the @arg{blurb}, which
-  should be a somewhat longer description, suitable for e.g. a tooltip. The
-  @arg{nick} and @arg{blurb} should ideally be localized.
+  Beyond @arg{name}, @symbol{g-param-spec}'s have two more descriptive strings
+  associated with them, @arg{nick}, which should be suitable for use as a label
+  for the property in a property editor, and @arg{blurb}, which should be a
+  somewhat longer description, suitable for e.g. a tooltip. @arg{nick} and
+  @arg{blurb} should ideally be localized.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+  (g-param-spec-internal \"GParamBoolean\" \"Boolean\" \"Bool\" \"Doku\" '(:readable :writable))
+=> #.(SB-SYS:INT-SAP #X00933890)
+  (g-param-spec-type-name *)
+=> \"GParamBoolean\"
+    @end{pre}
+  @end{dictionary}
   @see-symbol{g-param-spec}
   @see-symbol{g-param-flags}
   @see-class{g-type}
@@ -839,8 +916,8 @@
 ;;; This structure is used to provide the type system with the information
 ;;; required to initialize and destruct (finalize) a parameter's class and
 ;;; instances thereof. The initialized structure is passed to the
-;;; g_param_type_register_static() The type system will perform a deep copy of
-;;; this structure, so its memory does not need to be persistent across
+;;; g_param_type_register_static() The type system will perform a deep copy
+;;; of this structure, so its memory does not need to be persistent across
 ;;; invocation of g_param_type_register_static().
 ;;;
 ;;; guint16 instance_size;
@@ -870,8 +947,8 @@
 ;;;     out by pspec (optional), see g_param_value_validate().
 ;;;
 ;;; values_cmp ()
-;;;     Compares value1 with value2 according to pspec (recommended, the default
-;;;     is memcmp()), see g_param_values_cmp().
+;;;     Compares value1 with value2 according to pspec (recommended, the
+;;;     default is memcmp()), see g_param_values_cmp().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
