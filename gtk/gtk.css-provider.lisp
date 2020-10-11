@@ -62,7 +62,7 @@
 ;;;
 ;;; Signals
 ;;;
-;;;     void   parsing-error    Run Last
+;;;     void    parsing-error    Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;

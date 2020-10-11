@@ -116,6 +116,8 @@
              :initform nil))
   (:actual-type :pointer))
 
+(export 'g-boxed-foreign-type)
+
 (defgeneric make-foreign-type (info &key return-p))
 
 (define-parse-method g-boxed-foreign (name &rest options)

@@ -90,7 +90,7 @@
     See the function @fun{g-type-qdata} for attaching a @code{GQuark} identifier
     to a @class{g-type}.
   @end{dictionary}
-  @begin[example]{dictionary}
+  @begin[Example]{dictionary}
     Translate a Lisp String to a @code{GQuark} identifier:
     @begin{pre}
   (convert-to-foreign \"GtkWidget\" 'g-quark)

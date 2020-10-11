@@ -145,7 +145,7 @@
   loading the library, but is not exported.
   @begin[Example]{dictionary}
     An example with a simple window from the
-    @url[http://www.crategus.com/books/cl-gtk/gtk-tutorial.html]{GTK+ Lisp tutorial}
+    @url[http://www.crategus.com/books/cl-gtk/gtk-tutorial.html#example-simple-window]{GTK+ Lisp tutorial}
     which shows the usage of the macro @sym{within-main-loop}:
     @begin{pre}
 (defun example-simple-window ()
