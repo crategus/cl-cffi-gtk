@@ -634,7 +634,8 @@
 ;; TODO: Implement the constant
 ;; Is the syntax of this function consistent?
 
-(defcfun ("g_gtype_get_type" %g-type-gtype) g-size)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defcfun ("g_gtype_get_type" %g-type-gtype) g-size))
 
 (declaim (inline g-type-gtype))
 
@@ -652,6 +653,24 @@
   (gtype (%g-type-gtype)))
 
 (export 'g-type-gtype)
+
+;; Implement the type GType as a constant
+
+(defconstant +g-type-gtype+ #.(%g-type-gtype))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-type-gtype+ atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+g-type-gtype+ 'variable)
+ "@version{2020-10-11}
+  @variable-value{@code{(g-type-gtype)}}
+  @begin{short}
+    The fundamental type for @code{GType}.
+  @end{short}
+  @see-class{g-type}
+  @see-function{g-type-gtype}")
+
+(export '+g-type-gtype+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VARIANT
@@ -684,13 +703,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CHECKSUM
-;;;
-;;; #define G_TYPE_CHECKSUM (g_checksum_get_type ())
-;;;
-;;; The GType for a boxed type holding a GChecksum.
-;;;
-;;; Since 2.36
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defcfun ("g_checksum_get_type" %g-type-checksum) g-size))
+
+(defconstant +g-type-checksum+ #.(%g-type-checksum))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-type-checksum+ atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+g-type-checksum+ 'variable)
+ "@version{2020-10-11}
+  @begin{short}
+    The @class{g-type} for a boxed type holding a @code{GChecksum}.
+  @end{short}
+  @see-class{g-type}")
+
+(export '+g-type-checksum+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_GLIB_FIRST
@@ -972,7 +1002,9 @@
                the @code{G_SIGNAL_TYPE_STATIC_SCOPE} flag"))
   (:documentation
     "@version{2013-8-22}
-     Values of this CFFI foreign type @sym{g-type} identify the C GType.
+     @begin{short}
+       Values of this CFFI foreign type @sym{g-type} identify the C GType.
+     @end{short}
      @sym{g-type} is designated by its name (a string) or a numeric identifier.
      Functions accept @sym{g-type} designators as a string or integer and return
      them as a string. The functions @fun{g-type-name} and
