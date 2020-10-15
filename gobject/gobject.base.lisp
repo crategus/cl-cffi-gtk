@@ -653,11 +653,13 @@
 ;; Get the definition of a property for the GObject type. Both arguments are of
 ;; type string, e.g. (class-property-info "GtkLabel" "label")
 
-(defun class-property-info (type property-name)
-  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
-    (let* ((param-spec (g-object-class-find-property class property-name)))
-      (when param-spec
-        (parse-g-param-spec param-spec)))))
+(defun class-property-info (gtype property-name)
+  (let ((class (g-type-class-ref gtype)))
+    (unwind-protect
+      (let ((pspec (%g-object-class-find-property class property-name)))
+        (when pspec
+          (parse-g-param-spec pspec)))
+      (g-type-class-unref class))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1285,40 +1287,43 @@
 ;;; g_object_class_find_property ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_class_find_property" g-object-class-find-property)
+(defcfun ("g_object_class_find_property" %g-object-class-find-property)
     (:pointer (:struct g-param-spec))
+  (class (:pointer (:struct g-object-class)))
+  (property-name :string))
+
+(defun g-object-class-find-property (gtype property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[class]{a @symbol{g-object-class} structure}
-  @argument[property-name]{the name of the property to look up}
-  @return{The @symbol{g-param-spec} for the property, or @code{nil} if the class
-    does not have a property of that name.}
-  @short{Looks up the @symbol{g-param-spec} for a property of a class.}
-  @begin[Example]{dictionary}
-    The @symbol{g-param-spec} structure for the property \"label\" of the
+ "@version{2020-10-15}
+  @argument[gtype]{a @class{g-type} for an object class type}
+  @argument[property-name]{a string with the name of the property to look up}
+  @return{The @symbol{g-param-spec} structure for the property, or @code{nil}
+    if the class does not have a property of that name.}
+  @short{Looks up the @symbol{g-param-spec} structure for a property of a
+    class type.}
+  @begin[Examples]{dictionary}
+    The @symbol{g-param-spec} structure for the property \"label\" of
     @class{gtk-button} is looked up.
     @begin{pre}
- (setq param
-       (g-object-class-find-property (g-type-class-ref (gtype \"GtkButton\"))
-                                     \"label\"))
-=> #.(SB-SYS:INT-SAP #X08188AE0)
- (foreign-slot-value param '(:struct g-param-spec) :type-instance)
-=> #.(SB-SYS:INT-SAP #X08188AE0)
- (foreign-slot-value param '(:struct g-param-spec) :name)
+  (setq pspec (g-object-class-find-property \"GtkLabel\" \"label\"))
+=> #.(SB-SYS:INT-SAP #X009FC730)
+  (g-param-spec-type pspec)
+=> #<GTYPE :name \"GParamString\" :id 9641904>
+  (g-param-spec-value-type pspec)
+=> #<GTYPE :name \"gchararray\" :id 64>
+  (g-param-spec-name pspec)
 => \"label\"
- (foreign-slot-value param '(:struct g-param-spec) :flags)
-=> (:READABLE :WRITABLE :CONSTRUCT :STATIC-NAME :STATIC-NICK :STATIC-BLURB)
- (foreign-slot-value param '(:struct g-param-spec) :value-type)
-=> #S(GTYPE :NAME \"gchararray\" :%ID 64)
- (foreign-slot-value param '(:struct g-param-spec) :owner-type)
-=> #S(GTYPE :NAME \"GtkButton\" :%ID 134906760)
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
   @see-symbol{g-object-class}
   @see-symbol{g-param-spec}"
-  (class (:pointer (:struct g-object-class)))
-  (property-name :string))
+  (assert (g-type-is-a gtype +g-type-object+))
+  (let ((class (g-type-class-ref gtype)))
+    (unwind-protect
+      (let ((pspec (%g-object-class-find-property class property-name)))
+        (when (not (null-pointer-p pspec)) pspec))
+      (g-type-class-unref class))))
 
 (export 'g-object-class-find-property)
 
@@ -1329,36 +1334,38 @@
 (defcfun ("g_object_class_list_properties" %g-object-class-list-properties)
     (:pointer (:pointer (:struct g-param-spec)))
   (class (:pointer (:struct g-object-class)))
-  (n-properties (:pointer :uint)))
+  (n-props (:pointer :uint)))
 
-(defun g-object-class-list-properties (type)
+(defun g-object-class-list-properties (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[type]{a type ID of a class}
-  @return{A list of @symbol{g-param-spec} CStruct for all properties of a
-    class.}
+ "@version{2020-10-14}
+  @argument[type]{a @class{g-type} ID of a object class}
+  @return{A list of @symbol{g-param-spec} structures.}
   @begin{short}
-    Get a list of @symbol{g-param-spec} CStruct for all properties of a
+    Gets a list of @symbol{g-param-spec} structures for all properties of a
     class.
   @end{short}
   @begin[Note]{dictionary}
     The C implementation of the corresponding function does not take a type ID,
-    but a @symbol{g-object-class} structure as the first argument. The Lisp
-    function gets the @symbol{g-object-class} structure with the call
-    @code{(g-type-class-ref @arg{type})}.
+    but a @symbol{g-object-class} structure as the argument. The Lisp function
+    gets the @symbol{g-object-class} structure with the call
+    @code{(g-type-class-ref @arg{gtype})}.
   @end{dictionary}
   @see-class{g-object}
+  @see-class{g-type}
   @see-symbol{g-object-class}
   @see-symbol{g-param-spec}"
-  (assert (g-type-is-a type +g-type-object+))
-  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
-    (with-foreign-object (n-properties :uint)
-      (with-unwind (params (%g-object-class-list-properties class n-properties)
-                           g-free)
-        (loop
-           for i from 0 below (mem-ref n-properties :uint)
-           for param = (mem-aref params :pointer i)
-         collect (parse-g-param-spec param))))))
+  (assert (g-type-is-a gtype +g-type-object+))
+  (let ((class (g-type-class-ref gtype)))
+    (unwind-protect
+      (with-foreign-object (n-props :uint)
+        (let ((pspecs (%g-object-class-list-properties class n-props)))
+          (unwind-protect
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect pspec)
+          (g-free pspecs))))
+      (g-type-class-unref class))))
 
 (export 'g-object-class-list-properties)
 
@@ -1443,29 +1450,32 @@
 ;;; g_object_interface_find_property ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_interface_find_property" g-object-interface-find-property)
+(defcfun ("g_object_interface_find_property" %g-object-interface-find-property)
     (:pointer (:struct g-param-spec))
+  (iface (:pointer (:struct g-type-interface)))
+  (property-name :string))
+
+(defun g-object-interface-find-property (gtype property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[g-iface]{any interface vtable for the interface, or the default
-    vtable for the interface}
-  @argument[property-name]{name of a property to lookup}
-  @return{The @symbol{g-param-spec} CStruct for the property of the interface
+ "@version{2020-10-15}
+  @argument[iface]{a @class{g-type} for an interface type}
+  @argument[property-name]{a string with the name of a property to lookup}
+  @return{The @symbol{g-param-spec} structure for the property of the interface
     with the name @arg{property-name}, or @code{nil} if no such property
     exists.}
   @begin{short}
-    Find the @symbol{g-param-spec} CStruct with the given name for an interface.
+    Find the @symbol{g-param-spec} structure with the given property name for
+    an interface.
   @end{short}
-  Generally, the interface vtable passed in as @arg{g-iface} will be the default
-  vtable from the @fun{g-type-default-interface-ref} function, or, if you know
-  the interface has already been loaded, the @fun{g-type-default-interface-peek}
-  function.
   @see-class{g-object}
-  @see-symbol{g-param-spec}
-  @see-function{g-type-default-interface-ref}
-  @see-fun{g-type-default-interface-peek}"
-  (interface :pointer)
-  (property-name :string))
+  @see-class{g-type}
+  @see-symbol{g-param-spec}"
+  (assert (g-type-is-a gtype +g-type-interface+))
+  (let ((iface (g-type-default-interface-ref gtype)))
+    (unwind-protect
+      (let ((pspec (%g-object-interface-find-property iface property-name)))
+        (when (not (null-pointer-p pspec)) pspec))
+      (g-type-default-interface-unref iface))))
 
 (export 'g-object-interface-find-property)
 
@@ -1475,41 +1485,37 @@
 
 (defcfun ("g_object_interface_list_properties"
           %g-object-interface-list-properties) (:pointer (:struct g-param-spec))
-  (interface :pointer)
-  (n-properties (:pointer :uint)))
+  (iface (:pointer (:struct g-type-interface)))
+  (n-props (:pointer :uint)))
 
-(defun g-object-interface-list-properties (type)
+(defun g-object-interface-list-properties (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[type]{a type ID of an interface}
-  @return{A list of @symbol{g-param-spec} CStruct for all properties of an
+ "@version{2020-10-14}
+  @argument[type]{a @class{g-type} ID of an interface}
+  @return{A list of @symbol{g-param-spec} structures for all properties of an
     interface.}
   @begin{short}
     Lists the properties of an interface.
   @end{short}
-  Generally, the interface vtable passed in as @arg{g-iface} will be the default
-  vtable from the @fun{g-type-default-interface-ref} function, or, if you know
-  the interface has already been loaded, the @fun{g-type-default-interface-peek}
-  function.
   @begin[Note]{dictionary}
     The C implementation of the corresponding function does not take a
     type ID, but a vtable as the first argument. The Lisp function gets
     the vtable with the call @code{(g-type-default-interface-ref type)}.
   @end{dictionary}
   @see-class{g-object}
-  @see-symbol{g-param-spec}
-  @see-function{g-type-default-interface-ref}
-  @see-function{g-type-default-interface-peek}"
-  (assert (g-type-is-a type +g-type-interface+))
-  (with-unwind (g-iface (g-type-default-interface-ref type)
-                        g-type-default-interface-unref)
-    (with-foreign-object (n-props :uint)
-      (with-unwind (params (%g-object-interface-list-properties g-iface n-props)
-                           g-free)
-        (loop
-           for i from 0 below (mem-ref n-props :uint)
-           for param = (mem-aref params :pointer i)
-           collect (parse-g-param-spec param))))))
+  @see-class{g-type}
+  @see-symbol{g-param-spec}"
+  (assert (g-type-is-a gtype +g-type-interface+))
+  (let ((iface (g-type-default-interface-ref gtype)))
+    (unwind-protect
+      (with-foreign-object (n-props :uint)
+        (let ((pspecs (%g-object-interface-list-properties iface n-props)))
+          (unwind-protect
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect pspec)
+            (g-free pspecs))))
+      (g-type-default-interface-unref iface))))
 
 (export 'g-object-interface-list-properties)
 
