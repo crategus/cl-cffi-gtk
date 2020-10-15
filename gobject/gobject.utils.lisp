@@ -273,17 +273,18 @@
 ;; described by an object of type param-spec. type is an
 ;; integer or a string specifying the GType
 
-(defun interface-properties (type)
-  (assert (g-type-is-a type +g-type-interface+))
-  (with-unwind (g-iface (g-type-default-interface-ref type)
-                        g-type-default-interface-unref)
-    (with-foreign-object (n-props :uint)
-      (with-unwind (params (%g-object-interface-list-properties g-iface n-props)
-                           g-free)
-        (loop
-           for i from 0 below (mem-ref n-props :uint)
-           for param = (mem-aref params :pointer i)
-           collect (parse-g-param-spec param))))))
+(defun interface-properties (gtype)
+  (assert (g-type-is-a gtype +g-type-interface+))
+  (let ((iface (g-type-default-interface-ref gtype)))
+    (unwind-protect
+      (with-foreign-object (n-props :uint)
+        (let ((pspecs (%g-object-interface-list-properties iface n-props)))
+          (unwind-protect
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect (parse-g-param-spec pspec))
+            (g-free pspecs))))
+      (g-type-default-interface-unref iface))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -341,17 +342,18 @@
 ;; is described by an object of type param-spec. type is an
 ;; integer or a string specifying the GType
 
-(defun class-properties (type)
-  (assert (g-type-is-a type +g-type-object+))
-  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
-    (with-foreign-object (n-properties :uint)
-      (with-unwind
-        (params (%g-object-class-list-properties class n-properties)
-                g-free)
-        (loop
-           for i from 0 below (mem-ref n-properties :uint)
-           for param = (mem-aref params :pointer i)
-           collect (parse-g-param-spec param))))))
+(defun class-properties (gtype)
+  (assert (g-type-is-a gtype +g-type-object+))
+  (let ((class (g-type-class-ref gtype)))
+    (unwind-protect
+      (with-foreign-object (n-props :uint)
+        (let ((pspecs (%g-object-class-list-properties class n-props)))
+          (unwind-protect
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect (parse-g-param-spec pspec))
+            (g-free pspecs))))
+      (g-type-class-unref class))))
 
 ;;; ----------------------------------------------------------------------------
 
