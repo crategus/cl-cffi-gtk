@@ -98,7 +98,8 @@
                                    (type (eql (gtype +g-type-param+)))
                                    parse-kind)
   (declare (ignore parse-kind))
-  (parse-g-param-spec (g-value-param gvalue-ptr)))
+  (g-value-param gvalue-ptr))
+;  (parse-g-param-spec (g-value-param gvalue-ptr)))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
                                    (type (eql (gtype +g-type-object+)))
@@ -179,8 +180,11 @@
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-param+)))
                                 value)
-  (declare (ignore gvalue-ptr value))
-  (error "Setting of GParam is not implemented"))
+;  (declare (ignore gvalue-ptr value))
+;  (error "Setting of GParam is not implemented"))
+  (setf (g-value-param gvalue-ptr) value))
+
+
 
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-object+)))
