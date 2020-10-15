@@ -27,17 +27,10 @@
 
 (in-package :gtk)
 
-(defun container-child-property-info (type property-name)
-  (let ((class (g-type-class-ref type)))
-    (unwind-protect
-         (let ((g-param-spec (gtk-container-class-find-child-property class property-name)))
-           (parse-g-param-spec g-param-spec))
-      (g-type-class-unref class))))
-
 (defun container-call-get-property (container child property-name gtype)
   (with-foreign-object (gvalue '(:struct g-value))
     (g-value-init gvalue (gtype gtype))
-    (%gtk-container-child-get-property container child property-name gvalue)
+    (%gtk-container-child-property container child property-name gvalue)
     (prog1 (parse-g-value gvalue)
       (g-value-unset gvalue))))
 
