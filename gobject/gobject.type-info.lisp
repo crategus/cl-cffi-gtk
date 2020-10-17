@@ -2480,19 +2480,26 @@
 ;;; g_type_class_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_class_ref" g-type-class-ref) (:pointer (:struct g-type-class))
+(defcfun ("g_type_class_ref" %g-type-class-ref)
+    (:pointer (:struct g-type-class))
+  (gtype g-type))
+
+(defun g-type-class-ref (gtype)
  #+cl-cffi-gtk-documentation
  "@version{2020-10-14}
   @argument[gtype]{a @class{g-type} ID of a classed type}
   @return{The @symbol{g-type-class} structure for the given @arg{gtype}.}
   @begin{short}
     Increments the reference count of the class structure belonging to
-    @arg{gtype}.
+    @arg{gtype} and returns the pointer to the class structure.
   @end{short}
-  This function will create the class if it does not exist already.
+  This function will create the class if it does not exist already. Returns
+  @code{nil} when @arg{gtype} is not a valid type ID.
   @see-class{g-type}
   @see-symbol{g-type-class}"
-  (gtype g-type))
+  (let ((class (%g-type-class-ref gtype)))
+    (when (not (null-pointer-p class))
+      class)))
 
 (export 'g-type-class-ref)
 
