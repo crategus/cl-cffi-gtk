@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.enumeration.lisp
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GObject Reference Manual
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -25,6 +25,44 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Enumeration and Flag Types
+;;;
+;;;     Enumeration and flags types
+;;;
+;;; Types and Values
+;;;
+;;;     GEnumClass
+;;;     GFlagsClass
+;;;     GEnumValue
+;;;     GFlagsValue
+;;;
+;;; Functions
+;;;
+;;;     G_ENUM_CLASS_TYPE
+;;;     G_ENUM_CLASS_TYPE_NAME
+;;;     G_TYPE_IS_ENUM
+;;;     G_ENUM_CLASS
+;;;     G_IS_ENUM_CLASS
+;;;     G_TYPE_IS_FLAGS
+;;;     G_FLAGS_CLASS
+;;;     G_IS_FLAGS_CLASS
+;;;     G_FLAGS_CLASS_TYPE
+;;;     G_FLAGS_CLASS_TYPE_NAME
+;;;
+;;;     g_enum_get_value
+;;;     g_enum_get_value_by_name
+;;;     g_enum_get_value_by_nick
+;;;     g_enum_to_string
+;;;     g_flags_get_first_value
+;;;     g_flags_get_value_by_name
+;;;     g_flags_get_value_by_nick
+;;;     g_flags_to_string
+;;;     g_enum_register_static
+;;;     g_flags_register_static
+;;;     g_enum_complete_type_info
+;;;     g_flags_complete_type_info
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -297,52 +335,59 @@
          (list `(glib-init::at-init () ,(type-initializer-call type-initializer))))))
 
 ;;; ----------------------------------------------------------------------------
-;;; g-enum-class-type
+;;; G_ENUM_CLASS_TYPE
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: The function return for any class the type.
-
-(declaim (inline g-enum-class-type))
+;; TODO: Consider to remove the implementation. We do not export this function.
+;; It is a call of g-type-from-class.
 
 (defun g-enum-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-10}
-  @argument[class]{a @symbol{g-enum-class}}
-  @return{The @class{g-type}.}
-  Get the type identifier from a given @symbol{g-enum-class} structure."
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-enum-class} structure}
+  @return{The @class{g-type} ID for @arg{class}.}
+  @begin{short}
+    Get the type identifier from a given @symbol{g-enum-class} structure.
+  @end{short}
+  @see-symbol{g-enum-class}
+  @see-class{g-type}"
   (g-type-from-class class))
 
-(export 'g-enum-class-type)
-
 ;;; ----------------------------------------------------------------------------
-;;; g-enum-class-type-name
+;;; G_ENUM_CLASS_TYPE_NAME
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline g-enum-class-type-name))
+;; TODO: Consider to remove the implemenation. We do not export this function.
+;; It is a call of g-type-name and g-type-from-class.
 
 (defun g-enum-class-type-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-10}
-  @argument[class]{a @symbol{g-enum-class}}
-  @return{The type name.}
-  Get the static type name from a given GEnumClass structure."
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-enum-class} structure}
+  @return{A string with the type name.}
+  @begin{short}
+    Get the type name from a given @symbol{g-enum-class} structure.
+  @end{short}
+  @see-symbol{g-enum-class}"
   (g-type-name (g-type-from-class class)))
 
-(export 'g-enum-class-type-name)
-
 ;;; ----------------------------------------------------------------------------
-;;; g-type-is-enum
+;;; G_TYPE_IS_ENUM
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-type-is-enum))
 
-(defun g-type-is-enum (type)
+(defun g-type-is-enum (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-12}
-  @argument[type]{a @class{g-type} ID}
-  @return{@em{True} if @arg{type} \"is a\" @variable{+g-type-enum+}.}
-  Checks whether @arg{type} \"is a\" @variable{+g-type-enum+}."
-  (eql (gtype-id (g-type-fundamental type)) +g-type-enum+))
+ "@version{2020-10-16}
+  @argument[gtype]{a @class{g-type} ID}
+  @return{@em{True} if @arg{gtype} is a @variable{+g-type-enum+} type.}
+  @begin{short}
+    Checks whether @arg{gtype} is a @variable{+g-type-enum+} type.
+  @end{short}
+  @see-class{g-type}
+  @see-variable{+g-type-enum+}"
+  (eq (gtype (g-type-fundamental gtype)) (gtype +g-type-enum+)))
 
 (export 'g-type-is-enum)
 
@@ -359,15 +404,17 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; G_IS_ENUM_CLASS()
+;;; G_IS_ENUM_CLASS
 ;;; ----------------------------------------------------------------------------
 
 (defun g-is-enum-class (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
-  @argument[class]{a @symbol{g-enum-class}}
-  Checks whether class \"is a\" valid @symbol{g-enum-class} structure of type
-  @var{+g-type-enum+} or derived.
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-enum-class} structure}
+  @begin{short}
+    Checks whether class is a valid @symbol{g-enum-class} structure of type
+    @var{+g-type-enum+} or derived.
+  @end{short}
   @see-symbol{g-enum-class}
   @see-variable{+g-type-enum+}"
   (g-type-check-class-type class +g-type-enum+))
@@ -375,23 +422,27 @@
 (export 'g-is-enum-class)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-type-is-flags
+;;; G_TYPE_IS_FLAGS
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-type-is-flags))
 
-(defun g-type-is-flags (type)
+(defun g-type-is-flags (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-12}
+ "@version{2020-10-16}
   @argument[type]{a @class{g-type} ID}
-  @return{@em{True} if @arg{type} \"is a\" @variable{+g-type-flags+}.}
-  Checks whether @arg{type} \"is a\" @variable{+g-type-flags+}."
-  (eql (gtype-id (g-type-fundamental type)) +g-type-flags+))
+  @return{@em{True} if @arg{type} is a @variable{+g-type-flags+} type.}
+  @begin{short}
+    Checks whether @arg{type} is a @variable{+g-type-flags+} type.
+  @end{short}
+  @see-class{g-type}
+  @see-variable{+g-type-flags+}"
+  (eq (gtype (g-type-fundamental gtype)) (gtype +g-type-flags+)))
 
 (export 'g-type-is-flags)
 
 ;;; ----------------------------------------------------------------------------
-;;; G_FLAGS_CLASS()
+;;; G_FLAGS_CLASS
 ;;;
 ;;; #define G_FLAGS_CLASS(class)
 ;;;         (G_TYPE_CHECK_CLASS_CAST ((class), G_TYPE_FLAGS, GFlagsClass))
@@ -403,49 +454,59 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; G_IS_FLAGS_CLASS()
-;;;
-;;; #define G_IS_FLAGS_CLASS(class)
-;;;         (G_TYPE_CHECK_CLASS_TYPE ((class), G_TYPE_FLAGS))
-;;;
-;;; Checks whether class "is a" valid GFlagsClass structure of type G_TYPE_FLAGS
-;;; or derived.
-;;;
-;;; class :
-;;;     a GFlagsClass
+;;; G_IS_FLAGS_CLASS
 ;;; ----------------------------------------------------------------------------
 
+(defun g-is-flags-class (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-flags-class} structure}
+  @begin{short}
+    Checks whether @arg{class} is a valid @symbol{g-enum-class} structure
+    of type @var{+g-type-flags+} or derived.
+  @end{short}
+  @see-symbol{g-flags-class}
+  @see-variable{+g-type-flags+}"
+  (g-type-check-class-type class +g-type-flags+))
+
+(export 'g-is-flags-class)
+
 ;;; ----------------------------------------------------------------------------
-;;; g-flags-class-type
+;;; G_FLAGS_CLASS_TYPE
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline g-flags-class-type))
+;; TODO: Consider to remove the implementation. We do not export this function.
+;; It is a call of g-type-from-class.
 
 (defun g-flags-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-10}
-  @argument[class]{a @symbol{g-flags-class}}
-  @return{The @class{g-type}.}
-  Get the type identifier from a given @symbol{g-flags-class} structure."
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-flags-class} structure}
+  @return{The @class{g-type} ID for @arg{class}.}
+  @begin{short}
+    Get the type identifier from a given @symbol{g-flags-class} structure.
+  @end{short}
+  @see-symbol{g-flags-class}
+  @see-class{g-type}"
   (g-type-from-class class))
 
-(export 'g-flags-class-type)
-
 ;;; ----------------------------------------------------------------------------
-;;; G_FLAGS_CLASS_TYPE_NAME()
+;;; G_FLAGS_CLASS_TYPE_NAME
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline g-flags-class-type-name))
+;; TODO: Consider to remove the implemenation. We do not export this function.
+;; It is a call of g-type-name and g-type-from-class.
 
 (defun g-flags-class-type-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-10}
-  @argument[class]{a @symbol{g-flags-class}}
-  @return{The type name.}
-  Get the static type name from a given @symbol{g-flags-class} structure."
+ "@version{2020-10-16}
+  @argument[class]{a @symbol{g-flags-class} structure}
+  @return{A string with the type name.}
+  @begin{short}
+    Get the type name from a given @symbol{g-flags-class} structure.
+  @end{short}
+  @see-symbol{g-flags-class}"
   (g-type-name (g-type-from-class class)))
-
-(export 'g-flags-class-type-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_enum_get_value ()
@@ -479,8 +540,8 @@
 ;; This function is called from set-g-value to set a GEnum Value.
 
 (defun set-gvalue-enum (gvalue value)
-  (let* ((type (g-value-type gvalue))
-         (type-name (gtype-name type))
+  (let* ((gtype (g-value-type gvalue))
+         (type-name (gtype-name gtype))
          (enum-type (registered-enum-type type-name)))
     (unless enum-type
       (error "Enum ~A is not registered" type-name))
@@ -525,6 +586,29 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_enum_to_string ()
+;;;
+;;; gchar *
+;;; g_enum_to_string (GType g_enum_type, gint value);
+;;;
+;;; Pretty-prints value in the form of the enum’s name.
+;;;
+;;; This is intended to be used for debugging purposes. The format of the
+;;; output may change in the future.
+;;;
+;;; g_enum_type :
+;;;     the type identifier of a GEnumClass type
+;;;
+;;; value :
+;;;     the value
+;;;
+;;; Returns :
+;;;     a newly-allocated text string.
+;;;
+;;; Since 2.54
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_flags_get_first_value ()
 ;;;
 ;;; GFlagsValue * g_flags_get_first_value (GFlagsClass *flags_class,
@@ -547,21 +631,21 @@
 ;; TODO: Should we implement g-flags-get-first-value to be more complete?
 
 (defun parse-g-value-flags (gvalue)
-  (let* ((type (g-value-type gvalue))
-         (type-name (gtype-name type))
+  (let* ((gtype (g-value-type gvalue))
+         (type-name (gtype-name gtype))
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
-      (error "Flags ~A is not registered" type-name))
+      (error "Flags ~A is not registered." type-name))
     (convert-from-foreign (g-value-flags gvalue) flags-type)))
 
 ;; This function is called from set-g-value to set a GFlag value.
 
 (defun set-gvalue-flags (gvalue value)
-  (let* ((type (g-value-type gvalue))
-         (type-name (gtype-name type))
+  (let* ((gtype (g-value-type gvalue))
+         (type-name (gtype-name gtype))
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
-      (error "Flags ~A is not registered" type-name))
+      (error "Flags ~A is not registered." type-name))
     (setf (g-value-flags gvalue) (convert-to-foreign value flags-type))))
 
 ;;; ----------------------------------------------------------------------------
@@ -603,8 +687,35 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g-enum-register-static
+;;; g_flags_to_string ()
+;;;
+;;; gchar *
+;;; g_flags_to_string (GType flags_type, guint value);
+;;;
+;;; Pretty-prints value in the form of the flag names separated by | and sorted.
+;;; Any extra bits will be shown at the end as a hexadecimal number.
+;;;
+;;; This is intended to be used for debugging purposes. The format of the
+;;; output may change in the future.
+;;;
+;;; flags_type :
+;;;     the type identifier of a GFlagsClass type
+;;;
+;;; value :
+;;;     the value
+;;;
+;;; Returns :
+;;;     a newly-allocated text string.
+;;;
+;;; Since 2.54
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_enum_register_static ()
+;;; ----------------------------------------------------------------------------
+
+;; TODO: Consider to remove the implementation. This function is not
+;; exported.
 
 (defcfun ("g_enum_register_static" g-enum-register-static) g-type
  #+cl-cffi-gtk-documentation
@@ -625,11 +736,12 @@
   (name :string)
   (static-values (:pointer (:struct g-enum-value))))
 
-(export 'g-enum-register-static)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_flags_register_static ()
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Consider to remove the implementation. This function is not
+;; exported.
 
 (defcfun ("g_flags_register_static" g-flags-register-static) g-type
  #+cl-cffi-gtk-documentation
@@ -649,8 +761,6 @@
   to write one yourself using @sym{g-flags-register-static}."
   (name :string)
   (static-values (:pointer (:struct g-flags-value))))
-
-(export 'g-flags-register-static)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_enum_complete_type_info ()
