@@ -99,7 +99,6 @@
                                    parse-kind)
   (declare (ignore parse-kind))
   (g-value-param gvalue-ptr))
-;  (parse-g-param-spec (g-value-param gvalue-ptr)))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
                                    (type (eql (gtype +g-type-object+)))
