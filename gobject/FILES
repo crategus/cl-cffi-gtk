@@ -8,7 +8,7 @@ Content from the GObject 2.36.2 Reference Manual
   * not implemented *      - GTypeModule
 
   gobject.base.lisp        - GObject                           - GObject 2.64
-  gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.36.2
+  gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.66
   gobject.boxed.lisp       - Boxed Types                       - GObject 2.36.2
   gobject.g-value.lisp     - Generic values                    - GObject 2.66
   gobject.param.lisp       - Parameters and Values             - GObject 2.66

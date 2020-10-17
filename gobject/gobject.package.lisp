@@ -47,10 +47,13 @@
 
     #:create-fn-ref
 
+    #:param-spec-type
+    #:param-spec-owner-type
     #:param-spec-name
     #:param-spec-readable
-    #:param-spec-type
     #:param-spec-writable
+    #:param-spec-constructor
+    #:param-spec-constructor-only
 
     #:boxed-related-symbols
     #:copy-boxed-slots-to-foreign
@@ -347,8 +350,8 @@
   @end{section}
   @begin[Enumeration and Flag Types]{section}
     The GLib type system provides fundamental types for enumeration and flags
-    types. (Flags types are like enumerations, but allow their values to be
-    combined by bitwise or). A registered enumeration or flags type associates a
+    types. Flags types are like enumerations, but allow their values to be
+    combined by bitwise or. A registered enumeration or flags type associates a
     name and a nickname with each allowed value, and the methods
     @fun{g-enum-get-value-by-name}, @fun{g-enum-get-value-by-nick},
     @fun{g-flags-get-value-by-name} and @fun{g-flags-get-value-by-nick} can look
@@ -356,9 +359,6 @@
     registered with the GLib type system, it can be used as value type for
     object properties, using @fun{g-param-spec-enum} or
     @fun{g-param-spec-flags}.
-
-    GObject ships with a utility called @code{glib-mkenums} that can construct
-    suitable type registration functions from C enumeration definitions.
 
     @about-symbol{g-enum-value}
     @about-symbol{g-enum-class}
@@ -377,9 +377,11 @@
     @about-function{g-enum-get-value}
     @about-function{g-enum-get-value-by-name}
     @about-function{g-enum-get-value-by-nick}
+    @about-function{g-enum-to-string}
     @about-function{g-flags-get-first-value}
     @about-function{g-flags-get-value-by-name}
     @about-function{g-flags-get-value-by-nick}
+    @about-function{g-flags-to-string}
     @about-function{g-enum-register-static}
     @about-function{g-flags-register-static}
     @about-function{g-enum-complete-type-info}
