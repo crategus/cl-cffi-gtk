@@ -1080,15 +1080,15 @@
 (defcfun ("gtk_style_context_get_style_property"
           %gtk-style-context-style-property) :void
   (context (g-object gtk-style-context))
-  (property :string)
+  (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun gtk-style-context-style-property (context widget property)
+(defun gtk-style-context-style-property (context widget property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2020-10-13}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[widget]{a @class{gtk-widget} the style property is looked up for}
-  @argument[property]{a @code{:string} with the name of the widget style
+  @argument[property-name]{a @code{:string} with the name of the widget style
     property}
   @return{Returns the value of the style property.}
   @begin{short}
@@ -1105,14 +1105,14 @@
     @end{pre}
   @end{dictionary}
   @see-class{gtk-style-context}"
-  (let ((gtype (param-spec-type
+  (let ((gtype (g-param-spec-value-type
                    (gtk-widget-class-find-style-property
                        (g-type-from-instance widget)
-                       property))))
+                       property-name))))
     (with-foreign-object (value '(:struct g-value))
       (g-value-init value gtype)
       (prog2
-        (%gtk-style-context-style-property context property value)
+        (%gtk-style-context-style-property context property-name value)
         (parse-g-value value)
         (g-value-unset value)))))
 
