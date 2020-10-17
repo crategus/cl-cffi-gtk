@@ -31,7 +31,7 @@
                "parent" "receives-default" "resize-mode" "scale-factor" "sensitive" "style"
                "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
                "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkFlowBoxChild"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -40,11 +40,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkFlowBoxChild"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkFlowBoxChild"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFlowBoxChild" GTK-FLOW-BOX-CHILD
@@ -84,7 +84,7 @@
                "resize-mode" "row-spacing" "scale-factor" "selection-mode" "sensitive"
                "style" "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
                "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkFlowBox"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -93,11 +93,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkFlowBox"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkFlowBox"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFlowBox" GTK-FLOW-BOX

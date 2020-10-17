@@ -587,7 +587,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GdkWindow"))))
   ;; Check the class properties
   (is (equal '("cursor")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GdkWindow"))
                           #'string-lessp)))
   ;; Check the class definition

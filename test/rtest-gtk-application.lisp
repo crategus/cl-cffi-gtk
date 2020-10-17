@@ -58,7 +58,7 @@
   (is (equal '("action-group" "active-window" "app-menu" "application-id" "flags"
                "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"
                "register-session" "resource-base-path" "screensaver-active")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkApplication"))
                           #'string-lessp)))
   ;; Check the class definition

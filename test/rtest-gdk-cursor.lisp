@@ -157,7 +157,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GdkCursor"))))
   ;; Check the class properties
   (is (equal '("cursor-type" "display")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GdkCursor"))
                           #'string-lessp)))
   ;; Check the class definition

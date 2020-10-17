@@ -97,7 +97,7 @@
  "tooltip-markup" "tooltip-text" "transient-for" "type" "type-hint"
  "urgency-hint" "valign" "vexpand" "vexpand-set" "visible" "width-request"
  "window" "window-position")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkWindow"))
                           #'string-lessp)))
 
@@ -108,7 +108,7 @@
  "separator-width" "text-handle-height" "text-handle-width"
  "visited-link-color" "wide-separators" "window-dragging"
  "decoration-button-layout" "decoration-resize-handle")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWindow"))))
 
   ;; Get the names of the child properties

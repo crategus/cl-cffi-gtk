@@ -56,7 +56,7 @@
 
   ;; Get the names of the interface properties.
   (is (equal '()
-             (mapcar #'param-spec-name (g-object-interface-list-properties "GIcon"))))
+             (mapcar #'g-param-spec-name (g-object-interface-list-properties "GIcon"))))
 
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GIcon" G-ICON

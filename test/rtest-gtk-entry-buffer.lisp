@@ -74,7 +74,7 @@
 
   ;; Get the names of the class properties.
   (is (equal '("text" "length" "max-length")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-class-list-properties "GtkEntryBuffer"))))
 
   ;; Get the class definition

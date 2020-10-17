@@ -25,7 +25,7 @@
   ;; Check the class properties
   (is (equal '("accepting-jobs" "accepts-pdf" "accepts-ps" "backend" "icon-name" "is-virtual"
                "job-count" "location" "name" "paused" "state-message")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrinter"))
                           #'string-lessp)))
   ;; Check the class definition
@@ -75,7 +75,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkPrintBackend"))))
   ;; Check the class properties
   (is (equal '("status")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintBackend"))
                           #'string-lessp)))
   ;; Check the class definition

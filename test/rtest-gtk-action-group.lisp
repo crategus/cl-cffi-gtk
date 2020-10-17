@@ -21,7 +21,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkActionGroup"))))
   ;; Check the class properties
   (is (equal '("accel-group" "name" "sensitive" "visible")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkActionGroup"))
                           #'string-lessp)))
   ;; Check the class definition

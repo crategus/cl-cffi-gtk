@@ -65,7 +65,7 @@
                "sensitive" "style" "take-focus" "tearoff-state" "tearoff-title"
                "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
                "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkMenu"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -76,11 +76,11 @@
                "visited-link-color" "wide-separators" "window-dragging" "arrow-placement"
                "arrow-scaling" "double-arrows" "horizontal-offset" "horizontal-padding"
                "vertical-offset" "vertical-padding")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkMenu"))))
   ;; Get the names of the child properties
   (is (equal '("left-attach" "right-attach" "top-attach" "bottom-attach")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkMenu"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkMenu" GTK-MENU

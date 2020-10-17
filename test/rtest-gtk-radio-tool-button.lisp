@@ -34,7 +34,7 @@
                "tooltip-markup" "tooltip-text" "use-action-appearance" "use-underline"
                "valign" "vexpand" "vexpand-set" "visible" "visible-horizontal"
                "visible-vertical" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkRadioToolButton"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -43,11 +43,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "icon-spacing")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkRadioToolButton"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkRadioToolButton"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkRadioToolButton" GTK-RADIO-TOOL-BUTTON

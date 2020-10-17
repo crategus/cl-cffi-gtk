@@ -66,7 +66,7 @@
   ;; Check the class properties
   (is (equal '("action-group" "application-id" "flags" "inactivity-timeout" "is-busy"
                "is-registered" "is-remote" "resource-base-path")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GApplication"))
                           #'string-lessp)))
   ;; Check the class definition

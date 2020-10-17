@@ -32,7 +32,7 @@
                "scale-factor" "scrollable" "sensitive" "show-border" "show-tabs" "style"
                "tab-pos" "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
                "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkNotebook"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -44,12 +44,12 @@
                "has-backward-stepper" "has-forward-stepper" "has-secondary-backward-stepper"
                "has-secondary-forward-stepper" "has-tab-gap" "initial-gap" "tab-curvature"
                "tab-overlap")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkNotebook"))))
   ;; Get the names of the child properties
   (is (equal '("tab-label" "menu-label" "position" "tab-expand" "tab-fill" "reorderable"
                "detachable")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkNotebook"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkNotebook" GTK-NOTEBOOK

@@ -77,7 +77,7 @@ dargestellt werden.")
   ;; Check the class properties
   (is (equal '("copy-target-list" "cursor-position" "has-selection"
                "paste-target-list" "tag-table" "text")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkTextBuffer"))
                           #'string-lessp)))
   ;; Check the class definition

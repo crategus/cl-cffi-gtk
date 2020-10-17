@@ -23,7 +23,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GApplicationCommandLine"))))
   ;; Check the class properties
   (is (equal '("arguments" "is-remote" "options" "platform-data")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GApplicationCommandLine"))
                           #'string-lessp)))
   ;; Check the class definition

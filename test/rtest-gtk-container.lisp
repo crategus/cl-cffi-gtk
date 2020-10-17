@@ -65,7 +65,7 @@
                "parent" "receives-default" "resize-mode" "scale-factor" "sensitive" "style"
                "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
                "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkContainer"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -74,11 +74,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkContainer"))))
   ;; Get the names of the child properties
   (is (equal '("expand" "fill" "padding" "pack-type" "position")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkBox"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkContainer" GTK-CONTAINER
@@ -234,36 +234,36 @@
     (is (equal '(t nil :end 6 0)
                (gtk-container-child-get box button "expand" "fill" "pack-type" "padding" "position")))))
 
-;;;     gtk_container_child_get_property
+;;;     gtk-container-child-property
 
-(test gtk-container-child-get-property
+(test gtk-container-child-property.1
   (let ((box (make-instance 'gtk-box))
         (button (make-instance 'gtk-button)))
+    ;; Add a button to the box
     (is-false (gtk-container-add box button))
-    (is-false (gtk-container-child-get-property box button "expand"))
-    (is-true (gtk-container-child-get-property box button "fill"))
-    (is (eq :start (gtk-container-child-get-property box button "pack-type")))
-    (is (= 0 (gtk-container-child-get-property box button "padding")))
-    (is (= 0 (gtk-container-child-get-property box button "position")))))
+    ;; Get the values of the child properties of GtkBox
+    (is-false (gtk-container-child-property box button "expand"))
+    (is-true (gtk-container-child-property box button "fill"))
+    (is (eq :start (gtk-container-child-property box button "pack-type")))
+    (is (= 0 (gtk-container-child-property box button "padding")))
+    (is (= 0 (gtk-container-child-property box button "position")))))
 
-;;;     gtk_container_child_set_property
+;;;     (setf gtk-container-child-property)
 
-(test gtk-container-child-set-property
+(test gtk-container-child-property.2
   (let ((box (make-instance 'gtk-box))
         (button (make-instance 'gtk-button)))
+    ;; Add a button to the box
     (is-false (gtk-container-add box button))
-
-    (is-false (gtk-container-child-set-property box button "expand" t))
-    (is-true (gtk-container-child-get-property box button "expand"))
-
-    (is-false (gtk-container-child-set-property box button "fill" nil))
-    (is-false (gtk-container-child-get-property box button "fill"))
-
-    (is-false (gtk-container-child-set-property box button "pack-type" :end))
-    (is (eq :end (gtk-container-child-get-property box button "pack-type")))
-
-    (is-false (gtk-container-child-set-property box button "padding" 6))
-    (is (= 6 (gtk-container-child-get-property box button "padding")))))
+    ;; Set the values of the child properties of GtkBox
+    (is-true (setf (gtk-container-child-property box button "expand") t))
+    (is-true (gtk-container-child-property box button "expand"))
+    (is-false (setf (gtk-container-child-property box button "fill") nil))
+    (is-false (gtk-container-child-property box button "fill"))
+    (is (eq :end (setf (gtk-container-child-property box button "pack-type") :end)))
+    (is (eq :end (gtk-container-child-property box button "pack-type")))
+    (is (= 6 (setf (gtk-container-child-property box button "padding") 6)))
+    (is (= 6 (gtk-container-child-property box button "padding")))))
 
 ;;;     gtk_container_child_get_valist
 ;;;     gtk_container_child_set_valist
@@ -316,11 +316,79 @@
     (is-false (gtk-container-unset-focus-chain box))
     (is-false (gtk-container-focus-chain box))))
 
-;;;     gtk_container_class_find_child_property
+;;;     gtk-container-class-find-child-property
 
-(test gtk-container-class-find-child-property
-  (is-true (parse-g-param-spec (gtk-container-class-find-child-property (g-type-class-ref "GtkBox")
-                                                                        "expand"))))
+;; Find a child property of type gboolean
+
+(test gtk-container-class-find-child-property.1
+  (with-foreign-objects ((value '(:struct g-value)))
+    (is-true (g-value-init value "gboolean"))
+    (let ((pspec (gtk-container-class-find-child-property "GtkBox" "expand")))
+      ;; Type checks
+      (is-true (g-type-is-param (g-type-from-instance pspec)))
+      (is-true (g-is-param-spec pspec))
+      (is (equal (gtype "GParamBoolean") (g-param-spec-type pspec)))
+      (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
+      (is (equal (gtype "gboolean") (g-param-spec-value-type pspec)))
+      ;; Check the default value
+      (is (equal (gtype "gboolean") (g-value-type (g-param-spec-default-value pspec))))
+      (is-false (parse-g-value (g-param-spec-default-value pspec)))
+      (is-false (g-param-value-set-default pspec value))
+      (is-false (parse-g-value value))
+      ;; Check the infos about the parameter
+      (is (string= "expand" (g-param-spec-name pspec)))
+      (is (stringp (g-param-spec-nick pspec)))
+      (is (stringp (g-param-spec-blurb pspec)))
+      ;; Unset the GValue
+      (is-false (g-value-unset value)))))
+
+;; Find a child property of an enumeration type
+
+(test gtk-container-class-find-child-property.2
+  (with-foreign-objects ((value '(:struct g-value)))
+    (is-true (g-value-init value "GtkPackType"))
+    (let ((pspec (gtk-container-class-find-child-property "GtkBox" "pack-type")))
+      ;; Type checks
+      (is-true (g-type-is-param (g-type-from-instance pspec)))
+      (is-true (g-is-param-spec pspec))
+      (is (equal (gtype "GParamEnum") (g-param-spec-type pspec)))
+      (is (string= "GParamEnum" (g-param-spec-type-name pspec)))
+      (is (equal (gtype "GtkPackType") (g-param-spec-value-type pspec)))
+      ;; Check the default value
+      (is (equal (gtype "GtkPackType") (g-value-type (g-param-spec-default-value pspec))))
+      (is (eq :start (parse-g-value (g-param-spec-default-value pspec))))
+      (is-false (g-param-value-set-default pspec value))
+      (is (eq :start (parse-g-value value)))
+      ;; Check the infos about the parameter
+      (is (string= "pack-type" (g-param-spec-name pspec)))
+      (is (stringp (g-param-spec-nick pspec)))
+      (is (stringp (g-param-spec-blurb pspec)))
+      ;; Unset the GValue
+      (is-false (g-value-unset value)))))
+
+;; Find a child property of type gint
+
+(test gtk-container-class-find-child-property.3
+  (with-foreign-objects ((value '(:struct g-value)))
+    (is-true (g-value-init value "gint"))
+    (let ((pspec (gtk-container-class-find-child-property "GtkBox" "position")))
+      ;; Type checks
+      (is-true (g-type-is-param (g-type-from-instance pspec)))
+      (is-true (g-is-param-spec pspec))
+      (is (equal (gtype "GParamInt") (g-param-spec-type pspec)))
+      (is (string= "GParamInt" (g-param-spec-type-name pspec)))
+      (is (equal (gtype "gint") (g-param-spec-value-type pspec)))
+      ;; Check the default value
+      (is (equal (gtype "gint") (g-value-type (g-param-spec-default-value pspec))))
+      (is (= 0 (parse-g-value (g-param-spec-default-value pspec))))
+      (is-false (g-param-value-set-default pspec value))
+      (is (= 0 (parse-g-value value)))
+      ;; Check the infos about the parameter
+      (is (string= "position" (g-param-spec-name pspec)))
+      (is (stringp (g-param-spec-nick pspec)))
+      (is (stringp (g-param-spec-blurb pspec)))
+      ;; Unset the GValue
+      (is-false (g-value-unset value)))))
 
 ;;;     gtk_container_class_install_child_property
 ;;;     gtk_container_class_install_child_properties
@@ -330,8 +398,9 @@
 (test gtk-container-class-list-child-properties
     (is (listp (gtk-container-class-list-child-properties "GtkBox")))
     (is (equal '("expand" "fill" "padding" "pack-type" "position")
-               (mapcar #'param-spec-name
+               (mapcar #'g-param-spec-name
                        (gtk-container-class-list-child-properties "GtkBox")))))
 
 ;;;     gtk_container_class_handle_border_width
 
+;;; 2020-10-13

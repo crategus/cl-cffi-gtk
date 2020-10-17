@@ -21,7 +21,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkStyleContext"))))
   ;; Check the class properties
   (is (equal '("direction" "paint-clock" "parent" "screen")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkStyleContext"))
                           #'string-lessp)))
   ;; Check the class definition

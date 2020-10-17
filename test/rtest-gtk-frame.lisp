@@ -82,7 +82,7 @@
  "vexpand" "hexpand-set" "vexpand-set" "expand" "scale-factor" "border-width"
  "resize-mode" "child" "label" "label-xalign" "label-yalign" "shadow-type"
  "label-widget")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-class-list-properties "GtkFrame"))))
 
   ;; Get the names of the style properties.
@@ -91,11 +91,11 @@
  "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
  "separator-width" "text-handle-height" "text-handle-width"
  "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name (gtk-widget-class-list-style-properties "GtkFrame"))))
+             (mapcar #'g-param-spec-name (gtk-widget-class-list-style-properties "GtkFrame"))))
 
   ;; Get the names to the child properties
   (is (equal '()
-             (mapcar #'param-spec-name (gtk-container-class-list-child-properties "GtkFrame"))))
+             (mapcar #'g-param-spec-name (gtk-container-class-list-child-properties "GtkFrame"))))
 
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFrame" GTK-FRAME

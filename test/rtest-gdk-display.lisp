@@ -74,7 +74,7 @@
 
   ;; Get the names of the class properties.
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-class-list-properties "GdkDisplay"))))
 
   ;; No style properties

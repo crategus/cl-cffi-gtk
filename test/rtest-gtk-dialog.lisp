@@ -104,7 +104,7 @@
                "type-hint" "urgency-hint" "use-header-bar" "valign" "vexpand"
                "vexpand-set" "visible" "width-request" "window"
                "window-position")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkDialog"))
                           #'string-lessp)))
 
@@ -117,12 +117,12 @@
                "wide-separators" "window-dragging" "decoration-button-layout"
                "decoration-resize-handle" "action-area-border" "button-spacing"
                "content-area-border" "content-area-spacing")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkDialog"))))
 
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name (gtk-container-class-list-child-properties "GtkDialog"))))
+             (mapcar #'g-param-spec-name (gtk-container-class-list-child-properties "GtkDialog"))))
 
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkDialog" GTK-DIALOG

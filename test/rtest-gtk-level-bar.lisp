@@ -62,7 +62,7 @@
                "no-show-all" "opacity" "orientation" "parent" "receives-default"
                "scale-factor" "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
                "value" "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkLevelBar"))
                           #'string-lessp)))
   ;; Check the style properties.
@@ -72,7 +72,7 @@
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "min-block-height"
                "min-block-width")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkLevelBar"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkLevelBar" GTK-LEVEL-BAR

@@ -279,6 +279,7 @@
 
 (load "rtest-gtk-style-context.lisp")
 (load "rtest-gtk-css-provider.lisp")
+(load "rtest-gtk-style-provider.lisp")
 (load "rtest-gtk-widget-path.lisp")
 (load "rtest-gtk-icon-theme.lisp")
 

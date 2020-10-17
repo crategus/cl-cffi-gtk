@@ -25,7 +25,7 @@
   ;; Check the class properties
   (is (equal '("enabled" "invert-boolean" "name" "object" "parameter-type" "property-name"
                "state" "state-type")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GPropertyAction"))
                           #'string-lessp)))
   ;; Check the class definition

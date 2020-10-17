@@ -23,7 +23,7 @@
   (is (equal '("action-group" "always-show-image" "gicon" "hide-if-empty" "icon-name"
                "is-important" "label" "name" "sensitive" "short-label" "stock-id" "tooltip"
                "visible" "visible-horizontal" "visible-overflown" "visible-vertical")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkAction"))
                           #'string-lessp)))
   ;; Check the class definition

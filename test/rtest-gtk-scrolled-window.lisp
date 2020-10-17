@@ -102,7 +102,7 @@
                "tooltip-markup" "tooltip-text" "vadjustment" "valign" "vexpand" "vexpand-set"
                "visible" "vscrollbar-policy" "width-request" "window" "window-placement"
                "window-placement-set")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkScrolledWindow"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -112,11 +112,11 @@
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "scrollbar-spacing"
                "scrollbars-within-bevel")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkScrolledWindow"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkScrolledWindow"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkScrolledWindow" GTK-SCROLLED-WINDOW

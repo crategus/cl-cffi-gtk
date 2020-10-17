@@ -33,7 +33,7 @@
                "sensitive" "show-fill-level" "style" "tooltip-markup" "tooltip-text"
                "upper-stepper-sensitivity" "valign" "vexpand" "vexpand-set" "visible"
                "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkScrollbar"))
                           #'string-lessp)))
   ;; Check the style properties.
@@ -47,7 +47,7 @@
                "fixed-slider-length" "has-backward-stepper" "has-forward-stepper"
                "has-secondary-backward-stepper" "has-secondary-forward-stepper"
                "min-slider-length")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkScrollbar"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkScrollbar" GTK-SCROLLBAR

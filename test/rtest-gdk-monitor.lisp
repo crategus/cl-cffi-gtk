@@ -55,7 +55,7 @@
   ;; Check the class properties
   (is (equal '("display" "geometry" "height-mm" "manufacturer" "model" "refresh-rate"
  "scale-factor" "subpixel-layout" "width-mm" "workarea")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GdkMonitor"))
                           #'string-lessp)))
   ;; Check the class definition

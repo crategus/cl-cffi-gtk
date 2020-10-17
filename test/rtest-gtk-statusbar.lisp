@@ -31,7 +31,7 @@
                "opacity" "orientation" "parent" "receives-default" "resize-mode"
                "scale-factor" "sensitive" "spacing" "style" "tooltip-markup" "tooltip-text"
                "valign" "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkStatusbar"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -40,11 +40,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "shadow-type")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkStatusbar"))))
   ;; Get the names of the child properties
   (is (equal '("expand" "fill" "padding" "pack-type" "position")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkStatusbar"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkStatusbar" GTK-STATUSBAR

@@ -54,7 +54,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkAccelGroup"))))
   ;; Check the class properties
   (is (equal '("is-locked" "modifier-mask")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkAccelGroup"))
                           #'string-lessp)))
   ;; Check the class definition

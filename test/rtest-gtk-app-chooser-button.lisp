@@ -37,7 +37,7 @@
                "show-dialog-item" "style" "tearoff-title" "tooltip-markup" "tooltip-text"
                "valign" "vexpand" "vexpand-set" "visible" "width-request" "window"
                "wrap-width")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkAppChooserButton"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -47,11 +47,11 @@
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "appears-as-list"
                "arrow-scaling" "arrow-size" "shadow-type")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkAppChooserButton"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkAppChooserButton"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkAppChooserButton" GTK-APP-CHOOSER-BUTTON

@@ -15,7 +15,7 @@
           (registered-object-type-by-name "GAction")))
   ;; Get the names of the interface properties.
   (is (equal '("enabled" "name" "parameter-type" "state" "state-type")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-interface-list-properties "GAction"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GAction" G-ACTION

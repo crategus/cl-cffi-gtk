@@ -20,7 +20,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GSimpleActionGroup"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GSimpleActionGroup"))
                           #'string-lessp)))
   ;; Check the class definition

@@ -1,4 +1,3 @@
-
 (def-suite gobject-base :in gobject-suite)
 (in-suite gobject-base)
 
@@ -99,52 +98,59 @@
 ;;;
 ;;;    g_object_class_install_property
 ;;;    g_object_class_install_properties
-;;;    g_object_class_find_property
 
-;;;   g_object_class_list_properties
+;;;     g-object-class-find-property
+
+(test g-object-class-find-property
+  (is (g-is-param-spec (g-object-class-find-property "GtkLabel" "label")))
+  (is (g-is-param-spec (g-object-class-find-property (gtype-id (gtype "GtkLabel")) "label")))
+  (is (g-is-param-spec (g-object-class-find-property (gtype "GtkLabel") "label")))
+  ;; Unknown property-name returns nil
+  (is-false (g-object-class-find-property "GtkLabel" "xxx")))
+
+;;;     g-object-class-list-properties
 
 (test g-object-class-list-properties
-  (is (equal '("name" "parent" "width-request" "height-request" "visible" "sensitive"
- "app-paintable" "can-focus" "has-focus" "is-focus" "focus-on-click"
- "can-default" "has-default" "receives-default" "composite-child" "style"
- "events" "no-show-all" "has-tooltip" "tooltip-markup" "tooltip-text" "window"
- "opacity" "double-buffered" "halign" "valign" "margin-left" "margin-right"
- "margin-start" "margin-end" "margin-top" "margin-bottom" "margin" "hexpand"
- "vexpand" "hexpand-set" "vexpand-set" "expand" "scale-factor" "xpad" "ypad"
- "label" "attributes" "use-markup" "use-underline" "justify" "pattern" "wrap"
- "wrap-mode" "selectable" "mnemonic-keyval" "mnemonic-widget" "cursor-position"
- "selection-bound" "ellipsize" "width-chars" "single-line-mode" "angle"
- "max-width-chars" "track-visited-links" "lines" "xalign" "yalign")
-             (mapcar #'param-spec-name
+  (is (equal '("name" "parent" "width-request" "height-request" "visible"
+               "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
+               "focus-on-click" "can-default" "has-default" "receives-default"
+               "composite-child" "style" "events" "no-show-all" "has-tooltip"
+               "tooltip-markup" "tooltip-text" "window" "opacity"
+               "double-buffered" "halign" "valign" "margin-left" "margin-right"
+               "margin-start" "margin-end" "margin-top" "margin-bottom" "margin"
+               "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+               "scale-factor" "xpad" "ypad" "label" "attributes" "use-markup"
+               "use-underline" "justify" "pattern" "wrap" "wrap-mode"
+               "selectable" "mnemonic-keyval" "mnemonic-widget"
+               "cursor-position" "selection-bound" "ellipsize" "width-chars"
+               "single-line-mode" "angle" "max-width-chars"
+               "track-visited-links" "lines" "xalign" "yalign")
+             (mapcar #'g-param-spec-name
                      (g-object-class-list-properties "GtkLabel")))))
 
-;;;    g_object_class_override_property
-;;;    g_object_interface_install_property
+;;;     g_object_class_override_property
+;;;     g_object_interface_install_property
 
-;;;    g_object_interface_find_property
+;;;     g-object-interface-find-property
 
 (test g-object-interface-find-property
-  (gobject::with-unwind (interface (g-type-default-interface-ref "GAction")
-                        g-type-default-interface-unref)
-    (is (equal "enabled"
-               (foreign-slot-value (g-object-interface-find-property interface "enabled")
-                                   '(:struct g-param-spec) :name)))
+  (is (g-is-param-spec (g-object-interface-find-property "GAction" "enabled")))
+  (is (g-is-param-spec (g-object-interface-find-property (gtype "GAction") "enabled")))
+  (is (g-is-param-spec (g-object-interface-find-property (gtype-id (gtype "GAction")) "enabled")))
+  (is-false (g-object-interface-find-property "GAction" "xxx")))
 
-  ))
-
-;;;    g_object_interface_list_properties
+;;;     g-object-interface-list-properties
 
 (test g-object-interface-list-properties
   (is (equal '("orientation")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-interface-list-properties "GtkOrientable"))))
   (is (equal '("enabled" "name" "parameter-type" "state" "state-type")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-interface-list-properties "GAction"))))
   (is (equal '()
-             (mapcar #'param-spec-name
-                     (g-object-interface-list-properties "GActionGroup"))))
-)
+             (mapcar #'g-param-spec-name
+                     (g-object-interface-list-properties "GActionGroup")))))
 
 ;;;    g_object_new
 ;;;    g_object_newv
@@ -225,7 +231,7 @@
 ;;;    g_object_dup_qdata
 ;;;    g_object_replace-qdata
 
-;;;   g_object_set_property
+;;;     g-object-set-property
 
 (test g-object-set-property.1
   (let ((obj (make-instance 'gtk-label)))
@@ -253,7 +259,7 @@
     (g-object-set-property obj "max-width-chars" 10)
     (is (= 10 (g-object-get-property obj "max-width-chars")))))
 
-;;;   g_object_get_property
+;;;     g-object-get-property
 
 (test g-object-get-property.1
   (let ((obj (make-instance 'gtk-label :label "label")))
@@ -302,3 +308,5 @@
 ;;;    g_weak_ref_clear
 ;;;    g_weak_ref_get
 ;;;    g_weak_ref_set
+
+;;; 2020-10-15

@@ -22,7 +22,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkPrintContext"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintContext"))
                           #'string-lessp)))
   ;; Check the class definition

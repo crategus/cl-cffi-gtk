@@ -24,7 +24,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GdkScreen"))))
   ;; Check the class properties
   (is (equal '("font-options" "resolution")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GdkScreen"))
                           #'string-lessp)))
   ;; Check the class definition

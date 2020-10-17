@@ -84,7 +84,7 @@
                "tooltip-text" "transient-for" "type" "type-hint" "urgency-hint"
                "use-header-bar" "valign" "vexpand" "vexpand-set" "visible" "width-request"
                "window" "window-position")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintUnixDialog"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -95,11 +95,11 @@
                "visited-link-color" "wide-separators" "window-dragging"
                "decoration-button-layout" "decoration-resize-handle" "action-area-border"
                "button-spacing" "content-area-border" "content-area-spacing")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkPrintUnixDialog"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkPrintUnixDialog"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkPrintUnixDialog" GTK-PRINT-UNIX-DIALOG

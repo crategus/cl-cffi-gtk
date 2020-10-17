@@ -32,7 +32,7 @@
                "scale-factor" "sensitive" "show-text" "style" "text" "tooltip-markup"
                "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
                "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkProgressBar"))
                           #'string-lessp)))
   ;; Check the style properties.
@@ -43,7 +43,7 @@
                "visited-link-color" "wide-separators" "window-dragging"
                "min-horizontal-bar-height" "min-horizontal-bar-width"
                "min-vertical-bar-height" "min-vertical-bar-width" "xspacing" "yspacing")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkProgressBar"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkProgressBar" GTK-PROGRESS-BAR

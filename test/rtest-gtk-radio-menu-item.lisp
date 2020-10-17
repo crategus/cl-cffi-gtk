@@ -33,7 +33,7 @@
                "resize-mode" "right-justified" "scale-factor" "sensitive" "style" "submenu"
                "tooltip-markup" "tooltip-text" "use-action-appearance" "use-underline"
                "valign" "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkRadioMenuItem"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -44,11 +44,11 @@
                "visited-link-color" "wide-separators" "window-dragging" "arrow-scaling"
                "arrow-spacing" "horizontal-padding" "selected-shadow-type" "toggle-spacing"
                "width-chars" "indicator-size")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkRadioMenuItem"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkRadioMenuItem"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkRadioMenuItem" GTK-RADIO-MENU-ITEM

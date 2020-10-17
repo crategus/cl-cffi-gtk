@@ -31,7 +31,7 @@
                "receives-default" "scale-factor" "sensitive" "style" "tooltip-markup"
                "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
                "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkSpinner"))
                           #'string-lessp)))
   ;; Check the style properties.
@@ -40,7 +40,7 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkSpinner"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkSpinner" GTK-SPINNER

@@ -95,7 +95,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GdkVisual"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GdkVisual"))
                           #'string-lessp)))
   ;; Check the class definition

@@ -32,7 +32,7 @@
                "resize-mode" "revealed" "scale-factor" "sensitive" "show-close-button"
                "spacing" "style" "tooltip-markup" "tooltip-text" "valign" "vexpand"
                "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkInfoBar"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -42,11 +42,11 @@
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging" "action-area-border"
                "button-spacing" "content-area-border" "content-area-spacing")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkInfoBar"))))
   ;; Get the names of the child properties
   (is (equal '("expand" "fill" "padding" "pack-type" "position")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkInfoBar"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkInfoBar" GTK-INFO-BAR

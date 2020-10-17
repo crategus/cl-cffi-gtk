@@ -24,7 +24,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkTextTagTable"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkTextTagTable"))
                           #'string-lessp)))
   ;; Check the class definition

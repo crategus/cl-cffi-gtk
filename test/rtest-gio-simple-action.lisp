@@ -23,7 +23,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GSimpleAction"))))
   ;; Check the class properties
   (is (equal '("enabled" "name" "parameter-type" "state" "state-type")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GSimpleAction"))
                           #'string-lessp)))
   ;; Check the class definition

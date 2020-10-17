@@ -42,7 +42,7 @@
                "scale-factor" "sensitive" "style" "tooltip-markup"
                "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
                "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkWidget"))
                           #'string-lessp)))
   ;; Get the style properties.
@@ -52,7 +52,7 @@
                "secondary-cursor-color" "separator-height" "separator-width"
                "text-handle-height" "text-handle-width" "visited-link-color"
                "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWidget"))))
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkWidget" GTK-WIDGET
@@ -556,32 +556,26 @@ scale-factor
 ;;;     gtk_widget_class_install_style_property
 ;;;     gtk_widget_class_install_style_property_parser
 
-;;;   gtk_widget_class_find_style_property
+;;;     gtk-widget-class-find-style-property
 
-(test gtk-widget-class-find-style-property.1
+(test gtk-widget-class-find-style-property
   (is (string= "cursor-aspect-ratio"
-               (param-spec-name
-                 (gtk-widget-class-find-style-property "GtkFrame"
-                                                       "cursor-aspect-ratio")))))
-
-(test gtk-widget-class-find-style-property.2
+               (g-param-spec-name
+                   (gtk-widget-class-find-style-property "GtkFrame"
+                                                           "cursor-aspect-ratio"))))
   (is (string= "cursor-color"
-               (param-spec-name
-                 (gtk-widget-class-find-style-property "GtkFrame"
-                                                       "cursor-color")))))
-
-(test gtk-widget-class-find-style-property.3
+               (g-param-spec-name
+                   (gtk-widget-class-find-style-property "GtkFrame"
+                                                           "cursor-color"))))
   (is (string= "focus-line-pattern"
-               (param-spec-name
-                 (gtk-widget-class-find-style-property "GtkFrame"
-                                                       "focus-line-pattern")))))
-
-(test gtk-widget-class-find-style-property.4
+               (g-param-spec-name
+                   (gtk-widget-class-find-style-property "GtkFrame"
+                                                           "focus-line-pattern"))))
   (is-false (gtk-widget-class-find-style-property "GtkFrame" "xxx")))
 
-;;;   gtk_widget_class_list_style_properties
+;;;     gtk-widget-class-list-style-properties
 
-(test gtk-widget-class-list-style-properties
+(test gtk-widget-class-list-style-properties.1
   ;; Get the names of the style properties of GtkFrame.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
                "focus-line-width" "focus-padding" "interior-focus" "link-color"
@@ -589,15 +583,37 @@ scale-factor
                "secondary-cursor-color" "separator-height" "separator-width"
                "text-handle-height" "text-handle-width" "visited-link-color"
                "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkFrame")))))
+
+(test gtk-widget-class-list-style-properties.2
+  ;; Get the names of the style properties of GtkFrame.
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
+             (mapcar #'g-param-spec-name
+                     (gtk-widget-class-list-style-properties (gtype-id (gtype "GtkFrame")))))))
+
+(test gtk-widget-class-list-style-properties.3
+  ;; Get the names of the style properties of GtkFrame.
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
+             (mapcar #'g-param-spec-name
+                     (gtk-widget-class-list-style-properties (gtype "GtkFrame"))))))
 
 ;;;     gtk_widget_region_intersect
 ;;;     gtk_widget_send_expose
 ;;;     gtk_widget_send_focus_change
 ;;;     gtk_widget_style_get
 
-;;;   gtk_widget_style_get_property
+;;;     gtk-widget-style-property
 
 (test gtk-widget-style-property
   (let ((widget (make-instance 'gtk-frame)))

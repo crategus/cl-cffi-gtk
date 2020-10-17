@@ -19,7 +19,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkAdjustment"))))
   ;; Check the class properties
   (is (equal '("lower" "page-increment" "page-size" "step-increment" "upper" "value")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkAdjustment"))
                           #'string-lessp)))
   ;; Check the class definition

@@ -60,7 +60,7 @@
 
   ;; Check the interface properties
   (is (equal '("action-name" "action-target")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-interface-list-properties "GtkActionable"))
                           #'string-lessp)))
 

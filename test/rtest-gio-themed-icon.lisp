@@ -73,7 +73,7 @@
 
   ;; Get the names of the class properties.
   (is (equal '("name" "names" "use-default-fallbacks")
-             (mapcar #'param-spec-name (g-object-class-list-properties "GThemedIcon"))))
+             (mapcar #'g-param-spec-name (g-object-class-list-properties "GThemedIcon"))))
 
   ;; No style properties
   ;; No child properties

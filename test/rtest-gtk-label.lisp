@@ -35,7 +35,7 @@
                "track-visited-links" "use-markup" "use-underline" "valign" "vexpand"
                "vexpand-set" "visible" "width-chars" "width-request" "window" "wrap"
                "wrap-mode" "xalign" "xpad" "yalign" "ypad")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkLabel"))
                           #'string-lessp)))
   ;; Check the style properties.
@@ -44,7 +44,7 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkLabel"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkLabel" GTK-LABEL

@@ -609,10 +609,27 @@
 ;;;     g_type_depth
 ;;;     g_type_next_base
 ;;;     g_type_is_a
-;;;     g_type_class_ref
+
+;;;     g-type-class-ref
+;;;     g-type-class-unref
+
+(test g-type-class-ref
+  (let ((class nil))
+    ;; gtype is a string
+    (is (pointerp (setf class (g-type-class-ref "GtkBox"))))
+    (is (eq (gtype "GtkBox") (g-type-from-class class)))
+    (is-false (g-type-class-unref class))
+    ;; gtype is a ID
+    (is (pointerp (setf class (g-type-class-ref (gtype-id (gtype "GtkBox"))))))
+    (is (eq (gtype "GtkBox") (g-type-from-class class)))
+    (is-false (g-type-class-unref class))
+    ;; gtype is a g-type
+    (is (pointerp (setf class (g-type-class-ref (gtype "GtkBox")))))
+    (is (eq (gtype "GtkBox") (g-type-from-class class)))
+    (is-false (g-type-class-unref class))))
+
 ;;;     g_type_class_peek
 ;;;     g_type_class_peek_static
-;;;     g_type_class_unref
 ;;;     g_type_class_peek_parent
 ;;;     g_type_class_add_private
 ;;;     g_type_add_class_private                 * not implemented *

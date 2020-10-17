@@ -71,11 +71,6 @@
 
 ;;;     g-signal-emit
 
-;; TODO: Is this code safe?
-
-(trace gobject::%g-signal-emitv)
-(trace gobject::g-signal-emit)
-
 (test g-signal-emit.1
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -94,24 +89,56 @@
     (is-false (g-signal-emit button "clicked"))
     (is (string= "Signal 'clicked' for button" message))))
 
-#+nil
 (test g-signal-emit.2
   (let* ((message nil)
-         (switch (make-instance 'gtk-switch))
+         (button (make-instance 'gtk-button))
          ;; Connect a signal handler
-         (handler-id (g-signal-connect switch "notify::active"
-                       (lambda (widget)
+         (handler-id (g-signal-connect button "notify::can-default"
+                       (lambda (widget pspec)
                          (declare (ignore widget))
                          (when *verbose-gobject-signals*
-                           (format t "~&Signal 'notify::active' for switch.~%"))
-                         (setf message "Signal 'notify::active' for wwitch")
+                           (format t "~&Signal 'notify::can-default' for button.~%"))
+                         (setf message "Signal 'notify::can-default' for button")
+                         (is (g-is-param-spec pspec))
+                         (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
+                         (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
+                         (is (string= "myBoolean" (g-param-spec-name pspec)))
+                         (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
+                         (is-true (g-param-spec-default-value pspec))
                          t))))
     ;; The signal handler writes a message in the variable MESSAGE.
     ;; We emit the signal and check the value of MESSAGE.
     (is-true (integerp handler-id))
     (is-false (setf message nil))
-    (is-false (g-signal-emit switch "notify::active"))
-    (is (string= "Signal 'notify::active' for switch" message))))
+    (is-false (g-signal-emit button "notify::can-default"
+                             (g-param-spec-boolean "myBoolean" "myBool" "Doku" t '(:readable :writable))))
+    (is (string= "Signal 'notify::can-default' for button" message))))
+
+;; This test does not emit the signal, but sets the property "can-default".
+
+(test g-signal-emit.3
+  (let* ((message nil)
+         (button (make-instance 'gtk-button))
+         ;; Connect a signal handler
+         (handler-id (g-signal-connect button "notify::can-default"
+                       (lambda (widget pspec)
+                         (declare (ignore widget))
+                         (when *verbose-gobject-signals*
+                           (format t "~&Signal 'notify::can-default' for button.~%"))
+                         (setf message "Signal 'notify::can-default' for button")
+                         (is (g-is-param-spec pspec))
+                         (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
+                         (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
+                         (is (string= "can-default" (g-param-spec-name pspec)))
+                         (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
+                         (is-true (g-param-spec-default-value pspec))
+                         t))))
+    ;; The signal handler writes a message in the variable MESSAGE.
+    ;; We emit the signal and check the value of MESSAGE.
+    (is-true (integerp handler-id))
+    (is-false (setf message nil))
+    (is-true (setf (gtk-widget-can-default button) t))
+    (is (string= "Signal 'notify::can-default' for button" message))))
 
 ;;;     g_signal_emit_by_name
 ;;;     g_signal_emitv
@@ -222,4 +249,4 @@
 ;;;     g_signal_accumulator_true_handled
 ;;;     g_clear_signal_handler
 
-;;; 2020-10-2
+;;; 2020-10-12

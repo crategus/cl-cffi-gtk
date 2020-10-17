@@ -115,7 +115,7 @@
                "strikethrough-set" "style" "style-set" "tabs" "tabs-set" "underline"
                "underline-rgba" "underline-rgba-set" "underline-set" "variant" "variant-set"
                "weight" "weight-set" "wrap-mode" "wrap-mode-set")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkTextTag"))
                           #'string-lessp)))
   ;; Check the class definition

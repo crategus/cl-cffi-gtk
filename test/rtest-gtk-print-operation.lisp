@@ -158,7 +158,7 @@
                (g-type-name (gtype (foreign-funcall "gtk_print_operation_preview_get_type" :int)))))
   ;; Get the names of the interface properties.
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-interface-list-properties "GtkPrintOperationPreview"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GtkPrintOperationPreview"
@@ -190,7 +190,7 @@
  "embed-page-setup" "export-filename" "has-selection" "job-name" "n-pages"
  "n-pages-to-print" "print-settings" "show-progress" "status" "status-string"
  "support-selection" "track-print-status" "unit" "use-full-page")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintOperation"))
                           #'string-lessp)))
   ;; Check the class definition

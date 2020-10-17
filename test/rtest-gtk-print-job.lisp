@@ -24,7 +24,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkPrintJob"))))
   ;; Check the class properties
   (is (equal '("page-setup" "printer" "settings" "title" "track-print-status")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintJob"))
                           #'string-lessp)))
   ;; Check the class definition

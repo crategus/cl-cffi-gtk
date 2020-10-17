@@ -173,7 +173,7 @@
 
   ;; Get the names of the class properties.
   (is (equal '("display")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-class-list-properties "GdkSeat"))))
 
   ;; No style properties

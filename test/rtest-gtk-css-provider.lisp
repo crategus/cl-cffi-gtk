@@ -21,7 +21,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkCssProvider"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkCssProvider"))
                           #'string-lessp)))
   ;; Check the class definition
@@ -118,3 +118,4 @@
 ;;;     gtk_css_section_ref
 ;;;     gtk_css_section_unref
 
+;;; 2020-10-16

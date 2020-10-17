@@ -13,7 +13,7 @@
           (registered-object-type-by-name "GtkAppChooser")))
   ;; Get the names of the interface properties.
   (is (equal '("content-type")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (g-object-interface-list-properties "GtkAppChooser"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GtkAppChooser"

@@ -107,7 +107,7 @@
                "sensitive" "show-expanders" "style" "tooltip-column" "tooltip-markup"
                "tooltip-text" "ubuntu-almost-fixed-height-mode" "vadjustment" "valign"
                "vexpand" "vexpand-set" "visible" "vscroll-policy" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkTreeView"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
@@ -119,11 +119,11 @@
                "even-row-color" "expander-size" "grid-line-pattern" "grid-line-width"
                "horizontal-separator" "indent-expanders" "odd-row-color" "tree-line-pattern"
                "tree-line-width" "vertical-separator")
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkTreeView"))))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'param-spec-name
+             (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkTreeView"))))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTreeView" GTK-TREE-VIEW

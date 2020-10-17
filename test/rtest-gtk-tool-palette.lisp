@@ -87,7 +87,7 @@
  "vadjustment" "valign" "vexpand" "vexpand-set" "visible" "vscroll-policy"
  "width-request" "window")
 
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkToolPalette"))
                           #'string-lessp)))
 
@@ -97,11 +97,11 @@
                "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
                "separator-width" "text-handle-height" "text-handle-width"
                "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'param-spec-name (gtk-widget-class-list-style-properties "GtkToolPalette"))))
+             (mapcar #'g-param-spec-name (gtk-widget-class-list-style-properties "GtkToolPalette"))))
 
   ;; Get the names to the child properties
   (is (equal '("exclusive" "expand")
-             (mapcar #'param-spec-name (gtk-container-class-list-child-properties "GtkToolPalette"))))
+             (mapcar #'g-param-spec-name (gtk-container-class-list-child-properties "GtkToolPalette"))))
 
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkToolPalette" GTK-TOOL-PALETTE

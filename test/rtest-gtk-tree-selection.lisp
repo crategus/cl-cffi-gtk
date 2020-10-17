@@ -24,7 +24,7 @@
              (mapcar #'gtype-name (g-type-interfaces "GtkTreeSelection"))))
   ;; Check the class properties
   (is (equal '("mode")
-             (stable-sort (mapcar #'param-spec-name
+             (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkTreeSelection"))
                           #'string-lessp)))
   ;; Check the class definition
