@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2019 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -68,7 +68,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-provider atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-style-provider 'type)
- "@version{2020-3-2}
+ "@version{2020-10-16}
   @begin{short}
     @sym{gtk-style-provider} is an interface used to provide style information
     to a @class{gtk-style-context}.
@@ -76,6 +76,7 @@
   See the functions @fun{gtk-style-context-add-provider} and
   @fun{gtk-style-context-add-provider-for-screen}.
   @see-class{gtk-style-context}
+  @see-class{gtk-css-provider}
   @see-function{gtk-style-context-add-provider}
   @see-function{gtk-style-context-add-provider-for-screen}")
 
@@ -83,12 +84,19 @@
 ;;; GTK_STYLE_PROVIDER_PRIORITY_FALLBACK
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gtk-style-provider-priority-fallback+ 1
- #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+(defconstant +gtk-style-provider-priority-fallback+ 1)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gtk-style-provider-priority-fallback+
+               atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+gtk-style-provider-priority-fallback+ 'variable)
+ "@version{2020-10-16}
   @variable-value{1}
-  The priority used for default style information that is used in the absence
-  of themes.
+  @begin{short}
+    The priority used for default style information that is used in the absence
+    of themes.
+  @end{short}
   @see-class{gtk-style-provider}")
 
 (export '+gtk-style-provider-priority-fallback+)
@@ -97,11 +105,17 @@
 ;;; GTK_STYLE_PROVIDER_PRIORITY_THEME
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gtk-style-provider-priority-theme+ 200
- #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+(defconstant +gtk-style-provider-priority-theme+ 200)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gtk-style-provider-priority-theme+ atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+gtk-style-provider-priority-theme+ 'variable)
+ "@version{2020-10-16}
   @variable-value{200}
-  The priority used for style information provided by themes.
+  @begin{short}
+    The priority used for style information provided by themes.
+  @end{short}
   @see-class{gtk-style-provider}")
 
 (export '+gtk-style-provider-priority-theme+)
@@ -110,14 +124,18 @@
 ;;; GTK_STYLE_PROVIDER_PRIORITY_SETTINGS
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gtk-style-provider-priority-settings+ 400
- #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+(defconstant +gtk-style-provider-priority-settings+ 400)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gtk-style-provider-priority-settings+
+               atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+gtk-style-provider-priority-settings+ 'variable)
+ "@version{2020-10-16}
   @variable-value{400}
   @begin{short}
     The priority used for style information provided via @class{gtk-settings}.
   @end{short}
-
   This priority is higher than @var{+gtk-style-provider-priority-theme+} to let
   settings override themes.
   @see-class{gtk-style-provider}
@@ -130,12 +148,19 @@
 ;;; GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gtk-style-provider-priority-application+ 600
- #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+(defconstant +gtk-style-provider-priority-application+ 600)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gtk-style-provider-priority-application+
+               atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+gtk-style-provider-priority-application+ 'variable)
+ "@version{2020-10-16}
   @variable-value{600}
-  A priority that can be used when adding a @class{gtk-style-provider} for
-  application specific style information.
+  @begin{short}
+    A priority that can be used when adding a @class{gtk-style-provider} object
+    for application specific style information.
+  @end{short}
   @see-class{gtk-style-provider}")
 
 (export '+gtk-style-provider-priority-application+)
@@ -144,14 +169,17 @@
 ;;; GTK_STYLE_PROVIDER_PRIORITY_USER
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gtk-style-provider-priority-user+ 800
- #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+(defconstant +gtk-style-provider-priority-user+ 800)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gtk-style-provider-priority-user+ atdoc:*variable-name-alias*)
+      "Constant"
+      (documentation '+gtk-style-provider-priority-user+ 'variable)
+ "@version{2020-10-16}
   @variable-value{800}
   @begin{short}
-    The priority used for the style information from ~/.gtk-3.0.css.
+    The priority used for the style information from @file{~/.gtk-3.0.css}.
   @end{short}
-
   You should not use priorities higher than this, to give the user the last
   word.
   @see-class{gtk-style-provider}")
@@ -219,38 +247,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_provider_get_style_property ()
+;;; -> gtk-style-provider-style-property
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_style_provider_get_style_property"
-          %gtk-style-provider-get-style-property) :void
-  (provider (g-object gtk-style-provide))
+          %gtk-style-provider-style-property) :void
+  (provider (g-object gtk-style-provider))
   (path (g-boxed-foreign gtk-widget-path))
   (state gtk-state-flags)
   (pspec (:pointer (:struct g-param-spec)))
   (value (:pointer (:struct g-value))))
 
-(defun gtk-style-provider-get-style-property (provider path state pspec)
+(defun gtk-style-provider-style-property (provider path state pspec)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-7}
+ "@version{2020-10-16}
   @argument[provider]{a @class{gtk-style-provider} object}
   @argument[path]{a @symbol{gtk-widget-path} structure to query}
   @argument[state]{the @symbol{gtk-state-flags} to query the style property for}
-  @argument[pspec]{the @symbol{g-param-spec} to query}
-  @return{Returns the @symbol{g-value} of the style property.}
+  @argument[pspec]{the @symbol{g-param-spec} structure to query}
+  @return{Returns the value of the style property.}
   @begin{short}
-    Looks up a widget style property as defined by the provider for the widget
-    represented by @arg{path}.
+    Looks up the value of a widget style property as defined by the provider
+    for the widget represented by @arg{path}.
   @end{short}
   @see-class{gtk-style-provider}
-  @see-symbol{g-value}"
-  (let ((gtype (param-spec-type pspec)))
+  @see-class{gtk-widget-path}
+  @see-symbol{gtk-state-flags}
+  @see-symbol{g-param-spec}"
+  (let ((gtype (g-param-spec-value-type pspec)))
     (with-foreign-object (value '(:struct g-value))
-      (g-value-init value gtype)
-      (prog2
-        (%gtk-style-provider-get-style-property provider path state pspec value)
-        (parse-g-value value)
+      (unwind-protect
+        (progn
+          (g-value-init value gtype)
+          (%gtk-style-provider-style-property provider path state pspec value)
+          (parse-g-value value))
         (g-value-unset value)))))
 
-(export 'gtk-style-provider-get-style-property)
+(export 'gtk-style-provider-style-property)
 
 ;;; --- End of file gtk-style-provider.lisp ------------------------------------
