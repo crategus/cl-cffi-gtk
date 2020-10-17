@@ -4051,8 +4051,7 @@ setup_tree (void)
       @about-function{gtk-container-child-type}
       @about-function{gtk-container-child-get}
       @about-function{gtk-container-child-set}
-      @about-function{gtk-container-child-get-property}
-      @about-function{gtk-container-child-set-property}
+      @about-function{gtk-container-child-property}
       @about-function{gtk-container-child-get-valist}
       @about-function{gtk-container-child-set-valist}
       @about-function{gtk-container-child-notify}
@@ -5028,7 +5027,7 @@ setup_tree (void)
       @about-class{gtk-style-provider}
       @about-function{gtk-style-provider-get-icon-factory}
       @about-function{gtk-style-provider-get-style}
-      @about-function{gtk-style-provider-get-style-property}
+      @about-function{gtk-style-provider-style-property}
     @end{subsection}
     @begin[GtkWidgetPath]{subsection}
       Widget path abstraction.
