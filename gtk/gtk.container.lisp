@@ -334,12 +334,10 @@
     @fun{gtk-container-class-list-child-properties} to get information about
     existing child properties.
 
-    To set the value of a child property, use the functions
-    @fun{gtk-container-child-set-property} or @fun{gtk-container-child-set}. To
-    obtain the value of a child property, use the functions
-    @fun{gtk-container-child-get-property} or @fun{gtk-container-child-get}.
-    To emit notification about child property changes, use the function
-    @fun{gtk-widget-child-notify}.
+    To obtain or to set the value of a child property, use the functions
+    @fun{gtk-container-child-property}, @fun{gtk-container-child-get}, or
+    @fun{gtk-container-child-set}. To emit notification about child property
+    changes, use the function @fun{gtk-widget-child-notify}.
 
   @subheading{GtkContainer as GtkBuildable}
     The @sym{gtk-container} implementation of the @class{gtk-buildable}
@@ -415,10 +413,9 @@
   @see-function{gtk-container-class-install-child-property}
   @see-function{gtk-container-class-find-child-property}
   @see-function{gtk-container-class-list-child-properties}
-  @see-function{gtk-container-child-set-property}
-  @see-function{gtk-container-child-set}
-  @see-function{gtk-container-child-get-property}
+  @see-function{gtk-container-child-property}
   @see-function{gtk-container-child-get}
+  @see-function{gtk-container-child-set}
   @see-function{gtk-widget-child-notify}")
 
 ;;; ----------------------------------------------------------------------------
@@ -965,9 +962,9 @@
   @end{short}
   @see-class{gtk-container}
   @see-function{gtk-container-child-set}
-  @see-function{gtk-container-child-get-property}"
+  @see-function{gtk-container-child-property}"
   (loop for arg in args
-        collect (gtk-container-child-get-property container child arg)))
+        collect (gtk-container-child-property container child arg)))
 
 (export 'gtk-container-child-get)
 
@@ -986,48 +983,15 @@
   @end{short}
   @see-class{gtk-container}
   @see-function{gtk-container-child-set}
-  @see-function{gtk-container-child-set-property}"
+  @see-function{gtk-container-child-property}"
   (loop for (name value) on args by #'cddr
-        do (gtk-container-child-set-property container child name value)))
+        do (setf (gtk-container-child-property container child name) value)))
 
 (export 'gtk-container-child-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_get_property ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_container_child_get_property" %gtk-container-child-get-property)
-    :void
-  (container (g-object gtk-container))
-  (child (g-object gtk-widget))
-  (property-name :string)
-  (value (:pointer (:struct g-value))))
-
-(defun gtk-container-child-get-property (container child property-name)
- #+cl-cffi-gtk-documentation
- "@version{2020-5-4}
-  @argument[container]{a @class{gtk-container} widget}
-  @argument[child]{a @class{gtk-widget} which is a child of @arg{container}}
-  @argument[property-name]{a string with the name of the property to get}
-  @begin{short}
-    Gets the value of a child property for @arg{child} and @arg{container}.
-  @end{short}
-  @see-class{gtk-container}
-  @see-function{gtk-container-set-property}"
-  (let ((gtype (param-spec-type
-                 (container-child-property-info (g-type-from-instance container)
-                                                property-name))))
-    (with-foreign-object (gvalue '(:struct g-value))
-      (g-value-init gvalue gtype)
-      (%gtk-container-child-get-property container child property-name gvalue)
-      (prog1
-        (parse-g-value gvalue)
-        (g-value-unset gvalue)))))
-
-(export 'gtk-container-child-get-property)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_child_set_property ()
+;;; gtk_container_child_set_property () -> gtk-container-child-property
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_child_set_property" %gtk-container-child-set-property)
@@ -1037,28 +1001,52 @@
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun gtk-container-child-set-property (container child property-name value)
+(defun (setf gtk-container-child-property) (value container child property-name)
+  (let ((gtype (g-param-spec-value-type
+                   (gtk-container-class-find-child-property
+                       (g-type-from-instance container)
+                       property-name))))
+    (with-foreign-object (new-value '(:struct g-value))
+      (set-g-value new-value value gtype :zero-g-value t)
+      (%gtk-container-child-set-property container child property-name new-value)
+      (g-value-unset new-value)
+      (values value))))
+
+(defcfun ("gtk_container_child_get_property" %gtk-container-child-property)
+    :void
+  (container (g-object gtk-container))
+  (child (g-object gtk-widget))
+  (property-name :string)
+  (value (:pointer (:struct g-value))))
+
+(defun gtk-container-child-property (container child property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
+ "@version{2020-10-13}
+  @syntax[]{(gtk-container-child-property container child property-name) => value}
+  @syntax[]{(setf (gtk-container-child-property container child property-name) value)}
   @argument[container]{a @class{gtk-container} widget}
   @argument[child]{a @class{gtk-widget} which is a child of @arg{container}}
-  @argument[property-name]{a string with the name of the property to set}
-  @argument[value]{the value to set the property to}
+  @argument[property-name]{a string with the name of the property to get}
+  @argument[value]{the value of the property}
   @begin{short}
-    Sets a child property for @arg{child} and @arg{container}.
+    Gets or sets the value of a child property for @arg{child} and
+    @arg{container}.
   @end{short}
   @see-class{gtk-container}
-  @see-function{gtk-container-child-get-property}"
-  (let ((type (param-spec-type
-                (container-child-property-info (g-type-from-instance container)
-                                               property-name))))
-    (with-foreign-object (gvalue '(:struct g-value))
-      (set-g-value gvalue value type :zero-g-value t)
-      (%gtk-container-child-set-property container child property-name gvalue)
-      (g-value-unset gvalue)
-      (values))))
+  @see-function{gtk-container-child-get}
+  @see-function{gtk-container-child-set}"
+  (let ((gtype (g-param-spec-value-type
+                   (gtk-container-class-find-child-property
+                       (g-type-from-instance container)
+                       property-name))))
+    (with-foreign-object (value '(:struct g-value))
+      (g-value-init value gtype)
+      (%gtk-container-child-property container child property-name value)
+      (prog1
+        (parse-g-value value)
+        (g-value-unset value)))))
 
-(export 'gtk-container-child-set-property)
+(export 'gtk-container-child-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_get_valist ()
@@ -1308,30 +1296,45 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_class_find_child_property"
-           gtk-container-class-find-child-property)
+          %gtk-container-class-find-child-property)
     (:pointer (:struct g-param-spec))
+  (class (:pointer (:struct g-type-class)))
+  (property-name :string))
+
+(defun gtk-container-class-find-child-property (gtype property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
-  @argument[class]{a @class{gtk-container} class}
+ "@version{2020-10-13}
+  @argument[class]{a @class{gtk-container} class structure of type
+    @symbol{g-type-class}}
   @argument[property-name]{a string with the name of the child property to find}
   @begin{return}
-    The @symbol{g-param-spec} of the child property or @code{nil} if @arg{class}
-    has no child property with that name.
+    The @symbol{g-param-spec} structure of the child property or a
+    @code{null-pointer} if @arg{class} has no child property with that name.
   @end{return}
   @begin{short}
     Finds a child property of a container class by name.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
-  (gtk-container-class-find-child-property (g-type-class-ref \"GtkBox\") \"expand\")
+  (gtk-container-class-find-child-property \"GtkBox\" \"expand\")
 => #.(SB-SYS:INT-SAP #X00A7DA60)
-  (parse-g-param-spec *)
-=> #<PROPERTY gboolean #<GTYPE :name \"GtkBox\" :id 9692912> . expand (flags: readable writable)>
+  (g-param-spec-type *)
+=> #<GTYPE :name \"GParamBoolean\" :id 24606448>
+  (g-param-spec-value-type **)
+=> #<GTYPE :name \"gboolean\" :id 20>
+  (gtk-container-class-find-child-property \"GtkBox\" \"unknown\")
+=> #.(SB-SYS:INT-SAP #X00000000)
     @end{pre}
   @end{dictionary}
-  @see-class{gtk-container}"
-  (class :pointer)
-  (property-name :string))
+  @see-class{gtk-container}
+  @see-symbol{g-type-class}
+  @see-symbol{g-param-spec}"
+  (let ((class (g-type-class-ref gtype)))
+    (unwind-protect
+      (let ((pspec (%gtk-container-class-find-child-property class
+                                                             property-name)))
+        (unless (null-pointer-p pspec) pspec))
+      (g-type-class-unref class))))
 
 (export 'gtk-container-class-find-child-property)
 
@@ -1384,30 +1387,29 @@
           %gtk-container-class-list-child-properties)
     (:pointer (:pointer (:struct g-param-spec)))
   (class (:pointer (:struct g-object-class)))
-  (n-properties (:pointer :int)))
+  (n-props (:pointer :uint)))
 
-(defun gtk-container-class-list-child-properties (type)
+(defun gtk-container-class-list-child-properties (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
-  @argument[type]{a @class{gtk-container} type}
-  @return{A list of @symbol{g-param-spec}.}
+ "@version{2020-10-14}
+  @argument[gtype]{a @class{g-type} for a @class{gtk-container}}
+  @return{A list of @symbol{g-param-spec} structures.}
   @short{Returns all child properties of a container type.}
   @begin[Note]{dictionary}
     In the Lisp binding we pass the type of a container class and not
     a pointer to the container class as argument to the function.
   @end{dictionary}
-  @see-class{gtk-container}"
-  (setf type (gtype type))
-  (let ((class (g-type-class-ref type)))
+  @see-class{gtk-container}
+  @see-class{g-type}"
+  (let ((class (g-type-class-ref gtype)))
     (unwind-protect
       (with-foreign-object (n-props :uint)
-        (let ((params (%gtk-container-class-list-child-properties class n-props)))
+        (let ((pspecs (%gtk-container-class-list-child-properties class n-props)))
           (unwind-protect
-            (loop
-              for i from 0 below (mem-ref n-props :uint)
-              for param = (mem-aref params :pointer i)
-              collect (parse-g-param-spec param))
-            (g-free params))))
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect pspec)
+            (g-free pspecs))))
       (g-type-class-unref class))))
 
 (export 'gtk-container-class-list-child-properties)
