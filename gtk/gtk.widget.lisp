@@ -6468,33 +6468,38 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_widget_class_find_style_property"
           %gtk-widget-class-find-style-property)
     (:pointer (:struct g-param-spec))
-  (class :pointer)
-  (property-name g-string))
+  (class (:pointer (:struct g-type-class)))
+  (property-name :string))
 
-(defun gtk-widget-class-find-style-property (type property-name)
+(defun gtk-widget-class-find-style-property (gtype property-name)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-1}
-  @argument[type]{a string with a widget class name}
+ "@version{2020-10-14}
+  @argument[class]{a @class{g-type} ID for a @class{gtk-widget}}
   @argument[property-name]{a string with the name of the style property to find}
-  @return{The @symbol{g-param-spec} structure of the style property or
-    @code{nil} if the class has no style property with that property name.}
+  @return{The @symbol{g-param-spec} structure of the style property or a
+    @code{null-pointer} if @arg{class} has no style property with that property
+    name.}
   @short{Finds a style property of a widget class by property name.}
   @begin[Example]{dictionary}
     @begin{pre}
   (gtk-widget-class-find-style-property \"GtkNotebook\" \"arrow-spacing\")
-=> #<PROPERTY gint #<GTYPE :name \"GtkNotebook\" :id 24822816> . arrow-spacing (flags: readable)>
-  (gtk-widget-class-find-style-property \"GtkNotebook\" \"xxx\")
-=> NIL
+=> #.(SB-SYS:INT-SAP #X00E8BAE0)
+  (g-param-spec-type *)
+=> #<GTYPE :name \"GParamInt\" :id 14620672>
+  (g-param-spec-value-type **)
+=> #<GTYPE :name \"gint\" :id 24>
+  (gtk-widget-class-find-style-property \"GtkNotebook\" \"unknown\")
+=> #.(SB-SYS:INT-SAP #X00000000)
     @end{pre}
   @end{dictionary}
   @see-class{gtk-widget}
+  @see-symbol{g-type}
   @see-symbol{g-param-spec}
   @see-function{gtk-widget-class-list-style-properties}"
-  (let ((class (g-type-class-ref type)))
+  (let ((class (g-type-class-ref gtype)))
     (unwind-protect
-      (let ((pspec (%gtk-widget-class-find-style-property class
-                                                          property-name)))
-        (unless (null-pointer-p pspec) (parse-g-param-spec pspec)))
+      (let ((pspec (%gtk-widget-class-find-style-property class property-name)))
+        (unless (null-pointer-p pspec) pspec))
       (g-type-class-unref class))))
 
 (export 'gtk-widget-class-find-style-property)
@@ -6506,10 +6511,10 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_widget_class_list_style_properties"
           %gtk-widget-class-list-style-properties)
     (:pointer (:pointer (:struct g-param-spec)))
-  (class :pointer)
-  (n-properties (:pointer :int)))
+  (class (:pointer (:struct g-type-class)))
+  (n-props (:pointer :uint)))
 
-(defun gtk-widget-class-list-style-properties (type)
+(defun gtk-widget-class-list-style-properties (gtype)
  #+cl-cffi-gtk-documentation
  "@version{2013-11-29}
   @argument[type]{a widget class name}
@@ -6518,18 +6523,16 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @see-class{gtk-widget}
   @see-symbol{g-param-spec}
   @see-function{gtk-widget-class-find-style-property}"
-  (setf type (gtype type))
-  (let ((class (g-type-class-ref type)))
+;  (setf gtype (gtype gtype))
+  (let ((class (g-type-class-ref gtype)))
     (unwind-protect
-         (with-foreign-object (np :int)
-           (let ((specs (%gtk-widget-class-list-style-properties class np)))
-             (unwind-protect
-                  (loop
-                     repeat (mem-ref np :int)
-                     for i from 0
-                     for spec = (mem-aref specs :pointer i)
-                     collect (parse-g-param-spec spec))
-               (g-free specs))))
+      (with-foreign-object (n-props :uint)
+        (let ((pspecs (%gtk-widget-class-list-style-properties class n-props)))
+          (unwind-protect
+            (loop for count from 0 below (mem-ref n-props :uint)
+                  for pspec = (mem-aref pspecs :pointer count)
+                  collect pspec)
+            (g-free pspecs))))
       (g-type-class-unref class))))
 
 (export 'gtk-widget-class-list-style-properties)
@@ -6664,7 +6667,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_style_get_property" %gtk-widget-style-property) :void
   (widget (g-object gtk-widget))
-  (property-name g-string)
+  (property-name :string)
   (value (:pointer (:struct g-value))))
 
 (defun gtk-widget-style-property (widget property-name)
@@ -6689,9 +6692,12 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-class-find-style-property}"
-  (let* ((gtype (g-type-from-instance widget))
-         (pspec (gtk-widget-class-find-style-property gtype property-name))
-         (gtype (if pspec (param-spec-type pspec) nil)))
+  (let* ((pspec (gtk-widget-class-find-style-property
+                    (g-type-from-instance widget)
+                    property-name))
+         (gtype (if pspec
+                    (g-param-spec-value-type pspec)
+                    nil)))
     ;; TODO: Returns nil for an invalid property. Consider to throw an error.
     (when gtype
       (with-foreign-object (value '(:struct g-value))
@@ -6702,45 +6708,6 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
           (g-value-unset value))))))
 
 (export 'gtk-widget-style-property)
-
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-widget-style-property-info (type property-name)
-  (let ((class (g-type-class-ref type)))
-    (unwind-protect
-      (let ((pspec (%gtk-widget-class-find-style-property class
-                                                          property-name)))
-           (parse-g-param-spec pspec))
-      (g-type-class-unref class))))
-
-;(export 'gtk-widget-style-property-info)
-
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-widget-style-property-type (widget property-name)
-  (let ((property-info (gtk-widget-style-property-info
-                                                   (g-type-from-instance widget)
-                                                   property-name)))
-    (param-spec-type property-info)))
-
-;(export 'gtk-widget-style-property-type)
-
-;;; ----------------------------------------------------------------------------
-
-;; This implementation is wrong.
-
-(defun gtk-widget-style-property-value (widget property-name
-                                               &optional property-type)
-  (unless property-type
-    (setf property-type
-          (gtk-widget-style-property-type widget property-name)))
-  (setf property-type (gtype property-type))
-  (with-foreign-object (gvalue '(:struct g-value))
-    (g-value-init gvalue property-type)
-    (prog1 (%gtk-widget-style-property widget property-name gvalue)
-      (g-value-unset gvalue))))
-
-;(export 'gtk-widget-style-property-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_style_get_valist ()
