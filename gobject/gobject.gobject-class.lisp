@@ -351,7 +351,7 @@
 
 (defmethod slot-value-using-class ((class gobject-class) object
                                    (slot gobject-property-effective-slot-definition))
-  (g-object-get-property
+  (g-object-property
                (pointer object)
                (gobject-property-effective-slot-definition-g-property-name slot)
                (gobject-effective-slot-definition-g-property-type slot)))
@@ -359,11 +359,11 @@
 (defmethod (setf slot-value-using-class)
            (new-value (class gobject-class)
             object (slot gobject-property-effective-slot-definition))
-  (g-object-set-property (pointer object)
-                         (gobject-property-effective-slot-definition-g-property-name slot)
-                         new-value
-                         (gobject-effective-slot-definition-g-property-type slot))
-  new-value)
+
+  (setf (g-object-property (pointer object)
+                           (gobject-property-effective-slot-definition-g-property-name slot)
+                           (gobject-effective-slot-definition-g-property-type slot))
+        new-value))
 
 (defmethod slot-value-using-class ((class gobject-class) object
                                    (slot gobject-fn-effective-slot-definition))
