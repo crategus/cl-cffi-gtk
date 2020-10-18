@@ -2,9 +2,9 @@
 ;;; gobject.base.lisp
 ;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2020 Dieter Kaiser
@@ -160,8 +160,8 @@
 
 (defvar *registered-object-types* (make-hash-table :test 'equal))
 
-(defun register-object-type (name type)
-  (setf (gethash name *registered-object-types*) type))
+(defun register-object-type (name gtype)
+  (setf (gethash name *registered-object-types*) gtype))
 
 (defun registered-object-type-by-name (name)
   (gethash name *registered-object-types*))
@@ -170,7 +170,8 @@
 ;;; struct GParameter
 ;;; ----------------------------------------------------------------------------
 
-;; Consider to make this structure internal
+;; This structure is only needed in the construction of an object and is
+;; not exported.
 
 ;; The generalized calculation of the size and offset works for sbcl and ccl on
 ;; a 32-bit Linux. Check this for more system.
@@ -186,7 +187,6 @@
 (defcstruct g-parameter
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:value (:struct g-value))) ; A struct, not a pointer.
-
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
@@ -209,8 +209,6 @@
   @see-symbol{g-value}
   @see-function{g-object-newv}")
 
-(export 'g-parameter)
-
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObject
 ;;;
@@ -218,15 +216,13 @@
 ;;; implementation and should never be accessed directly.
 ;;; ----------------------------------------------------------------------------
 
-;; %g-object is not needed for the implementation.
+;; %g-object is not needed in the implementation.
 ;; It is defined to access the property ref-count for debugging the code.
 
 (defcstruct %g-object
   (:type-instance (:pointer (:struct g-type-instance)))
   (:ref-count :uint)
   (:data :pointer))
-
-;(export '%g-object)
 
 ;; Accessor for the slot ref-count of %g-object
 
@@ -288,28 +284,29 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"notify\" signal}
     @begin{pre}
- lambda (gobject pspec)   : No Hooks
+ lambda (object pspec)   : No Hooks
     @end{pre}
-    The \"notify\" signal is emitted on an object when one of its properties has
-    been changed. Note that getting this signal does not guarantee that the
+    The \"notify\" signal is emitted on an object when one of its properties
+    has been changed. Note that getting this signal does not guarantee that the
     value of the property has actually changed, it may also be emitted when the
     setter for the property is called to reinstate the previous value.
     This signal is typically used to obtain change notification for a single
     property, by specifying the property name as a detail in the
     @fun{g-signal-connect} call, like this:
     @begin{pre}
- (g-signal-connect switch \"notify::active\"
-    (lambda (widget param)
-      (declare (ignore param))
-      (if (gtk-switch-active widget)
-          (setf (gtk-label-label label) \"The Switch is ON\")
-          (setf (gtk-label-label label) \"The Switch is OFF\"))))
+(g-signal-connect switch \"notify::active\"
+   (lambda (widget pspec)
+     (declare (ignore pspec))
+     (if (gtk-switch-active widget)
+         (setf (gtk-label-label label) \"The Switch is ON\")
+         (setf (gtk-label-label label) \"The Switch is OFF\"))))
     @end{pre}
     It is important to note that you must use canonical parameter names as
     detail strings for the notify signal.
     @begin[code]{table}
-      @entry[gobject]{The @sym{g-object} which received the signal.}
-      @entry[pspec]{The @symbol{g-param-spec} of the property which changed.}
+      @entry[object]{The @sym{g-object} which received the signal.}
+      @entry[pspec]{The @symbol{g-param-spec} structure of the property which
+        changed.}
     @end{table}
   @end{dictionary}
   @see-slot{pointer}
@@ -332,16 +329,16 @@
 (setf (gethash 'pointer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'pointer 'function)
- "@version{2012-12-26}
-  @short{Accessor of the slot @code{pointer} of the @class{g-object} class.}
+ "@version{2020-10-17}
+  @short{Accessor of the @code{pointer} slot of the @class{g-object} class.}
 
   The accessor @sym{pointer} gets the foreign C pointer of an instance which is
   stored in a slot of the Lisp @class{g-object} class.
   @begin[Example]{dictionary}
     @begin{pre}
- (setq label (make-instance 'gtk-label))
+  (setq label (make-instance 'gtk-label))
 => #<GTK-LABEL {E2DB181@}>
- (pointer label)
+  (pointer label)
 => #.(SB-SYS:INT-SAP #X081BDAE0)
     @end{pre}
   @end{dictionary}
@@ -357,9 +354,9 @@
 (setf (gethash 'g-object-has-reference atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-object-has-reference 'function)
- "@version{2012-12-26}
+ "@version{2020-10-17}
   @begin{short}
-    Accessor of the slot @code{has-reference} of the @class{g-object} class.
+    Accessor of the @code{has-reference} slot of the @class{g-object} class.
   @end{short}
 
   The slot is set to @em{true} when registering an object during creation.
@@ -375,22 +372,22 @@
 (setf (gethash 'g-object-signal-handlers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-object-signal-handlers 'function)
- "@version{2014-11-13}
+ "@version{2020-10-17}
   @begin{short}
     Returns an array of signal handlers which are connected to an instance of
-    an GObject.
+    a GObject.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (setq button (make-instance 'gtk-button))
+  (setq button (make-instance 'gtk-button))
 => #<GTK-BUTTON {E319359@}>
- (g-signal-connect button \"clicked\" (lambda () ))
+  (g-signal-connect button \"clicked\" (lambda () ))
 => 27
- (g-object-signal-handlers button)
+  (g-object-signal-handlers button)
 => #(#<FUNCTION (LAMBDA #) {E324855@}>)
- (g-signal-connect button \"destroy\" (lambda () ))
+  (g-signal-connect button \"destroy\" (lambda () ))
 => 28
- (g-object-signal-handlers button)
+  (g-object-signal-handlers button)
 => #(#<FUNCTION (LAMBDA #) {E324855@}> #<FUNCTION (LAMBDA #) {E336EDD@}>)
     @end{pre}
   @end{dictionary}
@@ -423,11 +420,10 @@
   (with-recursive-lock-held (*gobject-gc-hooks-lock*)
     (when *gobject-gc-hooks*
       (log-for :gc "activating gc hooks for objects: ~A~%" *gobject-gc-hooks*)
-      (loop
-         for pointer in *gobject-gc-hooks*
-         do (g-object-remove-toggle-ref pointer
-                                        (callback g-toggle-notify)
-                                        (null-pointer)))
+      (loop for pointer in *gobject-gc-hooks*
+            do (%g-object-remove-toggle-ref pointer
+                                            (callback g-toggle-notify)
+                                            (null-pointer)))
       (setf *gobject-gc-hooks* nil)))
   nil)
 
@@ -438,7 +434,6 @@
       (unless locks-were-present
         (log-for :gc "adding idle-gc-hook to main loop~%")
         (g-idle-add #'activate-gc-hooks)))))
-;        (glib::%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
 
 ;(defcallback g-idle-gc-hook :boolean ((data :pointer))
 ;  (declare (ignore data))
@@ -468,7 +463,7 @@
                          pointer
                          (ref-count pointer))
                 (handler-case
-                    (dispose-carefully pointer)
+                  (dispose-carefully pointer)
                   (error (e)
                     (log-for :gc "Error in finalizer for ~A: ~A~%" s e)
                     (format t "Error in finalizer for ~A: ~A~%" s e))))))
@@ -482,17 +477,17 @@
            (pointer obj)
            obj
            (ref-count obj)
-           (if (g-object-is-floating (pointer obj)) "(floating)" ""))
+           (if (%g-object-is-floating (pointer obj)) "(floating)" ""))
   (when (should-ref-sink-at-creation obj)
     (log-for :gc "g_object_ref_sink(~A)~%" (pointer obj))
-    (g-object-ref-sink (pointer obj)))
+    (%g-object-ref-sink (pointer obj)))
   (setf (g-object-has-reference obj) t)
   (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*)
         obj)
-  (g-object-add-toggle-ref (pointer obj)
-                           (callback g-toggle-notify)
-                           (null-pointer))
-  (g-object-unref (pointer obj)))
+  (%g-object-add-toggle-ref (pointer obj)
+                            (callback g-toggle-notify)
+                            (null-pointer))
+  (%g-object-unref (pointer obj)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -575,7 +570,7 @@
   (let ((object (get-g-object-for-pointer pointer)))
     (when (and object
                (foreign-g-object-type-already-referenced type))
-      (g-object-unref (pointer object)))
+      (%g-object-unref (pointer object)))
     object))
 
 ;; Translate a pointer to a C object to the corresponding Lisp object.
@@ -764,7 +759,7 @@
                          arg-g-type
                          :zero-g-value t))
       (unwind-protect
-           (g-object-newv object-type args-count parameters)
+        (%g-object-newv object-type args-count parameters)
         (loop
            for i from 0 below args-count
            for parameter = (mem-aptr parameters '(:struct g-parameter) i)
@@ -901,6 +896,9 @@
 ;;; struct GObjectConstructParam
 ;;; ----------------------------------------------------------------------------
 
+;; This structure is not needed in the implementation of the Lisp library
+;; and is not exported.
+
 (defcstruct g-object-construct-param
   (:pspec (:pointer (:struct g-param-spec)))
   (:value (:pointer (:struct g-value))))
@@ -926,8 +924,6 @@
   @see-symbol{g-object-class}
   @see-symbol{g-param-spec}
   @see-symbol{g-value}")
-
-(export 'g-object-construct-param)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GObjectGetPropertyFunc ()
@@ -992,25 +988,26 @@
 ;;; G_TYPE_IS_OBJECT()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-is-object (type)
+(defun g-type-is-object (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[type]{type ID to check}
-  @return{@em{False} or @em{true}, indicating whether @arg{type} is a
-    @var{+g-type-object+}.}
+ "@version{2020-10-17}
+  @argument[gtype]{a @class{g-type} ID to check}
+  @return{@em{False} or @em{true}, indicating whether @arg{gtype} is a
+    @var{+g-type-object+} type.}
   @begin{short}
-    Check if the passed in @arg{type} ID is a @var{+g-type-object+} or derived
-    from it.
+    Check if the passed in @arg{gtype} ID is a @var{+g-type-object+} type or
+    derived from it.
   @end{short}
   @begin[Examples]{dictionary}
     @begin{pre}
- (g-type-is-object (gtype \"GtkLabel\")) => T
- (g-type-is-object (gtype \"gboolean\")) => NIL
+(g-type-is-object (gtype \"GtkLabel\")) => T
+(g-type-is-object (gtype \"gboolean\")) => NIL
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
+  @see-class{g-type}
   @see-variable{+g-type-object+}"
-  (eql (gtype-id (g-type-fundamental (gtype type))) +g-type-object+))
+  (eq (g-type-fundamental (gtype gtype)) (gtype +g-type-object+)))
 
 (export 'g-type-is-object)
 
@@ -1034,14 +1031,14 @@
 
 (defun g-is-object (object)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[object]{instance to check for being a @var{+g-type-object+}}
+ "@version{2020-10-17}
+  @argument[object]{instance to check for being a @var{+g-type-object+} type}
   @begin{short}
     Checks whether @arg{object} is of type @var{+g-type-object+}.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-is-object (make-instance 'gtk-button)) => T
+(g-is-object (make-instance 'gtk-button)) => T
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
@@ -1068,10 +1065,12 @@
 
 (defun g-is-object-class (class)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[class]{a foreign pointer to a @symbol{g-object-class} structure}
-  Checks whether @arg{class} \"is a\" valid @symbol{g-object-class} structure
-  of type @var{+g-type-object+} or derived.
+  @begin{short}
+    Checks whether @arg{class} is a @symbol{g-object-class} structure
+    of type @var{+g-type-object+} or derived.
+  @end{short}
   @see-class{g-object}
   @see-symbol{g-object-class}
   @see-variable{+g-type-object+}"
@@ -1080,19 +1079,20 @@
 (export 'g-is-object-class)
 
 ;;; ----------------------------------------------------------------------------
-;;; G_OBJECT_GET_CLASS()
+;;; G_OBJECT_GET_CLASS() -> g-object-class
 ;;; ----------------------------------------------------------------------------
 
-(defun g-object-get-class (object)
+(defun g-object-class (object)
  #+cl-cffi-gtk-documentation
- "@version{2014-11-13}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance}
   @return{Pointer to @arg{object} class structure.}
-  @short{Get the class structure associated to a @class{g-object} instance.}
-  @see-class{g-object}"
-  (g-type-instance-get-class object))
+  @short{Gets the class structure associated to a @class{g-object} instance.}
+  @see-class{g-object}
+  @see-symbol{g-object-class}"
+  (g-type-instance-class object))
 
-(export 'g-object-get-class)
+(export 'g-object-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_TYPE()
@@ -1100,9 +1100,9 @@
 
 (defun g-object-type (object)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-6}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance to return the type ID for}
-  @return{Type ID of @arg{object}}
+  @return{A @class{g-type} ID of @arg{object}}
   @short{Get the type ID for the instance of an object.}
   @begin[Example]{dictionary}
     @begin{pre}
@@ -1111,6 +1111,7 @@
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
+  @see-class{g-type}
   @see-function{g-object-type-name}"
   (g-type-from-instance object))
 
@@ -1122,13 +1123,13 @@
 
 (defun g-object-type-name (object)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-6}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance to return the type name for}
   @return{A string with type name of @arg{object}.}
   @short{Get the name of the type for an instance.}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-object-type-name (make-instance 'gtk-label))
+  (g-object-type-name (make-instance 'gtk-label))
 => \"GtkLabel\"
     @end{pre}
   @end{dictionary}
@@ -1144,16 +1145,17 @@
 
 (defun g-object-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[class]{a valid @symbol{g-object-class} structure}
-  @return{Type ID of class.}
-  @short{Get the type ID of a @arg{class} structure.}
+  @return{A @class{g-type} ID of @arg{class}.}
+  @short{Get the type ID of a class structure.}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-object-class-type (g-type-class-ref (gtype \"GtkLabel\")))
+  (g-object-class-type (g-type-class-ref (gtype \"GtkLabel\")))
 => #S(GTYPE :NAME \"GtkLabel\" :%ID 134905144)
     @end{pre}
   @end{dictionary}
+  @see-class{g-type}
   @see-class{g-object}
   @see-symbol{g-object-class}"
   (g-type-from-class class))
@@ -1166,13 +1168,13 @@
 
 (defun g-object-class-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[class]{a valid @symbol{g-object-class} structure}
-  @return{Type name of @arg{class}.}
+  @return{A string with the type name of @arg{class}.}
   @short{Return the name of a @arg{class} structure's type.}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-object-class-name (g-type-class-ref (gtype \"GtkLabel\")))
+  (g-object-class-name (g-type-class-ref (gtype \"GtkLabel\")))
 => \"GtkLabel\"
     @end{pre}
   @end{dictionary}
@@ -1186,7 +1188,9 @@
 ;;; g_object_class_install_property ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_class_install_property" g-object-class-install-property)
+;; For internal use and not exported.
+
+(defcfun ("g_object_class_install_property" %g-object-class-install-property)
     :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
@@ -1198,7 +1202,7 @@
   @end{short}
 
   Note that it is possible to redefine a property in a derived class, by
-  installing a property with the same name. This can be useful at times, e. g.
+  installing a property with the same name. This can be useful at times, e.g.
   to change the range of allowed values or the default value.
   @see-class{g-object}
   @see-symbol{g-object-class}
@@ -1206,8 +1210,6 @@
   (class (:pointer (:struct g-object-class)))
   (property-id :uint)
   (pspec (:pointer (:struct g-param-spec))))
-
-(export 'g-object-class-install-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_install_properties ()
@@ -1339,7 +1341,7 @@
 (defun g-object-class-list-properties (gtype)
  #+cl-cffi-gtk-documentation
  "@version{2020-10-14}
-  @argument[type]{a @class{g-type} ID of a object class}
+  @argument[gtype]{a @class{g-type} ID of a object class}
   @return{A list of @symbol{g-param-spec} structures.}
   @begin{short}
     Gets a list of @symbol{g-param-spec} structures for all properties of a
@@ -1373,8 +1375,10 @@
 ;;; g_object_class_override_property ()
 ;;; ----------------------------------------------------------------------------
 
+;; We do not export this function.
+
 (defcfun ("g_object_class_override_property"
-           g-object-class-override-property) :void
+          %g-object-class-override-property) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[class]{a @symbol{g-object-class} structure}
@@ -1408,17 +1412,17 @@
   (property-id :uint)
   (name :string))
 
-(export 'g-object-class-override-property)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_interface_install_property ()
 ;;; ----------------------------------------------------------------------------
 
+;; We do not export this function.
+
 (defcfun ("g_object_interface_install_property"
-           g-object-interface-install-property) :void
+          %g-object-interface-install-property) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
-  @argument[g-iface]{any interface vtable for the interface, or the default
+  @argument[iface]{any interface vtable for the interface, or the default
     vtable for the interface}
   @argument[pspec]{the @symbol{g-param-spec} CStruct for the new property}
   @begin{short}
@@ -1441,10 +1445,8 @@
   @see-symbol{g-param-spec}
   @see-symbol{g-type-info}
   @see-function{g-object-class-override-property}"
-  (g-iface :pointer)
+  (iface :pointer)
   (pspec (:pointer (:struct g-param-spec))))
-
-(export 'g-object-interface-install-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_interface_find_property ()
@@ -1458,7 +1460,7 @@
 (defun g-object-interface-find-property (gtype property-name)
  #+cl-cffi-gtk-documentation
  "@version{2020-10-15}
-  @argument[iface]{a @class{g-type} for an interface type}
+  @argument[gtype]{a @class{g-type} for an interface type}
   @argument[property-name]{a string with the name of a property to lookup}
   @return{The @symbol{g-param-spec} structure for the property of the interface
     with the name @arg{property-name}, or @code{nil} if no such property
@@ -1491,7 +1493,7 @@
 (defun g-object-interface-list-properties (gtype)
  #+cl-cffi-gtk-documentation
  "@version{2020-10-14}
-  @argument[type]{a @class{g-type} ID of an interface}
+  @argument[gtype]{a @class{g-type} ID of an interface}
   @return{A list of @symbol{g-param-spec} structures for all properties of an
     interface.}
   @begin{short}
@@ -1525,9 +1527,9 @@
 
 (defun g-object-new (object-type &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
-  @argument[object-type]{the type ID of the @class{g-object} subtype to
-    instantiate}
+ "@version{2020-10-16}
+  @argument[object-type]{the @class{g-type} ID of the @class{g-object} subtype
+    to instantiate}
   @argument[args]{pairs of the property name and value}
   @begin{short}
     Creates a new instance of a @class{g-object} subtype and sets its
@@ -1535,26 +1537,26 @@
   @end{short}
 
   Construction parameters, see @code{:construct} and @code{:construct-only} of
-  the type @symbol{g-param-flags}, which are not explicitly specified are set to
-  their default values.
+  type @symbol{g-param-flags} flags, which are not explicitly specified are set
+  to their default values.
   @begin[Note]{dictionary}
-    In the Lisp implementation the method @code{make-instance} is called
-    which calls the function @fun{g-object-newv} for creating a new instance.
+    In the Lisp implementation this function calls the method
+    @code{make-instance} to create the new instance.
   @end{dictionary}
   @begin[Examples]{dictionary}
     @begin{pre}
- (g-object-new \"GtkButton\" :label \"text\" :margin 6)
+  (g-object-new \"GtkButton\" :label \"text\" :margin 6)
 => #<GTK-BUTTON {D941381@}>
     @end{pre}
-    The above is equivalent to:
+    This is equivalent to:
     @begin{pre}
- (make-instance 'gtk-button :label \"text\" :margin 6)
+  (make-instance 'gtk-button :label \"text\" :margin 6)
 => #<GTK-BUTTON {D947381@}>
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
-  @see-symbol{g-param-flags}
-  @see-function{g-object-newv}"
+  @see-class{g-type}
+  @see-symbol{g-param-flags}"
   (let ((lisp-type (gethash object-type *registered-object-types*)))
     (apply 'make-instance (cons lisp-type args))))
 
@@ -1598,7 +1600,10 @@
 ;;; g_object_newv ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_newv" g-object-newv) :pointer
+;; This function is called internally in the Lisp library to create an object
+;; and is not exported.
+
+(defcfun ("g_object_newv" %g-object-newv) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-10-27}
   @argument[object-type]{the type ID of the @class{g-object} subtype to
@@ -1622,13 +1627,14 @@
   (n-parameter :uint)
   (parameters :pointer))
 
-(export 'g-object-newv)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_ref" g-object-ref) :pointer
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_ref" %g-object-ref) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2014-11-13}
   @argument[object]{a @class{g-object} instance}
@@ -1637,13 +1643,14 @@
   @see-class{g-object}"
   (object :pointer))
 
-(export 'g-object-ref)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_unref" g-object-unref) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_unref" %g-object-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2014-11-13}
   @argument[object]{a @class{g-object} instance}
@@ -1655,13 +1662,14 @@
   @see-class{g-object}"
   (object :pointer))
 
-(export 'g-object-unref)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_ref_sink ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_ref_sink" g-object-ref-sink) :pointer
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_ref_sink" %g-object-ref-sink) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{a @class{g-object} instance}
@@ -1677,8 +1685,6 @@
   increasing the reference count by one.
   @see-class{g-object}"
   (object :pointer))
-
-(export 'g-object-ref-sink)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_set_object ()
@@ -1841,7 +1847,10 @@
 ;;; g_object_is_floating ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_is_floating" g-object-is-floating) :boolean
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_is_floating" %g-object-is-floating) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{a @class{g-object} instance}
@@ -1852,13 +1861,14 @@
   @see-class{g-object}"
   (object :pointer))
 
-(export 'g-object-is-floating)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_force_floating ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_force_floating" g-object-force-floating) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_force_floating" %g-object-force-floating) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{a @class{g-object} instance}
@@ -1873,8 +1883,6 @@
   @see-class{g-initially-unowned}
   @see-function{g-object-ref-sink}"
   (object :pointer))
-
-(export 'g-object-force-floating)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GWeakNotify ()
@@ -1898,7 +1906,10 @@
 ;;; g_object_weak_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_weak_ref" g-object-weak-ref) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_weak_ref" %g-object-weak-ref) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{@class{g-object} instance to reference weakly}
@@ -1923,13 +1934,14 @@
   (notify :pointer)
   (data :pointer))
 
-(export 'g-object-weak-ref)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_weak_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_weak_unref" g-object-weak-unref) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_weak_unref" %g-object-weak-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{@class{g-object} instance to remove a weak reference from}
@@ -1942,8 +1954,6 @@
   (object :pointer)
   (notify :pointer)
   (data :pointer))
-
-(export 'g-object-weak-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_add_weak_pointer ()
@@ -2110,7 +2120,10 @@
 ;;; g_object_add_toggle_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_add_toggle_ref" g-object-add-toggle-ref) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_add_toggle_ref" %g-object-add-toggle-ref) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{a @class{g-object} instance}
@@ -2151,13 +2164,14 @@
   (notify :pointer)
   (data :pointer))
 
-(export 'g-object-add-toggle-ref)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_remove_toggle_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_remove_toggle_ref" g-object-remove-toggle-ref) :void
+;; The memory management is done in the Lisp library. We do not export this
+;; function.
+
+(defcfun ("g_object_remove_toggle_ref" %g-object-remove-toggle-ref) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-17}
   @argument[object]{a @class{g-object} instance}
@@ -2173,8 +2187,6 @@
   (object :pointer)
   (notify :pointer)
   (data :pointer))
-
-(export 'g-object-remove-toggle-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_connect ()
@@ -2396,21 +2408,16 @@
 
 (defcfun ("g_object_notify" g-object-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance}
-  @argument[property-name]{the name of a property installed on the class of
-    @arg{object}}
+  @argument[property-name]{a string with the name of a property installed on
+    the class of @arg{object}}
   @begin{short}
     Emits a \"notify\" signal for the property @arg{property-name} on
     @arg{object}.
   @end{short}
-
-  When possible, e. g. when signaling a property change from within the class
-  that registered the property, you should use @fun{g-object-notify-by-pspec}
-  instead.
-  @see-class{g-object}
-  @see-function{g-object-notify-by-pspec}"
-  (object :pointer)
+  @see-class{g-object}"
+  (object g-object)
   (property-name :string))
 
 (export 'g-object-notify)
@@ -2470,18 +2477,20 @@
 
 (defcfun ("g_object_freeze_notify" g-object-freeze-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance}
   @begin{short}
-    Increases the freeze count on @arg{object}. If the freeze count is non-zero,
-    the emission of \"notify\" signals on object is stopped. The signals are
-    queued until the freeze count is decreased to zero.
+    Increases the freeze count on @arg{object}.
   @end{short}
+  If the freeze count is non-zero, the emission of \"notify\" signals on object
+  is stopped. The signals are queued until the freeze count is decreased to
+  zero.
 
   This is necessary for accessors that modify multiple properties to prevent
   premature notification while the object is still being modified.
-  @see-class{g-object}"
-  (object :pointer))
+  @see-class{g-object}
+  @see-function{g-object-thaw-notify}"
+  (object g-object))
 
 (export 'g-object-freeze-notify)
 
@@ -2491,11 +2500,11 @@
 
 (defcfun ("g_object_thaw_notify" g-object-thaw-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
   @argument[object]{a @class{g-object} instance}
   @begin{short}
-    Reverts the effect of a previous call to the @fun{g-object-freeze-notify}
-    function.
+    Reverts the effect of a previous call to the function
+    @fun{g-object-freeze-notify}.
   @end{short}
   The freeze count is decreased on @arg{object} and when it reaches zero, all
   queued \"notify\" signals are emitted.
@@ -2503,7 +2512,7 @@
   It is an error to call this function when the freeze count is zero.
   @see-class{g-object}
   @see-function{g-object-freeze-notify}"
-  (object :pointer))
+  (object g-object))
 
 (export 'g-object-thaw-notify)
 
@@ -2598,25 +2607,25 @@
     @sym{g-object-set-data-full} with a destroy notify handler. The code is
     taken from the @code{gtk-widget-factory} demo.
     @begin{pre}
-  ;; Callback function for the destroy notify handler
-  (defcallback pulse-remove :void ((data :pointer))
-    (g-source-remove (pointer-address data)))
+;; Callback function for the destroy notify handler
+(defcallback pulse-remove :void ((data :pointer))
+  (g-source-remove (pointer-address data)))
 
-  ;; Function called by the timeout handler
-  (defun pulse-it (widget)
-    ;; Pulse the widget which is an entry or a progress bar
-    (if (eq 'gtk-entry (type-of widget))
-        (gtk-entry-progress-pulse widget)
-        (gtk-progress-bar-pulse widget))
-    ;; Set a timeout handler and store the handler on the property list
-    (g-object-set-data-full widget
-                            \"pulse-id\"
-                            (make-pointer (g-timeout-add *pulse-time*
-                                                         (lambda ()
-                                                           (pulse-it widget))))
-                            (callback pulse-remove))
-    ;; Remove the source
-    +g-source-remove+)
+;; Function called by the timeout handler
+(defun pulse-it (widget)
+  ;; Pulse the widget which is an entry or a progress bar
+  (if (eq 'gtk-entry (type-of widget))
+      (gtk-entry-progress-pulse widget)
+      (gtk-progress-bar-pulse widget))
+  ;; Set a timeout handler and store the handler on the property list
+  (g-object-set-data-full widget
+                          \"pulse-id\"
+                          (make-pointer (g-timeout-add *pulse-time*
+                                                       (lambda ()
+                                                         (pulse-it widget))))
+                          (callback pulse-remove))
+  ;; Remove the source
+  +g-source-remove+)
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
@@ -2634,7 +2643,7 @@
 
 (defcfun ("g_object_steal_data" g-object-steal-data) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
+ "@version{2020-10-17}
   @argument[object]{@class{g-object} instance containing the associations}
   @argument[key]{a string with the name of the key}
   @return{The data as a pointer if found, or @code{nil} if no such data exists.}
@@ -2645,7 +2654,7 @@
   @see-class{g-object}
   @see-function{g-object-data}
   @see-function{g-object-set-data-full}"
-  (object :pointer)
+  (object g-object)
   (key :string))
 
 (export 'g-object-steal-data)
@@ -2939,6 +2948,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_set_property ()
+;;; g_object_get_property () -> g-object-property
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_property" %g-object-set-property) :void
@@ -2946,65 +2956,54 @@
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun g-object-set-property (object property-name new-value
-                                         &optional property-type)
- #+cl-cffi-gtk-documentation
- "@version{2020-5-31}
-  @argument[object]{a @class{g-object} instance}
-  @argument[property-name]{a string with the name of the property to set}
-  @argument[value]{the value of type @symbol{g-value}}
-  @begin{short}
-    Sets a property on an object.
-  @end{short}
-  @see-class{g-object}
-  @see-symbol{g-value}
-  @see-function{g-object-get-property}"
+(defun (setf g-object-property) (value object property-name
+                                       &optional property-type)
   (unless property-type
     (setf property-type
           (class-property-type (g-type-from-instance object)
                                property-name
                                :assert-writable t)))
-  (with-foreign-object (value '(:struct g-value))
-    (set-g-value value new-value property-type :zero-g-value t)
+  (with-foreign-object (new-value '(:struct g-value))
     (unwind-protect
-      (%g-object-set-property object property-name value)
-      (g-value-unset value))))
-
-(export 'g-object-set-property)
-
-;;; ----------------------------------------------------------------------------
-;;; g_object_get_property ()
-;;; ----------------------------------------------------------------------------
+      (progn
+        (set-g-value new-value value property-type :zero-g-value t)
+        (%g-object-set-property object property-name new-value))
+      (g-value-unset new-value)))
+  value)
 
 (defcfun ("g_object_get_property" %g-object-get-property) :void
   (object g-object)
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun g-object-get-property (object property-name &optional property-type)
+(defun g-object-property (object property-name &optional property-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-17}
+ "@version{2020-10-17}
+  @syntax[]{(g-object-property object property-name property-type) => value}
+  @syntax[]{(setf (g-object-property object property-name property-type) value)}
   @argument[object]{a @class{g-object} instance}
-  @argument[property-name]{the name of the property to get}
-  @return{The property value.}
-  @short{Gets a property of an object.}
+  @argument[property-name]{a string with the name of the property}
+  @argument[property-type]{the optional @class{g-type} ID of the property}
+  @argument[value]{a value for the property}
+  @short{Accessor of the value of the property of an object.}
   @see-class{g-object}
-  @see-function{g-object-set-property}"
+  @see-class{g-type}"
   (restart-case
     (unless property-type
       (setf property-type
             (class-property-type (g-type-from-instance object)
                                  property-name
                                  :assert-readable t)))
-    (return-nil () (return-from g-object-get-property nil)))
+    (return-nil () (return-from g-object-property nil)))
   (with-foreign-object (value '(:struct g-value))
-    (g-value-init value property-type)
-    (%g-object-get-property object property-name value)
     (unwind-protect
-      (parse-g-value value)
+      (progn
+        (g-value-init value property-type)
+        (%g-object-get-property object property-name value)
+        (parse-g-value value))
       (g-value-unset value))))
 
-(export 'g-object-get-property)
+(export 'g-object-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_new_valist ()
