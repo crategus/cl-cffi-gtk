@@ -724,18 +724,18 @@
 
 ;; This function is deprecated and not exported.
 
-(defun gdk-cursor-ref (cursor)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-29}
-  @argument[cursor]{a @class{gdk-cursor} object}
-  @return{Same @arg{cursor} that was passed in.}
-  @short{Adds a reference to @arg{cursor}.}
-  @begin[Warning]{dictionary}
-    @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use the @fun{g-object-ref} function instead.
-  @end{dictionary}
-  @see-class{gdk-cursor}"
-  (g-object-ref cursor))
+;(defun gdk-cursor-ref (cursor)
+; #+cl-cffi-gtk-documentation
+; "@version{2013-7-29}
+;  @argument[cursor]{a @class{gdk-cursor} object}
+;  @return{Same @arg{cursor} that was passed in.}
+;  @short{Adds a reference to @arg{cursor}.}
+;  @begin[Warning]{dictionary}
+;    @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
+;    be used in newly-written code. Use the @fun{g-object-ref} function instead.
+;  @end{dictionary}
+;  @see-class{gdk-cursor}"
+;  (g-object-ref cursor))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_unref ()
@@ -743,20 +743,20 @@
 
 ;; This function is deprecated and not exported.
 
-(defun gdk-cursor-unref (cursor)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-29}
-  @argument[cursor]{a @class{gdk-cursor} object}
-  @begin{short}
-    Removes a reference from @arg{cursor}, deallocating the @arg{cursor} if no
-    references remain.
-  @end{short}
-  @begin[Warning]{dictionary}
-    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use the @fun{g-object-unref} function
-    instead.
-  @end{dictionary}
-  @see-class{gdk-cursor}"
-  (g-object-unref cursor))
+;(defun gdk-cursor-unref (cursor)
+; #+cl-cffi-gtk-documentation
+; "@version{2013-7-29}
+;  @argument[cursor]{a @class{gdk-cursor} object}
+;  @begin{short}
+;    Removes a reference from @arg{cursor}, deallocating the @arg{cursor} if no
+;    references remain.
+;  @end{short}
+;  @begin[Warning]{dictionary}
+;    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
+;    be used in newly-written code. Use the @fun{g-object-unref} function
+;    instead.
+;  @end{dictionary}
+;  @see-class{gdk-cursor}"
+;  (g-object-unref cursor))
 
 ;;; --- End of file gdk.cursor.lisp --------------------------------------------
