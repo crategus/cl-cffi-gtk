@@ -2,11 +2,11 @@
 ;;; gobject.binding.lisp
 ;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.60 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,17 +44,17 @@
 ;;;     g_binding_get_flags
 ;;;     g_binding_unbind
 ;;;     g_object_bind_property
-;;;     (*GBindingTransformFunc)
+;;;     GBindingTransformFunc
 ;;;     g_object_bind_property_full
 ;;;     g_object_bind_property_with_closures
 ;;;
 ;;; Properties
 ;;;
-;;;     GBindingFlags   flags              Read / Write / Construct Only
-;;;           GObject*  source             Read / Write / Construct Only
-;;;             gchar*  source-property    Read / Write / Construct Only
-;;;           GObject*  target             Read / Write / Construct Only
-;;;             gchar*  target-property    Read / Write / Construct Only
+;;;   GBindingFlags    flags              Read / Write / Construct Only
+;;;         GObject*   source             Read / Write / Construct Only
+;;;           gchar*   source-property    Read / Write / Construct Only
+;;;         GObject*   target             Read / Write / Construct Only
+;;;           gchar*   target-property    Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -80,10 +80,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-binding-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'g-binding-flags atdoc:*external-symbols*)
- "@version{2019-3-12}
+ "@version{2020-10-18}
   @begin{short}
-    Flags to be passed to the @fun{g-object-bind-property} or
-    @fun{g-object-bind-property-full} functions.
+    Flags to be passed to the functions @fun{g-object-bind-property} or
+    @fun{g-object-bind-property-full}.
   @end{short}
 
   This enumeration can be extended at later date.
@@ -97,21 +97,19 @@
   (:invert-boolean 4))
   @end{pre}
   @begin[code]{table}
-    @entry[:default]{The default binding; if the source property changes, the
+    @entry[:default]{The default binding. If the source property changes, the
       target property is updated with its value.}
-    @entry[:bidirectional]{Bidirectional binding; if either the property of the
+    @entry[:bidirectional]{Bidirectional binding. If either the property of the
       source or the property of the target changes, the other is updated.}
     @entry[:sync-create]{Synchronize the values of the source and target
-      properties when creating the binding; the direction of the synchronization
+      properties when creating the binding. The direction of the synchronization
       is always from the source to the target.}
     @entry[:invert-bool]{If the two properties being bound are booleans, setting
-      one to @em{true} will result in the other being set to @code{nil} and vice
-      versa.
-      This flag will only work for boolean properties, and cannot be used when
-      passing custom transformation functions to
+      one to @em{true} will result in the other being set to @code{false} and
+      vice versa. This flag will only work for boolean properties, and cannot be
+      used when passing custom transformation functions to the function
       @fun{g-object-bind-property-full}.}
   @end{table}
-  Since 2.26
   @see-class{g-binding}
   @see-function{g-object-bind-property}
   @see-function{g-object-bind-property-full}")
@@ -141,14 +139,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-binding 'type)
- "@version{2019-6-1}
+ "@version{2020-10-18}
   @begin{short}
     @sym{g-binding} is the representation of a binding between a property on a
     @class{g-object} instance, or source, and another property on another
     @class{g-object} instance, or target.
   @end{short}
   Whenever the source property changes, the same value is applied to the target
-  property; for instance, the following binding:
+  property. For instance, the following binding:
   @begin{pre}
 g_object_bind_property (object1, \"property-a\",
                         object2, \"property-b\",
@@ -170,8 +168,8 @@ g_object_bind_property (object1, \"property-a\",
 
   It is also possible to set a custom transformation function, in both
   directions, in case of a bidirectional binding, to apply a custom
-  transformation from the source value to the target value before applying it;
-  for instance, the following binding:
+  transformation from the source value to the target value before applying it.
+  For instance, the following binding:
   @begin{pre}
 g_object_bind_property_full (adjustment1, \"value\",
                              adjustment2, \"value\",
@@ -180,18 +178,18 @@ g_object_bind_property_full (adjustment1, \"value\",
                              fahrenheit_to_celsius,
                              NULL, NULL);
   @end{pre}
-  will keep the @code{value} property of the two adjustments in sync; the
-  @code{celsius_to_fahrenheit} function will be called whenever the @code{value}
+  will keep the @code{value} property of the two adjustments in sync. The
+  function @code{celsius_to_fahrenheit} will be called whenever the @code{value}
   property of @code{adjustment1} changes and will transform the current value of
   the property before applying it to the @code{value} property of
   @code{adjustment2}.
 
-  Vice versa, the @code{fahrenheit_to_celsius} function will be called whenever
+  Vice versa, the function @code{fahrenheit_to_celsius} will be called whenever
   the @code{value} property of @code{adjustment2} changes, and will transform
   the current value of the property before applying it to the @code{value}
   property of @code{adjustment1}.
 
-  Note that @sym{g-binding} does not resolve cycles by itself; a cycle like
+  Note that @sym{g-binding} does not resolve cycles by itself. A cycle like
   @begin{pre}
 object1:propertyA -> object2:propertyB
 object2:propertyB -> object3:propertyC
@@ -201,18 +199,17 @@ object3:propertyC -> object1:propertyA
   avoided if the objects emit the \"notify\" signal only if the value has
   effectively been changed. A binding is implemented using the \"notify\"
   signal, so it is susceptible to all the various ways of blocking a signal
-  emission, like @fun{g-signal-stop-emission} or @fun{g-signal-handler-block}.
+  emission, like the functions @fun{g-signal-stop-emission} or
+  @fun{g-signal-handler-block}.
 
   A binding will be severed, and the resources it allocates freed, whenever
   either one of the @class{g-object} instances it refers to are finalized, or
   when the @sym{g-binding} instance loses its last reference.
 
-  Bindings for languages with garbage collection can use the
-  @fun{g-binding-unbind} function to explicitly release a binding between the
-  source and target properties, instead of relying on the last reference on the
-  binding, source, and target instances to drop.
-
-  @sym{g-binding} is available since version 2.26.
+  Bindings for languages with garbage collection can use the function
+  @fun{g-binding-unbind} to explicitly release a binding between the source and
+  target properties, instead of relying on the last reference on the binding,
+  source, and target instances to drop.
   @see-slot{g-binding-flags}
   @see-slot{g-binding-source}
   @see-slot{g-binding-source-property}
@@ -229,16 +226,21 @@ object3:propertyC -> object1:propertyA
 (setf (documentation (atdoc:get-slot-from-name "flags" 'g-binding) 't)
  "The @code{flags} property of type @symbol{g-binding-flags}
   (Read / Write / Construct Only) @br{}
-  Flags to be used to control the @sym{g-binding}.")
+  Flags to be used to control the binding.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-binding-flags atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-binding-flags 'function)
- "@version{2019-6-1}
+ "@version{2020-10-18}
+  @syntax[]{(g-binding-flags object) => flags}
+  @argument[object]{a @class{g-binding} object}
+  @argument[flags]{the @symbol{g-binding-flags} value used by the binding}
   @begin{short}
     Accessor of the @slot[g-binding]{flags} slot of the @class{g-binding} class.
   @end{short}
+
+  Retrieves the flags passed when constructing the @class{g-binding} object.
   @see-class{g-binding}")
 
 ;;; --- g-binding-source -------------------------------------------------------
@@ -247,17 +249,22 @@ object3:propertyC -> object1:propertyA
 (setf (documentation (atdoc:get-slot-from-name "source" 'g-binding) 't)
  "The @code{source} property of type @class{g-object}
   (Read / Write / Construct Only) @br{}
-  The @class{g-object} that should be used as the source of the binding.")
+  The object that should be used as the source of the binding.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-binding-source atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-binding-source 'function)
- "@version{2019-6-1}
+ "@version{2020-10-18}
+  @syntax[]{(g-binding-source object) => source}
+  @argument[object]{a @class{g-binding} object}
+  @argument[source]{the @class{g-object} source}
   @begin{short}
     Accessor of the @slot[g-binding]{source} slot of the @class{g-binding}
     class.
   @end{short}
+
+  Retrieves the @class{g-object} instance used as the source of the binding.
   @see-class{g-binding}")
 
 ;;; --- g-binding-source-property ----------------------------------------------
@@ -274,138 +281,89 @@ object3:propertyC -> object1:propertyA
 (setf (gethash 'g-binding-source-property atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-binding-source-property 'function)
- "@version{2019-6-1}
+ "@version{2020-10-18}
+  @syntax[]{(g-binding-source-property object) => source-property}
+  @argument[object]{a @class{g-binding} object}
+  @argument[source-property]{a string with the name of the source property}
   @begin{short}
     Accessor of the @slot[g-binding]{source-property} slot of the
     @class{g-binding} class.
   @end{short}
+
+  Retrieves the name of the property of the source used for the binding.
   @see-class{g-binding}")
 
-#|
+;;; --- g-binding-target -------------------------------------------------------
 
-The “target” property
-  “target”                   GObject *
-The GObject that should be used as the target of the binding
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "target" 'g-binding) 't)
+ "The @code{target} property of type @class{g-object}
+  (Read / Write / Construct Only) @br{}
+  The object that should be used as the target of the binding.")
 
-Flags: Read / Write / Construct Only
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-binding-target atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-binding-target 'function)
+ "@version{2020-10-18}
+  @syntax[]{(g-binding-target object) => target}
+  @argument[object]{a @class{g-binding} object}
+  @argument[target]{the @class{g-object} target}
+  @begin{short}
+    Accessor of the @slot[g-binding]{target} slot of the @class{g-binding}
+    class.
+  @end{short}
 
-Since: 2.26
+  Retrieves the @class{g-object} instance used as the target of the binding.
+  @see-class{g-binding}")
 
-The “target-property” property
-  “target-property”          gchar *
-The name of the property of “target” that should be used as the target of the binding
+;;; --- g-binding-target-property ----------------------------------------------
 
-Flags: Read / Write / Construct Only
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "target-property" 'g-binding) 't)
+ "The @code{target-property} property of type @code{:string}
+  (Read / Write / Construct Only) @br{}
+  The name of the property of the target that should be used for the binding.
+  @br{}
+  Default value: @code{nil}")
 
-Default value: NULL
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-binding-target-property atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-binding-target-property 'function)
+ "@version{2020-10-18}
+  @syntax[]{(g-binding-target-property object) => target}
+  @argument[object]{a @class{g-binding} object}
+  @argument[target-property]{a string with the name of the target property}
+  @begin{short}
+    Accessor of the @slot[g-binding]{target-property} slot of the
+    @class{g-binding} class.
+  @end{short}
 
-Since: 2.26
-
-
-|#
-
-
-
-
-;;; ----------------------------------------------------------------------------
-;;; g_binding_get_source ()
-;;;
-;;; GObject * g_binding_get_source (GBinding *binding);
-;;;
-;;; Retrieves the GObject instance used as the source of the binding.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Returns :
-;;;     the source GObject.
-;;;
-;;; Since: 2.26
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_binding_get_source_property ()
-;;;
-;;; const gchar * g_binding_get_source_property (GBinding *binding);
-;;;
-;;; Retrieves the name of the property of “source” used as the source of the
-;;; binding.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Returns :
-;;;     the name of the source property
-;;;
-;;; Since: 2.26
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_binding_get_target ()
-;;;
-;;; GObject * g_binding_get_target (GBinding *binding);
-;;;
-;;; Retrieves the GObject instance used as the target of the binding.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Returns :
-;;;     the target GObject.
-;;;
-;;; Since: 2.26
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_binding_get_target_property ()
-;;;
-;;; const gchar * g_binding_get_target_property (GBinding *binding);
-;;;
-;;; Retrieves the name of the property of “target” used as the target of the
-;;; binding.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Returns :
-;;;     the name of the target property
-;;;
-;;; Since: 2.26
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_binding_get_flags ()
-;;;
-;;; GBindingFlags g_binding_get_flags (GBinding *binding);
-;;;
-;;; Retrieves the flags passed when constructing the GBinding.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Returns :
-;;;     the GBindingFlags used by the GBinding
-;;;
-;;; Since: 2.26
-;;; ----------------------------------------------------------------------------
+  Retrieves the name of the property of the target used for the binding.
+  @see-class{g-binding}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_binding_unbind ()
-;;;
-;;; void g_binding_unbind (GBinding *binding);
-;;;
-;;; Explicitly releases the binding between the source and the target property
-;;; expressed by binding .
-;;;
-;;; This function will release the reference that is being held on the binding
-;;; instance; if you want to hold on to the GBinding instance after calling
-;;; g_binding_unbind(), you will need to hold a reference to it.
-;;;
-;;; binding :
-;;;     a GBinding
-;;;
-;;; Since: 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_binding_unbind" g-binding-unbind) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-18}
+  @argument[binding]{a @class{g-binding} object}
+  @begin{short}
+    Explicitly releases the binding between the source and the target property
+    expressed by binding .
+  @end{short}
+
+  This function will release the reference that is being held on the binding
+  instance. If you want to hold on to the @class{g-binding} instance after
+  calling the function @sym{g-binding-unbind}, you will need to hold a reference
+  to it.
+  @see-class{g-binding}"
+  (binding (g-object g-binding)))
+
+(export 'g-binding-unbind)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_bind_property ()
@@ -413,45 +371,41 @@ Since: 2.26
 
 (defcfun ("g_object_bind_property" g-object-bind-property) (g-object g-binding)
  #+cl-cffi-gtk-documentation
- "@version{2019-3-12}
-  @argument[source]{The source @class{g-object}.}
-  @argument[source-property]{The property on source to bind.}
-  @argument[target]{The target @class{g-object}.}
-  @argument[target-property]{The property on target to bind.}
-  @argument[flags]{Flags to pass to @class{g-binding}.}
+ "@version{2020-10-18}
+  @argument[source]{the source @class{g-object} instance}
+  @argument[source-property]{a string with the property on @arg{source} to bind}
+  @argument[target]{the target @class{g-object} instance}
+  @argument[target-property]{a string with the property on @arg{target} to bind}
+  @argument[flags]{a @symbol{g-binding-flags} value to pass to the binding}
   @begin{return}
     The @class{g-binding} instance representing the binding between the two
-    @class{g-object} instances. The binding is released whenever the
-    @class{g-binding} reference count reaches zero.
+    @class{g-object} instances.
   @end{return}
   @begin{short}
-    Creates a binding between @arg{source_property} on @arg{source} and
-    @arg{target_property} on @arg{target}.
+    Creates a binding between @arg{source-property} on @arg{source} and
+    @arg{target-property} on @arg{target}.
   @end{short}
   Whenever the @arg{source-property} is changed the @arg{target-property} is
   updated using the same value. For instance:
   @begin{pre}
-    (g-object-bind-property action \"active\" widget \"sensitive\" :default)
+(g-object-bind-property action \"active\" widget \"sensitive\" :default)
   @end{pre}
-  Will result in the @code{\"sensitive\"} property of the widget
-  @class{g-object} instance to be updated with the same value of the
-  @code{\"active\"} property of the action @class{g-object} instance.
+  Will result in the @code{sensitive} property of the widget @class{g-object}
+  instance to be updated with the same value of the @code{active} property of
+  the action @class{g-object} instance.
 
-  If @arg{flags} contains @code{:bidirectional} then the binding will be mutual:
-  if @arg{target_property} on @arg{target} changes then the
-  @arg{source_property} on @arg{source} will be updated as well.
+  If @arg{flags} contains @code{:bidirectional} then the binding will be
+  mutual. If @arg{target-property} on @arg{target} changes then the
+  @arg{source-property} on @arg{source} will be updated as well.
 
   The binding will automatically be removed when either the source or the
   target instances are finalized. To remove the binding without affecting the
-  source and the target you can just call @fun{g-object-unref} on the returned
-  @class{g-binding} instance.
+  source and the target you can just call @code{g_object_unref()} on the
+  returned @class{g-binding} instance.
 
   A @class{g-object} can have multiple bindings.
-
-  Since 2.26
   @see-class{g-binding}
-  @see-class{g-object}
-  @see-function{g-object-unref}"
+  @see-class{g-object}"
   (source g-object)
   (source-property :string)
   (target g-object)
