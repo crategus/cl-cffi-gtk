@@ -552,11 +552,11 @@
   (is (equal (gtype "GtkOrientable")
              (g-type-from-interface (g-type-default-interface-ref "GtkOrientable")))))
 
-;;;     G_TYPE_INSTANCE_GET_CLASS
+;;;     g-type-instance-class
 
-(test g-type-instance-get-class
-  (is (equal (gtype "GtkButton")
-             (g-type-from-class (g-type-instance-get-class (make-instance 'gtk-button))))))
+(test g-type-instance-class
+  (is (eq (gtype "GtkButton")
+          (g-type-from-class (g-type-instance-class (make-instance 'gtk-button))))))
 
 ;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
 ;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
@@ -1007,3 +1007,4 @@
       (is (equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format)))
       (is-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))))
 
+;;; 2020-10-17
