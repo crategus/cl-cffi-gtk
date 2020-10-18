@@ -220,7 +220,7 @@
 
   The code fragments in the following example show the use of a property of
   type @code{G_TYPE_STRV} with the functions
-  @fun{g-object-class-install-property}, @fun{g-object-set} and
+  @code{g_object_class_install_property()}, @fun{g-object-set} and
   @fun{g-object-get}.
   @begin{pre}
  g_object_class_install_property (object_class,
@@ -239,8 +239,6 @@
  /* do something with writers */
  g_strfreev (writers);
   @end{pre}
-  Since 2.4
-  @see-function{g-object-class-install-property}
   @see-function{g-object-set}
   @see-function{g-object-get}")
 

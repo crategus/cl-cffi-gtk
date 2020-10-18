@@ -400,7 +400,7 @@
   `(with-foreign-object (,err :pointer)
      (setf (mem-ref ,err :pointer) (null-pointer))
      (unwind-protect
-          (progn ,@body)
+       (progn ,@body)
        (maybe-raise-g-error-condition (mem-ref ,err :pointer))
        (%g-clear-error ,err))))
 
@@ -408,7 +408,7 @@
   `(with-foreign-object (,err :pointer)
      (setf (mem-ref ,err :pointer) (null-pointer))
      (unwind-protect
-          (progn ,@body)
+       (progn ,@body)
        (%g-clear-error ,err))))
 
 (defmacro with-catching-to-g-error ((err) &body body)

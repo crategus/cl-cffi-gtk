@@ -289,7 +289,7 @@
   `(progn
      (gdk-threads-enter)
      (unwind-protect
-          (progn ,@body)
+       (progn ,@body)
        (gdk-threads-leave))))
 
 (export 'with-gdk-threads-lock)

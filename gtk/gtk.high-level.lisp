@@ -187,7 +187,7 @@
     `(let* ((,bar (create-progress-bar *current-progress-bar* ,name ,count))
             (*current-progress-bar* ,bar))
        (unwind-protect
-            (progn ,@body)
+         (progn ,@body)
          (delete-progress-bar ,bar)))))
 
 (export 'with-progress-bar)

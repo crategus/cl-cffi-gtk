@@ -74,7 +74,7 @@
 (defmacro with-stable-pointer ((ptr expr) &body body)
   `(let ((,ptr (glib::allocate-stable-pointer ,expr)))
      (unwind-protect
-         (progn ,@body)
+       (progn ,@body)
        (free-stable-pointer ,ptr))))
 
 ;; Callback function to free a pointer

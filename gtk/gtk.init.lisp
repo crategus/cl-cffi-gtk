@@ -62,9 +62,9 @@
                                   (gdk-threads-init)   ;; Calling on win32 will deadlock
                                   (gdk-threads-enter)) ;; Calling on win32 will deadlock
                                 (unwind-protect
-                                    (progn
-;                                      (%gtk-init)
-                                      (%gtk-main))
+                                  (progn
+;                                   (%gtk-init)
+                                    (%gtk-main))
                                   (unless (find :win32 *features*)
                                     (gdk-threads-leave)) ;; Calling on win32 will deadlock
                                   ))

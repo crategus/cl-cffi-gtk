@@ -78,7 +78,8 @@
 
 (defmacro with-unwind ((var expr unwind-function) &body body)
   `(let ((,var ,expr))
-     (unwind-protect (progn ,@body)
+     (unwind-protect
+       (progn ,@body)
        (,unwind-function ,var))))
 
 ;;; ----------------------------------------------------------------------------
@@ -102,7 +103,7 @@
 (defmacro using ((var &optional (expr var)) &body body)
   `(let ((,var ,expr))
      (unwind-protect
-          (progn ,@body)
+       (progn ,@body)
        (release ,var))))
 
 (defun using-expand (bindings body)
@@ -111,7 +112,7 @@
           (ensure-list (first bindings))
        `(let ((,var ,expr))
           (unwind-protect
-               ,(using-expand (rest bindings) body)
+            ,(using-expand (rest bindings) body)
             (release ,var))))
       `(progn ,@body)))
 

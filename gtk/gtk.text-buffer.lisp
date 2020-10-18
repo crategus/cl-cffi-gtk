@@ -2256,7 +2256,7 @@
     `(let ((,g ,buffer))
        (gtk-text-buffer-begin-user-action ,g)
        (unwind-protect
-            (progn ,@body)
+         (progn ,@body)
          (gtk-text-buffer-end-user-action ,g)))))
 
 (export 'with-text-buffer-user-action)
@@ -2478,14 +2478,14 @@
     (iter (for i from 0 below (length data))
           (setf (mem-aref bytes :uint8 i) (aref data i)))
     (unwind-protect
-         (with-g-error (err)
-           (%gtk-text-buffer-deserialize register-buffer
-                                         content-buffer
-                                         format
-                                         iter
-                                         bytes
-                                         (length data)
-                                         err))
+      (with-g-error (err)
+        (%gtk-text-buffer-deserialize register-buffer
+                                      content-buffer
+                                      format
+                                      iter
+                                      bytes
+                                      (length data)
+                                      err))
       (foreign-free bytes))))
 
 (export 'gtk-text-buffer-deserialize)

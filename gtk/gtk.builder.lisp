@@ -786,17 +786,16 @@
   @arg{object-ids}.
   @see-class{gtk-builder}"
   (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
-    (loop
-       for i from 0
-       for object-id in object-ids
-       do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
+    (loop for i from 0
+          for object-id in object-ids
+          do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
     (unwind-protect
-         (%gtk-builder-add-objects-from-file builder filename l (null-pointer))
-      (loop
-         for i from 0
-         repeat (1- (length object-ids))
-         do (foreign-string-free (mem-aref l :pointer i)))
-      (foreign-free l))))
+      (%gtk-builder-add-objects-from-file builder filename l (null-pointer))
+      (progn
+        (loop for i from 0
+              repeat (1- (length object-ids))
+              do (foreign-string-free (mem-aref l :pointer i)))
+        (foreign-free l)))))
 
 (export 'gtk-builder-add-objects-from-file)
 
@@ -833,21 +832,20 @@
   @arg{object-ids}.
   @see-class{gtk-builder}"
   (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
-    (loop
-       for i from 0
-       for object-id in object-ids
-       do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
+    (loop for i from 0
+          for object-id in object-ids
+          do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
     (unwind-protect
       (%gtk-builder-add-objects-from-string builder
                                             buffer
                                             -1
                                             l
                                             (null-pointer))
-      (loop
-         for i from 0
-         repeat (1- (length object-ids))
-         do (foreign-string-free (mem-aref l :pointer i)))
-      (foreign-free l))))
+      (progn
+        (loop for i from 0
+              repeat (1- (length object-ids))
+              do (foreign-string-free (mem-aref l :pointer i)))
+        (foreign-free l)))))
 
 (export 'gtk-builder-add-objects-from-string)
 

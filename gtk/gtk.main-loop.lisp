@@ -276,8 +276,8 @@
           (mem-ref argv '(:pointer :string))
           (foreign-alloc :string :count 1 :initial-element "/usr/bin/sbcl"))
     (unwind-protect
-         (unless (%gtk-init-check argc argv)
-           (error "Cannot initialize Gtk+"))
+      (unless (%gtk-init-check argc argv)
+        (error "Cannot initialize Gtk+"))
       (foreign-free (mem-ref argv '(:pointer :string))))))
 
 ;;; ----------------------------------------------------------------------------
