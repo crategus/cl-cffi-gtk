@@ -2,9 +2,9 @@
 ;;; gobject.signals.lisp
 ;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2020 Dieter Kaiser
