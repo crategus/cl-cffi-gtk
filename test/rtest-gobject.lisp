@@ -12,5 +12,6 @@
 (load "rtest-gobject-base.lisp")
 (load "rtest-gobject-utils.lisp")
 (load "rtest-gobject-signals.lisp")
+(load "rtest-gobject-binding.lisp")
 
 ;;; 2020-10-10
