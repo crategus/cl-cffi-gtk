@@ -164,7 +164,7 @@
 (defmethod property->reader (class (property gobject-property))
   (with-slots (accessor-name type gname) property
    `(defmethod ,accessor-name ((object ,class))
-      (g-object-get-property object ,gname ,type))))
+      (g-object-property object ,gname ,type))))
 
 (defmethod property->reader (class (property cffi-property))
   (with-slots (accessor-name type reader) property
@@ -181,8 +181,7 @@
 (defmethod property->writer (class (property gobject-property))
   (with-slots (accessor-name type gname) property
     `(defmethod (setf ,accessor-name) (new-value (object ,class))
-       (g-object-set-property object ,gname new-value ,type)
-       new-value)))
+       (setf (g-object-property object ,gname ,type) new-value))))
 
 (defmethod property->writer (class (property cffi-property))
   (with-slots (accessor-name type writer) property

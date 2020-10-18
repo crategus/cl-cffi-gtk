@@ -83,7 +83,7 @@
           (for param-spec = (property->param-spec property))
           (for property-id from 123)
           (log-for :subclass "installing property ~A~%" property)
-          (g-object-class-install-property class property-id param-spec))))
+          (%g-object-class-install-property class property-id param-spec))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -477,12 +477,11 @@
                (declare (ignorable prop-type))
                (when prop-reader
                  (collect `(defun ,prop-accessor (object)
-                             (g-object-get-property object ,prop-name))))
+                             (g-object-property object ,prop-name))))
                (when prop-writer
                  (collect `(defun (setf ,prop-accessor) (new-value object)
-                             (g-object-set-property object
-                                                    ,prop-name
-                                                    new-value))))))
+                             (setf (g-object-property object ,prop-name)
+                                   new-value))))))
      ,name))
 
 ;;; --- End of file gobject.foreign-gobject-subclassing.lisp -------------------
