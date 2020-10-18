@@ -179,8 +179,8 @@
     @about-function{g-type-from-instance}
     @about-function{g-type-from-class}
     @about-function{g-type-from-interface}
-    @about-function{g-type-instance-get-class}
-    @about-function{g-type-instance-get-interface}
+    @about-function{g-type-instance-class}
+    @about-function{g-type-instance-interface}
     @about-function{g-type-instance-get-private}
     @about-function{g-type-class-get-private}
     @about-function{g-type-check-instance}
@@ -267,24 +267,19 @@
     @about-generic{pointer}
     @about-generic{g-object-has-reference}
     @about-generic{g-object-signal-handlers}
-
     @about-symbol{g-object-class}
     @about-symbol{g-object-construct-param}
     @about-symbol{g-parameter}
     @about-class{g-initially-unowned}
     @about-class{g-initially-unowned-class}
-
     @about-function{g-type-is-object}
-    @about-function{G_OBJECT}
     @about-function{g-is-object}
-    @about-function{G_OBJECT_CLASS}
     @about-function{g-is-object-class}
-    @about-function{g-object-get-class}
+    @about-function{g-object-class}
     @about-function{g-object-type}
     @about-function{g-object-type-name}
     @about-function{g-object-class-type}
     @about-function{g-object-class-name}
-
     @about-function{g-object-class-install-property}
     @about-function{g-object-class-install-properties}
     @about-function{g-object-class-find-property}
@@ -334,8 +329,7 @@
     @about-function{g-object-steal-qdata}
     @about-function{g-object-dup-qdata}
     @about-function{g-object-replace-qdata}
-    @about-function{g-object-set-property}
-    @about-function{g-object-get-property}
+    @about-function{g-object-property}
     @about-function{g-object-new-valist}
     @about-function{g-object-set-valist}
     @about-function{g-object-get-valist}

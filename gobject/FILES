@@ -1,13 +1,11 @@
-Content from the GObject 2.36.2 Reference Manual
-
-    *   - needs update
+Content from the GObject 2.66 Reference Manual
 
   gobject.type-info.lisp   - Type Information                  - GObject 2.66
 
   * not implemented *      - GTypePlugin
   * not implemented *      - GTypeModule
 
-  gobject.base.lisp        - GObject                           - GObject 2.64
+  gobject.base.lisp        - GObject                           - GObject 2.66
   gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.66
   gobject.boxed.lisp       - Boxed Types                       - GObject 2.36.2
   gobject.g-value.lisp     - Generic values                    - GObject 2.66
@@ -22,3 +20,4 @@ Content from the GObject 2.36.2 Reference Manual
   * not implemented *      - Value arrays
   * not implemented *      - GBinding
 
+2020-10-17
