@@ -84,10 +84,13 @@
 (unexport 'gobject:using* :gobject)
 (unexport 'gobject:with-foreign-boxed-array :gobject)
 
+(unexport 'gobject:param-spec-type :gobject)
+(unexport 'gobject:param-spec-owner-type :gobject)
 (unexport 'gobject:param-spec-name :gobject)
 (unexport 'gobject:param-spec-readable :gobject)
-(unexport 'gobject:param-spec-type :gobject)
 (unexport 'gobject:param-spec-writable :gobject)
+(unexport 'gobject:param-spec-constructor :gobject)
+(unexport 'gobject:param-spec-constructor-only :gobject)
 
 (unexport 'gobject:lisp-closure :gobject)
 
