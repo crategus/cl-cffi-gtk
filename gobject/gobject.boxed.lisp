@@ -2,12 +2,12 @@
 ;;; gobject.boxed.lisp
 ;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,14 +29,9 @@
 ;;;
 ;;; Boxed Types
 ;;;
-;;; A mechanism to wrap opaque C structures registered by the type system
+;;;     A mechanism to wrap opaque C structures registered by the type system.
 ;;;
-;;; Synopsis
-;;;
-;;;     g_boxed_copy
-;;;     g_boxed_free
-;;;     g_boxed_type_register_static
-;;;     g_pointer_type_register_static
+;;; Types and Values
 ;;;
 ;;;     G_TYPE_HASH_TABLE
 ;;;     G_TYPE_DATE
@@ -55,15 +50,28 @@
 ;;;     G_TYPE_IO_CHANNEL
 ;;;     G_TYPE_IO_CONDITION
 ;;;     G_TYPE_VARIANT_BUILDER
+;;;     G_TYPE_VARIANT_DICT
 ;;;     G_TYPE_KEY_FILE
 ;;;     G_TYPE_MAIN_CONTEXT
 ;;;     G_TYPE_MAIN_LOOP
+;;;     G_TYPE_MAPPED_FILE
 ;;;     G_TYPE_MARKUP_PARSE_CONTEXT
 ;;;     G_TYPE_SOURCE
 ;;;     G_TYPE_POLLED
 ;;;     G_TYPE_THREAD
+;;;     G_TYPE_OPTION_GROUP
+;;;     G_TYPE_URI
 ;;;
-;;;     GStrv
+;;; Functions
+;;;
+;;;     GBoxedCopyFunc
+;;;     GBoxedFreeFunc
+;;;
+;;;     g_boxed_copy
+;;;     g_boxed_free
+;;;     g_boxed_type_register_static
+;;;     g_pointer_type_register_static
+;;;
 ;;;
 ;;; Description
 ;;;
@@ -73,7 +81,18 @@
 ;;;
 ;;; Boxed types are useful for simple value-holder structures like rectangles or
 ;;; points. They can also be used for wrapping structures defined in non-GObject
-;;; based libraries.
+;;; based libraries. They allow arbitrary structures to be handled in a uniform
+;;; way, allowing uniform copying (or referencing) and freeing
+;;; (or unreferencing) of them, and uniform representation of the type of the
+;;; contained structure. In turn, this allows any type which can be boxed to be
+;;; set as the data in a GValue, which allows for polymorphic handling of a much
+;;; wider range of data types, and hence usage of such types as GObject property
+;;; values.
+;;;
+;;; GBoxed is designed so that reference counted types can be boxed. Use the
+;;; type’s ‘ref’ function as the GBoxedCopyFunc, and its ‘unref’ function as
+;;; the GBoxedFreeFunc. For example, for GBytes, the GBoxedCopyFunc is
+;;; g_bytes_ref(), and the GBoxedFreeFunc is g_bytes_unref().
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -109,7 +128,14 @@
 ;;; g_boxed_copy ()
 ;;; ----------------------------------------------------------------------------
 
+;; Used internally for the implementation of a Lisp boxed type. This function
+;; is not exported.
+
 (defcfun ("g_boxed_copy" %g-boxed-copy) :pointer
+  (boxed-type g-type)
+  (boxed-src :pointer))
+
+(defun g-boxed-copy (boxed-type boxed-src)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-10}
   @argument[boxed-type]{the type of @arg{src-boxed}}
@@ -117,18 +143,16 @@
   @return{The newly created copy of the boxed structure.}
   Provide a copy of a boxed structure @arg{src-boxed} which is of type
   @arg{boxed-type}."
-  (boxed-type g-type)
-  (boxed-src :pointer))
-
-(defun g-boxed-copy (boxed-type boxed-src)
+  ;; We check for a null-pointer and return nil.
   (unless (null-pointer-p boxed-src)
     (%g-boxed-copy boxed-type boxed-src)))
-
-(export 'g-boxed-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_free ()
 ;;; ----------------------------------------------------------------------------
+
+;; Used internally for the implementation of a Lisp boxed type. This function
+;; is not exported.
 
 (defcfun ("g_boxed_free" g-boxed-free) :void
  #+cl-cffi-gtk-documentation
@@ -139,11 +163,11 @@
   (boxed-type g-type)
   (boxed :pointer))
 
-(export 'g-boxed-free)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_type_register_static ()
 ;;; ----------------------------------------------------------------------------
+
+;; This function is not exported.
 
 (defcfun ("g_boxed_type_register_static" g-boxed-type-register-static) g-type
  #+cl-cffi-gtk-documentation
@@ -162,11 +186,11 @@
   (copy-fn :pointer)
   (free-fn :pointer))
 
-(export 'g-boxed-type-register-static)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_pointer_type_register_static ()
 ;;; ----------------------------------------------------------------------------
+
+;; This function is not exported.
 
 (defcfun ("g_pointer_type_register_static" g-pointer-type-register-static)
     g-type
@@ -177,8 +201,6 @@
   Creates a new @var{+g-type-pointer+} derived type ID for a new pointer type
   with name @arg{name}."
   (name :string))
-
-(export 'g-pointer-type-register-static)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_HASH_TABLE
@@ -212,35 +234,12 @@
 
 (defcfun ("g_strv_get_type" g-type-strv) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-6-10}
+ "@version{2020-10-18}
   @begin{short}
-    The @class{g-type} for a boxed type holding a @code{NULL}-terminated array
-    of strings.
+    The @class{g-type} ID for a boxed type holding a @code{NULL}-terminated
+    array of strings.
   @end{short}
-
-  The code fragments in the following example show the use of a property of
-  type @code{G_TYPE_STRV} with the functions
-  @code{g_object_class_install_property()}, @fun{g-object-set} and
-  @fun{g-object-get}.
-  @begin{pre}
- g_object_class_install_property (object_class,
-                                  PROP_AUTHORS,
-                                  g_param_spec_boxed (\"authors\",
-                                                      _(\"Authors\"),
-                                                      _(\"List of authors\"),
-                                                      G_TYPE_STRV,
-                                                      G_PARAM_READWRITE));
-
- gchar *authors[] = { \"Owen\", \"Tim\", NULL @};
- g_object_set (obj, \"authors\", authors, NULL);
-
- gchar *writers[];
- g_object_get (obj, \"authors\", &writers, NULL);
- /* do something with writers */
- g_strfreev (writers);
-  @end{pre}
-  @see-function{g-object-set}
-  @see-function{g-object-get}")
+  @see-class{g-type}")
 
 (export 'g-type-strv)
 
@@ -373,6 +372,16 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; G_TYPE_VARIANT_DICT
+;;;
+;;; #define G_TYPE_VARIANT_DICT (g_variant_dict_get_type ())
+;;;
+;;; The GType for a boxed type holding a GVariantDict.
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_KEY_FILE
 ;;;
 ;;; #define G_TYPE_KEY_FILE (g_key_file_get_type ())
@@ -400,6 +409,16 @@
 ;;; The GType for a boxed type holding a GMainLoop.
 ;;;
 ;;; Since 2.30
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_MAPPED_FILE
+;;;
+;;; #define G_TYPE_MAPPED_FILE (g_mapped_file_get_type ())
+;;;
+;;; The GType for a boxed type holding a GMappedFile.
+;;;
+;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -443,11 +462,23 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GStrv
+;;; G_TYPE_OPTION_GROUP
 ;;;
-;;; typedef gchar** GStrv;
+;;; #define G_TYPE_OPTION_GROUP (g_option_group_get_type ())
 ;;;
-;;; A C representable type name for G_TYPE_STRV.
+;;; The GType for a boxed type holding a GOptionGroup.
+;;;
+;;; Since 2.44
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_URI
+;;;
+;;; #define G_TYPE_URI (g_uri_get_type ())
+;;;
+;;; The GType for a boxed type holding a GUri.
+;;;
+;;; Since 2.66
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gobject.boxed.lisp -----------------------------------------
