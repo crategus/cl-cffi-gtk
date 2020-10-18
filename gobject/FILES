@@ -7,17 +7,18 @@ Content from the GObject 2.66 Reference Manual
 
   gobject.base.lisp        - GObject                           - GObject 2.66
   gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.66
-  gobject.boxed.lisp       - Boxed Types                       - GObject 2.36.2
+  gobject.boxed.lisp       - Boxed Types                       - GObject 2.66
   gobject.g-value.lisp     - Generic values                    - GObject 2.66
   gobject.param.lisp       - Parameters and Values             - GObject 2.66
   gobject.param-spec.lisp  - GParamSpec                        - GObject 2.66
 
   * not implemented *      - Varargs Value Collection
 
-  gobject.signals.lisp     - Signals                           - GObject 2.64
-  gobject.closures.lisp    - Closures                          - GObject 2.36.2
+  gobject.signals.lisp     - Signals                           - GObject 2.66
+  gobject.closures.lisp    - Closures                          - GObject 2.66
 
   * not implemented *      - Value arrays
-  * not implemented *      - GBinding
 
-2020-10-17
+  gobject.binding.lisp     - GBinding                          - GObject 2.66
+
+2020-10-18

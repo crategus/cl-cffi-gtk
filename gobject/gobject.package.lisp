@@ -145,7 +145,7 @@
     @about-variable{+g-type-object+}
     @about-variable{+g-type-gtype+}
     @about-variable{+g-type-variant+}
-
+    @about-variable{+g-type-checksum+}
     @about-variable{+g-type-reserved-glib-first+}
     @about-variable{+g-type-reserved-glib-last+}
     @about-variable{+g-type-reserved-bse-first+}
@@ -390,7 +390,19 @@
 
     Boxed types are useful for simple value-holder structures like rectangles or
     points. They can also be used for wrapping structures defined in non-GObject
-    based libraries.
+    based libraries. They allow arbitrary structures to be handled in a uniform
+    way, allowing uniform copying (or referencing) and freeing
+    (or unreferencing) of them, and uniform representation of the type of the
+    contained structure. In turn, this allows any type which can be boxed to be
+    set as the data in a GValue, which allows for polymorphic handling of a much
+    wider range of data types, and hence usage of such types as GObject property
+    values.
+
+    GBoxed is designed so that reference counted types can be boxed. Use the
+    type’s ‘ref’ function as the @code{GBoxedCopyFunc}, and its ‘unref’ function
+    as the @code{GBoxedFreeFunc}. For example, for @code{GBytes}, the
+    @code{GBoxedCopyFunc} is @code{g_bytes_ref()}, and the
+    @code{GBoxedFreeFunc} is @code{g_bytes_unref()}.
 
     @about-function{g-boxed-copy}
     @about-function{g-boxed-free}
@@ -420,7 +432,6 @@
     @about-function{g-type-source}
     @about-function{g-type-polled}
     @about-function{g-type-thread}
-    @about-symbol{GStrv}
   @end{section}
   @begin[Generic Values]{section}
     A polymorphic type that can hold values of any other type.
@@ -827,17 +838,19 @@
     @about-function{g-closure-set-dummy-callback}
   @end{section}
   @begin[GBinding]{section}
+    Bind two object properties.
+
     @about-symbol{g-binding-flags}
-
     @about-class{g-binding}
-
     @about-generic{g-binding-flags}
     @about-generic{g-binding-source}
     @about-generic{g-binding-source-property}
     @about-generic{g-binding-target}
     @about-generic{g-binding-target-property}
-
+    @about-function{g-binding-unbind}
     @about-function{g-object-bind-property}
+    @about-function{g-object-bind-property-full}
+    @about-function{g-object-bind-property-with-closures}
   @end{section} ")
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------
