@@ -1975,24 +1975,24 @@
 (export 'g-type-from-interface)
 
 ;;; ----------------------------------------------------------------------------
-;;; G_TYPE_INSTANCE_GET_CLASS()
+;;; G_TYPE_INSTANCE_GET_CLASS() -> gtk-type-instance-class
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-instance-get-class (instance)
+(defun g-type-instance-class (instance)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-29}
-  @argument[instance]{the @symbol{g-type-instance} structure}
-  @return{The class structure of @arg{instance}.}
+ "@version{2020-10-17}
+  @argument[instance]{a @symbol{g-type-instance} structure}
+  @return{The @symbol{g-type-class} structure of @arg{instance}.}
   @begin{short}
     Get the class structure of a given @arg{instance}.
   @end{short}
 
   This function should only be used in type implementations.
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     @begin{pre}
- (g-type-instance-get-class (make-instance 'gtk-button))
+  (g-type-instance-class (make-instance 'gtk-button))
 => #.(SB-SYS:INT-SAP #X0813E608)
- (g-type-from-class *)
+  (g-type-from-class *)
 => #<GTYPE :name \"GtkButton\" :id 134914160>
     @end{pre}
   @end{dictionary}
@@ -2001,7 +2001,7 @@
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (foreign-slot-value ptr '(:struct g-type-instance) :class)))
 
-(export 'g-type-instance-get-class)
+(export 'g-type-instance-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INSTANCE_GET_INTERFACE()
