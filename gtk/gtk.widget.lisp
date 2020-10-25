@@ -7140,7 +7140,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
                      :int width
                      :int height
                      :void)
-    size))
+    (values width height)))
 
 (defcfun ("gtk_widget_get_size_request" %gtk-widget-size-request) :void
   (widget (g-object gtk-widget))
@@ -7149,17 +7149,17 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defun gtk-widget-size-request (widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2020-10-25}
   @syntax[]{(gtk-widget-size-request object) => width, height}
   @syntax[]{(setf (gtk-widget-size-request object) (list width height))}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[width]{a @code{:int} with the width}
-  @argument[height]{a @code{:int} with the height}
+  @argument[width]{an integer with the width}
+  @argument[height]{an integer with the height}
   @begin{short}
     Accessor of the size request of the widget.
   @end{short}
 
-  A value of -1 stored in @arg{width} or @arg{height} indicates that that
+  A value of -1 returned in @arg{width} or @arg{height} indicates that that
   dimension has not been set explicitly and the natural requisition of the
   widget will be used instead. To get the size a widget will actually request,
   call the function @fun{gtk-widget-preferred-size} instead of this function.
@@ -7170,7 +7170,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   or smaller than it normally would be.
 
   In most cases, the function @fun{gtk-window-default-size} is a better choice
-  for toplevel windows than this function; setting the default size will still
+  for toplevel windows than this function. Setting the default size will still
   allow users to shrink the window. Setting the size request will force them to
   leave the window at least as large as the size request. When dealing with
   window sizes, the function @fun{gtk-window-set-geometry-hints} can be a
@@ -8662,7 +8662,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (export 'gtk-widget-request-mode)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_preferred_size ()
+;;; gtk_widget_get_preferred_size () -> gtk-widget-preferred-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_preferred_size" %gtk-widget-preferred-size) :void
