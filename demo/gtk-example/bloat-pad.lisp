@@ -299,8 +299,8 @@
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
 (defun bloat-pad-new ()
-  (unless (string= "Bloatpad" (g-get-application-name))
-      (g-set-application-name "Bloatpad"))
+  (unless (string= "Bloatpad" (g-application-name))
+      (setf (g-application-name) "Bloatpad"))
   (make-instance 'bloat-pad
                  :application-id "com.crategus.bloatpad"
                  :flags :handles-open

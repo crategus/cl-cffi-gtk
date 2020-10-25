@@ -64,7 +64,7 @@
                (pango-cairo-update-layout cr layout)
 
                (multiple-value-bind (width height)
-                   (pango-layout-get-size layout)
+                   (pango-layout-size layout)
                  (declare (ignore height))
                  (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
                (pango-cairo-show-layout cr layout)

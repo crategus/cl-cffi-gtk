@@ -353,8 +353,7 @@
 <!ENTITY gtk-layout-new                      "&api;gtk_fun_gtk-layout-new.html">
 <!ENTITY gtk-layout-move                     "&api;gtk_fun_gtk-layout-move.html">
 <!ENTITY gtk-layout-put                      "&api;gtk_fun_gtk-layout-put.html">
-<!ENTITY gtk-layout-get-size                 "&api;gtk_fun_gtk-layout-get-size.html">
-<!ENTITY gtk-layout-set-size                 "&api;gtk_fun_gtk-layout-set-size.html">
+<!ENTITY gtk-layout-size                     "&api;gtk_fun_gtk-layout-size.html">
 
 <!ENTITY gtk-link-button                     "&api;gtk_class_gtk-link-button.html">
 <!ENTITY gtk_link_button_uri                 "&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-uri">

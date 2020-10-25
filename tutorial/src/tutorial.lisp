@@ -4597,7 +4597,7 @@ happen.")
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
 (defun bloat-pad-new ()
-  (g-set-application-name "Bloatpad")
+  (setf (g-application-name) "Bloatpad")
   (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-default))
         nil)
   (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-default))

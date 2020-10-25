@@ -541,8 +541,8 @@
 
 (defun gtk-demo (&optional (argv nil))
   (within-main-loop
-    (unless (equal "GTK Lisp Demo" (g-get-application-name))
-      (g-set-application-name "GTK Lisp Demo"))
+    (unless (string= "GTK Lisp Demo" (g-application-name))
+      (setf (g-application-name) "GTK Lisp Demo"))
     (let ((gtk-demo (make-instance 'gtk-application
                                    :application-id "com.crategus.gtk-demo"
                                    :register-session t)))

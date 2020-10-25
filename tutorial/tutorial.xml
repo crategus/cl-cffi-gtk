@@ -4692,10 +4692,7 @@ int main( int argc, char *argv[] )
       <primary>layout-put, gtk-layout-put</primary>
      </indexterm>
      <indexterm zone="Layout_Container">
-      <primary>layout-get-size, gtk-layout-get-size</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout-set-size, gtk-layout-set-size</primary>
+      <primary>layout-size, gtk-layout-size</primary>
      </indexterm>
     </itermset>
    </sectioninfo>
@@ -4717,7 +4714,7 @@ int main( int argc, char *argv[] )
     Widgets can be added and moved in the Layout container using the functions <ulink url="&gtk-layout-put;">
     <code>gtk-layout-put</code></ulink> and <ulink url="&gtk-layout-move;">
     <code>gtk-layout-move</code></ulink>.  The size of the layout container can be set using the function
-    <ulink url="&gtk-layout-set-size;"><code>gtk-layout-set-size</code></ulink>.
+    <ulink url="&gtk-layout-size;"><code>gtk-layout-size</code></ulink>.
    </para>
    <para>
     <ulink url="&gtk-layout;"><code>gtk-layout</code></ulink> implements the interface
@@ -14001,6 +13998,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 
