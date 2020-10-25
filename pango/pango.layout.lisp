@@ -2,9 +2,9 @@
 ;;; pango.layout.lisp
 ;;;
 ;;; The documentation of this file is taken from the Pango Reference Manual
-;;; Version 1.44 and modified to document the Lisp binding to the Pango
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 1.46 and modified to document the Lisp binding to the Pango
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2020 Dieter Kaiser
@@ -78,6 +78,7 @@
 ;;;     pango_layout_get_justify
 ;;;     pango_layout_set_auto_dir
 ;;;     pango_layout_get_auto_dir
+;;;     pango_layout_get_direction
 ;;;     pango_layout_set_alignment
 ;;;     pango_layout_get_alignment
 ;;;     pango_layout_set_tabs
@@ -358,7 +359,7 @@
       (documentation 'pango-layout-iter 'type)
  "@version{2013-12-8}
   @begin{short}
-    A @asym{pango-layout-iter} structure can be used to iterate over the visual
+    A @sym{pango-layout-iter} structure can be used to iterate over the visual
     extents of a @class{pango-layout} object.
   @end{short}
 
@@ -378,17 +379,15 @@
 
 (defcfun ("pango_layout_new" pango-layout-new) (g-object pango-layout)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
+ "@version{2020-10-23}
   @argument[context]{a @class{pango-context} object}
+  @return{The newly allocated @class{pango-layout} object.}
   @begin{short}
-    The newly allocated @class{pango-layout}, with a reference count of one,
-    which should be freed with the function @fun{g-object-unref}.
+    Create a new Pango layout with attributes initialized to default values for
+    a particular @class{pango-context} object.
   @end{short}
-  Create a new @class{pango-layout} object with attributes initialized to
-  default values for a particular @class{pango-context}.
   @see-class{pango-layout}
-  @see-class{pango-context}
-  @see-function{g-object-unref}"
+  @see-class{pango-context}"
   (context (g-object pango-context)))
 
 (export 'pango-layout-new)
@@ -425,20 +424,27 @@
 ;;;     reference it yourself
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_context" pango-layout-context)
+    (g-object pango-context)
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-context)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_context_changed ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_context_changed" pango-layout-context-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2020-10-18}
   @argument[layout]{a @class{pango-layout} object}
   @begin{short}
-    Forces recomputation of any state in the @class{pango-layout} that might
-    depend on the @arg{layout}'s context.
+    Forces recomputation of any state in the Pango layout that might depend
+    on the @arg{layout}'s context.
   @end{short}
   This function should be called if you make changes to the context subsequent
-  to creating the @arg{layout}."
+  to creating the Pango layout.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-context-changed)
@@ -469,9 +475,14 @@
 ;;; Since 1.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_serial" pango-layout-serial) :uint
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-serial)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_text ()
-;;; pango_layout_get_text ()
+;;; pango_layout_get_text () -> pango-layout-text
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-text) (text layout)
@@ -483,20 +494,20 @@
 
 (defcfun ("pango_layout_get_text" pango-layout-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-4-8}
+ "@version{2020-10-18}
   @syntax[]{(pango-layout-text layout) => text}
   @syntax[]{(setf (pango-layout-text layout) text)}
   @argument[layout]{a @class{pango-layout} object}
-  @argument[text]{a valid UTF-8 string}
+  @argument[text]{a string with a valid UTF-8 string}
   @begin{short}
     Accessor of the text of a @class{pango-layout} object.
   @end{short}
 
-  The function @sym{pango-layout-text} gets the text in the @arg{layout}.
-  The function @sym{(setf pango-layout-text)} sets the text of the @arg{layout}.
+  The function @sym{pango-layout-text} gets the text in the Pango layout.
+  The function @sym{(setf pango-layout-text)} sets the text of the Pango layout.
 
   Note that if you have used the functions @fun{pango-layout-markup} or
-  @fun{pango-layout-markup-with-accel} on @arg{layout} before, you may want
+  @fun{pango-layout-markup-with-accel} on the Pango layout before, you may want
   to call the function @fun{pango-layout-attributes} to clear the attributes
   set on the layout from the markup as this function does not clear attributes.
   @see-class{pango-layout}
@@ -522,6 +533,11 @@
 ;;;
 ;;; Since 1.30
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_character_count" pango-layout-character-count) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-character-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_markup ()
@@ -938,6 +954,14 @@
 ;;; void pango_layout_set_spacing (PangoLayout *layout, int spacing);
 ;;;
 ;;; Sets the amount of spacing in Pango unit between the lines of the layout.
+;;; When placing lines with spacing, Pango arranges things so that
+;;;
+;;; line2.top = line1.bottom + spacing
+;;;
+;;; Note: Since 1.44, Pango defaults to using the line height (as determined by
+;;; the font) for placing lines. The spacing set with this function is only
+;;; taken into account when the line-height factor is set to zero with
+;;; pango_layout_set_line_spacing().
 ;;;
 ;;; layout :
 ;;;     a PangoLayout
@@ -1071,6 +1095,27 @@
 ;;;     contents, FALSE otherwise.
 ;;;
 ;;; Since 1.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_get_direction ()
+;;;
+;;; PangoDirection
+;;; pango_layout_get_direction (PangoLayout *layout,
+;;;                             int index);
+;;;
+;;; Gets the text direction at the given character position in layout .
+;;;
+;;; layout :
+;;;     a PangoLayout
+;;;
+;;; index :
+;;;     the byte index of the char
+;;;
+;;; Returns :
+;;;     the text direction at index
+;;;
+;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1492,21 +1537,21 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_size ()
+;;; pango_layout_get_size () -> pango-layout-size
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_size" %pango-layout-get-size) :void
+(defcfun ("pango_layout_get_size" %pango-layout-size) :void
   (layout (g-object pango-layout))
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun pango-layout-get-size (layout)
+(defun pango-layout-size (layout)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
+ "@version{2020-10-25}
   @argument[layout]{a @class{pango-layout} object}
   @begin{return}
-    @code{width} -- the logical width, or @code{nil} @br{}
-    @code{height} -- the logical height, or @code{nil}
+    @code{width}  -- an integer with the logical width, or @code{nil} @br{}
+    @code{height} -- an integer with the logical height, or @code{nil}
   @end{return}
   @begin{short}
     Determines the logical width and height of a @class{pango-layout} in Pango
@@ -1518,11 +1563,11 @@
   @see-function{pango-layout-get-extents}
   @see-variable{+pango-scale+}"
   (with-foreign-objects ((width :int) (height :int))
-    (%pango-layout-get-size layout width height)
+    (%pango-layout-size layout width height)
     (values (mem-ref width :int)
             (mem-ref height :int))))
 
-(export 'pango-layout-get-size)
+(export 'pango-layout-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_pixel_size ()
@@ -1998,6 +2043,9 @@
 ;;; spacing above and below the line, if pango_layout_set_spacing() has been
 ;;; called to set layout spacing. The Y positions are in layout coordinates
 ;;; (origin at top left of the entire layout).
+;;;
+;;; Note: Since 1.44, Pango uses line heights for placing lines, and there may
+;;; be gaps between the ranges returned by this function.
 ;;;
 ;;; iter :
 ;;;     a PangoLayoutIter

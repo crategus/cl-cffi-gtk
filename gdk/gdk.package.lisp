@@ -1181,13 +1181,13 @@
     or @fun{gtk-widget-create-pango-layout}, rather than using the lowlevel
     function @fun{gdk-pango-context-for-screen}. Once you have a
     @class{pango-layout} object, you can set the text and attributes of it with
-    Pango functions like @fun{pango-layout-text} and get its size with
-    @fun{pango-layout-get-size}. Note that Pango uses a fixed point system
+    Pango functions like @fun{pango-layout-text} and get its size with the
+    function @fun{pango-layout-size}. Note that Pango uses a fixed point system
     internally, so converting between Pango units and pixels using the constant
     @var{+pango-scale+} or the function @fun{pango-pixels}.
 
     Rendering a Pango layout is done most simply with the function
-    @fun{pango-cairo-show-layout}; you can also draw pieces of the layout with
+    @fun{pango-cairo-show-layout}. You can also draw pieces of the layout with
     the function @fun{pango-cairo-show-layout-line}.
 
     @b{Example:} Draw transformed text with Pango and Cairo
@@ -1253,7 +1253,7 @@
                (pango-cairo-update-layout cr layout)
 
                (multiple-value-bind (width height)
-                   (pango-layout-get-size layout)
+                   (pango-layout-size layout)
                  (declare (ignore height))
                  (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
                (pango-cairo-show-layout cr layout)

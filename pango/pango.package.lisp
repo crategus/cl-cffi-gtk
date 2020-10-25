@@ -416,7 +416,7 @@
       @about-function{pango-layout-move-cursor-visually}
       @about-function{pango-layout-get-extents}
       @about-function{pango-layout-get-pixel-extents}
-      @about-function{pango-layout-get-size}
+      @about-function{pango-layout-size}
       @about-function{pango-layout-get-pixel-size}
       @about-function{pango-layout-get-baseline}
       @about-function{pango-layout-get-line-count}

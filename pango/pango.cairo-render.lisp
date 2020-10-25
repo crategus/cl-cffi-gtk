@@ -627,7 +627,7 @@
     target surface of the Cairo context.
   @end{short}
   This layout can then be used for text measurement with functions like
-  @fun{pango-layout-get-size} or drawing with functions like
+  @fun{pango-layout-size} or drawing with functions like
   @fun{pango-cairo-show-layout}. If you change the transformation or target
   surface for @arg{cr}, you need to call the function
   @fun{pango-cairo-update-layout}.
@@ -641,7 +641,7 @@
   @see-symbol{cairo-t}
   @see-class{pango-layout}
   @see-class{pango-context}
-  @see-function{pango-layout-get-size}
+  @see-function{pango-layout-size}
   @see-function{pango-cairo-show-layout}
   @see-function{pango-cairo-update-layout}"
   (cr (:pointer (:struct cairo-t))))

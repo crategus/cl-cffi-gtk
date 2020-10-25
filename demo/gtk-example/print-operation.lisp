@@ -26,7 +26,7 @@
     (setf (pango-layout-alignment layout) :center)
     ;; Get the height of the text
     (multiple-value-bind (width height)
-        (pango-layout-get-size layout)
+        (pango-layout-size layout)
       (declare (ignore width))
       (setf text-height (/ height +pango-scale+)))
     ;; Set color to black and center the text in header

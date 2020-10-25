@@ -552,7 +552,7 @@
     (setf (pango-layout-alignment layout) :center)
     ;; Get the height of the text
     (multiple-value-bind (width height)
-        (pango-layout-get-size layout)
+        (pango-layout-size layout)
       (setf text-height (/ height +pango-scale+)))
     ;; Set color to black and center the text in header
     (cairo-set-source-rgb cr 0.0 0.0 0.0)
