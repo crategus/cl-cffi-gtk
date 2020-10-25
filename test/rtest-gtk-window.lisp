@@ -307,7 +307,6 @@
 ;;;     gtk_window_activate_focus
 ;;;     gtk_window_activate_default
 ;;;     gtk_window_set_modal                               Accessor
-;;;     gtk_window_set_default_size
 ;;;     gtk_window_set_default_geometry
 
 ;;; --- gtk-window-set-geometry-hints ------------------------------------------
@@ -375,7 +374,18 @@
 ;;;     gtk_window_get_deletable                           Accessor
 ;;;     gtk_window_get_default_icon_list
 ;;;     gtk_window_get_default_icon_name
-;;;     gtk_window_get_default_size
+
+;;;     gtk-window-default-size
+
+(test gtk-window-default-size
+  (let ((window (make-instance 'gtk-window)))
+    (is (equal '(-1 -1)
+               (multiple-value-list (gtk-window-default-size window))))
+    (is (equal '(100 200)
+               (multiple-value-list (setf (gtk-window-default-size window) '(100 200)))))
+    (is (equal '(100 200)
+               (multiple-value-list (gtk-window-default-size window))))))
+
 ;;;     gtk_window_get_destroy_with_parent                 Accessor
 ;;;     gtk_window_get_hide_titlebar_when_maximized        Accessor
 ;;;     gtk_window_get_icon                                Accessor

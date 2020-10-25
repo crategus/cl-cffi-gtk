@@ -112,7 +112,7 @@
 ;    gtk.cell-area.lisp
 ;    gtk.cell-area-box.lisp
 ;    gtk.cell-area-context.lisp
-;    gtk.cell-renderer.lisp
+(load "rtest-gtk-cell-renderer.lisp")
 ;    gtk.cell-editable.lisp
 ;    gtk.cell-renderer-accel.lisp
 ;    gtk.cell-renderer-combo.lisp

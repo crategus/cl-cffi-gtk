@@ -87,61 +87,58 @@
 
 ;;; --- Functions --------------------------------------------------------------
 
-;;;     gtk_layout_new
+;;;     gtk-layout-new
 
 (test gtk-layout-new
-
   (let ((layout (make-instance 'gtk-layout)))
     (is (eq 'gtk-layout (type-of (gtk-layout-new))))
     (is (eq 'gtk-adjustment (type-of (gtk-scrollable-hadjustment layout))))
     (is (eq 'gtk-adjustment (type-of (gtk-scrollable-vadjustment layout)))))
-
   (let* ((adjustment (make-instance 'gtk-adjustment))
          (layout (gtk-layout-new adjustment adjustment)))
     (is (eq 'gtk-layout (type-of layout)))
     (is (equal adjustment (gtk-scrollable-hadjustment layout)))
     (is (equal adjustment (gtk-scrollable-vadjustment layout))))
-
   (let* ((adjustment (make-instance 'gtk-adjustment))
          (layout (gtk-layout-new adjustment)))
     (is (eq 'gtk-layout (type-of layout)))
     (is (equal adjustment (gtk-scrollable-hadjustment layout))))
-
   (let* ((adjustment (make-instance 'gtk-adjustment))
          (layout (gtk-layout-new nil adjustment)))
     (is (eq 'gtk-layout (type-of layout)))
-    (is (equal adjustment (gtk-scrollable-vadjustment layout))))
-)
+    (is (equal adjustment (gtk-scrollable-vadjustment layout)))))
 
-;;;     gtk_layout_put
+;;;     gtk-layout-put
 
 (test gtk-layout-put
   (let ((layout (make-instance 'gtk-layout))
         (button (make-instance 'gtk-button)))
+    ;; Put a button in the layout
     (is-false (gtk-layout-put layout button 10 20))
     (is (= 10 (gtk-layout-child-x layout button)))
-    (is (= 20 (gtk-layout-child-y layout button)))
-))
+    (is (= 20 (gtk-layout-child-y layout button)))))
 
-;;;     gtk_layout_move
+;;;     gtk-layout-move
 
-(test gtk-layout-put
+(test gtk-layout-move
   (let ((layout (make-instance 'gtk-layout))
         (button (make-instance 'gtk-button)))
-
+    ;; Add a button the layout
     (is-false (gtk-container-add layout button))
     (is (=  0 (gtk-layout-child-x layout button)))
     (is (=  0 (gtk-layout-child-y layout button)))
-
+    ;; Move the button
     (is-false (gtk-layout-move layout button 10 20))
     (is (= 10 (gtk-layout-child-x layout button)))
-    (is (= 20 (gtk-layout-child-y layout button)))
-))
+    (is (= 20 (gtk-layout-child-y layout button)))))
 
-;;;     gtk_layout_set_size
-;;;     gtk_layout_get_size
+;;;     gtk-layout-size
 
-
+(test gtk-layout-size
+  (let ((layout (make-instance 'gtk-layout)))
+    (is (equal '(100 100) (multiple-value-list (gtk-layout-size layout))))
+    (is (equal '(200 200) (multiple-value-list (setf (gtk-layout-size layout) '(200 200)))))
+    (is (equal '(200 200) (multiple-value-list (gtk-layout-size layout))))))
 
 ;;;     gtk_layout_get_hadjustment                         deprecated
 ;;;     gtk_layout_get_vadjustment                         deprecated
@@ -149,3 +146,4 @@
 ;;;     gtk_layout_set_vadjustment                         deprecated
 ;;;     gtk_layout_get_bin_window
 
+;;; 2020-10-24

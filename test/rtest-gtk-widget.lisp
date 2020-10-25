@@ -432,9 +432,9 @@ scale-factor
 ;;;     gtk_widget_set_parent_window
 ;;;     gtk_widget_get_parent_window
 
-;;;   gtk_widget_set_events
-;;;   gtk_widget_get_events
-;;;   gtk_widget_add_events
+;;;     gtk_widget_set_events
+;;;     gtk_widget_get_events
+;;;     gtk_widget_add_events
 
 (test gtk-widget-add-events
   (let ((eventbox (make-instance 'gtk-event-box)))
@@ -645,9 +645,19 @@ scale-factor
 ;;;     gtk_widget_get_root_window
 ;;;     gtk_widget_get_screen
 ;;;     gtk_widget_has_screen
-;;;     gtk_widget_get_size_request
+
+;;;     gtk-widget-size-request
+
+(test gtk-widget-size-request
+  (let ((button (make-instance 'gtk-button)))
+    (is (equal '(-1 -1)
+               (multiple-value-list (gtk-widget-size-request button))))
+    (is (equal '(100 200)
+               (multiple-value-list (setf (gtk-widget-size-request button) '(100 200)))))
+    (is (equal '(100 200)
+               (multiple-value-list (gtk-widget-size-request button))))))
+
 ;;;     gtk_widget_set_child_visible
-;;;     gtk_widget_set_size_request
 ;;;     gtk_widget_thaw_child_notify
 ;;;     gtk_widget_set_no_show_all
 ;;;     gtk_widget_get_no_show_all
@@ -751,7 +761,34 @@ scale-factor
   (is (eql :constant-size
            (gtk-widget-request-mode (make-instance 'gtk-button :label "Hello")))))
 
-;;;     gtk_widget_get_preferred_size
+;;;     gtk-widget-preferred-size
+
+(test gtk-widget-preferred-size.1
+  (let ((button (make-instance 'gtk-button)))
+    (is (listp (multiple-value-list (gtk-widget-preferred-size button))))
+    (is (eq 'gtk-requisition
+            (type-of (first (multiple-value-list (gtk-widget-preferred-size button))))))
+    (is (eq 'gtk-requisition
+            (type-of (second (multiple-value-list (gtk-widget-preferred-size button))))))
+))
+
+(test gtk-widget-preferred-size.2
+  (let ((button (make-instance 'gtk-button)))
+
+    (multiple-value-bind (minimum-size natural-size)
+        (gtk-widget-preferred-size button)
+
+      (is (= 0 (gtk-requisition-width minimum-size)))
+      (is (= 0 (gtk-requisition-height minimum-size)))
+
+      (is (= 0 (gtk-requisition-width natural-size)))
+      (is (= 0 (gtk-requisition-height natural-size)))
+
+    )
+
+))
+
+
 ;;;     gtk_distribute_natural_allocation
 ;;;
 ;;;     gtk_widget_get_halign
