@@ -622,22 +622,20 @@
 (export 'gtk-table-resize)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_table_get_size ()
+;;; gtk_table_get_size () -> gtk-table-size
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-table-get-size))
-
-(defun gtk-table-get-size (table)
+(defun gtk-table-size (table)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-20}
+ "@version{2020-10-25}
   @argument[table]{a @class{gtk-table} widget}
   @begin{return}
-    @code{n-rows} -- number of rows, or @code{nil}@br{}
+    @code{n-rows}    -- number of rows, or @code{nil} @br{}
     @code{n-columns} -- the number of columns, or @code{nil}
   @end{return}
   @short{Gets the number of rows and columns in the table.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-table-get-size} has been deprecated since version 3.4
+    The function @sym{gtk-table-size} has been deprecated since version 3.4
     and should not be used in newly-written code. @class{gtk-grid} does not
     expose the number of columns and rows.
   @end{dictionary}
@@ -645,7 +643,7 @@
   (values (gtk-table-n-rows table)
           (gtk-table-n-columns table)))
 
-(export 'gtk-table-get-size)
+(export 'gtk-table-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_attach ()
