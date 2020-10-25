@@ -251,12 +251,13 @@
   @end{short}
 
   The primary use of a @sym{gtk-cell-renderer} is for drawing a certain
-  graphical elements on a @symbol{cairo-t}. Typically, one cell renderer is used
-  to draw many cells on the screen. To this extent, it is not expected that a
-  CellRenderer keep any permanent state around. Instead, any state is set just
-  prior to use using GObjects property system. Then, the cell is measured using
-  the function @fun{gtk-cell-renderer-get-size}. Finally, the cell is rendered
-  in the correct location using the function @fun{gtk-cell-renderer-render}.
+  graphical elements on a @symbol{cairo-t}. Typically, one cell renderer is
+  used to draw many cells on the screen. To this extent, it is not expected
+  that a @sym{gtk-cell-renderer} keep any permanent state around. Instead, any
+  state is set just prior to use using GObjects property system. Then, the cell
+  is measured using the function @fun{gtk-cell-renderer-size}. Finally, the
+  cell is rendered in the correct location using the function
+  @fun{gtk-cell-renderer-render}.
 
   There are a number of rules that must be followed when writing a new
   @sym{gtk-cell-renderer}. First and formost, its important that a certain set
@@ -825,10 +826,10 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_renderer_get_size ()
+;;; gtk_cell_renderer_get_size () -> gtk-cell-renderer-size
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_renderer_get_size" %gtk-cell-renderer-get-size) :void
+(defcfun ("gtk_cell_renderer_get_size" %gtk-cell-renderer-size) :void
   (cell (g-object gtk-cell-renderer))
   (widget (g-object gtk-widget))
   (cell-area (g-boxed-foreign gdk-rectangle))
@@ -837,35 +838,38 @@
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun gtk-cell-renderer-get-size (cell widget cell-area)
+(defun gtk-cell-renderer-size (cell widget cell-area)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
+ "@version{2020-10-25}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[widget]{the widget the renderer is rendering to}
-  @argument[cell-area]{the area a cell will be allocated, or @code{nil}}
+  @argument[widget]{the @class{gtk-widget} object the renderer is rendering to}
+  @argument[cell-area]{a @class{gdk-rectangle} with the area a cell will be
+    allocated, or @code{nil}}
   @begin{return}
-    @code{x-offset} -- x offset of cell relative to @arg{cell-area},
+    @code{x-offset} -- an integer with the x offset of cell relative to
+                       @arg{cell-area}, or @code{nil} @br{}
+    @code{y-offset} -- an integer with the y offset of cell relative to
+                       @arg{cell-area}, or @code{nil} @br{}
+    @code{width}    -- an integer with the width needed to render a cell,
                        or @code{nil} @br{}
-    @code{y-offset} -- y offset of cell relative to @arg{cell-area},
-                       or @code{nil} @br{}
-    @code{width} -- width needed to render a cell, or @code{nil} @br{}
-    @code{height} --  height needed to render a cell, or @code{nil}
+    @code{height}   -- an integer with the height needed to render a cell,
+                       or @code{nil}
   @end{return}
   @begin{short}
-    Obtains the width and height needed to render the cell. Used by view widgets
-    to determine the appropriate size for the @arg{cell-area} passed to the
-    @fun{gtk-cell-renderer-render} function.
+    Obtains the width and height needed to render the cell.
   @end{short}
-  If @arg{cell-area} is not @code{nil}, fills in the x and y offsets (if set)
+  Used by view widgets to determine the appropriate size for the
+  @arg{cell-area} passed to the function @fun{gtk-cell-renderer-render}. If
+  @arg{cell-area} is not @code{nil}, fills in the x and y offsets (if set)
   of the cell relative to this location.
 
   Please note that the values set in @arg{width} and @arg{height}, as well as
   those in @arg{x-offset} and @arg{y-offset} are inclusive of the
   @slot[gtk-cell-renderer]{xpad} and @slot[gtk-cell-renderer]{ypad} properties.
   @begin[Warning]{dictionary}
-    The @sym{gtk-cell-renderer-get-size} function has been deprecated since
-    version 3.0 and should not be used in newly-written code.
-    Use the function @fun{gtk-cell-renderer-preferred-size} instead.
+    The function @sym{gtk-cell-renderer-size} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-cell-renderer-preferred-size} instead.
   @end{dictionary}
   @see-class{gtk-cell-renderer}
   @see-class{gtk-widget}
@@ -876,19 +880,19 @@
                          (y-offset :int)
                          (width :int)
                          (height :int))
-    (%gtk-cell-renderer-get-size cell
-                                 widget
-                                 cell-area
-                                 x-offset
-                                 y-offset
-                                 width
-                                 height)
+    (%gtk-cell-renderer-size cell
+                             widget
+                             cell-area
+                             x-offset
+                             y-offset
+                             width
+                             height)
     (values (mem-ref x-offset :int)
             (mem-ref y-offset :int)
             (mem-ref width :int)
             (mem-ref height :int))))
 
-(export 'gtk-cell-renderer-get-size)
+(export 'gtk-cell-renderer-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_render ()
