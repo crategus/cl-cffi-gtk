@@ -649,8 +649,7 @@
       @about-function{gtk-layout-new}
       @about-function{gtk-layout-put}
       @about-function{gtk-layout-move}
-      @about-function{gtk-layout-set-size}
-      @about-function{gtk-layout-get-size}
+      @about-function{gtk-layout-size}
       @about-function{gtk-layout-bin-window}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
@@ -2535,7 +2534,7 @@ setup_tree (void)
       @about-generic{gtk-cell-renderer-yalign}
       @about-generic{gtk-cell-renderer-ypad}
       @about-function{gtk-cell-renderer-get-aligned-area}
-      @about-function{gtk-cell-renderer-get-size}
+      @about-function{gtk-cell-renderer-size}
       @about-function{gtk-cell-renderer-render}
       @about-function{gtk-cell-renderer-activate}
       @about-function{gtk-cell-renderer-start-editing}
@@ -5345,7 +5344,7 @@ setup_tree (void)
       @about-function{gtk-table-child-y-padding}
       @about-function{gtk-table-new}
       @about-function{gtk-table-resize}
-      @about-function{gtk-table-get-size}
+      @about-function{gtk-table-size}
       @about-function{gtk-table-attach}
       @about-function{gtk-table-attach-defaults}
       @about-function{gtk-table-set-row-spacing}
