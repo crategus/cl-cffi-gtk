@@ -338,11 +338,12 @@
   @begin[Utility Functions]{section}
     A selection of portable utility functions.
 
-    @about-function{g-get-application-name}
-    @about-function{g-set-application-name}
-    @about-function{g-get-prgname}
-    @about-function{g-set-prgname}
-    @about-function{g-get-environ}
+    @about-type{g-user-directory}
+    @about-type{GDebugKey}
+    @about-type{GFormatSizeFlags}
+    @about-function{g-application-name}
+    @about-function{g-prgname}
+    @about-function{g-environ}
     @about-function{g-environ-getenv}
     @about-function{g-environ-setenv}
     @about-function{g-environ-unsetenv}
@@ -350,33 +351,31 @@
     @about-function{g-setenv}
     @about-function{g-unsetenv}
     @about-function{g-listenv}
-    @about-function{g-get-user-name}
-    @about-function{g-get-real-name}
-    @about-function{g-get-user-cache-dir}
-    @about-function{g-get-user-data-dir}
-    @about-function{g-get-user-config-dir}
-    @about-function{g-get-user-runtime-dir}
-    @about-type{g-user-directory}
-    @about-function{g-get-user-special-dir}
-    @about-function{g-get-system-data-dirs}
-    @about-function{g-get-system-config-dirs}
+    @about-function{g-user-name}
+    @about-function{g-real-name}
+    @about-function{g-user-cache-dir}
+    @about-function{g-user-data-dir}
+    @about-function{g-user-config-dir}
+    @about-function{g-user-runtime-dir}
+    @about-function{g-user-special-dir}
+    @about-function{g-system-data-dirs}
+    @about-function{g-system-config-dirs}
     @about-function{g-reload-user-special-dirs-cache}
-    @about-function{g-get-host-name}
-    @about-function{g-get-home-dir}
-    @about-function{g-get-tmp-dir}
-    @about-function{g-get-current-dir}
+    @about-function{g-host-name}
+    @about-function{g-home-dir}
+    @about-function{g-tmp-dir}
+    @about-function{g-current-dir}
     @about-function{g-basename}
     @about-function{g-dirname}
     @about-function{g-path-is-absolute}
     @about-function{g-path-skip-root}
-    @about-function{g-path-get-basename}
-    @about-function{g-path-get-dirname}
+    @about-function{g-path-basename}
+    @about-function{g-path-dirname}
     @about-function{g-build-filename}
     @about-function{g-build-filenamev}
     @about-function{g-build-path}
     @about-function{g-build-pathv}
     @about-function{g-format-size}
-    @about-function{GFormatSizeFlags}
     @about-function{g-format-size-full}
     @about-function{g-format-size-for-display}
     @about-function{g-find-program-in-path}
@@ -386,7 +385,6 @@
     @about-function{g-spaced-primes-closest}
     @about-function{g-atexit}
     @about-function{g-parse-debug-string}
-    @about-function{GDebugKey}
     @about-function{g-qsort-with-data}
     @about-function{g-nullify-pointer}
   @end{section}

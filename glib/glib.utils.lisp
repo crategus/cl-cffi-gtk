@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.utils.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; The documentation of this file is taken from the GLib 2.66 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,9 +29,28 @@
 ;;;
 ;;; Miscellaneous Utility Functions
 ;;;
-;;; A selection of portable utility functions
+;;;     A selection of portable utility functions
 ;;;
-;;; Synopsis
+;;; Types and Values
+;;;
+;;;     GUserDirectory
+;;;
+;;;     G_OS_INFO_KEY_NAME
+;;;     G_OS_INFO_KEY_PRETTY_NAME
+;;;     G_OS_INFO_KEY_VERSION
+;;;     G_OS_INFO_KEY_VERSION_CODENAME
+;;;     G_OS_INFO_KEY_VERSION_ID
+;;;     G_OS_INFO_KEY_ID
+;;;     G_OS_INFO_KEY_HOME_URL
+;;;     G_OS_INFO_KEY_DOCUMENTATION_URL
+;;;     G_OS_INFO_KEY_SUPPORT_URL
+;;;     G_OS_INFO_KEY_BUG_REPORT_URL
+;;;     G_OS_INFO_KEY_PRIVACY_POLICY_URL
+;;;
+;;;     GFormatSizeFlags
+;;;     GDebugKey
+;;;
+;;; Functions
 ;;;
 ;;;     g_get_application_name
 ;;;     g_set_application_name
@@ -54,175 +70,355 @@
 ;;;     g_get_user_data_dir
 ;;;     g_get_user_config_dir
 ;;;     g_get_user_runtime_dir
-;;;
-;;;     GUserDirectory
-;;;
 ;;;     g_get_user_special_dir
 ;;;     g_get_system_data_dirs
 ;;;     g_get_system_config_dirs
 ;;;     g_reload_user_special_dirs_cache
-;;;
+;;;     g_get_os_info
 ;;;     g_get_host_name
 ;;;     g_get_home_dir
 ;;;     g_get_tmp_dir
 ;;;     g_get_current_dir
 ;;;     g_basename
 ;;;     g_dirname
+;;;     g_canonicalize_filename
 ;;;     g_path_is_absolute
 ;;;     g_path_skip_root
 ;;;     g_path_get_basename
 ;;;     g_path_get_dirname
 ;;;     g_build_filename
 ;;;     g_build_filenamev
+;;;     g_build_filename_valist
 ;;;     g_build_path
 ;;;     g_build_pathv
-;;;
 ;;;     g_format_size
-;;;
-;;;     GFormatSizeFlags
-;;;
 ;;;     g_format_size_full
 ;;;     g_format_size_for_display
-;;;
 ;;;     g_find_program_in_path
-;;;
 ;;;     g_bit_nth_lsf
 ;;;     g_bit_nth_msf
 ;;;     g_bit_storage
-;;;
 ;;;     g_spaced_primes_closest
-;;;
 ;;;     g_atexit
-;;;
+;;;     g_abort
 ;;;     g_parse_debug_string
 ;;;
-;;;     GDebugKey
+;;;     (*GVoidFunc) ()
+;;;     (*GFreeFunc) ()
 ;;;
 ;;;     g_qsort_with_data
-;;;
 ;;;     g_nullify_pointer
-;;;
-;;; Description
-;;;
-;;; These are portable utility functions.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_application_name ()
+;;; enum GUserDirectory
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_application_name" g-get-application-name) :string
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @begin{return}
-    A string with a human-readable application name. May return @code{nil}.
-  @end{return}
+(defcenum g-user-directory
+  :desktop
+  :documents
+  :download
+  :music
+  :pictures
+  :public-share
+  :templates
+  :videos
+  :n-directories)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-user-directory atdoc:*type-name-alias*) "Enum"
+      (documentation 'g-user-directory 'type)
+ "@version{2020-10-23}
   @begin{short}
-    Gets a human-readable name for the application, as set by the function
-    @fun{g-set-application-name}.
+    These are logical IDs for special directories which are defined depending
+    on the platform used.
+  @end{short}
+  You should use the function @fun{g-user-special-dir} to retrieve the full
+  path associated to the logical ID.
+
+  The @sym{g-user-directory} enumeration can be extended at later date. Not
+  every platform has a directory for every logical id in this enumeration.
+  @begin[Lisp Implementation]{dictionary}
+    @begin{pre}
+(defcenum g-user-directory
+  :desktop
+  :documents
+  :download
+  :music
+  :pictures
+  :public-share
+  :templates
+  :videos
+  :n-directories)
+    @end{pre}
+    @begin{table}
+      @entry[:desktop]{The user's Desktop directory.}
+      @entry[:documents]{The user's Documents directory.}
+      @entry[:download]{The user's Downloads directory.}
+      @entry[:music]{The user's Music directory.}
+      @entry[:pictures]{The user's Pictures directory.}
+      @entry[:public-share]{The user's shared directory.}
+      @entry[:templates]{The user's Templates directory.}
+      @entry[:videos]{The user's Movies directory.}
+      @entry[:n-directories]{The number of enumeration values.}
+    @end{table}
+  @end{dictionary}
+  @see-function{g-user-special-dir}")
+
+(export 'g-user-directory)
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_NAME
+;;;
+;;; #define G_OS_INFO_KEY_NAME
+;;;
+;;; A key to get the name of the operating system excluding version information
+;;; suitable for presentation to the user, e.g. "YoYoOS"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_PRETTY_NAME
+;;;
+;;; #define G_OS_INFO_KEY_PRETTY_NAME
+;;;
+;;; A key to get the name of the operating system in a format suitable for
+;;; presentation to the user, e.g. "YoYoOS Foo"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_VERSION
+;;;
+;;; #define G_OS_INFO_KEY_VERSION
+;;;
+;;; A key to get the operating system version suitable for presentation to the
+;;; user, e.g. "42 (Foo)"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_VERSION_CODENAME
+;;;
+;;; #define G_OS_INFO_KEY_VERSION_CODENAME
+;;;
+;;; A key to get a codename identifying the operating system release suitable
+;;; for processing by scripts or usage in generated filenames, e.g. "foo"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_VERSION_ID
+;;;
+;;; #define G_OS_INFO_KEY_VERSION_ID
+;;;
+;;; A key to get the version of the operating system suitable for processing by
+;;; scripts or usage in generated filenames, e.g. "42"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_ID
+;;;
+;;; #define G_OS_INFO_KEY_ID
+;;;
+;;; A key to get an ID identifying the operating system suitable for processing
+;;; by scripts or usage in generated filenames, e.g. "yoyoos"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_HOME_URL
+;;;
+;;; #define G_OS_INFO_KEY_HOME_URL
+;;;
+;;; A key to get the homepage for the operating system, e.g.
+;;; "https://www.yoyo-os.com/"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_DOCUMENTATION_URL
+;;;
+;;; #define G_OS_INFO_KEY_DOCUMENTATION_URL
+;;;
+;;; A key to get the documentation page for the operating system, e.g.
+;;; "https://docs.yoyo-os.com/"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_SUPPORT_URL
+;;;
+;;; #define G_OS_INFO_KEY_SUPPORT_URL
+;;;
+;;; A key to get the support page for the operating system, e.g.
+;;; "https://support.yoyo-os.com/"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_BUG_REPORT_URL
+;;;
+;;; #define G_OS_INFO_KEY_BUG_REPORT_URL
+;;;
+;;; A key to get the bug reporting page for the operating system, e.g.
+;;; "https://bugs.yoyo-os.com/"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_OS_INFO_KEY_PRIVACY_POLICY_URL
+;;;
+;;; #define G_OS_INFO_KEY_PRIVACY_POLICY_URL
+;;;
+;;; A key to get the privacy policy for the operating system, e.g.
+;;; "https://privacy.yoyo-os.com/"
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GFormatSizeFlags
+;;;
+;;; typedef enum {
+;;;   G_FORMAT_SIZE_DEFAULT     = 0,
+;;;   G_FORMAT_SIZE_LONG_FORMAT = 1 << 0,
+;;;   G_FORMAT_SIZE_IEC_UNITS   = 1 << 1
+;;; } GFormatSizeFlags;
+;;;
+;;; Flags to modify the format of the string returned by g_format_size_full().
+;;;
+;;; G_FORMAT_SIZE_DEFAULT
+;;;     behave the same as g_format_size()
+;;;
+;;; G_FORMAT_SIZE_LONG_FORMAT
+;;;     include the exact number of bytes as part of the returned string. For
+;;;     example, "45.6 kB (45,612 bytes)".
+;;;
+;;; G_FORMAT_SIZE_IEC_UNITS
+;;;     use IEC (base 1024) units with "KiB"-style suffixes. IEC units should
+;;;     only be used for reporting things with a strong "power of 2" basis,
+;;;     like RAM sizes or RAID stripe sizes. Network and storage sizes should
+;;;     be reported in the normal SI units.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct GDebugKey
+;;;
+;;; struct GDebugKey {
+;;;   const gchar *key;
+;;;   guint        value;
+;;; };
+;;;
+;;; Associates a string with a bit flag. Used in g_parse_debug_string().
+;;;
+;;; const gchar *key;
+;;;     the string
+;;;
+;;; guint value;
+;;;     the flag
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_get_application_name ()
+;;; g_set_application_name () -> g-application-name
+;;; ----------------------------------------------------------------------------
+
+(defun (setf g-application-name) (application-name)
+  (foreign-funcall "g_set_application_name"
+                   :string application-name
+                   :void)
+  application-name)
+
+(defcfun ("g_get_application_name" g-application-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-23}
+  @syntax[]{(g-application-name) => application-name}
+  @syntax[]{(setf (g-application-name) application-name)}
+  @argument[application-name]{a string with the localized name of the
+    application}
+  @begin{short}
+    Accessor of a human-readable name for the application.
   @end{short}
 
   This name should be localized if possible, and is intended for display to the
-  user. Contrast with the function @fun{g-get-prgname}, which gets a
-  non-localized name. If the function @fun{g-set-application-name} has not been
-  called, returns the result of the function @fun{g-get-prgname}, which may be
-  @code{nil} if the function @fun{g-set-prgname} has also not been called.
+  user. Contrast with the function @fun{g-prgname}, which gets a non-localized
+  name. If the function @sym{(setf g-application-name)} has not been called,
+  returns the result of the function @fun{g-prgname}, which may be @code{nil}
+  if the function @sym{(setf g-prgname)} has also not been called.
 
-  Since 2.2
-  @see-function{g-set-application-name}
-  @see-function{g-get-prgname}
-  @see-function{g-set-prgname}")
-
-(export 'g-get-application-name)
-
-;;; ----------------------------------------------------------------------------
-;;; g_set_application_name ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_set_application_name" g-set-application-name) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @argument[application-name]{localized name of the application}
-  @short{Sets a human-readable name for the application.}
-
-  This name should be localized if possible, and is intended for display to the
-  user. Contrast with @fun{g-set-prgname}, which sets a non-localized name.
-  @fun{g-set-prgname} will be called automatically by @code{gtk_init()}, but
-  @sym{g-set-application-name} will not.
-
-  Note that for thread safety reasons, this function can only be called once.
+  The function @fun{g-prgname} will be called automatically by
+  @code{gtk_init()}, but @sym{g-application-name} will not. Note that for
+  thread safety reasons, this function can only be called once.
 
   The application name will be used in contexts such as error messages, or
   when displaying an application's name in the task list.
+  @see-function{g-prgname}")
 
-  Since 2.2
-  @see-function{g-set-prgname}
-  @see-function{g-get-application-name}"
-  (application-name :string))
-
-(export 'g-set-application-name)
+(export 'g-application-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_prgname ()
+;;; g_set_prgname () -> g-prgname
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_prgname" g-get-prgname) :string
+(defun (setf g-prgname) (prgname)
+  (foreign-funcall "g_set_prgname"
+                   :string prgname
+                   :void)
+  prgname)
+
+(defcfun ("g_get_prgname" g-prgname) (:string :free-from-foreign niL)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-25}
-  @begin{return}
-    The name of the program. The returned string belongs to GLib and must
-    not be modified or freed.
-  @end{return}
-  @short{Gets the name of the program.}
+ "@version{2020-10-23}
+  @syntax[]{(g-prgname) => prgname}
+  @syntax[]{(setf (g-prgname) prgname)}
+  @argument[prgname]{a string with the name of the program}
+  @short{Accessor of the name of the program.}
+
   This name should not be localized, contrast with the function
-  @fun{g-get-application-name}. If you are using GDK or GTK+ the program name is
+  @fun{g-application-name}. If you are using GDK or GTK+ the program name is
   set in the function @code{gdk_init()}, which is called by the function
   @code{gtk_init()}. The program name is found by taking the last component of
   @code{argv[0]}.
-  @see-function{g-set-prgname}
-  @see-function{g-get-application-name}")
 
-(export 'g-get-prgname)
-
-;;; ----------------------------------------------------------------------------
-;;; g_set_prgname ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_set_prgname" g-set-prgname) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @argument[prgname]{the name of the program.}
-  @short{Sets the name of the program.}
-  This name should not be localized, contrast with @fun{g-set-application-name}.
   Note that for thread-safety reasons this function can only be called once.
-  @see-function{g-get-prgname}
-  @see-function{g-set-application-name}"
-  (prgname :string))
+  @see-function{g-application-name}")
 
-(export 'g-set-prgname)
+(export 'g-prgname)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_environ ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_environ" g-get-environ) (g-strv :free-from-foreign t)
+(defcfun ("g_get_environ" g-environ) (g-strv :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @return{The list of environment variables.}
+ "@version{2020-10-23}
+  @return{The list of strings with the environment variables.}
   @begin{short}
     Gets the list of environment variables for the current process.
   @end{short}
-
   Each item in the list is of the form '@code{NAME} = @code{VALUE}'.
 
   This is equivalent to direct access to the 'environ' global variable, except
   portable.
+  @see-function{g-getenv}
+  @see-function{g-setenv}")
 
-  Since 2.28")
-
-(export 'g-get-environ)
+(export 'g-environ)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_environ_getenv ()
@@ -311,12 +507,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_getenv" g-getenv) :string
- "@version{2012-12-31}
-  @argument[variable]{the environment variable to get, in the GLib file name
-    encoding}
-  @return{The value of the environment variable, or @code{nil} if the
-    environment variable is not found. The returned string may be overwritten by
-    the next call to @sym{g-getenv}, @fun{g-setenv} or @code{g_unsetenv()}.}
+ "@version{2020-10-24}
+  @argument[variable]{a string with the environment variable to get, in the
+    GLib file name encoding}
+  @return{A string with the value of the environment variable, or @code{nil} if
+    the environment variable is not found. The returned string may be
+    overwritten by the next call to @sym{g-getenv}, @fun{g-setenv} or
+    @code{g_unsetenv()}.}
   @short{Returns the value of an environment variable.}
 
   The name and value are in the GLib file name encoding. On UNIX, this means
@@ -326,10 +523,11 @@
   variables, they are expanded.
   @begin[Example]{dictionary}
     @begin{pre}
- (g-getenv \"HOME\") => \"/home/dieter\"
+(g-getenv \"HOME\") => \"/home/dieter\"
     @end{pre}
   @end{dictionary}
-  @see-function{g-setenv}"
+  @see-function{g-setenv}
+  @see-function{g-environ}"
   (variable :string))
 
 (export 'g-getenv)
@@ -339,11 +537,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_setenv" g-setenv) :boolean
- "@version{2012-12-31}
-  @argument[variable]{the environment variable to set, must not contain '='.}
-  @argument[value]{the value for to set the variable to.}
-  @argument[overwrite]{whether to change the variable if it already exists.}
-  @return{@arg{false} if the environment variable couldn't be set.}
+ "@version{2020-10-24}
+  @argument[variable]{a string with the the environment variable to set, must
+    not contain '='}
+  @argument[value]{a string with the value for to set the variable to}
+  @argument[overwrite]{a boolean whether to change the variable if it already
+    exists}
+  @return{@em{False} if the environment variable could not be set.}
   @short{Sets an environment variable.}
 
   Both the variable's name and value should be in the GLib file name encoding.
@@ -351,15 +551,14 @@
   should be in UTF-8.
 
   Note that on some systems, when variables are overwritten, the memory used
-  for the previous variables and its value isn't reclaimed.
-
+  for the previous variables and its value is not reclaimed.
   @begin[Warning]{dictionary}
     Environment variable handling in UNIX is not thread-safe, and your program
     may crash if one thread calls @sym{g-setenv} while another thread is calling
-    @code{getenv()}. (And note that many functions, such as @code{gettext()},
-    call @code{getenv()} internally.) This function is only safe to use at the
-    very start of your program, before creating any other threads (or creating
-    objects that create worker threads of their own).
+    @code{getenv()}. And note that many functions, such as @code{gettext()},
+    call @code{getenv()} internally. This function is only safe to use at the
+    very start of your program, before creating any other threads or creating
+    objects that create worker threads of their own.
 
     If you need to set up the environment for a child process, you can use
     @code{g_get_environ()} to get an environment array, modify that with
@@ -367,7 +566,8 @@
     that array directly to @code{execvpe()}, @code{g_spawn_async()}, or the
     like.
   @end{dictionary}
-  Since 2.4"
+  @see-function{g-getenv}
+  @see-function{g-environ}"
   (variable :string)
   (value :string)
   (overwrite :boolean))
@@ -409,70 +609,71 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_listenv" g-listenv) g-strv
- "@version{2012-12-31}
+ "@version{2020-10-24}
   @return{A list of strings.}
   @short{Gets the names of all variables set in the environment.}
 
   Programs that want to be portable to Windows should typically use this
-  function and @fun{g-getenv} instead of using the environ array from the C
-  library directly. On Windows, the strings in the environ array are in system
-  codepage encoding, while in most of the typical use cases for environment
-  variables in GLib-using programs you want the UTF-8 encoding that this
-  function and @fun{g-getenv} provide.
-
-  Since 2.8
+  function and the function @fun{g-getenv} instead of using the environ array
+  from the C library directly. On Windows, the strings in the environ array are
+  in system codepage encoding, while in most of the typical use cases for
+  environment variables in GLib-using programs you want the UTF-8 encoding that
+  this function and the function @fun{g-getenv} provide.
   @see-function{g-getenv}")
 
 (export 'g-listenv)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_user_name ()
+;;; g_get_user_name () -> g-user-name
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_user_name" g-get-user-name) :string
+(defcfun ("g_get_user_name" g-user-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{The user name of the current user.}
+ "@version{2020-10-24}
+  @return{A string with the user name of the current user.}
   @short{Gets the user name of the current user.}
   The encoding of the returned string is system-defined. On UNIX, it might be
   the preferred file name encoding, or something else, and there is no guarantee
   that it is even consistent on a machine. On Windows, it is always UTF-8.
   @begin[Example]{dictionary}
     @begin{pre}
- (g-get-user-name) => \"dieter\"
+(g-user-name) => \"dieter\"
     @end{pre}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-function{g-real-name}")
 
-(export 'g-get-user-name)
+(export 'g-user-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_real_name ()
+;;; g_get_real_name () -> g-real-name
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_real_name" g-get-real-name) :string
+(defcfun ("g_get_real_name" g-real-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{The user's real name.}
+ "@version{2020-10-24}
+  @return{A string with the user's real name.}
   @short{Gets the real name of the user.}
   This usually comes from the user's entry in the passwd file. The encoding of
-  the returned string is system-defined. (On Windows, it is, however, always
-  UTF-8.) If the real user name cannot be determined, the string \"Unknown\" is
+  the returned string is system-defined. On Windows, it is, however, always
+  UTF-8. If the real user name cannot be determined, the string \"Unknown\" is
   returned.
   @begin[Example]{dictionary}
     @begin{pre}
- (g-get-real-name) => \"Dieter Kaiser\"
+(g-real-name) => \"Dieter Kaiser\"
     @end{pre}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-function{g-user-name}")
 
-(export 'g-get-real-name)
+(export 'g-real-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_user_cache_dir ()
+;;; g_get_user_cache_dir () -> g-user-cache-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_user_cache_dir" g-get-user-cache-dir) :string
+(defcfun ("g_get_user_cache_dir" g-user-cache-dir)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
+ "@version{2020-10-24}
   @return{A string owned by GLib that must not be modified or freed.}
   @short{Returns a base directory in which to store non-essential, cached data
     specific to particular user.}
@@ -482,20 +683,23 @@
 
   On Windows is the directory that serves as a common repository for temporary
   Internet files. A typical path is
-  @file{C:\Documents and Settings\username\Local Settings\Temporary Internet Files}.
+  @file{C:\\Documents and Settings\\username\\Local Settings\\Temporary Internet Files}.
   See documentation for @code{CSIDL_INTERNET_CACHE}.
+  @see-function{g-user-data-dir}
+  @see-function{g-user-config-dir}
+  @see-function{g-user-runtime-dir}
+  @see-function{g-user-special-dir}")
 
-  Since 2.6")
-
-(export 'g-get-user-cache-dir)
+(export 'g-user-cache-dir)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_user_data_dir ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_user_data_dir" g-get-user-data-dir) :string
+(defcfun ("g_get_user_data_dir" g-user-data-dir)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
+ "@version{2020-10-24}
   @return{A string owned by GLib that must not be modified or freed.}
   @short{Returns a base directory in which to access application data such as
     icons that is customized for a particular user.}
@@ -505,208 +709,116 @@
 
   On Windows this is the folder to use for local (as opposed to roaming)
   application data. See documentation for @code{CSIDL_LOCAL_APPDATA}. Note that
-  on Windows it thus is the same as what @fun{g-get-user-config-dir} returns.
+  on Windows it thus is the same as what the function @fun{g-user-config-dir}
+  returns.
+  @see-function{g-user-cache-dir}
+  @see-function{g-user-config-dir}
+  @see-function{g-user-runtime-dir}
+  @see-function{g-user-special-dir}")
 
-  Since 2.6
-  @see-function{g-get-user-config-dir}")
-
-(export 'g-get-user-data-dir)
+(export 'g-user-data-dir)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_user_config_dir ()
+;;; g_get_user_config_dir () -> g-user-config-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_user_config_dir" g-get-user-config-dir) :string
+(defcfun ("g_get_user_config_dir" g-user-config-dir)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
+ "@version{2020-10-24}
   @return{A string owned by GLib that must not be modified or freed.}
   @short{Returns a base directory in which to store user-specific application
     configuration information such as user preferences and settings.}
-
   On UNIX platforms this is determined using the mechanisms described in the
   XDG Base Directory Specification. In this case the directory retrieved will
   be @code{XDG_CONFIG_HOME}.
 
   On Windows this is the folder to use for local (as opposed to roaming)
   application data. See documentation for @code{CSIDL_LOCAL_APPDATA}. Note that
-  on Windows it thus is the same as what @fun{g-get-user-data-dir} returns.
+  on Windows it thus is the same as what the function @fun{g-user-data-dir}
+  returns.
+  @see-function{g-user-cache-dir}
+  @see-function{g-user-data-dir}
+  @see-function{g-user-runtime-dir}
+  @see-function{g-user-special-dir}")
 
-  Since 2.6
-  @see-function{g-get-user-data-dir}")
-
-(export 'g-get-user-config-dir)
-
-;;; ----------------------------------------------------------------------------
-;;; g_get_user_runtime_dir ()
-;;;
-;;; const gchar * g_get_user_runtime_dir (void);
-;;;
-;;; Returns a directory that is unique to the current user on the local system.
-;;;
-;;; On UNIX platforms this is determined using the mechanisms described in the
-;;; XDG Base Directory Specification. This is the directory specified in the
-;;; XDG_RUNTIME_DIR environment variable. In the case that this variable is not
-;;; set, GLib will issue a warning message to stderr and return the value of
-;;; g_get_user_cache_dir().
-;;;
-;;; On Windows this is the folder to use for local (as opposed to roaming)
-;;; application data. See documentation for CSIDL_LOCAL_APPDATA. Note that on
-;;; Windows it thus is the same as what g_get_user_config_dir() returns.
-;;;
-;;; Returns :
-;;;     a string owned by GLib that must not be modified or freed.
-;;;
-;;; Since 2.28
-;;; ----------------------------------------------------------------------------
+(export 'g-user-config-dir)
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GUserDirectory
-;;;
-;;; typedef enum {
-;;;   G_USER_DIRECTORY_DESKTOP,
-;;;   G_USER_DIRECTORY_DOCUMENTS,
-;;;   G_USER_DIRECTORY_DOWNLOAD,
-;;;   G_USER_DIRECTORY_MUSIC,
-;;;   G_USER_DIRECTORY_PICTURES,
-;;;   G_USER_DIRECTORY_PUBLIC_SHARE,
-;;;   G_USER_DIRECTORY_TEMPLATES,
-;;;   G_USER_DIRECTORY_VIDEOS,
-;;;
-;;;   G_USER_N_DIRECTORIES
-;;; } GUserDirectory;
-;;;
-;;; These are logical ids for special directories which are defined depending on
-;;; the platform used. You should use g_get_user_special_dir() to retrieve the
-;;; full path associated to the logical id.
-;;;
-;;; The GUserDirectory enumeration can be extended at later date. Not every
-;;; platform has a directory for every logical id in this enumeration.
-;;;
-;;; G_USER_DIRECTORY_DESKTOP
-;;;     the user's Desktop directory
-;;;
-;;; G_USER_DIRECTORY_DOCUMENTS
-;;;     the user's Documents directory
-;;;
-;;; G_USER_DIRECTORY_DOWNLOAD
-;;;     the user's Downloads directory
-;;;
-;;; G_USER_DIRECTORY_MUSIC
-;;;     the user's Music directory
-;;;
-;;; G_USER_DIRECTORY_PICTURES
-;;;     the user's Pictures directory
-;;;
-;;; G_USER_DIRECTORY_PUBLIC_SHARE
-;;;     the user's shared directory
-;;;
-;;; G_USER_DIRECTORY_TEMPLATES
-;;;     the user's Templates directory
-;;;
-;;; G_USER_DIRECTORY_VIDEOS
-;;;     the user's Movies directory
-;;;
-;;; G_USER_N_DIRECTORIES
-;;;     the number of enum values
-;;;
-;;; Since 2.14
+;;; g_get_user_runtime_dir () -> g-user-runtime-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcenum g-user-directory
-  :desktop
-  :documents
-  :download
-  :music
-  :pictures
-  :public-share
-  :templates
-  :videos
-  :n-directories)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-user-directory atdoc:*type-name-alias*) "Enum"
-      (documentation 'g-user-directory 'type)
- "@version{2012-12-31}
-  @begin{short}
-    These are logical ids for special directories which are defined depending on
-    the platform used.
-  @end{short}
-  You should use @fun{g-get-user-special-dir} to retrieve the full path
-  associated to the logical id.
-
-  The @sym{g-user-directory} enumeration can be extended at later date. Not
-  every platform has a directory for every logical id in this enumeration.
-
-  Since 2.14
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
-(defcenum g-user-directory
-  :desktop
-  :documents
-  :download
-  :music
-  :pictures
-  :public-share
-  :templates
-  :videos
-  :n-directories)
-    @end{pre}
-    @begin{table}
-      @entry[:desktop]{the user's Desktop directory}
-      @entry[:documents]{the user's Documents directory}
-      @entry[:download]{the user's Downloads directory}
-      @entry[:music]{the user's Music directory}
-      @entry[:pictures]{the user's Pictures directory}
-      @entry[:public-share]{the user's shared directory}
-      @entry[:templates]{the user's Templates directory}
-      @entry[:videos]{the user's Movies directory}
-      @entry[:n-directories]{the number of enum values}
-    @end{table}
-  @end{dictionary}
-  @see-function{g-get-user-special-dir}")
-
-(export 'g-user-directory)
-
-;;; ----------------------------------------------------------------------------
-;;; g_get_user_special_dir ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_get_user_special_dir" g-get-user-special-dir) :string
+(defcfun ("g_get_user_runtime_dir" g-user-runtime-dir)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @argument[directory]{the logical id of special directory}
-  @return{The path to the specified special directory, or @code{nil} if the
-    logical id was not found. The returned string is owned by GLib and should
-    not be modified or freed.}
-  @short{Returns the full path of a special directory using its logical id.}
+ "@version{2020-10-24}
+  @return{A string owned by GLib that must not be modified or freed}
+  @begin{short}
+    Returns a directory that is unique to the current user on the local system.
+  @end{short}
+
+  On UNIX platforms this is determined using the mechanisms described in the
+  XDG Base Directory Specification. This is the directory specified in the
+  @code{XDG_RUNTIME_DIR} environment variable. In the case that this variable
+  is not set, GLib will issue a warning message to stderr and return the value
+  of the function @fun{g-user-cache-dir}.
+
+  On Windows this is the folder to use for local (as opposed to roaming)
+  application data. See documentation for @code{CSIDL_LOCAL_APPDATA}. Note that
+  on Windows it thus is the same as what the function @fun{g-user-config-dir}
+  returns.
+  @see-function{g-user-cache-dir}
+  @see-function{g-user-data-dir}
+  @see-function{g-user-config-dir}
+  @see-function{g-user-special-dir}")
+
+(export 'g-user-runtime-dir)
+
+;;; ----------------------------------------------------------------------------
+;;; g_get_user_special_dir () -> g-user-special-dir
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_get_user_special_dir" g-user-special-dir)
+    (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-10-23}
+  @argument[directory]{the @type{g-user-directory} logical ID of special
+    directory}
+  @return{A string with the path to the specified special directory, or
+    @code{nil} if the logical ID was not found. The returned string is owned by
+    GLib and should not be modified or freed.}
+  @short{Returns the full path of a special directory using its logical ID.}
 
   On Unix this is done using the XDG special user directories. For
   compatibility with existing practise, @code{:desktop} falls back to
   @code{$HOME/Desktop} when XDG special user directories have not been set up.
 
   Depending on the platform, the user might be able to change the path of the
-  special directory without requiring the session to restart; GLib will not
+  special directory without requiring the session to restart. GLib will not
   reflect any change once the special directories are loaded.
-
-  Since 2.14
   @begin[Examples]{dictionary}
     @begin{pre}
- (g-get-user-special-dir :documents)
+  (g-user-special-dir :documents)
 => \"/home/dieter/Dokumente\"
- (g-get-user-special-dir :download)
+  (g-user-special-dir :download)
 => \"/home/dieter/Downloads\"
     @end{pre}
   @end{dictionary}
-  @see-type{g-user-directory}"
+  @see-type{g-user-directory}
+  @see-function{g-user-cache-dir}
+  @see-function{g-user-data-dir}
+  @see-function{g-user-config-dir}
+  @see-function{g-user-runtime-dir}"
   (directory g-user-directory))
 
-(export 'g-get-user-special-dir)
+(export 'g-user-special-dir)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_system_data_dirs ()
+;;; g_get_system_data_dirs () -> g-system-data-dirs
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_system_data_dirs" g-get-system-data-dirs) g-strv
+(defcfun ("g_get_system_data_dirs" g-system-data-dirs)
+    (g-strv :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@return{A list of strings owned by GLib that must not be modified or freed.}
   @short{Returns an ordered list of base directories in which to access
@@ -717,8 +829,8 @@
   retrieved will be @code{XDG_DATA_DIRS}.
 
   On Windows the first elements in the list are the Application Data and
-  Documents folders for All Users. (These can be determined only on Windows
-  2000 or later and are not present in the list on other Windows versions.)
+  Documents folders for All Users. These can be determined only on Windows
+  2000 or later and are not present in the list on other Windows versions.
   See documentation for @code{CSIDL_COMMON_APPDATA} and
   @code{CSIDL_COMMON_DOCUMENTS}.
 
@@ -736,27 +848,27 @@
 
   Note that on Windows the returned list can vary depending on where this
   function is called.
-
-  Since 2.6
   @begin[Example]{dictionary}
     Result for a call on a LINUX system.
     @begin{pre}
- (g-get-system-data-dirs)
+  (g-system-data-dirs)
 => (\"/usr/share/ubuntu\" \"/usr/share/gnome\"
     \"/usr/local/share/\" \"/usr/share/\")
     @end{pre}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-function{g-system-config-dirs}")
 
-(export 'g-get-system-data-dirs)
+(export 'g-system-data-dirs)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_system_config_dirs ()
+;;; g_get_system_config_dirs () -> g-system-config-dirs
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_system_config_dirs" g-get-system-config-dirs) g-strv
+(defcfun ("g_get_system_config_dirs" g-system-config-dirs)
+    (g-strv :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{A list of strings owned by GLib that must not be modified or freed}
+ "@version{2020-10-24}
+  @return{A list of strings owned by GLib that must not be modified or freed.}
   @short{Returns an ordered list of base directories in which to access
     system-wide configuration information.}
 
@@ -766,15 +878,14 @@
 
   On Windows is the directory that contains application data for all users. A
   typical path is
-  @file{C:\Documents and Settings\All Users\Application Data}. This folder is
-  used for application data that is not user specific. For example, an
+  @file{C:\\Documents and Settings\\All Users\\Application Data}. This folder
+  is used for application data that is not user specific. For example, an
   application can store a spell-check dictionary, a database of clip art, or a
   log file in the @code{CSIDL_COMMON_APPDATA} folder. This information will not
   roam and is available to anyone using the computer.
+  @see-function{g-sytem-data-dirs}")
 
-  Since 2.6")
-
-(export 'g-get-system-config-dirs)
+(export 'g-system-config-dirs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_reload_user_special_dirs_cache ()
@@ -794,13 +905,38 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_get_os_info ()
+;;;
+;;; gchar *
+;;; g_get_os_info (const gchar *key_name);
+;;;
+;;; Get information about the operating system.
+;;;
+;;; On Linux this comes from the /etc/os-release file. On other systems, it may
+;;; come from a variety of sources. You can either use the standard key names
+;;; like G_OS_INFO_KEY_NAME or pass any UTF-8 string key name. For example,
+;;; /etc/os-release provides a number of other less commonly used values that
+;;; may be useful. No key is guaranteed to be provided, so the caller should
+;;; always check if the result is NULL.
+;;;
+;;; key_name :
+;;;     a key for the OS info being requested, for example G_OS_INFO_KEY_NAME.
+;;;
+;;; Returns :
+;;;     The associated value for the requested key or NULL if this information
+;;;     is not provided.
+;;;
+;;; Since 2.64
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_get_host_name ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_host_name" g-get-host-name) :string
+(defcfun ("g_get_host_name" g-host-name) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{The host name of the machine.}
+ "@version{2020-10-24}
+  @return{A string with the host name of the machine.}
   @short{Return a name for the machine.}
 
   The returned name is not necessarily a fully-qualified domain name, or even
@@ -810,18 +946,21 @@
   purposes. Even if the name of the machine is changed while an application is
   running, the return value from this function does not change. The returned
   string is owned by GLib and should not be modified or freed. If no name can
-  be determined, a default fixed string \"localhost\" is returned.")
+  be determined, a default fixed string \"localhost\" is returned.
+  @see-function{g-home-dir}
+  @see-function{g-tmp-dir}
+  @see-function{g-current-dir}")
 
-(export 'g-get-host-name)
+(export 'g-host-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_home_dir ()
+;;; g_get_home_dir () -> g-home-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_home_dir" g-get-home-dir) :string
+(defcfun ("g_get_home_dir" g-home-dir) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @return{The current user's home directory.}
+ "@version{2020-10-24}
+  @return{A string with the current user's home directory.}
   @short{Gets the current user's home directory.}
 
   As with most UNIX tools, this function will return the value of the
@@ -830,53 +969,67 @@
 
   If the path given in @code{HOME} is non-absolute, does not exist, or is not a
   directory, the result is undefined.
-
-  @subheading{Note}
+  @begin[Note]{dictionary}
     Before version 2.36 this function would ignore the @code{HOME} environment
     variable, taking the value from the passwd database instead. This was
-    changed to increase the compatibility of GLib with other programs (and the
-    XDG basedir specification) and to increase testability of programs based on
-    GLib (by making it easier to run them from test frameworks).
+    changed to increase the compatibility of GLib with other programs and the
+    XDG basedir specification and to increase testability of programs based on
+    GLib by making it easier to run them from test frameworks.
 
     If your program has a strong requirement for either the new or the old
-    behaviour (and if you do not wish to increase your GLib dependency to ensure
-    that the new behaviour is in effect) then you should either directly check
-    the HOME environment variable yourself or unset it before calling any functions
-    in GLib.")
+    behaviour and if you do not wish to increase your GLib dependency to ensure
+    that the new behaviour is in effect then you should either directly check
+    the HOME environment variable yourself or unset it before calling any
+    functions in GLib.
+  @end{dictionary}
+  @see-function{g-host-name}
+  @see-function{g-tmp-dir}
+  @see-function{g-current-dir}")
 
-(export 'g-get-home-dir)
+(export 'g-home-dir)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_tmp_dir ()
+;;; g_get_tmp_dir () -> g-tmp-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_tmp_dir" g-get-tmp-dir) :string
+(defcfun ("g_get_tmp_dir" g-tmp-dir) :string
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{The directory to use for temporary files.}
+ "@version{2020-10-24}
+  @return{A string with the directory to use for temporary files.}
   @short{Gets the directory to use for temporary files.}
   This is found from inspecting the environment variables @code{TMPDIR},
   @code{TMP}, and @code{TEMP} in that order. If none of those are defined
   @file{\"/tmp\"} is returned on UNIX and @file{\"C:\\\"} on Windows. The
   encoding of the returned string is system-defined. On Windows, it is always
-  UTF-8. The return value is never NULL or the empty string.")
+  UTF-8. The return value is never @code{nil} or the empty string.
+  @see-function{g-host-name}
+  @see-function{g-home-dir}
+  @see-function{g-current-dir}")
 
-(export 'g-get-tmp-dir)
+(export 'g-tmp-dir)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_get_current_dir ()
+;;; g_get_current_dir () -> g-current-dir
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_get_current_dir" g-get-current-dir) :string
+(defcfun ("g_get_current_dir" g-current-dir) :string
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @return{The current directory.}
+ "@version{2020-10-24}
+  @return{A string with the current directory.}
   @short{Gets the current directory.}
 
   The returned string should be freed when no longer needed. The encoding of
-  the returned string is system defined. On Windows, it is always UTF-8.")
+  the returned string is system defined. On Windows, it is always UTF-8.
 
-(export 'g-get-current-dir)
+  Since GLib 2.40, this function will return the value of the \"PWD\"
+  environment variable if it is set and it happens to be the same as the current
+  directory. This can make a difference in the case that the current directory
+  is the target of a symbolic link.
+  @see-function{g-host-name}
+  @see-function{g-home-dir}
+  @see-function{g-tmp-dir}")
+
+(export 'g-current-dir)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_basename ()
@@ -923,16 +1076,51 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_canonicalize_filename ()
+;;;
+;;; gchar *
+;;; g_canonicalize_filename (const gchar *filename,
+;;;                          const gchar *relative_to);
+;;;
+;;; Gets the canonical file name from filename . All triple slashes are turned
+;;; into single slashes, and all .. and .s resolved against relative_to .
+;;;
+;;; Symlinks are not followed, and the returned path is guaranteed to be
+;;; absolute.
+;;;
+;;; If filename is an absolute path, relative_to is ignored. Otherwise,
+;;; relative_to will be prepended to filename to make it absolute. relative_to
+;;; must be an absolute path, or NULL. If relative_to is NULL, it'll fallback
+;;; to g_get_current_dir().
+;;;
+;;; This function never fails, and will canonicalize file paths even if they
+;;; don't exist.
+;;;
+;;; No file system I/O is done.
+;;;
+;;; filename :
+;;;     the name of the file.
+;;;
+;;; relative_to :
+;;;     the relative directory, or NULL to use the current working directory.
+;;;
+;;; Returns :
+;;;     a newly allocated string with the canonical file path.
+;;;
+;;; Since 2.58
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_path_is_absolute ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_path_is_absolute" g-path-is-absolute) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2012-12-31}
-  @argument[file-name]{a file name}
-  @return{@arg{true} if file_name is absolute.}
+ "@version{2020-10-24}
+  @argument[file-name]{a string with a file name}
+  @return{@em{True} if @arg{file-name} is absolute.}
   @begin{short}
-    Returns @arg{true} if the given file_name is an absolute file name.
+    Returns @em{true} if the given @arg{file-name} is an absolute file name.
   @end{short}
   Note that this is a somewhat vague concept on Windows.
 
@@ -953,10 +1141,10 @@
 
   File names relative the current directory on some specific drive, such as
   @file{\"D:foo/bar\"}, are not interpreted as absolute by this function, but
-  they obviously are not relative to the normal current directory as returned by
-  @code{getcwd()} or @fun{g-get-current-dir} either. Such paths should be
-  avoided, or need to be handled using Windows-specific code.
-  @see-function{g-get-current-dir}"
+  they obviously are not relative to the normal current directory as returned
+  by @code{getcwd()} or the function @fun{g-current-dir} either. Such paths
+  should be avoided, or need to be handled using Windows-specific code.
+  @see-function{g-current-dir}"
   (file-name :string))
 
 (export 'g-path-is-absolute)
@@ -1019,12 +1207,12 @@
 
 (defun g-build-filename (&rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @argument[args]{elements in path}
-  @return{A string.}
+ "@version{2020-10-24}
+  @argument[args]{the strings in path}
+  @return{A string with the path.}
   @begin{short}
-    Creates a filename from a series of elements using the correct separator for
-    filenames.
+    Creates a filename from a series of elements using the correct separator
+    for filenames.
   @end{short}
 
   On Unix, this function behaves identically to
@@ -1066,15 +1254,37 @@
   (args g-strv))
 
 ;;; ----------------------------------------------------------------------------
+;;; g_build_filename_valist ()
+;;;
+;;; gchar *
+;;; g_build_filename_valist (const gchar *first_element,
+;;;                          va_list *args);
+;;;
+;;; Behaves exactly like g_build_filename(), but takes the path elements as a
+;;; va_list. This function is mainly meant for language bindings.
+;;;
+;;; first_element :
+;;;     the first element in the path.
+;;;
+;;; args :
+;;;     va_list of remaining elements in path
+;;;
+;;; Returns :
+;;;     a newly-allocated string that must be freed with g_free().
+;;;
+;;; Since 2.56
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_build_path ()
 ;;; ----------------------------------------------------------------------------
 
 (defun g-build-path (separator &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
+ "@version{2020-10-24}
   @argument[separator]{a string used to separator the elements of the path}
-  @argument[args]{elements in path}
-  @return{A string.}
+  @argument[args]{the strings in path}
+  @return{A string with the path.}
   @begin{short}
     Creates a path from a series of elements using @arg{separator} as the
     separator between elements.
@@ -1092,9 +1302,9 @@
 
   The number of trailing copies of the separator on the result is the same as
   the number of trailing copies of the separator on the last non-empty
-  element. (Determination of the number of trailing copies is done without
+  element. Determination of the number of trailing copies is done without
   stripping leading copies, so if the separator is ABA, ABABA has 1 trailing
-  copy.)
+  copy.
 
   However, if there is only a single non-empty element, and there are no
   characters in that element not part of the leading or trailing separators,
@@ -1162,31 +1372,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GFormatSizeFlags
-;;;
-;;; typedef enum {
-;;;   G_FORMAT_SIZE_DEFAULT     = 0,
-;;;   G_FORMAT_SIZE_LONG_FORMAT = 1 << 0,
-;;;   G_FORMAT_SIZE_IEC_UNITS   = 1 << 1
-;;; } GFormatSizeFlags;
-;;;
-;;; Flags to modify the format of the string returned by g_format_size_full().
-;;;
-;;; G_FORMAT_SIZE_DEFAULT
-;;;     behave the same as g_format_size()
-;;;
-;;; G_FORMAT_SIZE_LONG_FORMAT
-;;;     include the exact number of bytes as part of the returned string. For
-;;;     example, "45.6 kB (45,612 bytes)".
-;;;
-;;; G_FORMAT_SIZE_IEC_UNITS
-;;;     use IEC (base 1024) units with "KiB"-style suffixes. IEC units should
-;;;     only be used for reporting things with a strong "power of 2" basis, like
-;;;     RAM sizes or RAID stripe sizes. Network and storage sizes should be
-;;;     reported in the normal SI units.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; g_format_size_full ()
 ;;;
 ;;; gchar * g_format_size_full (guint64 size, GFormatSizeFlags flags);
@@ -1216,8 +1401,8 @@
 ;;; Warning
 ;;;
 ;;; g_format_size_for_display has been deprecated since version 2.30 and should
-;;; not be used in newly-written code. This function is broken due to its use of
-;;; SI suffixes to denote IEC units. Use g_format_size() instead.
+;;; not be used in newly-written code. This function is broken due to its use
+;;; of SI suffixes to denote IEC units. Use g_format_size() instead.
 ;;;
 ;;; Formats a size (for example the size of a file) into a human readable
 ;;; string. Sizes are rounded to the nearest size prefix (KB, MB, GB) and are
@@ -1309,8 +1494,8 @@
 ;;;
 ;;; guint g_bit_storage (gulong number);
 ;;;
-;;; Gets the number of bits used to hold number, e.g. if number is 4, 3 bits are
-;;; needed.
+;;; Gets the number of bits used to hold number, e.g. if number is 4, 3 bits
+;;; are needed.
 ;;;
 ;;; number :
 ;;;     a guint
@@ -1325,11 +1510,11 @@
 ;;; guint g_spaced_primes_closest (guint num);
 ;;;
 ;;; Gets the smallest prime number from a built-in array of primes which is
-;;; larger than num. This is used within GLib to calculate the optimum size of a
-;;; GHashTable.
+;;; larger than num. This is used within GLib to calculate the optimum size of
+;;; a GHashTable.
 ;;;
-;;; The built-in array of primes ranges from 11 to 13845163 such that each prime
-;;; is approximately 1.5-2 times the previous prime.
+;;; The built-in array of primes ranges from 11 to 13845163 such that each
+;;; prime is approximately 1.5-2 times the previous prime.
 ;;;
 ;;; num :
 ;;;     a guint
@@ -1353,8 +1538,8 @@
 ;;;
 ;;; Since GLib 2.8.2, on Windows g_atexit() actually is a preprocessor macro
 ;;; that maps to a call to the atexit() function in the C library. This means
-;;; that in case the code that calls g_atexit(), i.e. atexit(), is in a DLL, the
-;;; function will be called when the DLL is detached from the program. This
+;;; that in case the code that calls g_atexit(), i.e. atexit(), is in a DLL,
+;;; the function will be called when the DLL is detached from the program. This
 ;;; typically makes more sense than that the function is called when the GLib
 ;;; DLL is detached, which happened earlier when g_atexit() was a function in
 ;;; the GLib DLL.
@@ -1383,6 +1568,22 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_abort
+;;;
+;;; #define g_abort()
+;;;
+;;; A wrapper for the POSIX abort() function.
+;;;
+;;; On Windows it is a function that makes extra effort (including a call to
+;;; abort()) to ensure that a debugger-catchable exception is thrown before the
+;;; program terminates.
+;;;
+;;; See your C library manual for more details about abort().
+;;;
+;;; Since 2.50
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_parse_debug_string ()
 ;;;
 ;;; guint g_parse_debug_string (const gchar *string,
@@ -1390,15 +1591,15 @@
 ;;;                             guint nkeys);
 ;;;
 ;;; Parses a string containing debugging options into a guint containing bit
-;;; flags. This is used within GDK and GTK+ to parse the debug options passed on
-;;; the command line or through environment variables.
+;;; flags. This is used within GDK and GTK+ to parse the debug options passed
+;;; on the command line or through environment variables.
 ;;;
 ;;; If string is equal to "all", all flags are set. Any flags specified along
-;;; with "all" in string are inverted; thus, "all,foo,bar" or "foo,bar,all" sets
-;;; all flags except those corresponding to "foo" and "bar".
+;;; with "all" in string are inverted; thus, "all,foo,bar" or "foo,bar,all"
+;;; sets all flags except those corresponding to "foo" and "bar".
 ;;;
-;;; If string is equal to "help", all the available keys in keys are printed out
-;;; to standard error.
+;;; If string is equal to "help", all the available keys in keys are printed
+;;; out to standard error.
 ;;;
 ;;; string :
 ;;;     a list of debug options separated by colons, spaces, or commas, or NULL
@@ -1411,23 +1612,6 @@
 ;;;
 ;;; Returns :
 ;;;     the combined set of bit flags.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; struct GDebugKey
-;;;
-;;; struct GDebugKey {
-;;;   const gchar *key;
-;;;   guint        value;
-;;; };
-;;;
-;;; Associates a string with a bit flag. Used in g_parse_debug_string().
-;;;
-;;; const gchar *key;
-;;;     the string
-;;;
-;;; guint value;
-;;;     the flag
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

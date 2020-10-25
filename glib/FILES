@@ -64,7 +64,7 @@ GLib Utilities
     Hook Functions             - support for manipulating lists of hook
                                  functions
 
-  glib.utils.lisp              - Miscellaneous Utility Functions  - Glib 2.36.3%
+  glib.utils.lisp              - Miscellaneous Utility Functions  - Glib 2.66
 
     Lexical Scanner            - a general purpose lexical scanner
     Timers                     - keep track of elapsed time

@@ -630,7 +630,7 @@
                                                'gtk-about-dialog) 't)
  "The @code{program-name} property of type @code{:string} (Read / Write) @br{}
   The name of the program. If this is not set, it defaults to the return value
-  of the function @fun{g-get-application-name}. @br{}
+  of the function @fun{g-application-name}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -651,9 +651,9 @@
   program name displayed in the about dialog. The slot access function
   @sym{(setf gtk-about-dialog-program-name)} sets the name to display in the
   about dialog. If this is not set, it defaults to the return value of the
-  @fun{g-get-application-name} function.
+  function @fun{g-application-name}.
   @see-class{gtk-about-dialog}
-  @see-function{g-get-application-name}")
+  @see-function{g-application-name}")
 
 ;;; --- gtk-about-dialog-translator-credits ------------------------------------
 

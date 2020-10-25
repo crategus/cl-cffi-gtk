@@ -251,9 +251,9 @@
   Unless the program class has explicitly been set with the function
   @fun{gdk-set-program-class} or with the @code{--class} commandline option,
   the default value is the program name determined with the function
-  @fun{g-get-prgname} and with the first character converted to uppercase.
+  @fun{g-prgname} and with the first character converted to uppercase.
   @see-function{gdk-set-program-class}
-  @see-function{g-get-prgname}")
+  @see-function{g-prgname}")
 
 (export 'gdk-get-program-class)
 

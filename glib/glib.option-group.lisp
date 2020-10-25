@@ -565,7 +565,7 @@ Hilfeoptionen:
   @begin{short}
     Parses the command line arguments, recognizing options which have been added
     to @arg{context}. A side-effect of calling this function is that the
-    function @fun{g-set-prgname} will be called.
+    function @fun{g-prgname} will be called.
   @end{short}
 
   If the parsing is successful, any parsed arguments are removed from the
@@ -584,7 +584,7 @@ Hilfeoptionen:
 
   Since 2.6
   @see-type{g-option-context}
-  @see-function{g-set-prgname}
+  @see-function{g-prgname}
   @see-function{g-option-context-set-help-enabled}"
   (with-g-error (err)
     (with-foreign-objects ((argc-ptr :int)
