@@ -50,13 +50,13 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     guint  height  Read / Write
-;;;     guint  width   Read / Write
+;;;     guint    height    Read / Write
+;;;     guint    width     Read / Write
 ;;;
 ;;; Child Properties
 ;;;
-;;;     gint  x  Read / Write
-;;;     gint  y  Read / Write
+;;;      gint    x         Read / Write
+;;;      gint    y         Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -314,55 +314,47 @@
 (export 'gtk-layout-move)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_layout_set_size ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-layout-set-size))
-
-(defun gtk-layout-set-size (layout width height)
- #+cl-cffi-gtk-documentation
- "@version{2020-5-3}
-  @argument[layout]{a @class{gtk-layout} container}
-  @argument[width]{an integer with the width of entire scrollable area}
-  @argument[height]{an integer with the height of entire scrollable area}
-  @begin{short}
-    Sets the size in pixels of the scrollable area of the layout.
-  @end{short}
-  @see-class{gtk-layout}
-  @see-function{gtk-layout-get-size}
-  @see-function{gtk-layout-height}
-  @see-function{gtk-layout-width}"
-  (setf (gtk-layout-width layout) width
-        (gtk-layout-height layout) height))
-
-(export 'gtk-layout-set-size)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_size ()
+;;; gtk_layout_set_size () -> gtk-layout-size
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-layout-get-size))
+(defun (setf gtk-layout-size) (value layout)
+  (destructuring-bind (width height) value
+    (foreign-funcall "gtk_layout_set_size"
+                     (g-object gtk-layout) layout
+                     :uint width
+                     :uint height
+                     :void)
+  (values width height)))
 
-(defun gtk-layout-get-size (layout)
+(defun gtk-layout-size (layout)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-3}
-  @argument[layout]{a @class{gtk-layout} container}
+ "@version{2020-10-24}
+  @syntax[]{(gtk-layout-size layout) => width, height}
+  @syntax[]{(setf (gtk-layout-size layout) '(width height))}
+  @argument[layout]{a @class{gtk-layout} widget}
+  @argument[width]{an unsigned integer with the width of entire scrollable area}
+  @argument[height]{an unsigned integer with the height of entire scrollable
+    area}
   @begin{return}
     @code{width} -- an integer with the width set on @arg{layout} @br{}
     @code{height} -- an integer with the height set on @arg{layout} @br{}
   @end{return}
   @begin{short}
-    Gets the size in pixels that has been set on the layout, and that
-    determines the total extents of the layout's scrollbar area.
+    Accessor of the width and height of the scrollable area.
   @end{short}
+
+  The function @sym{gtk-layout-size} gets the size in pixels that has been set
+  on the layout, and that determines the total extents of the layout's scrollbar
+  area. The function @sym{(setf gtk-layout-size)} sets the size in pixels of the
+  scrollable area of the layout.
   @see-class{gtk-layout}
-  @see-function{gtk-layout-set-size}
   @see-function{gtk-layout-height}
   @see-function{gtk-layout-width}"
   (values (gtk-layout-width layout)
           (gtk-layout-height layout)))
 
-(export 'gtk-layout-get-size)
+(export 'gtk-layout-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_hadjustment ()
