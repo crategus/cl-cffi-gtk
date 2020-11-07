@@ -1,69 +1,55 @@
 (def-suite gdk-general :in gdk-suite)
 (in-suite gdk-general)
 
-;;;   gdk_init                                   * not implemented *
-;;;   gdk_init_check                             * not implemented *
-;;;   gdk_parse_args                             * not implemented *
+;;;     gdk_init                                           not implemented
+;;;     gdk_init_check                                     not implemented
+;;;     gdk_parse_args                                     not implemented
 
-;;;   gdk_get_display_arg_name
+;;;     gdk_get_display_arg_name
 
 (test gdk-get-display-arg-name
   (is-false (gdk-get-display-arg-name)))
 
-;;;   gdk_notify_startup_complete
-;;;   gdk_notify_startup_complete_with_id
+;;;     gdk_notify_startup_complete
+;;;     gdk_notify_startup_complete_with_id
+;;;     gdk_set_allowed_backends
 
-;;;   gdk_get_program_class
+;;;     gdk_get_program_class
+;;;     gdk_set_program_class
 
 (defvar *first-run-program-class* t)
 
-(test gdk-get-program-class
+(test gdk-program-class.1
   (if *first-run-program-class*
       #+(and sbcl (not windows))
-      (is (equal "Sbcl" (gdk-get-program-class)))
+      (is (string= "Sbcl" (gdk-program-class)))
       #+(and ccl (not windows))
-      (is (equal "Lx86cl" (gdk-get-program-class)))
+      (is (string= "Lx86cl" (gdk-program-class)))
       #+windows
-      (is (equal "Sbcl.exe" (gdk-get-program-class)))
-      (is (equal "Program class" (gdk-get-program-class)))))
+      (is (string= "Sbcl.exe" (gdk-program-class)))
+      (is (string= "Program class" (gdk-program-class)))))
 
-;;;   gdk_set_program_class
-
-(test gdk-set-program-class
+(test gdk-program-class.2
   (when *first-run-program-class*
-    (gdk-set-program-class "Program class")
+    (setf (gdk-program-class) "Program class")
     (setf *first-run-program-class* nil))
-  (is (equal "Program class" (gdk-get-program-class))))
+  (is (string= "Program class" (gdk-program-class))))
 
-;;;   gdk_get_display                            * deprecated *
+;;;     gdk_get_display                                    not exported
+;;;     gdk_flush                                          not exported
+;;;     gdk_screen_width                                   not exported
+;;;     gdk_screen_height                                  not exported
+;;;     gdk_screen_width_mm                                not exported
+;;;     gdk_screen_height_mm                               not exported
+;;;     gdk_pointer_grab                                   not exported
+;;;     gdk_pointer_ungrab                                 not exported
+;;;     gdk_pointer_is_grabbed                             not exported
+;;;     gdk_set_double_click_time                          not exported
+;;;     gdk_keyboard_grab                                  not exported
+;;;     gdk_keyboard_ungrab                                not exported
+;;;     gdk_beep                                           not exported
+;;;     gdk_error_trap_push                                not exported
+;;;     gdk_error_trap_pop                                 not exported
+;;;     gdk_error_trap_pop_ignored                         not exported
 
-#-windows
-(test gdk-get-display
-  (is (equal (g-getenv "DISPLAY") (gdk-get-display))))
-
-#+windows
-(test gdk-get-display
-  (is (equal "1\\WinSta0\\Default" (gdk-get-display))))
-
-;;;   gdk_flush
-
-;;;   gdk_screen_width                                deprecated
-;;;   gdk_screen_height                               deprecated
-;;;   gdk_screen_width_mm                             deprecated
-;;;   gdk_screen_height_mm                            deprecated
-
-;;;   gdk_pointer_grab                                deprecated
-;;;   gdk_pointer_ungrab                              deprecated
-;;;   gdk_pointer_is_grabbed                          deprecated
-
-;;;   gdk_set_double_click_time
-
-;;;   gdk_keyboard_grab                               deprecated
-;;;   gdk_keyboard_ungrab                             deprecated
-
-;;;   gdk_beep
-
-;;;   gdk_error_trap_push
-;;;   gdk_error_trap_pop
-;;;   gdk_error_trap_pop_ignored
-
+;;; 2020-11-6
