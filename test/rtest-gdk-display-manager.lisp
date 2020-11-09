@@ -18,10 +18,10 @@
   (is (eq (gtype "GObject") (g-type-parent "GdkDisplayManager")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GdkDisplayManager"))))
+             (mapcar #'g-type-name (g-type-children "GdkDisplayManager"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GdkDisplayManager"))))
+             (mapcar #'g-type-name (g-type-interfaces "GdkDisplayManager"))))
   ;; Check the class properties
   (is (equal '("default-display")
              (stable-sort (mapcar #'g-param-spec-name

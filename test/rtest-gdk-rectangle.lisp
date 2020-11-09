@@ -9,8 +9,8 @@
   ;; Type check
   (is-true (g-type-is-a (gtype "GdkRectangle") +g-type-boxed+))
   ;; Check the type initializer
-  (is (string= "GdkRectangle"
-               (g-type-name (gtype (foreign-funcall "gdk_rectangle_get_type" :int))))))
+  (is (eq (gtype "GdkRectangle")
+          (gtype (foreign-funcall "gdk_rectangle_get_type" g-size)))))
 
 (test gdk-rectangle-properties
   (let ((rect (make-gdk-rectangle)))
@@ -77,3 +77,4 @@
     (is-false (gdk-rectangle-equal rect1 rect2))
     (is-true  (gdk-rectangle-equal rect1 rect3))))
 
+;;; 2020-11-9
