@@ -2,7 +2,7 @@
 ;;; gdk.general.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -35,6 +35,22 @@
 ;;;
 ;;;     GdkGrabStatus                            -> gdk.device.lisp
 ;;;
+;;;     GDK_WINDOWING_X11
+;;;     GDK_WINDOWING_WIN32
+;;;     GDK_WINDOWING_QUARTZ
+;;;     GDK_WINDOWING_WAYLAND
+;;;     GDK_VERSION_3_0
+;;;     GDK_VERSION_3_2
+;;;     GDK_VERSION_3_4
+;;;     GDK_VERSION_3_6
+;;;     GDK_VERSION_3_8
+;;;     GDK_VERSION_3_10
+;;;     GDK_VERSION_3_12
+;;;     GDK_VERSION_3_14
+;;;     GDK_VERSION_MIN_REQUIRED
+;;;     GDK_VERSION_MAX_ALLOWED
+;;;     GDK_DISABLE_DEPRECATION_WARNINGS
+;;;
 ;;; Functions
 ;;;
 ;;;     gdk_init                                   not implemented
@@ -43,26 +59,26 @@
 ;;;     gdk_get_display_arg_name
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;     gdk_set_allowed_backends                   not implemented
+;;;     gdk_set_allowed_backends
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
 ;;;
-;;;     gdk_get_display                            deprecated
-;;;     gdk_flush                                  deprecated
+;;;     gdk_get_display                            deprecated, not exported
+;;;     gdk_flush                                  deprecated, not exported
 ;;;     gdk_screen_width                           deprecated -> gdk.screen.lisp
 ;;;     gdk_screen_height                          deprecated -> gdk.screen.lisp
 ;;;     gdk_screen_width_mm                        deprecated -> gdk.screen.lisp
 ;;;     gdk_screen_height_mm                       dprecateed -> gdk.screen.lisp
-;;;     gdk_pointer_grab                           deprecated
-;;;     gdk_pointer_ungrab                         deprecated
-;;;     gdk_pointer_is_grabbed                     deprecated
-;;;     gdk_set_double_click_time                  deprecated
-;;;     gdk_keyboard_grab                          deprecated
-;;;     gdk_keyboard_ungrab                        deprecated
-;;;     gdk_beep                                   deprecated
-;;;     gdk_error_trap_push                        deprecated
-;;;     gdk_error_trap_pop                         deprecated
-;;;     gdk_error_trap_pop_ignored                 deprecated
+;;;     gdk_pointer_grab                           deprecated, not exported
+;;;     gdk_pointer_ungrab                         deprecated, not exported
+;;;     gdk_pointer_is_grabbed                     deprecated, not exported
+;;;     gdk_set_double_click_time                  deprecated, not exported
+;;;     gdk_keyboard_grab                          deprecated, not exported
+;;;     gdk_keyboard_ungrab                        deprecated, not exported
+;;;     gdk_beep                                   deprecated, not exported
+;;;     gdk_error_trap_push                        deprecated, not exported
+;;;     gdk_error_trap_pop                         deprecated, not exported
+;;;     gdk_error_trap_pop_ignored                 deprecated, not exported
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -143,8 +159,9 @@
 (defcfun ("gdk_get_display_arg_name" gdk-get-display-arg-name)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @return{The display name, if specified explicitely, otherwise @code{nil}.}
+ "@version{2020-11-6}
+  @return{A string with the display name, if specified explicitely, otherwise
+    @code{nil}.}
   @begin{short}
     Gets the display name specified in the command line arguments passed to
     the functions @code{gdk_init} or @code{gdk_parse_args}, if any.
@@ -158,7 +175,7 @@
 
 (defcfun ("gdk_notify_startup_complete" gdk-notify-startup-complete) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
+ "@version{2020-11-6}
   @begin{short}
     Indicates to the GUI environment that the application has finished loading.
   @end{short}
@@ -166,9 +183,10 @@
   opening the application's initial set of windows.
 
   GTK+ will call this function automatically after opening the first
-  @class{gtk-window} unless the function
+  @class{gtk-window} object unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
+  @see-class{gtk-window}
   @see-function{gdk-notify-startup-complete-with-id}
   @see-function{gtk-window-set-auto-startup-notification}")
 
@@ -181,18 +199,18 @@
 (defcfun ("gdk_notify_startup_complete_with_id"
            gdk-notify-startup-complete-with-id) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[startup-id]{a startup notification identifier of type
-    @code{:string}}
+ "@version{2020-11-6}
+  @argument[startup-id]{a string with the startup notification identifier}
   @begin{short}
     Indicates to the GUI environment that the application has finished loading,
     using a given startup notification identifier.
   @end{short}
 
-  GTK+ will call this function automatically for @class{gtk-window} with custom
-  startup notification identifier unless the function
+  GTK+ will call this function automatically for @class{gtk-window} object with
+  custom startup notification identifier unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
+  @see-class{gtk-window}
   @see-function{gdk-notify-startup-complete}
   @see-function{gtk-window-set-auto-startup-notification}"
   (startup-id :string))
@@ -201,84 +219,86 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_set_allowed_backends ()
-;;;
-;;; void gdk_set_allowed_backends (const gchar *backends);
-;;;
-;;; Sets a list of backends that GDK should try to use.
-;;;
-;;; This can be be useful if your application does not work with certain GDK
-;;; backends.
-;;;
-;;; By default, GDK tries all included backends.
-;;;
-;;; For example,
-;;;
-;;; gdk_set_allowed_backends ("wayland,quartz,*");
-;;;
-;;; instructs GDK to try the Wayland backend first, followed by the Quartz
-;;; backend, and then all others.
-;;;
-;;; If the GDK_BACKEND environment variable is set, it determines what backends
-;;; are tried in what order, while still respecting the set of allowed backends
-;;; that are specified by this function.
-;;;
-;;; The possible backend names are x11, win32, quartz, broadway, wayland. You
-;;; can also include a * in the list to try all remaining backends.
-;;;
-;;; This call must happen prior to gdk_display_open(), gtk_init(),
-;;; gtk_init_with_args() or gtk_init_check() in order to take effect.
-;;;
-;;; Parameters
-;;;
-;;; backends
-;;;     a comma-separated list of backends
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-10
+(defcfun ("gdk_set_allowed_backends" gdk-set-allowed-backends) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-6}
+  @argument[backends]{a string with a comma-separated list of backends}
+  @begin{short}
+    Sets a list of backends that GDK should try to use.
+  @end{short}
+  This can be be useful if your application does not work with certain GDK
+  backends. By default, GDK tries all included backends.
+
+  For example,
+  @begin{pre}
+(gdk-set-allowed-backends \"wayland,quartz,*\)
+  @end{pre}
+  instructs GDK to try the Wayland backend first, followed by the Quartz
+  backend, and then all others.
+
+  If the @code{GDK_BACKEND} environment variable is set, it determines what
+  backends are tried in what order, while still respecting the set of allowed
+  backends that are specified by this function.
+
+  The possible backend names are x11, win32, quartz, broadway, wayland. You
+  can also include a * in the list to try all remaining backends.
+
+  This call must happen prior to the functions @fun{gdk-display-open},
+  @code{gtk_init()}, @code{gtk_init_with_args()} or @code{gtk_init_check()} in
+  order to take effect.
+
+  Since 3.10
+  @see-function{gdk-display-open}"
+  (backends :string))
+
+#+gdk-3-10
+(export 'gdk-set-allowed-backends)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_program_class ()
+;;; gdk_set_program_class () -> gdk-program-class
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_get_program_class" gdk-get-program-class)
+(defun (setf gdk-program-class) (program-class)
+  (foreign-funcall "gdk_set_program_class"
+                   :string program-class
+                   :void)
+  program-class)
+
+(defcfun ("gdk_get_program_class" gdk-program-class)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @return{The program class of type @code{:string}.}
+ "@version{2020-11-6}
+  @syntax[]{(gdk-program-class) => program-class}
+  @syntax[]{(setf (gdk-program-class) program-class)}
+  @argument[program-class]{a string with the program class}
   @begin{short}
-    Gets the program class.
+    Accessor of the program class.
   @end{short}
+
+  The function @sym{gdk-program-class} gets the program class. The function
+  @sym{(setf gdk-program-class)} sets the program class.
+
   Unless the program class has explicitly been set with the function
-  @fun{gdk-set-program-class} or with the @code{--class} commandline option,
+  @sym{(setf gdk-program-class)} or with the @code{--class} commandline option,
   the default value is the program name determined with the function
   @fun{g-prgname} and with the first character converted to uppercase.
-  @see-function{gdk-set-program-class}
+
+  The X11 backend uses the program class to set the class name part of the
+  @code{WM_CLASS} property on toplevel windows. See the Inter-Client
+  Communication Conventions Manual (ICCCM).
   @see-function{g-prgname}")
 
-(export 'gdk-get-program-class)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_set_program_class ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_set_program_class" gdk-set-program-class) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @argument[program-class]{a program class of type @code{:string}}
-  @begin{short}
-    Sets the program class.
-  @end{short}
-  The X11 backend uses the program class to set the class name part of the
-  @code{WM_CLASS} property on toplevel windows; see the Inter-Client
-  Communication Conventions Manual (ICCCM).
-  @see-function{gdk-get-program-class}"
-  (program-class (:string :free-to-foreign t)))
-
-(export 'gdk-set-program-class)
+(export 'gdk-program-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_display ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_get_display" gdk-get-display) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
@@ -291,16 +311,16 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-get-display} has been deprecated since version 3.8
     and should not be used in newly-written code. Call
-    @code{(gdk-display-get-name (gdk-display-default))} instead.
+    @code{(gdk-display-name (gdk-display-default))} instead.
   @end{dictionary}
-  @see-function{gdk-display-get-name}
+  @see-function{gdk-display-name}
   @see-function{gdk-display-default}")
-
-(export 'gdk-get-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_flush ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_flush" gdk-flush) :void
  #+cl-cffi-gtk-documentation
@@ -314,8 +334,6 @@
     The function @sym{gdk-flush} is deprecated and should not be used in
     newly-written code.
   @end{dictionary}")
-
-(export 'gdk-flush)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_width ()
@@ -425,6 +443,8 @@
 ;;; gdk_pointer_grab ()
 ;;; ----------------------------------------------------------------------------
 
+;; deprecated and not exported
+
 (defcfun ("gdk_pointer_grab" gdk-pointer-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
@@ -432,24 +452,24 @@
   @argument[owner-events]{if @code{nil} then all pointer events are reported
     with respect to @arg{window} and are only reported if selected by
     @arg{event-mask}. If @em{true} then pointer events for this application are
-    reported as normal, but pointer events outside this application are reported
-    with respect to @arg{window} and only if selected by @arg{event-mask}. In
-    either mode, unreported events are discarded.}
+    reported as normal, but pointer events outside this application are
+    reported with respect to @arg{window} and only if selected by
+    @arg{event-mask}. In either mode, unreported events are discarded.}
   @argument[event-mask]{specifies the event mask of type
     @symbol{gdk-event-mask}, which is used in accordance with
     @arg{owner-events}. Note that only pointer events (i. e. button and motion
     events) may be selected.}
   @argument[confine-to]{a @class{gdk-window} object, if non-@code{nil}, the
     pointer will be confined to this window during the grab. If the pointer is
-    outside @arg{confine-to}, it will automatically be moved to the closest edge
-    of @arg{confine-to} and enter and leave events will be generated as
+    outside @arg{confine-to}, it will automatically be moved to the closest
+    edge of @arg{confine-to} and enter and leave events will be generated as
     necessary.}
   @argument[cursor]{the @class{gdk-cursor} object to display while the grab is
     active. If this is @code{nil} then the normal cursors are used for
     @arg{window} and its descendants, and the cursor for @arg{window} is used
     for all other windows.}
-  @argument[time]{the timestamp of type @code{:uint32} of the event which led to
-    this pointer grab. This usually comes from a @class{gdk-event-button}
+  @argument[time]{the timestamp of type @code{:uint32} of the event which led
+    to this pointer grab. This usually comes from a @class{gdk-event-button}
     struct, though @var{+gdk-current-time+} can be used if the time isn't
     known.}
   @return{The value @code{:success} of the @symbol{gdk-grab-status} enumeration
@@ -492,11 +512,11 @@
   (cursor (g-object gdk-cursor))
   (time :uint32))
 
-(export 'gdk-pointer-grab)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_ungrab ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_pointer_ungrab" gdk-pointer-ungrab) :void
  #+cl-cffi-gtk-documentation
@@ -517,11 +537,11 @@
   @see-function{gdk-seat-ungrab}"
   (time :uint32))
 
-(export 'gdk-pointer-ungrab)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_is_grabbed ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_pointer_is_grabbed" gdk-pointer-is-grabbed) :boolean
  #+cl-cffi-gtk-documentation
@@ -529,8 +549,8 @@
   @return{a boolean that is @em{true} if the pointer is currently grabbed by
     this application.}
   @begin{short}
-    Returns @em{true} if the pointer on the default display is currently grabbed
-    by this application.
+    Returns @em{true} if the pointer on the default display is currently
+    grabbed by this application.
   @end{short}
 
   Note that this does not take the inmplicit pointer grab on button presses
@@ -542,11 +562,11 @@
   @end{dictionary}
   @see-function{gdk-display-device-is-grabbed}")
 
-(export 'gdk-pointer-is-grabbed)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_set_double_click_time ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_set_double_click_time" gdk-set-double-click-time) :void
  #+cl-cffi-gtk-documentation
@@ -566,22 +586,22 @@
   @see-function{gdk-display-set-double-click-distance}"
   (msec :uint))
 
-(export 'gdk-set-double-click-time)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyboard_grab ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_keyboard_grab" gdk-keyboard-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[window]{the @class{gdk-window} which will own the grab}
   @argument[owner-events]{a boolean, if @code{nil} then all keyboard events are
-    reported with respect to @arg{window}. If @em{true} then keyboard events for
-    this application are reported as normal, but keyboard events outside this
-    application are reported with respect to @arg{window}. Both key press and
-    key release events are always reported, independant of the event mask set by
-    the application.}
+    reported with respect to @arg{window}. If @em{true} then keyboard events
+    for this application are reported as normal, but keyboard events outside
+    this application are reported with respect to @arg{window}. Both key press
+    and key release events are always reported, independant of the event mask
+    set by the application.}
   @argument[time]{a timestamp of type @code{:uint32} from a @class{gdk-event},
     or @var{+gdk-current-time+} if no timestamp is available.}
   @return{The value @code{:success} of the @symbol{gdk-grab-status} enumeration
@@ -606,11 +626,11 @@
   (owner-events :boolean)
   (time :uint32))
 
-(export 'gdk-keyboard-grab)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyboard_ungrab ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_keyboard_ungrab" gdk-keyboard-ungrab) :void
  #+cl-cffi-gtk-documentation
@@ -622,8 +642,8 @@
     application.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0
-    and should not be used in newly written code. Use the function
+    The function @sym{gdk-keyboard-ungrab} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
     @fun{gdk-seat-ungrab}, together with the function @fun{gdk-seat-grab}
     instead.
   @end{dictionary}
@@ -631,11 +651,11 @@
   @see-function{gdk-seat-ungrab}"
   (time :uint32))
 
-(export 'gdk-keyboard-ungrab)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_beep ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_beep" gdk-beep) :void
  #+cl-cffi-gtk-documentation
@@ -646,11 +666,11 @@
     newly-written code.
   @end{dictionary}")
 
-(export 'gdk-beep)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_error_trap_push ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_error_trap_push" gdk-error-trap-push) :void
  #+cl-cffi-gtk-documentation
@@ -659,13 +679,13 @@
     This function allows X errors to be trapped instead of the normal behavior
     of exiting the application.
   @end{short}
-  It should only be used if it is not possible to avoid the X error in any other
-  way. Errors are ignored on all @class{gdk-display} currently known to the
-  @class{gdk-display-manager}. If you do not care which error happens and just
-  want to ignore everything, pop with the function
-  @fun{gdk-error-trap-pop-ignored}. If you need the error code, use the function
-  @fun{gdk-error-trap-pop} which may have to block and wait for the error to
-  arrive from the X server.
+  It should only be used if it is not possible to avoid the X error in any
+  other way. Errors are ignored on all @class{gdk-display} currently known to
+  the @class{gdk-display-manager}. If you do not care which error happens and
+  just want to ignore everything, pop with the function
+  @fun{gdk-error-trap-pop-ignored}. If you need the error code, use the
+  function @fun{gdk-error-trap-pop} which may have to block and wait for the
+  error to arrive from the X server.
 
   This API exists on all platforms but only does anything on X.
 
@@ -692,11 +712,11 @@
   @see-class{gdk-display}
   @see-class{gdk-display-manager}")
 
-(export 'gdk-error-trap-push)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_error_trap_pop ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_error_trap_pop" gdk-error-trap-pop) :int
  #+cl-cffi-gtk-documentation
@@ -722,11 +742,11 @@
   @see-function{gdk-error-trap-pop-ignored}
   @see-function{gdk-flush}")
 
-(export 'gdk-error-trap-pop)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_error_trap_pop_ignored ()
 ;;; ----------------------------------------------------------------------------
+
+;; deprecated and not exported
 
 (defcfun ("gdk_error_trap_pop_ignored" gdk-error-trap-pop-ignored) :void
  #+cl-cffi-gtk-documentation
@@ -735,8 +755,8 @@
     Removes an error trap pushed with the function @fun{gdk-error-trap-push},
     but without bothering to wait and see whether an error occurred.
   @end{short}
-  If an error arrives later asynchronously that was triggered while the trap was
-  pushed, that error will be ignored.
+  If an error arrives later asynchronously that was triggered while the trap
+  was pushed, that error will be ignored.
 
   Since 3.0
   @begin[Warning]{dictionary}
@@ -744,7 +764,5 @@
     be used in newly-written code.
   @end{dictionary}
   @see-function{gdk-error-trap-push}")
-
-(export 'gdk-error-trap-pop-ignored)
 
 ;;; --- End of file gdk.general.lisp -------------------------------------------
