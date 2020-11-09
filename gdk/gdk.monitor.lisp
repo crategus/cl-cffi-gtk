@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -51,20 +51,20 @@
 ;;;
 ;;; Properties
 ;;;
-;;;            GdkDisplay*  display          Read / Write / Construct Only
-;;;          GdkRectangle*  geometry         Read
-;;;                  gint   height-mm        Read
-;;;                 gchar*  manufacturer     Read
-;;;                 gchar*  model            Read
-;;;                  gint   refresh-rate     Read
-;;;                  gint   scale-factor     Read
-;;;     GdkSubpixelLayout   subpixel-layout  Read
-;;;                  gint   width-mm         Read
-;;;          GdkRectangle*  workarea         Read
+;;;            GdkDisplay*   display            Read / Write / Construct Only
+;;;          GdkRectangle*   geometry           Read
+;;;                  gint    height-mm          Read
+;;;                 gchar*   manufacturer       Read
+;;;                 gchar*   model              Read
+;;;                  gint    refresh-rate       Read
+;;;                  gint    scale-factor       Read
+;;;     GdkSubpixelLayout    subpixel-layout    Read
+;;;                  gint    width-mm           Read
+;;;          GdkRectangle*   workarea           Read
 ;;;
 ;;; Signals
 ;;;
-;;;     void	invalidate	Run First
+;;;                  void    invalidate         Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -91,7 +91,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-subpixel-layout atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-subpixel-layout atdoc:*external-symbols*)
- "@version{2019-3-25}
+ "@version{2020-10-27}
   @begin{short}
     This enumeration describes how the red, green and blue components of
     physical pixels on an output device are laid out.
@@ -160,28 +160,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-monitor 'type)
- "@version{2019-3-25}
+ "@version{2020-11-3}
   @begin{short}
-    @sym{gdk-monitor} objects represent the individual outputs that are
-    associated with a @class{gdk-display}.
+    The @sym{gdk-monitor} class represents the individual outputs that are
+    associated with a @class{gdk-display} object.
   @end{short}
-  @class{gdk-display} has APIs to enumerate monitors with the functions
-  @fun{gdk-display-get-n-monitors} and @fun{gdk-display-get-monitor}, and to
-  find particular monitors with the functions
-  @fun{gdk-display-get-primary-monitor} or
-  @fun{gdk-display-get-monitor-at-window}.
+  The @class{gdk-display} class has APIs to enumerate monitors with the
+  functions @fun{gdk-display-n-monitors} and @fun{gdk-display-monitor}, and to
+  find particular monitors with the functions @fun{gdk-display-primary-monitor}
+  or @fun{gdk-display-monitor-at-window}.
 
-  @sym{gdk-monitor} was introduced in GTK+ 3.22 and supersedes earlier APIs in
-  @class{gdk-screen} to obtain monitor-related information.
+  The @sym{gdk-monitor} class was introduced in GTK+ 3.22 and supersedes earlier
+  APIs in the @class{gdk-screen} class to obtain monitor-related information.
   @begin[Signal Details]{dictionary}
     @subheading{The \"invalidate\" signal}
     @begin{pre}
  lambda (monitor)    : Run First
     @end{pre}
     @begin[code]{table}
-      @entry[monitor]{The @sym{gdk-monitor} on which the signal is emitted.}
+      @entry[monitor]{The @sym{gdk-monitor} object on which the signal is
+        emitted.}
     @end{table}
-    Since 3.22
   @end{dictionary}
   @see-slot{gdk-monitor-display}
   @see-slot{gdk-monitor-geometry}
@@ -206,56 +205,57 @@
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-monitor) 't)
  "The @code{display} property of type @class{gdk-display}
   (Read / Write / Construct Only) @br{}
-  The @class{gdk-display} of the monitor. @br{}
-  Since 3.22")
+  The display of the monitor.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-display 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-display object) => display}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[display]{a @class{gdk-display}}
+  @argument[display]{a @class{gdk-display} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{display} of the
+    Accessor of the @slot[gdk-monitor]{display} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-display}
-  gets the display that this monitor belongs to.
+  The slot access function @sym{gdk-monitor-display} gets the display that the
+  monitor belongs to.
 
   Since 3.22
-  @see-class{gdk-monitor}")
+  @see-class{gdk-monitor}
+  @see-class{gdk-display}")
 
 ;;; --- gdk-monitor-geometry ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "geometry" 'gdk-monitor) 't)
  "The @code{geometry} property of type @class{gdk-rectangle} (Read) @br{}
-  The geometry of the monitor. @br{}
-  Since 3.22")
+  The geometry of the monitor.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-geometry atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-geometry 'function)
- "@version{2019-3-25}
+ "@version{2020-11-3}
   @syntax[]{(gdk-monitor-geometry object) => geometry}
   @argument[object]{a @class{gdk-monitor} object}
   @argument[geometry]{a @class{gdk-rectangle} with the monitor geometry}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{geometry} of the
+    Accessor of the @slot[gdk-monitor]{geometry} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-geometry}
-  retrieves the size and position of an individual monitor within the display
-  coordinate space. The returned geometry is in \"application pixels\", not in
-  \"device pixels\". See the function @fun{gdk-monitor-scale-factor}.
+  The slot access function @sym{gdk-monitor-geometry} retrieves the size and
+  position of an individual monitor within the display coordinate space. The
+  returned geometry is in \"application pixels\", not in \"device pixels\".
+  See the function @fun{gdk-monitor-scale-factor} for the internal scale factor
+  that maps from monitor coordinates to device pixels.
 
   Since 3.22
   @see-class{gdk-monitor}
+  @see-class{gdk-rectangle}
   @see-function{gdk-monitor-scale-factor}")
 
 ;;; --- gdk-monitor-height-mm --------------------------------------------------
@@ -265,24 +265,23 @@
  "The @code{height-mm} property of type @code{:int} (Read) @br{}
   The height of the monitor, in millimeters. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.22")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-height-mm atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-height-mm 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-height-mm object) => height}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[height]{the physical height of the monitor}
+  @argument[height]{an integer with the physical height of the monitor}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{height-mm} of the
+    Accessor of the @slot[gdk-monitor]{height-mm} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-height-mm}
-  gets the height in millimeters of the monitor.
+  The slot access function @sym{gdk-monitor-height-mm} gets the height in
+  millimeters of the monitor.
 
   Since 3.22
   @see-class{gdk-monitor}")
@@ -293,24 +292,24 @@
 (setf (documentation (atdoc:get-slot-from-name "manufacturer" 'gdk-monitor) 't)
  "The @code{manufacturer} property of type @code{:string} (Read) @br{}
   The manufacturer name. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.22")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-manufacturer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-manufacturer 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-manufacturer object) => manufacturer}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[manufacturer]{the name of the manufacturer, or @code{nil}}
+  @argument[manufacturer]{a string with the name of the manufacturer, or
+    @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{manufacturer} of the
+    Accessor of the @slot[gdk-monitor]{manufacturer} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-manufacturer}
-  gets the name of the monitor's manufacturer, if available.
+  The slot access function @sym{gdk-monitor-manufacturer} gets the name of the
+  monitor's manufacturer, if available.
 
   Since 3.22
   @see-class{gdk-monitor}")
@@ -321,24 +320,23 @@
 (setf (documentation (atdoc:get-slot-from-name "model" 'gdk-monitor) 't)
  "The @code{model} property of type @code{:string} (Read) @br{}
   The model name. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.22")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-model 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-model object) => model}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[model]{the monitor model, or @code{nil}}
+  @argument[model]{a string with the monitor model, or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{model} of the
+    Accessor of the @slot[gdk-monitor]{model} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-model}
-  gets a string identifying the monitor model, if available.
+  The slot access function @sym{gdk-monitor-model} gets a string identifying
+  the monitor model, if available.
 
   Since 3.22
   @see-class{gdk-monitor}")
@@ -350,24 +348,23 @@
  "The @code{refresh-rate} property of type @code{:int} (Read) @br{}
   The refresh rate, in millihertz. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 3.22")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-refresh-rate atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-refresh-rate 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-refresh-rate object) => refresh-rate}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[refresh-rate]{the refresh rate in milli-Hertz, or 0}
+  @argument[refresh-rate]{an integer with the refresh rate in milli-Hertz, or 0}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{refresh-rate} of the
+    Accessor of the @slot[gdk-monitor]{refresh-rate} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-refresh-rate}
-  gets the refresh rate of the monitor, if available.
+  The slot access function @sym{gdk-monitor-refresh-rate} gets the refresh rate
+  of the monitor, if available.
 
   The value is in milli-Hertz, so a refresh rate of 60 Hz is returned as 60000.
 
@@ -379,7 +376,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gdk-monitor) 't)
  "The @code{scale-factor} property of type @code{:int} (Read) @br{}
-  The scale factor. Since 3.22 @br{}
+  The scale factor. @br{}
   Allowed values: >= 0 @br{}
   Default value: 1")
 
@@ -387,7 +384,7 @@
 (setf (gethash 'gdk-monitor-scale-factor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-scale-factor 'function)
- "@version{2019-9-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-scale-factor object) => scale-factor}
   @argument[object]{a @class{gdk-monitor} object}
   @argument[scale-factor]{a @code{:int} with the scale factor}
@@ -396,13 +393,13 @@
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-scale-factor}
-  gets the internal scale factor that maps from monitor coordinates to the
-  actual device pixels. On traditional systems this is 1, but on very high
-  density outputs this can be a higher value (often 2).
+  The slot access function @sym{gdk-monitor-scale-factor} gets the internal
+  scale factor that maps from monitor coordinates to the actual device pixels.
+  On traditional systems this is 1, but on very high density outputs this can
+  be a higher value (often 2).
 
   This can be used if you want to create pixel based data for a particular
-  monitor, but most of the time you are drawing to a window where it is better
+  monitor. But most of the time you are drawing to a window where it is better
   to use the function @fun{gdk-window-scale-factor} instead.
 
   Since 3.22
@@ -417,28 +414,28 @@
  "The @code{subpixel-layout} property of type @symbol{gdk-subpixel-layout}
   (Read) @br{}
   The subpixel layout. @br{}
-  Default value: @code{:unknown} @br{}
-  Since 3.22")
+  Default value: @code{:unknown}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-subpixel-layout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-subpixel-layout 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-subpixel-layout object) => layout}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[layout]{a subpixel layout}
+  @argument[layout]{a subpixel layout of type @symbol{gdk-subpixel-layout}}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{subpixel-layout} of the
+    Accessor of the @slot[gdk-monitor]{subpixel-layout} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-subpixel-layout}
-  gets information about the layout of red, green and blue primaries for each
-  pixel in this monitor, if available.
+  The slot access function @sym{gdk-monitor-subpixel-layout} gets information
+  about the layout of red, green and blue primaries for each pixel in this
+  monitor, if available.
 
   Since 3.22
-  @see-class{gdk-monitor}")
+  @see-class{gdk-monitor}
+  @see-symbol{gdk-subpixel-layout}")
 
 ;;; --- gdk-monitor-width-mm ---------------------------------------------------
 
@@ -447,25 +444,24 @@
                      't)
  "The @code{width-mm} property of type @code{:int} (Read) @br{}
   The width of the monitor, in millimeters. @br{}
-  Allowed values: >= 0
-  Default value: 0 @br{}
-  Since 3.22")
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-width-mm atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-width-mm 'function)
- "@version{2019-3-25}
+ "@version{2020-10-28}
   @syntax[]{(gdk-monitor-width-mm object) => width}
   @argument[object]{a @class{gdk-monitor} object}
-  @argument[width]{the physical width of the monitor}
+  @argument[width]{an integer with the physical width of the monitor}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{width-mm} of the
+    Accessor of the @slot[gdk-monitor]{width-mm} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-width-mm}
-  gets the width in millimeters of the monitor.
+  The slot access function @sym{gdk-monitor-width-mm} gets the width in
+  millimeters of the monitor.
 
   Since 3.22
   @see-class{gdk-monitor}")
@@ -475,26 +471,26 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "workarea" 'gdk-monitor) 't)
  "The @code{workarea} property of type @class{gdk-rectangle} (Read) @br{}
-  The workarea of the monitor. @br{}
-  Since 3.22")
+  The workarea of the monitor.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-monitor-workarea atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-monitor-workarea 'function)
- "@version{2019-3-25}
+ "@version{2020-11-3}
   @syntax[]{(gdk-monitor-workarea object) => workarea}
   @argument[object]{a @class{gdk-monitor} object}
   @argument[workarea]{a @class{gdk-rectangle} with the monitor workarea}
   @begin{short}
-    Accessor of the slot @slot[gdk-monitor]{workarea} of the
+    Accessor of the @slot[gdk-monitor]{workarea} slot of the
     @class{gdk-monitor} class.
   @end{short}
 
-  The slot access function @sym{gdk-monitor-workarea}
-  retrieves the size and position of the \"work area\" on a monitor within the
-  display coordinate space. The returned geometry is in \"application pixels\",
-  not in \"device pixels\". See the function @fun{gdk-monitor-scale-factor}.
+  The slot access function @sym{gdk-monitor-workarea} retrieves the size and
+  position of the \"work area\" on a monitor within the display coordinate
+  space. The returned geometry is in \"application pixels\", not in
+  \"device pixels\". See the function @fun{gdk-monitor-scale-factor} for the
+  internal scale factor that maps from monitor coordinates to device pixels.
 
   The work area should be considered when positioning menus and similar popups,
   to avoid placing them below panels, docks or other desktop components.
@@ -504,7 +500,8 @@
 
   Since 3.22
   @see-class{gdk-monitor}
-  @fun{gdk-monitor-scale-factor}")
+  @see-class{gdk-rectangle}
+  @see-function{gdk-monitor-scale-factor}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_monitor_is_primary ()
@@ -512,17 +509,17 @@
 
 (defcfun ("gdk_monitor_is_primary" gdk-monitor-is-primary) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2019-3-30}
+ "@version{2020-10-28}
   @argument[monitor]{a @class{gdk-monitor} object}
-  @return{@em{True} if monitor is primary.}
+  @return{@em{True} if @arg{monitor} is the primary monitor.}
   @begin{short}
-    Gets whether this monitor should be considered primary.
+    Gets whether the monitor should be considered primary.
   @end{short}
-  See the function @fun{gdk-display-get-primary-monitor}.
+  See the function @fun{gdk-display-primary-monitor}.
 
   Since 3.22
   @see-class{gdk-monitor}
-  @see-function{gdk-display-get-primary-monitor}"
+  @see-function{gdk-display-primary-monitor}"
   (monitor (g-object gdk-monitor)))
 
 (export 'gdk-monitor-is-primary)
