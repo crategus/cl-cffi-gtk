@@ -187,14 +187,15 @@
   @end{short}
 
   The slot access function @sym{gdk-screen-font-options} returns the current
-  font options, or @code{nil} if no default font options have been set. The slot
-  access function @sym{(setf gdk-screen-font-options)} sets the default font
-  options for the screen.
+  font options, or @code{nil} if no default font options have been set. The
+  slot access function @sym{(setf gdk-screen-font-options)} sets the default
+  font options for the screen.
 
   These options will be set on any Pango context's newly created with the
   function @fun{gdk-pango-context-for-screen}. Changing the default set
   of font options does not affect contexts that have already been created.
   @see-class{gdk-screen}
+  @see-symbol{cairo-font-options-t}
   @see-function{gdk-pango-context-for-screen}")
 
 ;;; --- gdk-screen-resolution --------------------------------------------------
@@ -225,8 +226,8 @@
   font handling on the screen.
 
   This is a scale factor between points specified in a
-  @class{pango-font-description} structure and cairo units. The default value is
-  96, meaning that a 10 point font will be 13 units high
+  @class{pango-font-description} structure and cairo units. The default value
+  is 96, meaning that a 10 point font will be 13 units high
   (10 * 96. / 72. = 13.3).
   @see-class{gdk-screen}
   @see-class{pango-font-description}")
@@ -310,11 +311,11 @@
 
 (defcfun ("gdk_screen_is_composited" gdk-screen-is-composited) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
-    A @code{:boolean} whether windows with RGBA visuals can reasonably be
-    expected to have their alpha channels drawn correctly on @arg{screen}.
+    A boolean whether windows with RGBA visuals can reasonably be expected to
+    have their alpha channels drawn correctly on @arg{screen}.
   @end{return}
   @begin{short}
     Returns whether windows with an RGBA visual can reasonably be expected to
@@ -322,7 +323,7 @@
   @end{short}
 
   On X11 this function returns whether a compositing manager is compositing
-  @arg{screen}.
+  the screen.
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -368,9 +369,9 @@
 
 (defcfun ("gdk_screen_get_number" gdk-screen-number) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{The @code{:int} with the index of @arg{screen}.}
+  @return{An integer with the index of @arg{screen}.}
   @begin{short}
     Gets the index of the screen among the screens in the display to which
     it belongs.
@@ -395,9 +396,9 @@
 
 (defun gdk-screen-width (&optional (screen (gdk-screen-default)))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A @code{:int} with the width of @arg{screen} in pixels.}
+  @return{An integer with the width of @arg{screen} in pixels.}
   @short{Gets the width of the screen in pixels.}
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-width} has been deprecated since version
@@ -420,9 +421,9 @@
 
 (defun gdk-screen-height (&optional (screen (gdk-screen-default)))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A @code{:int} with the height of @arg{screen} in pixels.}
+  @return{An integer with the height of @arg{screen} in pixels.}
   @short{Gets the height of the screen in pixels.}
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-height} has been deprecated since version
@@ -445,9 +446,9 @@
 
 (defun gdk-screen-width-mm (&optional (screen (gdk-screen-default)))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A @code{:int} with the width of @arg{screen} in millimeters.}
+  @return{An integer with the width of @arg{screen} in millimeters.}
   @begin{short}
     Gets the width of the screen in millimeters.
   @end{short}
@@ -473,9 +474,9 @@
 
 (defun gdk-screen-height-mm (&optional (screen (gdk-screen-default)))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A @code{:int} with the height of @arg{screen} in millimeters.}
+  @return{An integer with the height of @arg{screen} in millimeters.}
   @begin{short}
     Returns the height of the screen in millimeters.
   @end{short}
@@ -544,12 +545,12 @@
 (defcfun ("gdk_screen_make_display_name" gdk-screen-make-display-name)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A string.}
+  @return{A string with the name of the default display.}
   @begin{short}
-    Determines the name to pass to the @fun{gdk-display-open} function to get a
-    @class{gdk-display} object with this screen as the default screen.
+    Determines the name to pass to the function @fun{gdk-display-open} to get
+    a @class{gdk-display} object with this screen as the default screen.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-make-display-name} has been deprecated since
@@ -568,9 +569,9 @@
 
 (defcfun ("gdk_screen_get_n_monitors" gdk-screen-n-monitors) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{Number of monitors of type @code{:int} which @arg{screen} consists
+  @return{An integer with the number of monitors which @arg{screen} consists
     of.}
   @short{Returns the number of monitors which the screen consists of.}
   @begin[Warning]{dictionary}
@@ -591,9 +592,9 @@
 
 (defcfun ("gdk_screen_get_primary_monitor" gdk-screen-primary-monitor) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{A @code{:int} index for the primary monitor, or 0 if none is
+  @return{An integer with the index for the primary monitor, or 0 if none is
     configured.}
   @begin{short}
     Gets the primary monitor for the screen.
@@ -628,13 +629,13 @@
 
 (defun gdk-screen-monitor-geometry (screen monitor-num)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[monitor-num]{the monitor number of type @code{:int}}
+  @argument[monitor-num]{an integer with the monitor number}
   @return{A @class{gdk-rectangle} structure filled with the monitor geometry.}
   @begin{short}
-    Retrieves the @class{gdk-rectangle} structure representing the size and
-    position of the individual monitor within the entire screen area.
+    Retrieves the rectangle representing the size and position of the
+    individual monitor within the entire screen area.
   @end{short}
   Monitor numbers start at 0. To obtain the number of monitors of the screen,
   use the function @fun{gdk-screen-n-monitors}.
@@ -667,13 +668,13 @@
 
 (defun gdk-screen-monitor-workarea (screen monitor-num)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[monitor-num]{the monitor number of type @code{:int}}
+  @argument[monitor-num]{an integer with the monitor number}
   @return{A @class{gdk-rectangle} structure filled with the monitor workarea.}
   @begin{short}
-    Retrieves the @class{gdk-rectangle} structure representing the size and
-    position of the \"work area\" on a monitor within the entire screen area.
+    Retrieves the rectangle representing the size and position of the
+    \"work area\" on a monitor within the entire screen area.
   @end{short}
 
   The work area should be considered when positioning menus and similar
@@ -682,8 +683,6 @@
 
   Monitor numbers start at 0. To obtain the number of monitors of the screen,
   use the function @fun{gdk-screen-n-monitors}.
-
-  Since 3.4
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-monitor-workarea} has been deprecated since
     version 3.22 and should not be used in newly-written code. Use the function
@@ -703,10 +702,10 @@
 
 (defcfun ("gdk_screen_get_monitor_at_point" gdk-screen-monitor-at-point) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[x]{the @code{:int} x coordinate in the virtual @arg{screen}}
-  @argument[y]{the @code{:int} y coordinate in the virtual @arg{screen}}
+  @argument[x]{an integer with the x coordinate in the virtual @arg{screen}}
+  @argument[y]{an integer with the y coordinate in the virtual @arg{screen}}
   @begin{return}
     The monitor number in which the point (@arg{x}, @arg{y}) lies, or a monitor
     close to the point if not in any monitor.
@@ -720,7 +719,8 @@
     @fun{gdk-display-monitor-at-point} instead.
   @end{dictionary}
   @see-class{gdk-screen}
-  @see-function{gdk-screen-monitor-at-window}"
+  @see-function{gdk-screen-monitor-at-window}
+  @see-function{gdk-display-monitor-at-point}"
   (screen (g-object gdk-screen))
   (x :int)
   (y :int))
@@ -733,11 +733,11 @@
 
 (defcfun ("gdk_screen_get_monitor_at_window" gdk-screen-monitor-at-window) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
-    The monitor number of type @code{:int} in which most of @arg{window} is
+    An integer with the monitor number in which most of @arg{window} is
     located, or if @arg{window} does not intersect any monitors, a monitor,
     close to @arg{window}.
   @end{return}
@@ -752,7 +752,8 @@
   @end{dictionary}
   @see-class{gdk-screen}
   @see-class{gdk-window}
-  @see-function{gdk-screen-monitor-at-point}"
+  @see-function{gdk-screen-monitor-at-point}
+  @see-function{gdk-display-monitor-at-window}"
   (screen (g-object gdk-screen))
   (window (g-object gdk-window)))
 
@@ -764,11 +765,11 @@
 
 (defcfun ("gdk_screen_get_monitor_height_mm" gdk-screen-monitor-height-mm) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[monitor-num]{a @code{:int} with the number of the monitor, between
+  @argument[monitor-num]{an integer with the number of the monitor, between
     0 and and the result of @code{(gdk-screen-n-monitors @arg{screen})}}
-  @return{A @code{:int} with the height of the monitor, or -1 if not available.}
+  @return{An integer with the height of the monitor, or -1 if not available.}
   @begin{short}
     Gets the height in millimeters of the specified monitor.
   @end{short}
@@ -791,11 +792,11 @@
 
 (defcfun ("gdk_screen_get_monitor_width_mm" gdk-screen-monitor-width-mm) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[monitor-num]{a @code{:int} with the number of the monitor, between
+  @argument[monitor-num]{an integer with the number of the monitor, between
     0 and and the result of @code{(gdk-screen-n-monitors @arg{screen})}}
-  @return{A @code{:int} witht the width of the monitor, or -1 if not available.}
+  @return{An integer with the width of the monitor, or -1 if not available.}
   @begin{short}
     Gets the width in millimeters of the specified monitor, if available.
   @end{short}
@@ -819,9 +820,9 @@
 (defcfun ("gdk_screen_get_monitor_plug_name" gdk-screen-monitor-plug-name)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[monitor-num]{a @code{:int} with the number of the monitor, between
+  @argument[monitor-num]{an integer with the number of the monitor, between
     0 and the result of @code{(gdk-screen-n-monitors @arg{screen})}}
   @begin{return}
     A string containing the name of the monitor, or @code{nil} if the name
@@ -851,11 +852,11 @@
 (defcfun ("gdk_screen_get_monitor_scale_factor" gdk-screen-monitor-scale-factor)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object to get scale factor for}
-  @argument[monitor-num]{a @code{:int} with the number of the monitor, between
+  @argument[monitor-num]{an integer with the number of the monitor, between
     0 and @code{(gdk-screen-n-monitors @arg{screen})}}
-  @return{A @code{:int} with the scale factor.}
+  @return{An integer with the scale factor.}
   @begin{short}
     Returns the internal scale factor that maps from monitor coordiantes to the
     actual device pixels.
@@ -871,9 +872,10 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-monitor-scale-factor} has been deprecated since
     version 3.22 and should not be used in newly-written code. Use the function
-    @sym{gdk-monitor-scale-factor} instead.
+    @fun{gdk-monitor-scale-factor} instead.
   @end{dictionary}
-  @see-class{gdk-screen}"
+  @see-class{gdk-screen}
+  @see-function{gdk-monitor-scale-factor}"
   (screen (g-object gdk-screen))
   (monitor-num :int))
 
@@ -891,10 +893,10 @@
 
 (defun gdk-screen-setting (screen name gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{the @class{gdk-screen} object where the setting is located}
-  @argument[name]{the name of type @code{:string} of the setting}
-  @argument[gtype]{a @code{:string} with the GType of the setting}
+  @argument[name]{a string with the name of the setting}
+  @argument[gtype]{a string with the @code{GType} of the setting}
   @begin{return}
     The value of the setting, or @code{nil} if the setting does not exist.
   @end{return}
@@ -928,7 +930,7 @@
 (defcfun ("gdk_screen_get_active_window" gdk-screen-active-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
   @return{The currently active @class{gdk-window} object, or @code{nil}.}
   @begin{short}
@@ -946,7 +948,8 @@
     The function @sym{gdk-screen-active-window} has been deprecated since
     version 3.22 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gdk-screen}"
+  @see-class{gdk-screen}
+  @see-class{gdk-window}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-active-window)
@@ -958,7 +961,7 @@
 (defcfun ("gdk_screen_get_window_stack" gdk-screen-window-stack)
     (g-list (g-object gdk-window :free-from-foreign t) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-8}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
     A list of @class{gdk-window} objects for the current window stack, or
@@ -975,7 +978,8 @@
 
   On other platforms, this function may return @code{nil}, depending on whether
   it is implementable on that platform.
-  @see-class{gdk-screen}"
+  @see-class{gdk-screen}
+  @see-class{gdk-window}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-window-stack)
