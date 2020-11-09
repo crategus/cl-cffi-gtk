@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,11 +45,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GdkDisplay*  default-display    Read / Write
+;;;     GdkDisplay*   default-display    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;           void   display-opened     Run Last
+;;;           void    display-opened     Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -74,7 +74,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-display-manager 'type)
- "@version{2013-9-16}
+ "@version{2020-11-6}
   @begin{short}
     The purpose of the @sym{gdk-display-manager} singleton object is to offer
     notification when displays appear or disappear or the default display
@@ -84,7 +84,7 @@
   You can use the function @fun{gdk-display-manager-get} to obtain the
   @sym{gdk-display-manager} singleton, but that should be rarely necessary.
   Typically, initializing GTK+ opens a display that you can work with without
-  ever accessing the @sym{gdk-display-manager}.
+  ever accessing the @sym{gdk-display-manager} object.
 
   The GDK library can be built with support for multiple backends. The
   @sym{gdk-display-manager} object determines which backend is used at runtime.
@@ -120,10 +120,10 @@
       @begin{pre}
  lambda (manager display)    : Run Last
       @end{pre}
-      The \"display-opened\" signal is emitted when a display is opened.
+      This signal is emitted when a display is opened.
       @begin[code]{table}
-        @entry[manager]{The @sym{gdk-display-manager} object on which the signal
-          is emitted.}
+        @entry[manager]{The @sym{gdk-display-manager} object on which the
+          signal is emitted.}
         @entry[display]{The opened @class{gdk-display} object.}
       @end{table}
   @end{dictionary}
@@ -140,15 +140,15 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "default-display"
                                                'gdk-display-manager) 't)
- "The @code{default-display} property of type @class{gdk-display}
-  (Read / Write) @br{}
+ "The @code{default-display} property of type @class{gdk-display} (Read / Write)
+  @br{}
   The default display for GDK.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-display-manager-default-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-display-manager-default-display 'function)
- "@version{2019-3-26}
+ "@version{2020-11-6}
   @syntax[]{(gdk-display-manager-default-display object) => display}
   @syntax[]{(setf (gdk-display-manager-default-display object) display)}
   @argument[object]{a @class{gdk-display-manager} object}
@@ -158,16 +158,15 @@
     @class{gdk-display-manager} class.
   @end{short}
 
-  The @sym{gdk-display-manager-default-display} slot access function
-  gets the default @class{gdk-display} object, or @code{nil} if there is no
+  The slot access function @sym{gdk-display-manager-default-display} gets the
+  default @class{gdk-display} object, or @code{nil} if there is no default
+  display. The slot access function
+  @sym{(setf gdk-display-manager-default-display)} sets @arg{display} as the
   default display.
-
-  The @sym{(setf gdk-display-manager-default-display)} slot access function
-  sets @arg{display} as the default display.
   @begin[Example]{dictionary}
     @begin{pre}
-  (gdk-display-manager-default-display (gdk-display-manager-get))
- => #<GDK-DISPLAY {1001F9A233@}>
+ (gdk-display-manager-default-display (gdk-display-manager-get))
+=> #<GDK-DISPLAY {1001F9A233@}>
     @end{pre}
   @end{dictionary}
   @see-class{gdk-display}
@@ -180,10 +179,10 @@
 (defcfun ("gdk_display_manager_get" gdk-display-manager-get)
     (g-object gdk-display-manager)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
-  @return{The global @class{gdk-display-manager} singleton.}
+ "@version{2020-11-6}
+  @return{The global @class{gdk-display-manager} singleton object.}
   @begin{short}
-    Gets the singleton @class{gdk-display-manager} object.
+    Gets the @class{gdk-display-manager} singleton object.
   @end{short}
 
   When called for the first time, this function consults the @code{GDK_BACKEND}
@@ -206,9 +205,9 @@
 (defcfun ("gdk_display_manager_list_displays" gdk-display-manager-list-displays)
     (g-slist (g-object gdk-display) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
+ "@version{2020-11-6}
   @argument[manager]{a @class{gdk-display-manager} object}
-  @return{A  list of @class{gdk-display} objects.}
+  @return{A list of @class{gdk-display} objects.}
   @short{List all currently open displays.}
   @see-class{gdk-display}
   @see-class{gdk-display-manager}"
@@ -223,9 +222,9 @@
 (defcfun ("gdk_display_manager_open_display" gdk-display-manager-open-display)
     (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
+ "@version{2020-11-6}
   @argument[manager]{a @class{gdk-display-manager} object}
-  @argument[name]{the name of type @code{:string} of the display to open}
+  @argument[name]{a string with the name of the display to open}
   @begin{return}
     A @class{gdk-display} object, or @code{nil} if the display could not be
     opened.
