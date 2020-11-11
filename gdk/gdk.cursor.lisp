@@ -38,17 +38,17 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gdk_cursor_new                             deprectated
+;;;     gdk_cursor_new                                     deprectated
 ;;;     gdk_cursor_new_from_pixbuf
 ;;;     gdk_cursor_new_from_surface
 ;;;     gdk_cursor_new_from_name
 ;;;     gdk_cursor_new_for_display
-;;;     gdk_cursor_get_display ()                  Accessor
+;;;     gdk_cursor_get_display                             Accessor
 ;;;     gdk_cursor_get_image
 ;;;     gdk_cursor_get_surface
-;;;     gdk_cursor_get_cursor_type ()              Accessor
-;;;     gdk_cursor_ref                             not exported
-;;;     gdk_cursor_unref                           not exported
+;;;     gdk_cursor_get_cursor_type                         Accessor
+;;;     gdk_cursor_ref                                     not exported
+;;;     gdk_cursor_unref                                   not exported
 ;;;
 ;;; Properties
 ;;;
@@ -363,7 +363,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-cursor 'type)
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @begin{short}
     These functions are used to create and destroy cursors.
   @end{short}
@@ -382,6 +382,7 @@
   @fun{gdk-window-new}.
   @see-slot{gdk-cursor-cursor-type}
   @see-slot{gdk-cursor-display}
+  @see-class{gdk-display}
   @see-symbol{gdk-window-attr}
   @see-function{gdk-window-new}
   @see-function{gdk-window-cursor}
@@ -407,7 +408,7 @@
 (setf (gethash 'gdk-cursor-cursor-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-cursor-cursor-type 'function)
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @argument[object]{a @class{gdk-cursor} object}
   @syntax[]{(gdk-cursor-cursor-type object) => cursor-type}
   @begin{short}
@@ -416,7 +417,7 @@
   @end{short}
 
   The slot access function @sym{gdk-cursor-cursor-type} returns the cursor type
-  for this @arg{cursor}. This is a value from the @symbol{gdk-cursor-type}
+  for the cursor. This is a value from the @symbol{gdk-cursor-type}
   enumeration.
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}")
@@ -433,7 +434,7 @@
 (setf (gethash 'gdk-cursor-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-cursor-display 'function)
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @argument[object]{a @class{gdk-cursor} object}
   @syntax[]{(gdk-cursor-display object) => display}
   @begin{short}
@@ -441,8 +442,8 @@
     class.
   @end{short}
 
-  The slot access function @sym{gdk-cursor-display} returns the display on which
-  the @arg{cursor} is defined.
+  The slot access function @sym{gdk-cursor-display} returns the display on
+  which the cursor is defined.
   @see-class{gdk-cursor}
   @see-class{gdk-display}")
 
@@ -482,13 +483,13 @@
 (defcfun ("gdk_cursor_new_from_pixbuf" gdk-cursor-new-from-pixbuf)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{2020-11-11}
   @argument[display]{the @class{gdk-display} object for which the cursor will
     be created}
   @argument[pixbuf]{the @class{gdk-pixbuf} object containing the cursor image}
-  @argument[x]{a @code{:int} with the horizontal offset of the 'hotspot' of the
+  @argument[x]{an integer with the horizontal offset of the 'hotspot' of the
     cursor}
-  @argument[y]{a @code{:int} with the vertical offset of the 'hotspot' of the
+  @argument[y]{an integer with the vertical offset of the 'hotspot' of the
     cursor}
   @return{A new @class{gdk-cursor} object.}
   @begin{short}
@@ -529,14 +530,14 @@
 (defcfun ("gdk_cursor_new_from_surface" gdk-cursor-new-from-surface)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @argument[display]{the @class{gdk-display} object for which the cursor will
     be created}
   @argument[surface]{the @symbol{cairo-surface-t} structure containing the
     cursor pixel data}
-  @argument[x]{a @code{:double} with the horizontal offset of the 'hotspot' of
+  @argument[x]{a double float with the horizontal offset of the 'hotspot' of
     the cursor}
-  @argument[y]{a @code{:double} with the vertical offset of the 'hotspot' of
+  @argument[y]{a double float with the vertical offset of the 'hotspot' of
     the cursor}
   @return{A new @class{gdk-cursor} object.}
   @begin{short}
@@ -575,10 +576,10 @@
 (defcfun ("gdk_cursor_new_from_name" gdk-cursor-new-from-name)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @argument[display]{the @class{gdk-display} object for which the cursor will
     be created}
-  @argument[name]{a @code{:string} with the name of the cursor}
+  @argument[name]{a string with the name of the cursor}
   @return{A new @class{gdk-cursor} object, or @code{nil} if there is no cursor
     with the given @arg{name}.}
   @begin{short}
@@ -661,9 +662,9 @@
 
 (defcfun ("gdk_cursor_get_image" gdk-cursor-image) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{2020-11-10}
   @argument[cursor]{a @class{gdk-cursor} object}
-  @return{A @class{gdk-pixbuf} representing @arg{cursor}, or @code{nil}.}
+  @return{A @class{gdk-pixbuf} object representing @arg{cursor}, or @code{nil}.}
   @begin{short}
     Returns a @class{gdk-pixbuf} object with the image used to display the
     cursor.
@@ -696,8 +697,8 @@
   @argument[cursor]{a @class{gdk-cursor} object}
   @begin{return}
     surface -- a @symbol{cairo-surface-t} structure representing a cursor @br{}
-    x-hot   -- a @code{:double} with the hotspot x position @br{}
-    y-hot   -- a @code{:double} with the hotspot y position
+    x-hot   -- a double float with the hotspot x position @br{}
+    y-hot   -- a double float with the hotspot y position
   @end{return}
   @begin{short}
     Returns a Cairo image surface with the image used to display the cursor.
@@ -724,18 +725,19 @@
 
 ;; This function is deprecated and not exported.
 
-;(defun gdk-cursor-ref (cursor)
-; #+cl-cffi-gtk-documentation
-; "@version{2013-7-29}
-;  @argument[cursor]{a @class{gdk-cursor} object}
-;  @return{Same @arg{cursor} that was passed in.}
-;  @short{Adds a reference to @arg{cursor}.}
-;  @begin[Warning]{dictionary}
-;    @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
-;    be used in newly-written code. Use the @fun{g-object-ref} function instead.
-;  @end{dictionary}
-;  @see-class{gdk-cursor}"
-;  (g-object-ref cursor))
+#+nil
+(defun gdk-cursor-ref (cursor)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-29}
+  @argument[cursor]{a @class{gdk-cursor} object}
+  @return{Same @arg{cursor} that was passed in.}
+  @short{Adds a reference to @arg{cursor}.}
+  @begin[Warning]{dictionary}
+    @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use the @fun{g-object-ref} function instead.
+  @end{dictionary}
+  @see-class{gdk-cursor}"
+  (g-object-ref cursor))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_unref ()
@@ -743,20 +745,21 @@
 
 ;; This function is deprecated and not exported.
 
-;(defun gdk-cursor-unref (cursor)
-; #+cl-cffi-gtk-documentation
-; "@version{2013-7-29}
-;  @argument[cursor]{a @class{gdk-cursor} object}
-;  @begin{short}
-;    Removes a reference from @arg{cursor}, deallocating the @arg{cursor} if no
-;    references remain.
-;  @end{short}
-;  @begin[Warning]{dictionary}
-;    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
-;    be used in newly-written code. Use the @fun{g-object-unref} function
-;    instead.
-;  @end{dictionary}
-;  @see-class{gdk-cursor}"
-;  (g-object-unref cursor))
+#+nil
+(defun gdk-cursor-unref (cursor)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-29}
+  @argument[cursor]{a @class{gdk-cursor} object}
+  @begin{short}
+    Removes a reference from @arg{cursor}, deallocating the @arg{cursor} if no
+    references remain.
+  @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use the @fun{g-object-unref} function
+    instead.
+  @end{dictionary}
+  @see-class{gdk-cursor}"
+  (g-object-unref cursor))
 
 ;;; --- End of file gdk.cursor.lisp --------------------------------------------
