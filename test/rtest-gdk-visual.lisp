@@ -7,28 +7,28 @@
 
 (test gdk-visual-type
   ;; Check the type
-  (is-true (g-type-is-enum "GdkVisualType"))
+  (is (g-type-is-enum "GdkVisualType"))
   ;; Check the type initializer
-  (is (string= "GdkVisualType"
-               (g-type-name (gtype (foreign-funcall "gdk_visual_type_get_type" :int)))))
+  (is (eq (gtype "GdkVisualType")
+          (gtype (foreign-funcall "gdk_visual_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-visual-type
-          (gobject::registered-enum-type "GdkVisualType")))
+          (registered-enum-type "GdkVisualType")))
   ;; Check the names
   (is (equal '("GDK_VISUAL_STATIC_GRAY" "GDK_VISUAL_GRAYSCALE"
                "GDK_VISUAL_STATIC_COLOR" "GDK_VISUAL_PSEUDO_COLOR"
                "GDK_VISUAL_TRUE_COLOR" "GDK_VISUAL_DIRECT_COLOR")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkVisualType"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkVisualType"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkVisualType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkVisualType"))))
   ;; Check the nick names
   (is (equal '("static-gray" "grayscale" "static-color" "pseudo-color"
                "true-color" "direct-color")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkVisualType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkVisualType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkVisualType"
                              GDK-VISUAL-TYPE
@@ -40,31 +40,31 @@
                              (:PSEUDO-COLOR 3)
                              (:TRUE-COLOR 4)
                              (:DIRECT-COLOR 5))
-             (gobject::get-g-type-definition "GdkVisualType"))))
+             (get-g-type-definition "GdkVisualType"))))
 
 ;;;     GdkByteOrder
 
 (test gdk-byte-order
   ;; Check the type
-  (is-true (g-type-is-enum "GdkByteOrder"))
+  (is (g-type-is-enum "GdkByteOrder"))
   ;; Check the type initializer
-  (is (string= "GdkByteOrder"
-               (g-type-name (gtype (foreign-funcall "gdk_byte_order_get_type" :int)))))
+  (is (eq (gtype"GdkByteOrder")
+          (gtype (foreign-funcall "gdk_byte_order_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-byte-order
-          (gobject::registered-enum-type "GdkByteOrder")))
+          (registered-enum-type "GdkByteOrder")))
   ;; Check the names
   (is (equal '("GDK_LSB_FIRST" "GDK_MSB_FIRST")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkByteOrder"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkByteOrder"))))
   ;; Check the values
   (is (equal '(0 1)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkByteOrder"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkByteOrder"))))
   ;; Check the nick names
   (is (equal '("lsb-first" "msb-first")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkByteOrder"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkByteOrder"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkByteOrder"
                              GDK-BYTE-ORDER
@@ -72,27 +72,27 @@
                               :TYPE-INITIALIZER "gdk_byte_order_get_type")
                              (:LSB-FIRST 0)
                              (:MSB-FIRST 1))
-             (gobject::get-g-type-definition "GdkByteOrder"))))
+             (get-g-type-definition "GdkByteOrder"))))
 
 ;;;     GdkVisual
 
 (test gdk-visual-class
   ;; Type check
-  (is-true (g-type-is-object "GdkVisual"))
+  (is (g-type-is-object "GdkVisual"))
   ;; Check the registered name
   (is (eq 'gdk-visual
           (registered-object-type-by-name "GdkVisual")))
   ;; Check the type initializer
-  (is (string= "GdkVisual"
-               (g-type-name (gtype (foreign-funcall "gdk_visual_get_type" :int)))))
+  (is (eq (gtype "GdkVisual")
+          (gtype (foreign-funcall "gdk_visual_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GdkVisual")))
+  (is (eq (gtype "GObject") (g-type-parent "GdkVisual")))
   ;; Check the children
-  (is (equal '("GdkX11Visual" "GdkBroadwayVisual")
-             (mapcar #'gtype-name (g-type-children "GdkVisual"))))
+  (is (equal '("GdkX11Visual")
+             (mapcar #'g-type-name (g-type-children "GdkVisual"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GdkVisual"))))
+             (mapcar #'g-type-name (g-type-interfaces "GdkVisual"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name
@@ -242,4 +242,4 @@
 (test gdk-visual-screen
   (is (eq 'gdk-screen (type-of (gdk-visual-screen (gdk-visual-system))))))
 
-;;; 2020-9-26
+;;; 2020-11-10

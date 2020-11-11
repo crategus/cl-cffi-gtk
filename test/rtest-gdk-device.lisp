@@ -7,29 +7,29 @@
 
 (test gdk-input-source
   ;; Check the type
-  (is-true (g-type-is-enum "GdkInputSource"))
+  (is (g-type-is-enum "GdkInputSource"))
   ;; Check the type initializer
   (is (eq (gtype "GdkInputSource")
           (gtype (foreign-funcall "gdk_input_source_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-input-source
-          (gobject::registered-enum-type "GdkInputSource")))
+          (registered-enum-type "GdkInputSource")))
   ;; Check the names
   (is (equal '("GDK_SOURCE_MOUSE" "GDK_SOURCE_PEN" "GDK_SOURCE_ERASER"
                "GDK_SOURCE_CURSOR" "GDK_SOURCE_KEYBOARD"
                "GDK_SOURCE_TOUCHSCREEN" "GDK_SOURCE_TOUCHPAD"
                "GDK_SOURCE_TRACKPOINT" "GDK_SOURCE_TABLET_PAD")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkInputSource"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkInputSource"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7 8)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkInputSource"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkInputSource"))))
   ;; Check the nick names
   (is (equal '("mouse" "pen" "eraser" "cursor" "keyboard" "touchscreen"
                "touchpad" "trackpoint" "tablet-pad")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkInputSource"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkInputSource"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkInputSource"
                              GDK-INPUT-SOURCE
@@ -44,31 +44,31 @@
                              (:TOUCHPAD 6)
                              (:TRACKPOINT 7)
                              (:TABLET-PAD 8))
-             (gobject::get-g-type-definition "GdkInputSource"))))
+             (get-g-type-definition "GdkInputSource"))))
 
 ;;;     GdkInputMode
 
 (test gdk-input-mode
   ;; Check the type
-  (is-true (g-type-is-enum "GdkInputMode"))
+  (is (g-type-is-enum "GdkInputMode"))
   ;; Check the type initializer
   (is (eq (gtype "GdkInputMode")
           (gtype (foreign-funcall "gdk_input_mode_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-input-mode
-          (gobject::registered-enum-type "GdkInputMode")))
+          (registered-enum-type "GdkInputMode")))
   ;; Check the names
   (is (equal '("GDK_MODE_DISABLED" "GDK_MODE_SCREEN" "GDK_MODE_WINDOW")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkInputMode"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkInputMode"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkInputMode"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkInputMode"))))
   ;; Check the nick names
   (is (equal '("disabled" "screen" "window")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkInputMode"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkInputMode"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkInputMode"
                              GDK-INPUT-MODE
@@ -77,7 +77,7 @@
                              (:DISABLED 0)
                              (:SCREEN 1)
                              (:WINDOW 2))
-             (gobject::get-g-type-definition "GdkInputMode"))))
+             (get-g-type-definition "GdkInputMode"))))
 
 ;;;     GdkAxisUse
 
@@ -89,23 +89,23 @@
           (gtype (foreign-funcall "gdk_axis_use_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-axis-use
-          (gobject::registered-enum-type "GdkAxisUse")))
+          (registered-enum-type "GdkAxisUse")))
   ;; Check the names
   (is (equal '("GDK_AXIS_IGNORE" "GDK_AXIS_X" "GDK_AXIS_Y" "GDK_AXIS_PRESSURE"
                "GDK_AXIS_XTILT" "GDK_AXIS_YTILT" "GDK_AXIS_WHEEL"
                "GDK_AXIS_DISTANCE" "GDK_AXIS_ROTATION" "GDK_AXIS_SLIDER"
                "GDK_AXIS_LAST")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkAxisUse"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkAxisUse"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7 8 9 10)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkAxisUse"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkAxisUse"))))
   ;; Check the nick names
   (is (equal '("ignore" "x" "y" "pressure" "xtilt" "ytilt" "wheel" "distance"
                "rotation" "slider" "last")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkAxisUse"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkAxisUse"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkAxisUse"
                              GDK-AXIS-USE
@@ -122,7 +122,7 @@
                              (:ROTATION 8)
                              (:SLIDER 9)
                              (:LAST 10))
-             (gobject::get-g-type-definition "GdkAxisUse"))))
+             (get-g-type-definition "GdkAxisUse"))))
 
 ;;;     GdkAxisFlags                                       Since 3.22
 
@@ -165,35 +165,35 @@
                               (:DISTANCE 128)
                               (:ROTATION 256)
                               (:SLIDER 512))
-             (gobject::get-g-type-definition "GdkAxisFlags"))))
+             (get-g-type-definition "GdkAxisFlags"))))
 
 ;;;     GdkDeviceToolType                                  Since 3.22
 
 (test gdk-device-tool-type
   ;; Check the type
-  (is-true (g-type-is-enum "GdkDeviceToolType"))
+  (is (g-type-is-enum "GdkDeviceToolType"))
   ;; Check the type initializer
   (is (eq (gtype "GdkDeviceToolType")
           (gtype (foreign-funcall "gdk_device_tool_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-device-tool-type
-          (gobject::registered-enum-type "GdkDeviceToolType")))
+          (registered-enum-type "GdkDeviceToolType")))
   ;; Check the names
   (is (equal '("GDK_DEVICE_TOOL_TYPE_UNKNOWN" "GDK_DEVICE_TOOL_TYPE_PEN"
                "GDK_DEVICE_TOOL_TYPE_ERASER" "GDK_DEVICE_TOOL_TYPE_BRUSH"
                "GDK_DEVICE_TOOL_TYPE_PENCIL" "GDK_DEVICE_TOOL_TYPE_AIRBRUSH"
                "GDK_DEVICE_TOOL_TYPE_MOUSE" "GDK_DEVICE_TOOL_TYPE_LENS")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkDeviceToolType"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkDeviceToolType"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkDeviceToolType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkDeviceToolType"))))
   ;; Check the nick names
   (is (equal '("unknown" "pen" "eraser" "brush" "pencil" "airbrush" "mouse"
                "lens")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkDeviceToolType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkDeviceToolType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkDeviceToolType"
                              GDK-DEVICE-TOOL-TYPE
@@ -207,32 +207,32 @@
                              (:AIRBRUSH 5)
                              (:MOUSE 6)
                              (:LENS 7))
-             (gobject::get-g-type-definition "GdkDeviceToolType"))))
+             (get-g-type-definition "GdkDeviceToolType"))))
 
 ;;;     GdkDeviceType
 
 (test gdk-device-type
   ;; Check the type
-  (is-true (g-type-is-enum "GdkDeviceType"))
+  (is (g-type-is-enum "GdkDeviceType"))
   ;; Check the type initializer
   (is (eq (gtype "GdkDeviceType")
           (gtype (foreign-funcall "gdk_device_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-device-type
-          (gobject::registered-enum-type "GdkDeviceType")))
+          (registered-enum-type "GdkDeviceType")))
   ;; Check the names
   (is (equal '("GDK_DEVICE_TYPE_MASTER" "GDK_DEVICE_TYPE_SLAVE"
                "GDK_DEVICE_TYPE_FLOATING")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkDeviceType"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkDeviceType"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkDeviceType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkDeviceType"))))
   ;; Check the nick names
   (is (equal '("master" "slave" "floating")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkDeviceType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkDeviceType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkDeviceType"
                              GDK-DEVICE-TYPE
@@ -241,32 +241,32 @@
                              (:MASTER 0)
                              (:SLAVE 1)
                              (:FLOATING 2))
-             (gobject::get-g-type-definition "GdkDeviceType"))))
+             (get-g-type-definition "GdkDeviceType"))))
 
 ;;;     GdkGrabOwnership
 
 (test gdk-grab-ownership
   ;; Check the type
-  (is-true (g-type-is-enum "GdkGrabOwnership"))
+  (is (g-type-is-enum "GdkGrabOwnership"))
   ;; Check the type initializer
   (is (eq (gtype "GdkGrabOwnership")
           (gtype (foreign-funcall "gdk_grab_ownership_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-grab-ownership
-          (gobject::registered-enum-type "GdkGrabOwnership")))
+          (registered-enum-type "GdkGrabOwnership")))
   ;; Check the names
   (is (equal '("GDK_OWNERSHIP_NONE" "GDK_OWNERSHIP_WINDOW"
                "GDK_OWNERSHIP_APPLICATION")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkGrabOwnership"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkGrabOwnership"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkGrabOwnership"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkGrabOwnership"))))
   ;; Check the nick names
   (is (equal '("none" "window" "application")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkGrabOwnership"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkGrabOwnership"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkGrabOwnership"
                              GDK-GRAB-OWNERSHIP
@@ -275,7 +275,7 @@
                              (:NONE 0)
                              (:WINDOW 1)
                              (:APPLICATION 2))
-             (gobject::get-g-type-definition "GdkGrabOwnership"))))
+             (get-g-type-definition "GdkGrabOwnership"))))
 
 ;;;     GdkTimeCoord
 
@@ -283,28 +283,28 @@
 
 (test gdk-grab-status
   ;; Check the type
-  (is-true (g-type-is-enum "GdkGrabStatus"))
+  (is (g-type-is-enum "GdkGrabStatus"))
   ;; Check the type initializer
   (is (eq (gtype "GdkGrabStatus")
           (gtype (foreign-funcall "gdk_grab_status_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-grab-status
-          (gobject::registered-enum-type "GdkGrabStatus")))
+          (registered-enum-type "GdkGrabStatus")))
   ;; Check the names
   (is (equal '("GDK_GRAB_SUCCESS" "GDK_GRAB_ALREADY_GRABBED"
                "GDK_GRAB_INVALID_TIME" "GDK_GRAB_NOT_VIEWABLE"
                "GDK_GRAB_FROZEN" "GDK_GRAB_FAILED")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkGrabStatus"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkGrabStatus"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkGrabStatus"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkGrabStatus"))))
   ;; Check the nick names
   (is (equal '("success" "already-grabbed" "invalid-time" "not-viewable"
                "frozen" "failed")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkGrabStatus"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkGrabStatus"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkGrabStatus"
                              GDK-GRAB-STATUS
@@ -316,7 +316,7 @@
                              (:NOT-VIEWABLE 3)
                              (:FROZEN 4)
                              (:FAILED 5))
-             (gobject::get-g-type-definition "GdkGrabStatus"))))
+             (get-g-type-definition "GdkGrabStatus"))))
 
 ;;;     GdkDeviceTool                                      Since 3.22
 
