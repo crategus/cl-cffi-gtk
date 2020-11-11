@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -70,10 +70,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-rgba 'type)
- "@version{2013-8-17}
+ "@version{2020-11-10}
   @begin{short}
     The @sym{gdk-rgba} structure is used to represent a (possibly translucent)
-    color, in a way that is compatible with cairos notion of color.
+    color, in a way that is compatible with Cairos notion of color.
   @end{short}
   @begin{pre}
 (define-g-boxed-cstruct gdk-rgba \"GdkRGBA\"
@@ -99,42 +99,47 @@
 (export (boxed-related-symbols 'gdk-rgba))
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;;  Contstructors
-;;;
+;;;  Constructors
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-rgba 'function)
- "@version{2013-8-17}
+ "@version{2020-11-10}
   @argument[instance]{a @class{gdk-rgba} structure}
-  Copy constructor of a @class{gdk-rgba} structure.
+  @begin{short}
+    Copy constructor of a @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-rgba 'function)
- "@version{2013-8-17}
-  @argument[red]{The intensity of the red channel from 0.0 to 1.0 inclusive.}
-  @argument[green]{The intensity of the green channel from 0.0 to 1.0
-    inclusive.}
-  @argument[blue]{The intensity of the blue channel from 0.0 to 1.0 inclusive.}
-  @argument[alpha]{The opacity of the color from 0.0 for completely translucent
-    to 1.0 for opaque.}
-  Creates a @class{gdk-rgba} structure.
+ "@version{2020-11-10}
+  @argument[red]{a @code{:double} with the intensity of the red channel
+    from 0.0 to 1.0 inclusive}
+  @argument[green]{a @code{:double} with the intensity of the green channel
+    from 0.0 to 1.0 inclusive}
+  @argument[blue]{a @code{:code} with the intensity of the blue channel
+    from 0.0 to 1.0 inclusive}
+  @argument[alpha]{a @code{:double} with the opacity of the color
+    from 0.0 for completely translucent to 1.0 for opaque}
+  @begin{short}
+    Creates a @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Slot Accessors
-;;;
+;;; Accessors
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba-red atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-red 'function)
- "@version{2013-8-17}
-  Accessor of the slot @code{red} of the @class{gdk-rgba} structure.
+ "@version{2020-11-10}
+  @argument[instance]{a @class{gdk-rgba} structure}
+  @begin{short}
+    Accessor of the @code{red} slot of the @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-green}
   @see-function{gdk-rgba-blue}
@@ -144,8 +149,11 @@
 (setf (gethash 'gdk-rgba-green atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-green 'function)
- "@version{2013-8-17}
-  Accessor of the slot @code{green} of the @class{gdk-rgba} structure.
+ "@version{2020-11-10}
+  @argument[instance]{a @class{gdk-rgba} structure}
+  @begin{short}
+    Accessor of the @code{green} slot of the @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
   @see-function{gdk-rgba-blue}
@@ -155,8 +163,11 @@
 (setf (gethash 'gdk-rgba-blue atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-blue 'function)
- "@version{2013-8-17}
-  Accessor of the slot @code{blue} of the @class{gdk-rgba} structure.
+ "@version{2020-11-10}
+  @argument[instance]{a @class{gdk-rgba} structure}
+  @begin{short}
+    Accessor of the @code{blue} slot of the @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
   @see-function{gdk-rgba-green}
@@ -166,8 +177,11 @@
 (setf (gethash 'gdk-rgba-alpha atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-alpha 'function)
- "@version{2013-8-17}
-  Accessor of the slot @code{alpha} of the @class{gdk-rgba} structure.
+ "@version{2020-11-10}
+  @argument[instance]{a @class{gdk-rgba} structure}
+  @begin{short}
+    Accessor of the @code{alpha} slot of the @class{gdk-rgba} structure.
+  @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
   @see-function{gdk-rgba-green}
@@ -177,7 +191,7 @@
 ;;; gdk_rgba_copy ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gdk-rgba-copy))
+;; not exported
 
 (defun gdk-rgba-copy (rgba)
  #+cl-cffi-gtk-documentation
@@ -195,8 +209,6 @@
   @see-class{gdk-rgba}
   @see-function{copy-gdk-rgba}"
   (copy-gdk-rgba rgba))
-
-(export 'gdk-rgba-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_free ()
@@ -221,13 +233,13 @@
   (rgba (g-boxed-foreign gdk-rgba))
   (spec :string))
 
-(defun gdk-rgba-parse (spec)
+(defun gdk-rgba-parse (color)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[spec]{the string specifying the color}
+ "@version{2020-11-10}
+  @argument[color]{a string specifying the color}
   @return{A @class{gdk-rgba} structure with the filled in values.}
   @begin{short}
-    Parses a textual representation of a color, and returns a rgba structure
+    Parses a textual representation of a color, and returns a RGBA structure
     filling in the red, green, blue and alpha fields.
   @end{short}
 
@@ -264,7 +276,7 @@
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-to-string}"
   (let ((rgba (make-gdk-rgba)))
-    (when (%gdk-rgba-parse rgba spec)
+    (when (%gdk-rgba-parse rgba color)
       rgba)))
 
 (export 'gdk-rgba-parse)
@@ -275,13 +287,11 @@
 
 (defcfun ("gdk_rgba_equal" gdk-rgba-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
-  @argument[p1]{a @class{gdk-rgba} structure}
-  @argument[p2]{another @class{gdk-rgba} structure}
+ "@version{2020-11-10}
+  @argument[color1]{a @class{gdk-rgba} structure}
+  @argument[color2]{another @class{gdk-rgba} structure}
   @return{@em{True} if the two colors compare equal.}
   @short{Compares two RGBA colors.}
-
-  Since 3.0
   @see-class{gdk-rgba}"
   (color1 (g-boxed-foreign gdk-rgba))
   (color2 (g-boxed-foreign gdk-rgba)))
@@ -294,17 +304,15 @@
 
 (defcfun ("gdk_rgba_hash" gdk-rgba-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
-  @argument[p]{a @class{gdk-rgba} structure}
-  @return{The hash value for @arg{p}.}
+ "@version{2020-11-10}
+  @argument[color]{a @class{gdk-rgba} structure}
+  @return{An unsigned integer with the hash value for @arg{color}.}
   @begin{short}
     A hash function suitable for using for a hash table that stores
-    @class{gdk-rgba}'s.
+    RGBA colors.
   @end{short}
-
-  Since 3.0
   @see-class{gdk-rgba}"
-  (p (g-boxed-foreign gdk-rgba)))
+  (color (g-boxed-foreign gdk-rgba)))
 
 (export 'gdk-rgba-hash)
 
@@ -314,13 +322,14 @@
 
 (defcfun ("gdk_rgba_to_string" gdk-rgba-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-8-15}
-  @argument[rgba]{a @class{gdk-rgba} structure}
-  @return{A newly allocated text string.}
+ "@version{2020-11-10}
+  @argument[color]{a @class{gdk-rgba} structure}
+  @return{A text string.}
   @begin{short}
-    Returns a textual specification of rgba in the form @code{rgb (r, g, b)} or
-    @code{rgba (r, g, b, a)}, where @code{r}, @code{g}, @code{b} and @code{a}
-    represent the red, green, blue and alpha values respectively.
+    Returns a textual specification of @arg{color} in the form
+    @code{rgb (r, g, b)} or @code{rgba (r, g, b, a)}, where @code{r}, @code{g},
+    @code{b} and @code{a} represent the red, green, blue and alpha values
+    respectively.
   @end{short}
   @code{r}, @code{g}, and @code{b} are represented as integers in the range 0
   to 255, and @code{a} is represented as floating point value in the range
@@ -332,11 +341,9 @@
   Note that this string representation may loose some precision, since @code{r},
   @code{g} and @code{b} are represented as 8-bit integers. If this is a concern,
   you should use a different representation.
-
-  Since 3.0
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-parse}"
-  (rgba (g-boxed-foreign gdk-rgba)))
+  (color (g-boxed-foreign gdk-rgba)))
 
 (export 'gdk-rgba-to-string)
 
