@@ -39,24 +39,24 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gdk_query_depths                                   * deprecated
-;;;     gdk_query_visual_types                             * deprecated
-;;;     gdk_list_visuals                                   * deprecated
-;;;     gdk_visual_get_bits_per_rgb                        * deprecated
+;;;     gdk_query_depths                                   deprecated
+;;;     gdk_query_visual_types                             deprecated
+;;;     gdk_list_visuals                                   deprecated
+;;;     gdk_visual_get_bits_per_rgb                        deprecated
 ;;;     gdk_visual_get_blue_pixel_details
-;;;     gdk_visual_get_byte_order                          * deprecated
-;;;     gdk_visual_get_colormap_size                       * deprecated
+;;;     gdk_visual_get_byte_order                          deprecated
+;;;     gdk_visual_get_colormap_size                       deprecated
 ;;;     gdk_visual_get_depth
 ;;;     gdk_visual_get_green_pixel_details
 ;;;     gdk_visual_get_red_pixel_details
 ;;;     gdk_visual_get_visual_type
-;;;     gdk_visual_get_best_depth                          * deprecated
-;;;     gdk_visual_get_best_type                           * deprecated
-;;;     gdk_visual_get_system                              * deprecated
-;;;     gdk_visual_get_best                                * deprecated
-;;;     gdk_visual_get_best_with_depth                     * deprecated
-;;;     gdk_visual_get_best_with_type                      * deprecated
-;;;     gdk_visual_get_best_with_both                      * deprecated
+;;;     gdk_visual_get_best_depth                          deprecated
+;;;     gdk_visual_get_best_type                           deprecated
+;;;     gdk_visual_get_system                              deprecated
+;;;     gdk_visual_get_best                                deprecated
+;;;     gdk_visual_get_best_with_depth                     deprecated
+;;;     gdk_visual_get_best_with_type                      deprecated
+;;;     gdk_visual_get_best_with_both                      deprecated
 ;;;     gdk_visual_get_screen
 ;;;
 ;;; Object Hierarchy
@@ -214,7 +214,7 @@
 
 (defun gdk-query-depths ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-10}
   @return{A list of integers of the available depths.}
   @begin{short}
     This function returns the available bit depths for the default screen.
@@ -230,12 +230,14 @@
   @end{dictionary}
   @begin[Example]{dictionary}
     @begin{pre}
-  (gdk-query-depths)
+ (gdk-query-depths)
 => (32 24)
     @end{pre}
   @end{dictionary}
   @see-class{gdk-visual}
-  @see-function{gdk-list-visuals}"
+  @see-function{gdk-list-visuals}
+  @see-function{gdk-screen-system-visual}
+  @see-function{gdk-screen-rgba-visual}"
   (with-foreign-objects ((count-r :int) (depths-r :pointer))
     (%gdk-query-depths depths-r count-r)
     (iter (with count = (mem-ref count-r :int))
@@ -317,9 +319,9 @@
 
 (defcfun ("gdk_visual_get_bits_per_rgb" gdk-visual-bits-per-rgb) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-10-11}
   @argument[visual]{a @class{gdk-visual} object}
-  @return{A @code{:int} with the number of significant bits per color value for
+  @return{An integer with the number of significant bits per color value for
     visual.}
   @begin{short}
     Returns the number of significant bits per red, green and blue value.
@@ -330,7 +332,10 @@
     @fun{gdk-visual-red-pixel-details} and its variants to learn about the
     pixel layout of TrueColor and DirectColor visuals.
   @end{dictionary}
-  @see-class{gdk-visual}"
+  @see-class{gdk-visual}
+  @see-function{gdk-visual-red-pixel-details}
+  @see-function{gdk-visual-blue-pixel-details}
+  @see-function{gdk-visual-green-pixel-details}"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-bits-per-rgb)
@@ -348,21 +353,21 @@
 
 (defun gdk-visual-blue-pixel-details (visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-10-11}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- a @code{:uint32}, or @code{nil} @br{}
-    @code{shift} -- a @code{:int}, or @code{nil} @br{}
-    @code{precision} -- a @code{:int}, or @code{nil}
+    @code{mask} -- an unsigned integer, or @code{nil} @br{}
+    @code{shift} -- an integer, or @code{nil} @br{}
+    @code{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate blue pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the number
-  of bits left we must shift a primary for it to be in position according to
-  @arg{mask}. Finally, @arg{precision} refers to how much precision the pixel
-  value contains for a particular primary.
+  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
+  number of bits left we must shift a primary for it to be in position
+  according to @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
   @see-function{gdk-visual-red-pixel-details}
   @see-function{gdk-visual-green-pixel-details}"
@@ -380,11 +385,12 @@
 
 (defcfun ("gdk_visual_get_byte_order" gdk-visual-byte-order) gdk-byte-order
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-10}
   @argument[visual]{a @class{gdk-visual} object}
-  @return{A @symbol{gdk-byte-order} stating the byte order of @arg{visual}.}
+  @return{A @symbol{gdk-byte-order} value stating the byte order of
+    @arg{visual}.}
   @begin{short}
-    Returns the byte order of this visual.
+    Returns the byte order of the visual.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-visual-byte-order} has been deprecated since version
@@ -403,9 +409,9 @@
 
 (defcfun ("gdk_visual_get_colormap_size" gdk-visual-colormap-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2020-10-11}
   @argument[visual]{a @class{gdk-visual} object}
-  @return{A @code{:int} with the size of a colormap that is suitable for
+  @return{An integer with the size of a colormap that is suitable for
     @arg{visual}.}
   @begin{short}
     Returns the size of a colormap for the visual.
@@ -426,11 +432,11 @@
 
 (defcfun ("gdk_visual_get_depth" gdk-visual-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-10-11}
   @argument[visual]{a @class{gdk-visual} object}
-  @return{A @code{:int} with the bit depth of this @arg{visual}.}
+  @return{An integer with the bit depth of @arg{visual}.}
   @begin{short}
-    Returns the bit depth of this visual.
+    Returns the bit depth of the visual.
   @end{short}
   @see-class{gdk-visual}"
   (visual (g-object gdk-visual)))
@@ -449,21 +455,21 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-green-pixel-details (visual)
- "@version{2020-9-26}
+ "@version{2020-10-11}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- a @code{:uint32}, or @code{nil} @br{}
-    @code{shift} -- a @code{:int}, or @code{nil} @br{}
-    @code{precision} -- a @code{:int}, or @code{nil}
+    @code{mask} -- an unsigned integer, or @code{nil} @br{}
+    @code{shift} -- an integer, or @code{nil} @br{}
+    @code{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate green pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the number
-  of bits left we must shift a primary for it to be in position according to
-  @arg{mask}. Finally, @arg{precision} refers to how much precision the pixel
-  value contains for a particular primary.
+  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
+  number of bits left we must shift a primary for it to be in position
+  according to @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
   @see-function{gdk-visual-red-pixel-details}
   @see-function{gdk-visual-blue-pixel-details}"
@@ -487,21 +493,21 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-red-pixel-details (visual)
- "@version{2020-9-26}
+ "@version{2020-11-10}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- a @code{:uint32}, or @code{nil} @br{}
-    @code{shift} -- a @code{:int}, or @code{nil} @br{}
-    @code{precision} -- a @code{:int}, or @code{nil}
+    @code{mask} -- an unsigned integer, or @code{nil} @br{}
+    @code{shift} -- an integer, or @code{nil} @br{}
+    @code{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate red pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the number
-  of bits left we must shift a primary for it to be in position according to
-  @arg{mask}. Finally, @arg{precision} refers to how much precision the pixel
-  value contains for a particular primary.
+  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
+  number of bits left we must shift a primary for it to be in position
+  according to @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
   @see-function{gdk-visual-blue-pixel-details}
   @see-function{gdk-visual-green-pixel-details}"
@@ -519,9 +525,9 @@
 
 (defcfun ("gdk_visual_get_visual_type" gdk-visual-visual-type) gdk-visual-type
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2020-11-10}
   @argument[visual]{a @class{gdk-visual} object}
-  @return{A @symbol{gdk-visual-type} value stating the type of visual.}
+  @return{A @symbol{gdk-visual-type} value stating the type of @arg{visual}.}
   @begin{short}
     Returns the type of visual this is (PseudoColor, TrueColor, etc).
   @end{short}
@@ -537,8 +543,8 @@
 
 (defcfun ("gdk_visual_get_best_depth" gdk-visual-best-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
-  @return{A @code{:int} with the best available depth.}
+ "@version{2020-11-10}
+  @return{An integer with the best available depth.}
   @begin{short}
     Get the best available depth for the default GDK screen.
   @end{short}
@@ -639,11 +645,11 @@
 (defcfun ("gdk_visual_get_best_with_depth" gdk-visual-best-with-depth)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
-  @argument[depth]{a @code{:int} with the bit depth}
+ "@version{2020-11-10}
+  @argument[depth]{an integer with the bit depth}
   @return{The best @class{gdk-visual} object for the given @arg{depth}.}
   @begin{short}
-    Get the best visual with depth @arg{depth} for the default GDK screen.
+    Get the best visual with depth for the default GDK screen.
   @end{short}
   Color visuals and visuals with mutable colormaps are preferred over grayscale
   or fixed-colormap visuals. @code{Nil} may be returned if no visual supports
@@ -704,8 +710,8 @@
 (defcfun ("gdk_visual_get_best_with_both" gdk-visual-best-with-both)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
-  @argument[depth]{a @code{:int} with the bit depth}
+ "@version{2020-11-10}
+  @argument[depth]{an integer with the bit depth}
   @argument[visual-type]{a value of the @symbol{gdk-visual-type} enumeration}
   @return{The best @class{gdk-visual} object with both @arg{depth} and
     @arg{visual-type}, or @code{nil} if none.}
