@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,8 +43,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     CairoRegion*  clip    Read / Write / Construct Only
-;;;       GdkWindow*  window  Read / Write / Construct Only
+;;;     CairoRegion*   clip      Read / Write / Construct Only
+;;;       GdkWindow*   window    Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -72,20 +72,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-drawing-context 'type)
- "@version{2019-3-25}
+ "@version{2020-11-12}
   @begin{short}
     @sym{gdk-drawing-context} is an object that represents the current drawing
-    state of a @class{gdk-window}.
+    state of a @class{gdk-window} object.
   @end{short}
 
-  It's possible to use a @sym{gdk-drawing-context} to draw on a
-  @class{gdk-window} via rendering API like Cairo or OpenGL.
+  It is possible to use a @sym{gdk-drawing-context} object to draw on a
+  @class{gdk-window} object via rendering API like Cairo or OpenGL.
 
-  A @sym{gdk-drawing-context} can only be created by calling
+  A @sym{gdk-drawing-context} object can only be created by calling
   the function @fun{gdk-window-begin-draw-frame} and will be valid until a call
   to the function @fun{gdk-window-end-draw-frame}.
 
-  @sym{gdk-drawing-context} is available since GDK 3.22.
+  The @sym{gdk-drawing-context} class is available since GDK 3.22.
   @see-class{gdk-window}
   @see-function{gdk-window-begin-draw-frame}
   @see-function{gdk-window-end-draw-frame}")
@@ -101,27 +101,27 @@
                                                'gdk-drawing-context) 't)
  "The @code{clip} property of type @symbol{cairo-region-t}
   (Read / Write / Construct Only) @br{}
-  The clip region applied to the drawing context. @br{}
-  Since 3.22")
+  The clip region applied to the drawing context. Since 3.22")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drawing-context-clip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-drawing-context-clip 'function)
- "@version{2019-3-25}
+ "@version{2020-11-12}
   @syntax[]{(gdk-drawing-context-clip object) => cairo-region}
   @argument[object]{a @class{gdk-drawing-context} object}
-  @argument[cairo-region]{a @class{cairo-region-t}}
+  @argument[cairo-region]{a @symbol{cairo-region-t} structure}
   @begin{short}
-    Accessor of the slot @slot[gdk-drawing-context]{clip} of the
+    Accessor of the @slot[gdk-drawing-context]{clip} slot of the
     @class{gdk-drawing-context} class.
   @end{short}
 
-  The generic function @sym{gdk-drawing-context-clip}
-  retrieves a copy of the clip region used when creating the context.
+  The slot access function @sym{gdk-drawing-context-clip} retrieves a copy of
+  the clip region used when creating the context.
 
   Since 3.22
-  @see-class{gdk-drawing-context}")
+  @see-class{gdk-drawing-context}
+  @see-symbol{cairo-region-t}")
 
 ;;; --- gdk-drawing-context-window ---------------------------------------------
 
@@ -130,63 +130,79 @@
                                                'gdk-drawing-context) 't)
  "The @code{window} property of type @class{gdk-window}
   (Read / Write / Construct Only) @br{}
-  The @class{gdk-window} that created the drawing context. @br{}
-  Since 3.22")
+  The window that created the drawing context. Since 3.22")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drawing-context-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-drawing-context-window 'function)
- "@version{2019-3-25}
+ "@version{2020-11-12}
   @syntax[]{(gdk-drawing-context-window object) => window}
   @argument[object]{a @class{gdk-drawing-context} object}
-  @argument[window]{a @class{gdk-window}}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-drawing-context]{window} of the
+    Accessor of the @slot[gdk-drawing-context]{window} slot of the
     @class{gdk-drawing-context} class.
   @end{short}
 
-  The generic function @sym{gdk-drawing-context-window}
-  retrieves the window that created the drawing context.
+  The slot access function @sym{gdk-drawing-context-window} retrieves the window
+  that created the drawing context.
 
   Since 3.22
-  @see-class{gdk-drawing-context}")
+  @see-class{gdk-drawing-context}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drawing_context_get_cairo_context ()
-;;;
-;;; cairo_t *
-;;; gdk_drawing_context_get_cairo_context (GdkDrawingContext *context);
-;;;
-;;; Retrieves a Cairo context to be used to draw on the GdkWindow that created
-;;; the GdkDrawingContext.
-;;;
-;;; The returned context is guaranteed to be valid as long as the
-;;; GdkDrawingContext is valid, that is between a call to
-;;; gdk_window_begin_draw_frame() and gdk_window_end_draw_frame().
-;;;
-;;; Returns :
-;;;     a Cairo context to be used to draw the contents of the GdkWindow. The
-;;;     context is owned by the GdkDrawingContext and should not be destroyed.
-;;;
-;;; Since: 3.22
+;;; -> gdk-drawing-context-cairo-context
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drawing_context_get_cairo_context"
+           gdk-drawing-context-cairo-context) (:pointer (:struct cairo-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-12}
+  @argument[object]{a @class{gdk-drawing-context} object}
+  @begin{return}
+    A Cairo context of type @symbol{cairo-t} to be used to draw the contents of
+    the @class{gdk-window} object.
+  @end{return}
+  @begin{short}
+    Retrieves a Cairo context to be used to draw on the window that created the
+    drawing context.
+  @end{short}
+
+  The returned context is guaranteed to be valid as long as the
+  @class{gdk-drawing-context} object is valid, that is between a call to
+  the functions @fun{gdk-window-begin-draw-frame} and
+  @fun{gdk-window-end-draw-frame}.
+
+  Since 3.22
+  @see-class{gdk-drawing-context}
+  @see-class{gdk-window}
+  @see-symbol{cairo-t}
+  @see-function{gdk-window-begin-draw-frame}
+  @see-function{gdk-window-end-draw-frame}"
+  (context (g-object gdk-drawing-context)))
+
+(export 'gdk-drawing-context-cairo-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drawing_context_is_valid ()
-;;;
-;;; gboolean
-;;; gdk_drawing_context_is_valid (GdkDrawingContext *context);
-;;;
-;;; Checks whether the given GdkDrawingContext is valid.
-;;;
-;;; context :
-;;;     a GdkDrawingContext
-;;;
-;;; Returns :
-;;;     TRUE if the context is valid
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drawing_context_is_valid" gdk-drawing-context-is-valid) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-12}
+  @argument[context]{a @class{gdk-drawing-context} object}
+  @return{@em{True} if the drawing context is valid.}
+  @begin{short}
+    Checks whether the given drawing context is valid.
+  @end{short}
+
+  Since 3.22
+  @see-class{gdk-drawing-context}"
+  (context (g-object gdk-drawing-context)))
+
+(export 'gdk-drawing-context-is-valid)
 
 ;;; --- End of file gdk.drawing-context.lisp -----------------------------------
