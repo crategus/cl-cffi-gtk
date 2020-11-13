@@ -1916,8 +1916,8 @@
   @see-function{gtk-window-default-height}
   @see-function{gtk-widget-size-request}
   @see-function{gtk-window-set-geometry-hints}"
-   (values (gtk-window-default-width window)
-           (gtk-window-default-height window)))
+  (values (gtk-window-default-width window)
+          (gtk-window-default-height window)))
 
 (export 'gtk-window-default-size)
 

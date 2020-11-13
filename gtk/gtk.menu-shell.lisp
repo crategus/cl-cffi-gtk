@@ -271,15 +271,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "take-focus" 'gtk-menu-shell) 't)
  "The @code{take-focus} property of type @code{:boolean} (Read / Write) @br{}
-  A boolean that determines whether the menu and its submenus grab the
-  keyboard focus. @br{}
+  Determines whether the menu and its submenus grab the keyboard focus. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-shell-take-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-shell-take-focus 'function)
- "@version{2020-5-19}
+ "@version{2020-11-6}
   @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
   @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
@@ -290,35 +289,28 @@
     @class{gtk-menu-shell} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-shell-take-focus} returns @em{true} if
-  the menu shell will take the keyboard focus on popup.
-
   If @arg{take-focus} is @em{true}, the default, the menu shell will take the
   keyboard focus so that it will receive all keyboard events which is needed
-  to enable keyboard navigation in menus.
-
-  Setting @arg{take-focus} to @em{false} is useful only for special applications
-  like virtual keyboard implementations which should not take keyboard focus.
+  to enable keyboard navigation in menus. Setting @arg{take-focus} to
+  @em{false} is useful only for special applications like virtual keyboard
+  implementations which should not take keyboard focus.
 
   The @arg{take-focus} state of a menu or menu bar is automatically propagated
-  to submenus whenever a submenu is popped up, so you do not have to worry about
-  recursively setting it for your entire menu hierarchy. Only when
+  to submenus whenever a submenu is popped up, so you do not have to worry
+  about recursively setting it for your entire menu hierarchy. Only when
   programmatically picking a submenu and popping it up manually, the
   @arg{take-focus} property of the submenu needs to be set explicitely.
 
   Note that setting it to @em{false} has side-effects:
 
-  If the focus is in some other app, it keeps the focus and keynav in the menu
-  does not work. Consequently, keynav on the menu will only work if the focus
-  is on some toplevel owned by the onscreen keyboard.
+  If the focus is in some other application, it keeps the focus and keynav in
+  the menu does not work. Consequently, keynav on the menu will only work if
+  the focus is on some toplevel owned by the onscreen keyboard.
 
   To avoid confusing the user, menus with @arg{take-focus} set to @em{false}
   should not display mnemonics or accelerators, since it cannot be guaranteed
   that they will work.
-
-  See also the function @fun{gdk-keyboard-grab}.
-  @see-class{gtk-menu-shell}
-  @see-function{gdk-keyboard-grab}")
+  @see-class{gtk-menu-shell}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_shell_append ()

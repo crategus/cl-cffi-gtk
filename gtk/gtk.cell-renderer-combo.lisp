@@ -236,17 +236,17 @@
   @begin{short}
     Creates a new cell renderer combo.
   @end{short}
-  Adjust how text is drawn using object properties. Object properties can be set
-  globally, with the function @fun{g-object-set-property}. Also, with
+  Adjust how text is drawn using object properties. Object properties can be
+  set globally, with the function @fun{g-object-property}. Also, with
   @class{gtk-tree-view-column}, you can bind a property to a value in a
-  @class{gtk-tree-model}. For example, you can bind the \"text\" property on the
-  cell renderer to a string value in the model, thus rendering a different
+  @class{gtk-tree-model}. For example, you can bind the \"text\" property on
+  the cell renderer to a string value in the model, thus rendering a different
   string in each row of the @class{gtk-tree-view}.
   @see-class{gtk-cell-renderer-combo}
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-view-column}
   @see-class{gtk-tree-model}
-  @see-function{g-object-set-property}"
+  @see-function{g-object-property}"
   (make-instance 'gtk-cell-renderer-combo))
 
 (export 'gtk-cell-renderer-combo-new)

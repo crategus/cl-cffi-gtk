@@ -290,19 +290,19 @@
 
     For each potential group of children that are lined up horizontally, the
     values returned by the function @fun{gtk-widget-preferred-width} should
-    be collected in an array of @class{gtk-requested-size} structures. Any child
+    be collected in an array of @code{GtkRequestedSize} structures. Any child
     spacing should be removed from the input for_width and then the collective
     size should be allocated using the @fun{gtk-distribute-natural-allocation}
     convenience function.
 
     The container will then move on to request the preferred height for each
     child by using the function @fun{gtk-widget-preferred-height-for-width}
-    and using the sizes stored in the @class{gtk-requested-size} array.
+    and using the sizes stored in the @code{GtkRequestedSize} array.
 
     To allocate a height-for-width container, it is again important to consider
     that a container must prioritize one dimension over the other. So if a
     container is a height-for-width container it must first allocate all widgets
-    horizontally using a @class{gtk-requested-size} array and the function
+    horizontally using a @code{GtkRequestedSize} array and the function
     @fun{gtk-distribute-natural-allocation} and then add any extra space, if
     and where appropriate, for the widget to expand.
 
@@ -310,7 +310,7 @@
     sufficient height to fit all of its content. At this time, the container
     must use the total horizontal sizes of each widget to request the
     height-for-width of each of its children and store the requests in a
-    @class{gtk-requested-size} array for any widgets that stack vertically, for
+    @code{GtkRequestedSize} array for any widgets that stack vertically, for
     tabular containers this can be generalized into the heights and widths of
     rows and columns. The vertical space must then again be distributed using
     the @fun{gtk-distribute-natural-allocation} function while this time
@@ -403,7 +403,6 @@
   @see-class{gtk-label}
   @see-class{gtk-image}
   @see-class{gtk-button}
-  @see-class{gtk-requested-size}
   @see-symbol{gtk-size-request-mode}
   @see-function{gtk-widget-preferred-width}
   @see-function{gtk-widget-preferred-height}

@@ -1683,8 +1683,8 @@
   @begin{short}
     Creates a new cell renderer text.
   @end{short}
-  Adjust how text is drawn using object properties. Object properties can be set
-  globally, with the function @fun{g-object-set-property}. Also, with
+  Adjust how text is drawn using object properties. Object properties can be
+  set globally, with the function @fun{g-object-property}. Also, with
   @class{gtk-tree-view-column}, you can bind a property to a value in a
   @class{gtk-tree-model}. For example, you can bind the
   @slot[gtk-cell-renderer-text]{text} property on the cell renderer to a string
@@ -1694,7 +1694,7 @@
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-view-column}
   @see-class{gtk-tree-model}
-  @see-function{g-object-set-property}"
+  @see-function{g-object-property}"
   (make-instance 'gtk-cell-renderer-text))
 
 (export 'gtk-cell-renderer-text-new)

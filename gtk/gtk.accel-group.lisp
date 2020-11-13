@@ -249,10 +249,10 @@
 (setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-modifier-mask 'function)
- "@version{2020-8-23}
+ "@version{2020-11-9}
   @syntax[]{(gtk-accelerator-group object) => modifier-mask}
   @argument[object]{a @class{gtk-accel-group} object}
-  @argument[modifier-mask]{a modifier mask of type @symbol{gdk-modifier-mask}}
+  @argument[modifier-mask]{a modifier mask of type @symbol{gdk-modifier-type}}
   @begin{short}
     Accessor of the @slot[gtk-accel-group]{modifier-mask} slot of the
     @class{gtk-accel-group} class.
@@ -261,7 +261,8 @@
   The slot access function @sym{gtk-accel-group-modifer-mask} gets the modifier
   mask for this accel group. For example, @code{:control-mask},
   @code{:shift-mask}, etc.
-  @see-class{gtk-accel-group}")
+  @see-class{gtk-accel-group}
+  @see-symbol{gdk-modifier-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_new ()

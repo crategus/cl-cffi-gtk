@@ -48,8 +48,8 @@
 ;;;
 ;;; Properties
 ;;;
-;;;      GClosure*  accel-closure    Read / Write
-;;;     GtkWidget*  accel-widget     Read / Write
+;;;      GClosure*   accel-closure    Read / Write
+;;;     GtkWidget*   accel-widget     Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -88,10 +88,10 @@
  "@version{2020-4-19}
   @begin{short}
     The @sym{gtk-accel-label} widget is a subclass of @class{gtk-label} that
-    also displays an accelerator key on the right of the label text, e. g.
-    \"Ctl+S\". It is commonly used in menus to show the keyboard short-cuts for
-    commands.
+    also displays an accelerator key on the right of the label text, e.g.
+    \"Ctl+S\".
   @end{short}
+  It is commonly used in menus to show the keyboard short-cuts for commands.
 
   @image[accel-label]{}
 
@@ -114,34 +114,35 @@
   function @fun{gtk-accel-label-accel-widget} to set it up for you.
 
   A @sym{gtk-accel-label} will only display accelerators which have
-  @code{:visible} set, see @symbol{gtk-accel-flags}. A @sym{gtk-accel-label} can
-  display multiple accelerators and even signal names, though it is almost
+  @code{:visible} set, see @symbol{gtk-accel-flags}. A @sym{gtk-accel-label}
+  can display multiple accelerators and even signal names, though it is almost
   always used to display just one accelerator key.
+  @begin[Example]{dictionary}
+    Creating a simple menu item with an accelerator key.
+    @begin{pre}
+GtkWidget *save_item;
+GtkAccelGroup *accel_group;
 
-  @b{Example:} Creating a simple menu item with an accelerator key.
-  @begin{pre}
-    GtkWidget *save_item;
-    GtkAccelGroup *accel_group;
+/* Create a GtkAccelGroup and add it to the window. */
+accel_group = gtk_accel_group_new ();
+gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
 
-    /* Create a GtkAccelGroup and add it to the window. */
-    accel_group = gtk_accel_group_new ();
-    gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+/* Create the menu item using the convenience function. */
+save_item = gtk_menu_item_new_with_label (\"Save\");
+gtk_widget_show (save_item);
+gtk_container_add (GTK_CONTAINER (menu), save_item);
 
-    /* Create the menu item using the convenience function. */
-    save_item = gtk_menu_item_new_with_label (\"Save\");
-    gtk_widget_show (save_item);
-    gtk_container_add (GTK_CONTAINER (menu), save_item);
-
-    /* Now add the accelerator to the GtkMenuItem. Note that since we called
-       gtk_menu_item_new_with_label() to create the GtkMenuItem the
-       GtkAccelLabel is automatically set up to display the GtkMenuItem
-       accelerators. We just need to make sure we use GTK_ACCEL_VISIBLE
-       here. */
-    gtk_widget_add_accelerator (save_item, \"activate\", accel_group,
-                                GDK_KEY_s,
-                                GDK_CONTROL_MASK,
-                                GTK_ACCEL_VISIBLE);
-  @end{pre}
+/* Now add the accelerator to the GtkMenuItem. Note that since we called
+   gtk_menu_item_new_with_label() to create the GtkMenuItem the
+   GtkAccelLabel is automatically set up to display the GtkMenuItem
+   accelerators. We just need to make sure we use GTK_ACCEL_VISIBLE
+   here. */
+gtk_widget_add_accelerator (save_item, \"activate\", accel_group,
+                            GDK_KEY_s,
+                            GDK_CONTROL_MASK,
+                            GTK_ACCEL_VISIBLE);
+    @end{pre}
+  @end{dictionary}
   @see-slot{gtk-accel-label-accel-closure}
   @see-slot{gtk-accel-label-accel-widget}")
 
@@ -297,12 +298,12 @@
 #+gtk-3-12
 (defun gtk-accel-label-get-accel (accel-label)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-19}
+ "@version{2020-11-9}
   @argument[accel-label]{a @class{gtk-accel-label} widget}
   @begin{return}
     @code{accelerator-key} --  an unsigned integer with a keyval @br{}
     @code{accelerator-mods} -- the modifier mask of type
-                               @symbol{gdk-modifier-mask}
+                               @symbol{gdk-modifier-type}
   @end{return}
   @begin{short}
     Gets the keyval and modifier mask set with the function

@@ -225,7 +225,7 @@
   @see-function{gtk-widget-append-type}"
   (path (g-boxed-foreign gtk-widget-path))
   (siblings (g-boxed-foreign gtk-widget-path))
-  (sibling-indes :uint))
+  (sibling-index :uint))
 
 (export 'gtk-widget-path-append-with-siblings)
 
@@ -314,13 +314,12 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_path_get_object_type ()
+;;; gtk_widget_path_get_object_type () -> gtk-widget-path-object-type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_path_get_object_type" gtk-widget-path-get-object-type)
-    g-type
+(defcfun ("gtk_widget_path_get_object_type" gtk-widget-path-object-type) g-type
  #+cl-cffi-gtk-documentation
- "@version{2020-2-29}
+ "@version{2020-10-30}
   @argument[path]{a @class{gtk-widget-path} structure}
   @return{The @class{g-type} of the object.}
   @begin{short}
@@ -330,7 +329,7 @@
   @see-class{gtk-widget-path}"
   (path (g-boxed-foreign gtk-widget-path)))
 
-(export 'gtk-widget-path-get-object-type)
+(export 'gtk-widget-path-object-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_has_parent ()
@@ -525,13 +524,13 @@
 (export 'gtk-widget-path-iter-get-object-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_path_iter_get_object_type ()
+;;; gtk_widget_path_iter_get_object_type () -> gtk-widget-path-iter-object-type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_path_iter_get_object_type"
-           gtk-widget-path-iter-get-object-type) g-type
+           gtk-widget-path-iter-object-type) g-type
  #+cl-cffi-gtk-documentation
- "@version{2020-2-29}
+ "@version{2020-10-30}
   @argument[path]{a @class{gtk-widget-path} structure}
   @argument[pos]{position of type @code{:int} to get the oject type for,
     -1 for the path head}
@@ -544,7 +543,7 @@
     @begin{pre}
  (setq widget (make-instance 'gtk-button))
 => #<GTK-BUTTON {10027EB373@}>
- (gtk-widget-path-iter-get-object-type (gtk-widget-path *) -1)
+ (gtk-widget-path-iter-object-type (gtk-widget-path *) -1)
 => #<GTYPE :name \"GtkButton\" :id 23267040>
     @end{pre}
   @end{dictionary}
@@ -552,7 +551,7 @@
   (path (g-boxed-foreign gtk-widget-path))
   (pos :int))
 
-(export 'gtk-widget-path-iter-get-object-type)
+(export 'gtk-widget-path-iter-object-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_get_siblings ()

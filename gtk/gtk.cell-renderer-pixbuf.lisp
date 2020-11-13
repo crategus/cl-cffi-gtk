@@ -431,7 +431,7 @@
     Creates a new cell renderer pixbuf.
   @end{short}
   Adjust rendering parameters using object properties. Object properties can
-  be set globally with the function @fun{g-object-set-property}. Also, with
+  be set globally with the function @fun{g-object-property}. Also, with
   @class{gtk-tree-view-column}, you can bind a property to a value in a
   @class{gtk-tree-model}. For example, you can bind the
   @slot[gtk-cell-renderer-pixbuf]{pixbuf} property on the cell renderer to a
@@ -441,7 +441,7 @@
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-view-column}
   @see-class{gtk-tree-model}
-  @see-function{g-object-set-property}"
+  @see-function{g-object-property}"
   (make-instance 'gtk-cell-renderer-pixbuf))
 
 (export 'gtk-cell-renderer-pixbuf-new)

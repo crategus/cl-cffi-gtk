@@ -113,8 +113,8 @@ void im_module_init(<GTKDOCLINK HREF=\"GTypeModule\">
   This function should register the @class{g-type} of the @sym{gtk-im-context}
   subclass which implements the input method by means of the function
   @code{g_type_module_register_type()}. Note that the function
-  @fun{g-type-register-static} cannot be used as the type needs to be registered
-  dynamically.
+  @code{g_type_register_static()} cannot be used as the type needs to be
+  registered dynamically.
   @begin{pre}
 void im_module_exit(void);
   @end{pre}

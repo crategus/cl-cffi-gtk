@@ -587,11 +587,11 @@
 
   This functions creates and adds a @class{gtk-cell-renderer-text} for the
   selected column. If you need to set the text column, but do not want the cell
-  renderer, use the function @fun{g-object-set-property} to set the
+  renderer, use the function @fun{g-object-property} to set the
   @slot[gtk-entry-completion]{text-column} property directly.
   @see-class{gtk-entry-completion}
   @see-class{gtk-cell-renderer-text}
-  @see-function{g-object-set-property}
+  @see-function{g-object-property}
   @see-function{gtk-entry-completion-inline-completion}")
 
 ;;; ----------------------------------------------------------------------------

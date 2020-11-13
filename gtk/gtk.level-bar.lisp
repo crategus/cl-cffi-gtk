@@ -59,20 +59,20 @@
 ;;;
 ;;; Properties
 ;;;
-;;;            gboolean  inverted            Read / Write
-;;;             gdouble  max-value           Read / Write
-;;;             gdouble  min-value           Read / Write
-;;;     GtkLevelBarMode  mode                Read / Write
-;;;             gdouble  value               Read / Write
+;;;            gboolean    inverted            Read / Write
+;;;             gdouble    max-value           Read / Write
+;;;             gdouble    min-value           Read / Write
+;;;     GtkLevelBarMode    mode                Read / Write
+;;;             gdouble    value               Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;                gint  min-block-height    Read / Write
-;;;                gint  min-block-width     Read / Write
+;;;                gint    min-block-height    Read / Write
+;;;                gint    min-block-width     Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void  offset-changed    Has Details
+;;;                void    offset-changed      Has Details
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -295,7 +295,7 @@
       @end{pre}
       Emitted when an offset specified on the bar changes value as an effect to
       the function @fun{gtk-level-bar-add-offset-value} being called. The signal
-      supports detailed connections; you can connect to the detailed signal
+      supports detailed connections. You can connect to the detailed signal
       \"changed::x\" in order to only receive callbacks when the value of
       offset \"x\" changes.
       @begin[code]{table}
@@ -522,7 +522,7 @@
 (defcfun ("gtk_level_bar_add_offset_value" %gtk-level-bar-add-offset-value)
     :void
   (level-bar (g-object gtk-level-bar))
-  (name g-string)
+  (name :string)
   (value :double))
 
 (defun gtk-level-bar-add-offset-value (level-bar name value)
@@ -566,23 +566,22 @@
   @see-class{gtk-level-bar}
   @see-function{gtk-level-bar-add-offset-value}"
   (level-bar (g-object gtk-level-bar))
-  (name g-string))
+  (name :string))
 
 (export 'gtk-level-bar-remove-offset-value)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_offset_value ()
+;;; gtk_level_bar_get_offset_value () -> gtk-level-bar-offset-value
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_level_bar_get_offset_value" %gtk-level-bar-get-offset-value)
-    :boolean
+(defcfun ("gtk_level_bar_get_offset_value" %gtk-level-bar-offset-value) :boolean
   (level-bar (g-object gtk-level-bar))
-  (name g-string)
+  (name :string)
   (value (:pointer :double)))
 
-(defun gtk-level-bar-get-offset-value (level-bar name)
+(defun gtk-level-bar-offset-value (level-bar name)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-18}
+ "@version{2020-10-26}
   @argument[level-bar]{a @class{gtk-level-bar} widget}
   @argument[name]{a string with the name of an offset in the level bar}
   @return{The value of type @code{:double} which specified the offset marker.}
@@ -592,9 +591,9 @@
   @end{short}
   @see-class{gtk-level-bar}"
   (with-foreign-object (value :double)
-    (when (%gtk-level-bar-get-offset-value level-bar name value)
+    (when (%gtk-level-bar-offset-value level-bar name value)
       (mem-ref value :double))))
 
-(export 'gtk-level-bar-get-offset-value)
+(export 'gtk-level-bar-offset-value)
 
 ;;; --- End of file gtk.level-bar.lisp -----------------------------------------
