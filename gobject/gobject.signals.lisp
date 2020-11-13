@@ -1727,7 +1727,7 @@
   signal of instance.
   @see-class{g-object}
   @see-function{g-signal-connect}"
-  (object g-object)
+  (object (g-object :free-to-foreign nil)) ; to stop a bug, seems to work?
   (handler-id :ulong))
 
 (export 'g-signal-handler-disconnect)
