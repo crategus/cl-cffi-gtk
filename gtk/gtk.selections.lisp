@@ -430,7 +430,7 @@
 ;;; GtkTargetList
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_target_list_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_target_list_get_type" g-size))
 
 (define-g-boxed-opaque gtk-target-list "GtkTargetList"
   :alloc (%gtk-target-list-new (null-pointer) 0))

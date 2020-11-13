@@ -250,7 +250,7 @@
 (in-package :gtk)
 
 ;; Search a better place
-(glib-init::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_ui_manager_get_type" g-size))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkJunctionSides
@@ -398,7 +398,7 @@
 ;;; struct GtkBorder
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_border_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_border_get_type" g-size))
 
 (define-g-boxed-cstruct gtk-border "GtkBorder"
   (left   :int16 :initform 0)

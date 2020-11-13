@@ -106,7 +106,7 @@
 ;;; GtkIconSource
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_icon_source_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_icon_source_get_type" g-size))
 
 (define-g-boxed-opaque gtk-icon-source "GtkIconSource"
   :alloc (gtk-icon-source-new))
@@ -195,7 +195,7 @@
 ;;; GtkIconSet
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_icon_set_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_icon_set_get_type" g-size))
 
 (defcfun ("gtk_icon_set_new" %gtk-icon-set-new) :pointer)
 

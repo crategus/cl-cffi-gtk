@@ -126,7 +126,7 @@
 ;;; GtkPaperSize
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_paper_size_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_paper_size_get_type" g-size))
 
 (define-g-boxed-opaque gtk-paper-size "GtkPaperSize"
   :alloc (%gtk-paper-size-new (null-pointer)))

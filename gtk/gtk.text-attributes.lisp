@@ -149,7 +149,7 @@
 ;;; struct GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_text_attributes_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_text_attributes_get_type" g-size))
 
 (define-g-boxed-cstruct gtk-text-attributes "GtkTextAttributes"
   (refcount :uint :initform 0)

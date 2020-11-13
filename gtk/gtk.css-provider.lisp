@@ -447,7 +447,7 @@
 ;;; GtkCssSection
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "gtk_css_section_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_css_section_get_type" g-size))
 
 (define-g-boxed-opaque gtk-css-section "GtkCssSection"
   :alloc (error "GtkCssSection can not be created from Lisp side"))

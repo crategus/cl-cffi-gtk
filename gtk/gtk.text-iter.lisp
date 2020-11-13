@@ -146,7 +146,7 @@
 
 (in-package :gtk)
 
-(glib-init::at-init () (foreign-funcall "gtk_text_iter_get_type" :int))
+(glib-init::at-init () (foreign-funcall "gtk_text_iter_get_type" g-size))
 
 ;;; ----------------------------------------------------------------------------
 
