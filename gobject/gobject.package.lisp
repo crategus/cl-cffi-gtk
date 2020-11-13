@@ -68,9 +68,24 @@
     #:define-boxed-opaque-accessor
     #:define-vtable
     #:get-g-type-definition
+
+    #:get-flags-items
+    #:get-g-flags-definition
+    #:flags-item-name
+    #:flags-item-value
+    #:flags-item-nick
+
+    #:get-enum-items
+    #:get-g-enum-definition
+    #:enum-item-name
+    #:enum-item-value
+    #:enum-item-nick
+
     #:register-object-type
     #:register-object-type-implementation
     #:registered-object-type-by-name
+    #:registered-enum-type
+    #:registered-flags-type
     #:with-foreign-boxed-array
 
     ;; Symbols from gobject.signals.lisp
@@ -87,35 +102,34 @@
   @begin[Type Information]{section}
     The GLib Runtime type identification and management system.
 
-    The GType API is the foundation of the @em{GObject} system. It provides the
+    The GType API is the foundation of the GObject system. It provides the
     facilities for registering and managing all fundamental data types,
-    user-defined object and interface types.
+    user-defined objects and interface types.
 
     For type creation and registration purposes, all types fall into one of two
     categories: static or dynamic. Static types are never loaded or unloaded at
-    run-time as dynamic types may be. Static types are created with
-    @fun{g-type-register-static} that gets type specific information passed
-    in via a @symbol{g-type-info} structure. Dynamic types are created with
-    @code{g_type_register_dynamic()} which takes a @code{GTypePlugin} structure
-    instead. The remaining type information (the @symbol{g-type-info} structure)
-    is retrieved during runtime through @code{GTypePlugin} and the
-    @code{g_type_plugin_*()} API. These registration functions are usually
-    called only once from a function whose only purpose is to return the type
-    identifier for a specific class. Once the type (or class or interface) is
-    registered, it may be instantiated, inherited, or implemented depending on
-    exactly what sort of type it is. There is also a third registration function
-    for registering fundamental types called
-    @code{g_type_register_fundamental()} which requires both a
-    @symbol{g-type-info} structure and a @symbol{g-type-fundamental-info}
-    structure but it is seldom used since most fundamental types are predefined
-    rather than user-defined.
+    run-time as dynamic types may be. Static types are created with the function
+    @code{g_type_register_static()} that gets type specific information passed
+    in via a @code{GTypeInfo} structure. Dynamic types are created with the
+    function @code{g_type_register_dynamic()} which takes a @code{GTypePlugin}
+    structure instead. The remaining type information (the @code{GTypeInfo}
+    structure) is retrieved during runtime through the @code{GTypePlugin}
+    structure and the @code{g_type_plugin_*()} API. These registration functions
+    are usually called only once from a function whose only purpose is to return
+    the type identifier for a specific class. Once the type (or class or
+    interface) is registered, it may be instantiated, inherited, or implemented
+    depending on exactly what sort of type it is. There is also a third
+    registration function for registering fundamental types called
+    @code{g_type_register_fundamental()} which requires both a @code{GTypeInfo}
+    structure and a @code{GTypeFundamentalInfo} structure but it is seldom used
+    since most fundamental types are predefined rather than user-defined.
 
-    Type instance and class structs are limited to a total of 64 KiB, including
-    all parent types. Similarly, type instances' private data (as created by
-    @fun{g-type-class-add-private}) are limited to a total of 64 KiB. If a
-    type instance needs a large static buffer, allocate it separately (typically
-    by using @code{GArray} or @code{GPtrArray}) and put a pointer to the buffer
-    in the structure.
+    Type instance and class structures are limited to a total of 64 KiB,
+    including all parent types. Similarly, type instances' private data (as
+    created by the function @code{g_type_class_add_private()}) are limited to a
+    total of 64 KiB. If a type instance needs a large static buffer, allocate it
+    separately (typically by using a @code{GArray} or @code{GPtrArray}
+    structure) and put a pointer to the buffer in the structure.
 
     A final word about type names. Such an identifier needs to be at least three
     characters long. There is no upper length limit. The first character needs
@@ -151,13 +165,20 @@
     @about-variable{+g-type-reserved-bse-first+}
     @about-variable{+g-type-reserved-bse-last+}
     @about-variable{+g-type-reserved-user-first+}
-
+    @about-variable{+g-type-fundamental-max+}
     @about-class{g-type}
-    @about-function{g-type-gtype}
+    @about-symbol{g-type-interface}
+    @about-symbol{g-type-instance}
+    @about-symbol{g-type-class}
+    @about-symbol{g-type-info}
+    @about-symbol{g-type-fundamental-info}
+    @about-symbol{g-interface-info}
+    @about-symbol{g-type-value-table}
+    @about-symbol{g-type-debug-flags}
+    @about-symbol{g-type-query}
     @about-symbol{g-type-flags}
     @about-symbol{g-type-fundamental-flags}
     @about-function{g-type-fundamental}
-    @about-variable{+g-type-fundamental-max+}
     @about-function{g-type-make-fundamental}
     @about-function{g-type-is-abstract}
     @about-function{g-type-is-derived}
@@ -169,13 +190,6 @@
     @about-function{g-type-is-derivable}
     @about-function{g-type-is-deep-derivable}
     @about-function{g-type-is-interface}
-    @about-symbol{g-type-interface}
-    @about-symbol{g-type-class}
-    @about-symbol{g-type-instance}
-    @about-symbol{g-type-info}
-    @about-symbol{g-type-fundamental-info}
-    @about-symbol{g-interface-info}
-    @about-symbol{g-type-value-table}
     @about-function{g-type-from-instance}
     @about-function{g-type-from-class}
     @about-function{g-type-from-interface}
@@ -186,13 +200,12 @@
     @about-function{g-type-check-instance}
     @about-function{g-type-check-instance-cast}
     @about-function{g-type-check-instance-type}
+    @about-function{g-type-check-instance-fundamental-type}
     @about-function{g-type-check-class-cast}
     @about-function{g-type-check-class-type}
     @about-function{g-type-check-value}
     @about-function{g-type-check-value-type}
-    @about-function{g-type-flag-reserved-id-bit}
     @about-function{g-type-init}
-    @about-symbol{g-type-debug-flags}
     @about-function{g-type-init-with-debug-flags}
     @about-function{g-type-name}
     @about-function{g-type-qname}
@@ -217,7 +230,6 @@
     @about-function{g-type-interfaces}
     @about-function{g-type-interface-prerequisites}
     @about-function{g-type-qdata}
-    @about-symbol{g-type-query}
     @about-function{g-type-query}
     @about-function{g-type-register-static}
     @about-function{g-type-register-static-simple}
@@ -229,7 +241,6 @@
     @about-function{g-type-get-plugin}
     @about-function{g-type-interface-get-plugin}
     @about-function{g-type-fundamental-next}
-    @about-function{g-type-fundamental}
     @about-function{g-type-create-instance}
     @about-function{g-type-free-instance}
     @about-function{g-type-add-class-cache-func}
@@ -240,10 +251,21 @@
     @about-function{g-type-value-table-peek}
     @about-function{g-type-ensure}
     @about-function{g-type-get-type-registration-serial}
+    @about-function{g-type-get-instance-count}
+    @about-function{G_DECLARE_FINAL_TYPE}
+    @about-function{G_DECLARE_DERIVABLE_TYPE}
+    @about-function{G_DECLARE_INTERFACE}
     @about-function{G-DEFINE-TYPE}
+    @about-function{G_DEFINE_TYPE_WITH_PRIVATE}
+    @about-function{G_DEFINE_ABSTRACT_TYPE_WITH_CODE}
     @about-function{G-DEFINE-TYPE-WITH-CODE}
     @about-function{G-DEFINE-ABSTRACT-TYPE}
+    @about-function{G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE}
     @about-function{G-DEFINE-ABSTRACT-TYPE-WITH-CODE}
+    @about-function{G_ADD_PRIVATE}
+    @about-function{G_PRIVATE_OFFSET}
+    @about-function{G_PRIVATE_FIELD}
+    @about-function{G_PRIVATE_FIELD_P}
     @about-function{G-DEFINE-INTERFACE}
     @about-function{G-DEFINE-INTERFACE-WITH-CODE}
     @about-function{G-IMPLEMENT-INTERFACE}
