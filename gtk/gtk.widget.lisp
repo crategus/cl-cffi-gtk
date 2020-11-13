@@ -506,15 +506,18 @@
 ;;; struct GtkRequestedSize
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-cstruct gtk-requested-size "GtkRequestedSize"
+;; Only needed in the function gtk_distribute_natual_allocation. This function
+;; is not implemented and we do not export this structure.
+
+(defcstruct gtk-requested-size
   (data :pointer)
   (minimum-size :int)
   (natural-size :int))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "Struct"
-      (documentation 'gtk-requested-size 'type)
- "@version{2013-8-27}
+(setf (gethash 'gtk-requested-size atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-requested-size atdoc:*external-symbols*)
+ "@version{2020-10-25}
   @begin{short}
     Represents a request of a screen object in a given orientation.
   @end{short}
@@ -522,7 +525,7 @@
   natural size for children calling. See the function
   @fun{gtk-distribute-natural-allocation}.
   @begin{pre}
-(define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
+(defcstruct gtk-requested-size
   (data :pointer)
   (minimum-size :int)
   (natural-size :int))
@@ -534,67 +537,7 @@
     @entry[natural-size]{The natural size for allocation in a given
       orientation.}
   @end{table}
-  @see-slot{gtk-requested-size-data}
-  @see-slot{gtk-requested-size-minimum-size}
-  @see-slot{gtk-requested-size-natural-size}
-  @see-constructor{copy-gtk-requested-size}
-  @see-constructor{make-gtk-requested-size}
   @see-function{gtk-distribute-natural-allocation}")
-
-(export (boxed-related-symbols 'gtk-requested-size))
-
-;;; ----------------------------------------------------------------------------
-;;; Constructors for GtkRequestedSize
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-requested-size 'function)
- "@version{2013-8-27}
-  @argument[instance]{a @class{gtk-requested-size} structure}
-  Copy constructor of a @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}
-  @see-function{make-gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-requested-size 'function)
- "@version{2013-8-27}
-  @argument[data]{a client pointer}
-  @argument[minimum-size]{The minimum size needed for allocation in a given
-    orientation}
-  @argument[natural-size]{The natural size for allocation in a given
-    orientation}
-  Creates a @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}
-  @see-function{copy-gtk-requested-size}")
-
-;;; ----------------------------------------------------------------------------
-;;; Accessors for GtkRequestedSize
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-data atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-requested-size-data 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{data} of the @class{gtk-requested-size} structure.
-  @see-class{gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-minimum-size atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-requested-size-minimum-size 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
-  structure.
-  @see-class{gtk-requested-size}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size-natural-size atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-requested-size-natural-size 'function)
- "@version{2013-8-27}
-  Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
-  structure.
-  @see-class{gtk-requested-size}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkAlign
@@ -2128,8 +2071,8 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         @entry[widget]{The object which received the signal.}
         @entry[help-type]{A value of the @symbol{gtk-widget-help-type}
           enumeration.}
-        @entry[Returns]{@code{True} to stop other handlers from being invoked
-          for the event. @code{Nil} to propagate the event further.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked
+          for the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"size-allocate\" signal}
       @begin{pre}
@@ -3979,18 +3922,18 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_realize" gtk-widget-realize) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2020-11-11}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Creates the GDK windowing system resources associated with a widget.
   @end{short}
   For example, @code{widget->window} will be created when a widget is realized.
-  Normally realization happens implicitly; if you show a widget and all its
+  Normally realization happens implicitly. If you show a widget and all its
   parent containers, then the widget will be realized and mapped automatically.
 
-  Realizing a widget requires all the widget's parent widgets to be realized;
-  calling the @sym{gtk-widget-realize} function realizes the widget's parents in
-  addition to @arg{widget} itself. If a widget is not yet inside a toplevel
+  Realizing a widget requires all the widget's parent widgets to be realized.
+  Calling the function @sym{gtk-widget-realize} realizes the widget's parents
+  in addition to @arg{widget} itself. If a widget is not yet inside a toplevel
   window when you realize it, bad things will happen.
 
   This function is primarily used in widget implementations, and is not very
@@ -4147,38 +4090,49 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_frame_clock ()
-;;;
-;;; GdkFrameClock * gtk_widget_get_frame_clock (GtkWidget *widget);
-;;;
-;;; Obtains the frame clock for a widget. The frame clock is a global "ticker"
-;;; that can be used to drive animations and repaints. The most common reason to
-;;; get the frame clock is to call gdk_frame_clock_get_frame_time(), in order to
-;;; get a time to use for animating. For example you might record the start of
-;;; the animation with an initial value from gdk_frame_clock_get_frame_time(),
-;;; and then update the animation by calling gdk_frame_clock_get_frame_time()
-;;; again during each repaint.
-;;;
-;;; gdk_frame_clock_request_phase() will result in a new frame on the clock, but
-;;; won't necessarily repaint any widgets. To repaint a widget, you have to use
-;;; gtk_widget_queue_draw() which invalidates the widget (thus scheduling it to
-;;; receive a draw on the next frame). gtk_widget_queue_draw() will also end up
-;;; requesting a frame on the appropriate frame clock.
-;;;
-;;; A widget's frame clock will not change while the widget is mapped.
-;;; Reparenting a widget (which implies a temporary unmap) can change the
-;;; widget's frame clock.
-;;;
-;;; Unrealized widgets do not have a frame clock.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     a GdkFrameClock (or NULL if widget is unrealized). [transfer none]
-;;;
-;;; Since 3.8
+;;; gtk_widget_get_frame_clock () -> gtk-widget-frame-clock
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_frame_clock" gtk-widget-frame-clock)
+    (g-object gdk-frame-clock)
+
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-11}
+
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{A @class{gdk-frame-clock} object, or @code{nil} if @arg{widget} is
+    unrealized.}
+  @begin{short}
+    Obtains the frame clock for a widget.
+  @end{short}
+  The frame clock is a global \"ticker\" that can be used to drive animations
+  and repaints. The most common reason to get the frame clock is to call the
+  function @fun{gdk-frame-clock-frame-time}, in order to get a time to use for
+  animating. For example you might record the start of the animation with an
+  initial value from the function @fun{gdk-frame-clock-frame-time}, and then
+  update the animation by calling the function @fun{gdk-frame-clock-frame-time}
+  again during each repaint.
+
+  The function @fun{gdk-frame-clock-request-phase} will result in a new frame
+  on the clock, but won't necessarily repaint any widgets. To repaint a widget,
+  you have to use the function @fun{gtk-widget-queue-draw} which invalidates the
+  widget (thus scheduling it to receive a draw on the next frame). The function
+  @fun{gtk-widget-queue-draw} will also end up requesting a frame on the
+  appropriate frame clock.
+
+  A widget's frame clock will not change while the widget is mapped. Reparenting
+  a widget (which implies a temporary unmap) can change the widget's frame
+  clock.
+
+  Unrealized widgets do not have a frame clock.
+
+  Since 3.8
+  @see-class{gtk-widget}
+  @see-class{gdk-frame-clock}"
+
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-frame-clock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTickCallback ()
@@ -4207,69 +4161,93 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-8
+(defcallback gtk-tick-callback :boolean
+    ((widget (g-object gtk-widget))
+     (frame-clock (g-object gdk-frame-clock))
+     (data :pointer))
+  (restart-case
+      (let ((ptr (get-stable-pointer-value data)))
+        (funcall ptr widget frame-clock))
+    (return () :report "Error in GtkTickCallback function." nil)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_tick_callback ()
-;;;
-;;; guint gtk_widget_add_tick_callback (GtkWidget *widget,
-;;;                                     GtkTickCallback callback,
-;;;                                     gpointer user_data,
-;;;                                     GDestroyNotify notify);
-;;;
-;;; Queues a animation frame update and adds a callback to be called before each
-;;; frame. Until the tick callback is removed, it will be called frequently
-;;; (usually at the frame rate of the output device or as quickly as the
-;;; application an be repainted, whichever is slower). For this reason, is most
-;;; suitable for handling graphics that change every frame or every few frames.
-;;; The tick callback does not automatically imply a relayout or repaint. If you
-;;; want a repaint or relayout, and aren't changing widget properties that would
-;;; trigger that (for example, changing the text of a GtkLabel), then you will
-;;; have to call gtk_widget_queue_resize() or gtk_widget_queue_draw_area()
-;;; yourself.
-;;;
-;;; gdk_frame_clock_get_frame_time() should generally be used for timing
-;;; continuous animations and
-;;; gdk_frame_timings_get_predicted_presentation_time() if you are trying to
-;;; display isolated frames at particular times.
-;;;
-;;; This is a more convenient alternative to connecting directly to the "update"
-;;; signal of GdkFrameClock, since you don't have to worry about when a
-;;; GdkFrameClock is assigned to a widget.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; callback :
-;;;     function to call for updating animations
-;;;
-;;; user_data :
-;;;     data to pass to callback
-;;;
-;;; notify :
-;;;     function to call to free user_data when the callback is removed.
-;;;
-;;; Returns :
-;;;     an id for the connection of this callback. Remove the callback by
-;;;     passing it to gtk_widget_remove_tick_callback()
-;;;
-;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(defcfun ("gtk_widget_add_tick_callback" %gtk-widget-add-tick-callback) :uint
+  (widget (g-object gtk-widget))
+  (func :pointer)
+  (data :pointer)
+  (notify :pointer))
+
+#+gtk-3-8
+(defun gtk-widget-add-tick-callback (widget func)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[func]{function to call for updating animations}
+  @argument[id]{An unsigned integer ID for the connection of this callback.
+    Remove the callback by passing it to the function
+    @fun{gtk-widget-remove-tick-callback}.}
+  @begin{short}
+    Queues a animation frame update and adds a callback to be called before
+    each frame.
+  @end{short}
+  Until the tick callback is removed, it will be called frequently (usually at
+  the frame rate of the output device or as quickly as the application an be
+  repainted, whichever is slower). For this reason, is most suitable for
+  handling graphics that change every frame or every few frames. The tick
+  callback does not automatically imply a relayout or repaint. If you want a
+  repaint or relayout, and are not changing widget properties that would trigger
+  that (for example, changing the text of a @class{gtk-label}), then you will
+  have to call the function @fun{gtk-widget-queue-resize} or the function
+  @fun{gtk-widget-queue-draw-area} yourself.
+
+  The function @fun{gdk-frame-clock-frame-time} should generally be used for
+  timing continuous animations and the function
+  @fun{gdk-frame-timings-predicted-presentation-time} if you are trying to
+  display isolated frames at particular times.
+
+  This is a more convenient alternative to connecting directly to the \"update\"
+  signal of @class{gdk-frame-clock}, since you do not have to worry about when a
+  @class{gdk-frame-clock} is assigned to a widget.
+
+  Since 3.8
+  @see-class{gtk-widget}"
+  (%gtk-widget-add-tick-callback widget
+                                 (callback gtk-tick-callback)
+                                 (allocate-stable-pointer func)
+                                 (callback stable-pointer-destroy-notify-cb)))
+
+#+gtk-3-8
+(export 'gtk-widget-add-tick-callback)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_remove_tick_callback ()
-;;;
-;;; void gtk_widget_remove_tick_callback (GtkWidget *widget, guint id);
-;;;
-;;; Removes a tick callback previously registered with
-;;; gtk_widget_add_tick_callback().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; id :
-;;;     an id returned by gtk_widget_add_tick_callback()
-;;;
-;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(defcfun ("gtk_widget_remove_tick_callback" gtk-widget-remove-tick-callback)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[id]{an unsigned integer with the ID returned by the function
+    @fun{gtk-widget-add-tick-callback}}
+  @begin{short}
+    Removes a tick callback previously registered with the function
+    @fun{gtk-widget-add-tick-callback}.
+  @end{short}
+
+  Since 3.8
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget))
+  (id :uint))
+
+#+gtk-3-8
+(export 'gtk-widget-remove-tick-callback)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_size_request ()
@@ -8677,7 +8655,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @begin{return}
     @code{minimum-size} -- a @class{gtk-requisition} with the minimum size,
                            or @code{nil} @br{}
-    @code{natural-size} -- a @class{gtk-requistion} with the the natural size,
+    @code{natural-size} -- a @class{gtk-requisition} with the the natural size,
                            or @code{nil}
   @end{return}
   @begin{short}
