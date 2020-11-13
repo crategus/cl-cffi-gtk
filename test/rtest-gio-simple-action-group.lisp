@@ -5,19 +5,19 @@
 
 (test g-simple-action-group-class
   ;; Type check
-  (is-true  (g-type-is-object "GSimpleActionGroup"))
+  (is (g-type-is-object "GSimpleActionGroup"))
   ;; Check the registered name
   (is (eq 'g-simple-action-group
           (registered-object-type-by-name "GSimpleActionGroup")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GSimpleActionGroup")))
+  (is (eq (gtype "GObject") (g-type-parent "GSimpleActionGroup")))
   ;; Check the children
 ;  TODO: In a second run we have the child "GApplicationExportedActions
 ;  (is (equal '()
-;             (mapcar #'gtype-name (g-type-children "GSimpleActionGroup"))))
+;             (mapcar #'g-type-name (g-type-children "GSimpleActionGroup"))))
   ;; Check the interfaces
   (is (equal '("GActionGroup" "GActionMap")
-             (mapcar #'gtype-name (g-type-interfaces "GSimpleActionGroup"))))
+             (mapcar #'g-type-name (g-type-interfaces "GSimpleActionGroup"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

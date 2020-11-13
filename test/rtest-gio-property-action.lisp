@@ -7,21 +7,21 @@
 
 (test g-property-action-class
   ;; Type check
-  (is-true  (g-type-is-object "GPropertyAction"))
+  (is (g-type-is-object "GPropertyAction"))
   ;; Check the registered name
   (is (eq 'g-property-action
           (registered-object-type-by-name "GPropertyAction")))
   ;; Check the type initializer
-  (is (string= "GPropertyAction"
-               (g-type-name (gtype (foreign-funcall "g_property_action_get_type" :int)))))
+  (is (eq (gtype "GPropertyAction")
+          (gtype (foreign-funcall "g_property_action_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GPropertyAction")))
+  (is (eq (gtype "GObject") (g-type-parent "GPropertyAction")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GPropertyAction"))))
+             (mapcar #'g-type-name (g-type-children "GPropertyAction"))))
   ;; Check the interfaces
   (is (equal '("GAction")
-             (mapcar #'gtype-name (g-type-interfaces "GPropertyAction"))))
+             (mapcar #'g-type-name (g-type-interfaces "GPropertyAction"))))
   ;; Check the class properties
   (is (equal '("enabled" "invert-boolean" "name" "object" "parameter-type" "property-name"
                "state" "state-type")

@@ -7,24 +7,24 @@
 
 (test gtk-unit
   ;; Check the type
-  (is-true (g-type-is-enum "GtkUnit"))
+  (is (g-type-is-enum "GtkUnit"))
   ;; Check the type initializer
-  (is (string= "GtkUnit"
-               (g-type-name (gtype (foreign-funcall "gtk_unit_get_type" :int)))))
+  (is (eq (gtype "GtkUnit")
+          (gtype (foreign-funcall "gtk_unit_get_type" g-size))))
   ;; Check the registered name
-  (is (eql 'gtk-unit (gobject::registered-enum-type "GtkUnit")))
+  (is (eq 'gtk-unit (registered-enum-type "GtkUnit")))
   ;; Check the names
   (is (equal '("GTK_UNIT_NONE" "GTK_UNIT_POINTS" "GTK_UNIT_INCH" "GTK_UNIT_MM")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkUnit"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkUnit"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkUnit"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkUnit"))))
   ;; Check the nick names
   (is (equal '("none" "points" "inch" "mm")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkUnit"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkUnit"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkUnit" GTK-UNIT
                 (:EXPORT T :TYPE-INITIALIZER "gtk_unit_get_type")
@@ -32,7 +32,7 @@
                 (:POINTS 1)
                 (:INCH 2)
                 (:MM 3))
-             (gobject::get-g-type-definition "GtkUnit"))))
+             (get-g-type-definition "GtkUnit"))))
 
 ;;;     GtkPaperSize
 
@@ -40,8 +40,8 @@
   ;; Type check
   (is-true (g-type-is-a (gtype "GtkPaperSize") +g-type-boxed+))
   ;; Check the type initializer
-  (is (string= "GtkPaperSize"
-               (g-type-name (gtype (foreign-funcall "gtk_paper_size_get_type" :int))))))
+  (is (eq (gtype "GtkPaperSize")
+          (gtype (foreign-funcall "gtk_paper_size_get_type" g-size)))))
 
 ;;; --- Functions --------------------------------------------------------------
 

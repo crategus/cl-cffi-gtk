@@ -7,40 +7,43 @@
 
 (test gtk-info-bar-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkInfoBar"))
+  (is (g-type-is-object "GtkInfoBar"))
   ;; Check the registered name
   (is (eq 'gtk-info-bar
           (registered-object-type-by-name "GtkInfoBar")))
   ;; Check the type initializer
-  (is (string= "GtkInfoBar"
-               (g-type-name (gtype (foreign-funcall "gtk_info_bar_get_type" :int)))))
+  (is (eq (gtype "GtkInfoBar")
+          (gtype (foreign-funcall "gtk_info_bar_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkBox") (g-type-parent "GtkInfoBar")))
+  (is (eq (gtype "GtkBox") (g-type-parent "GtkInfoBar")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkInfoBar"))))
+             (mapcar #'g-type-name (g-type-children "GtkInfoBar"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkInfoBar"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkInfoBar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default" "can-focus"
-               "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "message-type" "name"
-               "no-show-all" "opacity" "orientation" "parent" "receives-default"
-               "resize-mode" "revealed" "scale-factor" "sensitive" "show-close-button"
-               "spacing" "style" "tooltip-markup" "tooltip-text" "valign" "vexpand"
-               "vexpand-set" "visible" "width-request" "window")
+  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default"
+               "can-focus" "child" "composite-child" "double-buffered" "events"
+               "expand" "focus-on-click" "halign" "has-default" "has-focus"
+               "has-tooltip" "height-request" "hexpand" "hexpand-set"
+               "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top"
+               "message-type" "name" "no-show-all" "opacity" "orientation"
+               "parent" "receives-default" "resize-mode" "revealed"
+               "scale-factor" "sensitive" "show-close-button" "spacing" "style"
+               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
+               "visible" "width-request" "window")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkInfoBar"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "action-area-border"
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "action-area-border"
                "button-spacing" "content-area-border" "content-area-spacing")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkInfoBar"))))

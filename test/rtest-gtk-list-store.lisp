@@ -7,22 +7,22 @@
 
 (test gtk-list-store-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkListStore"))
+  (is (g-type-is-object "GtkListStore"))
   ;; Check the registered name
   (is (eq 'gtk-list-store
           (registered-object-type-by-name "GtkListStore")))
   ;; Check the type initializer
-  (is (string= "GtkListStore"
-               (g-type-name (gtype (foreign-funcall "gtk_list_store_get_type" :int)))))
+  (is (eq (gtype "GtkListStore")
+          (gtype (foreign-funcall "gtk_list_store_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkListStore")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkListStore")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkListStore"))))
+             (mapcar #'g-type-name (g-type-children "GtkListStore"))))
   ;; Check the interfaces
   (is (equal '("GtkTreeModel" "GtkTreeDragSource" "GtkTreeDragDest" "GtkTreeSortable"
                "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkListStore"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkListStore"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

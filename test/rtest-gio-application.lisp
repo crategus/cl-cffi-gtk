@@ -9,28 +9,28 @@
 
 (test g-application-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GApplicationFlags"))
+  (is (g-type-is-flags "GApplicationFlags"))
   ;; Check the registered name
-  (is (eql 'g-application-flags
-           (gobject::registered-flags-type "GApplicationFlags")))
+  (is (eq 'g-application-flags
+          (registered-flags-type "GApplicationFlags")))
   ;; Check the names
   (is (equal '("G_APPLICATION_FLAGS_NONE" "G_APPLICATION_IS_SERVICE"
                "G_APPLICATION_IS_LAUNCHER" "G_APPLICATION_HANDLES_OPEN"
                "G_APPLICATION_HANDLES_COMMAND_LINE" "G_APPLICATION_SEND_ENVIRONMENT"
                "G_APPLICATION_NON_UNIQUE" "G_APPLICATION_CAN_OVERRIDE_APP_ID"
                "G_APPLICATION_ALLOW_REPLACEMENT" "G_APPLICATION_REPLACE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GApplicationFlags"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GApplicationFlags"))))
   ;; Check the values
   (is (equal '(0 1 2 4 8 16 32 64 128 256)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GApplicationFlags"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GApplicationFlags"))))
   ;; Check the nick names
   (is (equal '("flags-none" "is-service" "is-launcher" "handles-open" "handles-command-line"
                "send-environment" "non-unique" "can-override-app-id" "allow-replacement"
                "replace")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GApplicationFlags"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GApplicationFlags"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GApplicationFlags"
                               G-APPLICATION-FLAGS
@@ -45,24 +45,24 @@
                               (:CAN-OVERRIDE-APP-ID 64)
                               (:ALLOW-REPLACEMENT 128)
                               (:REPLACE 256))
-             (gobject::get-g-type-definition "GApplicationFlags"))))
+             (get-g-type-definition "GApplicationFlags"))))
 
 ;;;     GApplication
 
 (test g-application-class
   ;; Type check
-  (is-true  (g-type-is-object "GApplication"))
+  (is (g-type-is-object "GApplication"))
   ;; Check the registered name
   (is (eq 'g-application
           (registered-object-type-by-name "GApplication")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GApplication")))
+  (is (eq (gtype "GObject") (g-type-parent "GApplication")))
   ;; Check the children
   (is (equal '("GtkApplication")
-             (mapcar #'gtype-name (g-type-children "GApplication"))))
+             (mapcar #'g-type-name (g-type-children "GApplication"))))
   ;; Check the interfaces
   (is (equal '("GActionGroup" "GActionMap")
-             (mapcar #'gtype-name (g-type-interfaces "GApplication"))))
+             (mapcar #'g-type-name (g-type-interfaces "GApplication"))))
   ;; Check the class properties
   (is (equal '("action-group" "application-id" "flags" "inactivity-timeout" "is-busy"
                "is-registered" "is-remote" "resource-base-path")

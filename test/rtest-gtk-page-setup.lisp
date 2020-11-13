@@ -7,21 +7,21 @@
 
 (test gtk-page-setup-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPageSetup"))
+  (is (g-type-is-object "GtkPageSetup"))
   ;; Check the registered name
   (is (eq 'gtk-page-setup
           (registered-object-type-by-name "GtkPageSetup")))
   ;; Check the type initializer
-  (is (string= "GtkPageSetup"
-               (g-type-name (gtype (foreign-funcall "gtk_page_setup_get_type" :int)))))
+  (is (eq (gtype "GtkPageSetup")
+          (gtype (foreign-funcall "gtk_page_setup_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPageSetup")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPageSetup")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPageSetup"))))
+             (mapcar #'g-type-name (g-type-children "GtkPageSetup"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPageSetup"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPageSetup"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

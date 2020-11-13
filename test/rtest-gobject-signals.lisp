@@ -87,7 +87,8 @@
     (is-true (integerp handler-id))
     (is-false (setf message nil))
     (is-false (g-signal-emit button "clicked"))
-    (is (string= "Signal 'clicked' for button" message))))
+    (is (string= "Signal 'clicked' for button" message))
+    (is-false (g-signal-handler-disconnect button handler-id))))
 
 (test g-signal-emit.2
   (let* ((message nil)
@@ -112,7 +113,8 @@
     (is-false (setf message nil))
     (is-false (g-signal-emit button "notify::can-default"
                              (g-param-spec-boolean "myBoolean" "myBool" "Doku" t '(:readable :writable))))
-    (is (string= "Signal 'notify::can-default' for button" message))))
+    (is (string= "Signal 'notify::can-default' for button" message))
+    (is-false (g-signal-handler-disconnect button handler-id))))
 
 ;; This test does not emit the signal, but sets the property "can-default".
 
@@ -138,7 +140,8 @@
     (is-true (integerp handler-id))
     (is-false (setf message nil))
     (is-true (setf (gtk-widget-can-default button) t))
-    (is (string= "Signal 'notify::can-default' for button" message))))
+    (is (string= "Signal 'notify::can-default' for button" message))
+    (is-false (g-signal-handler-disconnect button handler-id))))
 
 ;;;     g_signal_emit_by_name
 ;;;     g_signal_emitv
@@ -229,8 +232,12 @@
     (is-true (g-signal-has-handler-pending button signal-id (null-pointer) t))
     (is-true (g-signal-has-handler-pending button signal-id (null-pointer) nil))
     ;; We have no signal handler for the signal "pressed"
-    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton") (null-pointer) t))
-    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton") (null-pointer) nil))))
+    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton")
+                                                   (null-pointer)
+                                                   t))
+    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton")
+                                                   (null-pointer)
+                                                   nil))))
 
 ;;;     g_signal_stop_emission
 ;;;     g_signal_stop_emission_by_name

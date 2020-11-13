@@ -7,10 +7,10 @@
 
 (test gtk-image-type
   ;; Check the type
-  (is-true (g-type-is-enum "GtkImageType"))
+  (is (g-type-is-enum "GtkImageType"))
   ;; Check the type initializer
-  (is (string= "GtkImageType"
-               (g-type-name (gtype (foreign-funcall "gtk_image_type_get_type" :int)))))
+  (is (eq (gtype "GtkImageType")
+          (gtype (foreign-funcall "gtk_image_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-image-type (gobject::registered-enum-type "GtkImageType")))
   ;; Check the names
@@ -45,21 +45,21 @@
 
 (test gtk-image-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkImage"))
+  (is (g-type-is-object "GtkImage"))
   ;; Check the registered name
   (is (eq 'gtk-image
           (registered-object-type-by-name "GtkImage")))
   ;; Check the type initializer
-  (is (string= "GtkImage"
-               (g-type-name (gtype (foreign-funcall "gtk_image_get_type" :int)))))
+  (is (eq (gtype "GtkImage")
+          (gtype (foreign-funcall "gtk_image_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkMisc") (g-type-parent "GtkImage")))
+  (is (eq (gtype "GtkMisc") (g-type-parent "GtkImage")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkImage"))))
+             (mapcar #'g-type-name (g-type-children "GtkImage"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkImage"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkImage"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
                "events" "expand" "file" "focus-on-click" "gicon" "halign" "has-default"

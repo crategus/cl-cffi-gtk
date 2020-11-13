@@ -7,18 +7,18 @@
 
 (test gtk-action-group-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkActionGroup"))
+  (is (g-type-is-object "GtkActionGroup"))
   ;; Check the registered name
   (is (eq 'gtk-action-group
           (registered-object-type-by-name "GtkActionGroup")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkActionGroup")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkActionGroup")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkActionGroup"))))
+             (mapcar #'g-type-name (g-type-children "GtkActionGroup"))))
   ;; Check the interfaces
   (is (equal '("GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkActionGroup"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkActionGroup"))))
   ;; Check the class properties
   (is (equal '("accel-group" "name" "sensitive" "visible")
              (stable-sort (mapcar #'g-param-spec-name

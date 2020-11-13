@@ -7,24 +7,24 @@
 
 (test gtk-wrap-mode
   ;; Check the type
-  (is-true (g-type-is-enum "GtkWrapMode"))
+  (is (g-type-is-enum "GtkWrapMode"))
   ;; Check the type initializer
-  (is (string= "GtkWrapMode"
-               (g-type-name (gtype (foreign-funcall "gtk_wrap_mode_get_type" :int)))))
+  (is (eq (gtype "GtkWrapMode")
+          (gtype (foreign-funcall "gtk_wrap_mode_get_type" g-size))))
   ;; Check the registered name
-  (is (eql 'gtk-wrap-mode (gobject::registered-enum-type "GtkWrapMode")))
+  (is (eq 'gtk-wrap-mode (registered-enum-type "GtkWrapMode")))
   ;; Check the names
   (is (equal '("GTK_WRAP_NONE" "GTK_WRAP_CHAR" "GTK_WRAP_WORD" "GTK_WRAP_WORD_CHAR")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkWrapMode"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkWrapMode"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkWrapMode"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkWrapMode"))))
   ;; Check the nick names
   (is (equal '("none" "char" "word" "word-char")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkWrapMode"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkWrapMode"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkWrapMode"
                              GTK-WRAP-MODE
@@ -33,7 +33,7 @@
                              (:CHAR 1)
                              (:WORD 2)
                              (:WORD-CHAR 3))
-             (gobject::get-g-type-definition "GtkWrapMode"))))
+             (get-g-type-definition "GtkWrapMode"))))
 
 ;;;     GtkTextAppearance
 
@@ -43,10 +43,10 @@
 
 (test gtk-text-attributes
   ;; Type check
-  (is-true (g-type-is-a (gtype "GtkTextAttributes") +g-type-boxed+))
+  (is (g-type-is-a (gtype "GtkTextAttributes") +g-type-boxed+))
   ;; Check the type initializer
-  (is (string= "GtkTextAttributes"
-               (g-type-name (gtype (foreign-funcall "gtk_text_attributes_get_type" :int))))))
+  (is (eq (gtype "GtkTextAttributes")
+          (gtype (foreign-funcall "gtk_text_attributes_get_type" g-size)))))
 
 (test gtk-text-attributes-slots
   (let* ((buffer (make-instance 'gtk-text-buffer
@@ -82,21 +82,21 @@
 
 (test gtk-text-tag-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkTextTag"))
+  (is (g-type-is-object "GtkTextTag"))
   ;; Check the registered name
   (is (eq 'gtk-text-tag
           (registered-object-type-by-name "GtkTextTag")))
   ;; Check the type initializer
-  (is (string= "GtkTextTag"
-               (g-type-name (gtype (foreign-funcall "gtk_text_tag_get_type" :int)))))
+  (is (eq (gtype "GtkTextTag")
+          (gtype (foreign-funcall "gtk_text_tag_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkTextTag")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkTextTag")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTextTag"))))
+             (mapcar #'g-type-name (g-type-children "GtkTextTag"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkTextTag"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTextTag"))))
   ;; Check the class properties
   (is (equal '("accumulative-margin" "background" "background-full-height"
                "background-full-height-set" "background-gdk" "background-rgba"

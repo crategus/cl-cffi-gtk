@@ -7,21 +7,21 @@
 
 (test gtk-tree-selection-class
   ;; Type check
-  (is-true (g-type-is-object "GtkTreeSelection"))
+  (is (g-type-is-object "GtkTreeSelection"))
   ;; Check the registered name
   (is (eq 'gtk-tree-selection
           (registered-object-type-by-name "GtkTreeSelection")))
   ;; Check the type initializer
-  (is (string= "GtkTreeSelection"
-               (g-type-name (gtype (foreign-funcall "gtk_tree_selection_get_type" :int)))))
+  (is (eq (gtype "GtkTreeSelection")
+          (gtype (foreign-funcall "gtk_tree_selection_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkTreeSelection")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkTreeSelection")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTreeSelection"))))
+             (mapcar #'g-type-name (g-type-children "GtkTreeSelection"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkTreeSelection"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTreeSelection"))))
   ;; Check the class properties
   (is (equal '("mode")
              (stable-sort (mapcar #'g-param-spec-name

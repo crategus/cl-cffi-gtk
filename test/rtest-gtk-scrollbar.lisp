@@ -7,21 +7,21 @@
 
 (test gtk-scrollbar-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkScrollbar"))
+  (is (g-type-is-object "GtkScrollbar"))
   ;; Check the registered name
   (is (eq 'gtk-scrollbar
           (registered-object-type-by-name "GtkScrollbar")))
   ;; Check the type initializer
-  (is (string= "GtkScrollbar"
-               (g-type-name (gtype (foreign-funcall "gtk_scrollbar_get_type" :int)))))
+  (is (eq (gtype "GtkScrollbar")
+          (gtype (foreign-funcall "gtk_scrollbar_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkRange") (g-type-parent "GtkScrollbar")))
+  (is (eq (gtype "GtkRange") (g-type-parent "GtkScrollbar")))
   ;; Check the children
   (is (equal '("GtkHScrollbar" "GtkVScrollbar")
-             (mapcar #'gtype-name (g-type-children "GtkScrollbar"))))
+             (mapcar #'g-type-name (g-type-children "GtkScrollbar"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkScrollbar"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkScrollbar"))))
   ;; Check the class properties
   (is (equal '("adjustment" "app-paintable" "can-default" "can-focus" "composite-child"
                "double-buffered" "events" "expand" "fill-level" "focus-on-click" "halign"

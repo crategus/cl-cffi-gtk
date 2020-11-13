@@ -9,8 +9,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkArrowPlacement"))
   ;; Check the type initializer
-  (is (string= "GtkArrowPlacement"
-               (g-type-name (gtype (foreign-funcall "gtk_arrow_placement_get_type" :int)))))
+  (is (eq (gtype "GtkArrowPlacement")
+          (gtype (foreign-funcall "gtk_arrow_placement_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-arrow-placement (gobject::registered-enum-type "GtkArrowPlacement")))
   ;; Check the names
@@ -28,7 +28,8 @@
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkArrowPlacement"
                              GTK-ARROW-PLACEMENT
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_arrow_placement_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_arrow_placement_get_type")
                              (:BOTH 0)
                              (:START 1)
                              (:END 2))
@@ -38,21 +39,21 @@
 
 (test gtk-menu-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkMenu"))
+  (is (g-type-is-object "GtkMenu"))
   ;; Check the registered name
   (is (eq 'gtk-menu
           (registered-object-type-by-name "GtkMenu")))
   ;; Check the type initializer
-  (is (string= "GtkMenu"
-               (g-type-name (gtype (foreign-funcall "gtk_menu_get_type" :int)))))
+  (is (eq (gtype "GtkMenu")
+          (gtype (foreign-funcall "gtk_menu_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkMenuShell") (g-type-parent "GtkMenu")))
+  (is (eq (gtype "GtkMenuShell") (g-type-parent "GtkMenu")))
   ;; Check the children
   (is (equal '("GtkRecentChooserMenu")
-             (mapcar #'gtype-name (g-type-children "GtkMenu"))))
+             (mapcar #'g-type-name (g-type-children "GtkMenu"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkMenu"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkMenu"))))
   ;; Check the class properties
   (is (equal '("accel-group" "accel-path" "active" "anchor-hints" "app-paintable"
                "attach-widget" "border-width" "can-default" "can-focus" "child"

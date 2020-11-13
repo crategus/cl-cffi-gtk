@@ -9,8 +9,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkMenuDirectionType"))
   ;; Check the type initializer
-  (is (string= "GtkMenuDirectionType"
-               (g-type-name (gtype (foreign-funcall "gtk_menu_direction_type_get_type" :int)))))
+  (is (eq (gtype "GtkMenuDirectionType")
+          (gtype (foreign-funcall "gtk_menu_direction_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-menu-direction-type (gobject::registered-enum-type "GtkMenuDirectionType")))
   ;; Check the names
@@ -40,21 +40,21 @@
 
 (test gtk-menu-shell-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkMenuShell"))
+  (is (g-type-is-object "GtkMenuShell"))
   ;; Check the registered name
   (is (eq 'gtk-menu-shell
           (registered-object-type-by-name "GtkMenuShell")))
   ;; Check the type initializer
-  (is (string= "GtkMenuShell"
-               (g-type-name (gtype (foreign-funcall "gtk_menu_shell_get_type" :int)))))
+  (is (eq (gtype "GtkMenuShell")
+          (gtype (foreign-funcall "gtk_menu_shell_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkMenuShell")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkMenuShell")))
   ;; Check the children
   (is (equal '("GtkMenu" "GtkMenuBar")
-             (mapcar #'gtype-name (g-type-children "GtkMenuShell"))))
+             (mapcar #'g-type-name (g-type-children "GtkMenuShell"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkMenuShell"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkMenuShell"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"

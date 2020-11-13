@@ -1,83 +1,33 @@
 (def-suite gtk-entry-buffer :in gtk-suite)
 (in-suite gtk-entry-buffer)
 
-;;;   gtk-entry-buffer
+;;; --- Types and Values -------------------------------------------------------
+
+;;;     GtkEntryBuffer
 
 (test gtk-entry-buffer-class
-  ;; Type checks
-  (is-true  (g-type-is-object "GtkEntryBuffer"))
-  (is-false (g-type-is-abstract "GtkEntryBuffer"))
-  (is-true  (g-type-is-derived "GtkEntryBuffer"))
-  (is-false (g-type-is-fundamental "GtkEntryBuffer"))
-  (is-true  (g-type-is-value-type "GtkEntryBuffer"))
-  (is-true  (g-type-has-value-table "GtkEntryBuffer"))
-  (is-true  (g-type-is-classed "GtkEntryBuffer"))
-  (is-true  (g-type-is-instantiatable "GtkEntryBuffer"))
-  (is-true  (g-type-is-derivable "GtkEntryBuffer"))
-  (is-true  (g-type-is-deep-derivable "GtkEntryBuffer"))
-  (is-false (g-type-is-interface "GtkEntryBuffer"))
-
+  ;; Type check
+  (is (g-type-is-object "GtkEntryBuffer"))
   ;; Check the registered name
   (is (eq 'gtk-entry-buffer
           (registered-object-type-by-name "GtkEntryBuffer")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkEntryBuffer"))))
-    (is (equal (gtype "GtkEntryBuffer") (g-type-from-class class)))
-    (is (equal (gtype "GtkEntryBuffer") (g-object-class-type class)))
-    (is (equal "GtkEntryBuffer" (g-object-class-name class)))
-    (is (equal (gtype "GtkEntryBuffer")
-               (g-type-from-class  (g-type-class-peek "GtkEntryBuffer"))))
-    (is (equal (gtype "GtkEntryBuffer")
-               (g-type-from-class  (g-type-class-peek-static "GtkEntryBuffer"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-entry-buffer)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-entry-buffer (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkEntryBuffer" (gobject-class-g-type-name class)))
-    (is (equal "GtkEntryBuffer" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_entry_buffer_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (equal (gtype "GObject") (g-type-parent "GtkEntryBuffer")))
-  (is (= 2 (g-type-depth "GtkEntryBuffer")))
-  (is (equal (gtype "GtkEntryBuffer")
-             (g-type-next-base "GtkEntryBuffer" "GObject")))
-  (is-true  (g-type-is-a "GtkEntryBuffer" "GObject"))
-  (is-false (g-type-is-a "GtkEntryBuffer" "GtkWidget"))
-  (is-false (g-type-is-a "GtkEntryBuffer" "gboolean"))
-  (is-false (g-type-is-a "GtkEntryBuffer" "GtkWindow"))
-
+  ;; Check the type initializer
+  (is (eq (gtype "GtkEntryBuffer")
+          (gtype (foreign-funcall "gtk_entry_buffer_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GObject") (g-type-parent "GtkEntryBuffer")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkEntryBuffer"))))
+             (mapcar #'g-type-name (g-type-children "GtkEntryBuffer"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkEntryBuffer"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkEntryBuffer" query)
-    (is (equal (gtype "GtkEntryBuffer")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkEntryBuffer"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 248 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  32 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the names of the class properties.
-  (is (equal '("text" "length" "max-length")
-             (mapcar #'g-param-spec-name
-                     (g-object-class-list-properties "GtkEntryBuffer"))))
-
-  ;; Get the class definition
+             (mapcar #'g-type-name (g-type-interfaces "GtkEntryBuffer"))))
+  ;; Check the class properties
+  (is (equal '("length" "max-length" "text")
+             (stable-sort (mapcar #'g-param-spec-name
+                                  (g-object-class-list-properties "GtkEntryBuffer"))
+                          #'string-lessp)))
+  ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkEntryBuffer" GTK-ENTRY-BUFFER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
                         :TYPE-INITIALIZER "gtk_entry_buffer_get_type")
@@ -86,6 +36,7 @@
                          "gint" T T)
                         (TEXT GTK-ENTRY-BUFFER-TEXT "text" "gchararray" T T)))
              (get-g-type-definition "GtkEntryBuffer"))))
+
 
 (test gtk-entry-buffer-properties
   (let ((object (make-instance 'gtk-entry-buffer :text "text")))

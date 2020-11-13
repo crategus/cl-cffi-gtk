@@ -7,21 +7,21 @@
 
 (test gtk-list-box-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkListBox"))
+  (is (g-type-is-object "GtkListBox"))
   ;; Check the registered name
   (is (eq 'gtk-list-box
           (registered-object-type-by-name "GtkListBox")))
   ;; Check the type initializer
-  (is (string= "GtkListBox"
-               (g-type-name (gtype (foreign-funcall "gtk_list_box_get_type" :int)))))
+  (is (eq (gtype "GtkListBox")
+          (gtype (foreign-funcall "gtk_list_box_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkListBox")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkListBox")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkListBox"))))
+             (mapcar #'g-type-name (g-type-children "GtkListBox"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkListBox"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkListBox"))))
   ;; Check the class properties
   (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
                "can-focus" "child" "composite-child" "double-buffered" "events" "expand"
@@ -63,21 +63,21 @@
 
 (test gtk-list-box-row-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkListBoxRow"))
+  (is (g-type-is-object "GtkListBoxRow"))
   ;; Check the registered name
   (is (eq 'gtk-list-box-row
           (registered-object-type-by-name "GtkListBoxRow")))
   ;; Check the type initializer
-  (is (string= "GtkListBoxRow"
-               (g-type-name (gtype (foreign-funcall "gtk_list_box_row_get_type" :int)))))
+  (is (eq (gtype "GtkListBoxRow")
+          (gtype (foreign-funcall "gtk_list_box_row_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkBin") (g-type-parent "GtkListBoxRow")))
+  (is (eq (gtype "GtkBin") (g-type-parent "GtkListBoxRow")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkListBoxRow"))))
+             (mapcar #'g-type-name (g-type-children "GtkListBoxRow"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActionable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkListBoxRow"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkListBoxRow"))))
   ;; Check the class properties
   (is (equal '("action-name" "action-target" "activatable" "app-paintable" "border-width"
                "can-default" "can-focus" "child" "composite-child" "double-buffered" "events"

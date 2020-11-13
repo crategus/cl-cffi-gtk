@@ -7,21 +7,21 @@
 
 (test gtk-text-mark-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkTextMark"))
+  (is (g-type-is-object "GtkTextMark"))
   ;; Check the registered name
   (is (eq 'gtk-text-mark
           (registered-object-type-by-name "GtkTextMark")))
   ;; Check the type initializer
-  (is (string= "GtkTextMark"
-               (g-type-name (gtype (foreign-funcall "gtk_text_mark_get_type" :int)))))
+  (is (eq (gtype "GtkTextMark")
+          (gtype (foreign-funcall "gtk_text_mark_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkTextMark")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkTextMark")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTextMark"))))
+             (mapcar #'g-type-name (g-type-children "GtkTextMark"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkTextMark"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTextMark"))))
   ;; Check the class properties
   (is (equal '("left-gravity" "name")
              (stable-sort (mapcar #'g-param-spec-name

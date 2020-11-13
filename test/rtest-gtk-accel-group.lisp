@@ -5,13 +5,13 @@
 
 (test gtk-accel-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GtkAccelFlags"))
+  (is (g-type-is-flags "GtkAccelFlags"))
   ;; Check the registered name
   (is (eql 'gtk-accel-flags
            (gobject::registered-flags-type "GtkAccelFlags")))
   ;; Check the type initializer
-  (is (string= "GtkAccelFlags"
-               (g-type-name (gtype (foreign-funcall "gtk_accel_flags_get_type" :int)))))
+  (is (eq (gtype "GtkAccelFlags")
+          (gtype (foreign-funcall "gtk_accel_flags_get_type" g-size))))
   ;; Check the names
   (is (equal '("GTK_ACCEL_VISIBLE" "GTK_ACCEL_LOCKED" "GTK_ACCEL_MASK")
              (mapcar #'gobject::flags-item-name
@@ -37,21 +37,21 @@
 
 (test gtk-accel-group-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAccelGroup"))
+  (is (g-type-is-object "GtkAccelGroup"))
   ;; Check the registered name
   (is (eq 'gtk-accel-group
           (registered-object-type-by-name "GtkAccelGroup")))
   ;; Check the type initializer
-  (is (string= "GtkAccelGroup"
-               (g-type-name (gtype (foreign-funcall "gtk_accel_group_get_type" :int)))))
+  (is (eq (gtype "GtkAccelGroup")
+          (gtype (foreign-funcall "gtk_accel_group_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkAccelGroup")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkAccelGroup")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkAccelGroup"))))
+             (mapcar #'g-type-name (g-type-children "GtkAccelGroup"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkAccelGroup"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAccelGroup"))))
   ;; Check the class properties
   (is (equal '("is-locked" "modifier-mask")
              (stable-sort (mapcar #'g-param-spec-name

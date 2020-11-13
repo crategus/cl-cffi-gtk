@@ -7,21 +7,21 @@
 
 (test gtk-spinner-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkSpinner"))
+  (is (g-type-is-object "GtkSpinner"))
   ;; Check the registered name
   (is (eq 'gtk-spinner
           (registered-object-type-by-name "GtkSpinner")))
   ;; Check the type initializer
-  (is (string= "GtkSpinner"
-               (g-type-name (gtype (foreign-funcall "gtk_spinner_get_type" :int)))))
+  (is (eq (gtype "GtkSpinner")
+          (gtype (foreign-funcall "gtk_spinner_get_type" g-type))))
   ;; Check the parent
-  (is (equal (gtype "GtkWidget") (g-type-parent "GtkSpinner")))
+  (is (eq (gtype "GtkWidget") (g-type-parent "GtkSpinner")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkSpinner"))))
+             (mapcar #'g-type-name (g-type-children "GtkSpinner"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkSpinner"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkSpinner"))))
   ;; Check the class properties
   (is (equal '("active" "app-paintable" "can-default" "can-focus" "composite-child"
                "double-buffered" "events" "expand" "focus-on-click" "halign" "has-default"

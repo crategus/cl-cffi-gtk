@@ -18,13 +18,13 @@
   (is-false (g-type-is-interface "GdkColor"))
 
   ;; Check the fundamental type
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GdkColor")))
+  (is (eq (gtype "GBoxed") (g-type-fundamental "GdkColor")))
 
   ;; Check some more GType information
-  (is (equal (gtype "GBoxed") (g-type-parent "GdkColor")))
+  (is (eq (gtype "GBoxed") (g-type-parent "GdkColor")))
   (is (= 2 (g-type-depth "GdkColor")))
-  (is (equal (gtype "GdkColor")
-             (g-type-next-base "GdkColor" "GBoxed")))
+  (is (eq (gtype "GdkColor")
+          (g-type-next-base "GdkColor" "GBoxed")))
   (is-false (g-type-is-a "GdkColor" "GtkWidget"))
   (is-false (g-type-is-a "GdkColor" "GtkContainer"))
   (is-false (g-type-is-a "GdkColor" "gboolean"))

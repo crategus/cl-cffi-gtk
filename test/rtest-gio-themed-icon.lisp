@@ -1,84 +1,33 @@
 (def-suite gio-themed-icon :in gio-suite)
 (in-suite gio-themed-icon)
 
-;;;   GThemedIcon
+;;; --- Types and Values -------------------------------------------------------
 
-(test gio-themed-icon-class
-  ;; Type checks
-  (is-true  (g-type-is-object "GThemedIcon"))
-  (is-false (g-type-is-abstract "GThemedIcon"))
-  (is-true  (g-type-is-derived "GThemedIcon"))
-  (is-false (g-type-is-fundamental "GThemedIcon"))
-  (is-true  (g-type-is-value-type "GThemedIcon"))
-  (is-true  (g-type-has-value-table "GThemedIcon"))
-  (is-true  (g-type-is-classed "GThemedIcon"))
-  (is-true  (g-type-is-instantiatable "GThemedIcon"))
-  (is-true  (g-type-is-derivable "GThemedIcon"))
-  (is-true  (g-type-is-deep-derivable "GThemedIcon"))
-  (is-false (g-type-is-interface "GThemedIcon"))
+;;;     GThemedIcon
 
+(test g-themed-icon-class
+  ;; Type check
+  (is (g-type-is-object "GThemedIcon"))
   ;; Check the registered name
   (is (eq 'g-themed-icon
           (registered-object-type-by-name "GThemedIcon")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GThemedIcon"))))
-    (is (equal (gtype "GThemedIcon") (g-type-from-class class)))
-    (is (equal (gtype "GThemedIcon") (g-object-class-type class)))
-    (is (equal "GThemedIcon" (g-object-class-name class)))
-    (is (equal (gtype "GThemedIcon") (g-type-from-class  (g-type-class-peek "GThemedIcon"))))
-    (is (equal (gtype "GThemedIcon") (g-type-from-class  (g-type-class-peek-static "GThemedIcon"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'g-themed-icon)))
-    ;; Check the class name and type of the class
-    (is (eq 'g-themed-icon (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GThemedIcon" (gobject-class-g-type-name class)))
-    (is (equal "GThemedIcon" (gobject-class-direct-g-type-name class)))
-    (is (equal "g_themed_icon_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (equal (gtype "GObject") (g-type-parent "GThemedIcon")))
-  (is (= 2 (g-type-depth "GThemedIcon")))
-  (is (equal (gtype "GThemedIcon")
-             (g-type-next-base "GThemedIcon" "GObject")))
-  (is-true  (g-type-is-a "GThemedIcon" "GObject"))
-  (is-false (g-type-is-a "GThemedIcon" "GtkWidget"))
-  (is-false (g-type-is-a "GThemedIcon" "gboolean"))
-
+  ;; Check the type initializer
+  (is (eq (gtype "GThemedIcon")
+          (gtype (foreign-funcall "g_themed_icon_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GObject") (g-type-parent "GThemedIcon")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GThemedIcon"))))
+             (mapcar #'g-type-name (g-type-children "GThemedIcon"))))
   ;; Check the interfaces
   (is (equal '("GIcon")
-             (mapcar #'gtype-name (g-type-interfaces "GThemedIcon"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GThemedIcon" query)
-    (is (equal (gtype "GThemedIcon")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GThemedIcon"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 136
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 48
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the names of the class properties.
+             (mapcar #'g-type-name (g-type-interfaces "GThemedIcon"))))
+  ;; Check the class properties
   (is (equal '("name" "names" "use-default-fallbacks")
-             (mapcar #'g-param-spec-name (g-object-class-list-properties "GThemedIcon"))))
-
-  ;; No style properties
-  ;; No child properties
-
-  ;; Get the class definition
+             (stable-sort (mapcar #'g-param-spec-name
+                                  (g-object-class-list-properties "GThemedIcon"))
+                          #'string-lessp)))
+  ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GThemedIcon" G-THEMED-ICON
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES ("GIcon"))
                        ((NAME G-THEMED-ICON-NAME "name" "gchararray" NIL NIL)
@@ -88,12 +37,7 @@
                          "use-default-fallbacks" "gboolean" T NIL)))
              (get-g-type-definition "GThemedIcon"))))
 
-(test g-themed-icon-properties
-  (let ((object (g-themed-icon-new-with-default-fallbacks "gnome-dev-cdrom-audio")))
-;    (is-false (g-themed-icon-name object)) ; Not Readable
-    (is (equal '("gnome-dev-cdrom-audio")
-               (g-themed-icon-names object)))
-    (is-true  (g-themed-icon-use-default-fallbacks object))))
+;;; --- Functions --------------------------------------------------------------
 
 ;;;   g_themed_icon_new
 ;;;   g_themed_icon_append_name

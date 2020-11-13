@@ -7,21 +7,21 @@
 
 (test gtk-text-tag-table-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkTextTagTable"))
+  (is (g-type-is-object "GtkTextTagTable"))
   ;; Check the registered name
   (is (eq 'gtk-text-tag-table
           (registered-object-type-by-name "GtkTextTagTable")))
   ;; Check the type initializer
-  (is (string= "GtkTextTagTable"
-               (g-type-name (gtype (foreign-funcall "gtk_text_tag_table_get_type" :int)))))
+  (is (eq (gtype"GtkTextTagTable")
+          (gtype (foreign-funcall "gtk_text_tag_table_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkTextTagTable")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkTextTagTable")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTextTagTable"))))
+             (mapcar #'g-type-name (g-type-children "GtkTextTagTable"))))
   ;; Check the interfaces
   (is (equal '("GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkTextTagTable"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTextTagTable"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

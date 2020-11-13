@@ -37,10 +37,10 @@
 ;;;     g-param-spec-type
 
 (test g-param-spec-type
-  (is (equal (gtype "GParamBoolean")
-             (g-param-spec-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
-  (is (equal (gtype "GParamChar")
-             (g-param-spec-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+  (is (eq (gtype "GParamBoolean")
+          (g-param-spec-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+  (is (eq (gtype "GParamChar")
+          (g-param-spec-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     g-param-spec-type-name
 
@@ -53,10 +53,10 @@
 ;;;     g-param-spec-value-type
 
 (test g-param-spec-value-type
-  (is (equal (gtype "gboolean")
-             (g-param-spec-value-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
-  (is (equal (gtype "gchar")
-             (g-param-spec-value-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+  (is (eq (gtype "gboolean")
+          (g-param-spec-value-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+  (is (eq (gtype "gchar")
+          (g-param-spec-value-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     g_param_spec_ref
 ;;;     g_param_spec_unref
@@ -139,9 +139,9 @@
 (test g-param-spec-internal
   (let ((pspec (g-param-spec-internal "GParamBoolean" "Boolean" "Bool" "Doku" '(:readable :writable))))
     (is-true (g-is-param-spec pspec))
-    (is (equal (gtype "GParamBoolean") (g-param-spec-type pspec)))
+    (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
     (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
-    (is (equal (gtype "gboolean") (g-param-spec-value-type pspec)))))
+    (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))))
 
 ;;;     g_param_type_register_static
 

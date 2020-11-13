@@ -5,18 +5,18 @@
 
 (test gtk-application-window-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkApplicationWindow"))
+  (is (g-type-is-object "GtkApplicationWindow"))
   ;; Check the registered name
   (is (eq 'gtk-application-window
           (registered-object-type-by-name "GtkApplicationWindow")))
   ;; Check the parent
-  (is (equal (gtype "GtkWindow") (g-type-parent "GtkApplicationWindow")))
+  (is (eq (gtype "GtkWindow") (g-type-parent "GtkApplicationWindow")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkApplicationWindow"))))
+             (mapcar #'g-type-name (g-type-children "GtkApplicationWindow"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GActionGroup" "GActionMap")
-             (mapcar #'gtype-name (g-type-interfaces "GtkApplicationWindow"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkApplicationWindow"))))
   ;; Check the class properties
   (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
                "can-default" "can-focus" "child" "composite-child" "decorated"

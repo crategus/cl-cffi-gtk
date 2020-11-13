@@ -7,21 +7,21 @@
 
 (test gtk-paned-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPaned"))
+  (is (g-type-is-object "GtkPaned"))
   ;; Check the registered name
   (is (eq 'gtk-paned
           (registered-object-type-by-name "GtkPaned")))
   ;; Check the type initializer
-  (is (string= "GtkPaned"
-               (g-type-name (gtype (foreign-funcall "gtk_paned_get_type" :int)))))
+  (is (eq (gtype "GtkPaned")
+          (gtype (foreign-funcall "gtk_paned_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkPaned")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkPaned")))
   ;; Check the children
   (is (equal '("GtkHPaned" "GtkVPaned")
-             (mapcar #'gtype-name (g-type-children "GtkPaned"))))
+             (mapcar #'g-type-name (g-type-children "GtkPaned"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkPaned"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPaned"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"

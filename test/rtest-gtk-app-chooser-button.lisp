@@ -7,22 +7,22 @@
 
 (test gtk-app-chooser-button-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAppChooserButton"))
+  (is (g-type-is-object "GtkAppChooserButton"))
   ;; Check the registered name
   (is (eq 'gtk-app-chooser-button
           (registered-object-type-by-name "GtkAppChooserButton")))
   ;; Check the type initializer
-  (is (string= "GtkAppChooserButton"
-               (g-type-name (gtype (foreign-funcall "gtk_app_chooser_button_get_type" :int)))))
+  (is (eq (gtype "GtkAppChooserButton")
+          (gtype (foreign-funcall "gtk_app_chooser_button_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkComboBox") (g-type-parent "GtkAppChooserButton")))
+  (is (eq (gtype "GtkComboBox") (g-type-parent "GtkAppChooserButton")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkAppChooserButton"))))
+             (mapcar #'g-type-name (g-type-children "GtkAppChooserButton"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkCellLayout" "GtkCellEditable"
                "GtkAppChooser")
-             (mapcar #'gtype-name (g-type-interfaces "GtkAppChooserButton"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAppChooserButton"))))
   ;; Check the class properties
   (is (equal '("active" "active-id" "add-tearoffs" "app-paintable" "border-width"
                "button-sensitivity" "can-default" "can-focus" "cell-area" "child"

@@ -7,21 +7,21 @@
 
 (test gtk-printer-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrinter"))
+  (is (g-type-is-object "GtkPrinter"))
   ;; Check the registered name
   (is (eq 'gtk-printer
           (registered-object-type-by-name "GtkPrinter")))
   ;; Check the type initializer
-  (is (string= "GtkPrinter"
-               (g-type-name (gtype (foreign-funcall "gtk_printer_get_type" :int)))))
+  (is (eq (gtype "GtkPrinter")
+          (gtype (foreign-funcall "gtk_printer_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrinter")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrinter")))
   ;; Check the children
   (is (equal '() ; result for the second run is ("GtkPrinterCups" "GtkPrinterCloudprint")
-             (mapcar #'gtype-name (g-type-children "GtkPrinter"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrinter"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrinter"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrinter"))))
   ;; Check the class properties
   (is (equal '("accepting-jobs" "accepts-pdf" "accepts-ps" "backend" "icon-name" "is-virtual"
                "job-count" "location" "name" "paused" "state-message")
@@ -58,21 +58,21 @@
 
 (test gtk-print-backend-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrintBackend"))
+  (is (g-type-is-object "GtkPrintBackend"))
   ;; Check the registered name
   (is (eq 'gtk-print-backend
           (registered-object-type-by-name "GtkPrintBackend")))
   ;; Check the type initializer
-  (is (string= "GtkPrintBackend"
-               (g-type-name (gtype (foreign-funcall "gtk_print_backend_get_type" :int)))))
+  (is (eq (gtype "GtkPrintBackend")
+          (gtype (foreign-funcall "gtk_print_backend_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrintBackend")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrintBackend")))
   ;; Check the children
   (is (equal '() ; result for the second run is ("GtkPrintBackendFile" "GtkPrintBackendCups" "GtkPrintBackendCloudprint")
-             (mapcar #'gtype-name (g-type-children "GtkPrintBackend"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintBackend"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintBackend"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintBackend"))))
   ;; Check the class properties
   (is (equal '("status")
              (stable-sort (mapcar #'g-param-spec-name

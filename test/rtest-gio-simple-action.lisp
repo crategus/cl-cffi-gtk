@@ -9,18 +9,18 @@
 
 (test g-simple-action-class
   ;; Type check
-  (is-true  (g-type-is-object "GSimpleAction"))
+  (is (g-type-is-object "GSimpleAction"))
   ;; Check the registered name
   (is (eq 'g-simple-action
           (registered-object-type-by-name "GSimpleAction")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GSimpleAction")))
+  (is (eq (gtype "GObject") (g-type-parent "GSimpleAction")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GSimpleAction"))))
+             (mapcar #'g-type-name (g-type-children "GSimpleAction"))))
   ;; Check the interfaces
   (is (equal '("GAction")
-             (mapcar #'gtype-name (g-type-interfaces "GSimpleAction"))))
+             (mapcar #'g-type-name (g-type-interfaces "GSimpleAction"))))
   ;; Check the class properties
   (is (equal '("enabled" "name" "parameter-type" "state" "state-type")
              (stable-sort (mapcar #'g-param-spec-name

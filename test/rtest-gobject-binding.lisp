@@ -7,16 +7,16 @@
 
 (test gtk-binding-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GBindingFlags"))
+  (is (g-type-is-flags "GBindingFlags"))
   ;; Check the registered name
-  (is (eql 'g-binding-flags
-           (gobject::registered-flags-type "GBindingFlags")))
+  (is (eq 'g-binding-flags
+          (gobject::registered-flags-type "GBindingFlags")))
   ;; Check the type initializer
-  (is (string= "GBindingFlags"
-               (g-type-name (gtype (foreign-funcall "g_binding_flags_get_type" :int)))))
+  (is (eq (gtype "GBindingFlags")
+          (gtype (foreign-funcall "g_binding_flags_get_type" g-size))))
   ;; Check the names
-  (is (equal '("G_BINDING_DEFAULT" "G_BINDING_BIDIRECTIONAL" "G_BINDING_SYNC_CREATE"
-               "G_BINDING_INVERT_BOOLEAN")
+  (is (equal '("G_BINDING_DEFAULT" "G_BINDING_BIDIRECTIONAL"
+               "G_BINDING_SYNC_CREATE" "G_BINDING_INVERT_BOOLEAN")
              (mapcar #'gobject::flags-item-name
                      (gobject::get-flags-items "GBindingFlags"))))
   ;; Check the values
@@ -41,21 +41,21 @@
 
 (test g-binding-class
   ;; Type check
-  (is-true (g-type-is-object "GBinding"))
+  (is (g-type-is-object "GBinding"))
   ;; Check the registered name
   (is (eq 'g-binding
           (registered-object-type-by-name "GBinding")))
   ;; Check the type initializer
-  (is (string= "GBinding"
-               (g-type-name (gtype (foreign-funcall "g_binding_get_type" :int)))))
+  (is (eq (gtype "GBinding")
+          (gtype (foreign-funcall "g_binding_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GBinding")))
+  (is (eq (gtype "GObject") (g-type-parent "GBinding")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GBinding"))))
+             (mapcar #'g-type-name (g-type-children "GBinding"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GBinding"))))
+             (mapcar #'g-type-name (g-type-interfaces "GBinding"))))
   ;; Check the class properties
   (is (equal '("flags" "source" "source-property" "target" "target-property")
              (stable-sort (mapcar #'g-param-spec-name
@@ -114,4 +114,4 @@
 ;;;     g_object_bind_property_full
 ;;;     g_object_bind_property_with_closures
 
-;;; 2020-10-18
+;;; 2020-11-7

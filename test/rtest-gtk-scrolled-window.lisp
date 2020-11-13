@@ -7,25 +7,25 @@
 
 (test gtk-policy-type
   ;; Check the type
-  (is-true (g-type-is-enum "GtkPolicyType"))
+  (is (g-type-is-enum "GtkPolicyType"))
   ;; Check the type initializer
-  (is (string= "GtkPolicyType"
-               (g-type-name (gtype (foreign-funcall "gtk_policy_type_get_type" :int)))))
+  (is (eq (gtype "GtkPolicyType")
+          (gtype (foreign-funcall "gtk_policy_type_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-policy-type (gobject::registered-enum-type "GtkPolicyType")))
+  (is (eq 'gtk-policy-type (registered-enum-type "GtkPolicyType")))
   ;; Check the names
   (is (equal '("GTK_POLICY_ALWAYS" "GTK_POLICY_AUTOMATIC" "GTK_POLICY_NEVER"
                "GTK_POLICY_EXTERNAL")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkPolicyType"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkPolicyType"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkPolicyType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkPolicyType"))))
   ;; Check the nick names
   (is (equal '("always" "automatic" "never" "external")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkPolicyType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkPolicyType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPolicyType"
                              GTK-POLICY-TYPE
@@ -34,31 +34,31 @@
                              (:AUTOMATIC 1)
                              (:NEVER 2)
                              (:EXTERNAL 3))
-             (gobject::get-g-type-definition "GtkPolicyType"))))
+             (get-g-type-definition "GtkPolicyType"))))
 
 ;;;     GtkCornerType
 
 (test gtk-corner-type
   ;; Check the type
-  (is-true (g-type-is-enum "GtkCornerType"))
+  (is (g-type-is-enum "GtkCornerType"))
   ;; Check the type initializer
-  (is (string= "GtkCornerType"
-               (g-type-name (gtype (foreign-funcall "gtk_corner_type_get_type" :int)))))
+  (is (eq (gtype "GtkCornerType")
+          (gtype (foreign-funcall "gtk_corner_type_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-policy-type (gobject::registered-enum-type "GtkPolicyType")))
+  (is (eq 'gtk-policy-type (registered-enum-type "GtkPolicyType")))
   ;; Check the names
   (is (equal '("GTK_CORNER_TOP_LEFT" "GTK_CORNER_BOTTOM_LEFT" "GTK_CORNER_TOP_RIGHT"
                "GTK_CORNER_BOTTOM_RIGHT")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkCornerType"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkCornerType"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkCornerType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkCornerType"))))
   ;; Check the nick names
   (is (equal '("top-left" "bottom-left" "top-right" "bottom-right")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkCornerType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkCornerType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkCornerType"
                              GTK-CORNER-TYPE
@@ -67,27 +67,27 @@
                              (:BOTTOM-LEFT 1)
                              (:TOP-RIGHT 2)
                              (:BOTTOM-RIGHT 3))
-             (gobject::get-g-type-definition "GtkCornerType"))))
+             (get-g-type-definition "GtkCornerType"))))
 
 ;;;     GtkScrolledWindow
 
 (test gtk-scrolled-window-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkScrolledWindow"))
+  (is (g-type-is-object "GtkScrolledWindow"))
   ;; Check the registered name
   (is (eq 'gtk-scrolled-window
           (registered-object-type-by-name "GtkScrolledWindow")))
   ;; Check the type initializer
-  (is (string= "GtkScrolledWindow"
-               (g-type-name (gtype (foreign-funcall "gtk_scrolled_window_get_type" :int)))))
+  (is (eq (gtype "GtkScrolledWindow")
+          (gtype (foreign-funcall "gtk_scrolled_window_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkBin") (g-type-parent "GtkScrolledWindow")))
+  (is (eq (gtype "GtkBin") (g-type-parent "GtkScrolledWindow")))
   ;; Check the children
   (is (equal '("GtkPlacesSidebar")
-             (mapcar #'gtype-name (g-type-children "GtkScrolledWindow"))))
+             (mapcar #'g-type-name (g-type-children "GtkScrolledWindow"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkScrolledWindow"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkScrolledWindow"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"

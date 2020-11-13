@@ -7,21 +7,21 @@
 
 (test gtk-notebook-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkNotebook"))
+  (is (g-type-is-object "GtkNotebook"))
   ;; Check the registered name
   (is (eq 'gtk-notebook
           (registered-object-type-by-name "GtkNotebook")))
   ;; Check the type initializer
-  (is (string= "GtkNotebook"
-               (g-type-name (gtype (foreign-funcall "gtk_notebook_get_type" :int)))))
+  (is (eq (gtype "GtkNotebook")
+          (gtype (foreign-funcall "gtk_notebook_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkNotebook")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkNotebook")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkNotebook"))))
+             (mapcar #'g-type-name (g-type-children "GtkNotebook"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkNotebook"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkNotebook"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "enable-popup" "events" "expand"

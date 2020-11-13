@@ -24,7 +24,7 @@
 
   ;; Check infos about the C interface implementation
   (let ((class (g-type-default-interface-ref (gtype "GIcon"))))
-    (is (equal (gtype "GIcon") (g-type-from-interface class)))
+    (is (eq (gtype "GIcon") (g-type-from-interface class)))
     (g-type-default-interface-unref class))
 
   ;; Check infos about the Lisp class implementation
@@ -41,10 +41,10 @@
     (is-true (gobject-class-interface-p class)))
 
   ;; Check some more GType information
-  (is (equal (gtype "GInterface") (g-type-parent "GIcon")))
+  (is (eq (gtype "GInterface") (g-type-parent "GIcon")))
   (is (= 2 (g-type-depth "GIcon")))
-  (is (equal (gtype "GIcon")
-             (g-type-next-base "GIcon" "GInterface")))
+  (is (eq (gtype "GIcon")
+          (g-type-next-base "GIcon" "GInterface")))
   (is-true  (g-type-is-a "GIcon" "GInterface"))
   (is-false (g-type-is-a "GIcon" "GtkWidget"))
   (is-false (g-type-is-a "GIcon" "gboolean"))
@@ -52,7 +52,7 @@
 
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GIcon"))))
+             (mapcar #'g-type-name (g-type-children "GIcon"))))
 
   ;; Get the names of the interface properties.
   (is (equal '()

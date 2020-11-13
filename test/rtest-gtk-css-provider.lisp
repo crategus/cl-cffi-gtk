@@ -7,18 +7,18 @@
 
 (test gtk-css-provider-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkCssProvider"))
+  (is (g-type-is-object "GtkCssProvider"))
   ;; Check the registered name
   (is (eq 'gtk-css-provider
           (registered-object-type-by-name "GtkCssProvider")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkCssProvider")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkCssProvider")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkCssProvider"))))
+             (mapcar #'g-type-name (g-type-children "GtkCssProvider"))))
   ;; Check the interfaces
   (is (equal '("GtkStyleProvider" "GtkStyleProviderPrivate")
-             (mapcar #'gtype-name (g-type-interfaces "GtkCssProvider"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkCssProvider"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

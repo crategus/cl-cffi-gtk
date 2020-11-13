@@ -7,8 +7,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkScrollDirection"))
   ;; Check the type initializer
-  (is (string= "GdkScrollDirection"
-               (g-type-name (gtype (foreign-funcall "gdk_scroll_direction_get_type" :int)))))
+  (is (eq (gtype "GdkScrollDirection")
+          (gtype (foreign-funcall "gdk_scroll_direction_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-scroll-direction
           (gobject::registered-enum-type "GdkScrollDirection")))
@@ -42,8 +42,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkVisibilityState"))
   ;; Check the type initializer
-  (is (string= "GdkVisibilityState"
-               (g-type-name (gtype (foreign-funcall "gdk_visibility_state_get_type" :int)))))
+  (is (eq (gtype "GdkVisibilityState")
+          (gtype (foreign-funcall "gdk_visibility_state_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-visibility-state
           (gobject::registered-enum-type "GdkVisibilityState")))
@@ -75,8 +75,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkCrossingMode"))
   ;; Check the type initializer
-  (is (string= "GdkCrossingMode"
-               (g-type-name (gtype (foreign-funcall "gdk_crossing_mode_get_type" :int)))))
+  (is (eq (gtype "GdkCrossingMode")
+          (gtype (foreign-funcall "gdk_crossing_mode_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-crossing-mode
           (gobject::registered-enum-type "GdkCrossingMode")))
@@ -117,8 +117,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkNotifyType"))
   ;; Check the type initializer
-  (is (string= "GdkNotifyType"
-               (g-type-name (gtype (foreign-funcall "gdk_notify_type_get_type" :int)))))
+  (is (eq (gtype "GdkNotifyType")
+          (gtype (foreign-funcall "gdk_notify_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-notify-type (gobject::registered-enum-type "GdkNotifyType")))
   ;; Check the names
@@ -152,8 +152,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkPropertyState"))
   ;; Check the type initializer
-  (is (string= "GdkPropertyState"
-               (g-type-name (gtype (foreign-funcall "gdk_property_state_get_type" :int)))))
+  (is (eq (gtype "GdkPropertyState")
+          (gtype (foreign-funcall "gdk_property_state_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-property-state (gobject::registered-enum-type "GdkPropertyState")))
   ;; Check the names
@@ -180,13 +180,13 @@
 
 (test gdk-window-state
   ;; Check the type
-  (is-true (g-type-is-flags "GdkWindowState"))
+  (is (g-type-is-flags "GdkWindowState"))
   ;; Check the registered name
-  (is (eql 'gdk-window-state
-           (gobject::registered-flags-type "GdkWindowState")))
+  (is (eq 'gdk-window-state
+          (registered-flags-type "GdkWindowState")))
   ;; Check the type initializer
-  (is (string= "GdkWindowState"
-               (g-type-name (gtype (foreign-funcall "gdk_window_state_get_type" :int)))))
+  (is (eq (gtype "GdkWindowState")
+          (gtype (foreign-funcall "gdk_window_state_get_type" g-size))))
   ;; Check the names
   (is (equal '("GDK_WINDOW_STATE_WITHDRAWN" "GDK_WINDOW_STATE_ICONIFIED"
                "GDK_WINDOW_STATE_MAXIMIZED" "GDK_WINDOW_STATE_STICKY"
@@ -196,16 +196,17 @@
                "GDK_WINDOW_STATE_RIGHT_TILED" "GDK_WINDOW_STATE_RIGHT_RESIZABLE"
                "GDK_WINDOW_STATE_BOTTOM_TILED" "GDK_WINDOW_STATE_BOTTOM_RESIZABLE"
                "GDK_WINDOW_STATE_LEFT_TILED" "GDK_WINDOW_STATE_LEFT_RESIZABLE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkWindowState"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkWindowState"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkWindowState"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkWindowState"))))
   ;; Check the nick names
-  (is (equal '("withdrawn" "iconified" "maximized" "sticky" "fullscreen" "above" "below"
-               "focused" "tiled" "top-tiled" "top-resizable" "right-tiled" "right-resizable"
-               "bottom-tiled" "bottom-resizable" "left-tiled" "left-resizable")
+  (is (equal '("withdrawn" "iconified" "maximized" "sticky" "fullscreen" "above"
+               "below" "focused" "tiled" "top-tiled" "top-resizable"
+               "right-tiled" "right-resizable" "bottom-tiled" "bottom-resizable"
+               "left-tiled" "left-resizable")
              (mapcar #'gobject::flags-item-nick
                      (gobject::get-flags-items "GdkWindowState"))))
   ;; Check the flags definition
@@ -237,8 +238,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkSettingAction"))
   ;; Check the type initializer
-  (is (string= "GdkSettingAction"
-               (g-type-name (gtype (foreign-funcall "gdk_setting_action_get_type" :int)))))
+  (is (eq (gtype "GdkSettingAction")
+          (gtype (foreign-funcall "gdk_setting_action_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-setting-action (gobject::registered-enum-type "GdkSettingAction")))
   ;; Check the names
@@ -269,8 +270,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkOwnerChange"))
   ;; Check the type initializer
-  (is (string= "GdkOwnerChange"
-               (g-type-name (gtype (foreign-funcall "gdk_owner_change_get_type" :int)))))
+  (is (eq (gtype "GdkOwnerChange")
+          (gtype (foreign-funcall "gdk_owner_change_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-owner-change (gobject::registered-enum-type "GdkOwnerChange")))
   ;; Check the names
@@ -301,8 +302,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GdkEventType"))
   ;; Check the type initializer
-  (is (string= "GdkEventType"
-               (g-type-name (gtype (foreign-funcall "gdk_event_type_get_type" :int)))))
+  (is (eq (gtype "GdkEventType")
+          (gtype (foreign-funcall "gdk_event_type_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gdk-event-type (gobject::registered-enum-type "GdkEventType")))
   ;; Check the names
@@ -402,13 +403,13 @@
 
 (test gdk-modifier-type
   ;; Check the type
-  (is-true (g-type-is-flags "GdkModifierType"))
+  (is (g-type-is-flags "GdkModifierType"))
   ;; Check the registered name
-  (is (eql 'gdk-modifier-type
-           (gobject::registered-flags-type "GdkModifierType")))
+  (is (eq 'gdk-modifier-type
+          (registered-flags-type "GdkModifierType")))
   ;; Check the type initializer
-  (is (string= "GdkModifierType"
-               (g-type-name (gtype (foreign-funcall "gdk_modifier_type_get_type" :int)))))
+  (is (eq (gtype "GdkModifierType")
+          (gtype (foreign-funcall "gdk_modifier_type_get_type" g-size))))
   ;; Check the names
   (is (equal '("GDK_SHIFT_MASK" "GDK_LOCK_MASK" "GDK_CONTROL_MASK" "GDK_MOD1_MASK"
                "GDK_MOD2_MASK" "GDK_MOD3_MASK" "GDK_MOD4_MASK" "GDK_MOD5_MASK"
@@ -422,14 +423,14 @@
                "GDK_MODIFIER_RESERVED_24_MASK" "GDK_MODIFIER_RESERVED_25_MASK"
                "GDK_SUPER_MASK" "GDK_HYPER_MASK" "GDK_META_MASK"
                "GDK_MODIFIER_RESERVED_29_MASK" "GDK_RELEASE_MASK" "GDK_MODIFIER_MASK")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkModifierType"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkModifierType"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536 131072
                262144 524288 1048576 2097152 4194304 8388608 16777216 33554432 67108864
                134217728 268435456 536870912 1073741824 1543512063)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkModifierType"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkModifierType"))))
   ;; Check the nick names
   (is (equal '("shift-mask" "lock-mask" "control-mask" "mod1-mask" "mod2-mask" "mod3-mask"
                "mod4-mask" "mod5-mask" "button1-mask" "button2-mask" "button3-mask"
@@ -486,13 +487,13 @@
 
 (test gdk-event-mask
   ;; Check the type
-  (is-true (g-type-is-flags "GdkEventMask"))
+  (is (g-type-is-flags "GdkEventMask"))
   ;; Check the registered name
-  (is (eql 'gdk-event-mask
-           (gobject::registered-flags-type "GdkEventMask")))
+  (is (eq 'gdk-event-mask
+          (registered-flags-type "GdkEventMask")))
   ;; Check the type initializer
-  (is (string= "GdkEventMask"
-               (g-type-name (gtype (foreign-funcall "gdk_event_mask_get_type" :int)))))
+  (is (eq (gtype "GdkEventMask")
+          (gtype (foreign-funcall "gdk_event_mask_get_type" g-size))))
   ;; Check the names
   (is (equal '("GDK_EXPOSURE_MASK" "GDK_POINTER_MOTION_MASK" "GDK_POINTER_MOTION_HINT_MASK"
                "GDK_BUTTON_MOTION_MASK" "GDK_BUTTON1_MOTION_MASK" "GDK_BUTTON2_MOTION_MASK"
@@ -503,8 +504,8 @@
                "GDK_PROXIMITY_IN_MASK" "GDK_PROXIMITY_OUT_MASK" "GDK_SUBSTRUCTURE_MASK"
                "GDK_SCROLL_MASK" "GDK_TOUCH_MASK" "GDK_SMOOTH_SCROLL_MASK"
                "GDK_TOUCHPAD_GESTURE_MASK" "GDK_TABLET_PAD_MASK" "GDK_ALL_EVENTS_MASK")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkEventMask"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkEventMask"))))
   ;; Check the values
   (is (equal '(2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536 131072 262144
                524288 1048576 2097152 4194304 8388608 16777216 33554432 67108862)
@@ -556,14 +557,14 @@
 ;;;     GdkEventSequence    <-- gdk-events.lisp
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (foreign-funcall "gdk_event_sequence_get_type" :int))
+  (foreign-funcall "gdk_event_sequence_get_type" g-size))
 
 (test gdk-event-sequence
   ;; Type check
   (is-true (g-type-is-a (gtype "GdkEventSequence") +g-type-boxed+))
   ;; Check the type initializer
-  (is (string= "GdkEventSequence"
-               (g-type-name (gtype (foreign-funcall "gdk_event_sequence_get_type" :int))))))
+  (is (eq (gtype "GdkEventSequence")
+          (gtype (foreign-funcall "gdk_event_sequence_get_type" g-size)))))
 
 ;;;     GdkEvent
 ;;;     GdkEventAny

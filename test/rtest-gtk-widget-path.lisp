@@ -16,14 +16,50 @@
     (is (string= "GtkWindow GtkButton" (gtk-widget-path-to-string path)))))
 
 ;;;     gtk_widget_path_append_with_siblings
+
 ;;;     gtk_widget_path_append_for_widget
+
+(test gtk-widget-path-append-for-widget
+  (let ((path (gtk-widget-path-new))
+        (window (make-instance 'gtk-window)))
+    (is (= 0 (gtk-widget-path-append-for-widget path window)))
+    (is (string= "window:dir-ltr.background" (gtk-widget-path-to-string path)))))
+
 ;;;     gtk_widget_path_copy
 ;;;     gtk_widget_path_ref
 ;;;     gtk_widget_path_unref
 ;;;     gtk_widget_path_free
+
 ;;;     gtk_widget_path_get_object_type
+
+(test gtk-widget-path-object-type
+  (let ((path (gtk-widget-path-new)))
+    (is (= 0 (gtk-widget-path-append-type path "GtkWindow")))
+    (is (eq (gtype "GtkWindow")
+            (gtk-widget-path-object-type path)))))
+
 ;;;     gtk_widget_path_has_parent
+
+(test gtk-widget-path-has-parent
+  (let ((path (gtk-widget-path-new)))
+
+    (is (= 0 (gtk-widget-path-append-type path "GtkButton")))
+
+    (is-true (gtk-widget-path-has-parent path "GtkColorButton"))
+))
+
 ;;;     gtk_widget_path_is_type
+
+(test gtk-widget-path-is-type
+  (let ((path (gtk-widget-path-new)))
+
+    (is (= 0 (gtk-widget-path-append-type path "GtkWindow")))
+
+    (is-true (gtk-widget-path-is-type path "GtkWidget"))
+    (is-true (gtk-widget-path-is-type path "GtkWindow"))
+    (is-false (gtk-widget-path-is-type path "GtkButton"))
+))
+
 ;;;     gtk_widget_path_iter_add_class
 
 ;;;     gtk_widget_path_iter_add_region
@@ -57,10 +93,10 @@
 
 ;;;     gtk_widget_path_iter_get_object_type
 
-(test gtk-widget-path-iter-get-object-type
+(test gtk-widget-path-iter-object-type
   (let* ((widget (make-instance 'gtk-button))
          (path (gtk-widget-path widget)))
-    (is (string= "GtkButton" (g-type-name (gtk-widget-path-iter-get-object-type path -1))))))
+    (is (string= "GtkButton" (g-type-name (gtk-widget-path-iter-object-type path -1))))))
 
 ;;;     gtk_widget_path_iter_get_siblings
 ;;;     gtk_widget_path_iter_get_sibling_index
@@ -135,3 +171,5 @@
     (is (= 0 (gtk-widget-path-append-type path "GtkWindow")))
     (is (= 1 (gtk-widget-path-append-type path "GtkButton")))
     (is (string= "GtkWindow GtkButton" (gtk-widget-path-to-string path)))))
+
+;;; 2020-10-30

@@ -7,21 +7,21 @@
 
 (test gtk-flow-box-child-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkFlowBoxChild"))
+  (is (g-type-is-object "GtkFlowBoxChild"))
   ;; Check the registered name
   (is (eq 'gtk-flow-box-child
           (registered-object-type-by-name "GtkFlowBoxChild")))
   ;; Check the type initializer
-  (is (string= "GtkFlowBoxChild"
-               (g-type-name (gtype (foreign-funcall "gtk_flow_box_child_get_type" :int)))))
+  (is (eq (gtype "GtkFlowBoxChild")
+          (gtype (foreign-funcall "gtk_flow_box_child_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkBin") (g-type-parent "GtkFlowBoxChild")))
+  (is (eq (gtype "GtkBin") (g-type-parent "GtkFlowBoxChild")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkFlowBoxChild"))))
+             (mapcar #'g-type-name (g-type-children "GtkFlowBoxChild"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkFlowBoxChild"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkFlowBoxChild"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"
@@ -58,21 +58,21 @@
 
 (test gtk-flow-box-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkFlowBox"))
+  (is (g-type-is-object "GtkFlowBox"))
   ;; Check the registered name
   (is (eq 'gtk-flow-box
           (registered-object-type-by-name "GtkFlowBox")))
   ;; Check the type initializer
-  (is (string= "GtkFlowBox"
-               (g-type-name (gtype (foreign-funcall "gtk_flow_box_get_type" :int)))))
+  (is (eq (gtype "GtkFlowBox")
+          (gtype (foreign-funcall "gtk_flow_box_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkFlowBox")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkFlowBox")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkFlowBox"))))
+             (mapcar #'g-type-name (g-type-children "GtkFlowBox"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkFlowBox"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkFlowBox"))))
   ;; Check the class properties
   (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
                "can-focus" "child" "column-spacing" "composite-child" "double-buffered"

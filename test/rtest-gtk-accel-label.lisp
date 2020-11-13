@@ -7,21 +7,21 @@
 
 (test gtk-accel-label-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAccelLabel"))
+  (is (g-type-is-object "GtkAccelLabel"))
   ;; Check the registered name
   (is (eq 'gtk-accel-label
           (registered-object-type-by-name "GtkAccelLabel")))
   ;; Check the type initializer
-  (is (string= "GtkAccelLabel"
-               (g-type-name (gtype (foreign-funcall "gtk_accel_label_get_type" :int)))))
+  (is (eq (gtype "GtkAccelLabel")
+          (gtype (foreign-funcall "gtk_accel_label_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkLabel") (g-type-parent "GtkAccelLabel")))
+  (is (eq (gtype "GtkLabel") (g-type-parent "GtkAccelLabel")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkAccelLabel"))))
+             (mapcar #'g-type-name (g-type-children "GtkAccelLabel"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkAccelLabel"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAccelLabel"))))
   ;; Check the class properties
   (is (equal '("accel-closure" "accel-widget" "angle" "app-paintable" "attributes"
                "can-default" "can-focus" "composite-child" "cursor-position"

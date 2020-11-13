@@ -3,9 +3,6 @@
 (def-suite gtk-suite :in gtk-testsuite)
 (in-suite gtk-suite)
 
-#+sbcl
-(sb-ext:gc :full t)
-
 ;;;  Application support
 
 (load "rtest-gtk-application.lisp")
@@ -288,3 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
+;;; 2020-11-7

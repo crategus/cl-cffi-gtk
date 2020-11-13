@@ -7,18 +7,18 @@
 
 (test gtk-style-context-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkStyleContext"))
+  (is (g-type-is-object "GtkStyleContext"))
   ;; Check the registered name
   (is (eq 'gtk-style-context
           (registered-object-type-by-name "GtkStyleContext")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkStyleContext")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkStyleContext")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkStyleContext"))))
+             (mapcar #'g-type-name (g-type-children "GtkStyleContext"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkStyleContext"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkStyleContext"))))
   ;; Check the class properties
   (is (equal '("direction" "paint-clock" "parent" "screen")
              (stable-sort (mapcar #'g-param-spec-name
@@ -72,30 +72,31 @@
 
 (test gtk-junction-sides
   ;; Check the type
-  (is-true (g-type-is-flags "GtkJunctionSides"))
+  (is (g-type-is-flags "GtkJunctionSides"))
   ;; Check the registered name
-  (is (eql 'gtk-junction-sides
-           (gobject::registered-flags-type "GtkJunctionSides")))
+  (is (eq 'gtk-junction-sides
+          (registered-flags-type "GtkJunctionSides")))
   ;; Check the names
   (is (equal '("GTK_JUNCTION_NONE" "GTK_JUNCTION_CORNER_TOPLEFT"
                "GTK_JUNCTION_CORNER_TOPRIGHT" "GTK_JUNCTION_CORNER_BOTTOMLEFT"
                "GTK_JUNCTION_CORNER_BOTTOMRIGHT" "GTK_JUNCTION_TOP" "GTK_JUNCTION_BOTTOM"
                "GTK_JUNCTION_LEFT" "GTK_JUNCTION_RIGHT")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GtkJunctionSides"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkJunctionSides"))))
   ;; Check the values
   (is (equal '(0 1 2 4 8 3 12 5 10)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GtkJunctionSides"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkJunctionSides"))))
   ;; Check the nick names
   (is (equal '("none" "corner-topleft" "corner-topright" "corner-bottomleft"
                "corner-bottomright" "top" "bottom" "left" "right")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GtkJunctionSides"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkJunctionSides"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkJunctionSides"
                               GTK-JUNCTION-SIDES
-                              (:EXPORT T :TYPE-INITIALIZER "gtk_junction_sides_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gtk_junction_sides_get_type")
                               (:NONE 0)
                               (:CORNER-TOPLEFT 1)
                               (:CORNER-TOPRIGHT 2)
@@ -105,62 +106,63 @@
                               (:BOTTOM 12)
                               (:LEFT 5)
                               (:RIGHT 10))
-             (gobject::get-g-type-definition "GtkJunctionSides"))))
+             (get-g-type-definition "GtkJunctionSides"))))
 
 ;;;     GtkRegionFlags
 
 (test gtk-region-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GtkRegionFlags"))
+  (is (g-type-is-flags "GtkRegionFlags"))
   ;; Check the registered name
-  (is (eql 'gtk-region-flags
-           (gobject::registered-flags-type "GtkRegionFlags")))
+  (is (eq 'gtk-region-flags
+          (registered-flags-type "GtkRegionFlags")))
   ;; Check the names
   (is (equal '("GTK_REGION_EVEN" "GTK_REGION_ODD" "GTK_REGION_FIRST" "GTK_REGION_LAST"
                "GTK_REGION_ONLY" "GTK_REGION_SORTED")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GtkRegionFlags"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkRegionFlags"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GtkRegionFlags"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkRegionFlags"))))
   ;; Check the nick names
   (is (equal '("even" "odd" "first" "last" "only" "sorted")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GtkRegionFlags"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkRegionFlags"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkRegionFlags"
                               GTK-REGION-FLAGS
-                              (:EXPORT T :TYPE-INITIALIZER "gtk_region_flags_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gtk_region_flags_get_type")
                               (:EVEN 1)
                               (:ODD 2)
                               (:FIRST 4)
                               (:LAST 8)
                               (:ONLY 16)
                               (:SORTED 32))
-             (gobject::get-g-type-definition "GtkRegionFlags"))))
+             (get-g-type-definition "GtkRegionFlags"))))
 
 ;;;     GtkStyleContextPrintFlags
 
 (test gtk-style-context-print-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GtkStyleContextPrintFlags"))
+  (is (g-type-is-flags "GtkStyleContextPrintFlags"))
   ;; Check the registered name
-  (is (eql 'gtk-style-context-print-flags
-           (gobject::registered-flags-type "GtkStyleContextPrintFlags")))
+  (is (eq 'gtk-style-context-print-flags
+          (registered-flags-type "GtkStyleContextPrintFlags")))
   ;; Check the names
   (is (equal '("GTK_STYLE_CONTEXT_PRINT_NONE" "GTK_STYLE_CONTEXT_PRINT_RECURSE"
                "GTK_STYLE_CONTEXT_PRINT_SHOW_STYLE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GtkStyleContextPrintFlags"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkStyleContextPrintFlags"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GtkStyleContextPrintFlags"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkStyleContextPrintFlags"))))
   ;; Check the nick names
   (is (equal '("none" "recurse" "show-style")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GtkStyleContextPrintFlags"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkStyleContextPrintFlags"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkStyleContextPrintFlags"
                               GTK-STYLE-CONTEXT-PRINT-FLAGS
@@ -169,31 +171,32 @@
                               (:NONE 0)
                               (:RECURSE 1)
                               (:SHOW-STYLE 2))
-             (gobject::get-g-type-definition "GtkStyleContextPrintFlags"))))
+             (get-g-type-definition "GtkStyleContextPrintFlags"))))
 
 ;;;     GtkBorderStyle
 
 (test gtk-border-style
   ;; Check the type
-  (is-true (g-type-is-enum "GtkBorderStyle"))
+  (is (g-type-is-enum "GtkBorderStyle"))
   ;; Check the registered name
-  (is (eql 'gtk-border-style (gobject::registered-enum-type "GtkBorderStyle")))
+  (is (eq 'gtk-border-style (registered-enum-type "GtkBorderStyle")))
   ;; Check the names
-  (is (equal '("GTK_BORDER_STYLE_NONE" "GTK_BORDER_STYLE_SOLID" "GTK_BORDER_STYLE_INSET"
-               "GTK_BORDER_STYLE_OUTSET" "GTK_BORDER_STYLE_HIDDEN" "GTK_BORDER_STYLE_DOTTED"
-               "GTK_BORDER_STYLE_DASHED" "GTK_BORDER_STYLE_DOUBLE" "GTK_BORDER_STYLE_GROOVE"
-               "GTK_BORDER_STYLE_RIDGE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkBorderStyle"))))
+  (is (equal '("GTK_BORDER_STYLE_NONE" "GTK_BORDER_STYLE_SOLID"
+               "GTK_BORDER_STYLE_INSET" "GTK_BORDER_STYLE_OUTSET"
+               "GTK_BORDER_STYLE_HIDDEN" "GTK_BORDER_STYLE_DOTTED"
+               "GTK_BORDER_STYLE_DASHED" "GTK_BORDER_STYLE_DOUBLE"
+               "GTK_BORDER_STYLE_GROOVE" "GTK_BORDER_STYLE_RIDGE")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkBorderStyle"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7 8 9)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkBorderStyle"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkBorderStyle"))))
   ;; Check the nick names
-  (is (equal '("none" "solid" "inset" "outset" "hidden" "dotted" "dashed" "double" "groove"
-               "ridge")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkBorderStyle"))))
+  (is (equal '("none" "solid" "inset" "outset" "hidden" "dotted" "dashed"
+               "double" "groove" "ridge")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkBorderStyle"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkBorderStyle"
                              GTK-BORDER-STYLE
@@ -208,13 +211,16 @@
                              (:DOUBLE 7)
                              (:GROOVE 8)
                              (:RIDGE 9))
-             (gobject::get-g-type-definition "GtkBorderStyle"))))
+             (get-g-type-definition "GtkBorderStyle"))))
 
 ;;;     GtkBorder
 
-(test gtk-border-struct
- (is-true (gtype "GtkBorder"))
- (is-true (gobject::get-g-boxed-foreign-info 'gtk-border)))
+(test gtk-border
+  ;; Type check
+  (is (g-type-is-a (gtype "GtkBorder") +g-type-boxed+))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkBorder")
+          (gtype (foreign-funcall "gtk_border_get_type" g-size)))))
 
 ;;;     GTK_STYLE_PROPERTY_BACKGROUND_COLOR
 ;;;     GTK_STYLE_PROPERTY_COLOR
@@ -374,7 +380,7 @@
       (g-value-init value)
       (is-false (gtk::%gtk-style-context-property context "color" :normal value))
       (is-true value)
-      (is (equal (gtype "GdkRGBA") (g-value-type value)))
+      (is (eq (gtype "GdkRGBA") (g-value-type value)))
       (is (string= "GdkRGBA" (g-value-type-name value)))
       (g-value-unset value)))
   (let ((context (gtk-style-context-new)))

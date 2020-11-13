@@ -12,18 +12,18 @@
 
 (test gtk-icon-theme-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkIconTheme"))
+  (is (g-type-is-object "GtkIconTheme"))
   ;; Check the registered name
   (is (eq 'gtk-icon-theme
           (registered-object-type-by-name "GtkIconTheme")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkIconTheme")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkIconTheme")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkIconTheme"))))
+             (mapcar #'g-type-name (g-type-children "GtkIconTheme"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkIconTheme"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkIconTheme"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

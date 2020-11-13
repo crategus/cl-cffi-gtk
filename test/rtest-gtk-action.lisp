@@ -7,18 +7,18 @@
 
 (test gtk-action-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAction"))
+  (is (g-type-is-object "GtkAction"))
   ;; Check the registered name
   (is (eq 'gtk-action
           (registered-object-type-by-name "GtkAction")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkAction")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkAction")))
   ;; Check the children
   (is (equal '("GtkToggleAction" "GtkRecentAction")
-             (mapcar #'gtype-name (g-type-children "GtkAction"))))
+             (mapcar #'g-type-name (g-type-children "GtkAction"))))
   ;; Check the interfaces
   (is (equal '("GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkAction"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAction"))))
   ;; Check the class properties
   (is (equal '("action-group" "always-show-image" "gicon" "hide-if-empty" "icon-name"
                "is-important" "label" "name" "sensitive" "short-label" "stock-id" "tooltip"

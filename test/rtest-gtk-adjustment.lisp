@@ -5,18 +5,18 @@
 
 (test gtk-adjustment-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAdjustment"))
+  (is (g-type-is-object "GtkAdjustment"))
   ;; Check the registered name
   (is (eq 'gtk-adjustment
           (registered-object-type-by-name "GtkAdjustment")))
   ;; Check the parent
-  (is (equal (gtype "GInitiallyUnowned") (g-type-parent "GtkAdjustment")))
+  (is (eq (gtype "GInitiallyUnowned") (g-type-parent "GtkAdjustment")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkAdjustment"))))
+             (mapcar #'g-type-name (g-type-children "GtkAdjustment"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkAdjustment"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAdjustment"))))
   ;; Check the class properties
   (is (equal '("lower" "page-increment" "page-size" "step-increment" "upper" "value")
              (stable-sort (mapcar #'g-param-spec-name

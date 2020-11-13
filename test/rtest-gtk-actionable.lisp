@@ -38,9 +38,9 @@
     (is-true  (gobject-class-interface-p class)))
 
   ;; Check some more GType information
-  (is (equal (gtype "GInterface") (g-type-parent "GtkActionable")))
+  (is (eq (gtype "GInterface") (g-type-parent "GtkActionable")))
   (is (= 2 (g-type-depth "GtkActionable")))
-  (is (equal (gtype "GtkActionable")
+  (is (eq (gtype "GtkActionable")
              (g-type-next-base "GtkActionable" "GInterface")))
   (is-true  (g-type-is-a "GtkActionable" "GObject"))
   (is-true  (g-type-is-a "GtkActionable" "GInterface"))
@@ -53,7 +53,7 @@
 
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkActionable"))))
+             (mapcar #'g-type-name (g-type-children "GtkActionable"))))
 
   ;; Check the interfaces
   ;; No interfaces

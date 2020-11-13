@@ -7,21 +7,21 @@
 
 (test gtk-layout-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkLayout"))
+  (is (g-type-is-object "GtkLayout"))
   ;; Check the registered name
   (is (eq 'gtk-layout
           (registered-object-type-by-name "GtkLayout")))
   ;; Check the type initializer
-  (is (string= "GtkLayout"
-               (g-type-name (gtype (foreign-funcall "gtk_layout_get_type" :int)))))
+  (is (eq (gtype "GtkLayout")
+          (gtype (foreign-funcall "gtk_layout_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkLayout")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkLayout")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkLayout"))))
+             (mapcar #'g-type-name (g-type-children "GtkLayout"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkLayout"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkLayout"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"

@@ -7,21 +7,21 @@
 
 (test gtk-radio-button-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkRadioButton"))
+  (is (g-type-is-object "GtkRadioButton"))
   ;; Check the registered name
   (is (eq 'gtk-radio-button
           (registered-object-type-by-name "GtkRadioButton")))
   ;; Check the type initializer
-  (is (string= "GtkRadioButton"
-               (g-type-name (gtype (foreign-funcall "gtk_radio_button_get_type" :int)))))
+  (is (eq (gtype "GtkRadioButton")
+          (gtype (foreign-funcall "gtk_radio_button_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkCheckButton") (g-type-parent "GtkRadioButton")))
+  (is (eq (gtype "GtkCheckButton") (g-type-parent "GtkRadioButton")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkRadioButton"))))
+             (mapcar #'g-type-name (g-type-children "GtkRadioButton"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActionable" "GtkActivatable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkRadioButton"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkRadioButton"))))
   ;; Check the class properties
   (is (equal '("action-name" "action-target" "active" "always-show-image" "app-paintable"
                "border-width" "can-default" "can-focus" "child" "composite-child"

@@ -7,21 +7,21 @@
 
 (test gtk-page-setup-unix-dialog-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPageSetupUnixDialog"))
+  (is (g-type-is-object "GtkPageSetupUnixDialog"))
   ;; Check the registered name
   (is (eq 'gtk-page-setup-unix-dialog
           (registered-object-type-by-name "GtkPageSetupUnixDialog")))
   ;; Check the type initializer
-  (is (string= "GtkPageSetupUnixDialog"
-               (g-type-name (gtype (foreign-funcall "gtk_page_setup_unix_dialog_get_type" :int)))))
+  (is (eq (gtype "GtkPageSetupUnixDialog")
+          (gtype (foreign-funcall "gtk_page_setup_unix_dialog_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkDialog") (g-type-parent "GtkPageSetupUnixDialog")))
+  (is (eq (gtype "GtkDialog") (g-type-parent "GtkPageSetupUnixDialog")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPageSetupUnixDialog"))))
+             (mapcar #'g-type-name (g-type-children "GtkPageSetupUnixDialog"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkPageSetupUnixDialog"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPageSetupUnixDialog"))))
   ;; Check the class properties
   (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
                "can-default" "can-focus" "child" "composite-child" "decorated"

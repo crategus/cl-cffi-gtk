@@ -7,21 +7,21 @@
 
 (test gtk-statusbar-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkStatusbar"))
+  (is (g-type-is-object "GtkStatusbar"))
   ;; Check the registered name
   (is (eq 'gtk-statusbar
           (registered-object-type-by-name "GtkStatusbar")))
   ;; Check the type initializer
-  (is (string= "GtkStatusbar"
-               (g-type-name (gtype (foreign-funcall "gtk_statusbar_get_type" :int)))))
+  (is (eq (gtype "GtkStatusbar")
+          (gtype (foreign-funcall "gtk_statusbar_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkBox") (g-type-parent "GtkStatusbar")))
+  (is (eq (gtype "GtkBox") (g-type-parent "GtkStatusbar")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkStatusbar"))))
+             (mapcar #'g-type-name (g-type-children "GtkStatusbar"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkStatusbar"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkStatusbar"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "baseline-position" "border-width" "can-default" "can-focus"
                "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"

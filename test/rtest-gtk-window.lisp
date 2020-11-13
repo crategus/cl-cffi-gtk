@@ -9,112 +9,57 @@
 ;;;     GtkWindow
 
 (test gtk-window-class
-  ;; Type checks
-  (is-true  (g-type-is-object "GtkWindow"))
-  (is-false (g-type-is-abstract "GtkWindow"))
-  (is-true  (g-type-is-derived "GtkWindow"))
-  (is-false (g-type-is-fundamental "GtkWindow"))
-  (is-true  (g-type-is-value-type "GtkWindow"))
-  (is-true  (g-type-has-value-table "GtkWindow"))
-  (is-true  (g-type-is-classed "GtkWindow"))
-  (is-true  (g-type-is-instantiatable "GtkWindow"))
-  (is-true  (g-type-is-derivable "GtkWindow"))
-  (is-true  (g-type-is-deep-derivable "GtkWindow"))
-  (is-false (g-type-is-interface "GtkWindow"))
-
+  ;; Type check
+  (is (g-type-is-object "GtkWindow"))
   ;; Check the registered name
   (is (eq 'gtk-window
           (registered-object-type-by-name "GtkWindow")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkWindow"))))
-    (is (equal (gtype "GtkWindow") (g-type-from-class class)))
-    (is (equal (gtype "GtkWindow") (g-object-class-type class)))
-    (is (equal "GtkWindow" (g-object-class-name class)))
-    (is (equal (gtype "GtkWindow")
-               (g-type-from-class  (g-type-class-peek "GtkWindow"))))
-    (is (equal (gtype "GtkWindow")
-               (g-type-from-class  (g-type-class-peek-static "GtkWindow"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-window)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-window (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkWindow" (gobject-class-g-type-name class)))
-    (is (equal "GtkWindow" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_window_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (equal (gtype "GtkBin") (g-type-parent "GtkWindow")))
-  (is (= 6 (g-type-depth "GtkWindow")))
-  (is (equal (gtype "GInitiallyUnowned")
-             (g-type-next-base "GtkWindow" "GObject")))
-  (is-true  (g-type-is-a "GtkWindow" "GObject"))
-  (is-true  (g-type-is-a "GtkWindow" "GInitiallyUnowned"))
-  (is-false (g-type-is-a "GtkWindow" "gboolean"))
-  (is-true (g-type-is-a "GtkWindow" "GtkWindow"))
-
+  ;; Check the type initializer
+  (is (eq (gtype "GtkWindow")
+          (gtype (foreign-funcall "gtk_window_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GtkBin") (g-type-parent "GtkWindow")))
   ;; Check the children
-  (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug" "GtkShortcutsWindow"
- "GtkApplicationWindow")
-             (mapcar #'gtype-name (g-type-children "GtkWindow"))))
-
+  (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug"
+               "GtkShortcutsWindow" "GtkApplicationWindow")
+             (mapcar #'g-type-name (g-type-children "GtkWindow"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkWindow"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkWindow" query)
-    (is (equal (gtype "GtkWindow")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkWindow"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 1072
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 56
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the class properties.
-  (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
- "can-default" "can-focus" "child" "composite-child" "decorated"
- "default-height" "default-width" "deletable" "destroy-with-parent"
- "double-buffered" "events" "expand" "focus-on-click" "focus-on-map"
- "focus-visible" "gravity" "halign" "has-default" "has-focus" "has-resize-grip"
- "has-tooltip" "has-toplevel-focus" "height-request" "hexpand" "hexpand-set"
- "hide-titlebar-when-maximized" "icon" "icon-name" "is-active" "is-focus"
- "is-maximized" "margin" "margin-bottom" "margin-end" "margin-left"
- "margin-right" "margin-start" "margin-top" "mnemonics-visible" "modal" "name"
- "no-show-all" "opacity" "parent" "receives-default" "resizable"
- "resize-grip-visible" "resize-mode" "role" "scale-factor" "screen" "sensitive"
- "skip-pager-hint" "skip-taskbar-hint" "startup-id" "style" "title"
- "tooltip-markup" "tooltip-text" "transient-for" "type" "type-hint"
- "urgency-hint" "valign" "vexpand" "vexpand-set" "visible" "width-request"
- "window" "window-position")
+             (mapcar #'g-type-name (g-type-interfaces "GtkWindow"))))
+  ;; Check the class properties
+  (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
+               "border-width" "can-default" "can-focus" "child" "composite-child"
+               "decorated" "default-height" "default-width" "deletable"
+               "destroy-with-parent" "double-buffered" "events" "expand"
+               "focus-on-click" "focus-on-map" "focus-visible" "gravity" "halign"
+               "has-default" "has-focus" "has-resize-grip" "has-tooltip"
+               "has-toplevel-focus" "height-request" "hexpand" "hexpand-set"
+               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active" "is-focus"
+               "is-maximized" "margin" "margin-bottom" "margin-end" "margin-left"
+               "margin-right" "margin-start" "margin-top" "mnemonics-visible"
+               "modal" "name" "no-show-all" "opacity" "parent" "receives-default"
+               "resizable" "resize-grip-visible" "resize-mode" "role" "scale-factor"
+               "screen" "sensitive" "skip-pager-hint" "skip-taskbar-hint" "startup-id"
+               "style" "title" "tooltip-markup" "tooltip-text" "transient-for" "type"
+               "type-hint" "urgency-hint" "valign" "vexpand" "vexpand-set" "visible"
+               "width-request" "window" "window-position")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkWindow"))
                           #'string-lessp)))
-
-  ;; Get the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
- "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
- "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
- "separator-width" "text-handle-height" "text-handle-width"
- "visited-link-color" "wide-separators" "window-dragging"
- "decoration-button-layout" "decoration-resize-handle")
+  ;; Get the names of the style properties.
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+               "separator-height" "separator-width" "text-handle-height"
+               "text-handle-width" "visited-link-color" "wide-separators"
+               "window-dragging" "decoration-button-layout" "decoration-resize-handle")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWindow"))))
-
   ;; Get the names of the child properties
-  ;; to add
-
-  ;; Get the class definition
+  (is (equal '()
+             (mapcar #'g-param-spec-name
+                     (gtk-container-class-list-child-properties "GtkWindow"))))
+  ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkWindow" GTK-WINDOW
                        (:SUPERCLASS GTK-BIN :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable")
@@ -439,4 +384,4 @@
 ;;;     gtk_window_get_titlebar
 ;;;     gtk_window_set_interactive_debugging
 
-;;; 2020-10-2
+;;; 2020-11-1

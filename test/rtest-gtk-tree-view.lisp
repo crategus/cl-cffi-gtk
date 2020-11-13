@@ -7,35 +7,37 @@
 
 (test gtk-tree-view-drop-position
   ;; Check the type
-  (is-true (g-type-is-enum "GtkTreeViewDropPosition"))
+  (is (g-type-is-enum "GtkTreeViewDropPosition"))
   ;; Check the type initializer
-  (is (string= "GtkTreeViewDropPosition"
-               (g-type-name (gtype (foreign-funcall "gtk_tree_view_drop_position_get_type" :int)))))
+  (is (eq (gtype "GtkTreeViewDropPosition")
+          (gtype (foreign-funcall "gtk_tree_view_drop_position_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-tree-view-drop-position
-          (gobject::registered-enum-type "GtkTreeViewDropPosition")))
+          (registered-enum-type "GtkTreeViewDropPosition")))
   ;; Check the names
   (is (equal '("GTK_TREE_VIEW_DROP_BEFORE" "GTK_TREE_VIEW_DROP_AFTER"
-               "GTK_TREE_VIEW_DROP_INTO_OR_BEFORE" "GTK_TREE_VIEW_DROP_INTO_OR_AFTER")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkTreeViewDropPosition"))))
+               "GTK_TREE_VIEW_DROP_INTO_OR_BEFORE"
+               "GTK_TREE_VIEW_DROP_INTO_OR_AFTER")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkTreeViewDropPosition"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkTreeViewDropPosition"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkTreeViewDropPosition"))))
   ;; Check the nick names
   (is (equal '("before" "after" "into-or-before" "into-or-after")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkTreeViewDropPosition"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkTreeViewDropPosition"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkTreeViewDropPosition"
                              GTK-TREE-VIEW-DROP-POSITION
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_tree_view_drop_position_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_tree_view_drop_position_get_type")
                              (:BEFORE 0)
                              (:AFTER 1)
                              (:INTO-OR-BEFORE 2)
                              (:INTO-OR-AFTER 3))
-             (gobject::get-g-type-definition "GtkTreeViewDropPosition"))))
+             (get-g-type-definition "GtkTreeViewDropPosition"))))
 
 ;;;     GtkTreeViewPrivate
 
@@ -43,26 +45,26 @@
 
 (test gtk-tree-view-grid-lines
   ;; Check the type
-  (is-true (g-type-is-enum "GtkTreeViewGridLines"))
+  (is (g-type-is-enum "GtkTreeViewGridLines"))
   ;; Check the type initializer
-  (is (string= "GtkTreeViewGridLines"
-               (g-type-name (gtype (foreign-funcall "gtk_tree_view_grid_lines_get_type" :int)))))
+  (is (eq (gtype "GtkTreeViewGridLines")
+          (gtype (foreign-funcall "gtk_tree_view_grid_lines_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-tree-view-grid-lines
-          (gobject::registered-enum-type "GtkTreeViewGridLines")))
+          (registered-enum-type "GtkTreeViewGridLines")))
   ;; Check the names
   (is (equal '("GTK_TREE_VIEW_GRID_LINES_NONE" "GTK_TREE_VIEW_GRID_LINES_HORIZONTAL"
                "GTK_TREE_VIEW_GRID_LINES_VERTICAL" "GTK_TREE_VIEW_GRID_LINES_BOTH")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkTreeViewGridLines"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkTreeViewGridLines"))))
   ;; Check the values
   (is (equal '(0 1 2 3)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkTreeViewGridLines"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkTreeViewGridLines"))))
   ;; Check the nick names
   (is (equal '("none" "horizontal" "vertical" "both")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkTreeViewGridLines"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkTreeViewGridLines"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkTreeViewGridLines"
                              GTK-TREE-VIEW-GRID-LINES
@@ -72,27 +74,27 @@
                              (:HORIZONTAL 1)
                              (:VERTICAL 2)
                              (:BOTH 3))
-             (gobject::get-g-type-definition "GtkTreeViewGridLines"))))
+             (get-g-type-definition "GtkTreeViewGridLines"))))
 
 ;;;     GtkTreeView
 
 (test gtk-tree-view-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkTreeView"))
+  (is (g-type-is-object "GtkTreeView"))
   ;; Check the registered name
   (is (eq 'gtk-tree-view
           (registered-object-type-by-name "GtkTreeView")))
   ;; Check the type initializer
-  (is (string= "GtkTreeView"
-               (g-type-name (gtype (foreign-funcall "gtk_tree_view_get_type" :int)))))
+  (is (eq (gtype "GtkTreeView")
+          (gtype (foreign-funcall "gtk_tree_view_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkTreeView")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkTreeView")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTreeView"))))
+             (mapcar #'g-type-name (g-type-children "GtkTreeView"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkTreeView"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTreeView"))))
   ;; Check the class properties
   (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
                "can-focus" "child" "composite-child" "double-buffered" "enable-grid-lines"

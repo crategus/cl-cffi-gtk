@@ -7,34 +7,35 @@
 
 (test gtk-print-capabilities
   ;; Check the type
-  (is-true (g-type-is-flags "GtkPrintCapabilities"))
+  (is (g-type-is-flags "GtkPrintCapabilities"))
   ;; Check the registered name
-  (is (eql 'gtk-print-capabilities
-           (gobject::registered-flags-type "GtkPrintCapabilities")))
+  (is (eq 'gtk-print-capabilities
+          (registered-flags-type "GtkPrintCapabilities")))
   ;; Check the type initializer
-  (is (string= "GtkPrintCapabilities"
-               (g-type-name (gtype (foreign-funcall "gtk_print_capabilities_get_type" :int)))))
+  (is (eq (gtype "GtkPrintCapabilities")
+          (gtype (foreign-funcall "gtk_print_capabilities_get_type" g-size))))
   ;; Check the names
   (is (equal '("GTK_PRINT_CAPABILITY_PAGE_SET" "GTK_PRINT_CAPABILITY_COPIES"
                "GTK_PRINT_CAPABILITY_COLLATE" "GTK_PRINT_CAPABILITY_REVERSE"
                "GTK_PRINT_CAPABILITY_SCALE" "GTK_PRINT_CAPABILITY_GENERATE_PDF"
                "GTK_PRINT_CAPABILITY_GENERATE_PS" "GTK_PRINT_CAPABILITY_PREVIEW"
                "GTK_PRINT_CAPABILITY_NUMBER_UP" "GTK_PRINT_CAPABILITY_NUMBER_UP_LAYOUT")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GtkPrintCapabilities"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkPrintCapabilities"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 64 128 256 512)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GtkPrintCapabilities"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkPrintCapabilities"))))
   ;; Check the nick names
-  (is (equal '("page-set" "copies" "collate" "reverse" "scale" "generate-pdf" "generate-ps"
-               "preview" "number-up" "number-up-layout")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GtkPrintCapabilities"))))
+  (is (equal '("page-set" "copies" "collate" "reverse" "scale" "generate-pdf"
+               "generate-ps" "preview" "number-up" "number-up-layout")
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkPrintCapabilities"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkPrintCapabilities"
                               GTK-PRINT-CAPABILITIES
-                              (:EXPORT T :TYPE-INITIALIZER "gtk_print_capabilities_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gtk_print_capabilities_get_type")
                               (:PAGE-SET 1)
                               (:COPIES 2)
                               (:COLLATE 4)
@@ -45,56 +46,61 @@
                               (:PREVIEW 128)
                               (:NUMBER-UP 256)
                               (:NUMBER-UP-LAYOUT 512))
-             (gobject::get-g-type-definition "GtkPrintCapabilities"))))
+             (get-g-type-definition "GtkPrintCapabilities"))))
 
 ;;;     GtkPrintUnixDialog
 
 (test gtk-print-unix-dialog-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrintUnixDialog"))
+  (is (g-type-is-object "GtkPrintUnixDialog"))
   ;; Check the registered name
   (is (eq 'gtk-print-unix-dialog
           (registered-object-type-by-name "GtkPrintUnixDialog")))
   ;; Check the type initializer
-  (is (string= "GtkPrintUnixDialog"
-               (g-type-name (gtype (foreign-funcall "gtk_print_unix_dialog_get_type" :int)))))
+  (is (eq (gtype "GtkPrintUnixDialog")
+          (gtype (foreign-funcall "gtk_print_unix_dialog_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkDialog") (g-type-parent "GtkPrintUnixDialog")))
+  (is (eq (gtype "GtkDialog") (g-type-parent "GtkPrintUnixDialog")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPrintUnixDialog"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintUnixDialog"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintUnixDialog"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintUnixDialog"))))
   ;; Check the class properties
-  (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
-               "can-default" "can-focus" "child" "composite-child" "current-page" "decorated"
-               "default-height" "default-width" "deletable" "destroy-with-parent"
-               "double-buffered" "embed-page-setup" "events" "expand" "focus-on-click"
-               "focus-on-map" "focus-visible" "gravity" "halign" "has-default" "has-focus"
-               "has-resize-grip" "has-selection" "has-tooltip" "has-toplevel-focus"
-               "height-request" "hexpand" "hexpand-set" "hide-titlebar-when-maximized" "icon"
-               "icon-name" "is-active" "is-focus" "is-maximized" "manual-capabilities"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "mnemonics-visible" "modal" "name" "no-show-all"
-               "opacity" "page-setup" "parent" "print-settings" "receives-default"
-               "resizable" "resize-grip-visible" "resize-mode" "role" "scale-factor" "screen"
-               "selected-printer" "sensitive" "skip-pager-hint" "skip-taskbar-hint"
-               "startup-id" "style" "support-selection" "title" "tooltip-markup"
+  (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
+               "border-width" "can-default" "can-focus" "child"
+               "composite-child" "current-page" "decorated" "default-height"
+               "default-width" "deletable" "destroy-with-parent"
+               "double-buffered" "embed-page-setup" "events" "expand"
+               "focus-on-click" "focus-on-map" "focus-visible" "gravity"
+               "halign" "has-default" "has-focus" "has-resize-grip"
+               "has-selection" "has-tooltip" "has-toplevel-focus"
+               "height-request" "hexpand" "hexpand-set"
+               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active"
+               "is-focus" "is-maximized" "manual-capabilities" "margin"
+               "margin-bottom" "margin-end" "margin-left" "margin-right"
+               "margin-start" "margin-top" "mnemonics-visible" "modal" "name"
+               "no-show-all" "opacity" "page-setup" "parent" "print-settings"
+               "receives-default" "resizable" "resize-grip-visible"
+               "resize-mode" "role" "scale-factor" "screen" "selected-printer"
+               "sensitive" "skip-pager-hint" "skip-taskbar-hint" "startup-id"
+               "style" "support-selection" "title" "tooltip-markup"
                "tooltip-text" "transient-for" "type" "type-hint" "urgency-hint"
-               "use-header-bar" "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window" "window-position")
+               "use-header-bar" "valign" "vexpand" "vexpand-set" "visible"
+               "width-request" "window" "window-position")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrintUnixDialog"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging"
-               "decoration-button-layout" "decoration-resize-handle" "action-area-border"
-               "button-spacing" "content-area-border" "content-area-spacing")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "decoration-button-layout"
+               "decoration-resize-handle" "action-area-border" "button-spacing"
+               "content-area-border" "content-area-spacing")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkPrintUnixDialog"))))
   ;; Get the names of the child properties

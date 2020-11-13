@@ -21,13 +21,13 @@
   (is-false (g-type-is-interface "GtkSelectionData"))
 
   ;; Check the fundamental type
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GtkSelectionData")))
+  (is (eq (gtype "GBoxed") (g-type-fundamental "GtkSelectionData")))
 
   ;; Check some more GType information
-  (is (equal (gtype "GBoxed") (g-type-parent "GtkSelectionData")))
+  (is (eq (gtype "GBoxed") (g-type-parent "GtkSelectionData")))
   (is (= 2 (g-type-depth "GtkSelectionData")))
-  (is (equal (gtype "GtkSelectionData")
-             (g-type-next-base "GtkSelectionData" "GBoxed")))
+  (is (eq (gtype "GtkSelectionData")
+          (g-type-next-base "GtkSelectionData" "GBoxed")))
   (is-false (g-type-is-a "GtkSelectionData" "GtkWidget"))
   (is-false (g-type-is-a "GtkSelectionData" "GtkContainer"))
   (is-false (g-type-is-a "GtkSelectionData" "gboolean"))

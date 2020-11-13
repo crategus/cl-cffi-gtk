@@ -1,9 +1,34 @@
 (def-suite gobject-type-info :in gobject-suite)
 (in-suite gobject-type-info)
 
-(test g-type-info-contstants
-  (is (= 2 gobject::+g-type-fundamental-shift+))
+;;; --- Types and Values -------------------------------------------------------
 
+;;;     G_TYPE_INVALID
+;;;     G_TYPE_NONE
+;;;     G_TYPE_INTERFACE
+;;;     G_TYPE_CHAR
+;;;     G_TYPE_UCHAR
+;;;     G_TYPE_BOOLEAN
+;;;     G_TYPE_INT
+;;;     G_TYPE_UINT
+;;;     G_TYPE_LONG
+;;;     G_TYPE_ULONG
+;;;     G_TYPE_INT64
+;;;     G_TYPE_UINT64
+;;;     G_TYPE_ENUM
+;;;     G_TYPE_FLAGS
+;;;     G_TYPE_FLOAT
+;;;     G_TYPE_DOUBLE
+;;;     G_TYPE_STRING
+;;;     G_TYPE_POINTER
+;;;     G_TYPE_BOXED
+;;;     G_TYPE_PARAM
+;;;     G_TYPE_OBJECT
+;;;     G_TYPE_GTYPE
+;;;     G_TYPE_VARIANT
+;;;     G_TYPE_CHECKSUM
+
+(test g-type-constants.1
   (is (= (ash  0 2) +g-type-invalid+))
   (is (= (ash  1 2) +g-type-none+))
   (is (= (ash  2 2) +g-type-interface+))
@@ -25,86 +50,93 @@
   (is (= (ash 18 2) +g-type-boxed+))
   (is (= (ash 19 2) +g-type-param+))
   (is (= (ash 20 2) +g-type-object+))
-  (is (= (ash 21 2) +g-type-variant+))
-  (is (= 22 +g-type-reserved-glib-first+))
-  (is (= 31 +g-type-reserved-glib-last+))
-  (is (= 32 +g-type-reserved-bse-first+))
-  (is (= 48 +g-type-reserved-bse-last+))
-  (is (= 49 +g-type-reserved-user-first+))
+  (is (= (ash 21 2) +g-type-variant+)))
 
-  ;; +g-type-fundamental-max+
-  (is (= (ash 255 2) +g-type-fundamental-max+)))
+(test g-type-constants.2
+  (is (eq (gtype "void") (gtype +g-type-none+)))
+  (is (eq (gtype "GInterface") (gtype +g-type-interface+)))
+  (is (eq (gtype "gchar") (gtype +g-type-char+)))
+  (is (eq (gtype "guchar") (gtype +g-type-uchar+)))
+  (is (eq (gtype "gboolean") (gtype +g-type-boolean+)))
+  (is (eq (gtype "gint") (gtype +g-type-int+)))
+  (is (eq (gtype "guint") (gtype +g-type-uint+)))
+  (is (eq (gtype "glong") (gtype +g-type-long+)))
+  (is (eq (gtype "gulong") (gtype +g-type-ulong+)))
+  (is (eq (gtype "gint64") (gtype +g-type-int64+)))
+  (is (eq (gtype "guint64") (gtype +g-type-uint64+)))
+  (is (eq (gtype "GEnum") (gtype +g-type-enum+)))
+  (is (eq (gtype "GFlags") (gtype +g-type-flags+)))
+  (is (eq (gtype "gfloat") (gtype +g-type-float+)))
+  (is (eq (gtype "gdouble") (gtype +g-type-double+)))
+  (is (eq (gtype "gchararray") (gtype +g-type-string+)))
+  (is (eq (gtype "gpointer") (gtype +g-type-pointer+)))
+  (is (eq (gtype "GBoxed") (gtype +g-type-boxed+)))
+  (is (eq (gtype "GParam") (gtype +g-type-param+)))
+  (is (eq (gtype "GObject") (gtype +g-type-object+)))
+; Does not work
+;  (is (eq (gtype "GType") (gtype +g-type-gtype+)))
+  (is (eq (gtype "GVariant") (gtype +g-type-variant+)))
+; Does not work
+;  (is (eq (gtype "GChecksum") (gtype +g-type-checksum+)))
+)
 
-;;;   g_type_gtype
+;;;     GType
 
-(test g-type-gtype
-  (is (equal "GType" (gtype-name (g-type-gtype)))))
+;;;     GTypeInterface
 
-;;;   GTypeFlags
+(test g-type-interface-structure
+  (let ((interface (g-type-default-interface-ref "GtkOrientable")))
+    (is (= 16 (foreign-type-size '(:struct g-type-interface))))
+    (is (equal '(:instance-type :type)
+               (stable-sort (foreign-slot-names '(:struct g-type-interface))
+                            #'string-lessp)))
+    (is-true (foreign-slot-value interface
+                                 '(:struct g-type-interface) :type))
+    (is-false (foreign-slot-value interface
+                                  '(:struct g-type-interface) :instance-type))))
 
-(test g-type-flags
-  (is (= 4 (foreign-type-size 'g-type-flags)))
-  (is (equal '(:abstract)
-             (foreign-bitfield-symbols 'g-type-flags (ash 1 4))))
-  (is (equal '(:value-abstract)
-             (foreign-bitfield-symbols 'g-type-flags (ash 1 5))))
-  (is (equal '(:abstract :value-abstract)
-             (foreign-bitfield-symbols 'g-type-flags
-                                       (+ (ash 1 4) (ash 1 5)))))
-  (is (= (ash 1 4)
-         (foreign-bitfield-value 'g-type-flags '(:abstract))))
-  (is (= (ash 1 5)
-         (foreign-bitfield-value 'g-type-flags '(:value-abstract))))
-  (is (= (+ (ash 1 4) (ash 1 5))
-         (foreign-bitfield-value 'g-type-flags
-                                 '(:abstract :value-abstract)))))
+;;;     GTypeInstance
 
-;;;   GTypeFundamentalFlags
+(test g-type-instance-structure
+  (let ((button (make-instance 'gtk-button)))
+    (is (= 8 (foreign-type-size '(:struct g-type-instance))))
+    (is (equal '(:class) (foreign-slot-names '(:struct g-type-instance))))
+    (is-true (foreign-slot-value (pointer button)
+                                 '(:struct g-type-instance) :class))))
 
-(test g-type-fundamental-flags
-  (is (= 4 (foreign-type-size 'g-type-fundamental-flags)))
-  (is (equal '(:classed)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 0))))
-  (is (equal '(:instantiatable)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 1))))
-  (is (equal '(:derivable)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 2))))
-  (is (equal '(:deep-derivable)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 3))))
-  (is (equal '(:CLASSED :INSTANTIATABLE :DERIVABLE :DEEP-DERIVABLE)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags
-                                       (+ (ash 1 0) (ash 1 1)
-                                                    (ash 1 2) (ash 1 3)))))
-  (is (= (ash 1 0)
-         (foreign-bitfield-value 'g-type-fundamental-flags '(:classed))))
-  (is (= (ash 1 1)
-         (foreign-bitfield-value 'g-type-fundamental-flags '(:instantiatable))))
-  (is (= (ash 1 2)
-         (foreign-bitfield-value 'g-type-fundamental-flags '(:derivable))))
-  (is (= (ash 1 3)
-         (foreign-bitfield-value 'g-type-fundamental-flags '(:deep-derivable))))
-  (is (= (+ (ash 1 0) (ash 1 1) (ash 1 2) (ash 1 3))
-         (foreign-bitfield-value 'g-type-fundamental-flags
-                                 '(:classed :instantiatable
-                                   :derivable :deep-derivable)))))
+;;;     GTypeClass
+
+(test g-type-class-structure
+  (let ((class (g-type-class-ref "GtkButton")))
+    (is (= 8 (foreign-type-size '(:struct g-type-class))))
+    (is (equal '(:type) (foreign-slot-names '(:struct g-type-class))))
+    (is-true (foreign-slot-value class '(:struct g-type-class) :type))))
+
+;;;     GTypeInfo
+;;;     GTypeFundamentalInfo
+;;;     GInterfaceInfo
+;;;     GTypeValueTable
+;;;     GTypeDebugFlags                                    not implemented
+;;;     GTypeQuery
+;;;     GTypeFlags
+;;;     GTypeFundamentalFlags
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;   g_type_fundamental
 
 (test g-type-fundamental
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkWidget")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkContainer")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkBox")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkWindow")))
-  (is (equal (gtype "GInterface") (g-type-fundamental "GtkOrientable")))
-  (is (equal (gtype "GFlags") (g-type-fundamental "GtkAccelFlags")))
-  (is (equal (gtype "GEnum") (g-type-fundamental "GtkArrowPlacement")))
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GdkRGBA")))
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))))
+  (is (eq (gtype "GObject") (g-type-fundamental "GtkWidget")))
+  (is (eq (gtype "GObject") (g-type-fundamental "GtkContainer")))
+  (is (eq (gtype "GObject") (g-type-fundamental "GtkBox")))
+  (is (eq (gtype "GObject") (g-type-fundamental "GtkWindow")))
+  (is (eq (gtype "GInterface") (g-type-fundamental "GtkOrientable")))
+  (is (eq (gtype "GFlags") (g-type-fundamental "GtkAccelFlags")))
+  (is (eq (gtype "GEnum") (g-type-fundamental "GtkArrowPlacement")))
+  (is (eq (gtype "GBoxed") (g-type-fundamental "GdkRGBA")))
+  (is (eq (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))))
 
-;;;   g_type_make_fundamental
-
-(test g-type-make-fundamental
-  (is (= (ash 256 2) (g-type-make-fundamental 256))))
+;;;   g_type_make_fundamental                              not exported
 
 ;;;   g_type_is_abstract
 
@@ -466,91 +498,27 @@
   (is-false (g-type-is-interface "GdkRGBA"))
   (is-false (g-type-is-interface "GtkTreePath")))
 
-;;;   GTypeInterface
-
-(test g-type-interface
-  (let ((interface (g-type-default-interface-ref "GtkOrientable")))
-    (is (= 16 (foreign-type-size '(:struct g-type-interface))))
-    (is (equal '(:instance-type :type)
-               (stable-sort (foreign-slot-names '(:struct g-type-interface))
-                            #'string-lessp)))
-    (is-true (foreign-slot-value interface
-                                 '(:struct g-type-interface) :type))
-    (is-false (foreign-slot-value interface
-                                  '(:struct g-type-interface) :instance-type))))
-
-;;;   GTypeClass
-
-(test g-type-class
-  (let ((class (g-type-class-ref "GtkButton")))
-    (is (= 8 (foreign-type-size '(:struct g-type-class))))
-    (is (equal '(:type) (foreign-slot-names '(:struct g-type-class))))
-    (is-true (foreign-slot-value class '(:struct g-type-class) :type))))
-
-;;;   GTypeInstance
-
-(test g-type-instance
-  (let ((button (make-instance 'gtk-button)))
-    (is (= 8 (foreign-type-size '(:struct g-type-instance))))
-    (is (equal '(:class) (foreign-slot-names '(:struct g-type-instance))))
-    (is-true (foreign-slot-value (pointer button)
-                                 '(:struct g-type-instance) :class))))
-
-;;;   g-type-info
-
-(test g-type-info
-  (is (= 72 (foreign-type-size '(:struct g-type-info))))
-  (is (equal '(:BASE-FINALIZE-FN :BASE-INIT-FN :CLASS-DATA :CLASS-FINALIZE-FN
-               :CLASS-INIT-FN :CLASS-SIZE :INSTANCE-INIT-FN :INSTANCE-SIZE
-               :N-PREALLOCS :VALUE-TABLE)
-             (stable-sort (foreign-slot-names '(:struct g-type-info))
-                          #'string-lessp))))
-
-;;;   GTypeFundamentalInfo
-
-(test g-type-fundamental-info
-  (is (= 4 (foreign-type-size '(:struct g-type-fundamental-info))))
-  (is (equal '(:TYPE-FLAGS)
-             (foreign-slot-names '(:struct g-type-fundamental-info)))))
-
-;;;   GInterfaceInfo
-
-(test g-interface-info
-  (is (= 24 (foreign-type-size '(:struct g-interface-info))))
-  (is (equal '(:INTERFACE-DATA :INTERFACE-FINALIZE :INTERFACE-INIT)
-             (stable-sort (foreign-slot-names '(:struct g-interface-info))
-             #'string-lessp))))
-
-;;;   GTypeValueTable
-
-(test g-type-value-table
-  (is (= 64 (foreign-type-size '(:struct g-type-value-table))))
-  (is (equal '(:COLLECT-FORMAT :COLLECT-VALUE :LCOPY-FORMAT :LCOPY-VALUE
-               :VALUE-COPY :VALUE-FREE :VALUE-INIT :VALUE-PEEK-POINTER)
-             (stable-sort (foreign-slot-names '(:struct g-type-value-table))
-                          #'string-lessp))))
-
 ;;; G_TYPE_FROM_INSTANCE
 
 (test g-type-from-instance
-  (is (equal (gtype "GtkButton")
-             (g-type-from-instance (make-instance 'gtk-button)))))
+  (is (eq (gtype "GtkButton")
+          (g-type-from-instance (make-instance 'gtk-button)))))
 
 ;;;   G_TYPE_FROM_CLASS
 
 (test g-type-from-class
-  (is (equal (gtype "GtkWidget")
-             (g-type-from-class (g-type-class-ref "GtkWidget"))))
-  (is (equal (gtype "GtkContainer")
-             (g-type-from-class (g-type-class-ref "GtkContainer"))))
-  (is (equal (gtype "GtkButton")
-             (g-type-from-class (g-type-class-ref "GtkButton")))))
+  (is (eq (gtype "GtkWidget")
+          (g-type-from-class (g-type-class-ref "GtkWidget"))))
+  (is (eq (gtype "GtkContainer")
+          (g-type-from-class (g-type-class-ref "GtkContainer"))))
+  (is (eq (gtype "GtkButton")
+          (g-type-from-class (g-type-class-ref "GtkButton")))))
 
 ;;;   G_TYPE_FROM_INTERFACE
 
 (test g-type-from-interface
-  (is (equal (gtype "GtkOrientable")
-             (g-type-from-interface (g-type-default-interface-ref "GtkOrientable")))))
+  (is (eq (gtype "GtkOrientable")
+          (g-type-from-interface (g-type-default-interface-ref "GtkOrientable")))))
 
 ;;;     g-type-instance-class
 
@@ -558,11 +526,11 @@
   (is (eq (gtype "GtkButton")
           (g-type-from-class (g-type-instance-class (make-instance 'gtk-button))))))
 
-;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
-;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
-;;;     G_TYPE_CLASS_GET_PRIVATE                 * not implemented *
-;;;     G_TYPE_CHECK_INSTANCE                    * not implemented *
-;;;     G_TYPE_CHECK_INSTANCE_CAST               * not implemented *
+;;;     G_TYPE_INSTANCE_GET_INTERFACE                      not implemented
+;;;     G_TYPE_INSTANCE_GET_PRIVATE                        not implemented
+;;;     G_TYPE_CLASS_GET_PRIVATE                           not implemented
+;;;     G_TYPE_CHECK_INSTANCE                              not implemented
+;;;     G_TYPE_CHECK_INSTANCE_CAST                         not implemented
 
 ;;;     G_TYPE_CHECK_INSTANCE_TYPE
 
@@ -571,7 +539,7 @@
     (is-true (g-type-check-instance-type button "GObject"))
     (is-true (g-type-check-instance-type button "GtkButton"))))
 
-;;;     G_TYPE_CHECK_CLASS_CAST                  * not implemented *
+;;;     G_TYPE_CHECK_CLASS_CAST                            not implemented
 
 ;;;   G_TYPE_CHECK_CLASS_TYPE
 
@@ -579,15 +547,11 @@
   (is-true  (g-type-check-class-type (g-type-class-ref "GtkButton") "GObject"))
   (is-false (g-type-check-class-type (g-type-class-ref "GtkButton") "GtkWindow")))
 
-;;;     G_TYPE_CHECK_VALUE                       * not implemented *
-;;;     G_TYPE_CHECK_VALUE_TYPE                  * not implemented *
-;;;     G_TYPE_FLAG_RESERVED_ID_BIT              * not implemented *
+;;;     G_TYPE_CHECK_VALUE                                 not implemented
+;;;     G_TYPE_CHECK_VALUE_TYPE                            not implemented
 ;;;
 ;;;     g_type_init
-;;;
-;;;     GTypeDebugFlags                          * not implemented *
-;;;
-;;;     g_type_init_with_debug_flags             * not implemented *
+;;;     g_type_init_with_debug_flags                       not implemented
 
 ;;;   g_type_name
 
@@ -601,9 +565,9 @@
 ;;;   g_type_from_name
 
 (test g-type-from-name
-  (is (equal (gtype "gdouble") (g-type-from-name "gdouble")))
-  (is (equal (gtype "GBoxed") (g-type-from-name "GBoxed")))
-  (is (equal (gtype "GtkWidget") (g-type-from-name "GtkWidget"))))
+  (is (eq (gtype "gdouble") (g-type-from-name "gdouble")))
+  (is (eq (gtype "GBoxed") (g-type-from-name "GBoxed")))
+  (is (eq (gtype "GtkWidget") (g-type-from-name "GtkWidget"))))
 
 ;;;     g_type_parent
 ;;;     g_type_depth
@@ -632,9 +596,9 @@
 ;;;     g_type_class_peek_static
 ;;;     g_type_class_peek_parent
 ;;;     g_type_class_add_private
-;;;     g_type_add_class_private                 * not implemented *
+;;;     g_type_add_class_private                           not implemented
 ;;;     g_type_interface_peek
-;;;     g_type_interface_peek_parent             * not implemented *
+;;;     g_type_interface_peek_parent                       not implemented
 ;;;     g_type_default_interface_ref
 ;;;     g_type_default_interface_peek
 ;;;     g_type_default_interface_unref
@@ -660,31 +624,29 @@
   (is-false (setf (g-type-qdata "GtkButton" "mydata") nil))
   (is-false (g-type-qdata "GtkButton" "mydata")))
 
-;;;     GTypeQuery
-;;;
 ;;;     g_type_query
 ;;;     g_type_register_static
 ;;;     g_type_register_static_simple
-;;;     g_type_register_dynamic                  * not implemented *
-;;;     g_type_register_fundamental              * not implemented *
+;;;     g_type_register_dynamic                            not implemented
+;;;     g_type_register_fundamental                        not implemented
 ;;;     g_type_add_interface_static
-;;;     g_type_add_interface_dynamic             * not implemented *
+;;;     g_type_add_interface_dynamic                       not implemented
 ;;;     g_type_interface_add_prerequisite
-;;;     g_type_get_plugin                        * not implemented *
-;;;     g_type_interface_get_plugin              * not implemented *
+;;;     g_type_get_plugin                                  not implemented
+;;;     g_type_interface_get_plugin                        not implemented
 
 ;;;     g_type_fundamental_next
 
 (test g-type-fundamental-next
   (is (= 196 (g-type-fundamental-next))))
 
-;;;     g_type_create_instance                   * not implemented *
-;;;     g_type_free_instance                     * not implemented *
-;;;     g_type_add_class_cache_func              * not implemented *
-;;;     g_type_remove_class_cache_func           * not implemented *
-;;;     g_type_class_unref_uncached              * not implemented *
-;;;     g_type_add_interface_check               * not implemented *
-;;;     g_type_remove_interface_check            * not implemented *
+;;;     g_type_create_instance                             not implemented
+;;;     g_type_free_instance                               not implemented
+;;;     g_type_add_class_cache_func                        not implemented
+;;;     g_type_remove_class_cache_func                     not implemented
+;;;     g_type_class_unref_uncached                        not implemented
+;;;     g_type_add_interface_check                         not implemented
+;;;     g_type_remove_interface_check                      not implemented
 
 ;;;     g_type_value_table_peek
 
@@ -723,21 +685,20 @@
   (is-true  (not (null-pointer-p (g-type-value-table-peek "GtkTreePath")))))
 
 ;;;     g_type_ensure
-;;;     g_type_get_type_registration_serial      * not implemented *
+;;;     g_type_get_type_registration_serial                not implemented
 ;;;
-;;;     G_DEFINE_TYPE                            * not implemented *
-;;;     G_DEFINE_TYPE_WITH_CODE                  * not implemented *
-;;;     G_DEFINE_ABSTRACT_TYPE                   * not implemented *
-;;;     G_DEFINE_ABSTRACT_TYPE_WITH_CODE         * not implemented *
-;;;     G_DEFINE_INTERFACE                       * not implemented *
-;;;     G_DEFINE_INTERFACE_WITH_CODE             * not implemented *
-;;;     G_IMPLEMENT_INTERFACE                    * not implemented *
-;;;     G_DEFINE_TYPE_EXTENDED                   * not implemented *
-;;;     G_DEFINE_BOXED_TYPE                      * not implemented *
-;;;     G_DEFINE_BOXED_TYPE_WITH_CODE            * not implemented *
-;;;     G_DEFINE_POINTER_TYPE                    * not implemented *
-;;;     G_DEFINE_POINTER_TYPE_WITH_CODE          * not implemented *
-
+;;;     G_DEFINE_TYPE                                      not implemented
+;;;     G_DEFINE_TYPE_WITH_CODE                            not implemented
+;;;     G_DEFINE_ABSTRACT_TYPE                             not implemented
+;;;     G_DEFINE_ABSTRACT_TYPE_WITH_CODE                   not implemented
+;;;     G_DEFINE_INTERFACE                                 not implemented
+;;;     G_DEFINE_INTERFACE_WITH_CODE                       not implemented
+;;;     G_IMPLEMENT_INTERFACE                              not implemented
+;;;     G_DEFINE_TYPE_EXTENDED                             not implemented
+;;;     G_DEFINE_BOXED_TYPE                                not implemented
+;;;     G_DEFINE_BOXED_TYPE_WITH_CODE                      not implemented
+;;;     G_DEFINE_POINTER_TYPE                              not implemented
+;;;     G_DEFINE_POINTER_TYPE_WITH_CODE                    not implemented
 
 #+nil
 (test g-type-info-char
@@ -943,9 +904,9 @@
     (is (= 5 (g-type-depth id)))
     (is (= 5 (g-type-depth name)))
     ;; g-type-next-base
-    (is (equal (gtype "GInitiallyUnowned") (g-type-next-base gtype "GObject")))
-    (is (equal (gtype "GInitiallyUnowned") (g-type-next-base id "GObject")))
-    (is (equal (gtype "GInitiallyUnowned") (g-type-next-base name "GObject")))
+    (is (eq (gtype "GInitiallyUnowned") (g-type-next-base gtype "GObject")))
+    (is (eq (gtype "GInitiallyUnowned") (g-type-next-base id "GObject")))
+    (is (eq (gtype "GInitiallyUnowned") (g-type-next-base name "GObject")))
     ;; g-type-is-a
     (is-false (g-type-is-a gtype +g-type-invalid+))
     (is-true (g-type-is-a gtype gtype))
@@ -959,25 +920,25 @@
     (is (equal gtype (foreign-slot-value (g-type-class-peek-static gtype) 'g-type-class :type)))
     ;; g-type-class-unref
     ;; g-type-class-peek-parent
-    (is (equal (gtype "GtkMisc")
-                (foreign-slot-value (g-type-class-peek-parent (g-type-class-peek gtype))
-                                    '(:struct g-type-class) :type)))
+    (is (eq (gtype "GtkMisc")
+            (foreign-slot-value (g-type-class-peek-parent (g-type-class-peek gtype))
+                                '(:struct g-type-class) :type)))
     ;; g-type-interface-peek
     ;; g-type-interface-peek-parent
     ;; g-type-default-interface-ref
     ;; g-type-default-interface-peek
     ;; g-type-default-interface-unref
     ;; g-type-children
-    (is (equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children gtype))))
-    (is (equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children id))))
-    (is (equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children name))))
+    (is (equal '("GtkAccelLabel") (mapcar #'g-type-name (g-type-children gtype))))
+    (is (equal '("GtkAccelLabel") (mapcar #'g-type-name (g-type-children id))))
+    (is (equal '("GtkAccelLabel") (mapcar #'g-type-name (g-type-children name))))
     ;; g-type-interfaces
     (is (equal '("AtkImplementorIface" "GtkBuildable")
-                  (mapcar #'gtype-name (g-type-interfaces gtype))))
+                  (mapcar #'g-type-name (g-type-interfaces gtype))))
     (is (equal '("AtkImplementorIface" "GtkBuildable")
-                  (mapcar #'gtype-name (g-type-interfaces id))))
+                  (mapcar #'g-type-name (g-type-interfaces id))))
     (is (equal '("AtkImplementorIface" "GtkBuildable")
-                  (mapcar #'gtype-name (g-type-interfaces name))))
+                  (mapcar #'g-type-name (g-type-interfaces name))))
     ;; g-type-interace-prerequisites
     ;; (setf g-type-qdata)
     (setf (g-type-qdata gtype "myData") (null-pointer))
@@ -991,9 +952,9 @@
       (is (= 476 (foreign-slot-value query 'g-type-query :class-size)))
       (is (=  24 (foreign-slot-value query 'g-type-query :instance-size))))
     ;; g-type-fundamental
-    (is (equal (gtype "GObject") (g-type-fundamental gtype)))
-    (is (equal (gtype "GObject") (g-type-fundamental id)))
-    (is (equal (gtype "GObject") (g-type-fundamental name)))
+    (is (eq (gtype "GObject") (g-type-fundamental gtype)))
+    (is (eq (gtype "GObject") (g-type-fundamental id)))
+    (is (eq (gtype "GObject") (g-type-fundamental name)))
     ;; g-type-value-table-peek
     #+nil
     (with-foreign-object (table 'g-type-value-table)
@@ -1007,4 +968,4 @@
       (is (equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format)))
       (is-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))))
 
-;;; 2020-10-17
+;;; 2020-11-1

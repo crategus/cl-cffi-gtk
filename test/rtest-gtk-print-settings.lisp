@@ -7,21 +7,21 @@
 
 (test gtk-print-settings-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrintSettings"))
+  (is (g-type-is-object "GtkPrintSettings"))
   ;; Check the registered name
   (is (eq 'gtk-print-settings
           (registered-object-type-by-name "GtkPrintSettings")))
   ;; Check the type initializer
-  (is (string= "GtkPrintSettings"
-               (g-type-name (gtype (foreign-funcall "gtk_print_settings_get_type" :int)))))
+  (is (eq (gtype "GtkPrintSettings")
+          (gtype (foreign-funcall "gtk_print_settings_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrintSettings")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrintSettings")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPrintSettings"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintSettings"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintSettings"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintSettings"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name
@@ -40,8 +40,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPageOrientation"))
   ;; Check the type initializer
-  (is (string= "GtkPageOrientation"
-               (g-type-name (gtype (foreign-funcall "gtk_page_orientation_get_type" :int)))))
+  (is (eq (gtype "GtkPageOrientation")
+          (gtype (foreign-funcall "gtk_page_orientation_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-page-orientation (gobject::registered-enum-type "GtkPageOrientation")))
   ;; Check the names
@@ -74,8 +74,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintDuplex"))
   ;; Check the type initializer
-  (is (string= "GtkPrintDuplex"
-               (g-type-name (gtype (foreign-funcall "gtk_print_duplex_get_type" :int)))))
+  (is (eq (gtype "GtkPrintDuplex")
+          (gtype (foreign-funcall "gtk_print_duplex_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-print-duplex (gobject::registered-enum-type "GtkPrintDuplex")))
   ;; Check the names
@@ -106,8 +106,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintQuality"))
   ;; Check the type initializer
-  (is (string= "GtkPrintQuality"
-               (g-type-name (gtype (foreign-funcall "gtk_print_quality_get_type" :int)))))
+  (is (eq (gtype "GtkPrintQuality")
+          (gtype (foreign-funcall "gtk_print_quality_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-print-quality (gobject::registered-enum-type "GtkPrintQuality")))
   ;; Check the names
@@ -139,8 +139,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkNumberUpLayout"))
   ;; Check the type initializer
-  (is (string= "GtkNumberUpLayout"
-               (g-type-name (gtype (foreign-funcall "gtk_number_up_layout_get_type" :int)))))
+  (is (eq (gtype "GtkNumberUpLayout")
+          (gtype (foreign-funcall "gtk_number_up_layout_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-number-up-layout (gobject::registered-enum-type "GtkNumberUpLayout")))
   ;; Check the names
@@ -182,8 +182,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPrintPages"))
   ;; Check the type initializer
-  (is (string= "GtkPrintPages"
-               (g-type-name (gtype (foreign-funcall "gtk_print_pages_get_type" :int)))))
+  (is (eq (gtype "GtkPrintPages")
+          (gtype (foreign-funcall "gtk_print_pages_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-print-pages (gobject::registered-enum-type "GtkPrintPages")))
   ;; Check the names
@@ -217,8 +217,8 @@
   ;; Check the type
   (is-true (g-type-is-enum "GtkPageSet"))
   ;; Check the type initializer
-  (is (string= "GtkPageSet"
-               (g-type-name (gtype (foreign-funcall "gtk_page_set_get_type" :int)))))
+  (is (eq (gtype "GtkPageSet")
+          (gtype (foreign-funcall "gtk_page_set_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-page-set (gobject::registered-enum-type "GtkPageSet")))
   ;; Check the names

@@ -1,109 +1,55 @@
 (def-suite gtk-tool-palette :in gtk-suite)
 (in-suite gtk-tool-palette)
 
-;;;   GtkToolPalette
+;;; --- Types and Values -------------------------------------------------------
+
+;;;     GtkToolPalette
 
 (test gtk-tool-palette-class
-  ;; Type checks
-  (is-true  (g-type-is-object "GtkToolPalette"))
-  (is-false (g-type-is-abstract "GtkToolPalette"))
-  (is-true  (g-type-is-derived "GtkToolPalette"))
-  (is-false (g-type-is-fundamental "GtkToolPalette"))
-  (is-true  (g-type-is-value-type "GtkToolPalette"))
-  (is-true  (g-type-has-value-table "GtkToolPalette"))
-  (is-true  (g-type-is-classed "GtkToolPalette"))
-  (is-true  (g-type-is-instantiatable "GtkToolPalette"))
-  (is-true  (g-type-is-derivable "GtkToolPalette"))
-  (is-true  (g-type-is-deep-derivable "GtkToolPalette"))
-  (is-false (g-type-is-interface "GtkToolPalette"))
-
+  ;; Type check
+  (is (g-type-is-object "GtkToolPalette"))
   ;; Check the registered name
   (is (eq 'gtk-tool-palette
           (registered-object-type-by-name "GtkToolPalette")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkToolPalette"))))
-    (is (equal (gtype "GtkToolPalette") (g-type-from-class class)))
-    (is (equal (gtype "GtkToolPalette") (g-object-class-type class)))
-    (is (equal "GtkToolPalette" (g-object-class-name class)))
-    (is (equal (gtype "GtkToolPalette") (g-type-from-class  (g-type-class-peek "GtkToolPalette"))))
-    (is (equal (gtype "GtkToolPalette") (g-type-from-class  (g-type-class-peek-static "GtkToolPalette"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-tool-palette)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-tool-palette (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkToolPalette" (gobject-class-g-type-name class)))
-    (is (equal "GtkToolPalette" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_tool_palette_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkToolPalette")))
-  (is (= 5 (g-type-depth "GtkToolPalette")))
-  (is (equal (gtype "GtkContainer")
-             (g-type-next-base "GtkToolPalette" "GtkWidget")))
-  (is-true  (g-type-is-a "GtkToolPalette" "GtkWidget"))
-  (is-true  (g-type-is-a "GtkToolPalette" "GtkContainer"))
-  (is-false (g-type-is-a "GtkToolPalette" "gboolean"))
-  (is-false (g-type-is-a "GtkToolPalette" "GtkWindow"))
-
+  ;; Check the type initializer
+  (is (eq (gtype "GtkToolPalette")
+          (gtype (foreign-funcall "gtk_tool_palette_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkToolPalette")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkToolPalette"))))
+             (mapcar #'g-type-name (g-type-children "GtkToolPalette"))))
   ;; Check the interfaces
-  (is (equal '("AtkImplementorIface"
-               "GtkBuildable"
-               "GtkOrientable"
-               "GtkScrollable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkToolPalette"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkToolPalette" query)
-    (is (equal (gtype "GtkToolPalette")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkToolPalette"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 1008
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 48
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the names of the class properties.
+  (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable" "GtkScrollable")
+             (mapcar #'g-type-name (g-type-interfaces "GtkToolPalette"))))
+  ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
- "composite-child" "double-buffered" "events" "expand" "focus-on-click"
- "hadjustment" "halign" "has-default" "has-focus" "has-tooltip"
- "height-request" "hexpand" "hexpand-set" "hscroll-policy" "icon-size"
- "icon-size-set" "is-focus" "margin" "margin-bottom" "margin-end" "margin-left"
- "margin-right" "margin-start" "margin-top" "name" "no-show-all" "opacity"
- "orientation" "parent" "receives-default" "resize-mode" "scale-factor"
- "sensitive" "style" "toolbar-style" "tooltip-markup" "tooltip-text"
- "vadjustment" "valign" "vexpand" "vexpand-set" "visible" "vscroll-policy"
- "width-request" "window")
-
+               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
+               "hadjustment" "halign" "has-default" "has-focus" "has-tooltip"
+               "height-request" "hexpand" "hexpand-set" "hscroll-policy" "icon-size"
+               "icon-size-set" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "orientation" "parent" "receives-default"
+               "resize-mode" "scale-factor" "sensitive" "style" "toolbar-style"
+               "tooltip-markup" "tooltip-text" "vadjustment" "valign" "vexpand"
+               "vexpand-set" "visible" "vscroll-policy" "width-request" "window")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkToolPalette"))
                           #'string-lessp)))
-
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name (gtk-widget-class-list-style-properties "GtkToolPalette"))))
-
-  ;; Get the names to the child properties
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+               "separator-height" "separator-width" "text-handle-height"
+               "text-handle-width" "visited-link-color" "wide-separators"
+               "window-dragging")
+             (mapcar #'g-param-spec-name
+                     (gtk-widget-class-list-style-properties "GtkToolPalette"))))
+  ;; Get the names of the child properties
   (is (equal '("exclusive" "expand")
-             (mapcar #'g-param-spec-name (gtk-container-class-list-child-properties "GtkToolPalette"))))
-
-  ;; Get the class definition
+             (mapcar #'g-param-spec-name
+                     (gtk-container-class-list-child-properties "GtkToolPalette"))))
+  ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkToolPalette" GTK-TOOL-PALETTE
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"

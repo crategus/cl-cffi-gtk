@@ -5,21 +5,21 @@
 
 (test gtk-print-context-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrintContext"))
+  (is (g-type-is-object "GtkPrintContext"))
   ;; Check the registered name
   (is (eq 'gtk-print-context
           (registered-object-type-by-name "GtkPrintContext")))
   ;; Check the type initializer
-  (is (string= "GtkPrintContext"
-               (g-type-name (gtype (foreign-funcall "gtk_print_context_get_type" :int)))))
+  (is (eq (gtype "GtkPrintContext")
+          (gtype (foreign-funcall "gtk_print_context_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrintContext")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrintContext")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPrintContext"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintContext"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintContext"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintContext"))))
   ;; Check the class properties
   (is (equal '()
              (stable-sort (mapcar #'g-param-spec-name

@@ -9,18 +9,18 @@
 
 (test g-application-command-line-class
   ;; Type check
-  (is-true  (g-type-is-object "GApplicationCommandLine"))
+  (is (g-type-is-object "GApplicationCommandLine"))
   ;; Check the registered name
   (is (eq 'g-application-command-line
           (registered-object-type-by-name "GApplicationCommandLine")))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GApplicationCommandLine")))
+  (is (eq (gtype "GObject") (g-type-parent "GApplicationCommandLine")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GApplicationCommandLine"))))
+             (mapcar #'g-type-name (g-type-children "GApplicationCommandLine"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GApplicationCommandLine"))))
+             (mapcar #'g-type-name (g-type-interfaces "GApplicationCommandLine"))))
   ;; Check the class properties
   (is (equal '("arguments" "is-remote" "options" "platform-data")
              (stable-sort (mapcar #'g-param-spec-name

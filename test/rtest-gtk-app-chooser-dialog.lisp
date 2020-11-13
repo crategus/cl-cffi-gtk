@@ -7,21 +7,21 @@
 
 (test gtk-app-chooser-dialog-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkAppChooserDialog"))
+  (is (g-type-is-object "GtkAppChooserDialog"))
   ;; Check the registered name
   (is (eq 'gtk-app-chooser-dialog
           (registered-object-type-by-name "GtkAppChooserDialog")))
   ;; Check the type initializer
-  (is (string= "GtkAppChooserDialog"
-               (g-type-name (gtype (foreign-funcall "gtk_app_chooser_dialog_get_type" :int)))))
+  (is (eq (gtype "GtkAppChooserDialog")
+          (gtype (foreign-funcall "gtk_app_chooser_dialog_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkDialog") (g-type-parent "GtkAppChooserDialog")))
+  (is (eq (gtype "GtkDialog") (g-type-parent "GtkAppChooserDialog")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkAppChooserDialog"))))
+             (mapcar #'g-type-name (g-type-children "GtkAppChooserDialog"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkAppChooser")
-             (mapcar #'gtype-name (g-type-interfaces "GtkAppChooserDialog"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkAppChooserDialog"))))
   ;; Check the class properties
   (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
                "can-default" "can-focus" "child" "composite-child" "content-type" "decorated"

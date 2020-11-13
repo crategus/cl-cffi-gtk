@@ -7,29 +7,31 @@
 
 (test gdk-window-type
   ;; Check the type
-  (is-true (g-type-is-enum "GtkWindowType"))
+  (is (g-type-is-enum "GtkWindowType"))
   ;; Check the type initializer
-  (is (string= "GdkWindowType"
-               (g-type-name (gtype (foreign-funcall "gdk_window_type_get_type" :int)))))
+  (is (eq (gtype "GdkWindowType")
+          (gtype (foreign-funcall "gdk_window_type_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-window-type (gobject::registered-enum-type "GtkWindowType")))
+  (is (eq 'gtk-window-type (registered-enum-type "GtkWindowType")))
   ;; Check the names
-  (is (equal '("GDK_WINDOW_ROOT" "GDK_WINDOW_TOPLEVEL" "GDK_WINDOW_CHILD" "GDK_WINDOW_TEMP"
-               "GDK_WINDOW_FOREIGN" "GDK_WINDOW_OFFSCREEN" "GDK_WINDOW_SUBSURFACE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkWindowType"))))
+  (is (equal '("GDK_WINDOW_ROOT" "GDK_WINDOW_TOPLEVEL" "GDK_WINDOW_CHILD"
+               "GDK_WINDOW_TEMP" "GDK_WINDOW_FOREIGN" "GDK_WINDOW_OFFSCREEN"
+               "GDK_WINDOW_SUBSURFACE")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkWindowType"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkWindowType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkWindowType"))))
   ;; Check the nick names
   (is (equal '("root" "toplevel" "child" "temp" "foreign" "offscreen" "subsurface")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkWindowType"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkWindowType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkWindowType"
                              GDK-WINDOW-TYPE
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_window_type_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_window_type_get_type")
                              (:ROOT 0)
                              (:TOPLEVEL 1)
                              (:CHILD 2)
@@ -37,68 +39,70 @@
                              (:FOREIGN 4)
                              (:OFFSCREEN 5)
                              (:SUBSURFACE 6))
-             (gobject::get-g-type-definition "GdkWindowType"))))
+             (get-g-type-definition "GdkWindowType"))))
 
 ;;;     GdkWindowWindowClass
 
 (test gdk-window-window-class
   ;; Check the type
-  (is-true (g-type-is-enum "GdkWindowWindowClass"))
+  (is (g-type-is-enum "GdkWindowWindowClass"))
   ;; Check the type initializer
-  (is (string= "GdkWindowWindowClass"
-               (g-type-name (gtype (foreign-funcall "gdk_window_window_class_get_type" :int)))))
+  (is (eq (gtype "GdkWindowWindowClass")
+          (gtype (foreign-funcall "gdk_window_window_class_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-window-window-class (gobject::registered-enum-type "GdkWindowWindowClass")))
+  (is (eq 'gdk-window-window-class (registered-enum-type "GdkWindowWindowClass")))
   ;; Check the names
   (is (equal '("GDK_INPUT_OUTPUT" "GDK_INPUT_ONLY")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkWindowWindowClass"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkWindowWindowClass"))))
   ;; Check the values
   (is (equal '(0 1)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkWindowWindowClass"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkWindowWindowClass"))))
   ;; Check the nick names
   (is (equal '("input-output" "input-only")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkWindowWindowClass"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkWindowWindowClass"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkWindowWindowClass"
                              GDK-WINDOW-WINDOW-CLASS
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_window_window_class_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_window_window_class_get_type")
                              (:INPUT-OUTPUT 0)
                              (:INPUT-ONLY 1))
-             (gobject::get-g-type-definition "GdkWindowWindowClass"))))
+             (get-g-type-definition "GdkWindowWindowClass"))))
 
 ;;;     GdkWindowHints
 
 (test gdk-window-hints
   ;; Check the type
-  (is-true (g-type-is-flags "GdkWindowHints"))
+  (is (g-type-is-flags "GdkWindowHints"))
   ;; Check the registered name
-  (is (eql 'gdk-window-hints
-           (gobject::registered-flags-type "GdkWindowHints")))
+  (is (eq 'gdk-window-hints
+          (registered-flags-type "GdkWindowHints")))
   ;; Check the type initializer
-  (is (string= "GdkWindowHints"
-               (g-type-name (gtype (foreign-funcall "gdk_window_hints_get_type" :int)))))
+  (is (eq (gtype "GdkWindowHints")
+          (gtype (foreign-funcall "gdk_window_hints_get_type" g-size))))
   ;; Check the names
-  (is (equal '("GDK_HINT_POS" "GDK_HINT_MIN_SIZE" "GDK_HINT_MAX_SIZE" "GDK_HINT_BASE_SIZE"
-               "GDK_HINT_ASPECT" "GDK_HINT_RESIZE_INC" "GDK_HINT_WIN_GRAVITY"
-               "GDK_HINT_USER_POS" "GDK_HINT_USER_SIZE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkWindowHints"))))
+  (is (equal '("GDK_HINT_POS" "GDK_HINT_MIN_SIZE" "GDK_HINT_MAX_SIZE"
+               "GDK_HINT_BASE_SIZE" "GDK_HINT_ASPECT" "GDK_HINT_RESIZE_INC"
+               "GDK_HINT_WIN_GRAVITY" "GDK_HINT_USER_POS" "GDK_HINT_USER_SIZE")
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkWindowHints"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 64 128 256)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkWindowHints"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkWindowHints"))))
   ;; Check the nick names
-  (is (equal '("pos" "min-size" "max-size" "base-size" "aspect" "resize-inc" "win-gravity"
-               "user-pos" "user-size")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GdkWindowHints"))))
+  (is (equal '("pos" "min-size" "max-size" "base-size" "aspect" "resize-inc"
+               "win-gravity" "user-pos" "user-size")
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GdkWindowHints"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkWindowHints"
                               GDK-WINDOW-HINTS
-                              (:EXPORT T :TYPE-INITIALIZER "gdk_window_hints_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gdk_window_hints_get_type")
                               (:POS 1)
                               (:MIN-SIZE 2)
                               (:MAX-SIZE 4)
@@ -108,38 +112,39 @@
                               (:WIN-GRAVITY 64)
                               (:USER-POS 128)
                               (:USER-SIZE 256))
-             (gobject::get-g-type-definition "GdkWindowHints"))))
+             (get-g-type-definition "GdkWindowHints"))))
 
 ;;;     GdkGravity
 
 (test gdk-gravity
   ;; Check the type
-  (is-true (g-type-is-enum "GdkGravity"))
+  (is (g-type-is-enum "GdkGravity"))
   ;; Check the type initializer
-  (is (string= "GdkGravity"
-               (g-type-name (gtype (foreign-funcall "gdk_gravity_get_type" :int)))))
+  (is (eq (gtype "GdkGravity")
+          (gtype (foreign-funcall "gdk_gravity_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-gravity (gobject::registered-enum-type "GdkGravity")))
+  (is (eq 'gdk-gravity (registered-enum-type "GdkGravity")))
   ;; Check the names
-  (is (equal '("GDK_GRAVITY_NORTH_WEST" "GDK_GRAVITY_NORTH" "GDK_GRAVITY_NORTH_EAST"
-               "GDK_GRAVITY_WEST" "GDK_GRAVITY_CENTER" "GDK_GRAVITY_EAST"
-               "GDK_GRAVITY_SOUTH_WEST" "GDK_GRAVITY_SOUTH" "GDK_GRAVITY_SOUTH_EAST"
-               "GDK_GRAVITY_STATIC")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkGravity"))))
+  (is (equal '("GDK_GRAVITY_NORTH_WEST" "GDK_GRAVITY_NORTH"
+               "GDK_GRAVITY_NORTH_EAST" "GDK_GRAVITY_WEST" "GDK_GRAVITY_CENTER"
+               "GDK_GRAVITY_EAST" "GDK_GRAVITY_SOUTH_WEST" "GDK_GRAVITY_SOUTH"
+               "GDK_GRAVITY_SOUTH_EAST" "GDK_GRAVITY_STATIC")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkGravity"))))
   ;; Check the values
   (is (equal '(1 2 3 4 5 6 7 8 9 10)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkGravity"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkGravity"))))
   ;; Check the nick names
-  (is (equal '("north-west" "north" "north-east" "west" "center" "east" "south-west" "south"
-               "south-east" "static")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkGravity"))))
+  (is (equal '("north-west" "north" "north-east" "west" "center" "east"
+               "south-west" "south" "south-east" "static")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkGravity"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkGravity"
                              GDK-GRAVITY
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_gravity_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_gravity_get_type")
                              (:NORTH-WEST 1)
                              (:NORTH 2)
                              (:NORTH-EAST 3)
@@ -150,7 +155,7 @@
                              (:SOUTH 8)
                              (:SOUTH-EAST 9)
                              (:STATIC 10))
-             (gobject::get-g-type-definition "GdkGravity"))))
+             (get-g-type-definition "GdkGravity"))))
 
 ;;;     GdkGeometry
 
@@ -194,32 +199,33 @@
 
 (test gdk-anchor-hints
   ;; Check the type
-  (is-true (g-type-is-flags "GdkAnchorHints"))
+  (is (g-type-is-flags "GdkAnchorHints"))
   ;; Check the registered name
-  (is (eql 'gdk-anchor-hints
-           (gobject::registered-flags-type "GdkAnchorHints")))
+  (is (eq 'gdk-anchor-hints
+          (registered-flags-type "GdkAnchorHints")))
   ;; Check the type initializer
-  (is (string= "GdkAnchorHints"
-               (g-type-name (gtype (foreign-funcall "gdk_anchor_hints_get_type" :int)))))
+  (is (eq (gtype "GdkAnchorHints")
+          (gtype (foreign-funcall "gdk_anchor_hints_get_type" g-size))))
   ;; Check the names
   (is (equal '("GDK_ANCHOR_FLIP_X" "GDK_ANCHOR_FLIP_Y" "GDK_ANCHOR_SLIDE_X"
                "GDK_ANCHOR_SLIDE_Y" "GDK_ANCHOR_RESIZE_X" "GDK_ANCHOR_RESIZE_Y"
                "GDK_ANCHOR_FLIP" "GDK_ANCHOR_SLIDE" "GDK_ANCHOR_RESIZE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkAnchorHints"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkAnchorHints"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 3 12 48)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkAnchorHints"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkAnchorHints"))))
   ;; Check the nick names
-  (is (equal '("flip-x" "flip-y" "slide-x" "slide-y" "resize-x" "resize-y" "flip" "slide"
-               "resize")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GdkAnchorHints"))))
+  (is (equal '("flip-x" "flip-y" "slide-x" "slide-y" "resize-x" "resize-y"
+               "flip" "slide" "resize")
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GdkAnchorHints"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkAnchorHints"
                               GDK-ANCHOR-HINTS
-                              (:EXPORT T :TYPE-INITIALIZER "gdk_anchor_hints_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gdk_anchor_hints_get_type")
                               (:FLIP-X 1)
                               (:FLIP-Y 2)
                               (:SLIDE-X 4)
@@ -229,38 +235,39 @@
                               (:FLIP 3)
                               (:SLIDE 12)
                               (:RESIZE 48))
-             (gobject::get-g-type-definition "GdkAnchorHints"))))
+             (get-g-type-definition "GdkAnchorHints"))))
 
 ;;;     GdkWindowEdge
 
 (test gdk-window-edge
   ;; Check the type
-  (is-true (g-type-is-enum "GdkWindowEdge"))
+  (is (g-type-is-enum "GdkWindowEdge"))
   ;; Check the type initializer
-  (is (string= "GdkWindowEdge"
-               (g-type-name (gtype (foreign-funcall "gdk_window_edge_get_type" :int)))))
+  (is (eq (gtype "GdkWindowEdge")
+          (gtype (foreign-funcall "gdk_window_edge_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-window-edge (gobject::registered-enum-type "GdkWindowEdge")))
+  (is (eq 'gdk-window-edge (registered-enum-type "GdkWindowEdge")))
   ;; Check the names
   (is (equal '("GDK_WINDOW_EDGE_NORTH_WEST" "GDK_WINDOW_EDGE_NORTH"
-               "GDK_WINDOW_EDGE_NORTH_EAST" "GDK_WINDOW_EDGE_WEST" "GDK_WINDOW_EDGE_EAST"
-               "GDK_WINDOW_EDGE_SOUTH_WEST" "GDK_WINDOW_EDGE_SOUTH"
-               "GDK_WINDOW_EDGE_SOUTH_EAST")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkWindowEdge"))))
+               "GDK_WINDOW_EDGE_NORTH_EAST" "GDK_WINDOW_EDGE_WEST"
+               "GDK_WINDOW_EDGE_EAST" "GDK_WINDOW_EDGE_SOUTH_WEST"
+               "GDK_WINDOW_EDGE_SOUTH" "GDK_WINDOW_EDGE_SOUTH_EAST")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkWindowEdge"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkWindowEdge"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkWindowEdge"))))
   ;; Check the nick names
-  (is (equal '("north-west" "north" "north-east" "west" "east" "south-west" "south"
-               "south-east")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkWindowEdge"))))
+  (is (equal '("north-west" "north" "north-east" "west" "east" "south-west"
+               "south" "south-east")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkWindowEdge"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkWindowEdge"
                              GDK-WINDOW-EDGE
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_window_edge_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_window_edge_get_type")
                              (:NORTH-WEST 0)
                              (:NORTH 1)
                              (:NORTH-EAST 2)
@@ -269,18 +276,18 @@
                              (:SOUTH-WEST 5)
                              (:SOUTH 6)
                              (:SOUTH-EAST 7))
-             (gobject::get-g-type-definition "GdkWindowEdge"))))
+             (get-g-type-definition "GdkWindowEdge"))))
 
 ;;;     GdkWindowTypeHint
 
 (test gdk-window-type-hint
   ;; Check the type
-  (is-true (g-type-is-enum "GdkWindowTypeHint"))
+  (is (g-type-is-enum "GdkWindowTypeHint"))
   ;; Check the type initializer
-  (is (string= "GdkWindowTypeHint"
-               (g-type-name (gtype (foreign-funcall "gdk_window_type_hint_get_type" :int)))))
+  (is (eq (gtype "GdkWindowTypeHint")
+          (gtype (foreign-funcall "gdk_window_type_hint_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-window-type-hint (gobject::registered-enum-type "GdkWindowTypeHint")))
+  (is (eq 'gdk-window-type-hint (registered-enum-type "GdkWindowTypeHint")))
   ;; Check the names
   (is (equal '("GDK_WINDOW_TYPE_HINT_NORMAL" "GDK_WINDOW_TYPE_HINT_DIALOG"
                "GDK_WINDOW_TYPE_HINT_MENU" "GDK_WINDOW_TYPE_HINT_TOOLBAR"
@@ -289,21 +296,22 @@
                "GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU" "GDK_WINDOW_TYPE_HINT_POPUP_MENU"
                "GDK_WINDOW_TYPE_HINT_TOOLTIP" "GDK_WINDOW_TYPE_HINT_NOTIFICATION"
                "GDK_WINDOW_TYPE_HINT_COMBO" "GDK_WINDOW_TYPE_HINT_DND")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkWindowTypeHint"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7 8 9 10 11 12 13)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkWindowTypeHint"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the nick names
   (is (equal '("normal" "dialog" "menu" "toolbar" "splashscreen" "utility" "dock" "desktop"
                "dropdown-menu" "popup-menu" "tooltip" "notification" "combo" "dnd")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkWindowTypeHint"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkWindowTypeHint"
                              GDK-WINDOW-TYPE-HINT
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_window_type_hint_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_window_type_hint_get_type")
                              (:NORMAL 0)
                              (:DIALOG 1)
                              (:MENU 2)
@@ -318,7 +326,7 @@
                              (:NOTIFICATION 11)
                              (:COMBO 12)
                              (:DND 13))
-             (gobject::get-g-type-definition "GdkWindowTypeHint"))))
+             (get-g-type-definition "GdkWindowTypeHint"))))
 
 ;;;     GdkWindowAttr
 
@@ -362,30 +370,32 @@
 
 (test gdk-window-attributes-type
   ;; Check the type
-  (is-true (g-type-is-flags "GdkWindowAttributesType"))
+  (is (g-type-is-flags "GdkWindowAttributesType"))
   ;; Check the registered name
-  (is (eql 'gdk-window-attributes-type
-           (gobject::registered-flags-type "GdkWindowAttributesType")))
+  (is (eq 'gdk-window-attributes-type
+          (registered-flags-type "GdkWindowAttributesType")))
   ;; Check the type initializer
-  (is (string= "GdkWindowAttributesType"
-               (g-type-name (gtype (foreign-funcall "gdk_window_attributes_type_get_type" :int)))))
+  (is (eq (gtype "GdkWindowAttributesType")
+          (gtype (foreign-funcall "gdk_window_attributes_type_get_type" g-size))))
   ;; Check the names
-  (is (equal '("GDK_WA_TITLE" "GDK_WA_X" "GDK_WA_Y" "GDK_WA_CURSOR" "GDK_WA_VISUAL"
-               "GDK_WA_WMCLASS" "GDK_WA_NOREDIR" "GDK_WA_TYPE_HINT")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkWindowAttributesType"))))
+  (is (equal '("GDK_WA_TITLE" "GDK_WA_X" "GDK_WA_Y" "GDK_WA_CURSOR"
+               "GDK_WA_VISUAL" "GDK_WA_WMCLASS" "GDK_WA_NOREDIR"
+               "GDK_WA_TYPE_HINT")
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkWindowAttributesType"))))
   ;; Check the values
   (is (equal '(2 4 8 16 32 64 128 256)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkWindowAttributesType"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkWindowAttributesType"))))
   ;; Check the nick names
   (is (equal '("title" "x" "y" "cursor" "visual" "wmclass" "noredir" "type-hint")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GdkWindowAttributesType"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GdkWindowAttributesType"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkWindowAttributesType"
                               GDK-WINDOW-ATTRIBUTES-TYPE
-                              (:EXPORT T :TYPE-INITIALIZER "gdk_window_attributes_type_get_type")
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gdk_window_attributes_type_get_type")
                               (:TITLE 2)
                               (:X 4)
                               (:Y 8)
@@ -394,98 +404,104 @@
                               (:WMCLASS 64)
                               (:NOREDIR 128)
                               (:TYPE-HINT 256))
-             (gobject::get-g-type-definition "GdkWindowAttributesType"))))
+             (get-g-type-definition "GdkWindowAttributesType"))))
 
 ;;;     GdkFullscreenMode
 
 (test gdk-fullscreen-mode
   ;; Check the type
-  (is-true (g-type-is-enum "GdkFullscreenMode"))
+  (is (g-type-is-enum "GdkFullscreenMode"))
   ;; Check the type initializer
-  (is (string= "GdkFullscreenMode"
-               (g-type-name (gtype (foreign-funcall "gdk_fullscreen_mode_get_type" :int)))))
+  (is (eq (gtype "GdkFullscreenMode")
+          (gtype (foreign-funcall "gdk_fullscreen_mode_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-fullscreen-mode (gobject::registered-enum-type "GdkFullscreenMode")))
+  (is (eq 'gdk-fullscreen-mode (registered-enum-type "GdkFullscreenMode")))
   ;; Check the names
   (is (equal '("GDK_FULLSCREEN_ON_CURRENT_MONITOR" "GDK_FULLSCREEN_ON_ALL_MONITORS")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkFullscreenMode"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkFullscreenMode"))))
   ;; Check the values
   (is (equal '(0 1)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkFullscreenMode"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkFullscreenMode"))))
   ;; Check the nick names
   (is (equal '("current-monitor" "all-monitors")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkFullscreenMode"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkFullscreenMode"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkFullscreenMode"
                              GDK-FULLSCREEN-MODE
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_fullscreen_mode_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_fullscreen_mode_get_type")
                              (:CURRENT-MONITOR 0)
                              (:ALL-MONITORS 1))
-             (gobject::get-g-type-definition "GdkFullscreenMode"))))
+             (get-g-type-definition "GdkFullscreenMode"))))
 
 ;;;     GdkFilterReturn
 
 (test gdk-filter-return
   ;; Check the type
-  (is-true (g-type-is-enum "GdkFilterReturn"))
+  (is (g-type-is-enum "GdkFilterReturn"))
   ;; Check the type initializer
-  (is (string= "GdkFilterReturn"
-               (g-type-name (gtype (foreign-funcall "gdk_filter_return_get_type" :int)))))
+  (is (eq (gtype "GdkFilterReturn")
+          (gtype (foreign-funcall "gdk_filter_return_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-filter-return (gobject::registered-enum-type "GdkFilterReturn")))
+  (is (eq 'gdk-filter-return (registered-enum-type "GdkFilterReturn")))
   ;; Check the names
   (is (equal '("GDK_FILTER_CONTINUE" "GDK_FILTER_TRANSLATE" "GDK_FILTER_REMOVE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkFilterReturn"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkFilterReturn"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkFilterReturn"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkFilterReturn"))))
   ;; Check the nick names
   (is (equal '("continue" "translate" "remove")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkFilterReturn"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkFilterReturn"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkFilterReturn"
                              GDK-FILTER-RETURN
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_filter_return_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_filter_return_get_type")
                              (:CONTINUE 0)
                              (:TRANSLATE 1)
                              (:REMOVE 2))
-             (gobject::get-g-type-definition "GdkFilterReturn"))))
+             (get-g-type-definition "GdkFilterReturn"))))
 
 ;;;     GdkModifierIntent
 
 (test gdk-modifier-intent
   ;; Check the type
-  (is-true (g-type-is-enum "GdkModifierIntent"))
+  (is (g-type-is-enum "GdkModifierIntent"))
   ;; Check the type initializer
-  (is (string= "GdkModifierIntent"
-               (g-type-name (gtype (foreign-funcall "gdk_modifier_intent_get_type" :int)))))
+  (is (eq (gtype "GdkModifierIntent")
+          (gtype (foreign-funcall "gdk_modifier_intent_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-modifier-intent (gobject::registered-enum-type "GdkModifierIntent")))
+  (is (eq 'gdk-modifier-intent (registered-enum-type "GdkModifierIntent")))
   ;; Check the names
-  (is (equal '("GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR" "GDK_MODIFIER_INTENT_CONTEXT_MENU"
-               "GDK_MODIFIER_INTENT_EXTEND_SELECTION" "GDK_MODIFIER_INTENT_MODIFY_SELECTION"
-               "GDK_MODIFIER_INTENT_NO_TEXT_INPUT" "GDK_MODIFIER_INTENT_SHIFT_GROUP"
+  (is (equal '("GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR"
+               "GDK_MODIFIER_INTENT_CONTEXT_MENU"
+               "GDK_MODIFIER_INTENT_EXTEND_SELECTION"
+               "GDK_MODIFIER_INTENT_MODIFY_SELECTION"
+               "GDK_MODIFIER_INTENT_NO_TEXT_INPUT"
+               "GDK_MODIFIER_INTENT_SHIFT_GROUP"
                "GDK_MODIFIER_INTENT_DEFAULT_MOD_MASK")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GdkModifierIntent"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GdkModifierIntent"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GdkModifierIntent"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GdkModifierIntent"))))
   ;; Check the nick names
   (is (equal '("primary-accelerator" "context-menu" "extend-selection" "modify-selection"
                "no-text-input" "shift-group" "default-mod-mask")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GdkModifierIntent"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GdkModifierIntent"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GdkModifierIntent" GDK-MODIFIER-INTENT
-                             (:EXPORT T :TYPE-INITIALIZER "gdk_modifier_intent_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gdk_modifier_intent_get_type")
                              (:PRIMARY-ACCELERATOR 0)
                              (:CONTEXT-MENU 1)
                              (:EXTEND-SELECTION 2)
@@ -493,32 +509,33 @@
                              (:NO-TEXT-INPUT 4)
                              (:SHIFT-GROUP 5)
                              (:DEFAULT-MOD-MASK 6))
-             (gobject::get-g-type-definition "GdkModifierIntent"))))
+             (get-g-type-definition "GdkModifierIntent"))))
 
 ;;;     GdkWMDecoration
 
 (test gdk-wm-decoration
   ;; Check the type
-  (is-true (g-type-is-flags "GdkWMDecoration"))
+  (is (g-type-is-flags "GdkWMDecoration"))
   ;; Check the registered name
-  (is (eql 'gdk-wm-decoration
-           (gobject::registered-flags-type "GdkWMDecoration")))
+  (is (eq 'gdk-wm-decoration
+          (registered-flags-type "GdkWMDecoration")))
   ;; Check the type initializer
-  (is (string= "GdkWMDecoration"
-               (g-type-name (gtype (foreign-funcall "gdk_wm_decoration_get_type" :int)))))
+  (is (eq (gtype "GdkWMDecoration")
+          (gtype (foreign-funcall "gdk_wm_decoration_get_type" g-size))))
   ;; Check the names
-  (is (equal '("GDK_DECOR_ALL" "GDK_DECOR_BORDER" "GDK_DECOR_RESIZEH" "GDK_DECOR_TITLE"
-               "GDK_DECOR_MENU" "GDK_DECOR_MINIMIZE" "GDK_DECOR_MAXIMIZE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkWMDecoration"))))
+  (is (equal '("GDK_DECOR_ALL" "GDK_DECOR_BORDER" "GDK_DECOR_RESIZEH"
+               "GDK_DECOR_TITLE" "GDK_DECOR_MENU" "GDK_DECOR_MINIMIZE"
+               "GDK_DECOR_MAXIMIZE")
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkWMDecoration"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32 64)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkWMDecoration"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkWMDecoration"))))
   ;; Check the nick names
   (is (equal '("all" "border" "resizeh" "title" "menu" "minimize" "maximize")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GdkWMDecoration"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GdkWMDecoration"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkWMDecoration" GDK-W-M-DECORATION
                               (:EXPORT T)
@@ -529,32 +546,32 @@
                               (:MENU 16)
                               (:MINIMIZE 32)
                               (:MAXIMIZE 64))
-             (gobject::get-g-type-definition "GdkWMDecoration"))))
+             (get-g-type-definition "GdkWMDecoration"))))
 
 ;;;     GdkWMFunction
 
 (test gdk-wm-function
   ;; Check the type
-  (is-true (g-type-is-flags "GdkWMFunction"))
+  (is (g-type-is-flags "GdkWMFunction"))
   ;; Check the registered name
-  (is (eql 'gdk-wm-function
-           (gobject::registered-flags-type "GdkWMFunction")))
+  (is (eq 'gdk-wm-function
+          (registered-flags-type "GdkWMFunction")))
   ;; Check the type initializer
-  (is (string= "GdkWMFunction"
-               (g-type-name (gtype (foreign-funcall "gdk_wm_function_get_type" :int)))))
+  (is (eq (gtype "GdkWMFunction")
+          (gtype (foreign-funcall "gdk_wm_function_get_type" g-size))))
   ;; Check the names
-  (is (equal '("GDK_FUNC_ALL" "GDK_FUNC_RESIZE" "GDK_FUNC_MOVE" "GDK_FUNC_MINIMIZE"
-               "GDK_FUNC_MAXIMIZE" "GDK_FUNC_CLOSE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GdkWMFunction"))))
+  (is (equal '("GDK_FUNC_ALL" "GDK_FUNC_RESIZE" "GDK_FUNC_MOVE"
+               "GDK_FUNC_MINIMIZE" "GDK_FUNC_MAXIMIZE" "GDK_FUNC_CLOSE")
+             (mapcar #'flags-item-name
+                     (get-flags-items "GdkWMFunction"))))
   ;; Check the values
   (is (equal '(1 2 4 8 16 32)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GdkWMFunction"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GdkWMFunction"))))
   ;; Check the nick names
   (is (equal '("all" "resize" "move" "minimize" "maximize" "close")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GdkWMFunction"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GdkWMFunction"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkWMFunction" GDK-W-M-FUNCTION
                               (:EXPORT T)
@@ -564,27 +581,27 @@
                               (:MINIMIZE 8)
                               (:MAXIMIZE 16)
                               (:CLOSE 32))
-             (gobject::get-g-type-definition "GdkWMFunction"))))
+             (get-g-type-definition "GdkWMFunction"))))
 
 ;;;     GdkWindow
 
 (test gdk-window-class
   ;; Type check
-  (is-true  (g-type-is-object "GdkWindow"))
+  (is (g-type-is-object "GdkWindow"))
   ;; Check the registered name
   (is (eq 'gdk-window
           (registered-object-type-by-name "GdkWindow")))
   ;; Check the type initializer
-  (is (string= "GdkWindow"
-               (g-type-name (gtype (foreign-funcall "gdk_window_get_type" :int)))))
+  (is (eq (gtype "GdkWindow")
+           (gtype (foreign-funcall "gdk_window_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GdkWindow")))
+  (is (eq (gtype "GObject") (g-type-parent "GdkWindow")))
   ;; Check the children
-  (is (equal '("GdkX11Window" "GdkBroadwayWindow" "GdkWaylandWindow")
-             (mapcar #'gtype-name (g-type-children "GdkWindow"))))
+  (is (equal '("GdkX11Window")
+             (mapcar #'g-type-name (g-type-children "GdkWindow"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GdkWindow"))))
+             (mapcar #'g-type-name (g-type-interfaces "GdkWindow"))))
   ;; Check the class properties
   (is (equal '("cursor")
              (stable-sort (mapcar #'g-param-spec-name
@@ -599,58 +616,168 @@
 
 ;;; --- Properties -------------------------------------------------------------
 
-;;;        GdkCursor*   cursor                 Read / Write
+(test gdk-window-properties
+  (let ((window (gdk-default-root-window))
+        (display (gdk-display-default)))
+    (is (typep (setf (gdk-window-cursor window)
+                     (gdk-cursor-new-from-name display "pointer")) 'gdk-cursor))
+    (is (typep (gdk-window-cursor window) 'gdk-cursor))))
 
 ;;; --- Signals ----------------------------------------------------------------
 
-;;;     CairoSurface*   create-surface         Run Last
-;;;             void    from-embedder          Run Last
-;;;             void    moved-to-rect          Run First
-;;;        GdkWindow*   pick-embedded-child    Run Last
-;;;             void    to-embedder            Run Last
+;;;     create-surface
+
+;; Does not work, because CairoSurface can not be created from the Lisp side.
+
+#+nil
+(test gdk-window-create-surface-signal
+  (let* ((message nil)
+         (window (gdk-default-root-window))
+         (handler-id (g-signal-connect window "create-surface"
+                       (lambda (object width height)
+                         (setf message "Signal create-surface")
+                         (is (typep object 'gdk-window))
+                         (is (integerp width))
+                         (is (integerp height))
+                         nil))))
+    ;; Emit the signal
+    (is-true (g-signal-emit window "create-surface" 100 100))
+    (is (string= "Signal create-surface" message))
+    (is-false (g-signal-handler-disconnect window handler-id))))
+
+;;;     from-embedder
+
+(test gdk-window-from-embedder-signal
+  (with-foreign-objects ((offscreen-x :double) (offscreen-y :double))
+    (let* ((message nil)
+           (window (gdk-default-root-window))
+           (handler-id (g-signal-connect window "from-embedder"
+                         (lambda (object embedder-x embedder-y offscreen-x offscreen-y)
+                           (setf message "Signal from-embedder")
+                           (is (typep object 'gdk-window))
+                           (is (typep embedder-x 'double-float))
+                           (is (typep embedder-y 'double-float))
+                           (is (pointerp offscreen-x))
+                           (is (pointerp offscreen-y))
+                           t))))
+      ;; Emit the signal
+      (is-false (g-signal-emit window "from-embedder" 100 100 offscreen-x offscreen-y))
+      (is (string= "Signal from-embedder" message))
+      (is (typep (mem-ref offscreen-x :double) 'double-float))
+      (is (typep (mem-ref offscreen-y :double) 'double-float))
+      (is-false (g-signal-handler-disconnect window handler-id)))))
+
+;;;     moved-to-rect
+
+(test gdk-window-move-to-rect-signal
+  (with-foreign-objects ((flipped-rect '(g-boxed-foreign gdk-rectangle))
+                         (final-rect '(g-boxed-foreign gdk-rectangle)))
+    (let* ((message nil)
+           (window (gdk-default-root-window))
+           (handler-id (g-signal-connect window "moved-to-rect"
+                         (lambda (object flipped-rect final-rect flipped-x flipped-y)
+                           (setf message "Signal moved-to-rect")
+                           (is (typep object 'gdk-window))
+                           (is (pointerp flipped-rect))
+                           (is (pointerp final-rect))
+                           (is-false flipped-x)
+                           (is-false flipped-y)
+                           t))))
+      ;; Emit the signal
+      (is-false (g-signal-emit window "moved-to-rect" flipped-rect final-rect nil nil))
+      (is (string= "Signal moved-to-rect" message))
+      (is (typep (convert-from-foreign flipped-rect
+                                       '(g-boxed-foreign gdk-rectangle))
+                 'gdk-rectangle))
+      (is (typep (convert-from-foreign final-rect
+                                       '(g-boxed-foreign gdk-rectangle))
+                 'gdk-rectangle))
+      (is-false (g-signal-handler-disconnect window handler-id)))))
+
+;;;     pick-embedded-child
+
+(test gdk-window-pick-embedded-child-signal
+  (let* ((message nil)
+         (window (gdk-default-root-window))
+         (handler-id (g-signal-connect window "pick-embedded-child"
+                       (lambda (object x y)
+                         (setf message "Signal pick-embedded-child")
+                         (is (typep object 'gdk-window))
+                         (is (typep x 'double-float))
+                         (is (typep y 'double-float))
+                         nil))))
+    ;; Emit the signal
+    (is-false (g-signal-emit window "pick-embedded-child" 100.0d0 100.0d0))
+    (is (string= "Signal pick-embedded-child" message))
+    (is-false (g-signal-handler-disconnect window handler-id))))
+
+;;;     to-embedder
+
+(test gdk-window-to-embedder-signal
+  (with-foreign-objects ((embedder-x :double) (embedder-y :double))
+    (let* ((message nil)
+           (window (gdk-default-root-window))
+           (handler-id (g-signal-connect window "to-embedder"
+                         (lambda (object offscreen-x offscreen-y embedder-x embedder-y)
+                           (setf message "Signal to-embedder")
+                           (is (typep object 'gdk-window))
+                           (is (typep offscreen-x 'double-float))
+                           (is (typep offscreen-y 'double-float))
+                           (is (pointerp embedder-x))
+                           (is (pointerp embedder-y))
+                           t))))
+      ;; Emit the signal
+      (is-false (g-signal-emit window "to-embedder" 100 100 embedder-x embedder-y))
+      (is (string= "Signal to-embedder" message))
+      (is (typep (mem-ref embedder-x :double) 'double-float))
+      (is (typep (mem-ref embedder-y :double) 'double-float))
+      (is-false (g-signal-handler-disconnect window handler-id)))))
 
 ;;; --- Functions --------------------------------------------------------------
 
-;;;     gdk_window_new
+;;;     gdk-window-new
 
 (test gdk-window-new
-  (is (eq 'gdk-window
-          (type-of (gdk-window-new nil (make-gdk-window-attr) nil))))
-  (is (eq 'gdk-window
-          (type-of (gdk-window-new nil (make-gdk-window-attr) '(:x :y :title))))))
+  (is (typep (gdk-window-new nil (make-gdk-window-attr) nil) 'gdk-window))
+  (is (typep (gdk-window-new nil (make-gdk-window-attr) '(:x :y :title))
+             'gdk-window)))
 
-;;;     gdk_window_destroy
+;;;     gdk-window-destroy
 
 (test gdk-window-destroy
   (let ((window (gdk-window-new nil (make-gdk-window-attr) nil)))
     (is-false (gdk-window-destroy window))))
 
-;;;     gdk_window_get_window_type
+;;;     gdk-window-window-type
 
 (test gdk-window-window-type.1
-  (let ((window (gdk-window-new nil (make-gdk-window-attr :window-type :toplevel) nil)))
+  (let ((window (gdk-window-new nil
+                                (make-gdk-window-attr :window-type :toplevel)
+                                nil)))
     (is (eq :toplevel (gdk-window-window-type window)))))
 
 (test gdk-window-window-type.2
-  (let ((window (gdk-window-new nil (make-gdk-window-attr :window-type :child) nil)))
+  (let ((window (gdk-window-new nil
+                                (make-gdk-window-attr :window-type :child)
+                                nil)))
     (is (eq :child (gdk-window-window-type window)))))
 
-;;;     gdk_window_get_display
+;;;     gdk-window-display
 
 (test gdk-window-display
-  (is (eq 'gdk-display (type-of (gdk-window-display (gdk-default-root-window))))))
+  (is (typep (gdk-window-display (gdk-default-root-window)) 'gdk-display)))
 
-;;;     gdk_window_get_screen
+;;;     gdk-window-screen
 
 (test gdk-window-screen
-  (is (eq 'gdk-screen (type-of (gdk-window-screen (gdk-default-root-window))))))
+  (is (typep (gdk-window-screen (gdk-default-root-window)) 'gdk-screen)))
 
-;;;     gdk_window_get_visual
+;;;     gdk-window-visual
 
 (test gdk-window-visual
-  (is (eq 'gdk-visual (type-of (gdk-window-visual (gdk-default-root-window))))))
+  (is (typep (gdk-window-visual (gdk-default-root-window)) 'gdk-visual)))
 
-;;;     gdk_window_at_pointer                              * deprecated
+;;;     gdk_window_at_pointer                              deprecated
 ;;;     gdk_window_show
 ;;;     gdk_window_show_unraised
 ;;;     gdk_window_hide
@@ -675,8 +802,8 @@
 ;;;     gdk_window_set_keep_above
 ;;;     gdk_window_set_keep_below
 ;;;     gdk_window_set_opacity
-;;;     gdk_window_set_composited                          * deprecated
-;;;     gdk_window_get_composited                          * deprecated
+;;;     gdk_window_set_composited                          deprecated
+;;;     gdk_window_get_composited                          deprecated
 ;;;     gdk_window_set_pass_through
 ;;;     gdk_window_get_pass_through
 ;;;     gdk_window_move
@@ -685,7 +812,7 @@
 ;;;     gdk_window_scroll
 ;;;     gdk_window_move_to_rect
 ;;;     gdk_window_move_region
-;;;     gdk_window_flush                                   * deprecated
+;;;     gdk_window_flush                                   deprecated
 ;;;     gdk_window_has_native
 ;;;     gdk_window_ensure_native
 ;;;     gdk_window_reparent
@@ -706,9 +833,9 @@
 ;;;     gdk_window_create_gl_context
 ;;;     gdk_window_mark_paint_from_clip
 ;;;     gdk_window_get_clip_region
-;;;     gdk_window_begin_paint_rect                        * deprecated
-;;;     gdk_window_begin_paint_region                      * deprecated
-;;;     gdk_window_end_paint                               * deprecated
+;;;     gdk_window_begin_paint_rect                        deprecated
+;;;     gdk_window_begin_paint_region                      deprecated
+;;;     gdk_window_end_paint                               deprecated
 ;;;     gdk_window_begin_draw_frame
 ;;;     gdk_window_end_draw_frame
 ;;;     gdk_window_get_visible_region
@@ -721,11 +848,11 @@
 ;;;     gdk_window_get_update_area
 ;;;     gdk_window_freeze_updates
 ;;;     gdk_window_thaw_updates
-;;;     gdk_window_process_all_updates                     * deprecated
-;;;     gdk_window_process_updates                         * deprecated
-;;;     gdk_window_set_debug_updates                       * deprecated
-;;;     gdk_window_enable_synchronized_configure           * deprecated
-;;;     gdk_window_configure_finished                      * deprecated
+;;;     gdk_window_process_all_updates                     deprecated
+;;;     gdk_window_process_updates                         deprecated
+;;;     gdk_window_set_debug_updates                       deprecated
+;;;     gdk_window_enable_synchronized_configure           deprecated
+;;;     gdk_window_configure_finished                      deprecated
 ;;;     gdk_window_get_frame_clock
 ;;;     gdk_window_set_user_data
 ;;;     gdk_window_set_override_redirect
@@ -741,35 +868,49 @@
 ;;;     gdk_window_input_shape_combine_region
 ;;;     gdk_window_set_child_input_shapes
 ;;;     gdk_window_merge_child_input_shapes
-;;;     gdk_window_set_static_gravities                    * deprecated
+;;;     gdk_window_set_static_gravities                    deprecated
 ;;;     gdk_window_set_title
-;;;     gdk_window_set_background                          * deprecated
-;;;     gdk_window_set_background_rgba                     * deprecated
-;;;     gdk_window_set_background_pattern                  * deprecated
-;;;     gdk_window_get_background_pattern                  * deprecated
-;;;     gdk_window_set_cursor                                Accessor
-;;;     gdk_window_get_cursor                                Accessor
+;;;     gdk_window_set_background                          deprecated
+;;;     gdk_window_set_background_rgba                     deprecated
+;;;     gdk_window_set_background_pattern                  deprecated
+;;;     gdk_window_get_background_pattern                  deprecated
+;;;     gdk_window_set_cursor                              Accessor
+;;;     gdk_window_get_cursor                              Accessor
 ;;;     gdk_window_get_user_data
 
-;;;     gdk_window_get_geometry
+;;;     gdk-window-geometry
 
 (test gdk-window-geometry
-  (let ((window (gdk-window-new nil (make-gdk-window-attr :x 10 :y 20 :width 100 :height 200) nil)))
-    (is (equal '(0 0 100 200) (multiple-value-list (gdk-window-geometry window)))))
-  (let ((window (gdk-window-new nil (make-gdk-window-attr :x 10 :y 20 :width 100 :height 200) '(:x :y))))
-    (is (equal '(10 20 100 200) (multiple-value-list (gdk-window-geometry window))))))
+  (let ((window (gdk-window-new nil
+                                (make-gdk-window-attr :x 10
+                                                      :y 20
+                                                      :width 100
+                                                      :height 200)
+                                nil)))
+    (is (equal '(0 0 100 200)
+               (multiple-value-list (gdk-window-geometry window)))))
+  (let ((window (gdk-window-new nil
+                                (make-gdk-window-attr :x 10
+                                                      :y 20
+                                                      :width 100
+                                                      :height 200)
+                                '(:x :y))))
+    (is (equal '(10 20 100 200)
+        (multiple-value-list (gdk-window-geometry window))))))
 
-;;;     gdk_window_set_geometry_hints
+;;;     gdk-window-set-geometry-hints
 
 (test gdk-window-set-geometry-hints
   (let ((window (gdk-window-new nil (make-gdk-window-attr) nil)))
     (is-false (gdk-window-set-geometry-hints window (make-gdk-geometry) nil))))
 
-;;;     gdk_window_get_width
-;;;     gdk_window_get_height
+;;;     gdk-window-width
+;;;     gdk-window-height
 
 (test gdk-window-width/height
-  (let ((window (gdk-window-new nil (make-gdk-window-attr :width 100 :height 200) nil)))
+  (let ((window (gdk-window-new nil
+                                (make-gdk-window-attr :width 100 :height 200)
+                                nil)))
     (is (= 100 (gdk-window-width window)))
     (is (= 200 (gdk-window-height window)))))
 
@@ -783,7 +924,7 @@
 ;;;     gdk_window_set_skip_pager_hint
 ;;;     gdk_window_set_urgency_hint
 
-;;;     gdk_window_get_position
+;;;     gdk-window-position
 
 (test gdk-window-position
   (let ((window (gdk-window-new nil (make-gdk-window-attr) nil)))
@@ -795,13 +936,13 @@
 ;;;     gdk_window_get_frame_extents
 ;;;     gdk_window_get_origin
 ;;;     gdk_window_get_root_coords
-;;;     gdk_window_get_pointer                             * deprecated
+;;;     gdk_window_get_pointer                             deprecated
 ;;;     gdk_window_get_device_position
-;;;     gdk_window_get_device_position_double ()
+;;;     gdk_window_get_device_position_double
 ;;;     gdk_window_get_parent
 ;;;     gdk_window_get_toplevel
 ;;;     gdk_window_get_children
-;;;     gdk_window_get_children_with_user_data ()
+;;;     gdk_window_get_children_with_user_data
 ;;;     gdk_window_peek_children
 ;;;     gdk_window_get_events
 ;;;     gdk_window_set_events
@@ -815,11 +956,11 @@
 ;;;     gdk_window_get_decorations
 ;;;     gdk_window_set_functions
 
-;;;     gdk_get_default_root_window
+;;;     gdk-default-root-window
 
 (test gdk-default-root-window
   (let ((root-window (gdk-default-root-window)))
-    (is (eq 'gdk-window (type-of root-window)))
+    (is (typep root-window 'gdk-window))
     (is-true (integerp (gdk-window-width root-window)))
     (is-true (integerp (gdk-window-height root-window)))))
 
@@ -831,35 +972,42 @@
 ;;;     gdk_window_set_device_events
 ;;;     gdk_window_get_source_events
 ;;;     gdk_window_set_source_events
-;;;     gdk_window_get_event_compression ()
-;;;     gdk_window_set_event_compression ()
+;;;     gdk_window_get_event_compression
+;;;     gdk_window_set_event_compression
 ;;;     gdk_offscreen_window_get_surface
 ;;;     gdk_offscreen_window_set_embedder
 ;;;     gdk_offscreen_window_get_embedder
 ;;;     gdk_window_geometry_changed
 
-;;;     gdk_window_coords_from_parent
+;;;     gdk-window-coords-from-parent
 
 (test gdk-window-coords-from-parent
   (let ((window (gdk-default-root-window)))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-from-parent window 10.0d0 20.0d0))))
+               (multiple-value-list
+                 (gdk-window-coords-from-parent window 10.0d0 20.0d0))))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-from-parent window 10.0 20.0))))
+               (multiple-value-list
+                 (gdk-window-coords-from-parent window 10.0 20.0))))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-from-parent window 10 20))))))
+               (multiple-value-list
+                 (gdk-window-coords-from-parent window 10 20))))))
 
-;;;     gdk_window_coords_to_parent
+;;;     gdk-window-coords-to-parent
 
 (test gdk-window-coords-to-parent
   (let ((window (gdk-default-root-window)))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-to-parent window 10.0d0 20.0d0))))
+               (multiple-value-list
+                 (gdk-window-coords-to-parent window 10.0d0 20.0d0))))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-to-parent window 10.0 20.0))))
+               (multiple-value-list
+                 (gdk-window-coords-to-parent window 10.0 20.0))))
     (is (equal '(10.0d0 20.0d0)
-               (multiple-value-list (gdk-window-coords-to-parent window 10 20))))))
+               (multiple-value-list
+                 (gdk-window-coords-to-parent window 10 20))))))
 
 ;;;     gdk_window_get_effective_parent
 ;;;     gdk_window_get_effective_toplevel
 
+;;; 2020-11-10

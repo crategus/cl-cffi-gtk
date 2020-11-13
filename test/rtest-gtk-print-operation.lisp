@@ -10,8 +10,8 @@
   (is (eql 'gtk-print-status
            (gobject::registered-enum-type "GtkPrintStatus")))
   ;; Check the type initializer
-  (is (string= "GtkPrintStatus"
-               (g-type-name (gtype (foreign-funcall "gtk_print_status_get_type" :int)))))
+  (is (eq (gtype "GtkPrintStatus")
+          (gtype (foreign-funcall "gtk_print_status_get_type" g-size))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintStatus"
     GTK-PRINT-STATUS
@@ -53,8 +53,8 @@
   (is (eql 'gtk-print-operation-action
            (gobject::registered-enum-type "GtkPrintOperationAction")))
   ;; Check the type initializer
-  (is (string= "GtkPrintOperationAction"
-               (g-type-name (gtype (foreign-funcall "gtk_print_operation_action_get_type" :int)))))
+  (is (eq (gtype "GtkPrintOperationAction")
+          (gtype (foreign-funcall "gtk_print_operation_action_get_type" g-size))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationAction"
     GTK-PRINT-OPERATION-ACTION
@@ -87,8 +87,8 @@
   (is (eql 'gtk-print-operation-result
            (gobject::registered-enum-type "GtkPrintOperationResult")))
   ;; Check the type initializer
-  (is (string= "GtkPrintOperationResult"
-               (g-type-name (gtype (foreign-funcall "gtk_print_operation_result_get_type" :int)))))
+  (is (eq (gtype "GtkPrintOperationResult")
+          (gtype (foreign-funcall "gtk_print_operation_result_get_type" g-size))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintOperationResult"
     GTK-PRINT-OPERATION-RESULT
@@ -120,8 +120,8 @@
   ;; Check the registered name
   (is (eql 'gtk-print-error (gobject::registered-enum-type "GtkPrintError")))
   ;; Check the type initializer
-  (is (string= "GtkPrintError"
-               (g-type-name (gtype (foreign-funcall "gtk_print_error_get_type" :int)))))
+  (is (eq (gtype "GtkPrintError")
+          (gtype (foreign-funcall "gtk_print_error_get_type" g-size))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkPrintError"
     GTK-PRINT-ERROR
@@ -154,8 +154,8 @@
   (is (eq 'gtk-print-operation-preview
           (registered-object-type-by-name "GtkPrintOperationPreview")))
   ;; Check the type initializer
-  (is (string= "GtkPrintOperationPreview"
-               (g-type-name (gtype (foreign-funcall "gtk_print_operation_preview_get_type" :int)))))
+  (is (eq (gtype "GtkPrintOperationPreview")
+          (gtype (foreign-funcall "gtk_print_operation_preview_get_type" g-size))))
   ;; Get the names of the interface properties.
   (is (equal '()
              (mapcar #'g-param-spec-name
@@ -170,21 +170,21 @@
 
 (test gtk-print-operation-class
   ;; Type check
-  (is-true (g-type-is-object "GtkPrintOperation"))
+  (is (g-type-is-object "GtkPrintOperation"))
   ;; Check the registered name
   (is (eq 'gtk-print-operation
           (registered-object-type-by-name "GtkPrintOperation")))
   ;; Check the type initializer
-  (is (string= "GtkPrintOperation"
-               (g-type-name (gtype (foreign-funcall "gtk_print_operation_get_type" :int)))))
+  (is (eq (gtype "GtkPrintOperation")
+          (gtype (foreign-funcall "gtk_print_operation_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrintOperation")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrintOperation")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPrintOperation"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintOperation"))))
   ;; Check the interfaces
   (is (equal '("GtkPrintOperationPreview")
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintOperation"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintOperation"))))
   ;; Check the class properties
   (is (equal '("allow-async" "current-page" "custom-tab-label" "default-page-setup"
  "embed-page-setup" "export-filename" "has-selection" "job-name" "n-pages"

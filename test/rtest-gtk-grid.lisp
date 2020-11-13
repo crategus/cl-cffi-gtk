@@ -7,21 +7,21 @@
 
 (test gtk-grid-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkGrid"))
+  (is (g-type-is-object "GtkGrid"))
   ;; Check the registered name
   (is (eq 'gtk-grid
           (registered-object-type-by-name "GtkGrid")))
   ;; Check the type initializer
-  (is (string= "GtkGrid"
-               (g-type-name (gtype (foreign-funcall "gtk_grid_get_type" :int)))))
+  (is (eq (gtype "GtkGrid")
+          (gtype (foreign-funcall "gtk_grid_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkGrid")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkGrid")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkGrid"))))
+             (mapcar #'g-type-name (g-type-children "GtkGrid"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkGrid"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkGrid"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "baseline-row" "border-width" "can-default" "can-focus"
                "child" "column-homogeneous" "column-spacing" "composite-child"

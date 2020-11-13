@@ -7,23 +7,23 @@
 
 (test gtk-application-inhibit-flags
   ;; Check the type
-  (is-true (g-type-is-flags "GtkApplicationInhibitFlags"))
+  (is (g-type-is-flags "GtkApplicationInhibitFlags"))
   ;; Check the registered name
-  (is (eql 'gtk-application-inhibit-flags
-           (gobject::registered-flags-type "GtkApplicationInhibitFlags")))
+  (is (eq 'gtk-application-inhibit-flags
+          (registered-flags-type "GtkApplicationInhibitFlags")))
   ;; Check the names
   (is (equal '("GTK_APPLICATION_INHIBIT_LOGOUT" "GTK_APPLICATION_INHIBIT_SWITCH"
                "GTK_APPLICATION_INHIBIT_SUSPEND" "GTK_APPLICATION_INHIBIT_IDLE")
-             (mapcar #'gobject::flags-item-name
-                     (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkApplicationInhibitFlags"))))
   ;; Check the values
   (is (equal '(1 2 4 8)
-             (mapcar #'gobject::flags-item-value
-                     (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkApplicationInhibitFlags"))))
   ;; Check the nick names
   (is (equal '("logout" "switch" "suspend" "idle")
-             (mapcar #'gobject::flags-item-nick
-                     (gobject::get-flags-items "GtkApplicationInhibitFlags"))))
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkApplicationInhibitFlags"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GtkApplicationInhibitFlags"
                               GTK-APPLICATION-INHIBIT-FLAGS
@@ -39,21 +39,21 @@
 
 (test gtk-application-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkApplication"))
+  (is (g-type-is-object "GtkApplication"))
   ;; Check the registered name
   (is (eq 'gtk-application
           (registered-object-type-by-name "GtkApplication")))
   ;; Check the type initializer
-  (is (string= "GtkApplication"
-               (g-type-name (gtype (foreign-funcall "gtk_application_get_type" :int)))))
+  (is (eq (gtype "GtkApplication")
+          (gtype (foreign-funcall "gtk_application_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GApplication") (g-type-parent "GtkApplication")))
+  (is (eq (gtype "GApplication") (g-type-parent "GtkApplication")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkApplication"))))
+             (mapcar #'g-type-name (g-type-children "GtkApplication"))))
   ;; Check the interfaces
   (is (equal '("GActionGroup" "GActionMap")
-             (mapcar #'gtype-name (g-type-interfaces "GtkApplication"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkApplication"))))
   ;; Check the class properties
   (is (equal '("action-group" "active-window" "app-menu" "application-id" "flags"
                "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"

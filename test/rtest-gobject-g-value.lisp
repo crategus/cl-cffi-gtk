@@ -27,14 +27,14 @@
 (test g-value-type
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "gint")
-    (is (equal (gtype "gint") (g-value-type value)))))
+    (is (eq (gtype "gint") (g-value-type value)))))
 
 ;;;     G_VALUE_TYPE_NAME
 
 (test g-value-type-name
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "gint")
-    (is (equal "gint" (g-value-type-name value)))))
+    (is (string= "gint" (g-value-type-name value)))))
 
 ;;;     G_TYPE_IS_VALUE
 
@@ -55,7 +55,7 @@
 ;;;     G_TYPE_VALUE
 
 (test g-type-value
-  (is (equal (gtype "GValue") (g-type-value))))
+  (is (eq (gtype "GValue") (g-type-value))))
 
 ;;;     G_TYPE_VALUE_ARRAY                       * not implemented *
 
@@ -68,7 +68,7 @@
     (is-true  (foreign-slot-value value '(:struct g-value) :data))
 
     (is-true (pointerp (g-value-init value "gint")))
-    (is (equal (gtype "gint") (foreign-slot-value value '(:struct g-value) :type)))
+    (is (eq (gtype "gint") (foreign-slot-value value '(:struct g-value) :type)))
     (is-true  (foreign-slot-value value '(:struct g-value) :data))
 
     (is (= 0 (parse-g-value value)))

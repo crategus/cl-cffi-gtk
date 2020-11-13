@@ -7,21 +7,21 @@
 
 (test gtk-label-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkLabel"))
+  (is (g-type-is-object "GtkLabel"))
   ;; Check the registered name
   (is (eq 'gtk-label
           (registered-object-type-by-name "GtkLabel")))
   ;; Check the type initializer
-  (is (string= "GtkLabel"
-               (g-type-name (gtype (foreign-funcall "gtk_label_get_type" :int)))))
+  (is (eq (gtype "GtkLabel")
+          (gtype (foreign-funcall "gtk_label_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkMisc") (g-type-parent "GtkLabel")))
+  (is (eq (gtype "GtkMisc") (g-type-parent "GtkLabel")))
   ;; Check the children
   (is (equal '("GtkAccelLabel")
-             (mapcar #'gtype-name (g-type-children "GtkLabel"))))
+             (mapcar #'g-type-name (g-type-children "GtkLabel"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkLabel"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkLabel"))))
   ;; Check the class properties
   (is (equal '("angle" "app-paintable" "attributes" "can-default" "can-focus"
                "composite-child" "cursor-position" "double-buffered" "ellipsize" "events"

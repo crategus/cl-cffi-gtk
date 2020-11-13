@@ -59,21 +59,21 @@ dargestellt werden.")
 
 (test gtk-text-buffer-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkTextBuffer"))
+  (is (g-type-is-object "GtkTextBuffer"))
   ;; Check the registered name
   (is (eq 'gtk-text-buffer
           (registered-object-type-by-name "GtkTextBuffer")))
   ;; Check the type initializer
-  (is (string= "GtkTextBuffer"
-               (g-type-name (gtype (foreign-funcall "gtk_text_buffer_get_type" :int)))))
+  (is (eq (gtype "GtkTextBuffer")
+          (gtype (foreign-funcall "gtk_text_buffer_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkTextBuffer")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkTextBuffer")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkTextBuffer"))))
+             (mapcar #'g-type-name (g-type-children "GtkTextBuffer"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkTextBuffer"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkTextBuffer"))))
   ;; Check the class properties
   (is (equal '("copy-target-list" "cursor-position" "has-selection"
                "paste-target-list" "tag-table" "text")

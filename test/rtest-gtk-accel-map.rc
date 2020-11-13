@@ -1,11 +1,16 @@
 ; Program GtkAccelMap rc-file         -*- scheme -*-
 ; this file is an automated accelerator map dump
 ;
+; (gtk_accel_path "<Actions>/AppWindowActions/Blue" "<Primary>b")
+; (gtk_accel_path "<test>/File/Exit" "")
 ; (gtk_accel_path "<Actions>/AppWindowActions/Quit" "<Primary>q")
 ; (gtk_accel_path "<Test>/Edit/Save" "<Primary>s")
 ; (gtk_accel_path "<Actions>/AppWindowActions/About" "<Primary>a")
 ; (gtk_accel_path "<Actions>/AppWindowActions/SaveAs" "<Primary>s")
+; (gtk_accel_path "<Actions>/AppWindowActions/Green" "<Primary>g")
 ; (gtk_accel_path "<Actions>/AppWindowActions/Save" "<Primary>s")
+; (gtk_accel_path "<Actions>/AppWindowActions/Open" "<Primary>o")
 ; (gtk_accel_path "<Actions>/AppWindowActions/New" "<Primary>n")
 ; (gtk_accel_path "<Test>/Edit/Look" "<Primary>l")
 (gtk_accel_path "<Test>/Edit/Change" "<Primary>c")
+; (gtk_accel_path "<Actions>/AppWindowActions/Red" "<Primary>r")

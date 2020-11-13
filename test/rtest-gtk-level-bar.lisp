@@ -7,52 +7,52 @@
 
 (test gtk-level-bar-mode
   ;; Check the type
-  (is-true (g-type-is-enum "GtkLevelBarMode"))
+  (is (g-type-is-enum "GtkLevelBarMode"))
   ;; Check the type initializer
-  (is (string= "GtkLevelBarMode"
-               (g-type-name (gtype (foreign-funcall "gtk_level_bar_mode_get_type" :int)))))
+  (is (eq (gtype "GtkLevelBarMode")
+          (gtype (foreign-funcall "gtk_level_bar_mode_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-level-bar-mode
-          (gobject::registered-enum-type "GtkLevelBarMode")))
+          (registered-enum-type "GtkLevelBarMode")))
   ;; Check the names
   (is (equal '("GTK_LEVEL_BAR_MODE_CONTINUOUS" "GTK_LEVEL_BAR_MODE_DISCRETE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkLevelBarMode"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkLevelBarMode"))))
   ;; Check the values
   (is (equal '(0 1)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkLevelBarMode"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkLevelBarMode"))))
   ;; Check the nick names
   (is (equal '("continuous" "discrete")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkLevelBarMode"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkLevelBarMode"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkLevelBarMode"
                              GTK-LEVEL-BAR-MODE
                              (:EXPORT T :TYPE-INITIALIZER "gtk_level_bar_mode_get_type")
                              (:CONTINUOUS 0)
                              (:DISCRETE 1))
-             (gobject::get-g-type-definition "GtkLevelBarMode"))))
+             (get-g-type-definition "GtkLevelBarMode"))))
 
 ;;;     GtkLevelBar
 
 (test gtk-level-bar-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkLevelBar"))
+  (is (g-type-is-object "GtkLevelBar"))
   ;; Check the registered name
   (is (eq 'gtk-level-bar
           (registered-object-type-by-name "GtkLevelBar")))
   ;; Check the type initializer
-  (is (string= "GtkLevelBar"
-               (g-type-name (gtype (foreign-funcall "gtk_level_bar_get_type" :int)))))
+  (is (eq (gtype "GtkLevelBar")
+          (gtype (foreign-funcall "gtk_level_bar_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkWidget") (g-type-parent "GtkLevelBar")))
+  (is (eq (gtype "GtkWidget") (g-type-parent "GtkLevelBar")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkLevelBar"))))
+             (mapcar #'g-type-name (g-type-children "GtkLevelBar"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkLevelBar"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkLevelBar"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
                "events" "expand" "focus-on-click" "halign" "has-default" "has-focus"
@@ -121,6 +121,31 @@
     (is (= 3 (gtk-widget-style-property level-bar "min-block-height")))
     (is (= 3 (gtk-widget-style-property level-bar "min-block-width")))))
 
+;;; --- Signals ----------------------------------------------------------------
+
+(defvar *verbose-gtk-level-bar* nil)
+
+(test gtk-level-bar-offset-changed-signal
+  (let* ((message nil)
+         (level-bar (gtk-level-bar-new-for-interval 0.0 10.0))
+         ;; Connect a signal handler
+         (handler-id (g-signal-connect level-bar "offset-changed"
+                       (lambda (widget name)
+                         (declare (ignore widget))
+                         (when *verbose-gtk-level-bar*
+                           (format t "~&Signal 'offset-changed' for level bar.~%"))
+                         (is (string= "high" name))
+                         (is (= 0.75 (gtk-level-bar-offset-value level-bar name)))
+                         (setf message "Signal 'offset-changed' for level bar")
+                         t))))
+    ;; The signal handler writes a message in the variable MESSAGE.
+    ;; We emit the signal and check the value of MESSAGE.
+    (is-true (integerp handler-id))
+    (is-false (setf message nil))
+    (is-false (g-signal-emit level-bar "offset-changed" "high"))
+    (is (string= "Signal 'offset-changed' for level bar" message))
+    (is-false (g-signal-handler-disconnect level-bar handler-id))))
+
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_level_bar_new
@@ -142,7 +167,8 @@
 (test gtk-level-bar-add-offset-value
   (let ((level-bar (gtk-level-bar-new-for-interval 0.0 10.0)))
     (is-false (gtk-level-bar-add-offset-value level-bar "half" 0.5))
-    (is (= 0.5d0 (gtk-level-bar-get-offset-value level-bar "half")))
+    (is (= 0.5d0 (gtk-level-bar-offset-value level-bar "half")))
     (is-false (gtk-level-bar-remove-offset-value level-bar "half"))
-    (is-false (gtk-level-bar-get-offset-value level-bar "half"))))
+    (is-false (gtk-level-bar-offset-value level-bar "half"))))
 
+;;; 2020-10-26

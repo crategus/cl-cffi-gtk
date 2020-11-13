@@ -7,55 +7,56 @@
 
 (test gtk-resize-mode
   ;; Check the type
-  (is-true (g-type-is-enum "GtkResizeMode"))
+  (is (g-type-is-enum "GtkResizeMode"))
   ;; Check the type initializer
-  (is (string= "GtkResizeMode"
-               (g-type-name (gtype (foreign-funcall "gtk_resize_mode_get_type" :int)))))
+  (is (eq (gtype "GtkResizeMode")
+          (gtype (foreign-funcall "gtk_resize_mode_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-resize-mode (gobject::registered-enum-type "GtkResizeMode")))
+  (is (eq 'gtk-resize-mode (registered-enum-type "GtkResizeMode")))
   ;; Check the names
   (is (equal '("GTK_RESIZE_PARENT" "GTK_RESIZE_QUEUE" "GTK_RESIZE_IMMEDIATE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkResizeMode"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkResizeMode"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkResizeMode"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkResizeMode"))))
   ;; Check the nick names
   (is (equal '("parent" "queue" "immediate")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkResizeMode"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkResizeMode"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkResizeMode"
                              GTK-RESIZE-MODE
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_resize_mode_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_resize_mode_get_type")
                              (:PARENT 0)
                              (:QUEUE 1)
                              (:IMMEDIATE 2))
-             (gobject::get-g-type-definition "GtkResizeMode"))))
+             (get-g-type-definition "GtkResizeMode"))))
 
 ;;;     GtkContainer
 
 (test gtk-container-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkContainer"))
+  (is (g-type-is-object "GtkContainer"))
   ;; Check the registered name
   (is (eq 'gtk-container
           (registered-object-type-by-name "GtkContainer")))
   ;; Check the type initializer
-  (is (string= "GtkContainer"
-               (g-type-name (gtype (foreign-funcall "gtk_container_get_type" :int)))))
+  (is (eq (gtype "GtkContainer")
+          (gtype (foreign-funcall "gtk_container_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkWidget") (g-type-parent "GtkContainer")))
+  (is (eq (gtype "GtkWidget") (g-type-parent "GtkContainer")))
   ;; Check the children
   (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox" "GtkFlowBox"
                "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout" "GtkNotebook" "GtkFixed"
                "GtkTextView" "GtkTreeView" "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
                "GtkToolPalette" "GtkSocket" "GtkTable")
-             (mapcar #'gtype-name (g-type-children "GtkContainer"))))
+             (mapcar #'g-type-name (g-type-children "GtkContainer"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkContainer"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkContainer"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
                "composite-child" "double-buffered" "events" "expand" "focus-on-click"
@@ -327,11 +328,11 @@
       ;; Type checks
       (is-true (g-type-is-param (g-type-from-instance pspec)))
       (is-true (g-is-param-spec pspec))
-      (is (equal (gtype "GParamBoolean") (g-param-spec-type pspec)))
+      (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
       (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
-      (is (equal (gtype "gboolean") (g-param-spec-value-type pspec)))
+      (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
       ;; Check the default value
-      (is (equal (gtype "gboolean") (g-value-type (g-param-spec-default-value pspec))))
+      (is (eq (gtype "gboolean") (g-value-type (g-param-spec-default-value pspec))))
       (is-false (parse-g-value (g-param-spec-default-value pspec)))
       (is-false (g-param-value-set-default pspec value))
       (is-false (parse-g-value value))
@@ -351,11 +352,11 @@
       ;; Type checks
       (is-true (g-type-is-param (g-type-from-instance pspec)))
       (is-true (g-is-param-spec pspec))
-      (is (equal (gtype "GParamEnum") (g-param-spec-type pspec)))
+      (is (eq (gtype "GParamEnum") (g-param-spec-type pspec)))
       (is (string= "GParamEnum" (g-param-spec-type-name pspec)))
-      (is (equal (gtype "GtkPackType") (g-param-spec-value-type pspec)))
+      (is (eq (gtype "GtkPackType") (g-param-spec-value-type pspec)))
       ;; Check the default value
-      (is (equal (gtype "GtkPackType") (g-value-type (g-param-spec-default-value pspec))))
+      (is (eq (gtype "GtkPackType") (g-value-type (g-param-spec-default-value pspec))))
       (is (eq :start (parse-g-value (g-param-spec-default-value pspec))))
       (is-false (g-param-value-set-default pspec value))
       (is (eq :start (parse-g-value value)))
@@ -375,11 +376,11 @@
       ;; Type checks
       (is-true (g-type-is-param (g-type-from-instance pspec)))
       (is-true (g-is-param-spec pspec))
-      (is (equal (gtype "GParamInt") (g-param-spec-type pspec)))
+      (is (eq (gtype "GParamInt") (g-param-spec-type pspec)))
       (is (string= "GParamInt" (g-param-spec-type-name pspec)))
-      (is (equal (gtype "gint") (g-param-spec-value-type pspec)))
+      (is (eq (gtype "gint") (g-param-spec-value-type pspec)))
       ;; Check the default value
-      (is (equal (gtype "gint") (g-value-type (g-param-spec-default-value pspec))))
+      (is (eq (gtype "gint") (g-value-type (g-param-spec-default-value pspec))))
       (is (= 0 (parse-g-value (g-param-spec-default-value pspec))))
       (is-false (g-param-value-set-default pspec value))
       (is (= 0 (parse-g-value value)))

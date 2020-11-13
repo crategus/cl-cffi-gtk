@@ -5,7 +5,7 @@
 
 (test gtk-buildable-interface
   ;; Type check
-  (is-true (g-type-is-interface "GtkBuildable"))
+  (is (g-type-is-interface "GtkBuildable"))
   ;; Check the registered name
   (is (eq 'gtk-buildable
           (registered-object-type-by-name "GtkBuildable")))
@@ -15,8 +15,9 @@
                      (g-object-interface-list-properties "GtkBuildable"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GtkBuildable"
-    GTK-BUILDABLE
-    (:EXPORT T :TYPE-INITIALIZER "gtk_buildable_get_type"))
+                                  GTK-BUILDABLE
+                                  (:EXPORT T
+                                   :TYPE-INITIALIZER "gtk_buildable_get_type"))
              (get-g-type-definition "GtkBuildable"))))
 
 ;;;     gtk_buildable_set_name

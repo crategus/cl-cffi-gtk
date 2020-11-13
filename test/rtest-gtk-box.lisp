@@ -3,21 +3,21 @@
 
 ;; GtkPrinterOptionWidget is a child of GtkBox
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (foreign-funcall "gtk_printer_option_widget_get_type" :int))
+  (foreign-funcall "gtk_printer_option_widget_get_type" g-size))
 
 ;;; --- Types and Values -------------------------------------------------------
 
 (test gtk-box-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkBox"))
+  (is (g-type-is-object "GtkBox"))
   ;; Check the registered name
   (is (eq 'gtk-box
           (registered-object-type-by-name "GtkBox")))
   ;; Check the type initializer
-  (is (string= "GtkBox"
-               (g-type-name (gtype (foreign-funcall "gtk_box_get_type" :int)))))
+  (is (eq (gtype "GtkBox")
+          (gtype (foreign-funcall "gtk_box_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkContainer") (g-type-parent "GtkBox")))
+  (is (eq (gtype "GtkContainer") (g-type-parent "GtkBox")))
   ;; Check the children
   (is (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox" "GtkStatusbar"
                "GtkInfoBar" "GtkColorChooserWidget" "GtkColorSelection"
@@ -25,10 +25,10 @@
                "GtkFontSelection" "GtkRecentChooserWidget" "GtkAppChooserWidget"
                "GtkShortcutsSection" "GtkShortcutsGroup" "GtkShortcutsShortcut"
                "GtkPrinterOptionWidget")
-             (mapcar #'gtype-name (g-type-children "GtkBox"))))
+             (mapcar #'g-type-name (g-type-children "GtkBox"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkBox"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkBox"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "baseline-position" "border-width" "can-default" "can-focus"
                "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"

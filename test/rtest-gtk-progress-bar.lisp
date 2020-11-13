@@ -7,21 +7,21 @@
 
 (test gtk-progress-bar-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkProgressBar"))
+  (is (g-type-is-object "GtkProgressBar"))
   ;; Check the registered name
   (is (eq 'gtk-progress-bar
           (registered-object-type-by-name "GtkProgressBar")))
   ;; Check the type initializer
-  (is (string= "GtkProgressBar"
-               (g-type-name (gtype (foreign-funcall "gtk_progress_bar_get_type" :int)))))
+  (is (eq (gtype "GtkProgressBar")
+          (gtype (foreign-funcall "gtk_progress_bar_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkWidget") (g-type-parent "GtkProgressBar")))
+  (is (eq (gtype "GtkWidget") (g-type-parent "GtkProgressBar")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkProgressBar"))))
+             (mapcar #'g-type-name (g-type-children "GtkProgressBar"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkProgressBar"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkProgressBar"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
                "ellipsize" "events" "expand" "focus-on-click" "fraction" "halign"

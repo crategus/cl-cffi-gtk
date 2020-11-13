@@ -1,103 +1,55 @@
 (def-suite gtk-frame :in gtk-suite)
 (in-suite gtk-frame)
 
-;;;   GtkFrame
+;;; --- Types and Values -------------------------------------------------------
+
+;;;     GtkFrame
 
 (test gtk-frame-class
-  ;; Type checks
-  (is-true  (g-type-is-object "GtkFrame"))
-  (is-false (g-type-is-abstract "GtkFrame"))
-  (is-true  (g-type-is-derived "GtkFrame"))
-  (is-false (g-type-is-fundamental "GtkFrame"))
-  (is-true  (g-type-is-value-type "GtkFrame"))
-  (is-true  (g-type-has-value-table "GtkFrame"))
-  (is-true  (g-type-is-classed "GtkFrame"))
-  (is-true  (g-type-is-instantiatable "GtkFrame"))
-  (is-true  (g-type-is-derivable "GtkFrame"))
-  (is-true  (g-type-is-deep-derivable "GtkFrame"))
-  (is-false (g-type-is-interface "GtkFrame"))
-
+  ;; Type check
+  (is (g-type-is-object "GtkFrame"))
   ;; Check the registered name
   (is (eq 'gtk-frame
           (registered-object-type-by-name "GtkFrame")))
-
-  ;; Check infos about the C class implementation
-  (let ((class (g-type-class-ref (gtype "GtkFrame"))))
-    (is (equal (gtype "GtkFrame") (g-type-from-class class)))
-    (is (equal (gtype "GtkFrame") (g-object-class-type class)))
-    (is (equal "GtkFrame" (g-object-class-name class)))
-    (is (equal (gtype "GtkFrame") (g-type-from-class  (g-type-class-peek "GtkFrame"))))
-    (is (equal (gtype "GtkFrame") (g-type-from-class  (g-type-class-peek-static "GtkFrame"))))
-    (g-type-class-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'gtk-frame)))
-    ;; Check the class name and type of the class
-    (is (eq 'gtk-frame (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GtkFrame" (gobject-class-g-type-name class)))
-    (is (equal "GtkFrame" (gobject-class-direct-g-type-name class)))
-    (is (equal "gtk_frame_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-false (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (equal (gtype "GtkBin") (g-type-parent "GtkFrame")))
-  (is (= 6 (g-type-depth "GtkFrame")))
-  (is (equal (gtype "GtkContainer")
-             (g-type-next-base "GtkFrame" "GtkWidget")))
-  (is-true  (g-type-is-a "GtkFrame" "GtkWidget"))
-  (is-true  (g-type-is-a "GtkFrame" "GtkContainer"))
-  (is-false (g-type-is-a "GtkFrame" "gboolean"))
-  (is-false (g-type-is-a "GtkFrame" "GtkWindow"))
-
+  ;; Check the type initializer
+  (is (eq (gtype "GtkFrame")
+          (gtype (foreign-funcall "gtk_frame_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GtkBin") (g-type-parent "GtkFrame")))
   ;; Check the children
   (is (equal '("GtkAspectFrame")
-             (mapcar #'gtype-name (g-type-children "GtkFrame"))))
+             (mapcar #'g-type-name (g-type-children "GtkFrame"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkFrame"))))
-
-  ;; Query infos about the class
-  (with-foreign-object (query '(:struct g-type-query))
-    (g-type-query "GtkFrame" query)
-    (is (equal (gtype "GtkFrame")
-               (foreign-slot-value query '(:struct g-type-query) :type)))
-    (is (equal "GtkFrame"
-               (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 1048
-           (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 56
-           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
-
-  ;; Get the names of the class properties.
-  (is (equal '("name" "parent" "width-request" "height-request" "visible" "sensitive"
- "app-paintable" "can-focus" "has-focus" "is-focus" "focus-on-click"
- "can-default" "has-default" "receives-default" "composite-child" "style"
- "events" "no-show-all" "has-tooltip" "tooltip-markup" "tooltip-text" "window"
- "opacity" "double-buffered" "halign" "valign" "margin-left" "margin-right"
- "margin-start" "margin-end" "margin-top" "margin-bottom" "margin" "hexpand"
- "vexpand" "hexpand-set" "vexpand-set" "expand" "scale-factor" "border-width"
- "resize-mode" "child" "label" "label-xalign" "label-yalign" "shadow-type"
- "label-widget")
-             (mapcar #'g-param-spec-name
-                     (g-object-class-list-properties "GtkFrame"))))
-
+             (mapcar #'g-type-name (g-type-interfaces "GtkFrame"))))
+  ;; Check the class properties
+  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
+               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
+               "halign" "has-default" "has-focus" "has-tooltip" "height-request"
+               "hexpand" "hexpand-set" "is-focus" "label" "label-widget"
+               "label-xalign" "label-yalign" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "parent" "receives-default" "resize-mode"
+               "scale-factor" "sensitive" "shadow-type" "style" "tooltip-markup"
+               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
+               "width-request" "window")
+             (stable-sort (mapcar #'g-param-spec-name
+                                  (g-object-class-list-properties "GtkFrame"))
+                          #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
- "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
- "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
- "separator-width" "text-handle-height" "text-handle-width"
- "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name (gtk-widget-class-list-style-properties "GtkFrame"))))
-
-  ;; Get the names to the child properties
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+               "separator-height" "separator-width" "text-handle-height"
+               "text-handle-width" "visited-link-color" "wide-separators"
+               "window-dragging")
+             (mapcar #'g-param-spec-name
+                     (gtk-widget-class-list-style-properties "GtkFrame"))))
+  ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name (gtk-container-class-list-child-properties "GtkFrame"))))
-
-  ;; Get the class definition
+             (mapcar #'g-param-spec-name
+                     (gtk-container-class-list-child-properties "GtkFrame"))))
+  ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFrame" GTK-FRAME
                        (:SUPERCLASS GTK-BIN :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable")
@@ -111,8 +63,8 @@
                          "gfloat" T T)
                         (SHADOW-TYPE GTK-FRAME-SHADOW-TYPE "shadow-type"
                          "GtkShadowType" T T)))
-             (get-g-type-definition "GtkFrame")))
-)
+             (get-g-type-definition "GtkFrame"))))
+
 
 (test gtk-frame-properties
   (let ((widget (make-instance 'gtk-frame)))

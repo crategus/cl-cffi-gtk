@@ -7,21 +7,21 @@
 
 (test gtk-radio-menu-item-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkRadioMenuItem"))
+  (is (g-type-is-object "GtkRadioMenuItem"))
   ;; Check the registered name
   (is (eq 'gtk-radio-menu-item
           (registered-object-type-by-name "GtkRadioMenuItem")))
   ;; Check the type initializer
-  (is (string= "GtkRadioMenuItem"
-               (g-type-name (gtype (foreign-funcall "gtk_radio_menu_item_get_type" :int)))))
+  (is (eq (gtype "GtkRadioMenuItem")
+          (gtype (foreign-funcall "gtk_radio_menu_item_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GtkCheckMenuItem") (g-type-parent "GtkRadioMenuItem")))
+  (is (eq (gtype "GtkCheckMenuItem") (g-type-parent "GtkRadioMenuItem")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkRadioMenuItem"))))
+             (mapcar #'g-type-name (g-type-children "GtkRadioMenuItem"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActivatable" "GtkActionable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkRadioMenuItem"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkRadioMenuItem"))))
   ;; Check the class properties
   (is (equal '("accel-path" "action-name" "action-target" "active" "app-paintable"
                "border-width" "can-default" "can-focus" "child" "composite-child"

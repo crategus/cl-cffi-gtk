@@ -1,9 +1,65 @@
 (def-suite gtk-widget :in gtk-suite)
 (in-suite gtk-widget)
 
+;;; --- Types and Values -------------------------------------------------------
+
 ;;;  	GtkRequisition
+
+(test gtk-requisition
+  ;; Type check
+  (is-true (g-type-is-a (gtype "GtkRequisition") +g-type-boxed+))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkRequisition")
+          (gtype (foreign-funcall "gtk_requisition_get_type" g-size)))))
+
+(test make-gtk-requisition
+  (is (eq 'gtk-requisition (type-of (make-gtk-requisition)))))
+
+(test copy-gtk-requisition
+  (let ((requisition (make-gtk-requisition)))
+    (is (eq 'gtk-requisition (type-of (copy-gtk-requisition requisition))))))
+
+(test gtk-requisition-accessors
+  (let ((requisition (make-gtk-requisition)))
+    (is (= 0 (gtk-requisition-width requisition)))
+    (is (= 0 (gtk-requisition-height requisition)))))
+
 ;;;     GtkAllocation
+
+;; not implemented
+
 ;;;     GtkWidgetHelpType
+
+(test gtk-widget-help-type
+  ;; Check the type-widget-help-type
+  (is-true (g-type-is-enum "GtkWidgetHelpType"))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkWidgetHelpType")
+          (gtype (foreign-funcall "gtk_widget_help_type_get_type" g-size))))
+  ;; Check the registered name
+  (is (eq 'gtk-widget-help-type
+          (gobject::registered-enum-type "GtkWidgetHelpType")))
+  ;; Check the names
+  (is (equal '("GTK_WIDGET_HELP_TOOLTIP" "GTK_WIDGET_HELP_WHATS_THIS")
+             (mapcar #'gobject::enum-item-name
+                     (gobject::get-enum-items "GtkWidgetHelpType"))))
+  ;; Check the values
+  (is (equal '(0 1)
+             (mapcar #'gobject::enum-item-value
+                     (gobject::get-enum-items "GtkWidgetHelpType"))))
+  ;; Check the nick names
+  (is (equal '("tooltip" "whats-this")
+             (mapcar #'gobject::enum-item-nick
+                     (gobject::get-enum-items "GtkWidgetHelpType"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkWidgetHelpType"
+                             GTK-WIDGET-HELP-TYPE
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_widget_help_type_get_type")
+                             (:TOOLTIP 0)
+                             (:WHATS-THIS 1))
+             (gobject::get-g-type-definition "GtkWidgetHelpType"))))
+
 ;;;     GtkSizeRequestMode
 ;;;     GtkRequestedSize
 ;;;     GtkAlign
@@ -12,25 +68,23 @@
 
 (test gtk-widget-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkWidget"))
+  (is (g-type-is-object "GtkWidget"))
   ;; Check the registered name
   (is (eq 'gtk-widget
           (registered-object-type-by-name "GtkWidget")))
   ;; Check the type initializer
-  (is (string= "GtkWidget"
-               (g-type-name (gtype (foreign-funcall "gtk_widget_get_type" :int)))))
+  (is (eq (gtype "GtkWidget")
+          (gtype (foreign-funcall "gtk_widget_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget")))
+  (is (eq (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget")))
   ;; Check the children
-  ;; TODO: The class GtkIcon is not documented.
   (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
-               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
-               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea"
-               "GtkIcon")
-             (mapcar #'gtype-name (g-type-children "GtkWidget"))))
+               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch" "GtkCellView"
+               "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea" "GtkIcon")
+             (mapcar #'g-type-name (g-type-children "GtkWidget"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
-             (mapcar #'gtype-name (g-type-interfaces "GtkWidget"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkWidget"))))
   ;; Get the class properties.
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
                "double-buffered" "events" "expand" "focus-on-click"
@@ -390,6 +444,22 @@ scale-factor
   @see-slot{gtk-widget-window}
 |#
 
+;;; --- Signals ----------------------------------------------------------------
+
+(test gtk-widget-show-help-signal
+  (let* ((message nil)
+         (button (make-instance 'gtk-button))
+         (handler-id (g-signal-connect button "show-help"
+                       (lambda (widget help-type)
+                         (declare (ignore widget))
+                         (setf message "Signal show-help")
+                         (is (eq :whats-this help-type))
+                         t))))
+    (is (integerp handler-id))
+    ;; Emit the signal show-help
+    (is-true (g-signal-emit button "show-help" :whats-this))
+    (is (string= "Signal show-help" message))))
+
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_widget_new
@@ -472,8 +542,8 @@ scale-factor
   ;; Check the type
   (is-true (g-type-is-enum "GtkTextDirection"))
   ;; Check the type initializer
-  (is (string= "GtkTextDirection"
-               (g-type-name (gtype (foreign-funcall "gtk_text_direction_get_type" :int)))))
+  (is (eq (gtype "GtkTextDirection")
+          (gtype (foreign-funcall "gtk_text_direction_get_type" g-size))))
   ;; Check the registered name
   (is (eq 'gtk-text-direction (gobject::registered-enum-type "GtkTextDirection")))
   ;; Check the names
@@ -814,3 +884,5 @@ scale-factor
 ;;;     gtk_widget_set_vexpand_set
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
+
+;;; 2020-10-25

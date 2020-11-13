@@ -7,21 +7,21 @@
 
 (test gtk-print-job-class
   ;; Type check
-  (is-true  (g-type-is-object "GtkPrintJob"))
+  (is (g-type-is-object "GtkPrintJob"))
   ;; Check the registered name
   (is (eq 'gtk-print-job
           (registered-object-type-by-name "GtkPrintJob")))
   ;; Check the type initializer
-  (is (string= "GtkPrintJob"
-               (g-type-name (gtype (foreign-funcall "gtk_print_job_get_type" :int)))))
+  (is (eq (gtype "GtkPrintJob")
+          (gtype (foreign-funcall "gtk_print_job_get_type" g-size))))
   ;; Check the parent
-  (is (equal (gtype "GObject") (g-type-parent "GtkPrintJob")))
+  (is (eq (gtype "GObject") (g-type-parent "GtkPrintJob")))
   ;; Check the children
   (is (equal '()
-             (mapcar #'gtype-name (g-type-children "GtkPrintJob"))))
+             (mapcar #'g-type-name (g-type-children "GtkPrintJob"))))
   ;; Check the interfaces
   (is (equal '()
-             (mapcar #'gtype-name (g-type-interfaces "GtkPrintJob"))))
+             (mapcar #'g-type-name (g-type-interfaces "GtkPrintJob"))))
   ;; Check the class properties
   (is (equal '("page-setup" "printer" "settings" "title" "track-print-status")
              (stable-sort (mapcar #'g-param-spec-name
