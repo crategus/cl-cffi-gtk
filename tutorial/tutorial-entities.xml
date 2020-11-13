@@ -163,11 +163,26 @@
 <!ENTITY gtk-buildable                       "&api;gtk_class_gtk-buildable.html">
 <!ENTITY gtk-builder                         "&api;gtk_class_gtk-builder.html">
 
-<!ENTITY gtk-button                          "&api;gtk_class_gtk-button.html">
-<!ENTITY gtk-button-new                      "&api;gtk_fun_gtk-button-new.html">
-<!ENTITY gtk-button-new-with-label           "&api;gtk_fun_gtk-button-new-with-label.html">
-<!ENTITY gtk-button-new-with-mnemonic        "&api;gtk_fun_gtk-button-new-with-mnemonic.html">
-<!ENTITY gtk-button-new-from-stock           "&api;gtk_fun_gtk-button-new-from-stock.html">
+<!ENTITY gtk-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button</code></ulink>">
+<!ENTITY gtk-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new</code></ulink>">
+<!ENTITY gtk-button-new-with-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-new-with-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-with-label</code></ulink>">
+<!ENTITY gtk-button-new-with-mnemonic
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-new-with-mnemonic.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-with-mnemonic</code></ulink>">
+<!ENTITY gtk-button-new-from-stock
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-new-from-stock.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-from-stock</code></ulink>">
 
 <!ENTITY gtk-button-box                      "&api;gtk_class_gtk-button-box.html">
 <!ENTITY gtk-button-box-new                  "&api;gtk_fun_gtk-button-box-new.html">
@@ -218,22 +233,40 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-container.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-container</code></ulink>">
-
-<!ENTITY gtk_container_border-width          "&api;gtk_class_gtk-container.html#gtk_slot_gtk-container-border-width">
-
+<!ENTITY gtk_container_border-width
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-container.html#gtk_slot_gtk-container-border-width'>
+          <code xmlns='http://docbook.org/ns/docbook'>border-width</code></ulink>">
 <!ENTITY gtk-container-add
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-container-add.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-container-add</code></ulink>">
+<!ENTITY gtk-container-border-width
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-container-border-width.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-container-border-width</code></ulink>">
 
-<!ENTITY gtk-container-border-width          "&api;gtk_fun_gtk-container-border-width.html">
+<!ENTITY gtk-check-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-check-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-check-button</code></ulink>">
+<!ENTITY gtk-check-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-check-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-check-button-new</code></ulink>">
+<!ENTITY gtk-check-button-new-with-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-check-button-new-with-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-check-button-new-with-label</code></ulink>">
+<!ENTITY gtk-check-button-new-with-mnemonic
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-check-button-new-with-mnemonic.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-check-button-new-with-mnemonic</code></ulink>">
 
-<!ENTITY gtk-check-button                    "&api;gtk_class_gtk-check-button.html">
-<!ENTITY gtk-check-button-new                "&api;gtk_fun_gtk-check-button-new.html">
-<!ENTITY gtk-check-button-new-with-label     "&api;gtk_fun_gtk-check-button-new-with-label.html">
-<!ENTITY gtk-check-button-new-with-mnemonic  "&api;gtk_fun_gtk-check-button-new-with-mnemonic.html">
-
-<!ENTITY gtk-check-menu-item                 "&api;gtk_class_gtk-check-menu-item.html">
+<!ENTITY gtk-check-menu-item
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-check-menu-item.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-check-menu-item</code></ulink>">
 
 <!ENTITY gtk-dialog                          "&api;gtk_class_gtk-dialog.html">
 <!ENTITY gtk-dialog-action-area              "&api;gtk_fun_gtk-dialog-action-area.html">
@@ -243,7 +276,10 @@
 <!ENTITY gtk-dialog-new-with-buttons         "&api;gtk_fun_gtk-dialog-new-with-buttons.html">
 <!ENTITY gtk-dialog-run                      "&api;gtk_fun_gtk-dialog-run.html">
 
-<!ENTITY gtk-drawing-area                    "&api;gtk_class_gtk-drawing-area.html">
+<!ENTITY gtk-drawing-area
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-drawing-area.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-drawing-area</code></ulink>">
 
 <!ENTITY gtk-editable                        "&api;gtk_class_gtk-editable.html">
 <!ENTITY gtk-editable-editable               "&api;gtk_fun_gtk-editable-editable.html">
@@ -297,28 +333,42 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-grid.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-grid</code></ulink>">
-
 <!ENTITY gtk_grid_column-homogeneous
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-homogeneous'>
           <code xmlns='http://docbook.org/ns/docbook'>column-homogeneous</code></ulink>">
-
-<!ENTITY gtk_grid_column-spacing             "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-spacing">
-
+<!ENTITY gtk_grid_column-spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-column-spacing'>
+          <code xmlns='http://docbook.org/ns/docbook'>column-spacing</code></ulink>">
 <!ENTITY gtk_grid_row-homogeneous
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-homogeneous'>
           <code xmlns='http://docbook.org/ns/docbook'>row-homogeneous</code></ulink>">
-
-<!ENTITY gtk_grid_row-spacing                "&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-spacing">
+<!ENTITY gtk_grid_row-spacing
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-spacing'>
+          <code xmlns='http://docbook.org/ns/docbook'>row-spacing</code></ulink>">
 
 <!ENTITY gtk-icon-view                       "&api;gtk_class_gtk-icon-view.html">
 
-<!ENTITY gtk-image                           "&api;gtk_class_gtk-image.html">
-<!ENTITY gtk-image-new-from-file             "&api;gtk_fun_gtk-image-new-from-file.html">
-<!ENTITY gtk-image-new-from-pixbuf           "&api;gtk_fun_gtk-image-new-from-pixbuf.html">
+<!ENTITY gtk-image
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-image.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-image</code></ulink>">
+<!ENTITY gtk-image-new-from-file
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-image-new-from-file.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-image-new-from-file</code></ulink>">
+<!ENTITY gtk-image-new-from-pixbuf
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-image-new-from-pixbuf.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-image-new-from-pixbuf</code></ulink>">
 
-<!ENTITY gtk-image-menu-item                 "&api;gtk_class_gtk-image-menu-item.html">
+<!ENTITY gtk-image-menu-item
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-image-menu-item.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-image-menu-item</code></ulink>">
 
 <!ENTITY gtk-info-bar                        "&api;gtk_class_gtk-info-bar.html">
 <!ENTITY gtk-info-bar-content-area           "&api;gtk_fun_gtk-info-bar-content-area.html">
@@ -355,12 +405,30 @@
 <!ENTITY gtk-layout-put                      "&api;gtk_fun_gtk-layout-put.html">
 <!ENTITY gtk-layout-size                     "&api;gtk_fun_gtk-layout-size.html">
 
-<!ENTITY gtk-link-button                     "&api;gtk_class_gtk-link-button.html">
-<!ENTITY gtk_link_button_uri                 "&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-uri">
-<!ENTITY gtk_link_button_visited             "&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-visited">
-<!ENTITY gtk-link-button-new                 "&api;gtk_fun_gtk-link-button-new.html">
-<!ENTITY gtk-link-button-new-with-label      "&api;gtk_fun_gtk-link-button-new-with-label.html">
-<!ENTITY gtk-link-button-uri                 "&api;gtk_fun_gtk-link-button-uri.html">
+<!ENTITY gtk-link-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-link-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-link-button</code></ulink>">
+<!ENTITY gtk_link_button_uri
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-uri'>
+          <code xmlns='http://docbook.org/ns/docbook'>uri</code></ulink>">
+<!ENTITY gtk_link_button_visited
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-link-button.html#gtk_slot_gtk-link-button-visited'>
+          <code xmlns='http://docbook.org/ns/docbook'>visited</code></ulink>">
+<!ENTITY gtk-link-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-link-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-link-button-new</code></ulink>">
+<!ENTITY gtk-link-button-new-with-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-link-button-new-with-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-link-button-new-with-label</code></ulink>">
+<!ENTITY gtk-link-button-uri
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-link-button-uri.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-link-button-uri</code></ulink>">
 
 <!ENTITY gtk-list-store                      "&api;gtk_class_gtk-list-store.html">
 <!ENTITY gtk-list-store-append               "&api;gtk_fun_gtk-list-store-append.html">
@@ -451,24 +519,53 @@
 <!ENTITY gtk-progress-bar-pulse-step         "&api;gtk_fun_gtk-progress-bar-pulse-step.html">
 <!ENTITY gtk-progress-bar-text               "&api;gtk_fun_gtk-progress-bar-text.html">
 
-<!ENTITY gtk-radio-button                    "&api;gtk_class_gtk-radio-button.html">
-<!ENTITY gtk-radio-button-new                "&api;gtk_fun_gtk-radio-button-new.html">
-<!ENTITY gtk-radio-button-new-with-label     "&api;gtk_fun_gtk-radio-button-new-with-label.html">
-<!ENTITY gtk-radio-button-new-with-mnemonic  "&api;gtk_fun_gtk-radio-button-new-with-mnemonic.html">
+<!ENTITY gtk-radio-action
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-radio-action.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-action</code></ulink>">
 
-<!ENTITY gtk-radio-button-new-from-widget    "&api;gtk_fun_gtk-radio-button-new-from-widget.html">
+<!ENTITY gtk-radio-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-radio-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button</code></ulink>">
+<!ENTITY gtk-radio-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new</code></ulink>">
+<!ENTITY gtk-radio-button-new-with-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new-with-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new-with-label</code></ulink>">
+<!ENTITY gtk-radio-button-new-with-mnemonic
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new-with-mnemonic.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new-with-mnemonic</code></ulink>">
+<!ENTITY gtk-radio-button-new-from-widget
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new-from-widget.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new-from-widget</code></ulink>">
 <!ENTITY gtk-radio-button-new-with-label-from-widget
-                                             "&api;gtk_fun_gtk-radio-button-new-with-label-from-widget.html">
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new-with-label-from-widget.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new-label-from-widget</code></ulink>">
 <!ENTITY gtk-radio-button-new-with-mnemonic-from-widget
-                                             "&api;gtk_fun_gtk-radio-button-new-with-mnemonic-from-widget.html">
-<!ENTITY gtk-radio-button-get-group          "&api;gtk_fun_gtk-radio-button-get-group.html">
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-new-with-mnemonic-from-widget.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-new-with-mnemonic-from-widget</code></ulink>">
+<!ENTITY gtk-radio-button-get-group
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-radio-button-get-group.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-button-get-group</code></ulink>">
 
-<!ENTITY gtk-radio-tool-button               "&api;gtk_class_gtk-radio-tool-button.html">
+<!ENTITY gtk-radio-tool-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-radio-tool-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-radio-tool-button</code></ulink>">
 
 <!ENTITY gtk-range                           "&api;gtk_class_gtk-range.html">
 <!ENTITY gtk-range-adjustment                "&api;gtk_fun_gtk-range-adjustment.html">
 
-<!ENTITY gtk-radio-action                    "&api;gtk_class_gtk-radio-action.html">
+
 <!ENTITY gtk-recent-action                   "&api;gtk_class_gtk-recent-action.html">
 
 <!ENTITY gtk-response-type                   "&api;gtk_sym_gtk-response-type.html">
@@ -516,7 +613,11 @@
 <!ENTITY gtk-shadow-type                     "&api;gtk_sym_gtk-shadow-type.html">
 
 <!ENTITY gtk-show-about-dialog               "&api;gtk_fun_gtk-show-about-dialog.html">
-<!ENTITY gtk-show-uri                        "&api;gtk_fun_gtk-show-uri.html">
+
+<!ENTITY gtk-show-uri
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-show-uri.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-show-uri</code></ulink>">
 
 <!ENTITY gtk-spin-button                     "&api;gtk_class_gtk-spin-button.html">
 <!ENTITY gtk-spin-button-adjustment          "&api;gtk_fun_gtk-spin-button-adjustment.html">
@@ -539,12 +640,30 @@
 <!ENTITY gtk-statusbar-push                  "&api;gtk_fun_gtk-statusbar-push.html">
 <!ENTITY gtk-statusbar-remove                "&api;gtk_fun_gtk-statusbar-remove.html">
 
-<!ENTITY gtk-switch                          "&api;gtk_class_gtk-switch.html">
-<!ENTITY gtk_switch_active                   "&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-active">
-<!ENTITY gtk_switch_state                    "&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-state">
-<!ENTITY gtk-switch-active                   "&api;gtk_fun_gtk-switch-active.html">
-<!ENTITY gtk-switch-state                    "&api;gtk_fun_gtk-switch-state.html">
-<!ENTITY gtk-switch-new                      "&api;gtk_fun_gtk-switch-new.html">
+<!ENTITY gtk-switch
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-switch.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-switch</code></ulink>">
+<!ENTITY gtk_switch_active
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-active'>
+          <code xmlns='http://docbook.org/ns/docbook'>active</code></ulink>">
+<!ENTITY gtk_switch_state
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-switch.html#gtk_slot_gtk-switch-state'>
+          <code xmlns='http://docbook.org/ns/docbook'>state</code></ulink>">
+<!ENTITY gtk-switch-active
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-switch-active.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-switch-active</code></ulink>">
+<!ENTITY gtk-switch-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-switch-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-switch-new</code></ulink>">
+<!ENTITY gtk-switch-state
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-switch-state.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-switch-state</code></ulink>">
 
 <!ENTITY gtk-table
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -643,12 +762,30 @@
 
 <!ENTITY gtk-toggle-action                   "&api;gtk_class_gtk-toggle-action.html">
 
-<!ENTITY gtk-toggle-button                   "&api;gtk_class_gtk-toggle-button.html">
-<!ENTITY gtk_toggle_button_active            "&api;gtk_class_gtk-toggle-button.html#gtk_slot_gtk-toggle-button-active">
-<!ENTITY gtk-toggle-button-new               "&api;gtk_fun_gtk-toggle-button-new.html">
-<!ENTITY gtk-toggle-button-new-with-label    "&api;gtk_fun_gtk-toggle-button-new-with-label.html">
-<!ENTITY gtk-toggle-button-new-with-mnemonic "&api;gtk_fun_gtk-toggle-button-new-with-mnemonic.html">
-<!ENTITY gtk-toggle-button-active            "&api;gtk_fun_gtk-toggle-button-active.html">
+<!ENTITY gtk-toggle-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-toggle-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toggle-button</code></ulink>">
+<!ENTITY gtk_toggle_button_active
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-toggle-button.html#gtk_slot_gtk-toggle-button-active'>
+          <code xmlns='http://docbook.org/ns/docbook'>active</code></ulink>">
+<!ENTITY gtk-toggle-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-toggle-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toggle-button-new</code></ulink>">
+<!ENTITY gtk-toggle-button-new-with-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-toggle-button-new-with-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toggle-button-new-with-label</code></ulink>">
+<!ENTITY gtk-toggle-button-new-with-mnemonic
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-toggle-button-new-with-mnemonic.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toggle-button-new-with-mnemonic</code></ulink>">
+<!ENTITY gtk-toggle-button-active
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-toggle-button-active.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toggle-button-active</code></ulink>">
 
 <!ENTITY gtk-toggle-tool-button              "&api;gtk_class_gtk-toggle-tool-button.html">
 
@@ -741,13 +878,34 @@
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-hexpand'>
           <code xmlns='http://docbook.org/ns/docbook'>hexpand</code></ulink>">
 
-<!ENTITY gtk_widget_margin                   "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin">
-<!ENTITY gtk_widget_margin-bottom            "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-bottom">
-<!ENTITY gtk_widget_margin-end               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-end">
-<!ENTITY gtk_widget_margin-left              "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-left">
-<!ENTITY gtk_widget_margin-right             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-right">
-<!ENTITY gtk_widget_margin-start             "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-start">
-<!ENTITY gtk_widget_margin-top               "&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-top">
+<!ENTITY gtk_widget_margin
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin</code></ulink>">
+<!ENTITY gtk_widget_margin-bottom
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-bottom'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-bottom</code></ulink>">
+<!ENTITY gtk_widget_margin-end
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-end'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-end</code></ulink>">
+<!ENTITY gtk_widget_margin-left
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-left'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-left</code></ulink>">
+<!ENTITY gtk_widget_margin-right
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-right'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-right</code></ulink>">
+<!ENTITY gtk_widget_margin-start
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-start'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-start</code></ulink>">
+<!ENTITY gtk_widget_margin-top
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-top'>
+          <code xmlns='http://docbook.org/ns/docbook'>margin-top</code></ulink>">
 
 <!ENTITY gtk_widget_valign
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -762,7 +920,12 @@
 <!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
 <!ENTITY gtk-widget-allocation               "&api;gtk_fun_gtk-widget-allocation.html">
 <!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">
-<!ENTITY gtk-widget-queue-draw               "&api;gtk_fun_gtk-widget-queue-draw.html">
+
+<!ENTITY gtk-widget-queue-draw
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-queue-draw.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-queue-draw</code></ulink>">
+
 <!ENTITY gtk-widget-realize                  "&api;gtk_fun_gtk-widget-realize.html">
 
 <!ENTITY gtk-widget-show

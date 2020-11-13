@@ -388,21 +388,19 @@ int main (int argc, char *argv[])
     the following way in the Lisp library as the function <code>(setf gtk-window-default-size)</code>:
    </para>
    <programlisting>
-(defgeneric (setf gtk-window-default-size) (size window)
-  (:method (size (window gtk-window))
-    (destructuring-bind (width height) size
-      (values (setf (gtk-window-default-width window) width)
-              (setf (gtk-window-default-height window) height)))))
+(defun (setf gtk-window-default-size) (size window)
+  (destructuring-bind (width height) size
+     (values (setf (gtk-window-default-width window) width)
+             (setf (gtk-window-default-height window) height))))
    </programlisting>
    <para>
     As a second example the Lisp implementation of the C function <code>gtk_window_get_default_size()</code>
     is shown:
    </para>
    <programlisting>
-(defgeneric gtk-window-default-size (window)
-  (:method ((window gtk-window))
-    (values (gtk-window-default-width window)
-            (gtk-window-default-height window))))
+(defun gtk-window-default-size (window)
+  (values (gtk-window-default-width window)
+          (gtk-window-default-height window)))
    </programlisting>
    <para>
     In distinction to the C function <code>gtk_window_get_default_size()</code>, which is implemented as
@@ -546,25 +544,23 @@ int main( int argc, char *argv[] )
    </example>
    <para>
     Now, the Lisp implementation is presented in example <link linkend="example-hello-world">
-    Hello World</link>.  One difference is, that the function <code>make-instance</code> is used to create
-    the window and the button.  Another point is, that the definition of separate callback functions is
-    avoided.  The callback functions are short, implemented through Lisp <code>lambda</code> functions and
+    Hello World</link>. One difference is, that the function <code>make-instance</code> is used to create
+    the window and the button. Another point is, that the definition of separate callback functions is
+    avoided. The callback functions are short, implemented through Lisp <code>lambda</code> functions and
     are passed as the third argument to the function &g-signal-connect;.
     More about signals and callback functions follows in
     <link linkend="Introduction_to_Signals_and_Callbacks">Indroduction to Signals and Callbacks</link>.
    </para>
    <para>
     In example <link linkend="example-hello-world">Hello World</link> a border with a width of 12 is added
-    to the window setting the property <ulink url="&gtk_container_border-width;">
-    <code>border-width</code></ulink> when creating the window with the function <code>make-instance</code>.
-    The C implementation uses the function <code>gtk_container_set_border_width()</code> which is available
-    in Lisp as the accessor <ulink url="&gtk-container-border-width;">
-    <code>gtk-container-border-width</code></ulink>. The property <ulink url="&gtk_container_border-width;">
-    <code>border-width</code></ulink> is inherited from the C class <code>GtkContainer</code>, which in the
-    Lisp library is represented through the Lisp class &gtk-container;. Therefore, the accessor function has
-    the prefix
-    <code>gtk_container</code> in C and <code>gtk-container</code> in Lisp.  A full list of properties of
-    <code>GtkContainer</code> is available at &gtk-container;.
+    to the window setting the property &gtk_container_border-width; when creating the window with the
+    function <code>make-instance</code>. The C implementation uses the function
+    <code>gtk_container_set_border_width()</code> which is available in Lisp as the accessor
+    &gtk-container-border-width;. The property &gtk_container_border-width; is inherited from the C class
+    <code>GtkContainer</code>, which in the Lisp library is represented through the Lisp class
+    &gtk-container;. Therefore, the accessor function has the prefix <code>gtk_container</code> in C and
+    <code>gtk-container</code> in Lisp. A full list of properties of <code>GtkContainer</code> is available
+    in the &gtk-container; documentation.
    </para>
    <example id="example-hello-world">
     <title>Hello World in the programming language Lisp</title>
@@ -603,57 +599,50 @@ int main( int argc, char *argv[] )
     </programlisting>
    </example>
    <para>
-    An attentive reader notes that in distinction to the C implementation the function
-    &gtk-widget-show; is not called for every single
-    widget, which are in example <link linkend="example-hello-world">Hello World</link> the window and the
-    button.  Instead the function &gtk-widget-show-all;
-    is used to display the window with all including widgets.
+    An attentive reader notes that in distinction to the C implementation the function &gtk-widget-show; is
+    not called for every single widget, which are in example <link linkend="example-hello-world">
+    Hello World</link> the window and the button. Instead the function &gtk-widget-show-all; is used to
+    display the window with all including widgets.
    </para>
    <para>
     Three more functions are introduced in example <link linkend="example-hello-world">Hello World</link>.
     The function <ulink url="&gtk-widget-destroy;"><code>gtk-widget-destroy</code></ulink> takes as an
-    argument any widget and destroys it.  In the above example this function is called by the signal handler
-    of the button.  When the button is clicked by the user, the signal "clicked" is catched by the signal
+    argument any widget and destroys it. In the above example this function is called by the signal handler
+    of the button. When the button is clicked by the user, the signal "clicked" is catched by the signal
     handler, which causes a call of the function <ulink url="&gtk-widget-destroy;">
-    <code>gtk-widget-destroy</code></ulink> for the toplevel window.  Now the toplevel window receives the
-    signal "destroy", which is handled by a signal handler of the toplevel window.  This signal handler
-    calls the function &leave-gtk-main;, which stops the
-    event loop and finishes the application.
+    <code>gtk-widget-destroy</code></ulink> for the toplevel window. Now the toplevel window receives the
+    signal "destroy", which is handled by a signal handler of the toplevel window. This signal handler
+    calls the function &leave-gtk-main;, which stops the event loop and finishes the application.
    </para>
    <para>
-    A second signal handler is connected to the toplevel window to catch the signal "delete-event".  The
-    signal "delete-event" occurs, when the user or the window manager tries to close the window.  In this
-    case, the signal handler prints a message on the console.   Because the value of the constant
+    A second signal handler is connected to the toplevel window to catch the signal "delete-event". The
+    signal "delete-event" occurs, when the user or the window manager tries to close the window. In this
+    case, the signal handler prints a message on the console. Because the value of the constant
     <ulink url="&gdk-event-stop;"><code>+gdk-event-stop+</code></ulink> is <emphasis>true</emphasis> the
     signal handler stops the handling of the signal and the window is not closed, but the execution of the
-    application is continued.  To close the window, the user has to press the button in this example.  There
+    application is continued. To close the window, the user has to press the button in this example. There
     is a second constant <ulink url="&gdk-event-propagate;"><code>+gdk-event-propagate+</code></ulink> which
-    is used to make sure that the propagation of the event is continued.  At last, the function
-    &gtk-container-add; is used to put the button into
-    the toplevel window.  The section <link linkend="Packing_Widgets"> Packing Widgets</link> shows how it
-    is possible to put more than one widget into a window.
+    is used to make sure that the propagation of the event is continued. At last, the function
+    &gtk-container-add; is used to put the button into the toplevel window. The section
+    <link linkend="Packing_Widgets"> Packing Widgets</link> shows how it is possible to put more than one
+    widget into a window.
    </para>
   </section>
 
   <section id="Introduction_to_Signals_and_Callbacks">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Introduction_to_Signals_and_Callbacks"><primary>signal-connect, g-signal-connect</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Introduction to Signals and Callbacks</title>
    <para>
     GTK+ is an event driven toolkit, which means GTK+ will sleep until an event occurs and control is passed
-    to the appropriate function.  This passing of control is done using the idea of "signals".  (Note that
+    to the appropriate function. This passing of control is done using the idea of "signals". (Note that
     these signals are not the same as the Unix system signals, and are not implemented using them, although
-    the terminology is almost identical.)  When an event occurs, such as the press of a mouse button, the
-    appropriate signal will be "emitted" by the widget that was pressed.  This is how GTK+ does most of its
-    useful work.  There are signals that all widgets inherit, such as "destroy", and there are signals that
+    the terminology is almost identical.) When an event occurs, such as the press of a mouse button, the
+    appropriate signal will be "emitted" by the widget that was pressed. This is how GTK+ does most of its
+    useful work. There are signals that all widgets inherit, such as "destroy", and there are signals that
     are widget specific, such as "toggled" on a toggle button.
    </para>
    <para>
     To make a button perform an action, a signal handler is set up to catch these signals and to call the
-    appropriate function.  This is done in the C GTK+ library by using a function such as
+    appropriate function. This is done in the C GTK+ library by using a function such as
    </para>
    <programlisting>
 gulong g_signal_connect( gpointer      *object,
@@ -663,7 +652,7 @@ gulong g_signal_connect( gpointer      *object,
    </programlisting>
    <para>
     where the first argument is the widget which will be emitting the signal, and the second the name of the
-    signal to catch.  The third is the function to be called when the signal is caught, and the fourth, the
+    signal to catch. The third is the function to be called when the signal is caught, and the fourth, the
     data to have passed to this function.
    </para>
    <para>
@@ -682,12 +671,10 @@ void callback_func( GtkWidget *widget,
     widget specific signals generate different calling parameters.
    </para>
    <para>
-    This mechanism is realized in Lisp with a similar function &g-signal-connect;
-    which has the arguments <code>widget</code>, <code>name</code>,
-    and <code>func</code>.  In distinction from C the Lisp function &g-signal-connect;
-    has not the argument <code>func_data</code>.  The functionality of
-    passing data to a callback function can be realized with the help of a <code>lambda</code> function in
-    Lisp.
+    This mechanism is realized in Lisp with a similar function &g-signal-connect; which has the arguments
+    <code>widget</code>, <code>name</code>, and <code>func</code>. In distinction from C the Lisp function
+    &g-signal-connect; has not the argument <code>func_data</code>. The functionality of passing data to a
+    callback function can be realized with the help of a <code>lambda</code> function in Lisp.
    </para>
    <para>
     As an example the following code shows a typical C implementation which is used in the Hello World
@@ -737,12 +724,6 @@ static void destroy (GtkWidget *widget, gpointer data)
   </section>
 
   <section id="Upgraded_Hello_World">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Upgraded_Hello_World"><primary>:horizontal</primary></indexterm>
-     <indexterm zone="Upgraded_Hello_World"><primary>box-new, gtk-box-new</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Upgraded Hello World</title>
    <figure id="figure-upgraded-hello-world">
     <title>Upgraded Hello World</title>
@@ -755,7 +736,7 @@ static void destroy (GtkWidget *widget, gpointer data)
    <para>
     Figure <link linkend="figure-upgraded-hello-world">Upgraded Hello World</link> and example
     <link linkend="example-upgraded-hello-world">Upraded Hello World</link> show a slightly improved Hello
-    World with better examples of callbacks.  This will also introduce the next topic, packing widgets.
+    World with better examples of callbacks. This will also introduce the next topic, packing widgets.
     First, the C program is shown in example <link linkend="example-upgraded-hello-world-c">
     Upgraded Hello World in C</link>.
    </para>
@@ -857,23 +838,20 @@ int main( int argc, char *argv[] )
    </example>
    <para>
     The Lisp implementation in example <link linkend="example-upgraded-hello-world">
-    Upgraded Hello World</link> tries to be close to the C program.  Therefore, the window and the box are
-    created with the functions &gtk-window-new; and
-    &gtk-box-new;.  Various properties like the title of the
+    Upgraded Hello World</link> tries to be close to the C program. Therefore, the window and the box are
+    created with the functions &gtk-window-new; and &gtk-box-new;. Various properties like the title of the
     window, the default size or the border width are set with the functions &gtk-window-title;,
-    &gtk-window-default-size; and <ulink url="&gtk-container-border-width;">
-    <code>gtk-container-border-width</code></ulink>.  As described for the example
-    <link linkend="example-hello-world">Hello World</link> the function &gtk-widget-show-all;
-    is used to display the window including all child widgets.
+    &gtk-window-default-size; and &gtk-container-border-width;. As described for the example
+    <link linkend="example-hello-world">Hello World</link> the function &gtk-widget-show-all; is used to
+    display the window including all child widgets.
    </para>
    <para>
-    One main difference of the Lisp implementation is the use of the function &gtk-box-new;
-    with an argument <code>:horizontal</code> to create a horizontal box.
-    The <code>GtkHBox</code> widget which is used in the
+    One main difference of the Lisp implementation is the use of the function &gtk-box-new; with an argument
+    <code>:horizontal</code> to create a horizontal box. The <code>GtkHBox</code> widget which is used in the
     <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html">
     GTK+ 3 Reference Manual</ulink> is deprecated and is replaced by <code>GtkBox</code> with the property
-    &gtk_orientable_orientation;.  More about boxes and their
-    usages follows in <link linkend="Packing_Widgets">Packing Widgets</link>.
+    &gtk_orientable_orientation;. More about boxes and their usages follows in section
+    <link linkend="Packing_Widgets"> Packing Widgets</link>.
    </para>
    <example id="example-upgraded-hello-world">
     <title>Upgraded Hello World in the programming language C</title>
@@ -908,16 +886,14 @@ int main( int argc, char *argv[] )
    </example>
    <para>
     The second implementation in example <link linkend="example-upgraded-hello-world-2">
-    Upgraded Hello World</link> makes more use of a Lisp style.  The window is created with the Lisp
-    function <code>make-instance</code>.  All desired properties of the window are initialized by assigning
-    values to the slots of the classes &gtk-window; and
-    &gtk-box;.  The Lisp implementation uses a lot keywords
-    arguments with default values for long lists of arguments.  In example
+    Upgraded Hello World</link> makes more use of a Lisp style. The window is created with the Lisp function
+    <code>make-instance</code>. All desired properties of the window are initialized by assigning values to
+    the slots of the classes &gtk-window; and &gtk-box;. The Lisp implementation uses a lot keywords
+    arguments with default values for long lists of arguments. In example
     <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> the keyword arguments
     <code>expand</code>, <code>fill</code>, and <code>padding</code> of the function "&gtk-box-pack-start;
-    take their default values.
-    In future examples of this tutorial the style shown in example
-    <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> is preferred.  Furthermore,
+    take their default values. In future examples of this tutorial the style shown in example
+    <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> is preferred. Furthermore,
     the C code is no longer presented for comparison.
    </para>
    <example id="example-upgraded-hello-world-2">
@@ -954,15 +930,9 @@ int main( int argc, char *argv[] )
       (gtk-widget-show-all window))))
     </programlisting>
    </example>
-
   </section>
+
   <section id="Drawing_in_response_to_input">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Drawing_in_response_to_input"><primary>drawing-area, gtk-drawing-area</primary></indexterm>
-     <indexterm zone="Drawing_in_response_to_input"><primary>widget-queue-draw, gtk-widget-queue-draw</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Drawing in response to input</title>
    <figure id="figure-drawing">
     <title>Drawing in response to input</title>
@@ -973,23 +943,21 @@ int main( int argc, char *argv[] )
     </mediaobject>
    </figure>
    <para>
-    Many widgets, like buttons, do all their drawing themselves.  You just tell them the label you want to
-    see, and they figure out what font to use, draw the button outline and focus rectangle, etc.  Sometimes,
-    it is necessary to do some custom drawing.  In that case, a <ulink url="&gtk-drawing-area;">
-    <code>gtk-drawing-area</code></ulink> might be the right widget to use.  It offers a canvas on which you
-    can draw by connecting to the "draw" signal.
+    Many widgets, like buttons, do all their drawing themselves. You just tell them the label you want to
+    see, and they figure out what font to use, draw the button outline and focus rectangle, etc. Sometimes,
+    it is necessary to do some custom drawing. In that case, a &gtk-drawing-area; might be the right widget
+    to use. It offers a canvas on which you can draw by connecting to the "draw" signal.
    </para>
    <para>
     The contents of a widget often need to be partially or fully redrawn, e. g. when another window is moved
-    and uncovers part of the widget, or when the window containing it is resized.  It is also possible to
-    explicitly cause part or all of the widget to be redrawn, by calling the function
-    <ulink url="&gtk-widget-queue-draw;"><code>gtk-widget-queue-draw</code></ulink> or its variants.  GTK+
-    takes care of most of the details by providing a ready-to-use cairo context to the "draw" signal handler.
+    and uncovers part of the widget, or when the window containing it is resized. It is also possible to
+    explicitly cause part or all of the widget to be redrawn, by calling the function &gtk-widget-queue-draw;
+    or its variants. GTK+ takes care of most of the details by providing a ready-to-use cairo context to the
+    "draw" signal handler.
    </para>
    <para>
-    The following example shows a "draw" signal handler.  It is a more complicated than the previous
-    examples, since it also demonstrates input event handling by means of "button-press" and "motion-notify"
-    handlers.
+    The following example shows a "draw" signal handler. It is a more complicated than the previous examples,
+    since it also demonstrates input event handling by means of "button-press" and "motion-notify" handlers.
    </para>
    <example id="example-drawing">
     <title>Drawing in response to input</title>
@@ -1430,7 +1398,7 @@ int main( int argc, char *argv[] )
     <tgroup cols='2' align='left' colsep='0' rowsep='0'>
      <thead>
       <row>
-       <entry>Argument</entry>
+       <entry>Argument&#x2003;&#x2003;&#x2003;</entry>
        <entry>Description</entry>
       </row>
      </thead>
@@ -1695,8 +1663,8 @@ int main( int argc, char *argv[] )
    <section id="GtkBox_versus_GtkGrid_packing">
     <title>GtkBox versus GtkGrid - packing</title>
     <para>
-     &gtk-box; works by arranging child widgets in a single line, either horizontally or vertically. It allows
-     packing children from the beginning or end, using &gtk-box-pack-start; and &gtk-box-pack-end;.
+     &gtk-box; works by arranging child widgets in a single line, either horizontally or vertically. It
+     allows packing children from the beginning or end, using &gtk-box-pack-start; and &gtk-box-pack-end;.
     </para>
     <para>
      The following code creates a simple box with two labels:
@@ -1729,10 +1697,10 @@ int main( int argc, char *argv[] )
     </para>
     <para>
      One difference to keep in mind is that the &gtk-box-pack-start; and &gtk-box-pack-end; functions allow
-     you to place an arbitrary number of children from either end without ever 'colliding in the middle'. With
-     &gtk-grid;, you have to leave enough space between the two ends, if you want to combine packing from both
-     ends towards the middle. In practice, this should be easy to avoid; and &gtk-grid; simply ignores
-     entirely empty rows or columns for layout and spacing.
+     you to place an arbitrary number of children from either end without ever 'colliding in the middle'.
+     With &gtk-grid;, you have to leave enough space between the two ends, if you want to combine packing
+     from both ends towards the middle. In practice, this should be easy to avoid; and &gtk-grid; simply
+     ignores entirely empty rows or columns for layout and spacing.
     </para>
     <para>
      On the other hand, &gtk-grid; is more flexible in that its grid extends indefinitively in both directions
@@ -1764,9 +1732,9 @@ int main( int argc, char *argv[] )
     </para>
     <para>
      To replace the functionality of the <code>fill</code> child properties, you can set the
-     &gtk_widget_halign; and &gtk_widget_valign; properties. An align value of <code>:fill</code> has the same
-     effect as setting <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code> has the
-     same effect as setting <code>fill</code> to <code>nil</code>.
+     &gtk_widget_halign; and &gtk_widget_valign; properties. An align value of <code>:fill</code> has the
+     same effect as setting <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code>
+     has the same effect as setting <code>fill</code> to <code>nil</code>.
     </para>
     <para>
      Expansion and alignment with &gtk-box;:
@@ -1795,13 +1763,12 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     One difference between the new &gtk-widget; expand
-     properties and the &gtk-box; child property of the same name is that widget expandability is 'inherited'
-     from children. What this means is that a container will become itself expanding as soon as it has an
-     expanding child. This is typically what you want, it lets you e.g. mark the content pane of your
-     application window as expanding, and all the intermediate containers between the content pane and the
-     toplevel window will automatically do the right thing. This automatism can be overridden at any point by
-     setting the expand flags on a container explicitly.
+     One difference between the new &gtk-widget; expand properties and the &gtk-box; child property of the
+     same name is that widget expandability is 'inherited' from children. What this means is that a container
+     will become itself expanding as soon as it has an expanding child. This is typically what you want, it
+     lets you e.g. mark the content pane of your application window as expanding, and all the intermediate
+     containers between the content pane and the toplevel window will automatically do the right thing. This
+     automatism can be overridden at any point by setting the expand flags on a container explicitly.
     </para>
     <para>
      Another difference between &gtk-box; and &gtk-grid; with respect to expandability is when there are no
@@ -1821,28 +1788,21 @@ int main( int argc, char *argv[] )
    <section id="GtkBox_versus_GtkGrid_spacing">
     <title>GtkBox versus GtkGrid - spacing</title>
     <para>
-     With &gtk-box;, you have to specify the "spacing" when you
-     construct it.  This property specifies the space that separates the children from each other.
-     Additionally, you can specify extra space to put around each child individually, using the
-     <code>padding</code> child property.
+     With &gtk-box;, you have to specify the "spacing" when you construct it. This property specifies the
+     space that separates the children from each other. Additionally, you can specify extra space to put
+     around each child individually, using the <code>padding</code> child property.
     </para>
     <para>
-     &gtk-grid; is very similar when it comes to spacing between
-     the children, except that it has two separate properties, <ulink url="&gtk_grid_row-spacing;">
-     <code>row-spacing</code></ulink> and <ulink url="&gtk_grid_column-spacing;">
-     <code>column-spacing</code></ulink>, for the space to leave between rows and columns.  Note that
-     <ulink url="&gtk_grid_row-spacing;"><code>row-spacing</code></ulink> is the space between rows, not
-     inside a row.  So, if you doing a horizontal layout, you need to set
-     <ulink url="&gtk_grid_column-spacing;"><code>column-spacing</code></ulink>.
+     &gtk-grid; is very similar when it comes to spacing between the children, except that it has two separate
+     properties, &gtk_grid_row-spacing; and &gtk_grid_column-spacing;, for the space to leave between rows and
+     columns. Note that &gtk_grid_row-spacing; is the space between rows, not inside a row. So, if you doing
+     a horizontal layout, you need to set &gtk_grid_column-spacing;.
     </para>
     <para>
-     &gtk-grid; does not have any custom child properties to
-     specify per-child padding; instead you can use the <ulink url="&gtk_widget_margin;">
-     <code>margin</code></ulink> property.  You can also set different padding on each side with the
-     <ulink url="&gtk_widget_margin-start;"><code>margin-start</code></ulink>,
-     <ulink url="&gtk_widget_margin-end;"><code>margin-end</code></ulink>,
-     <ulink url="&gtk_widget_margin-top;"><code>margin-top</code></ulink> and
-     <ulink url="&gtk_widget_margin-bottom;"><code>margin-bottom</code></ulink> properties.
+     &gtk-grid; does not have any custom child properties to specify per-child padding; instead you can use
+     the &gtk_widget_margin; property. You can also set different padding on each side with the
+     &gtk_widget_margin-start;, &gtk_widget_margin-end;, &gtk_widget_margin-top; and
+     &gtk_widget_margin-bottom; properties.
     </para>
     <para>
      Example with spacing in boxes:
@@ -1871,11 +1831,11 @@ int main( int argc, char *argv[] )
    <title>Grid Packing Examples</title>
    <para>
     We repeat the implementation of the example <link linkend="example-box-packing">Box Packing</link> and
-    the example <link linkend="example-table-packing">Table Packing</link> using <code>GtkGrid</code>.  The
+    the example <link linkend="example-table-packing">Table Packing</link> using <code>GtkGrid</code>. The
     first example <link linkend="example-grid-packing">Grid Packing</link> shows how to replace
-    &gtk-box; with &gtk-grid; to create vertical and horizontal boxes.  In the second example
+    &gtk-box; with &gtk-grid; to create vertical and horizontal boxes. In the second example
     <link linkend="example-grid-packing-2">Grid Packing</link> &gtk-table; is replaced with &gtk-grid;.
-    See the figure <link linkend="figure-box-packing">Box Packing</link> and
+    See the figures <link linkend="figure-box-packing">Box Packing</link> and
     <link linkend="figure-table-packing">Table Packing</link> for the output of the example programs.
    </para>
    <example id="example-grid-packing">
@@ -2023,30 +1983,15 @@ int main( int argc, char *argv[] )
  <chapter id="Button_Widgets">
   <title>Button Widgets</title>
   <section id="Normal_Buttons">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Normal_Buttons"><primary>GtkButton</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>button-new, gtk-button-new</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>button-new-with-label, gtk-button-new-with-label</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>button-new-with-mnemonic, gtk-button-new-with-mnemonic</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>button-new-from-stock, gtk-button-new-from-stock</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>image-new-from-file, gtk-image-new-from-file</primary></indexterm>
-     <indexterm zone="Normal_Buttons"><primary>settings-gtk-button-images, gtk-settings-gtk-button-images</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Normal Buttons</title>
    <para>
-    We have almost seen all there is to see of the button widget, which is represented by the
-    <ulink url="&gtk-button;"><code>gtk-button</code></ulink> class.  The button widget is pretty simple.
-    There is however more than one way to create a button.  You can use the the function
-    <ulink url="&gtk-button-new-with-label;"><code>gtk-button-new-with-label</code></ulink> or the function
-    <ulink url="&gtk-button-new-with-mnemonic;"><code>gtk-button-new-with-mnemonic</code></ulink> to create
-    a button with a label, use <ulink url="&gtk-button-new-from-stock;">
-    <code>gtk-button-new-from-stock</code></ulink> to create a button containing the image and text from a
-    stock item or use <ulink url="&gtk-button-new;"><code>gtk-button-new</code></ulink> to create a blank
-    button.  It is then up to you to pack a label or pixmap into this new button. To do this, create a new
-    box, and then pack your objects into this box using the function &gtk-box-pack-start;, and then use the
-    function &gtk-container-add; to pack the box
+    We have almost seen all there is to see of the button widget, which is represented by the &gtk-button;
+    class. The button widget is pretty simple. There is however more than one way to create a button. You can
+    use the the function &gtk-button-new-with-label; or the function &gtk-button-new-with-mnemonic; to create
+    a button with a label, use &gtk-button-new-from-stock; to create a button containing the image and text
+    from a stock item or use &gtk-button-new; to create a blank button. It is then up to you to pack a label
+    or pixmap into this new button. To do this, create a new box, and then pack your objects into this box
+    using the function &gtk-box-pack-start;, and then use the function &gtk-container-add; to pack the box
     into the button.
    </para>
    <figure id="figure-button">
@@ -2058,23 +2003,22 @@ int main( int argc, char *argv[] )
     </mediaobject>
    </figure>
    <para>
-    The figure <link linkend="figure-button">Button</link> is an example of using
-    <ulink url="&gtk-button-new;"><code>gtk-button-new</code></ulink> to create a button with an image and a
-    label in it.  The image is loaded from a file with the function
-    <ulink url="&gtk-image-new-from-file;"><code>gtk-image-new-from-file</code></ulink>.  The code to create
-    a box is shown in the example <link linkend="example-image-label-box">Image Label Box</link> and breaken
-    up from the rest so you can use it in your programs.  The main program which uses this subroutine is
-    shown in the example <link linkend="example-button">Button</link>.
+    The figure <link linkend="figure-button">Button</link> is an example of using &gtk-button-new; to create
+    a button with an image and a label in it. The image is loaded from a file with the function
+    &gtk-image-new-from-file;. The code to create a box is shown in the example
+    <link linkend="example-image-label-box">Image Label Box</link> and breaken up from the rest so you can
+    use it in your programs. The main program which uses this subroutine is shown in the example
+    <link linkend="example-button">Button</link>.
    </para>
    <para>
-    The <code>image-label-box</code> function could be used to pack images and labels into any widget that
+    The function <code>image-label-box</code> could be used to pack images and labels into any widget that
     can be a container.
    </para>
    <para>
     The figure <link linkend="figure-buttons">Buttons</link> shows more buttons, which are created with
-    standard functions and with the function <code>make-instance</code>.  To get buttons which show both a
+    standard functions and with the function <code>make-instance</code>. To get buttons which show both a
     label and an image the global setting of the property <code>gtk-button-images</code> has to be set to the
-    value <code>T</code>.  The code of the figure <link linkend="figure-buttons">Buttons</link> is shown in
+    value <code>T</code>. The code of the figure <link linkend="figure-buttons">Buttons</link> is shown in
     example <link linkend="example-buttons">Buttons</link>.
    </para>
    <example id="example-button">
@@ -2187,43 +2131,28 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Toggle_Buttons">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Toggle_Buttons"><primary>GtkToggleButton</primary></indexterm>
-     <indexterm zone="Toggle_Buttons"><primary>toggle-button, gtk-toggle-button</primary></indexterm>
-     <indexterm zone="Toggle_Buttons"><primary>toggle-button-new, gtk-toggle-button-new</primary></indexterm>
-     <indexterm zone="Toggle_Buttons"><primary>toggle-button-new-with-label, gtk-toggle-button-new-with-label</primary></indexterm>
-     <indexterm zone="Toggle_Buttons"><primary>toggle-button-new-with-mnemonic, gtk-toggle-button-new-with-mnemonic</primary></indexterm>
-     <indexterm zone="Toggle_Buttons"><primary>toggle-button-active, gtk-toggle-button-active</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Toggle Buttons</title>
    <para>
     Toggle buttons are derived from normal buttons and are very similar, except toggle buttons always are in
-    one of two states, alternated by a click.  Toggle buttons can be depressed, and when clicked again, the
-    toggle button will pop back up.  Toggle buttons are the basis for check buttons and radio buttons, as
+    one of two states, alternated by a click. Toggle buttons can be depressed, and when clicked again, the
+    toggle button will pop back up. Toggle buttons are the basis for check buttons and radio buttons, as
     such, many of the calls used for toggle buttons are inherited by radio and check buttons.
    </para>
    <para>
     Beside <code>make-instance</code>, toggle buttons can be created with the functions
-    <ulink url="&gtk-toggle-button-new;"><code>gtk-toggle-button-new</code></ulink>,
-    <ulink url="&gtk-toggle-button-new-with-label;"><code>gtk-toggle-button-new-with-label</code></ulink>,
-    and <ulink url="&gtk-toggle-button-new-with-mnemonic;">
-    <code>gtk-toggle-button-new-with-mnemonic</code></ulink>.  The first function creates a blank toggle
-    button, and the last two functions, a toggle button with a label widget already packed into it.  The
-    <ulink url="&gtk-toggle-button-new-with-mnemonic;">
-    <code>gtk-toggle-button-new-with-mnemonic</code></ulink> variant additionally parses the label for
-    '_'-prefixed mnemonic characters.
+    &gtk-toggle-button-new;, &gtk-toggle-button-new-with-label;, and &gtk-toggle-button-new-with-mnemonic;.
+    The first function creates a blank toggle button, and the last two functions, a toggle button with a
+    label widget already packed into it. The &gtk-toggle-button-new-with-mnemonic; variant additionally
+    parses the label for '_'-prefixed mnemonic characters.
    </para>
    <para>
     To retrieve the state of the toggle widget, including radio and check buttons, a construct as shown in
-    the example below is used.  This tests the state of the toggle button, by accessing the active field of
-    the toggle widget's structure with the function <ulink url="&gtk-toggle-button-active;">
-    <code>gtk-toggle-button-active</code></ulink>.  The signal of interest to us emitted by toggle buttons
-    (the toggle button check button, and radio button widgets) is the "toggled" signal.  To check the state
-    of these buttons, set up a signal handler to catch the toggled signal, and access the property
-    <ulink url="&gtk_toggle_button_active;"><code>active</code></ulink> to determine the state of the button.
-    A signal handler will look something like:
+    the example below is used. This tests the state of the toggle button, by accessing the active field of
+    the toggle widget's structure with the function &gtk-toggle-button-active;. The signal of interest to us
+    emitted by toggle buttons (the toggle button check button, and radio button widgets) is the "toggled"
+    signal. To check the state of these buttons, set up a signal handler to catch the toggled signal, and
+    access the property &gtk_toggle_button_active; to determine the state of the button. A signal handler
+    will look something like:
    </para>
    <programlisting>
 (g-signal-connect button "toggled"
@@ -2238,18 +2167,16 @@ int main( int argc, char *argv[] )
    </programlisting>
    <para>
     To force the state of a toggle button, and its children, the radio and check buttons, use this function
-    <ulink url="&gtk-toggle-button-active;"><code>gtk-toggle-button-active</code></ulink>.  This function
-    can be used to set the state of the toggle button, and its children the radio and check buttons.  Passing
-    in your created button as the first argument, and a <code>T</code> or <code>NIL</code> for the second
-    state argument to specify whether it should be down (depressed) or up (released).  Default is up, or
-    <code>NIL</code>.
+    &gtk-toggle-button-active;. This function can be used to set the state of the toggle button, and its
+    children the radio and check buttons. Passing in your created button as the first argument, and a
+    <code>T</code> or <code>NIL</code> for the second state argument to specify whether it should be down
+    (depressed) or up (released). Default is up, or <code>NIL</code>.
    </para>
    <para>
-    Note that when you use the <ulink url="&gtk-toggle-button-active;">
-    <code>gtk-toggle-button-active</code></ulink> function, and the state is actually changed, it causes the
-    "clicked" and "toggled" signals to be emitted from the button.  The current state of the toggle button as
-    a boolean <code>T</code> or <code>NIL</code> value is returned from the generic function
-    <ulink url="&gtk-toggle-button-active;"><code>gtk-toggle-button-active</code></ulink>.
+    Note that when you use the &gtk-toggle-button-active; function, and the state is actually changed, it
+    causes the "clicked" and "toggled" signals to be emitted from the button. The current state of the toggle
+    button as a boolean <code>T</code> or <code>NIL</code> value is returned from the slot access function
+    &gtk-toggle-button-active;.
    </para>
    <para>
     In example <link linkend="example-table-packing-2">Table Packing</link> the usage of toggle buttons is
@@ -2258,74 +2185,43 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Check_Buttons">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Check_Buttons"><primary>GtkCheckButton</primary></indexterm>
-     <indexterm zone="Check_Buttons"><primary>check-button, gtk-check-button</primary></indexterm>
-     <indexterm zone="Check_Buttons"><primary>check-button-new, gtk-check-button-new</primary></indexterm>
-     <indexterm zone="Check_Buttons"><primary>check-button-new-with-label, gtk-check-button-new-with-label</primary></indexterm>
-     <indexterm zone="Check_Buttons"><primary>check-button-new-with-mnemonic, gtk-check-button-new-with-mnemonic</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Check Buttons</title>
    <para>
-    Check buttons are implemented as the class <ulink url="&gtk-check-button;">
-    <code>gtk-check-button</code></ulink> and inherit many properties and functions from the toggle buttons
-    above, but look a little different.  Rather than being buttons with text inside them, they are small
-    squares with the text to the right of them.  These are often used for toggling options on and off in
-    applications.
+    Check buttons are implemented as the class &gtk-check-button; and inherit many properties and functions
+    from the toggle buttons above, but look a little different. Rather than being buttons with text inside
+    them, they are small squares with the text to the right of them. These are often used for toggling
+    options on and off in applications.
    </para>
    <para>
-    The creation functions are similar to those of the normal button: <ulink url="&gtk-check-button-new;">
-    <code>gtk-check-button-new</code></ulink>, <ulink url="&gtk-check-button-new-with-label;">
-    <code>gtk-check-button-new-with-label</code></ulink>, <ulink url="&gtk-check-button-new-with-mnemonic;">
-    <code>gtk-check-button-new-with-mnemonic</code></ulink>.  The
-    <ulink url="&gtk-check-button-new-with-label;"><code>gtk-check-button-new-with-label</code></ulink>
-    function creates a check button with a label beside it.
+    The creation functions are similar to those of the normal button: &gtk-check-button-new;,
+    &gtk-check-button-new-with-label;, &gtk-check-button-new-with-mnemonic;. The
+    &gtk-check-button-new-with-label; function creates a check button with a label beside it.
    </para>
    <para>
-    Checking the state of the check button is identical to that of the toggle button.  The figure
+    Checking the state of the check button is identical to that of the toggle button. The figure
     <link linkend="figure-toggle-buttons">Toggle Buttons</link> shows toggle buttons and the example
     <link linkend="example-toggle-buttons">Toggle Buttons</link> the code to create toggle buttons.
    </para>
   </section>
 
   <section id="Radio_Buttons">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Radio_Buttons"><primary>GtkRadioButton</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button, gtk-radio-button</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new, gtk-radio-button-new</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new-with-label, gtk-radio-button-new-with-label</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new-with-mnemonic, gtk-radio-button-new-with-mnemonic</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-get-group, gtk-radio-button-get-group</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new-from-widget, gtk-radio-button-new-from-widget</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new-with-label-from-widget, gtk-radio-button-new-with-label-from-widget</primary></indexterm>
-     <indexterm zone="Radio_Buttons"><primary>radio-button-new-with-mnemonic-from-widget, gtk-radio-button-new-with-mnemonic-from-widget</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Radio Buttons</title>
    <para>
     Radio buttons are similar to check buttons except they are grouped so that only one may be selected or
-    depressed at a time.  This is good for places in your application where you need to select from a short
+    depressed at a time. This is good for places in your application where you need to select from a short
     list of options.
    </para>
    <para>
-    Creating a new radio button is done with one of these calls: <ulink url="&gtk-radio-button-new;">
-    <code>gtk-radio-button-new</code></ulink>, <ulink url="&gtk-radio-button-new-with-label;">
-    <code>gtk-radio-button-new-with-label</code></ulink>, and
-    <ulink url="&gtk-radio-button-new-with-mnemonic;">
-    <code>gtk-radio-button-new-with-mnemonic</code></ulink>.  These functions take a list of radio buttons as
-    the first argument or <code>NIL</code>.  When <code>NIL</code> a new list of radio buttons is created.
-    The newly created list for the radio buttons can be get with the function
-    <ulink url="&gtk-radio-button-get-group;"><code>gtk-radio-button-get-group</code></ulink>.  More radio
-    buttons can then be added to this list.  The important thing to remember is that
-    <ulink url="&gtk-radio-button-get-group;"><code>gtk-radio-button-get-group</code></ulink> must be called
-    for each new button added to the group, with the previous button passed in as an argument.  The result is
-    then passed into the next call to <ulink url="&gtk-radio-button-new;">
-    <code>gtk-radio-button-new</code></ulink> or the other two functions for creating a radio button.  This
-    allows a chain of buttons to be established. The example <link linkend="example-toggle-buttons">
-    Toggle Buttons</link> creates a radio button group with three buttons.
+    Creating a new radio button is done with one of these calls: &gtk-radio-button-new;,
+    &gtk-radio-button-new-with-label;, and &gtk-radio-button-new-with-mnemonic;. These functions take a list
+    of radio buttons as the first argument or <code>NIL</code>. When <code>NIL</code> a new list of radio
+    buttons is created. The newly created list for the radio buttons can be get with the function
+    &gtk-radio-button-get-group;. More radio buttons can then be added to this list. The important thing to
+    remember is that &gtk-radio-button-get-group; must be called for each new button added to the group, with
+    the previous button passed in as an argument. The result is then passed into the next call to
+    &gtk-radio-button-new; or the other two functions for creating a radio button. This allows a chain of
+    buttons to be established. The example <link linkend="example-toggle-buttons">Toggle Buttons</link>
+    creates a radio button group with three buttons.
    </para>
    <para>
     You can shorten this slightly by using the following syntax, which removes the need for a variable to
@@ -2338,14 +2234,9 @@ int main( int argc, char *argv[] )
    </programlisting>
    <para>
     Each of these functions has a variant, which take a radio button as the first argument and allows to omit
-    the <ulink url="&gtk-radio-button-get-group;"><code>gtk-radio-button-get-group</code></ulink> call.  In
-    this case the new radio button is added to the list of radio buttons the argument is already a part of.
-    These functions are: <ulink url="&gtk-radio-button-new-from-widget;">
-    <code>gtk-radio-button-new-from-widget</code></ulink>,
-    <ulink url="&gtk-radio-button-new-with-label-from-widget;">
-    <code>gtk-radio-button-new-with-label-from-widget</code></ulink>, and
-    <ulink url="&gtk-radio-button-new-with-mnemonic-from-widget;">
-    <code>gtk-radio-button-new-with-mnemonic-from-widget</code></ulink>.
+    the &gtk-radio-button-get-group; call. In this case the new radio button is added to the list of radio
+    buttons the argument is already a part of. These functions are: &gtk-radio-button-new-from-widget;,
+    &gtk-radio-button-new-with-label-from-widget;, and &gtk-radio-button-new-with-mnemonic-from-widget;.
    </para>
    <figure id="figure-toggle-buttons">
     <title>Toggle Buttons</title>
@@ -2357,11 +2248,11 @@ int main( int argc, char *argv[] )
    </figure>
    <para>
     It is also a good idea to explicitly set which button should be the default depressed button with the
-    function <ulink url="&gtk-toggle-button-active;"><code>gtk-toggle-button-active</code></ulink>.  This is
-    described in the section on toggle buttons, and works in exactly the same way.  Once the radio buttons
-    are grouped together, only one of the group may be active at a time.  If the user clicks on one radio
-    button, and then on another, the first radio button will first emit a "toggled" signal (to report
-    becoming inactive), and then the second will emit its "toggled" signal (to report becoming active).
+    function &gtk-toggle-button-active;. This is described in the section on toggle buttons, and works in
+    exactly the same way. Once the radio buttons are grouped together, only one of the group may be active at
+    a time. If the user clicks on one radio button, and then on another, the first radio button will first
+    emit a "toggled" signal (to report becoming inactive), and then the second will emit its "toggled" signal
+    (to report becoming active).
    </para>
    <example id="example-toggle-buttons">
     <title>Radio and Toggle Buttons</title>
@@ -2444,15 +2335,6 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Link_Buttons">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Link_Buttons"><primary>GtkLinkButton</primary></indexterm>
-     <indexterm zone="Link_Buttons"><primary>link-button, gtk-link-button</primary></indexterm>
-     <indexterm zone="Link_Buttons"><primary>link-button-new, gtk-link-button-new</primary></indexterm>
-     <indexterm zone="Link_Buttons"><primary>link-button-new-with-label, gtk-link-button-new-with-label</primary></indexterm>
-     <indexterm zone="Link_Buttons"><primary>link-button-uri, gtk-link-button-uri</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Link Buttons</title>
    <figure id="figure-link-button">
     <title>Link Buttons</title>
@@ -2463,30 +2345,26 @@ int main( int argc, char *argv[] )
     </mediaobject>
    </figure>
    <para>
-    A <ulink url="&gtk-link-button;"><code>gtk-link-button</code></ulink> is a <ulink url="&gtk-button;">
-    <code>gtk-button</code></ulink> with a hyperlink, similar to the one used by web browsers, which triggers
-    an action when clicked.  It is useful to show quick links to resources.
+    A &gtk-link-button; is a &gtk-button; with a hyperlink, similar to the one used by web browsers, which
+    triggers an action when clicked. It is useful to show quick links to resources.
    </para>
    <para>
-    A link button is created by calling either the functions <ulink url="&gtk-link-button-new;">
-    <code>gtk-link-button-new</code></ulink> or <ulink url="&gtk-link-button-new-with-label;">
-    <code>gtk-link-button-new-with-label</code></ulink>.  If using the former, the URI you pass to the
-    constructor is used as a label for the widget.
+    A link button is created by calling either the functions &gtk-link-button-new; or
+    &gtk-link-button-new-with-label;. If using the former, the URI you pass to the constructor is used as a
+    label for the widget.
    </para>
    <para>
-    The URI bound to a <ulink url="&gtk-link-button;"><code>gtk-link-button</code></ulink> can be set
-    specifically or retrieved using the slot access function <ulink url="&gtk-link-button-uri;">
-    <code>gtk-link-button-uri</code></ulink>.
+    The URI bound to a &gtk-link-button; can be set specifically or retrieved using the slot access function
+    &gtk-link-button-uri;.
    </para>
    <para>
-    By default, <ulink url="&gtk-link-button;"><code>gtk-link-button</code></ulink> calls
-    <ulink url="&gtk-show-uri;"><code>gtk-show-uri</code></ulink> when the button is clicked. This behaviour
-    can be overridden by connecting to the "activate-link" signal and returning <code>T</code> from the
-    signal handler.
+    By default, &gtk-link-button; calls &gtk-show-uri; when the button is clicked. This behaviour can be
+    overridden by connecting to the "activate-link" signal and returning <code>T</code> from the signal
+    handler.
    </para>
    <para>
     The figure <link linkend="figure-link-button">Link Button</link> shows two different styles of link
-    buttons.  The code is shown in example <link linkend="example-link-button">Link Button</link>.
+    buttons. The code is shown in example <link linkend="example-link-button">Link Button</link>.
    </para>
    <example id="example-link-button">
     <title>Link Buttons</title>
@@ -2529,14 +2407,6 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Switches">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Switches"><primary>GtkSwitch</primary></indexterm>
-     <indexterm zone="Switches"><primary>switch, gtk-switch</primary></indexterm>
-     <indexterm zone="Switches"><primary>switch-new, gtk-switch-new</primary></indexterm>
-     <indexterm zone="Switches"><primary>switch-active, gtk-switch-active</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Switches</title>
     <figure id="figure-switch">
      <title>Switch</title>
@@ -2547,19 +2417,17 @@ int main( int argc, char *argv[] )
      </mediaobject>
    </figure>
    <para>
-    <ulink url="&gtk-switch;"><code>gtk-switch</code></ulink> is a widget that has two states: on or off.
-    The user can control which state should be active by clicking the empty area, or by dragging the handle.
-    The switch is created with the function <ulink url="&gtk-switch-new;"><code>gtk-switch-new</code></ulink>
-    or the call <code>(make-instance 'gtk-switch)</code>.
+    &gtk-switch; is a widget that has two states: on or off. The user can control which state should be
+    active by clicking the empty area, or by dragging the handle. The switch is created with the function
+    &gtk-switch-new; or the call <code>(make-instance 'gtk-switch)</code>.
    </para>
    <para>
-    <ulink url="&gtk-switch;"><code>gtk-switch</code></ulink> has the property
-    <ulink url="&gtk_switch_active;"><code>active</code></ulink>, which can be set or retrieved with the slot
-    access function <ulink url="&gtk-switch-active;"><code>gtk-switch-active</code></ulink>.
+    &gtk-switch; has the property &gtk_switch_active;, which can be set or retrieved with the slot access
+    function &gtk-switch-active;.
    </para>
    <para>
-    An example of a switch is shown in figure <link linkend="figure-switch">Switch</link>.  The code is
-    shown in example <link linkend="example-switch">Switch</link>.  Note that in the example the signal
+    An example of a switch is shown in figure <link linkend="figure-switch">Switch</link>. The code is
+    shown in example <link linkend="example-switch">Switch</link>. Note that in the example the signal
     "notify::active" is connected to the switch to display a label with the state of the switch.
    </para>
    <example id="example-switch">
@@ -2615,7 +2483,7 @@ int main( int argc, char *argv[] )
    <para>
     Labels are used a lot in GTK+, and are relatively simple. The &gtk-label; widget displays a small amount
     of text.  As the name implies, most labels
-    are used to label another widget such as a <ulink url="&gtk-button;"><code>gtk-button</code></ulink>, a
+    are used to label another widget such as a &gtk-button;, a
     <ulink url="&gtk-menu-item;"><code>gtk-menu-item</code></ulink>, or a <ulink url="&gtk-combo-box;">
     <code>gtk-combo-box</code></ulink>.  Labels emit no signals as they do not have an associated X window.
     If you need to catch signals, or do clipping, place it inside a <ulink url="&gtk-event-box;">
@@ -2660,7 +2528,7 @@ int main( int argc, char *argv[] )
     </para>
     <para>
      Mnemonics automatically activate any activatable widget the label is inside, such as a
-     <ulink url="&gtk-button;"><code>gtk-button</code></ulink>; if the label is not inside the mnemonic's
+     &gtk-button;; if the label is not inside the mnemonic's
      target widget, you have to tell the label about the target using
      <ulink url="&gtk-label-mnemonic-widget;"><code>gtk-label-mnemonic-widget</code></ulink>.
     </para>
@@ -3143,13 +3011,6 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Images">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Images"><primary>GtkImage</primary></indexterm>
-     <indexterm zone="Images"><primary>image, gtk-image</primary></indexterm>
-     <indexterm zone="Images"><primary>image-new-from-file, gtk-image-new-from-file</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Images</title>
    <figure id="figure-images">
     <title>Images</title>
@@ -3160,11 +3021,10 @@ int main( int argc, char *argv[] )
     </mediaobject>
    </figure>
    <para>
-    The <ulink url="&gtk-image;"><code>gtk-image</code></ulink> widget displays an image.  Various kinds of
+    The &gtk-image; widget displays an image.  Various kinds of
     object can be displayed as an image; most typically, you would load a <ulink url="&gdk-pixbuf;">
     <code>gdk-pixbuf</code></ulink> object ("pixel buffer") from a file, and then display that.  There is a
-    convenience function to do this, <ulink url="&gtk-image-new-from-file;">
-    <code>gtk-image-new-from-file</code></ulink>, used as follows:
+    convenience function to do this, &gtk-image-new-from-file;, used as follows:
    </para>
    <programlisting>
 (let ((image (gtk-image-new-from-file "myfile.png")))
@@ -3175,21 +3035,21 @@ int main( int argc, char *argv[] )
     used in many web browsers.  If you want to handle errors in loading the file yourself, for example by
     displaying an error message, then load the image with the function
     <ulink url="&gdk-pixbuf-new-from-file;"><code>gdk-pixbuf-new-from-file</code></ulink>, then create the
-    <ulink url="&gtk-image;"><code>gtk-image</code></ulink> with the function
-    <ulink url="&gtk-image-new-from-pixbuf;"><code>gtk-image-new-from-pixbuf</code></ulink>.
+    &gtk-image; with the function
+    &gtk-image-new-from-pixbuf;.
    </para>
    <para>
-    The image file may contain an animation, if so the <ulink url="&gtk-image;">
-    <code>gtk-image</code></ulink> will display an animation of type <ulink url="&gdk-pixbuf-animation;">
+    The image file may contain an animation, if so the &gtk-image; will display an animation of type
+    <ulink url="&gdk-pixbuf-animation;">
     <code>gdk-pixbuf-animation</code></ulink> instead of a static image.
    </para>
    <para>
-    <ulink url="&gtk-image;"><code>gtk-image</code></ulink> is a subclass of <ulink url="&gtk-misc;">
+    &gtk-image; is a subclass of <ulink url="&gtk-misc;">
     <code>gtk-misc</code></ulink>, which implies that you can align it (center, left, right) and add padding
     to it, using <ulink url="&gtk-misc;"><code>gtk-misc</code></ulink> methods.
    </para>
    <para>
-    <ulink url="&gtk-image;"><code>gtk-image</code></ulink> is a "no window" widget (has no
+    &gtk-image; is a "no window" widget (has no
     <ulink url="&gdk-window;"><code>gdk-window</code></ulink> of its own), so by default does not receive
     events.  If you want to receive events on the image, such as button clicks, place the image inside a
     <ulink url="&gtk-event-box;"><code>gtk-event-box</code></ulink>, then connect to the event signals on
@@ -9061,7 +8921,7 @@ main (int argc, char **argv)
    <para>
     About dialogs often contain links and email addresses. <ulink url="&gtk-about-dialog;">
     <code>gtk-about-dialog</code></ulink> displays these as clickable links.  By default, it calls the
-    function <ulink url="&gtk-show-uri;"><code>gtk-show-uri</code></ulink> when a user clicks one.  The
+    function &gtk-show-uri; when a user clicks one.  The
     behavior can be overridden with the "activate-link" signal.
    </para>
    <para>
@@ -11053,7 +10913,7 @@ main (int argc, char **argv)
     <varlistentry>
      <term><code>gtk-check-menu-item</code></term>
      <listitem>
-      A <ulink url="&gtk-check-menu-item;"><code>gtk-check-menu-item</code></ulink> is a menu item that
+      A &gtk-check-menu-item; is a menu item that
       maintains the state of a boolean value in addition to a <ulink url="&gtk-menu-item;">
       <code>gtk-menu-item</code></ulink> usual role in activating application code. A check box indicating
       the state of the boolean value is displayed at the left side of the <ulink url="&gtk-menu-item;">
@@ -11064,7 +10924,7 @@ main (int argc, char **argv)
     <varlistentry>
      <term><code>gtk-image-menu-item</code></term>
      <listitem>
-      A <ulink url="&gtk-image-menu-item;"><code>gtk-image-menu-item</code></ulink> is a menu item which has
+      A &gtk-image-menu-item; is a menu item which has
       an icon next to the text label. Note that the user can disable display of menu icons, so make sure to
       still fill in the text label.
      </listitem>
@@ -11550,7 +11410,7 @@ main (int argc, char **argv)
     <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink>.  There are also two subclasses of the
     tool button class: <ulink url="&gtk-menu-tool-button;"><code>gtk-menu-tool-button</code></ulink> and
     <ulink url="&gtk-toggle-tool-button;"><code>gtk-toggle-tool-button</code></ulink>, which has a subclass
-    <ulink url="&gtk-radio-tool-button;"><code>gtk-radio-tool-button</code></ulink>.
+    &gtk-radio-tool-button;.
    </para>
    <para>
     A toolbar is created with only a single function <ulink url="&gtk-toolbar-new;">
@@ -11724,7 +11584,7 @@ main (int argc, char **argv)
      <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> and
      <ulink url="&gtk-recent-action;"><code>gtk-recent-action</code></ulink>.  The
      <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> class has a
-     <ulink url="&gtk-radio-action;"><code>gtk-radio-action</code></ulink> subclass.  These correspond to
+     &gtk-radio-action; subclass.  These correspond to
      toggle buttons and radio buttons respectively.
     </para>
    </section>
@@ -13802,13 +13662,13 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
    <para>
     This demo shows a custom widget named <code>egg-clock-face</code> which draws a clock using
     Cairo.  This Cairo Clock example is inspired by the C code from Davyd Madeley.  
-    <code>egg-clock-face</code> is defined as a subclass of the <ulink url="&gtk-drawing-area;">
-    <code>gtk-drawing-area</code></ulink> class.  Only the property <code>time</code> is added to
+    <code>egg-clock-face</code> is defined as a subclass of the &gtk-drawing-area;
+    class.  Only the property <code>time</code> is added to
     hold the actual time of the clock.  The <code>initialize-instance</code> method installs a
     timeout source with the function <ulink url="&g-timeout-add;"><code>g-timeout-add</code>
     </ulink>, which updates every second the <code>time</code> property of <code>egg-clock-face
     </code> and requests the redrawing of the widget.  The "draw" signal handler draws the clock
-    into the <ulink url="&gtk-drawing-area;"><code>gtk-drawing-area</code></ulink> of the
+    into the &gtk-drawing-area; of the
     <code>egg-clock-face</code> widget.
    </para>
 
@@ -13998,6 +13858,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 
