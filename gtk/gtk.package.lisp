@@ -879,7 +879,7 @@
       @about-function{gtk-level-bar-new-for-interval}
       @about-function{gtk-level-bar-add-offset-value}
       @about-function{gtk-level-bar-remove-offset-value}
-      @about-function{gtk-level-bar-get-offset-value}
+      @about-function{gtk-level-bar-offset-value}
     @end{subsection}
     @begin[GtkStatusbar]{subsection}
       Report messages of minor importance to the user.
@@ -3801,6 +3801,18 @@ setup_tree (void)
     @begin[GtkWidget]{subsection}
       Base class for all widgets.
 
+      @about-struct{gtk-requisition}
+      @about-function{make-gtk-requisition}
+      @about-function{copy-gtk-requisition}
+      @about-function{gtk-requisition-width}
+      @about-function{gtk-requisition-height}
+      @about-symbol{gtk-widget-help-type}
+
+      @about-symbol{gtk-text-direction}
+      @about-symbol{gtk-size-request-mode}
+      @about-symbol{gtk-requested-size}
+      @about-symbol{gtk-align}
+
       @about-class{gtk-widget}
       @about-generic{gtk-widget-app-paintable}
       @about-generic{gtk-widget-can-default}
@@ -3842,15 +3854,6 @@ setup_tree (void)
       @about-generic{gtk-widget-width-request}
       @about-generic{gtk-widget-window}
 
-      @about-struct{gtk-requisition}
-      @about-function{make-gtk-requisition}
-      @about-function{copy-gtk-requisition}
-      @about-function{gtk-requisition-width}
-      @about-function{gtk-requisition-height}
-      @about-symbol{gtk-align}
-      @about-symbol{gtk-widget-aux-info}
-      @about-symbol{gtk-widget-help-type}
-      @about-symbol{gtk-text-direction}
       @about-function{gtk-widget-new}
       @about-function{gtk-widget-destroy}
       @about-function{gtk-widget-in-destruction}
@@ -3868,8 +3871,14 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
+
+      @about-function{gtk-widget-frame-clock}
+      @about-function{gtk-widget-scale-factor}
+
+      @about-symbol{gtk-tick-callback}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
+
       @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
@@ -4005,13 +4014,6 @@ setup_tree (void)
       @about-function{gtk-requisition-new}
       @about-function{gtk-requisition-copy}
       @about-function{gtk-requisition-free}
-      @about-symbol{gtk-size-request-mode}
-      @about-symbol{gtk-requested-size}
-      @about-function{copy-gtk-requested-size}
-      @about-function{make-gtk-requested-size}
-      @about-function{gtk-requested-size-data}
-      @about-function{gtk-requested-size-minimum-size}
-      @about-function{gtk-requested-size-natural-size}
       @about-function{gtk-widget-preferred-height}
       @about-function{gtk-widget-preferred-width}
       @about-function{gtk-widget-preferred-height-for-width}
@@ -4554,6 +4556,8 @@ setup_tree (void)
 
       @about-symbol{gtk-accel-flags}
       @about-class{gtk-accel-group}
+      @about-generic{gtk-accel-group-is-locked}
+      @about-generic{gtk-accel-group-modifier-mask}
       @about-function{gtk-accel-group-new}
       @about-function{gtk-accel-group-connect}
       @about-function{gtk-accel-group-connect-by-path}
@@ -5039,7 +5043,7 @@ setup_tree (void)
       @about-function{gtk-widget-path-ref}
       @about-function{gtk-widget-path-unref}
       @about-function{gtk-widget-path-free}
-      @about-function{gtk-widget-path-get-object-type}
+      @about-function{gtk-widget-path-object-type}
       @about-function{gtk-widget-path-has-parent}
       @about-function{gtk-widget-path-is-type}
       @about-function{gtk-widget-path-iter-add-class}
@@ -5048,7 +5052,7 @@ setup_tree (void)
       @about-function{gtk-widget-path-iter-clear-regions}
       @about-function{gtk-widget-path-iter-get-name}
       @about-function{gtk-widget-path-iter-get-object-name}
-      @about-function{gtk-widget-path-iter-get-object-type}
+      @about-function{gtk-widget-path-iter-object-type}
       @about-function{gtk-widget-path-iter-get-siblings}
       @about-function{gtk-widget-path-iter-get-sibling-index}
       @about-function{gtk-widget-path-iter-get-state}
