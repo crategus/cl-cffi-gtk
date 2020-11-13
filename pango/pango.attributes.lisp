@@ -1280,7 +1280,7 @@
 ;;; PangoAttrList
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "pango_attr_list_get_type" :int))
+(glib-init::at-init () (foreign-funcall "pango_attr_list_get_type" g-size))
 
 (define-g-boxed-opaque pango-attr-list "PangoAttrList"
   :alloc (%pango-attr-list-new))

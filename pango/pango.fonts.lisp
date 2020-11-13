@@ -381,7 +381,7 @@
 ;;; enum PangoStretch
 ;;; ----------------------------------------------------------------------------
 
-(glib-init::at-init () (foreign-funcall "pango_stretch_get_type" :int))
+(glib-init::at-init () (foreign-funcall "pango_stretch_get_type" g-size))
 
 (define-g-enum "PangoStretch" pango-stretch
   (:export t
