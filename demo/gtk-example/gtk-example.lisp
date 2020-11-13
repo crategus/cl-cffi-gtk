@@ -20,6 +20,7 @@
            #:example-message-dialog-set-markup
            #:example-message-dialog-ui
            #:example-page-setup-unix-dialog
+           #:example-pointer-device
            #:example-print-dialog
            #:example-print-operation
            #:example-print-run-page-setup-dialog

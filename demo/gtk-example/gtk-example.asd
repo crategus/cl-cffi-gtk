@@ -24,6 +24,7 @@
                (:file "message-dialog-new")
 ;               (:file "page-setup")
                (:file "page-setup-unix-dialog")
+               (:file "pointer-device")
                (:file "print-dialog")
                (:file "print-operation")
                (:file "radio-button")
@@ -31,3 +32,4 @@
                (:file "widget-pointer")
               ))
 
+;; 2020-11-5

@@ -25,9 +25,9 @@
     (cond ((string= name "DarkTheme")
            (let ((value (gtk-toggle-action-active action))
                  (settings (gtk-settings-default)))
-             (g-object-set-property settings
-                                    "gtk-application-prefer-dark-theme"
-                                    value)))
+             (setf (g-object-property settings
+                                      "gtk-application-prefer-dark-theme")
+                   value)))
           ((string= name "HideTitlebar")
            (let ((value (gtk-toggle-action-active action)))
              (setf (gtk-window-hide-titlebar-when-maximized (app-window *app*))
