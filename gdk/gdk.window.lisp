@@ -59,7 +59,7 @@
 ;;;     gdk_window_get_display
 ;;;     gdk_window_get_screen
 ;;;     gdk_window_get_visual
-;;;     gdk_window_at_pointer                              * deprecated
+;;;     gdk_window_at_pointer                              deprecated
 ;;;     gdk_window_show
 ;;;     gdk_window_show_unraised
 ;;;     gdk_window_hide
@@ -84,8 +84,8 @@
 ;;;     gdk_window_set_keep_above
 ;;;     gdk_window_set_keep_below
 ;;;     gdk_window_set_opacity
-;;;     gdk_window_set_composited                          * deprecated
-;;;     gdk_window_get_composited                          * deprecated
+;;;     gdk_window_set_composited                          deprecated
+;;;     gdk_window_get_composited                          deprecated
 ;;;     gdk_window_set_pass_through
 ;;;     gdk_window_get_pass_through
 ;;;     gdk_window_move
@@ -94,7 +94,7 @@
 ;;;     gdk_window_scroll
 ;;;     gdk_window_move_to_rect
 ;;;     gdk_window_move_region
-;;;     gdk_window_flush                                   * deprecated
+;;;     gdk_window_flush                                   deprecated
 ;;;     gdk_window_has_native
 ;;;     gdk_window_ensure_native
 ;;;     gdk_window_reparent
@@ -115,9 +115,9 @@
 ;;;     gdk_window_create_gl_context
 ;;;     gdk_window_mark_paint_from_clip
 ;;;     gdk_window_get_clip_region
-;;;     gdk_window_begin_paint_rect                        * deprecated
-;;;     gdk_window_begin_paint_region                      * deprecated
-;;;     gdk_window_end_paint                               * deprecated
+;;;     gdk_window_begin_paint_rect                        deprecated
+;;;     gdk_window_begin_paint_region                      deprecated
+;;;     gdk_window_end_paint                               deprecated
 ;;;     gdk_window_begin_draw_frame
 ;;;     gdk_window_end_draw_frame
 ;;;     gdk_window_get_visible_region
@@ -130,11 +130,11 @@
 ;;;     gdk_window_get_update_area
 ;;;     gdk_window_freeze_updates
 ;;;     gdk_window_thaw_updates
-;;;     gdk_window_process_all_updates                     * deprecated
-;;;     gdk_window_process_updates                         * deprecated
-;;;     gdk_window_set_debug_updates                       * deprecated
-;;;     gdk_window_enable_synchronized_configure           * deprecated
-;;;     gdk_window_configure_finished                      * deprecated
+;;;     gdk_window_process_all_updates                     deprecated
+;;;     gdk_window_process_updates                         deprecated
+;;;     gdk_window_set_debug_updates                       deprecated
+;;;     gdk_window_enable_synchronized_configure           deprecated
+;;;     gdk_window_configure_finished                      deprecated
 ;;;     gdk_window_get_frame_clock
 ;;;     gdk_window_set_user_data
 ;;;     gdk_window_set_override_redirect
@@ -150,14 +150,14 @@
 ;;;     gdk_window_input_shape_combine_region
 ;;;     gdk_window_set_child_input_shapes
 ;;;     gdk_window_merge_child_input_shapes
-;;;     gdk_window_set_static_gravities                    * deprecated
+;;;     gdk_window_set_static_gravities                    deprecated
 ;;;     gdk_window_set_title
-;;;     gdk_window_set_background                          * deprecated
-;;;     gdk_window_set_background_rgba                     * deprecated
-;;;     gdk_window_set_background_pattern                  * deprecated
-;;;     gdk_window_get_background_pattern                  * deprecated
-;;;     gdk_window_set_cursor                                Accessor
-;;;     gdk_window_get_cursor                                Accessor
+;;;     gdk_window_set_background                          deprecated
+;;;     gdk_window_set_background_rgba                     deprecated
+;;;     gdk_window_set_background_pattern                  deprecated
+;;;     gdk_window_get_background_pattern                  deprecated
+;;;     gdk_window_set_cursor                              Accessor
+;;;     gdk_window_get_cursor                              Accessor
 ;;;     gdk_window_get_user_data
 ;;;     gdk_window_get_geometry
 ;;;     gdk_window_set_geometry_hints
@@ -177,7 +177,7 @@
 ;;;     gdk_window_get_frame_extents
 ;;;     gdk_window_get_origin
 ;;;     gdk_window_get_root_coords
-;;;     gdk_window_get_pointer                             * deprecated
+;;;     gdk_window_get_pointer                             deprecated
 ;;;     gdk_window_get_device_position
 ;;;     gdk_window_get_device_position_double ()
 ;;;     gdk_window_get_parent
@@ -4849,15 +4849,15 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-pointer (window)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2020-11-9}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
     @code{win} -- the window containing the pointer as with the function
-                  @fun{gdk-window-at-pointer}, or @code{nil} if the
-                  window containing the pointer is not known to GDK @br{}
+    @fun{gdk-window-at-pointer}, or @code{nil} if the window containing the
+    pointer is not known to GDK @br{}
     @code{x} -- an integer with the x coordinate of pointer @br{}
     @code{y} -- an integer with the y coordinate of pointer @br{}
-    @code{mask} -- modifier mask of type @symbol{gdk-modifier-mask}
+    @code{mask} -- modifier mask of type @symbol{gdk-modifier-type}
   @end{return}
   @begin{short}
     Obtains the current pointer position and modifier state. The position is
@@ -4869,7 +4869,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     @fun{gdk-window-device-position} instead.
   @end{dictionary}
   @see-class{gdk-window}
-  @see-symbol{gdk-modifier-mask}
+  @see-symbol{gdk-modifier-type}
   @see-function{gdk-window-at-pointer}
   @see-function{gdk-window-device-position}"
   (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))

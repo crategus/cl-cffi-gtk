@@ -4116,7 +4116,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[owner]{The new owner of the selection, or @code{nil} if there is
       none}
     @entry[reason]{The reason for the ownership change as a
-      @symbol{gk-owner-change} value.}
+      @symbol{gdk-owner-change} value.}
     @entry[selection]{The atom identifying the selection.}
     @entry[time]{The timestamp of the event.}
     @entry[selection-time]{The time at which the selection ownership was taken

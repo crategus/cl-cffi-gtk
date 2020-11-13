@@ -307,28 +307,26 @@
 (defcfun ("gdk_device_manager_list_devices" gdk-device-manager-list-devices)
     (g-list (g-object gdk-device) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2020-11-7}
   @argument[device-manager]{a @class{gdk-device-manager} object}
-  @argument[type]{device type to get}
+  @argument[device-type]{device type to get}
   @return{A list of @class{gdk-device} objects.}
   @begin{short}
-    Returns the list of devices of type @arg{type} currently attached to
+    Returns the list of devices of type @arg{device-type} currently attached to
     @arg{device-manager}.
   @end{short}
-
-  Since 3.0
   @begin[Warning]{dictionary}
     The function @sym{gdk-device-manager-list-devices} has been deprecated since
     version 3.20 and should not be used in newly-written code. Use the functions
-    @fun{gdk-seat-pointer}, @fun{gdk-seat-get-keyboard} and
-    @fun{gdk-seat-get-slaves} instead.
+    @fun{gdk-seat-pointer}, @fun{gdk-seat-keyboard} and @fun{gdk-seat-slaves}
+    instead.
   @end{dictionary}
   @see-class{gdk-device-manager}
   @see-function{gdk-seat-pointer}
-  @see-function{gdk-seat-get-keyboard}
-  @see-function{gdk-seat-get-slaves}"
+  @see-function{gdk-seat-keyboard}
+  @see-function{gdk-seat-slaves}"
   (device-manager (g-object gdk-device-manager))
-  (type gdk-device-type))
+  (device-type gdk-device-type))
 
 (export 'gdk-device-manager-list-devices)
 

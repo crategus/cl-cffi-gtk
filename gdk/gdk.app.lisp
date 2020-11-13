@@ -134,10 +134,10 @@
   @begin[Warning]{dictionary}
     @sym{gdk-app-launch-context-display} has been deprecated since version
     3.0 and should not be used in newly-written code. Use the function
-    @fun{gdk-display-get-app-launch-context} instead.
+    @fun{gdk-display-app-launch-context} instead.
   @end{dictionary}
   @see-class{gdk-app-launch-context}
-  @see-function{gdk-display-get-app-launch-context}
+  @see-function{gdk-display-app-launch-context}
   @see-function{gdk-app-launch-context-set-screen}")
 
 ;;; ----------------------------------------------------------------------------
@@ -155,10 +155,10 @@
   @begin[Warning]{dictionary}
     @sym{gdk-app-launch-context-new} has been deprecated since version 3.0 and
     should not be used in newly-written code.
-    Use the function @fun{gdk-display-get-app-launch-context} instead.
+    Use the function @fun{gdk-display-app-launch-context} instead.
   @end{dictionary}
   @see-class{gdk-app-launch-context}
-  @see-function{gdk-display-get-app-launch-context}")
+  @see-function{gdk-display-app-launch-context}")
 
 (export 'gdk-app-launch-context-new)
 

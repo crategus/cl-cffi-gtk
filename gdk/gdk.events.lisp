@@ -274,9 +274,9 @@
     Checks all open displays for an event to be processed, fetching events from
     the windowing system if necessary.
   @end{short}
-  See also the function @fun{gdk-display-get-event}.
+  See also the function @fun{gdk-display-event}.
   @see-class{gdk-event}
-  @see-function{gdk-display-get-event}")
+  @see-function{gdk-display-event}")
 
 (export 'gdk-event-get)
 
