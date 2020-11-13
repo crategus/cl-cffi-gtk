@@ -6,24 +6,26 @@ List of files for the GDK Library
 
  I. API Reference
 
-  gdk.general.lisp          - Library initialization - GDK 3.24 &
+  gdk.general.lisp          - Library initialization - GDK 3.24
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.24
   gdk.display.lisp          - GdkDisplay             - GDK 3.24
   gdk.screen.lisp           - GdkScreen              - GDK 3.24
-  gdk.seat.lisp             - GdkSeat                - GDK 3.24 &
-
+  gdk.seat.lisp             - GdkSeat                - GDK 3.24
   gdk.monitor.lisp          - GdkMonitor             - GDK 3.24
-  gdk.device.lisp           - GdkDevice              - GDK 3.24 &
-  gdk.device-pad.lisp       - GtkDevicePad           - GDK 3.24 &
+  gdk.device.lisp           - GdkDevice              - GDK 3.24
+  gdk.device-pad.lisp       - GtkDevicePad           - GDK 3.24
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.24
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.24
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.24
   gdk.visual.lisp           - Visuals                - GDK 3.24
   gdk.cursor.lisp           - Cursors                - GDK 3.24
+
   gdk.window.lisp           - Windows                - GDK 3.24 &
-  gdk.frame-clock.lisp      - Frame clock            - GDK 3.24 &
-  gdk.frame-timings.lisp    - Frame timings          - GDK 3.24 &
+
+  gdk.frame-clock.lisp      - Frame clock            - GDK 3.24
+  gdk.frame-timings.lisp    - Frame timings          - GDK 3.24
   gdk.drawing-context.lisp  - GdkDrawingContext      - Gdk 3.24
+
   gdk.gl-context.lisp       - OpenGL context         - GDK 3.24 &
   gdk.events.lisp           - Events                 - GDK 3.24 &
   gdk.event-structures.lisp - Event Structures       - GDK 3.24

@@ -43,7 +43,7 @@
                (:file "gdk.device")           ; Representing an input device
 
                (:file "gdk.device-pad"        ; Pad device interface
-                      :if-feature :gtk-3-22)
+                      :if-feature :gdk-3-22)
 
                (:file "gdk.device-manager")   ; Handling input devices
                (:file "gdk.screen")           ; Representing a physical screen

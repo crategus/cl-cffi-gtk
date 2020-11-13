@@ -38,7 +38,7 @@
   windowing system. This is the API documentation of a Lisp binding to GDK.
   @begin[General]{section}
     This section describes the GDK initialization functions and miscellaneous
-    utility functions.
+    utility functions, as well as deprecation facilities.
 
     @about-function{gdk-init}
     @about-function{gdk-init-check}
@@ -47,9 +47,7 @@
     @about-function{gdk-notify-startup-complete}
     @about-function{gdk-notify-startup-complete-with-id}
     @about-function{gdk-set-allowed-backends}
-    @about-function{gdk-get-program-class}
-    @about-function{gdk-set-program-class}
-    @about-function{gdk-get-display}
+    @about-function{gdk-program-class}
     @about-function{gdk-flush}
     @about-function{gdk-pointer-grab}
     @about-function{gdk-pointer-ungrab}
@@ -77,11 +75,11 @@
     @about-class{gdk-display}
     @about-function{gdk-display-open}
     @about-function{gdk-display-default}
-    @about-function{gdk-display-get-name}
-    @about-function{gdk-display-get-n-screens}
-    @about-function{gdk-display-get-screen}
+    @about-function{gdk-display-name}
+    @about-function{gdk-display-n-screens}
+    @about-function{gdk-display-screen}
     @about-function{gdk-display-default-screen}
-    @about-function{gdk-display-get-device-manager}
+    @about-function{gdk-display-device-manager}
     @about-function{gdk-display-pointer-ungrab}
     @about-function{gdk-display-keyboard-ungrab}
     @about-function{gdk-display-pointer-is-grabbed}
@@ -91,15 +89,15 @@
     @about-function{gdk-display-flush}
     @about-function{gdk-display-close}
     @about-function{gdk-display-is-closed}
-    @about-function{gdk-display-get-event}
+    @about-function{gdk-display-event}
     @about-function{gdk-display-peek-event}
     @about-function{gdk-display-put-event}
     @about-function{gdk-display-has-pending}
     @about-function{gdk-display-set-double-click-time}
     @about-function{gdk-display-set-double-click-distance}
-    @about-function{gdk-display-get-pointer}
+    @about-function{gdk-display-pointer}
     @about-function{gdk-display-list-devices}
-    @about-function{gdk-display-get-window-at-pointer}
+    @about-function{gdk-display-window-at-pointer}
     @about-function{gdk-display-warp-pointer}
     @about-function{gdk-display-supports-cursor-color}
     @about-function{gdk-display-supports-cursor-alpha}
@@ -113,15 +111,15 @@
     @about-function{gdk-display-supports-shapes}
     @about-function{gdk-display-supports-input-shapes}
     @about-function{gdk-display-supports-composite}
-    @about-function{gdk-display-get-app-launch-context}
+    @about-function{gdk-display-app-launch-context}
     @about-function{gdk-display-notify-startup-complete}
     @about-function{gdk-display-default-seat}
     @about-function{gdk-display-list-seats}
-    @about-function{gdk-display-get-n-monitors}
-    @about-function{gdk-display-get-monitor}
-    @about-function{gdk-display-get-primary-monitor}
-    @about-function{gdk-display-get-monitor-at-point}
-    @about-function{gdk-display-get-monitor-at-window}
+    @about-function{gdk-display-n-monitors}
+    @about-function{gdk-display-monitor}
+    @about-function{gdk-display-primary-monitor}
+    @about-function{gdk-display-monitor-at-point}
+    @about-function{gdk-display-monitor-at-window}
   @end{section}
   @begin[GdkScreen]{section}
     Object representing a physical screen.
@@ -165,10 +163,10 @@
     @about-generic{gdk-seat-display}
     @about-function{gdk-seat-grab}
     @about-function{gdk-seat-ungrab}
-    @about-function{gdk-seat-get-capabilities}
+    @about-function{gdk-seat-capabilities}
     @about-function{gdk-seat-pointer}
-    @about-function{gdk-seat-get-keyboard}
-    @about-function{gdk-seat-get-slaves}
+    @about-function{gdk-seat-keyboard}
+    @about-function{gdk-seat-slaves}
   @end{section}
   @begin[GdkMonitor]{section}
     Object representing an output.
@@ -177,26 +175,19 @@
     @about-class{gdk-monitor}
     @about-generic{gdk-monitor-display}
     @about-generic{gdk-monitor-geometry}
-    @about-generic{gdk-monitor-workarea}
-    @about-generic{gdk-monitor-width-mm}
     @about-generic{gdk-monitor-height-mm}
     @about-generic{gdk-monitor-manufacturer}
     @about-generic{gdk-monitor-model}
-    @about-generic{gdk-monitor-scale-factor}
     @about-generic{gdk-monitor-refresh-rate}
+    @about-generic{gdk-monitor-scale-factor}
     @about-generic{gdk-monitor-subpixel-layout}
-
+    @about-generic{gdk-monitor-width-mm}
+    @about-generic{gdk-monitor-workarea}
     @about-function{gdk-monitor-is-primary}
   @end{section}
   @begin[GdkDevice]{section}
     Object representing an input device.
 
-    @about-struct{gdk-time-coord}
-    @about-function{copy-gdk-time-coord}
-    @about-function{make-gdk-time-coord}
-    @about-function{gdk-time-coord-time}
-    @about-function{gdk-time-coord-axes}
-    @about-symbol{gdk-grab-status}
     @about-symbol{gdk-input-source}
     @about-symbol{gdk-input-mode}
     @about-symbol{gdk-axis-use}
@@ -204,53 +195,56 @@
     @about-symbol{gdk-device-tool-type}
     @about-symbol{gdk-device-type}
     @about-symbol{gdk-grab-ownership}
+    @about-symbol{gdk-time-coord}
+    @about-symbol{gdk-grab-status}
     @about-class{gdk-device-tool}
     @about-class{gdk-device}
-    @about-generic{gdk-device-name}
-    @about-generic{gdk-device-vendor-id}
-    @about-generic{gdk-device-product-id}
     @about-generic{gdk-device-associated-device}
-    @about-generic{gdk-device-device-type}
+    @about-generic{gdk-device-axes}
+    @about-generic{gdk-device-device-manager}
     @about-generic{gdk-device-display}
     @about-generic{gdk-device-has-cursor}
+    @about-generic{gdk-device-input-mode}
+    @about-generic{gdk-device-input-source}
     @about-generic{gdk-device-n-axes}
-    @about-generic{gdk-device-axes}
+    @about-generic{gdk-device-name}
+    @about-generic{gdk-device-num-touches}
+    @about-generic{gdk-device-product-id}
     @about-generic{gdk-device-seat}
-    @about-function{gdk-device-get-source}
-    @about-function{gdk-device-set-mode}
-    @about-function{gdk-device-get-mode}
-    @about-function{gdk-device-set-key}
-    @about-function{gdk-device-get-key}
-    @about-function{gdk-device-set-axis-use}
-    @about-function{gdk-device-get-axis-use}
+    @about-generic{gdk-device-tool}
+    @about-generic{gdk-device-type}
+    @about-generic{gdk-device-vendor-id}
+    @about-function{gdk-device-key}
+    @about-function{gdk-device-axis-use}
     @about-function{gdk-device-list-slave-devices}
-    @about-function{gdk-device-get-n-keys}
+    @about-function{gdk-device-n-keys}
     @about-function{gdk-device-warp}
     @about-function{gdk-device-grab}
     @about-function{gdk-device-ungrab}
-    @about-function{gdk-device-get-state}
-    @about-function{gdk-device-get-position}
-    @about-function{gdk-device-get-position-double}
-    @about-function{gdk-device-get-window-at-position}
-    @about-function{gdk-device-get-window-at-position-double}
-    @about-function{gdk-device-get-history}
+    @about-function{gdk-device-state}
+    @about-function{gdk-device-position}
+    @about-function{gdk-device-position-double}
+    @about-function{gdk-device-window-at-position}
+    @about-function{gdk-device-window-at-position-double}
+    @about-function{gdk-device-history}
     @about-function{gdk-device-free-history}
-    @about-function{gdk-device-get-axis}
+    @about-function{gdk-device-axis}
     @about-function{gdk-device-list-axes}
-    @about-function{gdk-device-get-axis-value}
-    @about-function{gdk-device-get-last-event-window}
+    @about-function{gdk-device-axis-value}
+    @about-function{gdk-device-last-event-window}
     @about-function{gdk-device-tool-get-serial}
     @about-function{gdk-device-tool-get-tool-type}
+    @about-function{gdk-device-tool-get-hardware-id}
   @end{section}
   @begin[GdkDevicePad]{section}
     Pad device interface.
 
     @about-symbol{gdk-device-pad-feature}
     @about-class{gdk-device-pad}
-    @about-function{gdk-device-pad-get-n-groups}
-    @about-function{gdk-device-pad-get-group-n-modes}
-    @about-function{gdk-device-pad-get-n-features}
-    @about-function{gdk-device-pad-get-feature-group}
+    @about-function{gdk-device-pad-n-groups}
+    @about-function{gdk-device-pad-group-n-modes}
+    @about-function{gdk-device-pad-n-features}
+    @about-function{gdk-device-pad-feature-group}
   @end{section}
   @begin[Rectangles]{section}
     Simple graphical data types.
@@ -274,13 +268,12 @@
     Functions for obtaining pixbufs.
 
     Pixbufs are client-side images. For details on how to create and manipulate
-    pixbufs, see the @class{gdk-pixbuf} API documentation.
+    pixbufs, see the @class{gdk-pixbuf} API documentation. The functions
+    described here allow to obtain pixbufs from @class{gdk-window} objects and
+    cairo surfaces.
 
-    The functions described here allow to obtain pixbufs from
-    @class{gdk-window}'s and cairo surfaces.
-
-    @about-function{gdk-pixbuf-get-from-window}
-    @about-function{gdk-pixbuf-get-from-surface}
+    @about-function{gdk-pixbuf-from-window}
+    @about-function{gdk-pixbuf-from-surface}
   @end{section}
   @begin[RGBA Colors]{section}
     RGBA colors
@@ -330,8 +323,8 @@
 
     @about-symbol{gdk-cursor-type}
     @about-class{gdk-cursor}
-    @about-generic{gdk-cursor-display}
     @about-generic{gdk-cursor-cursor-type}
+    @about-generic{gdk-cursor-display}
     @about-function{gdk-cursor-new}
     @about-function{gdk-cursor-new-from-pixbuf}
     @about-function{gdk-cursor-new-from-surface}
@@ -506,20 +499,20 @@
     @about-function{gdk-window-effective-toplevel}
   @end{section}
   @begin[Frame Clock]{section}
-    A @sym{gdk-frame-clock} tells the application when to update and repaint a
-    window.
+    A @sym{gdk-frame-clock} object tells the application when to update and
+    repaint a window.
 
     @about-symbol{gdk-frame-clock-phase}
     @about-class{gdk-frame-clock}
-    @about-function{gdk-frame-clock-get-frame-time}
+    @about-function{gdk-frame-clock-frame-time}
     @about-function{gdk-frame-clock-request-phase}
     @about-function{gdk-frame-clock-begin-updating}
     @about-function{gdk-frame-clock-end-updating}
-    @about-function{gdk-frame-clock-get-frame-counter}
-    @about-function{gdk-frame-clock-get-history-start}
-    @about-function{gdk-frame-clock-get-timings}
-    @about-function{gdk-frame-clock-get-current-timings}
-    @about-function{gdk-frame-clock-get-refresh-info}
+    @about-function{gdk-frame-clock-frame-counter}
+    @about-function{gdk-frame-clock-history-start}
+    @about-function{gdk-frame-clock-timings}
+    @about-function{gdk-frame-clock-current-timings}
+    @about-function{gdk-frame-clock-refresh-info}
   @end{section}
   @begin[Frame timings]{section}
     Object holding timing information for a single frame.
@@ -527,20 +520,20 @@
     @about-class{gdk-frame-timings}
     @about-function{gdk-frame-timings-ref}
     @about-function{gdk-frame-timings-unref}
-    @about-function{gdk-frame-timings-get-frame-counter}
-    @about-function{gdk-frame-timings-get-complete}
-    @about-function{gdk-frame-timings-get-frame-time}
-    @about-function{gdk-frame-timings-get-presentation-time}
-    @about-function{gdk-frame-timings-get-refresh-interval}
-    @about-function{gdk-frame-timings-get-predicted-presentation-time}
+    @about-function{gdk-frame-timings-frame-counter}
+    @about-function{gdk-frame-timings-complete}
+    @about-function{gdk-frame-timings-frame-time}
+    @about-function{gdk-frame-timings-presentation-time}
+    @about-function{gdk-frame-timings-refresh-interval}
+    @about-function{gdk-frame-timings-predicted-presentation-time}
   @end{section}
   @begin[GdkDrawingContext]{section}
     Drawing context for GDK windows.
 
     @about-class{gdk-drawing-context}
-    @about-generic{gdk-drawing-context-window}
     @about-generic{gdk-drawing-context-clip}
-    @about-function{gdk-drawing-context-get-cairo-context}
+    @about-generic{gdk-drawing-context-window}
+    @about-function{gdk-drawing-context-cairo-context}
     @about-function{gdk-drawing-context-is-valid}
   @end{section}
   @begin[OpenGL context]{section}
@@ -1080,83 +1073,50 @@
 
     GLib is completely thread safe (all global data is automatically locked),
     but individual data structure instances are not automatically locked for
-    performance reasons. So e. g. you must coordinate accesses to the same
+    performance reasons. So e.g. you must coordinate accesses to the same
     @code{GHashTable} from multiple threads.
 
-    GTK+ is \"thread aware\" but not thread safe - it provides a global lock
-    controlled by the functions @fun{gdk-threads-enter}/@fun{gdk-threads-leave}
-    which protects all use of GTK+. That is, only one thread can use GTK+ at any
-    given time.
+    GTK+, however, is not thread safe. You should only use GTK+ and GDK from
+    the thread @code{gtk_init()} and @code{gtk_main()} were called on. This is
+    usually referred to as the \"main thread\".
 
-    Unfortunately the above holds with the X11 backend only. With the Win32
-    backend, GDK calls should not be attempted from multiple threads at all.
+    Signals on GTK+ and GDK types, as well as non-signal callbacks, are emitted
+    in the main thread.
 
-    You must call the function @fun{gdk-threads-init} before executing any
-    other GTK+ or GDK functions in a threaded GTK+ program.
-
-    Idles, timeouts, and input functions from GLib, such as the function
-    @fun{g-idle-add}, are executed outside of the main GTK+ lock. So, if you
-    need to call GTK+ inside of such a callback, you must surround the callback
-    with a @fun{gdk-threads-enter}/@fun{gdk-threads-leave} pair or use the
-    function @fun{gdk-threads-add-idle-full} which does this for you. However,
-    event dispatching from the mainloop is still executed within the main GTK+
-    lock, so callback functions connected to event signals like
-    \"button-press-event\", do not need thread protection.
-
-    In particular, this means, if you are writing widgets that might be used in
-    threaded programs, you must surround timeouts and idle functions in this
-    matter.
-
-    As always, you must also surround any calls to GTK+ not made within a signal
-    handler with a @fun{gdk-threads-enter}/@fun{gdk-threads-leave} pair.
-
-    Before calling the function @fun{gdk-threads-leave} from a thread other than
-    your main thread, you probably want to call the function @fun{gdk-flush} to
-    send all pending commands to the windowing system. (The reason you do not
-    need to do this from the main thread is that GDK always automatically
-    flushes pending commands when it runs out of incoming events to process and
-    has to sleep while waiting for more events.)
-
-    A minimal main program for a threaded GTK+ application looks like:
+    You can schedule work in the main thread safely from other threads by using
+    the functions @fun{gdk-threads-add-idle} and @fun{ gdk-threads-add-timeout}.
     @begin{pre}
-   int
-   main (int argc, char *argv[])
-   {
-     GtkWidget *window;
+static void
+worker_thread (void)
+{
+  ExpensiveData *expensive_data = do_expensive_computation ();
 
-     gdk_threads_init ();
-     gdk_threads_enter ();
+  gdk_threads_add_idle (got_value, expensive_data);
+@}
 
-     gtk_init (&argc, &argv);
+static gboolean
+got_value (gpointer user_data)
+{
+  ExpensiveData *expensive_data = user_data;
 
-     window = create_window ();
-     gtk_widget_show (window);
+  my_app->expensive_data = expensive_data;
+  gtk_button_set_sensitive (my_app->button, TRUE);
+  gtk_button_set_label (my_app->button, expensive_data->result_label);
 
-     gtk_main ();
-     gdk_threads_leave ();
-
-     return 0;
-   @}
+  return G_SOURCE_REMOVE;
+@}
     @end{pre}
-    Callbacks require a bit of attention. Callbacks from GTK+ signals are made
-    within the GTK+ lock. However callbacks from GLib (timeouts, IO callbacks,
-    and idle functions) are made outside of the GTK+ lock. So, within a signal
-    handler you do not need to call the function @fun{gdk-threads-enter}, but
-    within the other types of callbacks, you do.
+    You should use the functions @fun{gdk-threads-add-idle} and
+    @fun{gdk-threads-add-timeout} instead of @fun{g-idle-add} and
+    @fun{g-timeout-add} since libraries not under your control might be using
+    the deprecated GDK locking mechanism. If you are sure that none of the code
+    in your application and libraries use the deprecated
+    @code{gdk_threads_enter()} or @code{gdk_threads_leave()} methods, then you
+    can safely use the functions @fun{g-idle-add} and @fun{g-timeout-add}.
 
-    Unfortunately, all of the above documentation holds with the X11 backend
-    only. With the Win32 backend, GDK and GTK+ calls should not be attempted
-    from multiple threads at all. Combining the GDK lock with other locks such
-    as the Python global interpreter lock can be complicated.
-
-    For these reason, the threading support has been deprecated in GTK+ 3.6.
-    Instead of calling GTK+ directly from multiple threads, it is recommended to
-    use the functions @fun{g-idle-add}, @code{g_main_context_invoke()} and
-    similar functions to make these calls from the main thread instead. The main
-    thread is the thread which has called the function @code{gtk_init()} and is
-    running the GTK+ mainloop. GTK+ itself will continue to use the GDK lock
-    internally as long as the deprecated functionality is still available, and
-    other libraries should probably do the same.
+    For more information on this \"worker thread\" pattern, you should also
+    look at @code{GTask}, which gives you high-level tools to perform expensive
+    tasks from worker threads, and will handle thread management for you.
 
     @about-function{gdk-threads-init}
     @about-function{gdk-threads-enter}
