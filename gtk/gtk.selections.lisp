@@ -1041,17 +1041,17 @@
 (defcfun ("gtk_selection_data_get_pixbuf" gtk-selection-data-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2020-11-21}
   @syntax[]{(gtk-selection-data-pixbuf selection-data) => pixbuf}
   @syntax[]{(setf (gtk-selection-data-pixbuf selection-data) pixbuf)}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{short}
-    The @sym{gtk-selection-data-pixbuf} gets the contents of the selection data
-    as a @class{gdk-pixbuf}.
+    The function @sym{gtk-selection-data-pixbuf} gets the contents of the
+    selection data as a @class{gdk-pixbuf} structure.
   @end{short}
   The function @sym{(setf gtk-selection-data-pixbuf)} sets the contents of the
-  selection from a @class{gdk-pixbuf}.
+  selection from a @class{gdk-pixbuf} structure.
 
   The pixbuf is converted to the form determined by the file @code{target}
   of @arg{selection-data}.
@@ -1132,10 +1132,10 @@
 (defcfun ("gtk_selection_data_targets_include_image"
            gtk-selection-data-targets-include-image) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2020-11-21}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
-  @argument[writable]{whether to accept only targets for which GTK+ knows how
-    to convert a pixbuf into the format}
+  @argument[writable]{a boolean whether to accept only targets for which GTK+
+    knows how to convert a pixbuf into the format}
   @begin{return}
     @em{True} if @arg{selection-data} holds a list of targets, and a suitable
     target for images is included, otherwise @code{nil}.
@@ -1143,7 +1143,7 @@
   @begin{short}
     Given a @class{gtk-selection-data} structure holding a list of targets,
     determines if any of the targets in targets can be used to provide a
-    @class{gdk-pixbuf}.
+    @class{gdk-pixbuf} structure.
   @end{short}
   @see-class{gtk-selection-data}
   @see-class{gdk-pixbuf}"

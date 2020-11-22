@@ -2700,10 +2700,10 @@
 (defcfun ("gtk_window_get_default_icon_list" gtk-window-default-icon-list)
     (g-list (g-object gdk-pixbuf :free-from-foreign nil))
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-11-21}
   @syntax[]{(gtk-window-default-icon-list) => icon-list}
   @syntax[]{(setf (gtk-window-default-icon-list) icon-list)}
-  @argument[icon-list]{a list of @class{gdk-pixbuf} objects}
+  @argument[icon-list]{a list of @class{gdk-pixbuf} structures}
   @begin{short}
     Accessor of the icon list of the window.
   @end{short}
@@ -2766,11 +2766,11 @@
 (defcfun ("gtk_window_get_icon_list" gtk-window-icon-list)
     (g-list (g-object gdk-pixbuf :free-from-foreign nil) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-11-21}
   @syntax[]{(gtk-window-icon-list window) => icon-list}
   @syntax[]{(setf (gtk-window-icon-list window) icon-list)}
   @argument[window]{a @class{gtk-window} widget}
-  @argument[icon-list]{list of @class{gdk-pixbuf} objects}
+  @argument[icon-list]{list of @class{gdk-pixbuf} structures}
   @begin{short}
     Accessor of the icon list of the window.
   @end{short}
@@ -3230,7 +3230,7 @@
 
 (defcfun ("gtk_window_set_default_icon" gtk-window-set-default-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-11-21}
   @argument[icon]{the icon of type @class{gdk-pixbuf}}
   @begin{short}
     Sets an icon to be used as fallback for windows that have not had the

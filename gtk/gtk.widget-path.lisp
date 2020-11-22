@@ -337,17 +337,17 @@
 
 (defcfun ("gtk_widget_path_has_parent" gtk-widget-path-has-parent) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-2-29}
+ "@version{2020-11-13}
   @argument[path]{a @class{gtk-widget-path} structure}
-  @argument[type]{the @class{g-type} of the widget to check in parents}
-  @return{@arg{True} if any parent is of type @arg{type}.}
+  @argument[gtype]{the @class{g-type} of the widget to check in parents}
+  @return{@arg{True} if any parent is of type @arg{gtype}.}
   @begin{short}
     Returns @arg{true} if any of the parents of the widget represented in
-    @arg{path} is of type @arg{type}, or any subtype of it.
+    @arg{path} is of type @arg{gtype}, or any subtype of it.
   @end{short}
   @see-class{gtk-widget-path}"
   (path (g-boxed-foreign gtk-widget-path))
-  (type g-type))
+  (gtype g-type))
 
 (export 'gtk-widget-path-has-parent)
 

@@ -556,22 +556,26 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixbuf" 'gtk-status-icon) 't)
  "The @code{pixbuf} property of type @class{gdk-pixbuf} (Read / Write) @br{}
-  A @class{gdk-pixbuf} object to display.")
+  A @class{gdk-pixbuf} structure to display.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-status-icon-pixbuf 'function)
- "@version{2020-1-19}
+ "@version{2020-11-21}
   @syntax[]{(gtk-status-icon-pixbuf object) => pixbuf}
+  @syntax[]{(setf (gtk-status-icon-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-status-icon} widget}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{short}
     Accessor of the @slot[gtk-status-icon]{pixbuf} slot of the
     @class{gtk-status-icon} class.
   @end{short}
 
-  The @sym{gtk-status-icon-pixbuf} slot access function gets the
-  @class{gdk-pixbuf} object being displayed by the status icon.
+  The slot access function @sym{gtk-status-icon-pixbuf} gets the
+  @class{gdk-pixbuf} structure being displayed by the status icon. The slot
+  access function @sym{(setf gtk-status-icon-pixbuf)} sets the
+  @class{gdk-pixbuf} structure being displayed.
 
   The storage type of the status icon must be the value @code{:empty} or
   @code{:pixbuf}. See the function @fun{gtk-status-icon-storage-type}. The
@@ -579,8 +583,8 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-status-icon-pixbuf} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @code{GNotification}
-    and @class{gtk-application} to provide status notifications; there is no
-    direct replacement for this functionality.
+    and the @class{gtk-application} class to provide status notifications.
+    There is no direct replacement for this functionality.
   @end{dictionary}
   @see-class{gtk-status-icon}
   @see-class{gdk-pixbuf}
@@ -939,8 +943,8 @@
 (defcfun ("gtk_status_icon_new_from_pixbuf" gtk-status-icon-new-from-pixbuf)
     (g-object gtk-status-icon)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-19}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+ "@version{2020-11-21}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @return{A new @class{gtk-status-icon} widget.}
   @begin{short}
     Creates a status icon displaying @arg{pixbuf}.
@@ -951,10 +955,11 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-status-icon-new-from-pixbuf} has been deprecated since
     version 3.14 and should not be used in newly-written code. Use
-    @code{GNotification} and @class{gtk-application} to provide status
-    notifications
+    @code{GNotification} and the @class{gtk-application} class to provide
+    status notifications.
   @end{dictionary}
-  @see-class{gtk-status-icon}"
+  @see-class{gtk-status-icon}
+  @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf)))
 
 (export 'gtk-status-icon-new-from-pixbuf)
@@ -1073,22 +1078,23 @@
 (defcfun ("gtk_status_icon_set_from_pixbuf" gtk-status-icon-set-from-pixbuf)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-19}
+ "@version{2020-11-21}
   @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[pixbuf]{a @class{gdk-pixbuf} or @code{nil}}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure or @code{nil}}
   @begin{short}
     Makes the status icon display @arg{pixbuf}.
   @end{short}
   See the function @fun{gtk-status-icon-new-from-pixbuf} for details.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-status-icon-set-from-pixbuf} has been deprecated since
-    version 3.14 and should not be used in newly-written code. Use
-    @code{GNotification} and @class{gtk-application} to provide status
-    notifications; you can use @code{g_notification_set_icon()} to associate a
-    @class{g-icon} with a notification.
+    The function @sym{gtk-status-icon-set-from-pixbuf} has been deprecated
+    since version 3.14 and should not be used in newly-written code. Use
+    @code{GNotification} and the @class{gtk-application} class to provide status
+    notifications. You can use the function @code{g_notification_set_icon()} to
+    associate a @class{g-icon} object with a notification.
   @end{dictionary}
   @see-class{gtk-status-icon}
   @see-class{gdk-pixbuf}
+  @see-class{g-icon}
   @see-function{gtk-status-icon-new-from-pixbuf}"
   (status-icon (g-object gtk-status-icon))
   (pixbuf (g-object gdk-pixbuf)))

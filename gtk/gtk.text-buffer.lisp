@@ -288,18 +288,19 @@
       @begin{pre}
  lambda (buffer location pixbuf)    : Run Last
       @end{pre}
-      The \"insert-pixbuf\" signal is emitted to insert a @class{gdk-pixbuf} in
-      a @sym{gtk-text-buffer}. Insertion actually occurs in the default handler.
-      Note that if your handler runs before the default handler it must not
-      invalidate the @arg{location} iter (or has to revalidate it). The default
-      signal handler revalidates it to be placed after the inserted
-      @arg{pixbuf}. See also the function @fun{gtk-text-buffer-insert-pixbuf}.
+      The \"insert-pixbuf\" signal is emitted to insert a @class{gdk-pixbuf}
+      structure in a @sym{gtk-text-buffer} object. Insertion actually occurs in
+      the default handler. Note that if your handler runs before the default
+      handler it must not invalidate the @arg{location} iter (or has to
+      revalidate it). The default signal handler revalidates it to be placed
+      after the inserted @arg{pixbuf}. See also the function
+      @fun{gtk-text-buffer-insert-pixbuf}.
       @begin[code]{table}
         @entry[buffer]{The @sym{gtk-text-buffer} object which received the
           signal.}
         @entry[location]{The @class{gtk-text-iter} position to insert
           @arg{pixbuf} in @arg{buffer}.}
-        @entry[pixbuf]{The @class{gdk-pixbuf} to be inserted.}
+        @entry[pixbuf]{The @class{gdk-pixbuf} structure to be inserted.}
       @end{table}
     @subheading{The \"insert-text\" signal}
       @begin{pre}
@@ -1170,18 +1171,18 @@
 
 (defcfun ("gtk_text_buffer_insert_pixbuf" gtk-text-buffer-insert-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-12}
+ "@version{2020-11-21}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[iter]{a @class{gtk-text-iter} location to insert the pixbuf}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{short}
-    Inserts an image into the text @arg{buffer} at @arg{iter}.
+    Inserts an image into the text buffer at @arg{iter}.
   @end{short}
   The image will be counted as one character in character counts, and when
   obtaining the buffer contents as a string, will be represented by the Unicode
   \"object replacement character\" @code{0xFFFC}. Note that the \"slice\"
   variants for obtaining portions of the buffer as a string include this
-  character for pixbufs, but the \"text\" variants do not. E. g. see the
+  character for pixbufs, but the \"text\" variants do not. E.g. see the
   functions @fun{gtk-text-buffer-get-slice} and @fun{gtk-text-buffer-get-text}.
   @see-class{gtk-text-buffer}
   @see-class{gdk-pixbuf}

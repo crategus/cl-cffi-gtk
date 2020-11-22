@@ -89,7 +89,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-store 'type)
- "@version{2020-4-14}
+ "@version{2020-11-21}
   @begin{short}
     The @sym{gtk-list-store} object is a list model for use with a
     @class{gtk-tree-view} widget.
@@ -99,20 +99,21 @@
   @class{gtk-tree-sortable} interface so it can be sorted by the view. Finally,
   it also implements the tree drag and drop interfaces.
 
-  The @sym{gtk-list-store} can accept most GObject types as a column type,
-  though it cannot accept all custom types. Internally, it will keep a copy of
-  data passed in, such as a string or a boxed pointer. Columns that accept
-  GObjects are handled a little differently. The @sym{gtk-list-store} will keep
-  a reference to the object instead of copying the value. As a result, if the
-  object is modified, it is up to the application writer to call the function
-  @fun{gtk-tree-model-row-changed} to emit the \"row-changed\" signal. This
-  most commonly affects lists with @class{gdk-pixbuf}s stored.
+  The @sym{gtk-list-store} object can accept most GObject types as a column
+  type, though it cannot accept all custom types. Internally, it will keep a
+  copy of data passed in, such as a string or a boxed pointer. Columns that
+  accept GObjects are handled a little differently. The @sym{gtk-list-store}
+  object will keep a reference to the object instead of copying the value. As a
+  result, if the object is modified, it is up to the application writer to call
+  the function @fun{gtk-tree-model-row-changed} to emit the \"row-changed\"
+  signal. This most commonly affects lists with @class{gdk-pixbuf} structures
+  stored.
 
   @subheading{Performance Considerations}
-    Internally, the @sym{gtk-list-store} was implemented with a linked list
-    with a tail pointer prior to GTK+ 2.6. As a result, it was fast at data
-    insertion and deletion, and not fast at random data access. The
-    @sym{gtk-list-store} sets the @code{:iters-persist} flag of type
+    Internally, the @sym{gtk-list-store} object was implemented with a linked
+    list with a tail pointer prior to GTK+ 2.6. As a result, it was fast at
+    data insertion and deletion, and not fast at random data access. The
+    @sym{gtk-list-store} object sets the @code{:iters-persist} flag of type
     @symbol{gtk-tree-model-flags}, which means that @class{gtk-tree-iter}
     structures can be cached while the row exists. Thus, if access to a
     particular row is needed often and your code is expected to run on older
@@ -122,16 +123,17 @@
     It is important to note that only the method
     @fun{gtk-list-store-insert-with-values} is atomic, in the sense that the
     row is being appended to the store and the values filled in in a single
-    operation with regard to @class{gtk-tree-model} signaling. In contrast,
-    using e. g. the functions @fun{gtk-list-store-append} and then
+    operation with regard to the @class{gtk-tree-model} interface signaling. In
+    contrast, using e.g. the functions @fun{gtk-list-store-append} and then
     @fun{gtk-list-store-set} will first create a row, which triggers the
-    \"row-inserted\" signal on @sym{gtk-list-store}. The row, however, is still
-    empty, and any signal handler connecting to \"row-inserted\" on this
-    particular store should be prepared for the situation that the row might
-    be empty. This is especially important if you are wrapping the
-    @sym{gtk-list-store} inside a @class{gtk-tree-model-filter} and are using
-    a @code{GtkTreeModelFilterVisibleFunc}. Using any of the non-atomic
-    operations to append rows to the @sym{gtk-list-store} will cause the
+    \"row-inserted\" signal on the @sym{gtk-list-store} object. The row,
+    however, is still empty, and any signal handler connecting to
+    \"row-inserted\" on this particular store should be prepared for the
+    situation that the row might be empty. This is especially important if you
+    are wrapping the @sym{gtk-list-store} object inside a
+    @class{gtk-tree-model-filter} object and are using a
+    @code{GtkTreeModelFilterVisibleFunc}. Using any of the non-atomic
+    operations to append rows to the @sym{gtk-list-store} object will cause the
     @code{GtkTreeModelFilterVisibleFunc} to be visited with an empty row first;
     the function must be prepared for that.
   @begin[Example]{dictionary}

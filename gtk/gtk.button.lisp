@@ -171,7 +171,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2020-8-20}
+ "@version{2020-11-19}
   @short{A widget that emits a signal when clicked on.}
 
   @image[button]{}
@@ -182,16 +182,16 @@
 
   The @sym{gtk-button} widget can hold any valid child widget. That is, it can
   hold almost any other standard @class{gtk-widget}. The most commonly used
-  child is the @class{gtk-label}.
+  child is the @class{gtk-label} widget.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-button} has a single CSS node with name @code{button}. The node
-    will get the style classes @code{.image-button} or @code{.text-button}, if
-    the content is just an image or label, respectively. It may also receive
-    the @code{.flat} style class.
+    The @sym{gtk-button} widget has a single CSS node with name @code{button}.
+    The node will get the style classes @code{.image-button} or
+    @code{.text-button}, if the content is just an image or label, respectively.
+    It may also receive the @code{.flat} style class.
 
-    Other style classes that are commonly used with @sym{gtk-button} include
-    @code{.suggested-action} and @code{.destructive-action}. In special cases,
-    buttons can be made round by adding the @code{.circular} style class.
+    Other style classes that are commonly used with the @sym{gtk-button} widget
+    include @code{.suggested-action} and @code{.destructive-action}. In special
+    cases, buttons can be made round by adding the @code{.circular} style class.
 
     Button-like widgets like @class{gtk-toggle-button}, @class{gtk-menu-button},
     @class{gtk-volume-button}, @class{gtk-lock-button},
@@ -355,8 +355,7 @@
   @see-class{gtk-label}
   @see-class{gtk-border}
   @see-symbol{gtk-position-type}
-  @see-symbol{gtk-relief-style}
-  @see-function{gtk-widget-grab-default}")
+  @see-symbol{gtk-relief-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -399,7 +398,9 @@
   the image.
 
   Since 3.6
-  @see-class{gtk-button}")
+  @see-class{gtk-button}
+  @see-class{gtk-settings}
+  @see-function{gtk-settings-gtk-button-images}")
 
 ;;; --- gtk-button-focus-on-click ----------------------------------------------
 
@@ -449,7 +450,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-image atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-image 'function)
- "@version{2020-5-9}
+ "@version{2020-11-20}
   @syntax[]{(gtk-button-image object) => image}
   @syntax[]{(setf (gtk-button-image object) image)}
   @argument[object]{a @class{gtk-button} widget}
@@ -462,16 +463,15 @@
   The slot access function @sym{gtk-button-image} gets the widget that is
   currently set as the image of the button. This may have been explicitly set
   by the slot access function @sym{(setf gtk-button-image)} or constructed by
-  the function @fun{gtk-button-new-from-stock}.
+  the function @fun{gtk-button-new-from-icon-name}.
 
-  The slot access function @sym{(setf gtk-button-image)} sets the image of the
-  button to the given widget. Note that it depends on the
-  @slot[gtk-settings]{gtk-button-images} setting whether the image will be
-  displayed or not, you do not have to call the function @fun{gtk-widget-show}
-  on the image yourself.
+  Note that it depends on the @slot[gtk-button]{always-show-image} property
+  whether the image will allways be displayed or not. You do not have to call
+  the function @fun{gtk-widget-show} on the image yourself.
   @see-class{gtk-button}
   @see-function{gtk-widget-show}
-  @see-function{gtk-button-new-from-stock}")
+  @see-function{gtk-button-new-from-icon-name}
+  @see-function{gtk-button-always-show-image}")
 
 ;;; --- gtk-button-image-position ----------------------------------------------
 
@@ -645,9 +645,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-button) 't)
  "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
-  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its horizontal alignment. The value 0.0
-  is left aligned, 1.0 is right aligned. @br{}
+  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment}
+  widget, this property can be used to control its horizontal alignment. The
+  value 0.0 is left aligned, 1.0 is right aligned. @br{}
   @em{Warning:} The @code{xalign} property has been deprecated since version
   3.14 and should not be used in newly-written code. Access the child widget
   directly if you need to control its alignment. @br{}
@@ -657,7 +657,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-xalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-xalign 'function)
- "@version{2020-5-10}
+ "@version{2020-11-19}
   @syntax[]{(gtk-button-xalign object) => xalign}
   @syntax[]{(setf (gtk-button-xalign object) xalign)}
   @argument[object]{a @class{gtk-button} widget}
@@ -667,9 +667,9 @@
     class.
   @end{short}
 
-  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its horizontal alignment. The value 0.0
-  is left aligned, 1.0 is right aligned.
+  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment}
+  widget, this property can be used to control its horizontal alignment. The
+  value 0.0 is left aligned, 1.0 is right aligned.
   @begin[Warning]{dictionary}
     The function @sym{gtk-button-xalign} property has been deprecated since
     version 3.14 and should not be used in newly-written code. Access the child
@@ -683,9 +683,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-button) 't)
  "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
-  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its vertical alignment. The value 0.0
-  is top aligned, 1.0 is bottom aligned. @br{}
+  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment}
+  widget, this property can be used to control its vertical alignment. The
+  value 0.0 is top aligned, 1.0 is bottom aligned. @br{}
   @em{Warning:} The @code{yalign} property has been deprecated since version
   3.14 and should not be used in newly-written code. Access the child widget
   directly if you need to control its alignment. @br{}
@@ -695,7 +695,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-yalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-yalign 'function)
- "@version{2020-5-10}
+ "@version{2020-11-19}
   @syntax[]{(gtk-button-xalign object) => yalign}
   @syntax[]{(setf (gtk-button-xalign object) yalign)}
   @argument[object]{a @class{gtk-button} widget}
@@ -705,9 +705,9 @@
     class.
   @end{short}
 
-  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its vertical alignment. The value 0.0
-  is top aligned, 1.0 is bottom aligned.
+  If the child of the button is a @class{gtk-misc} or @class{gtk-alignment}
+  widget, this property can be used to control its vertical alignment. The
+  value 0.0 is top aligned, 1.0 is bottom aligned.
   @begin[Warning]{dictionary}
     The @code{yalign} property has been deprecated since version 3.14 and
     should not be used in newly-written code. Access the child widget directly
@@ -724,7 +724,7 @@
 
 (defun gtk-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2020-11-20}
   @return{The newly created @class{gtk-button} widget.}
   @begin{short}
     Creates a new button widget.
@@ -734,7 +734,6 @@
   @see-function{gtk-button-new-with-label}
   @see-function{gtk-button-new-with-mnemonic}
   @see-function{gtk-button-new-from-icon-name}
-  @see-function{gtk-button-new-from-stock}
   @see-function{gtk-container-add}"
   (make-instance 'gtk-button))
 
@@ -748,7 +747,7 @@
 
 (defun gtk-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2020-11-20}
   @argument[label]{a string with the text you want the @class{gtk-label} widget
     to hold}
   @return{The newly created @class{gtk-button} widget.}
@@ -760,8 +759,7 @@
   @see-class{gtk-label}
   @see-function{gtk-button-new}
   @see-function{gtk-button-new-with-mnemonic}
-  @see-function{gtk-button-new-from-icon-name}
-  @see-function{gtk-button-new-from-stock}"
+  @see-function{gtk-button-new-from-icon-name}"
   (make-instance 'gtk-button
                  :label label))
 
@@ -775,12 +773,12 @@
 
 (defun gtk-button-new-with-mnemonic (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2020-11-20}
   @argument[label]{a string with the text of the button, with an underscore in
     front of the mnemonic character}
   @return{A new @class{gtk-button} widget.}
   @begin{short}
-    Creates a new button widget containing a label.
+    Creates a new button widget containing a label with a mnemonic.
   @end{short}
   If characters in label are preceded by an underscore, they are underlined.
   If you need a literal underscore character in a label, use '__' (two
@@ -789,8 +787,7 @@
   @see-class{gtk-button}
   @see-function{gtk-button-new}
   @see-function{gtk-button-new-with-label}
-  @see-function{gtk-button-new-from-icon-name}
-  @see-function{gtk-button-new-from-stock}"
+  @see-function{gtk-button-new-from-icon-name}"
   (make-instance 'gtk-button
                  :label label
                  :use-underline t))
@@ -835,8 +832,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_new_from_stock ()
 ;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-new-from-stock))
 
 (defun gtk-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation

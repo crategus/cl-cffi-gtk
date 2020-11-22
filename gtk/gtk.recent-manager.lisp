@@ -1019,11 +1019,11 @@ else
 (defcfun ("gtk_recent_info_get_icon" gtk-recent-info-icon)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2020-11-21}
   @argument[info]{a @class{gtk-recent-info} structure}
-  @argument[size]{a @code{:int} with the size of the icon in pixels}
+  @argument[size]{an integer with the size of the icon in pixels}
   @begin{return}
-    A @class{gdk-pixbuf} containing the icon, or @code{nil}.
+    A @class{gdk-pixbuf} structure containing the icon, or @code{nil}.
   @end{return}
   @begin{short}
     Retrieves the icon of size @arg{size} associated to the resource MIME type.

@@ -171,9 +171,9 @@
 
 (defcfun ("gtk_tooltip_set_icon" gtk-tooltip-set-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-3}
+ "@version{2020-11-21}
   @argument[tooltip]{a @class{gtk-tooltip} object}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object, or @code{nil}}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure, or @code{nil}}
   @begin{short}
     Sets the icon of the tooltip, which is in front of the text, to be
     @arg{pixbuf}.

@@ -748,12 +748,12 @@ drag_motion (GtkWidget *widget,
 
 (defcfun ("gtk_drag_set_icon_pixbuf" gtk-drag-set-icon-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2020-11-21}
   @argument[context]{the context of type @class{gdk-drag-context} for a drag,
     this must be called with a context for the source side of a drag}
-  @argument[pixbuf]{the @class{gdk-pixbuf} object to use as the drag icon}
-  @argument[hot-x]{a @code{:int} with the x offset within widget of the hotspot}
-  @argument[hot-y]{a @code{:int} with the y offset within widget of the hotspot}
+  @argument[pixbuf]{the @class{gdk-pixbuf} structure to use as the drag icon}
+  @argument[hot-x]{an integer with the x offset within widget of the hotspot}
+  @argument[hot-y]{an integer with the y offset within widget of the hotspot}
   @short{Sets @arg{pixbuf} as the icon for a given drag.}
   @see-class{gdk-drag-context}
   @see-class{gdk-pixbuf}"
@@ -970,12 +970,12 @@ drag_motion (GtkWidget *widget,
 (defcfun ("gtk_drag_source_set_icon_pixbuf" gtk-drag-source-set-icon-pixbuf)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2020-11-21}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[pixbuf]{the @class{gdk-pixbuf} for the drag icon}
+  @argument[pixbuf]{the @class{gdk-pixbuf} structure for the drag icon}
   @begin{short}
     Sets the icon that will be used for drags from a particular @arg{widget}
-    from a @class{gdk-pixbuf}.
+    from a @class{gdk-pixbuf} structure.
   @end{short}
   GTK+ retains a reference for @arg{pixbuf} and will release it when it is no
   longer needed.

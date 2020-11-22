@@ -1651,11 +1651,11 @@
 (setf (gethash 'gtk-entry-primary-icon-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-primary-icon-pixbuf 'function)
- "@version{2020-5-29}
+ "@version{2020-11-21}
   @syntax[]{(gtk-entry-primary-icon-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-entry-primary-icon-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{short}
     Accessor of the @slot[gtk-entry]{primary-icon-pixbuf} slot of the
     @class{gtk-entry} class.
@@ -2017,17 +2017,17 @@
 (setf (gethash 'gtk-entry-secondary-icon-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-pixbuf 'function)
- "@version{2020-5-30}
+ "@version{2020-11-21}
   @syntax[]{(gtk-entry-secondary-icon-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-entry-secondary-icon-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{short}
     Accessor of the @slot[gtk-entry]{seconary-icon-pixbuf} slot of the
     @class{gtk-entry} class.
   @end{short}
 
-  An pixbuf to use as the secondary icon for the entry.
+  A pixbuf to use as the secondary icon for the entry.
   @see-class{gtk-entry}
   @see-function{gtk-entry-icon-pixbuf}")
 
@@ -2866,10 +2866,10 @@
 
 (defcfun ("gtk_entry_set_icon_from_pixbuf" gtk-entry-set-icon-from-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-30}
+ "@version{2020-11-21}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
-  @argument[pixbuf]{a @class{gdk-pixbuf}, or @code{nil}}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure, or @code{nil}}
   @begin{short}
     Sets the icon shown in the specified position using a pixbuf.
   @end{short}
@@ -3006,19 +3006,20 @@
 
 (defun gtk-entry-icon-pixbuf (entry icon-pos)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-30}
+ "@version{2020-11-21}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of @symbol{gtk-entry-icon-position}}
   @begin{return}
-    A @class{gdk-pixbuf}, or @code{nil} if no icon is set for this position.
+    A @class{gdk-pixbuf} structure, or @code{nil} if no icon is set for this
+    position.
   @end{return}
   @begin{short}
     Retrieves the image used for the icon.
   @end{short}
 
   Unlike the other methods of setting and getting icon data, this method will
-  work regardless of whether the icon was set using a @class{gdk-pixbuf}, a
-  @class{g-icon}, a stock item, or an icon name.
+  work regardless of whether the icon was set using a @class{gdk-pixbuf}
+  structure, a @class{g-icon} object, a stock item, or an icon name.
   @see-class{gtk-entry}
   @see-class{g-icon}
   @see-class{gdk-pixbuf}

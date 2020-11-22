@@ -2378,32 +2378,30 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-default" 'gtk-widget) 't)
- "The @code{can-default} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{can-default} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget can be the default widget. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-can-default atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-can-default 'function)
- "@version{2014-2-25}
+ "@version{2020-11-19}
   @syntax[]{(gtk-widget-can-default object) => can-default}
   @syntax[]{(setf (gtk-widget-can-default object) can-default)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[can-default]{whether or not the widget can be a default widget}
+  @argument[can-default]{a boolean whether or not the widget can be a default
+    widget}
   @begin{short}
     Accessor of the @slot[gtk-widget]{can-default} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The @sym{gtk-widget-can-default} slot access function returns @em{true} if
-  the widget can be a default widget, @code{nil} otherwise. It determines
-  whether the widget can be a default widget.
+  The slot access function @sym{gtk-widget-can-default} returns @em{true} if
+  the widget can be a default widget, @em{false} otherwise. The slot access
+  function @sym{(setf gtk-widget-can-default)} specifies whether the widget can
+  be a default widget.
 
-  The @sym{(setf gtk-widget-can-default)} slot access function specifies whether
-  the widget can be a default widget.
-
-  See the @fun{gtk-widget-grab-default} function for details about the meaning
+  See the function @fun{gtk-widget-grab-default} for details about the meaning
   of \"default\".
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-default}")
@@ -3302,22 +3300,22 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (setf (gethash 'gtk-widget-receives-default atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-receives-default 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-11-19}
   @syntax[]{(gtk-widget-receives-default object) => receives-default}
   @syntax[]{(setf (gtk-widget-receives-default object) receives-default)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[receives-default]{a boolean wether the widget will receive the
+    default action}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{receives-default} of the
+    Accessor of the @slot[gtk-widget]{receives-default} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-receives-default} determines whether
+  The slot access function @sym{gtk-widget-receives-default} determines whether
   @arg{widget} is alyways treated as default widget within its toplevel when it
-  has the focus, even if another widget is the default.
-
-  The generic function @sym{(setf gtk-widget-receives-default)} specifies
-  whether @arg{widget} will be treated as the default widget within
-  its toplevel when it has the focus, even if another widget is the default.
+  has the focus, even if another widget is the default. The slot access function
+  @sym{(setf gtk-widget-receives-default)} specifies whether @arg{widget} will
+  be treated as the default widget.
 
   See the function @fun{gtk-widget-grab-default} for details about the meaning
   of \"default\".
@@ -3922,7 +3920,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_realize" gtk-widget-realize) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-11}
+ "@version{2020-11-19}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Creates the GDK windowing system resources associated with a widget.
@@ -3940,7 +3938,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   useful otherwise. Many times when you think you might need it, a better
   approach is to connect to a signal that will be called after the widget is
   realized automatically, such as the \"draw\" signal. Or simply use the
-  @fun{g-signal-connect} function with the \"realize\" signal.
+  function @fun{g-signal-connect} with the \"realize\" signal.
   @see-class{gtk-widget}
   @see-function{gtk-widget-unrealize}
   @see-function{g-signal-connect}"
@@ -4695,12 +4693,12 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_grab_default" gtk-widget-grab-default) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-2-7}
+ "@version{2020-11-19}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes @arg{widget} to become the default widget.
   @end{short}
-  @arg{widget} must be able to be a default widget; typically you would ensure
+  @arg{widget} must be able to be a default widget. Typically you would ensure
   this yourself by calling the function @fun{gtk-widget-can-default} with a
   @em{true} value.
 
@@ -4709,7 +4707,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @fun{gtk-widget-activate} should affect them. Note that @class{gtk-entry}
   widgets require the @slot[gtk-widget]{activates-default} property set to
   @em{true} before they activate the default widget when Enter is pressed and
-  the @class{gtk-entry} is focused.
+  the @class{gtk-entry} widget is focused.
   @see-class{gtk-widget}
   @see-class{gtk-entry}
   @see-function{gtk-widget-activate}

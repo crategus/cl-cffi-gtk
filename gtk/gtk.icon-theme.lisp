@@ -1172,13 +1172,14 @@
 (defcfun ("gtk_icon_info_new_for_pixbuf" gtk-icon-info-new-for-pixbuf)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
+ "@version{2020-11-21}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[pixbuf]{the @class{gdk-pixbuf} to wrap in a @symbol{gtk-icon-info}
-    structure}
+  @argument[pixbuf]{the @class{gdk-pixbuf} structure to wrap in a
+    @symbol{gtk-icon-info} structure}
   @return{A @symbol{gtk-icon-info} structure.}
   @begin{short}
-    Creates a @symbol{gtk-icon-info} structure for a @class{gdk-pixbuf} object.
+    Creates a @symbol{gtk-icon-info} structure for a @class{gdk-pixbuf}
+    structure.
   @end{short}
   @see-class{gtk-icon-theme}"
   (icon-theme (g-object gtk-icon-theme))
@@ -1462,17 +1463,17 @@
 
 (defun gtk-icon-info-load-symbolic (icon-info fg success warning error)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-7}
+ "@version{2020-11-21}
   @argument[icon-info]{a @symbol{gtk-icon-info} structure}
-  @argument[fg]{a @class{gdk-rgba} representing the foreground color of the
-    icon}
-  @argument[success]{a @class{gdk-rgba} representing the warning color of
+  @argument[fg]{a @class{gdk-rgba} structure representing the foreground color
+    of the icon}
+  @argument[success]{a @class{gdk-rgba} structure representing the warning color
+    of the icon or @code{nil} to use the default color}
+  @argument[warning]{a @class{gdk-rgba} structure representing the warning color
+    of the icon or @code{nil} to use the default color}
+  @argument[error]{a @class{gdk-rgba} structure representing the error color of
     the icon or @code{nil} to use the default color}
-  @argument[warning]{a @class{gdk-rgba} representing the warning color of
-    the icon or @code{nil} to use the default color}
-  @argument[error]{a @class{gdk-rgba} representing the error color of the
-    icon or @code{nil} to use the default color}
-  @return{A @class{gdk-pixbuf} object representing the loaded icon.}
+  @return{A @class{gdk-pixbuf} structure representing the loaded icon.}
   @begin{short}
     Loads an icon, modifying it to match the system colours for the foreground,
     success, warning and error colors provided.
@@ -1641,7 +1642,7 @@
  "@version{2020-3-7}
   @argument[icon-info]{a @symbol{gtk-icon-info} structure}
   @argument[context]{a @class{gtk-style-context} object}
-  @return{A @class{gdk-pixbuf} object representing the loaded icon.}
+  @return{A @class{gdk-pixbuf} structure representing the loaded icon.}
   @begin{short}
     Loads an icon, modifying it to match the system colors for the foreground,
     success, warning and error colors provided.

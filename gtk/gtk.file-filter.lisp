@@ -297,11 +297,11 @@
 (defcfun ("gtk_file_filter_add_pixbuf_formats"
           gtk-file-filter-add-pixbuf-formats) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-5}
+ "@version{2020-11-21}
   @argument[filter]{a @class{gtk-file-filter} object}
   @begin{short}
-    Adds a rule allowing image files in the formats supported by
-    @class{gdk-pixbuf}.
+    Adds a rule allowing image files in the formats supported by a
+    @class{gdk-pixbuf} structure.
   @end{short}
   @see-class{gtk-file-filter}
   @see-class{gdk-pixbuf}"

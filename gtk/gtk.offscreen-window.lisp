@@ -71,26 +71,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
- "@version{*2020-5-29}
+ "@version{2020-11-21}
   @begin{short}
-    @sym{gtk-offscreen-window} is strictly intended to be used for obtaining
-    snapshots of widgets that are not part of a normal widget hierarchy.
+    The @sym{gtk-offscreen-window} widget is strictly intended to be used for
+    obtaining snapshots of widgets that are not part of a normal widget
+    hierarchy.
   @end{short}
-  Since @sym{gtk-offscreen-window} is a toplevel widget you cannot obtain
-  snapshots of a full window with it since you cannot pack a toplevel widget in
-  another toplevel.
+  Since the @sym{gtk-offscreen-window} widget is a toplevel widget you cannot
+  obtain snapshots of a full window with it since you cannot pack a toplevel
+  widget in another toplevel.
 
   The idea is to take a widget and manually set the state of it, add it to a
-  @sym{gtk-offscreen-window} and then retrieve the snapshot as a
-  @symbol{cairo-surface-t} structure or @class{gdk-pixbuf} object.
+  @sym{gtk-offscreen-window} widget and then retrieve the snapshot as a
+  @symbol{cairo-surface-t} or @class{gdk-pixbuf} structure.
 
-  @sym{gtk-offscreen-window} derives from @class{gtk-window} only as an
-  implementation detail. Applications should not use any API specific to
-  @class{gtk-window} to operate on this object. It should be treated as a
-  @class{gtk-bin} that has no parent widget.
+  The @sym{gtk-offscreen-window} widget derives from the @class{gtk-window}
+  class only as an implementation detail. Applications should not use any API
+  specific to the @class{gtk-window} class to operate on this object. It should
+  be treated as a @class{gtk-bin} widget that has no parent widget.
 
-  When contained offscreen widgets are redrawn, @sym{gtk-offscreen-window} will
-  emit a \"damage-event\" signal.
+  When contained offscreen widgets are redrawn, the @sym{gtk-offscreen-window}
+  widget will emit a \"damage-event\" signal.
   @see-class{gtk-bin}
   @see-class{gtk-window}
   @see-class{gdk-pixbuf}
@@ -146,12 +147,12 @@
 (defcfun ("gtk_offscreen_window_get_pixbuf" gtk-offscreen-window-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
+ "@version{2020-11-21}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
-  @return{A @class{gdk-pixbuf} object, or @code{nil}.}
+  @return{A @class{gdk-pixbuf} structure, or @code{nil}.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
-    @class{gdk-pixbuf} object.
+    @class{gdk-pixbuf} structure.
   @end{short}
   @see-class{gtk-offscreen-window}
   @see-class{gdk-pixbuf}

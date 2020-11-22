@@ -48,16 +48,16 @@
 ;;;
 ;;; Properties
 ;;;
-;;;            gboolean   child-detached     Read
-;;;     GtkPositionType   handle-position    Read / Write
-;;;       GtkShadowType   shadow-type        Read / Write
-;;;     GtkPositionType   snap-edge          Read / Write
-;;;            gboolean   snap-edge-set      Read / Write
+;;;            gboolean    child-detached     Read
+;;;     GtkPositionType    handle-position    Read / Write
+;;;       GtkShadowType    shadow-type        Read / Write
+;;;     GtkPositionType    snap-edge          Read / Write
+;;;            gboolean    snap-edge-set      Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;                void   child-attached     Run First
-;;;                void   child-detached     Run First
+;;;                void    child-attached     Run First
+;;;                void    child-detached     Run First
 ;;;
 ;;;
 ;;; Object Hierarchy
@@ -175,7 +175,7 @@
  "The @code{child-detached} property of type @code{:boolean} (Read) @br{}
   A boolean value indicating whether the handlebox's child is attached or
   detached. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
@@ -279,7 +279,7 @@
  "The @code{snap-edge-set} property of type @code{:boolean} (Read / Write) @br{}
   Whether to use the value from the @code{snap-edge} property or a value
   derived from the @code{handle-position} property. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)

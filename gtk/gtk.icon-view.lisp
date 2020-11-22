@@ -702,10 +702,9 @@
 (setf (documentation (atdoc:get-slot-from-name "pixbuf-column"
                                                'gtk-icon-view) 't)
  "The @code{pixbuf-column} property of type @code{:int} (Read / Write) @br{}
-  The @code{pixbuf-column} property contains the number of the model column
-  containing the pixbufs which are displayed. The pixbuf column must be of
-  type @class{gdk-pixbuf}. Setting this property to -1 turns off the
-  display of pixbufs. @br{}
+  Contains the number of the model column containing the pixbufs which are
+  displayed. The pixbuf column must be of type @class{gdk-pixbuf}. Setting this
+  property to -1 turns off the display of pixbufs. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -713,21 +712,21 @@
 (setf (gethash 'gtk-icon-view-pixbuf-column atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-icon-view-pixbuf-column 'function)
- "@version{2013-3-8}
+ "@version{2020-11-21}
   @syntax[]{(gtk-icon-view-pixbuf-column object) => column}
   @syntax[]{(setf (gtk-icon-view-pixbuf-column object) column)}
   @argument[icon-view]{a @class{gtk-icon-view} widget}
-  @argument[column]{a column in the currently used model, or -1 to disable}
+  @argument[column]{an integer with a column in the currently used model, or
+    -1 to disable}
   @begin{short}
     Accessor of the @slot[gtk-icon-view]{pixbuf-column} slot of the
     @class{gtk-icon-view} class.
   @end{short}
 
-  The @sym{gtk-icon-view-pixbuf-column} slot access function
-  returns the column with pixbufs for the icon view.
-
-  The @sym{(setf gtk-icon-view-pixbuf-column} slot access function
-  sets the column with pixbufs for the icon view  to be column.
+  The slot access function @sym{gtk-icon-view-pixbuf-column} returns the column
+  with pixbufs for the icon view. The slot access function
+  @sym{(setf gtk-icon-view-pixbuf-column} sets the column with pixbufs for the
+  icon view  to be column.
 
   The pixbuf column must be of type @class{gdk-pixbuf}.
   @see-class{gtk-icon-view}")
