@@ -42,7 +42,7 @@
                    (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
-      (let ((button (gtk-button-new-from-stock "gtk-close")))
+      (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))

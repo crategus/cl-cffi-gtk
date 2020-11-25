@@ -10,9 +10,27 @@
                              :border-width 6
                              :layout-style layout
                              :spacing spacing)))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+    (gtk-container-add bbox
+                       (make-instance 'gtk-button
+                                      :label "OK"
+                                      :always-show-image t
+                                      :image
+                                      (make-instance 'gtk-image
+                                                     :icon-name "gtk-ok")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Cancel"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-cancel")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Help"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-help")))
   (gtk-container-add frame bbox)
   frame))
 
@@ -34,8 +52,6 @@
                                :orientation :horizontal
                                :homogeneous nil
                                :spacing 12)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -113,3 +129,4 @@
       (gtk-container-add window vbox1)
       (gtk-widget-show-all window))))
 
+;;; 2020-11-18

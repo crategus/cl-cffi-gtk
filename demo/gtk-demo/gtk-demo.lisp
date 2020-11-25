@@ -190,7 +190,7 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "More Buttons"
                                 "buttons.lisp"
-                                "EXAMPLE-BUTTONS")
+                                "EXAMPLE-MORE-BUTTONS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Toggle Buttons"
                                 "toggle-buttons.lisp"
