@@ -2,12 +2,12 @@
 ;;; gdk-pixbuf.scaling.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
-;;; Version 2.28.1 and modified to document the Lisp binding to the GDK-PixBuf
+;;; Version 2.36 and modified to document the Lisp binding to the GDK-PixBuf
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,20 +29,20 @@
 ;;;
 ;;; Scaling
 ;;;
-;;; Scaling pixbufs and scaling and compositing pixbufs
+;;;     Scaling pixbufs and scaling and compositing pixbufs
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkInterpType
+;;;     GdkPixbufRotation
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_scale_simple
 ;;;     gdk_pixbuf_scale
 ;;;     gdk_pixbuf_composite_color_simple
 ;;;     gdk_pixbuf_composite
 ;;;     gdk_pixbuf_composite_color
-;;;
-;;;     GdkPixbufRotation
-;;;
 ;;;     gdk_pixbuf_rotate_simple
 ;;;     gdk_pixbuf_flip
 ;;; ----------------------------------------------------------------------------
@@ -57,25 +57,25 @@
   (:export t
    :type-initializer "gdk_interp_type_get_type")
   (:nearest 0)
-  (:tiles 0)
-  (:bilinear 0)
-  (:hyper 0))
+  (:tiles 1)
+  (:bilinear 2)
+  (:hyper 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-interp-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-interp-type atdoc:*external-symbols*)
- "@version{2013-9-1}
+ "@version{2020-11-21}
   @begin{short}
     This enumeration describes the different interpolation modes that can be
-    used with the scaling functions. @code{:nearest} is the fastest scaling
-    method, but has horrible quality when scaling down. @code{:bilinear} is the
-    best choice if you are not sure what to choose, it has a good speed/quality
-    balance.
+    used with the scaling functions.
   @end{short}
-
-  @subheading{Note}
-    Cubic filtering is missing from the list; hyperbolic interpolation is just
+  @code{:nearest} is the fastest scaling method, but has horrible quality when
+  scaling down. @code{:bilinear} is the best choice if you are not sure what to
+  choose, it has a good speed/quality balance.
+  @begin[Note]{dictionary}
+    Cubic filtering is missing from the list. Hyperbolic interpolation is just
     as fast and results in higher quality.
+  @end{dictionary}
   @begin{pre}
 (define-g-enum \"GdkInterpType\" gdk-interp-type
   (:export t
@@ -108,28 +108,55 @@
   @see-class{gdk-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkPixbufRotation
+;;;
+;;; typedef enum {
+;;;     GDK_PIXBUF_ROTATE_NONE             =   0,
+;;;     GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE =  90,
+;;;     GDK_PIXBUF_ROTATE_UPSIDEDOWN       = 180,
+;;;     GDK_PIXBUF_ROTATE_CLOCKWISE        = 270
+;;; } GdkPixbufRotation;
+;;;
+;;; The possible rotations which can be passed to gdk_pixbuf_rotate_simple().
+;;; To make them easier to use, their numerical values are the actual degrees.
+;;;
+;;; GDK_PIXBUF_ROTATE_NONE
+;;;     No rotation.
+;;;
+;;; GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE
+;;;     Rotate by 90 degrees.
+;;;
+;;; GDK_PIXBUF_ROTATE_UPSIDEDOWN
+;;;     Rotate by 180 degrees.
+;;;
+;;; GDK_PIXBUF_ROTATE_CLOCKWISE
+;;;     Rotate by 270 degrees.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_scale_simple ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_scale_simple" gdk-pixbuf-scale-simple)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-2}
-  @argument[src]{a @class{gdk-pixbuf} object}
-  @argument[dest-width]{the width of destination image}
-  @argument[dest-height]{the height of destination image}
-  @argument[interp-type]{the interpolation type for the transformation}
+ "@version{2020-11-21}
+  @argument[src]{a @class{gdk-pixbuf} structure}
+  @argument[dest-width]{an integer with the width of destination image}
+  @argument[dest-height]{an integer with the height of destination image}
+  @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
+    the transformation}
   @begin{return}
-    The new @class{gdk-pixbuf} object, or @code{nil} if not enough memory could
-    be allocated for it.
+    The new @class{gdk-pixbuf} structure, or @code{nil} if not enough memory
+    could be allocated for it.
   @end{return}
   @begin{short}
-    Create a new @class{gdk-pixbuf} object containing a copy of @arg{src} scaled
-    to @arg{dest-width} @code{x} @arg{dest-height}.
+    Create a new @class{gdk-pixbuf} structure containing a copy of @arg{src}
+    scaled to @arg{dest-width} @code{x} @arg{dest-height}.
   @end{short}
   Leaves @arg{src} unaffected. @arg{interp-type} should be @code{:nearest} if
   you want maximum speed, but when scaling down @code{:nearest} is usually
-  unusably ugly. The default @arg{interp-type} should be @code{:bilinear}  which
+  unusably ugly. The default @arg{interp-type} should be @code{:bilinear} which
   offers reasonable quality and speed.
 
   You can scale a sub-portion of @arg{src} by creating a sub-pixbuf pointing
@@ -155,20 +182,22 @@
 
 (defcfun ("gdk_pixbuf_scale" gdk-pixbuf-scale) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[src]{a @class{gdk-pixbuf} object}
-  @argument[dest]{the @class{gdk-pixbuf} into which to render the results}
-  @argument[dest-x]{the left coordinate for region to render}
-  @argument[dest-y]{the top coordinate for region to render}
-  @argument[dest-width]{the width of the region to render}
-  @argument[dest-height]{the height of the region to render}
-  @argument[offset-x]{the offset in the x direction (currently rounded to an
-    integer)}
-  @argument[offset-y]{the offset in the y direction (currently rounded to an
-    integer)}
-  @argument[scale-x]{the scale factor in the x direction}
-  @argument[scale-y]{the scale factor in the y direction}
-  @argument[interp-type]{the interpolation type for the transformation}
+ "@version{2020-11-21}
+  @argument[src]{a @class{gdk-pixbuf} structure}
+  @argument[dest]{the @class{gdk-pixbuf} structure into which to render the
+    results}
+  @argument[dest-x]{an integer with the left coordinate for region to render}
+  @argument[dest-y]{an integer with the top coordinate for region to render}
+  @argument[dest-width]{an integer with the width of the region to render}
+  @argument[dest-height]{an integer with the height of the region to render}
+  @argument[offset-x]{a dobule with the offset in the x direction (currently
+    rounded to an integer)}
+  @argument[offset-y]{a double with the offset in the y direction (currently
+    rounded to an integer)}
+  @argument[scale-x]{a double with the scale factor in the x direction}
+  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
+    the transformation}
   @begin{short}
     Creates a transformation of the source image @arg{src} by scaling by
     @arg{scale-x} and @arg{scale-y} then translating by @arg{offset-x} and
@@ -208,23 +237,27 @@
 (defcfun ("gdk_pixbuf_composite_color_simple" gdk-pixbuf-composite-color-simple)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[src]{a @class{gdk-pixbuf} object}
-  @argument[dest-width]{the width of destination image}
-  @argument[dest-height]{the height of destination image}
-  @argument[interp-type]{the interpolation type for the transformation}
-  @argument[overall-alpha]{overall alpha for source image (0..255)}
-  @argument[check-size]{the size of checks in the checkboard (must be a power
-    of two)}
-  @argument[color1]{the color of check at upper left}
-  @argument[color2]{the color of the other check}
+ "@version{2020-11-21}
+  @argument[src]{a @class{gdk-pixbuf} structure}
+  @argument[dest-width]{an integer with the width of destination image}
+  @argument[dest-height]{an integer with the height of destination image}
+  @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
+    the transformation}
+  @argument[overall-alpha]{an integer with the overall alpha for source image
+    (0..255)}
+  @argument[check-size]{an integer with the size of checks in the checkboard
+    (must be a power of two)}
+  @argument[color1]{an unsigned integer with the color of check at upper left}
+  @argument[color2]{an unsigned integer with the color of the other check}
   @begin{return}
     The new @class{gdk-pixbuf}, or @code{nil} if not enough memory could be
     allocated for it.
   @end{return}
-  Creates a new @class{gdk-pixbuf} by scaling @arg{src} to @arg{dest-width}
-  @code{x} @arg{dest-height} and compositing the result with a checkboard of
-  colors @arg{color1} and @arg{color2}.
+  @begin{short}
+    Creates a new @class{gdk-pixbuf} structure by scaling @arg{src} to
+    @arg{dest-width} @code{x} @arg{dest-height} and compositing the result with
+    a checkboard of colors @arg{color1} and @arg{color2}.
+  @end{short}
   @see-class{gdk-pixbuf}
   @see-symbol{gdk-interp-type}
   @see-function{gdk-pixbuf-composite-color}"
@@ -245,32 +278,39 @@
 
 (defcfun ("gdk_pixbuf_composite" gdk-pixbuf-composite) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-23}
-  @argument[src]{a @class{gdk-pixbuf} object}
-  @argument[dest]{the @class{gdk-pixbuf} into which to render the results}
-  @argument[dest-x]{the left coordinate for region to render}
-  @argument[dest-y]{the top coordinate for region to render}
-  @argument[dest-width]{the width of the region to render}
-  @argument[dest-height]{the height of the region to render}
-  @argument[offset-x]{the offset in the x direction (currently rounded to an
-    integer)}
-  @argument[offset-y]{the offset in the y direction (currently rounded to an
-    integer)}
-  @argument[scale-x]{the scale factor in the x direction}
-  @argument[scale-y]{the scale factor in the y direction}
-  @argument[interp-type]{the interpolation type for the transformation}
-  @argument[overall-alpha]{overall alpha for source image (0 .. 255)}
+ "@version{2020-11-22}
+  @argument[src]{a @class{gdk-pixbuf} structure}
+  @argument[dest]{the @class{gdk-pixbuf} structure into which to render the
+    results}
+  @argument[dest-x]{an integer with the left coordinate for region to render}
+  @argument[dest-y]{an integer with the top coordinate for region to render}
+  @argument[dest-width]{an integer with the width of the region to render}
+  @argument[dest-height]{an integer with the height of the region to render}
+  @argument[offset-x]{a double with the offset in the x direction (currently
+    rounded to an integer)}
+  @argument[offset-y]{a double with the offset in the y direction (currently
+    rounded to an integer)}
+  @argument[scale-x]{a double with the scale factor in the x direction}
+  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
+    the transformation}
+  @argument[overall-alpha]{an integer with the overall alpha for source image
+   (0 .. 255)}
   @begin{short}
     Creates a transformation of the source image @arg{src} by scaling by
     @arg{scale-x} and @arg{scale-y} then translating by @arg{offset-x} and
-    @arg{offset-y}. This gives an image in the coordinates of the destination
-    pixbuf. The rectangle (@arg{dest-x}, @arg{dest-y}, @arg{dest-width},
-    @arg{dest-height}) is then composited onto the corresponding rectangle of
-    the original destination image.
+    @arg{offset-y}.
   @end{short}
+  This gives an image in the coordinates of the destination pixbuf. The
+  rectangle (@arg{dest-x}, @arg{dest-y}, @arg{dest-width}, @arg{dest-height})
+  is then composited onto the corresponding rectangle of the original
+  destination image.
 
   When the destination rectangle contains parts not in the source image, the
   data at the edges of the source image is replicated to infinity.
+
+  @image[composite]{}
+
   @see-class{gdk-pixbuf}
   @see-symbol{gdk-interp-type}
   @see-function{gdk-pixbuf-composite-color}
@@ -297,28 +337,31 @@
 (defcfun ("gdk_pixbuf_composite_color" gdk-pixbuf-composite-color)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[src]{a @class{gdk-pixbuf} object}
-  @argument[dest]{the @class{gdk-pixbuf} object into which to render the results}
-  @argument[dest-x]{the left coordinate for region to render}
-  @argument[dest-y]{the top coordinate for region to render}
-  @argument[dest-width]{the width of the region to render}
-  @argument[dest-height]{the height of the region to render}
-  @argument[offset-x]{the offset in the x direction, currently rounded to an
-    integer}
-  @argument[offset-y]{the offset in the y direction, currently rounded to an
-    integer}
-  @argument[scale-x]{the scale factor in the x direction}
-  @argument[scale-y]{the scale factor in the y direction}
-  @argument[interp-type]{the interpolation type for the transformation}
-  @argument[overall-alpha]{overall alpha for source image (0..255)}
-  @argument[check-x]{the x offset for the checkboard, origin of checkboard is at
-    @code{(-@arg{check-x}, -@arg{check-y})}}
-  @argument[check-y]{the y offset for the checkboard}
-  @argument[check-size]{the size of checks in the checkboard, must be a power of
-    two}
-  @argument[color1]{the color of check at upper left}
-  @argument[color2]{the color of the other check}
+ "@version{2020-11-22}
+  @argument[src]{a @class{gdk-pixbuf} structure}
+  @argument[dest]{the @class{gdk-pixbuf} structure into which to render the
+    results}
+  @argument[dest-x]{an integer with the left coordinate for region to render}
+  @argument[dest-y]{an integer with the top coordinate for region to render}
+  @argument[dest-width]{an integer with the width of the region to render}
+  @argument[dest-height]{an integer with the height of the region to render}
+  @argument[offset-x]{a double with the offset in the x direction, currently
+    rounded to an integer}
+  @argument[offset-y]{a double with the offset in the y direction, currently
+    rounded to an integer}
+  @argument[scale-x]{a double with the scale factor in the x direction}
+  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
+    the transformation}
+  @argument[overall-alpha]{an integer with the overall alpha for source image
+   (0..255)}
+  @argument[check-x]{an integer with the x offset for the checkboard, origin of
+    checkboard is at @code{(-@arg{check-x}, -@arg{check-y})}}
+  @argument[check-y]{an integer with the y offset for the checkboard}
+  @argument[check-size]{an integer with the size of checks in the checkboard,
+    must be a power of two}
+  @argument[color1]{an unsigned integer with the color of check at upper left}
+  @argument[color2]{an unsigned integer with the color of the other check}
   @begin{short}
     Creates a transformation of the source image @arg{src} by scaling by
     @arg{scale-x} and @arg{scale-y} then translating by @arg{offset-x} and
@@ -352,32 +395,6 @@
   (color2 :uint32))
 
 (export 'gdk-pixbuf-composite-color)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GdkPixbufRotation
-;;;
-;;; typedef enum {
-;;;     GDK_PIXBUF_ROTATE_NONE             =   0,
-;;;     GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE =  90,
-;;;     GDK_PIXBUF_ROTATE_UPSIDEDOWN       = 180,
-;;;     GDK_PIXBUF_ROTATE_CLOCKWISE        = 270
-;;; } GdkPixbufRotation;
-;;;
-;;; The possible rotations which can be passed to gdk_pixbuf_rotate_simple().
-;;; To make them easier to use, their numerical values are the actual degrees.
-;;;
-;;; GDK_PIXBUF_ROTATE_NONE
-;;;     No rotation.
-;;;
-;;; GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE
-;;;     Rotate by 90 degrees.
-;;;
-;;; GDK_PIXBUF_ROTATE_UPSIDEDOWN
-;;;     Rotate by 180 degrees.
-;;;
-;;; GDK_PIXBUF_ROTATE_CLOCKWISE
-;;;     Rotate by 270 degrees.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_rotate_simple ()
