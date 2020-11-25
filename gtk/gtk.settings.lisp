@@ -34,7 +34,7 @@
 ;;; Types and Values
 ;;;
 ;;;     GtkSettings
-;;;     GtkSettingsValue
+;;;     GtkSettingsValue                                   deprecated
 ;;;     GtkIMPreeditStyle
 ;;;     GtkIMStatusStyle
 ;;;
@@ -42,18 +42,18 @@
 ;;;
 ;;;     gtk_settings_get_default
 ;;;     gtk_settings_get_for_screen
-;;;     gtk_settings_install_property                      * deprecated
-;;;     gtk_settings_install_property_parser               * deprecated
+;;;     gtk_settings_install_property                      deprecated
+;;;     gtk_settings_install_property_parser               deprecated
 ;;;     gtk_rc_property_parse_color
 ;;;     gtk_rc_property_parse_enum
 ;;;     gtk_rc_property_parse_flags
 ;;;     gtk_rc_property_parse_requisition
 ;;;     gtk_rc_property_parse_border
-;;;     gtk_settings_set_property_value                    * deprecated
-;;;     gtk_settings_set_string_property                   * deprecated
-;;;     gtk_settings_set_long_property                     * deprecated
-;;;     gtk_settings_set_double_property                   * deprecated
-;;;     gtk_settings_reset_property ()
+;;;     gtk_settings_set_property_value                    deprecated
+;;;     gtk_settings_set_string_property                   deprecated
+;;;     gtk_settings_set_long_property                     deprecated
+;;;     gtk_settings_set_double_property                   deprecated
+;;;     gtk_settings_reset_property
 ;;;
 ;;; Properties
 ;;;
@@ -152,6 +152,70 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkIMPreeditStyle
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkIMPreeditStyle" gtk-im-preedit-style
+  (:export t
+   :type-initializer "gtk_im_preedit_style_get_type")
+  (:nothing 0)
+  (:callback 1)
+  (:none 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
+ "@version{2020-11-20}
+  @short{Style for input method preedit.}
+  See also the @slot[gtk-settings]{gtk-im-preedit-style} property.
+  @begin{pre}
+(define-g-enum \"GtkIMPreeditStyle\" gtk-im-preedit-style
+  (:export t
+   :type-initializer \"gtk_im_preedit_style_get_type\")
+  (:nothing 0)
+  (:callback 1)
+  (:none 2))
+  @end{pre}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-im-preedit-style} enumeration has been deprecated since version
+    3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-function{gtk-settings-gtk-im-preedit-style}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkIMStatusStyle
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkIMStatusStyle" gtk-im-status-style
+  (:export t
+   :type-initializer "gtk_im_status_style_get_type")
+  (:nothing 0)
+  (:callback 1)
+  (:none 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-im-status-style atdoc:*external-symbols*)
+ "@version{2020-11-20}
+  @short{Style for input method status.}
+  See also the @slot[gtk-settings]{gtk-im-status-style} property.
+  @begin{pre}
+(define-g-enum \"GtkIMStatusStyle\" gtk-im-status-style
+  (:export t
+   :type-initializer \"gtk_im_status_style_get_type\")
+  (:nothing 0)
+  (:callback 1)
+  (:none 2))
+  @end{pre}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-im-status-style} enumeration has been deprecated since version
+    3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-function{gtk-settings-gtk-im-status-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkSettings
@@ -668,19 +732,38 @@
   version 3.10 and should not be used in newly-written code. This setting is
   deprecated. Application developers control whether a button should show an
   icon or not, on a per-button basis. If a @class{gtk-button} widget should show
-  an icon, use the @slot[gtk-button]{always-show-image} property of
-  @class{gtk-button}, and pack a @class{gtk-image} inside the
-  @class{gtk-button}. @br{}
-  Default value: @em{true}")
+  an icon, use the @slot[gtk-button]{always-show-image} property of the
+  @class{gtk-button} widget, and pack a @class{gtk-image} widget inside the
+  @class{gtk-button} widget. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-button-images atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-button-images 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-button-images} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2020-11-20}
+  @syntax[]{(gtk-settings-gtk-button-images object) => setting}
+  @syntax[]{(setf gtk-settings-gtk-button-images object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a boolean wether images should be shown on buttons}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-button-images} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Whether images should be shown on buttons.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-settings-gtk-button-images} has been deprecated since
+    version 3.10 and should not be used in newly-written code. This setting is
+    deprecated. Application developers control whether a button should show an
+    icon or not, on a per-button basis. If a @class{gtk-button} widget should
+    show an icon, use the @slot[gtk-button]{always-show-image} property of the
+    @class{gtk-button} widget, and pack a @class{gtk-image} widget inside the
+    @class{gtk-button} widget.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-class{gtk-button}
+  @see-function{gtk-button-always-show-image}")
 
 ;;; --- gtk-settings-gtk-can-change-accels -------------------------------------
 
@@ -1431,10 +1514,24 @@ size-name = width , height
 (setf (gethash 'gtk-settings-gtk-im-preedit-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-im-preedit-style 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-im-preedit-style} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2020-11-20}
+  @syntax[]{(gtk-settings-gtk-im-preedit-style object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-im-preedit-style object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a @symbol{gtk-im-preedit-style} value}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-im-preedit-style} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  How to draw the input method preedit string.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-settings-gtk-im-preedit-style} has been deprecated
+    since version 3.10 and should not be used in newly-written code. This
+    setting is ignored.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-symbol{gtk-im-preedit-style}")
 
 ;;; --- gtk-settings-gtk-im-status-style ---------------------------------------
 
@@ -1453,10 +1550,24 @@ size-name = width , height
 (setf (gethash 'gtk-settings-gtk-im-status-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-im-status-style 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-im-status-style} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2020-11-20}
+  @syntax[]{(gtk-settings-gtk-im-status-style object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-im-status-style object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a @symbol{gtk-im-status-style} value}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-im-status-style} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  How to draw the input method statusbar.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-settings-gtk-im-status-style} has been deprecated
+    since version 3.10 and should not be used in newly-written code. This
+    setting is ignored.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-symbol{gtk-im-status-style}")
 
 ;;; --- gtk-settings-gtk-key-theme-name ----------------------------------------
 
@@ -2621,11 +2732,11 @@ size-name = width , height
 ;;;                                       const GString *gstring,
 ;;;                                       GValue *property_value);
 ;;;
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses a color given
-;;; either by its name or in the form { red, green, blue } where red, green and
-;;; blue are integers between 0 and 65535 or floating-point numbers between 0
-;;; and 1.
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses a color
+;;; given either by its name or in the form { red, green, blue } where red,
+;;; green and blue are integers between 0 and 65535 or floating-point numbers
+;;; between 0 and 1.
 ;;;
 ;;; pspec :
 ;;;     a GParamSpec
@@ -2648,8 +2759,8 @@ size-name = width , height
 ;;;                                      const GString *gstring,
 ;;;                                      GValue *property_value);
 ;;;
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses a single
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses a single
 ;;; enumeration value.
 ;;;
 ;;; The enumeration value can be specified by its name, its nickname or its
@@ -2677,8 +2788,8 @@ size-name = width , height
 ;;;                                       const GString *gstring,
 ;;;                                       GValue *property_value);
 ;;;
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses flags.
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses flags.
 ;;;
 ;;; Flags can be specified by their name, their nickname or numerically.
 ;;; Multiple flags can be specified in the form "( flag1 | flag2 | ... )".
@@ -2704,9 +2815,9 @@ size-name = width , height
 ;;;                                             const GString *gstring,
 ;;;                                             GValue *property_value);
 ;;;
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses a requisition
-;;; in the form "{ width, height }" for integers width and height.
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses a
+;;; requisition in the form "{ width, height }" for integers width and height.
 ;;;
 ;;; pspec :
 ;;;     a GParamSpec
@@ -2729,9 +2840,9 @@ size-name = width , height
 ;;;                                        const GString *gstring,
 ;;;                                        GValue *property_value);
 ;;;
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses borders in the
-;;; form "{ left, right, top, bottom }" for integers left, right, top and
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses borders in
+;;; the form "{ left, right, top, bottom }" for integers left, right, top and
 ;;; bottom.
 ;;;
 ;;; pspec :

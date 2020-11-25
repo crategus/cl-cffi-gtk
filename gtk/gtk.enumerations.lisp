@@ -55,8 +55,6 @@
 ;;;
 ;;;     GtkDragResult
 ;;;     GtkExpanderStyle
-;;;     GtkIMPreeditStyle
-;;;     GtkIMStatusStyle
 ;;;     GtkPathPriorityType
 ;;;     GtkPathType
 ;;;     GtkResizeMode
@@ -217,68 +215,6 @@
     @entry[:expanded]{The style used for an expanded subtree.}
   @end{table}
   @see-class{gtk-tree-view}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIMPreeditStyle
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkIMPreeditStyle" gtk-im-preedit-style
-  (:export t
-   :type-initializer "gtk_im_preedit_style_get_type")
-  (:nothing 0)
-  (:callback 1)
-  (:none 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
- "@version{2014-7-26}
-  @short{Style for input method preedit.}
-  See also the @slot[gtk-settings]{gtk-im-preedit-style} property.
-  @begin{pre}
-(define-g-enum \"GtkIMPreeditStyle\" gtk-im-preedit-style
-  (:export t
-   :type-initializer \"gtk_im_preedit_style_get_type\")
-  (:nothing 0)
-  (:callback 1)
-  (:none 2))
-  @end{pre}
-  @begin[Warning]{dictionary}
-    The enumeration @sym{gtk-im-preedit-style} has been deprecated since version
-    3.10 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-settings}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIMStatusStyle
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkIMStatusStyle" gtk-im-status-style
-  (:export t
-   :type-initializer "gtk_im_status_style_get_type")
-  (:nothing 0)
-  (:callback 1)
-  (:none 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-im-status-style atdoc:*external-symbols*)
- "@version{2014-7-26}
-  @short{Style for input method status.}
-  See also the @slot[gtk-settings]{gtk-im-status-style} property.
-  @begin{pre}
-(define-g-enum \"GtkIMStatusStyle\" gtk-im-status-style
-  (:export t
-   :type-initializer \"gtk_im_status_style_get_type\")
-  (:nothing 0)
-  (:callback 1)
-  (:none 2))
-  @end{pre}
-  @begin[Warning]{dictionary}
-    The enumeration @sym{gtk-im-status-style} has been deprecated since version
-    3.10 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-settings}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkJustification

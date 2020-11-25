@@ -4682,6 +4682,8 @@ setup_tree (void)
       Sharing settings between applications.
 
       @about-symbol{GtkSettingsValue}
+      @about-symbol{gtk-im-preedit-style}
+      @about-symbol{gtk-im-status-style}
       @about-class{gtk-settings}
       @about-generic{gtk-settings-color-hash}
       @about-generic{gtk-settings-gtk-alternative-button-order}
@@ -4793,8 +4795,6 @@ setup_tree (void)
       @about-symbol{gtk-delete-type}
       @about-symbol{gtk-direction-type}
       @about-symbol{gtk-expander-style}
-      @about-symbol{gtk-im-preedit-style}
-      @about-symbol{gtk-im-status-style}
       @about-symbol{gtk-justification}
       @about-symbol{gtk-movement-step}
       @about-symbol{gtk-orientation}
