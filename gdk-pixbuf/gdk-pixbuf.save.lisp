@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk-pixbuf.save.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
 ;;; Version 2.26.1 and modified to document the Lisp binding to the GDK-PixBuf
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +29,22 @@
 ;;;
 ;;; File saving
 ;;;
-;;; Saving a pixbuf to a file.
+;;;     Saving a pixbuf to a file.
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_savev
 ;;;     gdk_pixbuf_save
+;;;     GdkPixbufSaveFunc
 ;;;     gdk_pixbuf_save_to_callback
 ;;;     gdk_pixbuf_save_to_callbackv
 ;;;     gdk_pixbuf_save_to_buffer
 ;;;     gdk_pixbuf_save_to_bufferv
 ;;;     gdk_pixbuf_save_to_stream
+;;;     gdk_pixbuf_save_to_streamv
+;;;     gdk_pixbuf_save_to_stream_async
+;;;     gdk_pixbuf_save_to_streamv_async
+;;;     gdk_pixbuf_save_to_stream_finish
 ;;;
 ;;; Description
 ;;;
@@ -109,11 +111,11 @@
 
 (defun gdk-pixbuf-save (pixbuf filename type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-16}
-  @argument[pixbuf]{a GdkPixbuf.}
-  @argument[filename]{name of file to save.}
-  @argument[type]{name of file format.}
-  @return{whether an error was set}
+ "@version{2020-11-21}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[filename]{a string with the name of file to save}
+  @argument[type]{a string with the name of file format}
+  @return{A boolean whether an error was set.}
   @begin{short}
     Saves pixbuf to a file in format @arg{type}. By default, \"jpeg\", \"png\",
     \"ico\" and \"bmp\" are possible file formats to save in, but more formats
@@ -121,16 +123,16 @@
   @end{short}
   The list of all writable formats can be determined in the following way:
   @begin{pre}
- void add_if_writable (GdkPixbufFormat *data, GSList **list)
- {
-   if (gdk_pixbuf_format_is_writable (data))
-     *list = g_slist_prepend (*list, data);
- @}
+void add_if_writable (GdkPixbufFormat *data, GSList **list)
+{
+  if (gdk_pixbuf_format_is_writable (data))
+    *list = g_slist_prepend (*list, data);
+@}
 
- GSList *formats = gdk_pixbuf_get_formats ();
- GSList *writable_formats = NULL;
- g_slist_foreach (formats, add_if_writable, &writable_formats);
- g_slist_free (formats);
+GSList *formats = gdk_pixbuf_get_formats ();
+GSList *writable_formats = NULL;
+g_slist_foreach (formats, add_if_writable, &writable_formats);
+g_slist_free (formats);
   @end{pre}
   If error is set, @code{nil} will be returned. Possible errors include those in
   the @code{GDK_PIXBUF_ERROR} domain and those in the @code{G_FILE_ERROR}
@@ -140,11 +142,13 @@
   should contain pairs of strings that modify the save parameters.
   For example:
   @begin{pre}
- gdk_pixbuf_save (pixbuf, handle, \"jpeg\", &error,
-                 \"quality\", \"100\", NULL);
+gdk_pixbuf_save (pixbuf, handle, \"jpeg\", &error,
+                \"quality\", \"100\", NULL);
   @end{pre}
   Currently only few parameters exist. JPEG images can be saved with a
-  \"quality\" parameter; its value should be in the range [0,100].
+  \"quality\" parameter; its value should be in the range [0,100]. JPEG and PNG
+  density can be set by setting the \"x-dpi\" and \"y-dpi\" parameters to the
+  appropriate values in dots per inch.
 
   Text chunks can be attached to PNG images by specifying parameters of the
   form \"tEXt::key\", where key is an ASCII string of length 1-79. The values
@@ -155,19 +159,23 @@
   ICC color profiles can also be embedded into PNG and TIFF images. The
   \"icc-profile\" value should be the complete ICC profile encoded into base64.
   @begin{pre}
- gchar *contents;
- gchar *contents_encode;
- gsize length;
- g_file_get_contents (\"/home/hughsie/.color/icc/L225W.icm\",
-                      &contents, &length, NULL);
- contents_encode = g_base64_encode ((const guchar *) contents, length);
- gdk_pixbuf_save (pixbuf, handle, \"png\", &error,
-                  \"icc-profile\", contents_encode,
-                  NULL);
+gchar *contents;
+gchar *contents_encode;
+gsize length;
+g_file_get_contents (\"/home/hughsie/.color/icc/L225W.icm\",
+                     &contents, &length, NULL);
+contents_encode = g_base64_encode ((const guchar *) contents, length);
+gdk_pixbuf_save (pixbuf, handle, \"png\", &error,
+                 \"icc-profile\", contents_encode,
+                 NULL);
   @end{pre}
-  TIFF images recognize a \"compression\" option which acceps an integer value.
-  Among the codecs are 1 None, 2 Huffman, 5 LZW, 7 JPEG and 8 Deflate, see
-  the libtiff documentation and tiff.h for all supported codec values.
+  TIFF images recognize: (1) a \"bits-per-sample\" option (integer) which can be
+  either 1 for saving bi-level CCITTFAX4 images, or 8 for saving 8-bits per
+  sample; (2) a \"compression\" option (integer) which can be 1 for no
+  compression, 2 for Huffman, 5 for LZW, 7 for JPEG and 8 for DEFLATE (see the
+  libtiff documentation and tiff.h for all supported codec values); (3) an
+  \"icc-profile\" option (zero-terminated string) containing a base64 encoded
+  ICC color profile.
 
   ICO images can be saved in depth 16, 24, or 32, by using the \"depth\"
   parameter. When the ICO saver is given \"x_hot\" and \"y_hot\" parameters, it
@@ -430,5 +438,165 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pixbuf_save_to_streamv ()
+;;;
+;;; gboolean
+;;; gdk_pixbuf_save_to_streamv (GdkPixbuf *pixbuf,
+;;;                             GOutputStream *stream,
+;;;                             const char *type,
+;;;                             char **option_keys,
+;;;                             char **option_values,
+;;;                             GCancellable *cancellable,
+;;;                             GError **error);
+;;;
+;;; Saves pixbuf to an output stream.
+;;;
+;;; Supported file formats are currently "jpeg", "tiff", "png", "ico" or "bmp".
+;;; See gdk_pixbuf_save_to_stream() for more details.
+;;;
+;;; pixbuf :
+;;;     a GdkPixbuf
+;;;
+;;; stream :
+;;;     a GOutputStream to save the pixbuf to
+;;;
+;;; type :
+;;;     name of file format
+;;;
+;;; option_keys :
+;;;     name of options to set, NULL-terminated.
+;;;
+;;; option_values :
+;;;     values for named options.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     return location for error, or NULL.
+;;;
+;;; Returns :
+;;;     TRUE if the pixbuf was saved successfully, FALSE if an error was set.
+;;;
+;;; Since 2.36
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pixbuf_save_to_stream_async ()
+;;;
+;;; void
+;;; gdk_pixbuf_save_to_stream_async (GdkPixbuf *pixbuf,
+;;;                                  GOutputStream *stream,
+;;;                                  const gchar *type,
+;;;                                  GCancellable *cancellable,
+;;;                                  GAsyncReadyCallback callback,
+;;;                                  gpointer user_data,
+;;;                                  ...);
+;;;
+;;; Saves pixbuf to an output stream asynchronously.
+;;;
+;;; For more details see gdk_pixbuf_save_to_stream(), which is the synchronous
+;;; version of this function.
+;;;
+;;; When the operation is finished, callback will be called in the main thread.
+;;; You can then call gdk_pixbuf_save_to_stream_finish() to get the result of
+;;; the operation.
+;;;
+;;; pixbuf :
+;;;     a GdkPixbuf
+;;;
+;;; stream :
+;;;     a GOutputStream to which to save the pixbuf
+;;;
+;;; type :
+;;;     name of file format
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the the pixbuf is loaded
+;;;
+;;; user_data :
+;;;     the data to pass to the callback function
+;;;
+;;; ... :
+;;;     list of key-value save options
+;;;
+;;; Since 2.24
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pixbuf_save_to_streamv_async ()
+;;;
+;;; void
+;;; gdk_pixbuf_save_to_streamv_async (GdkPixbuf *pixbuf,
+;;;                                   GOutputStream *stream,
+;;;                                   const gchar *type,
+;;;                                   gchar **option_keys,
+;;;                                   gchar **option_values,
+;;;                                   GCancellable *cancellable,
+;;;                                   GAsyncReadyCallback callback,
+;;;                                   gpointer user_data);
+;;;
+;;; Saves pixbuf to an output stream asynchronously.
+;;;
+;;; For more details see gdk_pixbuf_save_to_streamv(), which is the synchronous
+;;; version of this function.
+;;;
+;;; When the operation is finished, callback will be called in the main thread.
+;;; You can then call gdk_pixbuf_save_to_stream_finish() to get the result of
+;;; the operation.
+;;;
+;;; pixbuf :
+;;;     a GdkPixbuf
+;;;
+;;; stream :
+;;;     a GOutputStream to which to save the pixbuf
+;;;
+;;; type :
+;;;     name of file format
+;;;
+;;; option_keys :
+;;;     name of options to set, NULL-terminated.
+;;;
+;;; option_values :
+;;;     values for named options.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the the pixbuf is loaded
+;;;
+;;; user_data :
+;;;     the data to pass to the callback function
+;;;
+;;; Since 2.36
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pixbuf_save_to_stream_finish ()
+;;;
+;;; gboolean
+;;; gdk_pixbuf_save_to_stream_finish (GAsyncResult *async_result,
+;;;                                   GError **error);
+;;;
+;;; Finishes an asynchronous pixbuf save operation started with
+;;; gdk_pixbuf_save_to_stream_async().
+;;;
+;;; async_result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the pixbuf was saved successfully, FALSE if an error was set.
+;;;
+;;; Since 2.24
+;; -----------------------------------------------------------------------------
 
 ;;; --- End of file gdk-pixbuf.save.lisp ---------------------------------------
