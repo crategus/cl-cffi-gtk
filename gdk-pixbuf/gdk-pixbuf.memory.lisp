@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk-pixbuf.memory.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
-;;; Version 2.28.1 and modified to document the Lisp binding to the GDK-PixBuf
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.36 and modified to document the Lisp binding to the GDK-PixBuf
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,12 @@
 ;;;
 ;;; Image Data in Memory
 ;;;
-;;; Creating a pixbuf from image data that is already in memory.
+;;;     Creating a pixbuf from image data that is already in memory.
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_new
+;;;     gdk_pixbuf_new_from_bytes
 ;;;     gdk_pixbuf_new_from_data
 ;;;     gdk_pixbuf_new_from_xpm_data
 ;;;     gdk_pixbuf_new_from_inline
@@ -77,19 +75,24 @@
 
 (defcfun ("gdk_pixbuf_new" gdk-pixbuf-new) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-22}
-  @argument[colorspace]{color space for image}
-  @argument[has-alpha]{whether the image should have transparency information}
-  @argument[bits-per-sample]{number of bits per color sample}
-  @argument[width]{width of image in pixels, must be > 0}
-  @argument[height]{height of image in pixels, must be > 0}
+ "@version{2020-11-21}
+  @argument[colorspace]{a @symbol{gdk-color-space} value for the image}
+  @argument[has-alpha]{a boolean whether the image should have transparency
+    information}
+  @argument[bits-per-sample]{an integer with number of bits per color sample}
+  @argument[width]{an integer with the width of image in pixels, must be > 0}
+  @argument[height]{an integer with the height of image in pixels, must be > 0}
   @begin{return}
-    A newly-created @class{gdk-pixbuf} with a reference count of 1, or
-    @code{nil} if not enough memory could be allocated for the image buffer.
+    A newly-created @class{gdk-pixbuf} structure with a reference count of 1,
+    or @code{nil} if not enough memory could be allocated for the image buffer.
   @end{return}
-  Creates a new @class{gdk-pixbuf} structure and allocates a buffer for it. The
-  buffer has an optimal rowstride. Note that the buffer is not cleared; you will
-  have to fill it completely yourself."
+  @begin{short}
+    Creates a new @class{gdk-pixbuf} structure and allocates a buffer for it.
+  @end{short}
+  The buffer has an optimal rowstride. Note that the buffer is not cleared. You
+  will have to fill it completely yourself.
+  @see-class{gdk-pixbuf}
+  @see-symbol{gdk-color-space}"
   (colorspace gdk-colorspace)
   (has-alpha :boolean)
   (bits-per-sample :int)
@@ -97,6 +100,49 @@
   (height :int))
 
 (export 'gdk-pixbuf-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pixbuf_new_from_bytes ()
+;;;
+;;; GdkPixbuf *
+;;; gdk_pixbuf_new_from_bytes (GBytes *data,
+;;;                            GdkColorspace colorspace,
+;;;                            gboolean has_alpha,
+;;;                            int bits_per_sample,
+;;;                            int width,
+;;;                            int height,
+;;;                            int rowstride);
+;;;
+;;; Creates a new GdkPixbuf out of in-memory readonly image data. Currently only
+;;; RGB images with 8 bits per sample are supported. This is the GBytes variant
+;;; of gdk_pixbuf_new_from_data().
+;;;
+;;; data :
+;;;     Image data in 8-bit/sample packed format inside a GBytes
+;;;
+;;; colorspace :
+;;;     Colorspace for the image data
+;;;
+;;; has_alpha :
+;;;     Whether the data has an opacity channel
+;;;
+;;; bits_per_sample :
+;;;     Number of bits per sample
+;;;
+;;; width :
+;;;     Width of the image in pixels, must be > 0
+;;;
+;;; height :
+;;;     Height of the image in pixels, must be > 0
+;;;
+;;; rowstride :
+;;;     Distance in bytes between row starts
+;;;
+;;; Returns :
+;;;     A newly-created GdkPixbuf structure with a reference count of 1.
+;;;
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_data ()
@@ -169,6 +215,13 @@
 ;;;                                         gboolean copy_pixels,
 ;;;                                         GError **error);
 ;;;
+;;; Warning :
+;;;
+;;;     gdk_pixbuf_new_from_inline has been deprecated since version 2.32 and
+;;;     should not be used in newly-written code.
+;;;
+;;;     Use GResource instead.
+;;;
 ;;; Create a GdkPixbuf from a flat representation that is suitable for storing
 ;;; as inline data in a program. This is useful if you want to ship a program
 ;;; with images, but don't want to depend on any external files.
@@ -220,13 +273,13 @@
 (defcfun ("gdk_pixbuf_new_subpixbuf" gdk-pixbuf-new-subpixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
+ "@version{2020-11-21}
   @argument[src-pixbuf]{a @class{gdk-pixbuf} object}
-  @argument[src-x]{x coord in @arg{src-pixbuf}}
-  @argument[src-y]{y coord in @arg{src-pixbuf}}
-  @argument[width]{width of region in @arg{src-pixbuf}}
-  @argument[height]{height of region in @arg{src-pixbuf}}
-  @return{A new pixbuf.}
+  @argument[src-x]{an integer with the x coord in @arg{src-pixbuf}}
+  @argument[src-y]{an integer with the y coord in @arg{src-pixbuf}}
+  @argument[width]{an integer with the width of region in @arg{src-pixbuf}}
+  @argument[height]{an integer with the height of region in @arg{src-pixbuf}}
+  @return{A new @class{gdk-pixbuf} structure.}
   @begin{short}
     Creates a new pixbuf which represents a sub-region of @arg{src-pixbuf}.
   @end{short}
@@ -248,14 +301,17 @@
 
 (defcfun ("gdk_pixbuf_copy" gdk-pixbuf-copy) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-21}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+ "@version{2020-11-21}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
   @begin{return}
     A newly created pixbuf with a reference count of 1, or @code{nil} if not
     enough memory could be allocated.
   @end{return}
-  Creates a new @class{gdk-pixbuf} object with a copy of the information in the
-  specified @arg{pixbuf}."
+  @begin{short}
+    Creates a new @class{gdk-pixbuf} structure with a copy of the information
+    in the specified @arg{pixbuf}.
+  @end{short}
+  @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf)))
 
 (export 'gdk-pixbuf-copy)
