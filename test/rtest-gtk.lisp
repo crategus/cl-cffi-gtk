@@ -266,7 +266,7 @@
 (load "rtest-gtk-accel-map.lisp")
 ;    gtk.clipboard.lisp
 ;    gtk.drag-and-drop.lisp
-;    gtk.settings.lisp
+(load "rtest-gtk-settings.lisp")
 ;    gtk.bindings.lisp
 ;    gtk.enumerations.lisp
 (load "rtest-gtk-selections.lisp")

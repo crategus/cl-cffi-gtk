@@ -23,7 +23,8 @@
   (let ((path (gtk-widget-path-new))
         (window (make-instance 'gtk-window)))
     (is (= 0 (gtk-widget-path-append-for-widget path window)))
-    (is (string= "window:dir-ltr.background" (gtk-widget-path-to-string path)))))
+    (is (string= "window:dir-ltr.background"
+                 (gtk-widget-path-to-string path)))))
 
 ;;;     gtk_widget_path_copy
 ;;;     gtk_widget_path_ref
@@ -38,15 +39,15 @@
     (is (eq (gtype "GtkWindow")
             (gtk-widget-path-object-type path)))))
 
-;;;     gtk_widget_path_has_parent
+;;;     gtk-widget-path-has-parent
+
+;; TODO: Find a working example
 
 (test gtk-widget-path-has-parent
   (let ((path (gtk-widget-path-new)))
-
     (is (= 0 (gtk-widget-path-append-type path "GtkButton")))
-
-    (is-true (gtk-widget-path-has-parent path "GtkColorButton"))
-))
+    (is (string= "GtkButton" (gtk-widget-path-to-string path)))
+    (is-false (gtk-widget-path-has-parent path "GtkWidget"))))
 
 ;;;     gtk_widget_path_is_type
 
@@ -172,4 +173,4 @@
     (is (= 1 (gtk-widget-path-append-type path "GtkButton")))
     (is (string= "GtkWindow GtkButton" (gtk-widget-path-to-string path)))))
 
-;;; 2020-10-30
+;;; 2020-11-13

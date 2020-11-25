@@ -1,67 +1,25 @@
-
 (def-suite gio-icon :in gio-suite)
 (in-suite gio-icon)
 
-;;;   GIcon
+;;;     GIcon
 
-(test gio-icon-interface
-  ;; Type checks
-  (is-false (g-type-is-object "GIcon"))
-  (is-false (g-type-is-abstract "GIcon"))
-  (is-true  (g-type-is-derived "GIcon"))
-  (is-false (g-type-is-fundamental "GIcon"))
-  (is-true  (g-type-is-value-type "GIcon"))
-  (is-true  (g-type-has-value-table "GIcon"))
-  (is-false (g-type-is-classed "GIcon"))
-  (is-false (g-type-is-instantiatable "GIcon"))
-  (is-true  (g-type-is-derivable "GIcon"))
-  (is-false (g-type-is-deep-derivable "GIcon"))
-  (is-true  (g-type-is-interface "GIcon"))
-
+(test g-icon-interface
+  ;; Type check
+  (is (g-type-is-interface "GIcon"))
   ;; Check the registered name
   (is (eq 'g-icon
           (registered-object-type-by-name "GIcon")))
-
-  ;; Check infos about the C interface implementation
-  (let ((class (g-type-default-interface-ref (gtype "GIcon"))))
-    (is (eq (gtype "GIcon") (g-type-from-interface class)))
-    (g-type-default-interface-unref class))
-
-  ;; Check infos about the Lisp class implementation
-  (let ((class (find-class 'g-icon)))
-    ;; Check the class name and type of the class
-    (is (eq 'g-icon (class-name class)))
-    (is (eq 'gobject-class (type-of class)))
-    (is (eq (find-class 'gobject-class) (class-of class)))
-    ;; Properties of the metaclass gobject-class
-    (is (equal "GIcon" (gobject-class-g-type-name class)))
-    (is (equal "GIcon" (gobject-class-direct-g-type-name class)))
-    (is (equal "g_icon_get_type"
-               (gobject-class-g-type-initializer class)))
-    (is-true (gobject-class-interface-p class)))
-
-  ;; Check some more GType information
-  (is (eq (gtype "GInterface") (g-type-parent "GIcon")))
-  (is (= 2 (g-type-depth "GIcon")))
+  ;; Check the type initializer
   (is (eq (gtype "GIcon")
-          (g-type-next-base "GIcon" "GInterface")))
-  (is-true  (g-type-is-a "GIcon" "GInterface"))
-  (is-false (g-type-is-a "GIcon" "GtkWidget"))
-  (is-false (g-type-is-a "GIcon" "gboolean"))
-  (is-false (g-type-is-a "GIcon" "GtkWindow"))
-
-  ;; Check the children
-  (is (equal '()
-             (mapcar #'g-type-name (g-type-children "GIcon"))))
-
+          (gtype (foreign-funcall "g_icon_get_type" g-size))))
   ;; Get the names of the interface properties.
   (is (equal '()
-             (mapcar #'g-param-spec-name (g-object-interface-list-properties "GIcon"))))
-
+             (mapcar #'g-param-spec-name
+                     (g-object-interface-list-properties "GIcon"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GIcon" G-ICON
-                (:EXPORT T))
-                (get-g-type-definition "GIcon"))))
+                       (:EXPORT T))
+             (get-g-type-definition "GIcon"))))
 
 ;;;     GIconIface
 
@@ -115,3 +73,4 @@
     (is (equal ". GThemedIcon gnome-dev-cdrom-audio gnome-dev-cdrom gnome-dev gnome gnome-dev-cdrom-audio-symbolic gnome-dev-cdrom-symbolic gnome-dev-symbolic gnome-symbolic"
                (g-icon-to-string icon3)))))
 
+;;; 2020-11-13

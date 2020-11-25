@@ -1,38 +1,16 @@
-
 (def-suite gtk-selections :in gtk-suite)
 (in-suite gtk-selections)
 
 (defvar *verbose-gtk-selections* nil)
 
-;;;   GtkSelectionData
+;;;     GtkSelectionData
 
-(test gtk-selection-data
-  ;; Type checks
-  (is-false (g-type-is-object "GtkSelectionData"))
-  (is-false (g-type-is-abstract "GtkSelectionData"))
-  (is-true  (g-type-is-derived "GtkSelectionData"))
-  (is-false (g-type-is-fundamental "GtkSelectionData"))
-  (is-true  (g-type-is-value-type "GtkSelectionData"))
-  (is-true  (g-type-has-value-table "GtkSelectionData"))
-  (is-false (g-type-is-classed "GtkSelectionData"))
-  (is-false (g-type-is-instantiatable "GtkSelectionData"))
-  (is-true  (g-type-is-derivable "GtkSelectionData"))
-  (is-false (g-type-is-deep-derivable "GtkSelectionData"))
-  (is-false (g-type-is-interface "GtkSelectionData"))
-
-  ;; Check the fundamental type
-  (is (eq (gtype "GBoxed") (g-type-fundamental "GtkSelectionData")))
-
-  ;; Check some more GType information
-  (is (eq (gtype "GBoxed") (g-type-parent "GtkSelectionData")))
-  (is (= 2 (g-type-depth "GtkSelectionData")))
+(test gtk-selection-data-structure
+  ;; Type check
+  (is (g-type-is-a (gtype "GtkSelectionData") +g-type-boxed+))
+  ;; Check the type initializer
   (is (eq (gtype "GtkSelectionData")
-          (g-type-next-base "GtkSelectionData" "GBoxed")))
-  (is-false (g-type-is-a "GtkSelectionData" "GtkWidget"))
-  (is-false (g-type-is-a "GtkSelectionData" "GtkContainer"))
-  (is-false (g-type-is-a "GtkSelectionData" "gboolean"))
-  (is-true  (g-type-is-a "GtkSelectionData" "GBoxed"))
-)
+          (gtype (foreign-funcall "gtk_selection_data_get_type" g-size)))))
 
 (test make-gtk-selection-data
   (let ((selection (make-gtk-selection-data)))
@@ -479,3 +457,4 @@
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
 
+;;; 2020-11-13

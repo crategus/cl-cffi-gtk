@@ -12,25 +12,27 @@
   (is (eq (gtype "GtkImageType")
           (gtype (foreign-funcall "gtk_image_type_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-image-type (gobject::registered-enum-type "GtkImageType")))
+  (is (eq 'gtk-image-type (registered-enum-type "GtkImageType")))
   ;; Check the names
-  (is (equal '("GTK_IMAGE_EMPTY" "GTK_IMAGE_PIXBUF" "GTK_IMAGE_STOCK" "GTK_IMAGE_ICON_SET"
-               "GTK_IMAGE_ANIMATION" "GTK_IMAGE_ICON_NAME" "GTK_IMAGE_GICON"
-               "GTK_IMAGE_SURFACE")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkImageType"))))
+  (is (equal '("GTK_IMAGE_EMPTY" "GTK_IMAGE_PIXBUF" "GTK_IMAGE_STOCK"
+               "GTK_IMAGE_ICON_SET" "GTK_IMAGE_ANIMATION" "GTK_IMAGE_ICON_NAME"
+               "GTK_IMAGE_GICON" "GTK_IMAGE_SURFACE")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkImageType"))))
   ;; Check the values
   (is (equal '(0 1 2 3 4 5 6 7)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkImageType"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkImageType"))))
   ;; Check the nick names
-  (is (equal '("empty" "pixbuf" "stock" "icon-set" "animation" "icon-name" "gicon" "surface")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkImageType"))))
+  (is (equal '("empty" "pixbuf" "stock" "icon-set" "animation" "icon-name"
+               "gicon" "surface")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkImageType"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkImageType"
                              GTK-IMAGE-TYPE
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_image_type_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_image_type_get_type")
                              (:EMPTY 0)
                              (:PIXBUF 1)
                              (:STOCK 2)
@@ -39,7 +41,7 @@
                              (:ICON-NAME 5)
                              (:GICON 6)
                              (:SURFACE 7))
-             (gobject::get-g-type-definition "GtkImageType"))))
+             (get-g-type-definition "GtkImageType"))))
 
 ;;;     GtkImage
 
@@ -61,25 +63,28 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkImage"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
-               "events" "expand" "file" "focus-on-click" "gicon" "halign" "has-default"
-               "has-focus" "has-tooltip" "height-request" "hexpand" "hexpand-set" "icon-name"
-               "icon-set" "icon-size" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name" "no-show-all"
-               "opacity" "parent" "pixbuf" "pixbuf-animation" "pixel-size" "receives-default"
-               "resource" "scale-factor" "sensitive" "stock" "storage-type" "style" "surface"
+  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
+               "double-buffered" "events" "expand" "file" "focus-on-click"
+               "gicon" "halign" "has-default" "has-focus" "has-tooltip"
+               "height-request" "hexpand" "hexpand-set" "icon-name" "icon-set"
+               "icon-size" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "parent" "pixbuf" "pixbuf-animation"
+               "pixel-size" "receives-default" "resource" "scale-factor"
+               "sensitive" "stock" "storage-type" "style" "surface"
                "tooltip-markup" "tooltip-text" "use-fallback" "valign" "vexpand"
-               "vexpand-set" "visible" "width-request" "window" "xalign" "xpad" "yalign"
-               "ypad")
+               "vexpand-set" "visible" "width-request" "window" "xalign" "xpad"
+               "yalign" "ypad")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkImage"))
                           #'string-lessp)))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkImage"))))
   ;; Check the class definition
@@ -133,8 +138,10 @@
   ;; The accessor gtk-image-icon-size is implemented with an integer.
   ;; This integer can be converted to a gtk-icon-size keyword
   (let ((image (gtk-image-new)))
-    (is (eq :button (foreign-enum-keyword 'gtk-icon-size (gtk-image-icon-size image))))
-    (is (= (foreign-enum-value 'gtk-icon-size :button) (gtk-image-icon-size image)))))
+    (is (eq :button
+            (foreign-enum-keyword 'gtk-icon-size (gtk-image-icon-size image))))
+    (is (= (foreign-enum-value 'gtk-icon-size :button)
+           (gtk-image-icon-size image)))))
 
 ;;; --- Functions --------------------------------------------------------------
 

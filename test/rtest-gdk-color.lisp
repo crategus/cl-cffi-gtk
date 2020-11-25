@@ -1,34 +1,14 @@
 (def-suite gdk-color :in gdk-suite)
 (in-suite gdk-color)
 
-;;;   gdk-color-structure
+;;;     GdkColor
 
 (test gdk-color-structure
-  ;; Type checks
-  (is-false (g-type-is-object "GdkColor"))
-  (is-false (g-type-is-abstract "GdkColor"))
-  (is-true  (g-type-is-derived "GdkColor"))
-  (is-false (g-type-is-fundamental "GdkColor"))
-  (is-true  (g-type-is-value-type "GdkColor"))
-  (is-true  (g-type-has-value-table "GdkColor"))
-  (is-false (g-type-is-classed "GdkColor"))
-  (is-false (g-type-is-instantiatable "GdkColor"))
-  (is-true  (g-type-is-derivable "GdkColor"))
-  (is-false (g-type-is-deep-derivable "GdkColor"))
-  (is-false (g-type-is-interface "GdkColor"))
-
-  ;; Check the fundamental type
-  (is (eq (gtype "GBoxed") (g-type-fundamental "GdkColor")))
-
-  ;; Check some more GType information
-  (is (eq (gtype "GBoxed") (g-type-parent "GdkColor")))
-  (is (= 2 (g-type-depth "GdkColor")))
+  ;; Type check
+  (is (g-type-is-a (gtype "GdkColor") +g-type-boxed+))
+  ;; Check the type initializer
   (is (eq (gtype "GdkColor")
-          (g-type-next-base "GdkColor" "GBoxed")))
-  (is-false (g-type-is-a "GdkColor" "GtkWidget"))
-  (is-false (g-type-is-a "GdkColor" "GtkContainer"))
-  (is-false (g-type-is-a "GdkColor" "gboolean"))
-  (is-true  (g-type-is-a "GdkColor" "GBoxed")))
+          (gtype (foreign-funcall "gdk_color_get_type" g-size)))))
 
 ;;;   make-gdk-color
 
@@ -110,3 +90,4 @@
   (let ((color (gdk-color-parse "#ffff0000aaaa")))
     (is (equal "#ffff0000aaaa" (gdk-color-to-string color)))))
 
+;;; 2020-11-13
