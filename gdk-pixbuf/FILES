@@ -1,33 +1,34 @@
-Content from the GDK-Pixbuf 2.28.1 Reference Manual
+Content from the GDK-Pixbuf 2.36 Reference Manual
 
    *   - needs update
    %   - not fully implemented
    &   - objects and structures are implemented, some functions are missing
   (**) - deprecated
 
-  gdk-pixbuf.version.lisp   - Library version numbers                  - 2.26.1*
-  gdk-pixbuf.structure.lisp - Information that describes an image      - 2.26.1*
+  gdk-pixbuf.version.lisp   - Library version numbers                  - 2.36
+  gdk-pixbuf.structure.lisp - Information that describes an image      - 2.36
 
-    Reference Counting and Memory Mangement - Reference counting and memory management on pixbufs
+  Reference counting and memory management on pixbufs
 
-  gdk-pixbuf.load.lisp   - Loading a pixbuf from a file                - 2.26.1*
-  gdk-pixbuf.save.lisp   - Saving a pixbuf to a file                   - 2.26.1*
-  gdk-pixbuf.memory.lisp - Creating a pixbuf from image data in memory - 2.28.1%
+  gdk-pixbuf.load.lisp   - Loading a pixbuf from a file                - 2.36 &
+  gdk-pixbuf.save.lisp   - Saving a pixbuf to a file                   - 2.36 &
+  gdk-pixbuf.memory.lisp - Creating a pixbuf from image data in memory - 2.36 &
 
-    Inline data - Functions for inlined pixbuf handling.
+  Inline data - Functions for inlined pixbuf handling.
 
-  gdk-pixbuf.scaling.lisp - Scaling pixbufs                            - 2.28.1%
+  gdk-pixbuf.scaling.lisp - Scaling pixbufs                            - 2.36 &
 
-    Rendering - Rendering a pixbuf to a GDK drawable.
-    Drawables to Pixbufs - Getting parts of a GDK drawable's image data into a pixbuf.
+  Rendering - Rendering a pixbuf to a GDK drawable.
+  Getting parts of a GDK drawable's image data into a pixbuf.
 
-  gdk-pixbuf.utilities.lisp - Utility functions                        - 2.28.0%
-  gdk-pixbuf.animation.lisp - Animated images                          - 2.28.1%
-  gdk-pixbuf.loader.lisp    - Progressive image loading                - 2.28.1%
-  gdk-pixbuf.interface.lisp - Extending GdkPixBuf                      - 2.28.1%
+  gdk-pixbuf.utilities.lisp - Utility functions                        - 2.36 &
+  gdk-pixbuf.animation.lisp - Animated images                          - 2.36 &
+  gdk-pixbuf.loader.lisp    - Progressive image loading                - 2.36 &
+  gdk-pixbuf.interface.lisp - Extending GdkPixBuf                      - 2.36 &
 
-    gdk-pixbuf Xlib initialization - Initializing the gdk-pixbuf Xlib library.
-    Xlib Rendering - Rendering a pixbuf to an X drawable.
-    X Drawables to Pixbufs - Getting parts of an X drawable's image data into a pixbuf.
-    XlibRGB - Rendering RGB buffers to X drawables.
+  gdk-pixbuf Xlib initialization - Initializing the gdk-pixbuf Xlib library.
+  Xlib Rendering - Rendering a pixbuf to an X drawable.
+  Getting parts of an X drawable's image data into a pixbuf.
+  XlibRGB - Rendering RGB buffers to X drawables.
 
+;;; 2020-11-22

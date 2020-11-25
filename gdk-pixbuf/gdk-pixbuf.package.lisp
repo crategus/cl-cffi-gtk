@@ -49,22 +49,27 @@
   @begin[The GdkPixbuf Structure]{section}
     Information that describes an image.
 
-    @about-class{gdk-pixbuf}
     @about-symbol{GdkPixbufError}
     @about-symbol{GDK_PIXBUF_ERROR}
     @about-symbol{gdk-colorspace}
     @about-symbol{gdk-pixbuf-alpha-mode}
-    @about-function{gdk-pixbuf-get-colorspace}
-    @about-function{gdk-pixbuf-get-n-channels}
-    @about-function{gdk-pixbuf-get-has-alpha}
-    @about-function{gdk-pixbuf-get-bits-per-sample}
-    @about-function{gdk-pixbuf-get-pixels}
-    @about-function{gdk-pixbuf-get-pixels-with-length}
-    @about-function{gdk-pixbuf-get-width}
-    @about-function{gdk-pixbuf-get-height}
-    @about-function{gdk-pixbuf-get-rowstride}
-    @about-function{gdk-pixbuf-get-byte-length}
-    @about-function{gdk-pixbuf-get-option}
+    @about-class{gdk-pixbuf}
+    @about-generic{gdk-pixbuf-bits-per-sample}
+    @about-generic{gdk-pixbuf-colorspace}
+    @about-generic{gdk-pixbuf-has-alpha}
+    @about-generic{gdk-pixbuf-height}
+    @about-generic{gdk-pixbuf-n-channels}
+    @about-generic{gdk-pixbuf-pixel-bytes}
+    @about-generic{gdk-pixbuf-pixels}
+    @about-generic{gdk-pixbuf-rowstride}
+    @about-generic{gdk-pixbuf-width}
+    @about-function{gdk-pixbuf-pixels-with-length}
+    @about-function{gdk-pixbuf-byte-length}
+    @about-function{gdk-pixbuf-option}
+    @about-function{gdk-pixbuf-remove-option}
+    @about-function{gdk-pixbuf-options}
+    @about-function{gdk-pixbuf-copy-options}
+    @about-function{gdk-pixbuf-read-pixels}
   @end{section}
   @begin[File Loading]{section}
     Loading a pixbuf from a file.
@@ -77,23 +82,30 @@
     This interface can be used by applications in which blocking is acceptable
     while an image is being loaded. It can also be used to load small images in
     general. Applications that need progressive loading can use the
-    @code{GdkPixbufLoader} functionality instead.
+    @class{gdk-pixbuf-loader} functionality instead.
 
     @about-function{gdk-pixbuf-new-from-file}
     @about-function{gdk-pixbuf-new-from-file-at-size}
     @about-function{gdk-pixbuf-new-from-file-at-scale}
-    @about-function{gdk-pixbuf-get-file-info}
+    @about-function{gdk-pixbuf-file-info}
+    @about-function{gdk-pixbuf-get-file-info-async}
+    @about-function{gdk-pixbuf-get-file-info-finish}
+    @about-function{gdk-pixbuf-new-from-resource}
+    @about-function{gdk-pixbuf-new-from-resource-at-scale}
     @about-function{gdk-pixbuf-new-from-stream}
+    @about-function{gdk-pixbuf-new-from-stream-async}
+    @about-function{gdk-pixbuf-new-from-stream-finish}
     @about-function{gdk-pixbuf-new-from-stream-at-scale}
+    @about-function{gdk-pixbuf-new-from-stream-at-scale-async}
   @end{section}
   @begin[File Saving]{section}
     Saving a pixbuf to a file.
 
-    These functions allow to save a @class{gdk-pixbuf} object in a number of
+    These functions allow to save a @class{gdk-pixbuf} structure in a number of
     file formats. The formatted data can be written to a file or to a memory
-    buffer. @class{gdk-pixbuf} can also call a user-defined callback on the
-    data, which allows to e. g. write the image to a socket or store it in a
-    database.
+    buffer. The @class{gdk-pixbuf} library can also call a user-defined callback
+    on the data, which allows to e.g. write the image to a socket or store it in
+    a database.
 
     @about-function{gdk-pixbuf-savev}
     @about-function{gdk-pixbuf-save}
@@ -102,6 +114,10 @@
     @about-function{gdk-pixbuf-save-to-buffer}
     @about-function{gdk-pixbuf-save-to-bufferv}
     @about-function{gdk-pixbuf-save-to-stream}
+    @about-function{gdk-pixbuf-save-to-streamv}
+    @about-function{gdk-pixbuf-save-to-stream-async}
+    @about-function{gdk-pixbuf-save-to-streamv-async}
+    @about-function{gdk-pixbuf-save-to-stream-finish}
   @end{section}
   @begin[Image Data in Memory]{section}
     Creating a pixbuf from image data that is already in memory.
@@ -133,6 +149,7 @@
     structure for it.
 
     @about-function{gdk-pixbuf-new}
+    @about-function{gdk-pixbuf-new-from-byte}
     @about-function{gdk-pixbuf-from-data}
     @about-function{gdk-pixbuf-new-from-xpm-data}
     @about-function{gdk-pixbuf-new-from-inline}
@@ -142,71 +159,74 @@
   @begin[Scaling]{section}
     Scaling pixbufs and scaling and compositing pixbufs.
 
-    The @class{gdk-pixbuf} contains functions to scale pixbufs, to scale pixbufs
-    and composite against an existing image, and to scale pixbufs and composite
-    against a solid color or checkerboard. Compositing a checkerboard is a
-    common way to show an image with an alpha channel in image-viewing and
-    editing software.
+    The @class{gdk-pixbuf} structure contains functions to scale pixbufs, to
+    scale pixbufs and composite against an existing image, and to scale pixbufs
+    and composite against a solid color or checkerboard. Compositing a
+    checkerboard is a common way to show an image with an alpha channel in
+    image-viewing and editing software.
 
     Since the full-featured functions @fun{gdk-pixbuf-scale},
     @fun{gdk-pixbuf-composite}, and @fun{gdk-pixbuf-composite-color} are rather
-    complex to use and have many arguments, two simple convenience functions are
-    provided, @fun{gdk-pixbuf-scale-simple} and
-    @fun{gdk-pixbuf-composite-color-simple} which create a new pixbuf of a given
-    size, scale an original image to fit, and then return the new pixbuf.
+    complex to use and have many arguments, two simple convenience functions
+    are provided, @fun{gdk-pixbuf-scale-simple} and
+    @fun{gdk-pixbuf-composite-color-simple} which create a new pixbuf of a
+    given size, scale an original image to fit, and then return the new pixbuf.
+
+    If the destination pixbuf was created from a readonly source, these
+    operations will force a copy into a mutable buffer.
 
     Scaling and compositing functions take advantage of MMX hardware
-    acceleration on systems where MMX is supported. If @class{gdk-pixbuf} is
-    built with the Sun mediaLib library, these functions are instead accelerated
-    using mediaLib, which provides hardware acceleration on Intel, AMD, and
-    Sparc chipsets. If desired, mediaLib support can be turned off by setting
-    the @code{GDK_DISABLE_MEDIALIB} environment variable.
+    acceleration on systems where MMX is supported. If the @class{gdk-pixbuf}
+    library is built with the Sun mediaLib library, these functions are instead
+    accelerated using mediaLib, which provides hardware acceleration on Intel,
+    AMD, and Sparc chipsets. If desired, mediaLib support can be turned off by
+    setting the @code{GDK_DISABLE_MEDIALIB} environment variable.
 
     The following example demonstrates handling an expose event by rendering the
     appropriate area of a source image (which is scaled to fit the widget) onto
     the widget's window. The source image is rendered against a checkerboard,
-    which provides a visual representation of the alpha channel if the image has
-    one. If the image does not have an alpha channel, calling
-    @fun{gdk-pixbuf-composite-color} function has exactly the same effect as
-    calling the function @fun{gdk-pixbuf-scale}.
+    which provides a visual representation of the alpha channel if the image
+    has one. If the image does not have an alpha channel, calling the function
+    @fun{gdk-pixbuf-composite-color} has exactly the same effect as calling the
+    function @fun{gdk-pixbuf-scale}.
 
     @b{Example:} Handling an expose event.
     @begin{pre}
- gboolean
- expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
- {
-   GdkPixbuf *dest;
+gboolean
+expose_cb (GtkWidget *widget, GdkEventExpose *event, gpointer data)
+{
+  GdkPixbuf *dest;
 
-   dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-                          event->area.width, event->area.height);
+  dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+                         event->area.width, event->area.height);
 
-   gdk_pixbuf_composite_color (pixbuf, dest,
-            0, 0,
-            event->area.width, event->area.height,
-            -event->area.x, -event->area.y,
-            (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
-            (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
-            GDK_INTERP_BILINEAR, 255,
-            event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
+  gdk_pixbuf_composite_color (pixbuf, dest,
+           0, 0,
+           event->area.width, event->area.height,
+           -event->area.x, -event->area.y,
+           (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
+           (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
+           GDK_INTERP_BILINEAR, 255,
+           event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
 
-   gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
-                    dest, 0, 0,
-                    event->area.x, event->area.y,
-                    event->area.width, event->area.height,
-                    GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
+  gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
+                   dest, 0, 0,
+                   event->area.x, event->area.y,
+                   event->area.width, event->area.height,
+                   GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
 
-   gdk_pixbuf_unref (dest);
+  gdk_pixbuf_unref (dest);
 
-   return TRUE;
- @}
+  return TRUE;
+@}
     @end{pre}
     @about-symbol{gdk-interp-type}
+    @about-symbol{gdk-pixbuf-rotation}
     @about-function{gdk-pixbuf-scale-simple}
     @about-function{gdk-pixbuf-scale}
     @about-function{gdk-pixbuf-composite-color-simple}
     @about-function{gdk-pixbuf-composite}
     @about-function{gdk-pixbuf-composite-color}
-    @about-symbol{gdk-pixbuf-rotation}
     @about-function{gdk-pixbuf-rotate-simple}
     @about-function{gdk-pixbuf-flip}
   @end{section}
@@ -227,8 +247,10 @@
   @begin[Animations]{section}
     Animated images.
 
-    @about-class{gdk-pixbuf-animation}
     @about-class{gdk-pixbuf-animation-iter}
+    @about-class{gdk-pixbuf-simple-anim}
+    @about-class{gdk-pixbuf-animation}
+    @about-generic{gdk-pixbuf-animation-loop}
     @about-function{gdk-pixbuf-animation-new-from-file}
     @about-function{gdk-pixbuf-animation-new-from-resource}
     @about-function{gdk-pixbuf-animation-new-from-stream}
@@ -240,12 +262,11 @@
     @about-function{gdk-pixbuf-animation-get-height}
     @about-function{gdk-pixbuf-animation-get-iter}
     @about-function{gdk-pixbuf-animation-is-static-image}
-    @about-function{gdk-pixbuf-animation-get-static-image}
+    @about-function{gdk-pixbuf-animation-static-image}
     @about-function{gdk-pixbuf-animation-iter-advance}
     @about-function{gdk-pixbuf-animation-iter-get-delay-time}
     @about-function{gdk-pixbuf-animation-iter-on-currently-loading-frame}
     @about-function{gdk-pixbuf-animation-iter-get-pixbuf}
-    @about-class{gdk-pixbuf-simple-anim}
     @about-function{gdk-pixbuf-simple-anim-new}
     @about-function{gdk-pixbuf-simple-anim-add-frame}
     @about-function{gdk-pixbuf-simple-anim-set-loop}
@@ -260,46 +281,34 @@
     @about-function{gdk-pixbuf-loader-new-with-mime-type}
     @about-function{gdk-pixbuf-loader-get-format}
     @about-function{gdk-pixbuf-loader-write}
+    @about-function{gdk-pixbuf-loader-write-bytes}
     @about-function{gdk-pixbuf-loader-set-size}
-    @about-function{gdk-pixbuf-loader-get-pixbuf}
-    @about-function{gdk-pixbuf-loader-get-animation}
+    @about-function{gdk-pixbuf-loader-pixbuf}
+    @about-function{gdk-pixbuf-loader-animation}
     @about-function{gdk-pixbuf-loader-close}
   @end{section}
   @begin[Module Interface]{section}
-    Extending GdkPixBuf.
-
-    @about-function{gdk_pixbuf-set-option}
-    @about-function{gdk-pixbuf-get-formats}
-    @about-function{gdk-pixbuf-format-copy}
-    @about-function{gdk-pixbuf-format-free}
-    @about-function{gdk-pixbuf-format-get-name}
-    @about-function{gdk-pixbuf-format-get-description}
-    @about-function{gdk-pixbuf-format-get-mime-types}
-    @about-function{gdk-pixbuf-format-get-extensions}
-    @about-function{gdk-pixbuf-format-is-writable}
-    @about-function{gdk-pixbuf-format-is-scalable}
-    @about-function{gdk-pixbuf-format-is-disabled}
-    @about-function{gdk-pixbuf-format-set-disabled}
-    @about-function{gdk-pixbuf-format-get-license}
-
-    @about-struct{gdk-pixbuf-format}
-    @about-function{copy-gdk-pixbuf-format}
-    @about-function{make-gdk-pixbuf-format}
-    @about-function{gdk-pixbuf-format-name}
-    @about-function{gdk-pixbuf-format-signature}
-    @about-function{gdk-pixbuf-format-domain}
-    @about-function{gdk-pixbuf-format-description}
-    @about-function{gdk-pixbuf-format-mime-types}
-    @about-function{gdk-pixbuf-format-extensions}
-    @about-function{gdk-pixbuf-format-flags}
-    @about-function{gdk-pixbuf-format-disabled}
-    @about-function{gdk-pixbuf-format-license}
+    Extending GdkPixbuf.
 
     @about-symbol{gdk-pixbuf-format-flags}
     @about-type{gdk-pixbuf-module-pattern}
     @about-symbol{gdk-pixbuf-module}
     @about-symbol{gdk-pixbuf-animation-class}
     @about-symbol{gdk-pixbuf-animation-iter-class}
+    @about-symbol{gdk-pixbuf-format}
+    @about-function{gdk-pixbuf-formats}
+    @about-function{gdk-pixbuf-format-copy}
+    @about-function{gdk-pixbuf-format-free}
+    @about-function{gdk-pixbuf-format-name}
+    @about-function{gdk-pixbuf-format-description}
+    @about-function{gdk-pixbuf-format-mime-types}
+    @about-function{gdk-pixbuf-format-extensions}
+    @about-function{gdk-pixbuf-format-is-save-option-supported}
+    @about-function{gdk-pixbuf-format-is-writable}
+    @about-function{gdk-pixbuf-format-is-scalable}
+    @about-function{gdk-pixbuf-format-is-disabled}
+    @about-function{gdk-pixbuf-format-set-disabled}
+    @about-function{gdk-pixbuf-format-license}
   @end{section}")
 
 ;;; --- End of file gdk.pixbuf-package.lisp ------------------------------------
