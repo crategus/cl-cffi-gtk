@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk-pixbuf.animation.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
-;;; Version 2.28.1 and modified to document the Lisp binding to the GDK-PixBuf
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.36 and modified to document the Lisp binding to the GDK-PixBuf
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,12 +29,15 @@
 ;;;
 ;;; Animations
 ;;;
-;;; Animated images.
+;;;     Animated images.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkPixbufAnimation
 ;;;     GdkPixbufAnimationIter
+;;;     GdkPixbufSimpleAnim
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_animation_new_from_file
 ;;;     gdk_pixbuf_animation_new_from_resource
@@ -56,32 +56,42 @@
 ;;;     gdk_pixbuf_animation_iter_on_currently_loading_frame
 ;;;     gdk_pixbuf_animation_iter_get_pixbuf
 ;;;
-;;;     GdkPixbufSimpleAnim
-;;;
 ;;;     gdk_pixbuf_simple_anim_new
 ;;;     gdk_pixbuf_simple_anim_add_frame
 ;;;     gdk_pixbuf_simple_anim_set_loop
 ;;;     gdk_pixbuf_simple_anim_get_loop
 ;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GdkPixbufAnimation
-;;;          +----GdkPixbufSimpleAnim
-;;;
-;;;   GObject
-;;;    +----GdkPixbufAnimationIter
-;;;
-;;;   GObject
-;;;    +----GdkPixbufAnimation
-;;;          +----GdkPixbufSimpleAnim
-;;;
 ;;; Properties
 ;;;
-;;;   "loop"                     gboolean              : Read / Write
+;;;      gboolean    loop    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ├── GdkPixbufAnimation
+;;;     │   ╰── GdkPixbufSimpleAnim
+;;;     ╰── GdkPixbufAnimationIter
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk-pixbuf)
+
+;;; ----------------------------------------------------------------------------
+;;; struct GdkPixbufAnimationIter
+;;;
+;;; struct GdkPixbufAnimationIter;
+;;;
+;;; An opaque struct representing an iterator which points to a certain position
+;;; in an animation.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GdkPixbufSimpleAnim
+;;;
+;;; typedef struct _GdkPixbufSimpleAnim GdkPixbufSimpleAnim;
+;;;
+;;; An opaque struct representing a simple animation.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkPixbufAnimation
@@ -98,55 +108,46 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-pixbuf-animation 'type)
- "@version{2013-10-13}
+ "@version{2020-11-22}
   @begin{short}
-    The GdkPixbuf library provides a simple mechanism to load and represent
-    animations. An animation is conceptually a series of frames to be displayed
-    over time. The animation may not be represented as a series of frames
-    internally; for example, it may be stored as a sprite and instructions for
-    moving the sprite around a background. To display an animation you do not
-    need to understand its representation, however; you just ask
-    @class{gdk-pixbuf} what should be displayed at a given point in time.
+    The @sym{gdk-pixbuf} library provides a simple mechanism to load and
+    represent animations.
   @end{short}
-  @see-class{gdk-pixbuf}
-  @see-slot{gdk-pixbuf-animation-loop}")
+  An animation is conceptually a series of frames to be displayed over time.
+  The animation may not be represented as a series of frames internally. For
+  example, it may be stored as a sprite and instructions for moving the sprite
+  around a background. To display an animation you do not need to understand
+  its representation, however; you just ask @class{gdk-pixbuf} what should be
+  displayed at a given point in time.
+  @see-slot{gdk-pixbuf-animation-loop}
+  @see-class{gdk-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "loop" 'gdk-pixbuf-animation) 't)
- "The @code{\"loop\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{loop} property of type @code{:boolean} (Read / Write) @br{}
   Whether the animation should loop when it reaches the end. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.18")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-pixbuf-animation-loop atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-animation-loop 'function)
- "@version{2013-8-10}
-  Accessor of the slot @code{\"loop\"} of the @class{gdk-pixbuf-animation}
-  class.
-  @see-class{gdk-pixbuf-animation}")
+ "@version{2020-11-22}
+  @syntax[]{(gdk-pixbuf-animation-loop object) => loop}
+  @syntax[]{(setf (gdk-pixbuf-animation-loop object) loop)}
+  @argument[object]{a @class{gdk-pixbuf-animation} structure}
+  @argument[loop]{a boolean wether the animation should loop}
+  @begin{short}
+    Accessor of the @slot[gdk-pixbuf-animation]{loop} of the
+    @class{gdk-pixbuf-animation} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkPixbufAnimationIter
-;;;
-;;; struct GdkPixbufAnimationIter;
-;;;
-;;; An opaque struct representing an iterator which points to a certain position
-;;; in an animation.
-;;; ----------------------------------------------------------------------------
+  Whether the animation should loop when it reaches the end.
+  @see-class{gdk-pixbuf-animation}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_new_from_file ()
@@ -159,8 +160,9 @@
 
 (defun gdk-pixbuf-animation-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
-  @argument[filename]{name of file to load, in the GLib file name encoding}
+ "@version{2020-11-22}
+  @argument[filename]{a string with the name of file to load, in the GLib file
+    name encoding}
   @begin{return}
     A newly created animation with a reference count of 1, or @code{nil} if any
     of several error conditions ocurred: the file could not be opened, there
@@ -432,14 +434,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_get_static_image ()
+;;; -> gdk-pixbuf-animation-static-image
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_animation_get_static_image"
-           gdk-pixbuf-animation-get-static-image) (g-object gdk-pixbuf)
+           gdk-pixbuf-animation-static-image) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-13}
-  @argument[animation]{a @class{gdk-pixbuf-animation} object}
-  @return{Unanimated image representing the animation.}
+ "@version{2020-11-22}
+  @argument[animation]{a @class{gdk-pixbuf-animation} structure}
+  @return{Unanimated @class{gdk-pixbuf} image representing the animation.}
   @begin{short}
     If an animation is really just a plain image, has only one frame, this
     function returns that image.
@@ -452,7 +455,7 @@
   @see-class{gdk-pixbuf-animation}"
   (animation (g-object gdk-pixbuf-animation)))
 
-(export 'gdk-pixbuf-animation-get-static-image)
+(export 'gdk-pixbuf-animation-static-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_iter_advance ()
