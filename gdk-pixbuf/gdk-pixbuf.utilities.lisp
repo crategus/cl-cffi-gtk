@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk-pixbuf.utilities.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
-;;; Version 2.28.0 and modified to document the Lisp binding to the GDK-PixBuf
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 2.36 and modified to document the Lisp binding to the GDK-PixBuf
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,9 +28,9 @@
 ;;;
 ;;; Utilities
 ;;;
-;;; Utility and miscellaneous convenience functions.
+;;;     Utility and miscellaneous convenience functions.
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_add_alpha
 ;;;     gdk_pixbuf_copy_area
@@ -57,21 +54,21 @@
 
 (defcfun ("gdk_pixbuf_add_alpha" gdk-pixbuf-add-alpha) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
-  @argument[substitute-color]{whether to set a color to zero opacity. If this is
-    @code{nil}, then the (@arg{red}, @arg{green}, @arg{blue}) arguments will be
-    ignored}
-  @argument[red]{red value to substitute}
-  @argument[green]{green value to substitute}
-  @argument[blue]{blue value to substitute}
+ "@version{2020-11-22}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[substitute-color]{a boolean whether to set a color to zero opacity,
+    if this is @em{false}, then the (@arg{red}, @arg{green}, @arg{blue})
+    arguments will be ignored}
+  @argument[red]{an unsigned char with the red value to substitute}
+  @argument[green]{an unsigned char with the green value to substitute}
+  @argument[blue]{an unsigned char with the blue value to substitute}
   @return{A newly created pixbuf with a reference count of 1.}
   @begin{short}
-    Takes an existing @arg{pixbuf} and adds an alpha channel to it. If the
-    existing @arg{pixbuf} already had an alpha channel, the channel values are
-    copied from the original; otherwise, the alpha channel is initialized to
-    255 (full opacity).
+    Takes an existing @arg{pixbuf} and adds an alpha channel to it.
   @end{short}
+  If the existing @arg{pixbuf} already had an alpha channel, the channel values
+  are copied from the original; otherwise, the alpha channel is initialized to
+  255 (full opacity).
 
   If @arg{substitute-color} is @em{true}, then the color specified by
   (@arg{red}, @arg{green}, @arg{blue}) will be assigned zero opacity. That is,
@@ -91,23 +88,26 @@
 
 (defcfun ("gdk_pixbuf_copy_area" gdk-pixbuf-copy-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-22}
-  @argument[src-pixbuf]{source pixbuf}
-  @argument[src-x]{source x coordinate within @arg{src-pixbuf}}
-  @argument[src-y]{source y coordinate within @arg{src-pixbuf}}
-  @argument[width]{width of the area to copy}
-  @argument[height]{height of the area to copy}
-  @argument[dest-pixbuf]{destination pixbuf}
-  @argument[dest-x]{x coordinate within @arg{dest-pixbuf}}
-  @argument[dest-y]{y coordinate within @arg{dest-pixbuf}}
+ "@version{2020-11-22}
+  @argument[src-pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[src-x]{an integer with the source x coordinate within
+    @arg{src-pixbuf}}
+  @argument[src-y]{an integer with the source y coordinate within
+    @arg{src-pixbuf}}
+  @argument[width]{an integer with the width of the area to copy}
+  @argument[height]{an integer with the height of the area to copy}
+  @argument[dest-pixbuf]{a @class{gdk-pixbuf} destination structure}
+  @argument[dest-x]{an integer with the x coordinate within @arg{dest-pixbuf}}
+  @argument[dest-y]{an integer with the y coordinate within @arg{dest-pixbuf}}
   @begin{short}
     Copies a rectangular area from @arg{src-pixbuf} to @arg{dest-pixbuf}.
-    Conversion of pixbuf formats is done automatically.
   @end{short}
+  Conversion of pixbuf formats is done automatically.
 
   If the source rectangle overlaps the destination rectangle on the same
   pixbuf, it will be overwritten during the copy operation. Therefore, you can
-  not use this function to scroll a pixbuf."
+  not use this function to scroll a pixbuf.
+  @see-class{gdk-pixbuf}"
   (src-pixbuf (g-object gdk-pixbuf))
   (scc-x :int)
   (src-y :int)
@@ -176,15 +176,15 @@
 
 (defcfun ("gdk_pixbuf_fill" gdk-pixbuf-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-14}
-  @argument[pixbuf]{a @class{gdk-pixbuf} object}
-  @argument[pixel]{RGBA pixel to clear to, @code{#xffffffff} is opaque white,
-    @code{#x00000000} transparent black}
+ "@version{2020-11-22}
+  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[pixel]{an unsigned integer with the RGBA pixel to clear to,
+    @code{#xffffffff} is opaque white, @code{#x00000000} transparent black}
   @begin{short}
-    Clears a @arg{pixbuf} to the given RGBA value, converting the RGBA value
-    into the @arg{pixbuf}'s pixel format.
+    Clears a pixbuf to the given RGBA value, converting the RGBA value
+    into the pixbuf's pixel format.
   @end{short}
-  The alpha will be ignored if the @arg{pixbuf} does not have an alpha channel.
+  The alpha will be ignored if the pixbuf does not have an alpha channel.
   @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf))
   (pixel :uint32))
