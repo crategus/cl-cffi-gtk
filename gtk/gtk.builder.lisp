@@ -106,10 +106,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-builder-error atdoc:*external-symbols*)
- "@version{2013-5-28}
+ "@version{2020-11-24}
   @begin{short}
-    Error codes that identify various errors that can occur while using
-    @sym{gtk-builder}.
+    Error codes that identify various errors that can occur while using the
+    @sym{gtk-builder} class.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkBuilderError\" gtk-builder-error
@@ -131,21 +131,21 @@
   (:invalid-id 13))
   @end{pre}
   @begin[code]{table}
-    @entry[:invalid-type-function]{A type-func attribute did not name a function
-      that returns a @class{g-type}.}
-    @entry[:unhandled-tag]{The input contained a tag that @class{gtk-builder}
-      cannot handle.}
-    @entry[:missing-attribute]{An attribute that is required by
-      @sym{gtk-builder} was missing.}
-    @entry[:invalid-attribute]{@sym{gtk-builder} found an attribute that it
-      does not understand.}
-    @entry[:invalid-tag]{@sym{gtk-builder} found a tag that it does not
-      understand.}
+    @entry[:invalid-type-function]{A type-func attribute did not name a
+      function that returns a @class{g-type}.}
+    @entry[:unhandled-tag]{The input contained a tag that a @class{gtk-builder}
+      object cannot handle.}
+    @entry[:missing-attribute]{An attribute that is required by a
+      @sym{gtk-builder} object was missing.}
+    @entry[:invalid-attribute]{A @sym{gtk-builder} object found an attribute
+      that it does not understand.}
+    @entry[:invalid-tag]{A @sym{gtk-builder} object found a tag that it does
+      not understand.}
     @entry[:missing-property-value]{A required property value was missing.}
-    @entry[:invalid-value]{@sym{gtk-builder} could not parse some attribute
-      value.}
+    @entry[:invalid-value]{A @sym{gtk-builder} object could not parse some
+      attribute value.}
     @entry[:version-mismatch]{The input file requires a newer version of GTK+.}
-    @entry[:duplicate-id]{An object id occurred twice.}
+    @entry[:duplicate-id]{An object ID occurred twice.}
     @entry[:type-refused]{A specified object type is of the same type or derived
       from the type of the composite class being extended with builder XML.}
     @entry[:template-mismatch]{The wrong type was specified in a composite
@@ -154,8 +154,9 @@
       class.}
     @entry[:invalid-signal]{The specified signal is unknown for the object
       class.}
-    @entry[:invalid-id]{An object id is unknown.}
-  @end{table}")
+    @entry[:invalid-id]{An object ID is unknown.}
+  @end{table}
+  @see-class{gtk-builder}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuilder
@@ -180,28 +181,28 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-builder 'type)
- "@version{#2014-7-20}
+ "@version{2020-11-24}
   @begin{short}
-    A @sym{gtk-builder} is an auxiliary object that reads textual descriptions
-    of a user interface and instantiates the described objects.
+    A @sym{gtk-builder} object is an auxiliary object that reads textual
+    descriptions of a user interface and instantiates the described objects.
   @end{short}
-  To create a @class{gtk-builder} from a user interface description, call
-  the @fun{gtk-builder-new-from-file}, @fun{gtk-builder-new-from-resource} or
-  @fun{gtk-builder-new-from-string} functions.
+  To create a @class{gtk-builder} object from a user interface description,
+  call the functions @fun{gtk-builder-new-from-file},
+  @fun{gtk-builder-new-from-resource} or
+  @fun{gtk-builder-new-from-string}.
 
   In the (unusual) case that you want to add user interface descriptions from
-  multiple sources to the same @class{gtk-builder} you can call the
-  @fun{gtk-builder-new} function to get an empty builder and populate it by
-  (multiple) calls to the @fun{gtk-builder-add-from-file},
-  @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}
-  functions.
+  multiple sources to the same @class{gtk-builder} object you can call the
+  function @fun{gtk-builder-new} to get an empty builder and populate it by
+  (multiple) calls to the functions @fun{gtk-builder-add-from-file},
+  @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}.
 
-  A @sym{gtk-builder} holds a reference to all objects that it has constructed
-  and drops these references when it is finalized. This finalization can cause
-  the destruction of non-widget objects or widgets which are not contained in a
-  toplevel window. For toplevel windows constructed by a builder, it is the
-  responsibility of the user to call the @fun{gtk-widget-destroy} function to
-  get rid of them and all the widgets they contain.
+  A @sym{gtk-builder} object holds a reference to all objects that it has
+  constructed and drops these references when it is finalized. This finalization
+  can cause the destruction of non-widget objects or widgets which are not
+  contained in a toplevel window. For toplevel windows constructed by a builder,
+  it is the responsibility of the user to call the function
+  @fun{gtk-widget-destroy} to get rid of them and all the widgets they contain.
 
   The functions @fun{gtk-builder-object} and @fun{gtk-builder-objects} can be
   used to access the widgets in the interface by the names assigned to them
@@ -214,13 +215,13 @@
   to be reffed with the function @fun{g-object-ref} to keep them beyond the
   lifespan of the builder.
 
-  The @fun{gtk-builder-connect-signals} function and variants thereof can be
+  The function @fun{gtk-builder-connect-signals} and variants thereof can be
   used to connect handlers to the named signals in the description.
 
   @subheading{GtkBuilder UI Definitions}
-  @sym{gtk-builder} parses textual descriptions of user interfaces which are
-  specified in an XML format which can be roughly described by the RELAX NG
-  schema below. We refer to these descriptions as @sym{gtk-builder} UI
+  The @sym{gtk-builder} object parses textual descriptions of user interfaces
+  which are specified in an XML format which can be roughly described by the
+  RELAX NG schema below. We refer to these descriptions as @sym{gtk-builder} UI
   definitions or just UI definitions if the context is clear. Do not confuse
   @sym{gtk-builder} UI Definitions with @class{gtk-ui-manager} UI Definitions,
   which are more limited in scope. It is common to use @code{.ui} as the
@@ -324,12 +325,12 @@
   The toplevel element is @code{<interface>}. It optionally takes a
   @code{\"domain\"} attribute, which will make the builder look for translated
   strings using @code{dgettext()} in the domain specified. This can also be
-  done by calling the @fun{gtk-builder-translation-domain} function on the
+  done by calling the function @fun{gtk-builder-translation-domain} on the
   builder. Objects are described by @code{<object>} elements, which can
   contain @code{<property>} elements to set properties, @code{<signal>}
   elements which connect signals to handlers, and @code{<child>} elements,
   which describe child objects, most often widgets inside a container, but
-  also e. g. actions in an action group, or columns in a tree model. A
+  also e.g. actions in an action group, or columns in a tree model. A
   @code{<child>} element contains an @code{<object>} element which describes
   the child object. The target toolkit version(s) are described by
   @code{<requires>} elements, the @code{\"lib\"} attribute specifies the
@@ -343,11 +344,12 @@
   been loaded yet, GTK+ tries to find the @code{_get_type()} from the class
   name by applying heuristics. This works in most cases, but if necessary, it
   is possible to specify the name of the @code{_get_type()} explictly with the
-  @code{\"type-func\"} attribute. As a special case, @class{gtk-builder}
-  allows to use an object that has been constructed by a
-  @class{gtk-ui-manager} in another part of the UI definition by specifying
-  the ID of the @class{gtk-ui-manager} in the @code{\"constructor\"} attribute
-  and the name of the object in the @code{\"id\"} attribute.
+  @code{\"type-func\"} attribute. As a special case, the @class{gtk-builder}
+  object allows to use an object that has been constructed by a
+  @class{gtk-ui-manager} object in another part of the UI definition by
+  specifying the ID of the @class{gtk-ui-manager} object in the
+  @code{\"constructor\"} attribute and the name of the object in the
+  @code{\"id\"} attribute.
 
   Objects must be given a name with the @code{\"ID\"} attribute, which allows
   the application to retrieve them from the builder with the function
@@ -355,15 +357,16 @@
   property value in other parts of the UI definition.
 
   @subheading{Note}
-  Prior to 2.20, @sym{gtk-builder} was setting the @code{\"name\"} property of
-  constructed widgets to the @code{\"id\"} attribute. In GTK+ 2.20 or newer, you
-  have to use the function @fun{gtk-buildable-name} instead of the function
-  @fun{gtk-widget-name} to obtain the @code{\"id\"}, or set the
-  @code{\"name\"} property in your UI definition.
+  Prior to 2.20, the @sym{gtk-builder} implementation was setting the
+  @code{\"name\"} property of constructed widgets to the @code{\"id\"}
+  attribute. In GTK+ 2.20 or newer, you have to use the function
+  @fun{gtk-buildable-name} instead of the function @fun{gtk-widget-name} to
+  obtain the @code{\"id\"}, or set the @code{\"name\"} property in your UI
+  definition.
 
   Setting properties of objects is pretty straightforward with the
-  @code{<property>} element: the @code{\"name\"} attribute specifies the name of
-  the property, and the content of the element specifies the value. If the
+  @code{<property>} element: the @code{\"name\"} attribute specifies the name
+  of the property, and the content of the element specifies the value. If the
   @code{\"translatable\"} attribute is set to a true value, GTK+ uses
   @code{gettext()}, or @code{dgettext()} if the builder has a translation domain
   set, to find a translation for the value. This happens before the value is
