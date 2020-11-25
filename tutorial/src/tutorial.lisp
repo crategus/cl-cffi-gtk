@@ -717,7 +717,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun example-buttons ()
+(defun example-more-buttons ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Buttons"
@@ -737,40 +737,38 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       ;; These are the standard functions to create a button.
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-label "Label"))
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-mnemonic "_Mnemonic"))
       (gtk-box-pack-start vbox1
-                          (gtk-button-new-from-stock "gtk-apply"))
+                          (gtk-button-new-from-icon-name "gtk-apply" :button))
       ;; Create some buttons with make-instance.
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
-                                         :image-position :right
+                                         :image-position :left
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock "gtk-edit"
-                                                                   :button)
-                                         :label "gtk-edit"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-edit")
+                                         :label "Bearbeiten"))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :top
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock "gtk-cut"
-                                                                   :button)
-                                         :label "gtk-cut"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-cut")
+                                         :label "Ausschneiden"))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :bottom
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock "gtk-cancel"
-                                                                   :button)
-                                         :label "gtk-cancel"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-cancel")
+                                         :label "Abbrechen"))
       (gtk-box-pack-start hbox vbox1)
       (gtk-box-pack-start hbox vbox2)
       (gtk-container-add window hbox)
@@ -1849,9 +1847,27 @@
                              :border-width 6
                              :layout-style layout
                              :spacing spacing)))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+    (gtk-container-add bbox
+                       (make-instance 'gtk-button
+                                      :label "OK"
+                                      :always-show-image t
+                                      :image
+                                      (make-instance 'gtk-image
+                                                     :icon-name "gtk-ok")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Cancel"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-cancel")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Help"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-help")))
   (gtk-container-add frame bbox)
   frame))
 
@@ -1873,8 +1889,6 @@
                                :orientation :horizontal
                                :homogeneous nil
                                :spacing 12)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -3543,7 +3557,12 @@ happen.")
                    (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
-      (let ((button (gtk-button-new-from-stock "gtk-close")))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close"
+                                   :always-show-image t
+                                   :image
+                                   (make-instance 'gtk-image
+                                                  :icon-name "gtk-close"))))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))

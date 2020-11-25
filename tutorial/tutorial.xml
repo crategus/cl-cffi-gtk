@@ -1988,11 +1988,11 @@ int main( int argc, char *argv[] )
     We have almost seen all there is to see of the button widget, which is represented by the &gtk-button;
     class. The button widget is pretty simple. There is however more than one way to create a button. You can
     use the the function &gtk-button-new-with-label; or the function &gtk-button-new-with-mnemonic; to create
-    a button with a label, use &gtk-button-new-from-stock; to create a button containing the image and text
-    from a stock item or use &gtk-button-new; to create a blank button. It is then up to you to pack a label
-    or pixmap into this new button. To do this, create a new box, and then pack your objects into this box
-    using the function &gtk-box-pack-start;, and then use the function &gtk-container-add; to pack the box
-    into the button.
+    a button with a label, use the function &gtk-button-new-from-icon-name; to create a button containing the
+    image from the current icon theme or use the function &gtk-button-new; to create a blank button. It is
+    then up to you to pack a label or pixmap into this new button. To do this, create a new box, and then
+    pack your objects into this box using the function &gtk-box-pack-start;, and then use the function
+    &gtk-container-add; to pack the box into the button.
    </para>
    <figure id="figure-button">
     <title>Button with an image from a file</title>
@@ -2003,9 +2003,9 @@ int main( int argc, char *argv[] )
     </mediaobject>
    </figure>
    <para>
-    The figure <link linkend="figure-button">Button</link> is an example of using &gtk-button-new; to create
-    a button with an image and a label in it. The image is loaded from a file with the function
-    &gtk-image-new-from-file;. The code to create a box is shown in the example
+    The figure <link linkend="figure-button">Button</link> shows an example of using the function
+    &gtk-button-new; to create a button with an image and a label in it. The image is loaded from a file with
+    the function &gtk-image-new-from-file;. The code to create a box is shown in the example
     <link linkend="example-image-label-box">Image Label Box</link> and breaken up from the rest so you can
     use it in your programs. The main program which uses this subroutine is shown in the example
     <link linkend="example-button">Button</link>.
@@ -2013,13 +2013,6 @@ int main( int argc, char *argv[] )
    <para>
     The function <code>image-label-box</code> could be used to pack images and labels into any widget that
     can be a container.
-   </para>
-   <para>
-    The figure <link linkend="figure-buttons">Buttons</link> shows more buttons, which are created with
-    standard functions and with the function <code>make-instance</code>. To get buttons which show both a
-    label and an image the global setting of the property <code>gtk-button-images</code> has to be set to the
-    value <code>T</code>. The code of the figure <link linkend="figure-buttons">Buttons</link> is shown in
-    example <link linkend="example-buttons">Buttons</link>.
    </para>
    <example id="example-button">
     <title>Button with an image and a label</title>
@@ -2055,8 +2048,19 @@ int main( int argc, char *argv[] )
     (gtk-box-pack-start box label :expand nil :fill nil :padding 3)
     box))
      </programlisting>
+   <para>
+    The figure <link linkend="figure-more-buttons">Buttons</link> shows more buttons, which are created with
+    standard functions and with the function <code>make-instance</code>. The buttons created with the function
+    <code>make-instance</code> show both a label and an image. The images are created with the function
+    <code>make-instance</code> from the current icon theme by setting the &gtk_image_icon-name; property to
+    the icon name of the image. More about the &gtk-image; class follows in section
+    <link linkend="Images">Images</link>. To show the images, the &gtk_button_always-show-image; property must
+    be set to the value <code>T</code>. This is done in the call to the function <code>make-instance</code>.
+    The code of the figure <link linkend="figure-more-buttons">Buttons</link> is shown in example
+    <link linkend="example-more-buttons">Buttons</link>.
+   </para>
    </example>
-   <figure id="figure-buttons">
+   <figure id="figure-more-buttons">
     <title>More Examples to create buttons</title>
     <mediaobject>
      <imageobject>
@@ -2064,10 +2068,10 @@ int main( int argc, char *argv[] )
      </imageobject>
     </mediaobject>
    </figure>
-   <example id="example-buttons">
+   <example id="example-more-buttons">
     <title>More buttons</title>
     <programlisting>
-(defun example-buttons ()
+(defun example-more-buttons ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Buttons"
@@ -2087,41 +2091,38 @@ int main( int argc, char *argv[] )
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       ;; These are the standard functions to create a button.
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-label "Label"))
       (gtk-box-pack-start vbox1
                           (gtk-button-new-with-mnemonic "_Mnemonic"))
       (gtk-box-pack-start vbox1
-                          (gtk-button-new-from-stock "gtk-apply"))
+                          (gtk-button-new-from-icon-name "gtk-apply" :button))
       ;; Create some buttons with make-instance.
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
-                                         :image-position :right
+                                         :image-position :left
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock "gtk-edit"
-                                                                   :button)
-                                         :label "gtk-edit"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-edit")
+                                         :label "Bearbeiten"))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :top
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock "gtk-cut"
-                                                                   :button)
-                                         :label "gtk-cut"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-cut")
+                                         :label "Ausschneiden"))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :bottom
+                                         :always-show-image t
                                          :image
-                                         (gtk-image-new-from-stock
-                                                                 "gtk-cancel"
-                                                                 :button)
-                                         :label "gtk-cancel"
-                                         :use-stock t))
+                                         (make-instance 'gtk-image
+                                                        :icon-name "gtk-cancel")
+                                         :label "Abbrechen"))
       (gtk-box-pack-start hbox vbox1)
       (gtk-box-pack-start hbox vbox2)
       (gtk-container-add window hbox)
@@ -5146,9 +5147,27 @@ int main( int argc, char *argv[] )
                              :border-width 6
                              :layout-style layout
                              :spacing spacing)))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+    (gtk-container-add bbox
+                       (make-instance 'gtk-button
+                                      :label "OK"
+                                      :always-show-image t
+                                      :image
+                                      (make-instance 'gtk-image
+                                                     :icon-name "gtk-ok")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Cancel"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-cancel")))
+  (gtk-container-add bbox
+                     (make-instance 'gtk-button
+                                    :label "Help"
+                                    :always-show-image t
+                                    :image
+                                    (make-instance 'gtk-image
+                                                   :icon-name "gtk-help")))
   (gtk-container-add frame bbox)
   frame))
 
@@ -5170,8 +5189,6 @@ int main( int argc, char *argv[] )
                                :orientation :horizontal
                                :homogeneous nil
                                :spacing 12)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -10140,7 +10157,7 @@ main (int argc, char **argv)
                    (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
-      (let ((button (gtk-button-new-from-stock "gtk-close")))
+      (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))
@@ -13858,6 +13875,10 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
+
+
 
 
 

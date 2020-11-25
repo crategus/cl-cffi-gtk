@@ -167,6 +167,10 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-button.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-button</code></ulink>">
+<!ENTITY gtk_button_always-show-image
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-button.html#gtk_slot_gtk-button-always-show-image'>
+          <code xmlns='http://docbook.org/ns/docbook'>always-show-image</code></ulink>">
 <!ENTITY gtk-button-new
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-button-new.html'>
@@ -183,6 +187,10 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-button-new-from-stock.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-from-stock</code></ulink>">
+<!ENTITY gtk-button-new-from-icon-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-new-from-icon-name.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-from-icon-name</code></ulink>">
 
 <!ENTITY gtk-button-box                      "&api;gtk_class_gtk-button-box.html">
 <!ENTITY gtk-button-box-new                  "&api;gtk_fun_gtk-button-box-new.html">
@@ -356,6 +364,12 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-image.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-image</code></ulink>">
+
+<!ENTITY gtk_image_icon-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-image.html#gtk_slot_gtk-image-icon-name'>
+          <code xmlns='http://docbook.org/ns/docbook'>icon-name</code></ulink>">
+
 <!ENTITY gtk-image-new-from-file
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-image-new-from-file.html'>
