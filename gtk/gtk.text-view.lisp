@@ -300,7 +300,7 @@
 #+(and gtk-3-16 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-extend-selection atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-extend-selection atdoc:*external-symbols*)
- "@version{2020-6-7}
+ "@version{2020-11-25}
   @begin{short}
     Granularity types that extend the text selection. Use the
     \"extend-selection\" signal to customize the selection.
@@ -315,9 +315,9 @@
   (:line 1))
   @end{pre}
   @begin[code]{table}
-    @entry[:word]{Selects the current word. It is triggered by a double-click
+    @entry[:word]{Selects the current word. It is triggered by a double click
       for example.}
-    @entry[:line]{Selects the current line. It is triggered by a triple-click
+    @entry[:line]{Selects the current line. It is triggered by a triple click
       for example.}
   @end{table}
   @see-class{gtk-text-view}")

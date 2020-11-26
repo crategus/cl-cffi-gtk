@@ -345,7 +345,7 @@
  "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether children can be activated with a single click, or require
-  a double-click. @br{}
+  a double click. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -353,10 +353,10 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-activate-on-single-click 'function)
- "@version{2020-5-8}
+ "@version{2020-11-25}
   @syntax[]{(gtk-flow-box-acivate-on-click object) => single}
   @syntax[]{(setf (gtk-flow-box-activate-on-click object) single)}
-  @argument[object]{a @class{gtk-flow-box} container}
+  @argument[object]{a @class{gtk-flow-box} widget}
   @argument[single]{@em{false} to emit the \"child-activated\" signal on
     a single click}
   @begin{short}
@@ -365,10 +365,9 @@
   @end{short}
 
   The slot access function @sym{gtk-flow-box-activate-on-single-click} returns
-  whether children activate on single clicks.
-
-  If @arg{single} is @em{true}, children will be activated when you click on
-  them, otherwise you need to double-click.
+  whether children activate on single clicks. If @arg{single} is @em{true},
+  children will be activated when you click on them, otherwise you need to
+  double click.
 
   Since 3.12
   @see-class{gtk-flow-box}")

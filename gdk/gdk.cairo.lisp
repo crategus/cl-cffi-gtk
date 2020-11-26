@@ -259,14 +259,13 @@
 
 (defcfun ("gdk_cairo_set_source_rgba" gdk-cairo-set-source-rgba) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[cr]{a cairo context}
+ "@version{2020-11-25}
+  @argument[cr]{a @symbol{cairo-t} context}
   @argument[rgba]{a @class{gdk-rgba} structure}
   @begin{short}
-    Sets the specified @class{gdk-rgba} as the source color of @arg{cr}.
+    Sets the specified @arg{rgba} color as the source color of the Cairo
+    context.
   @end{short}
-
-  Since 3.0
   @see-symbol{cairo-t}
   @see-class{gdk-rgba}"
   (cr (:pointer (:struct cairo-t)))

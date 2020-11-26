@@ -182,7 +182,7 @@
 
 (defcfun ("gdk_pixbuf_scale" gdk-pixbuf-scale) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2020-11-25}
   @argument[src]{a @class{gdk-pixbuf} structure}
   @argument[dest]{the @class{gdk-pixbuf} structure into which to render the
     results}
@@ -192,10 +192,10 @@
   @argument[dest-height]{an integer with the height of the region to render}
   @argument[offset-x]{a dobule with the offset in the x direction (currently
     rounded to an integer)}
-  @argument[offset-y]{a double with the offset in the y direction (currently
-    rounded to an integer)}
-  @argument[scale-x]{a double with the scale factor in the x direction}
-  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[offset-y]{a double float with the offset in the y direction
+    (currently rounded to an integer)}
+  @argument[scale-x]{a double float with the scale factor in the x direction}
+  @argument[scale-y]{a double float with the scale factor in the y direction}
   @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
     the transformation}
   @begin{short}
@@ -286,12 +286,12 @@
   @argument[dest-y]{an integer with the top coordinate for region to render}
   @argument[dest-width]{an integer with the width of the region to render}
   @argument[dest-height]{an integer with the height of the region to render}
-  @argument[offset-x]{a double with the offset in the x direction (currently
-    rounded to an integer)}
-  @argument[offset-y]{a double with the offset in the y direction (currently
-    rounded to an integer)}
-  @argument[scale-x]{a double with the scale factor in the x direction}
-  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[offset-x]{a double float with the offset in the x direction
+    (currently rounded to an integer)}
+  @argument[offset-y]{a double float with the offset in the y direction
+    (currently rounded to an integer)}
+  @argument[scale-x]{a double float with the scale factor in the x direction}
+  @argument[scale-y]{a double float with the scale factor in the y direction}
   @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
     the transformation}
   @argument[overall-alpha]{an integer with the overall alpha for source image
@@ -345,12 +345,12 @@
   @argument[dest-y]{an integer with the top coordinate for region to render}
   @argument[dest-width]{an integer with the width of the region to render}
   @argument[dest-height]{an integer with the height of the region to render}
-  @argument[offset-x]{a double with the offset in the x direction, currently
-    rounded to an integer}
-  @argument[offset-y]{a double with the offset in the y direction, currently
-    rounded to an integer}
-  @argument[scale-x]{a double with the scale factor in the x direction}
-  @argument[scale-y]{a double with the scale factor in the y direction}
+  @argument[offset-x]{a double float with the offset in the x direction,
+    currently rounded to an integer}
+  @argument[offset-y]{a double float with the offset in the y direction,
+    currently rounded to an integer}
+  @argument[scale-x]{a double float with the scale factor in the x direction}
+  @argument[scale-y]{a double float with the scale factor in the y direction}
   @argument[interp-type]{the @symbol{gdk-interp-type} interpolation type for
     the transformation}
   @argument[overall-alpha]{an integer with the overall alpha for source image

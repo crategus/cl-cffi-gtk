@@ -762,8 +762,8 @@ Hilfeoptionen:
       the option are collected into a list of strings.}
     @entry[:filename-array]{The option takes a filename as argument, multiple
       uses of the option are collected into a list of strings.}
-    @entry[:double]{The option takes a double argument. The argument can be
-      formatted either for the user's locale or for the \"C\" locale.
+    @entry[:double]{The option takes a double float argument. The argument can
+      be formatted either for the user's locale or for the \"C\" locale.
       Since 2.12.}
     @entry[:int64]{The option takes a 64-bit integer. Like @code{:int} but for
       larger numbers. The number can be in decimal base, or in hexadecimal

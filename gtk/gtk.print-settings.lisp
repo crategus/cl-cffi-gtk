@@ -662,19 +662,19 @@
 
 (defcfun ("gtk_print_settings_get_double" gtk-print-settings-double) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-4-13}
+ "@version{2020-11-25}
   @syntax[]{(gtk-print-settings-double settings key) => value}
   @syntax[]{(setf (gtk-print-settings-double settings key) value)}
   @argument[settings]{a @class{gtk-print-settings} object}
   @argument[key]{a string with a key}
-  @argument[value]{a double value}
+  @argument[value]{a double float value}
   @begin{short}
-    Accessor of the double value of a key in a print setting.
+    Accessor of the double float value of a key in a print setting.
   @end{short}
 
-  The function @sym{gtk-print-settings-double} gets the double value of
+  The function @sym{gtk-print-settings-double} gets the double float value of
   @arg{key}, or 0. The function @sym{(setf gkt-print-settings-double)}
-  sets @arg{key} to a double value.
+  sets @arg{key} to a double float value.
   @see-class{gtk-print-settings}
   @see-function{gtk-print-settings-double-with-default}"
   (settings (g-object gtk-print-settings))

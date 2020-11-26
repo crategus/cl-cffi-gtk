@@ -2277,7 +2277,7 @@ size-name = width , height
                                                'gtk-settings) 't)
  "The @code{gtk-titlebar-double-click} property of type @code{:string}
   (Read / Write) @br{}
-  This setting determines the action to take when a double-click occure on the
+  This setting determines the action to take when a double click occures on the
   titlebar of client-side decorated windows. Recognized actions are
   \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
   Since 3.14 @br{}
@@ -2288,11 +2288,19 @@ size-name = width , height
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-titlebar-double-click 'function)
- "@version{2019-4-19}
+ "@version{2020-11-25}
+  @syntax[]{(gtk-settings-gtk-titlebar-double-click object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-titlebar-double-click object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with a action}
   @begin{short}
     Accessor of the @slot[gtk-settings]{gtk-titlebar-double-click} slot of the
     @class{gtk-settings} class.
   @end{short}
+
+  This setting determines the action to take when a double click occures on the
+  titlebar of client-side decorated windows. Recognized actions are
+  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
 
   Since 3.14
   @see-class{gtk-settings}")

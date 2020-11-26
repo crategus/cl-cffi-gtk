@@ -1576,9 +1576,9 @@
 
 (defcfun ("g_variant_get_double" g-variant-double) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
-  @argument[value]{a double @type{g-variant} instance}
-  @return{A @code{:double} value.}
+ "@version{2020-11-25}
+  @argument[value]{a double float @type{g-variant} instance}
+  @return{A double float value.}
   @short{Returns the double precision floating point value of @arg{value}.}
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-double+}.

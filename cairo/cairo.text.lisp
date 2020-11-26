@@ -306,9 +306,9 @@
 
 (defun cairo-set-font-size (cr size)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-1}
-  @argument[cr]{a @symbol{cairo-t}}
-  @argument[size]{the new font size, in user space units}
+ "@version{2020-11-25}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[size]{a double float with the new font size, in user space units}
   @begin{short}
     Sets the current font matrix to a scale by a factor of size, replacing any
     font matrix previously set with the functions @sym{cairo-set-font-size} or
@@ -321,8 +321,6 @@
   If text is drawn without a call to the function @sym{cairo-set-font-size},
   nor the function @fun{cairo-set-font-matrix} nor the function
   @fun{cairo-set-scaled-font}, the default font size is 10.0.
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-set-font-matrix}
   @see-function{cairo-set-scaled-font}"
