@@ -34,7 +34,7 @@ Icons
 
 Resources
 
-  gio.resource.lisp            - GResource                         - GIO 2.60
+  gio.resource.lisp            - GResource                         - GIO 2.66 &
 
 Application support
 

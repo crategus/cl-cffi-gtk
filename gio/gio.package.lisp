@@ -2,11 +2,11 @@
 ;;; gio.package.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.66 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -155,6 +155,32 @@
       @about-function{g-emblem-new}
       @about-function{g-emblem-new-with-origin}
     @end{subsection}
+  @end{section}
+  @begin[Resources]{section}
+    Resource framework
+
+    @about-symbol{g-resource-flags}
+    @about-symbol{g-resource-lookup-flags}
+    @about-symbol{g-static-resource}
+    @about-symbol{g-resource-error}
+    @about-class{g-resource}
+    @about-function{g-resource-load}
+    @about-function{g-resource-new-from-data}
+    @about-function{g-resource-ref}
+    @about-function{g-resource-unref}
+    @about-function{g-resource-lookup-data}
+    @about-function{g-resource-open-stream}
+    @about-function{g-resource-enumerate-children}
+    @about-function{g-resource-get-info}
+    @about-function{g-static-resource-init}
+    @about-function{g-static-resource-fini}
+    @about-function{g-static-resource-get.resource}
+    @about-function{g-resources-register}
+    @about-function{g-resources-unregister}
+    @about-function{g-resources-lookup-data}
+    @about-function{g-resources-open-stream}
+    @about-function{g-resources-enumerate-children}
+    @about-function{g-resources-get-info}
   @end{section}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}
