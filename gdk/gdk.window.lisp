@@ -2205,7 +2205,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gdk-window-composited) (composited window)
-  (foreign-funcall "gtk_window_set_composited"
+  (foreign-funcall "gdk_window_set_composited"
                    (g-object gdk-window) window
                    :boolean composited
                    :void)
