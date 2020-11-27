@@ -13,7 +13,6 @@
 
 (load "rtest-gtk-builder.lisp")
 (load "rtest-gtk-buildable.lisp")
-;    gtk.buildable.lisp
 
 ;;;  Windows
 
@@ -285,4 +284,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2020-11-7
+;;; 2020-11-27

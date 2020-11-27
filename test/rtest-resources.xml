@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/home/dieter/Lisp/lisp-projects/cl-gtk/test">
+  <gresource prefix="/com/crategus/test">
+    <file>ducky.png</file>
+    <file>floppybuddy.gif</file>
     <file>gtk-logo-24.png</file>
+    <file>rtest-dialog.ui</file>
+    <file>rtest-dialog2.ui</file>
+    <file>rtest-application.ui</file>
   </gresource>
 </gresources>
-

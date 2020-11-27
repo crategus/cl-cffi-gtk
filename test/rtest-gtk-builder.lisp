@@ -77,41 +77,83 @@
    </object>
  </interface>")
 
-;;;     GtkBuilder
+;;; --- Types and Values -------------------------------------------------------
+
 ;;;     GtkBuilderError
 
-;;;     GTK_BUILDER_WARN_INVALID_CHILD_TYPE
-;;;     GTK_BUILDER_ERROR
+;;;     GtkBuilder
+
+(test gtk-builder-class
+  ;; Type check
+  (is (g-type-is-object "GtkBuilder"))
+  ;; Check the registered name
+  (is (eq 'gtk-builder
+          (registered-object-type-by-name "GtkBuilder")))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkBuilder")
+          (gtype (foreign-funcall "gtk_builder_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GObject") (g-type-parent "GtkBuilder")))
+  ;; Check the children
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-children "GtkBuilder"))))
+  ;; Check the interfaces
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-interfaces "GtkBuilder"))))
+  ;; Check the class properties
+  (is (equal '("translation-domain")
+             (stable-sort (mapcar #'g-param-spec-name
+                                  (g-object-class-list-properties "GtkBuilder"))
+                          #'string-lessp)))
+  ;; Check the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkBuilder" GTK-BUILDER
+                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                        :TYPE-INITIALIZER "gtk_builder_get_type")
+                       ((TRANSLATION-DOMAIN GTK-BUILDER-TRANSLATION-DOMAIN
+                         "translation-domain" "gchararray" T T)))
+             (get-g-type-definition "GtkBuilder"))))
+
+;;; ---  Properties ------------------------------------------------------------
+
+(test gtk-builder-properties
+  (let ((builder (make-instance 'gtk-builder :from-string *dialog*)))
+    (is-false (gtk-builder-translation-domain builder))))
 
 ;;; --- gtk-builder-new --------------------------------------------------------
 
 (test gtk-builder-new
   ;; gtk-builder-new is implemented with make-instance
-  (is (eq 'gtk-builder (type-of (gtk-builder-new))))
+  (is (typep (gtk-builder-new) 'gtk-builder))
   ;; Check Lisp extension for initializing gtk-builder
   (let ((builder (make-instance 'gtk-builder :from-string *dialog*)))
-    (is (eq 'gtk-dialog (type-of (gtk-builder-object builder "dialog1")))))
+    (is (typep (gtk-builder-object builder "dialog1") 'gtk-dialog)))
   (let ((builder (make-instance 'gtk-builder
                                 :from-file "rtest-application.ui")))
-    (is (eq 'g-menu (type-of (gtk-builder-object builder "menubar"))))))
+    (is (typep (gtk-builder-object builder "menubar") 'g-menu))))
 
 ;;; --- gtk-builder-new-from-file ----------------------------------------------
 
 (test gtk-builder-new-from-file
-  (is (eq 'gtk-builder
-          (type-of (gtk-builder-new-from-file "rtest-application.ui")))))
+  (is (typep (gtk-builder-new-from-file "rtest-application.ui") 'gtk-builder)))
 
 ;;;     gtk_builder_new_from_resource
+
+(test gtk-builder-new-from-resource
+  (let ((resource (g-resource-load "rtest-resources.gresource")))
+    (is-false (g-resources-register resource))
+    (is (typep (gtk-builder-new-from-resource "/com/crategus/test/rtest-dialog.ui")
+               'gtk-builder))
+    (is-false (g-resources-unregister resource))))
 
 ;;; --- gtk-builder-new-from-string --------------------------------------------
 
 (test gtk-builder-new-from-string
-  (is (eq 'gtk-builder (type-of (gtk-builder-new-from-string *menus*)))))
+  (is (typep (gtk-builder-new-from-string *menus*) 'gtk-builder)))
 
 ;;;     gtk_builder_add_callback_symbol
 ;;;     gtk_builder_add_callback_symbols
 ;;;     gtk_builder_lookup_callback_symbol
-;;;
+
 ;;; --- gtk-builder-add-from-file ----------------------------------------------
 
 (test gtk-builder-add-from-file
@@ -119,6 +161,14 @@
     (is-true (gtk-builder-add-from-file builder "rtest-application.ui"))))
 
 ;;;     gtk_builder_add_from_resource
+
+(test gtk-builder-add-from-resource
+  (let ((resource (g-resource-load "rtest-resources.gresource"))
+        (builder (gtk-builder-new)))
+    (is-false (g-resources-register resource))
+    (is-true (gtk-builder-add-from-resource builder
+                                            "/com/crategus/test/rtest-dialog.ui"))
+    (is-false (g-resources-unregister resource))))
 
 ;;; --- gtk-builder-add-from-string --------------------------------------------
 
@@ -130,8 +180,9 @@
 
 (test gtk-builder-add-objects-from-file
   (let ((builder (gtk-builder-new)))
-    (is-true (gtk-builder-add-objects-from-file builder "rtest-dialog.ui" '("dialog1")))
-    (is (eq 'gtk-dialog (type-of (gtk-builder-object builder "dialog1"))))
+    (is-true (gtk-builder-add-objects-from-file builder
+                                                "rtest-dialog.ui" '("dialog1")))
+    (is (typep (gtk-builder-object builder "dialog1") 'gtk-dialog))
     (is (equal '(GTK-DIALOG GTK-BOX GTK-BUTTON-BOX GTK-BUTTON)
                (mapcar 'type-of (gtk-builder-objects builder))))))
 
@@ -140,7 +191,7 @@
 (test gtk-builder-add-objects-from-string
   (let ((builder (gtk-builder-new)))
     (is-true (gtk-builder-add-objects-from-string builder *dialog* '("dialog1")))
-    (is (eq 'gtk-dialog (type-of (gtk-builder-object builder "dialog1"))))
+    (is (typep (gtk-builder-object builder "dialog1") 'gtk-dialog))
     (is (equal '(GTK-DIALOG GTK-BOX GTK-BUTTON-BOX GTK-BUTTON)
                (mapcar 'type-of (gtk-builder-objects builder))))))
 
@@ -151,14 +202,14 @@
 
 (test gtk-builder-object
   (let ((builder (gtk-builder-new-from-string *dialog*)))
-    (is (eq 'gtk-dialog (type-of (gtk-builder-object builder "dialog1"))))
-    (is (eq 'gtk-button (type-of (gtk-builder-object builder "ok_button"))))))
+    (is (typep (gtk-builder-object builder "dialog1") 'gtk-dialog))
+    (is (typep (gtk-builder-object builder "ok_button") 'gtk-button))))
 
 ;;; --- gtk-builder-objects ----------------------------------------------------
 
 (test gtk-builder-objects
   (let ((builder (gtk-builder-new)))
-    (is (eq 'gtk-builder (type-of builder)))
+    (is (typep builder 'gtk-builder))
     (is (equal '() (gtk-builder-objects builder)))
     (is-true (gtk-builder-add-from-string builder *menus*))
     (is (equal '(g-menu g-menu)
@@ -174,3 +225,4 @@
 ;;;     gtk_builder_value_from_string
 ;;;     gtk_builder_value_from_string_type
 
+;;; 2020-11-27

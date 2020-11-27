@@ -122,7 +122,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 4 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -148,19 +148,20 @@
 ;;;     gtk_image_get_icon_set
 
 (test gtk-image-get-icon-set
-  (let ((image (gtk-image-new-from-icon-set (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
-    (is (eq 'gtk-image (type-of image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-get-icon-set image))))
+  (let ((image (gtk-image-new-from-icon-set
+                   (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
+    (is (typep image 'gtk-image))
+    (is (typep (gtk-image-get-icon-set image) 'gtk-icon-set))
     (multiple-value-bind (icon-set icon-size)
         (gtk-image-get-icon-set image)
-      (is (eq 'gtk-icon-set (type-of icon-set)))
+      (is (typep icon-set 'gtk-icon-set))
       (is (eq :dialog icon-size)))))
 
 ;;;     gtk_image_get_stock
 
 (test gtk-image-get-stock
   (let ((image (gtk-image-new-from-stock "gtk-ok" :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is (string= "gtk-ok" (gtk-image-get-stock image)))
     (multiple-value-bind (icon-set icon-size)
         (gtk-image-get-stock image)
@@ -172,14 +173,14 @@
 (test gtk-image-get-animation
   (let* ((animation (gdk-pixbuf-animation-new-from-file "floppybuddy.gif"))
          (image (gtk-image-new-from-animation animation)))
-    (is (eq 'gtk-image (type-of image)))
-    (is (eq 'gdk-pixbuf-animation (type-of (gtk-image-get-animation image))))))
+    (is (typep image 'gtk-image))
+    (is (typep (gtk-image-get-animation image) 'gdk-pixbuf-animation))))
 
 ;;;     gtk_image_get_icon_name
 
 (test gtk-image-get-icon-name
   (let ((image (gtk-image-new-from-icon-name "gtk-ok" :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is (string= "gtk-ok" (gtk-image-get-icon-name image)))
     (multiple-value-bind (icon-set icon-size)
         (gtk-image-get-icon-name image)
@@ -191,24 +192,24 @@
 (test gtk-image-get-gicon
   (let* ((icon (g-themed-icon-new-from-names "gtk-ok"))
          (image (gtk-image-new-from-gicon icon :dialog)))
-    (is (eq 'gtk-image (type-of image)))
-    (is (eq 'g-themed-icon (type-of (gtk-image-gicon image))))
+    (is (typep image 'gtk-image))
+    (is (typep (gtk-image-gicon image) 'g-themed-icon))
     (multiple-value-bind (icon-set icon-size)
         (gtk-image-get-gicon image)
-      (is (eq 'g-themed-icon (type-of icon-set)))
+      (is (typep icon-set 'g-themed-icon))
       (is (eq :dialog icon-size)))))
 
 ;;;     gtk_image_new_from_file
 
 (test gtk-image-new-from-file
   (let ((image (gtk-image-new-from-file "gtk-logo-24.png")))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is (string= "gtk-logo-24.png" (gtk-image-file image)))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
-    (is (eq 'gdk-pixbuf (type-of (gtk-image-pixbuf image))))
+    (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
@@ -221,12 +222,13 @@
 ;;;     gtk_image_new_from_icon_set
 
 (test gtk-image-new-from-icon-set
-  (let ((image (gtk-image-new-from-icon-set (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+  (let ((image (gtk-image-new-from-icon-set
+                   (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -243,13 +245,13 @@
 (test gtk-image-new-from-pixbuf
   (let* ((pixbuf (gdk-pixbuf-new-from-file "gtk-logo-24.png"))
          (image (gtk-image-new-from-pixbuf pixbuf)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
-    (is (eq 'gdk-pixbuf (type-of (gtk-image-pixbuf image))))
+    (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
@@ -263,11 +265,11 @@
 
 (test gtk-image-new-from-stock
   (let ((image (gtk-image-new-from-stock "gtk-ok" :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -284,14 +286,14 @@
 (test gtk-image-new-from-animation
   (let* ((animation (gdk-pixbuf-animation-new-from-file "floppybuddy.gif"))
          (image (gtk-image-new-from-animation animation)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
-    (is (eq 'gdk-pixbuf-animation (type-of (gtk-image-pixbuf-animation image))))
+    (is (typep (gtk-image-pixbuf-animation image) 'gdk-pixbuf-animation))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
     (is-false (gtk-image-stock image))
@@ -304,11 +306,11 @@
 
 (test gtk-image-new-from-icon-name
   (let ((image (gtk-image-new-from-icon-name "gtk-ok" :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -325,11 +327,11 @@
 (test gtk-image-new-from-gicon
   (let* ((icon (g-themed-icon-new-from-names "gtk-ok"))
          (image (gtk-image-new-from-gicon icon :dialog)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
-    (is (eq 'g-themed-icon (type-of (gtk-image-gicon image))))
+    (is (typep (gtk-image-gicon image) 'g-themed-icon))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -343,25 +345,28 @@
 
 ;;;     gtk_image_new_from_resource
 
-;; TODO: There is something wrong with the gresources file.
-
 (test gtk-image-new-from-resource
-  (let ((image (gtk-image-new-from-resource "gtk-logo-24.png")))
-    (is (eq 'gtk-image (type-of image)))
-    (is-false (gtk-image-file image))
-    (is-false (gtk-image-gicon image))
-    (is (string= "image-missing" (gtk-image-icon-name image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
-    (is (= 4 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
-    (is-false (gtk-image-pixbuf-animation image))
-    (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
-    (is-false (gtk-image-stock image))
-    (is (eq :icon-name (gtk-image-storage-type image)))
-    ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
+  (let ((resource (g-resource-load "rtest-resources.gresource")))
+    ;; Register the resources
+    (is-false (g-resources-register resource))
+    (let ((image (gtk-image-new-from-resource "/com/crategus/test/ducky.png")))
+      (is (typep image 'gtk-image))
+      (is-false (gtk-image-file image))
+      (is-false (gtk-image-gicon image))
+      (is-false (gtk-image-icon-name image))
+      (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+      (is (= 0 (gtk-image-icon-size image)))
+      (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
+      (is-false (gtk-image-pixbuf-animation image))
+      (is (= -1 (gtk-image-pixel-size image)))
+      (is (string= "/com/crategus/test/ducky.png" (gtk-image-resource image)))
+      (is-false (gtk-image-stock image))
+      (is (eq :pixbuf (gtk-image-storage-type image)))
+      ;; at this point surface is a null-pointer, this causes an error
+      (signals (error) (gtk-image-surface image))
+      (is-false (gtk-image-use-fallback image)))
+      ;; Unregister the resources
+      (is-false (g-resources-unregister resource))))
 
 ;;;     gtk_image_new_from_surface ()
 
@@ -369,11 +374,11 @@
   (let* ((theme (gtk-icon-theme-default))
          (surface (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))
          (image (gtk-image-new-from-surface surface)))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -382,7 +387,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :surface (gtk-image-storage-type image)))
     ;; we have a valid Cairo surface
-    (is (eq 'cairo-surface (type-of (gtk-image-surface image))))
+    (is (typep (gtk-image-surface image) 'cairo-surface))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_file
@@ -392,13 +397,13 @@
     ;; Set image from file
     (is-false (gtk-image-set-from-file image "gtk-logo-24.png"))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is (string= "gtk-logo-24.png" (gtk-image-file image)))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
-    (is (eq 'gdk-pixbuf (type-of (gtk-image-pixbuf image))))
+    (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
@@ -413,13 +418,14 @@
 (test gtk-image-set-from-icon-set
   (let ((image (make-instance 'gtk-image)))
     ;; Set image from icon set
-    (is-false (gtk-image-set-from-icon-set image (gtk-icon-factory-lookup-default "gtk-ok") :dialog))
+    (is-false (gtk-image-set-from-icon-set image
+                  (gtk-icon-factory-lookup-default "gtk-ok") :dialog))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -439,13 +445,13 @@
     ;; Set image from pixbuf
     (is-false (gtk-image-set-from-pixbuf image pixbuf))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
-    (is (eq 'gdk-pixbuf (type-of (gtk-image-pixbuf image))))
+    (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
@@ -462,11 +468,11 @@
     ;; Set image from stock
     (is-false (gtk-image-set-from-stock image "gtk-ok" :dialog))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -486,14 +492,14 @@
     ;; Set image from animation
     (is-false (gtk-image-set-from-animation image animation))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
-    (is (eq 'gdk-pixbuf-animation (type-of (gtk-image-pixbuf-animation image))))
+    (is (typep (gtk-image-pixbuf-animation image) 'gdk-pixbuf-animation))
     (is (= -1 (gtk-image-pixel-size image)))
     (is-false (gtk-image-resource image))
     (is-false (gtk-image-stock image))
@@ -509,11 +515,11 @@
     ;; Set image from icon name
     (is-false (gtk-image-set-from-icon-name image "gtk-ok" :dialog))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -533,9 +539,9 @@
     ;; Set image from gicon
     (is-false (gtk-image-set-from-gicon image icon :dialog))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
-    (is (eq 'g-themed-icon (type-of (gtk-image-gicon image))))
+    (is (typep (gtk-image-gicon image) 'g-themed-icon))
     (is-false (gtk-image-icon-name image))
     (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
     (is (= 6 (gtk-image-icon-size image)))
@@ -551,28 +557,31 @@
 
 ;;;     gtk_image_set_from_resource
 
-;; TODO: There is something wrong with the gresources file.
-
 (test gtk-image-set-from-resource
-  (let ((image (gtk-image-new)))
-    ;; Set image for resource
-    (is-false (gtk-image-set-from-resource image "gtk-logo-24.png"))
+  (let ((resource (g-resource-load "rtest-resources.gresource"))
+        (image (gtk-image-new)))
+    ;; Register the resources
+    (is-false (g-resources-register resource))
+    ;; Set image from resource
+    (is-false (gtk-image-set-from-resource image "/com/crategus/test/ducky.png"))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
-    (is (string= "image-missing" (gtk-image-icon-name image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
-    (is (= 4 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
+    (is-false (gtk-image-icon-name image))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is (= 0 (gtk-image-icon-size image)))
+    (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
     (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
+    (is (string= "/com/crategus/test/ducky.png" (gtk-image-resource image)))
     (is-false (gtk-image-stock image))
-    (is (eq :icon-name (gtk-image-storage-type image)))
+    (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
     (signals (error) (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
+    (is-false (gtk-image-use-fallback image))
+    ;; Unregister the resources
+    (is-false (g-resources-unregister resource))))
 
 ;;;     gtk_image_set_from_surface ()
 
@@ -583,11 +592,11 @@
     ;; Set image from surface
     (is-false (gtk-image-set-from-surface image surface))
     ;; Check the properties
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -596,20 +605,19 @@
     (is-false (gtk-image-stock image))
     (is (eq :surface (gtk-image-storage-type image)))
     ;; we have a valid Cairo surface
-    (is (eq 'cairo-surface (type-of (gtk-image-surface image))))
+    (is (typep (gtk-image-surface image) 'cairo-surface))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_clear
 
 (test gtk-image-clear
   (let ((image (gtk-image-new-from-icon-name "gtk-ok" 4)))
-
     ;; Create image from icon name
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 4 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -620,14 +628,13 @@
     ;; at this point surface is a null-pointer, this causes an error
     (signals (error) (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))
-
     ;; Clear the image
     (is-false (gtk-image-clear image))
-    (is (eq 'gtk-image (type-of image)))
+    (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -642,5 +649,6 @@
 ;;;     gtk_image_new
 
 (test gtk-image-new
-  (is (eq 'gtk-image (type-of (gtk-image-new)))))
+  (is (typep (gtk-image-new) 'gtk-image)))
 
+;;; 2020-11-27
