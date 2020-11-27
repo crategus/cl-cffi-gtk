@@ -3143,18 +3143,19 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-name atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-name 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2020-11-27}
   @syntax[]{(gtk-widget-name object) => name}
   @syntax[]{(setf (gtk-widget-name object) name)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[name]{a string with the name of the widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{name} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{name} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-name} retrieves the name of a widget.
-
-  The generic function @sym{(setf gtk-widget-name)} sets the name of a widget.
+  The slot access function @sym{gtk-widget-name} retrieves the name of a widget.
+  The slot acess function @sym{(setf gtk-widget-name)} sets the name of a
+  widget.
 
   Widgets can be named, which allows you to refer to them from a CSS file.
   You can apply a style to widgets with a particular name in the CSS file.
@@ -3721,23 +3722,21 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_destroy" gtk-widget-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2020-11-27}
   @argument[widget]{a @class{gtk-widget} object}
   @short{Destroys a widget.}
 
   When a widget is destroyed, it will break any references it holds to other
   objects. If the widget is inside a container, the widget will be removed from
-  the container. If the widget is a toplevel, derived from @class{gtk-window},
-  it will be removed from the list of toplevels, and the reference GTK+ holds
-  to it will be removed. Removing a widget from its container or the list of
-  toplevels results in the widget being finalized, unless you have added
-  additional references to the widget with the function @fun{g-object-ref}.
+  the container. If the widget is a toplevel, derived from the
+  @class{gtk-window} class, it will be removed from the list of toplevels, and
+  the reference GTK+ holds to it will be removed. Removing a widget from its
+  container or the list of toplevels results in the widget being finalized.
 
   In most cases, only toplevel windows require explicit destruction,
   because when you destroy a toplevel its children will be destroyed as well.
   @see-class{gtk-widget}
   @see-class{gtk-window}
-  @see-function{g-object-ref}
   @see-function{gtk-widget-in-destruction}"
   (widget (g-object gtk-widget)))
 
