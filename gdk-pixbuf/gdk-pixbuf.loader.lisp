@@ -100,10 +100,10 @@
 
   The second signal, \"area-prepared\", will be called as soon as the pixbuf of
   the desired has been allocated. You can obtain it by calling the function
-  @fun{gdk-pixbuf-loader-get-pixbuf}. In addition, no actual information will be
+  @fun{gdk-pixbuf-loader-pixbuf}. In addition, no actual information will be
   passed in yet, so the pixbuf can be safely filled with any temporary graphics
   (or an initial color) as needed. You can also call the function
-  @fun{gdk-pixbuf-loader-get-pixbuf} later and get the same pixbuf.
+  @fun{gdk-pixbuf-loader-pixbuf} later and get the same pixbuf.
 
   The last signal, \"area-updated\" gets called every time a region is updated.
   This way you can update a partially completed image. Note that you do not
@@ -125,8 +125,8 @@
       @end{pre}
       This signal is emitted when the pixbuf loader has allocated the pixbuf
       in the desired size. After this signal is emitted, applications can call
-      the function @fun{gdk-pixbuf-loader-get-pixbuf} to fetch the
-      partially-loaded pixbuf.
+      the function @fun{gdk-pixbuf-loader-pixbuf} to fetch the partially-loaded
+      pixbuf.
       @begin[code]{table}
         @entry[loader]{The @sym{gdk-pixbuf-loader} object which received
           the signal.}
@@ -183,7 +183,7 @@
   @see-function{gdk-pixbuf-loader-write}
   @see-function{gdk-pixbuf-loader-close}
   @see-function{gdk-pixbuf-loader-set-size}
-  @see-function{gdk-pixbuf-loader-get-pixbuf}
+  @see-function{gdk-pixbuf-loader-pixbuf}
   @see-function{gdk-pixbuf-loader-get-animation}
   @see-function{gdk-pixbuf-animation-get-iter}")
 

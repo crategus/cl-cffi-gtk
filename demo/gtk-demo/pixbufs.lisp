@@ -39,8 +39,8 @@
 
   (defun load-pixbufs ()
     (setf background (gdk-pixbuf-new-from-file (rel-path "background.jpg")))
-    (setf back-width (gdk-pixbuf-get-width background)
-          back-height (gdk-pixbuf-get-height background))
+    (setf back-width (gdk-pixbuf-width background)
+          back-height (gdk-pixbuf-height background))
     (setf back-rect (make-gdk-rectangle :x 0 :y 0
                                         :width back-width :height back-height))
     (loop for i from 0 and file-name in *image-files*
@@ -56,8 +56,8 @@
       (gdk-pixbuf-copy-area background 0 0 back-width back-height frame 0 0)
       (dotimes (i 8)
         (let* ((ang (* 2.0d0 3.14d0 (- (/ i 8) f)))
-               (iw (gdk-pixbuf-get-width (aref *image-pixbufs* i)))
-               (ih (gdk-pixbuf-get-height (aref *image-pixbufs* i)))
+               (iw (gdk-pixbuf-width (aref *image-pixbufs* i)))
+               (ih (gdk-pixbuf-height (aref *image-pixbufs* i)))
                (r (+ radius (* (/ radius 3.0d0) (sin (* f 2.0d0 3.14)))))
                (xpos (floor (+ xmid (* r (cos ang)) (* -1 (/ iw 2.0d0)) 0.5)))
                (ypos (floor (+ ymid (* r (sin ang)) (* -1 (/ ih 2.0d0)) 0.5)))
@@ -143,3 +143,4 @@
 
         (gtk-widget-show-all window)))))
 
+;;; 2020-11-26

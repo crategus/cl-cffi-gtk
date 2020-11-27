@@ -37,7 +37,7 @@
         (setf pixbuf-loader (gdk-pixbuf-loader-new))
         (g-signal-connect pixbuf-loader "area-prepared"
            (lambda (loader)
-             (let ((pixbuf (gdk-pixbuf-loader-get-pixbuf loader)))
+             (let ((pixbuf (gdk-pixbuf-loader-pixbuf loader)))
                (gdk-pixbuf-fill pixbuf #xaaaaaaff)
                (gtk-image-set-from-pixbuf image pixbuf))))
         (g-signal-connect pixbuf-loader "area-updated"
@@ -188,3 +188,4 @@
       (gtk-container-add window vgrid)
       (gtk-widget-show-all window)))))
 
+;;; 2020-11-26
