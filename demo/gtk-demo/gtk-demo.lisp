@@ -346,6 +346,51 @@
                                 "scrolled-window.lisp"
                                 "EXAMPLE-SCROLLED-WINDOW")
     )
+    ;; Cairo demos
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Cairo")))
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Stroke"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-STROKE")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Fill"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-FILL")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Text"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-TEXT")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Paint"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-PAINT")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Mask"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-MASK")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Source RGBA"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-SET-SOURCE-RGBA")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Source Gradient"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-SET-SOURCE-GRADIENT")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Path"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-PATH")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Dash"
+                                "../cairo-demo/cairo-demo.lisp"
+                                "DEMO-CAIRO-DASH")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Cairo Clock"
+                                "../cairo-demo/cairo-clock.lisp"
+                                "DEMO-CAIRO-CLOCK")
+    )
+
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Miscellaneous")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
@@ -392,7 +437,9 @@
          (let* ((model (gtk-tree-view-model tree-view))
                 (iter (gtk-tree-model-iter model path))
                 (func-name (gtk-tree-model-value model iter 2))
-                (func (find-symbol func-name :gtk-demo)))
+                (func (or (find-symbol func-name :gtk-demo)
+                          (find-symbol func-name :cairo-demo)
+                          (find-symbol func-name :cairo-clock))))
            (if func
                (funcall func)
                (format t "~%No function.~%")))))

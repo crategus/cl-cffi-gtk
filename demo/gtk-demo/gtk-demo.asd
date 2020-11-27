@@ -78,4 +78,8 @@
                (:file "text-view-attributes")
                (:file "toggle-buttons")
                (:file "tool-palette")
+               (:file "../cairo-demo/cairo-demo")
+               (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
+
+;;; 2020-11-26

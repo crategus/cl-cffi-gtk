@@ -6,7 +6,6 @@
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "gdk-demo")
-               (:file "composited-window")
                (:file "events")
                (:file "pango")
                (:file "put-pixel")

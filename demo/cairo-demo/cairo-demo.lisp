@@ -1,10 +1,11 @@
-(defpackage :demo-cairo
+(defpackage :cairo-demo
   (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :iterate :common-lisp)
-  (:export #:demo-cairo-stroke #:demo-cairo-fill #:demo-cairo-text #:demo-cairo-paint
-           #:demo-cairo-mask #:demo-cairo-set-source-rgba #:demo-cairo-set-source-gradient
+  (:export #:demo-cairo-stroke #:demo-cairo-fill #:demo-cairo-text
+           #:demo-cairo-paint #:demo-cairo-mask #:demo-cairo-set-source-rgba
+           #:demo-cairo-set-source-gradient
            #:demo-cairo-path #:demo-cairo-dash))
 
-(in-package :demo-cairo)
+(in-package :cairo-demo)
 
 (defun demo-cairo-stroke ()
   (within-main-loop
@@ -62,7 +63,7 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
@@ -96,7 +97,7 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
@@ -139,7 +140,7 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
@@ -172,20 +173,18 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
            ;; Drawing code goes here
            (let ((linpat (cairo-pattern-create-linear 0 0 1 1))
-                 (radpat (cairo-pattern-create-radial 0.5 0.5 0.25 0.5 0.5 0.75)))
-
+                 (radpat (cairo-pattern-create-radial 0.5 0.5 0.25
+                                                      0.5 0.5 0.75)))
              (cairo-pattern-add-color-stop-rgb linpat 0 0 0.3 0.8)
              (cairo-pattern-add-color-stop-rgb linpat 1 0 0.8 0.3)
-
              (cairo-pattern-add-color-stop-rgba radpat 0 0 0 0 1)
              (cairo-pattern-add-color-stop-rgba radpat 0.5 0 0 0 0)
-
              (cairo-set-source cr linpat)
              (cairo-mask cr radpat))
            (cairo-destroy cr)
@@ -213,7 +212,7 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
@@ -225,15 +224,12 @@
            (cairo-line-to cr 0 1)
            (cairo-set-line-width cr 0.2)
            (cairo-stroke cr)
-
            (cairo-rectangle cr 0 0 0.5 0.5)
            (cairo-set-source-rgba cr 1 0 0 0.80)
            (cairo-fill cr)
-
            (cairo-rectangle cr 0 0.5 0.5 0.5)
            (cairo-set-source-rgba cr 0 1 0 0.60)
            (cairo-fill cr)
-
            (cairo-rectangle cr 0.5 0 0.5 0.5)
            (cairo-set-source-rgba cr 0 0 1 0.40)
            (cairo-fill cr)
@@ -263,12 +259,13 @@
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale cr
                         (gdk-window-width window)
                         (gdk-window-height window))
            ;; Drawing code goes here
-           (let ((radpat (cairo-pattern-create-radial 0.25 0.25 0.10 0.50 0.50 0.50))
+           (let ((radpat (cairo-pattern-create-radial 0.25 0.25 0.10
+                                                      0.50 0.50 0.50))
                  (linpat (cairo-pattern-create-linear 0.25 0.35 0.75 0.65)))
              (cairo-pattern-add-color-stop-rgb radpat 0.00 1.00 0.80 0.80)
              (cairo-pattern-add-color-stop-rgb radpat 1.00 0.90 0.00 0.00)
@@ -281,13 +278,11 @@
                                           0.08)))
              (cairo-set-source cr radpat)
              (cairo-fill cr)
-
              (cairo-pattern-add-color-stop-rgba linpat 0.00 1.0 1.0 1.0 0.0)
              (cairo-pattern-add-color-stop-rgba linpat 0.25 0.0 1.0 0.0 0.5)
              (cairo-pattern-add-color-stop-rgba linpat 0.50 1.0 1.0 1.0 0.0)
              (cairo-pattern-add-color-stop-rgba linpat 0.75 0.0 0.0 1.0 0.5)
              (cairo-pattern-add-color-stop-rgba linpat 1.00 1.0 1.0 1.0 0.0)
-
              (cairo-rectangle cr 0.0 0.0 1.0 1.0)
              (cairo-set-source cr linpat)
              (cairo-fill cr))
@@ -316,24 +311,20 @@
            ;; Clear surface
            (cairo-set-source-rgb (pointer cr) 1.0d0 1.0d0 1.0d0)
            (cairo-paint (pointer cr))
-	   ;; Example is in 1.0 x 1.0 coordinate space
+           ;; Example is in 1.0 x 1.0 coordinate space
            (cairo-scale (pointer cr)
                         (gdk-window-width window)
                         (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-line-width (pointer cr) 0.01d0)
            (cairo-set-source-rgb (pointer cr) 1.0d0 0.0d0 0.0d0)
-
            (cairo-move-to (pointer cr) 0.25 0.25)
-
            (cairo-line-to (pointer cr) 0.5 0.375)
            (cairo-rel-line-to (pointer cr) 0.25 -0.125)
-
-           (cairo-arc (pointer cr) 0.5 0.5 (* 0.25 (sqrt 2)) (* -0.25 pi) (* 0.25 pi))
+           (cairo-arc (pointer cr)
+                      0.5 0.5 (* 0.25 (sqrt 2)) (* -0.25 pi) (* 0.25 pi))
            (cairo-rel-curve-to (pointer cr) -0.25 -0.125 -0.25 0.125 -0.5 0)
-
            (cairo-close-path (pointer cr))
-
            (cairo-stroke (pointer cr))
            ;; Destroy the Cairo context
            (cairo-destroy (pointer cr))
@@ -392,3 +383,4 @@
            t)))
       (gtk-widget-show-all window))))
 
+;;; 2020-11-26
