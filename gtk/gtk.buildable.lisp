@@ -67,9 +67,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-buildable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-buildable 'type)
- "@version{2020-6-1}
+ "@version{2020-11-27}
   @begin{short}
-    Interface for objects that can be built by @class{gtk-builder}.
+    Interface for objects that can be built by a @class{gtk-builder} UI
+    description.
   @end{short}
 
   The @sym{gtk-buildable} interface allows objects to extend and customize
@@ -79,8 +80,8 @@
 
   The @sym{gtk-buildable} interface is implemented by all widgets and many of
   the non-widget objects that are provided by GTK+. The main user of this
-  interface is @class{gtk-builder}. There should be very little need for
-  applications to call any @code{gtk-buildable-...} functions.
+  interface is the @class{gtk-builder} class. There should be very little need
+  for applications to call any functions from the @sym{gtk-buildable} interface.
   @begin[Note]{dictionary}
     An object only needs to implement this interface if it needs to extend the
     @class{gtk-builder} format or run any extra routines at deserialization
@@ -103,7 +104,7 @@
 
 (defcfun ("gtk_buildable_get_name" gtk-buildable-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-6-1}
+ "@version{2020-11-27}
   @syntax[]{(gtk-buildable-name buildable) => name}
   @syntax[]{(setf (gtk-buildable-name buildable) name)}
   @argument[buildable]{a @class{gtk-buildable} object}
@@ -118,7 +119,8 @@
 
   @class{gtk-builder} sets the name based on the the @class{gtk-builder} UI
   definition used to construct the buildable.
-  @see-class{gtk-buildable}"
+  @see-class{gtk-buildable}
+  @see-class{gtk-builder}"
   (buildable (g-object gtk-buildable)))
 
 (export 'gtk-buildable-name)
@@ -131,22 +133,25 @@
   (buildable (g-object gtk-buildable))
   (builder (g-object gtk-builder))
   (child g-object)
-  (type :string))
+  (child-type :string))
 
-(defun gtk-buildable-add-child (buildable builder child type)
+(defun gtk-buildable-add-child (buildable builder child child-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-1}
+ "@version{2020-11-27}
   @argument[buildable]{a @class{gtk-buildable} widget}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[child]{a @class{g-object} child to add}
-  @argument[type]{a string with the kind of child or @code{nil}}
+  @argument[child-type]{a string with the kind of child or @code{nil}}
   @begin{short}
-    Adds a child to the buildable.
+    Adds a child to the buildable widget.
   @end{short}
-  @arg{type} is an optional string describing how the child should be added.
-  @see-class{gtk-buildable}"
-  (if type
-      (%gtk-buildable-add-child buildable builder child type)
+  The argument @arg{child-type} is an optional string describing how the child
+  should be added.
+  @see-class{gtk-buildable}
+  @see-class{gtk-builder}
+  @see-class{g-object}"
+  (if child-type
+      (%gtk-buildable-add-child buildable builder child child-type)
       (%gtk-buildable-add-child buildable builder Child (null-pointer))))
 
 (export 'gtk-buildable-add-child)
@@ -325,15 +330,17 @@
 (defcfun ("gtk_buildable_get_internal_child" gtk-buildable-internal-child)
     g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-6-1}
+ "@version{2020-11-27}
   @argument[buildable]{a @class{gtk-buildable} widget}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[childname]{a string with the name of the child}
-  @return{The internal child of the buildable object.}
+  @argument[childname]{a string with the name of the child widget}
+  @return{The internal child widget of the buildable widget.}
   @begin{short}
-    Gets the internal child called @arg{childname} of the buildable object.
+    Gets the internal child widget called @arg{childname} of the buildable
+    widget.
   @end{short}
-  @see-class{gtk-buildable}"
+  @see-class{gtk-buildable}
+  @see-class{gtk-builder}"
   (buildable (g-object gtk-buildable))
   (builder (g-object gtk-builder))
   (childname :string))
