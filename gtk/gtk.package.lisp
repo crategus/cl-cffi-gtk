@@ -149,14 +149,14 @@
       @about-function{gtk-builder-expose-object}
       @about-function{gtk-builder-connect-signals}
       @about-function{gtk-builder-connect-signals-full}
-      @about-function{gtk-builder-set-application}
-      @about-function{gtk-builder-get-application}
-      @about-function{gtk-builder-get-type-from-name}
+      @about-function{gtk-builder-application}
+      @about-function{gtk-builder-type-from-name}
       @about-function{gtk-builder-value-from-string}
       @about-function{gtk-builder-value-from-string-type}
     @end{subsection}
     @begin[GtkBuildable]{subsection}
-      Interface for objects that can be built by @class{gtk-builder}.
+      Interface for objects that can be built by a @class{gtk-builder} UI
+      description.
 
       @about-class{gtk-buildable}
       @about-function{gtk-buildable-name}

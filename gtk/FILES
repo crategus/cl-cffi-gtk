@@ -15,8 +15,8 @@ GTK+ Widgets and Objects
 
   Interface builder
 
- +  gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.24 &
- +  gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.24 &
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.24 &
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.24 &
 
   Windows
 
@@ -339,3 +339,4 @@ Deprecated
 
     not implemented                  - GtkStyleProperties
 
+;;; 2020-11-27
