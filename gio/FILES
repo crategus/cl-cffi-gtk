@@ -1,4 +1,4 @@
-Content from the GIO Reference Manual for Version 2.62
+Content from the GIO Reference Manual for Version 2.66
 
     *   - needs update
     %   - not fully implemented
@@ -16,9 +16,10 @@ File Operations
 
 File types and applications
 
-  gio.content-type.lisp        - Platform-specific content typing  - GIO 2.40&
+  gio.content-type.lisp        - Platform-specific content typing  - GIO 2.66 &
   gio.app-info.lisp            - GAppInfo                          - GIO 2.40%
 
+  not implemented              - GAppInfoMonitor
   not implemented              - GDesktopAppInfo
 
 Icons

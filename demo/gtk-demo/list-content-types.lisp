@@ -3,16 +3,16 @@
 (defun create-and-fill-model-for-content-types ()
   (let ((types (sort (g-content-types-get-registered) #'string-lessp))
         (model (make-instance 'gtk-list-store
-                              :column-types 
-                              '("GIcon" 
+                              :column-types
+                              '("GIcon"
                                 "gchararray" "gchararray" "gchararray"))))
     (dolist (type types)
       (gtk-list-store-set model
                           (gtk-list-store-append model)
-                          (g-content-type-get-icon type)
+                          (g-content-type-icon type)
                           type
-                          (g-content-type-get-generic-icon-name type)
-                          (g-content-type-get-description type)))
+                          (g-content-type-generic-icon-name type)
+                          (g-content-type-description type)))
     model))
 
 (defun create-view-and-model-for-content-types ()
@@ -61,3 +61,4 @@
       (gtk-container-add window scrolled)
       (gtk-widget-show-all window))))
 
+;;; 2020-11-28

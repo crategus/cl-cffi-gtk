@@ -2,11 +2,11 @@
 ;;; gio.content-type.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.66 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,12 +28,13 @@
 ;;;
 ;;; GContentType
 ;;;
-;;; Platform-specific content typing
+;;;     Platform-specific content typing
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     g_content_type_equals
 ;;;     g_content_type_is_a
+;;;     g_content_type_is_mime_type
 ;;;     g_content_type_is_unknown
 ;;;     g_content_type_get_description
 ;;;     g_content_type_get_mime_type
@@ -52,6 +53,7 @@
 ;;; file. On UNIX it is a mime type like "text/plain" or "image/png". On Win32
 ;;; it is an extension string like ".doc", ".txt" or a perceived string like
 ;;; "audio". Such strings can be looked up in the registry at HKEY_CLASSES_ROOT.
+;;; On macOS it is a Uniform Type Identifier such as com.apple.application.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -91,6 +93,28 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_content_type_is_mime_type ()
+;;;
+;;; gboolean
+;;; g_content_type_is_mime_type (const gchar *type,
+;;;                              const gchar *mime_type);
+;;;
+;;; Determines if type is a subset of mime_type . Convenience wrapper around
+;;; g_content_type_is_a().
+;;;
+;;; type :
+;;;     a content type string
+;;;
+;;; mime_type :
+;;;     a mime type string
+;;;
+;;; Returns :
+;;;     TRUE if type is a kind of mime_type , FALSE otherwise.
+;;;
+;;; Since 2.52
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_content_type_is_unknown ()
 ;;;
 ;;; gboolean g_content_type_is_unknown (const gchar *type);
@@ -106,124 +130,122 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_type_get_description ()
+;;; g_content_type_get_description () -> g-content-type-description
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_content_type_get_description" g-content-type-get-description)
+(defcfun ("g_content_type_get_description" g-content-type-description)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-20}
-  @argument[type]{a content type string}
+ "@version{2020-11-28}
+  @argument[content-type]{a content type string}
   @begin{return}
-    A short description of the content type @arg{type}.
+    A string with a short description of the content type.
   @end{return}
   @begin{short}
     Gets the human readable description of the content type.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-content-type-get-description \"text/plain\")
+(g-content-type-description \"text/plain\")
 => \"Einfaches Textdokument\"
     @end{pre}
   @end{dictionary}
-  @see-function{g-content-types-get-registered}"
-  (type :string))
+  @see-function{g-content-types-registered}"
+  (content-type :string))
 
-(export 'g-content-type-get-description)
+(export 'g-content-type-description)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_type_get_mime_type ()
+;;; g_content_type_get_mime_type () -> g-content-type-mime-type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_content_type_get_mime_type" g-content-type-get-mime-type) :string
+(defcfun ("g_content_type_get_mime_type" g-content-type-mime-type) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-12-31}
-  @argument[type]{a content type string}
+ "@version{2020-11-28}
+  @argument[content-type]{a content type string}
   @begin{return}
-    The registered mime type for the given type, or @code{nil} if unknown.
+    A string with the registered mime type for the given type, or @code{nil}
+    if unknown.
   @end{return}
   @begin{short}
     Gets the mime type for the content type, if one is registered.
   @end{short}"
-  (type :string))
+  (content-type :string))
 
-(export 'g-content-type-get-mime-type)
+(export 'g-content-type-mime-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_type_get_icon ()
+;;; g_content_type_get_icon () -> g-content-type-icon
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_content_type_get_icon" g-content-type-get-icon) (g-object g-icon)
+(defcfun ("g_content_type_get_icon" g-content-type-icon) (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-20}
-  @argument[type]{a content type string}
+ "@version{2020-11-28}
+  @argument[content-type]{a content type string}
   @begin{return}
-    The @class{g-icon} corresponding to the content type.
+    A @class{g-icon} object corresponding to the content type.
   @end{return}
   @begin{short}
     Gets the icon for a content type.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (g-content-type-get-icon \"text/plain\")
+(g-content-type-icon \"text/plain\")
 => #<G-THEMED-ICON {10089505F3@}>
     @end{pre}
   @end{dictionary}
-  @see-function{g-content-type-get-symbolic-icon}
-  @see-function{g-content-type-get-generic-icon-name}"
-  (type :string))
+  @see-function{g-content-type-symbolic-icon}
+  @see-function{g-content-type-generic-icon-name}"
+  (content-type :string))
 
-(export 'g-content-type-get-icon)
+(export 'g-content-type-icon)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_type_get_symbolic_icon ()
+;;; g_content_type_get_symbolic_icon () -> g-content-type-symbolic-icon
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_content_type_get_symbolic_icon" g-content-type-get-symbolic-icon)
+(defcfun ("g_content_type_get_symbolic_icon" g-content-type-symbolic-icon)
     (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-20}
-  @argument[type]{a content type string}
+ "@version{2020-11-28}
+  @argument[content-type]{a content type string}
   @begin{return}
-    Symbolic @class{g-icon} corresponding to the content type.
+    Symbolic @class{g-icon} object corresponding to the content type.
   @end{return}
   @short{Gets the symbolic icon for a content type.}
+  @see-function{g-content-type-icon}
+  @see-function{g-content-type-generic-icon-name}"
+  (content-type :string))
 
-  Since 2.34
-  @see-function{g-content-type-get-icon}
-  @see-function{g-content-type-get-generic-icon-name}"
-  (type :string))
-
-(export 'g-content-type-get-symbolic-icon)
+(export 'g-content-type-symbolic-icon)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_type_get_generic_icon_name ()
+;;; g_content_type_get_generic_icon_name () -> g-content-type-generic-icon-name
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_content_type_get_generic_icon_name"
-           g-content-type-get-generic-icon-name) (:string :free-from-foreign t)
+           g-content-type-generic-icon-name) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-20}
-  @argument[type]{a content type string}
+ "@version{2020-11-28}
+  @argument[content-type]{a content type string}
   @begin{return}
-    The registered generic icon name for the given type, or @code{nil} if
-    unknown.
+    A string with the registered generic icon name for the given type, or
+    @code{nil} if unknown.
   @end{return}
   @short{Gets the generic icon name for a content type.}
 
   See the shared-mime-info specification for more on the generic icon name.
   @begin[Example]{dictionary}
     @begin{pre}
- (g-content-type-get-generic-icon-name \"text/plain\")
+(g-content-type-generic-icon-name \"text/plain\")
 => \"text-x-generic\"
     @end{pre}
   @end{dictionary}
-  Since 2.34
-  @see-function{g-content-type-get-icon}
-  @see-function{g-content-type-get-symbolic-icon}"
-  (type :string))
+  @see-function{g-content-type-icon}
+  @see-function{g-content-type-symbolic-icon}"
+  (content-type :string))
 
-(export 'g-content-type-get-generic-icon-name)
+(export 'g-content-type-generic-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_can_be_executable ()
@@ -314,20 +336,20 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_content_types_get_registered ()
+;;; g_content_types_get_registered () -> g-content-types-registered
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_content_types_get_registered" g-content-types-get-registered)
+(defcfun ("g_content_types_get_registered" g-content-types-registered)
     (g-list :string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-20}
+ "@version{2020-11-28}
   @return{A list of strings of the registered content types.}
   @begin{short}
     Gets a list of strings containing all the registered content types known to
     the system.
   @end{short}
-  @see-function{g-content-type-get-description}")
+  @see-function{g-content-type-description}")
 
-(export 'g-content-types-get-registered)
+(export 'g-content-types-registered)
 
 ;;; --- End of file gio.content-type.lisp --------------------------------------

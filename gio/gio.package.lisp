@@ -47,21 +47,23 @@
       file. On UNIX it is a mime type like \"text/plain\" or \"image/png\". On
       Win32 it is an extension string like \".doc\", \".txt\" or a perceived
       string like \"audio\". Such strings can be looked up in the registry at
-      @code{HKEY_CLASSES_ROOT}.
+      @code{HKEY_CLASSES_ROOT}. On macOS it is a Uniform Type Identifier such
+      as @code{com.apple.application}.
 
       @about-function{g-content-type-equals}
       @about-function{g-content-type-is-a}
+      @about-function{g-content-type-is-mime-type}
       @about-function{g-content-type-is-unknown}
-      @about-function{g-content-type-get-description}
-      @about-function{g-content-type-get-mime-type}
-      @about-function{g-content-type-get-icon}
-      @about-function{g-content-type-get-symbolic-icon}
-      @about-function{g-content-type-get-generic-icon-name}
+      @about-function{g-content-type-description}
+      @about-function{g-content-type-mime-type}
+      @about-function{g-content-type-icon}
+      @about-function{g-content-type-symbolic-icon}
+      @about-function{g-content-type-generic-icon-name}
       @about-function{g-content-type-can-be-executable}
       @about-function{g-content-type-from-mime-type}
       @about-function{g-content-type-guess}
       @about-function{g-content-type-guess-for-tree}
-      @about-function{g-content-types-get-registered}
+      @about-function{g-content-types-registered}
     @end{subsection}
     @begin[GAppInfo]{subsection}
       Application information and launch contexts.
@@ -138,7 +140,7 @@
     @begin[GEmblemedIcon]{subsection}
       An implementation of GIcon for icons with emblems.
 
-      @about-class{g-emblemed-icon}
+      @about-class{g-emblemed-icon}gboolean	g_content_type_is_mime_type ()
       @about-function{g-emblemed-icon-new}
       @about-function{g-emblemed-icon-get-icon}
       @about-function{g-emblemed-icon-get-emblems}
