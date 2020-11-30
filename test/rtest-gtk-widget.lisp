@@ -78,10 +78,17 @@
   ;; Check the parent
   (is (eq (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget")))
   ;; Check the children
-  (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
-               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch" "GtkCellView"
-               "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea" "GtkIcon")
-             (mapcar #'g-type-name (g-type-children "GtkWidget"))))
+  (is (or (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator"
+                   "GtkInvisible" "GtkProgressBar" "GtkLevelBar" "GtkSpinner"
+                   "GtkSwitch" "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar"
+                   "GtkDrawingArea")
+                 (mapcar #'g-type-name (g-type-children "GtkWidget")))
+          ;; Or with the undocumented GtkIcon class
+          (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator"
+                   "GtkInvisible" "GtkProgressBar" "GtkLevelBar" "GtkSpinner"
+                   "GtkSwitch" "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar"
+                   "GtkDrawingArea" "GtkIcon")
+                 (mapcar #'g-type-name (g-type-children "GtkWidget")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkWidget"))))
@@ -722,8 +729,14 @@ scale-factor
 ;;;     gtk_widget_get_clipboard
 ;;;     gtk_widget_get_display
 ;;;     gtk_widget_get_root_window
+
 ;;;     gtk_widget_get_screen
 ;;;     gtk_widget_has_screen
+
+(test gtk-widget-screen
+  (let ((window (make-instance 'gtk-window :type :toplevel)))
+    (is-true (gtk-widget-has-screen window))
+    (is (typep (gtk-widget-screen window) 'gdk-screen))))
 
 ;;;     gtk-widget-size-request
 
@@ -740,9 +753,25 @@ scale-factor
 ;;;     gtk_widget_thaw_child_notify
 ;;;     gtk_widget_set_no_show_all
 ;;;     gtk_widget_get_no_show_all
+
 ;;;     gtk_widget_list_mnemonic_labels
 ;;;     gtk_widget_add_mnemonic_label
 ;;;     gtk_widget_remove_mnemonic_label
+
+(test gtk-widget-mnemonic-label
+  (let ((button (gtk-button-new-with-mnemonic "_Hello")))
+    ;; Check for the mnemonic label in the list of mnemonic labels
+    (is (every (lambda (x) (typep x 'gtk-widget))
+               (gtk-widget-list-mnemonic-labels button)))
+    (let ((label (first (gtk-widget-list-mnemonic-labels button))))
+      ;; Remove the mnemonic label
+      (is-false (gtk-widget-remove-mnemonic-label button label))
+      (is-false (gtk-widget-list-mnemonic-labels button))
+      ;; Add again the mnemonic label
+      (is-false (gtk-widget-add-mnemonic-label button label))
+      (is (every (lambda (x) (typep x 'gtk-widget))
+                 (gtk-widget-list-mnemonic-labels button))))))
+
 ;;;     gtk_widget_is_composited
 ;;;     gtk_widget_error_bell
 ;;;     gtk_widget_keynav_failed
@@ -845,28 +874,19 @@ scale-factor
 (test gtk-widget-preferred-size.1
   (let ((button (make-instance 'gtk-button)))
     (is (listp (multiple-value-list (gtk-widget-preferred-size button))))
-    (is (eq 'gtk-requisition
-            (type-of (first (multiple-value-list (gtk-widget-preferred-size button))))))
-    (is (eq 'gtk-requisition
-            (type-of (second (multiple-value-list (gtk-widget-preferred-size button))))))
-))
+    (is (typep (first (multiple-value-list (gtk-widget-preferred-size button)))
+                'gtk-requisition))
+    (is (typep (second (multiple-value-list (gtk-widget-preferred-size button)))
+                'gtk-requisition))))
 
 (test gtk-widget-preferred-size.2
   (let ((button (make-instance 'gtk-button)))
-
     (multiple-value-bind (minimum-size natural-size)
         (gtk-widget-preferred-size button)
-
       (is (= 0 (gtk-requisition-width minimum-size)))
       (is (= 0 (gtk-requisition-height minimum-size)))
-
       (is (= 0 (gtk-requisition-width natural-size)))
-      (is (= 0 (gtk-requisition-height natural-size)))
-
-    )
-
-))
-
+      (is (= 0 (gtk-requisition-height natural-size))))))
 
 ;;;     gtk_distribute_natural_allocation
 ;;;
@@ -894,4 +914,4 @@ scale-factor
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
 
-;;; 2020-10-25
+;;; 2020-11-28
