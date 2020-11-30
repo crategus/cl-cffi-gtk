@@ -1601,7 +1601,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       The signal emission takes care of calling the functions @fun{cairo-save}
       before and @fun{cairo-restore} after invoking the handler.
       @begin[code]{table}
-        @entry[widget]{The @class{gtk-widget} object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
       @end{table}
     @subheading{The \"enter-notify-event\" signal}
@@ -1692,13 +1692,13 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{pre}
       Emitted when a pointer or keyboard grab on a window belonging to widget
       gets broken. On X11, this happens when the grab window becomes unviewable,
-      i. e. it or one of its ancestors is unmapped, or if the same application
+      i.e. it or one of its ancestors is unmapped, or if the same application
       grabs the pointer or keyboard again.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-grab-broken} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"grab-focus\" signal}
       @begin{pre}
@@ -1910,31 +1910,31 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      To receive this signal the @class{gdk-window} associated to the widget
-      needs to enable the @code{:proximity-in-mask} mask of type
-      @symbol{gdk-event-mask}. This signal will be sent to the grab @arg{widget}
+      To receive this signal the @class{gdk-window} object associated to the
+      widget needs to enable the @code{:proximity-in-mask} mask of type
+      @symbol{gdk-event-mask}. This signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-proximity} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-proximity} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"proximity-out-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      To receive this signal the @class{gdk-window} associated to the widget
-      needs to enable the @code{:proximity-out-mask} mask of type
+      To receive this signal the @class{gdk-window} object associated to the
+      widget needs to enable the @code{:proximity-out-mask} mask of type
       @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
       there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-proximity} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-proximity} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
      @end{table}
    @subheading{The \"query-tooltip\" signal}
      @begin{pre}
@@ -2006,40 +2006,42 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       The \"selection-clear-event\" signal will be emitted when the the widget's
       window has lost ownership of a selection.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-selection} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-selection} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"selection-get\" signal}
       @begin{pre}
  lambda (widget data info time)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[data]{The @class{gtk-selection-data}.}
-        @entry[info]{The info that has been registered with the target.}
-        @entry[time]{The timestamp at which the data was requested.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[data]{The @class{gtk-selection-data} structure.}
+        @entry[info]{An unsigned integer with the info that has been registered
+          with the target.}
+        @entry[time]{An unsigned integer with the timestamp at which the data
+          was requested.}
       @end{table}
     @subheading{The \"selection-notify-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-selection}.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-selection} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"selection-received\" signal}
       @begin{pre}
  lambda (widget data time)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[data]{The @class{gtk-selection-data}.}
-        @entry[time]{A timestamp.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[data]{The @class{gtk-selection-data} structure.}
+        @entry[time]{An unsigned integer with the timestamp.}
       @end{table}
     @subheading{The \"selection-request-event\" signal}
       @begin{pre}
@@ -2048,11 +2050,11 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       The \"selection-request-event\" signal will be emitted when another client
       requests ownership of the selection owned by the widget's window.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-selection} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-selection} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
     @subheading{The \"show\" signal}
       @begin{pre}
@@ -2102,7 +2104,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       The \"state-flags-changed\" signal is emitted when the widget state
       changes, see the function @fun{gtk-widget-state-flags}.
       @begin[code]{table}
-        @entry[widget]{The @class{gtk-widget} object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[flags]{The previous state flags of type
           @symbol{gtk-state-flags}.}
       @end{table}
@@ -2195,14 +2197,14 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
       The \"visibility-notify-event\" will be emitted when the widget's window
       is obscured or unobscured. To receive this signal the @class{gdk-window}
-      associated to the widget needs to enable the
-      @code{:visibility-notify-mask} mask of type @symbol{gdk-event-mask}.
+      object associated to the widget needs to enable the
+      @code{:visibility-notify-mask} value of @symbol{gdk-event-mask} flags.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-visibility} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-visibility} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @code{False} to propagate the event further.}
       @end{table}
     @subheading{The \"window-state-event\" signal}
       @begin{pre}
@@ -2210,15 +2212,15 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{pre}
       The \"window-state-event\" signal will be emitted when the state of the
       toplevel window associated to the widget changes. To receive this signal
-      the @class{gdk-window} associated to the widget needs to enable the
-      @code{:structure-mask} mask of type @symbol{gdk-event-mask}. GDK will
+      the @class{gdk-window} object associated to the widget needs to enable
+      the @code{:structure-mask} mask of type @symbol{gdk-event-mask}. GDK will
       enable this mask automatically for all new windows.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-window-state} which triggered this
-          signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-window-state} event which triggered
+          this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event. @em{False} to propagate the event further.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-widget-app-paintable}
@@ -2270,21 +2272,6 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @see-class{gtk-style-context}
   @see-class{gdk-window}
   @see-class{gdk-color}
-  @see-class{gdk-event}
-  @see-class{gdk-event-button}
-  @see-class{gdk-event-configure}
-  @see-class{gdk-event-expose}
-  @see-class{gdk-event-crossing}
-  @see-class{gdk-event-focus}
-  @see-class{gdk-event-grab-broken}
-  @see-class{gdk-event-key}
-  @see-class{gdk-event-motion}
-  @see-class{gdk-event-property}
-  @see-class{gdk-event-proximity}
-  @see-class{gdk-event-scroll}
-  @see-class{gdk-event-selection}
-  @see-class{gdk-event-visibility}
-  @see-class{gdk-event-window-state}
   @see-symbol{gtk-align}
   @see-symbol{gtk-size-request-mode}
   @see-symbol{gtk-dest-defaults}
@@ -3835,7 +3822,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
  "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
   @short{Shows a widget.}
-  If @arg{widget} is an unmapped toplevel widget, i. e. a @class{gtk-window}
+  If @arg{widget} is an unmapped toplevel widget, i.e. a @class{gtk-window}
   that has not yet been shown, enter the main loop and wait for the window to
   actually be mapped. Be careful; because the main loop is running, anything
   can happen during this function.
@@ -6879,13 +6866,13 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_freeze_child_notify" gtk-widget-freeze-child-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2020-11-28}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Stops emission of \"child-notify\" signals on @arg{widget}.
+    Stops emission of \"child-notify\" signals on the widget.
   @end{short}
   The signals are queued until the function @fun{gtk-widget-thaw-child-notify}
-  is called on @arg{widget}.
+  is called on the widget.
 
   This is the analogue of the function @fun{g-object-freeze-notify} for child
   properties.
@@ -7063,21 +7050,22 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_get_screen" gtk-widget-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2020-11-28}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @class{gdk-screen} object for the toplevel for this widget.}
   @begin{short}
     Get the screen from the toplevel window associated with this widget.
   @end{short}
   This function can only be called after the widget has been added to a widget
-  hierarchy with a @class{gtk-window} at the top.
+  hierarchy with a @class{gtk-window} widget at the top.
 
   In general, you should only create screen specific resources when a widget
   has been realized, and you should free those resources when the widget is
   unrealized.
   @see-class{gtk-widget}
   @see-class{gtk-window}
-  @see-class{gdk-screen}"
+  @see-class{gdk-screen}
+  @see-function{gtk-widget-has-screen}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-screen)
@@ -7088,17 +7076,19 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_has_screen" gtk-widget-has-screen) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@em{True} if there is a @class{gdk-screen} associcated with the
-    widget.}
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @begin{return}
+    @em{True} if there is a @class{gdk-screen} object associcated with the
+    widget.
+  @end{return}
   @begin{short}
-    Checks whether there is a @class{gdk-screen} is associated with this
-    @arg{widget}.
+    Checks whether there is a screen associated with this widget.
   @end{short}
   All toplevel widgets have an associated screen, and all widgets added into a
   hierarchy with a toplevel window at the top.
-  @see-class{gtk-widget}"
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-screen}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-has-screen)
@@ -7189,14 +7179,14 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_thaw_child_notify" gtk-widget-thaw-child-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Reverts the effect of a previous call to
+    Reverts the effect of a previous call to the function
     @fun{gtk-widget-freeze-child-notify}.
   @end{short}
-  This causes all queued \"child-notify\" signals on @arg{widget} to be
-  emitted.
+  This causes all queued \"child-notify\" signals on the widget to be emitted.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-freeze-child-notify}"
   (widget (g-object gtk-widget)))
 
@@ -7209,28 +7199,25 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_widget_list_mnemonic_labels" gtk-widget-list-mnemonic-labels)
     (g-list (g-object gtk-widget) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The list of mnemonic labels.}
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The list of @class{gtk-widget} mnemonic labels.}
   @begin{short}
-    Returns a list of the widgets, normally labels, for which this @arg{widget}
-    is the target of a mnemonic.
+    Returns a list of the widgets, normally labels, for which this widget is
+    the target of a mnemonic.
   @end{short}
-  (See for example, @fun{gtk-label-mnemonic-widget}.)
-
-  The widgets in the list are not individually referenced. If you want to
-  iterate through the list and perform actions involving callbacks that might
-  destroy the widgets, you must call
-  @code{g_list_foreach (result, (GFunc)g_object_ref, NULL)} first, and then
-  unref all the widgets afterwards.
+  See for example the function @fun{gtk-label-mnemonic-widget} for more
+  information about mnemonic labels.
   @begin[Example]{dictionary}
     @begin{pre}
- (setq button (gtk-button-new-with-mnemonic \"_Hello\"))
+(setq button (gtk-button-new-with-mnemonic \"_Hello\"))
 => #<GTK-BUTTON {C2794C9@}>
- (gtk-widget-list-mnemonic-labels button)
+(gtk-widget-list-mnemonic-labels button)
 => (#<GTK-LABEL {C292FE1@}>)
     @end{pre}
   @end{dictionary}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-add-mnemonic-label}
   @see-function{gtk-label-mnemonic-widget}"
   (widget (g-object gtk-widget)))
 
@@ -7242,20 +7229,25 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_add_mnemonic_label" gtk-widget-add-mnemonic-label) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[label]{a @class{gtk-widget} instance that acts as a mnemonic label
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[label]{a @class{gtk-widget} object that acts as a mnemonic label
     for @arg{widget}}
   @begin{short}
     Adds a widget to the list of mnemonic labels for this widget.
   @end{short}
-  (See @fun{gtk-widget-list-mnemonic-labels}). Note the list of mnemonic labels
-  for the widget is cleared when the widget is destroyed, so the caller must
-  make sure to update its internal state at this point as well, by using a
-  connection to the \"destroy\" signal or a weak notifier.
-  @see-class{gtk-widget}"
+  See the function @fun{gtk-widget-list-mnemonic-labels} for a list of mnemonic
+  labels for this widget.
+
+  Note the list of mnemonic labels for the widget is cleared when the widget is
+  destroyed, so the caller must make sure to update its internal state at this
+  point as well, by using a connection to the \"destroy\" signal or a weak
+  notifier.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-list-mnemonic-labels}
+  @see-function{gtk-widget-remove-mnemonic-label}"
   (widget (g-object gtk-widget))
-  (label g-object))
+  (label (g-object gtk-widget)))
 
 (export 'gtk-widget-add-mnemonic-label)
 
@@ -7266,22 +7258,21 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_widget_remove_mnemonic_label" gtk-widget-remove-mnemonic-label)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
+ "@version{2020-11-28}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[label]{a @class{gtk-widget} object that was previously set as a
-    mnemnic label for widget with the function
-    @fun{gtk-widget-add-mnemonic-label}.}
+    mnemonic label for @arg{widget}}
   @begin{short}
     Removes a widget from the list of mnemonic labels for this widget.
   @end{short}
-  See the function @fun{gtk-widget-list-mnemonic-labels}. The widget must have
-  previously been added to the list with the function
-  @fun{gtk-widget-add-mnemonic-label}.
+  See the function @fun{gtk-widget-list-mnemonic-labels} for a list of mnemonic
+  labels for the widget. The widget must have previously been added to the list
+  with the function @fun{gtk-widget-add-mnemonic-label}.
   @see-class{gtk-widget}
   @see-function{gtk-widget-add-mnemonic-label}
   @see-function{gtk-widget-list-mnemonic-labels}"
   (widget (g-object gtk-widget))
-  (label g-object))
+  (label (g-object gtk-widget)))
 
 (export 'gtk-widget-remove-mnemonic-label)
 
@@ -7431,13 +7422,14 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_tooltip_trigger_tooltip_query" gtk-widget-trigger-tooltip-query)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Triggers a tooltip query on the display where the toplevel of @arg{widget}
     is located.
   @end{short}
-  See @fun{gtk-tooltip-trigger-tooltip-query} for more information.
+  See the function @fun{gtk-tooltip-trigger-tooltip-query} for more information.
+  @see-class{gtk-widget}
   @see-function{gtk-tooltip-trigger-tooltip-query}"
   (widget (g-object gtk-widget)))
 
@@ -7955,10 +7947,10 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_is_drawable" gtk-widget-is-drawable) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@em{True} if @arg{widget} is drawable, @code{nil} otherwise.}
-  @short{Determines whether @arg{widget} can be drawn to.}
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if @arg{widget} is drawable, @em{false} otherwise.}
+  @short{Determines whether the widget can be drawn to.}
   A widget can be drawn to if it is mapped and visible.
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
@@ -7971,15 +7963,17 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 (defcfun ("gtk_widget_is_toplevel" gtk-widget-is-toplevel) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@em{True} if @arg{widget} is a toplevel, @code{nil} otherwise.}
-  @short{Determines whether @arg{widget} is a toplevel widget.}
-
-  Currently only @class{gtk-window} and @class{gtk-invisible} (and
-  out-of-process @class{gtk-plug}'s) are toplevel widgets. Toplevel widgets
-  have no parent widget.
-  @see-class{gtk-widget}"
+ "@version{2020-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if @arg{widget} is a toplevel, @em{false} otherwise.}
+  @short{Determines whether the widget is a toplevel widget.}
+  Currently only @class{gtk-window}, @class{gtk-invisible}, and
+  out-of-process @class{gtk-plug} widgets are toplevel widgets. Toplevel
+  widgets have no parent widget.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-invisible}
+  @see-class{gtk-plug}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-toplevel)
