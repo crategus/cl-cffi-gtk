@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.variant-type.lisp
 ;;;
-;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; The documentation of this file is taken from the GLib 2.66 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,9 +28,9 @@
 ;;;
 ;;; GVariantType
 ;;;
-;;; Introduction to the GVariant type system
+;;;     Introduction to the GVariant type system
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GVariantType
 ;;;
@@ -61,6 +61,8 @@
 ;;;     G_VARIANT_TYPE_BYTESTRING
 ;;;     G_VARIANT_TYPE_BYTESTRING_ARRAY
 ;;;     G_VARIANT_TYPE_VARDICT
+;;;
+;;; Functions
 ;;;
 ;;;     G_VARIANT_TYPE
 ;;;
@@ -107,31 +109,31 @@
 ;;; ----------------------------------------------------------------------------
 
 (gobject::define-g-boxed-opaque g-variant-type "GVariantType"
-  :alloc (error "GVariantType can not be created from Lisp side"))
+  :alloc (error "GVariantType can not be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-variant-type atdoc:*class-name-alias*) "CStruct"
       (documentation 'g-variant-type 'type)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @begin{short}
-    This section introduces the @type{g-variant} type system. It is based, in
-    large part, on the D-Bus type system, with two major changes and some minor
-    lifting of restrictions. The D-Bus specification, therefore, provides a
-    significant amount of information that is useful when working with
-    @type{g-variant}.
+    This section introduces the GVariant type system. It is based, in large
+    part, on the D-Bus type system, with two major changes and some minor
+    lifting of restrictions.
   @end{short}
+  The D-Bus specification, therefore, provides a significant amount of
+  information that is useful when working with @type{g-variant} values.
 
   The first major change with respect to the D-Bus type system is the
-  introduction of maybe (or \"nullable\") types. Any type in @type{g-variant}
-  can be converted to a maybe type, in which case, \"nothing\" (or \"null\")
-  becomes a valid value. Maybe types have been added by introducing the
-  character \"m\" to type strings.
+  introduction of maybe (or \"nullable\") types. Any type in the GVariant type
+  system can be converted to a maybe type, in which case, \"nothing\" (or
+  \"null\") becomes a valid value. Maybe types have been added by introducing
+  the character \"m\" to type strings.
 
-  The second major change is that the @type{g-variant} type system supports
-  the concept of \"indefinite types\" -- types that are less specific than the
-  normal types found in D-Bus. For example, it is possible to speak of \"an
-  array of any type\" in @type{g-variant}, where the D-Bus type system would
-  require you to speak of \"an array of integers\" or \"an array of strings\".
+  The second major change is that the GVariant type system supports the concept
+  of \"indefinite types\" -- types that are less specific than the normal types
+  found in D-Bus. For example, it is possible to speak of \"an array of any
+  type\" in the GVariant type system, where the D-Bus type system would require
+  you to speak of \"an array of integers\" or \"an array of strings\".
   Indefinite types have been added by introducing the characters \"*\", \"?\"
   and \"r\" to type strings.
 
@@ -139,16 +141,16 @@
   lifted along with the restriction that dictionary entries may only appear
   nested inside of arrays.
 
-  Just as in D-Bus, @type{g-variant} types are described with strings
+  Just as in D-Bus, GVariant types are described with strings
   (\"type strings\"). Subject to the differences mentioned above, these strings
   are of the same form as those found in D-Bus. Note, however: D-Bus always
   works in terms of messages and therefore individual type strings appear
   nowhere in its interface. Instead, \"signatures\" are a concatenation of the
-  strings of the type of each argument in a message. @type{g-variant} deals
-  with single values directly so @type{g-variant} type strings always describe
+  strings of the type of each argument in a message. The GVariant type system
+  deals with single values directly so GVariant type strings always describe
   the type of exactly one value. This means that a D-Bus signature string is
-  generally not a valid @type{g-variant} type string -- except in the case
-  that it is the signature of a message containing exactly one argument.
+  generally not a valid GVariant type string -- except in the case that it is
+  the signature of a message containing exactly one argument.
 
   An indefinite type is similar in spirit to what may be called an abstract
   type in other type systems. No value can exist that has an indefinite type
@@ -163,106 +165,97 @@
 
   This is similar to how instances of abstract classes may not directly exist
   in other type systems, but instances of their non-abstract subtypes may. For
-  example, in GTK+, no object that has the type of @class{gtk-bin} can exist
-  (since @class{gtk-bin} is an abstract class), but a @class{gtk-window} can
+  example, in GTK+, no object that has the type of @class{gtk-bin} can exist,
+  since @class{gtk-bin} is an abstract class, but a @class{gtk-window} can
   certainly be instantiated, and you would say that the @class{gtk-window} is a
-  @class{gtk-bin} (since @class{gtk-window} is a subclass of @class{gtk-bin}).
+  @class{gtk-bin}, since @class{gtk-window} is a subclass of @class{gtk-bin}.
 
-  A detailed description of @type{g-variant} type strings is given here:
+  A detailed description of GVariant type strings is given here:
 
   @subheading{GVariant Type Strings}
-    A @type{g-variant} type string can be any of the following:
-    @begin{itemize}
-      @item{any basic type string (listed below)}
-      @item{\"v\", \"r\" or \"*\"}
-      @item{one of the characters 'a' or 'm', followed by another type string}
-      @item{the character '(', followed by a concatenation of zero or more other
-        type strings, followed by the character ')'}
-      @item{the character '{', followed by a basic type string (see below),
-        followed by another type string, followed by the character '@}'}
-    @end{itemize}
-    A basic type string describes a basic type (as per
-    @fun{g-variant-type-is-basic}) and is always a single character in length.
-    The valid basic type strings are \"b\", \"y\", \"n\", \"q\", \"i\", \"u\",
-    \"x\", \"t\", \"h\", \"d\", \"s\", \"o\", \"g\" and \"?\".
+  A GVariant type string can be any of the following:
+  @begin{itemize}
+    @item{any basic type string (listed below)}
+    @item{\"v\", \"r\" or \"*\"}
+    @item{one of the characters 'a' or 'm', followed by another type string}
+    @item{the character '(', followed by a concatenation of zero or more other
+      type strings, followed by the character ')'}
+    @item{the character '{', followed by a basic type string (see below),
+      followed by another type string, followed by the character '@}'}
+  @end{itemize}
+  A basic type string describes a basic type as per the function
+  @fun{g-variant-type-is-basic} and is always a single character in length.
+  The valid basic type strings are \"b\", \"y\", \"n\", \"q\", \"i\", \"u\",
+  \"x\", \"t\", \"h\", \"d\", \"s\", \"o\", \"g\" and \"?\".
 
-    The above definition is recursive to arbitrary depth. \"aaaaai\" and
-    \"(ui(nq((y)))s)\" are both valid type strings, as is
-    \"a(aa(ui)(qna{ya(yd)@}))\".
+  The above definition is recursive to arbitrary depth. \"aaaaai\" and
+  \"(ui(nq((y)))s)\" are both valid type strings, as is
+  \"a(aa(ui)(qna{ya(yd)@}))\".
 
-    The meaning of each of the characters is as follows:
-    @begin[code]{table}
-       @entry[b]{The type string of @var{+g-variant-type-boolean+};
-         a boolean value.}
-       @entry[y]{The type string of @var{+g-variant-type-byte+}; a byte.}
-       @entry[n]{The type string of @var{+g-variant-type-int16+};
-         a signed 16 bit integer.}
-       @entry[q]{The type string of @var{+g-variant-type-uint16+};
-         an unsigned 16 bit integer.}
-       @entry[i]{The type string of @var{+g-variant-type-int32};
-         a signed 32 bit integer.}
-       @entry[u]{The type string of @var{+g-variant-type-uint32+};
-         an unsigned 32 bit integer.}
-       @entry[x]{The type string of @var{+g-variant-type-int64+};
-         a signed 64 bit integer.}
-       @entry[t]{The type string of @var{+g-variant-type-uint64+};
-         an unsigned 64 bit integer.}
-       @entry[h]{The type string of @var{+g-variant-type-handle+};
-         a signed 32 bit value that, by convention, is used as an index into an
-         array of file descriptors that are sent alongside a D-Bus message.}
-       @entry[d]{The type string of @var{+g-variant-type-double+};
-         a double precision floating point value.}
-       @entry[s]{The type string of @var{+g-variant-type-string+}; a string.}
-       @entry[o]{The type string of @var{+g-variant-type-object-path+};
-         a string in the form of a D-Bus object path.}
-       @entry[g]{The type string of @var{+g-variant-type-string+};
-         a string in the form of a D-Bus type signature.}
-       @entry[?]{The type string of @var{+g-variant-type-basic+};
-         an indefinite type that is a supertype of any of the basic types.}
-       @entry[v]{The type string of @var{+g-variant-type-variant+};
-         a container type that contain any other type of value.}
-       @entry[a]{Used as a prefix on another type string to mean an array of
-         that type; the type string \"ai\", for example, is the type of an array
-         of 32 bit signed integers.}
-       @entry[m]{Used as a prefix on another type string to mean a \"maybe\", or
-         \"nullable\", version of that type; the type string \"ms\", for
-         example, is the type of a value that maybe contains a string, or maybe
-         contains nothing.}
-       @entry[()]{Used to enclose zero or more other concatenated type strings
-         to create a tuple type; the type string \"(is)\", for example, is the
-         type of a pair of an integer and a string.}
-       @entry[r]{The type string of @var{+g-variant-type-tuple+};
-         an indefinite type that is a supertype of any tuple type, regardless
-         of the number of items.}
-       @entry[{}]{Used to enclose a basic type string concatenated with another
-         type string to create a dictionary entry type, which usually appears
-         inside of an array to form a dictionary; the type string \"a{sd@}\",
-         for example, is the type of a dictionary that maps strings to double
-         precision floating point values.@br{}
-         The first type (the basic type) is the key type and the second type is
-         the value type. The reason that the first type is restricted to being a
-         basic type is so that it can easily be hashed.}
-       @entry[*]{The type string of @var{+g-variant-type-any+};
-         the indefinite type that is a supertype of all types. Note that, as
-         with all type strings, this character represents exactly one type. It
-         cannot be used inside of tuples to mean \"any number of items\".}
-    @end{table}
-    Any type string of a container that contains an indefinite type is, itself,
-    an indefinite type. For example, the type string \"a*\" (corresponding to
-    @var{+g-variant-type-array+}) is an indefinite type that is a supertype of
-    every array type. \"(*s)\" is a supertype of all tuples that contain exactly
-    two items where the second item is a string.
+  The meaning of each of the characters is as follows:
+  @begin[code]{table}
+     @entry[b]{The type string of a boolean value.}
+     @entry[y]{The type string of a byte.}
+     @entry[n]{The type string of a signed 16 bit integer.}
+     @entry[q]{The type string of an unsigned 16 bit integer.}
+     @entry[i]{The type string of a signed 32 bit integer.}
+     @entry[u]{The type string of an unsigned 32 bit integer.}
+     @entry[x]{The type string of a signed 64 bit integer.}
+     @entry[t]{The type string of an unsigned 64 bit integer.}
+     @entry[h]{The type string of a signed 32 bit value that, by convention,
+       is used as an index into an array of file descriptors that are sent
+       alongside a D-Bus message.}
+     @entry[d]{The type string of a double precision floating point value.}
+     @entry[s]{The type string of a string.}
+     @entry[o]{The type string of a string in the form of a D-Bus object path.}
+     @entry[g]{The type string of a string in the form of a D-Bus type
+       signature.}
+     @entry[?]{The type string of an indefinite type that is a supertype of any
+       of the basic types.}
+     @entry[v]{The type string of a container type that contain any other type
+       of value.}
+     @entry[a]{Used as a prefix on another type string to mean an array of
+       that type. The type string \"ai\", for example, is the type of an array
+       of 32 bit signed integers.}
+     @entry[m]{Used as a prefix on another type string to mean a \"maybe\", or
+       \"nullable\", version of that type. The type string \"ms\", for
+       example, is the type of a value that maybe contains a string, or maybe
+       contains nothing.}
+     @entry[()]{Used to enclose zero or more other concatenated type strings
+       to create a tuple type. The type string \"(is)\", for example, is the
+       type of a pair of an integer and a string.}
+     @entry[r]{The type string of an indefinite type that is a supertype of any
+       tuple type, regardless of the number of items.}
+     @entry[{}]{Used to enclose a basic type string concatenated with another
+       type string to create a dictionary entry type, which usually appears
+       inside of an array to form a dictionary. The type string \"a{sd@}\",
+       for example, is the type of a dictionary that maps strings to double
+       precision floating point values. The first type (the basic type) is the
+       key type and the second type is the value type. The reason that the
+       first type is restricted to being a basic type is so that it can easily
+       be hashed.}
+     @entry[*]{The type string of the indefinite type that is a supertype of all
+       types. Note that, as with all type strings, this character represents
+       exactly one type. It cannot be used inside of tuples to mean \"any number
+       of items\".}
+  @end{table}
+  Any type string of a container that contains an indefinite type is, itself,
+  an indefinite type. For example, the type string \"a*\" (corresponding to
+  an array) is an indefinite type that is a supertype of every array type.
+  \"(*s)\" is a supertype of all tuples that contain exactly two items where
+  the second item is a string.
 
-    \"a{?*@}\" is an indefinite type that is a supertype of all arrays
-    containing dictionary entries where the key is any basic type and the value
-    is any type at all. This is, by definition, a dictionary, so this type
-    string corresponds to @var{+g-variant-type-dictionary+}. Note that, due to
-    the restriction that the key of a dictionary entry must be a basic type,
-    \"{**@}\" is not a valid type string.
+  \"a{?*@}\" is an indefinite type that is a supertype of all arrays
+  containing dictionary entries where the key is any basic type and the value
+  is any type at all. This is, by definition, a dictionary. Note that, due to
+  the restriction that the key of a dictionary entry must be a basic type,
+  \"{**@}\" is not a valid type string.
 
-    Two types may not be compared by value; use @fun{g-variant-type-equal} or
-    @fun{g-variant-type-is-subtype-of}. May be copied using
-    @fun{g-variant-type-copy} and freed using @fun{g-variant-type-free}.
+  Two types may not be compared by value. Use the functions
+  @fun{g-variant-type-equal} or @fun{g-variant-type-is-subtype-of}. May be
+  copied using the function @fun{g-variant-type-copy} and freed using the
+  function @fun{g-variant-type-free}.
+  @see-type{g-variant}
   @see-function{g-variant-type}
   @see-function{g-variant-is-of-type}
   @see-function{g-variant-type-is-basic}
@@ -274,7 +267,7 @@
 (export (gobject::boxed-related-symbols 'g-variant-type))
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_BOOLEAN
+;;; G_VARIANT_TYPE_BOOLEAN                                 not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-boolean+ "b")
@@ -283,14 +276,15 @@
 (setf (gethash '+g-variant-type-boolean+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-boolean+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"b\"}
-  The type of a value that can be either @em{true} or @code{nil}.")
-
-(export '+g-variant-type-boolean+)
+  @begin{short}
+    The type of a value that can be either @em{true} or @code{nil}.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_BYTE
+;;; G_VARIANT_TYPE_BYTE                                    not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-byte+ "y")
@@ -299,14 +293,13 @@
 (setf (gethash '+g-variant-type-byte+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-byte+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"y\"}
-  The type of an integer value that can range from 0 to 255.")
-
-(export '+g-variant-type-byte+)
+  @short{The type of an integer value that can range from 0 to 255.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_INT16
+;;; G_VARIANT_TYPE_INT16                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-int16+ "n")
@@ -315,14 +308,13 @@
 (setf (gethash '+g-variant-type-int16+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-int16+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"n\"}
-  The type of an integer value that can range from -32768 to 32767.")
-
-(export '+g-variant-type-int16+)
+  @short{The type of an integer value that can range from -32768 to 32767.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_UINT16
+;;; G_VARIANT_TYPE_UINT16                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-uint16+ "q")
@@ -331,15 +323,13 @@
 (setf (gethash '+g-variant-type-uint16+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-uint16+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"q\"}
-  The type of an integer value that can range from 0 to 65535. There were
-  about this many people living in Toronto in the 1870s.")
-
-(export '+g-variant-type-uint16+)
+  @short{The type of an integer value that can range from 0 to 65535.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_INT32
+;;; G_VARIANT_TYPE_INT32                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-int32+ "i")
@@ -348,14 +338,15 @@
 (setf (gethash '+g-variant-type-int32+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-int32+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"i\"}
-  The type of an integer value that can range from -2147483648 to 2147483647.")
-
-(export '+g-variant-type-int32+)
+  @begin{short}
+    The type of an integer value that can range from -2147483648 to 2147483647.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_UINT32
+;;; G_VARIANT_TYPE_UINT32                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-uint32+ "u")
@@ -364,15 +355,13 @@
 (setf (gethash '+g-variant-type-uint32+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-uint32+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"u\"}
-  The type of an integer value that can range from 0 to 4294967295. That is one
-  number for everyone who was around in the late 1970s.")
-
-(export '+g-variant-type-uint32+)
+  @short{The type of an integer value that can range from 0 to 4294967295.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_INT64
+;;; G_VARIANT_TYPE_INT64                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-int64+ "x")
@@ -381,15 +370,16 @@
 (setf (gethash '+g-variant-type-int64+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-int64+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"x\"}
-  The type of an integer value that can range from -9223372036854775808 to
-  9223372036854775807.")
-
-(export '+g-variant-type-int64+)
+  @begin{short}
+    The type of an integer value that can range from -9223372036854775808 to
+    9223372036854775807.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_UINT64
+;;; G_VARIANT_TYPE_UINT64                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-uint64+ "t")
@@ -398,16 +388,15 @@
 (setf (gethash '+g-variant-type-uint64+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-uint64+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"t\"}
-  The type of an integer value that can range from 0 to 18446744073709551616.
-  That is a really big number, but a Rubik's cube can have a bit more than
-  twice as many possible positions.")
-
-(export '+g-variant-type-uint64+)
+  @begin{short}
+    The type of an integer value that can range from 0 to 18446744073709551616.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_HANDLE
+;;; G_VARIANT_TYPE_HANDLE                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-handle+ "h")
@@ -416,21 +405,19 @@
 (setf (gethash '+g-variant-type-handle+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-handle+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"h\"}
   @begin{short}
     The type of a 32 bit signed integer value, that by convention, is used as
     an index into an array of file descriptors that are sent alongside a D-Bus
     message.
   @end{short}
-
   If you are not interacting with D-Bus, then there is no reason to make use
-  of this type.")
-
-(export '+g-variant-type-handle+)
+  of this type.
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_DOUBLE
+;;; G_VARIANT_TYPE_DOUBLE                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-double+ "d")
@@ -439,17 +426,13 @@
 (setf (gethash '+g-variant-type-double+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-double+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"d\"}
-  The type of a double precision IEEE754 floating point number. These guys go
-  up to about 1.80e308 (plus and minus) but miss out on some numbers in
-  between. In any case, that is far greater than the estimated number of
-  fundamental particles in the observable universe.")
-
-(export '+g-variant-type-double+)
+  @short{The type of a double precision IEEE754 floating point number.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_STRING
+;;; G_VARIANT_TYPE_STRING                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-string+ "s")
@@ -458,14 +441,13 @@
 (setf (gethash '+g-variant-type-string+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-string+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"s\"}
-  The type of a string. \"\" is a string. @code{NULL} is not a string.")
-
-(export '+g-variant-type-string+)
+  @short{The type of a string.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_OBJECT_PATH
+;;; G_VARIANT_TYPE_OBJECT_PATH                             not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-object-path+ "o")
@@ -474,21 +456,19 @@
 (setf (gethash '+g-variant-type-object-path+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-object-path+ 'variable)
- "@version{2013-4-4}
+ "@version{2020-11-29}
   @variable-value{\"o\"}
   @begin{short}
-    The type of a D-Bus object reference. These are strings of a specific
-    format used to identify objects at a given destination on the bus.
+    The type of a D-Bus object reference.
   @end{short}
-
-  If you are not interacting with D-Bus, then there is no reason to make use
-  of this type. If you are, then the D-Bus specification contains a precise
-  description of valid object paths.")
-
-(export '+g-variant-type-object-path+)
+  These are strings of a specific format used to identify objects at a given
+  destination on the bus. If you are not interacting with D-Bus, then there is
+  no reason to make use of this type. If you are, then the D-Bus specification
+  contains a precise description of valid object paths.
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_SIGNATURE
+;;; G_VARIANT_TYPE_SIGNATURE                               not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-signature+ "g")
@@ -497,21 +477,19 @@
 (setf (gethash '+g-variant-type-signature+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-signature+ 'variable)
- "@version{2013-2-17}
+ "@version{2020-11-29}
   @variable-value{\"g\"}
   @begin{short}
-    The type of a D-Bus type signature. These are strings of a specific format
-     used as type signatures for D-Bus methods and messages.
+    The type of a D-Bus type signature.
   @end{short}
-
-  If you are not interacting with D-Bus, then there is no reason to make use
-  of this type. If you are, then the D-Bus specification contains a precise
-  description of valid signature strings.")
-
-(export '+g-variant-type-signature+)
+  These are strings of a specific format used as type signatures for D-Bus
+  methods and messages. If you are not interacting with D-Bus, then there is no
+  reason to make use of this type. If you are, then the D-Bus specification
+  contains a precise description of valid signature strings.
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_VARIANT
+;;; G_VARIANT_TYPE_VARIANT                                 not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-variant+ "v")
@@ -520,14 +498,16 @@
 (setf (gethash '+g-variant-type-variant+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-variant+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"v\"}
-  The type of a box that contains any other value (including another variant).")
-
-(export '+g-variant-type-variant+)
+  @begin{short}
+    The type of a box that contains any other value (including another
+    variant).
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_ANY
+;;; G_VARIANT_TYPE_ANY                                     not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-any+ "*")
@@ -536,14 +516,15 @@
 (setf (gethash '+g-variant-type-any+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-any+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"*\"}
-  An indefinite type that is a supertype of every type (including itself).")
-
-(export '+g-variant-type-any+)
+  @begin{short}
+    An indefinite type that is a supertype of every type (including itself).
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_BASIC
+;;; G_VARIANT_TYPE_BASIC                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-basic+ "?")
@@ -552,15 +533,16 @@
 (setf (gethash '+g-variant-type-basic+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-basic+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"?\"}
-  An indefinite type that is a supertype of every basic (i. e.: non-container)
-  type.")
-
-(export '+g-variant-type-basic+)
+  @begin{short}
+    An indefinite type that is a supertype of every basic (i.e. non-container)
+    type.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_MAYBE
+;;; G_VARIANT_TYPE_MAYBE                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-maybe+ "m*")
@@ -569,14 +551,13 @@
 (setf (gethash '+g-variant-type-maybe+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-maybe+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"m*\"}
-  An indefinite type that is a supertype of every maybe type.")
-
-(export '+g-variant-type-maybe+)
+  @short{An indefinite type that is a supertype of every maybe type.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_ARRAY
+;;; G_VARIANT_TYPE_ARRAY                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-array+ "a*")
@@ -585,14 +566,13 @@
 (setf (gethash '+g-variant-type-array+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-array+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"a*\"}
-  An indefinite type that is a supertype of every array type.")
-
-(export '+g-variant-type-array+)
+  @short{An indefinite type that is a supertype of every array type.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_TUPLE
+;;; G_VARIANT_TYPE_TUPLE                                   not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-tuple+ "r")
@@ -601,15 +581,16 @@
 (setf (gethash '+g-variant-type-tuple+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-tuple+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"r\"}
-  An indefinite type that is a supertype of every tuple type, regardless of
-  the number of items in the tuple.")
-
-(export '+g-variant-type-tuple+)
+  @begin{short}
+    An indefinite type that is a supertype of every tuple type, regardless of
+    the number of items in the tuple.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_UNIT
+;;; G_VARIANT_TYPE_UNIT                                    not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-unit+ "()")
@@ -618,15 +599,16 @@
 (setf (gethash '+g-variant-type-unit+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-unit+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"()\"}
-  The empty tuple type. Has only one instance. Known also as \"triv\" or
-  \"void\".")
-
-(export '+g-variant-type-unit+)
+  @begin{short}
+    The empty tuple type. Has only one instance. Known also as \"triv\" or
+    \"void\".
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_DICT_ENTRY
+;;; G_VARIANT_TYPE_DICT_ENTRY                              not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-dict-entry+ "{?*}")
@@ -635,14 +617,15 @@
 (setf (gethash '+g-variant-type-dict-entry+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-dict-entry+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"{?*@}\"}
-  An indefinite type that is a supertype of every dictionary entry type.")
-
-(export '+g-variant-type-dict-entry+)
+  @begin{short}
+    An indefinite type that is a supertype of every dictionary entry type.
+  @end{short}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_DICTIONARY
+;;; G_VARIANT_TYPE_DICTIONARY                              not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-dictionary+ "a{?*}")
@@ -651,15 +634,17 @@
 (setf (gethash '+g-variant-type-dictionary+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-dictionary+ 'variable)
- "@version{2013-6-29}
+ "@version{2020-11-29}
   @variable-value{\"a{?*@}\"}
-  An indefinite type that is a supertype of every dictionary type. That is,
-  any array type that has an element type equal to any dictionary entry type.")
-
-(export '+g-variant-type-dictionary+)
+  @begin{short}
+    An indefinite type that is a supertype of every dictionary type.
+  @end{short}
+  That is, any array type that has an element type equal to any dictionary
+  entry type.
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_STRING_ARRAY
+;;; G_VARIANT_TYPE_STRING_ARRAY                            not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-string-array+ "as")
@@ -668,14 +653,13 @@
 (setf (gethash '+g-variant-type-string-array+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-string-array+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"as\"}
-  The type of an array of strings.")
-
-(export '+g-variant-type-string-array+)
+  @short{The type of an array of strings.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_OBJECT_PATH_ARRAY
+;;; G_VARIANT_TYPE_OBJECT_PATH_ARRAY                       not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-object-path-array+ "ao")
@@ -684,14 +668,13 @@
 (setf (gethash '+g-variant-type-object-path-array+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-object-path-array+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"ao\"}
-  The type of an array of object paths.")
-
-(export '+g-variant-type-object-path-array+)
+  @short{The type of an array of object paths.}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_BYTESTRING
+;;; G_VARIANT_TYPE_BYTESTRING                              not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-bytestring+ "ay")
@@ -700,17 +683,18 @@
 (setf (gethash '+g-variant-type-bytestring+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-bytestring+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"ay\"}
-  The type of an array of bytes. This type is commonly used to pass around
-  strings that may not be valid utf8. In that case, the convention is that the
-  nul terminator character should be included as the last character in the
-  array.")
-
-(export '+g-variant-type-bytestring+)
+  @begin{short}
+    The type of an array of bytes.
+  @end{short}
+  This type is commonly used to pass around strings that may not be valid UTF8.
+  In that case, the convention is that the nul terminator character should be
+  included as the last character in the array.
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_BYTESTRING_ARRAY
+;;; G_VARIANT_TYPE_BYTESTRING_ARRAY                        not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-bytestring-array+ "aay")
@@ -719,14 +703,13 @@
 (setf (gethash '+g-variant-type-bytestring-array+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-bytestring-array+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"aay\"}
-  The type of an array of byte strings (an array of arrays of bytes).")
-
-(export '+g-variant-type-bytestring-array+)
+  @short{The type of an array of byte strings (an array of arrays of bytes).}
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE_VARDICT
+;;; G_VARIANT_TYPE_VARDICT                                 not exported
 ;;; ----------------------------------------------------------------------------
 
 (defparameter +g-variant-type-vardict+ "a(sv)")
@@ -735,19 +718,16 @@
 (setf (gethash '+g-variant-type-vardict+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-vardict+ 'variable)
- "@version{2013-4-9}
+ "@version{2020-11-29}
   @variable-value{\"a(sv)\"}
   @begin{short}
     The type of a dictionary mapping strings to variants (the ubiquitous
     \"a{sv@}\" type).
   @end{short}
-
-  Since 2.30")
-
-(export '+g-variant-type-vardict+)
+  @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE() --> g_variant_type_checked_
+;;; G_VARIANT_TYPE -> g-variant-type-checked
 ;;; ----------------------------------------------------------------------------
 
 ;; We call the private C function g_variant_tpye_checked_ to define a Lisp
@@ -756,14 +736,14 @@
 (defcfun ("g_variant_type_checked_" g-variant-type-checked)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-4}
+ "@version{2020-11-29}
   @argument[type-string]{a well-formed @class{g-variant-type} type string}
-  @return{a @class{g-variant-type}}
+  @return{A @class{g-variant-type} instance.}
   @begin{short}
-    Converts a string to a @class{g-variant-type}.
+    Converts a string to a @class{g-variant-type} instance.
   @end{short}
   Depending on the current debugging level, this function may perform a runtime
-  check to ensure that the type string is a valid @class{g-variant} type string.
+  check to ensure that the type string is a valid GVariant type string.
 
   It is always a programmer error to use this function with an invalid type
   string. If in doubt, use the function @fun{g-variant-type-string-is-valid} to
@@ -780,20 +760,17 @@
 
 (defcfun ("g_variant_type_free" g-variant-type-free) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}, or @code{NULL}}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
   @begin{short}
-    Frees a @class{g-variant-type} that was allocated with
-    @fun{g-variant-type-copy}, @fun{g-variant-type-new} or one of the container
-    type constructor functions.
+    Frees a @class{g-variant-type} instance that was allocated with the
+    functions @fun{g-variant-type-copy}, @fun{g-variant-type-new} or one of the
+    container type constructor functions.
   @end{short}
-
-  In the case that type is @code{NULL}, this function does nothing.
-
-  Since 2.24
+  @see-class{g-variant-type}
   @see-function{g-variant-type-copy}
   @see-function{g-variant-type-new}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-free)
 
@@ -804,18 +781,17 @@
 (defcfun ("g_variant_type_copy" g-variant-type-copy)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{A new @class{g-variant-type}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{A new @class{g-variant-type} instance.}
   @begin{short}
-    Makes a copy of a @class{g-variant-type}. It is appropriate to call
-    @fun{g-variant-type-free} on the return value. @arg{type} may not be
-    @code{NULL}.
+    Makes a copy of a @class{g-variant-type} instance.
   @end{short}
-
-  Since 2.24
+  It is appropriate to call the function @fun{g-variant-type-free} on the return
+  value.
+  @see-class{g-variant-type}
   @see-function{g-variant-type-free}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-copy)
 
@@ -826,19 +802,19 @@
 (defcfun ("g_variant_type_new" g-variant-type-new)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type-string]{a valid @type{g-variant} type string}
-  @return{A new @class{g-variant-type}.}
+ "@version{2020-11-29}
+  @argument[type-string]{a valid @class{g-variant-type} type string}
+  @return{A new @class{g-variant-type} instance.}
   @begin{short}
-    Creates a new @class{g-variant-type} corresponding to the type string
-    given by @arg{type-string}.
+    Creates a new @class{g-variant-type} instance corresponding to the type
+    string given by @arg{type-string}.
   @end{short}
-  It is appropriate to call @fun{g-variant-type-free} on the return value.
+  It is appropriate to call the function @fun{g-variant-type-free} on the
+  return value.
 
   It is a programmer error to call this function with an invalid type string.
-  Use @fun{g-variant-type-string-is-valid} if you are unsure.
-
-  Since 2.24
+  Use the function @fun{g-variant-type-string-is-valid} if you are unsure.
+  @see-class{g-variant-type}
   @see-function{g-variant-type-free}
   @see-function{g-variant-type-string-is-valid}"
   (type-string :string))
@@ -852,17 +828,13 @@
 (defcfun ("g_variant_type_string_is_valid" g-variant-type-string-is-valid)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-27}
-  @argument[type-string]{a string}
+ "@version{2020-11-29}
+  @argument[type-string]{a @class{g-variant-type} type string}
   @return{@em{True} if @arg{type-string} is exactly one valid type string.}
   @begin{short}
-    Checks if @arg{type-string} is a valid @class{g-variant-type} string.
+    Checks if @arg{type-string} is a valid @class{g-variant-type} type string.
   @end{short}
-  This call is equivalent to calling the function
-  @fun{g-variant-type-string-scan}.
-
-  Since 2.24
-  @see-function{g-variant-type-string-scan}"
+  @see-class{g-variant-type}"
   (type-string :string))
 
 (export 'g-variant-type-string-is-valid)
@@ -901,44 +873,28 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
-;;; TODO: We do not implement the C function, but simply call the function
-;;;       g-variant-type-string-is-valid.
-
-(declaim (inline g-variant-type-string-scan))
-
-(defun g-variant-type-string-scan (string)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-27}
-  @argument[string]{a string}
-  @return{@em{True} if a valid type string was found.}
-  This function is equivalent to the function
-  @fun{g-variant-type-string-is-valid}.
-  @see-function{g-variant-type-string-is-valid}"
-  (g-variant-type-string-is-valid string))
-
-(export 'g-variant-type-string-scan)
+;; not implemented, is equivalent to g-variant-type-string-is-valid
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_type_get_string_length ()
+;;; g_variant_type_get_string_length () -> g-variant-type-string-length
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_get_string_length" g-variant-type-get-string-length)
+(defcfun ("g_variant_type_get_string_length" g-variant-type-string-length)
     g-size
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
   @return{The length of the corresponding type string.}
   @begin{short}
     Returns the length of the type string corresponding to the given type.
   @end{short}
   This function must be used to determine the valid extent of the memory region
-  returned by @fun{g-variant-type-peek-string}.
-
-  Since 2.24
+  returned by the function @fun{g-variant-type-peek-string}.
+  @see-class{g-variant-type}
   @see-function{g-variant-type-peek-string}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
-(export 'g-variant-type-get-string-length)
+(export 'g-variant-type-string-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_peek_string ()
@@ -946,19 +902,19 @@
 
 (defcfun ("g_variant_type_peek_string" g-variant-type-peek-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{The corresponding type string (not nul-terminated)}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{The corresponding type string.}
   @begin{short}
-    Returns the type string corresponding to the given @arg{type}.
+    Returns the type string corresponding to the given @arg{variant-type}.
   @end{short}
-  The result is not nul-terminated; in order to determine its length you must
-  call @fun{g-variant-type-get-string-length}.
+  The result is not nul-terminated. In order to determine its length you must
+  call the function @fun{g-variant-type-string-length}.
 
-  To get a nul-terminated string, see @fun{g-variant-type-dup-string}.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  To get a nul-terminated string, see the function
+  @fun{g-variant-type-dup-string}.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-peek-string)
 
@@ -968,17 +924,18 @@
 
 (defcfun ("g_variant_type_dup_string" g-variant-type-dup-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
   @return{The corresponding type string.}
   @begin{short}
-    Returns a newly allocated copy of the type string corresponding to type.
+    Returns a newly allocated copy of the type string corresponding to
+    @arg{variant-type}.
   @end{short}
-  The returned string is nul-terminated. It is appropriate to call @fun{g-free}
-  on the return value.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  The returned string is nul-terminated. It is appropriate to call the function
+  @fun{g-variant-type-free} on the return value.
+  @see-class{g-variant-type}
+  @see-function{g-variant-type-free}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-dup-string)
 
@@ -988,24 +945,23 @@
 
 (defcfun ("g_variant_type_is_definite" g-variant-type-is-definite) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is definite.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is definite.}
   @begin{short}
-    Determines if the given type is definite (i. e.: not indefinite).
+    Determines if the given variant type is definite, i.e. not indefinite.
   @end{short}
-
   A type is definite if its type string does not contain any indefinite type
   characters ('*', '?', or 'r').
 
-  A @type{g-variant} instance may not have an indefinite type, so calling this
-  function on the result of the function @fun{g-variant-type} will always result
-  in @em{true} being returned. Calling this function on an indefinite type like
-  @var{+g-variant-type-array+}, however, will result in @code{nil} being
+  A @class{g-variant-type} instance may not have an indefinite type, so calling
+  this function on the result of the function @fun{g-variant-type-checked} will
+  always result in @em{true} being returned. Calling this function on an
+  indefinite type like \"a*\", however, will result in @em{false} being
   returned.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  @see-class{g-variant-type}
+  @see-function{g-variant-type-checked}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-definite)
 
@@ -1015,21 +971,19 @@
 
 (defcfun ("g_variant_type_is_container" g-variant-type-is-container) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is a container type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a container type.}
   @begin{short}
-    Determines if the given type is a container type.
+    Determines if the given variant type is a container type.
   @end{short}
-
   Container types are any array, maybe, tuple, or dictionary entry types plus
   the variant type.
 
   This function returns @em{true} for any indefinite type for which every
-  definite subtype is a container -- @var{+g-variant-type-array+}, for example.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  definite subtype is a container -- \"a*\", for example.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-container)
 
@@ -1039,23 +993,19 @@
 
 (defcfun ("g_variant_type_is_basic" g-variant-type-is-basic) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is a basic type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a basic type.}
   @begin{short}
-    Determines if the given type is a basic type.
+    Determines if the given variant type is a basic type.
   @end{short}
-
   Basic types are booleans, bytes, integers, doubles, strings, object paths
-  and signatures.
+  and signatures. Only a basic type may be used as the key of a dictionary
+  entry.
 
-  Only a basic type may be used as the key of a dictionary entry.
-
-  This function returns @code{nil} for all indefinite types except
-  @var{+g-variant-type-basic+}.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  This function returns @em{false} for all indefinite types except \"?\".
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-basic)
 
@@ -1065,19 +1015,18 @@
 
 (defcfun ("g_variant_type_is_maybe" g-variant-type-is-maybe) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is a maybe type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a maybe type.}
   @begin{short}
-    Determines if the given type is a maybe type. This is true if the type
-    string for type starts with an 'm'.
+    Determines if the given variant type is a maybe type.
   @end{short}
+  This is true if the type string for @arg{variant-type} starts with an 'm'.
 
   This function returns @em{true} for any indefinite type for which every
-  definite subtype is a maybe type -- @var{+g-variant-type-maybe+}, for example.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  definite subtype is a maybe type -- \"m*\", for example.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-maybe)
 
@@ -1087,20 +1036,18 @@
 
 (defcfun ("g_variant_type_is_array" g-variant-type-is-array) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is an array type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is an array type.}
   @begin{short}
-    Determines if the given type is an array type. This is true if the type
-    string for type starts with an 'a'.
+    Determines if the given variant type is an array type.
   @end{short}
+  This is true if the variant type string for type starts with an 'a'.
 
   This function returns @em{true} for any indefinite type for which every
-  definite subtype is an array type -- @var{+g-variant-type-array+}, for
-  example.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  definite subtype is an array type -- \"a*\", for example.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-array)
 
@@ -1110,20 +1057,19 @@
 
 (defcfun ("g_variant_type_is_tuple" g-variant-type-is-tuple) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is a tuple type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a tuple type.}
   @begin{short}
-    Determines if the given type is a tuple type. This is true if the type
-    string for type starts with a '(' or if type is
-    @var{+g-variant-type-tuple+}.
+    Determines if the given type is a tuple type.
   @end{short}
+  This is true if the variant type string for type starts with a '(' or if type
+  is \"r\".
 
   This function returns @em{true} for any indefinite type for which every
-  definite subtype is a tuple type -- @var{+g-variant-type-tuple+}, for example.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  definite subtype is a tuple type -- \"r\", for example.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-tuple)
 
@@ -1133,20 +1079,18 @@
 
 (defcfun ("g_variant_type_is_dict_entry" g-variant-type-is-dict-entry) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is a dictionary entry type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a dictionary entry type.}
   @begin{short}
-    Determines if the given type is a dictionary entry type. This is true if the
-    type string for type starts with a '{'.
+    Determines if the given variant type is a dictionary entry type.
   @end{short}
+  This is @em{true} if the type string for type starts with a '{'.
 
   This function returns @em{true} for any indefinite type for which every
-  definite subtype is a dictionary entry type --
-  @var{+g-variant-type-dict-entry+}, for example.
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  definite subtype is a dictionary entry type -- \"{?*@}\", for example.
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-dict-entry)
 
@@ -1156,15 +1100,14 @@
 
 (defcfun ("g_variant_type_is_variant" g-variant-type-is-variant) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if type is the variant type.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is the variant type.}
   @begin{short}
-    Determines if the given type is the variant type.
+    Determines if the given variant type is the variant type.
   @end{short}
-
-  Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-variant)
 
@@ -1174,20 +1117,15 @@
 
 (defcfun ("g_variant_type_hash" g-variant-type-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-7-27}
-  @argument[type]{a @class{g-variant-type}}
-  @return{The hash value.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{An unsigned integer with the hash value.}
   @begin{short}
-    Hashes type.
+    The has value of the given variant type.
   @end{short}
-
-  The argument type of @arg{type} is only @code{gconstpointer} to allow use with
-  @code{GHashTable} without function pointer casting. A valid
-  @class{g-variant-type} must be provided.
-
-  Since 2.24
+  A valid @class{g-variant-type} instance must be provided.
   @see-class{g-variant-type}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-hash)
 
@@ -1195,31 +1133,28 @@
 ;;; g_variant_type_equal ()
 ;;; ----------------------------------------------------------------------------
 
-
 (defcfun ("g_variant_type_equal" g-variant-type-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
-  @argument[type1]{a @class{g-variant-type} structure}
-  @argument[type2]{a @class{g-variant-type} structure}
-  @return{@em{True} if @arg{type1} and @arg{type2} are exactly equal.}
+ "@version{2020-11-29}
+  @argument[variant-type-1]{a @class{g-variant-type} instance}
+  @argument[variant-type-2]{a @class{g-variant-type} instance}
+  @begin{return}
+    @em{True} if @arg{variant-type-1} and @arg{variant-type-2} are exactly
+    equal.
+  @end{return}
   @begin{short}
-    Compares @arg{type1} and @arg{type2} for equality.
+    Compares two variant types for equality.
   @end{short}
-
   Only returns @em{true} if the types are exactly equal. Even if one type is an
   indefinite type and the other is a subtype of it, @code{nil} will be returned
   if they are not exactly equal. If you want to check for subtypes, use the
   function @fun{g-variant-type-is-subtype-of}.
 
-  The argument types of @arg{type1} and @arg{type2} are only in the C
-  implementation @code{gconstpointer} to allow use with @code{GHashTable}
-  without function pointer casting. For both arguments, a valid
-  @class{g-variant-type} must be provided.
-
-  Since 2.24
+  For both arguments, a valid @class{g-variant-type} instance must be provided.
+  @see-class{g-variant-type}
   @see-function{g-variant-type-is-subtype-of}"
-  (type1 (gobject:g-boxed-foreign g-variant-type))
-  (type2 (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type-1 (gobject:g-boxed-foreign g-variant-type))
+  (variant-type-2 (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-equal)
 
@@ -1229,21 +1164,19 @@
 
 (defcfun ("g_variant_type_is_subtype_of" g-variant-type-is-subtype-of) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
-  @argument[type]{a @class{g-variant-type} structure}
-  @argument[supertype]{a @class{g-variant-type} structure}
-  @return{@em{True} if @arg{type} is a subtype of @arg{supertype}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @argument[supertype]{a @class{g-variant-type} instance}
+  @return{@em{True} if @arg{variant-type} is a subtype of @arg{supertype}.}
   @begin{short}
-    Checks if @arg{type} is a subtype of @arg{supertype}.
+    Checks if @arg{variant-type} is a subtype of @arg{supertype}.
   @end{short}
 
-  This function returns @em{true} if @arg{type} is a subtype of @arg{supertype}.
-  All types are considered to be subtypes of themselves. Aside from that, only
-  indefinite types can have subtypes.
-
-  Since 2.24
+  This function returns @em{true} if @arg{variant-type} is a subtype of
+  @arg{supertype}. All types are considered to be subtypes of themselves. Aside
+  from that, only indefinite types can have subtypes.
   @see-class{g-variant-type}"
-  (type (gobject:g-boxed-foreign g-variant-type))
+  (variant-type (gobject:g-boxed-foreign g-variant-type))
   (supertype (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-subtype-of)
@@ -1255,19 +1188,19 @@
 (defcfun ("g_variant_type_new_maybe" g-variant-type-new-maybe)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
-  @argument[element]{a @class{g-variant-type} structure}
-  @return{A new maybe @class{g-variant-type} structure.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{A new maybe @class{g-variant-type} instance.}
   @begin{short}
     Constructs the type corresponding to a maybe instance containing type
-    @arg{type} or nothing.
+    @arg{variant-type} or nothing.
   @end{short}
 
-  It is appropriate to call @fun{g-variant-type-free} on the return value.
-
-  Since 2.24
+  It is appropriate to call the function @fun{g-variant-type-free} on the
+  return value.
+  @see-class{g-variant-type}
   @see-function{g-variant-type-free}"
-  (element (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-new-maybe)
 
@@ -1278,18 +1211,16 @@
 (defcfun ("g_variant_type_new_array" g-variant-type-new-array)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
-  @argument[element]{a @class{g-variant-type} structure}
-  @return{A new array @class{g-variant-type} structure.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance}
+  @return{A new array @class{g-variant-type} instance.}
   @begin{short}
     Constructs the type corresponding to an array of elements of the type
-    @arg{type}.
+    @arg{variant-type}.
   @end{short}
 
   It is appropriate to call the function @fun{g-variant-type-free} on the
   return value.
-
-  Since 2.24
   @see-class{g-variant-type}
   @see-function{g-variant-type-free}"
   (element (gobject:g-boxed-foreign g-variant-type)))
@@ -1307,20 +1238,15 @@
 
 (defun g-variant-type-new-tuple (&rest items)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[items]{an array of @class{g-variant-type}'s, one for each item}
-  @argument[length]{the length of items, or -1}
-  @return{A new tuple @class{g-variant-type}.}
+ "@version{2020-11-29}
+  @argument[items]{a list of @class{g-variant-type} types, one for each item}
+  @return{A new tuple @class{g-variant-type} instance.}
   @begin{short}
-    Constructs a new tuple type, from items.
+    Constructs a new tuple type, from @arg{items}.
   @end{short}
 
-   @arg{length} is the number of items in @arg{items}, or -1 to indicate that
-   @arg{items} is @code{NULL}-terminated.
-
-  It is appropriate to call the @fun{g-variant-type-free} on the return value.
-
-  Since 2.24
+  It is appropriate to call the function @fun{g-variant-type-free} on the
+  return value.
   @see-class{g-variant-type}
   @see-function{g-variant-type-free}"
   (let ((n-items (length items)))
@@ -1342,19 +1268,17 @@
 (defcfun ("g_variant_type_new_dict_entry" g-variant-type-new-dict-entry)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[key]{a basic @class{g-variant-type}}
-  @argument[value]{a @class{g-variant-type}}
-  @return{A new dictionary entry @class{g-variant-type}.}
+ "@version{2020-11-29}
+  @argument[key]{a basic @class{g-variant-type} instance}
+  @argument[value]{a @class{g-variant-type} instance}
+  @return{A new dictionary entry @class{g-variant-type} instance.}
   @begin{short}
     Constructs the type corresponding to a dictionary entry with a key of type
-    key and a value of type value.
+    @arg{key} and a value of type @arg{value}.
   @end{short}
 
-  It is appropriate to call the function @fun{g-variant-type-free} on the return
-  value.
-
-  Since 2.24
+  It is appropriate to call the function @fun{g-variant-type-free} on the
+  return value.
   @see-class{g-variant-type}
   @see-function{g-variant-type-free}"
   (key (gobject:g-boxed-foreign g-variant-type))
@@ -1369,18 +1293,15 @@
 (defcfun ("g_variant_type_element" g-variant-type-element)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[type]{an array or maybe @class{g-variant-type}}
-  @return{The element type of @arg{type}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{an array or maybe @class{g-variant-type} instance}
+  @return{The element type of @arg{variant-type}.}
   @begin{short}
     Determines the element type of an array or maybe type.
   @end{short}
-
   This function may only be used with array or maybe types.
-
-  Since 2.24
-  @class{g-variant-type}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  @see-class{g-variant-type}"
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-element)
 
@@ -1390,23 +1311,20 @@
 
 (defcfun ("g_variant_type_n_items" g-variant-type-n-items) g-size
  #+cl-cffi-gtk-documentation
- "@version{2013-6-16}
-  @argument[type]{a tuple or dictionary entry @class{g-variant-type}}
-  @return{The number of items in @arg{type}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a tuple or dictionary entry @class{g-variant-type}
+    instance}
+  @return{The number of items in @arg{variant-type}.}
   @begin{short}
     Determines the number of items contained in a tuple or dictionary entry
-    @arg{type}.
+    @arg{variant-type}.
   @end{short}
 
   This function may only be used with tuple or dictionary entry types, but
-  must not be used with the generic tuple type @var{+g-variant-type-tuple+}.
-
-  In the case of a dictionary entry type, this function will always return 2.
-
-  Since 2.24
-  @see-class{g-variant-type}
-  @see-variable{+g-variant-type-tuple+}"
-  (type (gobject::g-boxed-foreign g-variant-type)))
+  must not be used with the generic tuple type \"r\". In the case of a
+  dictionary entry type, this function will always return 2.
+  @see-class{g-variant-type}"
+  (variant-type (gobject::g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-n-items)
 
@@ -1417,30 +1335,24 @@
 (defcfun ("g_variant_type_first" g-variant-type-first)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[type]{a tuple or dictionary entry @class{g-variant-type}}
-  @return{The first item type of type, or @code{NULL}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a tuple or dictionary entry @class{g-variant-type}
+    instance}
+  @return{The first item type of @arg{variant-type}.}
   @begin{short}
     Determines the first item type of a tuple or dictionary entry type.
   @end{short}
-
   This function may only be used with tuple or dictionary entry types, but
-  must not be used with the generic tuple type
-  @var{+g-variant-type-tuple+}.
+  must not be used with the generic tuple type \"r\".
 
   In the case of a dictionary entry type, this returns the type of the key.
-
-  @code{NULL} is returned in case of type being @var{+g-variant-type-unit+}.
+  @code{NULL} is returned in case of type being \"()\".
 
   This call, together with the function @fun{g-variant-type-next} provides an
   iterator interface over tuple and dictionary entry types.
-
-  Since 2.24
   @see-class{g-variant-type}
-  @see-variable{+g-variant-type-tuple+}
-  @see-variable{+g-variant-type-unit+}
   @see-function{g-variant-type-next}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-first)
 
@@ -1451,27 +1363,25 @@
 (defcfun ("g_variant_type_next" g-variant-type-next)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[type]{a @class{g-variant-type} from a previous call}
-  @return{The next @class{g-variant-type} after type, or @code{NULL}.}
+ "@version{2020-11-29}
+  @argument[variant-type]{a @class{g-variant-type} instance from a previous
+    call}
+  @return{The next @class{g-variant-type} instance after type, or @code{NULL}.}
   @begin{short}
     Determines the next item type of a tuple or dictionary entry type.
   @end{short}
-
-  @arg{type} must be the result of a previous call to the functions
-  @fun{g-variant-type-first} or @sym{g-variant-type-next}.
+  The argument @arg{variant-type} must be the result of a previous call to the
+  functions @fun{g-variant-type-first} or @sym{g-variant-type-next}.
 
   If called on the key type of a dictionary entry then this call returns the
   value type. If called on the value type of a dictionary entry then this call
   returns @code{NULL}.
 
-  For tuples, @code{NULL} is returned when @arg{type} is the last item in a
-  tuple.
-
-  Since 2.24
+  For tuples, @code{NULL} is returned when @arg{variant-type} is the last item
+  in a tuple.
   @see-class{g-variant-type}
   @see-function{g-variant-type-first}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-next)
 
@@ -1482,8 +1392,8 @@
 (defcfun ("g_variant_type_key" g-variant-type-key)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[type]{a dictionary entry @class{g-variant-type}}
+ "@version{2020-11-29}
+  @argument[variant-type]{a dictionary entry @class{g-variant-type} instance}
   @return{The key type of the dictionary entry.}
   @begin{short}
     Determines the key type of a dictionary entry type.
@@ -1492,12 +1402,10 @@
   This function may only be used with a dictionary entry type. Other than the
   additional restriction, this call is equivalent to the function
   @fun{g-variant-type-first}.
-
-  Since 2.24
   @see-class{g-variant-type}
   @see-function{g-variant-type-first}
   @see-function{g-variant-type-value}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-key)
 
@@ -1508,19 +1416,16 @@
 (defcfun ("g_variant_type_value" g-variant-type-value)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-28}
-  @argument[type]{a dictionary entry @class{g-variant-type}}
+ "@version{2020-11-29}
+  @argument[variant-type]{a dictionary entry @class{g-variant-type} instance}
   @return{The value type of the dictionary entry.}
   @begin{short}
     Determines the value type of a dictionary entry type.
   @end{short}
-
   This function may only be used with a dictionary entry type.
-
-  Since 2.24
   @see-class{g-variant-type}
   @see-function{g-variant-type-key}"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+  (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-value)
 
