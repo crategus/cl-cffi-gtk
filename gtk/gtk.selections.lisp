@@ -218,7 +218,7 @@
   @syntax[]{(gtk-selection-data-selection instance) => selection}
   @syntax[]{(setf (gtk-selection-data-selection instance) selection)}
   @argument[instance]{a @class{gtk-selection-data} structure}
-  @argument[selection]{a @class{gdk-atom}}
+  @argument[selection]{a @symbol{gdk-atom}}
   @begin{short}
     Accessor of the @code{selection} slot of the @class{gtk-selection-data}
     structure.
