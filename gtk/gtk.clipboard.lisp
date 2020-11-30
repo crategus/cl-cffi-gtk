@@ -154,8 +154,8 @@
       @begin{pre}
  lambda (clipboard event)    : Run First
       @end{pre}
-      The \"owner-change\" signal is emitted when GTK+ receives an @arg{event}
-      that indicates that the ownership of the selection associated with
+      The \"owner-change\" signal is emitted when GTK+ receives an event that
+      indicates that the ownership of the selection associated with
       @arg{clipboard} has changed.
       @begin[arg]{table}
         @entry[clipboard]{The @sym{gtk-clipboard} object on which the signal is

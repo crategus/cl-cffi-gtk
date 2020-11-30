@@ -930,7 +930,7 @@
 (defcfun ("gdk_display_supports_selection_notification"
            gdk-display-supports-selection-notification) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2020-11-29}
   @argument[display]{a @class{gdk-display} object}
   @return{A boolean whether @class{gdk-event-owner-change} events will be sent.}
   @begin{short}
@@ -938,6 +938,7 @@
     owner of a selection changes.
   @end{short}
   @see-class{gdk-display}
+  @see-class{gdk-event-owner-change}
   @see-function{gdk-display-request-selection-notification}"
   (display (g-object gdk-display)))
 
@@ -950,7 +951,7 @@
 (defcfun ("gdk_display_request_selection_notification"
            gdk-display-request-selection-notification) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2020-11-29}
   @argument[display]{a @class{gdk-display} object}
   @argument[selection]{a string naming the selection for which ownership change
     notification is requested}
@@ -960,6 +961,7 @@
     selection named by the given atom.
   @end{short}
   @see-class{gdk-display}
+  @see-class{gdk-event-owner-change}
   @see-function{gdk-display-supports-selection-notification}"
   (display (g-object gdk-display))
   (selection gdk-atom-as-string))

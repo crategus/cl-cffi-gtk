@@ -294,7 +294,7 @@
 (defcfun ("gtk_tooltip_trigger_tooltip_query" gtk-tooltip-trigger-tooltip-query)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-3}
+ "@version{2020-11-28}
   @argument[display]{a @class{gdk-display} object}
   @begin{short}
     Triggers a new tooltip query on @arg{display}, in order to update the
@@ -302,7 +302,8 @@
   @end{short}
   This function is useful to call when, for example, the state of the widget
   changed by a key press.
-  @see-class{gtk-tooltip}"
+  @see-class{gtk-tooltip}
+  @see-function{gtk-widget-trigger-tooltip-query}"
   (display (g-object gdk-display)))
 
 (export 'gtk-tooltip-trigger-tooltip-query)
