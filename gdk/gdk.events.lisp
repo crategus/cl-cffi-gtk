@@ -304,12 +304,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_new" %gdk-event-new) (g-boxed-foreign gdk-event)
-  (type gdk-event-type))
+  (event-type gdk-event-type))
 
-(defun gdk-event-new (type &rest args)
+(defun gdk-event-new (event-type &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
-  @argument[type]{a value of the @symbol{gdk-event-type} enumeration}
+ "@version{2020-11-28}
+  @argument[event-type]{a value of the @symbol{gdk-event-type} enumeration}
   @argument[args]{pairs of property name and property value}
   @return{A new  @class{gdk-event} structure.}
   @begin{short}
@@ -317,7 +317,7 @@
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (gdk-event-new :button-press :x 10.0d0 :y 20.0d0)
+(gdk-event-new :button-press :x 10.0d0 :y 20.0d0)
 =>
 #S(GDK-EVENT-BUTTON
    :TYPE :BUTTON-PRESS
@@ -336,54 +336,58 @@
   @end{dictionary}
   @see-class{gdk-event}
   @see-symbol{gdk-event-type}"
-  (cond ((member type '(:key-press :key-release))
-         (apply #'make-gdk-event-key (list* :type type args)))
-        ((member type '(:button-press :2button-press :double-button-press
-                        :3button-press :triple-button-press :button-release))
-         (apply #'make-gdk-event-button (list* :type type args)))
-        ((member type '(:motion-notify))
-         (apply #'make-gdk-event-motion (list* :type type args)))
-        ((member type '(:enter-notify :leave-notify))
-         (apply #'make-gdk-event-crossing (list* :type type args)))
-        ((member type '(:focus-change))
-         (apply #'make-gdk-event-focus (list* :type type args)))
-        ((member type '(:configure))
-         (apply #'make-gdk-event-configure (list* :type type args)))
-        ((member type '(:property-notify))
-         (apply #'make-gdk-event-property (list* :type type args)))
-        ((member type '(:selection-clear :selection-notify :selection-request))
-         (apply #'make-gdk-event-selection (list* :type type args)))
-        ((member type '(:proximity-in :proximity-out))
-         (apply #'make-gdk-event-proximity (list* :type type args)))
-        ((member type '(:drag-enter :drag-leave :drag-motion :drag-status
-                        :drop-start :drop-finished))
-         (apply #'make-gdk-event-dnd (list* :type type args)))
-        ((member type '(:visibility-notify))
-         (apply #'make-gdk-event-visibility (list* :type type args)))
-        ((member type '(:scroll))
-         (apply #'make-gdk-event-scroll (list* :type type args)))
-        ((member type '(:window-state))
-         (apply #'make-gdk-event-window-state (list* :type type args)))
-        ((member type '(:setting))
-         (apply #'make-gdk-event-setting (list* :type type args)))
-        ((member type '(:owner-change))
-         (apply #'make-gdk-event-owner-change (list* :type type args)))
-        ((member type '(:grab-broken))
-         (apply #'make-gdk-event-grab-broken (list* :type type args)))
-        ((member type '(:touch-begin :touch-update :touch-end :touch-cancel))
-         (apply #'make-gdk-event-touch (list* :type type args)))
-        ((member type '(:touchpad-swipe))
-         (apply #'make-gdk-event-touchpad-swipe (list* :type type args)))
-        ((member type '(:touchpad-pinch))
-         (apply #'make-gdk-event-touchpad-pinch (list* :type type args)))
-        ((member type '(:pad-button-press :pad-button-release))
-         (apply #'make-gdk-event-pad-button (list* :type type args)))
-        ((member type '(:pad-ring :pad-strip))
-         (apply #'make-gdk-event-pad-axis (list* :type type args)))
-        ((member type '(:pad-group-mode))
-         (apply #'make-gdk-event-pad-group-mode (list* :type type args)))
+  (cond ((member event-type '(:key-press :key-release))
+         (apply #'make-gdk-event-key (list* :type event-type args)))
+        ((member event-type
+                 '(:button-press :2button-press :double-button-press
+                   :3button-press :triple-button-press :button-release))
+         (apply #'make-gdk-event-button (list* :type event-type args)))
+        ((member event-type '(:motion-notify))
+         (apply #'make-gdk-event-motion (list* :type event-type args)))
+        ((member event-type '(:enter-notify :leave-notify))
+         (apply #'make-gdk-event-crossing (list* :type event-type args)))
+        ((member event-type '(:focus-change))
+         (apply #'make-gdk-event-focus (list* :type event-type args)))
+        ((member event-type '(:configure))
+         (apply #'make-gdk-event-configure (list* :type event-type args)))
+        ((member event-type '(:property-notify))
+         (apply #'make-gdk-event-property (list* :type event-type args)))
+        ((member event-type
+                 '(:selection-clear :selection-notify :selection-request))
+         (apply #'make-gdk-event-selection (list* :type event-type args)))
+        ((member event-type '(:proximity-in :proximity-out))
+         (apply #'make-gdk-event-proximity (list* :type event-type args)))
+        ((member event-type
+                 '(:drag-enter :drag-leave :drag-motion :drag-status
+                   :drop-start :drop-finished))
+         (apply #'make-gdk-event-dnd (list* :type event-type args)))
+        ((member event-type '(:visibility-notify))
+         (apply #'make-gdk-event-visibility (list* :type event-type args)))
+        ((member event-type '(:scroll))
+         (apply #'make-gdk-event-scroll (list* :type event-type args)))
+        ((member event-type '(:window-state))
+         (apply #'make-gdk-event-window-state (list* :type event-type args)))
+        ((member event-type '(:setting))
+         (apply #'make-gdk-event-setting (list* :type event-type args)))
+        ((member event-type '(:owner-change))
+         (apply #'make-gdk-event-owner-change (list* :type event-type args)))
+        ((member event-type '(:grab-broken))
+         (apply #'make-gdk-event-grab-broken (list* :type event-type args)))
+        ((member event-type
+                 '(:touch-begin :touch-update :touch-end :touch-cancel))
+         (apply #'make-gdk-event-touch (list* :type event-type args)))
+        ((member event-type '(:touchpad-swipe))
+         (apply #'make-gdk-event-touchpad-swipe (list* :type event-type args)))
+        ((member event-type '(:touchpad-pinch))
+         (apply #'make-gdk-event-touchpad-pinch (list* :type event-type args)))
+        ((member event-type '(:pad-button-press :pad-button-release))
+         (apply #'make-gdk-event-pad-button (list* :type event-type args)))
+        ((member event-type '(:pad-ring :pad-strip))
+         (apply #'make-gdk-event-pad-axis (list* :type event-type args)))
+        ((member event-type '(:pad-group-mode))
+         (apply #'make-gdk-event-pad-group-mode (list* :type event-type args)))
         (t
-         (%gdk-event-new type))))
+         (%gdk-event-new event-type))))
 
 (export 'gdk-event-new)
 
