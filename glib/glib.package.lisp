@@ -518,7 +518,7 @@
     @about-function{g-variant-type-new}
     @about-function{g-variant-type-string-is-valid}
     @about-function{g-variant-type-string-scan}
-    @about-function{g-variant-type-get-string-length}
+    @about-function{g-variant-type-string-length}
     @about-function{g-variant-type-peek-string}
     @about-function{g-variant-type-dup-string}
     @about-function{g-variant-type-is-definite}
