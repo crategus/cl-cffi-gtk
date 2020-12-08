@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.script.lisp
 ;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.29.5. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; for Pango 1.48 and modified to document the Lisp binding to the Pango
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,15 +28,15 @@
 ;;;
 ;;; Scripts and Languages
 ;;;
-;;; Identifying writing systems and languages
+;;;     Identifying writing systems and languages
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     PangoScript
-;;;
-;;;     PANGO_TYPE_SCRIPT
-;;;
 ;;;     PangoScriptIter
+;;;     PangoLanguage
+;;;
+;;; Functions
 ;;;
 ;;;     pango_script_for_unichar
 ;;;     pango_script_get_sample_language
@@ -44,25 +45,23 @@
 ;;;     pango_script_iter_next
 ;;;     pango_script_iter_free
 ;;;
-;;;     PangoLanguage
-;;;
-;;;     PANGO_TYPE_LANGUAGE
-;;;
 ;;;     pango_language_from_string
 ;;;     pango_language_to_string
 ;;;     pango_language_matches
 ;;;     pango_language_includes_script
 ;;;     pango_language_get_scripts
 ;;;     pango_language_get_default
+;;;     pango_language_get_preferred
 ;;;     pango_language_get_sample_string
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GEnum
-;;;    +----PangoScript
+;;;     GBoxed
+;;;     ├── PangoLanguage
+;;;     ╰── PangoScriptIter
 ;;;
-;;;   GBoxed
-;;;    +----PangoLanguage
+;;;     GEnum
+;;;     ╰── PangoScript
 ;;;
 ;;; Description
 ;;;
@@ -75,102 +74,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoScript
 ;;;
-;;; typedef enum {
-;;;                                        /* ISO 15924 code */
-;;;       PANGO_SCRIPT_INVALID_CODE = -1,
-;;;       PANGO_SCRIPT_COMMON       = 0,   /* Zyyy */
-;;;       PANGO_SCRIPT_INHERITED,          /* Qaai */
-;;;       PANGO_SCRIPT_ARABIC,             /* Arab */
-;;;       PANGO_SCRIPT_ARMENIAN,           /* Armn */
-;;;       PANGO_SCRIPT_BENGALI,            /* Beng */
-;;;       PANGO_SCRIPT_BOPOMOFO,           /* Bopo */
-;;;       PANGO_SCRIPT_CHEROKEE,           /* Cher */
-;;;       PANGO_SCRIPT_COPTIC,             /* Qaac */
-;;;       PANGO_SCRIPT_CYRILLIC,           /* Cyrl (Cyrs) */
-;;;       PANGO_SCRIPT_DESERET,            /* Dsrt */
-;;;       PANGO_SCRIPT_DEVANAGARI,         /* Deva */
-;;;       PANGO_SCRIPT_ETHIOPIC,           /* Ethi */
-;;;       PANGO_SCRIPT_GEORGIAN,           /* Geor (Geon, Geoa) */
-;;;       PANGO_SCRIPT_GOTHIC,             /* Goth */
-;;;       PANGO_SCRIPT_GREEK,              /* Grek */
-;;;       PANGO_SCRIPT_GUJARATI,           /* Gujr */
-;;;       PANGO_SCRIPT_GURMUKHI,           /* Guru */
-;;;       PANGO_SCRIPT_HAN,                /* Hani */
-;;;       PANGO_SCRIPT_HANGUL,             /* Hang */
-;;;       PANGO_SCRIPT_HEBREW,             /* Hebr */
-;;;       PANGO_SCRIPT_HIRAGANA,           /* Hira */
-;;;       PANGO_SCRIPT_KANNADA,            /* Knda */
-;;;       PANGO_SCRIPT_KATAKANA,           /* Kana */
-;;;       PANGO_SCRIPT_KHMER,              /* Khmr */
-;;;       PANGO_SCRIPT_LAO,                /* Laoo */
-;;;       PANGO_SCRIPT_LATIN,              /* Latn (Latf, Latg) */
-;;;       PANGO_SCRIPT_MALAYALAM,          /* Mlym */
-;;;       PANGO_SCRIPT_MONGOLIAN,          /* Mong */
-;;;       PANGO_SCRIPT_MYANMAR,            /* Mymr */
-;;;       PANGO_SCRIPT_OGHAM,              /* Ogam */
-;;;       PANGO_SCRIPT_OLD_ITALIC,         /* Ital */
-;;;       PANGO_SCRIPT_ORIYA,              /* Orya */
-;;;       PANGO_SCRIPT_RUNIC,              /* Runr */
-;;;       PANGO_SCRIPT_SINHALA,            /* Sinh */
-;;;       PANGO_SCRIPT_SYRIAC,             /* Syrc (Syrj, Syrn, Syre) */
-;;;       PANGO_SCRIPT_TAMIL,              /* Taml */
-;;;       PANGO_SCRIPT_TELUGU,             /* Telu */
-;;;       PANGO_SCRIPT_THAANA,             /* Thaa */
-;;;       PANGO_SCRIPT_THAI,               /* Thai */
-;;;       PANGO_SCRIPT_TIBETAN,            /* Tibt */
-;;;       PANGO_SCRIPT_CANADIAN_ABORIGINAL, /* Cans */
-;;;       PANGO_SCRIPT_YI,                 /* Yiii */
-;;;       PANGO_SCRIPT_TAGALOG,            /* Tglg */
-;;;       PANGO_SCRIPT_HANUNOO,            /* Hano */
-;;;       PANGO_SCRIPT_BUHID,              /* Buhd */
-;;;       PANGO_SCRIPT_TAGBANWA,           /* Tagb */
-;;;
-;;;       /* Unicode-4.0 additions */
-;;;       PANGO_SCRIPT_BRAILLE,            /* Brai */
-;;;       PANGO_SCRIPT_CYPRIOT,            /* Cprt */
-;;;       PANGO_SCRIPT_LIMBU,              /* Limb */
-;;;       PANGO_SCRIPT_OSMANYA,            /* Osma */
-;;;       PANGO_SCRIPT_SHAVIAN,            /* Shaw */
-;;;       PANGO_SCRIPT_LINEAR_B,           /* Linb */
-;;;       PANGO_SCRIPT_TAI_LE,             /* Tale */
-;;;       PANGO_SCRIPT_UGARITIC,           /* Ugar */
-;;;
-;;;       /* Unicode-4.1 additions */
-;;;       PANGO_SCRIPT_NEW_TAI_LUE,        /* Talu */
-;;;       PANGO_SCRIPT_BUGINESE,           /* Bugi */
-;;;       PANGO_SCRIPT_GLAGOLITIC,         /* Glag */
-;;;       PANGO_SCRIPT_TIFINAGH,           /* Tfng */
-;;;       PANGO_SCRIPT_SYLOTI_NAGRI,       /* Sylo */
-;;;       PANGO_SCRIPT_OLD_PERSIAN,        /* Xpeo */
-;;;       PANGO_SCRIPT_KHAROSHTHI,         /* Khar */
-;;;
-;;;       /* Unicode-5.0 additions */
-;;;       PANGO_SCRIPT_UNKNOWN,            /* Zzzz */
-;;;       PANGO_SCRIPT_BALINESE,           /* Bali */
-;;;       PANGO_SCRIPT_CUNEIFORM,          /* Xsux */
-;;;       PANGO_SCRIPT_PHOENICIAN,         /* Phnx */
-;;;       PANGO_SCRIPT_PHAGS_PA,           /* Phag */
-;;;       PANGO_SCRIPT_NKO,                /* Nkoo */
-;;;
-;;;       /* Unicode-5.1 additions */
-;;;       PANGO_SCRIPT_KAYAH_LI,           /* Kali */
-;;;       PANGO_SCRIPT_LEPCHA,             /* Lepc */
-;;;       PANGO_SCRIPT_REJANG,             /* Rjng */
-;;;       PANGO_SCRIPT_SUNDANESE,          /* Sund */
-;;;       PANGO_SCRIPT_SAURASHTRA,         /* Saur */
-;;;       PANGO_SCRIPT_CHAM,               /* Cham */
-;;;       PANGO_SCRIPT_OL_CHIKI,           /* Olck */
-;;;       PANGO_SCRIPT_VAI,                /* Vaii */
-;;;       PANGO_SCRIPT_CARIAN,             /* Cari */
-;;;       PANGO_SCRIPT_LYCIAN,             /* Lyci */
-;;;       PANGO_SCRIPT_LYDIAN              /* Lydi */
-;;; } PangoScript;
-;;;
 ;;; The PangoScript enumeration identifies different writing systems. The values
-;;; correspond to the names as defined in the Unicode standard. Note that new
-;;; types may be added in the future. Applications should be ready to handle
-;;; unknown values. This enumeration is interchangeable with GUnicodeScript.
-;;; See Unicode Standard Annex #24: Script names.
+;;; correspond to the names as defined in the Unicode standard. See Unicode
+;;; Standard Annex 24: Script names.
+;;;
+;;; Note that this enumeration is deprecated and will not be updated to include
+;;; values in newer versions of the Unicode standard. Applications should use
+;;; the GUnicodeScript enumeration instead, whose values are interchangeable
+;;; with PangoScript.
 ;;;
 ;;; PANGO_SCRIPT_INVALID_CODE
 ;;;     a value never returned from pango_script_for_unichar()
@@ -409,14 +320,123 @@
 ;;;
 ;;; PANGO_SCRIPT_LYDIAN
 ;;;     Lydian. Since 1.20.1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_SCRIPT
 ;;;
-;;; #define PANGO_TYPE_SCRIPT (pango_script_get_type())
+;;; PANGO_SCRIPT_BATAK
+;;;     Batak. Since 1.32
 ;;;
-;;; The GObject type for PangoScript
+;;; PANGO_SCRIPT_BRAHMI
+;;;     Brahmi. Since 1.32
+;;;
+;;; PANGO_SCRIPT_MANDAIC
+;;;     Mandaic. Since 1.32
+;;;
+;;; PANGO_SCRIPT_CHAKMA
+;;;     Chakma. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_MEROITIC_CURSIVE
+;;;     Meroitic Cursive. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_MEROITIC_HIEROGLYPHS
+;;;     Meroitic Hieroglyphs. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_MIAO
+;;;     Miao. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_SHARADA
+;;;     Sharada. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_SORA_SOMPENG
+;;;     Sora Sompeng. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_TAKRI
+;;;     Takri. Since: 1.32
+;;;
+;;; PANGO_SCRIPT_BASSA_VAH
+;;;     Bassa. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_CAUCASIAN_ALBANIAN
+;;;     Caucasian Albanian. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_DUPLOYAN
+;;;     Duployan. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_ELBASAN
+;;;     Elbasan. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_GRANTHA
+;;;     Grantha. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_KHOJKI
+;;;     Kjohki. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_KHUDAWADI
+;;;     Khudawadi, Sindhi. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_LINEAR_A
+;;;     Linear A. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MAHAJANI
+;;;     Mahajani. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MANICHAEAN
+;;;     Manichaean. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MENDE_KIKAKUI
+;;;     Mende Kikakui. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MODI
+;;;     Modi. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MRO
+;;;     Mro. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_NABATAEAN
+;;;     Nabataean. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_OLD_NORTH_ARABIAN
+;;;     Old North Arabian. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_OLD_PERMIC
+;;;     Old Permic. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_PAHAWH_HMONG
+;;;     Pahawh Hmong. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_PALMYRENE
+;;;     Palmyrene. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_PAU_CIN_HAU
+;;;     Pau Cin Hau. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_PSALTER_PAHLAVI
+;;;     Psalter Pahlavi. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_SIDDHAM
+;;;     Siddham. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_TIRHUTA
+;;;     Tirhuta. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_WARANG_CITI
+;;;     Warang Citi. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_AHOM
+;;;     Ahom. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_ANATOLIAN_HIEROGLYPHS
+;;;     Anatolian Hieroglyphs. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_HATRAN
+;;;     Hatran. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_MULTANI
+;;;     Multani. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_OLD_HUNGARIAN
+;;;     Old Hungarian. Since: 1.40
+;;;
+;;; PANGO_SCRIPT_SIGNWRITING
+;;;     Signwriting. Since: 1.40
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -429,9 +449,32 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; PangoLanguage
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque pango-language "PangoLanguage"
+  :alloc (error "PangoLanguage cannot be created from the Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-language atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-language 'type)
+ "@version{2020-12-4}
+  @begin{short}
+    The @sym{pango-language} structure is used to represent a language.
+  @end{short}
+  @see-function{pango-language-default}")
+
+(export (boxed-related-symbols 'pango-language))
+
+;;; ----------------------------------------------------------------------------
 ;;; pango_script_for_unichar ()
 ;;;
 ;;; PangoScript pango_script_for_unichar (gunichar ch);
+;;;
+;;; Warning
+;;;
+;;; pango_script_for_unichar has been deprecated since version 1.44. and should
+;;; not be used in newly-written code. Use g_unichar_get_script()
 ;;;
 ;;; Looks up the PangoScript for a particular character (as defined by Unicode
 ;;; Standard Annex 24). No check is made for ch being a valid Unicode character;
@@ -571,61 +614,32 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; PangoLanguage
-;;; ----------------------------------------------------------------------------
-
-(define-g-boxed-opaque pango-language "PangoLanguage"
-  :alloc (error "PangoLanguage can not be created from Lisp side."))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-language atdoc:*class-name-alias*) "CStruct"
-      (documentation 'pango-language 'type)
- "@version{2013-3-9}
-  @begin{short}
-    The @sym{pango-language} structure is used to represent a language.
-  @end{short}
-
-  @sym{pango-language} pointers can be efficiently copied and compared with each
-  other.")
-
-(export (boxed-related-symbols 'pango-language))
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_LANGUAGE
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("pango_language_get_type" pango-language-get-type) g-type
- #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @short{The GObject type for @class{pango-language} structure.}")
-
-(export 'pango-language-get-type)
-
-;;; ----------------------------------------------------------------------------
 ;;; pango_language_from_string ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_from_string" pango-language-from-string)
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[language]{a string representing a language tag, or @code{nil}}
-  @begin{return}
-    An opaque pointer to a @class{pango-language} structure, or @code{nil} if
-    language was @code{NULL}. The returned pointer will be valid forever after,
-    and should not be freed.
-  @end{return}
+ "@version{2020-12-4}
+  @argument[language]{a string representing a language tag}
+  @return{A @class{pango-language} structure.}
   @begin{short}
-    Take a RFC-3066 format language tag as a string and convert it to a
-    @class{pango-language} pointer that can be efficiently copied (copy the
-    pointer) and compared with other language tags (compare the pointer.)
+    Takes a RFC-3066 format language tag as a string and convert it to a
+    @class{pango-language} structure that can be efficiently copied and
+    compared with other language tags.
   @end{short}
-
   This function first canonicalizes the string by converting it to lowercase,
   mapping '_' to '-', and stripping all characters other than letters and '-'.
 
   Use the function @fun{pango-language-default} if you want to get the
   @class{pango-language} structure for the current locale of the process.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(pango-language-from-string \"de-de\") => #<PANGO-LANGUAGE {1006D76393@}>
+(pango-language-to-string *) => \"de-de\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{pango-language}
   @see-function{pango-language-default}"
   (language :string))
 
@@ -637,13 +651,15 @@
 
 (defcfun ("pango_language_to_string" pango-language-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[language]{a language tag}
+ "@version{2020-12-4}
+  @argument[language]{a @class{pango-language} tag}
   @begin{return}
-    A string representing the language tag. This is owned by Pango and
-    should not be freed.
+    A string representing the Pango language tag.
   @end{return}
-  Gets the RFC-3066 format string representing the given language tag."
+  @begin{short}
+    Gets the RFC-3066 format string representing the given Pango language tag.
+  @end{short}
+  @see-class{pango-language}"
   (language (g-boxed-foreign pango-language)))
 
 (export 'pango-language-to-string)
@@ -654,12 +670,10 @@
 
 (defcfun ("pango_language_matches" pango-language-matches) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[language]{a language tag (see the function
-    @fun{pango-language-from-string}), @code{nil} is allowed and matches
-    nothing but '*'}
+ "@version{2020-12-4}
+  @argument[language]{a @class{pango-language} tag}
   @argument[range-list]{a list of language ranges, separated by ';', ':', ',',
-    or space characters. Each element must either be '*', or a RFC 3066 language
+    or space characters, each element must either be '*', or a RFC 3066 language
     range canonicalized as by the function @fun{pango-language-from-string}}
   @return{@em{True} if a match was found.}
   @begin{short}
@@ -669,6 +683,13 @@
   A language tag is considered to match a range in the list if the range is '*',
   the range is exactly the tag, or the range is a prefix of the tag, and the
   character after it in the tag is '-'.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(pango-language-matches (pango-language-default) \"de-de en-gb\") => T
+(pango-language-matches (pango-language-default) \"en-gb\") => NIL
+    @end{pre}
+  @end{dictionary}
+  @see-class{pango-language}
   @see-function{pango-language-from-string}"
   (language (g-boxed-foreign pango-language))
   (range-list :string))
@@ -781,20 +802,37 @@
   settings to take effect. Gtk+ does this in its initialization functions
   automatically by calling @code{gtk_set_locale()}. See @code{man setlocale}
   for more details.
-
-  Since 1.16
   @begin[Example]{dictionary}
     @begin{pre}
-  (pango-language-default)
-=> #<PANGO-LANGUAGE {10019E6973@}>
-  (pango-language-to-string *)
-=> \"de-de\"
+(pango-language-default) => #<PANGO-LANGUAGE {10019E6973@}>
+(pango-language-to-string *) => \"de-de\"
     @end{pre}
   @end{dictionary}
   @see-class{pango-language}
   @see-function{pango-language-sample-string}")
 
 (export 'pango-language-default)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_language_get_preferred ()
+;;;
+;;; PangoLanguage **
+;;; pango_language_get_preferred (void);
+;;;
+;;; Returns the list of languages that the user prefers, as specified by the
+;;; PANGO_LANGUAGE or LANGUAGE environment variables, in order of preference.
+;;; Note that this list does not necessarily include the language returned by
+;;; pango_language_get_default().
+;;;
+;;; When choosing language-specific resources, such as the sample text returned
+;;; by pango_language_get_sample_string(), you should first try the default
+;;; language, followed by the languages returned by this function.
+;;;
+;;; Returns :
+;;;     a NULL-terminated array of PangoLanguage*.
+;;;
+;;; Since 1.48
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_get_sample_string () -> pango-language-sample-string
@@ -825,7 +863,7 @@
   \"The quick brown fox...\" is returned.
   @begin[Example]{dictionary}
     @begin{pre}
-  (pango-language-sample-string (pango-language-default))
+(pango-language-sample-string (pango-language-default))
 => \"Zwölf Boxkämpfer jagen Viktor quer über den großen Sylter Deich.\"
     @end{pre}
   @end{dictionary}
