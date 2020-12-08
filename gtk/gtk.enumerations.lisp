@@ -53,7 +53,6 @@
 ;;;
 ;;; TODO: Move these implementations to other files
 ;;;
-;;;     GtkDragResult
 ;;;     GtkExpanderStyle
 ;;;     GtkPathPriorityType
 ;;;     GtkPathType
@@ -504,6 +503,8 @@
 ;;; enum GtkScrollStep
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: This enumeration is not in use in the cl-cffi-gtk implementation.
+
 (define-g-enum "GtkScrollStep" gtk-scroll-step
   (:export t
    :type-initializer "gtk_scroll_step_get_type")
@@ -517,7 +518,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scroll-step atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scroll-step atdoc:*external-symbols*)
- "@version{2013-3-18}
+ "@version{2020-12-4}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkScrollStep\" gtk-scroll-step
@@ -993,49 +994,6 @@
   @begin[code]{table}
     @entry[:ascending]{Sorting is in ascending order.}
     @entry[:descending]{Sorting is in descending order.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkDragResult
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkDragResult" gtk-drag-result
-  (:export t
-   :type-initializer "gtk_drag_result_get_type")
-  (:success 0)
-  (:no-target 1)
-  (:user-cancelled 2)
-  (:timeout-expired 3)
-  (:grab-broken 4)
-  (:error 5))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-drag-result atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-drag-result atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Gives an indication why a drag operation failed. The value can by obtained
-    by connecting to the \"drag-failed\" signal.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkDragResult\" gtk-drag-result
-  (:export t
-   :type-initializer \"gtk_drag_result_get_type\")
-  (:success 0)
-  (:no-target 1)
-  (:user-cancelled 2)
-  (:timeout-expired 3)
-  (:grab-broken 4)
-  (:error 5))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:success]{The drag operation was successful.}
-    @entry[:no-target]{No suitable drag target.}
-    @entry[:user-cancelled]{The user cancelled the drag operation.}
-    @entry[:timeout-expired]{The drag operation timed out.}
-    @entry[:grab-broken]{The pointer or keyboard grab used for the drag
-      operation was broken.}
-    @entry[:error]{The drag operation failed due to some unspecified error.}
   @end{table}")
 
 ;;; --- End of file gtk.enumerations.lisp --------------------------------------

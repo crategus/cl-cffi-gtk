@@ -133,6 +133,50 @@
   @see-function{gtk-drag-finish}")
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkDragResult
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkDragResult" gtk-drag-result
+  (:export t
+   :type-initializer "gtk_drag_result_get_type")
+  (:success 0)
+  (:no-target 1)
+  (:user-cancelled 2)
+  (:timeout-expired 3)
+  (:grab-broken 4)
+  (:error 5))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-drag-result atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-drag-result atdoc:*external-symbols*)
+ "@version{2020-12-3}
+  @begin{short}
+    Gives an indication why a drag operation failed. The value can by obtained
+    by connecting to the \"drag-failed\" signal of a @class{gtk-widget} object.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkDragResult\" gtk-drag-result
+  (:export t
+   :type-initializer \"gtk_drag_result_get_type\")
+  (:success 0)
+  (:no-target 1)
+  (:user-cancelled 2)
+  (:timeout-expired 3)
+  (:grab-broken 4)
+  (:error 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:success]{The drag operation was successful.}
+    @entry[:no-target]{No suitable drag target.}
+    @entry[:user-cancelled]{The user cancelled the drag operation.}
+    @entry[:timeout-expired]{The drag operation timed out.}
+    @entry[:grab-broken]{The pointer or keyboard grab used for the drag
+      operation was broken.}
+    @entry[:error]{The drag operation failed due to some unspecified error.}
+  @end{table}
+  @see-class{gtk-widget}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set ()
 ;;; ----------------------------------------------------------------------------
 
