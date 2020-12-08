@@ -1,4 +1,4 @@
-Content from the Pango 1.32.6 Reference Manual
+Content from the Pango 1.48 Reference Manual
 
     *   - needs update
     %   - not fully implemented
@@ -7,48 +7,50 @@ Content from the Pango 1.32.6 Reference Manual
 
 Basic Pango Interfaces
 
- pango.context.lisp - Functions to run the rendering pipeline    - Pango 1.32.6%
- pamgo.glyph.lisp - Storing information about glyphs             - Pango 1.32.6%
+ Rendering — Functions to run the rendering pipeline
  pango.fonts.lisp - Structures representing abstract fonts       - Pango 1.30.0*
+ pango.glyph.lisp - Storing information about glyphs             - Pango 1.32.6%
  pango.attributes.lisp - Attributes for annotating text          - Pango 1.30.0*
- pango.tab-array.lisp - Structures for storing tab stops         - Pango 1.32.6%
 
-  Text Attribute Markup - Simple markup language to encode text with attributes
+ Markup — Simple markup language for text with attributes
 
  pango.layout.lisp - High-level layout driver objects            - Pango 1.46 &
- pango.script.lisp - Scripts and Languages                       - Pango 1.29.5*
+ pango.script.lisp - Scripts and Languages                       - Pango 1.48 &
  pango.biderectional.lisp - Handling bidirectional text          - Pango 1.32.6%
 
-  Vertical Text - Laying text out in vertical directions
+ Vertical Text — Laying text out in vertical directions
 
 Rendering with Pango
 
-  Win32 Fonts and Rendering - Functions for shape engines to manipulate Win32 fonts
-  FreeType Fonts and Rendering - Functions for shape engines to manipulate FreeType fonts
-  Xft Fonts and Rendering - Font handling and rendering with the Xft backend
-
  pango.cairo-rendering - Rendering with the Cairo backend        - Pango 1.32.6%
 
-  CoreText Fonts - Font handling with CoreText fonts
+ Win32 Fonts and Rendering — Font handling and rendering on Windows
+ CoreText Fonts and Rendering — Font handling and rendering on OS X
+ FreeType Fonts and Rendering — Font handling and rendering with FreeType
+ Xft Fonts and Rendering — Font handling and rendering with the Xft backend
 
 Low Level Functionality
 
+ pango.context.lisp - Global context object                      - Pango 1.32.6%
+ pango.tab-array.lisp - Structures for storing tab stops         - Pango 1.32.6%
+
+ Coverage Maps — Unicode character range coverage storage
+
  pango.renderer.lisp - Rendering driver base class               - Pango 1.32.6%
 
-  PangoFcFontMap - Base fontmap class for Fontconfig-based backends
-  PangoFcFont - Base font class for Fontconfig-based backends
-  PangoFcDecoder - Custom font encoding handling
-  OpenType Font Handling - Obtaining information from OpenType tables
-  Coverage Maps - Unicode character range coverage storage
-  Engines - Language-specific and rendering-system-specific processing
-  PangoEngineLang - Rendering-system independent script engines
-  PangoEngineShape - Rendering-system dependent script engines
-  Modules - Support for loadable modules
-  Miscellaneous Utilities - Various convenience and utility functions
+ PangoFcFontMap — Base fontmap class for Fontconfig-based backends
+ PangoFcFont — Base font class for Fontconfig-based backends
+ PangoFcDecoder — Custom font encoding handling
+ Miscellaneous Utilities — Various convenience and utility functions
 
- pango.version.lisp -Version Checking                            - Pango 1.30.0*
+ pango.version.lisp -Version Checking                            - Pango 1.48
 
-Pango Tools
+Deprecated APIs
 
-  pango-querymodules - Module registration utility
+ OpenType Font Handling — Obtaining information from OpenType tables
+ Engines — Language-specific and rendering-system-specific processing
+ PangoEngineLang — Rendering-system independent script engines
+ PangoEngineShape — Rendering-system dependent script engines
+ Modules — Support for loadable modules
 
+;;; 2020-12-1

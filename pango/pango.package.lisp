@@ -455,25 +455,24 @@
       @about-function{pango-layout-line-get-height}
     @end{subsection}
     @begin[Scripts and Languages]{subsection}
-      Identifying writing systems and languages
+      Identifying writing systems and languages.
 
       @about-symbol{pango-script}
-      @about-function{pango-type-script}
       @about-symbol{pango-script-iter}
       @about-function{pango-script-for-unichar}
-      @about-function{pango-script-get-sample-language}
+      @about-function{pango-script-sample-language}
       @about-function{pango-script-iter-new}
       @about-function{pango-script-iter-get-range}
       @about-function{pango-script-iter-next}
       @about-function{pango-script-iter-free}
       @about-class{pango-language}
-      @about-function{pango-type-language}
       @about-function{pango-language-from-string}
       @about-function{pango-language-to-string}
       @about-function{pango-language-matches}
       @about-function{pango-language-includes-script}
-      @about-function{pango-language-get-scripts}
+      @about-function{pango-language-scripts}
       @about-function{pango-language-default}
+      @about-function{pango-language-preferred}
       @about-function{pango-language-sample-string}
     @end{subsection}
     @begin[Bidirectional Text]{subsection}
