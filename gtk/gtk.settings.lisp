@@ -1994,9 +1994,20 @@ size-name = width , height
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-recent-files-max-age 'function)
- "@version{2013-3-13}
-  Accessor of the @slot[gtk-settings]{gtk-recent-files-max-page} slot of the
-  @class{gtk-settings} class.
+ "@version{2020-12-4}
+  @syntax[]{(gtk-settings-gtk-recent-files-max-age object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-recent-files-max-age object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{an integer with the maximum age, in days}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-recent-files-max-page} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  The maximum age, in days, of the items inside the recently used resources
+  list. Items older than this setting will be excised from the list. If set to
+  0, the list will always be empty, if set to -1, no item will be
+  removed.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-scrolled-window-placement -----------------------------

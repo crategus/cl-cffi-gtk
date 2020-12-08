@@ -108,7 +108,7 @@
 ;;; CairoSurface represents a cairo-surface-t, but we need a boxed type in GTK+.
 
 (define-g-boxed-opaque cairo-surface "CairoSurface"
-  :alloc (error "CairoSurface can not be created from Lisp side."))
+  :alloc (error "CairoSurface cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-surface atdoc:*class-name-alias*) "CStruct"
@@ -120,7 +120,7 @@
   See the documentation of @symbol{cairo-surface-t} for more information.
   @begin{pre}
 (define-g-boxed-opaque cairo-surface \"CairoSurface\"
-  :alloc (error \"CairoSurface can not be created from Lisp side.\"))
+  :alloc (error \"CairoSurface cannot be created from the Lisp side.\"))
   @end{pre}
   @see-symbol{cairo-surface-t}")
 

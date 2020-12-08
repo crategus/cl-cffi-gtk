@@ -229,8 +229,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-size atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-icon-size atdoc:*external-symbols*)
- #+cl-cffi-gtk-documentation
- "@version{2013-3-8}
+ "@version{2020-12-4}
   @short{Built-in stock icon sizes.}
   @begin{pre}
 (define-g-enum \"GtkIconSize\" gtk-icon-size
@@ -243,7 +242,8 @@
   (:button 4)
   (:dnd 5)
   (:dialog 6))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-icon-factory}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_copy ()

@@ -171,7 +171,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2020-11-19}
+ "@version{2020-12-3}
   @short{A widget that emits a signal when clicked on.}
 
   @image[button]{}
@@ -303,7 +303,7 @@
       Emitted when the pointer enters the button. @br{}
       @em{Warning:} The \"enter\" signal has been deprecated since version 2.8
       and should not be used in newly written code. Use the
-      \"enter-notify-event\" signal.
+      \"enter-notify-event\" signal of the @class{gtk-widget} class.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
@@ -314,7 +314,7 @@
       Emitted when the pointer leaves the button. @br{}
       @em{Warning:} The \"leave\" signal has been deprecated since version 2.8
       and should not be used in newly written code. Use the
-      \"leave-notify-event\" signal.
+      \"leave-notify-event\" signal of the @class{gtk-widget} class.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
@@ -325,7 +325,7 @@
       Emitted when the button is pressed. @br{}
       @em{Warning:} The \"pressed\" signal has been deprecated since version
       2.8 and should not be used in newly-written code. Use the
-      \"button-press-event\" signal.
+      \"button-press-event\" signal of the @class{gtk-widget} class.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}
@@ -336,7 +336,7 @@
       Emitted when the button is released. @br{}
       @em{Warning:} The \"released\" signal has been deprecated since version
       2.8 and should not be used in newly written code. Use the
-      \"button-release-event\" signal.
+      \"button-release-event\" signal of the @class{gtk-widget} class.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-button} widget which received the signal.}
       @end{table}

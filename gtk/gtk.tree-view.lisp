@@ -2386,7 +2386,7 @@
   (tree-view (g-object gtk-tree-view))
   (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-tree-view-get-visible-rect (tree-view)
+(defun gtk-tree-view-visible-rect (tree-view)
  #+cl-cffi-gtk-documentation
  "@version{2020-9-12}
   @argument[tree-view]{a @class{gtk-tree-view} widget}

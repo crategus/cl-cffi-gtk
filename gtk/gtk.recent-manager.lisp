@@ -101,7 +101,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque gtk-recent-info "GtkRecentInfo"
-  :alloc (error "GtkRecentInfo can not be created from Lisp side."))
+  :alloc (error "GtkRecentInfo cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-info atdoc:*class-name-alias*) "CStruct"
@@ -115,7 +115,7 @@
   accessed using the provided API.
   @begin{pre}
 (define-g-boxed-opaque gtk-recent-info \"GtkRecentInfo\"
-  :alloc (error \"GtkRecentInfo can not be created from Lisp side.\"))
+  :alloc (error \"GtkRecentInfo cannot be created from the Lisp side.\"))
   @end{pre}
   @see-class{gtk-recent-manager}")
 
@@ -296,7 +296,8 @@ else
   one, or more @class{gtk-recent-chooser} implementations.
 
   The maximum age of the recently used files list is controllable through the
-  \"gtk-recent-files-max-age\" property.
+  @slot[gtk-settings]{gtk-recent-files-max-age} settting of the
+  @class{gtk-settings} class.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
@@ -306,7 +307,8 @@ else
       contents, either by calling the function @fun{gtk-recent-manager-add-item}
       or by another application.
       @begin[code]{table}
-        @entry[recent-manager]{The @sym{gtk-recent-manager} object.}
+        @entry[recent-manager]{The @sym{gtk-recent-manager} object which
+          received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-recent-manager-filename}

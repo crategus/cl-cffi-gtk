@@ -80,7 +80,7 @@
 (in-package :gtk)
 
 (define-g-boxed-opaque g-error "GError"
-  :alloc (error "GError can not be created from Lisp side."))
+  :alloc (error "GError cannot be created from the Lisp side."))
 
 (export (boxed-related-symbols 'g-error))
 
@@ -450,7 +450,7 @@
 (glib-init::at-init () (foreign-funcall "gtk_css_section_get_type" g-size))
 
 (define-g-boxed-opaque gtk-css-section "GtkCssSection"
-  :alloc (error "GtkCssSection can not be created from Lisp side"))
+  :alloc (error "GtkCssSection cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-css-section atdoc:*class-name-alias*) "CStruct"
@@ -463,7 +463,7 @@
   @fun{gtk-css-section-get-parent} to get the containing region.
   @begin{pre}
 (define-g-boxed-opaque gtk-css-section \"GtkCssSection\"
-  :alloc (error \"GtkCssSection can not be created from Lisp side\"))
+  :alloc (error \"GtkCssSection cannot be created from the Lisp side.\"))
   @end{pre}
   @see-function{gtk-css-section-get-parent}")
 

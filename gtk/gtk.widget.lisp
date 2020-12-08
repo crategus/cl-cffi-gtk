@@ -308,7 +308,7 @@
 ;;; CairoContext represents a cairo-t, but we need a boxed type in GTK+.
 
 (define-g-boxed-opaque cairo-context "CairoContext"
-  :alloc (error "CairoContext can not be created from Lisp side."))
+  :alloc (error "CairoContext cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-context atdoc:*class-name-alias*) "CStruct"
@@ -320,7 +320,7 @@
   See the documentation of @symbol{cairo-t} for more information.
   @begin{pre}
 (define-g-boxed-opaque cairo-context \"CairoContext\"
-  :alloc (error \"CairoContext can not be created from Lisp side.\"))
+  :alloc (error \"CairoContext cannot be created from the Lisp side.\"))
   @end{pre}
   @see-symbol{cairo-t}")
 
@@ -732,7 +732,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2020-9-16}
+ "@version{2020-12-3}
   @begin{short}
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
@@ -1176,31 +1176,32 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"button-press-event\" signal will be emitted when a button
-      typically from a mouse is pressed. To receive this signal, the
-      @class{gdk-window} associated to the widget needs to enable the
-      @code{:button-press-mask} mask of type @symbol{gdk-event-mask}. This
-      signal will be sent to the grab widget if there is one.
+      Emitted when a button typically from a mouse is pressed. To receive this
+      signal, the @class{gdk-window} object associated to the widget needs to
+      enable the mask @code{:button-press-mask} of type @symbol{gdk-event-mask}.
+      This signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
+        @entry[event]{The @class{gdk-event-button} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event, @code{nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"button-release-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"button-release-event\" signal will be emitted when a button
-      typically from a mouse is released. To receive this signal, the
-      @class{gdk-window} associated to the widget needs to enable the
-      @code{:button-realease-mask} mask of type @symbol{gdk-event-mask}. This
-      signal will be sent to the grab widget if there is one.
+      Emitted when a button typically from a mouse is released. To receive this
+      signal, the @class{gdk-window} object associated to the widget needs to
+      enable the mask @code{:button-realease-mask} of type
+      @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
+      there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
+        @entry[event]{The @class{gdk-event-button} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event, @code{nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"can-activate-accel\" signal}
       @begin{pre}
@@ -1208,31 +1209,34 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{pre}
       Determines whether an accelerator that activates the signal identified by
       @arg{signal-id} can currently be activated. This signal is present to
-      allow applications and derived widgets to override the default
-      @sym{gtk-widget} handling for determining whether an accelerator can be
-      activated.
+      allow applications and derived widgets to override the default handling
+      for determining whether an accelerator can be activated.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[signal-id]{The ID of a signal installed on @arg{widget}.}
+        @entry[signal-id]{An unsigned integer with the ID of a signal installed
+          on @arg{widget}.}
         @entry[Returns]{@em{True} if the signal can be activated.}
       @end{table}
     @subheading{The \"child-notify\" signal}
       @begin{pre}
  lambda (widget pspec)    : No Hooks
       @end{pre}
-      The \"child-notify\" signal is emitted for each child property that has
-      changed on an object. The signal's detail holds the property name.
+      Emitted for each child property that has changed on an object. The
+      signal's detail holds the property name.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[pspec]{The @symbol{g-param-spec} of the changed child property.}
+        @entry[pspec]{The @symbol{g-param-spec} instance of the changed child
+          property.}
       @end{table}
     @subheading{The \"composited-changed\" signal}
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"composited-changed\" signal is emitted when the composited status
-      of widgets screen changes. See the function
-      @fun{gdk-screen-is-composited}.
+      Emitted when the composited status of widgets screen changes. See the
+      function @fun{gdk-screen-is-composited}. @br{}
+      @em{Warning:} The \"composited-changed\" signal has been deprecated since
+      version 3.22 and should not be used in newly-written code. Use the
+      \"composited-changed\" signal of the @class{gdk-screen} class instead.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object on which the signal is
           emitted.}
@@ -1241,46 +1245,45 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"configure-event\" signal will be emitted when the size, position
-      or stacking of the widget's window has changed. To receive this signal,
-      the @class{gdk-window} associated to the widget needs to enable the
-      @code{:structure-mask} mask of type @symbol{gdk-event-mask}. GDK will
-      enable this mask automatically for all
+      Emitted when the size, position or stacking of the widget's window has
+      changed. To receive this signal, the @class{gdk-window} object associated
+      to the widget needs to enable the mask @code{:structure-mask} of type
+      @symbol{gdk-event-mask}. GDK will enable this mask automatically for all
       new windows.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-configure} which triggered this
+        @entry[event]{The @class{gdk-event-configure} event which triggered this
           signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"damage-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      Emitted when a redirected window belonging to widget gets drawn into. The
-      region/area members of the event shows what area of the redirected
-      drawable was drawn into.
+      Emitted when a redirected window belonging to @arg{widget} gets drawn
+      into. The region/area members of the event shows what area of the
+      redirected drawable was drawn into.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-expose} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"delete-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"delete-event\" signal is emitted if a user requests that a
-      toplevel window is closed. The default handler for this signal destroys
-      the window. Connecting the function @fun{gtk-widget-hide-on-delete} to
-      this signal will cause the window to be hidden instead, so that it can
-      later be shown again without reconstructing it.
+      Emitted if a user requests that a toplevel window is closed. The default
+      handler for this signal destroys the window. Connecting the function
+      @fun{gtk-widget-hide-on-delete} to this signal will cause the window to be
+      hidden instead, so that it can later be shown again without reconstructing
+      it.
     @begin[code]{table}
-      @entry[widget]{The object which received the signal.}
-      @entry[event]{The event which triggered this signal.}
+      @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+      @entry[event]{The @class{gdk-event} event which triggered this signal.}
       @entry[Returns]{@em{True} to stop other handlers from being invoked for
-        the event. @code{Nil} to propagate the event further.}
+        the event, @em{false} to propagate the event further.}
     @end{table}
     @subheading{The \"destroy\" signal}
       @begin{pre}
@@ -1290,190 +1293,204 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       reference that they hold. May result in finalization of the widget if all
       references are released.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
     @end{table}
     @subheading{The \"destroy-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"destroy-event\" signal is emitted when a @class{gdk-window} window
-      is destroyed. You rarely get this signal, because most widgets disconnect
-      themselves from their window before they destroy it, so no widget owns the
-      window at destroy time. To receive this signal, the @class{gdk-window}
-      window associated to the widget needs to enable the @code{:structure-mask}
-      mask of type @symbol{gdk-event-mask}. GDK will enable this mask
-      automatically for all new windows.
+      Emitted when a @class{gdk-window} object is destroyed. You rarely get this
+      signal, because most widgets disconnect themselves from their window
+      before they destroy it, so no widget owns the window at destroy time. To
+      receive this signal, the @class{gdk-window} object associated to the
+      widget needs to enable the mask @code{:structure-mask} of type
+      @symbol{gdk-event-mask}. GDK will enable this mask automatically for all
+      new windows.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The event which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event} event which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"direction-changed\" signal}
       @begin{pre}
  lambda (widget previous-direction)    : Run First
       @end{pre}
-      The \"direction-changed\" signal is emitted when the text direction of a
-      widget changes.
+      Emitted when the text direction of a widget changes.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[previous-direction]{The previous text direction of widget.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[previous-direction]{The previous text direction of type
+          @symbol{gtk-text-direction} of the widget.}
       @end{table}
     @subheading{The \"drag-begin\" signal}
       @begin{pre}
  lambda (widget drag-context)    : Run Last
       @end{pre}
-      The \"drag-begin\" signal is emitted on the drag source when a drag is
-      started. A typical reason to connect to this signal is to set up a custom
-      drag icon with e. g. the function @fun{gtk-drag-source-set-icon-pixbuf}.
-      Note that some widgets set up a drag icon in the default handler of this
-      signal, so you may have to use the function @fun{g-signal-connect-after}
-      to override what the default handler did.
+      Emitted on the drag source when a drag is started. A typical reason to
+      connect to this signal is to set up a custom drag icon with e.g. the
+      function @fun{gtk-drag-source-set-icon-pixbuf}. Note that some widgets set
+      up a drag icon in the default handler of this signal, so you may have to
+      use the function @fun{g-signal-connect-after} to override what the default
+      handler did.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-data-delete\" signal}
       @begin{pre}
  lambda (widget drag-context)    : Run Last
       @end{pre}
-      The \"drag-data-delete\" signal is emitted on the drag source when a drag
-      with the action @code{:move} of the type @symbol{gdk-drag-action} is
-      successfully completed. The signal handler is responsible for deleting the
-      data that has been dropped. What \"delete\" means depends on the context
-      of the drag operation.
+      Emitted on the drag source when a drag with the action @code{:move} of
+      type @symbol{gdk-drag-action} is successfully completed. The signal
+      handler is responsible for deleting the data that has been dropped. What
+      \"delete\" means depends on the context of the drag operation.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-data-get\" signal}
       @begin{pre}
  lambda (widget drag-context data info time)    : Run Last
       @end{pre}
-      The \"drag-data-get\" signal is emitted on the drag source when the drop
-      site requests the data which is dragged. It is the responsibility of the
-      signal handler to fill @arg{data} with the data in the format which is
-      indicated by @arg{info}. See the functions @fun{gtk-selection-data-set}
-      and @fun{gtk-selection-data-set-text}.
+      Emitted on the drag source when the drop site requests the data which is
+      dragged. It is the responsibility of the signal handler to fill @arg{data}
+      with the data in the format which is indicated by @arg{info}. See the
+      functions @fun{gtk-selection-data-set} and
+      @fun{gtk-selection-data-set-text}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[data]{The @class{gtk-selection-data} to be filled with the
-          dragged data}
-        @entry[info]{The info that has been registered with the target in the
-          @class{gtk-target-list}.}
-      @entry[time]{The timestamp at which the data was requested.}
+        @entry[data]{The @class{gtk-selection-data} instance to be filled with
+          the dragged data.}
+        @entry[info]{An unsigned integer with the info that has been registered
+          with the target in the @class{gtk-target-list} instance.}
+      @entry[time]{An unsigned integer with the timestamp at which the data was
+        requested.}
     @end{table}
     @subheading{The \"drag-data-received\" signal}
       @begin{pre}
  lambda (widget drag-context x y data info time)    : Run Last
       @end{pre}
-      The \"drag-data-received\" signal is emitted on the drop site when the
-      dragged data has been received. If the data was received in order to
-      determine whether the drop will be accepted, the handler is expected to
-      call the function @fun{gdk-drag-status} and not finish the drag. If the
-      data was received in response to a \"drag-drop\" signal and this is the
-      last target to be received, the handler for this signal is expected to
-      process the received data and then call the function
+      Emitted on the drop site when the dragged data has been received. If the
+      data was received in order to determine whether the drop will be accepted,
+      the handler is expected to call the function @fun{gdk-drag-status} and not
+      finish the drag. If the data was received in response to a \"drag-drop\"
+      signal and this is the last target to be received, the handler for this
+      signal is expected to process the received data and then call the function
       @fun{gtk-drag-finish}, setting the success parameter depending on whether
-      the data was processed successfully. The handler may inspect and modify
-      @code{drag_context->action} before calling the function
-      @fun{gtk-drag-finish}, e. g. to implement @code{:ask} of type
-      @symbol{gdk-drag-action} as shown in the following example:
+      the data was processed successfully. Applications must create some means
+      to determine why the signal was emitted and therefore whether to call the
+      functions @fun{gdk-drag-status} or @fun{gtk-drag-finish}. The handler may
+      inspect the selected action with the function
+      @fun{gdk-drag-context-get-selected-action} before calling the function
+      @fun{gtk-drag-finish}, e.g. to implement the value @code{:ask} of the
+      @symbol{gdk-drag-action} enumeration as shown in the following example:
       @begin{pre}
- void
- drag_data_received (GtkWidget          *widget,
-                     GdkDragContext     *drag_context,
-                     gint                x,
-                     gint                y,
-                     GtkSelectionData   *data,
-                     guint               info,
-                     guint               time)
- {
-   if ((data->length >= 0) && (data->format == 8))
-     {
-       if (drag_context->action == GDK_ACTION_ASK)
-         {
-           GtkWidget *dialog;
-           gint response;
-           dialog = gtk_message_dialog_new (NULL,
-                                            GTK_DIALOG_MODAL |
-                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            GTK_MESSAGE_INFO,
-                                            GTK_BUTTONS_YES_NO,
-                                            \"Move the data ?\n\");
-           response = gtk_dialog_run (GTK_DIALOG (dialog));
-           gtk_widget_destroy (dialog);
+void
+drag_data_received (GtkWidget          *widget,
+                    GdkDragContext     *context,
+                    gint                x,
+                    gint                y,
+                    GtkSelectionData   *data,
+                    guint               info,
+                    guint               time)
+{
+  if ((data->length >= 0) && (data->format == 8))
+    {
+      GdkDragAction action;
 
-           if (response == GTK_RESPONSE_YES)
-             drag_context->action = GDK_ACTION_MOVE;
-           else
-             drag_context->action = GDK_ACTION_COPY;
-          @}
+      // handle data here
 
-       gtk_drag_finish (drag_context, TRUE, FALSE, time);
-       return;
-     @}
+      action = gdk_drag_context_get_selected_action (context);
+      if (action == GDK_ACTION_ASK)
+        {
+          GtkWidget *dialog;
+          gint response;
 
-    gtk_drag_finish (drag_context, FALSE, FALSE, time);
-  @}
+          dialog = gtk_message_dialog_new (NULL,
+                                           GTK_DIALOG_MODAL |
+                                           GTK_DIALOG_DESTROY_WITH_PARENT,
+                                           GTK_MESSAGE_INFO,
+                                           GTK_BUTTONS_YES_NO,
+                                           \"Move the data ?\n\");
+          response = gtk_dialog_run (GTK_DIALOG (dialog));
+          gtk_widget_destroy (dialog);
+
+          if (response == GTK_RESPONSE_YES)
+            action = GDK_ACTION_MOVE;
+          else
+            action = GDK_ACTION_COPY;
+         @}
+
+      gtk_drag_finish (context, TRUE, action == GDK_ACTION_MOVE, time);
+    @}
+  else
+    gtk_drag_finish (context, FALSE, FALSE, time);
+@}
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[x]{Where the drop happened.}
-        @entry[y]{Where the drop happened.}
+        @entry[x]{An integer where the drop happened.}
+        @entry[y]{An integer where the drop happened.}
         @entry[data]{The received data of type @class{gtk-selection-data}.}
-        @entry[info]{The info that has been registered with the target in the
-          @class{gtk-target-list}.}
-        @entry[time]{The timestamp at which the data was received.}
+        @entry[info]{An unsigned integer with the info that has been registered
+          with the target in the @class{gtk-target-list} instance.}
+        @entry[time]{An unsigned integer with the timestamp at which the data
+          was received.}
       @end{table}
     @subheading{The \"drag-drop\" signal}
       @begin{pre}
  lambda (widget drag-context x y time)    : Run Last
       @end{pre}
-      The \"drag-drop\" signal is emitted on the drop site when the user drops
-      the data onto the widget. The signal handler must determine whether the
-      cursor position is in a drop zone or not. If it is not in a drop zone, it
-      returns @code{nil} and no further processing is necessary. Otherwise, the
-      handler returns @em{true}. In this case, the handler must ensure that the
-      function @fun{gtk-drag-finish} is called to let the source know that the
-      drop is done. The call to the function @fun{gtk-drag-finish} can be done
-      either directly or in a \"drag-data-received\" signal handler which gets
+      Emitted on the drop site when the user drops the data onto the widget. The
+      signal handler must determine whether the cursor position is in a drop
+      zone or not. If it is not in a drop zone, it returns @em{false} and no
+      further processing is necessary. Otherwise, the handler returns @em{true}.
+      In this case, the handler must ensure that the function
+      @fun{gtk-drag-finish} is called to let the source know that the drop is
+      done. The call to the function @fun{gtk-drag-finish} can be done either
+      directly or in a \"drag-data-received\" signal handler which gets
       triggered by calling the function @fun{gtk-drag-data} to receive the data
       for one or more of the supported targets.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[x]{The x coordinate of the current cursor position.}
-        @entry[y]{The y coordinate of the current cursor position.}
-        @entry[time]{The timestamp of the motion event.}
-        @entry[Returns]{Whether the cursor position is in a drop zone.}
+        @entry[x]{An integer with the x coordinate of the current cursor
+          position.}
+        @entry[y]{An integer with the y coordinate of the current cursor
+          position.}
+        @entry[time]{An unsigned integer with the timestamp of the motion
+          event.}
+        @entry[Returns]{A boolean whether the cursor position is in a drop
+          zone.}
       @end{table}
     @subheading{The \"drag-end\" signal}
       @begin{pre}
  lambda (widget drag-context)    : Run Last
       @end{pre}
-      The \"drag-end\" signal is emitted on the drag source when a drag is
-      finished. A typical reason to connect to this signal is to undo things
-      done in the \"drag-begin\" signal handler.
+      Emitted on the drag source when a drag is finished. A typical reason to
+      connect to this signal is to undo things done in the \"drag-begin\" signal
+      handler.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-failed\" signal}
       @begin{pre}
  lambda (widget drag-context result)    : Run Last
       @end{pre}
-      The \"drag-failed\" signal is emitted on the drag source when a drag has
-      failed. The signal handler may hook custom code to handle a failed DND
-      operation based on the type of error, it returns @em{true} if the failure
-      has been already handled, not showing the default
-      \"drag operation failed\" animation, otherwise it returns @code{nil}.
+      Emitted on the drag source when a drag has failed. The signal handler may
+      hook custom code to handle a failed DND operation based on the type of
+      error, it returns @em{true} if the failure has been already handled, not
+      showing the default \"drag operation failed\" animation, otherwise it
+      returns @em{false}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[result]{The result of the drag operation.}
+        @entry[result]{The result of the drag operation of type
+          @symbol{gtk-drag-result}.}
         @entry[Returns]{@em{True} if the failed drag operation has been already
           handled.}
       @end{table}
@@ -1481,34 +1498,36 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget drag-context time)    : Run Last
       @end{pre}
-      The \"drag-leave signal\" is emitted on the drop site when the cursor
-      leaves the widget. A typical reason to connect to this signal is to undo
-      things done in a \"drag-motion\" signal handler, e. g. undo highlighting
-      with the function @fun{gtk-drag-unhighlight}.
-    @begin[code]{table}
-      @entry[widget]{The object which received the signal.}
-      @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-      @entry[time]{The timestamp of the motion event.}
-    @end{table}
+      Emitted on the drop site when the cursor leaves the widget. A typical
+      reason to connect to this signal is to undo things done in a
+      \"drag-motion\" signal handler, e.g. undo highlighting with the function
+      @fun{gtk-drag-unhighlight}. Likewise, the \"drag-leave\" signal is also
+      emitted before the \"drag-drop\"signal, for instance to allow cleaning up
+      of a preview item created in the \"drag-motion\" signal handler.
+      @begin[code]{table}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[time]{An unsigned integer with the timestamp of the motion
+          event.}
+      @end{table}
     @subheading{The \"drag-motion\" signal}
       @begin{pre}
  lambda (widget drag-context x y time)    : Run Last
       @end{pre}
-      The \"drag-motion\" signal is emitted on the drop site when the user moves
-      the cursor over the widget during a drag. The signal handler must
-      determine whether the cursor position is in a drop zone or not. If it is
-      not in a drop zone, it returns @code{nil} and no further processing is
-      necessary. Otherwise, the handler returns @em{true}. In this case, the
-      handler is responsible for providing the necessary information for
-      displaying feedback to the user, by calling the function
-      @fun{gdk-drag-status}.
+      Emitted on the drop site when the user moves the cursor over the widget
+      during a drag. The signal handler must determine whether the cursor
+      position is in a drop zone or not. If it is not in a drop zone, it returns
+      @em{false} and no further processing is necessary. Otherwise, the handler
+      returns @em{true}. In this case, the handler is responsible for providing
+      the necessary information for displaying feedback to the user, by calling
+      the function @fun{gdk-drag-status}.
 
       If the decision whether the drop will be accepted or rejected cannot be
       made based solely on the cursor position and the type of the data, the
       handler may inspect the dragged data by calling the function
       @fun{gtk-drag-data} and defer the @fun{gdk-drag-status} call to the
-      \"drag-data-received\" signal handler. Note that you cannot not pass
-      @code{:drop}, @code{:motion} or @code{:all} of the
+      \"drag-data-received\" signal handler. Note that you cannot not pass the
+      values @code{:drop}, @code{:motion} or @code{:all} of the
       @symbol{gtk-dest-defaults} enumeration to the function
       @fun{gtk-drag-dest-set} when using the drag-motion signal that way.
 
@@ -1519,87 +1538,91 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       typically highlight the drop site with the function
       @fun{gtk-drag-highlight}.
       @begin{pre}
- static void
- drag_motion (GtkWidget *widget,
-              GdkDragContext *context,
-              gint x,
-              gint y,
-              guint time)
- {
-   GdkAtom target;
+static void
+drag_motion (GtkWidget *widget,
+             GdkDragContext *context,
+             gint x,
+             gint y,
+             guint time)
+{
+  GdkAtom target;
 
-   PrivateData *private_data = GET_PRIVATE_DATA (widget);
+  PrivateData *private_data = GET_PRIVATE_DATA (widget);
 
-   if (!private_data->drag_highlight)
-    {
-      private_data->drag_highlight = 1;
-      gtk_drag_highlight (widget);
-    @}
+  if (!private_data->drag_highlight)
+   {
+     private_data->drag_highlight = 1;
+     gtk_drag_highlight (widget);
+   @}
 
-   target = gtk_drag_dest_find_target (widget, context, NULL);
-   if (target == GDK_NONE)
-     gdk_drag_status (context, 0, time);
-   else
-    {
-      private_data->pending_status = context->suggested_action;
-      gtk_drag_get_data (widget, context, target, time);
-    @}
+  target = gtk_drag_dest_find_target (widget, context, NULL);
+  if (target == GDK_NONE)
+    gdk_drag_status (context, 0, time);
+  else
+   {
+     private_data->pending_status = context->suggested_action;
+     gtk_drag_get_data (widget, context, target, time);
+   @}
 
-   return TRUE;
- @}
+  return TRUE;
+@}
 
- static void
- drag_data_received (GtkWidget        *widget,
-                     GdkDragContext   *context,
-                     gint              x,
-                     gint              y,
-                     GtkSelectionData *selection_data,
-                     guint             info,
-                     guint             time)
- {
-   PrivateData *private_data = GET_PRIVATE_DATA (widget);
+static void
+drag_data_received (GtkWidget        *widget,
+                    GdkDragContext   *context,
+                    gint              x,
+                    gint              y,
+                    GtkSelectionData *selection_data,
+                    guint             info,
+                    guint             time)
+{
+  PrivateData *private_data = GET_PRIVATE_DATA (widget);
 
-   if (private_data->suggested_action)
-    {
-      private_data->suggested_action = 0;
+  if (private_data->suggested_action)
+   {
+     private_data->suggested_action = 0;
 
-     /* We are getting this data due to a request in drag_motion,
-      * rather than due to a request in drag_drop, so we are just
-      * supposed to call gdk_drag_status (), not actually paste in
-      * the data.
-      */
-      str = gtk_selection_data_get_text (selection_data);
-      if (!data_is_acceptable (str))
-        gdk_drag_status (context, 0, time);
-      else
-        gdk_drag_status (context, private_data->suggested_action, time);
-    @}
-   else
-    {
-      /* accept the drop */
-    @}
- @}
+    /* We are getting this data due to a request in drag_motion,
+     * rather than due to a request in drag_drop, so we are just
+     * supposed to call gdk_drag_status (), not actually paste in
+     * the data.
+     */
+     str = gtk_selection_data_get_text (selection_data);
+     if (!data_is_acceptable (str))
+       gdk_drag_status (context, 0, time);
+     else
+       gdk_drag_status (context, private_data->suggested_action, time);
+   @}
+  else
+   {
+     /* accept the drop */
+   @}
+@}
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[x]{The x coordinate of the current cursor position.}
-        @entry[y]{The y coordinate of the current cursor position.}
-        @entry[time]{The timestamp of the motion event.}
-        @entry[Returns]{Whether the cursor position is in a drop zone.}
+        @entry[x]{An integer with the x coordinate of the current cursor
+          position.}
+        @entry[y]{An integer with the y coordinate of the current cursor
+          position.}
+        @entry[time]{An unsigned integer with the timestamp of the motion
+          event.}
+        @entry[Returns]{A boolean whether the cursor position is in a drop
+          zone.}
       @end{table}
     @subheading{The \"draw\" signal}
       @begin{pre}
  lambda (widget cr)    : Run Last
       @end{pre}
-      This signal is emitted when a widget is supposed to render itself. The
-      widget's top left corner must be painted at the origin of the passed in
-      context and be sized to the values returned by the functions
-      @fun{gtk-widget-allocated-width} and @fun{gtk-widget-allocated-height}.
-      Signal handlers connected to this signal can modify the cairo context
-      passed as @arg{cr} in any way they like and do not need to restore it.
-      The signal emission takes care of calling the functions @fun{cairo-save}
-      before and @fun{cairo-restore} after invoking the handler.
+      Emitted when a widget is supposed to render itself. The widget's top left
+      corner must be painted at the origin of the passed in context and be sized
+      to the values returned by the functions @fun{gtk-widget-allocated-width}
+      and @fun{gtk-widget-allocated-height}. Signal handlers connected to this
+      signal can modify the cairo context passed as @arg{cr} in any way they
+      like and do not need to restore it. The signal emission takes care of
+      calling the functions @fun{cairo-save} before and @fun{cairo-restore}
+      after invoking the handler.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
@@ -1608,32 +1631,31 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"enter-notify-event\" will be emitted when the pointer enters the
-      widget's window. To receive this signal, the @class{gdk-window} associated
-      to the widget needs to enable the flag @code{:enter-notify-mask} of type
-      @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
-      there is one.
+      Emitted when the pointer enters the widget's window. To receive this
+      signal, the @class{gdk-window} object associated to the widget needs to
+      enable the mask @code{:enter-notify-mask} of type @symbol{gdk-event-mask}.
+      This signal will be sent to the grab widget if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-crossing} which triggered this
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-crossing} event which triggered this
           signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The GTK+ main loop will emit three signals for each GDK event delivered to
-      a widget: one generic \"event\" signal, another, more specific, signal
-      that matches the type of event delivered, e. g. the \"key-press-event\"
+      The GTK+ main loop will emit three signals for each GDK event delivered
+      to a widget: one generic \"event\" signal, another, more specific, signal
+      that matches the type of event delivered, e.g. the \"key-press-event\"
       signal, and finally a generic \"event-after\" signal.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
         the event and to cancel the emission of the second specific \"event\"
-        signal. @code{Nil} to propagate the event further and to allow the
+        signal. @em{False} to propagate the event further and to allow the
         emission of the second signal. The \"event-after\" signal is emitted
         regardless of the return value.}
       @end{table}
@@ -1645,7 +1667,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       more specific signal, the signal \"event-after\" will be emitted
       regardless of the previous two signals handlers return values.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event} which triggered this signal.}
       @end{table}
     @subheading{The \"focus\" signal}
@@ -1653,38 +1675,40 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
  lambda (widget direction)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[direction]{The direction of type @symbol{gtk-direction-type}.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked
-          for the event. @code{Nil} to propagate the event further.}
+          for the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"focus-in-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"focus-in-event\" signal will be emitted when the keyboard focus
-      enters the widget's window. To receive this signal, the
-      @class{gdk-window} associated to the widget needs to enable the mask
-      @code{:focus-change-mask} of type @symbol{gdk-event-mask}.
+      Emitted when the keyboard focus enters the widget's window. To receive
+      this signal, the @class{gdk-window} object associated to the widget needs
+      to enable the mask @code{:focus-change-mask} of type
+      @symbol{gdk-event-mask}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-focus} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-focus} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-        the event. @code{Nil} to propagate the event further.}
+        the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"focus-out-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"focus-out-event\" signal will be emitted when the keyboard focus
-      leaves the widget's window. To receive this signal, the @class{gdk-window}
-      associated to the widget needs to enable the mask
-      @code{:focus-change-mask} of type @symbol{gdk-event-mask}.
+      Emitted when the keyboard focus leaves the widget's window. To receive
+      this signal, the @class{gdk-window} object associated to the widget needs
+      to enable the mask @code{:focus-change-mask} of type
+      @symbol{gdk-event-mask}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-focus} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-focus} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-        the event. @code{Nil} topropagate the event further.}
+        the event, @em{false} topropagate the event further.}
       @end{table}
     @subheading{The \"grab-broken-event\" signal}
       @begin{pre}
@@ -1698,81 +1722,81 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-grab-broken} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"grab-focus\" signal}
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"grab-notify\" signal}
       @begin{pre}
  lambda (widget was-grabbed)    : Run First
       @end{pre}
-      The \"grab-notify\" signal is emitted when a widget becomes shadowed by a
-      GTK+ grab, not a pointer or keyboard grab, on another widget, or when it
-      becomes unshadowed due to a grab being removed. A widget is shadowed by a
-      the function @fun{gtk-grab-add} when the topmost grab widget in the grab
-      stack of its window group is not its ancestor.
+      Emitted when a widget becomes shadowed by a GTK+ grab, not a pointer or
+      keyboard grab, on another widget, or when it becomes unshadowed due to a
+      grab being removed. A widget is shadowed by a the function
+      @fun{gtk-grab-add} when the topmost grab widget in the grab stack of its
+      window group is not its ancestor.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[was-grabbed]{@code{Nil} if the widget becomes shadowed, @em{true}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[was-grabbed]{@em{False} if the widget becomes shadowed, @em{true}
         if it becomes unshadowed.}
       @end{table}
     @subheading{The \"hide\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
-      The \"hide\" signal is emitted when @arg{widget} is hidden, for example
-      with the function @fun{gtk-widget-hide}.
+      Emitted when @arg{widget} is hidden, for example with the function
+      @fun{gtk-widget-hide}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"hierarchy-changed\" signal}
       @begin{pre}
  lambda (widget previous-toplevel)    : Run Last
       @end{pre}
-      The \"hierarchy-changed\" signal is emitted when the anchored state of a
-      widget changes. A widget is anchored when its toplevel ancestor is a
-      @class{gtk-window}. This signal is emitted when a widget changes from
-      un-anchored to anchored or vice-versa.
+      Emitted when the anchored state of a widget changes. A widget is anchored
+      when its toplevel ancestor is a @class{gtk-window} widget. This signal is
+      emitted when a widget changes from un-anchored to anchored or vice-versa.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[previous-toplevel]{The previous toplevel ancestor, or @code{nil}
-        if the widget was previously unanchored.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[previous-toplevel]{The previous @sym{gtk-widget} toplevel
+          ancestor, or @code{nil} if the widget was previously unanchored.}
       @end{table}
     @subheading{The \"key-press-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"key-press-event\" signal is emitted when a key is pressed. The
-      signal emission will reoccur at the key-repeat rate when the key is kept
-      pressed. To receive this signal, the @class{gdk-window} associated to the
-      widget needs to enable the mask @code{:key-press-mask} of type
-      @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
-      there is one.
+      Emitted when a key is pressed. The signal emission will reoccur at the
+      key-repeat rate when the key is kept pressed. To receive this signal, the
+      @class{gdk-window} object associated to the widget needs to enable the
+      mask @code{:key-press-mask} of type @symbol{gdk-event-mask}. This signal
+      will be sent to the grab widget if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-key} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-key} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"key-release-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"key-release-event\" signal is emitted when a key is released.
-      To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the mask @code{:key-release-mask} of type
-      @symbol{gdk-event-mask}.
-      This signal will be sent to the grab widget if there is one.
+      Emitted when a key is released. To receive this signal, the
+      @class{gdk-window} object associated to the widget needs to enable the
+      mask @code{:key-release-mask} of type @symbol{gdk-event-mask}. This signal
+      will be sent to the grab widget if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-key} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-key} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"keynav-failed\" signal}
       @begin{pre}
@@ -1781,137 +1805,140 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       Gets emitted if keyboard navigation fails. See the function
       @fun{gtk-widget-keynav-failed} for details.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[direction]{The direction of type @symbol{gtk-direction-type} of
           movement.}
         @entry[Returns]{@em{True} if stopping keyboard navigation is fine,
-          @code{nil} if the emitting widget should try to handle the keyboard
+          @code{false} if the emitting widget should try to handle the keyboard
           navigation attempt in its parent container(s).}
       @end{table}
     @subheading{The \"leave-notify-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"leave-notify-event\" will be emitted when the pointer leaves the
-      widget's window. To receive this signal, the @class{gdk-window} associated
-      to the widget needs to enable the mask @code{:leave-notify-mask} of type
-      @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
-      there is one.
+      Emitted when the pointer leaves the widget's window. To receive this
+      signal, the @class{gdk-window} object associated to the widget needs to
+      enable the mask @code{:leave-notify-mask} of type @symbol{gdk-event-mask}.
+      This signal will be sent to the grab widget if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-crossing} which triggered this
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-crossing} event which triggered this
           signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"map\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
-      The \"map\" signal is emitted when @arg{widget} is going to be mapped,
-      that is when the widget is visible (which is controlled with
-      @fun{gtk-widget-visible}) and all its parents up to the toplevel widget
+      Emitted when @arg{widget} is going to be mapped, that is when the widget
+      is visible, which is controlled with the function
+      @fun{gtk-widget-visible}, and all its parents up to the toplevel widget
       are also visible. Once the map has occurred, the \"map-event\" signal
       will be emitted. The \"map\" signal can be used to determine whether a
       widget will be drawn, for instance it can resume an animation that was
       stopped during the emission of \"unmap\".
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"map-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"map-event\" signal will be emitted when the widget's window is
-      mapped. A window is mapped when it becomes visible on the screen.
-      To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the mask @code{:structure-mask} of type
-      @symbol{gdk-event-mask}. GDK will enable this mask automatically for all
-      new windows.
+      Emitted when the widget's window is mapped. A window is mapped when it
+      becomes visible on the screen. To receive this signal, the
+      @class{gdk-window} object associated to the widget needs to enable the
+      mask @code{:structure-mask} of type @symbol{gdk-event-mask}. GDK will
+      enable this mask automatically for all new windows.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event} event which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"mnemonic-activate\" signal}
+      The default handler for this signal activates @arg{widget} if
+      @arg{group-cycling} is @em{false}, or just makes widget grab focus if
+      @arg{group-cycling} is @em{true}.
       @begin{pre}
- lambda (widget arg)    : Run Last
+ lambda (widget group-cycling)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[arg]{No documentation.}
-        @entry[Returns]{@code{True} to stop other handlers from being invoked
-          for the event. @code{Nil} to propagate the event further.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[groub-cycling]{@em{True} if there are other widgets with the same
+          mnemonic.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked
+          for the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"motion-notify-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"motion-notify-event\" signal is emitted when the pointer moves over
-      the widget's @class{gdk-window}. To receive this signal, the
-      @class{gdk-window} associated to the widget needs to enable the
-      @code{:pointer-motion-mask} mask of type @symbol{gdk-event-mask}. This
-      signal will be sent to the grab widget if there is one.
+      Emitted when the pointer moves over the widget's @class{gdk-window}
+      object. To receive this signal, the @class{gdk-window} object associated
+      to the widget needs to enable the mask @code{:pointer-motion-mask} of type
+      @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
+      there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-motion} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-motion} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"move-focus\" signal}
       @begin{pre}
  lambda (widget direction)    : Action
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[direction]{The direction of type @symbol{gtk-direction-type}.}
       @end{table}
     @subheading{The \"parent-set\" signal}
       @begin{pre}
  lambda (widget old-parent)    : Run First
       @end{pre}
-      The \"parent-set\" signal is emitted when a new parent has been set on a
-      widget.
+      Emitted when a new parent has been set on a widget.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[old-parent]{The previous parent, or @code{nil} if the widget just
-          got its initial parent.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[old-parent]{The previous @sym{gtk-widget} parent, or @code{nil}
+          if the widget just got its initial parent.}
       @end{table}
     @subheading{The \"popup-menu\" signal}
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      This signal gets emitted whenever a widget should pop up a context menu.
-      This usually happens through the standard key binding mechanism; by
-      pressing a certain key while a widget is focused, the user can cause the
-      widget to pop up a menu. For example, the @class{gtk-entry} widget creates
-      a menu with clipboard commands.
+      Gets emitted whenever a widget should pop up a context menu. This usually
+      happens through the standard key binding mechanism. By pressing a certain
+      key while a widget is focused, the user can cause the widget to pop up a
+      menu. For example, the @class{gtk-entry} widget creates a menu with
+      clipboard commands.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[Returns]{@em{True} if a menu was activated.}
       @end{table}
     @subheading{The \"property-notify-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"property-notify-event\" signal will be emitted when a property on
-      the @arg{widget}'s window has been changed or deleted. To receive this
-      signal, the @class{gdk-window} associated to the widget needs to enable
-      the @code{:property-change-mask} mask of type @symbol{gdk-event-mask}.
+      Emitted when a property on the widget's window has been changed or
+      deleted. To receive this signal, the @class{gdk-window} object associated
+      to the widget needs to enable the mask @code{:property-change-mask} of
+      type @symbol{gdk-event-mask}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-property} which triggered this
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-property} event which triggered this
           signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
     @end{table}
     @subheading{The \"proximity-in-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
       To receive this signal the @class{gdk-window} object associated to the
-      widget needs to enable the @code{:proximity-in-mask} mask of type
+      widget needs to enable the mask @code{:proximity-in-mask} of type
       @symbol{gdk-event-mask}. This signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
@@ -1926,7 +1953,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
  lambda (widget event)    : Run Last
       @end{pre}
       To receive this signal the @class{gdk-window} object associated to the
-      widget needs to enable the @code{:proximity-out-mask} mask of type
+      widget needs to enable the mask @code{:proximity-out-mask} of type
       @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
       there is one.
       @begin[code]{table}
@@ -1934,7 +1961,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         @entry[event]{The @class{gdk-event-proximity} event which triggered
           this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
      @end{table}
    @subheading{The \"query-tooltip\" signal}
      @begin{pre}
@@ -1945,72 +1972,71 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
      cursor hovering \"above\" widget; or emitted when widget got focus in
      keyboard mode. Using the given coordinates, the signal handler should
      determine whether a tooltip should be shown for widget. If this is the
-     case @em{true} should be returned, @code{nil} otherwise. Note that if
+     case @em{true} should be returned, @em{false} otherwise. Note that if
      @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y} are
      undefined and should not be used. The signal handler is free to
      manipulate @arg{tooltip} with the therefore destined function calls.
      @begin[code]{table}
-       @entry[widget]{The object which received the signal.}
-       @entry[x]{The x coordinate of the cursor position where the request has
-         been emitted, relative to widget's left side.}
-       @entry[y]{The y coordinate of the cursor position where the request has
-         been emitted, relative to widget's top.}
+       @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+       @entry[x]{An integer with the x coordinate of the cursor position where
+         the request has been emitted, relative to widget's left side.}
+       @entry[y]{An integer with the y coordinate of the cursor position where
+         the request has been emitted, relative to widget's top.}
        @entry[keyboard-mode]{@em{True} if the tooltip was trigged using the
          keyboard.}
        @entry[tooltip]{A @class{gtk-tooltip} object.}
        @entry[Returns]{@em{True} if tooltip should be shown right now,
-         @code{nil} otherwise.}
+         @em{false} otherwise.}
      @end{table}
     @subheading{The \"realize\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
-      The \"realize\" signal is emitted when @arg{widget} is associated with a
-      @class{gdk-window}, which means that the function @fun{gtk-widget-realize}
-      has been called or the widget has been mapped (that is, it is going to be
-      drawn).
+      Emitted when @arg{widget} is associated with a @class{gdk-window} object,
+      which means that the function @fun{gtk-widget-realize} has been called or
+      the widget has been mapped (that is, it is going to be drawn).
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"screen-changed\" signal}
       @begin{pre}
  lambda (widget previous-screen)    : Run Last
       @end{pre}
-      The \"screen-changed\" signal gets emitted when the screen of a widget has
-      changed.
+      Gets emitted when the screen of a widget has changed.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[previous-screen]{The previous screen, or @code{nil} if the widget
-          was not associated with a screen before.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[previous-screen]{The previous @class{gdk-screen} object, or
+          @code{nil} if the widget was not associated with a screen before.}
       @end{table}
     @subheading{The \"scroll-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"scroll-event\" signal is emitted when a button in the 4 to 7 range
-      is pressed. Wheel mice are usually configured to generate button press
-      events for buttons 4 and 5 when the wheel is turned. To receive this
-      signal, the @class{gdk-window} associated to the widget needs to enable
-      the @code{:button-press-mask} mask of type @symbol{gdk-event-mask}.
-      This signal will be sent to the grab widget if there is one.
+      Emitted when a button in the 4 to 7 range is pressed. Wheel mice are
+      usually configured to generate button press events for buttons 4 and 5
+      when the wheel is turned. To receive this signal, the @class{gdk-window}
+      object associated to the widget needs to enable the mask
+      @code{:button-press-mask} of type @symbol{gdk-event-mask}. This signal
+      will be sent to the grab widget if there is one.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-scroll} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event-scroll} event which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"selection-clear-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"selection-clear-event\" signal will be emitted when the the widget's
-      window has lost ownership of a selection.
+      Emitted when the the widget's window has lost ownership of a selection.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-selection} event which triggered
           this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"selection-get\" signal}
       @begin{pre}
@@ -2018,7 +2044,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[data]{The @class{gtk-selection-data} structure.}
+        @entry[data]{The @class{gtk-selection-data} instance.}
         @entry[info]{An unsigned integer with the info that has been registered
           with the target.}
         @entry[time]{An unsigned integer with the timestamp at which the data
@@ -2032,7 +2058,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-selection} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"selection-received\" signal}
       @begin{pre}
@@ -2040,69 +2066,69 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[data]{The @class{gtk-selection-data} structure.}
+        @entry[data]{The @class{gtk-selection-data} instance.}
         @entry[time]{An unsigned integer with the timestamp.}
       @end{table}
     @subheading{The \"selection-request-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"selection-request-event\" signal will be emitted when another client
-      requests ownership of the selection owned by the widget's window.
+      Emitted when another client requests ownership of the selection owned by
+      the widget's window.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-selection} event which triggered
           this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"show\" signal}
       @begin{pre}
  lambda (widget)
       @end{pre}
-      The \"show\" signal is emitted when @arg{widget} is shown, for example
-      with the function @fun{gtk-widget-show}.
+      Emitted when @arg{widget} is shown, for example with the function
+      @fun{gtk-widget-show}.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"show-help\" signal}
       @begin{pre}
  lambda (widget help-type)    : Action
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[help-type]{A value of the @symbol{gtk-widget-help-type}
           enumeration.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked
-          for the event. @em{False} to propagate the event further.}
+          for the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"size-allocate\" signal}
       @begin{pre}
  lambda (widget allocation)    : Run First
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[allocation]{A @class{gdk-rectangle} instance with the region
+          which has been allocated to the widget.}
       @end{table}
     @subheading{The \"state-changed\" signal}
       @begin{pre}
  lambda (widget state)    : Run First
       @end{pre}
-      @em{Warning:}
-        The \"state-changed\" signal is deprecated since version 3.0
-        and should not be used in newly-written code. Use the
-        \"state-flags-changed\" signal instead.
-
-      The \"state-changed\" signal is emitted when the widget state changes.
+      Emitted when the widget state changes. @br{}
+      @em{Warning:} The \"state-changed\" signal is deprecated since version
+      3.0 and should not be used in newly-written code. Use the
+      \"state-flags-changed\" signal instead.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[state]{The previous state.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[state]{The previous state of type @symbol{gtk-state-type}.}
       @end{table}
     @subheading{The \"state-flags-changed\" signal}
       @begin{pre}
  lambda (widget flags)    : Run First
       @end{pre}
-      The \"state-flags-changed\" signal is emitted when the widget state
-      changes, see the function @fun{gtk-widget-state-flags}.
+      Emitted when the widget state changes, see the function
+      @fun{gtk-widget-state-flags}.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[flags]{The previous state flags of type
@@ -2112,115 +2138,113 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @begin{pre}
  lambda (widget previous-style)    : Run First
       @end{pre}
-      @em{Warning:}
-        The \"style-set\" signal has been deprecated since version 3.0 and
-        should not be used in newly-written code. Use the \"style-updated\"
-        signal.
-
-      The \"style-set\" signal is emitted when a new style has been set on a
-      widget. Note that style-modifying functions like the function
-      @fun{gtk-widget-modify-base} also cause this signal to be emitted.
-      Note that this signal is emitted for changes to the deprecated
-      @code{GtkStyle} object. To track changes to the @class{gtk-style-context}
-      associated with a widget, use the \"style-updated\" signal.
+      Emitted when a new style has been set on a widget. Note that style
+      modifying functions like the function @fun{gtk-widget-modify-base} also
+      cause this signal to be emitted. Note that this signal is emitted for
+      changes to the deprecated @code{GtkStyle} object. To track changes to the
+      @class{gtk-style-context} object associated with a widget, use the
+      \"style-updated\" signal. @br{}
+      @em{Warning:} The \"style-set\" signal has been deprecated since version
+      3.0 and should not be used in newly-written code. Use the
+      \"style-updated\" signal.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[previous-style]{The previous style, or @code{nil} if the widget
-          just got its initial style.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[previous-style]{The previous style of type @code{GtkStyle}, or
+          @code{nil} if the widget just got its initial style.}
       @end{table}
     @subheading{The \"style-updated\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
-      The \"style-updated\" signal is emitted when the @class{gtk-style-context}
-      of a widget is changed. Note that style-modifying functions like
+      Emitted when the @class{gtk-style-context} object of a widget is changed.
+      Note that style-modifying functions like the function
       @fun{gtk-widget-override-color} also cause this signal to be emitted.
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"touch-event\" signal}
       @begin{pre}
- lambda (widget arg)    : Run Last
+ lambda (widget event)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[widget]{The object on which the signal is emitted.}
-        @entry[arg]{}
+        @entry[widget]{The @sym{gtk-widget} object on which the signal is
+          emitted.}
+        @entry[event]{A @class{gdk-event} event.}
       @end{table}
     @subheading{The \"unmap\" signal}
       @begin{pre}
  lambda (widget)    : Run First
       @end{pre}
-      The \"unmap\" signal is emitted when @arg{widget} is going to be
-      unmapped, which means that either it or any of its parents up to the
-      toplevel widget have been set as hidden.
-      As \"unmap\" indicates that a widget will not be shown any longer, it can
-      be used to, for example, stop an animation on the widget.
+      Emitted when @arg{widget} is going to be unmapped, which means that either
+      it or any of its parents up to the toplevel widget have been set as
+      hidden. As \"unmap\" indicates that a widget will not be shown any longer,
+      it can be used to, for example, stop an animation on the widget.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"unmap-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"unmap-event\" signal will be emitted when the widget's window is
-      unmapped. A window is unmapped when it becomes invisible on the screen.
-      To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the @code{:structure-mask} mask of type
-      @symbol{gdk-event-mask}. GDK will enable this mask automatically for all
-      new windows.
+      Emitted when the widget's window is unmapped. A window is unmapped when it
+      becomes invisible on the screen. To receive this signal, the
+      @class{gdk-window} object associated to the widget needs to enable the
+      mask @code{:structure-mask} of type @symbol{gdk-event-mask}. GDK will
+      enable this mask automatically for all new windows.
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event} which triggered this signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
+        @entry[event]{The @class{gdk-event} event which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{Nil} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"unrealize\" signal}
       @begin{pre}
  lambda (widget)    : Run Last
       @end{pre}
-      The \"unrealize\" signal is emitted when the @class{gdk-window} associated
-      with widget is destroyed, which means that the function
-      @fun{gtk-widget-unrealize} has been called or the widget has been unmapped
-      (that is, it is going to be hidden).
+      Emitted when the @class{gdk-window} object associated with @arg{widget}
+      is destroyed, which means that the function @fun{gtk-widget-unrealize} has
+      been called or the widget has been unmapped (that is, it is going to be
+      hidden).
       @begin[code]{table}
-        @entry[widget]{The object which received the signal.}
+        @entry[widget]{The @sym{gtk-widget} object which received the signal.}
       @end{table}
     @subheading{The \"visibility-notify-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
+      Emitted when the widget's window is obscured or unobscured. To receive
+      this signal the @class{gdk-window} object associated to the widget needs
+      to enable the mask @code{:visibility-notify-mask} of type
+      @symbol{gdk-event-mask}. @br{}
       @em{Warning:} The \"visibility-notify-event\" signal has been deprecated
       since version 3.12 and should not be used in newly-written code. Modern
       composited windowing systems with pervasive transparency make it
       impossible to track the visibility of a window reliably, so this signal
       can not be guaranteed to provide useful information.
-
-      The \"visibility-notify-event\" will be emitted when the widget's window
-      is obscured or unobscured. To receive this signal the @class{gdk-window}
-      object associated to the widget needs to enable the
-      @code{:visibility-notify-mask} value of @symbol{gdk-event-mask} flags.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-visibility} event which triggered
           this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
     @subheading{The \"window-state-event\" signal}
       @begin{pre}
  lambda (widget event)    : Run Last
       @end{pre}
-      The \"window-state-event\" signal will be emitted when the state of the
-      toplevel window associated to the widget changes. To receive this signal
-      the @class{gdk-window} object associated to the widget needs to enable
-      the @code{:structure-mask} mask of type @symbol{gdk-event-mask}. GDK will
-      enable this mask automatically for all new windows.
+      Emitted when the state of the toplevel window associated to the widget
+      changes. To receive this signal the @class{gdk-window} object associated
+      to the widget needs to enable the mask @code{:structure-mask} of type
+      @symbol{gdk-event-mask}. GDK will enable this mask automatically for all
+      new windows.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-window-state} event which triggered
           this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @em{False} to propagate the event further.}
+          the event, @em{false} to propagate the event further.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-widget-app-paintable}
@@ -2322,8 +2346,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-paintable" 'gtk-widget) 't)
- "The @code{app-paintable} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{app-paintable} property of type @code{:boolean} (Read / Write) @br{}
   Whether the application will paint directly on the widget. @br{}
   Default value: @code{nil}")
 
@@ -4392,7 +4415,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @argument[accel-mods]{modifier key combination of type
     @symbol{gdk-modifier-type} of the accelerator}
   @argument[accel-flags]{flag accelerators of type @symbol{gtk-accel-flags},
-    e. g. @code{:visible}}
+    e.g. @code{:visible}}
   @begin{short}
     Installs an accelerator for this widget in @arg{accel-group} that causes
     @arg{accel-signal} to be emitted if the accelerator is activated.
@@ -5230,10 +5253,8 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
-  @begin{return}
-    The deprecated default @class{gtk-style} object.
-  @end{return}
+ "@version{2020-12-3}
+  @return{The deprecated default @code{GtkStyle} object.}
   @short{Returns the default style used by all widgets initially.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-default-style} has been deprecated since
@@ -5392,7 +5413,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   The path is simply the name of a widget and all its parents in the container
   hierarchy, separated by periods. The name of a widget comes from
   @fun{gtk-widget-name}. Paths are used to apply styles to a widget in gtkrc
-  configuration files. Widget names are the type of the widget by default (e. g.
+  configuration files. Widget names are the type of the widget by default (e.g.
   \"GtkButton\") or can be set to an application-specific value with the
   generic function @fun{gtk-widget-name}. By setting the name of a widget, you
   allow users or theme authors to apply styles to that specific widget in their
@@ -5813,7 +5834,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @subheading{Note}
     Note that \"no window\" widgets, which have the @code{:no-window} flag set,
     draw on their parent container's window and thus may not draw any background
-    themselves. This is the case for e. g. @class{gtk-label}.
+    themselves. This is the case for e.g. @class{gtk-label}.
 
     To modify the background of such widgets, you have to set the background
     color on their parent; if you want to set the background of a rectangular
@@ -5893,7 +5914,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   @subheading{Note}
     Note that \"no window\" widgets, which have the @code{:no-window} flag set,
     draw on their parent container's window and thus may not draw any background
-    themselves. This is the case for e. g. @class{gtk-label}.
+    themselves. This is the case for e.g. @class{gtk-label}.
 
     To modify the background of such widgets, you have to set the base color on
     their parent; if you want to set the background of a rectangular area around
@@ -6247,7 +6268,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
 
   A composite child is a child that is an implementation detail of the container
   it is inside and should not be visible to people using the container.
-  Composite children are not treated differently by GTK, but e. g. GUI builders
+  Composite children are not treated differently by GTK, but e.g. GUI builders
   might want to treat them in a different way.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-push-composite-child} has been deprecated since
@@ -7348,7 +7369,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       navigation is Ok and/or there is nowhere we can/should move the focus
       to.}
     @item{When @code{nil} is returned, the caller should continue with
-      keyboard navigation outside the widget, e. g. by calling the function
+      keyboard navigation outside the widget, e.g. by calling the function
       @fun{gtk-widget-child-focus} on the widget's toplevel.}
   @end{itemize}
   The default \"keynav-failed\" handler returns @em{true} for
@@ -7365,7 +7386,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
   A use case for providing an own implementation of \"keynav-failed\" (either
   by connecting to it or by overriding it) would be a row of @class{gtk-entry}
   widgets where the user should be able to navigate the entire row with the
-  cursor keys, as e. g. known from user interfaces that require entering license
+  cursor keys, as e.g. known from user interfaces that require entering license
   keys.
   @see-function{gtk-widget-child-focus}
   @see-function{gtk-widget-error-bell}"

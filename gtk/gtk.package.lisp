@@ -2304,13 +2304,14 @@ setup_tree (void)
       @about-function{gtk-cell-view-new-with-pixbuf}
       @about-function{gtk-cell-view-set-displayed-row}
       @about-function{gtk-cell-view-get-displayed-row}
-      @about-function{gtk-cell-view-get-size-of-row}
+      @about-function{gtk-cell-view-size-of-row}
       @about-function{gtk-cell-view-set-background-color}
       @about-function{gtk-cell-view-set-background-rgba}
     @end{subsection}
     @begin[GtkIconView]{subsection}
       A widget which displays a list of icons in a grid.
 
+      @about-symbol{gtk-icon-view-drop-position}
       @about-class{gtk-icon-view}
       @about-generic{gtk-icon-view-activate-on-single-click}
       @about-generic{gtk-icon-view-cell-area}
@@ -2332,35 +2333,34 @@ setup_tree (void)
       @about-function{gtk-icon-view-new}
       @about-function{gtk-icon-view-new-with-area}
       @about-function{gtk-icon-view-new-with-model}
-      @about-function{gtk-icon-view-get-path-at-pos}
+      @about-function{gtk-icon-view-path-at-pos}
       @about-function{gtk-icon-view-item-at-pos}
       @about-function{gtk-icon-view-convert-widget-to-bin-window-coords}
       @about-function{gtk-icon-view-set-cursor}
       @about-function{gtk-icon-view-get-cursor}
       @about-function{gtk-icon-view-selected-foreach}
-      @about-function{gtk-icon-view-get-cell-rect}
+      @about-function{gtk-icon-view-cell-rect}
       @about-function{gtk-icon-view-select-path}
       @about-function{gtk-icon-view-unselect-path}
       @about-function{gtk-icon-view-path-is-selected}
-      @about-function{gtk-icon-view-get-selected-items}
+      @about-function{gtk-icon-view-selected-items}
       @about-function{gtk-icon-view-select-all}
       @about-function{gtk-icon-view-unselect-all}
       @about-function{gtk-icon-view-item-activated}
       @about-function{gtk-icon-view-scroll-to-path}
-      @about-function{gtk-icon-view-get-visible-range}
+      @about-function{gtk-icon-view-visible-range}
       @about-function{gtk-icon-view-set-tooltip-item}
       @about-function{gtk-icon-view-set-tooltip-cell}
-      @about-function{gtk-icon-view-get-tooltip-context}
-      @about-function{gtk-icon-view-get-item-row}
-      @about-function{gtk-icon-view-get-item-column}
-      @about-symbol{gtk-icon-view-drop-position}
+      @about-function{gtk-icon-view-tooltip-context}
+      @about-function{gtk-icon-view-item-row}
+      @about-function{gtk-icon-view-item-column}
       @about-function{gtk-icon-view-enable-model-drag-source}
       @about-function{gtk-icon-view-enable-model-drag-dest}
       @about-function{gtk-icon-view-unset-model-drag-source}
       @about-function{gtk-icon-view-unset-model-drag-dest}
       @about-function{gtk-icon-view-set-drag-dest-item}
       @about-function{gtk-icon-view-get-drag-dest-item}
-      @about-function{gtk-icon-view-get-dest-item-at-pos}
+      @about-function{gtk-icon-view-dest-item-at-pos}
       @about-function{gtk-icon-view-create-drag-icon}
     @end{subsection}
     @begin[GtkTreeSortable]{subsection}
@@ -4644,6 +4644,7 @@ setup_tree (void)
 
       @about-symbol{gtk-dest-defaults}
       @about-symbol{gtk-target-flags}
+      @about-symbol{gtk-drag-result}
       @about-function{gtk-drag-dest-set}
       @about-function{gtk-drag-dest-set-proxy}
       @about-function{gtk-drag-dest-unset}
@@ -4814,7 +4815,6 @@ setup_tree (void)
       @about-symbol{gtk-window-position}
       @about-symbol{gtk-window-type}
       @about-symbol{gtk-sort-type}
-      @about-symbol{gtk-drag-result}
       @about-symbol{gtk-junction-sides}
       @about-symbol{gtk-border-style}
       @about-symbol{gtk-region-flags}
@@ -5081,15 +5081,12 @@ setup_tree (void)
       @about-symbol{gtk-icon-info}
       @about-symbol{gtk-icon-lookup-flags}
       @about-symbol{gtk-icon-theme-error}
-
       @about-class{gtk-icon-theme}
-
       @about-function{gtk-icon-theme-new}
       @about-function{gtk-icon-theme-default}
       @about-function{gtk-icon-theme-for-screen}
-      @about-function{gtk-icon-theme-set-screen}
-      @about-function{gtk-icon-theme-set-search-path}
-      @about-function{gtk-icon-theme-get-search-path}
+      @about-function{gtk-icon-theme-set-screen}0
+      @about-function{gtk-icon-theme-search-path}
       @about-function{gtk-icon-theme-append-search-path}
       @about-function{gtk-icon-theme-prepend-search-path}
       @about-function{gtk-icon-theme-add-resource-path}
@@ -5107,17 +5104,16 @@ setup_tree (void)
       @about-function{gtk-icon-theme-list-contexts}
       @about-function{gtk-icon-theme-list-icons}
       @about-function{gtk-icon-theme-icon-sizes}
-      @about-function{gtk-icon-theme-get-example-icon-name}
+      @about-function{gtk-icon-theme-example-icon-name}
       @about-function{gtk-icon-theme-rescan-if-needed}
       @about-function{gtk-icon-theme-add-builtin-icon}
-
       @about-function{gtk-icon-info-copy}
       @about-function{gtk-icon-info-free}
       @about-function{gtk-icon-info-new-for-pixbuf}
-      @about-function{gtk-icon-info-get-base-size}
-      @about-function{gtk-icon-info-get-base-scale}
-      @about-function{gtk-icon-info-get-filename}
-      @about-function{gtk-icon-info-get-builtin-pixbuf}
+      @about-function{gtk-icon-info-base-size}
+      @about-function{gtk-icon-info-base-scale}
+      @about-function{gtk-icon-info-filename}
+      @about-function{gtk-icon-info-builtin-pixbuf}
       @about-function{gtk-icon-info-load-icon}
       @about-function{gtk-icon-info-load-surface}
       @about-function{gtk-icon-info-load-icon-async}
@@ -5128,9 +5124,9 @@ setup_tree (void)
       @about-function{gtk-icon-info-load-symbolic-for-context-async}
       @about-function{gtk-icon-info-load-symbolic-for-context-finish}
       @about-function{gtk-icon-info-set-raw-coordinates}
-      @about-function{gtk-icon-info-get-embedded-rect}
-      @about-function{gtk-icon-info-get-attach-points}
-      @about-function{gtk-icon-info-get-display-name}
+      @about-function{gtk-icon-info-embedded-rect}
+      @about-function{gtk-icon-info-attach-points}
+      @about-function{gtk-icon-info-display-name}
       @about-function{gtk-icon-info-is-symbolic}
     @end{subsection}
   @end{section}
