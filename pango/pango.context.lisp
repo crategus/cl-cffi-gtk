@@ -30,9 +30,9 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Rendering
+;;; Contexts
 ;;;
-;;; Functions to run the rendering pipeline
+;;;     Global context object
 ;;;
 ;;; Synopsis
 ;;;

@@ -199,7 +199,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque pango-font-description "PangoFontDescription"
-  :alloc (error "PangoFontDescription can not be created from Lisp side"))
+  :alloc (error "PangoFontDescription cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-font-description atdoc:*class-name-alias*) "CStruct"
@@ -212,7 +212,7 @@
   @end{short}
   @begin{pre}
 (define-g-boxed-opaque pango-font-description \"PangoFontDescription\"
-  :alloc (error \"PangoFontDescription can not be created from Lisp side\"))
+  :alloc (error \"PangoFontDescription cannot be created from the Lisp side.\"))
   @end{pre}")
 
 (export (boxed-related-symbols 'pango-font-description))
