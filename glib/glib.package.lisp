@@ -547,7 +547,6 @@
     Strongly typed value datatype.
 
     @about-type{g-variant}
-
     @about-symbol{g-variant-class}
     @about-symbol{g-variant-iter}
     @about-symbol{g-variant-builder}

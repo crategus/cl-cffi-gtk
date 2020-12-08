@@ -109,7 +109,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (gobject::define-g-boxed-opaque g-variant-type "GVariantType"
-  :alloc (error "GVariantType can not be created from the Lisp side."))
+  :alloc (error "GVariantType cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-variant-type atdoc:*class-name-alias*) "CStruct"

@@ -138,7 +138,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (gobject:define-g-boxed-opaque g-resource "GResource"
-  :alloc (error "GResource can not be created from the Lisp side."))
+  :alloc (error "GResource cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-resource atdoc:*class-name-alias*) "CStruct"

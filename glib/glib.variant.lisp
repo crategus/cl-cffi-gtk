@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.variant.lisp
 ;;;
-;;; The documentation of this file is taken from the GLib 2.64 Reference
+;;; The documentation of this file is taken from the GLib 2.66 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -73,8 +73,8 @@
 ;;;     g_variant_new_double
 ;;;     g_variant_new_string
 ;;;
-;;;     g_variant_new_take_string ()
-;;;     g_variant_new_printf ()
+;;;     g_variant_new_take_string
+;;;     g_variant_new_printf
 ;;;
 ;;;     g_variant_new_object_path
 ;;;     g_variant_is_object_path
@@ -147,6 +147,7 @@
 ;;;     g_variant_iter_next
 ;;;     g_variant_iter_loop
 ;;;
+;;;     G_VARIANT_BUILDER_INIT
 ;;;     g_variant_builder_unref
 ;;;     g_variant_builder_ref
 ;;;     g_variant_builder_new
@@ -159,25 +160,25 @@
 ;;;     g_variant_builder_open
 ;;;     g_variant_builder_close
 ;;;
-;;;     G_VARIANT_DICT_INIT()
-;;;     g_variant_dict_unref ()
-;;;     g_variant_dict_ref ()
-;;;     g_variant_dict_new ()
-;;;     g_variant_dict_init ()
-;;;     g_variant_dict_clear ()
-;;;     g_variant_dict_contains ()
-;;;     g_variant_dict_lookup ()
-;;;     g_variant_dict_lookup_value ()
-;;;     g_variant_dict_insert ()
-;;;     g_variant_dict_insert_value ()
-;;;     g_variant_dict_remove ()
-;;;     g_variant_dict_end ()
+;;;     G_VARIANT_DICT_INIT
+;;;     g_variant_dict_unref
+;;;     g_variant_dict_ref
+;;;     g_variant_dict_new
+;;;     g_variant_dict_init
+;;;     g_variant_dict_clear
+;;;     g_variant_dict_contains
+;;;     g_variant_dict_lookup
+;;;     g_variant_dict_lookup_value
+;;;     g_variant_dict_insert
+;;;     g_variant_dict_insert_value
+;;;     g_variant_dict_remove
+;;;     g_variant_dict_end
 ;;;
 ;;;     g_variant_parse
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
 ;;;
-;;;     g_variant_parse_error_print_context ()
+;;;     g_variant_parse_error_print_context
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
@@ -191,209 +192,498 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-variant atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-variant 'type)
- "@version{2013-7-27}
+ "@version{2020-11-30}
   @begin{short}
-    @sym{g-variant} is a variant datatype; it stores a value along with
-    information about the type of that value. The range of possible values is
-    determined by the type. The type system used by @sym{g-variant} is
-    @class{g-variant-type}.
+    The @sym{g-variant} structure is a variant datatype.
   @end{short}
+  It stores a value along with information about the type of that value. The
+  range of possible values is determined by the type. The type system used by
+  @sym{g-variant} instances is @class{g-variant-type}.
 
-  @sym{g-variant} instances always have a type and a value (which are given at
-  construction time). The type and value of a @sym{g-variant} instance can never
-  change other than by the @sym{g-variant} itself being destroyed. A
-  @sym{g-variant} cannot contain a pointer.
+  @sym{g-variant} instances always have a type and a value, which are given at
+  construction time. The type and value of a @sym{g-variant} instance can never
+  change other than by the @sym{g-variant} instance itself being destroyed. A
+  @sym{g-variant} instance cannot contain a pointer.
 
-  @sym{g-variant} is reference counted using @fun{g-variant-ref} and
-  @fun{g-variant-unref}. @sym{g-variant} also has floating reference counts --
-  see @fun{g-variant-ref-sink}.
+  A @sym{g-variant} instance is reference counted using the functions
+  @fun{g-variant-ref} and @fun{g-variant-unref}. The @sym{g-variant} instance
+  also has floating reference counts -- see the function
+  @fun{g-variant-ref-sink}.
 
-  @sym{g-variant} is completely threadsafe. A @sym{g-variant} instance can be
-  concurrently accessed in any way from any number of threads without problems.
+  The @sym{g-variant} structure is completely threadsafe. A @sym{g-variant}
+  instance can be concurrently accessed in any way from any number of threads
+  without problems.
 
-  @sym{g-variant} is heavily optimised for dealing with data in serialised form.
-  It works particularly well with data located in memory-mapped files. It can
-  perform nearly all deserialisation operations in a small constant time,
-  usually touching only a single memory page. Serialised GVariant data can
-  also be sent over the network.
+  The @sym{g-variant} structure is heavily optimised for dealing with data in
+  serialised form. It works particularly well with data located in memory-mapped
+  files. It can perform nearly all deserialisation operations in a small
+  constant time, usually touching only a single memory page. Serialised
+  @sym{g-variant} data can also be sent over the network.
 
-  @sym{g-variant} is largely compatible with D-Bus. Almost all types of
-  @sym{g-variant} instances can be sent over D-Bus. See @class{g-variant-type}
-  for exceptions. (However, @sym{g-variant}'s serialisation format is not the
-  same as the serialisation format of a D-Bus message body: use
-  @code{GDBusMessage}, in the gio library, for those.)
+  The @sym{g-variant} structure is largely compatible with D-Bus. Almost all
+  types of @sym{g-variant} instances can be sent over D-Bus. See the
+  @class{g-variant-type} documentation for exceptions. However, @sym{g-variant}
+  structures serialisation format is not the same as the serialisation format of
+  a D-Bus message body: use @code{GDBusMessage}, in the gio library, for those.
 
   For space-efficiency, the @sym{g-variant} serialisation format does not
-  automatically include the variant's type or endianness, which must either be
-  implied from context (such as knowledge that a particular file format always
-  contains a little-endian @var{+g-variant-type-variant+}) or supplied
-  out-of-band (for instance, a type and/or endianness indicator could be placed
-  at the beginning of a file, network message or network stream).
+  automatically include the variant's length, type or endianness, which must
+  either be implied from context (such as knowledge that a particular file
+  format always contains a little-endian \"v\" which occupies the whole length
+  of the file) or supplied out-of-band (for instance, a length, type and/or
+  endianness indicator could be placed at the beginning of a file, network
+  message or network stream).
 
-  A @sym{g-variant}'s size is limited mainly by any lower level operating system
-  constraints, such as the number of bits in @type{g-size}. For example, it is
-  reasonable to have a 2 GB file mapped into memory with @code{GMappedFile}, and
-  call @fun{g-variant-new-from-data} on it.
+  A @sym{g-variant} instance size is limited mainly by any lower level
+  operating system constraints, such as the number of bits in @type{g-size}.
+  For example, it is reasonable to have a 2 GB file mapped into memory with
+  @code{GMappedFile}, and call the function @code{g_variant_new_from_data()} on
+  it.
 
-  For convenience to C programmers, @sym{g-variant} features powerful
-  varargs-based value construction and destruction. This feature is designed to
-  be embedded in other libraries.
+  For convenience to C programmers, the @sym{g-variant} values features
+  powerful varargs-based value construction and destruction. This feature is
+  designed to be embedded in other libraries.
 
   There is a Python-inspired text language for describing @sym{g-variant}
-  values. @sym{g-variant} includes a printer for this language and a parser with
-  type inferencing.
+  values. The @sym{g-variant} structure includes a printer for this language
+  and a parser with type inferencing.
 
   @subheading{Memory Use}
-    @sym{g-variant} tries to be quite efficient with respect to memory use. This
-    section gives a rough idea of how much memory is used by the current
-    implementation. The information here is subject to change in the future.
+  @sym{g-variant} tries to be quite efficient with respect to memory use. This
+  section gives a rough idea of how much memory is used by the current
+  implementation. The information here is subject to change in the future.
 
-    The memory allocated by @sym{g-variant} can be grouped into 4 broad
-    purposes: memory for serialised data, memory for the type information cache,
-    buffer management memory and memory for the @sym{g-variant} structure
-    itself.
+  The memory allocated by @sym{g-variant} can be grouped into 4 broad purposes:
+  memory for serialised data, memory for the type information cache, buffer
+   management memory and memory for the @sym{g-variant} structure itself.
 
   @subheading{Serialised Data Memory}
-    This is the memory that is used for storing @sym{g-variant} data in
-    serialised form. This is what would be sent over the network or what would
-    end up on disk.
+  This is the memory that is used for storing @sym{g-variant} data in serialised
+  form. This is what would be sent over the network or what would end up on
+  disk.
 
-    The amount of memory required to store a boolean is 1 byte. 16, 32 and 64
-    bit integers and double precision floating point numbers use their
-    \"natural\" size. Strings (including object path and signature strings) are
-    stored with a nul terminator, and as such use the length of the string plus
-    1 byte.
+  The amount of memory required to store a boolean is 1 byte. 16, 32 and 64
+  bit integers and double precision floating point numbers use their \"natural\"
+  size. Strings (including object path and signature strings) are stored with a
+  nul terminator, and as such use the length of the string plus 1 byte.
 
-    Maybe types use no space at all to represent the null value and use the same
-    amount of space (sometimes plus one byte) as the equivalent non-maybe-typed
-    value to represent the non-null case.
+  Maybe types use no space at all to represent the null value and use the same
+  amount of space (sometimes plus one byte) as the equivalent non-maybe-typed
+  value to represent the non-null case.
 
-    Arrays use the amount of space required to store each of their members,
-    concatenated. Additionally, if the items stored in an array are not of a
-    fixed-size (ie: strings, other arrays, etc) then an additional framing
-    offset is stored for each item. The size of this offset is either 1, 2 or 4
-    bytes depending on the overall size of the container. Additionally, extra
-    padding bytes are added as required for alignment of child values.
+  Arrays use the amount of space required to store each of their members,
+  concatenated. Additionally, if the items stored in an array are not of a
+  fixed-size (i.e. strings, other arrays, etc) then an additional framing
+  offset is stored for each item. The size of this offset is either 1, 2 or 4
+  bytes depending on the overall size of the container. Additionally, extra
+  padding bytes are added as required for alignment of child values.
 
-    Tuples (including dictionary entries) use the amount of space required to
-    store each of their members, concatenated, plus one framing offset (as per
-    arrays) for each non-fixed-sized item in the tuple, except for the last one.
-    Additionally, extra padding bytes are added as required for alignment of
-    child values.
+  Tuples (including dictionary entries) use the amount of space required to
+  store each of their members, concatenated, plus one framing offset (as per
+  arrays) for each non-fixed-sized item in the tuple, except for the last one.
+  Additionally, extra padding bytes are added as required for alignment of
+  child values.
 
-    Variants use the same amount of space as the item inside of the variant,
-    plus 1 byte, plus the length of the type string for the item inside the
-    variant.
+  Variants use the same amount of space as the item inside of the variant, plus
+  1 byte, plus the length of the type string for the item inside the variant.
 
-    As an example, consider a dictionary mapping strings to variants. In the
-    case that the dictionary is empty, 0 bytes are required for the
-    serialisation.
+  As an example, consider a dictionary mapping strings to variants. In the
+  case that the dictionary is empty, 0 bytes are required for the serialisation.
 
-    If we add an item \"width\" that maps to the int32 value of 500 then we will
-    use 4 byte to store the int32 (so 6 for the variant containing it) and 6
-    bytes for the string. The variant must be aligned to 8 after the 6 bytes of
-    the string, so that's 2 extra bytes. 6 (string) + 2 (padding) + 6 (variant)
-    is 14 bytes used for the dictionary entry. An additional 1 byte is added to
-    the array as a framing offset making a total of 15 bytes.
+  If we add an item \"width\" that maps to the int32 value of 500 then we will
+  use 4 byte to store the int32 (so 6 for the variant containing it) and 6
+  bytes for the string. The variant must be aligned to 8 after the 6 bytes of
+  the string, so that's 2 extra bytes. 6 (string) + 2 (padding) + 6 (variant)
+  is 14 bytes used for the dictionary entry. An additional 1 byte is added to
+  the array as a framing offset making a total of 15 bytes.
 
-    If we add another entry, \"title\" that maps to a nullable string that
-    happens to have a value of null, then we use 0 bytes for the null value (and
-    3 bytes for the variant to contain it along with its type string) plus 6
-    bytes for the string. Again, we need 2 padding bytes. That makes a total of
-    6 + 2 + 3 = 11 bytes.
+  If we add another entry, \"title\" that maps to a nullable string that
+  happens to have a value of null, then we use 0 bytes for the null value (and
+  3 bytes for the variant to contain it along with its type string) plus 6
+  bytes for the string. Again, we need 2 padding bytes. That makes a total of
+  6 + 2 + 3 = 11 bytes.
 
-    We now require extra padding between the two items in the array. After the
-    14 bytes of the first item, that's 2 bytes required. We now require 2
-    framing offsets for an extra two bytes. 14 + 2 + 11 + 2 = 29 bytes to encode
-    the entire two-item dictionary.
+  We now require extra padding between the two items in the array. After the
+  14 bytes of the first item, that's 2 bytes required. We now require 2
+  framing offsets for an extra two bytes. 14 + 2 + 11 + 2 = 29 bytes to encode
+  the entire two-item dictionary.
 
   @subheading{Type Information Cache}
-    For each @sym{g-variant} type that currently exists in the program a type
-    information structure is kept in the type information cache. The type
-    information structure is required for rapid deserialisation.
+  For each @sym{g-variant} type that currently exists in the program a type
+  information structure is kept in the type information cache. The type
+  information structure is required for rapid deserialisation.
 
-    Continuing with the above example, if a GVariant exists with the type
-    \"a{sv@}\" then a type information struct will exist for \"a{sv@}\",
-    \"{sv@}\", \"s\", and \"v\". Multiple uses of the same type will share the
-    same type information. Additionally, all single-digit types are stored in
-    read-only static memory and do not contribute to the writable memory
-    footprint of a program using @sym{g-variant}.
+  Continuing with the above example, if a GVariant exists with the type
+  \"a{sv@}\" then a type information struct will exist for \"a{sv@}\",
+  \"{sv@}\", \"s\", and \"v\". Multiple uses of the same type will share the
+  same type information. Additionally, all single-digit types are stored in
+  read-only static memory and do not contribute to the writable memory
+  footprint of a program using @sym{g-variant}.
 
-    Aside from the type information structures stored in read-only memory, there
-    are two forms of type information. One is used for container types where
-    there is a single element type: arrays and maybe types. The other is used
-    for container types where there are multiple element types: tuples and
-    dictionary entries.
+  Aside from the type information structures stored in read-only memory, there
+  are two forms of type information. One is used for container types where
+  there is a single element type: arrays and maybe types. The other is used
+  for container types where there are multiple element types: tuples and
+  dictionary entries.
 
-    Array type info structures are 6 * @code{sizeof (void *)}, plus the memory
-    required to store the type string itself. This means that on 32 bit systems,
-    the cache entry for \"a{sv@}\" would require 30 bytes of memory (plus malloc
-    overhead).
+  Array type info structures are 6 * @code{sizeof (void *)}, plus the memory
+  required to store the type string itself. This means that on 32 bit systems,
+  the cache entry for \"a{sv@}\" would require 30 bytes of memory (plus malloc
+  overhead).
 
-    Tuple type info structures are 6 * @code{sizeof (void *)}, plus 4 *
-    @code{sizeof (void *)} for each item in the tuple, plus the memory required
-    to store the type string itself. A 2-item tuple, for example, would have a
-    type information structure that consumed writable memory in the size of 14
-    * @code{sizeof (void *)} (plus type string) This means that on 32 bit
-    systems, the cache entry for \"{sv@}\" would require 61 bytes of memory
-    (plus malloc overhead).
+  Tuple type info structures are 6 * @code{sizeof (void *)}, plus 4 *
+  @code{sizeof (void *)} for each item in the tuple, plus the memory required
+  to store the type string itself. A 2-item tuple, for example, would have a
+  type information structure that consumed writable memory in the size of 14
+  * @code{sizeof (void *)} (plus type string) This means that on 32 bit
+  systems, the cache entry for \"{sv@}\" would require 61 bytes of memory
+  (plus malloc overhead).
 
-    This means that in total, for our \"a{sv@}\" example, 91 bytes of type
-    information would be allocated.
+  This means that in total, for our \"a{sv@}\" example, 91 bytes of type
+  information would be allocated.
 
-    The type information cache, additionally, uses a @code{GHashTable} to store
-    and lookup the cached items and stores a pointer to this hash table in
-    static storage. The hash table is freed when there are zero items in the
-    type cache.
+  The type information cache, additionally, uses a @code{GHashTable} to store
+  and lookup the cached items and stores a pointer to this hash table in
+  static storage. The hash table is freed when there are zero items in the
+  type cache.
 
-    Although these sizes may seem large it is important to remember that a
-    program will probably only have a very small number of different types of
-    values in it and that only one type information structure is required for
-    many different values of the same type.
+  Although these sizes may seem large it is important to remember that a
+  program will probably only have a very small number of different types of
+  values in it and that only one type information structure is required for
+  many different values of the same type.
 
   @subheading{Buffer Management Memory}
-    @sym{g-variant} uses an internal buffer management structure to deal with
-    the various different possible sources of serialised data that it uses. The
-    buffer is responsible for ensuring that the correct call is made when the
-    data is no longer in use by @sym{g-variant}. This may involve a @fun{g-free}
-    or a @fun{g-slice-free} or even @fun{g-mapped-file-unref}.
+  @sym{g-variant} uses an internal buffer management structure to deal with
+  the various different possible sources of serialised data that it uses. The
+  buffer is responsible for ensuring that the correct call is made when the
+  data is no longer in use by a @sym{g-variant} instance. This may involve the
+  functions @fun{g-free} or a @code{g_slice_free()} or even
+  @code{g_mapped_file_unref()}.
 
-    One buffer management structure is used for each chunk of serialised data.
-    The size of the buffer management structure is 4 * @code{(void *)}. On
-    32 bit systems, that's 16 bytes.
+  One buffer management structure is used for each chunk of serialised data.
+  The size of the buffer management structure is 4 * @code{(void *)}. On
+  32 bit systems, that's 16 bytes.
 
   @subheading{GVariant structure}
-    The size of a @sym{g-variant} structure is 6 * @code{(void *)}. On 32 bit
-    systems, that's 24 bytes.
+  The size of a @sym{g-variant} structure is 6 * @code{(void *)}. On 32 bit
+  systems, that's 24 bytes.
 
-    @sym{g-variant} structures only exist if they are explicitly created with
-    API calls. For example, if a @sym{g-variant} is constructed out of
-    serialised data for the example given above (with the dictionary) then
-    although there are 9 individual values that comprise the entire dictionary
-    (two keys, two values, two variants containing the values, two dictionary
-    entries, plus the dictionary itself), only 1 @sym{g-variant} instance exists
-    -- the one referring to the dictionary.
+  @sym{g-variant} structures only exist if they are explicitly created with
+  API calls. For example, if a @sym{g-variant} is constructed out of
+  serialised data for the example given above (with the dictionary) then
+  although there are 9 individual values that comprise the entire dictionary
+  (two keys, two values, two variants containing the values, two dictionary
+  entries, plus the dictionary itself), only 1 @sym{g-variant} instance exists
+  -- the one referring to the dictionary.
 
-    If calls are made to start accessing the other values then @sym{g-variant}
-    instances will exist for those values only for as long as they are in use
-    (i.e. until you call the function @fun{g-variant-unref}). The type
-    information is shared. The serialised data and the buffer management
-    structure for that serialised data is shared by the child.
+  If calls are made to start accessing the other values then @sym{g-variant}
+  instances will exist for those values only for as long as they are in use
+  (i.e. until you call the function @fun{g-variant-unref}). The type
+  information is shared. The serialised data and the buffer management
+  structure for that serialised data is shared by the child.
 
   @subheading{Summary}
-    To put the entire example together, for our dictionary mapping strings to
-    variants (with two entries, as given above), we are using 91 bytes of memory
-    for type information, 29 byes of memory for the serialised data, 16 bytes
-    for buffer management and 24 bytes for the @sym{g-variant} instance, or a
-    total of 160 bytes, plus malloc overhead. If we were to use the function
-    @fun{g-variant-get-child-value} to access the two dictionary entries, we
-    would use an additional 48 bytes. If we were to have other dictionaries of
-    the same type, we would use more memory for the serialised data and buffer
-    management for those dictionaries, but the type information would be shared.
+  To put the entire example together, for our dictionary mapping strings to
+  variants (with two entries, as given above), we are using 91 bytes of memory
+  for type information, 29 byes of memory for the serialised data, 16 bytes
+  for buffer management and 24 bytes for the @sym{g-variant} instance, or a
+  total of 160 bytes, plus malloc overhead. If we were to use the function
+  @code{g_variant_get_child_value()} to access the two dictionary entries, we
+  would use an additional 48 bytes. If we were to have other dictionaries of
+  the same type, we would use more memory for the serialised data and buffer
+  management for those dictionaries, but the type information would be shared.
+  @see-class{g-variant-type}
   @see-function{g-variant-ref}
   @see-function{g-variant-unref}")
 
 (export 'g-variant)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GVariantClass
+;;; ----------------------------------------------------------------------------
+
+(defcenum g-variant-class
+  (:boolean     #.(char-code #\b))
+  (:byte        #.(char-code #\y))
+  (:int16       #.(char-code #\n))
+  (:uint16      #.(char-code #\q))
+  (:int32       #.(char-code #\i))
+  (:uint32      #.(char-code #\u))
+  (:int64       #.(char-code #\x))
+  (:uint64      #.(char-code #\t))
+  (:handle      #.(char-code #\h))
+  (:double      #.(char-code #\d))
+  (:string      #.(char-code #\s))
+  (:object-path #.(char-code #\o))
+  (:signature   #.(char-code #\g))
+  (:variant     #.(char-code #\v))
+  (:maybe       #.(char-code #\m))
+  (:array       #.(char-code #\a))
+  (:tuple       #.(char-code #\())
+  (:dict-entry  #.(char-code #\{)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-variant-class atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'g-variant-class atdoc:*external-symbols*)
+ "@version{2020-12-1}
+  @short{The range of possible top-level types of @type{g-variant} instances.}
+  @begin{pre}
+(defcenum g-variant-class
+  (:boolean     #.(char-code #\b))
+  (:byte        #.(char-code #\y))
+  (:int16       #.(char-code #\n))
+  (:uint16      #.(char-code #\q))
+  (:int32       #.(char-code #\i))
+  (:uint32      #.(char-code #\u))
+  (:int64       #.(char-code #\x))
+  (:uint64      #.(char-code #\t))
+  (:handle      #.(char-code #\h))
+  (:double      #.(char-code #\d))
+  (:string      #.(char-code #\s))
+  (:object-path #.(char-code #\o))
+  (:signature   #.(char-code #\g))
+  (:variant     #.(char-code #\v))
+  (:maybe       #.(char-code #\m))
+  (:array       #.(char-code #\a))
+  (:tuple       #.(char-code #\())
+  (:dict-entry  #.(char-code #\{)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:boolean]{The @type{g-variant} is a boolean.}
+    @entry[:byte]{The @type{g-variant} is a byte.}
+    @entry[:int16]{The @type{g-variant} is a signed 16 bit integer.}
+    @entry[:uint16]{The @type{g-variant} is an unsigned 16 bit integer.}
+    @entry[:int32]{The @type{g-variant} is a signed 32 bit integer.}
+    @entry[:unit32]{The @type{g-variant} is an unsigned 32 bit integer.}
+    @entry[:int64]{The @type{g-variant} is a signed 64 bit integer.}
+    @entry[:uint64]{The @type{g-variant} is an unsigned 64 bit integer.}
+    @entry[:handle]{The @type{g-variant} is a file handle index.}
+    @entry[:double]{The @type{g-variant} is a double precision floating point
+      value.}
+    @entry[:string]{The @type{g-variant} is a normal string.}
+    @entry[:object-path]{The @type{g-variant} is a D-Bus object path string.}
+    @entry[:signature]{The @type{g-variant} is a D-Bus signature string.}
+    @entry[:variant]{The @type{g-variant} is a variant.}
+    @entry[:maybe]{The @type{g-variant} is a maybe-typed value.}
+    @entry[:array]{The @type{g-variant} is an array.}
+    @entry[:tuple]{The @type{g-variant} is a tuple.}
+    @entry[:dict-entry]{The @type{g-variant} is a dictionary entry.}
+  @end{table}
+  @see-type{g-variant}")
+
+(export 'g-variant-class)
+
+;;; ----------------------------------------------------------------------------
+;;; struct GVariantIter
+;;;
+;;; struct GVariantIter {
+;;; };
+;;;
+;;; GVariantIter is an opaque data structure and can only be accessed using the
+;;; following functions.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct GVariantBuilder
+;;;
+;;; struct GVariantBuilder {
+;;; };
+;;;
+;;; A utility type for constructing container-type GVariant instances.
+;;;
+;;; This is an opaque structure and may only be accessed using the following
+;;; functions.
+;;;
+;;; GVariantBuilder is not threadsafe in any way. Do not attempt to access it
+;;; from more than one thread.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct GVariantDict
+;;;
+;;; struct GVariantDict {
+;;; };
+;;;
+;;; GVariantDict is a mutable interface to GVariant dictionaries.
+;;;
+;;; It can be used for doing a sequence of dictionary lookups in an efficient
+;;; way on an existing GVariant dictionary or it can be used to construct new
+;;; dictionaries with a hashtable-like interface. It can also be used for taking
+;;; existing dictionaries and modifying them in order to create new ones.
+;;;
+;;; GVariantDict can only be used with G_VARIANT_TYPE_VARDICT dictionaries.
+;;;
+;;; It is possible to use GVariantDict allocated on the stack or on the heap.
+;;; When using a stack-allocated GVariantDict, you begin with a call to
+;;; g_variant_dict_init() and free the resources with a call to
+;;; g_variant_dict_clear().
+;;;
+;;; Heap-allocated GVariantDict follows normal refcounting rules: you allocate
+;;; it with g_variant_dict_new() and use g_variant_dict_ref() and
+;;; g_variant_dict_unref().
+;;;
+;;; g_variant_dict_end() is used to convert the GVariantDict back into a
+;;; dictionary-type GVariant. When used with stack-allocated instances, this
+;;; also implicitly frees all associated memory, but for heap-allocated
+;;; instances, you must still call g_variant_dict_unref() afterwards.
+;;;
+;;; You will typically want to use a heap-allocated GVariantDict when you expose
+;;; it as part of an API. For most other uses, the stack-allocated form will be
+;;; more convenient.
+;;;
+;;; Consider the following two examples that do the same thing in each style:
+;;; take an existing dictionary and look up the "count" uint32 key, adding 1 to
+;;; it if it is found, or returning an error if the key is not found. Each
+;;; returns the new dictionary as a floating GVariant.
+;;;
+;;; Using a stack-allocated GVariantDict
+;;;
+;;; GVariant *
+;;; add_to_count (GVariant  *orig,
+;;;               GError   **error)
+;;; {
+;;;   GVariantDict dict;
+;;;   guint32 count;
+;;;
+;;;   g_variant_dict_init (&dict, orig);
+;;;   if (!g_variant_dict_lookup (&dict, "count", "u", &count))
+;;;     {
+;;;       g_set_error (...);
+;;;       g_variant_dict_clear (&dict);
+;;;       return NULL;
+;;;     }
+;;;
+;;;   g_variant_dict_insert (&dict, "count", "u", count + 1);
+;;;
+;;;   return g_variant_dict_end (&dict);
+;;; }
+;;;
+;;; Using heap-allocated GVariantDict
+;;;
+;;; GVariant *
+;;; add_to_count (GVariant  *orig,
+;;;               GError   **error)
+;;; {
+;;;   GVariantDict *dict;
+;;;   GVariant *result;
+;;;   guint32 count;
+;;;
+;;;   dict = g_variant_dict_new (orig);
+;;;
+;;;   if (g_variant_dict_lookup (dict, "count", "u", &count))
+;;;     {
+;;;       g_variant_dict_insert (dict, "count", "u", count + 1);
+;;;       result = g_variant_dict_end (dict);
+;;;     }
+;;;   else
+;;;     {
+;;;       g_set_error (...);
+;;;       result = NULL;
+;;;     }
+;;;
+;;;   g_variant_dict_unref (dict);
+;;;
+;;;   return result;
+;;; }
+;;;
+;;; Since 2.40
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GVariantParseError
+;;;
+;;; typedef enum {
+;;;   G_VARIANT_PARSE_ERROR_FAILED,
+;;;   G_VARIANT_PARSE_ERROR_BASIC_TYPE_EXPECTED,
+;;;   G_VARIANT_PARSE_ERROR_CANNOT_INFER_TYPE,
+;;;   G_VARIANT_PARSE_ERROR_DEFINITE_TYPE_EXPECTED,
+;;;   G_VARIANT_PARSE_ERROR_INPUT_NOT_AT_END,
+;;;   G_VARIANT_PARSE_ERROR_INVALID_CHARACTER,
+;;;   G_VARIANT_PARSE_ERROR_INVALID_FORMAT_STRING,
+;;;   G_VARIANT_PARSE_ERROR_INVALID_OBJECT_PATH,
+;;;   G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE,
+;;;   G_VARIANT_PARSE_ERROR_INVALID_TYPE_STRING,
+;;;   G_VARIANT_PARSE_ERROR_NO_COMMON_TYPE,
+;;;   G_VARIANT_PARSE_ERROR_NUMBER_OUT_OF_RANGE,
+;;;   G_VARIANT_PARSE_ERROR_NUMBER_TOO_BIG,
+;;;   G_VARIANT_PARSE_ERROR_TYPE_ERROR,
+;;;   G_VARIANT_PARSE_ERROR_UNEXPECTED_TOKEN,
+;;;   G_VARIANT_PARSE_ERROR_UNKNOWN_KEYWORD,
+;;;   G_VARIANT_PARSE_ERROR_UNTERMINATED_STRING_CONSTANT,
+;;;   G_VARIANT_PARSE_ERROR_VALUE_EXPECTED,
+;;;   G_VARIANT_PARSE_ERROR_RECURSION
+;;; } GVariantParseError;
+;;;
+;;; Error codes returned by parsing text-format GVariants.
+;;;
+;;; G_VARIANT_PARSE_ERROR_FAILED
+;;;     generic error (unused)
+;;;
+;;; G_VARIANT_PARSE_ERROR_BASIC_TYPE_EXPECTED
+;;;     a non-basic GVariantType was given where a basic type was expected
+;;;
+;;; G_VARIANT_PARSE_ERROR_CANNOT_INFER_TYPE
+;;;     cannot infer the GVariantType
+;;;
+;;; G_VARIANT_PARSE_ERROR_DEFINITE_TYPE_EXPECTED
+;;;     an indefinite GVariantType was given where a definite type was expected
+;;;
+;;; G_VARIANT_PARSE_ERROR_INPUT_NOT_AT_END
+;;;     extra data after parsing finished
+;;;
+;;; G_VARIANT_PARSE_ERROR_INVALID_CHARACTER
+;;;     invalid character in number or unicode escape
+;;;
+;;; G_VARIANT_PARSE_ERROR_INVALID_FORMAT_STRING
+;;;     not a valid GVariant format string
+;;;
+;;; G_VARIANT_PARSE_ERROR_INVALID_OBJECT_PATH
+;;;     not a valid object path
+;;;
+;;; G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE
+;;;     not a valid type signature
+;;;
+;;; G_VARIANT_PARSE_ERROR_INVALID_TYPE_STRING
+;;;     not a valid GVariant type string
+;;;
+;;; G_VARIANT_PARSE_ERROR_NO_COMMON_TYPE
+;;;     could not find a common type for array entries
+;;;
+;;; G_VARIANT_PARSE_ERROR_NUMBER_OUT_OF_RANGE
+;;;     the numerical value is out of range of the given type
+;;;
+;;; G_VARIANT_PARSE_ERROR_NUMBER_TOO_BIG
+;;;     the numerical value is out of range for any type
+;;;
+;;; G_VARIANT_PARSE_ERROR_TYPE_ERROR
+;;;     cannot parse as variant of the specified type
+;;;
+;;; G_VARIANT_PARSE_ERROR_UNEXPECTED_TOKEN
+;;;     an unexpected token was encountered
+;;;
+;;; G_VARIANT_PARSE_ERROR_UNKNOWN_KEYWORD
+;;;     an unknown keyword was encountered
+;;;
+;;; G_VARIANT_PARSE_ERROR_UNTERMINATED_STRING_CONSTANT
+;;;     unterminated string constant
+;;;
+;;; G_VARIANT_PARSE_ERROR_VALUE_EXPECTED
+;;;     no value given
+;;;
+;;; G_VARIANT_PARSE_ERROR_RECURSION
+;;;     variant was too deeply nested; GVariant is only guaranteed to handle
+;;;     nesting up to 64 levels (Since 2.64)
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_VARIANT_PARSE_ERROR
+;;;
+;;; #define G_VARIANT_PARSE_ERROR (g_variant_parser_get_error_quark ())
+;;;
+;;; Error domain for GVariant text format parsing. Specific error codes are not
+;;; currently defined for this domain. See GError for information on error
+;;; domains.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_unref ()
@@ -401,14 +691,15 @@
 
 (defcfun ("g_variant_unref" g-variant-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a @type{g-variant}}
+ "@version{2020-11-30}
+  @argument[value]{a @type{g-variant} instance}
   @begin{short}
-    Decreases the reference count of @arg{value}. When its reference count
-    drops to 0, the memory used by the variant is freed.
+    Decreases the reference count of @arg{value}.
   @end{short}
-
-  Since 2.24"
+  When its reference count drops to 0, the memory used by the variant is freed.
+  @see-type{g-variant}
+  @see-function{g-variant-ref}
+  @see-function{g-variant-ref-sink}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-unref)
@@ -419,12 +710,13 @@
 
 (defcfun ("g_variant_ref" g-variant-ref) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a @type{g-variant}}
+ "@version{2020-11-30}
+  @argument[value]{a @type{g-variant} instance}
   @return{The same @arg{value}.}
   @short{Increases the reference count of @arg{value}.}
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-function{g-variant-unref}
+  @see-function{g-variant-ref-sink}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-ref)
@@ -435,33 +727,36 @@
 
 (defcfun ("g_variant_ref_sink" g-variant-ref-sink) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a @type{g-variant}}
+ "@version{2020-11-30}
+  @argument[value]{a @type{g-variant} instance}
   @return{The same @arg{value}.}
   @begin{short}
-    @type{g-variant} uses a floating reference count system. All functions
-    with names starting with @sym{g_variant_new_} return floating references.
+    The @type{g-variant} structure uses a floating reference count system. All
+    functions with names starting with @sym{g_variant_new_} return floating
+    references.
   @end{short}
 
-  Calling @fun{g-variant-ref-sink} on a @type{g-variant} with a floating
-  reference will convert the floating reference into a full reference. Calling
-  @fun{g-variant-ref-sink} on a non-floating @type{g-variant} results in an
-  additional normal reference being added.
+  Calling the function @sym{g-variant-ref-sink} on a @type{g-variant} instance
+  with a floating reference will convert the floating reference into a full
+  reference. Calling the function @sym{g-variant-ref-sink} on a non-floating
+  @type{g-variant} instance results in an additional normal reference being
+  added.
 
-  In other words, if the @arg{value} is floating, then this call
+  In other words, if @arg{value} is floating, then this call
   \"assumes ownership\" of the floating reference, converting it to a normal
-  reference. If the @arg{value} is not floating, then this call adds a new
-  normal reference increasing the reference count by one.
+  reference. If @arg{value} is not floating, then this call adds a new normal
+  reference increasing the reference count by one.
 
   All calls that result in a @type{g-variant} instance being inserted into a
-  container will call @fun{g-variant-ref-sink} on the instance. This means that
-  if the value was just created (and has only its floating reference) then the
-  container will assume sole ownership of the value at that point and the caller
-  will not need to unreference it. This makes certain common styles of
-  programming much easier while still maintaining normal refcounting semantics
-  in situations where values are not floating.
-
-  Since 2.24"
+  container will call the function @sym{g-variant-ref-sink} on the instance.
+  This means that if the value was just created (and has only its floating
+  reference) then the container will assume sole ownership of the value at that
+  point and the caller will not need to unreference it. This makes certain
+  common styles of programming much easier while still maintaining normal
+  refcounting semantics in situations where values are not floating.
+  @see-type{g-variant}
+  @see-function{g-variant-ref}
+  @see-function{g-variant-unref}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-ref-sink)
@@ -472,9 +767,9 @@
 
 (defcfun ("g_variant_is_floating" g-variant-is-floating) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[value]{a @type{g-variant}}
-  @return{Whether @arg{value} is floating.}
+ "@version{2020-11-30}
+  @argument[value]{a @type{g-variant} instance}
+  @return{A boolean whether @arg{value} is floating.}
   @begin{short}
     Checks whether @arg{value} has a floating reference count.
   @end{short}
@@ -486,8 +781,7 @@
 
   See the function @fun{g-variant-ref-sink} for more information about floating
   reference counts.
-
-  Since 2.26
+  @see-type{g-variant}
   @see-function{g-variant-ref-sink}
   @see-function{g-variant-take-ref}"
   (value (:pointer (:struct g-variant))))
@@ -501,8 +795,8 @@
 (defcfun ("g_variant_take_ref" g-variant-take-ref)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[value]{a @type{g-variant}}
+ "@version{2020-11-30}
+  @argument[value]{a @type{g-variant} instance}
   @return{The same @arg{value}.}
   @begin{short}
     If @arg{value} is floating, sink it. Otherwise, do nothing.
@@ -513,10 +807,10 @@
   references, but there is one specific scenario where this function is helpful.
 
   The situation where this function is helpful is when creating an API that
-  allows the user to provide a callback function that returns a
-  @type{g-variant}. We certainly want to allow the user the flexibility to
-  return a non-floating reference from this callback (for the case where the
-  value that is being returned already exists).
+  allows the user to provide a callback function that returns a @type{g-variant}
+  instance. We certainly want to allow the user the flexibility to return a
+  non-floating reference from this callback (for the case where the value that
+  is being returned already exists).
 
   At the same time, the style of the @type{g-variant} API makes it likely that
   for newly-created @type{g-variant} instances, the user can be saved some
@@ -550,7 +844,7 @@
 (defcfun ("g_variant_get_type" g-variant-type)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
+ "@version{2020-11-30}
   @argument[value]{a @type{g-variant} instance}
   @return{A @class{g-variant-type} structure.}
   @begin{short}
@@ -570,15 +864,15 @@
 
 (defcfun ("g_variant_get_type_string" g-variant-type-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
+ "@version{2020-11-30}
   @argument[value]{a @type{g-variant} instance}
   @return{The type string for the type of @arg{value}.}
   @begin{short}
     Returns the type string of @arg{value}.
   @end{short}
   Unlike the result of calling the function @fun{g-variant-type-peek-string},
-  this string is nul-terminated. This string belongs to @type{g-variant} and
-  must not be freed.
+  this string is nul-terminated. This string belongs to the @type{g-variant}
+  instance and must not be freed.
 
   @see-type{g-variant}
   @see-function{g-variant-type-peek-string}"
@@ -592,15 +886,15 @@
 
 (defcfun ("g_variant_is_of_type" g-variant-is-of-type) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-11-30}
   @argument[value]{a @type{g-variant} instance}
-  @argument[type]{a @class{g-variant-type}}
-  @return{@em{True} if the type of @arg{value} matches @arg{type}.}
+  @argument[variant-type]{a @class{g-variant-type} structure}
+  @return{@em{True} if the type of @arg{value} matches @arg{variant-type}.}
   @begin{short}
-    Checks if a @arg{value} has a type matching the provided @arg{type}.
+    Checks if a @arg{value} has a type matching the provided @arg{variant-type}.
   @end{short}
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-class{g-varian-type}"
   (value (:pointer (:struct g-variant)))
   (type (gobject:g-boxed-foreign g-variant-type)))
 
@@ -612,14 +906,13 @@
 
 (defcfun ("g_variant_is_container" g-variant-is-container) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @type{g-variant} instance}
   @return{@em{True} if @arg{value} is a container.}
   @begin{short}
     Checks if @arg{value} is a container.
   @end{short}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-is-container)
@@ -630,20 +923,20 @@
 
 (defcfun ("g_variant_compare" g-variant-compare) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[one]{a basic-typed @type{g-variant} instance}
-  @argument[two]{a @type{g-variant} instance of the same type}
+ "@version{2020-12-1}
+  @argument[value-1]{a basic-typed @type{g-variant} instance}
+  @argument[value-2]{a @type{g-variant} instance of the same type}
   @return{Negative value if a < b; zero if a = b; positive value if a > b.}
   @begin{short}
-    Compares @arg{one} and @arg{two}.
+    Compares @arg{value-1} and @arg{value-2}.
   @end{short}
 
-  The types of @arg{one} and @arg{two} are @code{:pointer} only to allow use of
-  this function with @code{GTree}, @code{GPtrArray}, etc. They must each be a
-  @type{g-variant}.
+  The types of @arg{value-1} and @arg{value-2} are @code{:pointer} only to
+  allow use of this function with @code{GTree}, @code{GPtrArray}, etc. They
+  must each be a @type{g-variant} instance.
 
-  Comparison is only defined for basic types (i.e.: booleans, numbers, strings).
-  For booleans, @code{nil} is less than @em{true}. Numbers are ordered in the
+  Comparison is only defined for basic types (i.e. booleans, numbers, strings).
+  For booleans, @em{false} is less than @em{true}. Numbers are ordered in the
   usual way. Strings are in ASCII lexographical order.
 
   It is a programmer error to attempt to compare container values or two
@@ -651,90 +944,16 @@
   compare a 32-bit signed integer with a 32-bit unsigned integer. Also note
   that this function is not particularly well-behaved when it comes to
   comparison of doubles; in particular, the handling of incomparable values
-  (i.e.: NaN) is undefined.
+  (i.e. NaN) is undefined.
 
-  If you only require an equality comparison, @fun{g-variant-equal} is more
-  general.
-
-  Since 2.26"
-  (one :pointer)
-  (two :pointer))
+  If you only require an equality comparison, the function @fun{g-variant-equal}
+  is more general.
+  @see-type{g-variant}
+  @see-function{g-variant-equal}"
+  (value-1 (:pointer (:struct g-variant)))
+  (value-2 (:pointer (:struct g-variant))))
 
 (export 'g-variant-compare)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GVariantClass
-;;; ----------------------------------------------------------------------------
-
-(defcenum g-variant-class
-  (:boolean     #.(char-code #\b))
-  (:byte        #.(char-code #\y))
-  (:int16       #.(char-code #\n))
-  (:uint16      #.(char-code #\q))
-  (:int32       #.(char-code #\i))
-  (:uint32      #.(char-code #\u))
-  (:int64       #.(char-code #\x))
-  (:uint64      #.(char-code #\t))
-  (:handle      #.(char-code #\h))
-  (:double      #.(char-code #\d))
-  (:string      #.(char-code #\s))
-  (:object-path #.(char-code #\o))
-  (:signature   #.(char-code #\g))
-  (:variant     #.(char-code #\v))
-  (:maybe       #.(char-code #\m))
-  (:array       #.(char-code #\a))
-  (:tuple       #.(char-code #\())
-  (:dict-entry  #.(char-code #\{)))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-variant-class atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'g-variant-class atdoc:*external-symbols*)
- "@version{2013-2-7}
-  @short{The range of possible top-level types of @type{g-variant} instances.}
-  Since 2.24
-  @begin{pre}
-(defcenum g-variant-class
-  (:boolean     #.(char-code #\b))
-  (:byte        #.(char-code #\y))
-  (:int16       #.(char-code #\n))
-  (:uint16      #.(char-code #\q))
-  (:int32       #.(char-code #\i))
-  (:uint32      #.(char-code #\u))
-  (:int64       #.(char-code #\x))
-  (:uint64      #.(char-code #\t))
-  (:handle      #.(char-code #\h))
-  (:double      #.(char-code #\d))
-  (:string      #.(char-code #\s))
-  (:object-path #.(char-code #\o))
-  (:signature   #.(char-code #\g))
-  (:variant     #.(char-code #\v))
-  (:maybe       #.(char-code #\m))
-  (:array       #.(char-code #\a))
-  (:tuple       #.(char-code #\())
-  (:dict-entry  #.(char-code #\{)))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:boolean]{The @type{g-variant} is a boolean.}
-    @entry[:byte]{The @type{g-variant} is a byte.}
-    @entry[:int16]{The @type{g-variant} is a signed 16 bit integer.}
-    @entry[:uint16]{The @type{g-variant} is an unsigned 16 bit integer.}
-    @entry[:int32]{The @type{g-variant} is a signed 32 bit integer.}
-    @entry[:unit32]{The @type{g-variant} is an unsigned 32 bit integer.}
-    @entry[:int64]{The @type{g-variant} is a signed 64 bit integer.}
-    @entry[:uint64]{The @type{g-variant} is an unsigned 64 bit integer.}
-    @entry[:handle]{The @type{g-variant} is a file handle index.}
-    @entry[:double]{The @type{g-variant} is a double precision floating point value.}
-    @entry[:string]{The @type{g-variant} is a normal string.}
-    @entry[:object-path]{The @type{g-variant} is a D-Bus object path string.}
-    @entry[:signature]{The @type{g-variant} is a D-Bus signature string.}
-    @entry[:variant]{The @type{g-variant} is a variant.}
-    @entry[:maybe]{The @type{g-variant} is a maybe-typed value.}
-    @entry[:array]{The @type{g-variant} is an array.}
-    @entry[:tuple]{The @type{g-variant} is a tuple.}
-    @entry[:dict-entry]{The @type{g-variant} is a dictionary entry.}
-  @end{table}")
-
-(export 'g-variant-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_classify ()
@@ -742,13 +961,14 @@
 
 (defcfun ("g_variant_classify" g-variant-classify) g-variant-class
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @type{g-variant} instance}
-  @return{The @symbol{g-variant-class} of value.}
+  @return{The @symbol{g-variant-class} value of @arg{value}.}
   @begin{short}
     Classifies @arg{value} according to its top-level type.
   @end{short}
-  Since 2.24"
+  @see-type{g-variant}
+  @see-symbol{g-variant-class}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-classify)
@@ -764,8 +984,8 @@
 ;;; from a type-compatibility standpoint. format_string is assumed to be a valid
 ;;; format string (from a syntactic standpoint).
 ;;;
-;;; If copy_only is TRUE then this function additionally checks that it would be
-;;; safe to call g_variant_unref() on value immediately after the call to
+;;; If copy_only is TRUE then this function additionally checks that it would
+;;; be safe to call g_variant_unref() on value immediately after the call to
 ;;; g_variant_get() without invalidating the result. This is only possible if
 ;;; deep copies are made (ie: there are no pointers to the data inside of the
 ;;; soon-to-be-freed GVariant instance). If this check fails then a g_critical()
@@ -831,8 +1051,8 @@
 ;;; The API is more general than g_variant_get() to allow a wider range of
 ;;; possible uses.
 ;;;
-;;; format_string must still point to a valid format string, but it only need to
-;;; be nul-terminated if endptr is NULL. If endptr is non-NULL then it is
+;;; format_string must still point to a valid format string, but it only need
+;;; to be nul-terminated if endptr is NULL. If endptr is non-NULL then it is
 ;;; updated to point to the first character past the end of the format string.
 ;;;
 ;;; app is a pointer to a va_list. The arguments, according to format_string,
@@ -948,15 +1168,14 @@
 (defcfun ("g_variant_new_boolean" g-variant-new-boolean)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gboolean} value}
   @return{A floating reference to a new boolean @type{g-variant} instance.}
   @begin{short}
     Creates a new boolean @type{g-variant} instance -- either @em{true} or
-    @code{nil}.
+    @em{false}.
   @end{short}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :boolean))
 
 (export 'g-variant-new-boolean)
@@ -968,12 +1187,11 @@
 (defcfun ("g_variant_new_byte" g-variant-new-byte)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{guint8} value}
   @return{A floating reference to a new byte @type{g-variant} instance.}
   @short{Creates a new byte @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :uchar))
 
 (export 'g-variant-new-byte)
@@ -985,13 +1203,11 @@
 (defcfun ("g_variant_new_int16" g-variant-new-int16)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gint16} value}
-  @return{A floating reference to a new @code{int16} @type{g-variant}
-    instance.}
+  @return{A floating reference to a new @code{int16} @type{g-variant} instance.}
   @short{Creates a new @code{int16} @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :int16))
 
 (export 'g-variant-new-int16)
@@ -1003,12 +1219,13 @@
 (defcfun ("g_variant_new_uint16" g-variant-new-uint16)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{guint16} value}
-  @return{A floating reference to a new @code{uint16} @type{g-variant}
-    instance.}
+  @begin{return}
+    A floating reference to a new @code{uint16} @type{g-variant} instance.
+  @end{return}
   @short{Creates a new @code{uint16} @type{g-variant} instance.}
-  Since 2.24"
+  @see-type{g-variant}"
   (value :uint16))
 
 (export 'g-variant-new-uint16)
@@ -1020,13 +1237,11 @@
 (defcfun ("g_variant_new_int32" g-variant-new-int32)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gint32} value}
-  @return{A floating reference to a new @code{int32} @type{g-variant}
-    instance.}
+  @return{A floating reference to a new @code{int32} @type{g-variant} instance.}
   @short{Creates a new @code{int32} @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :int32))
 
 (export 'g-variant-new-int32)
@@ -1038,13 +1253,13 @@
 (defcfun ("g_variant_new_uint32" g-variant-new-uint32)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{guint32} value}
-  @return{A floating reference to a new @code{uint32} @type{g-variant}
-    instance.}
+  @begin{return}
+    A floating reference to a new @code{uint32} @type{g-variant} instance.
+  @end{return}
   @short{Creates a new @code{uint32} @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :uint32))
 
 (export 'g-variant-new-uint32)
@@ -1056,13 +1271,11 @@
 (defcfun ("g_variant_new_int64" g-variant-new-int64)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gint64} value}
-  @return{A floating reference to a new @code{int64} @type{g-variant}
-    instance.}
+  @return{A floating reference to a new @code{int64} @type{g-variant} instance.}
   @short{Creates a new @code{int64} @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :int64))
 
 (export 'g-variant-new-int64)
@@ -1074,13 +1287,13 @@
 (defcfun ("g_variant_new_uint64" g-variant-new-uint64)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{guint64} value}
-  @return{A floating reference to a new @code{uint64} @type{g-variant}
-    instance.}
+  @begin{return}
+    A floating reference to a new @code{uint64} @type{g-variant} instance.
+  @end{return}
   @short{Creates a new @code{uint64} @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :uint64))
 
 (export 'g-variant-new-uint64)
@@ -1092,7 +1305,7 @@
 (defcfun ("g_variant_new_handle" g-variant-new-handle)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gint32} value}
   @return{A floating reference to a new handle @type{g-variant} instance.}
   @short{Creates a new handle @type{g-variant} instance.}
@@ -1100,8 +1313,7 @@
   By convention, handles are indexes into an array of file descriptors that
   are sent alongside a D-Bus message. If you are not interacting with D-Bus,
   you probably do not need them.
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :int32))
 
 (export 'g-variant-new-handle)
@@ -1113,12 +1325,11 @@
 (defcfun ("g_variant_new_double" g-variant-new-double)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @code{gdouble} floating point value}
   @return{A floating reference to a new double @type{g-variant} instance.}
   @short{Creates a new double @type{g-variant} instance.}
-
-  Since 2.24"
+  @see-type{g-variant}"
   (value :double))
 
 (export 'g-variant-new-double)
@@ -1130,13 +1341,12 @@
 (defcfun ("g_variant_new_string" g-variant-new-string)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[string]{a normal utf8 nul-terminated string}
   @return{A floating reference to a new string @type{g-variant} instance.}
   @short{Creates a string @type{g-variant} with the contents of string.}
-  String must be valid utf8.
-
-  Since 2.24"
+  The string must be valid utf8.
+  @see-type{g-variant}"
   (value :string))
 
 (export 'g-variant-new-string)
@@ -1198,18 +1408,17 @@
 (defcfun ("g_variant_new_object_path" g-variant-new-object-path)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[object-path]{a string}
-  @return{A floating reference to a new object path @type{g-variant}
-    instance.}
+ "@version{2020-12-1}
+  @argument[object-path]{a string with a D-Bus object path}
+  @return{A floating reference to a new object path @type{g-variant} instance.}
   @begin{short}
     Creates a D-Bus object path @type{g-variant} with the contents of
     @arg{string}.
   @end{short}
-  @arg{string} must be a valid D-Bus object path. Use
+  The argument @arg{string} must be a valid D-Bus object path. Use the function
   @fun{g-variant-is-object-path} if you are not sure.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-function{g-variant-is-object-path}"
   (object-path :string))
 
 (export 'g-variant-new-object-path)
@@ -1220,21 +1429,21 @@
 
 (defcfun ("g_variant_is_object_path" g-variant-is-object-path) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[string]{a string}
+ "@version{2020-12-1}
+  @argument[string]{a string with a D-Bus object path}
   @return{@arg{True} if @arg{string} is a D-Bus object path.}
   @begin{short}
     Determines if a given @arg{string} is a valid D-Bus object path.
   @end{short}
   You should ensure that a @arg{string} is a valid D-Bus object path before
-  passing it to @fun{g-variant-new-object-path}.
+  passing it to the function @fun{g-variant-new-object-path}.
 
   A valid object path starts with '/' followed by zero or more sequences of
   characters separated by '/' characters. Each sequence must contain only the
   characters \"[A-Z][a-z][0-9]_\". No sequence (including the one following the
   final '/' character) may be empty.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-function{g-variant-new-object-path}"
   (string :string))
 
 (export 'g-variant-is-object-path)
@@ -1246,17 +1455,17 @@
 (defcfun ("g_variant_new_signature" g-variant-new-signature)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[signature]{a string}
+ "@version{2020-12-1}
+  @argument[signature]{a string with a signature}
   @return{A floating reference to a new signature @type{g-variant} instance.}
   @begin{short}
-    Creates a D-Bus type signature @type{g-variant} with the contents of
-    string.
+    Creates a D-Bus type @type{g-variant} signature with the contents of
+    @arg{string}.
   @end{short}
-  @arg{string} must be a valid D-Bus type signature.
-  Use @fun{g-variant-is-signature} if you are not sure.
-
-  Since 2.24"
+  The argument @arg{string} must be a valid D-Bus type signature. Use the
+  function @fun{g-variant-is-signature} if you are not sure.
+  @see-type{g-variant}
+  @see-function{g-variant-is-signature}"
   (signature :string))
 
 (export 'g-variant-new-signature)
@@ -1267,19 +1476,20 @@
 
 (defcfun ("g_variant_is_signature" g-variant-is-signature) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[string]{a normal C nul-terminated string}
-  @return{@em{True} if string is a D-Bus type signature.}
+  @return{@em{True} if @arg{string} is a D-Bus type signature.}
   @begin{short}
     Determines if a given @arg{string} is a valid D-Bus type signature.
   @end{short}
   You should ensure that a string is a valid D-Bus type signature before passing
-  it to @fun{g-variant-new-signature}.
+  it to the function @fun{g-variant-new-signature}.
 
   D-Bus type signatures consist of zero or more definite @class{g-variant-type}
   strings in sequence.
-
-  Since 2.24"
+  @see-type{g-variant}
+  @see-class{g-variant-type}
+  @see-function{g-variant-new-signature}"
   (string :string))
 
 (export 'g-variant-is-signature)
@@ -1291,18 +1501,19 @@
 (defcfun ("g_variant_new_variant" g-variant-new-variant)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @type{g-variant} instance}
   @return{A floating reference to a new variant @type{g-variant} instance.}
   @begin{short}
-    Boxes value. The result is a @type{g-variant} instance representing a
-    variant containing the original value.
+    Boxes @arg{value}.
   @end{short}
+  The result is a @type{g-variant} instance representing a variant containing
+  the original value.
 
-  If child is a floating reference (see @fun{g-variant-ref-sink}), the new
-  instance takes ownership of child.
-
-  Since 2.24"
+  If child is a floating reference, see the function @fun{g-variant-ref-sink},
+  the new instance takes ownership of child.
+  @see-type{g-variant}
+  @see-function{g-variant-ref-sink}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-new-variant)
@@ -1402,22 +1613,22 @@
 
 (defcfun ("g_variant_get_boolean" g-variant-boolean) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a boolean @type{g-variant} instance}
   @return{The boolean values @em{true} or @em{false}.}
   @short{Returns the boolean value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-boolean+}.
+  a @class{g-variant-type} with the type string \"b\".
   @begin[Example]{dictionary}
     @begin{pre}
-  (g-variant-boolean (g-variant-new-boolean nil))
+(g-variant-boolean (g-variant-new-boolean nil))
 => NIL
-  (g-variant-boolean (g-variant-new-boolean t))
+(g-variant-boolean (g-variant-new-boolean t))
 => T
     @end{pre}
   @end{dictionary}
   @see-type{g-variant}
-  @see-variable{+g-variant-type-boolean+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-boolean)
@@ -1428,14 +1639,14 @@
 
 (defcfun ("g_variant_get_byte" g-variant-byte) :uchar
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a byte @type{g-variant} instance}
   @return{A @code{:uchar} value.}
   @short{Returns the byte value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-byte+}.
+  a @class{g-variant-type} with the type string  \"y\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-byte}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-byte)
@@ -1446,14 +1657,14 @@
 
 (defcfun ("g_variant_get_int16" g-variant-int16) :int16
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a 16-bit signed integer @type{g-variant} instance}
   @return{A @code{:int16} value.}
   @short{Returns the 16-bit signed integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-int16+}.
+  a @class{g-variant-type} with the type string \"n\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-int16}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-int16)
@@ -1464,14 +1675,14 @@
 
 (defcfun ("g_variant_get_uint16" g-variant-uint16) :uint16
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a 16-bit unsigned integer @type{g-variant} instance}
   @return{A @code{:uint16} value.}
   @short{Returns the 16-bit unsigned integer value of value.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-uint16+}.
+  a @class{g-variant-type} with the type string \"q\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-uint16+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-uint16)
@@ -1482,14 +1693,14 @@
 
 (defcfun ("g_variant_get_int32" g-variant-int32) :int32
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a 32-bit signed integer @type{g-variant} instance}
   @return{A @code{:int32} value.}
   @short{Returns the 32-bit signed integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-int32+}.
+  a @class{g-variant-type} with the type string \"i\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-int32+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-int32)
@@ -1500,14 +1711,14 @@
 
 (defcfun ("g_variant_get_uint32" g-variant-uint32) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a 32-bit unsigned integer @type{g-variant} instance}
   @return{A @code{:uint32} value.}
   @short{Returns the 32-bit unsigned integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-uint32+}.
+  a @class{g-variant-type} with the type string \"u\".
   @see-symbol{g-variant}
-  @see-variable{+g-variant-type-uint32+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-uint32)
@@ -1518,14 +1729,14 @@
 
 (defcfun ("g_variant_get_int64" g-variant-int64) :int64
  #+cl-cffi-gtk-documentation
- "@version{2020-9-21}
+ "@version{2020-12-1}
   @argument[value]{a 64-bit signed integer @type{g-variant} instance}
   @return{A @code{:int64} value.}
   @short{Returns the 64-bit signed integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-int64+}.
+  a @class{g-variant-type} with the type string \"x\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-int64+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-int64)
@@ -1536,14 +1747,14 @@
 
 (defcfun ("g_variant_get_uint64" g-variant-uint64) :uint64
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
+ "@version{2020-12-1}
   @argument[value]{a 64-bit unsigned integer @type{g-variant} instance}
   @return{A @code{:uint64} value.}
   @short{Returns the 64-bit unsigned integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-uint64+}.
+  a @class{g-variant-type} with the type string \"t\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-uint64}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-uint64)
@@ -1554,18 +1765,18 @@
 
 (defcfun ("g_variant_get_handle" g-variant-handle) :int32
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
+ "@version{2020-12-1}
   @argument[value]{a handle @type{g-variant} instance}
   @return{A @code{:int32} value.}
   @short{Returns the 32-bit signed integer value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-handle+}.
+  a @class{g-variant-type} with the type string \"h\".
 
   By convention, handles are indexes into an array of file descriptors that
   are sent alongside a D-Bus message. If you are not interacting with D-Bus,
   you probably do not need them.
   @see-type{g-variant}
-  @see-variable{+g-variant-type-handle+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-handle)
@@ -1576,14 +1787,14 @@
 
 (defcfun ("g_variant_get_double" g-variant-double) :double
  #+cl-cffi-gtk-documentation
- "@version{2020-11-25}
+ "@version{2020-12-1}
   @argument[value]{a double float @type{g-variant} instance}
   @return{A double float value.}
   @short{Returns the double precision floating point value of @arg{value}.}
   It is an error to call this function with a value of any type other than
-  @var{+g-variant-type-double+}.
+  a @class{g-variant-type} with the type string \"d\".
   @see-type{g-variant}
-  @see-variable{+g-variant-type-double+}"
+  @see-class{g-variant-type}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-double)
@@ -1598,22 +1809,20 @@
 
 (defun g-variant-string (value)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-22}
+ "@version{2020-12-1}
   @argument[value]{a string @type{g-variant} instance}
   @return{The constant string, utf8 encoded.}
   @begin{short}
     Returns the string value of a @type{g-variant} instance with a string
-    type. This includes the types @var{+g-variant-type-string+},
-    @var{+g-variant-type-object-path+} and @var{+g-variant-type-signature+}.
+    type.
   @end{short}
-  The string will always be utf8 encoded.
+  This includes the @class{g-variant-type} types with the type strings \"s\",
+  \"o\", and \"g\". The string will always be utf8 encoded.
 
   It is an error to call this function with a value of any type other than
   those three. The return value remains valid as long as @arg{value} exists.
   @see-type{g-variant}
-  @see-variable{+g-variant-type-string+}
-  @see-variable{+g-variant-type-object-path+}
-  @see-variable{+g-variant-type-signature+}"
+  @see-class{g-variant-type}"
   (%g-variant-string value (null-pointer)))
 
 (export 'g-variant-string)
@@ -2228,8 +2437,8 @@
 ;;; G_VARIANT_TYPE_DOUBLE           gdouble
 ;;;
 ;;; For example, if calling this function for an array of 32 bit integers, you
-;;; might say sizeof (gint32). This value isn't used except for the purpose of a
-;;; double-check that the form of the serialised data matches the caller's
+;;; might say sizeof (gint32). This value isn't used except for the purpose of
+;;; a double-check that the form of the serialised data matches the caller's
 ;;; expectation.
 ;;;
 ;;; n_elements, which must be non-NULL is set equal to the number of items in
@@ -2282,8 +2491,8 @@
 ;;;
 ;;; Returns a pointer to the serialised form of a GVariant instance. The
 ;;; returned data may not be in fully-normalised form if read from an untrusted
-;;; source. The returned data must not be freed; it remains valid for as long as
-;;; value exists.
+;;; source. The returned data must not be freed; it remains valid for as long
+;;; as value exists.
 ;;;
 ;;; If value is a fixed-sized value that was deserialised from a corrupted
 ;;; serialised container then NULL may be returned. In this case, the proper
@@ -2390,6 +2599,11 @@
 ;;; exact time of this call is unspecified and might even be before this
 ;;; function returns.
 ;;;
+;;; Note: data must be backed by memory that is aligned appropriately for the
+;;; type being loaded. Otherwise this function will internally create a copy of
+;;; the memory (since GLib 2.60) or (in older versions) fail and exit the
+;;; process.
+;;;
 ;;; type :
 ;;;     a definite GVariantType
 ;;;
@@ -2426,6 +2640,10 @@
 ;;; various functions in gvariant.c.
 ;;;
 ;;; A reference is taken on bytes.
+;;;
+;;; The data in bytes must be aligned appropriately for the type being loaded.
+;;; Otherwise this function will internally create a copy of the memory (since
+;;; GLib 2.60) or (in older versions) fail and exit the process.
 ;;;
 ;;; type :
 ;;;     a GVariantType
@@ -2552,14 +2770,16 @@
 
 (defcfun ("g_variant_equal" g-variant-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-11}
-  @argument[one]{a @type{g-variant} instance}
-  @argument[two]{a @type{g-variant} instance}
-  @return{@em{True} if @arg{one} and @arg{two} are equal.}
-  @short{Checks if @arg{one} and @arg{two} have the same type and value.}
+ "@version{2020-12-1}
+  @argument[value-1]{a @type{g-variant} instance}
+  @argument[value-2]{a @type{g-variant} instance}
+  @return{@em{True} if @arg{value-1} and @arg{value-2} are equal.}
+  @begin{short}
+    Checks if @arg{value-1} and @arg{value-2} have the same type and value.
+  @end{short}
   @see-type{g-variant}"
-  (one (:pointer (:struct g-variant)))
-  (two (:pointer (:struct g-variant))))
+  (value-1 (:pointer (:struct g-variant)))
+  (value-2 (:pointer (:struct g-variant))))
 
 (export 'g-variant-equal)
 
@@ -2569,20 +2789,20 @@
 
 (defcfun ("g_variant_print" g-variant-print) g-string
  #+cl-cffi-gtk-documentation
- "@version{2020-4-11}
+ "@version{2020-12-1}
   @argument[value]{a @type{g-variant} structure}
   @argument[type-annotate]{@em{true} if type information should be included in
     the output}
   @return{A string holding the result.}
   @begin{short}
-    Pretty-prints @arg{value} in the format understood by the
-    function @fun{g-variant-parse}.
+    Pretty-prints @arg{value} in the format understood by the function
+    @fun{g-variant-parse}.
   @end{short}
 
   If @arg{type-annotate} is @em{true}, then type information is included in the
   output.
   @see-type{g-variant}
-  @see-function{g-variant-print}"
+  @see-function{g-variant-parse}"
   (value (:pointer (:struct g-variant)))
   (type-annotate :boolean))
 
@@ -2613,16 +2833,6 @@
 ;;;     a GString containing the string
 ;;;
 ;;; Since 2.24
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; struct GVariantIter
-;;;
-;;; struct GVariantIter {
-;;; };
-;;;
-;;; GVariantIter is an opaque data structure and can only be accessed using the
-;;; following functions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2737,8 +2947,8 @@
 ;;; Gets the next item in the container. If no more items remain then NULL is
 ;;; returned.
 ;;;
-;;; Use g_variant_unref() to drop your reference on the return value when you no
-;;; longer need it.
+;;; Use g_variant_unref() to drop your reference on the return value when you
+;;; no longer need it.
 ;;;
 ;;; Example 18. Iterating with g_variant_iter_next_value()
 ;;;
@@ -2849,10 +3059,10 @@
 ;;; This allows the previous values to be freed, as appropriate.
 ;;;
 ;;; This function is intended to be used with a while loop as demonstrated in
-;;; the following example. This function can only be used when iterating over an
-;;; array. It is only valid to call this function with a string constant for the
-;;; format string and the same string constant must be used each time. Mixing
-;;; calls to this function and g_variant_iter_next() or
+;;; the following example. This function can only be used when iterating over
+;;; an array. It is only valid to call this function with a string constant for
+;;; the format string and the same string constant must be used each time.
+;;; Mixing calls to this function and g_variant_iter_next() or
 ;;; g_variant_iter_next_value() on the same iterator causes undefined behavior.
 ;;;
 ;;; If you break out of a such a while loop using g_variant_iter_loop() then you
@@ -2910,18 +3120,30 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GVariantBuilder
+;;; G_VARIANT_BUILDER_INIT()
 ;;;
-;;; struct GVariantBuilder {
-;;; };
+;;; #define G_VARIANT_BUILDER_INIT(variant_type)
+;;;         { { { 2942751021u, variant_type, { 0, } } } }
 ;;;
-;;; A utility type for constructing container-type GVariant instances.
+;;; A stack-allocated GVariantBuilder must be initialized if it is used together
+;;; with g_auto() to avoid warnings or crashes if function returns before
+;;; g_variant_builder_init() is called on the builder. This macro can be used
+;;; as initializer instead of an explicit zeroing a variable when declaring it
+;;; and a following g_variant_builder_init(), but it cannot be assigned to a
+;;; variable.
 ;;;
-;;; This is an opaque structure and may only be accessed using the following
-;;; functions.
+;;; The passed variant_type should be a static GVariantType to avoid lifetime
+;;; issues, as copying the variant_type does not happen in the
+;;; G_VARIANT_BUILDER_INIT() call, but rather in functions that make sure that
+;;; GVariantBuilder is valid.
 ;;;
-;;; GVariantBuilder is not threadsafe in any way. Do not attempt to access it
-;;; from more than one thread.
+;;; g_auto(GVariantBuilder) builder
+;;;     = G_VARIANT_BUILDER_INIT (G_VARIANT_TYPE_BYTESTRING);
+;;;
+;;; variant_type :
+;;;     a const GVariantType*
+;;;
+;;; Since 2.50
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3007,8 +3229,8 @@
 ;;; This function completely ignores the previous contents of builder. On one
 ;;; hand this means that it is valid to pass in completely uninitialised memory.
 ;;; On the other hand, this means that if you are initialising over top of an
-;;; existing GVariantBuilder you need to first call g_variant_builder_clear() in
-;;; order to avoid leaking memory.
+;;; existing GVariantBuilder you need to first call g_variant_builder_clear()
+;;; in order to avoid leaking memory.
 ;;;
 ;;; You must not call g_variant_builder_ref() or g_variant_builder_unref() on a
 ;;; GVariantBuilder that was initialised with this function. If you ever pass a
@@ -3060,8 +3282,8 @@
 ;;;
 ;;; It is an error to call this function in any way that would create an
 ;;; inconsistent value to be constructed. Some examples of this are putting
-;;; different types of items into an array, putting the wrong types or number of
-;;; items in a tuple, putting more than one value into a variant, etc.
+;;; different types of items into an array, putting the wrong types or number
+;;; of items in a tuple, putting more than one value into a variant, etc.
 ;;;
 ;;; If value is a floating reference (see g_variant_ref_sink()), the builder
 ;;; instance takes ownership of value.
@@ -3174,8 +3396,8 @@
 ;;; inconsistent value to be constructed (ie: insufficient number of items
 ;;; added to a container with a specific number of children required). It is
 ;;; also an error to call this function if the builder was created with an
-;;; indefinite array or maybe type and no children have been added; in this case
-;;; it is impossible to infer the type of the empty array.
+;;; indefinite array or maybe type and no children have been added; in this
+;;; case it is impossible to infer the type of the empty array.
 ;;;
 ;;; builder :
 ;;;     a GVariantBuilder
@@ -3192,8 +3414,8 @@
 ;;; void g_variant_builder_open (GVariantBuilder *builder,
 ;;;                              const GVariantType *type);
 ;;;
-;;; Opens a subcontainer inside the given builder. When done adding items to the
-;;; subcontainer, g_variant_builder_close() must be called.
+;;; Opens a subcontainer inside the given builder. When done adding items to
+;;; the subcontainer, g_variant_builder_close() must be called.
 ;;;
 ;;; It is an error to call this function in any way that would cause an
 ;;; inconsistent value to be constructed (ie: adding too many values or a value
@@ -3213,8 +3435,8 @@
 ;;;
 ;;; void g_variant_builder_close (GVariantBuilder *builder);
 ;;;
-;;; Closes the subcontainer inside the given builder that was opened by the most
-;;; recent call to g_variant_builder_open().
+;;; Closes the subcontainer inside the given builder that was opened by the
+;;; most recent call to g_variant_builder_open().
 ;;;
 ;;; It is an error to call this function in any way that would create an
 ;;; inconsistent value to be constructed (ie: too few values added to the
@@ -3227,98 +3449,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GVariantParseError
-;;;
-;;; typedef enum {
-;;;   G_VARIANT_PARSE_ERROR_FAILED,
-;;;   G_VARIANT_PARSE_ERROR_BASIC_TYPE_EXPECTED,
-;;;   G_VARIANT_PARSE_ERROR_CANNOT_INFER_TYPE,
-;;;   G_VARIANT_PARSE_ERROR_DEFINITE_TYPE_EXPECTED,
-;;;   G_VARIANT_PARSE_ERROR_INPUT_NOT_AT_END,
-;;;   G_VARIANT_PARSE_ERROR_INVALID_CHARACTER,
-;;;   G_VARIANT_PARSE_ERROR_INVALID_FORMAT_STRING,
-;;;   G_VARIANT_PARSE_ERROR_INVALID_OBJECT_PATH,
-;;;   G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE,
-;;;   G_VARIANT_PARSE_ERROR_INVALID_TYPE_STRING,
-;;;   G_VARIANT_PARSE_ERROR_NO_COMMON_TYPE,
-;;;   G_VARIANT_PARSE_ERROR_NUMBER_OUT_OF_RANGE,
-;;;   G_VARIANT_PARSE_ERROR_NUMBER_TOO_BIG,
-;;;   G_VARIANT_PARSE_ERROR_TYPE_ERROR,
-;;;   G_VARIANT_PARSE_ERROR_UNEXPECTED_TOKEN,
-;;;   G_VARIANT_PARSE_ERROR_UNKNOWN_KEYWORD,
-;;;   G_VARIANT_PARSE_ERROR_UNTERMINATED_STRING_CONSTANT,
-;;;   G_VARIANT_PARSE_ERROR_VALUE_EXPECTED
-;;; } GVariantParseError;
-;;;
-;;; Error codes returned by parsing text-format GVariants.
-;;;
-;;; G_VARIANT_PARSE_ERROR_FAILED
-;;;     generic error (unused)
-;;;
-;;; G_VARIANT_PARSE_ERROR_BASIC_TYPE_EXPECTED
-;;;     a non-basic GVariantType was given where a basic type was expected
-;;;
-;;; G_VARIANT_PARSE_ERROR_CANNOT_INFER_TYPE
-;;;     cannot infer the GVariantType
-;;;
-;;; G_VARIANT_PARSE_ERROR_DEFINITE_TYPE_EXPECTED
-;;;     an indefinite GVariantType was given where a definite type was expected
-;;;
-;;; G_VARIANT_PARSE_ERROR_INPUT_NOT_AT_END
-;;;     extra data after parsing finished
-;;;
-;;; G_VARIANT_PARSE_ERROR_INVALID_CHARACTER
-;;;     invalid character in number or unicode escape
-;;;
-;;; G_VARIANT_PARSE_ERROR_INVALID_FORMAT_STRING
-;;;     not a valid GVariant format string
-;;;
-;;; G_VARIANT_PARSE_ERROR_INVALID_OBJECT_PATH
-;;;     not a valid object path
-;;;
-;;; G_VARIANT_PARSE_ERROR_INVALID_SIGNATURE
-;;;     not a valid type signature
-;;;
-;;; G_VARIANT_PARSE_ERROR_INVALID_TYPE_STRING
-;;;     not a valid GVariant type string
-;;;
-;;; G_VARIANT_PARSE_ERROR_NO_COMMON_TYPE
-;;;     could not find a common type for array entries
-;;;
-;;; G_VARIANT_PARSE_ERROR_NUMBER_OUT_OF_RANGE
-;;;     the numerical value is out of range of the given type
-;;;
-;;; G_VARIANT_PARSE_ERROR_NUMBER_TOO_BIG
-;;;     the numerical value is out of range for any type
-;;;
-;;; G_VARIANT_PARSE_ERROR_TYPE_ERROR
-;;;     cannot parse as variant of the specified type
-;;;
-;;; G_VARIANT_PARSE_ERROR_UNEXPECTED_TOKEN
-;;;     an unexpected token was encountered
-;;;
-;;; G_VARIANT_PARSE_ERROR_UNKNOWN_KEYWORD
-;;;     an unknown keyword was encountered
-;;;
-;;; G_VARIANT_PARSE_ERROR_UNTERMINATED_STRING_CONSTANT
-;;;     unterminated string constant
-;;;
-;;; G_VARIANT_PARSE_ERROR_VALUE_EXPECTED
-;;;     no value given
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_PARSE_ERROR
-;;;
-;;; #define G_VARIANT_PARSE_ERROR (g_variant_parser_get_error_quark ())
-;;;
-;;; Error domain for GVariant text format parsing. Specific error codes are not
-;;; currently defined for this domain. See GError for information on error
-;;; domains.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;G_VARIANT_DICT_INIT()
+;;; G_VARIANT_DICT_INIT()
 ;;;
 ;;; #define G_VARIANT_DICT_INIT(asv) { { { asv, 3488698669u, { 0, } } } }
 ;;;
@@ -3342,7 +3473,7 @@
 ;;; asv :
 ;;;     a GVariant*.
 ;;;
-;;;Since 2.50
+;;; Since 2.50
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3664,37 +3795,37 @@
 
 (defcfun ("g_variant_parse" %g-variant-parse-1)
     (:pointer (:struct g-variant))
-  (type :pointer)
+  (variant-type (gobject:g-boxed-foreign g-variant-type))
   (text :string)
   (limit :pointer)
   (endptr :pointer)
-  (error :pointer))
+  (err :pointer))
 
 (defcfun ("g_variant_parse" %g-variant-parse-2)
     (:pointer (:struct g-variant))
-  (type (gobject:g-boxed-foreign g-variant-type))
+  (variant-type (gobject:g-boxed-foreign g-variant-type))
   (text :string)
   (limit :pointer)
   (endptr :pointer)
-  (error :pointer))
+  (err :pointer))
 
-(defun g-variant-parse (type text)
+(defun g-variant-parse (variant-type text)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-11}
-  @argument[type]{a @class{g-variant-type}}
+ "@version{2020-12-1}
+  @argument[variant-type]{a @class{g-variant-type} instance}
   @argument[text]{a string containing a @type{g-variant} in text form}
   @return{A @type{g-variant} structure.}
   @begin{short}
-    Parses a @type{g-variant} from a text representation.
+    Parses a @type{g-variant} instance from a text representation.
   @end{short}
 
-  If @arg{type} is non-@code{nil} then the value will be parsed to have that
-  type. This may result in additional parse errors (in the case that the parsed
-  value doesn't fit the type) but may also result in fewer errors (in the case
-  that the type would have been ambiguous, such as with empty arrays).
+  If @arg{variant-type} is non-@code{nil} then the value will be parsed to have
+  that type. This may result in additional parse errors (in the case that the
+  parsed value does not fit the type) but may also result in fewer errors (in
+  the case that the type would have been ambiguous, such as with empty arrays).
 
   In the event that the parsing is successful, the resulting @type{g-variant}
-  is returned.
+  instance is returned.
 
   In case of any error, @code{nil} will be returned. If error is non-@code{nil}
   then it will be set to reflect the error that occurred.
@@ -3703,21 +3834,21 @@
   the function @fun{g-variant-print}.
   @begin[Example]{dictionary}
     @begin{pre}
-  (g-variant-parse (g-variant-type-new \"b\") \"true\")
+(g-variant-parse (g-variant-type-new \"b\") \"true\")
 => #.(SB-SYS:INT-SAP #X7F99C4012440)
-  (g-variant-print * nil)
+(g-variant-print * nil)
 => \"true\"
-  (g-variant-parse (g-variant-type-new \"i\") \"100\")
+(g-variant-parse (g-variant-type-new \"i\") \"100\")
 => #.(SB-SYS:INT-SAP #X7F99C4012CF0)
-  (g-variant-print * nil)
+(g-variant-print * nil)
 => \"100\"
     @end{pre}
   @end{dictionary}
   @see-type{g-variant}
   @see-function{g-variant-print}"
   (with-g-error (err)
-    (if type
-        (%g-variant-parse-2 type text (null-pointer) (null-pointer) err)
+    (if variant-type
+        (%g-variant-parse-2 variant-type text (null-pointer) (null-pointer) err)
         (%g-variant-parse-1 (null-pointer)
                             text
                             (null-pointer)
@@ -3804,8 +3935,8 @@
 ;;; g_variant_parse_error_print_context (GError *error,
 ;;;                                      const gchar *source_str);
 ;;;
-;;; Pretty-prints a message showing the context of a GVariant parse error within
-;;; the string for which parsing was attempted.
+;;; Pretty-prints a message showing the context of a GVariant parse error
+;;; within the string for which parsing was attempted.
 ;;;
 ;;; The resulting string is suitable for output to the console or other
 ;;; monospace media where newlines are treated in the usual way.

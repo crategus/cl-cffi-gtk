@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.object-function.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,20 +42,24 @@
       `(progn
          (defcallback ,call-cb ,return-type (,@args (,data :pointer))
            (let* ((,object (convert-from-foreign
-                             (foreign-slot-value ,data
-                                                 '(:struct object-func-ref)
-                                                 :object)
-                             'g-object))
-                  (,fn-id (foreign-slot-value ,data '(:struct object-func-ref) :fn-id))
+                               (foreign-slot-value ,data
+                                                   '(:struct object-func-ref)
+                                                   :object)
+                               'g-object))
+                  (,fn-id (foreign-slot-value ,data
+                                              '(:struct object-func-ref)
+                                              :fn-id))
                   (,fn (retrieve-handler-from-object ,object ,fn-id)))
              (funcall ,fn ,@arg-names)))
          (defcallback ,destroy-cb :void ((,data :pointer))
            (let* ((,object (convert-from-foreign
-                             (foreign-slot-value ,data
-                                                 '(:struct object-func-ref)
-                                                 :object)
-                            'g-object))
-                  (,fn-id (foreign-slot-value ,data '(:struct object-func-ref) :fn-id)))
+                               (foreign-slot-value ,data
+                                                   '(:struct object-func-ref)
+                                                   :object)
+                               'g-object))
+                  (,fn-id (foreign-slot-value ,data
+                                              '(:struct object-func-ref)
+                                              :fn-id)))
              (delete-handler-from-object ,object ,fn-id))
            (foreign-free ,data))))))
 

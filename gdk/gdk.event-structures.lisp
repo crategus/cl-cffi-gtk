@@ -944,7 +944,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque gdk-event-sequence "GdkEventSequence"
-  :alloc (error "GdkEventSequence can not be created from Lisp side."))
+  :alloc (error "GdkEventSequence cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-sequence 'type)

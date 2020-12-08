@@ -267,16 +267,15 @@
 ;; Helper functions for lisp-closure-marshal
 
 (defun parse-closure-arguments (count-of-args args)
-  (loop
-     for i from 0 below count-of-args
-     collect (parse-g-value (mem-aptr args '(:struct g-value) i))))
+  (loop for i from 0 below count-of-args
+        collect (parse-g-value (mem-aptr args '(:struct g-value) i))))
 
-(defun retrieve-handler-from-object (object handler-id)
-  (aref (g-object-signal-handlers object) handler-id))
+(defun retrieve-handler-from-object (object function-id)
+  (aref (g-object-signal-handlers object) function-id))
 
 (defun call-with-restarts (fn args)
   (restart-case
-      (apply fn args)
+    (apply fn args)
     (return-from-g-closure (&optional v)
                            :report "Return value from closure" v)))
 
@@ -1709,9 +1708,9 @@
 ;;; g_signal_handler_disconnect ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_handler_disconnect" g-signal-handler-disconnect) :void
+(defcfun ("g_signal_handler_disconnect" %g-signal-handler-disconnect) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
+ "@version{2020-12-6}
   @argument[instance]{the @class{g-object} instance to remove the signal
     handler from}
   @argument[handler-id]{a @code{:ulong} handler ID of the handler to be
@@ -1729,6 +1728,13 @@
   @see-function{g-signal-connect}"
   (object (g-object :free-to-foreign nil)) ; to stop a bug, seems to work?
   (handler-id :ulong))
+
+(defun g-signal-handler-disconnect (object handler-id)
+  (declare (ignore object handler-id))
+  ;; TODO: The implementation of %g-signal-handler-disconnect is wrong.
+  ;; In Lisp we have a list of signal handlers. The disconnected signal
+  ;; handler must be removed from this list. And this time we do nothing
+)
 
 (export 'g-signal-handler-disconnect)
 

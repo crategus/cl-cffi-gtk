@@ -55,7 +55,7 @@
 (glib-init::at-init () (foreign-funcall "gdk_frame_timings_get_type" g-size))
 
 (define-g-boxed-opaque gdk-frame-timings "GdkFrameTimings"
-  :alloc (error "GdkFrameTimings can not be created from Lisp side."))
+  :alloc (error "GdkFrameTimings cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-frame-timings atdoc:*class-name-alias*) "CStruct"
@@ -72,7 +72,7 @@
   quality metrics for the application’s display, such as latency and jitter.
   @begin{pre}
 (define-g-boxed-opaque gdk-frame-timings \"GdkFrameTimings\"
-  :alloc (error \"GdkFrameTimings can not be created from Lisp side.\"))
+  :alloc (error \"GdkFrameTimings cannot be created from the Lisp side.\"))
   @end{pre}
   Since 3.8
   @see-class{gdk-frame-clock}
