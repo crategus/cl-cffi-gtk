@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.transformations.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.14 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,9 +28,9 @@
 ;;;
 ;;; Transformations
 ;;;
-;;; Manipulating the current transformation matrix
+;;;     Manipulating the current transformation matrix
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     cairo_translate
 ;;;     cairo_scale
@@ -43,6 +43,13 @@
 ;;;     cairo_user_to_device_distance
 ;;;     cairo_device_to_user
 ;;;     cairo_device_to_user_distance
+;;;
+;;; Description
+;;;
+;;; The current transformation matrix, ctm, is a two-dimensional affine
+;;; transformation that maps all coordinates and other drawing instruments from
+;;; the user space into the surface's canonical coordinate system, also known
+;;; as the device space.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
@@ -58,10 +65,10 @@
 
 (defun cairo-translate (cr tx ty)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-5}
-  @argument[cr]{a cairo context}
-  @argument[tx]{amount to translate in the x direction}
-  @argument[ty]{amount to translate in the y direction}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[tx]{a double float with the amount to translate in the x direction}
+  @argument[ty]{a double float with the amount to translate in the y direction}
   @begin{short}
     Modifies the current transformation matrix (CTM) by translating the
     user-space origin by (@arg{tx}, @arg{ty}).
@@ -70,8 +77,6 @@
   place before the new call to the function @sym{cairo-translate}. In other
   words, the translation of the user-space origin takes place after any existing
   transformation.
-
-  Since 1.0
   @see-symbol{cairo-t}"
   (%cairo-translate cr
                     (coerce tx 'double-float)
@@ -90,18 +95,16 @@
 
 (defun cairo-scale (cr sx sy)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-3}
-  @argument[cr]{a cairo context}
-  @argument[sx]{scale factor for the x dimension}
-  @argument[sy]{scale factor for the y dimension}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[sx]{a double float with the scale factor for the x dimension}
+  @argument[sy]{a double float with the scale factor for the y dimension}
   @begin{short}
     Modifies the current transformation matrix (CTM) by scaling the x and y
     user-space axes by @arg{sx} and @arg{sy} respectively.
   @end{short}
   The scaling of the axes takes place after any existing transformation of user
   space.
-
-  Since 1.0
   @see-symbol{cairo-t}"
   (%cairo-scale cr (coerce sx 'double-float) (coerce sy 'double-float)))
 
@@ -117,10 +120,10 @@
 
 (defun cairo-rotate (cr angle)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[cr]{a cairo context}
-  @argument[angle]{angle in radians by which the user-space axes will be
-    rotated}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[angle]{a double float with an angle in radians by which the
+    user-space axes will be rotated}
   @begin{short}
     Modifies the current transformation matrix (CTM) by rotating the user-space
     axes by @arg{angle} radians.
@@ -128,8 +131,6 @@
   The rotation of the axes takes places after any existing transformation of
   user space. The rotation direction for positive angles is from the positive x
   axis toward the positive y axis.
-
-  Since 1.0
   @see-symbol{cairo-t}"
   (%cairo-rotate cr (coerce angle 'double-float)))
 
@@ -141,17 +142,16 @@
 
 (defcfun ("cairo_transform" cairo-transform) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-2-2}
-  @argument[cr]{a cairo context}
-  @argument[matrix]{a transformation to be applied to the user-space axes}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[matrix]{a @symbol{cairo-matrix-t} transformation to be applied to
+    the user-space axes}
   @begin{short}
-    Modifies the current transformation matrix (CTM) by applying matrix as an
-    additional transformation.
+    Modifies the current transformation matrix (CTM) by applying @arg{matrix}
+    as an additional transformation.
   @end{short}
   The new transformation of user space takes place after any existing
   transformation.
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-symbol{cairo-matrix-t}"
   (cr (:pointer (:struct cairo-t)))
@@ -165,15 +165,14 @@
 
 (defcfun ("cairo_set_matrix" cairo-set-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
-  @argument[cr]{a cairo context}
-  @argument[matrix]{a transformation matrix from user space to device space}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[matrix]{a @symbol{cairo-matrix-t} transformation matrix from user
+    space to device space}
   @begin{short}
     Modifies the current transformation matrix (CTM) by setting it equal to
     @arg{matrix}.
   @end{short}
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-symbol{cairo-matrix-t}
   @see-function{cairo-get-matrix}"
@@ -184,34 +183,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_matrix ()
-;;;
-;;; void cairo_get_matrix (cairo_t *cr, cairo_matrix_t *matrix);
-;;;
-;;; Stores the current transformation matrix (CTM) into matrix.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; matrix :
-;;;     return value for the matrix
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_matrix" cairo-get-matrix) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[matrix]{return value of type @symbol{cairo-matrix-t} for the matrix}
+  @begin{short}
+    Stores the current transformation matrix (CTM) into @arg{matrix}.
+  @end{short}
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-matrix-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-get-matrix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_identity_matrix ()
-;;;
-;;; void cairo_identity_matrix (cairo_t *cr);
-;;;
-;;; Resets the current transformation matrix (CTM) by setting it equal to the
-;;; identity matrix. That is, the user-space and device-space axes will be
-;;; aligned and one user-space unit will transform to one device-space unit.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_identity_matrix" cairo-identity-matrix) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @begin{short}
+    Resets the current transformation matrix (CTM) by setting it equal to the
+    identity matrix.
+  @end{short}
+  That is, the user-space and device-space axes will be aligned and one
+  user-space unit will transform to one device-space unit.
+  @see-symbol{cairo-t}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-identity-matrix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_user_to_device ()
@@ -224,18 +230,17 @@
 
 (defun cairo-user-to-device (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-4}
-  @argument[cr]{a cairo context}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x} -- x value of coordinate (in/out parameter) @br{}
-    @code{y} -- y value of coordinate (in/out parameter)
+    @code{x} -- a double float with the x value of coordinate (in/out parameter)
+    @br{}
+    @code{y} -- a double float with the y value of coordinate (in/out parameter)
   @end{return}
   @begin{short}
     Transform a coordinate from user space to device space by multiplying the
     given point by the current transformation matrix (CTM).
   @end{short}
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-device-to-user}"
   (with-foreign-objects ((x-new :double) (y-new :double))
@@ -260,11 +265,13 @@
 
 (defun cairo-user-to-device-distance (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-4}
+ "@version{2020-12-15}
   @argument[cr]{a cairo context}
   @begin{return}
-    @code{dx} -- x component of a distance vector (in/out parameter) @br{}
-    @code{dy} -- y component of a distance vector (in/out parameter)
+    @code{dx} -- a double float with the x component of a distance vector
+    (in/out parameter) @br{}
+    @code{dy} -- a double float with the y component of a distance vector
+    (in/out parameter)
   @end{return}
   @begin{short}
     Transform a distance vector from user space to device space.
@@ -272,8 +279,6 @@
   This function is similar to the function @fun{cairo-user-to-device} except
   that the translation components of the CTM will be ignored when transforming
   (@code{dx}, @code{dy}).
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-user-to-device}"
   (with-foreign-objects ((dx-new :double) (dy-new :double))
@@ -298,18 +303,17 @@
 
 (defun cairo-device-to-user (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-4}
-  @argument[cr]{a cairo context}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x} -- x value of coordinate (in/out parameter) @br{}
-    @code{y} -- y value of coordinate (in/out parameter)
+    @code{x} -- a double float with the x value of coordinate (in/out parameter)
+    @br{}
+    @code{y} -- a double float with the y value of coordinate (in/out parameter)
   @end{return}
   @begin{short}
     Transform a coordinate from device space to user space by multiplying the
     given point by the inverse of the current transformation matrix (CTM).
   @end{short}
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-user-to-device}"
   (with-foreign-objects ((x-new :double) (y-new :double))
@@ -334,11 +338,13 @@
 
 (defun cairo-device-to-user-distance (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-4}
-  @argument[cr]{a cairo context}
+ "@version{2020-12-15}
+  @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{dx} -- x component of a distance vector (in/out parameter) @br{}
-    @code{dy} -- y component of a distance vector (in/out parameter)
+    @code{dx} -- a double float x component of a distance vector
+    (in/out parameter) @br{}
+    @code{dy} -- a double float y component of a distance vector
+    (in/out parameter)
   @end{return}
   @begin{short}
     Transform a distance vector from device space to user space.
@@ -346,8 +352,6 @@
   This function is similar to the function @fun{cairo-device-to-user} except
   that the translation components of the inverse CTM will be ignored when
   transforming (@code{dx},@code{dy}).
-
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-device-to-user}"
   (with-foreign-objects ((dx-new :double) (dy-new :double))
