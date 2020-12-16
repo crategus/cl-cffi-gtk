@@ -533,7 +533,7 @@
  "@version{2020-11-10}
   @argument[display]{the @class{gdk-display} object for which the cursor will
     be created}
-  @argument[surface]{the @symbol{cairo-surface-t} structure containing the
+  @argument[surface]{the @symbol{cairo-surface-t} instance containing the
     cursor pixel data}
   @argument[x]{a double float with the horizontal offset of the 'hotspot' of
     the cursor}
@@ -696,7 +696,7 @@
  "@version{2020-8-16}
   @argument[cursor]{a @class{gdk-cursor} object}
   @begin{return}
-    surface -- a @symbol{cairo-surface-t} structure representing a cursor @br{}
+    surface -- a @symbol{cairo-surface-t} instance representing a cursor @br{}
     x-hot   -- a double float with the hotspot x position @br{}
     y-hot   -- a double float with the hotspot y position
   @end{return}

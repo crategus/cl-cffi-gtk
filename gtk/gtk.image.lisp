@@ -179,7 +179,7 @@
       object.}
     @entry[:icon-name]{The widget contains a named icon.}
     @entry[:gicon]{The widget contains a @class{g-icon} object.}
-    @entry[:surface]{The widget contains a @symbol{cairo-surface-t} structure.
+    @entry[:surface]{The widget contains a @symbol{cairo-surface-t} instance.
       Since 3.10}
   @end{table}
   @see-class{gtk-image}
@@ -656,7 +656,7 @@
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "surface" 'gtk-image) 't)
  "The @code{surface} property of type @code{g-string} (Read / Write) @br{}
-  A @symbol{cairo-surface-t} structure to display. Since 3.10")
+  A @symbol{cairo-surface-t} instance to display. Since 3.10")
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-image-surface atdoc:*function-name-alias*)
@@ -1094,7 +1094,7 @@
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
-  @argument[surface]{a @symbol{cairo-surface-t} structure}
+  @argument[surface]{a @symbol{cairo-surface-t} instance}
   @return{A new @class{gtk-image} object.}
   @begin{short}
     Creates a new image displaying @arg{surface}.
@@ -1293,7 +1293,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
   @argument[image]{a @class{gtk-image} widget}
-  @argument[surface]{a @symbol{cairo-surface-t} structure}
+  @argument[surface]{a @symbol{cairo-surface-t} instance}
   @begin{short}
     See the function @fun{gtk-image-new-from-surface} for details.
   @end{short}

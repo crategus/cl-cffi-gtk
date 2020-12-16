@@ -2004,7 +2004,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-12-10}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[surface]{a @symbol{cairo-surface-t} structure}
+  @argument[surface]{a @symbol{cairo-surface-t} instance}
   @argument[surface-x]{a double float x coordinate at which to place the origin
     of @arg{surface}}
   @argument[surface-y]{a double float y coordinate at which to place the origin

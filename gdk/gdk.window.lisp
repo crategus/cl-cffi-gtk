@@ -1342,7 +1342,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
           create.}
         @entry[height]{A @code{:int} with the height of the offscreen surface
           to create.}
-        @entry[Returns]{The newly created @symbol{cairo-surface-t} structure
+        @entry[Returns]{The newly created @symbol{cairo-surface-t} instance
           for the offscreen window.}
       @end{table}
     @subheading{The \"from-embedder\" signal}
@@ -5595,7 +5595,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
  #+cl-cffi-gtk-documentation
  "@version{2020-9-25}
   @argument[window]{a @class{gdk-window} object}
-  @return{The offscreen @symbol{cairo-surface-t} structure, or @code{nil} if
+  @return{The offscreen @symbol{cairo-surface-t} instance, or @code{nil} if
     not offscreen.}
   @begin{short}
     Gets the offscreen surface that an offscreen window renders into.

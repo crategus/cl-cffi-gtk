@@ -2706,7 +2706,7 @@
  "@version{2020-3-8}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argumuent[surface]{a @symbol{cairo-surface-t} structure containing the icon
+  @argumuent[surface]{a @symbol{cairo-surface-t} instance containing the icon
     to draw}
   @argument[x]{a @code{:double} with a x position for the icon}
   @argument[y]{a @code{:double} with a y position for the icon}

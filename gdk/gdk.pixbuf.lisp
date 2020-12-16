@@ -107,14 +107,14 @@
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-10}
-  @argument[surface]{a @symbol{cairo-surface-t} structure to copy from}
+  @argument[surface]{a @symbol{cairo-surface-t} instance to copy from}
   @argument[src-x]{an integer with the source x coordinate within surface}
   @argument[src-y]{an integer with the source y coordinate within surface}
   @argument[width]{an integer with width in pixels of region to get}
   @argument[height]{an integer with the height in pixels of region to get}
   @return{A newly-created @class{gdk-pixbuf} object, or @code{nil} on error.}
   @begin{short}
-    Transfers image data from a @symbol{cairo-surface-t} structure and converts
+    Transfers image data from a @symbol{cairo-surface-t} instance and converts
     it to an RGB(A) representation inside a @class{gdk-pixbuf} object.
   @end{short}
   This allows you to efficiently read individual pixels from cairo surfaces.

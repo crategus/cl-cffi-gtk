@@ -125,11 +125,11 @@
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-29}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
-  @return{A @symbol{cairo-surface-t} structure to the @arg{offscreen} surface,
+  @return{A @symbol{cairo-surface-t} instance to the @arg{offscreen} surface,
     or a @code{null}-pointer.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
-    @symbol{cairo-surface-t} structure.
+    @symbol{cairo-surface-t} instance.
   @end{short}
   If you need to keep this around over window resizes then you should add a
   reference to it.
