@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.png-surface.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.16 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,15 +28,19 @@
 ;;;
 ;;; PNG Support
 ;;;
-;;; Reading and writing PNG images
+;;;     Reading and writing PNG images
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     CAIRO_HAS_PNG_FUNCTIONS
 ;;;
+;;; Functions
+;;;
 ;;;     cairo_image_surface_create_from_png
+;;;     cairo_read_func_t
 ;;;     cairo_image_surface_create_from_png_stream
 ;;;     cairo_surface_write_to_png
+;;;     cairo_write_func_t
 ;;;     cairo_surface_write_to_png_stream
 ;;; ----------------------------------------------------------------------------
 
@@ -61,10 +65,10 @@
            cairo-image-surface-create-from-png)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2014-2-1}
-  @argument[filename]{name of PNG file to load}
+ "@version{2020-12-21}
+  @argument[filename]{a string with the name of PNG file to load}
   @begin{return}
-    A new @symbol{cairo-surface-t} structure initialized with the contents of
+    A new @symbol{cairo-surface-t} instance initialized with the contents of
     the PNG file, or a \"nil\" surface if any error occurred.
   @end{return}
   @begin{short}
@@ -72,13 +76,12 @@
     file.
   @end{short}
 
-  A nil surface can be checked for with the function @fun{cairo-surface-status}
-  which may return one of the following values: @code{:no-memory},
-  @code{:file-not-found}, or @code{:read-error}. Alternatively, you can allow
-  errors to propagate through the drawing operations and check the status on
-  the context upon completion using the function @fun{cairo-status}.
-
-  Since 1.0
+  A \"nil\" surface can be checked for with the function
+  @fun{cairo-surface-status} which may return one of the following values:
+  @code{:no-memory}, @code{:file-not-found}, or @code{:read-error}.
+  Alternatively, you can allow errors to propagate through the drawing
+  operations and check the status on the context upon completion using the
+  function @fun{cairo-status}.
   @see-symbol{cairo-surface-t}
   @see-function{cairo-status}
   @see-function{cairo-surface-status}"
@@ -145,27 +148,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_write_to_png ()
-;;;
-;;; cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,
-;;;                                            const char *filename);
-;;;
-;;; Writes the contents of surface to a new file filename as a PNG image.
-;;;
-;;; surface :
-;;;     a cairo_surface_t with pixel contents
-;;;
-;;; filename :
-;;;     the name of a file to write to
-;;;
-;;; Returns :
-;;;     CAIRO_STATUS_SUCCESS if the PNG file was written successfully.
-;;;     Otherwise, CAIRO_STATUS_NO_MEMORY if memory could not be allocated for
-;;;     the operation or CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does
-;;;     not have pixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error
-;;;     occurs while attempting to write the file.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_write_to_png" cairo-surface-write-to-png)
+    cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-21}
+  @argument[surface]{a @symbol{cairo-surface-t} instance with pixel contents}
+  @argument[filename]{a string with the name of a file to write to}
+  @begin{return}
+    @code{:success} if the PNG file was written successfully. Otherwise,
+    @code{:no-memory} if memory could not be allocated for the operation or
+    @code{:surface-type-mismatch} if the surface does not have pixel contents,
+    or @code{:write-error} if an I/O error occurs while attempting to write
+    the file.
+  @end{return}
+  @begin{short}
+    Writes the contents of the image surface to a new file as a PNG image.
+  @end{short}
+  @see-symbol{cairo-surface-t}"
+  (surface (:pointer (:struct cairo-surface-t)))
+  (filename :string))
+
+(export 'cairo-surface-write-to-png)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_write_func_t ()
