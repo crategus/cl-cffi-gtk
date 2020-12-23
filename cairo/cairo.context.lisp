@@ -131,7 +131,7 @@
 (setf (gethash 'cairo-antialias-t atdoc:*symbol-name-alias*)
       "CEnum"
       (gethash 'cairo-antialias-t atdoc:*external-symbols*)
- "@version{2020-12-10}
+ "@version{2020-12-21}
   @begin{short}
     Specifies the type of antialiasing to do when rendering text or shapes.
   @end{short}
@@ -165,8 +165,8 @@
     @entry[:default]{Use the default antialiasing for the subsystem and target
       device.}
     @entry[:none]{Use a bilevel alpha mask.}
-    @entry[:gray]{Perform single-color antialiasing (using shades of gray for
-      black text on a white background, for example).}
+    @entry[:gray]{Perform single-color antialiasing, using shades of gray for
+      black text on a white background, for example.}
     @entry[:subpixel]{Perform antialiasing by taking advantage of the order of
       subpixel elements on devices such as LCD panels.}
     @entry[:fast]{Hint that the backend should perform some antialiasing but
@@ -347,10 +347,10 @@
 (setf (gethash 'cairo-operator-t atdoc:*symbol-name-alias*)
       "CEnum"
       (gethash 'cairo-operator-t atdoc:*external-symbols*)
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @begin{short}
-    A @sym{cairo-operator-t} enumeration is used to set the compositing
-    operator for all cairo drawing operations.
+    The @sym{cairo-operator-t} enumeration is used to set the compositing
+    operator for all Cairo drawing operations.
   @end{short}
 
   The default operator is @code{:over}.
@@ -528,7 +528,8 @@
 (defcstruct cairo-t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-t atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'cairo-t atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'cairo-t atdoc:*external-symbols*)
  "@version{2020-12-10}
   @begin{short}
@@ -552,29 +553,29 @@
 
 (defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[target]{a @symbol{cairo-surface-t} target surface for the context}
   @begin{return}
     A newly allocated @symbol{cairo-t} context with a reference count of 1.
   @end{return}
   @begin{short}
-    Creates a new @symbol{cairo-t} context with all graphics state parameters
-    set to default values and with @arg{target} as a target surface.
+    Creates a new Cairo context with all graphics state parameters set to
+    default values and with @arg{target} as a target surface.
   @end{short}
   The target surface should be constructed with a backend-specific function
   such as the function @fun{cairo-image-surface-create}, or any other variant.
 
   The initial reference count should be released with the function
-  @fun{cairo-destroy} when you are done using the @symbol{cairo-t} context.
-  This function never returns @code{NULL}. If memory cannot be allocated, a
-  special @symbol{cairo-t} context will be returned on which the function
-  @fun{cairo-status} returns @code{:no-memory}. If you attempt to target a
-  surface which does not support writing, then a @code{:write-error} will be
-  raised. You can use this object normally, but no drawing will be done.
+  @fun{cairo-destroy} when you are done using the Cairo context. This function
+  will always return a valid pointer. If memory cannot be allocated, a special
+  Cairo context will be returned on which the function @fun{cairo-status}
+  returns @code{:no-memory}. If you attempt to target a surface which does not
+  support writing, then a @code{:write-error} will be raised. You can use this
+  object normally, but no drawing will be done.
 
-  This function references target, so you can immediately call the function
-  @fun{cairo-surface-destroy} on it if you do not need to maintain a separate
-  reference to it.
+  This function references @arg{target}, so you can immediately call the
+  function @fun{cairo-surface-destroy} on it if you do not need to maintain a
+  separate reference to it.
   @see-symbol{cairo-t}
   @see-symbol{cairo-surface-t}
   @see-function{cairo-status}
@@ -591,7 +592,7 @@
 
 (defcfun ("cairo_reference" cairo-reference) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @return{The referenced @symbol{cairo-t} context.}
   @begin{short}
@@ -600,8 +601,8 @@
   This prevents @arg{cr} from being destroyed until a matching call to the
   function @fun{cairo-destroy} is made.
 
-  The number of references to a @symbol{cairo-t} context can be get using the
-  function @fun{cairo-get-reference-count}.
+  The number of references to a Cairo context can be get using the function
+  @fun{cairo-get-reference-count}.
   @see-symbol{cairo-t}
   @see-function{cairo-destroy}
   @see-function{cairo-get-reference-count}"
@@ -634,9 +635,10 @@
 
 (defcfun ("cairo_status" cairo-status) cairo-status-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @return{The current status of type @symbol{cairo-status-t} of this context.}
+  @return{A value of the @symbol{cairo-status-t} enumeration for the current
+    status of this context.}
   @begin{short}
     Checks whether an error has previously occurred for this Cairo context.
   @end{short}
@@ -653,7 +655,7 @@
 
 (defcfun ("cairo_save" cairo-save) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Makes a copy of the current state of @arg{cr} and saves it on an internal
@@ -665,10 +667,10 @@
   @fun{cairo-restore} restores the state from the matching paired
   @sym{cairo-save}.
 
-  It is not necessary to clear all saved states before a @symbol{cairo-t}
-  context is freed. If the reference count of a @symbol{cairo-t} context drops
-  to zero in response to a call to the function @fun{cairo-destroy}, any saved
-  states will be freed along with the @symbol{cairo-t} context.
+  It is not necessary to clear all saved states before a Cairo context is freed.
+  If the reference count of a Cairo context drops to zero in response to a call
+  to the function @fun{cairo-destroy}, any saved states will be freed along with
+  the Cairo context.
   @see-symbol{cairo-t}
   @see-function{cairo-restore}
   @see-function{cairo-destroy}"
@@ -701,7 +703,7 @@
 (defcfun ("cairo_get_target" cairo-get-target)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The @symbol{cairo-surface-t} target surface. This object is owned by Cairo.
@@ -714,7 +716,7 @@
   @fun{cairo-surface-reference}.
 
   This function will always return a valid pointer, but the result can be a
-  @code{nil} surface if @arg{cr} is already in an error state.
+  \"nil\" surface if @arg{cr} is already in an error state.
   @see-symbol{cairo-t}
   @see-symbol{cairo-surface-t}
   @see-function{cairo-create}
@@ -729,7 +731,7 @@
 
 (defcfun ("cairo_push_group" cairo-push-group) :void
  #+cl-cffi-gtk-documentation
-"@version{2020-12-10}
+"@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Temporarily redirects drawing to an intermediate surface known as a group.
@@ -745,7 +747,7 @@
   translucence onto the destination.
 
   Groups can be nested arbitrarily deep by making balanced calls to
-  the functions @sym{cairo-push-group}and @fun{cairo-pop-group}. Each call
+  the functions @sym{cairo-push-group} and @fun{cairo-pop-group}. Each call
   pushes and pops the new target group onto and from a stack.
 
   The function @sym{cairo-push-group} calls the function @fun{cairo-save} so
@@ -786,10 +788,10 @@
 
 (defcfun ("cairo_push_group_with_content" cairo-push-group-with-content) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[content]{a @symbol{cairo-content-t} value indicating the type of
-    group that will be created}
+  @argument[content]{a value of the @symbol{cairo-content-t} enumeration
+    indicating the type of group that will be created}
   @begin{short}
     Temporarily redirects drawing to an intermediate surface known as a group.
   @end{short}
@@ -819,13 +821,13 @@
 (defcfun ("cairo_pop_group" cairo-pop-group)
     (:pointer (:struct cairo-pattern-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    A newly created (surface) @symbol{cairo-pattern-t} structure containing the
-    results of all drawing operations performed to the group. The caller owns
-    the returned object and should call the function @fun{cairo-pattern-destroy}
-    when finished with it.
+    A newly created @symbol{cairo-pattern-t} instance containing the results of
+    all drawing operations performed to the group. The caller owns the returned
+    instance and should call the function @fun{cairo-pattern-destroy} when
+    finished with it.
   @end{return}
   @begin{short}
     Terminates the redirection begun by a call to the functions
@@ -855,26 +857,26 @@
 
 (defcfun ("cairo_pop_group_to_source" cairo-pop-group-to-source) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Terminates the redirection begun by a call to the functions
     @fun{cairo-push-group} or @fun{cairo-push-group-with-content} and installs
-    the resulting pattern as the source pattern in the given cairo context.
+    the resulting pattern as the source pattern in the given Cairo context.
   @end{short}
   The behavior of this function is equivalent to the sequence of operations:
   @begin{pre}
- (let ((group (cairo-pop-group cr)))
-   (cairo-set-source cr group)
-   (cairo-pattern-destroy group))
+(setf group (cairo-pop-group cr))
+(cairo-set-source cr group)
+(cairo-pattern-destroy group)
   @end{pre}
   but is more convenient as their is no need for a variable to store the
   pattern.
 
-  The function @fun{cairo-pop-group} calls the function @fun{cairo-restore},
-  balancing a call to the function @fun{cairo-save} by the push group
-  function, so that any changes to the graphics state will not be visible
-  outside the group.
+  The function @sym{cairo-pop-group-to-source} calls the function
+  @fun{cairo-restore}, balancing a call to the function @fun{cairo-save} by the
+  push group function, so that any changes to the graphics state will not be
+  visible outside the group.
   @see-symbol{cairo-t}
   @see-function{cairo-push-group}
   @see-function{cairo-push-group-with-content}
@@ -892,10 +894,10 @@
 (defcfun ("cairo_get_group_target" cairo-get-group-target)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    The @symbol{cairo-surface-t} target surface. This object is owned by cairo.
+    The @symbol{cairo-surface-t} target surface. This object is owned by Cairo.
     To keep a reference to it, you must call the function
     @fun{cairo-surface-reference}.
   @end{return}
@@ -908,8 +910,8 @@
   @fun{cairo-push-group-with-content}.
 
   This function will always return a valid pointer, but the result can be a
-  \"nil\" surface if @arg{cr} is already in an error state. A nil surface is
-  indicated by a value not equal to @code{:success} of the
+  \"nil\" surface if @arg{cr} is already in an error state. A \"nil\" surface
+  is indicated by a value not equal to @code{:success} of the
   @symbol{cairo-status-t} enumeration.
   @see-symbol{cairo-t}
   @see-symbol{cairo-surface-t}
@@ -932,23 +934,25 @@
 
 (defun cairo-set-source-rgb (cr red green blue)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[red]{a double float with the red component of the color}
-  @argument[green]{a double float with the green component of the color}
-  @argument[blue]{a double float with the blue component of the color}
+  @argument[red]{a double float red component of the color}
+  @argument[green]{a double float green component of the color}
+  @argument[blue]{a double float blue component of the color}
   @begin{short}
     Sets the source pattern within @arg{cr} to an opaque color.
   @end{short}
-  This opaque color will then be used for any subsequent drawing operation until
-  a new source pattern is set.
+  This opaque color will then be used for any subsequent drawing operation
+  until a new source pattern is set.
 
   The color components are floating point numbers in the range 0.0 to
   1.0. If the values passed in are outside that range, they will be
   clamped.
 
   The default source pattern is opaque black, that is, it is equivalent to
-  @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
+  @begin{pre}
+(cairo-set-source-rgb cr 0.0 0.0 0.0)
+  @end{pre}
   @see-symbol{cairo-t}
   @see-function{cairo-set-source-rgba}"
   (%cairo-set-source-rgb cr
@@ -971,12 +975,12 @@
 
 (defun cairo-set-source-rgba (cr red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[red]{a double float with the red component of the color}
-  @argument[green]{a double float with the green component of the color}
-  @argument[blue]{a double float with the blue component of the color}
-  @argument[alpha]{a double float with the alpha component of the color}
+  @argument[red]{a double float red component of the color}
+  @argument[green]{a double float green component of the color}
+  @argument[blue]{a double float blue component of the color}
+  @argument[alpha]{a double float alpha component of the color}
   @begin{short}
     Sets the source pattern within @arg{cr} to a translucent color.
   @end{short}
@@ -987,7 +991,9 @@
   1.0. If the values passed in are outside that range, they will be clamped.
 
   The default source pattern is opaque black, that is, it is equivalent to
-  @code{(cairo-set-source-rgba cr 0.0 0.0 0.0 1.0)}.
+  @begin{pre}
+(cairo-set-source-rgba cr 0.0 0.0 0.0 1.0)
+  @end{pre}
   @see-symbol{cairo-t}
   @see-function{cairo-set-source-rgb}"
   (%cairo-set-source-rgba cr
@@ -1004,9 +1010,9 @@
 
 (defcfun ("cairo_set_source" cairo-set-source) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[source]{a @symbol{cairo-pattern-t} structure to be used as the
+  @argument[source]{a @symbol{cairo-pattern-t} instance to be used as the
     source for subsequent drawing operations}
   @begin{short}
     Sets the source pattern within @arg{cr} to @arg{source}.
@@ -1015,12 +1021,16 @@
   new source pattern is set.
 
   The default source pattern is a solid pattern that is opaque black, that
-  is, it is equivalent to @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
+  is, it is equivalent to
+  @begin{pre}
+(cairo-set-source-rgb cr 0.0 0.0 0.0)
+  @end{pre}
   @begin[Note]{dictionary}
     The pattern's transformation matrix will be locked to the user space
-    in effect at the time of @sym{cairo-set-source}. This means that further
-    modifications of the current transformation matrix will not affect the
-    source pattern. See the function @fun{cairo-pattern-set-matrix}.
+    in effect at the time of the call of the function @sym{cairo-set-source}.
+    This means that further modifications of the current transformation matrix
+    will not affect the source pattern. See the function
+    @fun{cairo-pattern-set-matrix}.
   @end{dictionary}
   @see-symbol{cairo-t}
   @see-symbol{cairo-pattern-t}
@@ -1043,10 +1053,10 @@
 
 (defun cairo-set-source-surface (cr surface x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[surface]{a surface of type @symbol{cairo-surface-t} to be used to
-    set the source pattern}
+  @argument[surface]{a @symbol{cairo-surface-t} instance to be used to set
+    the source pattern}
   @argument[x]{a double float user-space x coordinate for surface origin}
   @argument[y]{a double float user-space y coordinate for surface origin}
   @begin{short}
@@ -1087,14 +1097,14 @@
 (defcfun ("cairo_get_source" cairo-get-source)
     (:pointer (:struct cairo-pattern-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @return{ The current @symbol{cairo-pattern-t} source pattern.}
+  @return{The current @symbol{cairo-pattern-t} source pattern.}
   @begin{short}
     Gets the current source pattern for @arg{cr}.
   @end{short}
 
-  This object is owned by cairo. To keep a reference to it, you must call the
+  This object is owned by Cairo. To keep a reference to it, you must call the
   function @fun{cairo-pattern-reference}.
   @see-symbol{cairo-t}
   @see-symbol{cairo-pattern-t}
@@ -1135,9 +1145,9 @@
 
 (defcfun ("cairo_get_antialias" cairo-get-antialias) cairo-antialias-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @return{the current shape @symbol{cairo-antialias-t} mode}
+  @return{The current shape @symbol{cairo-antialias-t} mode.}
   @begin{short}
     Gets the current shape antialiasing mode, as set by the function
     @fun{cairo-set-antialias}.
@@ -1161,12 +1171,12 @@
 
 (defun cairo-set-dash (cr dashes offset)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[dashes]{a list of double float specifying alternate lengths of on
+  @argument[dashes]{a list of numbers specifying alternate lengths of on
     and off stroke portions}
-  @argument[offset]{an offset into the dash pattern at which the stroke should
-    start}
+  @argument[offset]{a number with an offset into the dash pattern at which
+    the stroke should start}
   @begin{short}
     Sets the dash pattern to be used by the function @fun{cairo-stroke}.
   @end{short}
@@ -1245,13 +1255,12 @@
 
 (defun cairo-get-dash (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     @code{dashes} -- a list of double float with the dash values, or @code{nil}
     @br{}
-    @code{offset} -- a double float value for the current dash offset, or
-    @code{nil}
+    @code{offset} -- a double float with the current dash offset
   @end{return}
   @begin{short}
     Gets the current dash list.
@@ -1429,7 +1438,7 @@
 
 (defun cairo-set-line-width (cr width)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[width]{a double float with the line width}
   @begin{short}
@@ -1445,8 +1454,8 @@
 
   The default line width value is 2.0.
   @begin[Note]{dictionary}
-    When the description above refers to user space and CTM it refers to
-    the user space and CTM in effect at the time of the stroking operation, not
+    When the description above refers to user space and CTM it refers to the
+    user space and CTM in effect at the time of the stroking operation, not
     the user space and CTM in effect at the time of the call to the function
     @sym{cairo-set-line-width}. The simplest usage makes both of these spaces
     identical. That is, if there is no change to the CTM between a call to the
@@ -1489,15 +1498,15 @@
 
 (defcfun ("cairo_set_miter_limit" cairo-set-miter-limit) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[limit]{a double float with the miter limit to set}
   @begin{short}
     Sets the current miter limit within the Cairo context.
   @end{short}
 
-  If the current line join style is set to @code{:miter} (see the function
-  @fun{cairo-set-line-join}), the miter limit is used to determine whether the
+  If the current line join style is set to @code{:miter}, see the function
+  @fun{cairo-set-line-join}, the miter limit is used to determine whether the
   lines should be joined with a bevel instead of a miter. Cairo divides the
   length of the miter by the line width. If the result is greater than the
   miter limit, the style is converted to a bevel.
@@ -1512,8 +1521,10 @@
   miter limit of 2.0 makes the miter cutoff at 60 degrees, and a miter limit of
   1.414 makes the cutoff at 90 degrees.
 
-  A miter limit for a desired angle can be computed as:
-  miter limit = 1/sin(angle/2)
+  A miter limit for a desired angle in radians can be computed as:
+  @begin{pre}
+(setf miter-limit (/ 1.0d0 (sin (/ angle 2.0d0))))
+  @end{pre}
   @see-symbol{cairo-t}
   @see-function{cairo-set-line-join}
   @see-function{cairo-stroke}
@@ -1595,7 +1606,7 @@
 (defun cairo-set-tolerance (cr tolerance)
 
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[tolerance]{a double float with the tolerance, in device units
     (typically pixels)}
@@ -1604,9 +1615,9 @@
   @end{short}
   Curved segments of the path will be subdivided until the maximum deviation
   between the original path and the polygonal approximation is less than
-  tolerance. The default value is 0.1. A larger value will give better
-  performance, a smaller value, better appearance. (Reducing the value from the
-  default value of 0.1 is unlikely to improve appearance significantly.) The
+  @arg{tolerance}. The default value is 0.1. A larger value will give better
+  performance, a smaller value, better appearance. Reducing the value from the
+  default value of 0.1 is unlikely to improve appearance significantly. The
   accuracy of paths within Cairo is limited by the precision of its internal
   arithmetic, and the prescribed tolerance is restricted to the smallest
   representable internal value.
@@ -1644,7 +1655,7 @@
 
 (defcfun ("cairo_clip" cairo-clip) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Establishes a new clip region by intersecting the current clip region with
@@ -1654,7 +1665,7 @@
   @end{short}
 
   After a call of the function @sym{cairo-clip}, the current path will be
-  cleared from the cairo context.
+  cleared from the Cairo context.
 
   The current clip region affects all drawing operations by effectively
   masking out any changes to the surface that are outside the current clip
@@ -1681,7 +1692,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_clip_preserve" cairo-clip-preserve) :void
-
  #+cl-cffi-gtk-documentation
  "@version{2020-12-10}
   @argument[cr]{a @symbol{cairo-t} context}
@@ -1710,7 +1720,6 @@
   @see-function{cairo-save}
   @see-function{cairo-restore}
   @see-function{cairo-reset-clip}"
-
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-clip-preserve)
@@ -1719,28 +1728,34 @@
 ;;; cairo_clip_extents ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_clip_extents" cairo-clip-extents) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
-  @argument[cr]{a @symbol{cairo-t} context}
-  @argument[x1]{a foreign pointer to a double float for the left of the
-    resulting extents}
-  @argument[y1]{a foreign pointer to a double float for the top of the
-    resulting extents}
-  @argument[x2]{a foreign pointer to a double float for the right of the
-    resulting extents}
-  @argument[y2]{a foreign pointer to a double float for the bottom of the
-    resulting extents}
-  @begin{short}
-    Computes a bounding box in user coordinates covering the area inside the
-    current clip.
-  @end{short}
-  @see-symbol{cairo-t}"
+(defcfun ("cairo_clip_extents" %cairo-clip-extents) :void
   (cr (:pointer (:struct cairo-t)))
   (x1 (:pointer :double))
   (y1 (:pointer :double))
   (x2 (:pointer :double))
   (y2 (:pointer :double)))
+
+(defun cairo-clip-extents (cr)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-23}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @begin{return}
+    @code{x1} -- a double float for the left of the resulting extents @br{}
+    @code{y1} -- a double float for the top of the resulting extents @br{}
+    @code{x2} -- a double float for the right of the resulting extents @br{}
+    @code{y2} -- a double float for the bottom of the resulting extents
+  @end{return}
+  @begin{short}
+    Computes a bounding box in user coordinates covering the area inside the
+    current clip.
+  @end{short}
+  @see-symbol{cairo-t}"
+  (with-foreign-objects ((x1 :double) (y1 :double) (x2 :double) (y2 :double))
+    (%cairo-clip-extents cr x1 y1 x2 y2)
+    (values (mem-ref x1 :double)
+            (mem-ref y1 :double)
+            (mem-ref x2 :double)
+            (mem-ref y2 :double))))
 
 (export 'cairo-clip-extents)
 
@@ -1751,7 +1766,7 @@
 (defcfun ("cairo_in_clip" cairo-in-clip) cairo-bool-t
 
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the point to test}
   @argument[y]{a double float y coordinate of the point to test}
@@ -1759,7 +1774,7 @@
   @begin{short}
     Tests whether the given point is inside the area that would be visible
     through the current clip, i.e. the area that would be filled by a call to
-    the function @fun{cairo-paint} operation.
+    the function @fun{cairo-paint}.
   @end{short}
 
   See the functions @fun{cairo-clip}, and @fun{cairo-clip-preserve}.
@@ -1856,14 +1871,14 @@
 
 (defcfun ("cairo_fill" cairo-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that fills the current path according to the current
     fill rule, each sub-path is implicitly closed before being filled.
   @end{short}
   After the function @sym{cairo-fill}, the current path will be cleared from
-  the cairo context. See the functions @fun{cairo-set-fill-rule} and
+  the Cairo context. See the functions @fun{cairo-set-fill-rule} and
   @fun{cairo-fill-preserve}.
   @see-symbol{cairo-t}
   @see-function{cairo-set-fill-rule}
@@ -1878,13 +1893,13 @@
 
 (defcfun ("cairo_fill_preserve" cairo-fill-preserve) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that fills the current path according to the current
     fill rule, each sub-path is implicitly closed before being filled.
   @end{short}
-  Unlike the functions @fun{cairo-fill}, @sym{cairo-fill-preserve} preserves
+  Unlike the function @fun{cairo-fill}, @sym{cairo-fill-preserve} preserves
   the path within the Cairo context.
 
   See the functions @fun{cairo-set-fill-rule} and @fun{cairo-fill}.
@@ -1899,25 +1914,34 @@
 ;;; cairo_fill_extents ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_fill_extents" cairo-fill-extents) :void
+(defcfun ("cairo_fill_extents" %cairo-fill-extents) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x1 (:pointer :double))
+  (y1 (:pointer :double))
+  (x2 (:pointer :double))
+  (y2 (:pointer :double)))
+
+(defun cairo-fill-extents (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[x1]{a double float with the left of the resulting extents}
-  @argument[y1]{a double float with the top of the resulting extents}
-  @argument[x2]{a double float with the right of the resulting extents}
-  @argument[y2]{a double float with the bottom of the resulting extents}
+  @begin{return}
+    @code{x1} -- a double float with the left of the resulting extents @br{}
+    @code{y1} -- a double float with the top of the resulting extents @br{}
+    @code{x2} -- a double float with the right of the resulting extents @br{}
+    @code{y2} -- a double float with the bottom of the resulting extents
+  @end{return}
   @begin{short}
     Computes a bounding box in user coordinates covering the area that would be
-    affected, (the \"inked\" area), by a @fun{cairo-fill} operation given the
+    affected, the \"inked\" area, by a @fun{cairo-fill} operation given the
     current path and fill parameters.
   @end{short}
-  If the current path is empty, returns an empty rectangle ((0,0), (0,0)).
-  Surface dimensions and clipping are not taken into account.
+  If the current path is empty, returns an empty rectangle. Surface dimensions
+  and clipping are not taken into account.
 
   Contrast with the function @fun{cairo-path-extents}, which is similar, but
-  returns non-zero extents for some paths with no inked area, (such as a simple
-  line segment).
+  returns non-zero extents for some paths with no inked area, such as a simple
+  line segment.
 
   Note that the function @sym{cairo-fill-extents} must necessarily do more work
   to compute the precise inked areas in light of the fill rule, so the function
@@ -1931,11 +1955,12 @@
   @see-function{cairo-path-extents}
   @see-function{cairo-set-fill-rule}
   @see-function{cairo-fill-preserve}"
-  (cr (:pointer (:struct cairo-t)))
-  (x1 (:pointer :double))
-  (y1 (:pointer :double))
-  (x2 (:pointer :double))
-  (y2 (:pointer :double)))
+  (with-foreign-objects ((x1 :double) (y1 :double) (x2 :double) (y2 :double))
+    (%cairo-fill-extents cr x1 y1 x2 y2)
+    (values (mem-ref x1 :double)
+            (mem-ref y1 :double)
+            (mem-ref x2 :double)
+            (mem-ref y2 :double))))
 
 (export 'cairo-fill-extents)
 
@@ -1974,9 +1999,9 @@
 
 (defcfun ("cairo_mask" cairo-mask) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[pattern]{a @symbol{cairo-pattern-t} structure}
+  @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @begin{short}
     A drawing operator that paints the current source using the alpha channel
     of @arg{pattern} as a mask.
@@ -2045,12 +2070,16 @@
 ;;; cairo_paint_with_alpha ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_paint_with_alpha" cairo-paint-with-alpha) :void
+(defcfun ("cairo_paint_with_alpha" %cairo-paint-with-alpha) :void
+  (cr (:pointer (:struct cairo-t)))
+  (alpha :double))
+
+(defun cairo-paint-with-alpha (cr alpha)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[alpha]{a double float alpha value, between 0 (transparent) and
-    1 (opaque)}
+  @argument[alpha]{a double float alpha value, between 0.0 (transparent) and
+    1.0 (opaque)}
   @begin{short}
     A drawing operator that paints the current source everywhere within the
     current clip region using a mask of constant alpha value @arg{alpha}.
@@ -2059,8 +2088,7 @@
   faded out using the alpha value.
   @see-symbol{cairo-t}
   @see-function{cairo-paint}"
-  (cr (:pointer (:struct cairo-t)))
-  (alpha :double))
+  (%cairo-paint-with-alpha cr (coerce alpha 'double-float)))
 
 (export 'cairo-paint-with-alpha)
 
@@ -2070,14 +2098,14 @@
 
 (defcfun ("cairo_stroke" cairo-stroke) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that strokes the current path according to the current
     line width, line join, line cap, and dash settings.
   @end{short}
   After the function @sym{cairo-stroke}, the current path will be cleared from
-  the cairo context. See the functions @fun{cairo-set-line-width},
+  the Cairo context. See the functions @fun{cairo-set-line-width},
   @fun{cairo-set-line-join}, @fun{cairo-set-line-cap}, @fun{cairo-set-dash},
   and @fun{cairo-stroke-preserve}.
   @begin[Note]{dictionary}
@@ -2086,7 +2114,7 @@
     @begin{enumerate}
       @begin{item}
         Zero-length \"on\" segments set in the function @fun{cairo-set-dash}.
-        If the cap style of type @symbol{cairo-line-cap-t} is @code{:round} or
+        If the @symbol{cairo-line-cap-t} style is @code{:round} or
         @code{:square} then these segments will be drawn as circular dots or
         squares respectively. In the case of @code{:square}, the orientation of
         the squares is determined by the direction of the underlying path.
@@ -2095,14 +2123,14 @@
         A sub-path created by the function @fun{cairo-move-to} followed by
         either a call to the function @fun{cairo-close-path} or one or more
         calls to the function @fun{cairo-line-to} to the same coordinate as the
-        the function @fun{cairo-move-to}. If the cap style is @code{:round}
-        then these sub-paths will be drawn as circular dots. Note that in the
-        case of @code{:square} a degenerate sub-path will not be drawn at all,
-        since the correct orientation is indeterminate.
+        the function @fun{cairo-move-to}. If the @symbol{cairo-line-cap-t} style
+        is @code{:round} then these sub-paths will be drawn as circular dots.
+        Note that in the case of @code{:square} a degenerate sub-path will not
+        be drawn at all, since the correct orientation is indeterminate.
       @end{item}
     @end{enumerate}
-    In no case will a cap style of @code{:butt} cause anything to be drawn in
-    the case of either degenerate segments or sub-paths.
+    In no case will a @symbol{cairo-line-cap-t} style of @code{:butt} cause
+    anything to be drawn in the case of either degenerate segments or sub-paths.
   @end{dictionary}
   @see-symbol{cairo-t}
   @see-symbol{cairo-line-cap-t}
@@ -2124,14 +2152,14 @@
 
 (defcfun ("cairo_stroke_preserve" cairo-stroke-preserve) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that strokes the current path according to the current
     line width, line join, line cap, and dash settings.
   @end{short}
   Unlike the function @fun{cairo-stroke}, @sym{cairo-stroke-preserve} preserves
-  the path within the cairo context.
+  the path within the Cairo context.
 
   See the functions @fun{cairo-set-line-width}, @fun{cairo-set-line-join},
   @fun{cairo-set-line-cap}, and @fun{cairo-set-dash}.
@@ -2149,25 +2177,30 @@
 ;;; cairo_stroke_extents ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_stroke_extents" cairo-stroke-extents) :void
+(defcfun ("cairo_stroke_extents" %cairo-stroke-extents) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x1 (:pointer :double))
+  (y1 (:pointer :double))
+  (x2 (:pointer :double))
+  (y2 (:pointer :double)))
+
+(defun cairo-stroke-extents (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
-  @argument[cr]{a cairo context}
-  @argument[x1]{a foreign pointer to a double float for the left of the
-    resulting extents}
-  @argument[y1]{a foreign pointer to a double float for the top of the
-    resulting extents}
-  @argument[x2]{a foreign pointer to a double float for the right of the
-    resulting extents}
-  @argument[y2]{a foreign pointer to a double float for the bottom of the
-    resulting extents}
+ "@version{2020-12-23}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @begin{return}
+    @code{x1} -- a double float with the left of the resulting extents @br{}
+    @code{y1} -- a double float with the top of the resulting extents @br{}
+    @code{x2} -- a double float with the right of the resulting extents @br{}
+    @code{y2} -- a double float with the bottom of the resulting extents
+  @end{return}
   @begin{short}
     Computes a bounding box in user coordinates covering the area that would be
     affected, the \"inked\" area, by a @fun{cairo-stroke} operation given the
     current path and stroke parameters.
   @end{short}
-  If the current path is empty, returns an empty rectangle ((0,0), (0,0)).
-  Surface dimensions and clipping are not taken into account.
+  If the current path is empty, returns an empty rectangle. Surface dimensions
+  and clipping are not taken into account.
 
   Note that if the line width is set to exactly zero, then the function
   @sym{cairo-stroke-extents} will return an empty rectangle. Contrast with the
@@ -2190,11 +2223,12 @@
   @see-function{cairo-set-line-cap}
   @see-function{cairo-set-dash}
   @see-function{cairo-stroke-preserve}"
-  (cr (:pointer (:struct cairo-t)))
-  (x1 (:pointer :double))
-  (y1 (:pointer :double))
-  (x2 (:pointer :double))
-  (y2 (:pointer :double)))
+  (with-foreign-objects ((x1 :double) (y1 :double) (x2 :double) (y2 :double))
+    (%cairo-stroke-extents cr x1 y1 x2 y2)
+    (values (mem-ref x1 :double)
+            (mem-ref y1 :double)
+            (mem-ref x2 :double)
+            (mem-ref y2 :double))))
 
 (export 'cairo-stroke-extents)
 
@@ -2238,7 +2272,7 @@
 
 (defcfun ("cairo_copy_page" cairo-copy-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Emits the current page for backends that support multiple pages, but does
@@ -2249,7 +2283,7 @@
   the emission.
 
   This is a convenience function that simply calls the function
-  @function{cairo-surface-copy-page} on @arg{cr}'s target.
+  @fun{cairo-surface-copy-page} on @arg{cr}'s target.
   @see-symbol{cairo-t}
   @see-function{cairo-show-page}
   @see-function{cairo-surface-copy-page}"
@@ -2285,11 +2319,11 @@
 
 (defcfun ("cairo_get_reference_count" cairo-get-reference-count) :uint
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2020-12-23}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    The current reference count of @arg{cr}. If the object is a @code{nil}
-    object, 0 will be returned.
+    The current reference count of @arg{cr}. If the Cairo context is a
+    \"nil\" context, 0 will be returned.
   @end{return}
   @begin{short}
     Returns the current reference count of @arg{cr}.
