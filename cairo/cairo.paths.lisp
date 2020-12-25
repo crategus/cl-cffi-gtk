@@ -118,7 +118,7 @@
   (x :double)
   (y :double))
 
-(defcunion cairo-path-data-t
+(defcstruct cairo-path-data-t
   (header (:pointer (:struct header-t)))
   (point (:pointer (:struct point-t))))
 
@@ -219,7 +219,7 @@ cairo_path_destroy (path);
 (setf (gethash 'cairo-path-t atdoc:*symbol-name-alias*)
        "CStruct"
       (gethash 'cairo-path-t atdoc:*external-symbols*)
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @begin{short}
     A data structure for holding a path.
   @end{short}
@@ -230,10 +230,10 @@ cairo_path_destroy (path);
   See the @symbol{cairo-path-data-t} structure for hints on how to iterate over
   the actual data within the path.
 
-  The @arg{num-data} member gives the number of elements in the data array. This
-  number is larger than the number of independent path portions (defined in
-  the @symbol{cairo-path-data-type-t} structure), since the data includes both
-  headers and coordinates for each portion.
+  The @arg{num-data} member gives the number of elements in the data array.
+  This number is larger than the number of independent path portions (defined
+  in the @symbol{cairo-path-data-type-t} structure), since the data includes
+  both headers and coordinates for each portion.
   @begin{pre}
 (defcstruct cairo-path-t
   (status cairo-status-t)
@@ -259,7 +259,7 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_copy_path" cairo-copy-path) (:pointer (:struct cairo-path-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The copy of the @symbol{cairo-path-t} current path. The caller owns the
@@ -274,12 +274,11 @@ cairo_path_destroy (path);
   the returned data structure.
 
   This function will always return a valid pointer, but the result will have
-  no data (data==NULL and num_data==0), if either of the following conditions
-  hold:
+  no data, if either of the following conditions hold:
   @begin{itemize}
     @begin{item}
-      If there is insufficient memory to copy the path. In this case
-      path->status will be set to @code{:no-memory}.
+      If there is insufficient memory to copy the path. In this case the status
+      of the path will be set to @code{:no-memory}.
     @end{item}
     @begin{item}
       If @arg{cr} is already in an error state. In this case path->status will
@@ -303,7 +302,7 @@ cairo_path_destroy (path);
 (defcfun ("cairo_copy_path_flat" cairo-copy-path-flat)
     (:pointer (:struct cairo-path-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The copy of the @symbol{cairo-path-t} current path. The caller owns the
@@ -324,12 +323,11 @@ cairo_path_destroy (path);
   instead be replaced by a series of @code{:line-to} elements.
 
   This function will always return a valid pointer, but the result will have
-  no data (data==NULL and num_data==0), if either of the following conditions
-  hold:
+  no data, if either of the following conditions hold:
   @begin{itemize}
     @begin{item}
-      If there is insufficient memory to copy the path. In this case
-      path->status will be set to @code{:no-memory}.
+      If there is insufficient memory to copy the path. In this case the status
+      of the path will be set to @code{:no-memory}.
     @end{item}
     @begin{item}
       If @arg{cr} is already in an error state. In this case path->status will
@@ -353,11 +351,11 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_path_destroy" cairo-path-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[path]{a @symbol{cairo-path-t} structure previously returned by
     either the function @fun{cairo-copy-path} or @fun{cairo-copy-path-flat}}
   @begin{short}
-    Immediately releases all memory associated with path.
+    Immediately releases all memory associated with @arg{path}.
   @end{short}
   After a call to the function @sym{cairo-path-destroy} the path pointer is no
   longer valid and should not be used further.
@@ -380,7 +378,7 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_append_path" cairo-append-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[path]{a @symbol{cairo-path-t} structure to be appended}
   @begin{short}
@@ -389,8 +387,8 @@ cairo_path_destroy (path);
   The path may be either the return value from one of the functions
   @fun{cairo-copy-path} or @fun{cairo-copy-path-flat} or it may be constructed
   manually. See the @symbol{cairo-path-t} structure for details on how the path
-  data structure should be initialized, and note that path->status must be
-  initialized to @code{:success}.
+  data structure should be initialized, and note that the status of the path
+  must be initialized to @code{:success}.
   @see-symbol{cairo-t}
   @see-symbol{cairo-path-t}
   @see-function{cairo-copy-path}
@@ -424,14 +422,19 @@ cairo_path_destroy (path);
 ;;; cairo_get_current_point ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_get_current_point" cairo-get-current-point) :void
+(defcfun ("cairo_get_current_point" %cairo-get-current-point) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun cairo-get-current-point (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[x]{a foreign pointer to a double float value for the x coordinate
-    of the current point}
-  @argument[y]{a foreign pointer to a double float value for the y coordinate
-    of the current point}
+  @begin{return}
+    @code{x} -- a double float x coordinate of the current point @br{}
+    @code{y} -- a double float y coordinate of the current point
+  @end{return}
   @begin{short}
     Gets the current point of the current path, which is conceptually the final
     point reached by the path so far.
@@ -444,37 +447,29 @@ cairo_path_destroy (path);
 
   Most path construction functions alter the current point. See the following
   functions for details on how they affect the current point:
-
-  @fun{cairo-new-path},
-  @fun{cairo-new-sub-path},
-  @fun{cairo-append-path},
-  @fun{cairo-close-path},
-  @fun{cairo-move-to},
-  @fun{cairo-line-to},
-  @fun{cairo-curve-to},
-  @fun{cairo-rel-move-to},
-  @fun{cairo-rel-line-to},
-  @fun{cairo-rel-curve-to},
-  @fun{cairo-arc},
-  @fun{cairo-arc-negative},
-  @fun{cairo-rectangle},
-  @fun{cairo-text-path},
-  @fun{cairo-glyph-path},
-  @fun{cairo-stroke-to-path}.
-
+  @begin{pre}
+cairo-new-path           cairo-new-sub-path       cairo-append-path
+cairo-close-path         cairo-move-to            cairo-line-to
+cairo-curve-to           cairo-rel-move-to        cairo-rel-line-to
+cairo-rel-curve-to       cairo-arc                cairo-arc-negative
+cairo-rectangle          cairo-text-path          cairo-glyph-path
+cairo-stroke-to-path
+  @end{pre}
   Some functions use and alter the current point but do not otherwise change
   current path:
-
-  @fun{cairo-show-text}.
-
+  @begin{pre}
+cairo-show-text
+  @end{pre}
   Some functions unset the current path and as a result, current point:
-
-  @fun{cairo-fill}, @fun{cairo-stroke}.
+  @begin{pre}
+cairo-fill               cairo-stroke
+  @end{pre}
   @see-symbol{cairo-t}
   @see-function{cairo-has-current-point}"
-  (cr (:pointer (:struct cairo-t)))
-  (x (:pointer :double))
-  (y (:pointer :double)))
+  (with-foreign-objects ((x :double) (y :double))
+    (%cairo-get-current-point cr x y)
+    (values (mem-ref x :double)
+            (mem-ref y :double))))
 
 (export 'cairo-get-current-point)
 
@@ -688,7 +683,7 @@ cairo_path_destroy (path);
 
 (defun cairo-curve-to (cr x1 y1 x2 y2 x3 y3)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x1]{a double float x coordinate of the first control point}
   @argument[y1]{a double float y coordinate of the first control point}
@@ -704,8 +699,10 @@ cairo_path_destroy (path);
   After this call the current point will be (@arg{x3}, @arg{y3}).
 
   If there is no current point before the call to the function
-  @sym{cairo-curve-to} this function will behave as if preceded by a call to
-  @code{(cairo-move-to cr x1 y1)}.
+  @sym{cairo-curve-to} this function will behave as if preceded by a call to:
+  @begin{pre}
+(cairo-move-to cr x1 y1)
+  @end{pre}
   @see-class{cairo-t}
   @see-function{cairo-move-to}"
   (%cairo-curve-to cr
@@ -729,18 +726,21 @@ cairo_path_destroy (path);
 
 (defun cairo-line-to (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the end of the new line}
   @argument[y]{a double float y coordinate of the end of the new line}
   @begin{short}
     Adds a line to the path from the current point to position
-   (@arg{x}, @arg{y}) in user-space coordinates. After this call the current
-   point will be (@arg{x}, @arg{y}).
+   (@arg{x}, @arg{y}) in user-space coordinates.
   @end{short}
+  After this call the current point will be (@arg{x}, @arg{y}).
 
   If there is no current point before the call to @sym{cairo-line-to} this
-  function will behave as @code{(cairo-move-to cr x y)}.
+  function will behave as:
+  @begin{pre}
+(cairo-move-to cr x y)
+  @end{pre}
   @see-symbol{cairo-t}
   @see-function{cairo-move-to}"
   (%cairo-line-to cr (coerce x 'double-float) (coerce y 'double-float)))
@@ -824,10 +824,10 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_glyph_path" cairo-glyph-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[glyphs]{array of @symbol{cairo-glyphs-t} glyphs to show}
-  @argument[num-glyphs]{an integer witht the number of glyphs to show}
+  @argument[num-glyphs]{an integer with the number of glyphs to show}
   @begin{short}
     Adds closed paths for the glyphs to the current path.
   @end{short}
@@ -848,7 +848,7 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_text_path" cairo-text-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[utf8]{a string of text encoded in UTF-8, or @code{nil}}
   @begin{short}
@@ -867,11 +867,11 @@ cairo_path_destroy (path);
   to to the function @sym{cairo-text-path} without having to set current point
   in between.
   @begin[Note]{dictionary}
-    The function @sym{cairo-text-path} function call is part of what the cairo
-    designers call the \"toy\" text API. It is convenient for short demos and
-    simple programs, but it is not expected to be adequate for serious
-    text-using applications. See the function @fun{cairo-glyph-path} for the
-    \"real\" text path API in cairo.
+    The function @sym{cairo-text-path} call is part of what the Cairo designers
+    call the \"toy\" text API. It is convenient for short demos and simple
+    programs, but it is not expected to be adequate for serious text-using
+    applications. See the function @fun{cairo-glyph-path} for the \"real\" text
+    path API in Cairo.
   @end{dictionary}
   @see-symbol{cario-t}
   @see-function{cairo-show-text}
@@ -1015,18 +1015,23 @@ cairo_path_destroy (path);
 ;;; cairo_path_extents ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_path_extents" cairo-path-extents) :void
+(defcfun ("cairo_path_extents" %cairo-path-extents) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x1 (:pointer :double))
+  (y1 (:pointer :double))
+  (x2 (:pointer :double))
+  (y2 (:pointer :double)))
+
+(defun cairo-path-extents (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2020-12-25}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[x1]{a foreign pointer to a double float for the left of the
-    resulting extents}
-  @argument[y1]{a foreign pointer to a double float for the top of the
-    resulting extents}
-  @argument[x2]{a foreign pointer to a double float for the right of the
-    resulting extents}
-  @argument[y2]{a foreign pointer to a double float for the bottom of the
-    resulting extents}
+  @begin{return}
+    @code{x1} -- a double float for the left of the resulting extents @br{}
+    @code{y1} -- a double float for the top of the resulting extents @br{}
+    @code{x2} -- a double float for the right of the resulting extents @br{}
+    @code{y2} -- a double float for the bottom of the resulting extents
+  @end{return}
   @begin{short}
     Computes a bounding box in user-space coordinates covering the points on
     the current path.
@@ -1041,24 +1046,25 @@ cairo_path_destroy (path);
 
   The result of the function @sym{cairo-path-extents} is defined as equivalent
   to the limit of the function @fun{cairo-stroke-extents} with @code{:round} as
-  the line width approaches 0.0, (but never reaching the empty-rectangle
-  returned by the function @fun{cairo-stroke-extents} for a line width of 0.0).
+  the line width approaches 0.0, but never reaching the empty-rectangle
+  returned by the function @fun{cairo-stroke-extents} for a line width of 0.0.
 
   Specifically, this means that zero-area sub-paths such as @fun{cairo-move-to};
-  @fun{cairo-line-to} segments, (even degenerate cases where the coordinates to
-  both calls are identical), will be considered as contributing to the
-  extents. However, a lone @fun{cairo-move-to} will not contribute to the
-  results of @sym{cairo-path-extents}.
+  @fun{cairo-line-to} segments, even degenerate cases where the coordinates to
+  both calls are identical, will be considered as contributing to the extents.
+  However, a lone @fun{cairo-move-to} will not contribute to the results of
+  the function @sym{cairo-path-extents}.
   @see-symbol{cairo-t}
   @see-function{cairo-fill-extents}
   @see-function{cairo-stroke-extents}
   @see-function{cairo-move-to}
   @see-function{cairo-line-to}"
-  (cr (:pointer (:struct cairo-t)))
-  (x1 (:pointer :double))
-  (y1 (:pointer :double))
-  (x2 (:pointer :double))
-  (y2 (:pointer :double)))
+  (with-foreign-objects ((x1 :double) (y1 :double) (x2 :double) (y2 :double))
+    (%cairo-path-extents cr x1 y1 x2 y2)
+    (values (mem-ref x1 :double)
+            (mem-ref y1 :double)
+            (mem-ref x2 :double)
+            (mem-ref y2 :double))))
 
 (export 'cairo-path-extents)
 
