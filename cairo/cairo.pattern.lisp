@@ -30,7 +30,7 @@
 ;;;
 ;;;     Sources for drawing
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_pattern_t
 ;;;     cairo_extend_t
@@ -53,6 +53,7 @@
 ;;;     cairo_pattern_create_radial
 ;;;     cairo_pattern_get_radial_circles
 ;;;     cairo_pattern_create_mesh
+;;;
 ;;;     cairo_mesh_pattern_begin_patch
 ;;;     cairo_mesh_pattern_end_patch
 ;;;     cairo_mesh_pattern_move_to
@@ -65,13 +66,13 @@
 ;;;     cairo_mesh_pattern_get_path
 ;;;     cairo_mesh_pattern_get_control_point
 ;;;     cairo_mesh_pattern_get_corner_color_rgba
+;;;
 ;;;     cairo_pattern_reference
 ;;;     cairo_pattern_destroy
 ;;;     cairo_pattern_status
 ;;;
 ;;;     cairo_pattern_set_extend
 ;;;     cairo_pattern_get_extend
-;;;
 ;;;     cairo_pattern_set_filter
 ;;;     cairo_pattern_get_filter
 ;;;     cairo_pattern_set_matrix
@@ -105,7 +106,7 @@
 (setf (gethash 'cairo-pattern-t atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'cairo-pattern-t atdoc:*external-symbols*)
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @begin{short}
     A @sym{cairo-pattern-t} structure represents a source when drawing onto a
     surface.
@@ -119,10 +120,11 @@
   @code{cairo-set-source-type} functions; for example the function
   @fun{cairo-set-source-rgb}.
 
-  The type of a pattern can be queried with @fun{cairo-pattern-get-type}.
+  The type of a pattern can be queried with the function
+  @fun{cairo-pattern-get-type}.
 
-  Memory management of @sym{cairo-pattern-t} is done with the functions
-  @fun{cairo-pattern-reference} and @fun{cairo-pattern-destroy}.
+  Memory management of the @sym{cairo-pattern-t} structure is done with the
+  functions @fun{cairo-pattern-reference} and @fun{cairo-pattern-destroy}.
   @see-function{cairo-pattern-create-rgb}
   @see-function{cairo-set-source-rgb}
   @see-function{cairo-pattern-reference}
@@ -309,7 +311,7 @@
 
 (defun cairo-pattern-add-color-stop-rgb (pattern offset red green blue)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[offset]{a double float with an offset in the range [0.0 .. 1.0]}
   @argument[red]{a double float red component of color}
@@ -327,13 +329,13 @@
   @fun{cairo-set-source-rgb}.
 
   If two (or more) stops are specified with identical offset values, they will
-  be sorted according to the order in which the stops are added, (stops added
-  earlier will compare less than stops added later). This can be useful for
+  be sorted according to the order in which the stops are added, stops added
+  earlier will compare less than stops added later. This can be useful for
   reliably making sharp color transitions instead of the typical blend.
   @begin[Note]{dictionary}
-    If @arg{pattern} is not a gradient pattern, (e.g. a linear or radial
-    pattern), then @arg{pattern} will be put into an error status with a status
-    of @code{:pattern-type-mismatch}.
+    If @arg{pattern} is not a gradient pattern, e.g. a linear or radial pattern,
+    then @arg{pattern} will be put into an error status with a status of
+    @code{:pattern-type-mismatch}.
   @end{dictionary}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-set-source-rgb}"
@@ -403,22 +405,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_pattern_get_color_stop_count"
-           cairo-pattern-get-color-stop-count) cairo-status-t
+           %cairo-pattern-get-color-stop-count) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (count (:pointer :int)))
+
+(defun cairo-pattern-get-color-stop-count (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[count]{a foreign pointer to an integer for the return value for the
-    number of color stops}
   @begin{return}
-    @code{:sucess}, or @code{:pattern-type-mismatch} if @arg{pattern} is not a
-    gradient pattern.
+    @code{count} -- an integer with the number of color stops @br{}
+    @code{status} -- @code{:sucess}, or @code{:pattern-type-mismatch} if
+    @arg{pattern} is not a gradient pattern
   @end{return}
   @begin{short}
     Gets the number of color stops specified in the given gradient pattern.
   @end{short}
   @see-symbol{cairo-pattern-t}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (count (:pointer :int)))
+  (with-foreign-object (count :int)
+    (let ((status (%cairo-pattern-get-color-stop-count cr count)))
+      (values (mem-ref count :int))
+              status)))
 
 (export 'cairo-pattern-get-color-stop-count)
 
@@ -426,22 +433,30 @@
 ;;; cairo_pattern_get_color_stop_rgba ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_get_color_stop_rgba" cairo-pattern-get-color-stop-rgba)
-    cairo-status-t
+(defcfun ("cairo_pattern_get_color_stop_rgba"
+          %cairo-pattern-get-color-stop-rgba) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (index :int)
+  (offset (:pointer :double))
+  (red (:pointer :double))
+  (green (:pointer :double))
+  (blue (:pointer :double))
+  (alpha (:pointer :double)))
+
+(defun cairo-pattern-get-color-stop-rgba (pattern index)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[index]{an integer with the index of the stop to return data for}
-  @argument[offset]{a foreign pointer to a double float for the offset of the
-    stop}
-  @argument[red]{a pointer to a double float for red component of color}
-  @argument[green]{a pointer to a double float for green component of color}
-  @argument[blue]{a pointer to a double float for blue component of color}
-  @argument[alpha]{a pointer to a double float for alpha component of color}
   @begin{return}
-    @code{:success}, or @code{:invalid-index} if @arg{index} is not valid for
-    the given pattern. If the pattern is not a gradient pattern,
-    @code{:pattern-type-mismatch} is returned.
+    @code{offset} -- a double float with the offset of the stop @br{}
+    @code{red} -- a double float red component of color @br{}
+    @code{green} -- a double float green component of color @br{}
+    @code{blue} -- a double float blue component of color @br{}
+    @code{alpha} -- a double float alpha component of color @br{}
+    @code{status} -- @code{:success}, or @code{:invalid-index} if @arg{index}
+    is not valid for the given pattern, if the pattern is not a gradient
+    pattern, @code{:pattern-type-mismatch} is returned
   @end{return}
   @begin{short}
     Gets the color and offset information at the given index for a gradient
@@ -451,13 +466,21 @@
   @fun{cairo-pattern-get-color-stop-count}.
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-get-color-stop-count}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (index :int)
-  (offset (:pointer :double))
-  (red (:pointer :double))
-  (green (:pointer :double))
-  (blue (:pointer :double))
-  (alpha (:pointer :double)))
+  (with-foreign-objects ((offset :double)
+                         (red :double)
+                         (green :double)
+                         (blue :double)
+                         (alpha :double))
+    (let ((status (%cairo-pattern-get-color-stop-rgba pattern
+                                                      index
+                                                      offset
+                                                      red green blue alpha)))
+      (values (mem-ref offset :double)
+              (mem-ref red :double)
+              (mem-ref green :double)
+              (mem-ref blue :double)
+              (mem-ref alpha :double)
+              status))))
 
 (export 'cairo-pattern-get-color-stop-rgba)
 
@@ -465,15 +488,20 @@
 ;;; cairo_pattern_create_rgb ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_create_rgb" cairo-pattern-create-rgb)
+(defcfun ("cairo_pattern_create_rgb" %cairo-pattern-create-rgb)
     (:pointer (:struct cairo-pattern-t))
+  (red :double)
+  (green :double)
+  (blue :double))
+
+(defun cairo-pattern-create-rgb (red green blue)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[red]{a double float red component of the color}
   @argument[green]{a double float green component of the color}
   @argument[blue]{a double float blue component of the color}
   @begin{return}
-    The newly created @sym{cairo-pattern-t} structure if successful, or an error
+    The newly created @sym{cairo-pattern-t} instance if successful, or an error
     pattern in case of no memory. The caller owns the returned object and should
     call the function @fun{cairo-pattern-destroy} when finished with it. This
     function will always return a valid pointer, but if an error occurred the
@@ -481,7 +509,7 @@
     use the function @fun{cairo-pattern-status}.
   @end{return}
   @begin{short}
-    Creates a new @sym{cairo-pattern-t} structure corresponding to an opaque
+    Creates a new @sym{cairo-pattern-t} instance corresponding to an opaque
     color.
   @end{short}
   The color components are floating point numbers in the range 0 to 1. If the
@@ -489,9 +517,9 @@
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-destroy}
   @see-function{cairo-pattern-status}"
-  (red :double)
-  (green :double)
-  (blue :double))
+  (%cairo-pattern-create-rgb (coerce red 'double-float)
+                             (coerce green 'double-float)
+                             (coerce blue 'double-float)))
 
 (export 'cairo-pattern-create-rgb)
 
@@ -499,10 +527,16 @@
 ;;; cairo_pattern_create_rgba ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_create_rgba" cairo-pattern-create-rgba)
+(defcfun ("cairo_pattern_create_rgba" %cairo-pattern-create-rgba)
     (:pointer (:struct cairo-pattern-t))
+  (red :double)
+  (green :double)
+  (blue :double)
+  (alpha :double))
+
+(defun cairo-pattern-create-rgba (red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-26}
   @argument[red]{a double float red component of the color}
   @argument[green]{a double float green component of the color}
   @argument[blue]{a double float blue component of the color}
@@ -524,10 +558,10 @@
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-destroy}
   @see-function{cairo-pattern-status}"
-  (red :double)
-  (green :double)
-  (blue :double)
-  (alpha :double))
+  (%cairo-pattern-create-rgba (coerce red 'double-float)
+                              (coerce green 'double-float)
+                              (coerce blue 'double-float)
+                              (coerce alpha 'double-float)))
 
 (export 'cairo-pattern-create-rgba)
 
@@ -535,27 +569,40 @@
 ;;; cairo_pattern_get_rgba ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_get_rgba" cairo-pattern-get-rgba) cairo-status-t
- #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
-  @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[red]{a pointer to a double float for red component of color}
-  @argument[green]{a pointer to a double float for green component of color}
-  @argument[blue]{a pointer to a double float for blue component of color}
-  @argument[alpha]{a pointer to a double float for alpha component of color}
-  @begin{return}
-    @code{:success}, or @code{:pattern-type-mismatch} if the pattern is not a
-    solid color pattern.
-  @end{return}
-  @begin{short}
-    Gets the solid color for a solid color pattern.
-  @end{short}
-  @see-symbol{cairo-pattern-t}"
+(defcfun ("cairo_pattern_get_rgba" %cairo-pattern-get-rgba) cairo-status-t
   (pattern (:pointer (:struct cairo-pattern-t)))
   (red (:pointer :double))
   (green (:pointer :double))
   (blue (:pointer :double))
   (alpha (:pointer :double)))
+
+(defun cairo-pattern-get-rgba (pattern)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-25}
+  @argument[pattern]{a @symbol{cairo-pattern-t} instance}
+  @begin{return}
+    @code{red} -- a double float red component of color @br{}
+    @code{green} -- a double float green component of color @br{}
+    @code{blue} -- a double float blue component of color @br{}
+    @code{alpha} -- a double float alpha component of color @br{}
+    @code{status} -- @code{:success}, or @code{:pattern-type-mismatch} if the
+    pattern is not a solid color pattern
+  @end{return}
+  @begin{short}
+    Gets the solid color for a solid color pattern.
+  @end{short}
+  @see-symbol{cairo-pattern-t}"
+  (with-foreign-objects ((red :double)
+                         (green :double)
+                         (blue :double)
+                         (alpha :double))
+    (let ((status (%cairo-pattern-get-rgba pattern red green blue alpha)))
+      (values (mem-ref red :double)
+              (mem-ref green :double)
+              (mem-ref blue :double)
+              (mem-ref alpha :double)
+              (mem-ref alpha :double)
+              status))))
 
 (export 'cairo-pattern-get-rgba)
 
@@ -591,26 +638,31 @@
 ;;; cairo_pattern_get_surface ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_get_surface" cairo-pattern-get-surface) cairo-status-t
+(defcfun ("cairo_pattern_get_surface" %cairo-pattern-get-surface) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (surface (:pointer (:pointer (:struct cairo-surface-t)))))
+
+(defun cairo-pattern-get-surface (pattern)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[surface]{a @symbol{cairo-surface-t} pointer for the surface of
-    the pattern}
   @begin{return}
-    @code{:success}, or @code{:pattern-type-mismatch} if the pattern is not a
-    surface pattern.
+    @code{surface} -- a @symbol{cairo-surface-t} instance of the pattern @br{}
+    @code{status} -- @code{:success}, or @code{:pattern-type-mismatch} if the
+    pattern is not a surface pattern
   @end{return}
   @begin{short}
     Gets the surface of a surface pattern.
   @end{short}
-  The reference returned in @arg{surface} is owned by the pattern; the caller
+  The reference returned in @arg{surface} is owned by the pattern. The caller
   should call the function @fun{cairo-surface-reference} if the surface is to
   be retained.
   @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-surface-t}
   @see-function{cairo-surface-reference}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (surface (:pointer (:pointer (:struct cairo-surface-t)))))
+  (with-foreign-object (surface '(:pointer (:struct cairo-surface-t)))
+    (let ((status (%cairo-pattern-get-surface pattern surface)))
+      (values surface status))))
 
 (export 'cairo-pattern-get-surface)
 
@@ -627,21 +679,21 @@
 
 (defun cairo-pattern-create-linear (x0 y0 x1 y1)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[x0]{a double float x coordinate of the start point}
   @argument[y0]{a double float y coordinate of the start point}
   @argument[x1]{a double float x coordinate of the end point}
   @argument[y1]{a double float y coordinate of the end point}
   @begin{return}
     The newly created @symbol{cairo-pattern-t} instance if successful, or an
-    error pattern in case of no memory. The caller owns the returned object and
-    should call the function @fun{cairo-pattern-destroy} when finished with it.
-    This function will always return a valid pointer, but if an error occurred
-    the pattern status will be set to an error. To inspect the status of a
-    pattern use the function @fun{cairo-pattern-status}.
+    error pattern in case of no memory. The caller owns the returned instance
+    and should call the function @fun{cairo-pattern-destroy} when finished with
+    it. This function will always return a valid pointer, but if an error
+    occurred the pattern status will be set to an error. To inspect the status
+    of a pattern use the function @fun{cairo-pattern-status}.
   @end{return}
   @begin{short}
-    Create a new linear gradient @symbol{cairo-pattern-t}structure along the
+    Create a new linear gradient @symbol{cairo-pattern-t} instance along the
     line defined by (@arg{x0}, @arg{y0}) and (@arg{x1}, @arg{y1}).
   @end{short}
   Before using the gradient pattern, a number of color stops should be defined
@@ -669,33 +721,38 @@
 ;;; cairo_pattern_get_linear_points ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_get_linear_points" cairo-pattern-get-linear-points)
+(defcfun ("cairo_pattern_get_linear_points" %cairo-pattern-get-linear-points)
     cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (x0 (:pointer :double))
+  (y0 (:pointer :double))
+  (x1 (:pointer :double))
+  (y1 (:pointer :double)))
+
+(defun cairo-pattern-get-linear-points (pattern)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[x0]{a pointer to double float for the x coordinate of the first
-    point}
-  @argument[y0]{a pointer to double float for the y coordinate of the first
-    point}
-  @argument[y0]{a pointer to double float for the x coordinate of the second
-    point}
-  @argument[y1]{a pointer to double float for the y coordinate of the second
-    point}
   @begin{return}
-    @code{:success}, or @code{:pattern-type-mismatch} if pattern is not a
-    linear gradient pattern.
+    @code{x0} -- a double float x coordinate of the first point @br{}
+    @code{y0} -- a double float y coordinate of the first point @br{}
+    @code{y0} -- a double float x coordinate of the second point @br{}
+    @code{y1} -- a double float y coordinate of the second point @br{}
+    @code{status} -- @code{:success}, or @code{:pattern-type-mismatch} if
+    pattern is not a linear gradient pattern
   @end{return}
   @begin{short}
     Gets the gradient endpoints for a linear gradient.
   @end{short}
   @see-symbol{cairo-pattern-t}
   @see-symbol{cairo-status-t}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (x0 (:pointer :double))
-  (y0 (:pointer :double))
-  (x1 (:pointer :double))
-  (y1 (:pointer :double)))
+  (with-foreign-objects ((x0 :double) (y0 :double) (x1 :double) (y1 :double))
+    (let ((status (%cairo-pattern-get-linear-points pattern x0 y0 x1 y1)))
+      (values (mem-ref x0 :double)
+              (mem-ref y0 :double)
+              (mem-ref x1 :double)
+              (mem-ref y1 :double)
+              status))))
 
 (export 'cairo-pattern-get-linear-points)
 
@@ -761,24 +818,33 @@
 ;;; cairo_pattern_get_radial_circles ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_pattern_get_radial_circles" cairo-pattern-get-radial-circles)
+(defcfun ("cairo_pattern_get_radial_circles" %cairo-pattern-get-radial-circles)
     cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (x0 (:pointer :double))
+  (y0 (:pointer :double))
+  (r0 (:pointer :double))
+  (x1 (:pointer :double))
+  (y1 (:pointer :double))
+  (r1 (:pointer :double)))
+
+(defun cairo-pattern-get-radial-circles (pattern)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[x0]{a pointer to a double float for the x coordinate of the center
-    of the first circle}
-  @argument[y0]{a pointer to a double float for the y coordinate of the center
-    of the first circle}
-  @argument[r0]{a pointer to a double float for the radius of the first circle}
-  @argument[x1]{a pointer to a double float for the x coordinate of the center
-    of the second circle}
-  @argument[y1]{a pointer to a double float for the y coordinate of the center
-    of the second circle}
-  @argument[r1]{a pointer to a double float for the radius of the second circle}
   @begin{return}
-    @code{:success}, or @code{:pattern-type-mismatch} if pattern is not a
-    radial gradient pattern.
+    @code{x0} -- a double float x coordinate of the center of the first circle
+    @br{}
+    @code{y0} -- a double float y coordinate of the center of the first circle
+    @br{}
+    @code{r0} -- a double float radius of the first circle  @br{}
+    @code{x1} -- a double float x coordinate of the center of the second circle
+    @br{}
+    @code{y1} -- a double float y coordinate of the center of the second circle
+    @br{}
+    @code{r1} -- a double float radius of the second circle @br{}
+    @code{status} -- @code{:success}, or @code{:pattern-type-mismatch} if
+    pattern is not a radial gradient pattern
   @end{return}
   @begin{short}
     Gets the gradient endpoint circles for a radial gradient, each specified as
@@ -786,12 +852,17 @@
   @end{short}
   @see-symbol{cairo-pattern-t}
   @see-symbol{cairo-status-t}"
-  (x0 (:pointer :double))
-  (y0 (:pointer :double))
-  (r0 (:pointer :double))
-  (x1 (:pointer :double))
-  (y1 (:pointer :double))
-  (r1 (:pointer :double)))
+  (with-foreign-objects ((x0 :double) (y0 :double) (r0 :double)
+                         (x1 :double) (y1 :double) (r1 :double))
+    (let ((status (%cairo-pattern-get-radial-circles pattern
+                                                     x0 y0 r0 x1 y1 r1)))
+      (values (mem-ref x0 :double)
+              (mem-ref y0 :double)
+              (mem-ref r0 :double)
+              (mem-ref x1 :double)
+              (mem-ref y1 :double)
+              (mem-ref r1 :double)
+              status))))
 
 (export 'cairo-pattern-get-radial-circles)
 
@@ -1081,7 +1152,7 @@ cairo_mesh_pattern_end_patch (pattern)
 
 (defcfun ("cairo_mesh_pattern_curve_to" cairo-mesh-pattern-curve-to) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[x1]{the double float x coordinate of the first control point}
   @argument[y1]{the double float y coordinate of the first control point}
@@ -1096,7 +1167,7 @@ cairo_mesh_pattern_end_patch (pattern)
   @end{short}
 
   If the current patch has no current point before the call to the function
-  @sym{cairo-mesh_pattern-curve-to}, this function will behave as if preceded
+  @sym{cairo-mesh-pattern-curve-to}, this function will behave as if preceded
   by a call
   @begin{pre}
 (cairo-mesh-pattern-move-to pattern x1 y1)
@@ -1248,14 +1319,18 @@ cairo_mesh_pattern_end_patch (pattern)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_mesh_pattern_get_patch_count"
-           cairo-mesh-pattern-get-patch-count) cairo-status-t
+          %cairo-mesh-pattern-get-patch-count) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (count (:pointer :uint)))
+
+(defun cairo-mesh-pattern-get-patch-count (pattern)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[count]{a pointer to an unsigned integer for the number patches}
   @begin{return}
-    @code{:success}, or @code{:pattern-tpye-mismatch} if @arg{pattern} is not
-    a mesh pattern.
+    @code{count} -- an unsigned integer with the number patches @br{}
+    @code{status} -- @code{:success}, or @code{:pattern-tpye-mismatch} if
+    @arg{pattern} is not a mesh pattern
   @end{return}
   @begin{short}
     Gets the number of patches specified in the given mesh pattern.
@@ -1264,11 +1339,12 @@ cairo_mesh_pattern_end_patch (pattern)
   The number only includes patches which have been finished by calling the
   function @fun{cairo-mesh-pattern-end-patch}. For example it will be 0 during
   the definition of the first patch.
-
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-mesh-pattern-end-patch}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (count (:pointer :uint)))
+  (with-foreign-object (count :uint)
+    (let ((status (%cairo-mesh-pattern-get-patch-count pattern count)))
+      (values (mem-ref count :uint)
+              status))))
 
 (export 'cairo-mesh-pattern-get-patch-count)
 
@@ -1309,22 +1385,28 @@ cairo_mesh_pattern_end_patch (pattern)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_mesh_pattern_get_control_point"
-           cairo-mesh-pattern-get-control-point) cairo-status-t
+          %cairo-mesh-pattern-get-control-point) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (patch-num :uint)
+  (point-num :uint)
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun cairo-mesh-pattern-get-control-point (pattern patch-num point-num)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[patch-num]{an unsigned integer with the patch number to return data
     for}
   @argument[point-num]{an unsigned integer with the control point number to
     return data for}
-  @argument[x]{a pointer to a double float for the x coordinate of the control
-    point}
-  @argument[y]{a pointer to a double float for the y coordinate of the control
-    point}
   @begin{return}
-    @code{:success}, or @code{:invalid-index} if @arg{patch-num} or
-    @arg{point-num} is not valid for @arg{pattern}. If @arg{pattern} is not a
-    mesh pattern, @code{:pattern-type-mismatch} is returned.
+    @code{x} -- a double float x coordinate of the control point @br{}
+    @code{y} -- a double float y coordinate of the control point @br{}
+    @code{status} -- @code{:success}, or @code{:invalid-index} if
+      @arg{patch-num} or @arg{point-num} is not valid for @arg{pattern}. If
+      @arg{pattern} is not a mesh pattern, @code{:pattern-type-mismatch} is
+      returned.
   @end{return}
   @begin{short}
     Gets the control point @arg{point-num} of patch @arg{patch-num} for a mesh
@@ -1339,11 +1421,14 @@ cairo_mesh_pattern_end_patch (pattern)
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-mesh-pattern-get-patch-count}
   @see-function{cairo-pattern-create-mesh}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (patch-num :uint)
-  (point-num :uint)
-  (x (:pointer :double))
-  (y (:pointer :double)))
+  (with-foreign-objects ((x :double) (y :double))
+    (let ((status (%cairo-mesh-pattern-get-control-point pattern
+                                                         patch-num
+                                                         point-num
+                                                         x y)))
+      (values (mem-ref x :double)
+              (mem-ref y :double)
+              status))))
 
 (export 'cairo-mesh-pattern-get-control-point)
 
@@ -1352,22 +1437,32 @@ cairo_mesh_pattern_end_patch (pattern)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_mesh_pattern_get_corner_color_rgba"
-           cairo-mesh-pattern-get-corner-color-rgba) cairo-status-t
+          %cairo-mesh-pattern-get-corner-color-rgba) cairo-status-t
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (patch-num :uint)
+  (corner-num :uint)
+  (red (:pointer :double))
+  (green (:pointer :double))
+  (blue (:pointer :double))
+  (alpha (:pointer :double)))
+
+(defun cairo-mesh-pattern-get-corner-color-rgba (pattern patch-num corner-num)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[patch-num]{an unsigned integer with the patch number to return data
     for}
   @argument[corner-num]{an unsigned integer with the corner number to return
     data for}
-  @argument[red]{a pointer to a double float for red component of color}
-  @argument[green]{a pointer to a double float for green component of color}
-  @argument[blue]{a pointer to a double float for blue component of color}
-  @argument[alpha]{a pointer to a double float for alpha component of color}
   @begin{return}
-    @code{:success}, or @code{:invalid-index} if @arg{patch-num} or
-    @arg{corner-num} is not valid for @arg{pattern}. If @arg{pattern} is not a
-    mesh pattern, @code{:pattern-type-mismatch} is returned.
+    @code{red} -- a double float red component of color @br{}
+    @code{green} -- a double float green component of color @br{}
+    @code{blue} -- a double float blue component of color @br{}
+    @code{alpha} -- a double float for alpha component of color @br{}
+    @code{status} -- @code{:success}, or @code{:invalid-index} if
+      @arg{patch-num} or @arg{corner-num} is not valid for @arg{pattern}. If
+      @arg{pattern} is not a mesh pattern, @code{:pattern-type-mismatch} is
+      returned.
   @end{return}
   @begin{short}
     Gets the color information in corner @arg{corner-num} of patch
@@ -1382,13 +1477,22 @@ cairo_mesh_pattern_end_patch (pattern)
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-mesh-pattern-get-patch-count}
   @see-function{cairo-pattern-create-mesh}"
-  (pattern (:pointer (:struct cairo-pattern-t)))
-  (patch-num :uint)
-  (corner-num :uint)
-  (red (:pointer :double))
-  (green (:pointer :double))
-  (blue (:pointer :double))
-  (alpha (:pointer :double)))
+  (with-foreign-objects ((red :double)
+                         (green :double)
+                         (blue :double)
+                         (alpha :double))
+    (let ((status (%cairo-mesh-pattern-get-corner-color-rgba pattern
+                                                             patch-num
+                                                             corner-num
+                                                             red
+                                                             green
+                                                             blue
+                                                             alpha)))
+      (values (mem-ref red :double)
+              (mem-ref green :double)
+              (mem-ref blue :double)
+              (mem-ref alpha :double)
+              status))))
 
 (export 'cairo-mesh-pattern-get-corner-color-rgba)
 
@@ -1510,7 +1614,7 @@ cairo_mesh_pattern_end_patch (pattern)
 
 (defcfun ("cairo_pattern_set_filter" cairo-pattern-set-filter) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[filter]{a value of the @symbol{cairo-filter-t} enumeration
     describing the filter to use for resizing the pattern}
@@ -1520,8 +1624,8 @@ cairo_mesh_pattern_end_patch (pattern)
   See the @symbol{cairo-filter-t} enumeration for details on each filter.
 
   Note that you might want to control filtering even when you do not have an
-  explicit @symbol{cairo-pattern-t} instance, (for example when using the
-  function @fun{cairo-set-source-surface}). In these cases, it is convenient to
+  explicit @symbol{cairo-pattern-t} instance, for example when using the
+  function @fun{cairo-set-source-surface}. In these cases, it is convenient to
   use the function @fun{cairo-get-source} to get access to the pattern that
   Cairo creates implicitly. For example:
   @begin{pre}
@@ -1562,9 +1666,9 @@ cairo_mesh_pattern_end_patch (pattern)
 
 (defcfun ("cairo_pattern_set_matrix" cairo-pattern-set-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[matrix]{a @symbol{cairo-matrix-t} structure}
+  @argument[matrix]{a @symbol{cairo-matrix-t} instance}
   @begin{short}
     Sets the pattern's transformation matrix to @arg{matrix}.
   @end{short}
@@ -1604,9 +1708,9 @@ cairo_mesh_pattern_end_patch (pattern)
 
 (defcfun ("cairo_pattern_get_matrix" cairo-pattern-get-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-25}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
-  @argument[matrix]{a pointer to @symbol{cairo-matrix-t} for the matrix}
+  @argument[matrix]{a @symbol{cairo-matrix-t} for the matrix}
   @begin{short}
     Stores the pattern's transformation matrix into @arg{matrix}.
   @end{short}
@@ -1643,12 +1747,12 @@ cairo_mesh_pattern_end_patch (pattern)
 (defcfun ("cairo_pattern_get_reference_count" cairo-pattern-get-reference-count)
     :uint
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{2020-12-26}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @begin{return}
     The current reference count of @arg{pattern}.
   @end{return}
-  If the instance is a nil instance, 0 will be returned.
+  If the instance is a \"nil\" instance, 0 will be returned.
   @short{Returns the current reference count of @arg{pattern}.}
   @see-symbol{cairo-pattern-t}"
   (pattern (:pointer (:struct cairo-pattern-t))))
