@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cairo.paths.lisp
+;;; cairo.path.lisp
 ;;;
 ;;; The documentation of the file is taken from the Cairo Reference Manual
 ;;; Version 1.16 and modified to document the Lisp binding to the Cairo
@@ -1068,4 +1068,4 @@ cairo-fill               cairo-stroke
 
 (export 'cairo-path-extents)
 
-;;; --- End of file cairo.paths.lisp -------------------------------------------
+;;; --- End of file cairo.path.lisp --------------------------------------------
