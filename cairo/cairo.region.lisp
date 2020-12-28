@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cairo.regions.lisp
+;;; cairo.region.lisp
 ;;;
 ;;; The documentation of the file is taken from the Cairo Reference Manual
 ;;; Version 1.16 and modified to document the Lisp binding to the Cairo
@@ -632,4 +632,4 @@
 
 (export 'cairo-region-xor-rectangle)
 
-;;; --- End of file cairo.regions.lisp -----------------------------------------
+;;; --- End of file cairo.region.lisp ------------------------------------------
