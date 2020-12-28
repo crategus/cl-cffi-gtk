@@ -84,7 +84,7 @@
 (setf (gethash 'cairo-region-overlap-t atdoc:*symbol-name-alias*)
       "Enum"
       (gethash 'cairo-region-overlap-t atdoc:*external-symbols*)
- "@version{2020-12-14}
+ "@version{2020-12-26}
   @begin{short}
     Used as the return value for the function
     @fun{cairo-region-contains-rectangle}.
@@ -96,7 +96,7 @@
       region.}
   @end{table}
   @see-symbol{cairo-region-t}
-  @see-function{cairo-region-contain-rectangle}")
+  @see-function{cairo-region-contains-rectangle}")
 
 (export 'cairo-region-overlap-t)
 
@@ -135,7 +135,7 @@
 (defcfun ("cairo_region_create" cairo-region-create)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
+ "@version{2020-12-26}
   @begin{return}
     A newly allocated @symbol{cairo-region-t} instance. Free with the function
     @fun{cairo-region-destroy}. This function always returns a valid pointer;
@@ -143,7 +143,7 @@
     all operations on the object do nothing. You can check for this with
     the function @fun{cairo-region-status}.
   @end{return}
-  @short{Allocates a new empty region object.}
+  @short{Allocates a new empty region instance.}
   @see-symbol{cairo-region-t}
   @see-function{cairo-region-destroy}
   @see-function{cairo-region-status}")
@@ -157,23 +157,23 @@
 (defcfun ("cairo_region_create_rectangle" cairo-region-create-rectangle)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
-  @argument[rectangle]{a @symbol{cairo-rectangle-int-t} structure}
+ "@version{2020-12-26}
+  @argument[rect]{a @symbol{cairo-rectangle-int-t} structure}
   @begin{return}
     A newly allocated @symbol{cairo-region-t} instance. Free with the function
-    @fun{cairo-region-destroy}. This function always returns a valid pointer;
-    if memory cannot be allocated, then a special error object is returned where
+    @fun{cairo-region-destroy}. This function always returns a valid pointer.
+    If memory cannot be allocated, then a special error object is returned where
     all operations on the object do nothing. You can check for this with the
     function @fun{cairo-region-status}.
   @end{return}
   @begin{short}
-    Allocates a new region object containing rectangle.
+    Allocates a new region instance containing @arg{rect}.
   @end{short}
   @see-symbol{cairo-region-t}
   @see-symbol{cairo-rectangle-int-t}
   @see-function{cairo-region-destroy}
   @see-function{cairo-region-status}"
-  (rectangle :pointer)) ; pointer to type cairo-rectangle-int-t
+  (rect :pointer)) ; pointer to type cairo-rectangle-int-t
 
 (export 'cairo-region-create-rectangle)
 
@@ -184,7 +184,7 @@
 (defcfun ("cairo_region_create_rectangles" cairo-region-create-rectangles)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
+ "@version{2020-12-26}
   @argument[rects]{an array of count @symbol{cairo-rectangle-int-t} structures}
   @argument[count]{an integer with the number of rectangles}
   @begin{return}
@@ -195,7 +195,8 @@
     the function @fun{cairo-region-status}.
   @end{return}
   @begin{short}
-    Allocates a new region object containing the union of all given @arg{rects}.
+    Allocates a new region instance containing the union of all given
+    @arg{rects}.
   @end{short}
   @see-symbol{cairo-region-t}
   @see-symbol{cairo-rectangle-int-t}
@@ -213,22 +214,22 @@
 (defcfun ("cairo_region_copy" cairo-region-copy)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
-  @argument[original]{a @symbol{cairo-region-t} instance}
+ "@version{2020-12-26}
+  @argument[region]{a @symbol{cairo-region-t} instance}
   @begin{return}
     A newly allocated @symbol{cairo-region-t} instance. Free with the function
-    @fun{cairo-region-destroy}. This function always returns a valid pointer;
-    if memory cannot be allocated, then a special error object is returned
+    @fun{cairo-region-destroy}. This function always returns a valid pointer.
+    If memory cannot be allocated, then a special error object is returned
     where all operations on the object do nothing. You can check for this with
     the function @fun{cairo-region-status}.
   @end{return}
   @begin{short}
-    Allocates a new region object copying the area from original.
+    Allocates a new region instance copying the area from @arg{region}.
   @end{short}
   @see-symbol{cairo-region-t}
   @see-function{cairo-region-destroy}
   @see-function{cairo-region-status}"
-  (original (:pointer (:struct cairo-region-t))))
+  (region (:pointer (:struct cairo-region-t))))
 
 (export 'cairo-region-copy)
 
@@ -239,13 +240,13 @@
 (defcfun ("cairo_region_reference" cairo-region-reference)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
+ "@version{2020-12-26}
   @argument[region]{a @symbol{cairo-region-t} instance}
   @return{The referenced @symbol{cairo-region-t} instance.}
   @begin{short}
-    Increases the reference count on region by one.
+    Increases the reference count on @arg{region} by one.
   @end{short}
-  This prevents region from being destroyed until a matching call to
+  This prevents @arg{region} from being destroyed until a matching call to
   the function @fun{cairo-region-destroy} is made.
   @see-symbol{cairo-region-t}
   @see-function{cairo-region-destroy}"
@@ -280,11 +281,11 @@
 
 (defcfun ("cairo_region_status" cairo-region-status) cairo-status-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
+ "@version{2020-12-26}
   @argument[region]{a @symbol{cairo-region-t} instance}
   @return{@code{:success} or @code{:no-memory}}
   @begin{short}
-    Checks whether an error has previous occurred for this region object.
+    Checks whether an error has previous occurred for this region instance.
   @end{short}
   @see-symbol{cairo-region-t}
   @see-symbol{cairo-status-t}"
@@ -298,13 +299,13 @@
 
 (defcfun ("cairo_region_get_extents" cairo-region-get-extents) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-14}
-  @argument[regon]{a @symbol{cairo-region-t} instance}
+ "@version{2020-12-26}
+  @argument[region]{a @symbol{cairo-region-t} instance}
   @argument[extents]{a @symbol{cairo-rectangle-int-t} instance into which to
     store the extents}
   @begin{short}
-    Gets the bounding rectangle of region as a @symbol{cairo-rectangle-int-t}
-    instance.
+    Gets the bounding rectangle of @arg{region} as a
+    @symbol{cairo-rectangle-int-t} instance.
   @end{short}
   @see-symbol{cairo-region-t}
   @see-symbol{cairo-rectangel-int-t}"
