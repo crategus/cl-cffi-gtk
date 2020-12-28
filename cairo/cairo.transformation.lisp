@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cairo.transformations.lisp
+;;; cairo.transformation.lisp
 ;;;
 ;;; The documentation of the file is taken from the Cairo Reference Manual
 ;;; Version 1.16 and modified to document the Lisp binding to the Cairo
@@ -363,4 +363,4 @@
 
 (export 'cairo-device-to-user-distance)
 
-;;; --- End of file cairo.transformations.lisp ---------------------------------
+;;; --- End of file cairo.transformation.lisp ----------------------------------
