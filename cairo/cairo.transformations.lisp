@@ -230,12 +230,11 @@
 
 (defun cairo-user-to-device (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2020-12-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x} -- a double float with the x value of coordinate (in/out parameter)
-    @br{}
-    @code{y} -- a double float with the y value of coordinate (in/out parameter)
+    @code{x} -- a double float x value of coordinate (in/out parameter) @br{}
+    @code{y} -- a double float y value of coordinate (in/out parameter)
   @end{return}
   @begin{short}
     Transform a coordinate from user space to device space by multiplying the
@@ -265,13 +264,13 @@
 
 (defun cairo-user-to-device-distance (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
-  @argument[cr]{a cairo context}
+ "@version{2020-12-26}
+  @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{dx} -- a double float with the x component of a distance vector
-    (in/out parameter) @br{}
-    @code{dy} -- a double float with the y component of a distance vector
-    (in/out parameter)
+    @code{dx} -- a double float x component of a distance vector
+      (in/out parameter) @br{}
+    @code{dy} -- a double float y component of a distance vector
+      (in/out parameter)
   @end{return}
   @begin{short}
     Transform a distance vector from user space to device space.
@@ -303,12 +302,11 @@
 
 (defun cairo-device-to-user (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2020-12-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x} -- a double float with the x value of coordinate (in/out parameter)
-    @br{}
-    @code{y} -- a double float with the y value of coordinate (in/out parameter)
+    @code{x} -- a double float x value of coordinate (in/out parameter) @br{}
+    @code{y} -- a double float y value of coordinate (in/out parameter)
   @end{return}
   @begin{short}
     Transform a coordinate from device space to user space by multiplying the
@@ -338,13 +336,13 @@
 
 (defun cairo-device-to-user-distance (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2020-12-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     @code{dx} -- a double float x component of a distance vector
-    (in/out parameter) @br{}
+      (in/out parameter) @br{}
     @code{dy} -- a double float y component of a distance vector
-    (in/out parameter)
+      (in/out parameter)
   @end{return}
   @begin{short}
     Transform a distance vector from device space to user space.
