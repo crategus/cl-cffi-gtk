@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.font-options.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.14 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,16 @@
 ;;;
 ;;; cairo_font_options_t
 ;;;
-;;; How a font should be rendered
+;;;     How a font should be rendered
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_font_options_t
+;;;     cairo_subpixel_order_t
+;;;     cairo_hint_style_t
+;;;     cairo_hint_metrics_t
+;;;
+;;; Functions
 ;;;
 ;;;     cairo_font_options_create
 ;;;     cairo_font_options_copy
@@ -43,21 +48,21 @@
 ;;;     cairo_font_options_equal
 ;;;     cairo_font_options_set_antialias
 ;;;     cairo_font_options_get_antialias
-;;;
-;;;     cairo_subpixel_order_t
-;;;
 ;;;     cairo_font_options_set_subpixel_order
 ;;;     cairo_font_options_get_subpixel_order
-;;;
-;;;     cairo_hint_style_t
-;;;
 ;;;     cairo_font_options_set_hint_style
 ;;;     cairo_font_options_get_hint_style
-;;;
-;;;     cairo_hint_metrics_t
-;;;
 ;;;     cairo_font_options_set_hint_metrics
 ;;;     cairo_font_options_get_hint_metrics
+;;;     cairo_font_options_get_variations
+;;;     cairo_font_options_set_variations
+;;;
+;;; Description
+;;;
+;;; The font options specify how fonts should be rendered. Most of the time the
+;;; font options implied by a surface are just right and do not need any
+;;; changes, but for pixel-based targets tweaking font options may result in
+;;; superior output on a particular display.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
@@ -69,33 +74,131 @@
 (defcstruct cairo-font-options-t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-font-options-t atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'cairo-font-options-t atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'cairo-font-options-t atdoc:*external-symbols*)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-2}
+ "@version{2020-12-15}
   @begin{short}
     An opaque structure holding all options that are used when rendering fonts.
   @end{short}
 
-  Individual features of a @sym{cairo-font-options-t} can be set or accessed
-  using functions named @code{cairo-font-options-set-feature-name} and
+  Individual features of a @sym{cairo-font-options-t} structure can be set or
+  accessed using functions named @code{cairo-font-options-set-feature-name} and
   @code{cairo-font-options-get-feature-name}, like the functions
   @fun{cairo-font-options-set-antialias} and
   @fun{cairo-font-options-get-antialias}.
 
-  New features may be added to a @sym{cairo-font-options-t} in the future.
-  For this reason, the functions @fun{cairo-font-options-copy},
+  New features may be added to a @sym{cairo-font-options-t} structure in the
+  future. For this reason, the functions @fun{cairo-font-options-copy},
   @fun{cairo-font-options-equal}, @fun{cairo-font-options-merge}, and
   @fun{cairo-font-options-hash} should be used to copy, check for equality,
   merge, or compute a hash value of @sym{cairo-font-options-t} structures.
-
-  Since 1.0
   @see-function{cairo-font-options-set-antialias}
   @see-function{cairo-font-options-get-antialias}
   @see-function{cairo-font-options-copy}
   @see-function{cairo-font-options-hash}")
 
 (export 'cairo-font-options-t)
+
+;;; ----------------------------------------------------------------------------
+;;; enum cairo_subpixel_order_t
+;;;
+;;; typedef enum {
+;;;     CAIRO_SUBPIXEL_ORDER_DEFAULT,
+;;;     CAIRO_SUBPIXEL_ORDER_RGB,
+;;;     CAIRO_SUBPIXEL_ORDER_BGR,
+;;;     CAIRO_SUBPIXEL_ORDER_VRGB,
+;;;     CAIRO_SUBPIXEL_ORDER_VBGR
+;;; } cairo_subpixel_order_t;
+;;;
+;;; The subpixel order specifies the order of color elements within each pixel
+;;; on the display device when rendering with an antialiasing mode of
+;;; CAIRO_ANTIALIAS_SUBPIXEL.
+;;;
+;;; CAIRO_SUBPIXEL_ORDER_DEFAULT
+;;;     Use the default subpixel order for for the target device.
+;;;
+;;; CAIRO_SUBPIXEL_ORDER_RGB
+;;;     Subpixel elements are arranged horizontally with red at the left.
+;;;
+;;; CAIRO_SUBPIXEL_ORDER_BGR
+;;;     Subpixel elements are arranged horizontally with blue at the left.
+;;;
+;;; CAIRO_SUBPIXEL_ORDER_VRGB
+;;;     Subpixel elements are arranged vertically with red at the top.
+;;;
+;;; CAIRO_SUBPIXEL_ORDER_VBGR
+;;;     Subpixel elements are arranged vertically with blue at the top.
+;;;
+;;; Since 1.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum cairo_hint_style_t
+;;;
+;;; typedef enum {
+;;;     CAIRO_HINT_STYLE_DEFAULT,
+;;;     CAIRO_HINT_STYLE_NONE,
+;;;     CAIRO_HINT_STYLE_SLIGHT,
+;;;     CAIRO_HINT_STYLE_MEDIUM,
+;;;     CAIRO_HINT_STYLE_FULL
+;;; } cairo_hint_style_t;
+;;;
+;;; Specifies the type of hinting to do on font outlines. Hinting is the process
+;;; of fitting outlines to the pixel grid in order to improve the appearance of
+;;; the result. Since hinting outlines involves distorting them, it also reduces
+;;; the faithfulness to the original outline shapes. Not all of the outline
+;;; hinting styles are supported by all font backends.
+;;;
+;;; New entries may be added in future versions.
+;;;
+;;; CAIRO_HINT_STYLE_DEFAULT
+;;;     Use the default hint style for font backend and target device.
+;;;
+;;; CAIRO_HINT_STYLE_NONE
+;;;     Do not hint outlines.
+;;;
+;;; CAIRO_HINT_STYLE_SLIGHT
+;;;     Hint outlines slightly to improve contrast while retaining good fidelity
+;;;     to the original shapes.
+;;;
+;;; CAIRO_HINT_STYLE_MEDIUM
+;;;     Hint outlines with medium strength giving a compromise between fidelity
+;;;     to the original shapes and contrast.
+;;;
+;;; CAIRO_HINT_STYLE_FULL
+;;;     Hint outlines to maximize contrast.
+;;;
+;;; Since 1.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum cairo_hint_metrics_t
+;;;
+;;; typedef enum {
+;;;     CAIRO_HINT_METRICS_DEFAULT,
+;;;     CAIRO_HINT_METRICS_OFF,
+;;;     CAIRO_HINT_METRICS_ON
+;;; } cairo_hint_metrics_t;
+;;;
+;;; Specifies whether to hint font metrics; hinting font metrics means
+;;; quantizing them so that they are integer values in device space. Doing this
+;;; improves the consistency of letter and line spacing, however it also means
+;;; that text will be laid out differently at different zoom factors.
+;;;
+;;; CAIRO_HINT_METRICS_DEFAULT
+;;;     Hint metrics in the default manner for the font backend and target
+;;;     device.
+;;;
+;;; CAIRO_HINT_METRICS_OFF
+;;;     Do not hint font metrics.
+;;;
+;;; CAIRO_HINT_METRICS_ON
+;;;     Hint font metrics.
+;;;
+;;; Since 1.0
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_font_options_create ()
@@ -242,6 +345,13 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_font_options_set_antialias" cairo-font-options-set-antialias)
+    :void
+  (options (:pointer (:struct cairo-font-options-t)))
+  (antialias cairo-antialias-t))
+
+(export 'cairo-font-options-set-antialias)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_font_options_get_antialias ()
 ;;;
@@ -259,38 +369,11 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; enum cairo_subpixel_order_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_SUBPIXEL_ORDER_DEFAULT,
-;;;     CAIRO_SUBPIXEL_ORDER_RGB,
-;;;     CAIRO_SUBPIXEL_ORDER_BGR,
-;;;     CAIRO_SUBPIXEL_ORDER_VRGB,
-;;;     CAIRO_SUBPIXEL_ORDER_VBGR
-;;; } cairo_subpixel_order_t;
-;;;
-;;; The subpixel order specifies the order of color elements within each pixel
-;;; on the display device when rendering with an antialiasing mode of
-;;; CAIRO_ANTIALIAS_SUBPIXEL.
-;;;
-;;; CAIRO_SUBPIXEL_ORDER_DEFAULT
-;;;     Use the default subpixel order for for the target device.
-;;;
-;;; CAIRO_SUBPIXEL_ORDER_RGB
-;;;     Subpixel elements are arranged horizontally with red at the left.
-;;;
-;;; CAIRO_SUBPIXEL_ORDER_BGR
-;;;     Subpixel elements are arranged horizontally with blue at the left.
-;;;
-;;; CAIRO_SUBPIXEL_ORDER_VRGB
-;;;     Subpixel elements are arranged vertically with red at the top.
-;;;
-;;; CAIRO_SUBPIXEL_ORDER_VBGR
-;;;     Subpixel elements are arranged vertically with blue at the top.
-;;;
-;;; Since 1.0
-;;; ----------------------------------------------------------------------------
+(defcfun ("cairo_font_options_get_antialias" cairo-font-options-get-antialias)
+    cairo-antialias-t
+  (options (:pointer (:struct cairo-font-options-t))))
+
+(export 'cairo-font-options-get-antialias)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_font_options_set_subpixel_order ()
@@ -327,45 +410,6 @@
 ;;;
 ;;; Returns :
 ;;;     the subpixel order for the font options object
-;;;
-;;; Since 1.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum cairo_hint_style_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_HINT_STYLE_DEFAULT,
-;;;     CAIRO_HINT_STYLE_NONE,
-;;;     CAIRO_HINT_STYLE_SLIGHT,
-;;;     CAIRO_HINT_STYLE_MEDIUM,
-;;;     CAIRO_HINT_STYLE_FULL
-;;; } cairo_hint_style_t;
-;;;
-;;; Specifies the type of hinting to do on font outlines. Hinting is the process
-;;; of fitting outlines to the pixel grid in order to improve the appearance of
-;;; the result. Since hinting outlines involves distorting them, it also reduces
-;;; the faithfulness to the original outline shapes. Not all of the outline
-;;; hinting styles are supported by all font backends.
-;;;
-;;; New entries may be added in future versions.
-;;;
-;;; CAIRO_HINT_STYLE_DEFAULT
-;;;     Use the default hint style for font backend and target device.
-;;;
-;;; CAIRO_HINT_STYLE_NONE
-;;;     Do not hint outlines.
-;;;
-;;; CAIRO_HINT_STYLE_SLIGHT
-;;;     Hint outlines slightly to improve contrast while retaining good fidelity
-;;;     to the original shapes.
-;;;
-;;; CAIRO_HINT_STYLE_MEDIUM
-;;;     Hint outlines with medium strength giving a compromise between fidelity
-;;;     to the original shapes and contrast.
-;;;
-;;; CAIRO_HINT_STYLE_FULL
-;;;     Hint outlines to maximize contrast.
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
@@ -409,33 +453,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum cairo_hint_metrics_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_HINT_METRICS_DEFAULT,
-;;;     CAIRO_HINT_METRICS_OFF,
-;;;     CAIRO_HINT_METRICS_ON
-;;; } cairo_hint_metrics_t;
-;;;
-;;; Specifies whether to hint font metrics; hinting font metrics means
-;;; quantizing them so that they are integer values in device space. Doing this
-;;; improves the consistency of letter and line spacing, however it also means
-;;; that text will be laid out differently at different zoom factors.
-;;;
-;;; CAIRO_HINT_METRICS_DEFAULT
-;;;     Hint metrics in the default manner for the font backend and target
-;;;     device.
-;;;
-;;; CAIRO_HINT_METRICS_OFF
-;;;     Do not hint font metrics.
-;;;
-;;; CAIRO_HINT_METRICS_ON
-;;;     Hint font metrics.
-;;;
-;;; Since 1.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; cairo_font_options_set_hint_metrics ()
 ;;;
 ;;; void cairo_font_options_set_hint_metrics (cairo_font_options_t *options,
@@ -470,6 +487,54 @@
 ;;;     the metrics hinting mode for the font options object
 ;;;
 ;;; Since 1.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_font_options_get_variations ()
+;;;
+;;; const char *
+;;; cairo_font_options_get_variations (cairo_font_options_t *options);
+;;;
+;;; Gets the OpenType font variations for the font options object. See
+;;; cairo_font_options_set_variations() for details about the string format.
+;;;
+;;; options :
+;;;     a cairo_font_options_t
+;;;
+;;; Returns :
+;;;     the font variations for the font options object. The returned string
+;;;     belongs to the options and must not be modified. It is valid until
+;;;     either the font options object is destroyed or the font variations in
+;;;     this object is modified with cairo_font_options_set_variations().
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_font_options_set_variations ()
+;;;
+;;; void
+;;; cairo_font_options_set_variations (cairo_font_options_t *options,
+;;;                                    const char *variations);
+;;;
+;;; Sets the OpenType font variations for the font options object. Font
+;;; variations are specified as a string with a format that is similar to the
+;;; CSS font-variation-settings. The string contains a comma-separated list of
+;;; axis assignments, which each assignment consists of a 4-character axis name
+;;; and a value, separated by whitespace and optional equals sign.
+;;;
+;;; Examples:
+;;;
+;;; wght=200, wdth=140.5
+;;; wght 200, wdth 140.5
+;;;
+;;; options :
+;;;     a cairo_font_options_t
+;;;
+;;; variations :
+;;;     the new font variations, or NULL
+;;;
+;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- cairo.font-options.lisp ------------------------------------------------
