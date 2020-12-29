@@ -81,7 +81,7 @@
 ;;; GdkPixbufModule. If a particular functionality is not implemented, the
 ;;; fill_vtable function will simply not set the corresponding function pointers
 ;;; of the GdkPixbufModule structure. If a module supports incremental loading
-;;; (i. e. provides begin_load, stop_load and load_increment), it doesn't have
+;;; (i.e. provides begin_load, stop_load and load_increment), it does not have
 ;;; to implement load, since GdkPixBuf can supply a generic load implementation
 ;;; wrapping the incremental loading.
 ;;;
@@ -175,7 +175,7 @@ GdkPixbufModulePattern *signature[] = {
   { NULL, NULL, 0 @}
 @};
   @end{pre}
-  The example matches e. g. \"auud\0\" with relevance 100, and \"blau\" with
+  The example matches e.g. \"auud\0\" with relevance 100, and \"blau\" with
   relevance 90.
   @begin{pre}
 (defcstruct gdk-pixbuf-module-pattern
