@@ -101,7 +101,7 @@
 (setf (gethash 'cairo-glyph-t atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'cairo-glyph-t atdoc:*external-symbols*)
- "@version{2020-12-15}
+ "@version{2020-12-28}
   @begin{short}
     The @sym{cairo-glyph-t} structure holds information about a single glyph
     when drawing or measuring text.
@@ -109,14 +109,14 @@
   A font is (in simple terms) a collection of shapes used to draw text. A glyph
   is one of these shapes. There can be multiple glyphs for a single character
   (alternates to be used in different contexts, for example), or a glyph can be
-  a ligature of multiple characters. Cairo doesl not expose any way of
-  converting input text into glyphs, so in order to use the Cairo interfaces
-  that take arrays of glyphs, you must directly access the appropriate
-  underlying font system.
+  a ligature of multiple characters. Cairo does not expose any way of converting
+  input text into glyphs, so in order to use the Cairo interfaces that take
+  arrays of glyphs, you must directly access the appropriate underlying font
+  system.
 
   Note that the offsets given by x and y are not cumulative. When drawing or
   measuring text, each glyph is individually positioned with respect to the
-  overall origin
+  overall origin.
   @begin{pre}
 (defcstruct cairo-glyph-t
   (index :ulong)
@@ -131,7 +131,8 @@
     @entry[y]{The offset in the y direction between the origin used for drawing
       or measuring the string and the origin of this glyph.}
   @end{table}
-  @see-function{cairo-glyph-path}")
+  @see-function{cairo-glyph-path}
+  @see-function{cairo-show-glyphs}")
 
 (export 'cairo-glyph-t)
 
@@ -618,22 +619,40 @@
 ;;; cairo_show_glyphs ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_show_glyphs" cairo-show-glyphs) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[cr]{a @symbol{cairo-t} context}
-  @argument[glyphs]{array of @symbol{cairo-glyph-t} to show}
-  @argument[num-glyphs]{an integer with the number of glyphs to show}
-  @begin{short}
-    A drawing operator that generates the shape from an array of glyphs,
-    rendered according to the current font face, font size (font matrix), and
-    font options.
-  @end{short}
-  @see-symbol{cairo-t}
-  @see-symbol{cairo-glyph-t}"
+(defcfun ("cairo_show_glyphs" %cairo-show-glyphs) :void
   (cr (:pointer (:struct cairo-t)))
   (glyphs (:pointer (:struct cairo-glyph-t)))
   (num-glyphs :int))
+
+(defun cairo-show-glyphs (cr glyphs)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-29}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[glyphs]{a list of glyphs to show}
+  @begin{short}
+    A drawing operator that generates the shape from a list of glyphs,
+    rendered according to the current font face, font size (font matrix), and
+    font options.
+  @end{short}
+  @see-symbol{cairo-t}"
+  (let ((num-glyphs (length glyphs)))
+    (with-foreign-object (glyphs-ptr '(:struct cairo-glyph-t) num-glyphs)
+      (loop for count from 0 below num-glyphs
+            for glyph in glyphs
+            for glyph-ptr = (mem-aptr glyphs-ptr '(:struct cairo-glyph-t) count)
+            do (setf (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'index)
+                     (first glyph)
+                     (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'x)
+                     (coerce (second glyph) 'double-float)
+                     (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'y)
+                     (coerce (third glyph) 'double-float)))
+      (%cairo-show-glyphs cr glyphs-ptr num-glyphs))))
 
 (export 'cairo-show-glyphs)
 
@@ -728,29 +747,29 @@
 
 (defun cairo-text-extents (cr utf8)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2020-12-29}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[utf8]{a @code{NUL}-terminated string of text encoded in UTF-8, or
-    @code{NULL}}
-  @argument[extents]{a @symbol{cairo-text-extents-t} instance into which the
-    results will be stored}
+  @argument[utf8]{a string of text encoded in UTF-8}
+  @begin{return}
+    A @symbol{cairo-text-extents-t} instance with the extents of @arg{utf8}.
+  @end{return}
   @begin{short}
     Gets the extents for a string of text.
   @end{short}
   The extents describe a user-space rectangle that encloses the \"inked\"
   portion of the text, as it would be drawn by the function
-  @fun{cairo-show-text}. Additionally, the @code{x_advance} and @code{y_advance}
+  @fun{cairo-show-text}. Additionally, the @code{x-advance} and @code{y-advance}
   values indicate the amount by which the current point would be advanced by
   the function @fun{cairo-show-text}.
 
   Note that whitespace characters do not directly contribute to the size of
-  the rectangle (@code{extents.width} and @code{extents.height}). They do
-  contribute indirectly by changing the position of non-whitespace characters.
-  In particular, trailing whitespace characters are likely to not affect the
-  size of the rectangle, though they will affect the @code{x_advance} and
-  @code{y_advance} values.
+  the rectangle (@code{width} and @code{height}). They do contribute indirectly
+  by changing the position of non-whitespace characters. In particular, trailing
+  whitespace characters are likely to not affect the size of the rectangle,
+  though they will affect the @code{x-advance} and @code{y-advance} values.
   @see-symbol{cairo-t}
-  @see-symbol{cairo-text-extents-t}"
+  @see-symbol{cairo-text-extents-t}
+  @see-function{cairo-show-text}"
   (with-foreign-object (extents '(:struct cairo-text-extents-t))
     (%cairo-text-extents cr utf8 extents)
     extents))
@@ -761,33 +780,56 @@
 ;;; cairo_glyph_extents ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_glyph_extents" cairo-glyph-extents) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[cr]{a @symbol{cairo-t} context}
-  @argument[glyphs]{an array of @symbol{cairo-glyph-t} instances}
-  @argument[num-glyph]{an integer with the number of elements in @arg{glyphs}}
-  @argument[extents]{a @symbol{cairo-text-extents-t} instance into which the
-    results will be stored}
-  @begin{short}
-    Gets the extents for an array of glyphs.
-  @end{short}
-  The extents describe a user-space rectangle that encloses the \"inked\"
-  portion of the glyphs, as they would be drawn by the function
-  @fun{cairo-show-glyphs}. Additionally, the @code{x_advance} and
-  @code{y_advance} values indicate the amount by which the current point would
-  be advanced by the function @fun{cairo-show-glyphs}.
-
-  Note that whitespace glyphs do not contribute to the size of the rectangle
-  (@code{extents.width} and @code{extents.height}).
-  @see-symbol{cairo-t}
-  @see-symbol{cairo-glyph-t}
-  @see-symbol{cairo-text-extents-t}
-  @see-function{cairo-show-glyphs}"
+(defcfun ("cairo_glyph_extents" %cairo-glyph-extents) :void
   (cr (:pointer (:struct cairo-t)))
   (glyphs (:pointer (:struct cairo-glyph-t)))
   (num-glyphs :int)
   (extents (:pointer (:struct cairo-text-extents-t))))
+
+(defun cairo-glyph-extents (cr glyphs)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-29}
+  @argument[cr]{a @symbol{cairo-t} context}
+  @argument[glyphs]{a list of glyphs of the form @code{'((index1 x1 y1)
+    (index2 x2 y2) ...)}}
+  @begin{return}
+    A @symbol{cairo-text-extents-t} instance with the extents of @arg{glyphs}.
+  @end{return}
+  @begin{short}
+    Gets the extents for a list of glyphs.
+  @end{short}
+  The extents describe a user-space rectangle that encloses the \"inked\"
+  portion of the glyphs, as they would be drawn by the function
+  @fun{cairo-show-glyphs}. Additionally, the @code{x-advance} and
+  @code{y-advance} values indicate the amount by which the current point would
+  be advanced by the function @fun{cairo-show-glyphs}.
+
+  Note that whitespace glyphs do not contribute to the size of the rectangle
+  (@code{width} and @code{height}).
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-glyph-t}
+  @see-symbol{cairo-text-extents-t}
+  @see-function{cairo-show-glyphs}"
+  (let ((num-glyphs (length glyphs)))
+    (with-foreign-objects ((extents '(:struct cairo-text-extents-t))
+                           (glyphs-ptr '(:struct cairo-glyph-t) num-glyphs))
+      (loop for count from 0 below num-glyphs
+            for glyph-ptr = (mem-aptr glyphs-ptr '(:struct cairo-glyph-t) count)
+            for glyph = (pop glyphs)
+            do (setf (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'cairo::index)
+                     (first glyph)
+                     (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'cairo::x)
+                     (coerce (second glyph) 'double-float)
+                     (foreign-slot-value glyph-ptr
+                                         '(:struct cairo-glyph-t)
+                                         'cairo::y)
+                     (coerce (third glyph) 'double-float)))
+      (%cairo-glyph-extents cr glyphs-ptr num-glyphs extents)
+      extents)))
 
 (export 'cairo-glyph-extents)
 
