@@ -1619,13 +1619,13 @@ drag_data_received (GtkWidget        *widget,
       corner must be painted at the origin of the passed in context and be sized
       to the values returned by the functions @fun{gtk-widget-allocated-width}
       and @fun{gtk-widget-allocated-height}. Signal handlers connected to this
-      signal can modify the cairo context passed as @arg{cr} in any way they
+      signal can modify the Cairo context passed as @arg{cr} in any way they
       like and do not need to restore it. The signal emission takes care of
       calling the functions @fun{cairo-save} before and @fun{cairo-restore}
       after invoking the handler.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
+        @entry[cr]{The Cairo context of type @class{cairo-context} to draw to.}
       @end{table}
     @subheading{The \"enter-notify-event\" signal}
       @begin{pre}
@@ -3981,13 +3981,13 @@ drag_data_received (GtkWidget        *widget,
  "@version{2013-11-18}
   @argument[widget]{the widget to draw. It must be drawable, see the function
     @fun{gtk-widget-is-drawable}, and a size must have been allocated.}
-  @argument[cr]{a cairo context to draw to}
+  @argument[cr]{a Cairo context to draw to}
   @begin{short}
     Draws @arg{widget} to @arg{cr}. The top left corner of the widget will be
     drawn to the currently set origin point of @arg{cr}.
   @end{short}
 
-  You should pass a cairo context as @arg{cr} argument that is in an original
+  You should pass a Cairo context as @arg{cr} argument that is in an original
   state. Otherwise the resulting drawing is undefined. For example changing the
   operator using the function @fun{cairo-set-operator} or the line width using
   the function @fun{cairo-set-line-width} might have unwanted side effects. You
@@ -4093,7 +4093,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; widget :
 ;;;     a GtkWidget
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -4397,7 +4397,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; baseline
 ;;;     The baseline of the child, or -1
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -5528,8 +5528,8 @@ drag_data_received (GtkWidget        *widget,
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
     the background color}
-  @argument[color]{the color of type @class{gdk-rgba} to assign, or @code{nil}
-    to undo the effect of previous calls to the function
+  @argument[color]{the @class{gdk-rgba} color to assign, or @code{nil} to undo
+    the effect of previous calls to the function
     @sym{gtk-widget-override-background-color}}
   @short{Sets the background color to use for a widget.}
 
@@ -5564,8 +5564,8 @@ drag_data_received (GtkWidget        *widget,
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
     the color}
-  @argument[color]{the color of type @class{gdk-rgba} to assign, or @code{nil}
-    to undo the effect of previous calls to the function
+  @argument[color]{the @class{gdk-rgba} color to assign, or @code{nil} to undo
+    the effect of previous calls to the function
     @sym{gtk-widget-override-color}}
   @short{Sets the color to use for a widget.}
   All other style values are left untouched.
@@ -5599,7 +5599,6 @@ drag_data_received (GtkWidget        *widget,
   @see-class{gtk-widget}
   @see-class{gdk-rgba}
   @see-class{gtk-css-provider}
-  @see-class{gdk-rgba}
   @see-function{gtk-style-context-add-class}
   @see-function{gtk-style-context-add-region}"
   (widget (g-object gtk-widget))
@@ -6065,7 +6064,7 @@ drag_data_received (GtkWidget        *widget,
 ;;;     a cairo_font_options_t, or NULL to unset any previously set default font
 ;;;     options.
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -6082,7 +6081,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns
 ;;;     the cairo_font_options_t or NULL if not set.
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -6099,7 +6098,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; font_map :
 ;;;     a PangoFontMap, or NULL to unset any previously set font map.
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -6115,7 +6114,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns :
 ;;;     A PangoFontMap, or NULL.
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -7504,7 +7503,7 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_cairo_should_draw_window" gtk-cairo-should-draw-window) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-11-26}
-  @argument[cr]{a cairo context}
+  @argument[cr]{a Cairo context}
   @argument[window]{the window to check, @arg{window} may not be an input-only
     window}
   @return{@em{True} if @arg{window} should be drawn.}
@@ -7533,11 +7532,11 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_cairo_transform_to_window" gtk-cairo-transform-to-window) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-26}
-  @argument[cr]{the cairo context to transform}
+  @argument[cr]{the Cairo context to transform}
   @argument[widget]{the widget the context is currently centered for}
   @argument[window]{the window to transform the context to}
   @begin{short}
-    Transforms the given cairo context @arg{cr} from widget-relative coordinates
+    Transforms the given Cairo context @arg{cr} from widget-relative coordinates
     to window-relative coordinates.
   @end{short}
   If the widget's window is not an ancestor of @arg{window}, no modification
@@ -7580,12 +7579,11 @@ drag_data_received (GtkWidget        *widget,
 ;;; gtk_widget_get_allocated_height () -> gtk-widget-allocated-height
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_allocated_height" gtk-widget-allocated-height)
-    :int
+(defcfun ("gtk_widget_get_allocated_height" gtk-widget-allocated-height) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2020-12-28}
   @argument[widget]{the @class{gtk-widget} object to query}
-  @return{An integer witt the height of the widget.}
+  @return{An integer with the height of the widget.}
   @begin{short}
     Returns the height that has currently been allocated to @arg{widget}.
   @end{short}
@@ -7715,7 +7713,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; clip
 ;;;     a pointer to a GtkAllocation to copy to.
 ;;;
-;;; Since: 3.14
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -7744,7 +7742,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; clip
 ;;;     a pointer to a GtkAllocation to copy from
 ;;;
-;;; Since: 3.14
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8234,7 +8232,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns
 ;;;     a NULL-terminated array of strings.
 ;;;
-;;; Since: 3.16
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8261,7 +8259,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns
 ;;;     A GActionGroup or NULL.
 ;;;
-;;; Since: 3.16
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8338,7 +8336,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns :
 ;;;     the CSS name of the given class
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8358,7 +8356,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; name :
 ;;;     name to use
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8622,7 +8620,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; natural_baseline :
 ;;;     location for storing the baseline for the natural height, or NULL.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8739,7 +8737,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns :
 ;;;     the vertical alignment of widget
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8799,33 +8797,37 @@ drag_data_received (GtkWidget        *widget,
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_init_template ()
-;;;
-;;; void
-;;; gtk_widget_init_template (GtkWidget *widget);
-;;;
-;;; Creates and initializes child widgets defined in templates. This function
-;;; must be called in the instance initializer for any class which assigned
-;;; itself a template using gtk_widget_class_set_template()
-;;;
-;;; It is important to call this function in the instance initializer of a
-;;; GtkWidget subclass and not in GObject.constructed() or GObject.constructor()
-;;; for two reasons.
-;;;
-;;; One reason is that generally derived widgets will assume that parent class
-;;; composite widgets have been created in their instance initializers.
-;;;
-;;; Another reason is that when calling g_object_new() on a widget with
-;;; composite templates, it’s important to build the composite widgets before
-;;; the construct properties are set. Properties passed to g_object_new() should
-;;; take precedence over properties set in the private template XML.
-;;;
-;;; Parameters
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_init_template" gtk-widget-init-template) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-11}
+  @argument[widget]{a @class{gtk-widget} object}
+  @begin{short}
+    Creates and initializes child widgets defined in templates.
+  @end{short}
+  This function must be called in the instance initializer for any class which
+  assigned itself a template using the function
+  @fun{gtk-widget-class-set-template}.
+
+  It is important to call this function in the instance initializer of a
+  GtkWidget subclass and not in @code{GObject.constructed()} or
+  @code{GObject.constructor()} for two reasons.
+
+  One reason is that generally derived widgets will assume that parent class
+  composite widgets have been created in their instance initializers.
+
+  Another reason is that when calling the function @fun{g-object-new} on a
+  widget with composite templates, it is important to build the composite
+  widgets before the construct properties are set. Properties passed to
+  the function @fun{g-object-new} should take precedence over properties set in
+  the private template XML.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-class-set-template}
+  @see-function{g-object-new}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-init-template)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_set_template ()
@@ -8851,32 +8853,43 @@ drag_data_received (GtkWidget        *widget,
 ;;; template_bytes :
 ;;;     A GBytes holding the GtkBuilder XML
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_set_template_from_resource ()
-;;;
-;;; void
-;;; gtk_widget_class_set_template_from_resource
-;;;                               (GtkWidgetClass *widget_class,
-;;;                                const gchar *resource_name);
-;;;
-;;; A convenience function to call gtk_widget_class_set_template().
-;;;
-;;; Note that any class that installs templates must call
-;;; gtk_widget_init_template() in the widget’s instance initializer.
-;;;
-;;; Parameters
-;;;
-;;; widget_class :
-;;;     A GtkWidgetClass
-;;;
-;;; resource_name :
-;;;     The name of the resource to load the template from
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_class_set_template_from_resource"
+          %gtk-widget-class-set-template-from-resource) :void
+  (widget-class (:pointer (:struct g-type-class)))
+  (resource-name :string))
+
+(defun gtk-widget-class-set-template-from-resource (gtype resource-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-11}
+  @argument[gtype]{the @class{g-type} of the widget class}
+  @argument[resource-name]{a string with the name of the resource to load the
+    template from}
+  @begin{short}
+    A convenience function to call the function
+    @fun{gtk-widget-class-set-template}.
+  @end{short}
+
+  Note that any class that installs templates must call the function
+  @fun{gtk-widget-init-template} in the widget’s instance initializer.
+  @see-class{gtk-widget}
+  @see-class{g-type}
+  @see-function{gtk-widget-class-set-template}
+  @see-function{gtk-widget-init-template}"
+  (let ((class (g-type-class-peek gtype)))
+    (unless class (setf class (g-type-class-ref gtype)))
+    (%gtk-widget-class-set-template-from-resource class resource-name)
+
+;      (g-type-class-unref class))))
+))
+
+(export 'gtk-widget-class-set-template-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_template_child ()
@@ -8910,7 +8923,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Returns
 ;;;     The object built in the template XML with the id name.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8938,7 +8951,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; member_name
 ;;;     name of the instance member in the instance struct for data_type
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8969,7 +8982,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; member_name
 ;;;     name of the instance member in the instance struct for data_type
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8999,7 +9012,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; member_name
 ;;;     name of the instance private member in the private struct for data_type
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -9030,7 +9043,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; member_name
 ;;;     name of the instance private member on the private struct for data_type
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -9089,7 +9102,7 @@ drag_data_received (GtkWidget        *widget,
 ;;;     private structure where the automated child pointer should be set, or
 ;;;     0 to not assign the pointer.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -9110,7 +9123,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; callback
 ;;;     the callback symbol
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -9139,7 +9152,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; callback_symbol
 ;;;     The callback symbol.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -9175,7 +9188,7 @@ drag_data_received (GtkWidget        *widget,
 ;;;     class finalization time, when no classes of type widget_type are in use
 ;;;     anymore.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.widget.lisp --------------------------------------------
