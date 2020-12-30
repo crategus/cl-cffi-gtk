@@ -562,8 +562,8 @@
 ;;;     the name to look up
 ;;;
 ;;; Returns :
-;;;     the GEnumValue with name name, or NULL if the enumeration doesn't have a
-;;;     member with that name
+;;;     the GEnumValue with name name, or NULL if the enumeration does not have
+;;;     a member with that name
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -581,7 +581,7 @@
 ;;;     the nickname to look up
 ;;;
 ;;; Returns :
-;;;     the GEnumValue with nickname nick, or NULL if the enumeration doesn't
+;;;     the GEnumValue with nickname nick, or NULL if the enumeration does not
 ;;;     have a member with that nickname
 ;;; ----------------------------------------------------------------------------
 
