@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,17 +42,25 @@
 
   @begin[Drawing]{section}
     @begin[The Cairo drawing context]{subsection}
-      A @symbol{cairo-t} is the main object used when drawing with Cairo. To
-      draw with Cairo, you create a @symbol{cairo-t}, set the target surface,
-      and drawing options for the @symbol{cairo-t}, create shapes with functions
-      like @fun{cairo-move-to} and @fun{cairo-line-to}, and then draw shapes
-      with the functions @fun{cairo-stroke} or @fun{cairo-fill}.
+      A @symbol{cairo-t} context is the main object used when drawing with
+      Cairo. To draw with Cairo, you create a @symbol{cairo-t} context, set the
+      target surface, and drawing options for the @symbol{cairo-t} context,
+      create shapes with functions like @fun{cairo-move-to} and
+      @fun{cairo-line-to}, and then draw shapes with the functions
+      @fun{cairo-stroke} or @fun{cairo-fill}.
 
-      @symbol{cairo-t}'s can be pushed to a stack via the function
+      @symbol{cairo-t} contexts can be pushed to a stack via the function
       @fun{cairo-save}. They may then safely be changed, without losing the
       current state. Use the function @fun{cairo-restore} to restore to the
       saved state.
 
+      @about-symbol{cairo-antialias-t}
+      @about-symbol{cairo-fill-rule-t}
+      @about-symbol{cairo-line-cap-t}
+      @about-symbol{cairo-line-join-t}
+      @about-symbol{cairo-operator-t}
+      @about-symbol{cairo-rectangle-t}
+      @about-symbol{cairo-rectangle-list-t}
       @about-symbol{cairo-t}
       @about-function{cairo-create}
       @about-function{cairo-reference}
@@ -71,26 +79,21 @@
       @about-function{cairo-set-source}
       @about-function{cairo-set-source-surface}
       @about-function{cairo-get-source}
-      @about-symbol{cairo-antialias-t}
       @about-function{cairo-set-antialias}
       @about-function{cairo-get-antialias}
       @about-function{cairo-set-dash}
       @about-function{cairo-get-dash-count}
       @about-function{cairo-get-dash}
-      @about-symbol{cairo-fill-rule-t}
       @about-function{cairo-set-fill-rule}
       @about-function{cairo-get-fill-rule}
-      @about-symbol{cairo-line-cap-t}
       @about-function{cairo-set-line-cap}
       @about-function{cairo-get-line-cap}
-      @about-symbol{cairo-line-join-t}
       @about-function{cairo-set-line-join}
       @about-function{cairo-get-line-join}
       @about-function{cairo-set-line-width}
       @about-function{cairo-get-line-width}
       @about-function{cairo-set-miter-limit}
       @about-function{cairo-get-miter-limit}
-      @about-symbol{cairo-operator-t}
       @about-function{cairo-set-operator}
       @about-function{cairo-get-operator}
       @about-function{cairo-set-tolerance}
@@ -100,8 +103,6 @@
       @about-function{cairo-clip-extents}
       @about-function{cairo-in-clip}
       @about-function{cairo-reset-clip}
-      @about-function{cairo-rectangle-t}
-      @about-function{cairo-rectangle-list-t}
       @about-function{cairo-rectangle-list-destroy}
       @about-function{cairo-copy-clip-rectangle-list}
       @about-function{cairo-fill}
@@ -128,9 +129,9 @@
       Paths are the most basic drawing tools and are primarily used to
       implicitly generate simple masks.
 
+      @about-symbol{cairo-path-data-type-t}
+      @about-symbol{cairo-path-data-t}
       @about-symbol{cairo-path-t}
-      @about-symbol{cairo-data-t}
-      @about-symbol{cairo-data-type-t}
       @about-function{cairo-copy-path}
       @about-function{cairo-copy-path-flat}
       @about-function{cairo-path-destroy}
@@ -156,7 +157,19 @@
     @begin[Pattern]{subsection}
       Sources for drawing.
 
+      The @symbol{cairo-pattern-t} structure is the paint with which Cairo
+      draws. The primary use of patterns is as the source for all Cairo drawing
+      operations, although they can also be used as masks, that is, as the
+      brush too.
+
+      A Cairo pattern is created by using one of the many constructors, of the
+      form @sym{cairo-pattern-create-type} or implicitly through the functions
+      @sym{cairo-set-source-type}.
+
       @about-symbol{cairo-pattern-t}
+      @about-symbol{cairo-extend-t}
+      @about-symbol{cairo-filter-t}
+      @about-symbol{cairo-pattern-type-t}
       @about-function{cairo-pattern-add-color-stop-rgb}
       @about-function{cairo-pattern-add-color-stop-rgba}
       @about-function{cairo-pattern-get-color-stop-count}
@@ -186,15 +199,12 @@
       @about-function{cairo-pattern-reference}
       @about-function{cairo-pattern-destroy}
       @about-function{cairo-pattern-status}
-      @about-symbol{cairo-extend-t}
       @about-function{cairo-pattern-set-extend}
       @about-function{cairo-pattern-get-extend}
-      @about-symbol{cairo-filter-t}
       @about-function{cairo-pattern-set-filter}
       @about-function{cairo-pattern-get-filter}
       @about-function{cairo-pattern-set-matrix}
       @about-function{cairo-pattern-get-matrix}
-      @about-symbol{cairo-pattern-type-t}
       @about-function{cairo-pattern-get-type}
       @about-function{cairo-pattern-get-reference-count}
       @about-function{cairo-pattern-set-user-data}
@@ -207,6 +217,7 @@
       integer-aligned rectangles. They are often used on raster surfaces to
       track areas of interest, such as change or clip areas.
 
+      @about-symbol{cairo-region-overlap-t}
       @about-symbol{cairo-region-t}
       @about-function{cairo-region-create}
       @about-function{cairo-region-create-rectangle}
@@ -220,7 +231,6 @@
       @about-function{cairo-region-get-rectangle}
       @about-function{cairo-region-is-empty}
       @about-function{cairo-region-contains-point}
-      @about-symbol{cairo-region-overlap-t}
       @about-function{cairo-region-contains-rectangle}
       @about-function{cairo-region-equal}
       @about-function{cairo-region-translate}
@@ -256,55 +266,128 @@
     @begin[Text]{subsection}
       Rendering text and glyphs.
 
-      @see-symbol{cairo-glyph-t}
-      @see-symbol{cairo-font-slant-t}
-      @see-symbol{cairo-font-weight-t}
-      @see-symbol{cairo-text-cluster-t}
-      @see-symbol{cairo-text-cluster-flags-t}
-      @see-function{cairo-select-font-face}
-      @see-function{cairo-set-font-size}
-      @see-function{cairo-set-font-matrix}
-      @see-function{cairo-get-font-matrix}
-      @see-function{cairo-set-font-options}
-      @see-function{cairo-get-font-options}
-      @see-function{cairo-set-font-face}
-      @see-function{cairo-get-font-face}
-      @see-function{cairo-set-scaled-font}
-      @see-function{cairo-get-scaled-font}
-      @see-function{cairo-show-text}
-      @see-function{cairo-show-glyphs}
-      @see-function{cairo-show-text-glyphs}
-      @see-function{cairo-font-extents}
-      @see-function{cairo-text-extents}
-      @see-function{cairo-glyph-extents}
-      @see-function{cairo-toy-font-face-create}
-      @see-function{cairo-toy-font-face-get-family}
-      @see-function{cairo-toy-font-face-get-slant}
-      @see-function{cairo-toy-font-face-get-weight}
-      @see-function{cairo-glyph-allocate}
-      @see-function{cairo-glyph-free}
-      @see-function{cairo-text-cluster-allocate}
-      @see-function{cairo-text-cluster-free}
+      The functions with text in their name form Cairo's toy text API. The toy
+      API takes UTF-8 encoded text and is limited in its functionality to
+      rendering simple left-to-right text with no advanced features. That means
+      for example that most complex scripts like Hebrew, Arabic, and Indic
+      scripts are out of question. No kerning or correct positioning of
+      diacritical marks either. The font selection is pretty limited too and
+      does not handle the case that the selected font does not cover the
+      characters in the text. This set of functions are really that, a toy text
+      API, for testing and demonstration purposes. Any serious application
+      should avoid them.
+
+      The functions with glyphs in their name form Cairo's low-level text API.
+      The low-level API relies on the user to convert text to a set of glyph
+      indexes and positions. This is a very hard problem and is best handled by
+      external libraries, like the @code{pangocairo} library that is part of
+      the Pango text layout and rendering library. Pango is available from the
+      @url[http://www.pango.org/]{Pango library}.
+
+      @about-symbol{cairo-glyph-t}
+      @about-symbol{cairo-font-slant-t}
+      @about-symbol{cairo-font-weight-t}
+      @about-symbol{cairo-text-cluster-t}
+      @about-symbol{cairo-text-cluster-flags-t}
+      @about-function{cairo-select-font-face}
+      @about-function{cairo-set-font-size}
+      @about-function{cairo-set-font-matrix}
+      @about-function{cairo-get-font-matrix}
+      @about-function{cairo-set-font-options}
+      @about-function{cairo-get-font-options}
+      @about-function{cairo-set-font-face}
+      @about-function{cairo-get-font-face}
+      @about-function{cairo-set-scaled-font}
+      @about-function{cairo-get-scaled-font}
+      @about-function{cairo-show-text}
+      @about-function{cairo-show-glyphs}
+      @about-function{cairo-show-text-glyphs}
+      @about-function{cairo-font-extents}
+      @about-function{cairo-text-extents}
+      @about-function{cairo-glyph-extents}
+      @about-function{cairo-toy-font-face-create}
+      @about-function{cairo-toy-font-face-get-family}
+      @about-function{cairo-toy-font-face-get-slant}
+      @about-function{cairo-toy-font-face-get-weight}
+      @about-function{cairo-glyph-allocate}
+      @about-function{cairo-glyph-free}
+      @about-function{cairo-text-cluster-allocate}
+      @about-function{cairo-text-cluster-free}
     @end{subsection}
     @begin[Raster Source]{subsection}
       Supplying arbitrary image data.
+
+      @about-function{cairo-pattern-create-raster-source}
+      @about-function{cairo-raster-source-pattern-set-callback-data}
+      @about-function{cairo-raster-source-pattern-get-callback-data}
+      @about-function{cairo-raster-source-pattern-set-acquire}
+      @about-function{cairo-raster-source-pattern-get-acquire}
+      @about-function{cairo-raster-source-pattern-set-snapshot}
+      @about-function{cairo-raster-source-pattern-get-snapshot}
+      @about-function{cairo-raster-source-pattern-set-copy}
+      @about-function{cairo-raster-source-pattern-get-copy}
+      @about-function{cairo-raster-source-pattern-set-finish}
+      @about-function{cairo-raster-source-pattern-get-finish}
+    @end{subsection}
+    @begin[Tags and Links]{subsection}
+      Hyperlinks and document structure
+
+      @see-symbol{CAIRO_TAG_DEST}
+      @see-symbol{CAIRO_TAG_LINK}
+      @see-function{cairo-tag-begin}
+      @see-function{cairo-tag-end}
     @end{subsection}
   @end{section}
   @begin[Fonts]{section}
     @begin[Font Faces]{subsection}
       Base class for font faces.
+
+      The @symbol{cairo-font-face-t} structure represents a particular font at
+      a particular weight, slant, and other characteristic but no size,
+      transformation, or size.
+
+      Font faces are created using font-backend-specific constructors, typically
+      of the form @code{cairo-backend-font-face-create}, or implicitly using the
+      toy text API by way of the function @fun{cairo-select-font-face}. The
+      resulting face can be accessed using the function
+      @fun{cairo-get-font-face}.
+
+      @about-symbol{cairo-font-face-t}
+      @about-symbol{cairo-font-type-t}
+      @about-function{cairo-font-face-reference}
+      @about-function{cairo-font-face-destroy}
+      @about-function{cairo-font-face-status}
+      @about-function{cairo-font-face-get-type}
+      @about-function{cairo-font-face-get-reference-count}
+      @about-function{cairo-font-face-set-user-data}
+      @about-function{cairo-font-face-get-user-data}
     @end{subsection}
     @begin[Scaled Fonts]{subsection}
       Font face at particular size and options.
 
+      The @symbol{cairo-scaled-font-t} structure represents a realization of a
+      font face at a particular size and transformation and a certain set of
+      font options.
+
       @about-symbol{cairo-scaled-font-t}
+      @about-symbol{cairo-font-extents-t}
+      @about-function{cairo-font-extents-ascent}
+      @about-function{cairo-font-extents-descent}
+      @about-function{cairo-font-extents-height}
+      @about-function{cairo-font-extents-max-x-advance}
+      @about-function{cairo-font-extents-max-y-advance}
+      @about-symbol{cairo-text-extents-t}
+      @about-function{cairo-text-extents-x-bearing}
+      @about-function{cairo-text-extents-y-bearing}
+      @about-function{cairo-text-extents-width}
+      @about-function{cairo-text-extents-height}
+      @about-function{cairo-text-extents-x-advance}
+      @about-function{cairo-text-extents-y-advance}
       @about-function{cairo-scaled-font-create}
       @about-function{cairo-scaled-font-reference}
       @about-function{cairo-scaled-font-destroy}
       @about-function{cairo-scaled-font-status}
-      @about-symbol{cairo-font-extents-t}
       @about-function{cairo-scaled-font-extents}
-      @about-type{cairo-text-extents-t}
       @about-function{cairo-scaled-font-text-extents}
       @about-function{cairo-scaled-font-glyph-extents}
       @about-function{cairo-scaled-font-text-to-glyphs}
@@ -334,8 +417,8 @@
       @about-function{cairo-font-options-merge}
       @about-function{cairo-font-options-hash}
       @about-function{cairo-font-options-equal}
-      @about-function{cairo-font-options-set_antialias}
-      @about-function{cairo-font-options-get_antialias}
+      @about-function{cairo-font-options-set-antialias}
+      @about-function{cairo-font-options-get-antialias}
       @about-symbol{cairo-subpixel-order-t}
       @about-function{cairo-font-options-set-subpixel-order}
       @about-function{cairo-font-options-get-subpixel-order}
@@ -361,14 +444,35 @@
   @end{section}
   @begin[Surfaces]{section}
     @begin[cairo_device_t]{subsection}
-        Interface to underlying rendering system
+        Interface to underlying rendering system.
+
+        @about-symbol{cairo-device-t}
+        @about-symbol{cairo-device-type-t}
+        @about-function{cairo-device-reference}
+        @about-function{cairo-device-destroy}
+        @about-function{cairo-device-status}
+        @about-function{cairo-device-finish}
+        @about-function{cairo-device-flush}
+        @about-function{cairo-device-get-type}
+        @about-function{cairo-device-get-reference-count}
+        @about-function{cairo-device-set-user-data}
+        @about-function{cairo-device-get-user-data}
+        @about-function{cairo-device-acquire}
+        @about-function{cairo-device-release}
+        @about-function{cairo-device-observer-elapsed}
+        @about-function{cairo-device-observer-fill-elapsed}
+        @about-function{cairo-device-observer-glyphs-elapsed}
+        @about-function{cairo-device-observer-mask-elapsed}
+        @about-function{cairo-device-observer-paint-elapsed}
+        @about-function{cairo-device-observer-print}
+        @about-function{cairo-device-observer-stroke-elapsed}
     @end{subsection}
     @begin[Cairo surfaces]{subsection}
       Base class for surfaces.
 
       A @symbol{cairo-surface-t} structure is the abstract type representing all
       different drawing targets that cairo can render to. The actual drawings
-      are performed using a cairo context.
+      are performed using a Cairo context.
 
       A cairo surface is created by using backend-specific constructors,
       typically of the form @code{cairo-backend-surface-create}.
@@ -413,6 +517,7 @@
       @about-symbol{CAIRO_MIME_TYPE_UNIQUE_ID}
       @about-symbol{cairo-surface-t}
       @about-symbol{cairo-content-t}
+      @about-symbol{cairo-surface-type-t}
       @about-function{cairo-surface-create-similar}
       @about-function{cairo-surface-create-similar-image}
       @about-function{cairo-surface-create-for-rectangle}
@@ -428,9 +533,10 @@
       @about-function{cairo-surface-mark-dirty-rectangle}
       @about-function{cairo-surface-set-device-offset}
       @about-function{cairo-surface-get-device-offset}
+      @about-function{cairo-surface-get-device-scale}
+      @about-function{cairo-surface-set-device-scale}
       @about-function{cairo-surface-set-fallback-resolution}
       @about-function{cairo-surface-get-fallback-resolution}
-      @about-symbol{cairo-surface-type-t}
       @about-function{cairo-surface-get-type}
       @about-function{cairo-surface-get-reference-count}
       @about-function{cairo-surface-set-user-data}
@@ -445,20 +551,40 @@
       @about-function{cairo-surface-unmap-image}
     @end{subsection}
     @begin[Image Surfaces]{subsection}
-      Rendering to memory buffers
+      Rendering to memory buffers.
+
+      Image surfaces provide the ability to render to memory buffers either
+      allocated by Cairo or by the calling code. The supported image formats
+      are those defined in the @symbol{cairo-format-t} enumeration.
 
       @about-symbol{cairo-format-t}
       @about-function{cairo-format-stride-for-width}
       @about-function{cairo-image-surface-create}
       @about-function{cairo-image-surface-create-for-data}
-      @about-function{cairo-image-surface-get-data}
-      @about-function{cairo-image-surface-get-format}
-      @about-function{cairo-image-surface-get-width}
-      @about-function{cairo-image-surface-get-height}
-      @about-function{cairo-image-surface-get-stride}
+      @about-function{cairo-image-surface-data}
+      @about-function{cairo-image-surface-format}
+      @about-function{cairo-image-surface-width}
+      @about-function{cairo-image-surface-height}
+      @about-function{cairo-image-surface-stride}
     @end{subsection}
     @begin[PDF Surfaces]{subsection}
       Rendering PDF documents
+
+      @about-symbol{CAIRO_HAS_PDF_SURFACE}
+      @about-symbol{CAIRO_PDF_OUTLINE_ROOT}
+      @about-symbol{cairo-pdf-outline-flags-t}
+      @about-symbol{cairo-pdf-metadata-t}
+      @about-symbol{cairo-pdf-version-t}
+      @about-function{cairo-pdf-surface-create}
+      @about-function{cairo-pdf-surface-create-for-stream}
+      @about-function{cairo-pdf-surface-restrict-to-version}
+      @about-function{cairo-pdf-get-versions}
+      @about-function{cairo-pdf-version-to-string}
+      @about-function{cairo-pdf-surface-set-size}
+      @about-function{cairo-pdf-surface-add-outline}
+      @about-function{cairo-pdf-surface-set-metadata}
+      @about-function{cairo-pdf-surface-set-page-label}
+      @about-function{cairo-pdf-surface-set-thumbnail-size}
     @end{subsection}
     @begin[PNG Support]{subsection}
       Reading and writing PNG images.
@@ -468,16 +594,16 @@
 
       It is a toy API. It only offers very simple support for reading and
       writing PNG files, which is sufficient for testing and demonstration
-      purposes. Applications which need more control over the generated PNG file
-      should access the pixel data directly, using the function
-      @fun{cairo-image-surface-get-data} or a backend-specific access function,
-      and process it with another library, e. g. @class{gdk-pixbuf} or libpng.
+      purposes. Applications which need more control over the generated PNG
+      file should access the pixel data directly, using the function
+      @fun{cairo-image-surface-data} or a backend-specific access function,
+      and process it with another library, e.g. GdkPixbuf or @code{libpng}.
 
-      @symbol{CAIRO_HAS_PNG_FUNCTIONS}
-      @see-function{cairo-image-surface-create-from-png}
-      @see-function{cairo-image-surface-create-from-png-stream}
-      @see-function{cairo-surface-write-to-png}
-      @see-function{cairo-surface-write-to-png-stream}
+      @about-symbol{CAIRO_HAS_PNG_FUNCTIONS}
+      @about-function{cairo-image-surface-create-from-png}
+      @about-function{cairo-image-surface-create-from-png-stream}
+      @about-function{cairo-surface-write-to-png}
+      @about-function{cairo-surface-write-to-png-stream}
     @end{subsection}
     @begin[PostScript Surfaces]{subsection}
       Rendering PostScript documents
@@ -508,30 +634,40 @@
     @end{subsection}
   @end{section}
   @begin[Utilities]{section}
+    @begin[Generic matrix operations]{subsection}
+      Generic matrix operations.
+
+      @about-symbol{cairo-matrix-t}
+      @about-function{cairo-matrix-init}
+      @about-function{cairo-matrix-init-identity}
+      @about-function{cairo-matrix-init-translate}
+      @about-function{cairo-matrix-init-scale}
+      @about-function{cairo-matrix-init-rotate}
+      @about-function{cairo-matrix-translate}
+      @about-function{cairo-matrix-scale}
+      @about-function{cairo-matrix-rotate}
+      @about-function{cairo-matrix-invert}
+      @about-function{cairo-matrix-multiply}
+      @about-function{cairo-matrix-transform-distance}
+      @about-function{cairo-matrix-transform-point}
+    @end{subsection}
     @begin[Error handling]{subsection}
-      Decoding cairo's status.r
+      Decoding Cairo's status.
 
       Cairo uses a single status type to represent all kinds of errors. A
       status value of @code{:success} represents no error and has an integer
       value of zero. All other status values represent an error.
 
       Cairo's error handling is designed to be easy to use and safe. All major
-      cairo objects retain an error status internally which can be queried
+      Cairo objects retain an error status internally which can be queried
       anytime by the users using @code{cairo*-status} calls. In the mean time,
-      it is safe to call all cairo functions normally even if the underlying
+      it is safe to call all Cairo functions normally even if the underlying
       object is in an error status. This means that no error handling code is
-      required before or after each individual cairo function call.
+      required before or after each individual Cairo function call.
 
       @about-symbol{cairo-status-t}
       @about-function{cairo-status-to-string}
       @about-function{cairo-debug-reset-static-data}
-    @end{subsection}
-    @begin[Types]{subsection}
-      This section lists generic data types used in the cairo API.
-
-      @about-symbol{cairo-bool-t}
-      @about-symbol{cairo-user-data-key-t}
-      @about-symbol{cairo-rectangle-int-t}
     @end{subsection}
     @begin[Version Information]{subsection}
       Cairo provides the ability to examine the version at either compile-time
@@ -539,14 +675,22 @@
       suitable for direct comparison. Cairo also provides the function
       @fun{cairo-version-encode} to perform the encoding.
 
+      @about-variable{+cairo-version+}
       @about-variable{+cairo-version-major+}
       @about-variable{+cairo-version-minor+}
       @about-variable{+cairo-version-micro+}
       @about-variable{+cairo-version-string+}
-      @about-variable{+cairo-version+}
       @about-function{cairo-version-encode}
+      @about-function{cairo-version-stringize}
       @about-function{cairo-version}
       @about-function{cairo-version-string}
+    @end{subsection}
+    @begin[Types]{subsection}
+      This section lists generic data types used in the cairo API.
+
+      @about-symbol{cairo-bool-t}
+      @about-symbol{cairo-user-data-key-t}
+      @about-symbol{cairo-rectangle-int-t}
     @end{subsection}
   @end{section}")
 
