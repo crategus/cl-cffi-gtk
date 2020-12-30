@@ -148,12 +148,12 @@
 ;;;     g-host-name
 
 (test g-host-name
-  (is (string= "dieter-notebook" (g-host-name))))
+  (is (stringp (g-host-name))))
 
 ;;;     g-home-dir
 
 (test g-home-dir
-  (is (string= "/home/dieter" (g-home-dir))))
+  (is (stringp (g-home-dir))))
 
 ;;;     g-tmp-dir
 
@@ -163,7 +163,7 @@
 ;;;     g_get_current_dir
 
 (test g-current-dir
-  (is (string= "/home/dieter/Lisp/lisp-projects/cl-gtk/test" (g-current-dir))))
+  (is (stringp (g-current-dir))))
 
 ;;;     g_basename
 ;;;     g_dirname
@@ -221,4 +221,4 @@
 ;;;     g_qsort_with_data
 ;;;     g_nullify_pointer
 
-;;; 2020-10-24
+;;; 2020-12-12

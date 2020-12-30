@@ -77,8 +77,8 @@
                         (is (equal '("file1" "file2" "file3")
                                    (g-application-command-line-get-arguments cmdline)))
                         (is (string= "/home/dieter/Lisp/lisp-projects/cl-gtk/test"
-                                     (g-application-command-line-get-cwd cmdline)))
-                        (is-true (listp (g-application-command-line-get-environ cmdline)))
+                                     (g-application-command-line-cwd cmdline)))
+                        (is-true (listp (g-application-command-line-environ cmdline)))
                         (g-application-release application)
                         0))
 
@@ -95,3 +95,4 @@
 ;;;     g_application_command_line_print
 ;;;     g_application_command_line_printerr
 
+;;; 2020-12-12

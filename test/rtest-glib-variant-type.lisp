@@ -39,7 +39,7 @@
 ;;;     g_variant_type_new
 
 (test g-variant-type-new
-  (is (eq 'g-variant-type (type-of (g-variant-type-new "b")))))
+  (is (typep (g-variant-type-new "b") 'g-variant-type)))
 
 ;;;     g_variant_type_string_is_valid
 
@@ -65,12 +65,12 @@
 ;;;   g_variant_type_peek_string
 
 (test g-variant-type-peek-string
-  (is (equal "b" (g-variant-type-peek-string (g-variant-type-new "b")))))
+  (is (string= "b" (g-variant-type-peek-string (g-variant-type-new "b")))))
 
 ;;;   g_variant_type_dup_string
 
 (test g-variant-type-dup-string
-  (is (equal "b" (g-variant-type-dup-string (g-variant-type-new "b")))))
+  (is (string= "b" (g-variant-type-dup-string (g-variant-type-new "b")))))
 
 ;;;   g_variant_type_is_definite
 
@@ -141,7 +141,8 @@
   (let ((bool (g-variant-type-new "b")))
     (is-true (g-variant-type-new-maybe bool))
     (is-true (g-variant-type-is-maybe (g-variant-type-new-maybe bool)))
-    (is (equal "mb" (g-variant-type-dup-string (g-variant-type-new-maybe bool))))))
+    (is (string= "mb"
+                 (g-variant-type-dup-string (g-variant-type-new-maybe bool))))))
 
 ;;;   g_variant_type_new_array
 
@@ -149,7 +150,8 @@
   (let ((bool (g-variant-type-new "b")))
     (is-true (g-variant-type-new-array bool))
     (is-true (g-variant-type-is-array (g-variant-type-new-array bool)))
-    (is (equal "ab" (g-variant-type-dup-string (g-variant-type-new-array bool))))))
+    (is (string= "ab"
+                 (g-variant-type-dup-string (g-variant-type-new-array bool))))))
 
 ;;;   g_variant_type_new_tuple
 
@@ -157,7 +159,9 @@
   (let ((bool (g-variant-type-new "b")))
     (is-true (g-variant-type-new-tuple bool bool bool))
     (is-true (g-variant-type-is-tuple (g-variant-type-new-tuple bool bool bool)))
-    (is (equal "(bbb)" (g-variant-type-dup-string (g-variant-type-new-tuple bool bool bool))))))
+    (is (string= "(bbb)"
+                 (g-variant-type-dup-string
+                     (g-variant-type-new-tuple bool bool bool))))))
 
 ;;;     g_variant_type_new_dict_entry
 
@@ -165,15 +169,20 @@
   (let ((bool (g-variant-type-new "b"))
         (int16 (g-variant-type-new "n")))
     (is-true (g-variant-type-new-dict-entry int16 bool))
-    (is-true (g-variant-type-is-dict-entry (g-variant-type-new-dict-entry int16 bool)))
-    (is (equal "{nb}" (g-variant-type-dup-string (g-variant-type-new-dict-entry int16 bool))))))
+    (is-true (g-variant-type-is-dict-entry
+                 (g-variant-type-new-dict-entry int16 bool)))
+    (is (string= "{nb}"
+                 (g-variant-type-dup-string
+                     (g-variant-type-new-dict-entry int16 bool))))))
 
 ;;;     g_variant_type_element
 
 (test g-variant-type-element
   (let ((bool (g-variant-type-new "b")))
     (is-true (g-variant-type-element (g-variant-type-new-array bool)))
-    (is (equal "b" (g-variant-type-dup-string (g-variant-type-element (g-variant-type-new-array bool)))))))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                     (g-variant-type-element (g-variant-type-new-array bool)))))))
 
 ;;;     g_variant_type_n_items
 
@@ -187,7 +196,7 @@
   (let* ((bool (g-variant-type-new "b"))
          (int16 (g-variant-type-new "n"))
          (tuple (g-variant-type-new-tuple bool int16 bool bool int16)))
-    (is (equal "b" (g-variant-type-dup-string (g-variant-type-first tuple))))))
+    (is (string= "b" (g-variant-type-dup-string (g-variant-type-first tuple))))))
 
 ;;;   g_variant_type_next
 
@@ -217,7 +226,7 @@
   (let* ((key-type (g-variant-type-new "n"))
          (value-type (g-variant-type-new "b"))
          (dict (g-variant-type-new-dict-entry key-type value-type)))
-    (is (equal "n" (g-variant-type-dup-string (g-variant-type-key dict))))
-    (is (equal "b" (g-variant-type-dup-string (g-variant-type-value dict))))))
+    (is (string= "n" (g-variant-type-dup-string (g-variant-type-key dict))))
+    (is (string= "b" (g-variant-type-dup-string (g-variant-type-value dict))))))
 
-;;; 2020-11-29
+;;; 2020-11-30

@@ -19,6 +19,7 @@
 (def-suite gtk-testsuite)
 (in-suite gtk-testsuite)
 
+(load "rtest-utilities.lisp")
 (load "rtest-glib.lisp")
 (load "rtest-gobject.lisp")
 (load "rtest-gdk.lisp")
@@ -27,3 +28,5 @@
 (load "rtest-gio.lisp")
 (load "rtest-pango.lisp")
 (load "rtest-cairo.lisp")
+
+;;; 2020-12-6

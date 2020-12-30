@@ -627,7 +627,7 @@
 
 ;;;     create-surface
 
-;; Does not work, because CairoSurface can not be created from the Lisp side.
+;; Does not work, because CairoSurface cannot be created from the Lisp side.
 
 #+nil
 (test gdk-window-create-surface-signal

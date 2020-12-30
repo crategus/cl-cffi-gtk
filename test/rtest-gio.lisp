@@ -3,6 +3,10 @@
 (def-suite gio-suite :in gtk-testsuite)
 (in-suite gio-suite)
 
+;;; File Operations
+
+(load "rtest-gio-file.lisp")
+
 ;;; File types and applications
 
 (load "rtest-gio-content-type.lisp")
@@ -43,3 +47,4 @@
 ;  not implemented              - GDBusMenuModel
 ;  not implemented              - GNotification
 
+;;; 2020-12-9

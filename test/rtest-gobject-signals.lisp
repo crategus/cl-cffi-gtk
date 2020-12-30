@@ -50,6 +50,8 @@
 
 ;;;     g-signal-name
 
+;; TODO: Thhe signals "enter", "leave", "pressed", and "released" are deprecated
+
 (test g-signal-name
   (is (string= "pressed" (g-signal-name (g-signal-lookup "pressed" "GtkButton"))))
   (is (string= "released" (g-signal-name (g-signal-lookup "released" "GtkButton"))))

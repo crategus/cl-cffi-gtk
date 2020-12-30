@@ -1,6 +1,5 @@
-
-(def-suite glib-variant :in glib-suite)
-(in-suite glib-variant)
+(def-suite g-variant :in glib-suite)
+(in-suite g-variant)
 
 ;;;     GVariant
 
@@ -192,3 +191,4 @@
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
 
+;;; 2020-11-30

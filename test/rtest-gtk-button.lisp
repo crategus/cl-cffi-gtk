@@ -186,10 +186,10 @@
                          (setf message "Signal clicked")
                          (is (typep widget 'gtk-button))
                          t))))
+    (declare (ignore handler-id))
     ;; Emit the signal
     (is-false (gtk-button-clicked button))
-    (is (string= "Signal clicked" message))
-    (is-false (g-signal-handler-disconnect button handler-id))))
+    (is (string= "Signal clicked" message))))
 
 ;;;     gtk-button-alignment                               deprecated
 
