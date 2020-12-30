@@ -158,10 +158,13 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;; Stores the Lisp class name of the gobject-class for the GType name
+;; e.g. the GType name "GtkButton" has the Lisp class name GTK-BUTTON
+
 (defvar *registered-object-types* (make-hash-table :test 'equal))
 
-(defun register-object-type (name gtype)
-  (setf (gethash name *registered-object-types*) gtype))
+(defun register-object-type (name class-name)
+  (setf (gethash name *registered-object-types*) class-name))
 
 (defun registered-object-type-by-name (name)
   (gethash name *registered-object-types*))
@@ -445,8 +448,9 @@
   (when *currently-making-object-p*
     (setf *currently-making-object-p* t))
   (let ((*current-creating-object* obj))
-    (log-for :subclass "initialize-instance :around; ~
-             *current-creating-object* = ~A~%" obj)
+    (log-for :subclass
+             ":subclass INITIALIZE-INSTANCE :around ~
+              *current-creating-object* is ~A~%" obj)
     (call-next-method)))
 
 (defmethod initialize-instance :after ((obj g-object) &key &allow-other-keys)
@@ -657,7 +661,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defmethod make-instance ((class gobject-class) &rest initargs &key pointer)
-  (log-for :subclass "(make-instance ~A ~{~A~^ ~})~%" class initargs)
+  (log-for :subclass
+           ":subclass MAkE-INSTANCE ~A ~{~A~^ ~})~%" class initargs)
   (ensure-finalized class)
   (let ((*currently-making-object-p* t))
     (if pointer
@@ -683,14 +688,6 @@
   (let ((filtered-initargs (filter-initargs-by-class (class-of instance)
                                                      initargs)))
     (apply #'call-next-method instance filtered-initargs)))
-
-(defmethod initialize-instance :after ((object gobject-class)
-                                       &key &allow-other-keys)
-  (when (gobject-class-direct-g-type-name object)
-    (register-object-type (gobject-class-direct-g-type-name object)
-                          (class-name object))
-    (glib-init::at-init (object)
-             (initialize-gobject-class-g-type object))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1624,7 +1621,7 @@
 ;;; Returns :
 ;;;     a new instance of object_type .
 ;;;
-;;; Since: 2.54
+;;; Since 2.54
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1688,7 +1685,7 @@
   @begin{short}
     Decreases the reference count of @arg{object}.
   @end{short}
-  When its reference count drops to 0, the object is finalized (i. e. its memory
+  When its reference count drops to 0, the object is finalized (i.e. its memory
   is freed).
   @see-class{g-object}"
   (object :pointer))
@@ -1758,7 +1755,7 @@
 ;;; Returns :
 ;;;     TRUE if the value of object_ptr changed, FALSE otherwise
 ;;;
-;;; Since: 2.44
+;;; Since 2.44
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1986,7 +1983,7 @@
 ;;; Returns :
 ;;;     TRUE if the value of weak_pointer_location changed, FALSE otherwise
 ;;;
-;;;Since: 2.56
+;;; Since 2.56
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2010,7 +2007,7 @@
 ;;; weak_pointer_location :
 ;;;     The memory address of a pointer
 ;;;
-;;; Since: 2.56
+;;; Since 2.56
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2278,7 +2275,7 @@
 ;;; values :
 ;;;     the values of each property to be set.
 ;;;
-;;; Since: 2.54
+;;; Since 2.54
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2349,7 +2346,7 @@
 ;;; values :
 ;;;     the values of each property to get.
 ;;;
-;;; Since: 2.54
+;;; Since 2.54
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3207,7 +3204,7 @@
 ;;; object :
 ;;;     an object.
 ;;;
-;;; Since: 2.62
+;;; Since 2.62
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gobject.base.lisp ------------------------------------------

@@ -36,8 +36,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun instance-init (instance class)
-  (log-for :subclass "(instance-init ~A ~A)~%" instance class)
-  (log-for :subclass "Initializing instance ~A for type ~A (creating ~A)~%"
+  (log-for :subclass
+           ":subclass INSTANCE-INIT for ~A for type ~A (creating ~A)~%"
            instance
            (gtype-name (foreign-slot-value class '(:struct g-type-class) :type))
            *current-creating-object*)
@@ -52,14 +52,15 @@
            (lisp-class (object-type-class lisp-type-info)))
       (make-instance lisp-class :pointer instance))))
 
-(defcallback c-instance-init :void ((instance :pointer) (class :pointer))
+(defcallback instance-init-cb :void ((instance :pointer) (class :pointer))
   (instance-init instance class))
 
 ;;; ----------------------------------------------------------------------------
 
 (defun class-init (class data)
   (declare (ignore data))
-  (log-for :subclass "class-init for ~A~%"
+  (log-for :subclass
+           ":subclass CLASS-INIT for ~A~%"
            (gtype-name (g-type-from-class class)))
   (let* ((type-name (gtype-name (g-type-from-class class)))
          (lisp-type-info (gethash type-name *registered-types*))
@@ -71,18 +72,21 @@
         (callback c-object-property-set))
   (install-properties class))
 
-(defcallback c-class-init :void ((class :pointer) (data :pointer))
+(defcallback class-init-cb :void ((class :pointer) (data :pointer))
   (class-init class data))
 
 ;;; ----------------------------------------------------------------------------
 
 (defun install-properties (class)
-  (let* ((name (gtype-name (foreign-slot-value class '(:struct g-type-class) :type)))
+  (let* ((name (gtype-name (foreign-slot-value class
+                                               '(:struct g-type-class) :type)))
          (lisp-type-info (gethash name *registered-types*)))
     (iter (for property in (object-type-properties lisp-type-info))
           (for param-spec = (property->param-spec property))
-          (for property-id from 123)
-          (log-for :subclass "installing property ~A~%" property)
+          (for property-id from 123) ; FIXME: ???
+          (log-for :subclass
+                   ":subclass INSTALL-PROPERTIES installing ~A~%"
+                   property)
           (%g-object-class-install-property class property-id param-spec))))
 
 ;;; ----------------------------------------------------------------------------
@@ -375,8 +379,12 @@
                                    *foreign-gobjects-strong*)
                           (gethash (pointer-address object)
                                    *foreign-gobjects-weak*)))
-         (property-name (foreign-slot-value pspec '(:struct g-param-spec) :name))
-         (property-type (foreign-slot-value pspec '(:struct g-param-spec) :value-type))
+         (property-name (foreign-slot-value pspec
+                                            '(:struct g-param-spec)
+                                            :name))
+         (property-type (foreign-slot-value pspec
+                                            '(:struct g-param-spec)
+                                            :value-type))
          (type-name (gtype-name (foreign-slot-value pspec
                                                     '(:struct g-param-spec)
                                                     :owner-type)))
@@ -396,10 +404,8 @@
                                                 value))))
       (set-g-value g-value value property-type))))
 
-(defcallback c-object-property-get :void ((object :pointer)
-                                          (property-id :uint)
-                                          (value :pointer)
-                                          (pspec :pointer))
+(defcallback c-object-property-get :void
+    ((object :pointer) (property-id :uint) (value :pointer) (pspec :pointer))
   (object-property-get object property-id value pspec))
 
 ;;; ----------------------------------------------------------------------------
@@ -410,7 +416,8 @@
                                    *foreign-gobjects-strong*)
                           (gethash (pointer-address object)
                                    *foreign-gobjects-weak*)))
-         (property-name (foreign-slot-value pspec '(:struct g-param-spec) :name))
+         (property-name (foreign-slot-value pspec
+                                            '(:struct g-param-spec) :name))
          (type-name (gtype-name (foreign-slot-value pspec
                                                     '(:struct g-param-spec)
                                                     :owner-type)))
@@ -425,10 +432,8 @@
         (funcall property-set-fn new-value lisp-object)
       (return-without-error-from-property-setter () nil))))
 
-(defcallback c-object-property-set :void ((object :pointer)
-                                          (property-id :uint)
-                                          (value :pointer)
-                                          (pspec :pointer))
+(defcallback c-object-property-set :void
+    ((object :pointer) (property-id :uint) (value :pointer) (pspec :pointer))
   (object-property-set object property-id value pspec))
 
 ;;; ----------------------------------------------------------------------------
@@ -436,6 +441,7 @@
 (defmacro register-object-type-implementation (name class parent interfaces properties)
   (unless (stringp parent)
     (setf parent (gtype-name (gtype parent))))
+
   `(progn
      (setf (gethash ,name *registered-types*)
            (make-object-type :name ,name
@@ -454,15 +460,15 @@
                                         (foreign-slot-value query
                                                             '(:struct g-type-query)
                                                             :class-size)
-                                        (callback c-class-init)
+                                        (callback class-init-cb)
                                         (foreign-slot-value query
                                                             '(:struct g-type-query)
                                                             :instance-size)
-                                        (callback c-instance-init) nil))
+                                        (callback instance-init-cb) nil))
        (add-interfaces ,name))
      (defmethod initialize-instance :before ((object ,class) &key pointer)
        (log-for :subclass
-                "(initialize-instance ~A :pointer ~A) :before~%"
+                ":subclass INITIAlIZE-INSTANCE :before ~A :pointer ~A~%"
                 object pointer)
        (unless (or pointer
                    (and (slot-boundp object 'pointer)
@@ -483,5 +489,120 @@
                              (setf (g-object-property object ,prop-name)
                                    new-value))))))
      ,name))
+
+;;; ----------------------------------------------------------------------------
+
+;; This is a hack to transform the list of properties in an new order for
+;; the functions which register a foreign class. Consider to reimplement this
+;; to avoid different orders of property lists.
+
+(defun properties-to-new-list (properties)
+  (loop for property in properties
+        collect (list (third property)
+                      (fourth property)
+                      (second property)
+                      (fifth property)
+                      (sixth property))))
+
+(defmacro define-foreign-g-object-class (g-type-name name
+                                 (&key (superclass 'g-object)
+                                       (export t)
+                                       interfaces
+                                       type-initializer)
+                                 (&rest properties))
+
+;  (setf properties (mapcar #'parse-property properties))
+
+  (let ((props (mapcar #'parse-property properties))
+        (parent (if (stringp superclass)
+                    superclass
+                    (gobject-class-g-type-name (find-class superclass)))))
+
+    (setf properties (properties-to-new-list properties))
+
+  `(progn
+
+     (setf (gethash ,g-type-name *registered-types*)
+           (make-object-type :name ,g-type-name
+                             :class ',name
+                             :parent ,parent
+                             :interfaces ',interfaces
+                             :properties ',properties))
+
+     (glib-init::at-init (',name)
+       (log-for :subclass
+                "Debug sublcass: Registering GObject type ~A for type ~A~%"
+                ',name ,g-type-name)
+       (with-foreign-object (query '(:struct g-type-query))
+         (g-type-query (gtype ,parent) query)
+         (g-type-register-static-simple (gtype ,parent)
+                                        ,g-type-name
+                                        (foreign-slot-value query
+                                                            '(:struct g-type-query)
+                                                            :class-size)
+                                        (callback class-init-cb)
+                                        (foreign-slot-value query
+                                                            '(:struct g-type-query)
+                                                            :instance-size)
+                                        (callback instance-init-cb) nil))
+       (add-interfaces ,g-type-name))
+
+
+     (defclass ,name (,@(when (and superclass
+                                   (not (eq superclass 'g-object)))
+                          (list superclass))
+                      ,@(mapcar #'interface->lisp-class-name interfaces))
+       ;; Generate the slot definitions from the given properties
+       (,@(mapcar (lambda (property)
+                     (meta-property->slot name property))
+                   props))
+       (:metaclass gobject-class)
+;       (:g-type-name . ,g-type-name)
+;       ,@(when type-initializer
+;           (list `(:g-type-initializer . ,type-initializer)))
+)
+
+
+     (defmethod initialize-instance :before ((object ,name) &key pointer)
+       (log-for :subclass
+                ":subclass INITIAlIZE-INSTANCE :before ~A :pointer ~A~%"
+                object pointer)
+       (unless (or pointer
+                   (and (slot-boundp object 'pointer)
+                        (pointer object)))
+         (log-for :subclass ":subclass calling g-object-constructor~%")
+         (setf (pointer object)
+               (call-gobject-constructor ,g-type-name nil nil)
+               (g-object-has-reference object) t)))
+
+     (progn
+       ,@(iter (for (prop-name prop-type prop-accessor prop-reader prop-writer)
+                    in properties)
+               (declare (ignorable prop-type))
+               (when prop-reader
+                 (collect `(defun ,prop-accessor (object)
+                             (g-object-property object ,prop-name))))
+               (when prop-writer
+                 (collect `(defun (setf ,prop-accessor) (new-value object)
+                             (setf (g-object-property object ,prop-name)
+                                   new-value))))))
+
+
+;     ,@(when export
+;         (cons `(export ',name
+;                         (find-package
+;                           ,(package-name (symbol-package name))))
+;               (mapcar (lambda (property)
+;                         `(export ',(intern (format nil "~A-~A"
+;                                                       (symbol-name name)
+;                                                       (property-name property))
+;                                              (symbol-package name))
+;                                   (find-package
+;                                     ,(package-name (symbol-package name)))))
+;                        props)))
+
+)))
+
+(export 'define-foreign-g-object-class)
 
 ;;; --- End of file gobject.foreign-gobject-subclassing.lisp -------------------

@@ -53,6 +53,19 @@
   (apply #'call-next-method class
          (compute-new-initargs-for-metaclass initargs 'g-object)))
 
+(defmethod initialize-instance :after
+    ((class gobject-class) &key &allow-other-keys)
+
+  (log-for :subclass
+           ":subclass INITIALIZE-INSTANCE :after for class ~a ~a ~a~%"
+           class (gobject-class-direct-g-type-name class) (class-name class))
+
+  (when (gobject-class-direct-g-type-name class)
+    (register-object-type (gobject-class-direct-g-type-name class)
+                          (class-name class))
+    (glib-init::at-init (class)
+             (initialize-gobject-class-g-type class))))
+
 (defmethod reinitialize-instance :around ((class gobject-class)
                                           &rest initargs
                                           &key (direct-superclasses nil d-s-p)
@@ -69,9 +82,9 @@
   (if (initargs-have-base-in-superclass initargs base-class)
       initargs
       (append (filter-from-initargs initargs :direct-superclasses)
-          (list :direct-superclasses
-            (append (getf initargs :direct-superclasses)
-                (list (find-class base-class)))))))
+              (list :direct-superclasses
+                    (append (getf initargs :direct-superclasses)
+                            (list (find-class base-class)))))))
 
 (defun initargs-have-base-in-superclass (initargs base-class)
   (let ((d-s (getf initargs :direct-superclasses)))
@@ -95,11 +108,20 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;; Called from the method initialize-instance for a gobject-class.
+
 (defun initialize-gobject-class-g-type (class)
+
+  (log-for :subclass
+           ":subclass INITIALIZE-GOBJECT-CLASS-G-TYPE for class ~a ~a~%"
+           class
+           (gtype (gobject-class-direct-g-type-name class)))
+
   (if (gobject-class-g-type-initializer class)
+      ;; We have a g-type-initializer function
       (let* ((initializer-fn-ptr (foreign-symbol-pointer
                                    (gobject-class-g-type-initializer class)))
-             (type (when initializer-fn-ptr
+             (gtype (when initializer-fn-ptr
                       (foreign-funcall-pointer initializer-fn-ptr nil g-type))))
         (if (null initializer-fn-ptr)
             (warn "Type initializer for class '~A' (GType '~A') is invalid: ~
@@ -108,24 +130,25 @@
                   (class-name class)
                   (gobject-class-g-type-initializer class))
             (progn
-              (when (eq (gtype +g-type-invalid+) type)
+              (when (eq (gtype +g-type-invalid+) gtype)
                 (warn "Declared GType name '~A' for class '~A' is invalid ~
                       ('~A' returned 0)"
                       (gobject-class-direct-g-type-name class)
                       (class-name class)
                       (gobject-class-g-type-initializer class)))
-              (unless (eq (gtype (gobject-class-direct-g-type-name class)) type)
+              (unless (eq gtype
+                          (gtype (gobject-class-direct-g-type-name class)))
                 (warn "Declared GType name '~A' for class '~A' does not match ~
                       actual GType name '~A'"
                       (gobject-class-direct-g-type-name class)
                       (class-name class)
-                      (gtype-name type))))))
+                      (gtype-name gtype))))))
+      ;; We have no g-type-initializer function
       (when (zerop (gtype-id (gtype (gobject-class-direct-g-type-name class))))
         ;; This is a hack to avoid a warning when loading the library.
         (when (not (string= "AtkImplementorIface"
                             (gobject-class-direct-g-type-name class)))
-          (warn "Declared GType name '~A' for class '~A' is invalid ~
-                (g_type_name returned 0)"
+          (warn "Declared GType name '~A' for class '~A' is invalid."
                 (gobject-class-direct-g-type-name class)
                 (class-name class))))))
 
