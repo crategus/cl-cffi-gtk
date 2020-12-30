@@ -1233,19 +1233,19 @@ got_value (gpointer user_data)
 
     Cairo is a graphics library that supports vector graphics and image
     compositing that can be used with GDK. GTK+ does all of its drawing using
-    cairo.
+    Cairo.
 
     GDK does not wrap the Cairo API, instead it allows to create Cairo contexts
-    which can be used to draw on @class{gdk-window}'s. Additional functions
-    allow use @class{gdk-rectangle}'s with Cairo and to use @class{gdk-color}'s,
-    @class{gdk-rgba}'s, @class{gdk-pixbuf}'s and @class{gdk-window}'s as sources
-    for drawing operations.
+    which can be used to draw on @class{gdk-window} objects. Additional
+    functions allow use @class{gdk-rectangle} objects with Cairo and to use
+    @class{gdk-color}, @class{gdk-rgba}, @class{gdk-pixbuf} and
+    @class{gdk-window} objects as sources for drawing operations.
 
     @about-function{gdk-window-create-similar-surface}
     @about-function{gdk-window-create-similar-image-surface}
     @about-function{gdk-cairo-create}
-    @about-function{gdk-cairo-get-clip-rectangle}
-    @about-function{gdk-cairo-get-drawing-context}
+    @about-function{gdk-cairo-clip-rectangle}
+    @about-function{gdk-cairo-drawing-context}
     @about-function{gdk-cairo-set-source-color}
     @about-function{gdk-cairo-set-source-rgba}
     @about-function{gdk-cairo-set-source-pixbuf}
@@ -1273,17 +1273,19 @@ got_value (gpointer user_data)
   @end{section}
   @begin[Deprecated]{section}
     @begin[Colors]{subsection}
-      Manipulation of colors
+      A @class{gdk-color} structure represents a color.
+
+      When working with Cairo, it is often more convenient to use a
+      @class{gdk-rgba} color instead, and @class{gdk-color} has been deprecated
+      in favor of @class{gdk-rgba}.
 
       @about-struct{gdk-color}
-      @about-function{copy-gdk-color}
-      @about-function{make-gdk-color}
-      @about-function{gdk-color-blue}
-      @about-function{gdk-color-green}
       @about-function{gdk-color-red}
+      @about-function{gdk-color-green}
+      @about-function{gdk-color-blue}
       @about-function{gdk-color-pixel}
+      @about-function{gdk-color-new}
       @about-function{gdk-color-copy}
-      @about-function{gdk-color-free}
       @about-function{gdk-color-parse}
       @about-function{gdk-color-equal}
       @about-function{gdk-color-hash}
