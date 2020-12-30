@@ -3049,9 +3049,9 @@ happen.")
 
 ;;; Color Selection Widget (deprecated)
 
-(let ((color (make-gdk-color :red 0
-                             :blue 65535
-                             :green 0)))
+(let ((color (gdk-color-new :red 0
+                            :blue 65535
+                            :green 0)))
   (defun drawing-area-event (widget event area)
     (declare (ignore widget))
     (let ((handled nil))

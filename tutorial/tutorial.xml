@@ -949,10 +949,10 @@ int main( int argc, char *argv[] )
     to use. It offers a canvas on which you can draw by connecting to the "draw" signal.
    </para>
    <para>
-    The contents of a widget often need to be partially or fully redrawn, e. g. when another window is moved
+    The contents of a widget often need to be partially or fully redrawn, e.g. when another window is moved
     and uncovers part of the widget, or when the window containing it is resized. It is also possible to
     explicitly cause part or all of the widget to be redrawn, by calling the function &gtk-widget-queue-draw;
-    or its variants. GTK+ takes care of most of the details by providing a ready-to-use cairo context to the
+    or its variants. GTK+ takes care of most of the details by providing a ready-to-use Cairo context to the
     "draw" signal handler.
    </para>
    <para>
@@ -3767,7 +3767,7 @@ int main( int argc, char *argv[] )
     properties of the C class <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.  The slots
     can be accessed with the corresponding Lisp accessor functions.  Alternativly, the C accessor functions
     like <code>gtk_adjustment_set_value()</code> and <code>gtk_adjustment_set_value()</code> are availabe in
-    the Lisp binding through e. g. <ulink url="&gtk-adjustment-value;">
+    the Lisp binding through e.g. <ulink url="&gtk-adjustment-value;">
     <code>gtk-adjustment-value</code></ulink> for the property <code>value</code>.
    </para>
    <para>
@@ -3963,7 +3963,7 @@ int main( int argc, char *argv[] )
      <ulink url="&gtk-position-type;"><code>gtk-position-type</code></ulink>.
     </para>
     <para>
-     If you position the value on the "side" of the trough (e. g., on the top or bottom of a horizontal scale
+     If you position the value on the "side" of the trough (e.g., on the top or bottom of a horizontal scale
      widget), then it will follow the slider up and down the trough.
     </para>
    </section>
@@ -4289,7 +4289,7 @@ int main( int argc, char *argv[] )
     course, if the scale settings are both set to <code>1.0</code>, the alignment settings have no effect.
     The scale settings are used to specify how much the child widget should expand to fill the space
     allocated to the <ulink url="&gtk-alignment;"><code>gtk-alignment</code></ulink>.  The values can range
-    from <code>0.0</code> (meaning the child doesn't expand at all) to <code>1.0</code> (meaning the child
+    from <code>0.0</code> (meaning the child does not expand at all) to <code>1.0</code> (meaning the child
     expands to fill all of the available space).
    </para>
    <para>
@@ -6661,7 +6661,7 @@ bad things will happen.")
     <title>More on Buffer and Window Coordinates</title>
     <para>
      In the previous section we obtained the screen coordinates for a position in the buffer.  What if we
-     want to do the exact opposite, i. e. what if we want to find the position in the buffer corresponding to
+     want to do the exact opposite, i.e. what if we want to find the position in the buffer corresponding to
      a particular X-Y coordinate.  The <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> has
      functions for these as well.
     </para>
@@ -7032,7 +7032,7 @@ bad things will happen.")
     </para>
     <para>
      For example, we might want to display a list of files. We would create a list store with two fields: a
-     field that stores the filename (i. e. a string) and a field that stores the file size (i. e. an unsigned
+     field that stores the filename (i.e. a string) and a field that stores the file size (i.e. an unsigned
      integer).  The filename would be stored in column 0 of the model, and the file size would be stored in
      column 1 of the model.  For each file we would add a row to the list store, and set the row's fields to
      the filename and the file size.
@@ -7122,7 +7122,7 @@ bad things will happen.")
      </para>
      <para>
       Instead of the string notation, <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> uses an
-      integer array internally.  You can get the depth, i. e. the nesting level, of a tree path with the
+      integer array internally.  You can get the depth, i.e. the nesting level, of a tree path with the
       function <ulink url="&gtk-tree-path-depth;"><code>gtk-tree-path-depth</code></ulink>.  A depth of 0 is
       the imaginary invisible root node of the tree view and model.  A depth of 1 means that the tree path
       describes a top-level row.  As lists are just trees without child nodes, all rows in a list always have
@@ -7139,7 +7139,7 @@ bad things will happen.")
       <ulink url="&gtk-tree-path-is-ancestor;"><code>gtk-tree-path-is-ancestor</code></ulink>, or
       <ulink url="&gtk-tree-path-is-descendant;"><code>gtk-tree-path-is-descendant</code></ulink>.  Note
       that this way you can construct and operate on tree paths that refer to rows that do not exist in model
-      or view.  The only way to check whether a path is valid for a specific model, i. e. the row described
+      or view.  The only way to check whether a path is valid for a specific model, i.e. the row described
       by the path exists, is to convert the path into an iter using the function
       <ulink url="&gtk-tree-model-iter;"><code>gtk-tree-model-iter</code></ulink>.
      </para>
@@ -7764,7 +7764,7 @@ bad things will happen.")
     <para>
      Cell renderers are objects that are responsible for the actual rendering of data within a
      <ulink url="&gtk-tree-view-column;"><code>gtk-tree-view-column</code></ulink>.  They are basically just
-     GObjects (i. e. not widgets) that have certain properties, and those properties determine how a
+     GObjects (i.e. not widgets) that have certain properties, and those properties determine how a
      single cell is drawn.
     </para>
     <para>
@@ -7813,7 +7813,7 @@ bad things will happen.")
        <row>
         <entry valign="top"><code>gtk-cell-editable</code></entry>
         <entry valign="top">
-         Is a special cell that implements editable cells (i. e. <ulink url="&gtk-entry;">
+         Is a special cell that implements editable cells (i.e. <ulink url="&gtk-entry;">
          <code>gtk-entry</code></ulink> or <ulink url="&gtk-spin-button;">
          <code>gtk-spin-button</code></ulink> in a treeview).  This is not a cell renderer!  If you
          want to have editable text cells, use <ulink url="&gtk-cell-renderer-text;">
@@ -8113,7 +8113,7 @@ bad things will happen.")
       <ulink url="&gtk-tree-view-column-add-attribute;">
       <code>gtk-tree-view-column-add-attribute</code></ulink> to connect a text cell renderer's "text"
       property to a model column, the model column does not need to be of <code>G_TYPE_STRING</code>, it can
-      also be one of most other fundamental GLib types, e. g. <code>G_TYPE_BOOLEAN</code>,
+      also be one of most other fundamental GLib types, e.g. <code>G_TYPE_BOOLEAN</code>,
       <code>G_TYPE_INT</code>, <code>G_TYPE_UINT</code>, <code>G_TYPE_LONG</code>, <code>G_TYPE_ULONG</code>,
       <code>G_TYPE_INT64</code>, <code>G_TYPE_UINT64</code>, <code>G_TYPE_FLOAT</code>, or
       <code>G_TYPE_DOUBLE</code>.  The text cell renderer will automatically display the values of these
@@ -8143,7 +8143,7 @@ bad things will happen.")
       cell renderer property is set.
      </para>
      <para>
-      If you are using a floating point type, i. e. <code>G_TYPE_FLOAT</code> or <code>G_TYPE_DOUBLE</code>,
+      If you are using a floating point type, i.e. <code>G_TYPE_FLOAT</code> or <code>G_TYPE_DOUBLE</code>,
       there is no way to tell the text cell renderer how many digits after the floating point (or comma)
       should be rendered.  If you only want a certain amount of digits after the point/comma, you will need
       to use a cell data function.
@@ -8477,8 +8477,8 @@ main (int argc, char **argv)
     </para>
     <para>
      Otherwise, the most suitable approach for most cases is that you add two columns to your model, one for
-     the property itself (e. g. a column <code>COL_ROW_COLOR</code> of type <code>G_TYPE_STRING</code>), and
-     one for the boolean flag of the property (e. g. a column <code>COL_ROW_COLOR_SET</code> of type
+     the property itself (e.g. a column <code>COL_ROW_COLOR</code> of type <code>G_TYPE_STRING</code>), and
+     one for the boolean flag of the property (e.g. a column <code>COL_ROW_COLOR_SET</code> of type
      <code>G_TYPE_BOOLEAN</code>).  You would then connect these columns with the <code>"foreground"</code>
      and <code>"foreground-set"</code> properties of each renderer.  Now, whenever you set a row's
      <code>COL_ROW_COLOR</code> field to a colour, and set that row's <code>COL_ROW_COLOR_SET</code> field to
@@ -8488,7 +8488,7 @@ main (int argc, char **argv)
      <code>"foreground"</code> property to whatever special color you want, and only connect the
      <code>COL_ROW_COLOR_SET</code> column to all renderer's <code>"foreground-set"</code> property using
      attributes.  This works similar with any other attribute, only that you need to adjust the data type for
-     the property of course (e. g. <code>"weight"</code> would take a <code>G_TYPE_INT</code>, in form of a
+     the property of course (e.g. <code>"weight"</code> would take a <code>G_TYPE_INT</code>, in form of a
      <code>PANGO_WEIGHT_FOO</code> define in this case).
     </para>
     <para>
@@ -8864,7 +8864,7 @@ main (int argc, char **argv)
       </row>
       <row>
        <entry valign="top"><code>:other</code></entry>
-       <entry valign="top">None of the above, doesn't get an icon.</entry>
+       <entry valign="top">None of the above, does not get an icon.</entry>
       </row>
      </tbody>
     </tgroup>
@@ -8955,7 +8955,7 @@ main (int argc, char **argv)
    </para>
    <para>
     It is possible to show a <ulink url="&gtk-about-dialog;"><code>gtk-about-dialog</code></ulink> like any
-    other <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, e. g. using
+    other <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, e.g. using
     <ulink url="&gtk-dialog-run;"><code>gtk-dialog-run</code></ulink>.  In this case, you might need to know
     that the 'Close' button returns the <code>:cancel</code> response ID.
    </para>
@@ -9485,7 +9485,7 @@ main (int argc, char **argv)
      <ulink url="&gtk-response-type;"><code>gtk-response-type</code></ulink>.  For most dialog boxes you can
      use your own custom response codes rather than the ones in <ulink url="&gtk-response-type;">
      <code>gtk-response-type</code></ulink>, but <ulink url="&gtk-file-chooser-dialog;">
-     <code>gtk-file-chooser-dialog</code></ulink> assumes that its "accept"-type action, e. g. an "Open" or
+     <code>gtk-file-chooser-dialog</code></ulink> assumes that its "accept"-type action, e.g. an "Open" or
      "Save" button, will have one of the following response codes <code>:accept</code>, <code>:ok</code>,
      <code>:yes</code>, or <code>:apply</code>.
     </para>
@@ -12083,7 +12083,7 @@ JustifyLeft
      The first argument is the object returned by the call to create the UI manager. The second is the group
      to be inserted. The <code>pos</code> argument specifies the position in the list of action groups
      managed by this UI manager. Action groups that are earlier in this list will be accessed before those
-     that are later in this list. A consequence of this is that, if an action with the same name, e. g.
+     that are later in this list. A consequence of this is that, if an action with the same name, e.g.
      "Open", is in two different groups, the entry in the group with smaller position will hide the one in
      the group with larger position. For example, if an "Open" action is in groups named
      <code>action-group1</code> and <code>action-group2</code>, and <code>action-group1</code> is inserted at
@@ -12193,8 +12193,8 @@ JustifyLeft
      in the XML tree of that element.
     </para>
     <para>
-     Elements which do not have a name or action attribute in the XML (e. g. <code>&#x3c;popup></code>) can
-     be addressed by their XML element name (e. g. "popup"). The root element ("/ui") can be omitted in the
+     Elements which do not have a name or action attribute in the XML (e.g. <code>&#x3c;popup></code>) can
+     be addressed by their XML element name (e.g. "popup"). The root element ("/ui") can be omitted in the
      path.
     </para>
     <para>t
@@ -13875,6 +13875,10 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
+
+
 
 
 
