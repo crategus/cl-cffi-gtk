@@ -148,13 +148,13 @@
   a keyboard state -- consisting of hardware keycode pressed, active modifiers,
   and active group -- applies the appropriate rules, and returns the group/level
   to be used to index the keymap, along with the modifiers which did not affect
-  the group and level, i. e. it returns \"unconsumed modifiers\". The keyboard
+  the group and level, i.e. it returns \"unconsumed modifiers\". The keyboard
   group may differ from the effective group used for keymap lookups because some
-  keys don't have multiple groups - e. g. the Enter key is always in group 0
+  keys don't have multiple groups - e.g. the Enter key is always in group 0
   regardless of keyboard state.
 
   Note that the function @fun{gdk-keymap-translate-keyboard-state} also returns
-  the keyval, i. e. it goes ahead and performs the keymap lookup in addition to
+  the keyval, i.e. it goes ahead and performs the keymap lookup in addition to
   telling you which effective group/level values were used for the lookup.
   @class{gdk-event-key} already contains this keyval, however, so you don’t
   normally need to call the function @fung{gdk-keymap-translate-keyboard-state}
@@ -673,8 +673,8 @@
   @argument[keymap]{a @class{gdk-keymap} object}
   @argument[state]{pointer to the modifier mask to change}
   @begin{short}
-    Adds virtual modifiers (i. e. Super, Hyper and Meta) which correspond to the
-    real modifiers (i. e Mod2, Mod3, ...) in modifiers and set the corresponding
+    Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond to the
+    real modifiers (i.e. Mod2, Mod3, ...) in modifiers and set the corresponding
     bits in state.
   @end{short}
 
@@ -705,8 +705,8 @@
     mapped to a non-virtual modifier that was already set in state.
   @end{return}
   @begin{short}
-    Maps the virtual modifiers (i. e. Super, Hyper and Meta) which are set in
-    state to their non-virtual counterparts (i. e. Mod2, Mod3,...) and set the
+    Maps the virtual modifiers (i.e. Super, Hyper and Meta) which are set in
+    state to their non-virtual counterparts (i.e. Mod2, Mod3,...) and set the
     corresponding bits in state.
   @end{short}
 

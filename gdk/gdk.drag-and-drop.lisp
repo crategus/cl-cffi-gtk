@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -88,7 +88,7 @@
 ;;; enum GdkDragCancelReason
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-20
+#+gdk-3-20
 (define-g-enum "GdkDragCancelReason" gdk-drag-cancel-reason
   (:export t
    :type-initializer "gdk_drag_cancel_reason_get_type")
@@ -96,7 +96,7 @@
   :user-cancelled
   :error)
 
-#+(and gtk-3-20 cl-cffi-gtk-documentation)
+#+(and gdk-3-20 cl-cffi-gtk-documentation)
 (setf (gethash 'gdk-drag-cancel-reason atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-drag-cancel-reason atdoc:*external-symbols*)
  "@version{2019-3-25}
@@ -202,7 +202,7 @@
   @begin[code]{table}
     @entry[:default]{Means nothing, and should not be used.}
     @entry[:copy]{Copy the data.}
-    @entry[:move]{Move the data, i. e. first copy it, then delete it from the
+    @entry[:move]{Move the data, i.e. first copy it, then delete it from the
       source using the \"DELETE\" target of the X selection protocol.}
     @entry[:link]{Add a link to the data. Note that this is only useful if
       source and destination agree on what it means.}
@@ -869,7 +869,7 @@
 ;;; The “dnd-finished” signal after the drag and drop operation concludes (after
 ;;; all GdkSelection transfers happen).
 ;;;
-;;; The “cancel” signal if the drag and drop operation is finished but doesn't
+;;; The “cancel” signal if the drag and drop operation is finished but does not
 ;;; happen over an accepting destination, or is cancelled through other means.
 ;;;
 ;;; context :

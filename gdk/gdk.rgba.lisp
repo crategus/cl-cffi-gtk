@@ -105,9 +105,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-rgba 'function)
  "@version{2020-11-10}
-  @argument[instance]{a @class{gdk-rgba} structure}
+  @argument[instance]{a @class{gdk-rgba} color}
   @begin{short}
-    Copy constructor of a @class{gdk-rgba} structure.
+    Copy constructor of a @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}")
 
@@ -123,7 +123,7 @@
   @argument[alpha]{a @code{:double} with the opacity of the color
     from 0.0 for completely translucent to 1.0 for opaque}
   @begin{short}
-    Creates a @class{gdk-rgba} structure.
+    Creates a @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}")
 
@@ -136,9 +136,9 @@
       "Accessor"
       (documentation 'gdk-rgba-red 'function)
  "@version{2020-11-10}
-  @argument[instance]{a @class{gdk-rgba} structure}
+  @argument[instance]{a @class{gdk-rgba} color}
   @begin{short}
-    Accessor of the @code{red} slot of the @class{gdk-rgba} structure.
+    Accessor of the @code{red} slot of the @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-green}
@@ -150,9 +150,9 @@
       "Accessor"
       (documentation 'gdk-rgba-green 'function)
  "@version{2020-11-10}
-  @argument[instance]{a @class{gdk-rgba} structure}
+  @argument[instance]{a @class{gdk-rgba} color}
   @begin{short}
-    Accessor of the @code{green} slot of the @class{gdk-rgba} structure.
+    Accessor of the @code{green} slot of the @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
@@ -164,9 +164,9 @@
       "Accessor"
       (documentation 'gdk-rgba-blue 'function)
  "@version{2020-11-10}
-  @argument[instance]{a @class{gdk-rgba} structure}
+  @argument[instance]{a @class{gdk-rgba} color}
   @begin{short}
-    Accessor of the @code{blue} slot of the @class{gdk-rgba} structure.
+    Accessor of the @code{blue} slot of the @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
@@ -178,9 +178,9 @@
       "Accessor"
       (documentation 'gdk-rgba-alpha 'function)
  "@version{2020-11-10}
-  @argument[instance]{a @class{gdk-rgba} structure}
+  @argument[instance]{a @class{gdk-rgba} color}
   @begin{short}
-    Accessor of the @code{alpha} slot of the @class{gdk-rgba} structure.
+    Accessor of the @code{alpha} slot of the @class{gdk-rgba} color.
   @end{short}
   @see-class{gdk-rgba}
   @see-function{gdk-rgba-red}
@@ -196,10 +196,10 @@
 (defun gdk-rgba-copy (rgba)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-17}
-  @argument[rgba]{a @class{gdk-rgba} structure}
-  @return{A newly allocated @class{gdk-rgba} structure, with the same contents
+  @argument[rgba]{a @class{gdk-rgba} color}
+  @return{A newly allocated @class{gdk-rgba} color, with the same contents
     as @arg{rgba}.}
-  @short{Makes a copy of a @class{gdk-rgba} structure.}
+  @short{Makes a copy of a @class{gdk-rgba} color.}
   @begin[Note]{dictionary}
     In the Lisp implementation this function is implemented as a call of the
     constructor @fun{copy-gdk-rgba}.
@@ -237,7 +237,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-11-10}
   @argument[color]{a string specifying the color}
-  @return{A @class{gdk-rgba} structure with the filled in values.}
+  @return{A @class{gdk-rgba} color with the filled in values.}
   @begin{short}
     Parses a textual representation of a color, and returns a RGBA structure
     filling in the red, green, blue and alpha fields.
@@ -288,8 +288,8 @@
 (defcfun ("gdk_rgba_equal" gdk-rgba-equal) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-11-10}
-  @argument[color1]{a @class{gdk-rgba} structure}
-  @argument[color2]{another @class{gdk-rgba} structure}
+  @argument[color1]{a @class{gdk-rgba} color}
+  @argument[color2]{another @class{gdk-rgba} color}
   @return{@em{True} if the two colors compare equal.}
   @short{Compares two RGBA colors.}
   @see-class{gdk-rgba}"
@@ -305,7 +305,7 @@
 (defcfun ("gdk_rgba_hash" gdk-rgba-hash) :uint
  #+cl-cffi-gtk-documentation
  "@version{2020-11-10}
-  @argument[color]{a @class{gdk-rgba} structure}
+  @argument[color]{a @class{gdk-rgba} color}
   @return{An unsigned integer with the hash value for @arg{color}.}
   @begin{short}
     A hash function suitable for using for a hash table that stores
@@ -323,7 +323,7 @@
 (defcfun ("gdk_rgba_to_string" gdk-rgba-to-string) :string
  #+cl-cffi-gtk-documentation
  "@version{2020-11-10}
-  @argument[color]{a @class{gdk-rgba} structure}
+  @argument[color]{a @class{gdk-rgba} color}
   @return{A text string.}
   @begin{short}
     Returns a textual specification of @arg{color} in the form

@@ -3366,7 +3366,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; This can be used to record the invalidated region, which is useful if you
 ;;; are keeping an offscreen copy of some region and want to keep it up to date.
 ;;; You can also modify the invalidated region in case you’re doing some effect
-;;; where e. g. a child widget appears in multiple places.
+;;; where e.g. a child widget appears in multiple places.
 ;;;
 ;;; Parameters
 ;;;

@@ -523,7 +523,7 @@
 ;;;     a GdkPixbufAnimationIter
 ;;;
 ;;; Returns :
-;;;     TRUE if the frame we're on is partially loaded, or the last frame
+;;;     TRUE if the frame we are on is partially loaded, or the last frame.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

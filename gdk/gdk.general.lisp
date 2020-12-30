@@ -457,7 +457,7 @@
     @arg{event-mask}. In either mode, unreported events are discarded.}
   @argument[event-mask]{specifies the event mask of type
     @symbol{gdk-event-mask}, which is used in accordance with
-    @arg{owner-events}. Note that only pointer events (i. e. button and motion
+    @arg{owner-events}. Note that only pointer events (i.e. button and motion
     events) may be selected.}
   @argument[confine-to]{a @class{gdk-window} object, if non-@code{nil}, the
     pointer will be confined to this window during the grab. If the pointer is

@@ -231,7 +231,7 @@
 ;;; user_data :
 ;;;     user data passed in gdk_seat_grab()
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gdk-seat-grab-prepare-func-cb :void
