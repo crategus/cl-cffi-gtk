@@ -36,9 +36,157 @@
   right level in the library stack, as well as other generally useful APIs for
   desktop applications (such as networking and D-Bus support). The goal is to
   overcome the shortcomings of GnomeVFS and provide an API that is so good that
-  developers prefer it over raw POSIX calls. Among other things that means using
-  GObject. It also means not cloning the POSIX API, but providing higher-level,
-  document-centric interfaces.
+  developers prefer it over raw POSIX calls. Among other things that means
+  using GObject. It also means not cloning the POSIX API, but providing
+  higher-level, document-centric interfaces.
+
+  @begin[File Operations]{section}
+    @begin[GFile]{subsection}
+      File and Directory Handling.
+
+      @about-symbol{g-file-query-info-flags}
+      @about-symbol{g-file-create-flags}
+      @about-symbol{g-file-copy-flags}
+      @about-symbol{g-file-monitor-flags}
+      @about-symbol{g-file-measure-flags}
+      @about-symbol{g-filesystem-preview-type}
+      @about-class{g-file}
+      @about-function{GFileProgressCallback}
+      @about-function{GFileReadMoreCallback}
+      @about-function{GFileMeasureProgressCallback}
+      @about-function{g-file-new-for-path}
+      @about-function{g-file-new-for-uri}
+      @about-function{g-file-new-for-commandline-arg}
+      @about-function{g-file-new-for-commandline-arg-and-cwd}
+      @about-function{g-file-new-tmp}
+      @about-function{g-file-parse-name}
+      @about-function{g-file-new-build-filename}
+      @about-function{g-file-dup}
+      @about-function{g-file-hash}
+      @about-function{g-file-equal}
+      @about-function{g-file-get-basename}
+      @about-function{g-file-get-path}
+      @about-function{g-file-peek-path}
+      @about-function{g-file-get-uri}
+      @about-function{g-file-get-parse-name}
+      @about-function{g-file-get-parent}
+      @about-function{g-file-has-parent}
+      @about-function{g-file-get-child}
+      @about-function{g-file-get-child-for-display-name}
+      @about-function{g-file-has-prefix}
+      @about-function{g-file-get-relative-path}
+      @about-function{g-file-resolve-relative-path}
+      @about-function{g-file-is-native}
+      @about-function{g-file-has-uri-scheme}
+      @about-function{g-file-get-uri-scheme}
+      @about-function{g-file-read}
+      @about-function{g-file-read-async}
+      @about-function{g-file-read-finish}
+      @about-function{g-file-append-to}
+      @about-function{g-file-create}
+      @about-function{g-file-replace}
+      @about-function{g-file-append-to-async}
+      @about-function{g-file-append-to-finish}
+      @about-function{g-file-create-async}
+      @about-function{g-file-create-finish}
+      @about-function{g-file-replace-async}
+      @about-function{g-file-replace-finish}
+      @about-function{g-file-query-info}
+      @about-function{g-file-query-info-async}
+      @about-function{g-file-query-info-finish}
+      @about-function{g-file-query-exists}
+      @about-function{g-file-query-file-type}
+      @about-function{g-file-query-filesystem-info}
+      @about-function{g-file-query-filesystem-info-async}
+      @about-function{g-file-query-filesystem-info-finish}
+      @about-function{g-file-query-default-handler}
+      @about-function{g-file-query-default-handler-async}
+      @about-function{g-file-query-default-handler-finish}
+      @about-function{g-file-measure-disk-usage}
+      @about-function{g-file-measure-disk-usage-async}
+      @about-function{g-file-measure-disk-usage-finish}
+      @about-function{g-file-find-enclosing-mount}
+      @about-function{g-file-find-enclosing-mount-async}
+      @about-function{g-file-find-enclosing-mount-finish}
+      @about-function{g-file-enumerate-children}
+      @about-function{g-file-enumerate-children-async}
+      @about-function{g-file-enumerate-children-finish}
+      @about-function{g-file-set-display-name}
+      @about-function{g-file-set-display-name-async}
+      @about-function{g-file-set-display-name-finish}
+      @about-function{g-file-delete}
+      @about-function{g-file-delete-async}
+      @about-function{g-file-delete-finish}
+      @about-function{g-file-trash}
+      @about-function{g-file-trash-async}
+      @about-function{g-file-trash-finish}
+      @about-function{g-file-copy}
+      @about-function{g-file-copy-async}
+      @about-function{g-file-copy-finish}
+      @about-function{g-file-move}
+      @about-function{g-file-make-directory}
+      @about-function{g-file-make-directory-async}
+      @about-function{g-file-make-directory-finish}
+      @about-function{g-file-make-directory-with-parents}
+      @about-function{g-file-make-symbolic-link}
+      @about-function{g-file-query-settable-attributes}
+      @about-function{g-file-query-writable-namespaces}
+      @about-function{g-file-set-attribute}
+      @about-function{g-file-set-attributes-from-info}
+      @about-function{g-file-set-attributes-async}
+      @about-function{g-file-set-attributes-finish}
+      @about-function{g-file-set-attribute-string}
+      @about-function{g-file-set-attribute-byte-string}
+      @about-function{g-file-set-attribute-uint32}
+      @about-function{g-file-set-attribute-int32}
+      @about-function{g-file-set-attribute-uint64}
+      @about-function{g-file-set-attribute-int64}
+      @about-function{g-file-mount-mountable}
+      @about-function{g-file-mount-mountable-finish}
+      @about-function{g-file-unmount-mountable}
+      @about-function{g-file-unmount-mountable-finish}
+      @about-function{g-file-unmount-mountable-with-operation}
+      @about-function{g-file-unmount-mountable-with-operation-finish}
+      @about-function{g-file-eject-mountable}
+      @about-function{g-file-eject-mountable-finish}
+      @about-function{g-file-eject-mountable-with-operation}
+      @about-function{g-file-eject-mountable-with-operation-finish}
+      @about-function{g-file-start-mountable}
+      @about-function{g-file-start-mountable-finish}
+      @about-function{g-file-stop-mountable}
+      @about-function{g-file-stop-mountable-finish}
+      @about-function{g-file-poll-mountable}
+      @about-function{g-file-poll-mountable-finish}
+      @about-function{g-file-mount-enclosing-volume}
+      @about-function{g-file-mount-enclosing-volume-finish}
+      @about-function{g-file-monitor-directory}
+      @about-function{g-file-monitor-file}
+      @about-function{g-file-monitor}
+      @about-function{g-file-load-bytes}
+      @about-function{g-file-load-bytes-async}
+      @about-function{g-file-load-bytes-finish}
+      @about-function{g-file-load-contents}
+      @about-function{g-file-load-contents-async}
+      @about-function{g-file-load-contents-finish}
+      @about-function{g-file-load-partial-contents-async}
+      @about-function{g-file-load-partial-contents-finish}
+      @about-function{g-file-replace-contents}
+      @about-function{g-file-replace-contents-async}
+      @about-function{g-file-replace-contents-bytes-async}
+      @about-function{g-file-replace-contents-finish}
+      @about-function{g-file-copy-attributes}
+      @about-function{g-file-create-readwrite}
+      @about-function{g-file-create-readwrite-async}
+      @about-function{g-file-create-readwrite-finish}
+      @about-function{g-file-open-readwrite}
+      @about-function{g-file-open-readwrite-async}
+      @about-function{g-file-open-readwrite-finish}
+      @about-function{g-file-replace-readwrite}
+      @about-function{g-file-replace-readwrite-async}
+      @about-function{g-file-replace-readwrite-finish}
+      @about-function{g-file-supports-thread-contexts}
+    @end{subsection}
+  @end{section}
   @begin[Files types and applications]{section}
     @begin[GContentType]{subsection}
       Platform-specific content typing.
@@ -232,16 +380,13 @@
       @about-generic{g-application-command-line-is-remote}
       @about-generic{g-application-command-line-options}
       @about-generic{g-application-command-line-platform-data}
-
       @about-function{g-application-command-line-get-arguments}
-      @about-function{g-application-command-line-get-cwd}
-      @about-function{g-application-command-line-get-environ}
-      @about-function{g-application-command-line-get-options-dict}
-      @about-function{g-application-command-line-get-stdin}
+      @about-function{g-application-command-line-cwd}
+      @about-function{g-application-command-line-environ}
+      @about-function{g-application-command-line-options-dict}
+      @about-function{g-application-command-line-stdin}
       @about-function{g-application-command-line-create-file-for-arg}
       @about-function{g-application-command-line-getenv}
-      @about-function{g-application-command-line-get-is-remote}
-      @about-function{g-application-command-line-get-platform-data}
       @about-function{g-application-command-line-set-exit-status}
       @about-function{g-application-command-line-get-exit-status}
       @about-function{g-application-command-line-print}

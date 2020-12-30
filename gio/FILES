@@ -7,7 +7,8 @@ Content from the GIO Reference Manual for Version 2.66
 
 File Operations
 
-  GFile — File and Directory Handling
+  gio.file-lisp - File and Directory Handling                      - GIO 2.66 &
+
   GFileAttribute — Key-Value Paired File Attributes
   GFileInfo — File Information and Attributes
   GFileEnumerator — Enumerated Files Routines
@@ -39,7 +40,7 @@ Resources
 
 Application support
 
-  gio.application.lisp         - GApplication                      - GIO 2.62 &
+  gio.application.lisp         - GApplication                      - GIO 2.66 &
   gio.appliation-command-line  - GApplicationCommandLine           - GIO 2.62 &
   gio.action-group.lisp        - GActionGroup                      - GIO 2.62 &
   gio.action-map.lisp          - GActionMap                        - GIO 2.62
@@ -61,3 +62,4 @@ Application support
   not implemented              - GDBusMenuModel
   not implemented              - GNotification
 
+;;; 2020-12-9
