@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.status.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.14 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,14 @@
 ;;;
 ;;; Error handling
 ;;;
-;;; Decoding cairo's status
+;;;     Decoding cairo's status
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_status_t
+;;;
+;;; Functions
+;;;
 ;;;     cairo_status_to_string
 ;;;     cairo_debug_reset_static_data
 ;;;
@@ -95,18 +98,25 @@
   :device-error
   :invalid-mesh-construction
   :device-finished
+  :jbig2-global-missing
+  :png-error
+  :freetype-error
+  :win32-gdk-error
+  :tag-error
   :last-status)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-status-t atdoc:*symbol-name-alias*) "CEnum"
+(setf (gethash 'cairo-status-t atdoc:*symbol-name-alias*)
+      "CEnum"
       (gethash 'cairo-status-t atdoc:*external-symbols*)
- "@version{2013-8-4}
+ "@version{2020-12-5}
   @begin{short}
-    @sym{cairo-status-t} is used to indicate errors that can occur when using
-    Cairo. In some cases it is returned directly by functions. but when using
-    @symbol{cairo-t}, the last error, if any, is stored in the context and can
-    be retrieved with the function @fun{cairo-status}.
+    The @sym{cairo-status-t} enumeration is used to indicate errors that can
+    occur when using Cairo.
   @end{short}
+  In some cases it is returned directly by functions. but when using a
+  @symbol{cairo-t} context, the last error, if any, is stored in the context
+  and can be retrieved with the function @fun{cairo-status}.
 
   New entries may be added in future versions. Use the function
   @fun{cairo-status-to-string} to get a human-readable representation of an
@@ -151,76 +161,82 @@
   :device-error
   :invalid-mesh-construction
   :device-finished
+  :jbig2-global-missing
+  :png-error
+  :freetype-error
+  :win32-gdk-error
+  :tag-error
   :last-status)
   @end{pre}
   @begin[code]{table}
-    @entry[:success]{No error has occurred. Since 1.0}
-    @entry[:no-memory]{Out of memory. Since 1.0}
+    @entry[:success]{No error has occurred.}
+    @entry[:no-memory]{Out of memory.}
     @entry[:invalid-store]{The function @fun{cairo-restore} called without
-      matching the function @fun{cairo-save}. Since 1.0}
-    @entry[:invalid-pop-group]{No saved group to pop, i. e. the function
+      matching the function @fun{cairo-save}.}
+    @entry[:invalid-pop-group]{No saved group to pop, i.e. the function
       @fun{cairo-pop-group} without matching the function
-      @fun{cairo-push-group}. Since 1.0}
-    @entry[:no-current-point]{No current point defined. Since 1.0}
-    @entry[:invalid-matrix]{Invalid matrix (not invertible). Since 1.0}
-    @entry[:invalid-status]{Invalid value for an input @sym{cairo-status-t}.
-      Since 1.0}
-    @entry[:null-pointer]{@code{NULL} pointer. Since 1.0}
-    @entry[:invalid-string]{Input string not valid UTF-8. Since 1.0}
-    @entry[:path-data]{Input path data not valid. Since 1.0}
-    @entry[:read-error]{Error while reading from input stream. Since 1.0}
-    @entry[:write-error]{Error while writing to output stream. Since 1.0}
-    @entry[:surface-finished]{Target surface has been finished. Since 1.0}
+      @fun{cairo-push-group}.}
+    @entry[:no-current-point]{No current point defined.}
+    @entry[:invalid-matrix]{Invalid matrix (not invertible).}
+    @entry[:invalid-status]{Invalid @sym{cairo-status-t} value for an input.}
+    @entry[:null-pointer]{@code{NULL} pointer.}
+    @entry[:invalid-string]{Input string not valid UTF-8.}
+    @entry[:path-data]{Input path data not valid.}
+    @entry[:read-error]{Error while reading from input stream.}
+    @entry[:write-error]{Error while writing to output stream.}
+    @entry[:surface-finished]{Target surface has been finished.}
     @entry[:surface-type-mismatch]{The surface type is not appropriate for the
-      operation. Since 1.0}
+      operation.}
     @entry[:pattern-type-mismatch]{The pattern type is not appropriate for the
-      operation. Since 1.0}
-    @entry[:invalid-content]{Invalid value for an input
-      @symbol{cairo-content-t}. Since 1.0}
-    @entry[:invalid-format]{Invalid value for an input @symbol{cairo-format-t}.
-      Since 1.0}
-    @entry[:invalid-visual]{Invalid value for an input Visual*. Since 1.0}
-    @entry[:file-not-found]{File not found. Since 1.0}
-    @entry[:invalid-dash]{Invalid value for a dash setting. Since 1.0}
-    @entry[:invalid-dsc-comment]{Invalid value for a DSC comment. Since 1.2}
-    @entry[:invalid-index]{Invalid index passed to getter. Since 1.4}
+      operation.}
+    @entry[:invalid-content]{Invalid @symbol{cairo-content-t} value for an
+      input.}
+    @entry[:invalid-format]{Invalid @symbol{cairo-format-t} value for an input.}
+    @entry[:invalid-visual]{Invalid value for an input Visual.}
+    @entry[:file-not-found]{File not found.}
+    @entry[:invalid-dash]{Invalid value for a dash setting.}
+    @entry[:invalid-dsc-comment]{Invalid value for a DSC comment.}
+    @entry[:invalid-index]{Invalid index passed to getter.}
     @entry[:clip-not-representable]{Clip region not representable in desired
-      format. Since 1.4}
-    @entry[:temp-file-error]{Error creating or writing to a temporary file.
-      Since 1.6}
-    @entry[:invalid-stride]{Invalid value for stride. Since 1.6}
+      format.}
+    @entry[:temp-file-error]{Error creating or writing to a temporary file.}
+    @entry[:invalid-stride]{Invalid value for stride.}
     @entry[:font-type-mismatch]{The font type is not appropriate for the
-      operation. Since 1.8}
-    @entry[:user-font-immutable]{The user-font is immutable. Since 1.8}
-    @entry[:user-font-error]{Error occurred in a user-font callback function.
-      Since 1.8}
-    @entry[:negative-count]{Negative number used where it is not allowed.
-      Since 1.8}
+      operation.}
+    @entry[:user-font-immutable]{The user-font is immutable.}
+    @entry[:user-font-error]{Error occurred in a user-font callback function.}
+    @entry[:negative-count]{Negative number used where it is not allowed.}
     @entry[:invalid-clusters]{Input clusters do not represent the accompanying
-      text and glyph array. Since 1.8}
-    @entry[:invalid-slant]{Invalid value for an input
-      @symbol{cairo-font-slant-t}. Since 1.8}
-    @entry[:invalid-weight]{Invalid value for an input
-      @symbol{cairo-font-weight-t}. Since 1.8}
+      text and glyph array.}
+    @entry[:invalid-slant]{Invalid @symbol{cairo-font-slant-t} value for an
+      input.}
+    @entry[:invalid-weight]{Invalid @symbol{cairo-font-weight-t} value for an
+      input.}
     @entry[:invalid-size]{Invalid value (typically too big) for the size of the
-      input (surface, pattern, etc.). Since 1.10}
-    @entry[:user-font-not-implemented]{User-font method not implemented.
-      Since 1.10}
+      input (surface, pattern, etc.).}
+    @entry[:user-font-not-implemented]{User-font method not implemented.}
     @entry[:device-type-mismatch]{The device type is not appropriate for the
-      operation. Since 1.10}
+      operation.}
     @entry[:device-error]{An operation to the device caused an unspecified
-      error. Since 1.10}
-    @entry[:invalid-mesh-construction]{A mesh pattern construction operation was
-      used outside of a
-      @fun{cairo-mesh-pattern-begin-patch}/@fun{cairo-mesh-pattern-end-patch}
-      pair of functions. Since 1.12}
-    @entry[:device-finished]{Target device has been finished. Since 1.12}
+      error.}
+    @entry[:invalid-mesh-construction]{A mesh pattern construction operation
+      was used outside of a @fun{cairo-mesh-pattern-begin-patch} and
+      @fun{cairo-mesh-pattern-end-patch} pair of functions.}
+    @entry[:device-finished]{Target device has been finished.}
+    @entry[:jbig2-global-missing]{@code{CAIRO_MIME_TYPE_JBIG2_GLOBAL_ID} has
+      been used on at least one image but no image provided
+      @code{CAIRO_MIME_TYPE_JBIG2_GLOBAL}.}
+    @entry[:png-error]{Error occurred in @code{libpng} while reading from or
+      writing to a PNG file.}
+    @entry[:freetype-error]{Error occurred in @code{libfreetype}.}
+    @entry[:win32-gdi-error]{Error occurred in the Windows Graphics Device
+      Interface.}
+    @entry[:tag-error]{Invalid tag name, attributes, or nesting.}
     @entry[:last-status]{This is a special value indicating the number of status
       values defined in this enumeration. When using this value, note that the
-      version of cairo at run-time may have additional status values defined
-      than the value of this symbol at compile-time. Since 1.10}
+      version of Cairo at run-time may have additional status values defined
+      than the value of this symbol at compile-time.}
   @end{table}
-  Since 1.0
   @see-symbol{cairo-t}
   @see-symbol{cairo-content-t}
   @see-symbol{cairo-format-t}
@@ -228,6 +244,7 @@
   @see-symbol{cairo-font-weight-t}
   @see-function{cairo-status}
   @see-function{cairo-status-to-string}
+  @see-function{cairo-save}
   @see-function{cairo-restore}
   @see-function{cairo-pop-group}
   @see-function{cairo-push-group}
@@ -242,14 +259,12 @@
 
 (defcfun ("cairo_status_to_string" cairo-status-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[status]{a cairo status}
-  @return{A string representation of the status.}
+ "@version{2020-12-5}
+  @argument[status]{a value of the @symbol{cairo-status-t} enumeration}
+  @return{A string representation of the Cario status.}
   @begin{short}
-    Provides a human-readable description of a @symbol{cairo-status-t}.
+    Provides a human-readable description of a Cairo status value.
   @end{short}
-
-  Since 1.0
   @see-symbol{cairo-status-t}"
   (status cairo-status-t))
 
