@@ -33,19 +33,18 @@
 ;;; Types and Values
 ;;;
 ;;;     GApplicationCommandLine
-;;;     GApplicationCommandLineClass
 ;;;
 ;;; Functions
 ;;;
-;;;     g_application_command_line_get_arguments
+;;;     g_application_command_line_get_arguments           Accessor
 ;;;     g_application_command_line_get_cwd
 ;;;     g_application_command_line_get_environ
 ;;;     g_application_command_line_get_options_dict
 ;;;     g_application_command_line_get_stdin
 ;;;     g_application_command_line_create_file_for_arg
 ;;;     g_application_command_line_getenv
-;;;     g_application_command_line_get_is_remote
-;;;     g_application_command_line_get_platform_data
+;;;     g_application_command_line_get_is_remote           Accessor
+;;;     g_application_command_line_get_platform_data       Accessor
 ;;;     g_application_command_line_set_exit_status
 ;;;     g_application_command_line_get_exit_status
 ;;;     g_application_command_line_print
@@ -99,9 +98,9 @@
   signal and virtual function.
 
   The class contains the list of arguments that the program was invoked with.
-  It is also possible to query if the commandline invocation was local (i. e.
+  It is also possible to query if the commandline invocation was local (i.e.
   the current process is running in direct response to the invocation) or
-  remote (i. e.: some other process forwarded the commandline to this process).
+  remote (i.e.: some other process forwarded the commandline to this process).
 
   The @sym{g-application-command-line} object can provide the @code{argc} and
   @code{argv} parameters for use with the @code{GOptionContext} command-line
@@ -110,12 +109,12 @@
 
   The exit status of the originally-invoked process may be set and messages can
   be printed to stdout or stderr of that process. The lifecycle of the
-  originally-invoked process is tied to the lifecycle of this object (i. e.:
+  originally-invoked process is tied to the lifecycle of this object (i.e.:
   the process exits when the last reference is dropped).
 
   The main use for @sym{g-application-command-line} (and the \"command-line\"
   signal) is 'Emacs server' like use cases: You can set the EDITOR environment
-  variable to have e. g. git use your favourite editor to edit commit messages,
+  variable to have e.g. git use your favourite editor to edit commit messages,
   and if you already have an instance of the editor running, the editing will
   happen in the running instance, instead of opening a new one. An important
   aspect of this use case is that the process that gets started by git does not
@@ -242,7 +241,8 @@ command_line (GApplication            *application,
   @see-slot{g-application-command-line-arguments}
   @see-slot{g-application-command-line-is-remote}
   @see-slot{g-application-command-line-options}
-  @see-slot{g-application-command-line-platform-data}")
+  @see-slot{g-application-command-line-platform-data}
+  @see-class{g-application}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -341,14 +341,14 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     the current directory, or NULL.
 ;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_application_command_line_get_cwd"
-           g-application-command-line-get-cwd) g-string
+(defcfun ("g_application_command_line_get_cwd" g-application-command-line-cwd)
+    :string
   (cmdline (g-object g-application-command-line)))
 
-(export 'g-application-command-line-get-cwd)
+(export 'g-application-command-line-cwd)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_environ ()
@@ -378,14 +378,14 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     the environment strings, or NULL if they were not sent.
 ;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_command_line_get_environ"
-           g-application-command-line-get-environ) g-strv
+           g-application-command-line-environ) g-strv
   (cmdline (g-object g-application-command-line)))
 
-(export 'g-application-command-line-get-environ)
+(export 'g-application-command-line-environ)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_options_dict ()
@@ -394,15 +394,6 @@ command_line (GApplication            *application,
 ;;; g_application_command_line_get_options_dict
 ;;;                                (GApplicationCommandLine *cmdline);
 ;;;
-;;; Gets the options there were passed to g_application_command_line().
-;;;
-;;; If you did not override local_command_line() then these are the same options
-;;; that were parsed according to the GOptionEntrys added to the application
-;;; with g_application_add_main_option_entries() and possibly modified from your
-;;; GApplication::handle-local-options handler.
-;;;
-;;; If no options were sent then an empty dictionary is returned so that you
-;;; don't need to check for NULL.
 ;;;
 ;;; cmdline :
 ;;;     a GApplicationCommandLine
@@ -410,8 +401,34 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     a GVariantDict with the options.
 ;;;
-;;; Since: 2.40
+;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_command_line_get_options_dict"
+           g-application-command-line-options-dict)
+    (:pointer (:struct g-variant-dict))
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-10}
+  @argument[cmdline]{a @class{g-application-command-line} instance}
+  @return{A @type{g-variant-dict} instance with the options.}
+  @begin{short}
+    Gets the options there were passed to the function
+    @fun{g-application-command-line}.
+  @end{short}
+
+  If you did not override the virtual function @code{local_command_line} then
+  these are the same options that were parsed according to the
+  @code{GOptionEntry}s added to the application with the function
+  @fun{g-application-add-main-option-entries} and possibly modified from your
+  \"handle-local-options\" signal handler.
+
+  If no options were sent then an empty dictionary is returned so that you
+  do not need to check for @code{nil}.
+  @see-class{g-application-command-line}
+  @see-function{g-application-add-main-option-entries}"
+  (cmdline (g-object g-application-command-line)))
+
+(export 'g-application-command-line-options-dict)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_stdin ()
@@ -422,7 +439,7 @@ command_line (GApplication            *application,
 ;;; Gets the stdin of the invoking process.
 ;;;
 ;;; The GInputStream can be used to read data passed to the standard input of
-;;; the invoking process. This doesn't work on all platforms. Presently, it is
+;;; the invoking process. This does not work on all platforms. Presently, it is
 ;;; only available on UNIX when using a DBus daemon capable of passing file
 ;;; descriptors. If stdin is not available then NULL will be returned. In the
 ;;; future, support may be expanded to other platforms.
@@ -435,7 +452,7 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     a GInputStream for stdin.
 ;;;
-;;; Since: 2.34
+;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -462,7 +479,7 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     a new GFile.
 ;;;
-;;; Since: 2.36
+;;; Since 2.36
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -493,8 +510,15 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     the value of the variable, or NULL if unset or unsent
 ;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_command_line_getenv" g-application-command-line-getenv)
+    :string
+  (cmdline (g-object g-application-command-line-getenv))
+  (name :string))
+
+(export 'g-application-command-line-getenv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_is_remote ()
@@ -511,7 +535,7 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     TRUE if the invocation was remote
 ;;;
-;;;Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -535,63 +559,60 @@ command_line (GApplication            *application,
 ;;; Returns :
 ;;;     the platform data, or NULL.
 ;;;
-;;; Since: 2.28
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_set_exit_status ()
-;;;
-;;; void
-;;; g_application_command_line_set_exit_status
-;;;                                (GApplicationCommandLine *cmdline,
-;;;                                 int exit_status);
-;;;
-;;; Sets the exit status that will be used when the invoking process exits.
-;;;
-;;; The return value of the “command-line” signal is passed to this function
-;;; when the handler returns. This is the usual way of setting the exit status.
-;;;
-;;; In the event that you want the remote invocation to continue running and
-;;; want to decide on the exit status in the future, you can use this call. For
-;;; the case of a remote invocation, the remote process will typically exit when
-;;; the last reference is dropped on cmdline . The exit status of the remote
-;;; process will be equal to the last value that was set with this function.
-;;;
-;;; In the case that the commandline invocation is local, the situation is
-;;; slightly more complicated. If the commandline invocation results in the
-;;; mainloop running (ie: because the use-count of the application increased to
-;;; a non-zero value) then the application is considered to have been
-;;; 'successful' in a certain sense, and the exit status is always zero. If the
-;;; application use count is zero, though, the exit status of the local
-;;; GApplicationCommandLine is used.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; exit_status :
-;;;     the exit status
-;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_exit_status ()
-;;;
-;;; int
-;;; g_application_command_line_get_exit_status
-;;;                                (GApplicationCommandLine *cmdline);
-;;;
-;;; Gets the exit status of cmdline . See
-;;; g_application_command_line_set_exit_status() for more information.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     the exit status
-;;;
-;;; Since: 2.28
+;;; g_application_command_line_set_exit_status ()
+;;; -> g-application-command-line-exit-status
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf g-application-command-line-exit-status) (exit-status cmdline)
+  (foreign-funcall "g_application_command_line_set_exit_status"
+                   (g-object g-application-command-line) cmdline
+                   :int exit-status
+                   :void)
+  exit-status)
+
+(defcfun ("g_application_command_line_get_exit_status"
+           g-application-command-line-exit-status) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2020-12-10}
+  @syntax[]{(g-application-command-line-exit-status cmdline) => exit-status}
+  @syntax[]{(setf (g-application-command-line-exit-status cmdline) exit-status)}
+  @argument[cmdline]{a @class{g-application-command-line} instance}
+  @argument[exit-status]{an integer with the exit status}
+  @begin{short}
+    Accessor of the exit status of a @class{g-application-command-line}
+    instance.
+  @end{short}
+
+  The function @sym{g-application-command-line-exit-status} gets the exit
+  status of @arg{cmdline}. The function
+  @sym{(setf g-application-command-line-exit-status)} sets the exit status that
+  will be used when the invoking process exits.
+
+  The return value of the \"command-line\" signal is passed to this function
+  when the handler returns. This is the usual way of setting the exit status.
+
+  In the event that you want the remote invocation to continue running and
+  want to decide on the exit status in the future, you can use this call. For
+  the case of a remote invocation, the remote process will typically exit when
+  the last reference is dropped on @arg{cmdline}. The exit status of the remote
+  process will be equal to the last value that was set with this function.
+
+  In the case that the commandline invocation is local, the situation is
+  slightly more complicated. If the commandline invocation results in the
+  mainloop running (ie: because the use-count of the application increased to
+  a non-zero value) then the application is considered to have been
+  'successful' in a certain sense, and the exit status is always zero. If the
+  application use count is zero, though, the exit status of the local
+  @class{g-application-command-line} instance is used.
+  @see-class{g-application-command-line}"
+  (cmdline (g-object g-application-command-line)))
+
+(export 'g-application-command-line-exit-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_print ()
@@ -617,7 +638,7 @@ command_line (GApplication            *application,
 ;;; ... :
 ;;;     arguments, as per format
 ;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -644,7 +665,7 @@ command_line (GApplication            *application,
 ;;; ... :
 ;;;     arguments, as per format
 ;;;
-;;; Since: 2.28
+;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gio.application-command-line.lisp --------------------------
