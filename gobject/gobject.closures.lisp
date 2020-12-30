@@ -228,7 +228,7 @@
 ;;; void (*GCallback) (void);
 ;;;
 ;;; The type used for callback functions in structure definitions and function
-;;; signatures. This doesn't mean that all callback functions must take no
+;;; signatures. This does not mean that all callback functions must take no
 ;;; parameters and return void. The required signature of a callback function is
 ;;; determined by the context in which is used (e.g. the signal to which it is
 ;;; connected). Use G_CALLBACK() to cast the callback function to a GCallback.
@@ -312,7 +312,7 @@
 ;;;
 ;;; return_value :
 ;;;     a GValue to store the return value. May be NULL if the callback of
-;;;     closure doesn't return a value
+;;;     closure does not return a value
 ;;;
 ;;; n_param_values :
 ;;;     the length of the param_values array
@@ -448,7 +448,7 @@
 ;;;
 ;;; return_gvalue :
 ;;;     A GValue to store the return value. May be NULL if the callback of
-;;;     closure doesn't return a value.
+;;;     closure does not return a value.
 ;;;
 ;;; n_param_values :
 ;;;     The length of the param_values array.
@@ -527,7 +527,7 @@
   @begin{pre}
    closure = g_cclosure_new (cb_func, cb_data);
    g_source_set_closure (source, closure);
-   g_closure_unref (closure); // XXX GObject doesn't really need this
+   g_closure_unref (closure); // XXX GObject does not really need this
   @end{pre}
   Because the @fun{g-source-set-closure} function (and similar functions) take
   ownership of the initial reference count, if it is unowned, we instead can
@@ -589,7 +589,7 @@
 ;;;
 ;;; return_value :
 ;;;     a GValue to store the return value. May be NULL if the callback of
-;;;     closure doesn't return a value
+;;;     closure does not return a value
 ;;;
 ;;; n_param_values :
 ;;;     the length of the param_values array

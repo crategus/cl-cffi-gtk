@@ -77,7 +77,7 @@
   @end{short}
 
   One useful application of this interface is to map the names of actions from
-  various action groups to unique, prefixed names, e. g. by prepending
+  various action groups to unique, prefixed names, e.g. by prepending
   @code{app.} or @code{win.}. This is the motivation for the 'map' part of the
   interface name.
   @see-class{g-action}

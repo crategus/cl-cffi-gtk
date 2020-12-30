@@ -96,7 +96,7 @@
     expose functionality in a structured way, either from one part of a program
     to another, or to the outside world. Action groups are often used together
     with a @code{GMenuModel} that provides additional representation data for
-    displaying the actions to the user, e. g. in a menu.
+    displaying the actions to the user, e.g. in a menu.
   @end{short}
 
   The main way to interact with the actions in a @sym{g-action-group} is to
@@ -124,8 +124,8 @@
 
   The @sym{g-action-group} API is meant to be the 'public' API to the action
   group. The calls here are exactly the interaction that 'external forces'
-  (e. g.: UI, incoming D-Bus messages, etc.) are supposed to have with actions.
-  'Internal' APIs (i. e.: ones meant only to be accessed by the action group
+  (e.g.: UI, incoming D-Bus messages, etc.) are supposed to have with actions.
+  'Internal' APIs (i.e.: ones meant only to be accessed by the action group
   implementation) are found on subclasses. This is why you will find - for
   example - the function @fun{g-action-group-get-action-enabled} but not an
   equivalent @code{set()} call.
@@ -245,7 +245,7 @@
 ;;;
 ;;; If the action exists, TRUE is returned and any of the requested fields (as
 ;;; indicated by having a non-NULL reference passed in) are filled. If the
-;;; action doesn't exist, FALSE is returned and the fields may or may not have
+;;; action does not exist, FALSE is returned and the fields may or may not have
 ;;; been modified.
 ;;;
 ;;; action_group :
@@ -408,7 +408,7 @@
   action.
 
   If a @type{g-variant} array is returned then each item in the array is a
-  possible value for the state. If a @type{g-variant} pair (i. e.: two-tuple) is
+  possible value for the state. If a @type{g-variant} pair (i.e.: two-tuple) is
   returned then the tuple specifies the inclusive lower and upper bound of valid
   values for the state.
 

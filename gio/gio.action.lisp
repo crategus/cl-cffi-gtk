@@ -277,14 +277,14 @@
 
   Queries the type of the state of the action.
 
-  If the action is stateful, e. g. created with the function
+  If the action is stateful, e.g. created with the function
   @fun{g-simple-action-new-stateful}, then this function returns the
   @class{g-variant-type} of the state. This is the type of the initial value
   given as the state. All calls to the function @fun{g-action-change-state} must
   give a @type{g-variant} of this type and the function @fun{g-action-state}
   will return a @type{g-variant} of the same type.
 
-  If the action is not stateful, e. g. created with the function
+  If the action is not stateful, e.g. created with the function
   @fun{g-simple-action-new}, then this function will return @code{nil}. In that
   case, the function @fun{g-action-state} will return @code{nil} and you
   must not call the function @fun{g-action-change-state}.
@@ -331,7 +331,7 @@
   action.
 
   If a @type{g-variant} array is returned then each item in the array is a
-  possible value for the state. If a @type{g-variant} pair, i. e. two-tuple,
+  possible value for the state. If a @type{g-variant} pair, i.e. two-tuple,
   is returned then the tuple specifies the inclusive lower and upper bound of
   valid values for the state.
 
@@ -388,7 +388,7 @@
   @short{Activates the action.}
 
   @arg{parameter} must be the correct type of the parameter for the action,
-  i. e. the parameter type given at construction time. If the parameter type
+  i.e. the parameter type given at construction time. If the parameter type
   was @code{nil} then @arg{parameter} must also be @code{nil}.
   @see-class{g-action}"
   (%g-action-activate (pointer action) parameter))

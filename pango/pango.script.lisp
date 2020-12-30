@@ -331,112 +331,112 @@
 ;;;     Mandaic. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_CHAKMA
-;;;     Chakma. Since: 1.32
+;;;     Chakma. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_MEROITIC_CURSIVE
-;;;     Meroitic Cursive. Since: 1.32
+;;;     Meroitic Cursive. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_MEROITIC_HIEROGLYPHS
-;;;     Meroitic Hieroglyphs. Since: 1.32
+;;;     Meroitic Hieroglyphs. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_MIAO
-;;;     Miao. Since: 1.32
+;;;     Miao. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_SHARADA
-;;;     Sharada. Since: 1.32
+;;;     Sharada. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_SORA_SOMPENG
-;;;     Sora Sompeng. Since: 1.32
+;;;     Sora Sompeng. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_TAKRI
-;;;     Takri. Since: 1.32
+;;;     Takri. Since 1.32
 ;;;
 ;;; PANGO_SCRIPT_BASSA_VAH
-;;;     Bassa. Since: 1.40
+;;;     Bassa. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_CAUCASIAN_ALBANIAN
-;;;     Caucasian Albanian. Since: 1.40
+;;;     Caucasian Albanian. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_DUPLOYAN
-;;;     Duployan. Since: 1.40
+;;;     Duployan. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_ELBASAN
-;;;     Elbasan. Since: 1.40
+;;;     Elbasan. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_GRANTHA
-;;;     Grantha. Since: 1.40
+;;;     Grantha. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_KHOJKI
-;;;     Kjohki. Since: 1.40
+;;;     Kjohki. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_KHUDAWADI
-;;;     Khudawadi, Sindhi. Since: 1.40
+;;;     Khudawadi, Sindhi. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_LINEAR_A
-;;;     Linear A. Since: 1.40
+;;;     Linear A. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MAHAJANI
-;;;     Mahajani. Since: 1.40
+;;;     Mahajani. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MANICHAEAN
-;;;     Manichaean. Since: 1.40
+;;;     Manichaean. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MENDE_KIKAKUI
-;;;     Mende Kikakui. Since: 1.40
+;;;     Mende Kikakui. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MODI
-;;;     Modi. Since: 1.40
+;;;     Modi. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MRO
-;;;     Mro. Since: 1.40
+;;;     Mro. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_NABATAEAN
-;;;     Nabataean. Since: 1.40
+;;;     Nabataean. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_OLD_NORTH_ARABIAN
-;;;     Old North Arabian. Since: 1.40
+;;;     Old North Arabian. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_OLD_PERMIC
-;;;     Old Permic. Since: 1.40
+;;;     Old Permic. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_PAHAWH_HMONG
-;;;     Pahawh Hmong. Since: 1.40
+;;;     Pahawh Hmong. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_PALMYRENE
-;;;     Palmyrene. Since: 1.40
+;;;     Palmyrene. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_PAU_CIN_HAU
-;;;     Pau Cin Hau. Since: 1.40
+;;;     Pau Cin Hau. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_PSALTER_PAHLAVI
-;;;     Psalter Pahlavi. Since: 1.40
+;;;     Psalter Pahlavi. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_SIDDHAM
-;;;     Siddham. Since: 1.40
+;;;     Siddham. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_TIRHUTA
-;;;     Tirhuta. Since: 1.40
+;;;     Tirhuta. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_WARANG_CITI
-;;;     Warang Citi. Since: 1.40
+;;;     Warang Citi. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_AHOM
-;;;     Ahom. Since: 1.40
+;;;     Ahom. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_ANATOLIAN_HIEROGLYPHS
-;;;     Anatolian Hieroglyphs. Since: 1.40
+;;;     Anatolian Hieroglyphs. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_HATRAN
-;;;     Hatran. Since: 1.40
+;;;     Hatran. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_MULTANI
-;;;     Multani. Since: 1.40
+;;;     Multani. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_OLD_HUNGARIAN
-;;;     Old Hungarian. Since: 1.40
+;;;     Old Hungarian. Since 1.40
 ;;;
 ;;; PANGO_SCRIPT_SIGNWRITING
-;;;     Signwriting. Since: 1.40
+;;;     Signwriting. Since 1.40
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -565,7 +565,7 @@
 ;;;                                   PangoScript *script);
 ;;;
 ;;; Gets information about the range to which iter currently points. The range
-;;; is the set of locations p where *start <= p < *end. (That is, it doesn't
+;;; is the set of locations p where *start <= p < *end. (That is, it does not
 ;;; include the character stored at *end)
 ;;;
 ;;; iter :

@@ -76,7 +76,7 @@
     @entry[:unkown]{Emblem of unknown origin.}
     @entry[:device]{Emblem adds device-specific information.}
     @entry[:livedata]{Emblem depicts live metadata, such as \"readonly\".}
-    @entry[:tag]{Emblem comes from a user-defined tag, e. g. set by nautilus
+    @entry[:tag]{Emblem comes from a user-defined tag, e.g. set by nautilus
       (in the future).}
   @end{table}
   Since 2.18

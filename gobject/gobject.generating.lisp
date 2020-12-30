@@ -238,7 +238,7 @@
      ,@(if (gobject-property-p property)
            `(:g-property-name ,(gobject-property-gname property))
            `(:g-getter ,(cffi-property-reader property)
-              :g-setter ,(cffi-property-writer property)))))
+             :g-setter ,(cffi-property-writer property)))))
 
 ;;; ----------------------------------------------------------------------------
 

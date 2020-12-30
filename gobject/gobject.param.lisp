@@ -2863,7 +2863,7 @@
 ;;; void g_value_take_param (GValue *value, GParamSpec *param);
 ;;;
 ;;; Sets the contents of a G_TYPE_PARAM GValue to param and takes over the
-;;; ownership of the callers reference to param; the caller doesn't have to
+;;; ownership of the callers reference to param; the caller does not have to
 ;;; unref it any more.
 ;;;
 ;;; value :
@@ -3442,7 +3442,7 @@
 ;;; void g_value_take_object (GValue *value, gpointer v_object);
 ;;;
 ;;; Sets the contents of a G_TYPE_OBJECT derived GValue to v_object and takes
-;;; over the ownership of the callers reference to v_object; the caller doesn't
+;;; over the ownership of the callers reference to v_object; the caller does not
 ;;; have to unref it any more (i.e. the reference count of the object is not
 ;;; increased).
 ;;;
@@ -4131,8 +4131,8 @@
 ;;; void g_value_take_variant (GValue *value, GVariant *variant);
 ;;;
 ;;; Set the contents of a variant GValue to variant, and takes over the
-;;; ownership of the caller's reference to variant; the caller doesn't have to
-;;; unref it any more (i.e. the reference count of the variant is not
+;;; ownership of the caller's reference to variant; the caller does not have
+;;; to unref it any more (i.e. the reference count of the variant is not
 ;;; increased).
 ;;;
 ;;; If variant was floating then its floating reference is converted to a hard

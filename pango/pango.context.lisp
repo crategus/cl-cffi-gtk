@@ -156,10 +156,10 @@
 ;;;     the glyph orientation for this segment (A PangoGravity).
 ;;;
 ;;; guint8 flags;
-;;;     boolean flags for this segment (currently only one) (Since: 1.16).
+;;;     boolean flags for this segment (currently only one) (Since 1.16).
 ;;;
 ;;; guint8 script;
-;;;     the detected script for this segment (A PangoScript) (Since: 1.18).
+;;;     the detected script for this segment (A PangoScript) (Since 1.18).
 ;;;
 ;;; PangoLanguage *language;
 ;;;     the detected language for this segment.
@@ -174,7 +174,7 @@
 ;;; #define PANGO_ANALYSIS_FLAG_CENTERED_BASELINE (1 << 0)
 ;;;
 ;;; Whether the segment should be shifted to center around the baseline. Used
-;;; in vertical writing directions mostly. Since: 1.16
+;;; in vertical writing directions mostly. Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -955,7 +955,7 @@
   ;; There are two ways to divide sentences. The first assigns all
   ;; intersentence whitespace/control/format chars to some sentence,
   ;; so all chars are in some sentence; is_sentence_boundary denotes
-  ;; the boundaries there. The second way doesn't assign
+  ;; the boundaries there. The second way does not assign
   ;; between-sentence spaces, etc. to any sentence, so
   ;; is_sentence_start/is_sentence_end mark the boundaries of those
   ;; sentences.
@@ -997,7 +997,7 @@
   ;; There are two ways to divide sentences. The first assigns all
   ;; intersentence whitespace/control/format chars to some sentence,
   ;; so all chars are in some sentence; is_sentence_boundary denotes
-  ;; the boundaries there. The second way doesn't assign
+  ;; the boundaries there. The second way does not assign
   ;; between-sentence spaces, etc. to any sentence, so
   ;; is_sentence_start/is_sentence_end mark the boundaries of those
   ;; sentences.
@@ -1020,7 +1020,7 @@
     @entry[is-char-break]{If set, can break here when doing character wrapping.}
     @entry[is-white]{Is whitespace character.}
     @entry[is-cursor-position]{If set, cursor can appear in front of character.
-      I. e. this is a grapheme boundary, or the first character in the text.
+      I.e. this is a grapheme boundary, or the first character in the text.
       This flag implements Unicode's Grapheme Cluster Boundaries semantics.}
     @entry[is-word-start]{Is first character in a word.}
     @entry[is-word-end]{Is first non-word char after a word. Note that in
@@ -1036,12 +1036,12 @@
     @entry[is-sentence-start]{Is first character in a sentence.}
     @entry[is-sentence-end]{Is first char after a sentence. Note that in
       degenerate cases, you could have both @code{is-sentence-start} and
-      @code{is-sentence-end} set for some character, e. g. no space after a
+      @code{is-sentence-end} set for some character, e.g. no space after a
       period, so the next sentence starts right away.}
     @entry[backspace-deletes-character]{If set, backspace deletes one character
       rather than the entire grapheme cluster. This field is only meaningful on
       grapheme boundaries, where @code{is-cursor-position} is set. In some
-      languages, the full grapheme, e. g. letter + diacritics, is considered a
+      languages, the full grapheme, e.g. letter + diacritics, is considered a
       unit, while in others, each decomposed character in the grapheme is a
       unit. In the default implementation of @fun{pango-break}, this bit is set
       on all grapheme boundaries except those following Latin, Cyrillic or Greek

@@ -182,7 +182,7 @@
   @end{short}
   Values of this type can range from @code{G_MINOFFSET} to @code{G_MAXOFFSET}.
 
-  Since: 2.14
+  Since 2.14
   @see-type{g-size}
   @see-type{g-ssize}")
 
@@ -379,7 +379,7 @@
 
   The @sym{g-string} type performs automatic conversion between Lisp and C
   strings. Note that, in the case of functions the converted C string will
-  have dynamic extent (i. e. it will be automatically freed after the foreign
+  have dynamic extent (i.e. it will be automatically freed after the foreign
   function returns).
 
   In addition to Lisp strings, this type will accept foreign pointers and pass

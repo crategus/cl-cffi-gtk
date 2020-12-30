@@ -465,7 +465,7 @@
 ;;;     the font size is specified.
 ;;;
 ;;; PANGO_FONT_MASK_GRAVITY
-;;;     the font gravity is specified (Since: 1.16.)
+;;;     the font gravity is specified (Since 1.16.)
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

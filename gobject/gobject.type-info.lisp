@@ -844,7 +844,7 @@
                                 "LispArrayListStore"
                                 "LispTreeStore")
                          :test #'equal)))
-    (warn "cl-cffi-gtk: GType ~A is not known to GObject" name)))
+    (warn "GType ~A is not known to GObject" name)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2710,7 +2710,7 @@
 ;;; Returns :
 ;;;     The corresponding GTypeInterface structure of the parent type of the
 ;;;     instance type to which g_iface belongs, or NULL if the parent type
-;;;     doesn't conform to the interface.
+;;;     does not conform to the interface.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3490,7 +3490,7 @@
 ;;; g_type_create_instance() is reserved for implementators of fundamental types
 ;;; only. E.g. instances of the GObject hierarchy should be created via
 ;;; g_object_new() and never directly through g_type_create_instance() which
-;;; doesn't handle things like singleton objects or object construction. Note:
+;;; does not handle things like singleton objects or object construction. Note:
 ;;; Do not use this function, unless you're implementing a fundamental type.
 ;;; Also language bindings should not use this function but g_object_new()
 ;;; instead.

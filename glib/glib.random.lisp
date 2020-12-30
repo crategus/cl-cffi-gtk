@@ -66,11 +66,11 @@
 ;;; numbers, you better create a GRand yourself and use the g_rand_* functions
 ;;; directly, which will also be slightly faster. Initializing a GRand with a
 ;;; certain seed will produce exactly the same series of random numbers on all
-;;; platforms. This can thus be used as a seed for e. g. games.
+;;; platforms. This can thus be used as a seed for e.g. games.
 ;;; 
 ;;; The g_rand*_range functions will return high quality equally distributed
 ;;; random numbers, whereas for example the (g_random_int()%max) approach often
-;;; doesn't yield equally distributed numbers.
+;;; does not yield equally distributed numbers.
 ;;; 
 ;;; GLib changed the seeding algorithm for the pseudo-random number generator
 ;;; Mersenne Twister, as used by GRand and GRandom. This was necessary, because

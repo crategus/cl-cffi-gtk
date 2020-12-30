@@ -204,7 +204,7 @@
 ;;; Gets the GQuark associated with the given string, or 0 if string is NULL or
 ;;; it has no associated GQuark.
 ;;;
-;;; If you want the GQuark to be created if it doesn't already exist, use
+;;; If you want the GQuark to be created if it does not already exist, use
 ;;; g_quark_from_string() or g_quark_from_static_string().
 ;;;
 ;;; string :

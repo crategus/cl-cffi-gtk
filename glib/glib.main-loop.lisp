@@ -1937,7 +1937,7 @@
 ;;;
 ;;; pid :
 ;;;     process to watch. On POSIX the pid of a child process. On Windows a
-;;;     handle for a process (which doesn't have to be a child).
+;;;     handle for a process (which does not have to be a child).
 ;;;
 ;;; Returns :
 ;;;     the newly-created child watch source
@@ -1972,7 +1972,7 @@
 ;;;
 ;;; pid :
 ;;;     process id to watch. On POSIX the pid of a child process. On Windows a
-;;;     handle for a process (which doesn't have to be a child).
+;;;     handle for a process (which does not have to be a child).
 ;;;
 ;;; function :
 ;;;     function to call
@@ -2019,7 +2019,7 @@
 ;;;
 ;;; pid :
 ;;;     process to watch. On POSIX the pid of a child process. On Windows a
-;;;     handle for a process (which doesn't have to be a child).
+;;;     handle for a process (which does not have to be a child).
 ;;;
 ;;; function :
 ;;;     function to call
@@ -2524,7 +2524,7 @@
   The callback function for a source is called from the source's dispatch
   function.
 
-  The exact type of @arg{func} depends on the type of @arg{source}; i. e. you
+  The exact type of @arg{func} depends on the type of @arg{source}; i.e. you
   should not count on @arg{func} being called with data as its first parameter.
 
   Typically, you will not use this function. Instead use functions specific to

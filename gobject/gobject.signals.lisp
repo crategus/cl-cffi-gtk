@@ -1517,7 +1517,7 @@
 ;;; useful than it might seem otherwise. Once gobject is disposed, the callback
 ;;; will no longer be called, but, the signal handler is not currently
 ;;; disconnected. If the instance is itself being freed at the same time than
-;;; this doesn't matter, since the signal will automatically be removed, but if
+;;; this does not matter, since the signal will automatically be removed, but if
 ;;; instance persists, then the signal handler will leak. You should not remove
 ;;; the signal yourself because in a future versions of GObject, the handler
 ;;; will automatically be disconnected.
@@ -2172,7 +2172,7 @@
 ;;; Creates a new signal. (This is usually done in the class initializer.)
 ;;;
 ;;; This is a variant of g_signal_new() that takes a C callback instead off a
-;;; class offset for the signal's class handler. This function doesn't need a
+;;; class offset for the signal's class handler. This function does not need a
 ;;; function pointer exposed in the class structure of an object definition,
 ;;; instead the function pointer is passed directly and can be overriden by
 ;;; derived classes with g_signal_override_class_closure() or

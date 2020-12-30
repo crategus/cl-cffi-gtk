@@ -110,7 +110,7 @@
     through them. Items can be grouped in sections, and may have submenus
     associated with them. Both items and sections usually have some
     representation data, such as labels or icons. The type of the associated
-    action, i. e. whether it is stateful, and what kind of state it has, can
+    action, i.e. whether it is stateful, and what kind of state it has, can
     influence the representation of the item.
   @end{short}
 
@@ -178,7 +178,7 @@
   reference to the action is encoded by the string ID in the
   @var{+g-menu-attribute-action+} attribute. An action ID uniquely identifies an
   action in an action group. Which action group(s) provide actions depends on
-  the context in which the menu model is used. E. g. when the model is exported
+  the context in which the menu model is used. E.g. when the model is exported
   as the application menu of a @class{gtk-application}, actions can be
   application-wide or window-specific, and thus come from two different action
   groups. By convention, the application-wide actions have names that start with

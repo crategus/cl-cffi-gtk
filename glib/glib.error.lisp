@@ -279,7 +279,7 @@
 ;;;     G_THREAD_ERROR_AGAIN.
 ;;;
 ;;;     If there's a "generic" or "unknown" error code for unrecoverable errors
-;;;     it doesn't make sense to distinguish with specific codes, it should be
+;;;     it does not make sense to distinguish with specific codes, it should be
 ;;;     called <NAMESPACE>_<MODULE>_ERROR_FAILED, for example
 ;;;     G_SPAWN_ERROR_FAILED.
 ;;;
@@ -361,8 +361,8 @@
   (:message (:string :free-from-foreign nil)))
   @end{pre}
   @begin{table}
-    @entry[:domain]{Error domain, e. g. @code{G_FILE_ERROR}.}
-    @entry[:code]{Error code, e. g. @code{G_FILE_ERROR_NOENT}.}
+    @entry[:domain]{Error domain, e.g. @code{G_FILE_ERROR}.}
+    @entry[:code]{Error code, e.g. @code{G_FILE_ERROR_NOENT}.}
     @entry[:message]{Human-readable informative error message.}
   @end{table}")
 

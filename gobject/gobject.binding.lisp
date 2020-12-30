@@ -443,7 +443,7 @@ object3:propertyC -> object1:propertyA
 ;;; Returns :
 ;;;     TRUE if the transformation was successful, and FALSE otherwise
 ;;;
-;;; Since: 2.26
+;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -521,7 +521,7 @@ object3:propertyC -> object1:propertyA
 ;;;     instances. The binding is released whenever the GBinding reference count
 ;;;     reaches zero.
 ;;;
-;;; Since: 2.26
+;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -571,7 +571,7 @@ object3:propertyC -> object1:propertyA
 ;;;     instances. The binding is released whenever the GBinding reference count
 ;;;     reaches zero.
 ;;;
-;;; Since: 2.26
+;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gobject.binding.lisp ---------------------------------------------------

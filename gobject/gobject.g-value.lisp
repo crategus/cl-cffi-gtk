@@ -780,7 +780,7 @@
     failing transformations, @arg{dest-value} is left untouched.}
   @begin{short}
     Tries to cast the contents of @arg{src-value} into a type appropriate to
-    store in @arg{dest-value}, e. g. to transform a @var{+g-type-int+} value
+    store in @arg{dest-value}, e.g. to transform a @var{+g-type-int+} value
     into a @var{+g-type-float+} value.
   @end{short}
   Performing transformations between value types might incur precision

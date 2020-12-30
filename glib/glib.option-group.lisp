@@ -1068,8 +1068,9 @@ Hilfeoptionen:
 ;;;     a GOptionContext
 ;;;
 ;;; Returns :
-;;;     the main group of context, or NULL if context doesn't have a main group.
-;;;     Note that group belongs to context and should not be modified or freed.
+;;;     the main group of context, or NULL if context does not have a main
+;;;     group. Note that group belongs to context and should not be modified or
+;;;     freed.
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------

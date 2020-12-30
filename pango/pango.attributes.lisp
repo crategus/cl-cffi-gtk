@@ -309,7 +309,8 @@
 ;;;
 ;;; This value can be used to set the start_index member of a PangoAttribute
 ;;; such that the attribute covers from the beginning of the text.
-;;; Since: 1.24
+;;;
+;;; Since 1.24
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -319,7 +320,8 @@
 ;;;
 ;;; This value can be used to set the end_index member of a PangoAttribute such
 ;;; that the attribute covers to the end of the text.
-;;; Since: 1.24
+;;;
+;;; Since 1.24
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

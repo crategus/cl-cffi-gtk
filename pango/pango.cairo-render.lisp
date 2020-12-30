@@ -96,8 +96,8 @@
 ;;; matrix and target surface of the Cairo context using
 ;;; pango_cairo_update_context(). The convenience functions
 ;;; pango_cairo_create_layout() and pango_cairo_update_layout() handle the
-;;; common case where the program doesn't need to manipulate the properties of
-;;; the PangoContext.
+;;; common case where the program does not need to manipulate the properties
+;;; of the PangoContext.
 ;;;
 ;;; When you get the metrics of a layout or of a piece of a layout using
 ;;; functions such as pango_layout_get_extents(), the reported metrics are in
@@ -681,9 +681,9 @@
 ;;;                                     PangoFont *font,
 ;;;                                     PangoGlyphString *glyphs);
 ;;;
-;;; Draws the glyphs in glyphs in the specified cairo context. The origin of the
+;;; Draws the glyphs in glyphs in the specified Cairo context. The origin of the
 ;;; glyphs (the left edge of the baseline) will be drawn at the current point of
-;;; the cairo context.
+;;; the Cairo context.
 ;;;
 ;;; cr :
 ;;;     a Cairo context
@@ -704,13 +704,13 @@
 ;;;                                   const char *text,
 ;;;                                   PangoGlyphItem *glyph_item);
 ;;;
-;;; Draws the glyphs in glyph_item in the specified cairo context, embedding the
+;;; Draws the glyphs in glyph_item in the specified Cairo context, embedding the
 ;;; text associated with the glyphs in the output if the output format supports
 ;;; it (PDF for example), otherwise it acts similar to
 ;;; pango_cairo_show_glyph_string().
 ;;;
 ;;; The origin of the glyphs (the left edge of the baseline) will be drawn at
-;;; the current point of the cairo context.
+;;; the current point of the Cairo context.
 ;;;
 ;;; Note that text is the start of the text for layout, which is then indexed by
 ;;; glyph_item->item->offset.
@@ -737,10 +737,10 @@
   @argument[cr]{a Cairo context}
   @argument[line]{a @class{pango-layout-line} structure}
   @begin{short}
-    Draws a @class{pango-layout-line} in the specified cairo context.
+    Draws a @class{pango-layout-line} in the specified Cairo context.
   @end{short}
   The origin of the glyphs, the left edge of the line, will be drawn at the
-  current point of the cairo context.
+  current point of the Cairo context.
 
   Since 1.10
   @see-symbol{cairo-t}
@@ -760,10 +760,10 @@
   @argument[cr]{a Cairo context}
   @argument[layout]{a Pango layout}
   @begin{short}
-    Draws a @class{pango-layout} in the specified cairo context.
+    Draws a @class{pango-layout} in the specified Cairo context.
   @end{short}
   The top-left corner of the @class{pango-layout} will be drawn at the current
-  point of the cairo context.
+  point of the Cairo context.
 
   Since 1.10
   @see-symbol{cairo-t}
@@ -782,7 +782,7 @@
 ;;;                                        double width,
 ;;;                                        double height);
 ;;;
-;;; Draw a squiggly line in the specified cairo context that approximately
+;;; Draw a squiggly line in the specified Cairo context that approximately
 ;;; covers the given rectangle in the style of an underline used to indicate a
 ;;; spelling error. (The width of the underline is rounded to an integer number
 ;;; of up/down segments and the resulting rectangle is centered in the original
@@ -815,7 +815,7 @@
 ;;;
 ;;; Adds the glyphs in glyphs to the current path in the specified cairo
 ;;; context. The origin of the glyphs (the left edge of the baseline) will be at
-;;; the current point of the cairo context.
+;;; the current point of the Cairo context.
 ;;;
 ;;; cr :
 ;;;     a Cairo context
@@ -836,7 +836,7 @@
 ;;;
 ;;; Adds the text in PangoLayoutLine to the current path in the specified cairo
 ;;; context. The origin of the glyphs (the left edge of the line) will be at the
-;;; current point of the cairo context.
+;;; current point of the Cairo context.
 ;;;
 ;;; cr :
 ;;;     a Cairo context
@@ -858,10 +858,10 @@
   @argument[layout]{a Pango layout}
   @begin{short}
     Adds the text in a @class{pango-layout} to the current path in the
-    specified cairo context.
+    specified Cairo context.
   @end{short}
   The top-left corner of the @class{pango-layout} will be at the current point
-  of the cairo context.
+  of the Cairo context.
 
   Since 1.10
   @see-symbol{cairo-t}
@@ -880,7 +880,7 @@
 ;;;                                        double width,
 ;;;                                        double height);
 ;;;
-;;; Add a squiggly line to the current path in the specified cairo context that
+;;; Add a squiggly line to the current path in the specified Cairo context that
 ;;; approximately covers the given rectangle in the style of an underline used
 ;;; to indicate a spelling error. (The width of the underline is rounded to an
 ;;; integer number of up/down segments and the resulting rectangle is centered
