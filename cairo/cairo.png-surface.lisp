@@ -137,7 +137,7 @@
 ;;; Returns :
 ;;;     a new cairo_surface_t initialized with the contents of the PNG file or a
 ;;;     "nil" surface if the data read is not a valid PNG image or memory could
-;;;     not be allocated for the operation. A nil surface can be checked for
+;;;     not be allocated for the operation. A "nil" surface can be checked for
 ;;;     with cairo_surface_status(surface) which may return one of the following
 ;;;     values: CAIRO_STATUS_NO_MEMORY CAIRO_STATUS_READ_ERROR Alternatively,
 ;;;     you can allow errors to propagate through the drawing operations and
