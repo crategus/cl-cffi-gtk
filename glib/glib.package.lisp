@@ -158,7 +158,7 @@
     @type{g-main-context}, and will be checked and dispatched for all main
     loops associated with that @type{g-main-context}.
 
-    GTK+ contains wrappers of some of these functions, e. g. the functions
+    GTK+ contains wrappers of some of these functions, e.g. the functions
     @fun{gtk-main}, @fun{gtk-main-quit} and @fun{gtk-events-pending}.
 
     @subheading{Creating new source types}
@@ -550,7 +550,7 @@
     @about-symbol{g-variant-class}
     @about-symbol{g-variant-iter}
     @about-symbol{g-variant-builder}
-    @about-symbol{g-variant-dict}
+    @about-type{g-variant-dict}
     @about-symbol{g-variant-parse-error}
     @about-function{g-variant-unref}
     @about-function{g-variant-ref}

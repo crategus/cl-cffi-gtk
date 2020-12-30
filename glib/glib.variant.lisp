@@ -500,94 +500,105 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GVariantDict
-;;;
-;;; struct GVariantDict {
-;;; };
-;;;
-;;; GVariantDict is a mutable interface to GVariant dictionaries.
-;;;
-;;; It can be used for doing a sequence of dictionary lookups in an efficient
-;;; way on an existing GVariant dictionary or it can be used to construct new
-;;; dictionaries with a hashtable-like interface. It can also be used for taking
-;;; existing dictionaries and modifying them in order to create new ones.
-;;;
-;;; GVariantDict can only be used with G_VARIANT_TYPE_VARDICT dictionaries.
-;;;
-;;; It is possible to use GVariantDict allocated on the stack or on the heap.
-;;; When using a stack-allocated GVariantDict, you begin with a call to
-;;; g_variant_dict_init() and free the resources with a call to
-;;; g_variant_dict_clear().
-;;;
-;;; Heap-allocated GVariantDict follows normal refcounting rules: you allocate
-;;; it with g_variant_dict_new() and use g_variant_dict_ref() and
-;;; g_variant_dict_unref().
-;;;
-;;; g_variant_dict_end() is used to convert the GVariantDict back into a
-;;; dictionary-type GVariant. When used with stack-allocated instances, this
-;;; also implicitly frees all associated memory, but for heap-allocated
-;;; instances, you must still call g_variant_dict_unref() afterwards.
-;;;
-;;; You will typically want to use a heap-allocated GVariantDict when you expose
-;;; it as part of an API. For most other uses, the stack-allocated form will be
-;;; more convenient.
-;;;
-;;; Consider the following two examples that do the same thing in each style:
-;;; take an existing dictionary and look up the "count" uint32 key, adding 1 to
-;;; it if it is found, or returning an error if the key is not found. Each
-;;; returns the new dictionary as a floating GVariant.
-;;;
-;;; Using a stack-allocated GVariantDict
-;;;
-;;; GVariant *
-;;; add_to_count (GVariant  *orig,
-;;;               GError   **error)
-;;; {
-;;;   GVariantDict dict;
-;;;   guint32 count;
-;;;
-;;;   g_variant_dict_init (&dict, orig);
-;;;   if (!g_variant_dict_lookup (&dict, "count", "u", &count))
-;;;     {
-;;;       g_set_error (...);
-;;;       g_variant_dict_clear (&dict);
-;;;       return NULL;
-;;;     }
-;;;
-;;;   g_variant_dict_insert (&dict, "count", "u", count + 1);
-;;;
-;;;   return g_variant_dict_end (&dict);
-;;; }
-;;;
-;;; Using heap-allocated GVariantDict
-;;;
-;;; GVariant *
-;;; add_to_count (GVariant  *orig,
-;;;               GError   **error)
-;;; {
-;;;   GVariantDict *dict;
-;;;   GVariant *result;
-;;;   guint32 count;
-;;;
-;;;   dict = g_variant_dict_new (orig);
-;;;
-;;;   if (g_variant_dict_lookup (dict, "count", "u", &count))
-;;;     {
-;;;       g_variant_dict_insert (dict, "count", "u", count + 1);
-;;;       result = g_variant_dict_end (dict);
-;;;     }
-;;;   else
-;;;     {
-;;;       g_set_error (...);
-;;;       result = NULL;
-;;;     }
-;;;
-;;;   g_variant_dict_unref (dict);
-;;;
-;;;   return result;
-;;; }
-;;;
-;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct g-variant-dict)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-variant-dict atdoc:*type-name-alias*)
+      "CStruct"
+      (documentation 'g-variant-dict 'type)
+ "@version{2020-12-10}
+  @begin{short}
+    The @sym{g-variant-dict} structure is a mutable interface to
+    @type{g-variant} dictionaries.
+  @end{short}
+
+  It can be used for doing a sequence of dictionary lookups in an efficient
+  way on an existing @type{g-variant} dictionary or it can be used to construct
+  new dictionaries with a hashtable-like interface. It can also be used for
+  taking existing dictionaries and modifying them in order to create new ones.
+
+  The @sym{g-variant-dict} structure can only be used with \"a(sv)\"
+  dictionaries.
+
+  It is possible to use @sym{g-variant-dict} structures allocated on the stack
+  or on the heap. When using a stack-allocated @sym{g-variant-dict} structure,
+  you begin with a call to the function @fun{g-variant-dict-init} and free the
+  resources with a call to the function @fun{g-variant-dict-clear}.
+
+  Heap-allocated @sym{g-variant-dict} structure follows normal refcounting
+  rules: you allocate it with the function @fun{g-variant-dict-new} and use
+  the functions @fun{g-variant-dict-ref} and @fun{g-variant-dict-unref}.
+
+  The function @fun{g-variant-dict-end} is used to convert the
+  @sym{g-variant-dict} structure back into a dictionary-type @type{g-variant}.
+  When used with stack-allocated instances, this also implicitly frees all
+  associated memory, but for heap-allocated instances, you must still call the
+  function @fun{g-variant-dict-unref} afterwards.
+
+  You will typically want to use a heap-allocated @sym{g-variant-dict} structure
+  when you expose it as part of an API. For most other uses, the stack-allocated
+  form will be more convenient.
+
+  Consider the following two examples that do the same thing in each style:
+  take an existing dictionary and look up the \"count\" @code{:uint32} key,
+  adding 1 to it if it is found, or returning an error if the key is not found.
+  Each returns the new dictionary as a floating @type{g-variant} instance.
+
+  Using a stack-allocated @sym{gvariant-dict} instance:
+  @begin{pre}
+GVariant *
+add_to_count (GVariant  *orig,
+              GError   **error)
+{
+  GVariantDict dict;
+  guint32 count;
+
+  g_variant_dict_init (&dict, orig);
+  if (!g_variant_dict_lookup (&dict, \"count\", \"u\", &count))
+    {
+      g_set_error (...);
+      g_variant_dict_clear (&dict);
+      return NULL;
+    @}
+
+  g_variant_dict_insert (&dict, \"count\", \"u\", count + 1);
+
+  return g_variant_dict_end (&dict);
+@}
+  @end{pre}
+  Using a heap-allocated @sym{g-variant-dict} instance:
+  @begin{pre}
+GVariant *
+add_to_count (GVariant  *orig,
+              GError   **error)
+{
+  GVariantDict *dict;
+  GVariant *result;
+  guint32 count;
+
+  dict = g_variant_dict_new (orig);
+
+  if (g_variant_dict_lookup (dict, \"count\", \"u\", &count))
+    {
+      g_variant_dict_insert (dict, \"count\", \"u\", count + 1);
+      result = g_variant_dict_end (dict);
+    @}
+  else
+    {
+      g_set_error (...);
+      result = NULL;
+    @}
+
+  g_variant_dict_unref (dict);
+
+  return result;
+@}
+  @end{pre}
+  @see-type{g-variant}")
+
+(export 'g-variant-dict)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GVariantParseError
@@ -3259,7 +3270,7 @@
 ;;; It typically only makes sense to do this on a stack-allocated
 ;;; GVariantBuilder if you want to abort building the value part-way through.
 ;;; This function need not be called if you call g_variant_builder_end() and it
-;;; also doesn't need to be called on builders allocated with
+;;; also does not need to be called on builders allocated with
 ;;; g_variant_builder_new (see g_variant_builder_unref() for that).
 ;;;
 ;;; This function leaves the GVariantBuilder structure set to all-zeros. It is
@@ -3585,7 +3596,7 @@
 ;;;
 ;;; It typically only makes sense to do this on a stack-allocated GVariantDict
 ;;; if you want to abort building the value part-way through. This function
-;;; need not be called if you call g_variant_dict_end() and it also doesn't
+;;; need not be called if you call g_variant_dict_end() and it also does not
 ;;; need to be called on dicts allocated with g_variant_dict_new
 ;;; (see g_variant_dict_unref() for that).
 ;;;
