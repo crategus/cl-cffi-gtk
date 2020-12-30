@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.types.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.16 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,13 +28,17 @@
 ;;;
 ;;; Types
 ;;;
-;;; Generic data types
+;;;     Generic data types
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_bool_t
 ;;;     cairo_user_data_key_t
 ;;;     cairo_rectangle_int_t
+;;;
+;;; Functions
+;;;
+;;;     cairo-destroy-func-t
 ;;;
 ;;; Description
 ;;;
@@ -59,6 +63,10 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defctype cairo-bool-t :int)
+
+(export 'cairo-bool-t)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_user_data_key_t
 ;;;
@@ -79,6 +87,41 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; cairo_rectangle_int_t
+;;; ----------------------------------------------------------------------------
+
+(defcstruct cairo-rectangle-int-t
+  (x :int)
+  (y :int)
+  (width :int)
+  (height :int))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-rectangle-int-t atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'cairo-rectangle-int-t atdoc:*external-symbols*)
+ "@version{2020-12-5}
+  @begin{short}
+    A data structure for holding a rectangle with integer coordinates.
+  @end{short}
+  @begin{pre}
+(defcstruct cairo-rectangle-int-t
+  (x :int)
+  (y :int)
+  (width :int)
+  (height :int))
+  @end{pre}
+  @begin[code]{table}
+    @entry[x]{An integer x coordinate of the left side of the rectangle.}
+    @entry[y]{An integer y coordinate of the the top side of the rectangle.}
+    @entry[width]{An integer with the width of the rectangle.}
+    @entry[height]{An integer with the height of the rectangle.}
+  @end{table}
+  @see-class{gdk-rectangle}")
+
+(export 'cairo-rectangle-int-t)
+
+;;; ----------------------------------------------------------------------------
 ;;; cairo_destroy_func_t ()
 ;;;
 ;;; void (*cairo_destroy_func_t) (void *data);
@@ -92,39 +135,5 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; cairo_rectangle_int_t
-;;; ----------------------------------------------------------------------------
-
-(defcstruct cairo-rectangle-int-t
-  (x :int)
-  (y :int)
-  (width :int)
-  (height :int))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-rectangle-int-t atdoc:*symbol-name-alias*) "CStruct"
-      (gethash 'cairo-rectangle-int-t atdoc:*external-symbols*)
- "@version{2013-10-17}
-  @begin{short}
-    A data structure for holding a rectangle with integer coordinates.
-  @end{short}
-  @begin{pre}
-(defcstruct cairo-rectangle-int-t
-  (x :int)
-  (y :int)
-  (width :int)
-  (height :int))
-  @end{pre}
-  @begin[code]{table}
-    @entry[x]{x coordinate of the left side of the rectangle.}
-    @entry[y]{y coordinate of the the top side of the rectangle.}
-    @entry[width]{Width of the rectangle.}
-    @entry[height]{Height of the rectangle.}
-  @end{table}
-  Since 1.10")
-
-(export 'cairo-rectangle-int-t)
 
 ;;; --- End of file cairo.types.lisp -------------------------------------------
