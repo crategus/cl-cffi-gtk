@@ -72,3 +72,5 @@
 
       ;; Start the application
       (g-application-run app argv))))
+
+;;; 2020-12-10

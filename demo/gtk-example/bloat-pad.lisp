@@ -4,8 +4,8 @@
 
 (defclass bloat-pad (gtk-application)
   ()
-  (:metaclass gobject-class)
-  (:g-type-name . "BloatPad"))
+;  (:g-type-name . "BloatPad")
+  (:metaclass gobject-class))
 
 (register-object-type-implementation "BloatPad"
                                      bloat-pad

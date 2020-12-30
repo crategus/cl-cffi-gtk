@@ -108,11 +108,11 @@
            (let ((text-extents (cairo-text-extents cr "a")))
              (cairo-move-to cr
                             (- 0.5
-                               (/ (cairo-text-extents-t-width text-extents) 2)
-                               (cairo-text-extents-t-x-bearing text-extents))
+                               (/ (cairo-text-extents-width text-extents) 2)
+                               (cairo-text-extents-x-bearing text-extents))
                             (- 0.5
-                               (/ (cairo-text-extents-t-height text-extents) 2)
-                               (cairo-text-extents-t-y-bearing text-extents)))
+                               (/ (cairo-text-extents-height text-extents) 2)
+                               (cairo-text-extents-y-bearing text-extents)))
              (cairo-show-text cr "a"))
            ;; Destroy the Cairo context
            (cairo-destroy cr)

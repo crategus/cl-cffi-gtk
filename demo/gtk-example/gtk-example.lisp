@@ -1,7 +1,8 @@
 (defpackage :gtk-example
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :common-lisp)
-  (:export #:example-dialog
+  (:export #:example-custom-window
+           #:example-dialog
            #:example-dialog-new
            #:example-dialog-new-with-buttons
            #:example-dialog-ui
@@ -38,3 +39,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
+;;; 2020-12-19

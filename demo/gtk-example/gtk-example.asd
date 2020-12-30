@@ -9,6 +9,7 @@
                (:file "application-inhibit")
                (:file "application-simple")
                (:file "bloat-pad")
+               (:file "custom-window")
                (:file "dialog")
                (:file "event-handler")
                (:file "file-chooser-dialog")
@@ -32,4 +33,4 @@
                (:file "widget-pointer")
               ))
 
-;; 2020-11-5
+;;; 2020-12-19
