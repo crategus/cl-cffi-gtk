@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.matrix.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.16 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; cairo_matrix_t
 ;;;
-;;; Generic matrix operations
+;;;     Generic matrix operations
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_matrix_t
+;;;
+;;; Functions
 ;;;
 ;;;     cairo_matrix_init
 ;;;     cairo_matrix_init_identity
@@ -77,22 +79,23 @@
   (y0 :double))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-matrix-t atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'cairo-matrix-t atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'cairo-matrix-t atdoc:*external-symbols*)
- "@version{2014-2-1}
+ "@version{2020-12-5}
   @begin{short}
-    A @sym{cairo-matrix-t} holds an affine transformation, such as a scale,
-    rotation, shear, or a combination of those.
+    A @sym{cairo-matrix-t} structure holds an affine transformation, such as a
+    scale, rotation, shear, or a combination of those.
   @end{short}
   The transformation of a point (x, y) is given by:
   @begin{pre}
- x_new = xx * x + xy * y + x0;
- y_new = yx * x + yy * y + y0;
+x_new = xx * x + xy * y + x0;
+y_new = yx * x + yy * y + y0;
   @end{pre}
-  The current transformation matrix of a @symbol{cairo-t}, represented as a
-  @sym{cairo-matrix-t}, defines the transformation from user-space coordinates
-  to device-space coordinates. See the functions @fun{cairo-get-matrix} and
-  @fun{cairo-set-matrix}.
+  The current transformation matrix of a @symbol{cairo-t} context, represented
+  as a @sym{cairo-matrix-t} structure, defines the transformation from user
+  space coordinates to device space coordinates. See the functions
+  @fun{cairo-get-matrix} and @fun{cairo-set-matrix}.
   @begin{pre}
 (defcstruct cairo-matrix-t
   (xx :double)
@@ -103,19 +106,30 @@
   (y0 :double))
   @end{pre}
   @begin[code]{table}
-    @entry[xx]{xx component of the affine transformation}
-    @entry[yx]{yx component of the affine transformation}
-    @entry[xy]{xy component of the affine transformation}
-    @entry[yy]{yy component of the affine transformation}
-    @entry[x0]{x translation component of the affine transformation}
-    @entry[y0]{y translation component of the affine transformation}
+    @entry[xx]{A double float xx component of the affine transformation.}
+    @entry[yx]{A double float yx component of the affine transformation.}
+    @entry[xy]{A double float xy component of the affine transformation.}
+    @entry[yy]{A double float yy component of the affine transformation.}
+    @entry[x0]{A double float x translation component of the affine
+      transformation.}
+    @entry[y0]{A double float y translation component of the affine
+      transformation.}
   @end{table}
-  Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-get-matrix}
   @see-function{cairo-set-matrix}")
 
 (export 'cairo-matrix-t)
+
+;;; ----------------------------------------------------------------------------
+
+;; Lisp helper function to get the values of a cairo-matrix-t structure
+
+(defun cairo-matrix-to-list (matrix)
+  (with-foreign-slots ((xx yx xy yy x0 y0) matrix (:struct cairo-matrix-t))
+    (list xx yx xy yy x0 y0)))
+
+(export 'cairo-matrix-to-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_init ()
@@ -158,6 +172,29 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defun cairo-matrix-init (matrix xx yx xy yy x0 y0) :void
+  (foreign-funcall "cairo_matrix_init"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce xx 'double-float)
+                   :double (coerce yx 'double-float)
+                   :double (coerce xy 'double-float)
+                   :double (coerce yy 'double-float)
+                   :double (coerce x0 'double-float)
+                   :double (coerce y0 'double-float)
+                   :void))
+
+;(defun cairo-matrix-init (xx yx xy yy x0 y0)
+;  (with-foreign-object (matrix '(:pointer (:struct cairo-matrix-t)))
+;    (%cairo-matrix-init matrix (coerce xx 'double-float)
+;                               (coerce yx 'double-float)
+;                               (coerce xy 'double-float)
+;                               (coerce yy 'double-float)
+;                               (coerce x0 'double-float)
+;                               (coerce y0 'double-float))
+;    matrix))
+
+(export 'cairo-matrix-init)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_init_identity ()
 ;;;
@@ -170,6 +207,11 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_matrix_init_identity" cairo-matrix-init-identity) :void
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-matrix-init-identity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_init_translate ()
@@ -193,6 +235,15 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defun cairo-matrix-init-translate (matrix tx ty)
+  (foreign-funcall "cairo_matrix_init_translate"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce tx 'double-float)
+                   :double (coerce ty 'double-float)
+                   :void))
+
+(export 'cairo-matrix-init-translate)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_init_scale ()
 ;;;
@@ -215,6 +266,15 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defun cairo-matrix-init-scale (matrix sx sy)
+  (foreign-funcall "cairo_matrix_init_scale"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce sx 'double-float)
+                   :double (coerce sy 'double-float)
+                   :void))
+
+(export 'cairo-matrix-init-scale)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_init_rotate ()
 ;;;
@@ -233,6 +293,14 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defun cairo-matrix-init-rotate (matrix radians)
+  (foreign-funcall "cairo_matrix_init_rotate"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce radians 'double-float)
+                   :void))
+
+(export 'cairo-matrix-init-rotate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_translate ()
@@ -257,6 +325,15 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defun cairo-matrix-translate (matrix tx ty)
+  (foreign-funcall "cairo_matrix_translate"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce tx 'double-float)
+                   :double (coerce ty 'double-float)
+                   :void))
+
+(export 'cairo-matrix-translate)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_scale ()
 ;;;
@@ -277,6 +354,15 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defun cairo-matrix-scale (matrix sx sy)
+  (foreign-funcall "cairo_matrix_scale"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce sx 'double-float)
+                   :double (coerce sy 'double-float)
+                   :void))
+
+(export 'cairo-matrix-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_rotate ()
@@ -299,6 +385,14 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defun cairo-matrix-rotate (matrix radians)
+  (foreign-funcall "cairo_matrix_rotate"
+                   (:pointer (:struct cairo-matrix-t)) matrix
+                   :double (coerce radians 'double-float)
+                   :void))
+
+(export 'cairo-matrix-rotate)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_invert ()
 ;;;
@@ -319,6 +413,11 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_matrix_invert" cairo-matrix-invert) cairo-status-t
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-matrix-invert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_multiply ()
@@ -345,6 +444,13 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_matrix_multiply" cairo-matrix-multiply) :void
+  (result (:pointer (:struct cairo-matrix-t)))
+  (a (:pointer (:struct cairo-matrix-t)))
+  (b (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-matrix-multiply)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_transform_distance ()
@@ -378,6 +484,14 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_matrix_transform_distance" cairo-matrix-transform-distance)
+    :void
+  (matrix (:pointer (:struct cairo-matrix-t)))
+  (dx (:pointer :double))
+  (dy (:pointer :double)))
+
+(export 'cairo-matrix-transform-distance)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_matrix_transform_point ()
 ;;;
@@ -398,5 +512,12 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_matrix_transform_point" cairo-matrix-transform-point) :void
+  (matrix (:pointer (:struct cairo-matrix-t)))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(export 'cairo-matrix-transform-point)
 
 ;;; --- End of file cairo.matrix.lisp ------------------------------------------
