@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.device.lisp
 ;;;
-;;; The documentation of this file is taken from the Cairo Reference Manual
-;;; Version 1.12.16 and modified to document the Lisp binding to the Cairo
-;;; library. See <http://cairographics.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of the file is taken from the Cairo Reference Manual
+;;; Version 1.16 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,14 @@
 ;;;
 ;;; cairo_device_t
 ;;;
-;;; Interface to underlying rendering system
+;;;     Interface to underlying rendering system
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_device_t
+;;;     cairo_device_type_t
+;;;
+;;; Functions
 ;;;
 ;;;     cairo_device_reference
 ;;;     cairo_device_destroy
@@ -40,14 +43,20 @@
 ;;;     cairo_device_finish
 ;;;     cairo_device_flush
 ;;;
-;;;     cairo_device_type_t
-;;;
 ;;;     cairo_device_get_type
 ;;;     cairo_device_get_reference_count
 ;;;     cairo_device_set_user_data
 ;;;     cairo_device_get_user_data
 ;;;     cairo_device_acquire
 ;;;     cairo_device_release
+;;;
+;;;     cairo_device_observer_elapsed ()
+;;;     cairo_device_observer_fill_elapsed ()
+;;;     cairo_device_observer_glyphs_elapsed ()
+;;;     cairo_device_observer_mask_elapsed ()
+;;;     cairo_device_observer_paint_elapsed ()
+;;;     cairo_device_observer_print ()
+;;;     cairo_device_observer_stroke_elapsed ()
 ;;;
 ;;; Description
 ;;;
@@ -111,24 +120,23 @@
 (defcstruct cairo-device-t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-device-t atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'cairo-device-t atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'cairo-device-t atdoc:*external-symbols*)
- "@version{2013-11-16}
+ "@version{2020-12-16}
   @begin{short}
-    A @sym{cairo-device-t} represents the driver interface for drawing
-    operations to a @symbol{cairo-surface-t} structure.
+    A @sym{cairo-device-t} structure represents the driver interface for
+    drawing operations to a @symbol{cairo-surface-t} instance.
   @end{short}
-  There are different subtypes of @sym{cairo-device-t} for different drawing
-  backends; for example, the function @code{cairo-egl-device-create} creates
-  a device that wraps an EGL display and context.
+  There are different subtypes of @sym{cairo-device-t} structures for different
+  drawing backends. For example, the function @code{cairo-egl-device-create}
+  creates a device that wraps an EGL display and context.
 
   The type of a device can be queried with the function
   @fun{cairo-device-get-type}.
 
-  Memory management of @sym{cairo-device-t} is done with the functions
-  @fun{cairo-device-reference} and @fun{cairo-device-destroy}.
-
-  Since 1.10
+  Memory management of the @sym{cairo-device-t} structure is done with the
+  functions @fun{cairo-device-reference} and @fun{cairo-device-destroy}.
   @see-symbol{cairo-surface-t}
   @see-function{cairo-device-get-type}
   @see-function{cairo-device-reference}
@@ -137,25 +145,89 @@
 (export 'cairo-device-t)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum cairo_device_type_t
+;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-device-type-t
+  :drm
+  :gl
+  :script
+  :xcb
+  :xlib
+  :xml
+  :cogl
+  :win32
+  (:invalid -1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-device-type-t atdoc:*symbol-name-alias*)
+      "CEnum"
+      (gethash 'cairo-device-type-t atdoc:*external-symbols*)
+ "@version{2020-12-16}
+  @begin{short}
+    The @sym{cairo-device-type-t} enumeration is used to describe the type of
+    a given device.
+  @end{short}
+  The devices types are also known as \"backends\" within Cairo.
+
+  The device type can be queried with the function @fun{cairo-device-get-type}.
+
+  The various @symbol{cairo-device-t} functions can be used with devices of any
+  type, but some backends also provide type-specific functions that must only
+  be called with a device of the appropriate type. These functions have names
+  that begin with @code{cairo-type-device} such as
+  @code{cairo-xcb-device-debug-cap-xrender-version}.
+
+  The behavior of calling a type-specific function with a device of the wrong
+  type is undefined.
+
+  New entries may be added in future versions.
+  @begin{pre}
+(defcenum cairo-device-type-t
+  :drm
+  :gl
+  :script
+  :xcb
+  :xlib
+  :xml
+  :cogl
+  :win32
+  (:invalid -1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:drm]{The device is of type Direct Render Manager.}
+    @entry[:gl]{The device is of type OpenGL.}
+    @entry[:script]{The device is of type script.}
+    @entry[:xcb]{The device is of type xcb.}
+    @entry[:xlib]{The device is of type xlib.}
+    @entry[:xml]{The device is of type XML.}
+    @entry[:cogl]{The device is of type cogl.}
+    @entry[:win32]{The device is of type win32.}
+    @entry[:invalid]{The device is invalid.}
+  @end{table}
+  @see-symbol{cairo-device-t}
+  @see-function{cairo-device-get-type}")
+
+(export 'cairo-device-type-t)
+
+;;; ----------------------------------------------------------------------------
 ;;; cairo_device_reference ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_device_reference" cairo-device-reference)
     (:pointer (:struct cairo-device-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[device]{a @symbol{cairo-device-t}}
-  @return{The referenced @symbol{cairo-device-t}.}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
+  @return{The referenced @symbol{cairo-device-t} instance.}
   @begin{short}
     Increases the reference count on @arg{device} by one.
   @end{short}
   This prevents @arg{device} from being destroyed until a matching call to
   the function @fun{cairo-device-destroy} is made.
 
-  The number of references to a @symbol{cairo-device-t} can be get using
-  the function @fun{cairo-device-get-reference-count}.
-
-  Since 1.10
+  The number of references to a @symbol{cairo-device-t} instance can be get
+  using the function @fun{cairo-device-get-reference-count}.
   @see-symbol{cairo-device-t}
   @see-function{cairo-device-destroy}
   @see-function{cairo-device-get-reference-count}"
@@ -169,17 +241,15 @@
 
 (defcfun ("cairo_device_destroy" cairo-device-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
-  @argument[device]{a @symbol{cairo-device-t}}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
   @begin{short}
-    Decreases the reference count on device by one.
+    Decreases the reference count on @arg{device} by one.
   @end{short}
   If the result is zero, then @arg{device} and all associated resources are
   freed. See the function @fun{cairo-device-reference}.
 
   This function may acquire devices if the last reference was dropped.
-
-  Since 1.10
   @see-symbol{cairo-device-t}
   @see-function{cairo-device-reference}"
   (device (:pointer (:struct cairo-device-t))))
@@ -233,8 +303,8 @@
 ;;; Finish any pending operations for the device and also restore any temporary
 ;;; modifications cairo has made to the device's state. This function must be
 ;;; called before switching from using the device with Cairo to operating on it
-;;; directly with native APIs. If the device doesn't support direct access, then
-;;; this function does nothing.
+;;; directly with native APIs. If the device does not support direct access,
+;;; then this function does nothing.
 ;;;
 ;;; This function may acquire devices.
 ;;;
@@ -245,85 +315,19 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum cairo_device_type_t
-;;; ----------------------------------------------------------------------------
-
-(defcenum cairo-device-type-t
-  :drm
-  :gl
-  :script
-  :xcb
-  :xlib
-  :xml
-  :cogl
-  :win32
-  (:invalid -1))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-device-type-t atdoc:*symbol-name-alias*) "CEnum"
-      (gethash 'cairo-device-type-t atdoc:*external-symbols*)
- "@version{2013-12-8}
-  @begin{short}
-    @sym{cairo-device-type-t} is used to describe the type of a given device.
-    The devices types are also known as \"backends\" within cairo.
-  @end{short}
-
-  The device type can be queried with the function @fun{cairo-device-get-type}.
-
-  The various @symbol{cairo-device-t} functions can be used with devices of any
-  type, but some backends also provide type-specific functions that must only be
-  called with a device of the appropriate type. These functions have names
-  that begin with @code{cairo-type-device} such as
-  @code{cairo-xcb-device-debug-cap-xrender-version}.
-
-  The behavior of calling a type-specific function with a device of the wrong
-  type is undefined.
-
-  New entries may be added in future versions.
-  @begin{pre}
-(defcenum cairo-device-type-t
-  :drm
-  :gl
-  :script
-  :xcb
-  :xlib
-  :xml
-  :cogl
-  :win32
-  (:invalid -1))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:drm]{The device is of type Direct Render Manager, since 1.10.}
-    @entry[:gl]{The device is of type OpenGL, since 1.10.}
-    @entry[:script]{The device is of type script, since 1.10.}
-    @entry[:xcb]{The device is of type xcb, since 1.10.}
-    @entry[:xlib]{The device is of type xlib, since 1.10.}
-    @entry[:xml]{The device is of type XML, since 1.10.}
-    @entry[:cogl]{The device is of type cogl, since 1.12.}
-    @entry[:win32]{The device is of type win32, since 1.12.}
-    @entry[:invalid]{The device is invalid, since 1.10.}
-  @end{table}
-  Since 1.10
-  @see-symbol{cairo-device-t}
-  @see-function{cairo-device-get-type}")
-
-(export 'cairo-device-type-t)
-
-;;; ----------------------------------------------------------------------------
 ;;; cairo_device_get_type ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_device_get_type" cairo-device-get-type) cairo-device-type-t
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
-  @argument[device]{a @symbol{cairo-device-t}}
-  @return{The type of device.}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
+  @return{A value of the @symbol{cairo-device-type-t} enumeration for the
+    type of @arg{device}.}
   @begin{short}
     This function returns the type of the device.
   @end{short}
   See the @symbol{cairo-device-type-t} enumeration for available types.
-
-  Since 1.10
   @see-symbol{cairo-device-t}
   @see-symbol{cairo-device-type-t}"
   (device (:pointer (:struct cairo-device-t))))
@@ -337,17 +341,15 @@
 (defcfun ("cairo_device_get_reference_count" cairo-device-get-reference-count)
     :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
-  @argument[device]{a @symbol{cairo-device-t}}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
   @begin{return}
-    The current reference count of device. If the object is a nil object,
-    0 will be returned.
+    An unsigned integer with the current reference count of @arg{device}.
+    If the instance is a nil instance, 0 will be returned.
   @end{return}
   @begin{short}
-    Returns the current reference count of device.
+    Returns the current reference count of the device.
   @end{short}
-
-  Since 1.10
   @see-symbol{cairo-device-t}"
   (device (:pointer (:struct cairo-device-t))))
 
@@ -412,18 +414,18 @@
 
 (defcfun ("cairo_device_acquire" cairo-device-acquire) cairo-status-t
  #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[device]{a @symbol{cairo-device-t}}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
   @begin{return}
     @code{:success} on success or an error code if the device is in an
-    error state and could not be acquired. After a successful call to
-    @sym{cairo-device-acquire}, a matching call to the function
+    error state and could not be acquired. After a successful call to the
+    function @sym{cairo-device-acquire}, a matching call to the function
     @fun{cairo-device-release} is required.
   @end{return}
   @begin{short}
-    Acquires the device for the current thread. This function will block until
-    no other thread has acquired the device.
+    Acquires the device for the current thread.
   @end{short}
+  This function will block until no other thread has acquired the device.
 
   If the return value is @code{:sucess}, you successfully acquired the device.
   From now on your thread owns the device and no other thread will be able to
@@ -431,16 +433,15 @@
   It is allowed to recursively acquire the device multiple times from the same
   thread.
 
-  @subheading{Note}
-    You must never acquire two different devices at the same time unless this is
-    explicitly allowed. Otherwise the possibility of deadlocks exist.
+  @begin[Note]{dictionary}
+    You must never acquire two different devices at the same time unless this
+    is explicitly allowed. Otherwise the possibility of deadlocks exist.
 
     As various Cairo functions can acquire devices when called, these functions
     may also cause deadlocks when you call them with an acquired device. So you
     must not have a device acquired when calling them. These functions are
     marked in the documentation.
-
-  Since 1.10
+  @end{dictionary}
   @see-symbol{cairo-device-t}
   @see-symbol{cairo-status-t}
   @see-function{cairo-device-release}"
@@ -454,18 +455,68 @@
 
 (defcfun ("cairo_device_release" cairo-device-release) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-5}
-  @argument[device]{a @symbol{cairo-device-t}}
+ "@version{2020-12-16}
+  @argument[device]{a @symbol{cairo-device-t} instance}
   @begin{short}
     Releases a device previously acquired using the function
     @fun{cairo-device-acquire}.
   @end{short}
   See that function for details.
-
-  Since 1.10
-  @see-symbol{cairo-device-t}"
+  @see-symbol{cairo-device-t}
+  @see-function{cairo-device-aquire}"
   (device (:pointer (:struct cairo-device-t))))
 
 (export 'cairo-device-release)
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_fill_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_fill_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_glyphs_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_glyphs_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_mask_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_mask_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_paint_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_paint_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_print ()
+;;;
+;;; cairo_status_t
+;;; cairo_device_observer_print (cairo_device_t *device,
+;;;                              cairo_write_func_t write_func,
+;;;                              void *closure);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; cairo_device_observer_stroke_elapsed ()
+;;;
+;;; double
+;;; cairo_device_observer_stroke_elapsed (cairo_device_t *device);
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file cairo.device.lisp ------------------------------------------
