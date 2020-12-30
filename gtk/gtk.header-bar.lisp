@@ -338,7 +338,7 @@
   (Read / Write) @br{}
   Whether to show window decorations. Which buttons are actually shown and
   where is determined by the @code{decoration-layout} property, and by the
-  state of the window, e. g. a close button will not be shown if the window
+  state of the window, e.g. a close button will not be shown if the window
   can not be closed. @br{}
   Default value: @em{false}")
 
@@ -426,7 +426,7 @@
   even if none is currently set. If this is not desired, set the
   @slot[gtk-header-bar]{has-subtitle} property to @em{false}.
 
-  Since: 3.10
+  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-title ---------------------------------------------------
@@ -459,7 +459,7 @@
   The title should help a user identify the current view. A good title should
   not include the application name.
 
-  Since: 3.10
+  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; ----------------------------------------------------------------------------

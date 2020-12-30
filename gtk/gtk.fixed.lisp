@@ -106,7 +106,7 @@
     @end{item}
   @end{itemize}
   In addition, the fixed widget cannot properly be mirrored in right-to-left
-  languages such as Hebrew and Arabic. i. e. normally GTK+ will flip the
+  languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
   interface to put labels to the right of the thing they label, but it cannot
   do that with @sym{gtk-fixed}. So your application will not be usable in
   right-to-left languages.

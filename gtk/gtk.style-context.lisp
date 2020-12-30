@@ -1203,7 +1203,7 @@
   @argument[context]{a @class{gtk-style-context} object}
   @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the color
     for}
-  @return{The @class{gdk-rgba} value for the foreground color.}
+  @return{The @class{gdk-rgba} foreground color.}
   @begin{short}
     Gets the foreground color for a given state.
   @end{short}
@@ -2283,7 +2283,7 @@
   @argument[height]{a @code{:double} with a rectangle height}
   @return{A @class{gdk-rectangle}.}
   @begin{short}
-    Returns the area that will be affected (i. e. drawn to) when calling the
+    Returns the area that will be affected (i.e. drawn to) when calling the
     function @fun{gtk-render-background} for the given context and rectangle.
   @end{short}
 
@@ -2767,7 +2767,7 @@
   @argument[index]{the index of type @code{:int} in the pango layout}
   @argument[direction]{the @symbol{pango-direction} of the text}
   @begin{short}
-    Draws a text caret on the cairo context at the specified index of the
+    Draws a text caret on the Cairo context at the specified index of the
     pango layout.
   @end{short}
   @see-class{gtk-style-context}
@@ -3341,7 +3341,7 @@
 ;;;
 ;;; Refer to individual widget documentation for used style classes.
 ;;;
-;;; Since: 3.16
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3673,7 +3673,7 @@
 ;;;
 ;;; Refer to individual widget documentation for used style classes.
 ;;;
-;;; Since: 3.14
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

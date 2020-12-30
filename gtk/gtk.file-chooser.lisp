@@ -252,9 +252,9 @@
   @begin[code]{table}
     @entry[:nonexistent]{Indicates that a file does not exist.}
     @entry[:bad-filename]{Indicates a malformed filename.}
-    @entry[:already-exists]{Indicates a duplicate path, e. g. when adding a
+    @entry[:already-exists]{Indicates a duplicate path, e.g. when adding a
       bookmark.}
-    @entry[:incomplete-hostname]{Indicates an incomplete hostname, e. g.
+    @entry[:incomplete-hostname]{Indicates an incomplete hostname, e.g.
       \"http://foo\" without a slash after that.}
   @end{table}
   @class{gtk-file-chooser}")
@@ -374,7 +374,7 @@
     @end{entry}
     @begin[Shortcuts]{entry}
       can be provided by the application or by the underlying filesystem
-      abstraction, e. g. both the gnome-vfs and the Windows filesystems provide
+      abstraction, e.g. both the gnome-vfs and the Windows filesystems provide
       \"Desktop\" shortcuts. Shortcuts cannot be modified by the user.
     @end{entry}
     @begin[Volumes]{entry}
@@ -1293,9 +1293,9 @@
   interface elements for navigating to other folders.
 
   Note that this is the folder that the file chooser is currently displaying,
-  e. g. \"/home/username/Documents\", which is not the same as the
+  e.g. \"/home/username/Documents\", which is not the same as the
   currently-selected folder if the chooser is in @code{:select-folder} mode,
-  e. g. \"/home/username/Documents/selected-folder/\". To get the
+  e.g. \"/home/username/Documents/selected-folder/\". To get the
   currently-selected folder in that mode, use the function
   @fun{gtk-file-chooser-uri} as the usual way to get the selection.
 
@@ -1468,8 +1468,8 @@
   folder.
 
   Note that this is the folder that the file chooser is currently displaying,
-  e. g. \"file:///home/username/Documents\", which is not the same as the
-  currently-selected folder if the chooser is in @code{:select-folder}, e. g.
+  e.g. \"file:///home/username/Documents\", which is not the same as the
+  currently-selected folder if the chooser is in @code{:select-folder}, e.g.
   \"file:///home/username/Documents/selected-folder/\". To get the
   currently-selected folder in that mode, use the function
   @fun{gtk-file-chooser-uri} as the usual way to get the selection.

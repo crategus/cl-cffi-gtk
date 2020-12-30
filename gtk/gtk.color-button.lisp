@@ -236,7 +236,7 @@
   @syntax[]{(gtk-color-button-rgba object) => rgba)}
   @syntax[]{(setf (gtk-color-button-rgba object) rgba)}
   @argument[object]{a @class{gtk-color-button} widget}
-  @argument[rgba]{a @class{gdk-rgba} to set the current color with}
+  @argument[rgba]{a @class{gdk-rgba} color to set the current color with}
   @begin{short}
     Accessor of the @slot[gtk-color-button]{rgba} slot of the
     @class{gtk-color-button} class.
@@ -404,7 +404,7 @@
 (defun gtk-color-button-new-with-rgba (rgba)
  #+cl-cffi-gtk-documentation
  "@version{2020-5-23}
-  @argument[rgba]{a @class{gdk-rgba} to set the current color with}
+  @argument[rgba]{a @class{gdk-rgba} color to set the current color with}
   @return{A new @class{gtk-color-button} widget.}
   @short{Creates a new color button.}
   @see-class{gtk-color-button}"

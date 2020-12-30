@@ -325,8 +325,8 @@
 ;;;
 ;;; void gtk_accel_map_foreach (gpointer data, GtkAccelMapForeach foreach_func);
 ;;;
-;;; Loops over the entries in the accelerator map whose accel path doesn't match
-;;; any of the filters added with gtk_accel_map_add_filter(), and execute
+;;; Loops over the entries in the accelerator map whose accel path does not
+;;; match any of the filters added with gtk_accel_map_add_filter(), and execute
 ;;; foreach_func on each. The signature of foreach_func is that of
 ;;; GtkAccelMapForeach, the changed parameter indicates whether this accelerator
 ;;; was changed during runtime (thus, would need saving during an accelerator

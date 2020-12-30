@@ -161,7 +161,7 @@
   information or default theming for its background image.
 
   If this method is called and an icon name was already set as background for
-  the icon, @arg{icon} will be used, i. e. the last method called between the
+  the icon, @arg{icon} will be used, i.e. the last method called between the
   functions @sym{(setf gtk-numerable-icon-background-icon)} and
   @sym{(setf gtk-numerable-icon-background-icon-name)} has always priority.
   @begin[Warning]{dictionary}
@@ -206,7 +206,7 @@
   style information or default theming for its background image.
 
   If this method is called and a @class{g-icon} was already set as background
-  for the icon, @arg{icon-name} will be used, i. e. the last method called
+  for the icon, @arg{icon-name} will be used, i.e. the last method called
   between the functions @sym{(setf gtk-numerable-icon-background-icon-name)}
   and @sym{(setf gtk-numerable-icon-background-icon)} has always priority.
   @begin[Warning]{dictionary}
@@ -244,10 +244,10 @@
   The @sym{(setf gtk-numerable-icon-count)} slot access function
   sets the currently displayed value of the numerable icon to @arg{count}.
 
-  The numeric value is always clamped to make it two digits, i. e. between -99
+  The numeric value is always clamped to make it two digits, i.e. between -99
   and 99. Setting a count of zero removes the emblem. If this method is called,
   and a label was already set on the icon, it will automatically be reset to
-  @code{nil} before rendering the number, i. e. the last method called between
+  @code{nil} before rendering the number, i.e. the last method called between
   the functions @sym{gtk-numerable-icon-count} and
   @sym{gtk-numerable-icon-label} has always priority.
   @begin[Warning]{dictionary}
@@ -291,7 +291,7 @@
   rendered very well.
 
   If this method is called, and a number was already set on the icon, it will
-  automatically be reset to zero before rendering the label, i. e. the last
+  automatically be reset to zero before rendering the label, i.e. the last
   method called between the functions @sym{gtk-numerable-icon-label} and
   @sym{gtk-numerable-icon-count} has always priority.
   @begin[Warning]{dictionary}

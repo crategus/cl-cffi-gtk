@@ -165,11 +165,11 @@
     with the function @fun{gtk-file-filter-add-custom}.
   @end{short}
 
-  Filtering by mime types handles aliasing and subclassing of mime types; e. g.
+  Filtering by mime types handles aliasing and subclassing of mime types; e.g.
   a filter for text/plain also matches a file with mime type application/rtf,
   since application/rtf is a subclass of text/plain. Note that
   @sym{gtk-file-filter} allows wildcards for the subtype of a mime type, so you
-  can e. g. filter for image/*.
+  can e.g. filter for image/*.
 
   Normally, filters are used by adding them to a @class{gtk-file-chooser}, see
   the function @fun{gtk-file-chooser-add-filter}, but it is also possible to
@@ -204,9 +204,9 @@
 ;;;
 ;;; GtkFileFilter * gtk_file_filter_new (void);
 ;;;
-;;; Creates a new GtkFileFilter with no rules added to it. Such a filter doesn't
-;;; accept any files, so is not particularly useful until you add rules with
-;;; gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(), or
+;;; Creates a new GtkFileFilter with no rules added to it. Such a filter does
+;;; not accept any files, so is not particularly useful until you add rules
+;;; with gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(), or
 ;;; gtk_file_filter_add_custom(). To create a filter that accepts any file, use:
 ;;;
 ;;;   GtkFileFilter *filter = gtk_file_filter_new ();

@@ -862,11 +862,11 @@
   @end{short}
 
   The argument @arg{accelerator} must be a string that can be parsed by the
-  function @fun{gtk-accelerator-parse}, e. g. \"<Primary>q\" or
+  function @fun{gtk-accelerator-parse}, e.g. \"<Primary>q\" or
   \"<Control><Alt>p\".
 
   The argument @arg{action-name} must be the name of an action as it would be
-  used in the application menu, i. e. actions that have been added to the
+  used in the application menu, i.e. actions that have been added to the
   application are referred to with an \"app.\" prefix, and window-specific
   actions with a \"win.\" prefix.
 

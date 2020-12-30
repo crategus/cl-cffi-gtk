@@ -988,7 +988,7 @@
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @return{A @code{:boolean} whether the iterator begins a line.}
   @begin{short}
-    Returns @em{true} if the iterator begins a paragraph, i. e. if the function
+    Returns @em{true} if the iterator begins a paragraph, i.e. if the function
     @fun{gtk-text-iter-line-offset} would return 0.
   @end{short}
 
@@ -1081,7 +1081,7 @@
   @return{@em{True} if the iterator is inside a sentence.}
   @begin{short}
     Determines whether the iterator is inside a sentence, as opposed to in
-    between two sentences, e. g. after a period and before the first letter of
+    between two sentences, e.g. after a period and before the first letter of
     the next sentence.
   @end{short}
 
@@ -1217,7 +1217,7 @@
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @return{A @code{:boolean} whether the iterator is the end iterator.}
   @begin{short}
-    Returns @em{true} if the iterator is the end iterator, i. e. one past the
+    Returns @em{true} if the iterator is the end iterator, i.e. one past the
     last dereferenceable iterator in the buffer.
   @end{short}
 
@@ -1450,7 +1450,7 @@
     Moves the iterator to the start of the previous line.
   @end{short}
 
-  Returns @em{true} if the iterator could be moved; i. e. if the iterator was
+  Returns @em{true} if the iterator could be moved; i.e. if the iterator was
   at character offset 0, this function returns @code{nil}. Therefore if the
   iterator was already on line 0, but not at the start of the line, the iterator
   is snapped to the start of the line and the function returns @em{true}. Note
@@ -2016,7 +2016,7 @@
     Moves the iterator to the start of the previous visible line.
   @end{short}
 
-  Returns @em{true} if the iterator could be moved; i. e. if the iterator was at
+  Returns @em{true} if the iterator could be moved; i.e. if the iterator was at
   character offset 0, this function returns @code{nil}. Therefore if the
   iterator was already on line 0, but not at the start of the line, the iterator
   is snapped to the start of the line and the function returns @em{true}. Note
@@ -2375,7 +2375,7 @@
   on large buffers.
 
   If the @code{:visible-only} flag is present, the match may have
-  invisible text interspersed in @arg{str}, i. e. @arg{str} will be a
+  invisible text interspersed in @arg{str}, i.e. @arg{str} will be a
   possibly-noncontiguous subsequence of the matched range. Similarly, if you
   specify @code{:text-only}, the match may have pixbufs or child widgets mixed
   inside the matched range. If these flags are not given, the match must be
@@ -2506,7 +2506,7 @@
     Tests whether two iterators are equal, using the fastest possible mechanism.
   @end{short}
 
-  This function is very fast; you can expect it to perform better than e. g.
+  This function is very fast; you can expect it to perform better than e.g.
   getting the character offset for each iterator and comparing the offsets
   yourself. Also, it is a bit faster than the function
   @fun{gtk-text-iter-compare}.
@@ -2533,7 +2533,7 @@
     than @arg{rhs}, positive if @arg{lhs} is greater than @arg{rhs}, and 0 if
     they are equal.
   @end{short}
-  Ordering is in character offset order, i. e. the first character in
+  Ordering is in character offset order, i.e. the first character in
   the buffer is less than the second character in the buffer.
   @see-class{gtk-text-iter}
   @see-function{gtk-text-iter-equal}"

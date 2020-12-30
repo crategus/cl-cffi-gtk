@@ -128,7 +128,7 @@
 
   @image[progressbar]{}
 
-  When an application can determine how much work needs to take place, e. g.
+  When an application can determine how much work needs to take place, e.g.
   read a fixed number of bytes from a file, and can monitor its progress, it
   can use the @sym{gtk-progress-bar} in percentage mode and the user sees a
   growing bar indicating the percentage of the work that has been completed.

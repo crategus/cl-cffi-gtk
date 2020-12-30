@@ -287,7 +287,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;; Returns :
 ;;;     A newly created GtkPadController
 ;;;
-;;; Since: 3.22
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Implement the functions for GtkPadController
@@ -312,7 +312,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;; n_entries :
 ;;;     the number of elements in entries
 ;;;
-;;; Since: 3.22
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -354,7 +354,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;; action_name :
 ;;;     action name that will be activated in the GActionGroup
 ;;;
-;;; Since: 3.22
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.pad-controller.lisp ------------------------------------

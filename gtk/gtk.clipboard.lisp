@@ -382,7 +382,7 @@
   backwards compatibility reasons. The currently-selected object or text should
   be provided on the clipboard identified by @code{\"PRIMARY\"}.
   Cut/copy/paste menu items conceptually copy the contents of the
-  @code{\"PRIMARY\"} clipboard to the default clipboard, i. e. they copy the
+  @code{\"PRIMARY\"} clipboard to the default clipboard, i.e. they copy the
   selection to what the user sees as the clipboard.
 
   It is possible to have arbitrary named clipboards; if you do invent new
@@ -902,7 +902,7 @@
 ;;; loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;;
 ;;; This function is a little faster than calling gtk_clipboard_wait_for_text()
-;;; since it doesn't need to retrieve the actual text.
+;;; since it does not need to retrieve the actual text.
 ;;;
 ;;; clipboard :
 ;;;     a GtkClipboard
@@ -922,7 +922,7 @@
 ;;; main loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;;
 ;;; This function is a little faster than calling gtk_clipboard_wait_for_image()
-;;; since it doesn't need to retrieve the actual image data.
+;;; since it does not need to retrieve the actual image data.
 ;;;
 ;;; clipboard :
 ;;;     a GtkClipboard
@@ -945,7 +945,7 @@
 ;;; main loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;;
 ;;; This function is a little faster than calling
-;;; gtk_clipboard_wait_for_rich_text() since it doesn't need to retrieve the
+;;; gtk_clipboard_wait_for_rich_text() since it does not need to retrieve the
 ;;; actual text.
 ;;;
 ;;; clipboard :
@@ -971,7 +971,7 @@
 ;;; events, timeouts, etc, may be dispatched during the wait.
 ;;;
 ;;; This function is a little faster than calling gtk_clipboard_wait_for_uris()
-;;; since it doesn't need to retrieve the actual URI data.
+;;; since it does not need to retrieve the actual URI data.
 ;;;
 ;;; clipboard :
 ;;;     a GtkClipboard

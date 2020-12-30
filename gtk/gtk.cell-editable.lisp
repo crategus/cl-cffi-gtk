@@ -83,7 +83,7 @@
       @end{pre}
       This signal is a sign for the cell renderer to update its value from the
       @arg{cell-editable}. Implementations of @sym{gtk-cell-editable} are
-      responsible for emitting this signal when they are done editing, e. g.
+      responsible for emitting this signal when they are done editing, e.g.
       @class{gtk-entry} is emitting it when the user presses Enter. The function
       @fun{gtk-cell-editable-editing-done} is a convenience method for emitting
       the \"editing-done\" signal.

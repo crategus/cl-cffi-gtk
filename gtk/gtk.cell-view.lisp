@@ -207,7 +207,7 @@
                                                'gtk-cell-view) 't)
  "The @code{background-rgba} property of type @class{gdk-rgba} (Read / Write)
   @br{}
-  The background color as a @class{gdk-rgba}.")
+  The @class{gdk-rgba} background color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-view-background-rgba atdoc:*function-name-alias*)

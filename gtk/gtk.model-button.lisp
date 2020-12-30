@@ -161,7 +161,7 @@
   @class{gtk-popover-menu}.
 
   When the action is specified via the @code{action-name} and
-  @code{action-target} properties, the role of the button, i. e. whether it is
+  @code{action-target} properties, the role of the button, i.e. whether it is
   a plain, check or radio button, is determined by the type of the action and
   does not have to be explicitly specified with the @code{role} property.
 

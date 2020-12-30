@@ -240,7 +240,7 @@
 ;;;     functions
 ;;;
 ;;; Returns :
-;;;     TRUE if a object has a custom implementation, FALSE if it doesn't.
+;;;     TRUE if a object has a custom implementation, FALSE if it does not.
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------

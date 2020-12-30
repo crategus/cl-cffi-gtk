@@ -152,7 +152,7 @@
     Describes the image data representation used by a @class{gtk-image}.
   @end{short}
   If you want to get the image from the widget, you can only get the
-  currently stored representation. e. g. if the slot access function
+  currently stored representation. e.g. if the slot access function
   @fun{gtk-image-storage-type} returns @code{:pixbuf}, then you can call the
   function @fun{gtk-image-pixbuf} but not @fun{gtk-image-stock}. For empty
   images, you can request any storage type, but they will all return

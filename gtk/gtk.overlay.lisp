@@ -90,7 +90,7 @@
     of which it can place overlay widgets.
   @end{short}
   The position of each overlay widget is determined by its
-  @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties. E. g. a
+  @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties. E.g. a
   widget with both alignments set to @code{:start} will be placed at the top
   left corner of the main widget, whereas an overlay with
   @slot[gtk-widget]{halign} set to @code{:center} and @slot[gtk-widget]{valign}

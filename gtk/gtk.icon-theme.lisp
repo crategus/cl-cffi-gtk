@@ -1877,7 +1877,7 @@
 ;;;     a GtkIconInfo
 ;;;
 ;;; Returns :
-;;;     the display name for the icon or NULL, if the icon doesn't have a
+;;;     the display name for the icon or NULL, if the icon does not have a
 ;;;     specified display name. This value is owned icon_info and must not be
 ;;;     modified or free.
 ;;;

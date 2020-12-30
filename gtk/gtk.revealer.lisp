@@ -218,7 +218,7 @@
   The slot access function @sym{gtk-revealer-reveal-child} returns whether the
   child is currently revealed. This function returns @em{true} as soon as the
   transition is to the revealed state is started. To learn whether the child
-  is fully revealed, i. e. the transition is completed, use the function
+  is fully revealed, i.e. the transition is completed, use the function
   @fun{gtk-revealer-child-revealed}.
 
   The slot access function @sym{(setf gtk-revealer-reveal-child)} tells the

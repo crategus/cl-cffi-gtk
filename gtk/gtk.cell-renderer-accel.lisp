@@ -122,7 +122,7 @@
 (setf (documentation 'gtk-cell-renderer-accel 'type)
  "@version{2020-6-20}
   @begin{short}
-    @sym{gtk-cell-renderer-accel} displays a keyboard accelerator, i. e. a key
+    @sym{gtk-cell-renderer-accel} displays a keyboard accelerator, i.e. a key
     combination like @code{Control+a}.
   @end{short}
   If the cell renderer is editable, the accelerator can be changed by simply

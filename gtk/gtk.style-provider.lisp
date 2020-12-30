@@ -223,7 +223,7 @@
 ;;;                                                  GtkWidgetPath *path);
 ;;;
 ;;; Returns the style settings affecting a widget defined by path, or NULL if
-;;; provider doesn't contemplate styling path.
+;;; provider does not contemplate styling path.
 ;;;
 ;;; Warning
 ;;;

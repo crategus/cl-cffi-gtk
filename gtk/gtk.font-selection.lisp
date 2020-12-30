@@ -373,7 +373,7 @@
 
   @begin{short}
     Gets the @class{pango-font-face} representing the selected font group
-    details (i. e. family, slant, weight, width, etc).
+    details (i.e. family, slant, weight, width, etc).
   @end{short}
   @see-class{gtk-font-selection}"
   (fontsel (g-object gtk-font-selection)))

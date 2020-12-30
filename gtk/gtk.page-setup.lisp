@@ -97,7 +97,7 @@
   affect the actual layout of the page, and thus need to be set long before user
   prints.
 
-  The margins specified in this object are the \"print margins\", i. e. the
+  The margins specified in this object are the \"print margins\", i.e. the
   parts of the page that the printer cannot print on. These are different from
   the layout margins that a word processor uses; they are typically used to
   determine the minimal size for the layout margins.

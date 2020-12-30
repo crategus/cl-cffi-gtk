@@ -786,7 +786,7 @@
 
   The function @sym{gtk-calendar-display-options} returns the current display
   options of the calendar. The function
-  @sym{(setf gtk-calendar-display-options)} sets display options, e. g.
+  @sym{(setf gtk-calendar-display-options)} sets display options, e.g.
   whether to display the heading and the month headings.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}"
@@ -803,7 +803,7 @@
  "@version{2020-6-3}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @begin{return}
-    @code{year} -- the year as a decimal number, e. g. 2011, or @code{nil} @br{}
+    @code{year} -- the year as a decimal number, e.g. 2011, or @code{nil} @br{}
     @code{month} -- the month number, between 0 and 11, or @code{nil} @br{}
     @code{day} -- the day number, between 1 and 31, or @code{nil}
   @end{return}

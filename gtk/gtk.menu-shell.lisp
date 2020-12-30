@@ -550,7 +550,7 @@
   menu model. If the menu model is @code{nil} then any previous binding is
   undone and all children are removed.
 
-  @arg{with-separators} determines if toplevel items, e. g. sections, have
+  @arg{with-separators} determines if toplevel items, e.g. sections, have
   separators inserted between them. This is typically desired for menus but
   does not make sense for menubars.
 

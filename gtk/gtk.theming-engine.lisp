@@ -604,7 +604,7 @@
 ;;;     Theme engine name to load
 ;;;
 ;;; Returns :
-;;;     A theming engine, or NULL if the engine name doesn't exist.
+;;;     A theming engine, or NULL if the engine name does not exist.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

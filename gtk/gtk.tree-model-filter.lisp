@@ -123,7 +123,7 @@
   that is exposed by the reference counting scheme. If the child model
   implements reference counting, unnecessary signals may not be emitted because
   of reference counting rule 3, see the @class{gtk-tree-model} documentation.
-  (Note that e. g. @class{gtk-tree-store} does not implement reference counting
+  (Note that e.g. @class{gtk-tree-store} does not implement reference counting
   and will always emit all signals, even when the receiving node is not
   visible).
 
@@ -277,7 +277,7 @@
     @code{nil} otherwise.
   @end{short}
 
-  If the condition calculated by the function changes over time, e. g. because
+  If the condition calculated by the function changes over time, e.g. because
   it depends on some global parameters, you must call the function
   @fun{gtk-tree-model-filter-refilter} to keep the visibility information of the
   model uptodate.

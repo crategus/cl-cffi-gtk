@@ -222,7 +222,7 @@
  "@version{*2020-5-26}
   @begin{short}
     Dialog windows are a convenient way to prompt the user for a small amount
-    of input, e. g. to display a message, ask a question, or anything else that
+    of input, e.g. to display a message, ask a question, or anything else that
     does not require extensive effort on the user's part.
   @end{short}
 
@@ -962,7 +962,7 @@
   Interface Guidelines with the affirmative button at the far right, and the
   cancel button left of it. But the builtin GTK+ dialogs and message dialogs
   do provide an alternative button order, which is more suitable on some
-  platforms, e. g. Windows.
+  platforms, e.g. Windows.
   @begin[Example]{dictionary}
     Use this function after adding all the buttons to your dialog, as the
     following example shows:

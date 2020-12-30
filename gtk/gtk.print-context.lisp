@@ -73,7 +73,7 @@
  "@version{2020-4-9}
   @begin{short}
     A @sym{gtk-print-context} encapsulates context information that is required
-    when drawing pages for printing, such as the cairo context and important
+    when drawing pages for printing, such as the Cairo context and important
     parameters like page size and resolution.
   @end{short}
   It also lets you easily create @class{pango-layout} and @class{pango-context}
@@ -136,9 +136,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-4-9}
   @argument[context]{a @class{gtk-print-context} object}
-  @return{The cairo context of @arg{context}.}
+  @return{The Cairo context of @arg{context}.}
   @begin{short}
-    Obtains the cairo context that is associated with the
+    Obtains the Cairo context that is associated with the
     @class{gtk-print-context}.
   @end{short}
   @see-class{gtk-print-context}
@@ -163,16 +163,16 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-4-9}
   @argument[context]{a @class{gtk-print-context} object}
-  @argument[cr]{the cairo context}
+  @argument[cr]{the Cairo context}
   @argument[dpi-x]{the horizontal resolution to use with @arg{cr}}
   @argument[dpi-y]{the vertical resolution to use with @arg{cr}}
   @begin{short}
-    Sets a new cairo context on a print context.
+    Sets a new Cairo context on a print context.
   @end{short}
 
   This function is intended to be used when implementing an internal print
   preview, it is not needed for printing, since GTK+ itself creates a suitable
-  cairo context in that case.
+  Cairo context in that case.
   @see-class{gtk-print-context}
   @see-symbol{cairo-t}
   @see-function{gtk-print-context-get-cairo-context}"

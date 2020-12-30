@@ -232,7 +232,7 @@
  "The @code{page-size} property of type @code{:double} (Read / Write) @br{}
   The page size of the adjustment. Note that the page size is irrelevant and
   should be set to zero if the adjustment is used for a simple scalar value,
-  e. g. in a @class{gtk-spin-button}. @br{}
+  e.g. in a @class{gtk-spin-button}. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation

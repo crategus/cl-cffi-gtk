@@ -116,7 +116,7 @@
 ;;;
 ;;; The name used for the stock full offset included by GtkLevelBar.
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -199,7 +199,7 @@
   The default interval of values is between zero and one, but it is possible to
   modify the interval using the functions @fun{gtk-level-bar-min-value} and
   @fun{gtk-level-bar-max-value}. The value will be always drawn in proportion to
-  the admissible interval, i. e. a value of 15 with a specified interval between
+  the admissible interval, i.e. a value of 15 with a specified interval between
   10 and 20 is equivalent to a value of 0.5 with an interval between 0 and 1.
   When the mode @code{:discrete} is used, the level bar is rendered as a finite
   and number of separated blocks instead of a single one. The number of blocks

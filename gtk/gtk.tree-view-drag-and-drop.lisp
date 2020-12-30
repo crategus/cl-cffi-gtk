@@ -186,7 +186,7 @@
 ;;;                                              GtkTreePath *path);
 ;;;
 ;;; Asks the GtkTreeDragSource whether a particular row can be used as the
-;;; source of a DND operation. If the source doesn't implement this interface,
+;;; source of a DND operation. If the source does not implement this interface,
 ;;; the row is assumed draggable.
 ;;;
 ;;; drag_source :
@@ -305,7 +305,7 @@
 ;;; Determines whether a drop is possible before the given dest_path, at the
 ;;; same depth as dest_path. i.e., can we drop the data in selection_data at
 ;;; that location. dest_path does not have to exist; the return value will
-;;; almost certainly be FALSE if the parent of dest_path doesn't exist, though.
+;;; almost certainly be FALSE if the parent of dest_path does not exist, though.
 ;;;
 ;;; drag_dest :
 ;;;     a GtkTreeDragDest

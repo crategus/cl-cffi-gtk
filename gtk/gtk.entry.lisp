@@ -610,7 +610,7 @@
   Note that functionality or information that is only available by clicking on
   an icon in an entry may not be accessible at all to users which are not able
   to use a mouse or other pointing device. It is therefore recommended that
-  any such functionality should also be available by other means, e. g. via the
+  any such functionality should also be available by other means, e.g. via the
   context menu of the entry.
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -808,7 +808,7 @@
       this signal and append your items to the widget, which will be a
       @class{gtk-menu} in this case. If the @code{populate-all} property is
       @em{true}, this signal will also be emitted to populate touch popups. In
-      this case, widget will be a different container, e. g. a
+      this case, widget will be a different container, e.g. a
       @class{gtk-toolbar}. The signal handler should not make assumptions about
       the type of the widget.
       @begin[code]{table}
@@ -1348,7 +1348,7 @@
   the actual text when the function @fun{gtk-entry-visibility} has been called
   to set text visibility to @em{false}.
 
-  I. e. this is the character used in \"password mode\" to show the user how
+  I.e. this is the character used in \"password mode\" to show the user how
   many characters have been typed. By default, GTK+ picks the best invisible
   char available in the current font. If you set the invisible char to 0, then
   the user will get no feedback at all. There will be no text on the screen as
@@ -2630,7 +2630,7 @@
   @begin{short}
     Gets the @class{pango-layout} object used to display the entry.
   @end{short}
-  The layout is useful to e. g. convert text positions to pixel positions, in
+  The layout is useful to e.g. convert text positions to pixel positions, in
   combination with the function @fun{gtk-entry-layout-offsets}. The returned
   layout is owned by the entry and must not be modified or freed by the
   caller.
@@ -2669,11 +2669,11 @@
     Obtains the position of the Pango layout used to render text in the entry,
     in widget coordinates.
   @end{short}
-  Useful if you want to line up the text in an entry with some other text, e. g.
+  Useful if you want to line up the text in an entry with some other text, e.g.
   when using the entry to implement editable cells in a sheet widget.
 
   Also useful to convert mouse events into coordinates inside the Pango layout,
-  e. g. to take some action if some part of the entry text is clicked.
+  e.g. to take some action if some part of the entry text is clicked.
 
   Note that as the user scrolls around in the entry the offsets will change.
   You will need to connect to the \"notify::scroll-offset\" signal to track
@@ -3048,7 +3048,7 @@
   @end{return}
   @begin{short}
     Retrieves the stock ID used for the icon, or @code{nil} if there is no icon
-    or if the icon was set by some other method, e. g., by pixbuf, icon name or
+    or if the icon was set by some other method, e.g., by pixbuf, icon name or
     gicon.
   @end{short}
   @begin[Warning]{dictionary}
@@ -3083,7 +3083,7 @@
   @end{return}
   @begin{short}
     Retrieves the icon name used for the icon, or @code{nil} if there is no icon
-    or if the icon was set by some other method, e. g., by pixbuf, stock or
+    or if the icon was set by some other method, e.g., by pixbuf, stock or
     gicon.
   @end{short}
   @see-class{gtk-entry}
@@ -3110,7 +3110,7 @@
     not a @class{g-icon}.}
   @begin{short}
     Retrieves the @class{g-icon} used for the icon, or @code{nil} if there is no
-    icon or if the icon was set by some other method, e. g., by stock, pixbuf,
+    icon or if the icon was set by some other method, e.g., by stock, pixbuf,
     or icon name.
   @end{short}
   @see-class{gtk-entry}

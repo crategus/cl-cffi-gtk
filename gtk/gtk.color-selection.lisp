@@ -236,7 +236,7 @@
   @syntax[]{(gtk-color-selection-current-rgba object) => rgba}
   @syntax[]{(setf (gtk-color-selection-current-rgba object) rgba)}
   @argument[object]{a @class{gtk-color-selection} widget}
-  @argument[rgba]{a @class{gdk-rgba} to set the current color with}
+  @argument[rgba]{a @class{gdk-rgba} color to set the current color with}
   @begin{short}
     Accessor of the @slot[gtk-color-selection]{current-rgba} slot of the
     @class{gtk-color-selection} class.
@@ -514,7 +514,7 @@
     since version 3.4 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-color-selection}"
-  (let ((color (make-gdk-color)))
+  (let ((color (gdk-color-new)))
     (%gtk-color-selection-get-previous-color color-selection color)
     color))
 
@@ -560,7 +560,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-24}
   @argument[color-selection]{a @class{gtk-color-selection} widget}
-  @short{Gets the original @class{gdk-rgba} color value.}
+  @short{Gets the original @class{gdk-rgba} color.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-get-previous-rgba} is deprecated
     since version 3.4 and should not be used in newly-written code.
@@ -581,7 +581,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-22}
   @argument[color-selection]{a @class{gtk-color-selection} widget}
-  @argument[rgba]{a @class{gdk-rgba} to set the previous color with}
+  @argument[rgba]{a @class{gdk-rgba} color to set the previous color with}
   @begin{short}
     Sets the previous color to be @arg{rgba}.
   @end{short}

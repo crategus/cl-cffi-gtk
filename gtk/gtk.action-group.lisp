@@ -127,9 +127,9 @@
   in a single group. Multiple action groups may be used for a particular user
   interface. In fact, it is expected that most nontrivial applications will
   make use of multiple groups. For example, in an application that can edit
-  multiple documents, one group holding global actions, e. g. quit, about,
+  multiple documents, one group holding global actions, e.g. quit, about,
   new, and one group per document holding actions that act on that document,
-  e. g. save, cut, copy, paste. Each window's menus would be constructed
+  e.g. save, cut, copy, paste. Each window's menus would be constructed
   from a combination of two action groups.
 
   @subheading{Accelerators}
@@ -155,7 +155,7 @@
     interface supports a custom @code{<accelerator>} element, which has
     attributes named @code{key} and @code{modifiers} and allows to specify
     accelerators. This is similar to the @code{<accelerator>} element of
-    @class{gtk-widget}, the main difference is that it doesn't allow you to
+    @class{gtk-widget}, the main difference is that it does not allow you to
     specify a signal.
 
     @b{Example:} A @sym{gtk-action-group} UI definition fragment.
@@ -181,7 +181,7 @@
       action in the group. Note that the proxy may have been connected to a
       different action before.
       This is intended for simple customizations for which a custom action class
-      would be too clumsy, e. g. showing tooltips for menuitems in the
+      would be too clumsy, e.g. showing tooltips for menuitems in the
       statusbar. @class{gtk-ui-manager} proxies the signal and provides global
       notification just before any action is connected to a proxy, which is
       probably more convenient to use.

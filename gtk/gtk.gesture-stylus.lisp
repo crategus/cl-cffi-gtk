@@ -197,7 +197,7 @@
 ;;; Returns :
 ;;;     TRUE if there is a current value for the axes
 ;;;
-;;; Since: 3.24
+;;; Since 3.24
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Implement the function

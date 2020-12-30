@@ -156,7 +156,7 @@
     folder. This is no longer considered to be a good policy, as now the file
     chooser is able to make good suggestions on its own. In general, you should
     only cause the file chooser to show a specific folder when it is appropriate
-    to use the function @fun{gtk-file-chooser-filename}, i. e. when you are
+    to use the function @fun{gtk-file-chooser-filename}, i.e. when you are
     doing a File/Save As command and you already have a file saved somewhere.
 
   @subheading{Response Codes}
@@ -176,7 +176,7 @@
     identifiers from @symbol{gtk-response-type}. For most dialog boxes you can
     use your own custom response codes rather than the ones in
     @symbol{gtk-response-type}, but @sym{gtk-file-chooser-dialog} assumes that
-    its \"accept\"-type action, e. g. an \"Open\"
+    its \"accept\"-type action, e.g. an \"Open\"
     or \"Save\" button, will have one of the following response codes:
     @begin{pre}
      @code{:accept}

@@ -147,7 +147,7 @@
   The model is represented as a hierarchical tree of strongly-typed, columned
   data. In other words, the model can be seen as a tree where every node has
   different values depending on which column is being queried. The type of
-  data found in a column is determined by using the GType system (i. e.
+  data found in a column is determined by using the GType system (i.e.
   @code{G_TYPE_INT}, @code{GTK_TYPE_BUTTON}, @code{G_TYPE_POINTER}, etc). The
   types are homogeneous per column across all nodes. It is important to note
   that this interface only provides a way of examining a model and observing
@@ -387,7 +387,7 @@
           children have been reordered.}
         @entry[iter]{A valid @class{gtk-tree-iter} pointing to the node whose.}
         @entry[new-order]{An array of integers mapping the current position of
-          each child to its old position before the re-ordering, i. e.
+          each child to its old position before the re-ordering, i.e.
           @code{@arg{new-order}[newpos] = oldpos}.}
       @end{table}
   @end{dictionary}")
@@ -1184,7 +1184,7 @@
 ;;; for that proxy. Since built-in GTK+ objects like GtkTreeView already use
 ;;; this mechanism internally, using them as the proxy object will produce
 ;;; unpredictable results. Further more, passing the same object as model and
-;;; proxy doesn't work for reasons of internal implementation.
+;;; proxy does not work for reasons of internal implementation.
 ;;;
 ;;; This type of row reference is primarily meant by structures that need to
 ;;; carefully monitor exactly when a row reference updates itself, and is not

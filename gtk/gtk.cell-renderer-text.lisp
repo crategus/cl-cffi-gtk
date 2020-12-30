@@ -501,13 +501,13 @@
   @syntax[]{(gtk-cell-renderer-text-background-rgba object) => background}
   @syntax[]{(setf (gtk-cell-renderer-text-background-rgba object) background)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[background]{a @class{gdk-rgba} with the background color}
+  @argument[background]{a @class{gdk-rgba} color with the background color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{background-rgba} slot of the
     @class{gtk-cell-renderer-text} class.
   @end{short}
 
-  Background color as a @class{gdk-rgba}.
+  The @class{gdk-rgba} background color.
   @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-background-set ----------------------------------
@@ -655,7 +655,7 @@
 (setf (documentation (atdoc:get-slot-from-name "family"
                                                'gtk-cell-renderer-text) 't)
  "The @code{family} property of type @code{:string} (Read / Write) @br{}
-  Name of the font family, e. g. Sans, Helvetica, Times, Monospace. @br{}
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -672,7 +672,7 @@
     @class{gtk-cell-renderer-text} class.
   @end{short}
 
-  Name of the font family, e. g. Sans, Helvetica, Times, Monospace.
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
   @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-family-set --------------------------------------
@@ -707,7 +707,7 @@
 (setf (documentation (atdoc:get-slot-from-name "font"
                                                'gtk-cell-renderer-text) 't)
  "The @code{font} property of type @code{:string} (Read / Write) @br{}
-  Font description as a string, e. g. \"Sans Italic 12\". @br{}
+  Font description as a string, e.g. \"Sans Italic 12\". @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -724,7 +724,7 @@
     @class{gtk-cell-renderer-text} class.
   @end{short}
 
-  Font description as a string, e. g. \"Sans Italic 12\".
+  Font description as a string, e.g. \"Sans Italic 12\".
   @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-font-desc ---------------------------------------
@@ -833,7 +833,7 @@
     @class{gtk-cell-renderer-text} class.
   @end{short}
 
-  Foreground color as a @class{gdk-rgba}.
+  The @class{gdk-rgba} foreground color.
   @see-class{gtk-cell-renderer-text}")
 
 ;;; --- gtk-cell-renderer-text-foreground-set ----------------------------------
@@ -1717,7 +1717,7 @@
   Further changes in these properties do not affect the height, so they must be
   accompanied by a subsequent call to this function. Using this function is
   unflexible, and should really only be used if calculating the size of a cell
-  is too slow, i. e., a massive number of cells displayed. If
+  is too slow, i.e., a massive number of cells displayed. If
   @arg{number-of-rows} is -1, then the fixed height is unset, and the height is
   determined by the properties again.
   @see-class{gtk-cell-renderer-text}"

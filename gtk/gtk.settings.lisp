@@ -2957,7 +2957,7 @@ size-name = width , height
 ;;; name :
 ;;;     the name of the setting to reset
 ;;;
-;;; Since: 3.20
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.settings.lisp ------------------------------------------

@@ -185,9 +185,9 @@
       rendered.}
     @entry[:sending-data]{The print job is being sent off to the printer.}
     @entry[:pending]{The print job has been sent to the printer, but is not
-      printed for some reason, e. g. the printer may be stopped.}
+      printed for some reason, e.g. the printer may be stopped.}
     @entry[:pending-issue]{Some problem has occurred during printing,
-      e. g. a paper jam.}
+      e.g. a paper jam.}
     @entry[:printing]{The printer is processing the print job.}
     @entry[:finished]{The printing has been completed successfully.}
     @entry[:finished-aborted]{The printing has been aborted.}
@@ -420,7 +420,7 @@
   The typical way to use the high-level printing API is to create a
   @sym{gtk-print-operation} object with the @fun{gtk-print-operation-new}
   function when the user selects to print. Then you set some properties on it,
-  e. g. the page size, any @class{gtk-print-settings} from previous print
+  e.g. the page size, any @class{gtk-print-settings} from previous print
   operations, the number of pages, the current page, etc.
 
   Then you start the print operation by calling the
@@ -528,11 +528,11 @@
  lambda (operation context page-nr)    : Run Last
       @end{pre}
       Emitted for every page that is printed. The signal handler must render the
-      @arg{page-nr}'s page onto the cairo context obtained from @arg{context}
+      @arg{page-nr}'s page onto the Cairo context obtained from @arg{context}
       using the function @fun{gtk-print-context-get-cairo-context}. Use the
       functions @fun{gtk-print-operation-use-full-page} and
       @fun{gtk-print-operation-unit} before starting the print operation to set
-      up the transformation of the cairo context according to your needs.
+      up the transformation of the Cairo context according to your needs.
       @begin{pre}
 (defun draw-page (operation context page-nr)
   (declare (ignore operation page-nr))
@@ -676,7 +676,7 @@
       The \"got-page-size\" signal is emitted once for each page that gets
       rendered to the preview. A handler for this signal should update the
       context according to the @arg{page-setup} argument and set up a suitable
-      cairo context, using the function
+      Cairo context, using the function
       @fun{gtk-print-context-set-cairo-context}.
       @begin[code]{table}
         @entry[preview]{The @class{gtk-print-operation-preview} object on which
@@ -977,7 +977,7 @@
 (setf (documentation (atdoc:get-slot-from-name "job-name"
                                                'gtk-print-operation) 't)
  "The @code{job-name} property of type @code{:string} (Read / Write) @br{}
-  A string used to identify the job, e. g. in monitoring applications like
+  A string used to identify the job, e.g. in monitoring applications like
   eggcups. If you do not set a job name, GTK+ picks a default one by numbering
   successive print jobs. @br{}
   Default value: \"\" ")
@@ -999,7 +999,7 @@
   The slot access function @sym{(setf gtk-print-operation-job-name)} sets the
   name of the print job.
 
-  The name is used to identify the job, e. g. in monitoring applications like
+  The name is used to identify the job, e.g. in monitoring applications like
   eggcups.
 
   If you do not set a job name, GTK+ picks a default one by numbering
@@ -1015,7 +1015,7 @@
   The number of pages in the document. This must be set to a positive number
   before the rendering starts. It may be set in a \"begin-print\" signal
   hander. Note that the page numbers passed to the \"request-page-setup\" and
-  \"draw-page\" signals are 0-based, i. e. if the user chooses to print all
+  \"draw-page\" signals are 0-based, i.e. if the user chooses to print all
   pages, the last \"draw-page\" signal will be for page @code{n-pages} - 1.@br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
@@ -1041,7 +1041,7 @@
   set in a \"begin-print\" signal hander.
 
   Note that the page numbers passed to the \"request-page-setup\" and
-  \"draw-page\" signals are 0-based, i. e. if the user chooses to print all
+  \"draw-page\" signals are 0-based, i.e. if the user chooses to print all
   pages, the last \"draw-page\" signal will be for page @arg{n-pages} - 1.
   @see-class{gtk-print-operation}")
 
@@ -1187,7 +1187,7 @@
                                                'gtk-print-operation) 't)
  "The @code{status-string} property of type @code{:string} (Read) @br{}
   A string representation of the status of the print operation. The string is
-  translated and suitable for displaying the print status e. g. in a
+  translated and suitable for displaying the print status e.g. in a
   @class{gtk-statusbar} widget. See the @code{status} property for a status
   value that is suitable for programmatic use. @br{}
   Default value: \"\"")
@@ -1209,7 +1209,7 @@
   The slot access function @sym{gtk-print-operation-status-string} returns a
   string representation of the status of the print operation.
 
-  The string is translated and suitable for displaying the print status e. g.
+  The string is translated and suitable for displaying the print status e.g.
   in a @class{gtk-statusbar} widget.
 
   Use the function @fun{gtk-print-operation-status} to obtain a status value
@@ -1293,7 +1293,7 @@
 (setf (documentation (atdoc:get-slot-from-name "unit"
                                                'gtk-print-operation) 't)
  "The @code{unit} property of type @symbol{gtk-unit} (Read / Write) @br{}
-  The transformation for the cairo context obtained from
+  The transformation for the Cairo context obtained from
   @class{gtk-print-context} is set up in such a way that distances are measured
   in units of a value of the @symbol{gtk-unit} enumeration. @br{}
   Default value: @code{:pixel}")
@@ -1313,7 +1313,7 @@
   @end{short}
 
   The @sym{(setf gtk-print-operation-unit)} slot access function sets up the
-  transformation for the cairo context obtained from @class{gtk-print-context}
+  transformation for the Cairo context obtained from @class{gtk-print-context}
   in such a way that distances are measured in units of a value of the
   @symbol{gtk-unit} enumeration.
   @see-class{gtk-print-operation}")
@@ -1324,11 +1324,11 @@
 (setf (documentation (atdoc:get-slot-from-name "use-full-page"
                                                'gtk-print-operation) 't)
  "The @code{use-full-page} property of type @code{:boolean} (Read / Write) @br{}
-  If @em{true}, the transformation for the cairo context obtained from
+  If @em{true}, the transformation for the Cairo context obtained from
   @class{gtk-print-context} puts the origin at the top left corner of the page,
   which may not be the top left corner of the sheet, depending on page
   orientation and the number of pages per sheet. Otherwise, the origin is at
-  the top left corner of the imageable area, i. e. inside the margins. @br{}
+  the top left corner of the imageable area, i.e. inside the margins. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -1346,11 +1346,11 @@
     @class{gtk-print-operation} class.
   @end{short}
 
-  If @arg{full-page} is @em{true}, the transformation for the cairo context
+  If @arg{full-page} is @em{true}, the transformation for the Cairo context
   obtained from @class{gtk-print-context} puts the origin at the top left corner
   of the page, which may not be the top left corner of the sheet, depending on
   page orientation and the number of pages per sheet. Otherwise, the origin is
-  at the top left corner of the imageable area, i. e. inside the margins.
+  at the top left corner of the imageable area, i.e. inside the margins.
   @see-class{gtk-print-operation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1432,7 +1432,7 @@
   If you call the function @fun{gtk-print-operation-allow-async} the operation
   will run asynchronously if this is supported on the platform. The \"done\"
   signal will be emitted with the result of the operation when the it is done,
-  i. e. when the dialog is canceled, or when the print succeeds or fails.
+  i.e. when the dialog is canceled, or when the print succeeds or fails.
 
   Note that the function @sym{gtk-print-operation-run} can only be called once
   on a given @class{gtk-print-operation}.
@@ -1496,7 +1496,7 @@
     Signalize that drawing of the particular page is complete.
   @end{short}
 
-  The function is called after completion of page drawing, e. g. drawing in
+  The function is called after completion of page drawing, e.g. drawing in
   another thread. If the function @fun{gtk-print-operation-set-defer-drawing}
   was called before, then this function has to be called by the application.
   In another case it is called by the library itself.
@@ -1708,7 +1708,7 @@
   A custom print preview should use this function in its \"expose\" handler to
   render the currently selected page.
 
-  Note that this function requires a suitable cairo context to be associated
+  Note that this function requires a suitable Cairo context to be associated
   with the print context.
   @see-class{gtk-print-operation}
   @see-class{gtk-print-operation-preview-render-page}"

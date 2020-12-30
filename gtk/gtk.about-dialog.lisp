@@ -187,9 +187,9 @@
     @entry[:lgpl-3-0-only]{The GNU Lesser General Public License, version 3.0
       only. Since 3.12.}
     @entry[:agpl-3-0]{The GNU Affero General Public License, version 3.0 or
-      later. Since: 3.22.}
+      later. Since 3.22.}
     @entry[:agpl-3-0-only]{The GNU Affero General Public License, version 3.0
-      only. Since: 3.22.}
+      only. Since 3.22.}
   @end{table}
   @see-class{gtk-about-dialog}")
 
@@ -284,7 +284,7 @@
                        :title \"About ExampleCode\")
   @end{pre}
   It is also possible to show a @sym{gtk-about-dialog} like any other
-  @class{gtk-dialog}, e. g. using the function @fun{gtk-dialog-run}. In this
+  @class{gtk-dialog}, e.g. using the function @fun{gtk-dialog-run}. In this
   case, you might need to know that the \"Close\" button returns the
   @code{:cancel} response ID.
   @begin[Signal Details]{dictionary}

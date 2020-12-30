@@ -187,7 +187,7 @@
  "@version{2020-5-31}
   @begin{short}
     @sym{gtk-range} is the common base class for widgets which visualize an
-    adjustment, e. g. @class{gtk-scale} or @class{gtk-scrollbar}.
+    adjustment, e.g. @class{gtk-scale} or @class{gtk-scrollbar}.
   @end{short}
 
   Apart from signals for monitoring the parameters of the adjustment,
@@ -386,7 +386,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fill-level" 'gtk-range) 't)
  "The @code{fill-level} property of type @code{:double} (Read / Write) @br{}
-  The fill level, e. g. prebuffering of a network stream. See the function
+  The fill level, e.g. prebuffering of a network stream. See the function
   @fun{gtk-range-fill-level}. @br{}
   Default value: 1.79769e+308")
 

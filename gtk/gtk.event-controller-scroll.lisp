@@ -137,7 +137,7 @@
 
   The behavior of the event controller can be modified by the flags given at
   creation time, or modified at a later point through the generic function
-  @fun{gtk-event-controller-scroll-flags}, e. g. because the scrolling
+  @fun{gtk-event-controller-scroll-flags}, e.g. because the scrolling
   conditions of the widget changed.
 
   The controller can be set up to emit motion for either/both vertical and

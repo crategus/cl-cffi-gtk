@@ -196,8 +196,8 @@
 ;;; gtk_stock_add_static has been deprecated since version 3.10 and should not
 ;;; be used in newly-written code.
 ;;;
-;;; Same as gtk_stock_add(), but doesn't copy items, so items must persist until
-;;; application exit.
+;;; Same as gtk_stock_add(), but does not copy items, so items must persist
+;;; until application exit.
 ;;;
 ;;; items :
 ;;;     a GtkStockItem or array of GtkStockItem

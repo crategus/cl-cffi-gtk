@@ -948,12 +948,12 @@
  "@version{2013-11-9}
   @argument[widget]{the widget which acts as requestor}
   @argument[selection]{which selection to get}
-  @argument[target]{form of information desired, e. g., @code{STRING}}
+  @argument[target]{form of information desired, e.g., @code{STRING}}
   @argument[time]{time of request, usually of triggering event, in emergency,
     you could use @var{+gdk-current-time+}}
   @begin{return}
     @em{True} if requested succeeded. @code{Nil} if we could not process
-    request. E. g., there was already a request in process for this widget.
+    request. E.g., there was already a request in process for this widget.
   @end{return}
   Requests the contents of a @arg{selection}. When received, a
   \"selection-received\" signal will be generated.

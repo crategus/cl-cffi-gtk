@@ -446,7 +446,7 @@
       (gethash 'gtk-position-type atdoc:*external-symbols*)
  "@version{2013-4-18}
   @begin{short}
-    Describes which edge of a widget a certain feature is positioned at, e. g.
+    Describes which edge of a widget a certain feature is positioned at, e.g.
     the tabs of a @class{gtk-notebook} or the label of a @class{gtk-scale}.
   @end{short}
   @begin{pre}
@@ -948,7 +948,7 @@
   toggle the frame. Windows with type @code{:popup} are ignored by the window
   manager; window manager keybindings will not work on them, the window manager
   will not decorate the window with a frame, many GTK+ features that rely on
-  the window manager will not work (e. g. resize grips and
+  the window manager will not work (e.g. resize grips and
   maximization/minimization). The type @code{:popup} is used to implement
   widgets such as @class{gtk-menu} or tooltips that you normally do not think
   of as windows per se. Nearly all windows should be of type @code{:toplevel}.

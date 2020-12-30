@@ -129,7 +129,7 @@
 ;;; "<Control>Left" key presses before it resorts to its default bindings, and
 ;;; the match instructs it to abort ("unbind") the search, so the key presses
 ;;; are not consumed by this widget. As usual, further processing of the key
-;;; presses, e. g. by an entry's parent widget, is now possible.
+;;; presses, e.g. by an entry's parent widget, is now possible.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

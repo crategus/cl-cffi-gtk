@@ -216,7 +216,7 @@
     dimensions, that is to say that a widget or container can only have a
     @symbol{gtk-size-request-mode} that is @code{:height-for-width} or
     @code{:width-for-height}. However, every widget and container must
-    be able to respond to the APIs for both dimensions, i. e. even if a widget
+    be able to respond to the APIs for both dimensions, i.e. even if a widget
     has a request mode that is height-for-width, it is possible that its parent
     will request its sizes using the width-for-height APIs.
 
@@ -936,7 +936,7 @@
   @end{short}
 
   Note that this may return @variable{+g-type-none+} to indicate that no more
-  children can be added, e. g. for a @class{gtk-paned} container which already
+  children can be added, e.g. for a @class{gtk-paned} container which already
   has two children.
   @see-class{gtk-container}"
   (container (g-object gtk-container)))
@@ -1143,7 +1143,7 @@
 ;;; pspec :
 ;;;     the GParamSpec of a child property instealled on the class of container
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1375,7 +1375,7 @@
 ;;; pspecs :
 ;;;     the GParamSpec array defining the new child properties.
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

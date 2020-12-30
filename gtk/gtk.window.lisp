@@ -363,7 +363,7 @@
   @image[window]{}
 
   Windows normally have decorations that are under the control of the windowing
-  system and allow the user to manipulate the window, e. g. to resize it, move
+  system and allow the user to manipulate the window, e.g. to resize it, move
   it, or close it.
   @begin[GtkWindow as GtkBuildable]{dictionary}
     The @sym{gtk-window} implementation of the @class{gtk-buildable} interface
@@ -1571,7 +1571,7 @@
   window.
 
   Dialog windows should be set transient for the main application window they
-  were spawned from. This allows window managers to e. g. keep the dialog on
+  were spawned from. This allows window managers to e.g. keep the dialog on
   top of the main window, or center the dialog over the main window. The
   function @fun{gtk-dialog-new-with-buttons} and other convenience functions
   in GTK+ will sometimes call the function @sym{gtk-window-transient-for} on
@@ -2303,10 +2303,10 @@
  "@version{*2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
-    Asks to iconify, i. e. minimize, the specified window.
+    Asks to iconify, i.e. minimize, the specified window.
   @end{short}
   Note that you should not assume the window is definitely iconified afterward,
-  because other entities, e. g. the user or window manager, could deiconify it
+  because other entities, e.g. the user or window manager, could deiconify it
   again, or there may not be a window manager in which case iconification is
   not possible, etc. But normally the window will end up iconified. Just do not
   write code that crashes if not.
@@ -2330,10 +2330,10 @@
  "@version{*2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
-    Asks to deiconify, i. e. unminimize, the specified window.
+    Asks to deiconify, i.e. unminimize, the specified window.
   @end{short}
   Note that you should not assume the window is definitely deiconified
-  afterward, because other entities, e. g. the user or window manager, could
+  afterward, because other entities, e.g. the user or window manager, could
   iconify it again before your code which assumes deiconification gets to run.
 
   You can track iconification via the \"window-state-event\" signal on
@@ -2356,7 +2356,7 @@
     desktops.
   @end{short}
   Note that you should not assume the window is definitely stuck afterward,
-  because other entities, e. g. the user or window manager, could unstick it
+  because other entities, e.g. the user or window manager, could unstick it
   again, and some window managers do not support sticking windows. But normally
   the window will end up stuck. Just do not write code that crashes if not.
 
@@ -2382,7 +2382,7 @@
     the user's desktops.
   @end{short}
   Note that you should not assume the window is definitely unstuck afterward,
-  because other entities, e. g. the user or window manager, could stick it
+  because other entities, e.g. the user or window manager, could stick it
   again. But normally the window will end up stuck. Just do not write code that
   crashes if not.
 
@@ -2405,7 +2405,7 @@
     Asks to maximize the window, so that it becomes full screen.
   @end{short}
   Note that you should not assume the window is definitely maximized afterward,
-  because other entities, e. g. the user or window manager, could unmaximize it
+  because other entities, e.g. the user or window manager, could unmaximize it
   again, and not all window managers support maximization. But normally the
   window will end up maximized. Just do not write code that crashes if not.
 
@@ -2432,7 +2432,7 @@
     Asks to unmaximize the window.
   @end{short}
   Note that you should not assume the window is definitely unmaximized
-  afterward, because other entities, e. g. the user or window manager, could
+  afterward, because other entities, e.g. the user or window manager, could
   maximize it again, and not all window managers honor requests to unmaximize.
   But normally the window will end up unmaximized. Just do not write code that
   crashes if not.
@@ -2456,7 +2456,7 @@
     Asks to place the window in the fullscreen state.
   @end{short}
   Note that you should not assume the window is definitely full screen
-  afterward, because other entities, e. g. the user or window manager, could
+  afterward, because other entities, e.g. the user or window manager, could
   unfullscreen it again, and not all window managers honor requests to
   fullscreen windows. But normally the window will end up fullscreen. Just do
   not write code that crashes if not.
@@ -2510,7 +2510,7 @@
     Asks to toggle off the fullscreen state for the window.
   @end{short}
   Note that you should not assume the window is definitely not full screen
-  afterward, because other entities, e. g. the user or window manager, could
+  afterward, because other entities, e.g. the user or window manager, could
   fullscreen it again, and not all window managers honor requests to
   unfullscreen windows. But normally the window will end up restored to its
   normal state. Just do not write code that crashes if not.
@@ -2535,7 +2535,7 @@
     Asks to keep the window above, so that it stays on top.
   @end{short}
   Note that you should not assume the window is definitely above afterward,
-  because other entities, e. g. the user or window manager, could not keep it
+  because other entities, e.g. the user or window manager, could not keep it
   above, and not all window managers support keeping windows above. But normally
   the window will end kept above. Just do not write code that crashes if not.
 
@@ -2547,7 +2547,7 @@
 
   Note that, according to the Extended Window Manager Hints specification, the
   above state is mainly meant for user preferences and should not be used by
-  applications e. g. for drawing attention to their dialogs.
+  applications e.g. for drawing attention to their dialogs.
   @see-class{gtk-window}"
   (window (g-object gtk-window))
   (setting :boolean))
@@ -2567,7 +2567,7 @@
     Asks to keep the window below, so that it stays in bottom.
   @end{short}
   Note that you should not assume the window is definitely below afterward,
-  because other entities, e. g. the user or window manager, could not keep it
+  because other entities, e.g. the user or window manager, could not keep it
   below, and not all window managers support putting windows below. But normally
   the window will be kept below. Just do not write code that crashes if not.
 
@@ -2579,7 +2579,7 @@
 
   Note that, according to the Extended Window Manager Hints specification,
   the above state is mainly meant for user preferences and should not be used
-  by applications e. g. for drawing attention to their dialogs.
+  by applications e.g. for drawing attention to their dialogs.
   @see-class{gtk-window}"
   (window (g-object gtk-window))
   (setting :boolean))
@@ -2928,7 +2928,7 @@
         If you are getting a window size in order to position the window
         onscreen, there may be a better way. The preferred way is to simply set
         the window's semantic type with the function @fun{gtk-window-type-hint},
-        which allows the window manager to e. g. center dialogs. Also, if you
+        which allows the window manager to e.g. center dialogs. Also, if you
         set the transient parent of dialogs with the function
         @fun{gtk-window-transient-for} window managers will often center the
         dialog over its parent window. It is much preferred to let the window
@@ -3074,7 +3074,7 @@
   This causes most window managers to honor the geometry.
 
   Note that for the function @sym{gtk-window-parse-geometry} to work as
-  expected, it has to be called when the window has its \"final\" size, i. e.
+  expected, it has to be called when the window has its \"final\" size, i.e.
   after calling the function @fun{gtk-widget-show-all} on the contents and the
   function @fun{gtk-window-set-geometry-hints} on the window.
   @begin{pre}

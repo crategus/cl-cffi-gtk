@@ -128,7 +128,7 @@
     @class{gtk-icon-view} or @class{gtk-combo-box}, there are some
     considerations related to the fact that these widgets internally use a
     @class{gtk-cell-area}. The cell area is exposed as a construct-only property
-    by these widgets. This means that it is possible to e. g. do
+    by these widgets. This means that it is possible to e.g. do
     @begin{pre}
  combo = g_object_new (GTK_TYPE_COMBO_BOX,
                        \"cell-area\", my_cell_area, NULL);

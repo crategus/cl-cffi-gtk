@@ -579,7 +579,7 @@
  lambda (view step count)    : Action
       @end{pre}
       The \"move-viewport\" signal is a keybinding signal which can be bound to
-      key combinations to allow the user to move the viewport, i. e. change what
+      key combinations to allow the user to move the viewport, i.e. change what
       part of the text view is visible in a containing scrolled window. There
       are no default bindings for this signal.
       @begin[code]{table}
@@ -607,7 +607,7 @@
       connect to this signal and append your items to the popup, which will be
       a @class{gtk-menu} in this case. If the @code{populate-all} property is
       @em{true}, this signal will also be emitted to populate touch popups. In
-      this case, popup will be a different container, e. g. a
+      this case, popup will be a different container, e.g. a
       @class{gtk-toolbar}. The signal handler should not make assumptions about
       the type of the widget, but check whether popup is a @class{gtk-menu} or
       @class{gtk-toolbar} or another kind of container.
@@ -1870,7 +1870,7 @@
 
   Note that this is different from the function
   @fun{gtk-text-view-iter-at-location}, which returns cursor locations,
-  i. e. positions between characters.
+  i.e. positions between characters.
   @see-class{gtk-text-view}
   @see-function{gtk-text-view-window-to-buffer-coords}
   @see-function{gtk-text-view-iter-at-location}"
@@ -2378,12 +2378,12 @@
  "@version{2020-6-7}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @begin{short}
-    Ensures that the cursor is shown, i. e. not in an 'off' blink interval, and
+    Ensures that the cursor is shown, i.e. not in an 'off' blink interval, and
     resets the time that it will stay blinking, or visible, in case blinking is
     disabled.
   @end{short}
 
-  This function should be called in response to user input, e. g. from derived
+  This function should be called in response to user input, e.g. from derived
   classes that override the textview's \"key-press-event\" handler.
 
   Since 3.20

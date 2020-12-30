@@ -389,7 +389,7 @@
                        action                         #REQUIRED >
     @end{pre}
     There are some additional restrictions beyond those specified in the DTD,
-    e. g. every toolitem must have a toolbar in its anchestry and every menuitem
+    e.g. every toolitem must have a toolbar in its anchestry and every menuitem
     must have a menubar or popup in its anchestry. Since a @code{GMarkup} parser
     is used to parse the UI description, it must not only be valid XML, but
     valid @code{GMarkup}.
@@ -468,7 +468,7 @@
     to have accelerators for actions even if they have no visible proxies.
 
     @subheading{Smart Separators}
-    The separators created by @sym{gtk-ui-manager} are \"smart\", i. e. they
+    The separators created by @sym{gtk-ui-manager} are \"smart\", i.e. they
     do not show up in the UI unless they end up between two visible menu or tool
     items. Separators which are located at the very beginning or end of the menu
     or toolbar containing them, or multiple separators next to each other, are
@@ -562,7 +562,7 @@
       The \"connect-proxy\" signal is emitted after connecting a proxy to an
       action in the group.
       This is intended for simple customizations for which a custom action class
-      would be too clumsy, e. g. showing tooltips for menuitems in the
+      would be too clumsy, e.g. showing tooltips for menuitems in the
       statusbar.
       @begin[code]{table}
         @entry[manager]{The @sym{gtk-ui-manager} object.}
@@ -823,8 +823,8 @@
   @end{short}
   The path consists of the names specified in the XML description of the UI
   separated by @code{'/'}. Elements which do not have a name or action attribute
-  in the XML, e. g. @code{<popup>}, can be addressed by their XML element name,
-  e. g. @code{\"popup\"}. The root element @code{(\"/ui\")} can be omitted in
+  in the XML, e.g. @code{<popup>}, can be addressed by their XML element name,
+  e.g. @code{\"popup\"}. The root element @code{(\"/ui\")} can be omitted in
   the path.
 
   Note that the widget found by following a path that ends in a @code{<menu>}

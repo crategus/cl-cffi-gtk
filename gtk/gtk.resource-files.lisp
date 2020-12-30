@@ -336,7 +336,7 @@
         @code{\"fontset\"} declarations are ignored; use @code{\"font_name\"}
         declarations instead.}
       @entry[font_name = font]{Sets the font for a widget. font must be a Pango
-        font name, e. g. \"Sans Italic 10\". For details about Pango font names,
+        font name, e.g. \"Sans Italic 10\". For details about Pango font names,
         see the function @fun{pango-font-description-from-string}.}
       @entry[stock[\"stock-id\"@] = { icon source specifications }]{Defines the
         icon for a stock item.}
@@ -808,7 +808,7 @@
 ;;;    appearance of all widgets, because when a widget gets a new style, it
 ;;;    will both redraw and recompute any cached information about its
 ;;;    appearance. As an example, it is used when the default font size set by
-;;;    the operating system changes. Note that this function doesn't affect
+;;;    the operating system changes. Note that this function does not affect
 ;;;    widgets that have a style set explicitely on them with
 ;;;    gtk_widget_set_style().
 ;;;

@@ -416,7 +416,7 @@
       on the root window. A handler for this signal can create a window
       containing a notebook where the tab will be attached. It is also
       responsible for moving/resizing the window and adding the necessary
-      properties to the notebook, e. g. the \"group\".
+      properties to the notebook, e.g. the \"group\".
       @begin[code]{table}
         @entry[notebook]{The @sym{gtk-notebook} container emitting the signal.}
         @entry[page]{The tab of notebook that is being detached.}
@@ -1665,7 +1665,7 @@
   function @fun{gtk-notebook-group-name}) to allow automatic tabs interchange
   between them.
   @begin[Example]{dictionary}
-    If you want a widget to interact with a notebook through DnD (i. e. accept
+    If you want a widget to interact with a notebook through DnD (i.e. accept
     dragged tabs from it) it must be set as a drop destination and accept the
     target \"GTK_NOTEBOOK_TAB\". The notebook will fill the selection with a
     GtkWidget** pointing to the child widget that corresponds to the dropped

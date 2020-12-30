@@ -86,7 +86,7 @@
   To start the animation in a cell, set the @code{active} property to @em{true}
   and increment the @code{pulse} property at regular intervals. The usual way to
   set the cell renderer properties for each cell is to bind them to columns in
-  your tree model using e. g. the function
+  your tree model using e.g. the function
   @fun{gtk-tree-view-column-add-attribute}.
   @see-slot{gtk-cell-renderer-spinner-active}
   @see-slot{gtk-cell-renderer-spinner-pulse}
@@ -105,7 +105,7 @@
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-cell-renderer-spinner) 't)
  "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the spinner is active, i. e. shown, in the cell. @br{}
+  Whether the spinner is active, i.e. shown, in the cell. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -122,7 +122,7 @@
     @class{gtk-cell-renderer-spinner} class.
   @end{short}
 
-  Whether the spinner is active, i. e. shown, in the cell.
+  Whether the spinner is active, i.e. shown, in the cell.
   @see-class{gtk-cell-renderer-spinner}")
 
 ;;; --- gtk-cell-renderer-spinner-pulse ----------------------------------------

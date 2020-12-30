@@ -221,10 +221,10 @@
   @end{short}
 
   The function @sym{gtk-text-mark-visible} returns @em{true} if @arg{mark} is
-  visible (i. e. a cursor is displayed for it). The function
+  visible (i.e. a cursor is displayed for it). The function
   @sym{(setf gtk-text-mark-visible)} sets the visibility of @arg{mark}.
 
-  The insertion point is normally visible, i. e. you can see it as a vertical
+  The insertion point is normally visible, i.e. you can see it as a vertical
   bar. Also, the text widget uses a visible mark to indicate where a drop will
   occur when dragging-and-dropping text. Most other marks are not visible.
   Marks are not visible by default.

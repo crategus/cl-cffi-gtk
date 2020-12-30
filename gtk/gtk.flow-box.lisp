@@ -749,7 +749,7 @@
 ;;; user_data :
 ;;;     user data.
 ;;;
-;;; Since: 3.12
+;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-flow-box-foreach-func-cb :void
@@ -905,7 +905,7 @@
 ;;; Returns :
 ;;;     TRUE if the row should be visible, FALSE otherwise
 ;;;
-;;; Since: 3.12
+;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-flow-box-filter-func-cb :boolean
@@ -998,7 +998,7 @@
 ;;;     < 0 if child1 should be before child2 , 0 if the are equal, and > 0
 ;;;     otherwise
 ;;;
-;;; Since: 3.12
+;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-flow-box-sort-func-cb :int
@@ -1084,7 +1084,7 @@
 ;;; Returns :
 ;;;     a GtkWidget that represents item .
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1126,7 +1126,7 @@
 ;;; user_data_free_func :
 ;;;     function for freeing user_data
 ;;;
-;;; Since: 3.18
+;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: GListModel ist not implemented

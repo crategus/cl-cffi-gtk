@@ -98,7 +98,7 @@
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-color-chooser} widget which received
           the signal.}
-        @entry[color]{The color of type @class{gdk-rgba}.}
+        @entry[color]{The @class{gdk-rgba} color.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-color-chooser-rgba}
@@ -118,7 +118,7 @@
 (setf (documentation (atdoc:get-slot-from-name "rgba" 'gtk-color-chooser) 't)
  "The @code{rgba} property of type @class{gdk-rgba} (Read / Write) @br{}
   The @code{rgba} property contains the currently selected color, as a
-  @class{gdk-rgba} structure. The property can be set to change the current
+  @class{gdk-rgba} color. The property can be set to change the current
   selection programmatically.")
 
 #+cl-cffi-gtk-documentation
@@ -148,7 +148,7 @@
                                                'gtk-color-chooser) 't)
  "The @code{use-alpha} property of type @code{:boolean} (Read / Write) @br{}
   When @code{use-alpha} is @em{true}, colors may have alpha (translucency)
-  information. When it is @em{false}, the @class{gdk-rgba} structure obtained
+  information. When it is @em{false}, the @class{gdk-rgba} color obtained
   via the @code{rgba} property will be forced to have alpha == 1.
   Implementations are expected to show alpha by rendering the color over a
   non-uniform background (like a checkerboard pattern). @br{}
@@ -197,8 +197,8 @@
   in rows, @code{:vertical} for columns}
   @argument[colors-per-line]{an integer with the number of colors to show in
     each row/column}
-  @argument[colors]{a list with the colors of type @class{gdk-rgba} of the
-    palette, or @code{nil}}
+  @argument[colors]{a list with the @class{gdk-rgba} colors of the palette,
+    or @code{nil}}
   @begin{short}
     Adds a palette to the color chooser.
   @end{short}

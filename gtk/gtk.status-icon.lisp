@@ -190,7 +190,7 @@
 
   On X11, the implementation follows the freedesktop.org \"System Tray\"
   specification. Implementations of the \"tray\" side of this specification can
-  be found e. g. in the GNOME 2 and KDE panel applications.
+  be found e.g. in the GNOME 2 and KDE panel applications.
 
   Note that a @sym{gtk-status-icon} is not a widget, but just a
   @class{g-object}. Making it a widget would be impractical, since the system
@@ -316,7 +316,7 @@
       @begin{pre}
  lambda (status-icon size)    : Run Last
       @end{pre}
-      Gets emitted when the size available for the image changes, e. g. because
+      Gets emitted when the size available for the image changes, e.g. because
       the notification area got resized.
       @begin[code]{table}
         @entry[status-icon]{The @sym{gtk-status-icon} object which received the
@@ -845,7 +845,7 @@
   @code{has-tooltip} property will automatically be set to @em{true} and the
   default handler for the \"query-tooltip\" signal will take care of displaying
   the tooltip. Note that some platforms have limitations on the length of
-  tooltips that they allow on status icons, e. g. Windows only shows the first
+  tooltips that they allow on status icons, e.g. Windows only shows the first
   64 characters. @br{}
   Default value: @code{nil}")
 

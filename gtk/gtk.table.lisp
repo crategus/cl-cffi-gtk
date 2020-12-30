@@ -870,7 +870,7 @@
   @argument[homogeneous]{set to @em{true} to ensure all table cells are the
     same size, set to @code{nil} if this is not your desired behaviour}
   @begin{short}
-    Changes the homogeneous property of table cells, i. e. whether all cells
+    Changes the homogeneous property of table cells, i.e. whether all cells
     are an equal size or not.
   @end{short}
   @begin[Warning]{dictionary}

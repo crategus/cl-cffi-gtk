@@ -317,7 +317,7 @@
     Accessor of the @slot[gtk-printer]{is-virtual} slot of the
     @class{gtk-printer} class.
   @end{short}
-  Returns whether the printer is virtual, i. e. does not represent actual
+  Returns whether the printer is virtual, i.e. does not represent actual
   printer hardware, but something like a CUPS class.
   @see-class{gtk-printer}")
 
@@ -505,7 +505,7 @@
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} is active.}
   @begin{short}
-    Returns whether the printer is currently active, i. e. accepts new jobs.
+    Returns whether the printer is currently active, i.e. accepts new jobs.
   @end{short}
   @see-class{gtk-printer}"
   (printer (g-object gtk-printer)))
@@ -721,7 +721,7 @@
     @code{right} -- a @code{:double} with the right margin
   @end{return}
   @begin{short}
-    Retrieve the hard margins of the printer, i. e. the margins that define
+    Retrieve the hard margins of the printer, i.e. the margins that define
     the area at the borders of the paper that the printer cannot print to.
   @end{short}
   @begin[Note]{dictionary}

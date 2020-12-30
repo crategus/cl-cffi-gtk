@@ -436,7 +436,7 @@
   widgets are added to any other container, using the function
   @fun{gtk-container-add}. You can also use the functions
   @fun{gtk-box-pack-start} or @fun{gtk-box-pack-end}, but for button boxes both
-  these functions work just like the function @fun{gtk-container-add}, i. e.,
+  these functions work just like the function @fun{gtk-container-add}, i.e.,
   they pack the button in a way that depends on the current layout style and on
   whether the button has had the function
   @fun{gtk-button-box-set-child-secondary} called on it.
@@ -603,7 +603,7 @@
   widgets are added to any other container, using the function
   @fun{gtk-container-add}. You can also use the functions
   @fun{gtk-box-pack-start} or @fun{gtk-box-pack-end}, but for button boxes both
-  these functions work just like the function @fun{gtk-container-add}, i. e.,
+  these functions work just like the function @fun{gtk-container-add}, i.e.,
   they pack the button in a way that depends on the current layout style and on
   whether the button has had the function
   @fun{gtk-button-box-set-child-secondary} called on it.

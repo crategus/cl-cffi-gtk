@@ -288,7 +288,7 @@
   on a label; the slot access function @fun{gtk-label-attributes} may be a
   simpler way to set attributes in some cases. Be careful though;
   @class{pango-attr-list} tends to cause internationalization problems, unless
-  you are applying attributes to the entire string (i. e. unless you set the
+  you are applying attributes to the entire string (i.e. unless you set the
   range of each attribute to @code{[0, G_MAXINT]}). The reason is that
   specifying the @code{start_index} and @code{end_index} for a
   @code{PangoAttribute} requires knowledge of the exact string being displayed,
@@ -835,7 +835,7 @@
   of the label's mnemonic, or @code{nil} if none has been set and the default
   algorithm will be used.
 
-  If the label has been set so that it has an mnemonic key, using i. e.
+  If the label has been set so that it has an mnemonic key, using i.e.
   the functions @fun{gtk-label-set-markup-with-mnemonic},
   @fun{gtk-label-set-text-with-mnemonic}, @fun{gtk-label-new-with-mnemonic} or
   the @slot[gtk-label]{use-underline} property, the label can be associated
@@ -843,7 +843,7 @@
 
   When the label is inside a widget, like a @class{gtk-button} or a
   @class{gtk-notebook} tab, it is automatically associated with the correct
-  widget, but sometimes, i. e. when the target is a @class{gtk-entry} next to
+  widget, but sometimes, i.e. when the target is a @class{gtk-entry} next to
   the label, you need to set it explicitly using this function.
 
   The target widget will be accelerated by emitting the \"mnemonic-activate\"
@@ -946,7 +946,7 @@
   Whether the label is in single line mode. In single line mode, the height
   of the label does not depend on the actual text, it is always set to ascent
   + descent of the font. This can be an advantage in situations where resizing
-  the label because of text changes would be distracting, e. g. in a
+  the label because of text changes would be distracting, e.g. in a
   statusbar. @br{}
   Default value: @em{false}")
 
@@ -1427,7 +1427,7 @@
     representing the text in the label.
   @end{short}
   This is useful to convert mouse events into coordinates inside the
-  @class{pango-layout}, e. g. to take some action if some part of the label is
+  @class{pango-layout}, e.g. to take some action if some part of the label is
   clicked.
 
   Of course you will need to create a @class{gtk-event-box} to receive the
@@ -1554,7 +1554,7 @@
   @begin{short}
     Gets the Pango layout used to display the label.
   @end{short}
-  The layout is useful to e. g. convert text positions to pixel positions,
+  The layout is useful to e.g. convert text positions to pixel positions,
   in combination with the function @fun{gtk-label-layout-offsets}. The label
   is free to recreate its layout at any time, so it should be considered
   read-only.

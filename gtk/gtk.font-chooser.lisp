@@ -205,7 +205,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font" 'gtk-font-chooser) 't)
  "The @code{font} property of type @code{:string} (Read / Write) @br{}
-  The font description as a string, e. g. \"Sans Italic 12\". @br{}
+  The font description as a string, e.g. \"Sans Italic 12\". @br{}
   Default value: \"Sans 10\"")
 
 #+cl-cffi-gtk-documentation
@@ -464,7 +464,7 @@
   @end{return}
   @begin{short}
     Gets the Pango font face representing the selected font group details,
-    i. e. family, slant, weight, width, etc.
+    i.e. family, slant, weight, width, etc.
   @end{short}
 
   If the selected font is not installed, returns @code{nil}.

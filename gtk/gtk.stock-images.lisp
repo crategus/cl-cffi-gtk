@@ -141,7 +141,7 @@
     An icon factory manages a collection of @class{gtk-icon-set} objects.
   @end{short}
   A @class{gtk-icon-set} object manages a set of variants of a particular icon,
-  i. e. a @class{gtk-icon-set} object contains variants for different sizes and
+  i.e. a @class{gtk-icon-set} object contains variants for different sizes and
   widget states. Icons in an icon factory are named by a stock ID, which is a
   simple string identifying the icon. Each @class{gtk-style} object has a list
   of @sym{gtk-icon-factory} objects derived from the current theme; those icon
@@ -206,7 +206,7 @@
 (setf (gethash 'gtk-icon-set atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-icon-set 'type)
  "@version{2013-5-6}
-  A @sym{gtk-icon-set} manages a set of variants of a particular icon, i. e. a
+  A @sym{gtk-icon-set} manages a set of variants of a particular icon, i.e. a
   @sym{gtk-icon-set} contains variants for different sizes and widget states.")
 
 (export 'gtk-icon-set)
@@ -291,7 +291,7 @@
     Adds the given @arg{icon-set} to the icon factory, under the name
     @arg{stock-id}.
   @end{short}
-  @arg{stock-id} should be namespaced for your application, e. g.
+  @arg{stock-id} should be namespaced for your application, e.g.
   \"myapp-whatever-icon\". Normally applications create a
   @class{gtk-icon-factory}, then add it to the list of default factories with
   @fun{gtk-icon-factory-add-default}. Then they pass the @arg{stock-id} to
@@ -411,7 +411,7 @@
 ;;; Icons in an icon factory are named by a stock ID, which is a simple string
 ;;; identifying the icon. Each GtkStyle has a list of GtkIconFactorys derived
 ;;; from the current theme; those icon factories are consulted first when
-;;; searching for an icon. If the theme doesn't set a particular icon, GTK+
+;;; searching for an icon. If the theme does not set a particular icon, GTK+
 ;;; looks for the icon in a list of default icon factories, maintained by
 ;;; gtk_icon_factory_add_default() and gtk_icon_factory_remove_default().
 ;;; Applications with icons should add a default icon factory with their icons,
@@ -712,7 +712,7 @@
 ;;; Returns :
 ;;;     a cairo_surface_t to be displayed.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

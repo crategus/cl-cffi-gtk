@@ -267,7 +267,7 @@
   Using @sym{gtk-list-box} is often an alternative to @class{gtk-tree-view},
   especially when the list contents has a more complicated layout than what is
   allowed by a @class{gtk-cell-renderer}, or when the contents is interactive
-  (i. e. has a button in it).
+  (i.e. has a button in it).
 
   Although a @sym{gtk-list-box} must have only @classl{gtk-list-box-row}
   children you can add any kind of widget to it via the function
@@ -648,7 +648,7 @@
 ;;; user_data :
 ;;;     user data.
 ;;;
-;;; Since: 3.14
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-list-box-foreach-func-cb :void
@@ -899,7 +899,7 @@
 ;;; Returns :
 ;;;    TRUE if the row should be visible, FALSE otherwise
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-list-box-filter-func-cb :boolean
@@ -968,7 +968,7 @@
 ;;; user_data :
 ;;;     user data.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-list-box-upate-header-func-cb :void
@@ -1008,7 +1008,7 @@
   to @code{nil}.
 
   Note that you may get many calls update_header to this for a particular row
-  when e. g. changing things that do not affect the header. In this case it is
+  when e.g. changing things that do not affect the header. In this case it is
   important for performance to not blindly replace an existing header with an
   identical one.
 
@@ -1050,7 +1050,7 @@
 ;;;     < 0 if row1 should be before row2 , 0 if they are equal and > 0
 ;;;     otherwise
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-list-box-sort-func-cb :int
@@ -1167,7 +1167,7 @@
 ;;; Returns :
 ;;;     a GtkWidget that represents item .
 ;;;
-;;; Since: 3.16
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1210,7 +1210,7 @@
 ;;; user_data_free_func :
 ;;;     function for freeing user_data
 ;;;
-;;; Since: 3.16
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: GListModel ist not implemented

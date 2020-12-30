@@ -1484,8 +1484,8 @@
 ;;;    Draws an expander as used in GtkTreeView. x and y specify the
 ;;;    center the expander. The size of the expander is determined by the
 ;;;    "expander-size" style property of widget. (If widget is not specified
-;;;    or doesn't have an "expander-size" property, an unspecified default
-;;;    size will be used, since the caller doesn't have sufficient information
+;;;    or does not have an "expander-size" property, an unspecified default
+;;;    size will be used, since the caller does not have sufficient information
 ;;;    to position the expander, this is likely not useful.) The expander is
 ;;;    expander_size pixels tall in the collapsed position and expander_size
 ;;;    pixels wide in the expanded position.
@@ -1627,30 +1627,30 @@
 ;;;                                 GtkTextDirection direction,
 ;;;                                 gboolean draw_arrow);
 ;;;
-;;;    Draws a text caret on cr at location. This is not a style function but
-;;;    merely a convenience function for drawing the standard cursor shape.
+;;; Draws a text caret on cr at location. This is not a style function but
+;;; merely a convenience function for drawing the standard cursor shape.
 ;;;
-;;;    widget :
-;;;    a GtkWidget
+;;; widget :
+;;;     a GtkWidget
 ;;;
-;;;    cr :
-;;;    cairo context to draw to
+;;; cr :
+;;;     Cairo context to draw to
 ;;;
-;;;    location :
-;;;    location where to draw the cursor (location->width is ignored)
+;;; location :
+;;;     location where to draw the cursor (location->width is ignored)
 ;;;
-;;;    is_primary :
-;;;    if the cursor should be the primary cursor color.
+;;; is_primary :
+;;;     if the cursor should be the primary cursor color.
 ;;;
-;;;    direction :
-;;;    whether the cursor is left-to-right or right-to-left. Should never be
-;;;    GTK_TEXT_DIR_NONE
+;;; direction :
+;;;     whether the cursor is left-to-right or right-to-left. Should never be
+;;;     GTK_TEXT_DIR_NONE
 ;;;
-;;;    draw_arrow :
-;;;    TRUE to draw a directional arrow on the cursor. Should be
-;;;    FALSE unless the cursor is split.
+;;; draw_arrow :
+;;;     TRUE to draw a directional arrow on the cursor. Should be
+;;;     FALSE unless the cursor is split.
 ;;;
-;;;    Since 3.0
+;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

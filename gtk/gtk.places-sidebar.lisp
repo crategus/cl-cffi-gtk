@@ -305,7 +305,7 @@
           dragged.}
         @entry[Returns]{An integer with the drag action to use, for example,
         @code{GDK_ACTION_COPY} or @code{GDK_ACTION_MOVE}, or 0 if no action is
-        allowed here, i. e. drops are not allowed in the specified
+        allowed here, i.e. drops are not allowed in the specified
         @arg{dest-file}.}
       @end{table}
     @subheading{The \"drag-perform-drop\" signal}
@@ -381,7 +381,7 @@
       Before 3.18, the container always was a @class{gtk-menu}, and you were
       expected to add your items as @class{gtk-menu-item} objects. Since 3.18,
       the popup may be implemented as a @class{gtk-popover}, in which case
-      container will be something else, e. g. a @class{gtk-box}, to which you
+      container will be something else, e.g. a @class{gtk-box}, to which you
       may add @class{gtk-model-button} widgets or other widgets, such as
       @class{gtk-entry}, @class{gtk-spin-button} widgets, etc. If your
       application can deal with this situation, you can set @code{populate-all}
@@ -447,7 +447,7 @@
  lambda (sidebar)    : Run First
       @end{pre}
       The places sidebar emits this signal when it needs the calling application
-      to present a way to show other locations e. g. drives and network access
+      to present a way to show other locations e.g. drives and network access
       points. For example, the application may bring up a page showing
       persistent volumes and discovered network addresses. Since 3.18
 
@@ -465,7 +465,7 @@
  lambda (sidebar open-flags)    : Run First
       @end{pre}
       The places sidebar emits this signal when it needs the calling application
-      to present a way to show other locations e. g. drives and network access
+      to present a way to show other locations e.g. drives and network access
       points. For example, the application may bring up a page showing
       persistent volumes and discovered network addresses. Since 3.20
       @begin[code]{table}

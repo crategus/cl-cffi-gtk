@@ -216,7 +216,7 @@
       Gets emitted when the inline autocompletion is triggered. The default
       behaviour is to make the entry display the whole prefix and select the
       newly inserted part. Applications may connect to this signal in order to
-      insert only a smaller part of the prefix into the entry - e. g. the entry
+      insert only a smaller part of the prefix into the entry - e.g. the entry
       used in the @class{gtk-file-chooser} inserts only the part of the prefix
       up to the next '/'.
       @begin[code]{table}
@@ -411,7 +411,7 @@
   search key for completion to be at least @arg{length}.
 
   This is useful for long lists, where completing using a small key takes a
-  lot of time and will come up with meaningless results anyway, i. e., a too
+  lot of time and will come up with meaningless results anyway, i.e., a too
   large dataset.
   @see-class{gtk-entry-completion}")
 

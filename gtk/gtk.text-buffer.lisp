@@ -643,7 +643,7 @@
     Gets the number of characters in the buffer.
   @end{short}
 
-  Note that characters and bytes are not the same, you cannot e. g. expect the
+  Note that characters and bytes are not the same, you cannot e.g. expect the
   contents of the buffer in string form to be this many bytes long. The
   character count is cached, so this function is very fast.
   @see-class{gtk-text-buffer}
@@ -1217,7 +1217,7 @@
   obtaining the buffer contents as a string, will be represented by the Unicode
   \"object replacement character\" @code{0xFFFC}. Note that the \"slice\"
   variants for obtaining portions of the buffer as a string include this
-  character for child anchors, but the \"text\" variants do not. E. g. see the
+  character for child anchors, but the \"text\" variants do not. e.g. see the
   functions @fun{gtk-text-buffer-get-slice} and @fun{gtk-text-buffer-get-text}.
   Consider the function @fun{gtk-text-buffer-create-child-anchor} as a more
   convenient alternative to this function. The buffer will add a reference to
@@ -2028,7 +2028,7 @@
                     the buffer
   @end{return}
   @begin{short}
-    Retrieves the first and last iterators in the buffer, i. e. the entire
+    Retrieves the first and last iterators in the buffer, i.e. the entire
     @arg{buffer} lies within the range [@arg{start}, @arg{end}).
   @end{short}
   @see-class{gtk-text-buffer}"
@@ -2531,7 +2531,7 @@
   that format is essentially a dump of the internal structure of the source
   buffer, including its tag names.
 
-  You should allow creation of tags only if you know what you are doing, e. g.
+  You should allow creation of tags only if you know what you are doing, e.g.
   if you defined a tagset name for your application suite's text buffers and
   you know that it is fine to receive new tags from these buffers, because you
   know that your application can handle the newly created tags.

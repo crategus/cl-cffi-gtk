@@ -259,7 +259,7 @@
     @class{gtk-cell-renderer-toggle} class.
   @end{short}
 
-  If @arg{radio} is @em{true}, the cell renderer renders a radio toggle, i. e.
+  If @arg{radio} is @em{true}, the cell renderer renders a radio toggle, i.e.
   a toggle in a group of mutually-exclusive toggles. If @em{false}, it renders
   a check toggle, a standalone boolean option.
 

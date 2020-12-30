@@ -423,7 +423,7 @@
 (setf (documentation (atdoc:get-slot-from-name "wide-handle" 'gtk-paned) 't)
  "The @code{wide-handled} property of type @code{:boolean} (Read / Write) @br{}
   Setting this property to @em{true} indicates that the paned needs to provide
-  stronger visual separation, e. g. because it separates between two notebooks,
+  stronger visual separation, e.g. because it separates between two notebooks,
   whose tab rows would otherwise merge visually. Since 3.16 @br{}
   Default value: @em{false}")
 

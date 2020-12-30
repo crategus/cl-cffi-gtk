@@ -398,7 +398,7 @@
   The @fun{gtk-text-buffer-create-tag} function is the best way to create tags.
   See gtk3-demo for numerous examples.
 
-  For each property of @sym{gtk-text-tag}, there is a \"set\" property, e. g.
+  For each property of @sym{gtk-text-tag}, there is a \"set\" property, e.g.
   \"font-set\" corresponds to \"font\". These \"set\" properties reflect whether
   a property has been set or not. They are maintained by GTK+ and you should not
   set them independently.
@@ -607,7 +607,7 @@
                                                'gtk-text-tag) 't)
  "The @code{background-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  Background color as a @sym{gdk-rgba}.")
+  The @class{gdk-rgba} background color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-background-rgba atdoc:*function-name-alias*)
@@ -647,7 +647,7 @@
 (setf (documentation (atdoc:get-slot-from-name "direction" 'gtk-text-tag) 't)
  "The @code{direction} property of type @symbol{gtk-text-direction}
   (Read / Write) @br{}
-  Text direction, e. g. right-to-left or left-to-right. @br{}
+  Text direction, e.g. right-to-left or left-to-right. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
@@ -745,7 +745,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "family" 'gtk-text-tag) 't)
  "The @code{family} property of type @code{:string} (Read / Write) @br{}
-  Name of the font family, e. g. Sans, Helvetica, Times, Monospace. @br{}
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -783,7 +783,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font" 'gtk-text-tag) 't)
  "The @code{font} property of type @code{:string} (Read / Write) @br{}
-  Font description as string, e. g. \"Sans Italic 12\".
+  Font description as string, e.g. \"Sans Italic 12\".
   Note that the initial value of this property depends on the internals of the
   @class{pango-font-description} structure. @br{}
   Default value: @code{nil}")
@@ -912,7 +912,7 @@
                                                'gtk-text-tag) 't)
  "The @code{foreground-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  Foreground color as a @sym{gdk-rgba}.")
+  The @class{gdk-rgba} foreground color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-foreground-rgba atdoc:*function-name-alias*)
@@ -1268,7 +1268,7 @@
                                                'gtk-text-tag) 't)
  "The @code{paragraph-background-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  The paragraph background color as a as a @sym{gdk-rgba}.")
+  The @class{gdk-rgba} paragraph background color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-paragraph-background-rgba
@@ -1619,7 +1619,7 @@
 (setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-text-tag) 't)
  "The @code{stretch} property of type @code{PangoStretch}
   (Read / Write) @br{}
-  Font stretch as a @symbol{pango-stretch} enumeration, e. g. the value
+  Font stretch as a @symbol{pango-stretch} enumeration, e.g. the value
   @code{:condensed}. @br{}
   Default value: @code{:normal}")
 
@@ -1745,7 +1745,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-text-tag) 't)
  "The @code{style} property of type @symbol{pango-style} (Read / Write) @br{}
-  Font style as a value of the @sym{pango-style} enumeration, e. g.
+  Font style as a value of the @sym{pango-style} enumeration, e.g.
   @code{:italic}. @br{}
   Default value: @code{:normal}")
 
@@ -1911,7 +1911,7 @@
 (setf (documentation (atdoc:get-slot-from-name "variant" 'gtk-text-tag) 't)
  "The @code{variant} property of type @symbol{pango-variant}
   (Read / Write) @br{}
-  Font variant as a value of the @sym{pango-variant} enumeration, e. g.
+  Font variant as a value of the @sym{pango-variant} enumeration, e.g.
   @code{:small-caps}. @br{}
   Default value: @code{:normal}")
 

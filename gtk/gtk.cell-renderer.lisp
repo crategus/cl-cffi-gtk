@@ -173,7 +173,7 @@
   @end{pre}
   @begin[code]{table}
     @entry[:inert]{The cell is just for display and cannot be interacted with.
-      Note that this doesn't mean that e. g. the row being drawn cannot be
+      Note that this does not mean that e.g. the row being drawn cannot be
       selected - just that a particular element of it cannot be individually
       modified.}
     @entry[:activatable]{The cell can be clicked.}
@@ -275,7 +275,7 @@
   @code{GtkCellRendererClass.start_editing} virtual functions, respectively.
 
   Many properties of @sym{gtk-cell-renderer} and its subclasses have a
-  corresponding @code{set} property, e. g. @code{cell-background-set}
+  corresponding @code{set} property, e.g. @code{cell-background-set}
   corresponds to @code{cell-background}. These @code{set} properties reflect
   whether a property has been set or not. You should not set them independently.
   @begin[Signal Details]{dictionary}
@@ -296,7 +296,7 @@
  lambda (renderer editable path)    : Run First
       @end{pre}
       This signal gets emitted when a cell starts to be edited. The intended use
-      of this signal is to do special setup on editable, e. g. adding a
+      of this signal is to do special setup on editable, e.g. adding a
       @class{gtk-entry-completion} or setting up additional columns in a
       @class{gtk-combo-box}. Note that GTK+ does not guarantee that cell
       renderers will continue to use the same kind of widget for editing in
@@ -421,7 +421,7 @@
   @syntax[]{(gtk-cell-renderer-cell-background-rgba object) => background}
   @syntax[]{(setf (gtk-cell-renderer-cell-background-rgba object) background)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[background]{a @class{gdk-rgba} with the cell background color}
+  @argument[background]{a @class{gdk-rgba} color with the cell background color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{cell-background-rgba} slot of the
     @class{gtk-cell-renderer} class.
@@ -902,7 +902,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-30}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[cr]{a cairo context to draw to}
+  @argument[cr]{a Cairo context to draw to}
   @argument[widget]{the widget owning window}
   @argument[background-area]{entire cell area including tree expanders and
     maybe padding on the sides}
