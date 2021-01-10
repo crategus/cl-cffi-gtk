@@ -210,11 +210,11 @@
 (setf (gethash 'gdk-screen-resolution atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-resolution 'function)
- "@version{2020-9-25}
+ "@version{2021-1-10}
   @syntax[]{(gdk-screen-resolution object) => dpi}
   @syntax[]{(setf (gdk-screen-resolution object) dpi)}
   @argument[object]{a @class{gdk-screen} object}
-  @argument[dpi]{the resolution of type @code{:double} in \"dots per inch\".}
+  @argument[dpi]{the resolution of type @code{:double} in \"dots per inch\"}
   @begin{short}
     Accessor of the @slot[gdk-screen]{resolution} slot of the @class{gdk-screen}
     class.
@@ -226,9 +226,9 @@
   font handling on the screen.
 
   This is a scale factor between points specified in a
-  @class{pango-font-description} structure and cairo units. The default value
+  @class{pango-font-description} structure and Cairo units. The default value
   is 96, meaning that a 10 point font will be 13 units high
-  (10 * 96. / 72. = 13.3).
+  (10 * 96 / 72 = 13.3).
   @see-class{gdk-screen}
   @see-class{pango-font-description}")
 
