@@ -511,6 +511,8 @@
                                        type-initializer)
                                  (&rest properties))
 
+  (declare (ignore export type-initializer))
+
 ;  (setf properties (mapcar #'parse-property properties))
 
   (let ((props (mapcar #'parse-property properties))
