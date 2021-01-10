@@ -44,4 +44,32 @@
 
   (use-foreign-library pangocairo))
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (pushnew :pango *features*))
+
+(defparameter +pango-version+ (foreign-funcall "pango_version" :int))
+(defparameter +pango-major-version+
+              (truncate (/ (foreign-funcall "pango_version" :int) 10000)))
+(defparameter +pango-minor-version+
+              (- (truncate (/ (foreign-funcall "pango_version" :int) 100))
+                 (* (truncate (/ (foreign-funcall "pango_version" :int) 10000))
+                    100)))
+
+(glib-init::push-library-version-features
+  pango
+  +pango-major-version+ +pango-minor-version+
+  1 38  ; Since 21.09.2015
+  1 40  ;       22.03.2016
+  1 42  ;       12.03.2018
+  1 44  ;       27.07.2019
+  1 46  ;       10.08.2020
+  1 48  ;       08.11.2020
+)
+
+(glib-init::require-library-version
+  "Pango"
+  1 38  ; Since 21.09.2015
+  +pango-major-version+
+  +pango-minor-version+)
+
 ;;; --- End of file pango.init.lisp --------------------------------------------

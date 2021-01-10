@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.tab-array.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the Pango Reference Manual
-;;; Version 1.32.6 and modified to document the Lisp binding to the Pango
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
-;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,15 +28,14 @@
 ;;;
 ;;; Tab Stops
 ;;;
-;;; Structures for storing tab stops
+;;;     Structures for storing tab stops
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     PangoTabArray
-;;;     PANGO_TYPE_TAB_ARRAY
-;;;
 ;;;     PangoTabAlign
-;;;     PANGO_TYPE_TAB_ALIGN
+;;;
+;;; Functions
 ;;;
 ;;;     pango_tab_array_new
 ;;;     pango_tab_array_new_with_positions
@@ -54,16 +50,16 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GBoxed
-;;;    +----PangoTabArray
+;;;     GBoxed
+;;;     ╰── PangoTabArray
 ;;;
-;;;   GEnum
-;;;    +----PangoTabAlign
+;;;     GEnum
+;;;     ╰── PangoTabAlign
 ;;;
 ;;; Description
 ;;;
-;;; Functions in this section are used to deal with PangoTabArray objects that
-;;; can be used to set tab stop positions in a PangoLayout.
+;;;     Functions in this section are used to deal with PangoTabArray objects
+;;;     that can be used to set tab stop positions in a PangoLayout.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -91,14 +87,6 @@
 (export (boxed-related-symbols 'pango-tab-array))
 
 ;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_TAB_ARRAY
-;;;
-;;; #define PANGO_TYPE_TAB_ARRAY (pango_tab_array_get_type ())
-;;;
-;;; The GObject type for PangoTabArray.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; enum PangoTabAlign
 ;;;
 ;;; typedef enum {
@@ -117,14 +105,6 @@
 ;;;
 ;;; PANGO_TAB_LEFT
 ;;;     the tab stop appears to the left of the text.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_TAB_ALIGN
-;;;
-;;; #define PANGO_TYPE_TAB_ALIGN (pango_tab_align_get_type ())
-;;;
-;;; The GObject type for PangoTabAlign.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

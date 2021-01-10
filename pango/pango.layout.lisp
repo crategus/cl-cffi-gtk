@@ -2,9 +2,9 @@
 ;;; pango.layout.lisp
 ;;;
 ;;; The documentation of this file is taken from the Pango Reference Manual
-;;; Version 1.46 and modified to document the Lisp binding to the Pango
-;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
-;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2020 Dieter Kaiser
@@ -146,6 +146,16 @@
 ;;;
 ;;;     GObject
 ;;;     ╰── PangoLayout
+;;;
+;;; Description
+;;;
+;;;     While complete access to the layout capabilities of Pango is provided
+;;;     using the detailed interfaces for itemization and shaping, using that
+;;;     functionality directly involves writing a fairly large amount of code.
+;;;     The objects and functions in this section provide a high-level driver
+;;;     for formatting entire paragraphs of text at once. This includes
+;;;     paragraph-level functionality such as line-breaking, justification,
+;;;     alignment and ellipsization.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -162,11 +172,12 @@
   (:word-char 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-wrap-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'pango-wrap-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'pango-wrap-mode atdoc:*external-symbols*)
- "@version{2013-4-12}
+ "@version{2021-1-5}
   @begin{short}
-    A @sym{pango-wrap-mode} describes how to wrap the lines of a
+    A @sym{pango-wrap-mode} enumeration describes how to wrap the lines of a
     @class{pango-layout} to the desired width.
   @end{short}
   @begin{pre}
@@ -182,7 +193,8 @@
     @entry[:char]{Wrap lines at character boundaries.}
     @entry[:word-char]{Wrap lines at word boundaries, but fall back to
       character boundaries if there is not enough space for a full word.}
-  @end{table}")
+  @end{table}
+  @see-class{pango-layout}")
 
 (export 'pango-wrap-mode)
 
@@ -199,9 +211,10 @@
   (:end 3))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'pango-ellipsize-mode atdoc:*external-symbols*)
- "@version{2013-4-12}
+ "@version{2021-1-5}
   @begin{short}
     The @sym{pango-ellipsize-mode} enumeration describes what sort of (if any)
     ellipsization should be applied to a line of text. In the ellipsization
@@ -222,7 +235,8 @@
     @entry[:start]{Omit characters at the start of the text.}
     @entry[:middle]{Omit characters in the middle of the text.}
     @entry[:end]{Omit characters at the end of the text.}
-  @end{table}")
+  @end{table}
+  @see-class{pango-layout}")
 
 (export 'pango-ellipsize-mode)
 
@@ -238,15 +252,16 @@
   (:right 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-alignment atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'pango-alignment atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'pango-alignment atdoc:*external-symbols*)
- "@version{2020-4-8}
+ "@version{2021-1-5}
   @begin{short}
-    A @sym{pango-alignment} describes how to align the lines of a
-    @class{pango-layout} within the available space.
+    A @sym{pango-alignment} enumeration describes how to align the lines of a
+    @class{pango-layout} object within the available space.
   @end{short}
   If the @class{pango-layout} object is set to justify using the function
-  @fun{pango-layout-set-justify}, this only has effect for partial lines.
+  @fun{pango-layout-justify}, this only has effect for partial lines.
   @begin{pre}
 (define-g-enum \"PangoAlignment\" pango-alignment
   (:export t
@@ -261,7 +276,7 @@
     @entry[:right]{Put all available space on the left.}
   @end{table}
   @see-class{pango-layout}
-  @see-function{pango-layout-set-justify}")
+  @see-function{pango-layout-justify}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoLayoutLine
@@ -286,16 +301,17 @@
   :alloc (error "Use Pango to create PANGO-LAYOUT-LINEs"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-layout-line atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-layout-line atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'pango-layout-line 'type)
- "@version{2013-6-30}
+ "@version{2021-1-5}
   @begin{short}
     The @sym{pango-layout-line} structure represents one of the lines resulting
-    from laying out a paragraph via @class{pango-layout}.
+    from laying out a paragraph via a @class{pango-layout} object.
   @end{short}
   @sym{pango-layout-line} structures are obtained by calling the function
-  @fun{pango-layout-get-line} and are only valid until the text, attributes,
-  or settings of the parent @class{pango-layout} are modified.
+  @fun{pango-layout-line} and are only valid until the text, attributes,
+  or settings of the parent @class{pango-layout} object are modified.
 
   Routines for rendering @class{pango-layout} objects are provided in code
   specific to each rendering system.
@@ -303,7 +319,8 @@
 (define-g-boxed-opaque pango-layout-line \"PangoLayoutLine\"
   :alloc (error \"Use Pango to create PANGO-LAYOUT-LINEs\"))
   @end{pre}
-  @see-function{pango-layout-get-line}")
+  @see-class{pango-layout}
+  @see-function{pango-layout-line}")
 
 (export (boxed-related-symbols 'pango-layout-line))
 
@@ -330,21 +347,22 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-layout 'type)
- "@version{2013-12-8}
+ "@version{2021-1-5}
   @begin{short}
-    The @sym{pango-layout} structure represents an entire paragraph of text.
+    The @sym{pango-layout} class represents an entire paragraph of text.
   @end{short}
-  It is initialized with a @class{pango-context}, UTF-8 string and set of
-  attributes for that string. Once that is done, the set of formatted lines
+  It is initialized with a @class{pango-context} object, UTF-8 string and set
+  of attributes for that string. Once that is done, the set of formatted lines
   can be extracted from the object, the layout can be rendered, and conversion
   between logical character positions within the layout's text, and the
   physical position of the resulting glyphs can be made.
 
   There are also a number of parameters to adjust the formatting of a
-  @sym{pango-layout}. It is possible, as well, to ignore the 2-D setup, and
-  simply treat the results of a @sym{pango-layout} as a list of lines.
+  @sym{pango-layout} object. It is possible, as well, to ignore the 2-D setup,
+  and simply treat the results of a @sym{pango-layout} object as a list of
+  lines.
 
-  The @sym{pango-layout} structure is opaque, and has no user-visible fields.
+  The @sym{pango-layout} class is opaque, and has no user-visible fields.
   @see-class{pango-context}")
 
 ;;; ----------------------------------------------------------------------------
@@ -355,9 +373,10 @@
   :alloc (error "Use Pango to create PANGO-LAYOUT-ITER"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-layout-iter atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-layout-iter atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'pango-layout-iter 'type)
- "@version{2013-12-8}
+ "@version{2021-1-5}
   @begin{short}
     A @sym{pango-layout-iter} structure can be used to iterate over the visual
     extents of a @class{pango-layout} object.
@@ -379,7 +398,7 @@
 
 (defcfun ("pango_layout_new" pango-layout-new) (g-object pango-layout)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-23}
+ "@version{2021-1-5}
   @argument[context]{a @class{pango-context} object}
   @return{The newly allocated @class{pango-layout} object.}
   @begin{short}
@@ -407,6 +426,11 @@
 ;;;     the newly allocated PangoLayout, with a reference count of one, which
 ;;;     should be freed with g_object_unref()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_copy" pango-layout-copy) (g-object pango-layout)
+  (src (g-object pango-layout)))
+
+(export 'pango-layout-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_context ()
@@ -436,7 +460,7 @@
 
 (defcfun ("pango_layout_context_changed" pango-layout-context-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-18}
+ "@version{2021-1-5}
   @argument[layout]{a @class{pango-layout} object}
   @begin{short}
     Forces recomputation of any state in the Pango layout that might depend
@@ -506,13 +530,14 @@
   The function @sym{pango-layout-text} gets the text in the Pango layout.
   The function @sym{(setf pango-layout-text)} sets the text of the Pango layout.
 
-  Note that if you have used the functions @fun{pango-layout-markup} or
-  @fun{pango-layout-markup-with-accel} on the Pango layout before, you may want
-  to call the function @fun{pango-layout-attributes} to clear the attributes
-  set on the layout from the markup as this function does not clear attributes.
+  Note that if you have used the functions @fun{pango-layout-set-markup} or
+  @fun{pango-layout-set-markup-with-accel} on the Pango layout before, you may
+  want to call the function @fun{pango-layout-attributes} to clear the
+  attributes set on the layout from the markup as this function does not clear
+  attributes.
   @see-class{pango-layout}
-  @see-function{pango-layout-markup}
-  @see-function{pango-layout-markup-with-accel}
+  @see-function{pango-layout-set-markup}
+  @see-function{pango-layout-set-markup-with-accel}
   @see-function{pango-layout-attributes}"
   (layout (g-object pango-layout)))
 
@@ -559,6 +584,13 @@
 ;;;     length of marked-up text in bytes, or -1 if markup is null-terminated
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_set_markup" pango-layout-set-markup) :void
+  (layout (g-object pango-layout))
+  (markup :string)
+  (length :int))
+
+(export 'pango-layout-set-markup)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_markup_with_accel ()
 ;;;
@@ -594,6 +626,16 @@
 ;;;     return location for first located accelerator, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_set_markup_with_accel"
+           pango-layout-set-markup-with-accel) :void
+  (layout (g-object pango-layout))
+  (markup :string)
+  (length :int)
+  (accel-marker :uint32) ; for gunichar (see Glib Unicode Manipulation)
+  (accel-char :uint32))
+
+(export 'pango-layout-set-markup-with-accel)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_attributes ()
 ;;;
@@ -610,6 +652,13 @@
 ;;;     a PangoAttrList, can be NULL
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-attributes) (attrs layout)
+  (foreign-funcall "pango_layout_set_attributes"
+                   (g-object pango-layout) layout
+                   (g-boxed-foreign pango-attr-list) attrs
+                   :void)
+  attrs)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_attributes ()
 ;;;
@@ -623,13 +672,6 @@
 ;;; Returns :
 ;;;     a PangoAttrList
 ;;; ----------------------------------------------------------------------------
-
-(defun (setf pango-layout-attributes) (attrs layout)
-  (foreign-funcall "pango_layout_set_attributes"
-                   (g-object pango-layout) layout
-                   (g-boxed-foreign pango-attr-list) attrs
-                   :void)
-  attrs)
 
 (defcfun ("pango_layout_get_attributes" pango-layout-attributes)
     (g-boxed-foreign pango-attr-list)
@@ -697,11 +739,6 @@
                    :void)
   width)
 
-(defcfun ("pango_layout_get_width" pango-layout-width) :int
-  (layout (g-object pango-layout)))
-
-(export 'pango-layout-width)
-
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_width ()
 ;;;
@@ -715,6 +752,11 @@
 ;;; Returns :
 ;;;     the width in Pango units, or -1 if no width set
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_width" pango-layout-width) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_height ()
@@ -760,11 +802,6 @@
                    :void)
   height)
 
-(defcfun ("pango_layout_get_height" pango-layout-height) :int
-  (layout (g-object pango-layout)))
-
-(export 'pango-layout-height)
-
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_height ()
 ;;;
@@ -782,6 +819,11 @@
 ;;; Since 1.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_height" pango-layout-height) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-height)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_wrap ()
 ;;;
@@ -797,6 +839,13 @@
 ;;; wrap :
 ;;;     the wrap mode
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf pango-layout-wrap) (wrap layout)
+  (foreign-funcall "pango_layout_set_wrap"
+                   (g-object pango-layout) layout
+                   pango-wrap-mode wrap
+                   :void)
+  wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_wrap ()
@@ -814,6 +863,11 @@
 ;;; Returns :
 ;;;     active wrap mode
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_wrap" pango-layout-wrap) pango-wrap-mode
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_is_wrapped ()
@@ -834,6 +888,11 @@
 ;;;
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_is_wrapped" pango-layout-is-wrapped) :boolean
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-is-wrapped)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_ellipsize ()
@@ -860,6 +919,13 @@
 ;;; Since 1.6
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-ellipsize) (ellipsize layout)
+  (foreign-funcall "pango_layout_set_ellipsize"
+                   (g-object pango-layout) layout
+                   pango-ellipsize-mode ellipsize
+                   :void)
+  ellipsize)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_ellipsize ()
 ;;;
@@ -878,6 +944,12 @@
 ;;;
 ;;; Since 1.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_ellipsize" pango-layout-ellipsize)
+    pango-ellipsize-mode
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-ellipsize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_is_ellipsized ()
@@ -899,6 +971,11 @@
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_is_ellipsized" pango-layout-is-ellipsized) :boolean
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-is-ellipsized)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_indent ()
 ;;;
@@ -919,6 +996,13 @@
 ;;;     the amount by which to indent
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-indent) (indent layout)
+  (foreign-funcall "pango_layout_set_indent"
+                   (g-object pango-layout) layout
+                   :int indent
+                   :void)
+  indent)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_indent ()
 ;;;
@@ -934,19 +1018,10 @@
 ;;;     the indent in Pango units
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_spacing ()
-;;;
-;;; int pango_layout_get_spacing (PangoLayout *layout);
-;;;
-;;; Gets the amount of spacing between the lines of the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the spacing in Pango units.
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_get_ident" pango-layout-indent) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-indent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_spacing ()
@@ -969,6 +1044,32 @@
 ;;; spacing :
 ;;;     the amount of spacing
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf pango-layout-spacing) (spacing layout)
+  (foreign-funcall "pango_layout_set_spacing"
+                   (g-object pango-layout) layout
+                   :int spacing
+                   :void)
+  spacing)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_get_spacing ()
+;;;
+;;; int pango_layout_get_spacing (PangoLayout *layout);
+;;;
+;;; Gets the amount of spacing between the lines of the layout.
+;;;
+;;; layout :
+;;;     a PangoLayout
+;;;
+;;; Returns :
+;;;     the spacing in Pango units.
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_spacing" pango-layout-spacing) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_line_spacing ()
@@ -999,6 +1100,13 @@
 ;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-line-spacing) (factor layout)
+  (foreign-funcall "pango_layout_set_line_spacing"
+                   (g-object pango-layout) layout
+                   :float (coerce factor 'float)
+                   :void)
+  factor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_line_spacing ()
 ;;;
@@ -1012,6 +1120,11 @@
 ;;;
 ;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_line_spacing" pango-layout-line-spacing) :float
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-line-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_justify ()
@@ -1033,6 +1146,13 @@
 ;;;     whether the lines in the layout should be justified.
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-justify) (justify layout)
+  (foreign-funcall "pango_layout_set_justify"
+                   (g-object pango-layout) layout
+                   :boolean justify
+                   :void)
+  justify)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_justify ()
 ;;;
@@ -1047,6 +1167,11 @@
 ;;; Returns :
 ;;;     the justify
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_justify" pango-layout-justify) :boolean
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-justify)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_auto_dir ()
@@ -1079,6 +1204,13 @@
 ;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-auto-dir) (auto-dir layout)
+  (foreign-funcall "pango_layout_set_auto_dir"
+                   (g-object pango-layout) layout
+                   :boolean auto-dir
+                   :void)
+  auto-dir)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_auto_dir ()
 ;;;
@@ -1097,8 +1229,13 @@
 ;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_auto_dir" pango-layout-auto-dir) :boolean
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-auto-dir)
+
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_direction ()
+;;; pango_layout_get_direction () -> pango-layout-direction
 ;;;
 ;;; PangoDirection
 ;;; pango_layout_get_direction (PangoLayout *layout,
@@ -1117,6 +1254,12 @@
 ;;;
 ;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_direction" pango-layout-direction) pango-direction
+  (layout (g-object pango-layout))
+  (index :int))
+
+(export 'pango-layout-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_alignment ()
@@ -1141,11 +1284,6 @@
                    :void)
   alignment)
 
-(defcfun ("pango_layout_get_alignment" pango-layout-alignment) pango-alignment
-  (layout (g-object pango-layout)))
-
-(export 'pango-layout-alignment)
-
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_alignment ()
 ;;;
@@ -1160,6 +1298,11 @@
 ;;; Returns :
 ;;;     the alignment
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_alignment" pango-layout-alignment) pango-alignment
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-alignment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_tabs ()
@@ -1178,6 +1321,13 @@
 ;;;     a PangoTabArray, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-tabs) (tabs layout)
+  (foreign-funcall "pango_layout_set_tabs"
+                   (g-object pango-layout) layout
+                   (g-boxed-foreign pango-tab-array) tabs
+                   :void)
+  tabs)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_tabs ()
 ;;;
@@ -1194,6 +1344,12 @@
 ;;; Returns :
 ;;;     a copy of the tabs for this layout, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_tabs" pango-layout-tabs)
+    (g-boxed-foreign pango-tab-array)
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-tabs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_single_paragraph_mode ()
@@ -1213,6 +1369,13 @@
 ;;;     new setting
 ;;; ----------------------------------------------------------------------------
 
+(defun (setf pango-layout-single-paragraph-mode) (setting layout)
+  (foreign-funcall "pango-layout-single-paragraph-mode"
+                   (g-object pango-layout) layout
+                   :boolean setting
+                   :void)
+  setting)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_single_paragraph_mode ()
 ;;;
@@ -1227,6 +1390,12 @@
 ;;;     TRUE if the layout does not break paragraphs at paragraph separator
 ;;;     characters, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_single_paragraph_mode"
+           pango-layout-single-paragraph-mode) :boolean
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-single-paragraph-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_unknown_glyphs_count ()
@@ -1249,6 +1418,12 @@
 ;;;
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_unknown_glyphs_count"
+           pango-layout-unknown-glyphs-count) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-unknown-glyphs-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_log_attrs ()
@@ -1273,6 +1448,13 @@
 ;;;     position before the first character and the position after the last
 ;;;     character.)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_log_attrs" pango-layout-log-attrs) :void
+  (layout (g-object pango-layout))
+  (attrs (:pointer (:struct pango-log-attr)))
+  (n-attrs :int))
+
+(export 'pango-layout-log-attrs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_log_attrs_readonly ()
@@ -1304,6 +1486,13 @@
 ;;; Since 1.30
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_log_attrs_readonly" pango-layout-log-attrs-readonly)
+    (:pointer (:struct pango-log-attr))
+  (layout (g-object pango-layout))
+  (n-attrs :int))
+
+(export 'pango-layout-log-attrs-readonly)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_index_to_pos ()
 ;;;
@@ -1326,6 +1515,13 @@
 ;;; pos :
 ;;;     rectangle in which to store the position of the grapheme
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_index_to_pos" pango-layout-index-to-pos) :void
+  (layout (g-object pango-layout))
+  (index :int)
+  (pos (:pointer (:struct pango-rectangle))))
+
+(export 'pango-layout-index-to-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_index_to_line_x ()
@@ -1358,6 +1554,15 @@
 ;;;     location to store resulting position within line (PANGO_SCALE units per
 ;;;     device unit), or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_index_to_line_x" pango-layout-index-to-line-x) :void
+  (layout (g-object pango-layout))
+  (index :int)
+  (trailing :boolean)
+  (line (:pointer :int))
+  (x-pos (:pointer :int)))
+
+(export 'pango-layout-index-to-line-x)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_xy_to_index ()
@@ -1397,6 +1602,15 @@
 ;;;     TRUE if the coordinates were inside text, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_xy_to_index" pango-layout-xy-to-index) :boolean
+  (layout (g-object pango-layout))
+  (x :int)
+  (y :int)
+  (index (:pointer :int))
+  (trainling (:pointer :int)))
+
+(export 'pango-layout-xy-to-index)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_cursor_pos ()
 ;;;
@@ -1425,6 +1639,14 @@
 ;;; weak_pos :
 ;;;     location to store the weak cursor position (may be NULL)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_cursor_pos" pango-layout-cursor-pos) :void
+  (layout (g-object pango-layout))
+  (index :int)
+  (strong-pos (:pointer (:struct pango-rectangle)))
+  (weak-pos (:pointer (:struct pango-rectangle))))
+
+(export 'pango-layout-cursor-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_move_cursor_visually ()
@@ -1483,6 +1705,18 @@
 ;;;     on the line where the cursor should be displayed.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_move_cursor_visually" pango-layout-move-cursor-visually)
+    :void
+  (layout (g-object pango-layout))
+  (strong :boolean)
+  (old-index :int)
+  (old-trailing :int)
+  (direction :int)
+  (new-index (:pointer :int))
+  (new-traling (:pointer :int)))
+
+(export 'pango-layout-move-cursor-visually)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_extents ()
 ;;;
@@ -1511,6 +1745,13 @@
 ;;;     indicate that the result is not needed
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_extents" pango-layout-extents) :void
+  (layout (g-object pango-layout))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(export 'pango-layout-extents)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_pixel_extents ()
 ;;;
@@ -1535,6 +1776,13 @@
 ;;;     rectangle used to store the logical extents of the layout or NULL to
 ;;;     indicate that the result is not needed
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_pixel_extents" pango-layout-pixel-extents) :void
+  (layout (g-object pango-layout))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(export 'pango-layout-pixel-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_size () -> pango-layout-size
@@ -1620,6 +1868,11 @@
 ;;; Since 1.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_baseline" pango-layout-baseline) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-baseline)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_line_count ()
 ;;;
@@ -1633,6 +1886,11 @@
 ;;; Returns :
 ;;;     the line count
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_line_count" pango-layout-line-count) :int
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-line-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_line ()
@@ -1656,6 +1914,13 @@
 ;;;     This layout line can be ref'ed and retained, but will become invalid
 ;;;     if changes are made to the PangoLayout
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_line" pango-layout-line)
+    (g-boxed-foreign pango-layout-line)
+  (layout (g-object pango-layout))
+  (line :int))
+
+(export 'pango-layout-line)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_line_readonly ()
@@ -1684,6 +1949,13 @@
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_get_line_readonly" pango-layout-line-readonly)
+    (g-boxed-foreign pango-layout-line)
+  (layout (g-object pango-layout))
+  (line :int))
+
+(export 'pango-layout-line-readonly)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_lines ()
 ;;;
@@ -1702,6 +1974,12 @@
 ;;;     data of the PangoLayout and must be used with care. It will become
 ;;;     invalid on any change to the layout's text or properties
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_lines" pango-layout-lines)
+    (g-slist (g-boxed-foreign pango-layout-line :free-from-foreign nil))
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-lines)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_lines_readonly ()
@@ -1725,6 +2003,12 @@
 ;;;
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_lines_readonly" pango-layout-lines-readonly)
+    (g-slist (g-boxed-foreign pango-layout-line :free-from-foreign nil))
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-lines-readonly)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_iter ()

@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.renderer.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.32.6. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,9 +29,9 @@
 ;;;
 ;;; PangoRenderer
 ;;;
-;;; Rendering driver base class
+;;;     Rendering driver base class
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     PangoRenderer
 ;;;     PangoRenderPart
@@ -41,6 +39,8 @@
 ;;;     PANGO_TYPE_RENDER_PART
 ;;;
 ;;;     PangoRendererClass
+;;;
+;;; Functions
 ;;;
 ;;;     pango_renderer_draw_layout
 ;;;     pango_renderer_draw_layout_line
@@ -55,6 +55,8 @@
 ;;;     pango_renderer_part_changed
 ;;;     pango_renderer_set_color
 ;;;     pango_renderer_get_color
+;;;     pango_renderer_set_alpha
+;;;     pango_renderer_get_alpha
 ;;;     pango_renderer_set_matrix
 ;;;     pango_renderer_get_matrix
 ;;;     pango_renderer_get_layout
@@ -364,8 +366,8 @@
 ;;; the text associated with the glyphs in the output if the output format
 ;;; supports it (PDF for example).
 ;;;
-;;; Note that text is the start of the text for layout, which is then indexed by
-;;; glyph_item->item->offset.
+;;; Note that text is the start of the text for layout, which is then indexed
+;;; by glyph_item->item->offset.
 ;;;
 ;;; If text is NULL, this simply calls pango_renderer_draw_glyphs().
 ;;;
@@ -434,15 +436,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_draw_error_underline ()
 ;;;
-;;; void                pango_renderer_draw_error_underline (PangoRenderer *renderer,
-;;;                                                          int x,
-;;;                                                          int y,
-;;;                                                          int width,
-;;;                                                          int height);
+;;; void
+;;; pango_renderer_draw_error_underline (PangoRenderer *renderer,
+;;;                                      int x,
+;;;                                      int y,
+;;;                                      int width,
+;;;                                      int height);
 ;;;
-;;; Draw a squiggly line that approximately covers the given rectangle in the style of an underline used to indicate a spelling error. (The width of the underline is rounded to an integer number of up/down segments and the resulting rectangle is centered in the original rectangle)
+;;; Draw a squiggly line that approximately covers the given rectangle in the
+;;; style of an underline used to indicate a spelling error. (The width of the
+;;; underline is rounded to an integer number of up/down segments and the
+;;; resulting rectangle is centered in the original rectangle)
 ;;;
-;;; This should be called while renderer is already active. Use pango_renderer_activate() to activate a renderer.
+;;; This should be called while renderer is already active. Use
+;;; pango_renderer_activate() to activate a renderer.
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
@@ -465,16 +472,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_draw_trapezoid ()
 ;;;
-;;; void                pango_renderer_draw_trapezoid       (PangoRenderer *renderer,
-;;;                                                          PangoRenderPart part,
-;;;                                                          double y1_,
-;;;                                                          double x11,
-;;;                                                          double x21,
-;;;                                                          double y2,
-;;;                                                          double x12,
-;;;                                                          double x22);
+;;; void
+;;; pango_renderer_draw_trapezoid (PangoRenderer *renderer,
+;;;                                PangoRenderPart part,
+;;;                                double y1_,
+;;;                                double x11,
+;;;                                double x21,
+;;;                                double y2,
+;;;                                double x12,
+;;;                                double x22);
 ;;;
-;;; Draws a trapezoid with the parallel sides aligned with the X axis using the given PangoRenderer; coordinates are in device space.
+;;; Draws a trapezoid with the parallel sides aligned with the X axis using the
+;;; given PangoRenderer; coordinates are in device space.
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
@@ -506,11 +515,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_draw_glyph ()
 ;;;
-;;; void                pango_renderer_draw_glyph           (PangoRenderer *renderer,
-;;;                                                          PangoFont *font,
-;;;                                                          PangoGlyph glyph,
-;;;                                                          double x,
-;;;                                                          double y);
+;;; void
+;;; pango_renderer_draw_glyph (PangoRenderer *renderer,
+;;;                            PangoFont *font,
+;;;                            PangoGlyph glyph,
+;;;                            double x,
+;;;                            double y);
 ;;;
 ;;; Draws a single glyph with coordinates in device space.
 ;;;
@@ -535,9 +545,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_activate ()
 ;;;
-;;; void                pango_renderer_activate             (PangoRenderer *renderer);
+;;; void
+;;; pango_renderer_activate (PangoRenderer *renderer);
 ;;;
-;;; Does initial setup before rendering operations on renderer. pango_renderer_deactivate() should be called when done drawing. Calls such as pango_renderer_draw_layout() automatically activate the layout before drawing on it. Calls to pango_renderer_activate() and pango_renderer_deactivate() can be nested and the renderer will only be initialized and deinitialized once.
+;;; Does initial setup before rendering operations on renderer.
+;;; pango_renderer_deactivate() should be called when done drawing. Calls such
+;;; as pango_renderer_draw_layout() automatically activate the layout before
+;;; drawing on it. Calls to pango_renderer_activate() and
+;;; pango_renderer_deactivate() can be nested and the renderer will only be
+;;; initialized and deinitialized once.
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
@@ -548,9 +564,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_deactivate ()
 ;;;
-;;; void                pango_renderer_deactivate           (PangoRenderer *renderer);
+;;; void
+;;; pango_renderer_deactivate (PangoRenderer *renderer);
 ;;;
-;;; Cleans up after rendering operations on renderer. See docs for pango_renderer_activate().
+;;; Cleans up after rendering operations on renderer. See docs for
+;;; pango_renderer_activate().
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
@@ -561,18 +579,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_part_changed ()
 ;;;
-;;; void                pango_renderer_part_changed         (PangoRenderer *renderer,
-;;;                                                          PangoRenderPart part);
+;;; void
+;;; pango_renderer_part_changed (PangoRenderer *renderer,
+;;;                              PangoRenderPart part);
 ;;;
-;;; Informs Pango that the way that the rendering is done for part has changed in a way that would prevent multiple pieces being joined together into one drawing call. For instance, if a subclass of PangoRenderer was to add a stipple option for drawing underlines, it needs to call
-;;;
-;;; 1
-;;;
-;;;
+;;; Informs Pango that the way that the rendering is done for part has changed
+;;; in a way that would prevent multiple pieces being joined together into one
+;;; drawing call. For instance, if a subclass of PangoRenderer was to add a
+;;; stipple option for drawing underlines, it needs to call
 ;;;
 ;;; pango_renderer_part_changed (render, PANGO_RENDER_PART_UNDERLINE);
 ;;;
-;;; When the stipple changes or underlines with different stipples might be joined together. Pango automatically calls this for changes to colors. (See pango_renderer_set_color())
+;;; When the stipple changes or underlines with different stipples might be
+;;; joined together. Pango automatically calls this for changes to colors. (See
+;;; pango_renderer_set_color())
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
@@ -586,9 +606,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_set_color ()
 ;;;
-;;; void                pango_renderer_set_color            (PangoRenderer *renderer,
-;;;                                                          PangoRenderPart part,
-;;;                                                          const PangoColor *color);
+;;; void
+;;; pango_renderer_set_color (PangoRenderer *renderer,
+;;;                           PangoRenderPart part,
+;;;                           const PangoColor *color);
 ;;;
 ;;; Sets the color for part of the rendering.
 ;;;
@@ -607,8 +628,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_get_color ()
 ;;;
-;;; PangoColor *        pango_renderer_get_color            (PangoRenderer *renderer,
-;;;                                                          PangoRenderPart part);
+;;; PangoColor *
+;;; pango_renderer_get_color (PangoRenderer *renderer,
+;;;                           PangoRenderPart part);
 ;;;
 ;;; Gets the current rendering color for the specified part.
 ;;;
@@ -619,16 +641,63 @@
 ;;;     the part to get the color for
 ;;;
 ;;; Returns :
-;;;     the color for the specified part, or NULL if it hasn't been set and should be inherited from the environment.
+;;;     the color for the specified part, or NULL if it hasn't been set and
+;;;     should be inherited from the environment.
 ;;;
 ;;; Since 1.8
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_renderer_set_alpha ()
+;;;
+;;; void
+;;; pango_renderer_set_alpha (PangoRenderer *renderer,
+;;;                           PangoRenderPart part,
+;;;                           guint16 alpha);
+;;;
+;;; Sets the alpha for part of the rendering. Note that the alpha may only be
+;;; used if a color is specified for part as well.
+;;;
+;;; renderer :
+;;;     a PangoRenderer
+;;;
+;;; part :
+;;;     the part to set the alpha for
+;;;
+;;; alpha :
+;;;     an alpha value between 1 and 65536, or 0 to unset the alpha
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_renderer_get_alpha ()
+;;;
+;;; guint16
+;;; pango_renderer_get_alpha (PangoRenderer *renderer,
+;;;                           PangoRenderPart part);
+;;;
+;;; Gets the current alpha for the specified part.
+;;;
+;;; renderer :
+;;;     a PangoRenderer
+;;;
+;;; part :
+;;;     the part to get the alpha for
+;;;
+;;; Returns :
+;;;     the alpha for the specified part, or 0 if it hasn't been set and should
+;;;     be inherited from the environment.
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_set_matrix ()
 ;;;
-;;; void                pango_renderer_set_matrix           (PangoRenderer *renderer,
-;;;                                                          const PangoMatrix *matrix);
+;;; void
+;;; pango_renderer_set_matrix (PangoRenderer *renderer,
+;;;                            const PangoMatrix *matrix);
 ;;;
 ;;; Sets the transformation matrix that will be applied when rendering.
 ;;;
@@ -636,7 +705,8 @@
 ;;;     a PangoRenderer
 ;;;
 ;;; matrix :
-;;;     a PangoMatrix, or NULL to unset any existing matrix. (No matrix set is the same as setting the identity matrix.). [allow-none]
+;;;     a PangoMatrix, or NULL to unset any existing matrix. (No matrix set is
+;;;     the same as setting the identity matrix.). [allow-none]
 ;;;
 ;;; Since 1.8
 ;;; ----------------------------------------------------------------------------
@@ -644,15 +714,19 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_get_matrix ()
 ;;;
-;;; const PangoMatrix * pango_renderer_get_matrix           (PangoRenderer *renderer);
+;;; const PangoMatrix *
+;;; pango_renderer_get_matrix (PangoRenderer *renderer);
 ;;;
-;;; Gets the transformation matrix that will be applied when rendering. See pango_renderer_set_matrix().
+;;; Gets the transformation matrix that will be applied when rendering. See
+;;; pango_renderer_set_matrix().
 ;;;
 ;;; renderer :
 ;;;     a PangoRenderer
 ;;;
 ;;; Returns :
-;;;     the matrix, or NULL if no matrix has been set (which is the same as the identity matrix). The returned matrix is owned by Pango and must not be modified or freed.
+;;;     the matrix, or NULL if no matrix has been set (which is the same as the
+;;;     identity matrix). The returned matrix is owned by Pango and must not be
+;;;     modified or freed.
 ;;;
 ;;; Since 1.8
 ;;; ----------------------------------------------------------------------------
@@ -660,9 +734,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_get_layout ()
 ;;;
-;;; PangoLayout *       pango_renderer_get_layout           (PangoRenderer *renderer);
+;;; PangoLayout *
+;;; pango_renderer_get_layout (PangoRenderer *renderer);
 ;;;
-;;; Gets the layout currently being rendered using renderer. Calling this function only makes sense from inside a subclass's methods, like in its draw_shape() for example.
+;;; Gets the layout currently being rendered using renderer. Calling this
+;;; function only makes sense from inside a subclass's methods, like in its
+;;; draw_shape() for example.
 ;;;
 ;;; The returned layout should not be modified while still being rendered.
 ;;;
@@ -670,7 +747,8 @@
 ;;;     a PangoRenderer
 ;;;
 ;;; Returns :
-;;;     the layout, or NULL if no layout is being rendered using renderer at this time. [transfer none]
+;;;     the layout, or NULL if no layout is being rendered using renderer at
+;;;     this time. [transfer none]
 ;;;
 ;;; Since 1.20
 ;;; ----------------------------------------------------------------------------
@@ -678,7 +756,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_renderer_get_layout_line ()
 ;;;
-;;; PangoLayoutLine * pango_renderer_get_layout_line (PangoRenderer *renderer);
+;;; PangoLayoutLine *
+;;; pango_renderer_get_layout_line (PangoRenderer *renderer);
 ;;;
 ;;; Gets the layout line currently being rendered using renderer. Calling this
 ;;; function only makes sense from inside a subclass's methods, like in its
@@ -692,5 +771,6 @@
 ;;; Returns :
 ;;;     The layout line, or NULL if no layout line is being rendered using
 ;;;     renderer at this time.
-;;;
+;;; ----------------------------------------------------------------------------
+
 ;;; --- End of file pango.renderer.lisp ----------------------------------------

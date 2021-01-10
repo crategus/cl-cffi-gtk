@@ -1,11 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk-pango.asd
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,7 +23,7 @@
 
 (defsystem :cl-cffi-gtk-pango
   :name :cl-cffi-gtk-pango
-  :version "1.32.5"                              ; Version of Pango Library
+  :version "1.46"                              ; Version of Pango Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -36,14 +32,24 @@
                (:file "pango.version")
                (:file "pango.attributes")
                (:file "pango.tab-array")
-               (:file "pango.fonts")
-               (:file "pango.layout")
                (:file "pango.script")
                (:file "pango.bidirectional")
                (:file "pango.renderer")
-               (:file "pango.context")
-               (:file "pango.cairo-render")
+
+               (:file "pango.rendering")
+
                (:file "pango.glyph")
+               (:file "pango.coverage")
+               (:file "pango.vertical-text")
+               (:file "pango.fonts")
+
+               (:file "pango.context")
+
+               (:file "pango.layout")
+               (:file "pango.cairo-rendering")
+
+               (:file "pango.markup")
+
               )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject

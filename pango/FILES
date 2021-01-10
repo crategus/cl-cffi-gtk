@@ -6,23 +6,22 @@ Content from the Pango 1.48 Reference Manual
 
 Basic Pango Interfaces
 
-  Rendering — Functions to run the rendering pipeline
+* pango.rendering.lisp - Functions to run the rendering pipeline  - Pango 1.48 %
 
-* pango.fonts.lisp - Structures representing abstract fonts       - Pango 1.30
-* pango.glyph.lisp - Storing information about glyphs             - Pango 1.32 %
-* pango.attributes.lisp - Attributes for annotating text          - Pango 1.30
+  pango.fonts.lisp - Structures representing abstract fonts       - Pango 1.48 &
 
- Markup — Simple markup language for text with attributes
+* pango.glyph.lisp - Storing information about glyphs             - Pango 1.48 %
+* pango.attributes.lisp - Attributes for annotating text          - Pango 1.48 %
+* pango.markup.lisp - Markup language for text with attributes    - Pango 1.48 %
+* pango.layout.lisp - High-level layout driver objects            - Pango 1.46 %
+* pango.script.lisp - Scripts and Languages                       - Pango 1.48 %
+* pango.biderectional.lisp - Handling bidirectional text          - Pango 1.48 %
 
-* pango.layout.lisp - High-level layout driver objects            - Pango 1.46 &
-* pango.script.lisp - Scripts and Languages                       - Pango 1.48 &
-* pango.biderectional.lisp - Handling bidirectional text          - Pango 1.32 %
-
-  Vertical Text — Laying text out in vertical directions
+  pango.vertical-text.lisp - Text layout in vertical directions   - Pango 1.48
 
 Rendering with Pango
 
-* pango.cairo-rendering - Rendering with the Cairo backend        - Pango 1.32 %
+  pango.cairo-rendering - Rendering with the Cairo backend        - Pango 1.48
 
   Win32 Fonts and Rendering — Font handling and rendering on Windows
   CoreText Fonts and Rendering — Font handling and rendering on OS X
@@ -31,12 +30,11 @@ Rendering with Pango
 
 Low Level Functionality
 
-* pango.context.lisp - Global context object                      - Pango 1.32 %
-* pango.tab-array.lisp - Structures for storing tab stops         - Pango 1.32 %
+  pango.context.lisp - Global context object                      - Pango 1.48
 
-  Coverage Maps — Unicode character range coverage storage
-
-* pango.renderer.lisp - Rendering driver base class               - Pango 1.32 %
+* pango.tab-array.lisp - Structures for storing tab stops         - Pango 1.48 %
+* pango.coverage.lisp - Unicode character range coverage storage  - Pango 1.48 %
+* pango.renderer.lisp - Rendering driver base class               - Pango 1.48 %
 
   PangoFcFontMap — Base fontmap class for Fontconfig-based backends
   PangoFcFont — Base font class for Fontconfig-based backends
@@ -53,4 +51,4 @@ Deprecated APIs
  PangoEngineShape — Rendering-system dependent script engines
  Modules — Support for loadable modules
 
-;;; 2020-12-26
+;;; 2021-1-5

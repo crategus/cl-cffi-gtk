@@ -1,12 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.attributes.lisp
 ;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,13 +27,19 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Text Attributes - Font and other attributes for annotating text
+;;; Text Attributes
 ;;;
-;;; Synopsis
+;;;     Font and other attributes for annotating text
+;;;
+;;; Types and Values
 ;;;
 ;;;     PangoAttrType
 ;;;     PangoAttrClass
 ;;;     PangoAttribute
+;;;
+;;;     PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING
+;;;     PANGO_ATTR_INDEX_TO_TEXT_END
+;;;
 ;;;     PangoAttrString
 ;;;     PangoAttrLanguage
 ;;;     PangoAttrColor
@@ -42,7 +49,25 @@
 ;;;     PangoAttrShape
 ;;;     PangoAttrSize
 ;;;
-;;;     pango_parse_markup
+;;;     PangoAttrFontFeatures
+;;;     PangoUnderline
+;;;     PangoOverline
+;;;
+;;;     PANGO_SCALE_XX_SMALL
+;;;     PANGO_SCALE_X_SMALL
+;;;     PANGO_SCALE_SMALL
+;;;     PANGO_SCALE_MEDIUM
+;;;     PANGO_SCALE_LARGE
+;;;     PANGO_SCALE_X_LARGE
+;;;     PANGO_SCALE_XX_LARGE
+;;;
+;;;     PangoShowFlags
+;;;     PangoColor
+;;;     PangoAttrList
+;;;     PangoAttrIterator
+;;;
+;;; Functions
+;;;
 ;;;     pango_attr_type_register
 ;;;     pango_attr_type_get_name
 ;;;     pango_attribute_init
@@ -65,33 +90,32 @@
 ;;;     pango_attr_strikethrough_color_new
 ;;;     pango_attr_underline_new
 ;;;     pango_attr_underline_color_new
-;;;
-;;;     PangoUnderline
+;;;     pango_attr_overline_new
+;;;     pango_attr_overline_color_new
 ;;;
 ;;;     pango_attr_shape_new
 ;;;     pango_attr_shape_new_with_data
+;;;
+;;;     PangoAttrDataCopyFunc
+;;;
 ;;;     pango_attr_scale_new
-;;;     PANGO_SCALE_XX_SMALL
-;;;     PANGO_SCALE_X_SMALL
-;;;     PANGO_SCALE_SMALL
-;;;     PANGO_SCALE_MEDIUM
-;;;     PANGO_SCALE_LARGE
-;;;     PANGO_SCALE_X_LARGE
-;;;     PANGO_SCALE_XX_LARGE
 ;;;     pango_attr_rise_new
 ;;;     pango_attr_letter_spacing_new
 ;;;     pango_attr_fallback_new
 ;;;     pango_attr_gravity_new
 ;;;     pango_attr_gravity_hint_new
-;;;
-;;;     PangoColor
+;;;     pango_attr_font_features_new
+;;;     pango_attr_foreground_alpha_new
+;;;     pango_attr_background_alpha_new
+;;;     pango_attr_allow_breaks_new
+;;;     pango_attr_insert_hyphens_new
+;;;     pango_attr_show_new
 ;;;
 ;;;     pango_color_parse
+;;;     pango_color_parse_with_alpha
 ;;;     pango_color_copy
 ;;;     pango_color_free
 ;;;     pango_color_to_string
-;;;
-;;;     PangoAttrList
 ;;;
 ;;;     pango_attr_list_new
 ;;;     pango_attr_list_ref
@@ -102,10 +126,13 @@
 ;;;     pango_attr_list_change
 ;;;     pango_attr_list_splice
 ;;;     pango_attr_list_filter
+;;;     pango_attr_list_update
+;;;
+;;;     PangoAttrFilterFunc
+;;;
+;;;     pango_attr_list_get_attributes
+;;;     pango_attr_list_equal
 ;;;     pango_attr_list_get_iterator
-;;;
-;;;     PangoAttrIterator
-;;;
 ;;;     pango_attr_iterator_copy
 ;;;     pango_attr_iterator_next
 ;;;     pango_attr_iterator_range
@@ -116,24 +143,27 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GEnum
-;;;    +----PangoAttrType
+;;;     GBoxed
+;;;     ├── PangoAttrIterator
+;;;     ├── PangoAttrList
+;;;     ├── PangoAttribute
+;;;     ╰── PangoColor
 ;;;
-;;;   GEnum
-;;;    +----PangoUnderline
+;;;     GEnum
+;;;     ├── PangoAttrType
+;;;     ├── PangoUnderline
+;;;     ╰── PangoOverline
 ;;;
-;;;   GBoxed
-;;;    +----PangoColor
-;;;
-;;;   GBoxed
-;;;    +----PangoAttrList
+;;;     GFlags
+;;;     ╰── PangoShowFlags
 ;;;
 ;;; Description
 ;;;
-;;; Attributed text is used in a number of places in Pango. It is used as the
-;;; input to the itemization process and also when creating a PangoLayout. The
-;;; data types and functions in this section are used to represent and
-;;; manipulate sets of attributes applied to a portion of text.
+;;;     Attributed text is used in a number of places in Pango. It is used as
+;;;     the input to the itemization process and also when creating a
+;;;     PangoLayout. The data types and functions in this section are used to
+;;;     represent and manipulate sets of attributes applied to a portion of
+;;;     text.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -241,6 +271,31 @@
 ;;;
 ;;; PANGO_ATTR_GRAVITY_HINT
 ;;;     gravity hint (PangoAttrInt)
+;;;
+;;; PANGO_ATTR_FONT_FEATURES
+;;;     OpenType font features (PangoAttrString). Since 1.38
+;;;
+;;; PANGO_ATTR_FOREGROUND_ALPHA
+;;;     foreground alpha (PangoAttrInt). Since 1.38
+;;;
+;;; PANGO_ATTR_BACKGROUND_ALPHA
+;;;     background alpha (PangoAttrInt). Since 1.38
+;;;
+;;; PANGO_ATTR_ALLOW_BREAKS
+;;;     whether breaks are allowed (PangoAttrInt). Since 1.44
+;;;
+;;; PANGO_ATTR_SHOW
+;;;     how to render invisible characters (PangoAttrInt). Since 1.44
+;;;
+;;; PANGO_ATTR_INSERT_HYPHENS
+;;;     whether to insert hyphens at intra-word line breaks (PangoAttrInt).
+;;;     Since 1.44
+;;;
+;;; PANGO_ATTR_OVERLINE
+;;;     whether the text has an overline (PangoAttrInt). Since 1.46
+;;;
+;;; PANGO_ATTR_OVERLINE_COLOR
+;;;     overline color (PangoAttrColor). Since 1.46
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -467,6 +522,20 @@
 ;;;     destroy function for the user data
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct pango-attr-shape)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-shape atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-shape atdoc:*external-symbols*)
+ "@version{2021-1-8}
+  @begin{short}
+    The @sym{pango-attr-shape} structure is used to represent attributes which
+    impose shape restrictions.
+  @end{short}")
+
+(export 'pango-attr-shape)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrSize
 ;;;
@@ -494,52 +563,223 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_parse_markup ()
+;;; struct PangoAttrFontFeatures
 ;;;
-;;; gboolean pango_parse_markup (const char *markup_text,
-;;;                              int length,
-;;;                              gunichar accel_marker,
-;;;                              PangoAttrList **attr_list,
-;;;                              char **text,
-;;;                              gunichar *accel_char,
-;;;                              GError **error);
+;;; struct PangoAttrFontFeatures {
+;;;   PangoAttribute attr;
+;;;   gchar *features;
+;;; };
 ;;;
-;;; Parses marked-up text (see markup format) to create a plain-text string and
-;;; an attribute list.
+;;; The PangoAttrFontFeatures structure is used to represent OpenType font
+;;; features as an attribute.
 ;;;
-;;; If accel_marker is nonzero, the given character will mark the character
-;;; following it as an accelerator. For example, accel_marker might be an
-;;; ampersand or underscore. All characters marked as an accelerator will
-;;; receive a PANGO_UNDERLINE_LOW attribute, and the first character so marked
-;;; will be returned in accel_char. Two accel_marker characters following each
-;;; other produce a single literal accel_marker character.
+;;; PangoAttribute attr;
+;;;     the common portion of the attribute
 ;;;
-;;; If any error happens, none of the output arguments are touched except for
-;;; error.
+;;; gchar *features;
+;;;     the featues, as a string in CSS syntax
 ;;;
-;;; markup_text :
-;;;     markup to parse (see markup format)
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoUnderline
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoUnderline" pango-underline
+  (:export t
+   :type-initializer "pango_underline_get_type")
+  (:none 0)
+  (:single 1)
+  (:double 2)
+  (:low 3)
+  (:error 4)
+  (:single-line 5)
+  (:double-line 6)
+  (:error-line 7))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-underline atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-underline atdoc:*external-symbols*)
+ "@version{2013-6-30}
+  @begin{short}
+    The @sym{pango-underline} enumeration is used to specify whether text should
+    be underlined, and if so, the type of underlining.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoUnderline\" pango-underline
+  (:export t
+   :type-initializer \"pango_underline_get_type\")
+  (:none 0)
+  (:single 1)
+  (:double 2)
+  (:low 3)
+  (:error 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No underline should be drawn.}
+    @entry[:single]{A single underline should be drawn.}
+    @entry[:double]{A double underline should be drawn.}
+    @entry[:low]{A single underline should be drawn at a position beneath the
+      ink extents of the text being underlined. This should be used only for
+      underlining single characters, such as for keyboard accelerators.
+      @code{:single} should be used for extended portions of text.}
+    @entry[:error]{A wavy underline should be drawn below. This underline is
+      typically used to indicate an error such as a possible mispelling; in
+      some cases a contrasting color may automatically be used. This type of
+      underlining is available since Pango 1.4.}
+    @entry[:single-line]{Like @code{:single}, but drawn continuously across
+      multiple runs. This type of underlining is available since Pango 1.46.}
+    @entry[:double-line]{Like @code{:double}, but drawn continuously across
+      multiple runs. This type of underlining is available since Pango 1.46.}
+    @entry[:error-line]{Like @code{:error}, but drawn continuously across
+      multiple runs. This type of underlining is available since Pango 1.46.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoOverline
 ;;;
-;;; length :
-;;;     length of markup_text, or -1 if nul-terminated
+;;; The PangoOverline enumeration is used to specify whether text should be
+;;; overlined, and if so, the type of line.
 ;;;
-;;; accel_marker :
-;;;     character that precedes an accelerator, or 0 for none
+;;; PANGO_OVERLINE_NONE
+;;;     no overline should be drawn
 ;;;
-;;; attr_list :
-;;;     address of return location for a PangoAttrList, or NULL
+;;; PANGO_OVERLINE_SINGLE
+;;;     Draw a single line above the ink extents of the text being underlined.
 ;;;
-;;; text :
-;;;     address of return location for text with tags stripped, or NULL
+;;; Since 1.46
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_XX_SMALL
 ;;;
-;;; accel_char :
-;;;     address of return location for accelerator char, or NULL
+;;; #define PANGO_SCALE_XX_SMALL ((double)0.5787037037037)
 ;;;
-;;; error :
-;;;     address of return location for errors, or NULL
+;;; The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_X_SMALL
 ;;;
-;;; Returns :
-;;;     FALSE if error is set, otherwise TRUE
+;;; #define PANGO_SCALE_X_SMALL  ((double)0.6444444444444)
+;;;
+;;; The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_SMALL
+;;;
+;;; #define PANGO_SCALE_SMALL    ((double)0.8333333333333)
+;;;
+;;; The scale factor for one shrinking step (1 / 1.2).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_MEDIUM
+;;;
+;;; #define PANGO_SCALE_MEDIUM   ((double)1.0)
+;;;
+;;; The scale factor for normal size (1.0).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_LARGE
+;;;
+;;; #define PANGO_SCALE_LARGE    ((double)1.2)
+;;;
+;;; The scale factor for one magnification step (1.2).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_X_LARGE
+;;;
+;;; #define PANGO_SCALE_X_LARGE  ((double)1.44)
+;;;
+;;; The scale factor for two magnification steps (1.2 * 1.2).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_SCALE_XX_LARGE
+;;;
+;;; #define PANGO_SCALE_XX_LARGE ((double)1.728)
+;;;
+;;; The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum PangoShowFlags
+;;;
+;;; These flags affect how Pango treats characters that are normally not
+;;; visible in the output.
+;;;
+;;; PANGO_SHOW_NONE
+;;;     No special treatment for invisible characters
+;;;
+;;; PANGO_SHOW_SPACES
+;;;     Render spaces, tabs and newlines visibly
+;;;
+;;; PANGO_SHOW_LINE_BREAKS
+;;;     Render line breaks visibly
+;;;
+;;; PANGO_SHOW_IGNORABLES
+;;;     Render default-ignorable Unicode characters visibly
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct PangoColor
+;;;
+;;; struct PangoColor {
+;;;   guint16 red;
+;;;   guint16 green;
+;;;   guint16 blue;
+;;; };
+;;;
+;;; The PangoColor structure is used to represent a color in an uncalibrated
+;;; RGB color-space.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PangoAttrList
+;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "pango_attr_list_get_type" g-size))
+
+(define-g-boxed-opaque pango-attr-list "PangoAttrList"
+  :alloc (%pango-attr-list-new))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-list atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-attr-list 'type)
+ "@version{2013-6-30}
+  @begin{short}
+    The @sym{pango-attr-list} structure represents a list of attributes that
+    apply to a section of text.
+  @end{short}
+  The attributes are, in general, allowed to overlap in an arbitrary fashion,
+  however, if the attributes are manipulated only through the function
+  @fun{pango-attr-list-change}, the overlap between properties will meet
+  stricter criteria.
+
+  Since the @sym{pango-attr-list} structure is stored as a linear list, it is
+  not suitable for storing attributes for large amounts of text. In general, you
+  should not use a single @sym{pango-attr-list} for more than one paragraph of
+  text.
+  @see-function{pango-attr-list-change}")
+
+(export (boxed-related-symbols 'pango-attr-list))
+
+;;; ----------------------------------------------------------------------------
+;;; PangoAttrIterator
+;;;
+;;; typedef struct _PangoAttrIterator PangoAttrIterator;
+;;;
+;;; The PangoAttrIterator structure is used to represent an iterator through a
+;;; PangoAttrList. A new iterator is created with
+;;; pango_attr_list_get_iterator(). Once the iterator is created, it can be
+;;; advanced through the style changes in the text using
+;;; pango_attr_iterator_next(). At each style change, the range of the current
+;;; style segment and the attributes currently in effect can be queried.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -911,56 +1151,48 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum PangoUnderline
+;;; pango_attr_overline_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_overline_new (PangoOverline overline);
+;;;
+;;; Create a new overline-style attribute.
+;;;
+;;; overline :
+;;;     the overline style
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "PangoUnderline" pango-underline
-  (:export t
-   :type-initializer "pango_underline_get_type")
-  (:none 0)
-  (:single 1)
-  (:double 2)
-  (:low 3)
-  (:error 4))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-underline atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'pango-underline atdoc:*external-symbols*)
- "@version{2013-6-30}
-  @begin{short}
-    The @sym{pango-underline} enumeration is used to specify whether text should
-    be underlined, and if so, the type of underlining.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"PangoUnderline\" pango-underline
-  (:export t
-   :type-initializer \"pango_underline_get_type\")
-  (:none 0)
-  (:single 1)
-  (:double 2)
-  (:low 3)
-  (:error 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:none]{No underline should be drawn.}
-    @entry[:single]{A single underline should be drawn.}
-    @entry[:double]{A double underline should be drawn.}
-    @entry[:low]{A single underline should be drawn at a position beneath the
-      ink extents of the text being underlined. This should be used only for
-      underlining single characters, such as for keyboard accelerators.
-      @code{:single} should be used for extended portions of text.}
-    @entry[:error]{A wavy underline should be drawn below. This underline is
-      typically used to indicate an error such as a possible mispelling; in some
-      cases a contrasting color may automatically be used. This type of
-      underlining is available since Pango 1.4.}
-  @end{table}")
-
 ;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_UNDERLINE
+;;; pango_attr_overline_color_new ()
 ;;;
-;;; #define PANGO_TYPE_UNDERLINE (pango_underline_get_type())
+;;; PangoAttribute *
+;;; pango_attr_overline_color_new (guint16 red,
+;;;                                guint16 green,
+;;;                                guint16 blue);
 ;;;
-;;; The GObject type for PangoUnderline.
+;;; Create a new overline color attribute. This attribute modifies the color of
+;;; overlines. If not set, overlines will use the foreground color.
+;;;
+;;; red :
+;;;     the red value (ranging from 0 to 65535)
+;;;
+;;; green :
+;;;     the green value
+;;;
+;;; blue :
+;;;     the blue value
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1049,62 +1281,6 @@
 ;;; Returns :
 ;;;     the newly allocated PangoAttribute, which should be freed with
 ;;;     pango_attribute_destroy()
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_XX_SMALL
-;;;
-;;; #define PANGO_SCALE_XX_SMALL ((double)0.5787037037037)
-;;;
-;;; The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_X_SMALL
-;;;
-;;; #define PANGO_SCALE_X_SMALL  ((double)0.6444444444444)
-;;;
-;;; The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_SMALL
-;;;
-;;; #define PANGO_SCALE_SMALL    ((double)0.8333333333333)
-;;;
-;;; The scale factor for one shrinking step (1 / 1.2).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_MEDIUM
-;;;
-;;; #define PANGO_SCALE_MEDIUM   ((double)1.0)
-;;;
-;;; The scale factor for normal size (1.0).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_LARGE
-;;;
-;;; #define PANGO_SCALE_LARGE    ((double)1.2)
-;;;
-;;; The scale factor for one magnification step (1.2).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_X_LARGE
-;;;
-;;; #define PANGO_SCALE_X_LARGE  ((double)1.4399999999999)
-;;;
-;;; The scale factor for two magnification steps (1.2 * 1.2).
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_SCALE_XX_LARGE
-;;;
-;;; #define PANGO_SCALE_XX_LARGE ((double)1.728)
-;;;
-;;; The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1198,16 +1374,118 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; struct PangoColor
+;;; pango_attr_font_features_new ()
 ;;;
-;;; struct PangoColor {
-;;;   guint16 red;
-;;;   guint16 green;
-;;;   guint16 blue;
-;;; };
+;;; PangoAttribute *
+;;; pango_attr_font_features_new (const gchar *features);
 ;;;
-;;; The PangoColor structure is used to represent a color in an uncalibrated
-;;; RGB color-space.
+;;; Create a new font features tag attribute.
+;;;
+;;; features :
+;;;     a string with OpenType font features, in CSS syntax
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_foreground_alpha_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_foreground_alpha_new (guint16 alpha);
+;;;
+;;; Create a new foreground alpha attribute.
+;;;
+;;; alpha :
+;;;     the alpha value, between 1 and 65536
+;;;
+;;; Returns :
+;;;     the new allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_background_alpha_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_background_alpha_new (guint16 alpha);
+;;;
+;;; Create a new background alpha attribute.
+;;;
+;;; alpha :
+;;;     the alpha value, between 1 and 65536
+;;;
+;;; Returns :
+;;;     the new allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_allow_breaks_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_allow_breaks_new (gboolean allow_breaks);
+;;;
+;;; Create a new allow-breaks attribute.
+;;;
+;;; If breaks are disabled, the range will be kept in a single run, as far as
+;;; possible.
+;;;
+;;; allow_breaks :
+;;;     TRUE if we line breaks are allowed
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.44
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_insert_hyphens_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_insert_hyphens_new (gboolean insert_hyphens);
+;;;
+;;; Create a new insert-hyphens attribute.
+;;;
+;;; Pango will insert hyphens when breaking lines in the middle of a word. This
+;;; attribute can be used to suppress the hyphen.
+;;;
+;;; insert_hyphens :
+;;;     TRUE if hyphens should be inserted
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.44
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_show_new ()
+;;;
+;;; PangoAttribute *
+;;; pango_attr_show_new (PangoShowFlags flags);
+;;;
+;;; Create a new attribute that influences how invisible characters are
+;;; rendered.
+;;;
+;;; flags :
+;;;     PangoShowFlags to apply
+;;;
+;;; Returns :
+;;;     the newly allocated PangoAttribute, which should be freed with
+;;;     pango_attribute_destroy().
+;;;
+;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1230,6 +1508,42 @@
 ;;;
 ;;; Returns :
 ;;;     TRUE if parsing of the specifier succeeded, otherwise false
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_color_parse_with_alpha ()
+;;;
+;;; gboolean
+;;; pango_color_parse_with_alpha (PangoColor *color,
+;;;                               guint16 *alpha,
+;;;                               const char *spec);
+;;;
+;;; Fill in the fields of a color from a string specification. The string can
+;;; either one of a large set of standard names. (Taken from the CSS
+;;; specification), or it can be a hexadecimal value in the form '#rgb'
+;;; '#rrggbb' '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex
+;;; digits of the red, green, and blue components of the color, respectively.
+;;; (White in the four forms is '#fff' '#ffffff' '#fffffffff' and
+;;; '#ffffffffffff')
+;;;
+;;; Additionally, parse strings of the form '#rgba', '#rrggbbaa',
+;;; '#rrrrggggbbbbaaaa', if alpha is not NULL, and set alpha to the value
+;;; specified by the hex digits for 'a'. If no alpha component is found in
+;;; spec , alpha is set to 0xffff (for a solid color).
+;;;
+;;; color :
+;;;     a PangoColor structure in which to store the result, or NULL.
+;;;
+;;; alpha :
+;;;     return location for alpha, or NULL.
+;;;
+;;; spec :
+;;;     a string specifying the new color
+;;;
+;;; Returns :
+;;;     TRUE if parsing of the specifier succeeded, otherwise false.
+;;;
+;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1277,36 +1591,6 @@
 ;;;
 ;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PangoAttrList
-;;; ----------------------------------------------------------------------------
-
-(glib-init::at-init () (foreign-funcall "pango_attr_list_get_type" g-size))
-
-(define-g-boxed-opaque pango-attr-list "PangoAttrList"
-  :alloc (%pango-attr-list-new))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-attr-list atdoc:*class-name-alias*) "CStruct"
-      (documentation 'pango-attr-list 'type)
- "@version{2013-6-30}
-  @begin{short}
-    The @sym{pango-attr-list} structure represents a list of attributes that
-    apply to a section of text.
-  @end{short}
-  The attributes are, in general, allowed to overlap in an arbitrary fashion,
-  however, if the attributes are manipulated only through the function
-  @fun{pango-attr-list-change}, the overlap between properties will meet
-  stricter criteria.
-
-  Since the @sym{pango-attr-list} structure is stored as a linear list, it is
-  not suitable for storing attributes for large amounts of text. In general, you
-  should not use a single @sym{pango-attr-list} for more than one paragraph of
-  text.
-  @see-function{pango-attr-list-change}")
-
-(export (boxed-related-symbols 'pango-attr-list))
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_new ()
@@ -1479,6 +1763,44 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_attr_list_update ()
+;;;
+;;; void
+;;; pango_attr_list_update (PangoAttrList *list,
+;;;                         int pos,
+;;;                         int remove,
+;;;                         int add);
+;;;
+;;; Update indices of attributes in list for a change in the text they refer to.
+;;;
+;;; The change that this function applies is removing remove bytes at position
+;;; pos and inserting add bytes instead.
+;;;
+;;; Attributes that fall entirely in the (pos , pos + remove ) range are
+;;; removed.
+;;;
+;;; Attributes that start or end inside the (pos , pos + remove ) range are
+;;; shortened to reflect the removal.
+;;;
+;;; Attributes start and end positions are updated if they are behind pos +
+;;; remove .
+;;;
+;;; list :
+;;;     a PangoAttrList
+;;;
+;;; pos :
+;;;     the position of the change
+;;;
+;;; remove :
+;;;     the number of removed bytes
+;;;
+;;; add :
+;;;     the number of added bytes
+;;;
+;;; Since 1.44
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; PangoAttrFilterFunc ()
 ;;;
 ;;; gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,
@@ -1498,6 +1820,54 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_attr_list_get_attributes ()
+;;;
+;;; GSList *
+;;; pango_attr_list_get_attributes (PangoAttrList *list);
+;;;
+;;; Gets a list of all attributes in list .
+;;;
+;;; list :
+;;;     a PangoAttrList
+;;;
+;;; Returns :
+;;;     a list of all attributes in list . To free this value, call
+;;;     pango_attribute_destroy() on each value and g_slist_free() on the list.
+;;;
+;;; Since 1.44
+;;; ----------------------------------------------------------------------------
+
+;#+pango-1-44
+;(defcfun ("pango_attr_list_get_attributes" pango-attr-list-attributes) g-slist
+;  (attr-list (g-boxed-foreign pango-attr-list)))
+
+;#+pango-1-44
+;(export 'pango-attr-list-attributes)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_attr_list_equal ()
+;;;
+;;; gboolean
+;;; pango_attr_list_equal (PangoAttrList *list,
+;;;                        PangoAttrList *other_list);
+;;;
+;;; Checks whether list and other_list contain the same attributes and whether
+;;; those attributes apply to the same ranges. Beware that this will return
+;;; wrong values if any list contains duplicates.
+;;;
+;;; list :
+;;;     a PangoAttrList
+;;;
+;;; other_list :
+;;;     the other PangoAttrList
+;;;
+;;; Returns :
+;;;     TRUE if the lists are equal, FALSE if they aren't.
+;;;
+;;; Since 1.46
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_get_iterator ()
 ;;;
 ;;; PangoAttrIterator * pango_attr_list_get_iterator (PangoAttrList *list);
@@ -1511,19 +1881,6 @@
 ;;; Returns :
 ;;;     the newly allocated PangoAttrIterator, which should be freed with
 ;;;     pango_attr_iterator_destroy()
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PangoAttrIterator
-;;;
-;;; typedef struct _PangoAttrIterator PangoAttrIterator;
-;;;
-;;; The PangoAttrIterator structure is used to represent an iterator through a
-;;; PangoAttrList. A new iterator is created with
-;;; pango_attr_list_get_iterator(). Once the iterator is created, it can be
-;;; advanced through the style changes in the text using
-;;; pango_attr_iterator_next(). At each style change, the range of the current
-;;; style segment and the attributes currently in effect can be queried.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

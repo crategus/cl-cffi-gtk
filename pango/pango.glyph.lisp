@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.glyph.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.32.6. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +28,29 @@
 ;;;
 ;;; Glyph Storage
 ;;;
-;;; Structures for storing information about glyphs
+;;;     Structures for storing information about glyphs
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     PANGO_SCALE
+;;;     PangoRectangle
+;;;     PangoMatrix
+;;;     PANGO_MATRIX_INIT
+;;;     PangoGlyph
+;;;     PANGO_GLYPH_EMPTY
+;;;     PANGO_GLYPH_INVALID_INPUT
+;;;     PANGO_GLYPH_UNKNOWN_FLAG
+;;;     PangoGlyphInfo
+;;;     PangoGlyphGeometry
+;;;     PangoGlyphUnit
+;;;     PangoGlyphVisAttr
+;;;     PangoGlyphString
+;;;     PangoGlyphItem
+;;;     PangoGlyphItemIter
+;;;     PANGO_TYPE_GLYPH_STRING
+;;;
+;;; Functions
+;;;
 ;;;     PANGO_PIXELS
 ;;;     PANGO_PIXELS_FLOOR
 ;;;     PANGO_PIXELS_CEIL
@@ -44,19 +59,12 @@
 ;;;     pango_units_to_double
 ;;;     pango_units_from_double
 ;;;
-;;;     PangoRectangle
-;;;
 ;;;     PANGO_ASCENT
 ;;;     PANGO_DESCENT
 ;;;     PANGO_LBEARING
 ;;;     PANGO_RBEARING
 ;;;
 ;;;     pango_extents_to_pixels
-;;;
-;;;     PangoMatrix
-;;;
-;;;     PANGO_TYPE_MATRIX
-;;;     PANGO_MATRIX_INIT
 ;;;
 ;;;     pango_matrix_copy
 ;;;     pango_matrix_free
@@ -69,23 +77,9 @@
 ;;;     pango_matrix_transform_rectangle
 ;;;     pango_matrix_transform_pixel_rectangle
 ;;;     pango_matrix_get_font_scale_factor
+;;;     pango_matrix_get_font_scale_factors
 ;;;
-;;;     PangoGlyph
-;;;
-;;;     PANGO_GLYPH_EMPTY
-;;;     PANGO_GLYPH_INVALID_INPUT
-;;;     PANGO_GLYPH_UNKNOWN_FLAG
 ;;;     PANGO_GET_UNKNOWN_GLYPH
-;;;
-;;;     PangoGlyphInfo
-;;;     PangoGlyphGeometry
-;;;     PangoGlyphUnit
-;;;     PangoGlyphVisAttr
-;;;     PangoGlyphString
-;;;     PangoGlyphItem
-;;;     PangoGlyphItemIter
-;;;
-;;;     PANGO_TYPE_GLYPH_STRING
 ;;;
 ;;;     pango_glyph_string_new
 ;;;     pango_glyph_string_copy
@@ -98,16 +92,12 @@
 ;;;     pango_glyph_string_x_to_index
 ;;;     pango_glyph_string_get_logical_widths
 ;;;
-;;;     PANGO_TYPE_GLYPH_ITEM
-;;;
 ;;;     pango_glyph_item_copy
 ;;;     pango_glyph_item_free
 ;;;     pango_glyph_item_split
 ;;;     pango_glyph_item_apply_attrs
 ;;;     pango_glyph_item_letter_space
 ;;;     pango_glyph_item_get_logical_widths
-;;;
-;;;     PANGO_TYPE_GLYPH_ITEM_ITER
 ;;;
 ;;;     pango_glyph_item_iter_copy
 ;;;     pango_glyph_item_iter_free
@@ -118,23 +108,17 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GBoxed
-;;;    +----PangoMatrix
-;;;
-;;;   GBoxed
-;;;    +----PangoGlyphString
-;;;
-;;;   GBoxed
-;;;    +----PangoGlyphItem
-;;;
-;;;   GBoxed
-;;;    +----PangoGlyphItemIter
+;;;     GBoxed
+;;;     ├── PangoGlyphItem
+;;;     ├── PangoGlyphItemIter
+;;;     ├── PangoGlyphString
+;;;     ╰── PangoMatrix
 ;;;
 ;;; Description
 ;;;
-;;; pango_shape() produces a string of glyphs which can be measured or drawn to
-;;; the screen. The following structures are used to store information about
-;;; glyphs.
+;;;     pango_shape() produces a string of glyphs which can be measured or drawn
+;;;     to the screen. The following structures are used to store information
+;;;     about glyphs.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -165,248 +149,79 @@
 (export '+pango-scale+)
 
 ;;; ----------------------------------------------------------------------------
-;;; PANGO_PIXELS()
-;;; ----------------------------------------------------------------------------
-
-(defun pango-pixels (d)
- #+cl-cffi-gtk-documentation
- "@version{2014-10-27}
-  @argument[d]{a dimension in Pango units}
-  @return{Rounded dimension in device units.}
-  Converts a dimension to device units by rounding.
-  @see-variable{+pango-scale+}"
-  (ash (+ d 512) -10)) ; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
-
-(export 'pango-pixels)
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_PIXELS_FLOOR()
-;;;
-;;; #define PANGO_PIXELS_FLOOR(d) (((int)(d)) >> 10)
-;;;
-;;; Converts a dimension to device units by flooring.
-;;;
-;;; d :
-;;;     a dimension in Pango units.
-;;;
-;;; Returns :
-;;;     floored dimension in device units.
-;;;
-;;; Since 1.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_PIXELS_CEIL()
-;;;
-;;; #define PANGO_PIXELS_CEIL(d) (((int)(d) + 1023) >> 10)
-;;;
-;;; Converts a dimension to device units by ceiling.
-;;;
-;;; d :
-;;;     a dimension in Pango units.
-;;;
-;;; Returns :
-;;;     ceiled dimension in device units.
-;;;
-;;; Since 1.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_UNITS_ROUND()
-;;;
-;;; #define PANGO_UNITS_ROUND(d)
-;;;
-;;; Rounds a dimension to whole device units, but does not convert it to device
-;;; units.
-;;;
-;;; d :
-;;;     a dimension in Pango units.
-;;;
-;;; Returns :
-;;;     rounded dimension in Pango units.
-;;;
-;;; Since 1.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_units_to_double ()
-;;;
-;;; double pango_units_to_double (int i);
-;;;
-;;; Converts a number in Pango units to floating-point: divides it by
-;;; PANGO_SCALE.
-;;;
-;;; i :
-;;;     value in Pango units
-;;;
-;;; Returns :
-;;;     the double value.
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_units_from_double ()
-;;;
-;;; int pango_units_from_double (double d);
-;;;
-;;; Converts a floating-point number to Pango units: multiplies it by
-;;; PANGO_SCALE and rounds to nearest integer.
-;;;
-;;; d :
-;;;     double floating-point value
-;;;
-;;; Returns :
-;;;     the value in Pango units.
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; struct PangoRectangle
-;;;
-;;; struct PangoRectangle {
-;;;   int x;
-;;;   int y;
-;;;   int width;
-;;;   int height;
-;;; };
-;;;
-;;; The PangoRectangle structure represents a rectangle. It is frequently used
-;;; to represent the logical or ink extents of a single glyph or section of
-;;; text. (See, for instance, pango_font_get_glyph_extents())
-;;;
-;;; int x;
-;;;     X coordinate of the left side of the rectangle.
-;;;
-;;; int y;
-;;;     Y coordinate of the the top side of the rectangle.
-;;;
-;;; int width;
-;;;     width of the rectangle.
-;;;
-;;; int height;
-;;;     height of the rectangle.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; PANGO_ASCENT()
-;;;
-;;; #define PANGO_ASCENT(rect) (-(rect).y)
-;;;
-;;; Extracts the ascent from a PangoRectangle representing glyph extents. The
-;;; ascent is the distance from the baseline to the highest point of the
-;;; character. This is positive if the glyph ascends above the baseline.
-;;;
-;;; rect :
-;;;     a PangoRectangle
-;;; ----------------------------------------------------------------------------
+(defcstruct pango-rectangle
+  (x :int)
+  (y :int)
+  (width :int)
+  (height :int))
 
-;;; ----------------------------------------------------------------------------
-;;; PANGO_DESCENT()
-;;;
-;;; #define PANGO_DESCENT(rect) ((rect).y + (rect).height)
-;;;
-;;; Extracts the descent from a PangoRectangle representing glyph extents. The
-;;; descent is the distance from the baseline to the lowest point of the
-;;; character. This is positive if the glyph descends below the baseline.
-;;;
-;;; rect :
-;;;     a PangoRectangle
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-rectangle atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-rectangle atdoc:*external-symbols*)
+ "@version{2021-1-4}
+  @begin{short}
+    The @sym{pango-rectangle} structure represents a rectangle.
+  @end{short}
+  It is frequently used to represent the logical or ink extents of a single
+  glyph or section of text. See, for instance, the function
+  @fun{pango-font-glyph-extents}.
+  @begin{pre}
+(defcstruct pango-rectangle
+  (x :int)
+  (y :int)
+  (width :int)
+  (height :int))
+  @end{pre}
+  @begin[code]{table}
+    @entry[x]{x coordinate of the left side of the rectangle.}
+    @entry[y]{y coordinate of the the top side of the rectangle.}
+    @entry[width]{Width of the rectangle.}
+    @entry[height]{Height of the rectangle.}
+  @end{table}
+  @see-function{pango-font-glyph-extents}")
 
-;;; ----------------------------------------------------------------------------
-;;; PANGO_LBEARING()
-;;;
-;;; #define PANGO_LBEARING(rect) ((rect).x)
-;;;
-;;; Extracts the left bearing from a PangoRectangle representing glyph extents.
-;;; The left bearing is the distance from the horizontal origin to the farthest
-;;; left point of the character. This is positive for characters drawn
-;;; completely to the right of the glyph origin.
-;;;
-;;; rect :
-;;;     a PangoRectangle
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_RBEARING()
-;;;
-;;; #define PANGO_RBEARING(rect) ((rect).x + (rect).width)
-;;;
-;;; Extracts the right bearing from a PangoRectangle representing glyph extents.
-;;; The right bearing is the distance from the horizontal origin to the farthest
-;;; right point of the character. This is positive except for characters drawn
-;;; completely to the left of the horizontal origin.
-;;;
-;;; rect :
-;;;     a PangoRectangle
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_extents_to_pixels ()
-;;;
-;;; void pango_extents_to_pixels (PangoRectangle *inclusive,
-;;;                               PangoRectangle *nearest);
-;;;
-;;; Converts extents from Pango units to device units, dividing by the
-;;; PANGO_SCALE factor and performing rounding.
-;;;
-;;; The inclusive rectangle is converted by flooring the x/y coordinates and
-;;; extending width/height, such that the final rectangle completely includes
-;;; the original rectangle.
-;;;
-;;; The nearest rectangle is converted by rounding the coordinates of the
-;;; rectangle to the nearest device unit (pixel).
-;;;
-;;; The rule to which argument to use is: if you want the resulting device-space
-;;; rectangle to completely contain the original rectangle, pass it in as
-;;; inclusive. If you want two touching-but-not-overlapping rectangles stay
-;;; touching-but-not-overlapping after rounding to device units, pass them in as
-;;; nearest.
-;;;
-;;; inclusive :
-;;;     rectangle to round to pixels inclusively, or NULL
-;;;
-;;; nearest :
-;;;     rectangle to round to nearest pixels, or NULL
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
+(export 'pango-rectangle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoMatrix
 ;;; ----------------------------------------------------------------------------
 
+(glib-init::at-init () (foreign-funcall "pango_matrix_get_type" g-size))
+
 (define-g-boxed-cstruct pango-matrix "PangoMatrix"
-  (xx :double :initform 0.0)
-  (xy :double :initform 0.0)
-  (yx :double :initform 0.0)
-  (yy :double :initform 0.0)
-  (x0 :double :initform 0.0)
-  (y0 :double :initform 0.0))
+  (xx :double :initform 0.0d0)
+  (xy :double :initform 0.0d0)
+  (yx :double :initform 0.0d0)
+  (yy :double :initform 0.0d0)
+  (x0 :double :initform 0.0d0)
+  (y0 :double :initform 0.0d0))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-matrix atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'pango-matrix 'type)
- "@version{2013-6-29}
+ "@version{2021-1-4}
   @begin{short}
     A structure specifying a transformation between user-space coordinates and
     device coordinates.
   @end{short}
   The transformation is given by
   @begin{pre}
- x_device = x_user * matrix->xx + y_user * matrix->xy + matrix->x0;
- y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
+ x-device = x-user * xx + y-user * xy + x0
+ y-device = x-user * yx + y-user * yy + y0
   @end{pre}
   @begin{pre}
 (define-g-boxed-cstruct pango-matrix \"PangoMatrix\"
-  (xx :double :initform 0.0)
-  (xy :double :initform 0.0)
-  (yx :double :initform 0.0)
-  (yy :double :initform 0.0)
-  (x0 :double :initform 0.0)
-  (y0 :double :initform 0.0))
+  (xx :double :initform 0.0d0)
+  (xy :double :initform 0.0d0)
+  (yx :double :initform 0.0d0)
+  (yy :double :initform 0.0d0)
+  (x0 :double :initform 0.0d0)
+  (y0 :double :initform 0.0d0))
   @end{pre}
   @begin[code]{table}
     @entry[xx]{1st component of the transformation matrix.}
@@ -414,344 +229,55 @@
     @entry[yx]{3rd component of the transformation matrix.}
     @entry[yy]{4th component of the transformation matrix.}
     @entry[x0]{x translation.}
-    @entry[y0]{ y translation.}
+    @entry[y0]{y translation.}
   @end{table}
-  Since 1.6
-  @see-constructor{copy-pango-matrix}
-  @see-constructor{make-pango-matrix}
-  @see-slot{pango-matrix-xx}
-  @see-slot{pango-matrix-xy}
-  @see-slot{pango-matrix-yx}
-  @see-slot{pango-matrix-yy}
-  @see-slot{pango-matrix-x0}
-  @see-slot{pango-matrix-y0}")
+  @see-function{pango-matrix-init}")
 
-(export (boxed-related-symbols 'pango-matrix))
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-pango-matrix 'function)
- "@version{2013-6-29}
-  Returns a @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-pango-matrix 'function)
- "@version{2013-6-29}
-  @argument[instance]{a @class{pango-matrix} structure}
-  Copy constructor of a @class{pango-matrix} structure.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-xx atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-xx 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{xx} of the @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-xy atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-xy 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{xy} of the @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-yx atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-yx 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{yx} of the @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-yy atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-yy 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{yy} of the @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-x0 atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-x0 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{x0} of the @class{pango-matrix} structure.")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'pango-matrix-y0 atdoc:*function-name-alias*) "Accessor"
-      (documentation 'pango-matrix-y0 'function)
- "@version{2013-6-29}
-  Accessor of the slot @code{y0} of the @class{pango-matrix} structure.")
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_TYPE_MATRIX
-;;;
-;;; #define PANGO_TYPE_MATRIX (pango_matrix_get_type ())
-;;;
-;;; The GObject type for PangoMatrix
-;;; ----------------------------------------------------------------------------
+(export 'pango-matrix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_MATRIX_INIT
-;;;
-;;; #define PANGO_MATRIX_INIT { 1., 0., 0., 1., 0., 0. }
-;;;
-;;; Constant that can be used to initialize a PangoMatrix to the identity
-;;; transform.
-;;;
-;;; PangoMatrix matrix = PANGO_MATRIX_INIT;
-;;; pango_matrix_rotate (&matrix, 45.);
-;;;
-;;; Since 1.6
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_copy ()
-;;;
-;;; PangoMatrix * pango_matrix_copy (const PangoMatrix *matrix);
-;;;
-;;; Copies a PangoMatrix.
-;;;
-;;; matrix :
-;;;     a PangoMatrix, may be NULL
-;;;
-;;; Returns :
-;;;     the newly allocated PangoMatrix, which should be freed with
-;;;     pango_matrix_free(), or NULL if matrix was NULL.
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
+(defun pango-matrix-init ()
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @return{A @class{pango-matrix} initialized to the identiy transform.}
+  @begin{short}
+    Constant that can be used to initialize a Pango matrix to the identity
+    transform.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+(let ((matrix (pango-matrix-init)))
+  (pango-matrix-rotate matrix 45.0d0)
+  ... )
+    @end{pre}
+  @end{dictionary}
+  @see-class{pango-matrix}"
+  (make-pango-matrix :xx 1.0d0 :yy 1.0d0))
 
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_free ()
-;;;
-;;; void pango_matrix_free (PangoMatrix *matrix);
-;;;
-;;; Free a PangoMatrix created with pango_matrix_copy().
-;;;
-;;; matrix :
-;;;     a PangoMatrix, may be NULL
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_translate ()
-;;;
-;;; void pango_matrix_translate (PangoMatrix *matrix,
-;;;                              double tx,
-;;;                              double ty);
-;;;
-;;; Changes the transformation represented by matrix to be the transformation
-;;; given by first translating by (tx, ty) then applying the original
-;;; transformation.
-;;;
-;;; matrix :
-;;;     a PangoMatrix
-;;;
-;;; tx :
-;;;     amount to translate in the X direction
-;;;
-;;; ty :
-;;;     amount to translate in the Y direction
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_scale ()
-;;;
-;;; void pango_matrix_scale (PangoMatrix *matrix,
-;;;                          double scale_x,
-;;;                          double scale_y);
-;;;
-;;; Changes the transformation represented by matrix to be the transformation
-;;; given by first scaling by sx in the X direction and sy in the Y direction
-;;; then applying the original transformation.
-;;;
-;;; matrix :
-;;;     a PangoMatrix
-;;;
-;;; scale_x :
-;;;     amount to scale by in X direction
-;;;
-;;; scale_y :
-;;;     amount to scale by in Y direction
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_rotate ()
-;;;
-;;; void pango_matrix_rotate (PangoMatrix *matrix, double degrees);
-;;;
-;;; Changes the transformation represented by matrix to be the transformation
-;;; given by first rotating by degrees degrees counter-clockwise then applying
-;;; the original transformation.
-;;;
-;;; matrix :
-;;;     a PangoMatrix
-;;;
-;;; degrees :
-;;;     degrees to rotate counter-clockwise
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_concat ()
-;;;
-;;; void pango_matrix_concat (PangoMatrix *matrix,
-;;;                           const PangoMatrix *new_matrix);
-;;;
-;;; Changes the transformation represented by matrix to be the transformation
-;;; given by first applying transformation given by new_matrix then applying the
-;;; original transformation.
-;;;
-;;; matrix :
-;;;     a PangoMatrix
-;;;
-;;; new_matrix :
-;;;     a PangoMatrix
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_transform_point ()
-;;;
-;;; void pango_matrix_transform_point (const PangoMatrix *matrix,
-;;;                                    double *x,
-;;;                                    double *y);
-;;;
-;;; Transforms the point (x, y) by matrix.
-;;;
-;;; matrix :
-;;;     a PangoMatrix, or NULL
-;;;
-;;; x :
-;;;     in/out X position. [inout]
-;;;
-;;; y :
-;;;     in/out Y position. [inout]
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_transform_distance ()
-;;;
-;;; void pango_matrix_transform_distance (const PangoMatrix *matrix,
-;;;                                       double *dx,
-;;;                                       double *dy);
-;;;
-;;; Transforms the distance vector (dx,dy) by matrix. This is similar to
-;;; pango_matrix_transform_point() except that the translation components of the
-;;; transformation are ignored. The calculation of the returned vector is as
-;;; follows:
-;;;
-;;; dx2 = dx1 * xx + dy1 * xy;
-;;; dy2 = dx1 * yx + dy1 * yy;
-;;;
-;;; Affine transformations are position invariant, so the same vector always
-;;; transforms to the same vector. If (x1,y1) transforms to (x2,y2) then
-;;; (x1+dx1,y1+dy1) will transform to (x1+dx2,y1+dy2) for all values of x1
-;;; and x2.
-;;;
-;;; matrix :
-;;;     a PangoMatrix, or NULL
-;;;
-;;; dx :
-;;;     in/out X component of a distance vector. [inout]
-;;;
-;;; dy :
-;;;     in/out Y component of a distance vector. [inout]
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_transform_rectangle ()
-;;;
-;;; void pango_matrix_transform_rectangle (const PangoMatrix *matrix,
-;;;                                        PangoRectangle *rect);
-;;;
-;;; First transforms rect using matrix, then calculates the bounding box of the
-;;; transformed rectangle. The rectangle should be in Pango units.
-;;;
-;;; This function is useful for example when you want to draw a rotated
-;;; PangoLayout to an image buffer, and want to know how large the image should
-;;; be and how much you should shift the layout when rendering.
-;;;
-;;; If you have a rectangle in device units (pixels), use
-;;; pango_matrix_transform_pixel_rectangle().
-;;;
-;;; If you have the rectangle in Pango units and want to convert to transformed
-;;; pixel bounding box, it is more accurate to transform it first (using this
-;;; function) and pass the result to pango_extents_to_pixels(), first argument,
-;;; for an inclusive rounded rectangle. However, there are valid reasons that
-;;; you may want to convert to pixels first and then transform, for example when
-;;; the transformed coordinates may overflow in Pango units (large matrix
-;;; translation for example).
-;;;
-;;; matrix :
-;;;     a PangoMatrix, or NULL
-;;;
-;;; rect :
-;;;     in/out bounding box in Pango units, or NULL. [inout][allow-none]
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_transform_pixel_rectangle ()
-;;;
-;;; void pango_matrix_transform_pixel_rectangle (const PangoMatrix *matrix,
-;;;                                              PangoRectangle *rect);
-;;;
-;;; First transforms the rect using matrix, then calculates the bounding box of
-;;; the transformed rectangle. The rectangle should be in device units (pixels).
-;;;
-;;; This function is useful for example when you want to draw a rotated
-;;; PangoLayout to an image buffer, and want to know how large the image should
-;;; be and how much you should shift the layout when rendering.
-;;;
-;;; For better accuracy, you should use pango_matrix_transform_rectangle() on
-;;; original rectangle in Pango units and convert to pixels afterward using
-;;; pango_extents_to_pixels()'s first argument.
-;;;
-;;; matrix :
-;;;     a PangoMatrix, or NULL
-;;;
-;;; rect :
-;;;     in/out bounding box in device units, or NULL. [inout][allow-none]
-;;;
-;;; Since 1.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_matrix_get_font_scale_factor ()
-;;;
-;;; double pango_matrix_get_font_scale_factor (const PangoMatrix *matrix);
-;;;
-;;; Returns the scale factor of a matrix on the height of the font. That is, the
-;;; scale factor in the direction perpendicular to the vector that the X
-;;; coordinate is mapped to.
-;;;
-;;; matrix :
-;;;     a PangoMatrix, may be NULL. [allow-none]
-;;;
-;;; Returns :
-;;;     the scale factor of matrix on the height of the font, or 1.0 if matrix
-;;;     is NULL.
-;;;
-;;; Since 1.12
-;;; ----------------------------------------------------------------------------
+(export 'pango-matrix-init)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoGlyph
-;;;
-;;; typedef guint32 PangoGlyph;
-;;;
-;;; A PangoGlyph represents a single glyph in the output form of a string.
 ;;; ----------------------------------------------------------------------------
+
+(defctype pango-glyph :uint32)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-glyph atdoc:*symbol-name-alias*)
+      "Type"
+      (gethash 'pango-glyph atdoc:*external-symbols*)
+ "@version{2021-1-8}
+  @begin{short}
+    A @symbol{pango-glyph} type represents a single glyph in the output form
+    of a string.
+  @end{short}
+  @see-class{pango-glyph-item}
+  @see-class{pango-glyph-string}")
+
+(export 'pango-glyph)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_GLYPH_EMPTY
@@ -785,21 +311,6 @@
 ;;; The PANGO_GLYPH_UNKNOWN_FLAG macro is a flag value that can be added to a
 ;;; gunichar value of a valid Unicode character, to produce a PangoGlyph value,
 ;;; representing an unknown-character glyph for the respective gunichar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; PANGO_GET_UNKNOWN_GLYPH()
-;;;
-;;; #define PANGO_GET_UNKNOWN_GLYPH(wc)
-;;;         ((PangoGlyph)(wc)|PANGO_GLYPH_UNKNOWN_FLAG)
-;;;
-;;; Returns a PangoGlyph value that means no glyph was found for wc. The way
-;;; this unknown glyphs are rendered is backend specific. For example, a box
-;;; with the hexadecimal Unicode code-point of the character written in it is
-;;; what is done in the most common backends.
-;;;
-;;; wc :
-;;;     a Unicode character
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -908,12 +419,30 @@
 ;;;   PangoItem        *item;
 ;;;   PangoGlyphString *glyphs;
 ;;; };
-;;;
-;;; A PangoGlyphItem is a pair of a PangoItem and the glyphs resulting from
-;;; shaping the text corresponding to an item. As an example of the usage of
-;;; PangoGlyphItem, the results of shaping text with PangoLayout is a list of
-;;; PangoLayoutLine, each of which contains a list of PangoGlyphItem.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque pango-glyph-item "PangoGlyphitem"
+  :alloc (error "PangoGlyphItem cannot be created from the Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-glyph-item atdoc:*class-name-alias*)
+      "CStruct"
+      (documentation 'pango-glyph-item 'type)
+ "@version{2013-6-29}
+  @begin{short}
+    A @sym{pango-glyph-item} structure is a pair of a @class{pango-item}
+    structure and the glyphs resulting from shaping the text corresponding to
+    an item.
+  @end{short}
+  As an example of the usage of the @sym{pango-glyph-item} structure, the
+  results of shaping text with the @class{pango-layout} class is a list of
+  @class{pango-layout-line} objects, each of which contains a list of
+  @sym{pango-glyph-item} structures.
+  @see-class{pango-item}
+  @see-class{pango-layout}
+  @see-class{pango-layout-line}")
+
+(export (boxed-related-symbols 'pango-glyph-item))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoGlyphItemIter
@@ -972,6 +501,553 @@
 ;;; #define PANGO_TYPE_GLYPH_STRING (pango_glyph_string_get_type ())
 ;;;
 ;;; The GObject type for PangoGlyphString.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_PIXELS()
+;;; ----------------------------------------------------------------------------
+
+(defun pango-pixels (d)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-10-27}
+  @argument[d]{a dimension in Pango units}
+  @return{Rounded dimension in device units.}
+  Converts a dimension to device units by rounding.
+  @see-variable{+pango-scale+}"
+  (ash (+ d 512) -10)) ; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
+
+(export 'pango-pixels)
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_PIXELS_FLOOR()
+;;;
+;;; #define PANGO_PIXELS_FLOOR(d) (((int)(d)) >> 10)
+;;;
+;;; Converts a dimension to device units by flooring.
+;;;
+;;; d :
+;;;     a dimension in Pango units.
+;;;
+;;; Returns :
+;;;     floored dimension in device units.
+;;;
+;;; Since 1.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_PIXELS_CEIL()
+;;;
+;;; #define PANGO_PIXELS_CEIL(d) (((int)(d) + 1023) >> 10)
+;;;
+;;; Converts a dimension to device units by ceiling.
+;;;
+;;; d :
+;;;     a dimension in Pango units.
+;;;
+;;; Returns :
+;;;     ceiled dimension in device units.
+;;;
+;;; Since 1.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_UNITS_ROUND()
+;;;
+;;; #define PANGO_UNITS_ROUND(d)
+;;;
+;;; Rounds a dimension to whole device units, but does not convert it to device
+;;; units.
+;;;
+;;; d :
+;;;     a dimension in Pango units.
+;;;
+;;; Returns :
+;;;     rounded dimension in Pango units.
+;;;
+;;; Since 1.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_units_to_double ()
+;;;
+;;; double pango_units_to_double (int i);
+;;;
+;;; Converts a number in Pango units to floating-point: divides it by
+;;; PANGO_SCALE.
+;;;
+;;; i :
+;;;     value in Pango units
+;;;
+;;; Returns :
+;;;     the double value.
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_units_from_double ()
+;;;
+;;; int pango_units_from_double (double d);
+;;;
+;;; Converts a floating-point number to Pango units: multiplies it by
+;;; PANGO_SCALE and rounds to nearest integer.
+;;;
+;;; d :
+;;;     double floating-point value
+;;;
+;;; Returns :
+;;;     the value in Pango units.
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_ASCENT()
+;;;
+;;; #define PANGO_ASCENT(rect) (-(rect).y)
+;;;
+;;; Extracts the ascent from a PangoRectangle representing glyph extents. The
+;;; ascent is the distance from the baseline to the highest point of the
+;;; character. This is positive if the glyph ascends above the baseline.
+;;;
+;;; rect :
+;;;     a PangoRectangle
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_DESCENT()
+;;;
+;;; #define PANGO_DESCENT(rect) ((rect).y + (rect).height)
+;;;
+;;; Extracts the descent from a PangoRectangle representing glyph extents. The
+;;; descent is the distance from the baseline to the lowest point of the
+;;; character. This is positive if the glyph descends below the baseline.
+;;;
+;;; rect :
+;;;     a PangoRectangle
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_LBEARING()
+;;;
+;;; #define PANGO_LBEARING(rect) ((rect).x)
+;;;
+;;; Extracts the left bearing from a PangoRectangle representing glyph extents.
+;;; The left bearing is the distance from the horizontal origin to the farthest
+;;; left point of the character. This is positive for characters drawn
+;;; completely to the right of the glyph origin.
+;;;
+;;; rect :
+;;;     a PangoRectangle
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_RBEARING()
+;;;
+;;; #define PANGO_RBEARING(rect) ((rect).x + (rect).width)
+;;;
+;;; Extracts the right bearing from a PangoRectangle representing glyph extents.
+;;; The right bearing is the distance from the horizontal origin to the farthest
+;;; right point of the character. This is positive except for characters drawn
+;;; completely to the left of the horizontal origin.
+;;;
+;;; rect :
+;;;     a PangoRectangle
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_extents_to_pixels ()
+;;;
+;;; void pango_extents_to_pixels (PangoRectangle *inclusive,
+;;;                               PangoRectangle *nearest);
+;;;
+;;; Converts extents from Pango units to device units, dividing by the
+;;; PANGO_SCALE factor and performing rounding.
+;;;
+;;; The inclusive rectangle is converted by flooring the x/y coordinates and
+;;; extending width/height, such that the final rectangle completely includes
+;;; the original rectangle.
+;;;
+;;; The nearest rectangle is converted by rounding the coordinates of the
+;;; rectangle to the nearest device unit (pixel).
+;;;
+;;; The rule to which argument to use is: if you want the resulting device-space
+;;; rectangle to completely contain the original rectangle, pass it in as
+;;; inclusive. If you want two touching-but-not-overlapping rectangles stay
+;;; touching-but-not-overlapping after rounding to device units, pass them in as
+;;; nearest.
+;;;
+;;; inclusive :
+;;;     rectangle to round to pixels inclusively, or NULL
+;;;
+;;; nearest :
+;;;     rectangle to round to nearest pixels, or NULL
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_copy ()
+;;; ----------------------------------------------------------------------------
+
+(defun pango-matrix-copy (matrix)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @argument[matrix]{a @class{pango-matrix} instance}
+  @return{The newly allocated @class{pango-matrix} instance.}
+  @short{Copies a Pango matrix.}
+  @see-class{pango-matrix}"
+  (copy-pango-matrix matrix))
+
+(export 'pango-matrix-copy)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_free ()
+;;;
+;;; void pango_matrix_free (PangoMatrix *matrix);
+;;;
+;;; Free a PangoMatrix created with pango_matrix_copy().
+;;;
+;;; matrix :
+;;;     a PangoMatrix, may be NULL
+;;;
+;;; Since 1.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_translate ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_translate" %pango-matrix-translate) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (tx :double)
+  (ty :double))
+
+(defun pango-matrix-translate (matrix tx ty)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @argument[matrix]{a @class{pango-matrix} instance}
+  @argument[tx]{a double float amount to translate in the x direction}
+  @argument[ty]{a double float amount to translate in the Y direction}
+  @begin{short}
+    Changes the transformation represented by @arg{matrix} to be the
+    transformation given by first translating by (@arg{tx}, @arg{ty}) then
+    applying the original transformation.
+  @end{short}
+  @see-class{pango-matrix}"
+  (%pango-matrix-translate matrix
+                           (coerce tx 'double-float)
+                           (coerce ty 'double-float)))
+
+(export 'pango-matrix-translate)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_scale ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_scale" %pango-matrix-scale) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (sx :double)
+  (sy :double))
+
+(defun pango-matrix-scale (matrix sx sy)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @argument[matrix]{a @class{pango-matrix} instance}
+  @argument[sx]{a double float amount to scale by in x direction}
+  @argument[sy]{a double float amount to scale by in y direction}
+  @begin{short}
+    Changes the transformation represented by @arg{matrix} to be the
+    transformation given by first scaling by @arg{x} in the x direction and
+    @arg{y} in the y direction then applying the original transformation.
+  @end{short}
+  @see-class{pango-matrix}"
+  (%pango-matrix-scale matrix
+                       (coerce sx 'double-float)
+                       (coerce sy 'double-float)))
+
+(export 'pango-matrix-scale)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_rotate ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_rotate" %pango-matrix-rotate) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (degrees :double))
+
+(defun pango-matrix-rotate (matrix degrees)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @argument[matrix]{a @class{pango-matrix} instance}
+  @argument[degrees]{a double float with the degrees to rotate
+    counter-clockwise}
+  @begin{short}
+    Changes the transformation represented by @arg{matrix} to be the
+    transformation given by first rotating by @arg{degrees} degrees
+    counter-clockwise then applying the original transformation.
+  @end{short}
+  @see-class{pango-matrix}"
+  (%pango-matrix-rotate matrix (coerce degrees 'double-float)))
+
+(export 'pango-matrix-rotate)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_concat ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_concat" pango-matrix-concat) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-4}
+  @argument[matrix]{a @class{pango-matrix} instance}
+  @argument[new-matrix]{a @class{pango-matrix} instance}
+  @begin{short}
+    Changes the transformation represented by @arg{matrix} to be the
+    transformation given by first applying transformation given by
+    @arg{new-matrix} then applying the original transformation.
+  @end{short}
+  @see-class{pango-matrix}"
+  (matrix (g-boxed-foreign pango-matrix))
+  (new-matrix (g-boxed-foreign pango-matrix)))
+
+(export 'pango-matrix-concat)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_transform_point ()
+;;;
+;;; void pango_matrix_transform_point (const PangoMatrix *matrix,
+;;;                                    double *x,
+;;;                                    double *y);
+;;;
+;;; Transforms the point (x, y) by matrix.
+;;;
+;;; matrix :
+;;;     a PangoMatrix, or NULL
+;;;
+;;; x :
+;;;     in/out X position. [inout]
+;;;
+;;; y :
+;;;     in/out Y position. [inout]
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_transform_point" %pango-matrix-transform-point) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun pango-matrix-transform-point (matrix x y)
+  (with-foreign-objects ((x-out :double) (y-out :double))
+    (setf (mem-ref x-out :double) (coerce x 'double-float)
+          (mem-ref y-out :double) (coerce y 'double-float))
+    (%pango-matrix-transform-point matrix x y)
+    (values (mem-ref x-out :double)
+            (mem-ref y-out :double))))
+
+(export 'pango-matrix-transform-point)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_transform_distance ()
+;;;
+;;; void pango_matrix_transform_distance (const PangoMatrix *matrix,
+;;;                                       double *dx,
+;;;                                       double *dy);
+;;;
+;;; Transforms the distance vector (dx,dy) by matrix. This is similar to
+;;; pango_matrix_transform_point() except that the translation components of the
+;;; transformation are ignored. The calculation of the returned vector is as
+;;; follows:
+;;;
+;;; dx2 = dx1 * xx + dy1 * xy;
+;;; dy2 = dx1 * yx + dy1 * yy;
+;;;
+;;; Affine transformations are position invariant, so the same vector always
+;;; transforms to the same vector. If (x1,y1) transforms to (x2,y2) then
+;;; (x1+dx1,y1+dy1) will transform to (x1+dx2,y1+dy2) for all values of x1
+;;; and x2.
+;;;
+;;; matrix :
+;;;     a PangoMatrix, or NULL
+;;;
+;;; dx :
+;;;     in/out X component of a distance vector. [inout]
+;;;
+;;; dy :
+;;;     in/out Y component of a distance vector. [inout]
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_transform_distance" %pango-matrix-transform-distance)
+    :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (dx (:pointer :double))
+  (dy (:pointer :double)))
+
+(defun pango-matrix-transform-distance (matrix dx dy)
+  (with-foreign-objects ((dx-out :double) (dy-out :double))
+    (setf (mem-ref dx-out :double) (coerce dx 'double-float)
+          (mem-ref dy-out :double) (coerce dy 'double-float))
+    (%pango-matrix-transform-distance matrix dx-out dy-out)
+    (values (mem-ref dx-out :double)
+            (mem-ref dy-out :double))))
+
+(export 'pango-matrix-transform-distance)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_transform_rectangle ()
+;;;
+;;; void pango_matrix_transform_rectangle (const PangoMatrix *matrix,
+;;;                                        PangoRectangle *rect);
+;;;
+;;; First transforms rect using matrix, then calculates the bounding box of the
+;;; transformed rectangle. The rectangle should be in Pango units.
+;;;
+;;; This function is useful for example when you want to draw a rotated
+;;; PangoLayout to an image buffer, and want to know how large the image should
+;;; be and how much you should shift the layout when rendering.
+;;;
+;;; If you have a rectangle in device units (pixels), use
+;;; pango_matrix_transform_pixel_rectangle().
+;;;
+;;; If you have the rectangle in Pango units and want to convert to transformed
+;;; pixel bounding box, it is more accurate to transform it first (using this
+;;; function) and pass the result to pango_extents_to_pixels(), first argument,
+;;; for an inclusive rounded rectangle. However, there are valid reasons that
+;;; you may want to convert to pixels first and then transform, for example when
+;;; the transformed coordinates may overflow in Pango units (large matrix
+;;; translation for example).
+;;;
+;;; matrix :
+;;;     a PangoMatrix, or NULL
+;;;
+;;; rect :
+;;;     in/out bounding box in Pango units, or NULL. [inout][allow-none]
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_transform_rectangle" pango-matrix-transform-rectangle)
+    :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (rect (:pointer (:struct pango-rectangle))))
+
+(export 'pango-matrix-transform-rectangle)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_transform_pixel_rectangle ()
+;;;
+;;; void pango_matrix_transform_pixel_rectangle (const PangoMatrix *matrix,
+;;;                                              PangoRectangle *rect);
+;;;
+;;; First transforms the rect using matrix, then calculates the bounding box of
+;;; the transformed rectangle. The rectangle should be in device units (pixels).
+;;;
+;;; This function is useful for example when you want to draw a rotated
+;;; PangoLayout to an image buffer, and want to know how large the image should
+;;; be and how much you should shift the layout when rendering.
+;;;
+;;; For better accuracy, you should use pango_matrix_transform_rectangle() on
+;;; original rectangle in Pango units and convert to pixels afterward using
+;;; pango_extents_to_pixels()'s first argument.
+;;;
+;;; matrix :
+;;;     a PangoMatrix, or NULL
+;;;
+;;; rect :
+;;;     in/out bounding box in device units, or NULL. [inout][allow-none]
+;;;
+;;; Since 1.16
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_transform_pixel_rectangle"
+           pango-matrix-transform-pixel-rectangle) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (rect (:pointer (:struct pango-rectangle))))
+
+(export 'pango-matrix-transform-pixel-rectangle)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_get_font_scale_factor ()
+;;;
+;;; double pango_matrix_get_font_scale_factor (const PangoMatrix *matrix);
+;;;
+;;; Returns the scale factor of a matrix on the height of the font. That is, the
+;;; scale factor in the direction perpendicular to the vector that the X
+;;; coordinate is mapped to.
+;;;
+;;; matrix :
+;;;     a PangoMatrix, may be NULL. [allow-none]
+;;;
+;;; Returns :
+;;;     the scale factor of matrix on the height of the font, or 1.0 if matrix
+;;;     is NULL.
+;;;
+;;; Since 1.12
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_get_font_scale_factor" pango-matrix-font-scale-factor)
+    :double
+  (matrix (g-boxed-foreign pango-matrix)))
+
+(export 'pango-matrix-font-scale-factor)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_matrix_get_font_scale_factors ()
+;;;
+;;; void
+;;; pango_matrix_get_font_scale_factors (const PangoMatrix *matrix,
+;;;                                      double *xscale,
+;;;                                      double *yscale);
+;;;
+;;; Calculates the scale factor of a matrix on the width and height of the font.
+;;; That is, xscale is the scale factor in the direction of the X coordinate,
+;;; and yscale is the scale factor in the direction perpendicular to the vector
+;;; that the X coordinate is mapped to.
+;;;
+;;; Note that output numbers will always be non-negative.
+;;;
+;;; matrix :
+;;;     a PangoMatrix, or NULL.
+;;;
+;;; xscale :
+;;;     output scale factor in the x direction, or NULL.
+;;;
+;;; yscale :
+;;;     output scale factor perpendicular to the x direction, or NULL.
+;;;
+;;; Since 1.38
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_matrix_get_font_scale_factors"
+          %pango-matrix-font-scale-factors) :void
+  (matrix (g-boxed-foreign pango-matrix))
+  (xscale (:pointer :double))
+  (yscale (:pointer :double)))
+
+(defun pango-matrix-font-scale-factors (matrix)
+  (with-foreign-objects ((xscale :double) (yscale :double))
+    (%pango-matrix-font-scale-factors matrix xscale yscale)
+    (values (mem-ref xscale :double)
+            (mem-ref yscale :double))))
+
+(export 'pango-matrix-font-scale-factors)
+
+;;; ----------------------------------------------------------------------------
+;;; PANGO_GET_UNKNOWN_GLYPH()
+;;;
+;;; #define PANGO_GET_UNKNOWN_GLYPH(wc)
+;;;         ((PangoGlyph)(wc)|PANGO_GLYPH_UNKNOWN_FLAG)
+;;;
+;;; Returns a PangoGlyph value that means no glyph was found for wc. The way
+;;; this unknown glyphs are rendered is backend specific. For example, a box
+;;; with the hexadecimal Unicode code-point of the character written in it is
+;;; what is done in the most common backends.
+;;;
+;;; wc :
+;;;     a Unicode character
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

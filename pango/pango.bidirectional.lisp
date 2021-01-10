@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.bidirectional.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.32.6. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; Version 1.48 and modified to document the Lisp binding to the Pango library.
+;;; See <http://www.pango.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2020 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,39 +29,39 @@
 ;;;
 ;;; Bidirectional Text
 ;;;
-;;; Types and functions to help with handling bidirectional text
+;;;     Types and functions to help with handling bidirectional text
 ;;;
-;;; Synopsis
+;;; Types and Value
 ;;;
 ;;;     PangoDirection
+;;;     PangoBidiType
+;;;
+;;; Function
 ;;;
 ;;;     pango_unichar_direction
 ;;;     pango_find_base_dir
 ;;;     pango_get_mirror_char
-;;;
-;;;     PangoBidiType
-;;;
 ;;;     pango_bidi_type_for_unichar
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GEnum
-;;;    +----PangoDirection
+;;;     GEnum
+;;;     ├── PangoBidiType
+;;;     ╰── PangoDirection
 ;;;
-;;;   GEnum
-;;;    +----PangoBidiType
 ;;;
 ;;; Description
 ;;;
-;;; Pango supports bidirectional text (like Arabic and Hebrew) automatically.
-;;; Some applications however, need some help to correctly handle bidirectional
-;;; text.
+;;;     Pango supports bidirectional text (like Arabic and Hebrew)
+;;;     automatically. Some applications however, need some help to correctly
+;;;     handle bidirectional text.
 ;;;
-;;; The PangoDirection type can be used with pango_context_set_base_dir() to
-;;; instruct Pango about direction of text, though in most cases Pango detects
-;;; that correctly and automatically. The rest of the facilities in this section
-;;; are used internally by Pango already, and are provided to help applications
-;;; that need more direct control over bidirectional setting of text.
+;;;     The PangoDirection type can be used with pango_context_set_base_dir()
+;;;     to instruct Pango about direction of text, though in most cases Pango
+;;;     detects that correctly and automatically. The rest of the facilities in
+;;;     this section are used internally by Pango already, and are provided to
+;;;     help applications that need more direct control over bidirectional
+;;;     setting of text.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -86,7 +84,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'pango-direction atdoc:*external-symbols*)
- "@version{2013-6-29}
+ "@version{2021-1-2}
   @begin{short}
     The @sym{pango-direction} enumeration represents a direction in the Unicode
     bidirectional algorithm.
@@ -95,13 +93,13 @@
   @sym{pango-direction}. For example, the return value of the functions
   @fun{pango-unichar-direction} and @fun{pango-find-base-dir} cannot be
   @code{:weak-ltr} or @code{:weak-rtl}, since every character is either neutral
-  or has a strong direction; on the other hand @code{:neutral} does not make
+  or has a strong direction. On the other hand @code{:neutral} does not make
   sense to pass to the function @fun{pango-itemize-with-base-dir}.
 
   The @code{:ttb-ltr}, @code{:ttb-rtl} values come from an earlier
   interpretation of this enumeration as the writing direction of a block of
-  text and are no longer used. See @symbol{pango-gravity} for how vertical text
-  is handled in Pango.
+  text and are no longer used. See the @symbol{pango-gravity} enumeration for
+  how vertical text is handled in Pango.
   @begin{pre}
 (define-g-enum \"PangoDirection\" pango-direction
   (:export t
@@ -118,7 +116,7 @@
     @entry[:ltr]{A strong left-to-right direction.}
     @entry[:rtl]{A strong right-to-left direction.}
     @entry[:ttb-ltr]{Deprecated value; treated the same as @code{:rtl}.}
-    @entry{:ttb-rtl]{Deprecated value; treated the same as @code{:ltr}.}
+    @entry[:ttb-rtl]{Deprecated value; treated the same as @code{:ltr}.}
     @entry[:weak-ltr]{A weak left-to-right direction.}
     @entry[:wek-rtl]{A weak right-to-left direction.}
     @entry[:neutral]{No direction specified.}
@@ -127,75 +125,6 @@
   @see-function{pango-unichar-direction}
   @see-function{pango-find-base-dir}
   @see-function{pango-itemize-with-base-dir}")
-
-;;; ----------------------------------------------------------------------------
-;;; pango_unichar_direction ()
-;;;
-;;; PangoDirection pango_unichar_direction (gunichar ch);
-;;;
-;;; Determines the inherent direction of a character; either
-;;; PANGO_DIRECTION_LTR, PANGO_DIRECTION_RTL, or PANGO_DIRECTION_NEUTRAL.
-;;;
-;;; This function is useful to categorize characters into left-to-right letters,
-;;; right-to-left letters, and everything else. If full Unicode bidirectional
-;;; type of a character is needed, pango_bidi_type_for_gunichar() can be used
-;;; instead.
-;;;
-;;; ch :
-;;;     a Unicode character
-;;;
-;;; Returns :
-;;;     the direction of the character.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_find_base_dir ()
-;;;
-;;; PangoDirection pango_find_base_dir (const gchar *text, gint length);
-;;;
-;;; Searches a string the first character that has a strong direction, according
-;;; to the Unicode bidirectional algorithm.
-;;;
-;;; text :
-;;;     the text to process
-;;;
-;;; length :
-;;;     length of text in bytes (may be -1 if text is nul-terminated)
-;;;
-;;; Returns :
-;;;     The direction corresponding to the first strong character. If no such
-;;;     character is found, then PANGO_DIRECTION_NEUTRAL is returned.
-;;;
-;;; Since 1.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; pango_get_mirror_char ()
-;;;
-;;; gboolean pango_get_mirror_char (gunichar ch, gunichar *mirrored_ch);
-;;;
-;;; Warning
-;;;
-;;; pango_get_mirror_char is deprecated and should not be used in newly-written
-;;; code.
-;;;
-;;; If ch has the Unicode mirrored property and there is another Unicode
-;;; character that typically has a glyph that is the mirror image of ch's glyph,
-;;; puts that character in the address pointed to by mirrored_ch.
-;;;
-;;; Use g_unichar_get_mirror_char() instead; the docs for that function provide
-;;; full details.
-;;;
-;;; ch :
-;;;     a Unicode character
-;;;
-;;; mirrored_ch :
-;;;     location to store the mirrored character
-;;;
-;;; Returns :
-;;;     TRUE if ch has a mirrored character and mirrored_ch is filled in, FALSE
-;;;     otherwise.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoBidiType
@@ -229,6 +158,11 @@
 ;;;
 ;;; The PangoBidiType type represents the bidirectional character type of a
 ;;; Unicode character as specified by the Unicode bidirectional algorithm.
+;;;
+;;; Warning
+;;;
+;;; PangoBidiType has been deprecated since version 1.44 and should not be used
+;;; in newly-written code. Use fribidi for this information
 ;;;
 ;;; PANGO_BIDI_TYPE_L
 ;;;     Left-to-Right
@@ -291,6 +225,90 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_unichar_direction ()
+;;;
+;;; PangoDirection pango_unichar_direction (gunichar ch);
+;;;
+;;; Determines the inherent direction of a character; either
+;;; PANGO_DIRECTION_LTR, PANGO_DIRECTION_RTL, or PANGO_DIRECTION_NEUTRAL.
+;;;
+;;; This function is useful to categorize characters into left-to-right letters,
+;;; right-to-left letters, and everything else. If full Unicode bidirectional
+;;; type of a character is needed, pango_bidi_type_for_gunichar() can be used
+;;; instead.
+;;;
+;;; Warning
+;;;
+;;; pango_unichar_direction is deprecated and should not be used in
+;;; newly-written code.
+;;;
+;;; ch :
+;;;     a Unicode character
+;;;
+;;; Returns :
+;;;     the direction of the character.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_find_base_dir ()
+;;;
+;;; PangoDirection pango_find_base_dir (const gchar *text, gint length);
+;;;
+;;; Searches a string the first character that has a strong direction, according
+;;; to the Unicode bidirectional algorithm.
+;;;
+;;; Warning
+;;;
+;;; pango_find_base_dir is deprecated and should not be used in newly-written
+;;; code.
+;;;
+;;; text :
+;;;     the text to process
+;;;
+;;; length :
+;;;     length of text in bytes (may be -1 if text is nul-terminated)
+;;;
+;;; Returns :
+;;;     The direction corresponding to the first strong character. If no such
+;;;     character is found, then PANGO_DIRECTION_NEUTRAL is returned.
+;;;
+;;; Since 1.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_get_mirror_char ()
+;;;
+;;; gboolean pango_get_mirror_char (gunichar ch, gunichar *mirrored_ch);
+;;;
+;;; Warning
+;;;
+;;; pango_get_mirror_char is deprecated and should not be used in newly-written
+;;; code.
+;;;
+;;; If ch has the Unicode mirrored property and there is another Unicode
+;;; character that typically has a glyph that is the mirror image of ch's glyph,
+;;; puts that character in the address pointed to by mirrored_ch.
+;;;
+;;; Use g_unichar_get_mirror_char() instead; the docs for that function provide
+;;; full details.
+;;;
+;;; Warning
+;;;
+;;; pango_get_mirror_char is deprecated and should not be used in newly-written
+;;; code.
+;;;
+;;; ch :
+;;;     a Unicode character
+;;;
+;;; mirrored_ch :
+;;;     location to store the mirrored character
+;;;
+;;; Returns :
+;;;     TRUE if ch has a mirrored character and mirrored_ch is filled in, FALSE
+;;;     otherwise.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; pango_bidi_type_for_unichar ()
 ;;;
 ;;; PangoBidiType pango_bidi_type_for_unichar (gunichar ch);
@@ -300,6 +318,11 @@
 ;;;
 ;;; A simplified version of this function is available as
 ;;; pango_unichar_get_direction().
+;;;
+;;; Warning
+;;;
+;;; pango_bidi_type_for_unichar is deprecated and should not be used in
+;;; newly-written code.
 ;;;
 ;;; ch :
 ;;;     a Unicode character
