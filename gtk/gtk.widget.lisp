@@ -5560,28 +5560,26 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_override_color" gtk-widget-override-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
+ "@version{2021-1-5}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
+  @argument[state]{a state of type @symbol{gtk-state-flags} for which to set
     the color}
-  @argument[color]{the @class{gdk-rgba} color to assign, or @code{nil} to undo
-    the effect of previous calls to the function
-    @sym{gtk-widget-override-color}}
+  @argument[color]{a @class{gdk-rgba} color to assign, or @code{nil} to undo
+    the effect of previous calls}
   @short{Sets the color to use for a widget.}
   All other style values are left untouched.
-
-  @subheading{Notes}
+  @begin[Note]{dictionary}
     @begin{itemize}
       @begin{item}
         This API is mostly meant as a quick way for applications to change a
         widget appearance. If you are developing a widgets library and intend
-        this change to be themeable, it is better done by setting meaningful CSS
-        classes and regions in your widget/container implementation through the
-        functions @fun{gtk-style-context-add-class} and
-        @fun{gtk-style-context-add-region}.
-        This way, your widget library can install a @class{gtk-css-provider}
-        with the @var{+gtk-style-provider-priority-fallback+} priority in order
-        to provide a default styling for those widgets that need so, and this
+        this change to be themeable, it is better done by setting meaningful
+        CSS classes and regions in your widget/container implementation through
+        the functions @fun{gtk-style-context-add-class} and
+        @fun{gtk-style-context-add-region}. This way, your widget library can
+        install a @class{gtk-css-provider} with the
+        @var{+gtk-style-provider-priority-fallback+} priority in order to
+        provide a default styling for those widgets that need so, and this
         theming may fully overridden by the user's theme.
       @end{item}
       @begin{item}
@@ -5591,6 +5589,7 @@ drag_data_received (GtkWidget        *widget,
         with the @var{+gtk-style-provider-priority-application+} priority.
       @end{item}
     @end{itemize}
+  @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-color} has been deprecated since
     version 3.16 and should not be used in newly-written code. Use a custom
@@ -5598,6 +5597,7 @@ drag_data_received (GtkWidget        *widget,
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-rgba}
+  @see-symbol{gtk-state-flags}
   @see-class{gtk-css-provider}
   @see-function{gtk-style-context-add-class}
   @see-function{gtk-style-context-add-region}"
@@ -5613,21 +5613,19 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_override_font" gtk-widget-override-font) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2021-1-5}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[font-desc]{the font description to use, or @code{nil} to undo the
-    effect of previous calls to the function @sym{gtk-widget-override-font}}
+  @argument[font-desc]{a @class{pango-font-description} instance to use,
+    or @code{nil} to undo the effect of previous calls}
   @short{Sets the font to use for a widget.}
   All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-font} has been deprecated since
-    version 3.16 and should not be used in newly-written code.
-
-    This function is not useful in the context of CSS-based rendering. If you
-    wish to change the font a widget uses to render its text you should use a
-     custom CSS style, through an application-specific
-     @class{gtk-style-provider} and a CSS style class.
+    version 3.16 and should not be used in newly-written code. This function is
+    not useful in the context of CSS-based rendering. If you wish to change the
+    font a widget uses to render its text you should use a custom CSS style,
+    through an application-specific style provider and a CSS style class.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{pango-font-description}
@@ -5941,12 +5939,11 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_modify_font" gtk-widget-modify-font) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2021-1-5}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[font-desc]{the font description to use, or @code{nil} to undo the
-    effect of previous calls to the function @sym{gtk-widget-modify-font}}
+  @argument[font-desc]{a @class{pango-font-description} instance to use,
+    or @code{nil} to undo the effect of previous calls}
   @short{Sets the font to use for a widget.}
-
   All other style values are left untouched.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-font} has been deprecated since version
@@ -5954,6 +5951,7 @@ drag_data_received (GtkWidget        *widget,
     @fun{gtk-widget-override-font} instead.
   @end{dictionary}
   @see-class{gtk-widget}
+  @see-class{pango-font-description}
   @see-function{gtk-widget-override-font}"
   (widget (g-object gtk-widget))
   (font-desc (g-boxed-foreign pango-font-description)))
