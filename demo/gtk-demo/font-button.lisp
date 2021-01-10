@@ -4,7 +4,7 @@
 
 (defun font-filter (family face)
   (declare (ignore face))
-  (member (pango-font-family-get-name family)
+  (member (pango-font-family-name family)
           '("Sans" "Serif")
           :test #'equal))
 
@@ -30,10 +30,10 @@
            (format t "   Font name   : ~A~%"
                    (gtk-font-chooser-font button))
            (format t "   Font family : ~A~%"
-                   (pango-font-family-get-name
+                   (pango-font-family-name
                      (gtk-font-chooser-font-family button)))
            (format t "   Font face   : ~A~%"
-                   (pango-font-face-get-face-name
+                   (pango-font-face-face-name
                      (gtk-font-chooser-font-face button)))
            (format t "   Font size   : ~A~%"
                    (gtk-font-chooser-font-size button))))
