@@ -212,7 +212,7 @@
 (setf (gethash 'gtk-font-chooser-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-font 'function)
- "@version{2020-6-5}
+ "@version{2021-1-7}
   @syntax[]{(gtk-font-chooser-font object) => fontname}
   @syntax[]{(setf (gtk-font-chooser-font object) fontname)}
   @argument[object]{a @class{gtk-font-chooser} object}
@@ -223,9 +223,9 @@
     @class{gtk-font-chooser} class.
   @end{short}
 
-  The slot access function @sym{(setf gtk-font-chooser-font)} sets the
-  currently-selected font. The slot access function @sym{gtk-font-chooser-font}
-  gets the currently-selected font name.
+  The slot access function @sym{gtk-font-chooser-font} gets the currently
+  selected font name. The slot access function
+  @sym{(setf gtk-font-chooser-font)} sets the currently selected font.
 
   Note that this can be a different string than what you set with the function
   @sym{(setf gtk-font-chooser-font)}, as the font chooser widget may normalize
@@ -235,7 +235,8 @@
 
   Use the function @fun{pango-font-description-equal} if you want to compare
   two font descriptions.
-  @see-class{gtk-font-chooser}")
+  @see-class{gtk-font-chooser}
+  @see-function{pango-font-description-equal}")
 
 ;;; --- gtk-font-chooser-font-desc ---------------------------------------------
 
@@ -250,19 +251,20 @@
 (setf (gethash 'gtk-font-chooser-font-desc atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-font-desc 'function)
- "@version{2020-6-5}
+ "@version{2021-1-7}
   @syntax[]{(gtk-font-chooser-font-desc object) => font-desc}
   @syntax[]{(setf (gtk-font-chooser-font-desc object) font-desc)}
   @argument[object]{a @class{gtk-font-chooser} object}
-  @argument[font-desc]{a @class{pango-font-description} structure}
+  @argument[font-desc]{a @class{pango-font-description} instance}
   @begin{short}
     Accessor of the @slot[gtk-font-chooser]{font-desc} slot of the
     @class{gtk-font-chooser} class.
   @end{short}
 
-  The slot access function @sym{(setf gtk-font-chooser-font-desc)} sets the
-  currently-selected font from @arg{font-desc}. The slot access function
-  @sym{gtk-font-chooser-font-desc}  gets the currently-selected font.
+  The slot access function @sym{gtk-font-chooser-font-desc}  gets the currently
+  selected font. The slot access function
+  @sym{(setf gtk-font-chooser-font-desc)} sets the currently selected font from
+  @arg{font-desc}.
 
   Note that this can be a different string than what you set with the function
   @sym{(setf gtk-font-chooser-font)}, as the font chooser widget may normalize
@@ -272,7 +274,9 @@
 
   Use the function @fun{pango-font-description-equal} if you want to compare
   two font descriptions.
-  @see-class{gtk-font-chooser}")
+  @see-class{gtk-font-chooser}
+  @see-class{pango-font-description}
+  @see-function{pango-font-description-equal}")
 
 ;;; --- gtk-font-chooser-font-features -----------------------------------------
 
@@ -288,7 +292,7 @@
 (setf (gethash 'gtk-font-chooser-font-features atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-font-features 'function)
- "@version{2020-6-5}
+ "@version{2021-1-7}
   @syntax[]{(gtk-font-chooser-font-features object) => features}
   @argument[object]{a @class{gtk-font-chooser} object}
   @argument[features]{a string with the curently selected font features}
@@ -298,7 +302,8 @@
   @end{short}
 
   The slot access function @sym{gtk-font-chooser-font-features} gets the
-  currently-selected font features.
+  currently-selected font features, in a format that is compatible with CSS and
+  with Pango attributes.
 
   Since 3.22
   @see-class{gtk-font-chooser}")

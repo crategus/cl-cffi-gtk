@@ -136,11 +136,9 @@
       @end{pre}
       The \"font-set\" signal is emitted when the user selects a font. When
       handling this signal, use the function @fun{gtk-font-button-font-name} to
-      find out which font was just selected.
-
-      Note that this signal is only emitted when the user changes the font. If
-      you need to react to programmatic font changes as well, use the
-      \"notify::font-name\" signal.
+      find out which font was just selected. Note that this signal is only
+      emitted when the user changes the font. If you need to react to
+      programmatic font changes as well, use the \"notify::font-name\" signal.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-font-button} widget which received the
           signal.}
@@ -172,7 +170,7 @@
 (setf (gethash 'gtk-font-button-font-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-font-name 'function)
- "@version{2020-6-6}
+ "@version{2021-1-7}
   @syntax[]{(gtk-font-button-font-name object) => fontname}
   @syntax[]{(setf (gtk-font-button-font-name object) fontname)}
   @argument[object]{a @class{gtk-font-button} widget}
@@ -198,7 +196,10 @@
     version 3.22 and should not be used in newly-written code. Use the function
     @fun{gtk-font-chooser-font} instead.
   @end{dictionary}
-  @see-class{gtk-font-button}")
+  @see-class{gtk-font-button}
+  @see-class{gtk-font-chooser}
+  @see-class{pango-font-description}
+  @see-function{pango-font-description-from-string}")
 
 ;;; --- gtk-font-button-show-size ----------------------------------------------
 

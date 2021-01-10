@@ -688,7 +688,7 @@
 (setf (gethash 'gtk-cell-renderer-text-family-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-text-family-set 'function)
- "@version{2020-6-13}
+ "@version{2021-1-7}
   @syntax[]{(gtk-cell-renderer-text-family-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-family-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
@@ -699,7 +699,8 @@
   @end{short}
 
   Whether this tag affects the font family.
-  @see-class{gtk-cell-renderer-text}")
+  @see-class{gtk-cell-renderer-text}
+  @see-function{gtk-cell-renderer-text-family}")
 
 ;;; --- gtk-cell-renderer-text-font --------------------------------------------
 
@@ -740,18 +741,19 @@
 (setf (gethash 'gtk-cell-renderer-text-font-desc atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-text-font-desc 'function)
- "@version{2020-6-13}
+ "@version{2021-1-7}
   @syntax[]{(gtk-cell-renderer-text-font-desc object) => font-desc}
   @syntax[]{(setf (gtk-cell-renderer-text-font-desc object) font-desc)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[font-desc]{a @class{pango-font-description} structure}
+  @argument[font-desc]{a @class{pango-font-description} instance}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{font-desc} slot of the
     @class{gtk-cell-renderer-text} class.
   @end{short}
 
   A Pango font description.
-  @see-class{gtk-cell-renderer-text}")
+  @see-class{gtk-cell-renderer-text}
+  @see-class{pango-font-description}")
 
 ;;; --- gtk-cell-renderer-text-foreground --------------------------------------
 

@@ -1404,7 +1404,8 @@
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-state-flags}
-  @see-function{gtk-style-context-get}"
+  @see-function{gtk-style-context-property}
+  @see-class{pango-font-description}"
   (context (g-object gtk-style-context))
   (state gtk-state-flags))
 

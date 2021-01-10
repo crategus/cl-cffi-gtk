@@ -752,11 +752,17 @@
 (setf (gethash 'gtk-text-tag-family atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-family 'function)
- "@version{2020-3-21}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-family object) => family}
+  @syntax[]{(setf (gtk-text-tag-family object) familiy)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[family]{a string with the name of the font family}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{family} slot of the
     @class{gtk-text-tag} class.
   @end{short}
+
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-family-set ------------------------------------------------
@@ -771,20 +777,27 @@
 (setf (gethash 'gtk-text-tag-family-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-family-set 'function)
- "@version{2020-3-21}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-family-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-family-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the font family}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{family-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the font family.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-family}")
 
 ;;; --- gtk-text-tag-font ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font" 'gtk-text-tag) 't)
  "The @code{font} property of type @code{:string} (Read / Write) @br{}
-  Font description as string, e.g. \"Sans Italic 12\".
-  Note that the initial value of this property depends on the internals of the
+  Font description as string, e.g. \"Sans Italic 12\". Note that the initial
+  value of this property depends on the internals of the
   @class{pango-font-description} structure. @br{}
   Default value: @code{nil}")
 
@@ -792,12 +805,21 @@
 (setf (gethash 'gtk-text-tag-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font 'function)
- "@version{2020-3-21}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-font object) => font}
+  @syntax[]{(setf (gtk-text-tag-font object) font)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[font]{a string with a font description}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{font} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font description as string, e.g. \"Sans Italic 12\". Note that the initial
+  value of this property depends on the internals of the
+  @class{pango-font-description} structure.
+  @see-class{gtk-text-tag}
+  @see-class{pango-font-description}")
 
 ;;; --- gtk-text-tag-font-desc -------------------------------------------------
 
@@ -805,18 +827,26 @@
 (setf (documentation (atdoc:get-slot-from-name "font-desc" 'gtk-text-tag) 't)
  "The @code{font-desc} property of type @class{pango-font-description}
   (Read / Write) @br{}
-  Font description as a @sym{pango-font-description} structure.")
+  Font description as a Pango font description.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-font-desc atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-desc 'function)
- "@version{2020-3-21}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-font-desc object) => font-desc}
+  @syntax[]{(setf (gtk-text-tag-font object) font-desc)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[font-desc]{a @class{pango-font-description} instance with a font
+    description}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{font-desc} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font description as a Pango font description.
+  @see-class{gtk-text-tag}
+  @see-class{pango-font-description}")
 
 ;;; --- gtk-text-tag-font-features ---------------------------------------------
 
@@ -831,11 +861,17 @@
 (setf (gethash 'gtk-text-tag-font-features atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-features 'function)
- "@version{2019-4-12}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-font-features object) => features}
+  @syntax[]{(setf (gtk-text-tag-font-features object) features)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[features]{a string with the OpenType font features}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{font-features} slot of the
     @class{gtk-text-tag} class.
   @end{short}
+
+  OpenType font features, as a string.
 
   Since 3.18
   @see-class{gtk-text-tag}")
@@ -845,8 +881,8 @@
 #+(and gtk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "font-features-set"
                                                'gtk-text-tag) 't)
- "The @code{font-features-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{font-features-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects font features. Since 3.18 @br{}
   Default value: @em{false}")
 
@@ -854,14 +890,21 @@
 (setf (gethash 'gtk-text-tag-font-features-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-features-set 'function)
- "@version{2019-4-12}
+ "@version{2021-1-7}
+  @syntax[]{(gtk-text-tag-font-features-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-font-features-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects font features}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{font-features-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
+  Whether this tag affects font features.
+
   Since 3.18
-  @see-class{gtk-text-tag}")
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-font-features}")
 
 ;;; --- gtk-text-tag-foreground ------------------------------------------------
 
@@ -1950,7 +1993,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-text-tag) 't)
  "The @code{weight} property of type @code{:int} (Read / Write) @br{}
-  Font weight as an integer, see predefined values in the @symol{pango-weight}
+  Font weight as an integer, see predefined values in the @symbol{pango-weight}
   enumeration; for example, @code{:bold}. @br{}
   Allowed values: >= 0 @br{}
   Default value: 400")
