@@ -518,9 +518,9 @@
 
 (defcfun ("g_action_group_action_added" g-action-group-action-added) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2021-1-1}
   @argument[action-group]{a @class{g-action-group} object}
-  @argument[action-name]{the name of an action in the group}
+  @argument[action-name]{a string with the name of an action in the group}
   @begin{short}
     Emits the \"action-added\" signal on @arg{action-group}.
   @end{short}
