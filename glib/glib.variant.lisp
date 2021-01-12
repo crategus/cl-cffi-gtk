@@ -3806,7 +3806,7 @@ add_to_count (GVariant  *orig,
 
 (defcfun ("g_variant_parse" %g-variant-parse-1)
     (:pointer (:struct g-variant))
-  (variant-type (gobject:g-boxed-foreign g-variant-type))
+  (variant-type :pointer) ; must be the type :pointer
   (text :string)
   (limit :pointer)
   (endptr :pointer)
