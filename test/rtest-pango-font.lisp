@@ -1,5 +1,5 @@
-(def-suite pango-fonts :in pango-suite)
-(in-suite pango-fonts)
+(def-suite pango-font :in pango-suite)
+(in-suite pango-font)
 
 ;;; --- Types and Values -------------------------------------------------------
 

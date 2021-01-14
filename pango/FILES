@@ -8,7 +8,7 @@ Basic Pango Interfaces
 
 * pango.rendering.lisp - Functions to run the rendering pipeline  - Pango 1.48 %
 
-  pango.fonts.lisp - Structures representing abstract fonts       - Pango 1.48 &
+  pango.font.lisp - Structures representing abstract fonts        - Pango 1.48 &
 
 * pango.glyph.lisp - Storing information about glyphs             - Pango 1.48 %
 * pango.attributes.lisp - Attributes for annotating text          - Pango 1.48 %

@@ -5,9 +5,8 @@
 
 ;;; Basic Pango Interfaces
 
-; pango.rendering.lisp - Functions to run the rendering pipeline  - Pango 1.48 %
-
-(load "rtest-pango-fonts.lisp")
+(load "rtest-pango-rendering.lisp")
+(load "rtest-pango-font.lisp")
 
 ; pango.glyph.lisp - Storing information about glyphs             - Pango 1.48 %
 ; pango.attributes.lisp - Attributes for annotating text          - Pango 1.48 %

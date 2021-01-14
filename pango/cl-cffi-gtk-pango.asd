@@ -36,12 +36,12 @@
                (:file "pango.bidirectional")
                (:file "pango.renderer")
 
+               (:file "pango.glyph")
                (:file "pango.rendering")
 
-               (:file "pango.glyph")
                (:file "pango.coverage")
                (:file "pango.vertical-text")
-               (:file "pango.fonts")
+               (:file "pango.font")
 
                (:file "pango.context")
 
