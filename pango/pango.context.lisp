@@ -607,22 +607,31 @@
 ;;; pango_context_list_families ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_context_list_families" pango-context-list-families) :void
+(defcfun ("pango_context_list_families" %pango-context-list-families) :void
+  (context (g-object pango-context))
+  (families :pointer)
+  (n-families (:pointer :int)))
+
+(defun pango-context-list-families (context)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-3}
+ "@version{2021-1-14}
   @argument[context]{a @class{pango-context} object}
-  @argument[families]{location to store a pointer to an array of
-    @class{pango-font-family} instances. This array should be freed with
-    the function @fun{g-free}}
-  @argument[n-families]{location to store the number of elements in descs}
+  @begin{return}
+    A list of @class{pango-font-family} objects.
+  @end{return}
   @begin{short}
     List all families for a context.
   @end{short}
   @see-class{pango-context}
-  @see-class{pango-font-familiy}"
-  (context (g-object pango-context))
-  (families (:pointer g-object))
-  (n-families :int))
+  @see-class{pango-font-family}"
+  (with-foreign-objects ((families-ptr :pointer) (n-families :int))
+    (%pango-context-list-families context families-ptr n-families)
+    (loop with families-ar = (mem-ref families-ptr :pointer)
+          for i from 0 below (mem-ref n-families :int)
+          for family = (convert-from-foreign (mem-aref families-ar :pointer i)
+                                             'g-object)
+          collect family
+          finally (g-free families-ar))))
 
 (export 'pango-context-list-families)
 
