@@ -92,7 +92,6 @@
 ;;;     pango_attr_underline_color_new
 ;;;     pango_attr_overline_new
 ;;;     pango_attr_overline_color_new
-;;;
 ;;;     pango_attr_shape_new
 ;;;     pango_attr_shape_new_with_data
 ;;;
@@ -197,106 +196,139 @@
 ;;;   PANGO_ATTR_GRAVITY_HINT         /* PangoAttrInt */
 ;;; } PangoAttrType;
 ;;;
-;;; The PangoAttrType distinguishes between different types of attributes.
-;;; Along with the predefined values, it is possible to allocate additional
-;;; values for custom attributes using pango_attr_type_register(). The
-;;; predefined values are given below. The type of structure used to store the
-;;; attribute is listed in parentheses after the description.
-;;;
-;;; PANGO_ATTR_INVALID
-;;;     does not happen
-;;;
-;;; PANGO_ATTR_LANGUAGE
-;;;     language (PangoAttrLanguage)
-;;;
-;;; PANGO_ATTR_FAMILY
-;;;     font family name list (PangoAttrString)
-;;;
-;;; PANGO_ATTR_STYLE
-;;;     font slant style (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_WEIGHT
-;;;     font weight (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_VARIANT
-;;;     font variant (normal or small caps) (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_STRETCH
-;;;     font stretch (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_SIZE
-;;;     font size in points scaled by PANGO_SCALE (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_FONT_DESC
-;;;     font description (PangoAttrFontDesc)
-;;;
-;;; PANGO_ATTR_FOREGROUND
-;;;     foreground color (PangoAttrColor)
-;;;
-;;; PANGO_ATTR_BACKGROUND
-;;;     background color (PangoAttrColor)
-;;;
-;;; PANGO_ATTR_UNDERLINE
-;;;     whether the text has an underline (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_STRIKETHROUGH
-;;;     whether the text is struck-through (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_RISE
-;;;     baseline displacement (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_SHAPE
-;;;     shape (PangoAttrShape)
-;;;
-;;; PANGO_ATTR_SCALE
-;;;     font size scale factor (PangoAttrFloat)
-;;;
-;;; PANGO_ATTR_FALLBACK
-;;;     whether fallback is enabled (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_LETTER_SPACING
-;;;     letter spacing (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_UNDERLINE_COLOR
-;;;     underline color (PangoAttrColor)
-;;;
-;;; PANGO_ATTR_STRIKETHROUGH_COLOR
-;;;     strikethrough color (PangoAttrColor)
-;;;
-;;; PANGO_ATTR_ABSOLUTE_SIZE
-;;;     font size in pixels scaled by PANGO_SCALE (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_GRAVITY
-;;;     base text gravity (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_GRAVITY_HINT
-;;;     gravity hint (PangoAttrInt)
-;;;
-;;; PANGO_ATTR_FONT_FEATURES
-;;;     OpenType font features (PangoAttrString). Since 1.38
-;;;
-;;; PANGO_ATTR_FOREGROUND_ALPHA
-;;;     foreground alpha (PangoAttrInt). Since 1.38
-;;;
-;;; PANGO_ATTR_BACKGROUND_ALPHA
-;;;     background alpha (PangoAttrInt). Since 1.38
-;;;
-;;; PANGO_ATTR_ALLOW_BREAKS
-;;;     whether breaks are allowed (PangoAttrInt). Since 1.44
-;;;
-;;; PANGO_ATTR_SHOW
-;;;     how to render invisible characters (PangoAttrInt). Since 1.44
-;;;
-;;; PANGO_ATTR_INSERT_HYPHENS
-;;;     whether to insert hyphens at intra-word line breaks (PangoAttrInt).
-;;;     Since 1.44
-;;;
-;;; PANGO_ATTR_OVERLINE
-;;;     whether the text has an overline (PangoAttrInt). Since 1.46
-;;;
-;;; PANGO_ATTR_OVERLINE_COLOR
-;;;     overline color (PangoAttrColor). Since 1.46
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoAttrType" pango-attr-type
+  (:export t
+   :type-initializer "pango_attr_type_get_type")
+  (:invalid 0)
+  (:language 1)
+  (:family 2)
+  (:style 3)
+  (:weight 4)
+  (:variant 5)
+  (:stretch 6)
+  (:size 7)
+  (:font-desc 8)
+  (:foreground 9)
+  (:background 10)
+  (:underline 11)
+  (:strikethrough 12)
+  (:rise 13)
+  (:shape 14)
+  (:scale 15)
+  (:fallback 16)
+  (:letter-spacing 17)
+  (:underline-color 18)
+  (:strikethrough-color 19)
+  (:absolute-size 20)
+  (:gravity 21)
+  (:gravity-hint 22)
+  (:font-features 23)
+  (:foreground-alpha 24)
+  (:background-alpha 25)
+  #+pango-1-44
+  (:allow-breaks 26)
+  #+pango-1-44
+  (:show 27)
+  #+pango-1-44
+  (:insert-hyphens 28)
+  #+pango-1-46
+  (:overline 29)
+  #+pango-1-46
+  (:overline-color 30)
+)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-type atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'pango-attr-type atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-type} enumeration distinguishes between different types
+    of attributes.
+  @end{short}
+  Along with the predefined values, it is possible to allocate additional
+  values for custom attributes using the function
+  @fun{pango-attr-type-register}. The predefined values are given below. The
+  type of structure used to store the attribute is listed in parentheses after
+  the description.
+  @begin{pre}
+(define-g-enum \"PangoAttrType\" pango-attr-type
+  (:export t
+   :type-initializer \"pango_attr_type_get_type\")
+  (:invalid 0)
+  (:language 1)
+  (:family 2)
+  (:style 3)
+  (:weight 4)
+  (:variant 5)
+  (:stretch 6)
+  (:size 7)
+  (:font-desc 8)
+  (:foreground 9)
+  (:background 10)
+  (:underline 11)
+  (:strikethrough 12)
+  (:rise 13)
+  (:shape 14)
+  (:scale 15)
+  (:fallback 16)
+  (:letter-spacing 17)
+  (:underline-color 18)
+  (:strikethrough-color 19)
+  (:absolute-size 20)
+  (:gravity 21)
+  (:gravity-hint 22)
+  (:font-features 23)
+  (:foreground-alpha 24)
+  (:background-alpha 25)
+  (:allow-breaks 26)
+  (:show 27)
+  (:insert-hyphens 28)
+  (:overline 29)
+  (:overline-color 30))
+  @end{pre}
+  @begin{table}
+    @entry[:invalid]{Does not happen.}
+    @entry[:language]{Language (PangoAttrLanguage).}
+    @entry[:family]{Font family name list (PangoAttrString).}
+    @entry[:style]{Font slant style (PangoAttrInt).}
+    @entry[:weight]{Font weight (PangoAttrInt).}
+    @entry[:variant]{Font variant (normal or small caps) (PangoAttrInt).}
+    @entry[:stretch]{Font stretch (PangoAttrInt).}
+    @entry[:size]{Font size in points scaled by @var{+pango-scale+}
+      (PangoAttrInt).}
+    @entry[:font-desc]{Font description (PangoAttrFontDesc).}
+    @entry[:foreground]{Foreground color (PangoAttrColor).}
+    @entry[:background]{Background color (PangoAttrColor).}
+    @entry[:underline]{Whether the text has an underline (PangoAttrInt).}
+    @entry[:strikethrough]{Whether the text is struck-through (PangoAttrInt).}
+    @entry[:rise]{Baseline displacement (PangoAttrInt).}
+    @entry[:shape]{Shape (PangoAttrShape).}
+    @entry[:scale]{Font size scale factor (PangoAttrFloat).}
+    @entry[:fallback]{Whether fallback is enabled (PangoAttrInt).}
+    @entry[:letter-spacing]{Letter spacing (PangoAttrInt).}
+    @entry[:underline-color]{Underline color (PangoAttrColor).}
+    @entry[:strikethrough-color]{Strikethrough color (PangoAttrColor).}
+    @entry[:absolute-size]{Font size in pixels scaled by @var{+pango-scale+}
+      (PangoAttrInt).}
+    @entry[:gravity]{Base text gravity (PangoAttrInt).}
+    @entry[:gravity-hint]{Gravity hint (PangoAttrInt).}
+    @entry[:font-features]{OpenType font features (PangoAttrString).}
+    @entry[:foreground-alpha]{Foreground alpha (PangoAttrInt).}
+    @entry[:background-alpha]{Background alpha (PangoAttrInt).}
+    @entry[:allow-breaks]{Whether breaks are allowed (PangoAttrInt). Since 1.44}
+    @entry[:show]{How to render invisible characters (PangoAttrInt). Since 1.44}
+    @entry[:insert-hyphens]{Whether to insert hyphens at intra-word line breaks
+      (PangoAttrInt). Since 1.44}
+    @entry[:overline]{Whether the text has an overline (PangoAttrInt).
+      Since 1.46}
+    @entry[:overline-color]{Overline color (PangoAttrColor). Since 1.46}
+  @end{table}
+  @see-class{pango-attribute}
+  @see-class{pango-attr-list}
+  @see-function{pango-attr-type-register}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrClass
@@ -308,11 +340,6 @@
 ;;;   gboolean         (*equal) (const PangoAttribute *attr1,
 ;;;                              const PangoAttribute *attr2);
 ;;; };
-;;;
-;;; The PangoAttrClass structure stores the type and operations for a particular
-;;; type of attribute. The functions in this structure should not be called
-;;; directly. Instead, one should use the wrapper functions provided for
-;;; PangoAttribute.
 ;;;
 ;;; PangoAttrType type;
 ;;;     the type ID for this attribute
@@ -330,6 +357,25 @@
 ;;;     (see pango_attribute_equal())
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct pango-attr-class)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-class atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-class atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-class} structure stores the type and operations for a
+    particular type of attribute.
+  @end{short}
+  The functions in this structure should not be called directly. Instead, one
+  should use the wrapper functions provided for the @class{pango-attribute}
+  structure.
+  @see-class{pango-attribute}
+  @see-symbol{pango-attr-type}")
+
+(export 'pango-attr-class)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttribute
 ;;;
@@ -338,13 +384,6 @@
 ;;;   guint start_index; /* in bytes */
 ;;;   guint end_index; /*in bytes. The character at this index is not included*/
 ;;; };
-;;;
-;;; The PangoAttribute structure represents the common portions of all
-;;; attributes. Particular types of attributes include this structure as their
-;;; initial portion. The common portion of the attribute holds the range to
-;;; which the value in the type-specific part of the attribute applies and
-;;; should be initialized using pango_attribute_init(). By default an attribute
-;;; will have an all-inclusive range of [0,G_MAXUINT].
 ;;;
 ;;; const PangoAttrClass *klass;
 ;;;     the class structure holding information about the type of the attribute
@@ -356,6 +395,29 @@
 ;;;     end index of the range (in bytes). The character at this index is not
 ;;;     included in the range
 ;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "pango_attribute_get_type" g-size))
+
+(define-g-boxed-opaque pango-attribute "PangoAttribute"
+  :alloc (error "PangoAttribute cannot be created from the Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attribute atdoc:*class-name-alias*)
+      "Boxed CStruct"
+      (documentation 'pango-attribute 'type)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attribute} structure represents the common portions of all
+    attributes.
+  @end{short}
+  Particular types of attributes include this structure as their initial
+  portion. The common portion of the attribute holds the range to which the
+  value in the type-specific part of the attribute applies and should be
+  initialized using the function @fun{pango-attribute-init}. By default an#
+  attribute will have an all-inclusive range of [0,G_MAXUINT].
+  @see-symbol{pango-attr-type}")
+
+(export (boxed-related-symbols 'pango-attribute))
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING
@@ -371,7 +433,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_ATTR_INDEX_TO_TEXT_END
 ;;;
-;;; #define PANGO_ATTR_INDEX_TO_TEXT_END        G_MAXUINT
+;;; #define PANGO_ATTR_INDEX_TO_TEXT_END G_MAXUINT
 ;;;
 ;;; This value can be used to set the end_index member of a PangoAttribute such
 ;;; that the attribute covers to the end of the text.
@@ -387,15 +449,27 @@
 ;;;   char *value;
 ;;; };
 ;;;
-;;; The PangoAttrString structure is used to represent attributes with a string
-;;; value.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; char *value;
 ;;;     the string which is the value of the attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-string)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-string atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-string atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-string} structure is used to represent attributes with
+    a string value.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrLanguage
@@ -405,15 +479,27 @@
 ;;;   PangoLanguage *value;
 ;;; };
 ;;;
-;;; The PangoAttrLanguage structure is used to represent attributes that are
-;;; languages.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; PangoLanguage *value;
 ;;;     the PangoLanguage which is the value of the attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-language)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-language atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-language atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-language} structure is used to represent attributes
+    that are languages.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-language)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrColor
@@ -423,15 +509,27 @@
 ;;;   PangoColor color;
 ;;; };
 ;;;
-;;; The PangoAttrColor structure is used to represent attributes that are
-;;; colors.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; PangoColor color;
 ;;;     the PangoColor which is the value of the attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-color)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-color atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-color atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-color} structure is used to represent attributes
+    that are colors.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrInt
@@ -441,15 +539,27 @@
 ;;;   int value;
 ;;; };
 ;;;
-;;; The PangoAttrInt structure is used to represent attributes with an integer
-;;; or enumeration value.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; int value;
 ;;;     the value of the attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-int)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-int atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-int atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-int} structure is used to represent attributes with
+    an integer or enumeration value.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrFloat
@@ -459,15 +569,27 @@
 ;;;   double value;
 ;;; };
 ;;;
-;;; The PangoAttrFloat structure is used to represent attributes with a float
-;;; or double value.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; double value;
 ;;;     the value of the attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-float)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-float atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-float atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-float} structure is used to represent attributes with
+    a float or double value.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-float)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrFontDesc
@@ -477,15 +599,27 @@
 ;;;   PangoFontDescription *desc;
 ;;; };
 ;;;
-;;; The PangoAttrFontDesc structure is used to store an attribute that sets all
-;;; aspects of the font description at once.
-;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
 ;;;
 ;;; PangoFontDescription *desc;
 ;;;     the font description which is the value of this attribute
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-font-desc)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-font-desc atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-font-desc atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-font-desc} structure is used to store an attribute that
+    sets all aspects of the font description at once.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-font-desc)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrShape
@@ -499,9 +633,6 @@
 ;;;   PangoAttrDataCopyFunc copy_func;
 ;;;   GDestroyNotify        destroy_func;
 ;;; };
-;;;
-;;; The PangoAttrShape structure is used to represent attributes which impose
-;;; shape restrictions.
 ;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
@@ -528,11 +659,12 @@
 (setf (gethash 'pango-attr-shape atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'pango-attr-shape atdoc:*external-symbols*)
- "@version{2021-1-8}
+ "@version{2021-1-17}
   @begin{short}
     The @sym{pango-attr-shape} structure is used to represent attributes which
     impose shape restrictions.
-  @end{short}")
+  @end{short}
+  @see-class{pango-attribute}")
 
 (export 'pango-attr-shape)
 
@@ -544,9 +676,6 @@
 ;;;   int size;
 ;;;   guint absolute : 1;
 ;;; };
-;;;
-;;; The PangoAttrShape structure is used to represent attributes which set font
-;;; size.
 ;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
@@ -562,6 +691,21 @@
 ;;;     TRUE for PANGO_ATTR_ABSOLUTE_SIZE.
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct pango-attr-size)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-size atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-size atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-size} structure is used to represent attributes which
+    set font size.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAttrFontFeatures
 ;;;
@@ -569,9 +713,6 @@
 ;;;   PangoAttribute attr;
 ;;;   gchar *features;
 ;;; };
-;;;
-;;; The PangoAttrFontFeatures structure is used to represent OpenType font
-;;; features as an attribute.
 ;;;
 ;;; PangoAttribute attr;
 ;;;     the common portion of the attribute
@@ -581,6 +722,21 @@
 ;;;
 ;;; Since 1.38
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-attr-font-features)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-font-features atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'pango-attr-font-features atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-attr-font-features} structure is used to represent OpenType
+    font features as an attribute.
+  @end{short}
+  @see-class{pango-attribute}")
+
+(export 'pango-attr-font-features)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoUnderline
@@ -594,17 +750,22 @@
   (:double 2)
   (:low 3)
   (:error 4)
+  #+pango-1-46
   (:single-line 5)
+  #+pango-1-46
   (:double-line 6)
-  (:error-line 7))
+  #+pango-1-46
+  (:error-line 7)
+)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-underline atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'pango-underline atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'pango-underline atdoc:*external-symbols*)
- "@version{2013-6-30}
+ "@version{2021-1-17}
   @begin{short}
-    The @sym{pango-underline} enumeration is used to specify whether text should
-    be underlined, and if so, the type of underlining.
+    The @sym{pango-underline} enumeration is used to specify whether text
+    should be underlined, and if so, the type of underlining.
   @end{short}
   @begin{pre}
 (define-g-enum \"PangoUnderline\" pango-underline
@@ -614,7 +775,10 @@
   (:single 1)
   (:double 2)
   (:low 3)
-  (:error 4))
+  (:error 4)
+  (:single-line 5)
+  (:double-line 6)
+  (:error-line 7))
   @end{pre}
   @begin[code]{table}
     @entry[:none]{No underline should be drawn.}
@@ -625,31 +789,51 @@
       underlining single characters, such as for keyboard accelerators.
       @code{:single} should be used for extended portions of text.}
     @entry[:error]{A wavy underline should be drawn below. This underline is
-      typically used to indicate an error such as a possible mispelling; in
-      some cases a contrasting color may automatically be used. This type of
-      underlining is available since Pango 1.4.}
+      typically used to indicate an error such as a possible mispelling. In
+      some cases a contrasting color may automatically be used.}
     @entry[:single-line]{Like @code{:single}, but drawn continuously across
-      multiple runs. This type of underlining is available since Pango 1.46.}
+      multiple runs. Since 1.46}
     @entry[:double-line]{Like @code{:double}, but drawn continuously across
-      multiple runs. This type of underlining is available since Pango 1.46.}
+      multiple runs. Since 1.46}
     @entry[:error-line]{Like @code{:error}, but drawn continuously across
-      multiple runs. This type of underlining is available since Pango 1.46.}
-  @end{table}")
+      multiple runs. Since 1.46}
+  @end{table}
+  @see-symbol{pango-overline}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoOverline
-;;;
-;;; The PangoOverline enumeration is used to specify whether text should be
-;;; overlined, and if so, the type of line.
-;;;
-;;; PANGO_OVERLINE_NONE
-;;;     no overline should be drawn
-;;;
-;;; PANGO_OVERLINE_SINGLE
-;;;     Draw a single line above the ink extents of the text being underlined.
-;;;
-;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
+
+#+pango-1-46
+(define-g-enum "PangoOverline" pango-overline
+  (:export t
+   :type-initializer "pango_overline_get_type")
+  (:none 0)
+  (:single 1))
+
+#+(and pango-1-46 cl-cffi-gtk-documentation)
+(setf (gethash 'pango-overline atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'pango-overline atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{Pango-overline} enumeration is used to specify whether text should
+    be overlined, and if so, the type of line.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoOverline\" pango-overline
+  (:export t
+   :type-initializer \"pango_overline_get_type\")
+  (:none 0)
+  (:single 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No overline should be drawn.}
+    @entry[:single]{Draw a single line above the ink extents of the text being
+      underlined.}
+  @end{table}
+  Since 1.46
+  @see-symbol{pango-underline}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_XX_SMALL
@@ -709,35 +893,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoShowFlags
-;;;
-;;; These flags affect how Pango treats characters that are normally not
-;;; visible in the output.
-;;;
-;;; PANGO_SHOW_NONE
-;;;     No special treatment for invisible characters
-;;;
-;;; PANGO_SHOW_SPACES
-;;;     Render spaces, tabs and newlines visibly
-;;;
-;;; PANGO_SHOW_LINE_BREAKS
-;;;     Render line breaks visibly
-;;;
-;;; PANGO_SHOW_IGNORABLES
-;;;     Render default-ignorable Unicode characters visibly
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "PangoShowFlags" pango-show-flags
+  (:export t
+   :type-initializer "pango_show_flags_get_type")
+  (:none #.(ash 1 0))
+  (:spaces #.(ash 1 1))
+  (:line-breaks #.(ash 1 2))
+  (:ignorables #.(ash 1 3)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*)
+      "Flags"
+      (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
+ "@version{2021-1-17}
+  @begin{short}
+    These flags affect how Pango treats characters that are normally not
+    visible in the output.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"PangoShowFlags\" pango-show-flags
+  (:export t
+   :type-initializer \"pango_show_flags_get_type\")
+  (:none #.(ash 1 0))
+  (:spaces #.(ash 1 1))
+  (:line-breaks #.(ash 1 2))
+  (:ignorables #.(ash 1 3)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No special treatment for invisible characters.}
+    @entry[:spaces]{Render spaces, tabs and newlines visibly.}
+    @entry[:line-breaks]{Render line breaks visibly.}
+    @entry[:ignorables]{Render default-ignorable Unicode characters visibly.}
+  @end{table}
+  @see-function{pango-attr-show-new}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoColor
-;;;
-;;; struct PangoColor {
-;;;   guint16 red;
-;;;   guint16 green;
-;;;   guint16 blue;
-;;; };
-;;;
-;;; The PangoColor structure is used to represent a color in an uncalibrated
-;;; RGB color-space.
 ;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "pango_color_get_type" g-size))
+
+(define-g-boxed-cstruct pango-color "PangoColor"
+  (red :uint16 :initform 0)
+  (green :uint16 :initform 0)
+  (blue :uint16 :initform 0))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-color atdoc:*class-name-alias*)
+      "CStruct"
+      (documentation 'pango-color 'type)
+ "@version{2021-1-17}
+  @begin{short}
+    The @sym{pango-color} structure is used to represent a color in an
+    uncalibrated RGB color-space.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct pango-color \"PangoColor\"
+  (red :uint16 :initform 0)
+  (green :uint16 :initform 0)
+  (blue :uint16 :initform 0))
+  @end{pre}")
+
+(export 'pango-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoAttrList
@@ -749,9 +968,10 @@
   :alloc (%pango-attr-list-new))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-attr-list atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-attr-list atdoc:*class-name-alias*)
+      "Boxed CStruct"
       (documentation 'pango-attr-list 'type)
- "@version{2013-6-30}
+ "@version{2021-1-17}
   @begin{short}
     The @sym{pango-attr-list} structure represents a list of attributes that
     apply to a section of text.
@@ -762,25 +982,42 @@
   stricter criteria.
 
   Since the @sym{pango-attr-list} structure is stored as a linear list, it is
-  not suitable for storing attributes for large amounts of text. In general, you
-  should not use a single @sym{pango-attr-list} for more than one paragraph of
-  text.
+  not suitable for storing attributes for large amounts of text. In general,
+  you should not use a single @sym{pango-attr-list} for more than one paragraph
+  of text.
+  @see-class{pango-attr-iterator}
   @see-function{pango-attr-list-change}")
 
 (export (boxed-related-symbols 'pango-attr-list))
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoAttrIterator
-;;;
-;;; typedef struct _PangoAttrIterator PangoAttrIterator;
-;;;
-;;; The PangoAttrIterator structure is used to represent an iterator through a
-;;; PangoAttrList. A new iterator is created with
-;;; pango_attr_list_get_iterator(). Once the iterator is created, it can be
-;;; advanced through the style changes in the text using
-;;; pango_attr_iterator_next(). At each style change, the range of the current
-;;; style segment and the attributes currently in effect can be queried.
 ;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "pango_attr_iterator_get_type" g-size))
+
+(define-g-boxed-opaque pango-attr-iterator "PangoAttrIterator"
+  :alloc (error "PangoAttrIterator cannot be created from the Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-iterator atdoc:*class-name-alias*)
+      "Boxed CStruct"
+      (documentation 'pango-attr-iterator 'type)
+ "@version{2021-1-11}
+  @begin{short}
+    The @sym{pango-attr-iterator} structure is used to represent an iterator
+    through a @class{pango-attr-list} structure.
+  @end{short}
+  A new iterator is created with the function @fun{pango-attr-list-iterator}.
+  Once the iterator is created, it can be advanced through the style changes in
+  the text using the function @fun{pango-attr-iterator-next}. At each style
+  change, the range of the current style segment and the attributes currently
+  in effect can be queried.
+  @see-class{pango-attr-list}
+  @see-function{pango-attr-list-iterator}
+  @see-function{pango-attr-iterator-next}")
+
+(export (boxed-related-symbols 'pango-attr-iterator))
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_type_register ()
@@ -1594,17 +1831,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_new ()
-;;;
-;;; PangoAttrList * pango_attr_list_new (void);
-;;;
-;;; Create a new empty attribute list with a reference count of one.
-;;;
-;;; Returns :
-;;;     the newly allocated PangoAttrList, which should be freed with
-;;;     pango_attr_list_unref()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_attr_list_new" %pango-attr-list-new) :pointer)
+
+(defcfun ("pango_attr_list_new" pango-attr-list-new)
+    (g-boxed-foreign pango-attr-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-17}
+  @begin{return}
+    The newly allocated @sym{pango-attr-list}.
+  @end{return}
+  @begin{short}
+    Create a new empty attribute list with a reference count of one.
+  @end{short}
+  @see-class{pango-attr-list}
+  @see-function{pango-attr-list-unref}")
+
+(export 'pango-attr-list-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_ref ()
@@ -1636,19 +1880,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_copy ()
-;;;
-;;; PangoAttrList * pango_attr_list_copy (PangoAttrList *list);
-;;;
-;;; Copy list and return an identical new list.
-;;;
-;;; list :
-;;;     a PangoAttrList, may be NULL
-;;;
-;;; Returns :
-;;;     the newly allocated PangoAttrList, with a reference count of one, which
-;;;     should be freed with pango_attr_list_unref(). Returns NULL if list was
-;;;     NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_attr_list_copy" pango-attr-list-copy)
+    (g-boxed-foreign pango-attr-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-17}
+  @argument[attr-list]{a @class{pango-attr-list} instance, may be @code{nil}}
+  @begin{return}
+    The newly allocated @class{pango-attr-list} instance. Returns @code{nil}
+    if @arg{attr-list} was @code{nil}.
+  @end{return}
+  @begin{short}
+    Copy @arg{attr-list} and return an identical new attribute list.
+  @end{short}
+  @see-class{pango-attr-list}"
+  (attr-list (g-boxed-foreign pango-attr-list)))
+
+(export 'pango-attr-list-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_insert ()
@@ -1820,29 +2069,30 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_attr_list_get_attributes ()
-;;;
-;;; GSList *
-;;; pango_attr_list_get_attributes (PangoAttrList *list);
-;;;
-;;; Gets a list of all attributes in list .
-;;;
-;;; list :
-;;;     a PangoAttrList
-;;;
-;;; Returns :
-;;;     a list of all attributes in list . To free this value, call
-;;;     pango_attribute_destroy() on each value and g_slist_free() on the list.
-;;;
-;;; Since 1.44
+;;; pango_attr_list_get_attributes () -> pango-attr-list-attributes
 ;;; ----------------------------------------------------------------------------
 
-;#+pango-1-44
-;(defcfun ("pango_attr_list_get_attributes" pango-attr-list-attributes) g-slist
-;  (attr-list (g-boxed-foreign pango-attr-list)))
+#+pango-1-44
+(defcfun ("pango_attr_list_get_attributes" pango-attr-list-attributes)
+    (g-slist (g-boxed-foreign pango-attribute :free-from-foreign t)
+             :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-17}
+  @argument[attr-list]{a @class{pango-attr-list} instance}
+  @begin{return}
+    A list of all attributes in @arg{attr-list}.
+  @end{return}
+  @begin{short}
+    Gets a list of all attributes in @arg{attr-list}.
+  @end{short}
 
-;#+pango-1-44
-;(export 'pango-attr-list-attributes)
+  Since 1.44
+  @see-class{pango-attr-list}
+  @see-class{pango-attribute}"
+  (attr-list (g-boxed-foreign pango-attr-list)))
+
+#+pango-1-44
+(export 'pango-attr-list-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_equal ()
