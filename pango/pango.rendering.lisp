@@ -80,51 +80,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoAnalysis
-;;;
-;;; struct PangoAnalysis {
-;;;   PangoEngineShape *shape_engine;
-;;;   PangoEngineLang  *lang_engine;
-;;;   PangoFont *font;
-;;;
-;;;   guint8 level;
-;;;   guint8 gravity;
-;;;   guint8 flags;
-;;;
-;;;   guint8 script;
-;;;   PangoLanguage *language;
-;;;
-;;;   GSList *extra_attrs;
-;;; };
-;;;
-;;; The PangoAnalysis structure stores information about the properties of a
-;;; segment of text.
-;;;
-;;; PangoEngineShape *shape_engine :
-;;;     unused
-;;;
-;;; PangoEngineLang *lang_engine :
-;;;     unused
-;;;
-;;; PangoFont *font :
-;;;     the font for this segment.
-;;;
-;;; guint8 level :
-;;;     the bidirectional level for this segment.
-;;;
-;;; guint8 gravity :
-;;;     the glyph orientation for this segment (A PangoGravity).
-;;;
-;;; guint8 flags :
-;;;     boolean flags for this segment (Since: 1.16).
-;;;
-;;; guint8 script:
-;;;     the detected script for this segment (A PangoScript) (Since: 1.18).
-;;;
-;;; PangoLanguage *language :
-;;;     the detected language for this segment.
-;;;
-;;; GSList *extra_attrs :
-;;;     extra attributes for this segment.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct pango-analysis
@@ -142,46 +97,74 @@
 (setf (gethash 'pango-analysis atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'pango-analysis atdoc:*external-symbols*)
- "@version{2021-1-10}
-")
+ "@version{2021-1-11}
+  @begin{short}
+    The @sym{pango-analysis} structure stores information about the properties
+    of a segment of text.
+  @end{short}
+  @begin{pre}
+(defcstruct pango-analysis
+  (shape-engine :pointer)
+  (lang-engine :pointer)
+  (font (g-object pango-font))
+  (level :uint8)
+  (gravity :uint8)
+  (flags :uint8)
+  (script :uint8)
+  (language (g-boxed-foreign pango-language))
+  (extra-attrs :pointer))
+  @end{pre}
+  @begin[code]{table}
+    @entry[shape-engine]{Unused.}
+    @entry[lang-engine]{Unused.}
+    @entry[font]{The font for this segment.}
+    @entry[level]{The bidirectional level for this segment.}
+    @entry[gravity]{The glyph orientation for this segment (A PangoGravity).}
+    @entry[flags]{Boolean flags for this segment.}
+    @entry[script]{The detected script for this segment (A PangoScript).}
+    @entry[language]{The detected language for this segment.}
+    @entry[extra-attrs]{Extra attributes for this segment.}
+  @end{table}
+  @see-class{pango-item}
+  @see-class{pango-font}
+  @see-class{pango-language}")
+
+(export 'pango-analysis)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoItem
-;;;
-;;; struct PangoItem {
-;;;   gint offset;
-;;;   gint length;
-;;;   gint num_chars;
-;;;   PangoAnalysis analysis;
-;;; };
-;;;
-;;; The PangoItem structure stores information about a segment of text.
-;;;
-;;; gint offset :
-;;;     byte offset of the start of this item in text.
-;;;
-;;; gint length :
-;;;     length of this item in bytes.
-;;;
-;;; gint num_chars :
-;;;     number of Unicode characters in the item.
-;;;
-;;; PangoAnalysis analysis :
-;;;     analysis results for the item.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct pango-item "PangoItem"
-  (offset :int)
-  (length :int)
-  (num-chars :int)
-  (analysis (:pointer (:struct pango-analysis))))
+  (offset :int :initform 0)
+  (length :int :initform 0)
+  (num-chars :int :initform 0)
+  (analysis (:pointer (:struct pango-analysis)) :initform (null-pointer)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-item atdoc:*class-name-alias*)
-      "CStruct"
+      "Boxed CStruct"
       (documentation 'pango-item 'type)
- "@version{2021-1-9}
-")
+ "@version{2021-1-11}
+  @begin{short}
+    The @sym{pango-item} structure stores information about a segment of text.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct pango-item \"PangoItem\"
+  (offset :int :initform 0)
+  (length :int :initform 0)
+  (num-chars :int :initform 0)
+  (analysis (:pointer (:struct pango-analysis)) :initform (null-pointer)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[offset]{Byte offset of the start of this item in text.}
+    @entry[length]{Length of this item in bytes.}
+    @entry[num-chars]{Number of Unicode characters in the item.}
+    @entry[analysis]{Analysis results for the item.}
+  @end{table}
+  @see-symbol{pango-analysis}")
+
+(export 'pango-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_ANALYSIS_FLAG_CENTERED_BASELINE
@@ -306,110 +289,127 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoShapeFlags
-;;;
-;;; Flags influencing the shaping process. These can be passed to
-;;; pango_shape_with_flags().
-;;;
-;;; PANGO_SHAPE_NONE :
-;;;     Default value.
-;;;
-;;; PANGO_SHAPE_ROUND_POSITIONS :
-;;;     Round glyph positions and widths to whole device units. This option
-;;;     should be set if the target renderer can't do subpixel positioning of
-;;;     glyphs.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "PangoShapeFlags" pango-shape-flags
+  (:export t
+   :type-initializer "pango_shape_flags_get_type")
+  (:none #.(ash 1 0))
+  (:round-positions #.(ash 1 1)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-shape-flags atdoc:*symbol-name-alias*)
+      "Flags"
+      (gethash 'pango-shape-flags atdoc:*external-symbols*)
+ "@version{2021-1-11}
+  @begin{short}
+    Flags influencing the shaping process.
+  @end{short}
+  These can be passed to the function @fun{pango-shape-with-flags}.
+  @begin{pre}
+(define-g-flags \"PangoShapeFlags\" pango-shape-flags
+  (:export t
+   :type-initializer \"pango_shape_flags_get_type\")
+  (:none #.(ash 1 0))
+  (:round-positions #.(ash 1 1)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{Default value.}
+    @entry[:round-positions]{Round glyph positions and widths to whole device
+      units. This option should be set if the target renderer cannot do subpixel
+      positioning of glyphs.}
+  @end{table}
+  @see-function{pango-shape-with-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_itemize ()
-;;;
-;;; GList *
-;;; pango_itemize (PangoContext *context,
-;;;                const char *text,
-;;;                int start_index,
-;;;                int length,
-;;;                PangoAttrList *attrs,
-;;;                PangoAttrIterator *cached_iter);
-;;;
-;;; Breaks a piece of text into segments with consistent directional level and
-;;; shaping engine. Each byte of text will be contained in exactly one of the
-;;; items in the returned list; the generated list of items will be in logical
-;;; order (the start offsets of the items are ascending).
-;;;
-;;; cached_iter should be an iterator over attrs currently positioned at a range
-;;; before or containing start_index ; cached_iter will be advanced to the range
-;;; covering the position just after start_index + length . (i.e. if itemizing
-;;; in a loop, just keep passing in the same cached_iter ).
-;;;
-;;; context :
-;;;     a structure holding information that affects the itemization process.
-;;;
-;;; text :
-;;;     the text to itemize. Must be valid UTF-8
-;;;
-;;; start_index :
-;;;     first byte in text to process
-;;;
-;;; length :
-;;;     the number of bytes (not characters) to process after start_index .
-;;;     This must be >= 0.
-;;;
-;;; attrs :
-;;;     the set of attributes that apply to text .
-;;;
-;;; cached_iter :
-;;;     Cached attribute iterator, or NULL.
-;;;
-;;; Returns :
-;;;     a GList of PangoItem structures. The items should be freed using
-;;;     pango_item_free() probably in combination with g_list_foreach(), and
-;;;     the list itself using g_list_free().
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_itemize" pango-itemize) (g-list (g-boxed-foreign pango-item))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[context]{a @class{pango-context} object holding information that
+    affects the itemization process}
+  @argument[text]{a string with the text to itemize, must be valid UTF-8}
+  @argument[start]{an integer with the first byte in @arg{text} to process}
+  @argument[length]{an integer with the number of bytes (not characters) to
+    process after @arg{start}, this must be >= 0}
+  @argument[attrs]{the @class{pango-attr-list} set of attributes that apply to
+    @arg{text}}
+  @argument[iter]{cached @class{pango-attr-iterator} attribute iterator, or
+    @code{nil}}
+  @return{A list of @class{pango-item} instances.}
+  @begin{short}
+    Breaks a piece of text into segments with consistent directional level and
+    shaping engine.
+  @end{short}
+  Each byte of @arg{text} will be contained in exactly one of the items in the
+  returned list. The generated list of items will be in logical order, the
+  start offsets of the items are ascending.
+
+  The argument @arg{iter} should be an iterator over @arg{attrs} currently
+  positioned at a range before or containing @arg{start}. The argument
+  @arg{iter} will be advanced to the range covering the position just after
+  @arg{start} + @arg{length}, i.e. if itemizing in a loop, just keep passing
+  in the same @arg{iter}.
+  @see-class{pango-context}
+  @see-class{pango-item}
+  @see-class{pango-attr-list}
+  @see-class{pango-attr-iterator}"
+  (context (g-object pango-context))
+  (text :string)
+  (start :int)
+  (length :int)
+  (attrs (g-boxed-foreign pango-attr-list))
+  (iter (g-boxed-foreign pango-attr-iterator)))
+
+(export 'pango-itemize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_itemize_with_base_dir ()
-;;;
-;;; GList *
-;;; pango_itemize_with_base_dir (PangoContext *context,
-;;;                              PangoDirection base_dir,
-;;;                              const char *text,
-;;;                              int start_index,
-;;;                              int length,
-;;;                              PangoAttrList *attrs,
-;;;                              PangoAttrIterator *cached_iter);
-;;;
-;;; Like pango_itemize(), but the base direction to use when computing
-;;; bidirectional levels (see pango_context_set_base_dir()), is specified
-;;; explicitly rather than gotten from the PangoContext.
-;;;
-;;; context :
-;;;     a structure holding information that affects the itemization process.
-;;;
-;;; base_dir :
-;;;     base direction to use for bidirectional processing
-;;;
-;;; text :
-;;;     the text to itemize.
-;;;
-;;; start_index :
-;;;     first byte in text to process
-;;;
-;;; length :
-;;;     the number of bytes (not characters) to process after start_index .
-;;;     This must be >= 0.
-;;;
-;;; attrs :
-;;;     the set of attributes that apply to text .
-;;;
-;;; cached_iter :
-;;;     Cached attribute iterator, or NULL.
-;;;
-;;; Returns :
-;;;     a GList of PangoItem structures. The items should be freed using
-;;;     pango_item_free() probably in combination with g_list_foreach(), and
-;;;     the list itself using g_list_free().
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_itemize_with_base_dir" pango-itemize-with-base-dir)
+    (g-list (g-boxed-foreign pango-item))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[context]{a @class{pango-context} object holding information that
+    affects the itemization process}
+  @argument[base-dir]{a @symbol{pango-direction} value with the base direction
+    to use for bidirectional processing}
+  @argument[text]{a string with the text to itemize, must be valid UTF-8}
+  @argument[start]{an integer with the first byte in @arg{text} to process}
+  @argument[length]{an integer with the number of bytes (not characters) to
+    process after @arg{start}, this must be >= 0}
+  @argument[attrs]{the @class{pango-attr-list} set of attributes that apply to
+    @arg{text}}
+  @argument[iter]{cached @class{pango-attr-iterator} attribute iterator,
+     or @code{nil}}
+  @begin{return}
+    A list of @class{pango-item} instances.
+  @end{return}
+  @begin{short}
+    Like the function @fun{pango-itemize}, but the base direction to use when
+    computing bidirectional levels, see the function
+    @fun{pango-context-base-dir}, is specified explicitly rather than gotten
+    from the @class{pango-context} object.
+  @end{short}
+  @see-class{pango-context}
+  @see-class{pango-item}
+  @see-class{pango-attr-list}
+  @see-class{pango-attr-iterator}
+  @see-symbol{pango-direction}
+  @see-function{pango-itemize}
+  @see-function{pango-context-base-dir}"
+  (context (g-object pango-context))
+  (base-dir pango-direction)
+  (text :string)
+  (start :int)
+  (length :int)
+  (attrs (g-boxed-foreign pango-attr-list))
+  (iter (g-boxed-foreign pango-attr-iterator)))
+
+(export 'pango-itemize-with-base-dir)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_item_free ()
@@ -423,91 +423,113 @@
 ;;;     a PangoItem, may be NULL.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_item_free" pango-item-free) :void
+  (item (g-boxed-foreign pango-item)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_item_copy ()
-;;;
-;;; PangoItem *
-;;; pango_item_copy (PangoItem *item);
-;;;
-;;; Copy an existing PangoItem structure.
-;;;
-;;; item :
-;;;     a PangoItem, may be NULL.
-;;;
-;;; Returns :
-;;;     the newly allocated PangoItem, which should be freed with
-;;;     pango_item_free(), or NULL if item was NULL.
 ;;; ----------------------------------------------------------------------------
+
+(defun pango-item-copy (item)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-11}
+  @argument[item]{a @class{pango-item} instance, may be @code{nil}}
+  @begin{return}
+    The newly allocated @class{pango-item} object, or @code{nil} if @arg{item}
+    was @code{nil}.
+  @end{return}
+  @begin{short}
+    Copy an existing @class{pango-item} structure.
+  @end{short}
+  @see-class{pango-item}"
+  (copy-pango-item item))
+
+(export 'pango-item-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_item_new ()
-;;;
-;;; PangoItem *
-;;; pango_item_new (void);
-;;;
-;;; Creates a new PangoItem structure initialized to default values.
-;;;
-;;; Returns :
-;;;     the newly allocated PangoItem, which should be freed with
-;;;     pango_item_free().
 ;;; ----------------------------------------------------------------------------
+
+(defun pango-item-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-11}
+  @begin{return}
+    The newly allocated @class{pango-item} structure.
+  @end{return}
+  @begin{short}
+    Creates a new @class{pango-item} structure initialized to default values.
+  @end{short}
+  @see-class{pango-item}"
+  (make-pango-item))
+
+(export 'pango-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_item_split ()
-;;;
-;;; PangoItem *
-;;; pango_item_split (PangoItem *orig,
-;;;                   int split_index,
-;;;                   int split_offset);
-;;;
-;;; Modifies orig to cover only the text after split_index , and returns a new
-;;; item that covers the text before split_index that used to be in orig . You
-;;; can think of split_index as the length of the returned item. split_index
-;;; may not be 0, and it may not be greater than or equal to the length of orig
-;;; (that is, there must be at least one byte assigned to each item, you can't
-;;; create a zero-length item). split_offset is the length of the first item in
-;;; chars, and must be provided because the text used to generate the item
-;;; isn't available, so pango_item_split() can't count the char length of the
-;;; split items itself.
-;;;
-;;; orig :
-;;;     a PangoItem
-;;;
-;;; split_index :
-;;;     byte index of position to split item, relative to the start of the item
-;;;
-;;; split_offset :
-;;;     number of chars between start of orig and split_index
-;;;
-;;; Returns :
-;;;     new item representing text before split_index , which should be freed
-;;;     with pango_item_free().
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_item_split" pango-item-split) (g-boxed-foreign pango-item)
+
+ #+cl-cffi-gtk-documentation
+ "@version{2021-01-12}
+  @argument[orig]{a @class{pango-item} instance}
+  @argument[split-index]{an integer with the byte index of position to split
+    item, relative to the start of the item}
+  @argument[split-offset]{an integer with the number of chars between start of
+    @arg{orig} and @arg{split-index}}
+  @begin{return}
+    New @class{pango-item} instance representing text before @arg{split-index}.
+  @end{return}
+  @begin{short}
+    Modifies @arg{orig} to cover only the text after @arg{split-index}, and
+    returns a new item that covers the text before @arg{split-index} that used
+    to be in @arg{orig}.
+  @end{short}
+  You can think of @arg{split-index} as the length of the returned item.
+  @arg{split-index} may not be 0, and it may not be greater than or equal to the
+  length of @arg{orig} (that is, there must be at least one byte assigned to
+  each item, you cannot create a zero-length item). @arg{split-offset} is the
+  length of the first item in chars, and must be provided because the text used
+  to generate the item is not available, so the function @sym{pango-item-split}
+  cannot count the char length of the split items itself.
+  @see-class{pango-item}"
+  (orig (g-boxed-foreign pango-item))
+  (split-index :int)
+  (split-offset :int))
+
+(export 'pango-item-split)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_item_apply_attrs ()
-;;;
-;;; void
-;;; pango_item_apply_attrs (PangoItem *item,
-;;;                         PangoAttrIterator *iter);
-;;;
-;;; Add attributes to a PangoItem. The idea is that you have attributes that
-;;; don't affect itemization, such as font features, so you filter them out
-;;; using pango_attr_list_filter(), itemize your text, then reapply the
-;;; attributes to the resulting items using this function.
-;;;
-;;; The iter should be positioned before the range of the item, and will be
-;;; advanced past it. This function is meant to be called in a loop over the
-;;; items resulting from itemization, while passing the iter to each call.
-;;;
-;;; item :
-;;;     a PangoItem
-;;;
-;;; iter :
-;;;     a PangoAttrIterator
-;;;
-;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
+
+#+pango-1-44
+(defcfun ("pango_item_apply_attrs" pango-item-apply-attrs) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[item]{a @class{pango-item} instance}
+  @argument[iter]{a @class{pango-attr-iterator} instance}
+  @begin{short}
+    Add attributes to a @class{pango-item} instance.
+  @end{short}
+  The idea is that you have attributes that do not affect itemization, such as
+  font features, so you filter them out using the function
+  @fun{pango-attr-list-filter}, itemize your text, then reapply the attributes
+  to the resulting items using this function.
+
+  The @arg{iter} should be positioned before the range of the item, and will be
+  advanced past it. This function is meant to be called in a loop over the items
+  resulting from itemization, while passing the iter to each call.
+
+  Since 1.44
+  @see-class{pango-item}
+  @see-class{pango-attr-iterator}
+  @see-function{pango-attr-list-filter}"
+  (item (g-boxed-foreign pango-item))
+  (iter (g-boxed-foreign pango-attr-iterator)))
+
+#+pango-1-44
+(export 'pango-item-apply-attrs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_reorder_items ()
@@ -515,8 +537,8 @@
 ;;; GList *
 ;;; pango_reorder_items (GList *logical_items);
 ;;;
-;;; From a list of items in logical order and the associated directional levels,
-;;; produce a list in visual order. The original list is unmodified.
+;;; From a list of items in logical order and the associated directional
+;;; levels, produce a list in visual order. The original list is unmodified.
 ;;;
 ;;; logical_items :
 ;;;     a GList of PangoItem in logical order.
@@ -531,311 +553,325 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_break ()
-;;;
-;;; void
-;;; pango_break (const gchar *text,
-;;;              int length,
-;;;              PangoAnalysis *analysis,
-;;;              PangoLogAttr *attrs,
-;;;              int attrs_len);
-;;;
-;;; pango_break has been deprecated since version 1.44 and should not be used
-;;; in newly-written code.
-;;;
-;;; Use pango_default_break() and pango_tailor_break()
-;;;
-;;; Determines possible line, word, and character breaks for a string of
-;;; Unicode text with a single analysis. For most purposes you may want to use
-;;; pango_get_log_attrs().
-;;;
-;;; text :
-;;;     the text to process. Must be valid UTF-8
-;;;
-;;; length :
-;;;     length of text in bytes (may be -1 if text is nul-terminated)
-;;;
-;;; analysis :
-;;;     PangoAnalysis structure from pango_itemize()
-;;;
-;;; attrs :
-;;;     an array to store character information in.
-;;;
-;;; attrs_len :
-;;;     size of the array passed as attrs
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_break" pango-break) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[text]{a string with the text to process, must be valid UTF-8}
+  @argument[length]{an integer with the length of @arg{text} in bytes (may be
+    -1 if text is @code{nul}-terminated)}
+  @argument[analysis]{a @symbol{pango-analysis} structure from the function
+    @fun{pango-itemize}}
+  @argument[attrs]{an array to store character information in}
+  @argument[attrs-len]{an integer with the ize of the array passed as
+    @arg{attrs}}
+  @begin{short}
+    Determines possible line, word, and character breaks for a string of
+    Unicode text with a single analysis.
+  @end{short}
+  For most purposes you may want to use the function @fun{pango-log-attrs}.
+  @begin[Warning]{dictionary}
+    The function @sym{pango-break} has been deprecated since version 1.44 and
+    should not be used in newly-written code. Use the functions
+    @fun{pango-default-break} and @fun{pango-tailor-break}.
+  @end{dictionary}
+  @see-symbol{pango-analysis}
+  @see-symbol{pango-log-attr}
+  @see-function{pango-itemize}
+  @see-function{pango-log-attrs}
+  @see-function{pango-default-break}
+  @see-function{pango-tailor-break}"
+  (text :string)
+  (length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (attrs (:pointer (:struct pango-log-attr)))
+  (attrs-len :int))
+
+(export 'pango-break)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_get_log_attrs ()
-;;;
-;;; void
-;;; pango_get_log_attrs (const char *text,
-;;;                      int length,
-;;;                      int level,
-;;;                      PangoLanguage *language,
-;;;                      PangoLogAttr *log_attrs,
-;;;                      int attrs_len);
-;;;
-;;; Computes a PangoLogAttr for each character in text . The log_attrs array
-;;; must have one PangoLogAttr for each position in text ; if text contains N
-;;; characters, it has N+1 positions, including the last position at the end of
-;;; the text. text should be an entire paragraph; logical attributes can't be
-;;; computed without context (for example you need to see spaces on either side
-;;; of a word to know the word is a word).
-;;;
-;;; text :
-;;;     text to process. Must be valid UTF-8
-;;;
-;;; length :
-;;;     length in bytes of text
-;;;
-;;; level :
-;;;     embedding level, or -1 if unknown
-;;;
-;;; language :
-;;;     language tag
-;;;
-;;; log_attrs :
-;;;     array with one PangoLogAttr per character in text , plus one extra, to
-;;;     be filled in.
-;;;
-;;; attrs_len :
-;;;     length of log_attrs array
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_log_attrs" pango-log-attrs) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[text]{a string with the text to process, must be valid UTF-8}
+  @argument[length]{an integer with the length in bytes of @arg{text}}
+  @argument[level]{an integer with the embedding level, or -1 if unknown}
+  @argument[language]{a @class{pango-language} tag}
+  @argument[log-attrs]{array with one @symbol{pango-log-attr} instance per
+    character in @arg{text}, plus one extra, to be filled in}
+  @argument[attrs-len]{an integer with the length of @arg{log-attrs} array}
+  @begin{short}
+    Computes a @symbol{pango-log-attr} instance for each character in
+    @arg{text}.
+  @end{short}
+  The @arg{log-attrs} array must have one @symbol{pango-log-attr} instance for
+  each position in @arg{text}. If @arg{text} contains N characters, it has N+1
+  positions, including the last position at the end of the text. text should be
+  an entire paragraph; logical attributes cannot be computed without context
+  (for example you need to see spaces on either side of a word to know the word
+  is a word).
+  @see-class{pango-language}
+  @see-symbol{pango-log-attr}"
+  (text :string)
+  (length :int)
+  (level :int)
+  (language (g-boxed-foreign pango-language))
+  (log-attrs (:pointer (:struct pango-log-attr)))
+  (attrs-len :int))
+
+(export 'pango-log-attrs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_find_paragraph_boundary ()
-;;;
-;;; void
-;;; pango_find_paragraph_boundary (const gchar *text,
-;;;                                gint length,
-;;;                                gint *paragraph_delimiter_index,
-;;;                                gint *next_paragraph_start);
-;;;
-;;; Locates a paragraph boundary in text . A boundary is caused by delimiter
-;;; characters, such as a newline, carriage return, carriage return-newline
-;;; pair, or Unicode paragraph separator character. The index of the run of
-;;; delimiters is returned in paragraph_delimiter_index . The index of the
-;;; start of the paragraph (index after all delimiters) is stored in
-;;; next_paragraph_start .
-;;;
-;;; If no delimiters are found, both paragraph_delimiter_index and
-;;; next_paragraph_start are filled with the length of text (an index one off
-;;; the end).
-;;;
-;;; text :
-;;;     UTF-8 text
-;;;
-;;; length :
-;;;     length of text in bytes, or -1 if nul-terminated
-;;;
-;;; paragraph_delimiter_index :
-;;;     return location for index of delimiter.
-;;;
-;;; next_paragraph_start :
-;;;     return location for start of next paragraph.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_find_paragraph_boundary" pango-find-paragraph-boundary) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[text]{a string with the UTF-8 text}
+  @argument[length]{an integer with the length of @arg{text} in bytes, or -1
+    if @code{nul}-terminated}
+  @argument[paragraph-delimiter-index]{return location for index of delimiter}
+  @argument[next-paragraph-start]{return location for start of next paragraph}
+  @begin{short}
+    Locates a paragraph boundary in @arg{text}.
+  @end{short}
+  A boundary is caused by delimiter characters, such as a newline, carriage
+  return, carriage return-newline pair, or Unicode paragraph separator
+  character. The index of the run of delimiters is returned in
+  @arg{paragraph-delimiter-index}. The index of the start of the paragraph
+  (index after all delimiters) is stored in @arg{next-paragraph-start}.
+
+  If no delimiters are found, both @arg{paragraph-delimiter-index} and
+  @arg{next-paragraph-start} are filled with the length of @arg{text} (an index
+  one off the end)."
+  (text :string)
+  (length :int)
+  (paragraph-delimiter-index :int)
+  (next-paragraph-start :int))
+
+(export 'pango-find-paragraph-boundary)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_default_break ()
-;;;
-;;; void
-;;; pango_default_break (const gchar *text,
-;;;                      int length,
-;;;                      PangoAnalysis *analysis,
-;;;                      PangoLogAttr *attrs,
-;;;                      int attrs_len);
-;;;
-;;; This is the default break algorithm. It applies Unicode rules without
-;;; language-specific tailoring, therefore the analyis argument is unused and
-;;; can be NULL.
-;;;
-;;; See pango_tailor_break() for language-specific breaks.
-;;;
-;;; text :
-;;;     text to break. Must be valid UTF-8
-;;;
-;;; length :
-;;;     length of text in bytes (may be -1 if text is nul-terminated)
-;;;
-;;; analysis :
-;;;     a PangoAnalysis for the text .
-;;;
-;;; attrs :
-;;;     logical attributes to fill in
-;;;
-;;; attrs_len :
-;;;     size of the array passed as attrs
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_default_break" pango-default-break) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[text]{a string with the text to break, must be valid UTF-8}
+  @argument[length]{an integer with the length of @arg{text} in bytes (may be
+    -1 if text is nul-terminated)}
+  @argument[analysis]{a @symbol{pango-analysis} for @arg{text}}
+  @argument[attrs]{logical attributes to fill in}
+  @argument[attrs-len]{an integer with the size of the array passed as
+    @arg{attrs}}
+  @begin{short}
+    This is the default break algorithm.
+  @end{short}
+  It applies Unicode rules without language-specific tailoring, therefore the
+  analyis argument is unused and can be @code{NULL}.
+
+  See the function @fun{pango-tailor-break} for language-specific breaks.
+  @see-symbol{pango-analysis}
+  @see-symbol{pango-log-attr}
+  @see-funcrion{pango-tailor-break}"
+  (text :string)
+  (length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (attrs-len :int))
+
+(export 'pango-default-break)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_tailor_break ()
-;;;
-;;; void
-;;; pango_tailor_break (const char *text,
-;;;                     int length,
-;;;                     PangoAnalysis *analysis,
-;;;                     int offset,
-;;;                     PangoLogAttr *log_attrs,
-;;;                     int log_attrs_len);
-;;;
-;;; Apply language-specific tailoring to the breaks in log_attrs , which are
-;;; assumed to have been produced by pango_default_break().
-;;;
-;;; If offset is not -1, it is used to apply attributes from analysis that are
-;;; relevant to line breaking.
-;;;
-;;; text :
-;;;     text to process. Must be valid UTF-8
-;;;
-;;; length :
-;;;     length in bytes of text
-;;;
-;;; analysis :
-;;;     PangoAnalysis structure from pango_itemize() for text
-;;;
-;;; offset :
-;;;     Byte offset of text from the beginning of the paragraph, or -1 to
-;;;     ignore attributes from analysis
-;;;
-;;; log_attrs :
-;;;     array with one PangoLogAttr per character in text , plus one extra, to
-;;;     be filled in.
-;;;
-;;; log_attrs_len :
-;;;     length of log_attrs array
-;;;
-;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
+
+#+pango-1-44
+(defcfun ("pango_tailor_break" pango-tailor-break) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[text]{a string with the text to process, must be valid UTF-8}
+  @argument[length]{an integer with the length in bytes of @arg{text}}
+  @argument[analysis]{a @symbol{pango-analysis} instance from the function
+    @fun{pango-itemize} for @arg{text}}
+  @argument[offset]{an integer with the byte offset of @arg{text} from the
+    beginning of the paragraph, or -1 to ignore attributes from analysis}
+  @argument[log-attrs]{array with one @symbol{pango-log-attr} instance per
+    character in @arg{text}, plus one extra, to be filled in}
+  @argument[log-attrs-len]{an integer with the length of @arg{log-attrs} array}
+  @begin{short}
+    Apply language-specific tailoring to the breaks in @arg{log-attrs}, which
+    are assumed to have been produced by the function
+    @fun{pango-default-break}.
+  @end{short}
+
+  If @arg{offset} is not -1, it is used to apply attributes from @arg{analysis}
+  that are relevant to line breaking.
+
+  Since 1.44
+  @see-symbol{pango-analysis}
+  @see-symbol{pango-log-attr}
+  @see-function{pango-itemize}
+  @see-function{pango-default-break}"
+  (text :string)
+  (length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (offset :int)
+  (log-attrs (:pointer (:struct pango-log-attr)))
+  (log-attrs-len :int))
+
+#+pango-1-44
+(export 'pango-tailor-break)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_shape ()
-;;;
-;;; void
-;;; pango_shape (const char *text,
-;;;              int length,
-;;;              const PangoAnalysis *analysis,
-;;;              PangoGlyphString *glyphs);
-;;;
-;;; Given a segment of text and the corresponding PangoAnalysis structure
-;;; returned from pango_itemize(), convert the characters into glyphs. You may
-;;; also pass in only a substring of the item from pango_itemize().
-;;;
-;;; It is recommended that you use pango_shape_full() instead, since that API
-;;; allows for shaping interaction happening across text item boundaries.
-;;;
-;;; Note that the extra attributes in the analyis that is returned from
-;;; pango_itemize() have indices that are relative to the entire paragraph, so
-;;; you need to subtract the item offset from their indices before calling
-;;; pango_shape().
-;;;
-;;; text :
-;;;     the text to process
-;;;
-;;; length :
-;;;     the length (in bytes) of text
-;;;
-;;; analysis :
-;;;     PangoAnalysis structure from pango_itemize()
-;;;
-;;; glyphs :
-;;;     glyph string in which to store results
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_shape" pango-shape) :void
+  #+cl-cffi-gtk-documentation
+  "@version{2021-1-12}
+  @argument[text]{a string with the text to process}
+  @argument[lenght]{an integer with the length (in bytes) of @arg{text}}
+  @argument[analysis]{a @symbol{pango-analysis} instance from the function
+    @fun{pango-itemize}}
+  @argument[glyphs]{a @class{pango-glyph-string} instance in which to store
+    results}
+  @begin{short}
+    Given a segment of text and the corresponding @symbol{pango-analysis}
+    instance returned from the function @fun{pango-itemize}, convert the
+    characters into glyphs.
+  @end{short}
+  You may also pass in only a substring of the item from the function
+  @fun{pango-itemize}.
+
+  It is recommended that you use the function @fun{pango-shape-full} instead,
+  since that API allows for shaping interaction happening across text item
+  boundaries.
+
+  Note that the extra attributes in the analyis that is returned from the
+  function @fun{pango-itemize} have indices that are relative to the entire
+  paragraph, so you need to subtract the item offset from their indices before
+  calling the function @sym{pango-shape}.
+  @see-symbol{pango-analysis}
+  @see-class{pango-glyph-string}
+  @see-function{pango-itemize}
+  @see-function{pango-shape-full}"
+  (text :string)
+  (length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (glyphs (g-boxed-foreign pango-glyph-string)))
+
+(export 'pango-shape)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_shape_full ()
-;;;
-;;; void
-;;; pango_shape_full (const char *item_text,
-;;;                   int item_length,
-;;;                   const char *paragraph_text,
-;;;                   int paragraph_length,
-;;;                   const PangoAnalysis *analysis,
-;;;                   PangoGlyphString *glyphs);
-;;;
-;;; Given a segment of text and the corresponding PangoAnalysis structure
-;;; returned from pango_itemize(), convert the characters into glyphs. You may
-;;; also pass in only a substring of the item from pango_itemize().
-;;;
-;;; This is similar to pango_shape(), except it also can optionally take the
-;;; full paragraph text as input, which will then be used to perform certain
-;;; cross-item shaping interactions. If you have access to the broader text of
-;;; which item_text is part of, provide the broader text as paragraph_text . If
-;;; paragraph_text is NULL, item text is used instead.
-;;;
-;;; Note that the extra attributes in the analyis that is returned from
-;;; pango_itemize() have indices that are relative to the entire paragraph, so
-;;; you do not pass the full paragraph text as paragraph_text , you need to
-;;; subtract the item offset from their indices before calling
-;;; pango_shape_full().
-;;;
-;;; item_text :
-;;;     valid UTF-8 text to shape.
-;;;
-;;; item_length :
-;;;     the length (in bytes) of item_text . -1 means nul-terminated text.
-;;;
-;;; paragraph_text :
-;;;     text of the paragraph (see details). May be NULL.
-;;;
-;;; paragraph_length :
-;;;     the length (in bytes) of paragraph_text . -1 means nul-terminated text.
-;;;
-;;; analysis :
-;;;     PangoAnalysis structure from pango_itemize().
-;;;
-;;; glyphs :
-;;;     glyph string in which to store results.
-;;;
-;;; Since 1.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_shape_full" pango-shape-full) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[item-text]{a string with valid UTF-8 text to shape}
+  @argument[item-length]{an integer with the length (in bytes) of
+    @arg{item-text}, -1 means @code{nul}-terminated text}
+  @argument[paragraph-text]{a string with the text of the paragraph (see
+    details), may be @code{NULL}}
+  @argument[paragraph-length]{an integer with the length (in bytes) of
+    @arg{paragraph-text}, -1 means @code{nul}-terminated text}
+  @argument[analysis]{a @symbol{pango-analysis} instance from the function
+    @fun{pango-itemize}}
+  @argument[glyphs]{a @symbol{pango-glyph-string} instance in which to store
+    results}
+  @begin{short}
+    Given a segment of text and the corresponding @symbol{pango-analysis}
+    instance returned from the function @fun{pango-itemize}, convert the
+    characters into glyphs.
+  @end{short}
+  You may also pass in only a substring of the item from the function
+  @fun{pango-itemize}.
+
+  This is similar to the function @fun{pango-shape}, except it also can
+  optionally take the full paragraph text as input, which will then be used to
+  perform certain cross-item shaping interactions. If you have access to the
+  broader text of which @arg{item-text} is part of, provide the broader text as
+  @arg{paragraph-text}. If @arg{paragraph-text} is @code{NULL}, item text is
+  used instead.
+
+  Note that the extra attributes in the analyis that is returned from the
+  function @fun{pango-itemize} have indices that are relative to the entire
+  paragraph, so you do not pass the full paragraph text as @arg{paragraph_text},
+  you need to subtract the item offset from their indices before calling the
+  function @sym{pango-shape-full}.
+  @see-symbol{pango-analysis}
+  @see-class{pango-glyph-string}
+  @see-function{pango-itemize}
+  @see-function{pango-shape}"
+  (text :string)
+  (length :int)
+  (paragraph-text :string)
+  (paragraph-length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (glyphs (g-boxed-foreign pango-glyph-string)))
+
+(export 'pango-shape-full)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_shape_with_flags ()
-;;;
-;;; void
-;;; pango_shape_with_flags (const char *item_text,
-;;;                         int item_length,
-;;;                         const char *paragraph_text,
-;;;                         int paragraph_length,
-;;;                         const PangoAnalysis *analysis,
-;;;                         PangoGlyphString *glyphs,
-;;;                         PangoShapeFlags flags);
-;;;
-;;; Given a segment of text and the corresponding PangoAnalysis structure
-;;; returned from pango_itemize(), convert the characters into glyphs. You may
-;;; also pass in only a substring of the item from pango_itemize().
-;;;
-;;; This is similar to pango_shape_full(), except it also takes flags that can
-;;; influence the shaping process.
-;;;
-;;; Note that the extra attributes in the analyis that is returned from
-;;; pango_itemize() have indices that are relative to the entire paragraph, so
-;;; you do not pass the full paragraph text as paragraph_text , you need to
-;;; subtract the item offset from their indices before calling
-;;; pango_shape_with_flags().
-;;;
-;;; item_text :
-;;;     valid UTF-8 text to shape
-;;;
-;;; item_length :
-;;;     the length (in bytes) of item_text . -1 means nul-terminated text.
-;;;
-;;; paragraph_text :
-;;;     text of the paragraph (see details). May be NULL.
-;;;
-;;; paragraph_length :
-;;;     the length (in bytes) of paragraph_text . -1 means nul-terminated text.
-;;;
-;;; analysis :
-;;;     PangoAnalysis structure from pango_itemize()
-;;;
-;;; glyphs :
-;;;     glyph string in which to store results
-;;;
-;;; flags :
-;;;     flags influencing the shaping process
-;;;
-;;; Since 1.44
 ;;; ----------------------------------------------------------------------------
+
+#+pango-1-44
+(defcfun ("pango_shape_with_flags" pango-shape-with-flags) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-12}
+  @argument[item-text]{a string with the valid UTF-8 text to shape}
+  @argument[item-length]{an integer with the length (in bytes) of
+    @arg{item_text}, -1 means @code{nul}-terminated text}
+  @argument[paragraph-text]{a string with the text of the paragraph (see
+    details), may be @code{NULL}}
+  @argument[paragraph-length]{an integer with the length (in bytes) of
+    @arg{paragraph-text}, -1 means @code{nul}-terminated text}
+  @argument[analysis]{a @symbol{pango-analysis} instance from the function
+    @fun{pango-itemize}}
+  @argument[glyphs]{a @symbol{pango-glyph-string} instance in which to store
+    results}
+  @argument[flags]{a @symbol{pango-shape-flags} value influencing the shaping
+    process}
+  @begin{short}
+    Given a segment of text and the corresponding @symbol{pango-analysis}
+    instance returned from the function @fun{pango-itemize}, convert the
+    characters into glyphs.
+  @end{short}
+  You may also pass in only a substring of the item from the function
+  @fun{pango-itemize}.
+
+  This is similar to the function @fun{pango-shape-full}, except it also takes
+  flags that can influence the shaping process.
+
+  Note that the extra attributes in the analyis that is returned from the
+  function @fun{pango-itemize} have indices that are relative to the entire
+  paragraph, so you do not pass the full paragraph text as @arg{paragraph_text},
+  you need to subtract the item offset from their indices before calling the
+  function @sym{pango-shape-with-flags}.
+
+  Since 1.44
+  @see-symbol{pango-analysis}
+  @see-class{pango-glyph-string}
+  @see-symbol{pango-shape-flags}
+  @see-function{pango-itemize}
+  @see-function{pango-shape-full}"
+  (item-text :string)
+  (item-length :int)
+  (paragraph-text :string)
+  (paragraph-length :int)
+  (analysis (:pointer (:struct pango-analysis)))
+  (glyphs (g-boxed-foreign pango-glyph-string))
+  (flags pango-shape-flags))
+
+#+pango-1-44
+(export 'pango-shape-with-flags)
 
 ;;; --- End of file pango.rendering.lisp ---------------------------------------
