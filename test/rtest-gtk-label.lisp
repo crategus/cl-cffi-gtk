@@ -96,13 +96,15 @@
 (test gtk-label-properties
   (let ((label (make-instance 'gtk-label)))
     ;; angle
-    (is (= 0.0d0 (gtk-label-angle label)))
+    (is (=  0.0d0 (gtk-label-angle label)))
     (is (= 15.0d0 (setf (gtk-label-angle label) 15)))
     (is (= 15.0d0 (gtk-label-angle label)))
     ;; attributes
-    (is (eq 'pango-attr-list (type-of (gtk-label-attributes label))))
-    (is (eq 'pango-attr-list (type-of (setf (gtk-label-attributes label) (gtk-label-attributes label)))))
-    (is (eq 'pango-attr-list (type-of (gtk-label-attributes label))))
+    (is (typep (gtk-label-attributes label) 'pango-attr-list))
+    (is (typep (setf (gtk-label-attributes label)
+                     (pango-attr-list-new))
+                'pango-attr-list))
+    (is (typep (gtk-label-attributes label) 'pango-attr-list))
     ;; cursor-position
     (is (= 0 (gtk-label-cursor-position label)))
     (signals (error) (setf (gtk-label-cursor-position label) 10))

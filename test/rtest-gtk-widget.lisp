@@ -625,7 +625,33 @@ scale-factor
 ;;;     gtk_widget_modify_font
 ;;;     gtk_widget_modify_cursor
 ;;;     gtk_widget_create_pango_context
+
 ;;;     gtk_widget_get_pango_context
+
+(test gtk-widget-pango-context
+  (let* ((label (make-instance 'gtk-label :label "Text"))
+         (context (gtk-widget-pango-context label)))
+
+    (is (typep context 'pango-context))
+
+    (is (typep (pango-context-font-map context) 'pango-font-map))
+    (is (typep (pango-context-font-description context) 'pango-font-description))
+    (is (typep (pango-context-language context) 'pango-language))
+    (is (eq :ltr (pango-context-base-dir context)))
+    (is (eq :south (pango-context-base-gravity context)))
+    (is (eq :south (pango-context-gravity context)))
+
+    (is (eq :natural (pango-context-gravity-hint context)))
+    (is-false (pango-context-matrix context))
+    (is-true (pango-context-round-glyph-positions context))
+    (is (typep (pango-context-metrics context
+                                      (pango-context-font-description context)
+                                      (pango-context-language context))
+               'pango-font-metrics))
+;    (is-false (pango-context-list-families context))
+
+))
+
 ;;;     gtk_widget_create_pango_layout
 ;;;     gtk_widget_render_icon
 ;;;     gtk_widget_render_icon_pixbuf

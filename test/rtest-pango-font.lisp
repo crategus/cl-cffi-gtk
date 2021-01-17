@@ -33,6 +33,7 @@
 
 ;;;     pango_font_description_copy_static
 
+#+nil
 (test pango-font-description-copy-static
   (let ((desc (pango-font-description-from-string "Sans Bold 16")))
     (is (typep (pango-font-description-copy-static desc)
@@ -163,13 +164,21 @@
 ;;;     pango_font_description_merge
 ;;;     pango_font_description_merge_static
 
-(test pango-font-description-merge
+(test pango-font-description-merge.1
   (let ((desc1 (pango-font-description-from-string "16"))
         (desc2 (pango-font-description-from-string "Sans Bold")))
     (is (string= "Normal 16" (pango-font-description-to-string desc1)))
     (is (string= "Sans Bold" (pango-font-description-to-string desc2)))
     (is-false (pango-font-description-merge desc1 desc2 t))
     (is (string= "Sans Bold 16" (pango-font-description-to-string desc1)))))
+
+(test pango-font-description-merge.2
+  (let ((desc1 (pango-font-description-from-string "16"))
+        (desc2 (pango-font-description-from-string "Sans Bold")))
+    (is (string= "Normal 16" (pango-font-description-to-string desc1)))
+    (is (string= "Sans Bold" (pango-font-description-to-string desc2)))
+    (is-false (pango-font-description-merge desc1 nil t))
+    (is (string= "Normal 16" (pango-font-description-to-string desc1)))))
 
 ;;;     pango_font_description_better_match
 
@@ -241,23 +250,102 @@
 ;;;     pango_font_get_font_map
 ;;;     pango_font_get_features
 ;;;     pango_font_get_hb_font
-;;;
+
 ;;;     pango_font_family_get_name
+
+(test pango-font-family-name
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is (string= "Serif" (pango-font-family-name family)))))
+
 ;;;     pango_font_family_is_monospace
+
+(test pango-font-family-is-monospace.1
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is-false (pango-font-family-is-monospace family))))
+
+(test pango-font-family-is-monospace.2
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Monospace")))
+    (is-true (pango-font-family-is-monospace family))))
+
 ;;;     pango_font_family_is_variable
+
+(test pango-font-family-is-variable.1
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is-false (pango-font-family-is-variable family))))
+
+(test pango-font-family-is-variable.2
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Monospace")))
+    (is-false (pango-font-family-is-variable family))))
+
 ;;;     pango_font_family_list_faces
+
+(test pango-font-family-list-faces
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is (every (lambda (x) (typep x 'pango-font-face))
+               (pango-font-family-list-faces family)))
+    (is (equal '("Regular" "Bold" "Italic" "Bold Italic")
+               (mapcar #'pango-font-face-face-name
+                       (pango-font-family-list-faces family))))))
+
 ;;;     pango_font_family_get_face
-;;;
+
+(test pango-font-family-face
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is (typep (pango-font-family-face family "Regular") 'pango-font-face))
+    (is (typep (pango-font-family-face family nil) 'pango-font-face))))
+
 ;;;     pango_font_face_get_face_name
+
+(test pango-font-family-face-name.1
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family "Regular")))
+    (is (typep face 'pango-font-face))
+    (is (string= "Regular" (pango-font-face-face-name face)))))
+
+(test pango-font-family-face-name.2
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family nil)))
+    (is (typep face 'pango-font-face))
+    (is (string= "Regular" (pango-font-face-face-name face)))))
+
 ;;;     pango_font_face_list_sizes
+
+(test pango-font-face-list-sizes
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family "Regular")))
+    (is (typep face 'pango-font-face))
+    (is-false (pango-font-face-list-sizes face))))
+
 ;;;     pango_font_face_describe
+
+
 ;;;     pango_font_face_is_synthesized
 ;;;     pango_font_face_get_family
 ;;;
 ;;;     pango_font_map_create_context
 ;;;     pango_font_map_load_font
 ;;;     pango_font_map_load_fontset
+
 ;;;     pango_font_map_list_families
+
+(test pango-font-map-list-families
+  (let ((fontmap (pango-cairo-font-map-default)))
+    (is (every (lambda (x) (typep x 'pango-font-family))
+               (pango-font-map-list-families fontmap)))
+    (is (every #'stringp
+               (mapcar #'pango-font-family-name
+                       (pango-font-map-list-families fontmap))))))
+
 ;;;     pango_font_map_get_family
 ;;;     pango_font_map_get_serial
 ;;;     pango_font_map_changed
@@ -268,4 +356,4 @@
 ;;;     PangoFontsetForeachFunc
 ;;;     pango_fontset_foreach
 
-;;; 2020-1-7
+;;; 2020-1-14

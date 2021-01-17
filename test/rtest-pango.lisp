@@ -9,7 +9,9 @@
 (load "rtest-pango-font.lisp")
 
 ; pango.glyph.lisp - Storing information about glyphs             - Pango 1.48 %
-; pango.attributes.lisp - Attributes for annotating text          - Pango 1.48 %
+
+(load "rtest-pango-attributes.lisp")
+
 ; pango.markup.lisp - Markup language for text with attributes    - Pango 1.48 %
 
 (load "rtest-pango-layout.lisp")
@@ -51,4 +53,4 @@
 ; PangoEngineShape — Rendering-system dependent script engines
 ; Modules — Support for loadable modules
 
-;;; 2021-1-2
+;;; 2021-1-17

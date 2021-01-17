@@ -115,6 +115,16 @@
 ;;;     pango_context_load_font
 ;;;     pango_context_load_fontset
 ;;;     pango_context_get_metrics
+
 ;;;     pango_context_list_families
 
-;;; 2021-1-2
+(test pango-context-list-families
+  (let ((context (pango-context-new)))
+    (setf (pango-context-font-map context) (pango-cairo-font-map-default))
+    (is (every (lambda (x) (typep x 'pango-font-family))
+               (pango-context-list-families context)))
+    (is (every #'stringp
+               (mapcar #'pango-font-family-name
+                       (pango-context-list-families context))))))
+
+;;; 2021-1-18
