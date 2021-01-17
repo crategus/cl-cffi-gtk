@@ -6,14 +6,15 @@ Content from the Pango 1.48 Reference Manual
 
 Basic Pango Interfaces
 
-* pango.rendering.lisp - Functions to run the rendering pipeline  - Pango 1.48 %
-
-  pango.font.lisp - Structures representing abstract fonts        - Pango 1.48 &
+  pango.rendering.lisp - Functions to run the rendering pipeline  - Pango 1.48
+  pango.font.lisp - Structures representing abstract fonts        - Pango 1.48
 
 * pango.glyph.lisp - Storing information about glyphs             - Pango 1.48 %
 * pango.attributes.lisp - Attributes for annotating text          - Pango 1.48 %
 * pango.markup.lisp - Markup language for text with attributes    - Pango 1.48 %
-* pango.layout.lisp - High-level layout driver objects            - Pango 1.46 %
+
+  pango.layout.lisp - High-level layout driver objects            - Pango 1.48
+
 * pango.script.lisp - Scripts and Languages                       - Pango 1.48 %
 * pango.biderectional.lisp - Handling bidirectional text          - Pango 1.48 %
 
@@ -51,4 +52,4 @@ Deprecated APIs
  PangoEngineShape — Rendering-system dependent script engines
  Modules — Support for loadable modules
 
-;;; 2021-1-5
+;;; 2021-1-16

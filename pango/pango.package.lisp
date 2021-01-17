@@ -48,7 +48,7 @@
       converts it into glyphs. The functions described in this section
       accomplish various steps of this process.
 
-      @about-symbol{pango-item}
+      @about-struct{pango-item}
       @about-symbol{pango-analysis}
       @about-symbol{PANGO_ANALYSIS_FLAG_CENTERED_BASELINE}
       @about-symbol{PANGO_ANALYSIS_FLAG_IS_ELLIPSIS}
@@ -64,7 +64,7 @@
       @about-function{pango-item-apply-attrs}
       @about-function{pango-reorder-items}
       @about-function{pango-break}
-      @about-function{pango-get-log-attrs}
+      @about-function{pango-log-attrs}
       @about-function{pango-find-paragraph-boundary}
       @about-function{pango-default-break}
       @about-function{pango-tailor-break}
@@ -241,13 +241,13 @@
       Font and other attributes for annotating text.
 
       Attributed text is used in a number of places in Pango. It is used as the
-      input to the itemization process and also when creating a PangoLayout.
+      input to the itemization process and also when creating a Pango layout.
       The data types and functions in this section are used to represent and
       manipulate sets of attributes applied to a portion of text.
 
       @about-symbol{pango-attr-type}
       @about-symbol{pango-attr-class}
-      @about-symbol{pango-attribute}
+      @about-class{pango-attribute}
       @about-symbol{PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING}
       @about-symbol{PANGO_ATTR_INDEX_TO_TEXT_END}
       @about-symbol{pango-attr-string}
@@ -258,7 +258,7 @@
       @about-symbol{pango-attr-font-desc}
       @about-symbol{pango-attr-shape}
       @about-symbol{pango-attr-size}
-      @about-symbol{PangoAttrFontFeatures}
+      @about-symbol{pango-attr-font-features}
       @about-symbol{pango-underline}
       @about-symbol{pango-overline}
       @about-symbol{PANGO_SCALE_XX_SMALL}
@@ -268,12 +268,12 @@
       @about-symbol{PANGO_SCALE_LARGE}
       @about-symbol{PANGO_SCALE_X_LARGE}
       @about-symbol{PANGO_SCALE_XX_LARGE}
-      @about-symbol{PangoShowFlags}
-      @about-symbol{PangoColor}
+      @about-symbol{pango-show-flags}
+      @about-class{pango-color}
       @about-class{pango-attr-list}
-      @about-symbol{PangoAttrIterator}
+      @about-class{pango-attr-iterator}
       @about-function{pango-attr-type-register}
-      @about-function{pango-attr-type-get-name}
+      @about-function{pango-attr-type-name}
       @about-function{pango-attribute-init}
       @about-function{pango-attribute-copy}
       @about-function{pango-attribute-equal}
@@ -326,20 +326,133 @@
       @about-function{pango-attr-list-filter}
       @about-function{pango-attr-list-update}
       @about-function{PangoAttrFilterFunc}
-      @about-function{pango-attr-list-get-attributes}
+      @about-function{pango-attr-list-attributes}
       @about-function{pango-attr-list-equal}
-      @about-function{pango-attr-list-get-iterator}
+      @about-function{pango-attr-list-iterator}
       @about-function{pango-attr-iterator-copy}
       @about-function{pango-attr-iterator-next}
       @about-function{pango-attr-iterator-range}
       @about-function{pango-attr-iterator-get}
-      @about-function{pango-attr-iterator-get-font}
-      @about-function{pango-attr-iterator-get-attrs}
+      @about-function{pango-attr-iterator-font}
+      @about-function{pango-attr-iterator-attrs}
       @about-function{pango-attr-iterator-destroy}
     @end{subsection}
     @begin[Pango Markup]{subsection}
       Simple markup language for text with attributes.
 
+      Frequently, you want to display some text to the user with attributes
+      applied to part of the text (for example, you might want bold or
+      italicized words). With the base Pango interfaces, you could create a
+      @class{pango-attr-list} instance and apply it to the text; the problem is
+      that you'd need to apply attributes to some numeric range of characters,
+      for example \"characters 12-17.\" This is broken from an
+      internationalization standpoint; once the text is translated, the word
+      you wanted to italicize could be in a different position.
+
+      The solution is to include the text attributes in the string to be
+      translated. Pango provides this feature with a small markup language.
+      You can parse a marked-up string into the string text plus a
+      @class{pango-attr-list} instance using either of the functions
+      @fun{pango-parse-markup} or @fun{pango-markup-parser-new}.
+
+      A simple example of a marked-up string might be:
+      @begin{pre}
+<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!
+      @end{pre}
+      Pango uses GMarkup to parse this language, which means that XML features
+      such as numeric character entities such as &amp;#169; for © can be used
+      too.
+
+      The root tag of a marked-up document is @code{<markup>}, but the function
+      @fun{pango-parse-markup} allows you to omit this tag, so you will most
+      likely never need to use it. The most general markup tag is @code{<span>},
+      then there are some convenience tags.
+
+      @subheading{Span attributes}
+      @code{<span>} has the following attributes:
+      @begin[code]{table}
+        @entry[font_desc]{A font description string, such as \"Sans Italic 12\".
+          See the function @fun{pango-font-description-from-string} for a
+          description of the format of the string representation. Note that any
+          other span attributes will override this description. So if you have
+          \"Sans Italic\" and also a style=\"normal\" attribute, you will get
+          Sans normal, not italic.}
+        @entry[font_family]{A font family name.}
+        @entry[font_size, size]{Font size in 1024ths of a point, or one of the
+          absolute sizes xx-small, x-small, small, medium, large, x-large,
+          xx-large, or one of the relative sizes smaller or larger. If you want
+          to specify a absolute size, it's usually easier to take advantage of
+          the ability to specify a partial font description using font; you can
+          use @code{font='12.5'} rather than @code{size='12800'}.}
+        @entry[font_style]{One of normal, oblique, italic.}
+        @entry[font_weight]{One of ultralight, light, normal, bold, ultrabold,
+          heavy, or a numeric weight.}
+        @entry[font_variant]{One of normal or smallcaps.}
+        @entry[font_stretch, stretch]{One of ultracondensed, extracondensed,
+          condensed, semicondensed, normal, semiexpanded, expanded,
+          extraexpanded, ultraexpanded.}
+        @entry[font_features]{A comma-separated list of OpenType font feature
+          settings, in the same syntax as accepted by CSS. E.g:
+          @code{font_features='dlig=1, -kern, afrc on'}.}
+        @entry[foreground, fgcolor]{An RGB color specification such as #00FF00
+          or a color name such as red. Since 1.38, an RGBA color specification
+          such as #00FF007F will be interpreted as specifying both a foreground
+          color and foreground alpha.}
+        @entry[background, bgcolor]{An RGB color specification such as #00FF00
+          or a color name such as red. Since 1.38, an RGBA color specification
+          such as #00FF007F will be interpreted as specifying both a background
+          color and background alpha.}
+        @entry[alpha, fgalpha]{An alpha value for the foreground color, either
+          a plain integer between 1 and 65536 or a percentage value like 50%.}
+        @entry[background_alpha, bgalpha]{An alpha value for the background
+          color, either a plain integer between 1 and 65536 or a percentage
+          value like 50%.}
+        @entry[underline]{One of none, single, double, low, error, single-line,
+          double-line or error-line.}
+        @entry[underline_color]{The color of underlines; an RGB color
+          specification such as #00FF00 or a color name such as red.}
+        @entry[overline]{One of none or single.}
+        @entry[overline_color]{The color of overlines; an RGB color
+          specification such as #00FF00 or a color name such as red.}
+        @entry[rise]{Vertical displacement, in Pango units. Can be negative for
+          subscript, positive for superscript.}
+        @entry[strikethrough]{true or false whether to strike through the text.}
+        @entry[strikethrough_color]{The color of strikethrough lines; an RGB
+          color specification such as #00FF00 or a color name such as red.}
+        @entry[fallback]{true or false whether to enable fallback. If disabled,
+          then characters will only be used from the closest matching font on
+          the system. No fallback will be done to other fonts on the system that
+          might contain the characters in the text. Fallback is enabled by
+          default. Most applications should not disable fallback.}
+        @entry[allow_breaks]{true or false whether to allow line breaks or not.
+          If not allowed, the range will be kept in a single run as far as
+          possible. Breaks are allowed by default.}
+        @entry[insert_hyphens]{true or false` whether to insert hyphens when
+          breaking lines in the middle of a word. Hyphens are inserted by
+          default.}
+        @entry[show]{A value determining how invisible characters are treated.
+          Possible values are spaces, line-breaks, ignorables or combinations,
+          such as spaces|line-breaks.}
+        @entry[lang]{A language code, indicating the text language.}
+        @entry[letter_spacing]{Inter-letter spacing in 1024ths of a point.}
+        @entry[gravity]{One of south, east, north, west, auto.}
+        @entry[gravity_hint]{One of natural, strong, line.}
+      @end{table}
+      @subheading{Convenience tags}
+      The following convenience tags are provided:
+      @begin[code]{table}
+        @entry[<b>]{Bold.}
+        @entry[<big>]{Makes font relatively larger, equivalent to
+          @code{<span size=\"larger\">}.}
+        @entry[<i>]{{Italic.}
+        @entry[<s>]{Strikethrough.}
+        @entry[<sub>]{Subscript.}
+        @entry[<sup>]{Superscript.}
+        @entry[<small>]{Makes font relatively smaller, equivalent to
+          @code{<span size=\"smaller\">}.}
+        @entry[<tt>]{Monospace.}
+        @entry[<u>]{Underline.}
+      @end{table}
       @about-function{pango-parse-markup}
       @about-function{pango-markup-parser-new}
       @about-function{pango-markup-parser-finish}
@@ -413,7 +526,7 @@
       @about-function{pango-layout-iter-next-char}
       @about-function{pango-layout-iter-next-cluster}
       @about-function{pango-layout-iter-next-line}
-      @about-function{pango-layout-iter-at_last-line}
+      @about-function{pango-layout-iter-at-last-line}
       @about-function{pango-layout-iter-index}
       @about-function{pango-layout-iter-baseline}
       @about-function{pango-layout-iter-run}
