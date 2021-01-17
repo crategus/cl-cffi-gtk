@@ -532,11 +532,11 @@
 (setf (gethash 'gtk-label-attributes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-attributes 'function)
- "@version{2020-4-14}
+ "@version{2021-1-17}
   @syntax[]{(gtk-label-attributes object) => attrs}
   @syntax[]{(setf (gtk-label-attributes object) attrs)}
   @argument[object]{a @class{gtk-label} widget}
-  @argument[attrs]{a @class{pango-attr-list} structure}
+  @argument[attrs]{a @class{pango-attr-list} instance}
   @begin{short}
     Accessor of the @slot[gtk-label]{attributes} slot of the @class{gtk-label}
     class.
@@ -544,25 +544,27 @@
 
   The slot access function @sym{gtk-label-attributes} gets the attribute list
   that was set on the label, if any. The slot access function
-  @sym{(setf gtk-label-attributes)} sets a @class{pango-attr-list}; the
-  attributes in the list are applied to the label text.
+  @sym{(setf gtk-label-attributes)} sets a attribute list. The attributes in
+  the list are applied to the label text.
 
   This function does not reflect attributes that come from the labels markup,
   see the function @fun{gtk-label-set-markup}. If you want to get the
   effective attributes for the label, use
   @begin{pre}
-    @code{(pango-layout-attributes (gtk-label-layout label))}
+(pango-layout-attributes (gtk-label-layout label))
   @end{pre}
   @begin[Note]{dictionary}
     The attributes set with this function will be applied and merged with any
     other attributes previously effected by way of the
     @slot[gtk-label]{use-underline} or @slot[gtk-label]{use-markup} properties.
     While it is not recommended to mix markup strings with manually set
-    attributes, if you must; know that the attributes will be applied to the
+    attributes, if you must, know that the attributes will be applied to the
     label after the markup string is parsed.
   @end{dictionary}
   @see-class{gtk-label}
-  @see-function{gtk-label-set-markup}")
+  @see-class{pango-attr-list}
+  @see-function{gtk-label-set-markup}
+  @see-function{gtk-label-layout}")
 
 ;;; --- gtk-label-cursor-position ----------------------------------------------
 
