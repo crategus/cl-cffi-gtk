@@ -347,7 +347,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-layout 'type)
- "@version{2021-1-5}
+ "@version{2021-1-16}
   @begin{short}
     The @sym{pango-layout} class represents an entire paragraph of text.
   @end{short}
@@ -361,6 +361,8 @@
   @sym{pango-layout} object. It is possible, as well, to ignore the 2-D setup,
   and simply treat the results of a @sym{pango-layout} object as a list of
   lines.
+  @image[layout]{Figure. Adjustable parameters (on the left) and font metrics
+    (on the right) for a PangoLayout}
 
   The @sym{pango-layout} class is opaque, and has no user-visible fields.
   @see-class{pango-context}")
@@ -413,43 +415,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_copy ()
-;;;
-;;; PangoLayout * pango_layout_copy (PangoLayout *src);
-;;;
-;;; Does a deep copy-by-value of the src layout. The attribute list, tab array,
-;;; and text from the original layout are all copied by value.
-;;;
-;;; src :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the newly allocated PangoLayout, with a reference count of one, which
-;;;     should be freed with g_object_unref()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_copy" pango-layout-copy) (g-object pango-layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[src]{a @class{pango-layout} object}
+  @begin{return}
+    The newly allocated @class{pango-layout} object.
+  @end{return}
+  @begin{short}
+    Does a deep copy-by-value of the src layout.
+  @end{short}
+  The attribute list, tab array, and text from the original layout are all
+  copied by value.
+  @see-class{pango-layout}"
   (src (g-object pango-layout)))
 
 (export 'pango-layout-copy)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_context ()
-;;;
-;;; PangoContext * pango_layout_get_context (PangoLayout *layout);
-;;;
-;;; Retrieves the PangoContext used for this layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the PangoContext for the layout. This does not have an additional
-;;;     refcount added, so if you want to keep a copy of this around, you must
-;;;     reference it yourself
+;;; pango_layout_get_context () -> pango-layout-context
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_context" pango-layout-context)
     (g-object pango-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    The @class{pango-context} object for the layout.
+  @end{return}
+  @begin{short}
+    Retrieves the Pango context used for this layout.
+  @end{short}
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-context)
@@ -474,32 +474,31 @@
 (export 'pango-layout-context-changed)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_serial ()
-;;;
-;;; guint
-;;; pango_layout_get_serial (PangoLayout *layout);
-;;;
-;;; Returns the current serial number of layout . The serial number is
-;;; initialized to an small number larger than zero when a new layout is created
-;;; and is increased whenever the layout is changed using any of the setter
-;;; functions, or the PangoContext it uses has changed. The serial may wrap, but
-;;; will never have the value 0. Since it can wrap, never compare it with
-;;; "less than", always use "not equals".
-;;;
-;;; This can be used to automatically detect changes to a PangoLayout, and is
-;;; useful for example to decide whether a layout needs redrawing. To force the
-;;; serial to be increased, use pango_layout_context_changed().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     The current serial number of layout .
-;;;
-;;; Since 1.32
+;;; pango_layout_get_serial () -> pango-layout-serial
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_serial" pango-layout-serial) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    The current serial number of @arg{layout}.
+  @end{return}
+  @begin{short}
+    Returns the current serial number of @arg{layout}.
+  @end{short}
+  The serial number is initialized to an small number larger than zero when a
+  new layout is created and is increased whenever the layout is changed using
+  any of the setter functions, or the @class{pango-context} object it uses has
+  changed. The serial may wrap, but will never have the value 0. Since it can
+  wrap, never compare it with \"less than\", always use \"not equals\".
+
+  This can be used to automatically detect changes to a Pango layout, and is
+  useful for example to decide whether a layout needs redrawing. To force the
+  serial to be increased, use the function @fun{pango-layout-context-changed}.
+  @see-class{pango-layout}
+  @see-class{pango-context}
+  @see-function{pango-layout-context-changed}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-serial)
@@ -544,112 +543,97 @@
 (export 'pango-layout-text)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_character_count ()
-;;;
-;;; gint pango_layout_get_character_count (PangoLayout *layout);
-;;;
-;;; Returns the number of Unicode characters in the the text of layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the number of Unicode characters in the text of layout
-;;;
-;;; Since 1.30
+;;; pango_layout_get_character_count () -> pango-layout-character-count
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_character_count" pango-layout-character-count) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    An integer with the number of Unicode characters in the text of
+    @arg{layout}.
+  @end{return}
+  @begin{short}
+    Returns the number of Unicode characters in the the text of @arg{layout}.
+  @end{short}
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-character-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_markup ()
-;;;
-;;; void pango_layout_set_markup (PangoLayout *layout,
-;;;                               const char *markup,
-;;;                               int length);
-;;;
-;;; Same as pango_layout_set_markup_with_accel(), but the markup text isn't
-;;; scanned for accelerators.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; markup :
-;;;     marked-up text
-;;;
-;;; length :
-;;;     length of marked-up text in bytes, or -1 if markup is null-terminated
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_set_markup" pango-layout-set-markup) :void
+(defcfun ("pango_layout_set_markup" %pango-layout-set-markup) :void
   (layout (g-object pango-layout))
   (markup :string)
   (length :int))
+
+(defun pango-layout-set-markup (layout markup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[markup]{a string with the marked-up text}
+  @begin{short}
+    Same as the function @fun{pango-layout-set-markup-with-accel}, but the
+    markup text is not scanned for accelerators.
+  @end{short}
+  @see-class{pango-layout}
+  @see-function{pango-layout-set-markup-with-accel}"
+  (%pango-layout-set-markup layout markup (length markup)))
 
 (export 'pango-layout-set-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_markup_with_accel ()
-;;;
-;;; void pango_layout_set_markup_with_accel (PangoLayout *layout,
-;;;                                          const char *markup,
-;;;                                          int length,
-;;;                                          gunichar accel_marker,
-;;;                                          gunichar *accel_char);
-;;;
-;;; Sets the layout text and attribute list from marked-up text (see markup
-;;; format). Replaces the current text and attribute list.
-;;;
-;;; If accel_marker is nonzero, the given character will mark the character
-;;; following it as an accelerator. For example, accel_marker might be an
-;;; ampersand or underscore. All characters marked as an accelerator will
-;;; receive a PANGO_UNDERLINE_LOW attribute, and the first character so marked
-;;; will be returned in accel_char. Two accel_marker characters following each
-;;; other produce a single literal accel_marker character.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; markup :
-;;;     marked-up text (see markup format)
-;;;
-;;; length :
-;;;     length of marked-up text in bytes, or -1 if markup is null-terminated
-;;;
-;;; accel_marker :
-;;;     marker for accelerators in the text
-;;;
-;;; accel_char :
-;;;     return location for first located accelerator, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_set_markup_with_accel"
-           pango-layout-set-markup-with-accel) :void
+          %pango-layout-set-markup-with-accel) :void
   (layout (g-object pango-layout))
   (markup :string)
   (length :int)
   (accel-marker :uint32) ; for gunichar (see Glib Unicode Manipulation)
-  (accel-char :uint32))
+  (accel-char (:pointer :uint32)))
+
+(defun pango-layout-set-markup-with-accel (layout markup accel-marker)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-13}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[markup]{a string with the marked-up text (see markup format)}
+  @argument[accel-marker]{an unsigned integer with the marker for accelerators
+    in the text}
+  @begin{return}
+    Returns the first located accelerator.
+  @end{return}
+  @begin{short}
+    Sets the layout text and attribute list from marked-up text (see markup
+    format).
+  @end{short}
+  Replaces the current text and attribute list.
+
+  If @arg{accel-marker} is nonzero, the given character will mark the character
+  following it as an accelerator. For example, @arg{accel-marker} might be an
+  ampersand or underscore. All characters marked as an accelerator will receive
+  a @code{PANGO_UNDERLINE_LOW} attribute, and the first character so marked
+  will be returned. Two @arg{accel-marker} characters following each other
+  produce a single literal @arg{accel-marker} character.
+  @see-class{pango-layout}"
+  (with-foreign-object (accel-char :uint32)
+    (%pango-layout-set-markup-with-accel layout
+                                         markup
+                                         (length markup)
+                                         accel-marker
+                                         accel-char)
+      (values (mem-ref accel-char :uint32))))
 
 (export 'pango-layout-set-markup-with-accel)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_attributes ()
-;;;
-;;; void pango_layout_set_attributes (PangoLayout *layout,
-;;;                                   PangoAttrList *attrs);
-;;;
-;;; Sets the text attributes for a layout object. References attrs, so the
-;;; caller can unref its reference.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; attrs :
-;;;     a PangoAttrList, can be NULL
+;;; pango_layout_get_attributes ()
+;;; pango_layout_set_attributes () -> pango-layout-attributes
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-attributes) (attrs layout)
@@ -659,29 +643,30 @@
                    :void)
   attrs)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_attributes ()
-;;;
-;;; PangoAttrList * pango_layout_get_attributes (PangoLayout *layout);
-;;;
-;;; Gets the attribute list for the layout, if any.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     a PangoAttrList
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_attributes" pango-layout-attributes)
     (g-boxed-foreign pango-attr-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @syntax[]{(pango-layout-attributes layout) => attrs}
+  @syntax[]{(setf (pango-layout-attributes layout) attrs)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[attrs]{a @class{pango-attr-list} instance, can be @code{NULL}}
+  @begin{short}
+    Accessor of the attribute list for the layout.
+  @end{short}
+
+  The function @sym{pango-layout-attributes} gets the attribute list for the
+  layout, if any. The function @sym{(setf pango-layout-attributes)} sets the
+  text attributes for a layout object. References @arg{attrs}, so the caller
+  can unref its reference.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_font_description ()
-;;; pango_layout_get_font_description ()
+;;; pango_layout_get_font_description () -> pango-layout-font-description
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-font-description) (desc layout)
@@ -717,19 +702,8 @@
 (export 'pango-layout-font-description)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_width ()
-;;;
-;;; void pango_layout_set_width (PangoLayout *layout, int width);
-;;;
-;;; Sets the width to which the lines of the PangoLayout should wrap or
-;;; ellipsized. The default value is -1: no width set.
-;;;
-;;; layout :
-;;;     a PangoLayout.
-;;;
-;;; width :
-;;;     the desired width in Pango units, or -1 to indicate that no wrapping or
-;;;     ellipsization should be performed
+;;; pango_layout_get_width ()
+;;; pango_layout_set_width () -> pango-layout-width
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-width) (width layout)
@@ -739,60 +713,30 @@
                    :void)
   width)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_width ()
-;;;
-;;; int pango_layout_get_width (PangoLayout *layout);
-;;;
-;;; Gets the width to which the lines of the PangoLayout should wrap.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the width in Pango units, or -1 if no width set
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_width" pango-layout-width) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @syntax[]{(pango-layout-width layout) => width}
+  @syntax[]{(setf (pango-layout-width layout) width)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[width]{an integer with the desired width in Pango units, or -1 to
+    indicate that no wrapping or ellipsization should be performed}
+  @begin{short}
+    Accessor of the width in Pango units of a Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-width} gets the width to which the lines of
+  the Pango layout should wrap. The function @sym{(setf pango-layout-width)}
+  sets the width to which the lines of the Pango layout should wrap or
+  ellipsized. The default value is -1: no width set.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-width)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_height ()
-;;;
-;;; void pango_layout_set_height (PangoLayout *layout, int height);
-;;;
-;;; Sets the height to which the PangoLayout should be ellipsized at. There are
-;;; two different behaviors, based on whether height is positive or negative.
-;;;
-;;; If height is positive, it will be the maximum height of the layout. Only
-;;; lines would be shown that would fit, and if there is any text omitted, an
-;;; ellipsis added. At least one line is included in each paragraph regardless
-;;; of how small the height value is. A value of zero will render exactly one
-;;; line for the entire layout.
-;;;
-;;; If height is negative, it will be the (negative of) maximum number of lines
-;;; per paragraph. That is, the total number of lines shown may well be more
-;;; than this value if the layout contains multiple paragraphs of text. The
-;;; default value of -1 means that first line of each paragraph is ellipsized.
-;;; This behvaior may be changed in the future to act per layout instead of per
-;;; paragraph. File a bug against pango at http://bugzilla.gnome.org/ if your
-;;; code relies on this behavior.
-;;;
-;;; Height setting only has effect if a positive width is set on layout and
-;;; ellipsization mode of layout is not PANGO_ELLIPSIZE_NONE. The behavior is
-;;; undefined if a height other than -1 is set and ellipsization mode is set to
-;;; PANGO_ELLIPSIZE_NONE, and may change in the future.
-;;;
-;;; layout :
-;;;     a PangoLayout.
-;;;
-;;; height :
-;;;     the desired height of the layout in Pango units if positive, or desired
-;;;     number of lines if negative.
-;;;
-;;; Since 1.20
+;;; pango_layout_get_height ()
+;;; pango_layout_set_height () -> pango-layout-height
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-height) (height layout)
@@ -802,42 +746,49 @@
                    :void)
   height)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_height ()
-;;;
-;;; int pango_layout_get_height (PangoLayout *layout);
-;;;
-;;; Gets the height of layout used for ellipsization.
-;;; See pango_layout_set_height() for details.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the height, in Pango units if positive, or number of lines if negative.
-;;;
-;;; Since 1.20
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_height" pango-layout-height) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @syntax[]{(pango-layout-height layout) => height}
+  @syntax[]{(setf (pango-layout-height layout) height)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[height]{an integer with the desired height of the layout in Pango
+    units if positive, or desired number of lines if negative}
+  @begin{short}
+    Accessor of the height in Pango units of the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-height} gets the height of @arg{layout} used
+  for ellipsization. The function @sym{(setf pango-layout-height)} sets the
+  height to which the Pango layout should be ellipsized at. There are two
+  different behaviors, based on whether @arg{height} is positive or negative.
+
+  If @arg{height} is positive, it will be the maximum height of the layout.
+  Only lines would be shown that would fit, and if there is any text omitted,
+  an ellipsis added. At least one line is included in each paragraph regardless
+  of how small the height value is. A value of zero will render exactly one
+  line for the entire layout.
+
+  If @arg{height} is negative, it will be the (negative of) maximum number of
+  lines per paragraph. That is, the total number of lines shown may well be
+  more than this value if the layout contains multiple paragraphs of text. The
+  default value of -1 means that first line of each paragraph is ellipsized.
+  This behvaior may be changed in the future to act per layout instead of per
+  paragraph. File a bug against pango at http://bugzilla.gnome.org/ if your
+  code relies on this behavior.
+
+  Height setting only has effect if a positive width is set on layout and
+  ellipsization mode of layout is not @code{PANGO_ELLIPSIZE_NONE}. The behavior
+  is undefined if a height other than -1 is set and ellipsization mode is set
+  to @code{PANGO_ELLIPSIZE_NONE}, and may change in the future.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-height)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_wrap ()
-;;;
-;;; void pango_layout_set_wrap (PangoLayout *layout, PangoWrapMode wrap);
-;;;
-;;; Sets the wrap mode; the wrap mode only has effect if a width is set on the
-;;; layout with pango_layout_set_width(). To turn off wrapping, set the width
-;;; to -1.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; wrap :
-;;;     the wrap mode
+;;; pango_layout_get_wrap ()
+;;; pango_layout_set_wrap () -> pango-layout-wrap
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-wrap) (wrap layout)
@@ -847,76 +798,57 @@
                    :void)
   wrap)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_wrap ()
-;;;
-;;; PangoWrapMode pango_layout_get_wrap (PangoLayout *layout);
-;;;
-;;; Gets the wrap mode for the layout.
-;;;
-;;; Use pango_layout_is_wrapped() to query whether any paragraphs were actually
-;;; wrapped.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     active wrap mode
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_wrap" pango-layout-wrap) pango-wrap-mode
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @syntax[]{(pango-layout-wrap layout) => wrap}
+  @syntax[]{(setf (pango-layout-wrap layout) wrap)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[wrap]{a value of the @symbol{pango-wrap-mode} enumeration}
+  @begin{short}
+    Accessor of the wrap mode of the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-wrap} gets the wrap mode for the layout. The
+  function @sym{(setf pango-layout-wrap)} sets the wrap mode. The wrap mode
+  only has effect if a width is set on the layout with the function
+  @fun{pango-layout-width}. To turn off wrapping, set the width to -1.
+
+  Use the function @fun{pango-layout-is-wrapped} to query whether any
+  paragraphs were actually wrapped.
+  @see-class{pango-layout}
+  @see-function{pango-layout-width}
+  @see-function{pango-layout-is-wrapped}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_is_wrapped ()
-;;;
-;;; gboolean pango_layout_is_wrapped (PangoLayout *layout);
-;;;
-;;; Queries whether the layout had to wrap any paragraphs.
-;;;
-;;; This returns TRUE if a positive width is set on layout, ellipsization mode
-;;; of layout is set to PANGO_ELLIPSIZE_NONE, and there are paragraphs exceeding
-;;; the layout width that have to be wrapped.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     TRUE if any paragraphs had to be wrapped, FALSE otherwise.
-;;;
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_is_wrapped" pango-layout-is-wrapped) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @em{True} if any paragraphs had to be wrapped, @em{false} otherwise.
+  @end{return}
+  @begin{short}
+    Queries whether the layout had to wrap any paragraphs.
+  @end{short}
+
+  This returns @em{true} if a positive width is set on the layout, ellipsization
+  mode of the layout is set to @code{PANGO_ELLIPSIZE_NONE}, and there are
+  paragraphs exceeding the layout width that have to be wrapped.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-is-wrapped)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_ellipsize ()
-;;;
-;;; void pango_layout_set_ellipsize (PangoLayout *layout,
-;;;                                  PangoEllipsizeMode ellipsize);
-;;;
-;;; Sets the type of ellipsization being performed for layout. Depending on the
-;;; ellipsization mode ellipsize text is removed from the start, middle, or end
-;;; of text so they fit within the width and height of layout set with
-;;; pango_layout_set_width() and pango_layout_set_height().
-;;;
-;;; If the layout contains characters such as newlines that force it to be
-;;; layed out in multiple paragraphs, then whether each paragraph is ellipsized
-;;; separately or the entire layout is ellipsized as a whole depends on the set
-;;; height of the layout. See pango_layout_set_height() for details.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; ellipsize :
-;;;     the new ellipsization mode for layout
-;;;
-;;; Since 1.6
+;;; pango_layout_get_ellipsize ()
+;;; pango_layout_set_ellipsize () -> pango-layout-ellipsize
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-ellipsize) (ellipsize layout)
@@ -926,74 +858,66 @@
                    :void)
   ellipsize)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_ellipsize ()
-;;;
-;;; PangoEllipsizeMode pango_layout_get_ellipsize (PangoLayout *layout);
-;;;
-;;; Gets the type of ellipsization being performed for layout.
-;;; See pango_layout_set_ellipsize()
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the current ellipsization mode for layout. Use
-;;;     pango_layout_is_ellipsized() to query whether any paragraphs were
-;;;     actually ellipsized.
-;;;
-;;; Since 1.6
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_ellipsize" pango-layout-ellipsize)
     pango-ellipsize-mode
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-14}
+  @syntax[]{(pango-layout-ellipsize layout) => ellipsize}
+  @syntax[]{(setf (pango-layout-ellipsize layout) ellipsize)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[ellipsize]{a value of the @symbol{pango-ellipsize-mode} enumeration}
+  @begin{short}
+    Accessor of the ellipsization mode for the layout.
+  @end{short}
+
+  The function @sym{pango-layout-ellispze} gets the type of ellipsization being
+  performed for the layout. The function @sym{(setf pango-layout-ellipsize}
+  sets the type of ellipsization being performed for the layout. Depending on
+  the ellipsization mode ellipsize text is removed from the start, middle, or
+  end of text so they fit within the width and height of layout set with the
+  functions @fun{pango-layout-width} and @fun{pango-layout-height}.
+
+  If the layout contains characters such as newlines that force it to be layed
+  out in multiple paragraphs, then whether each paragraph is ellipsized
+  separately or the entire layout is ellipsized as a whole depends on the set
+  height of the layout. See the function @fun{pango-layout-height} for details.
+
+  Use the function @fun{pango-layout-is-ellipsized} to query whether any
+  paragraphs were actually ellipsized.
+  @see-class{pango-layout}
+  @see-function{pango-layout-width}
+  @see-function{pango-layout-height}
+  @see-function{pango-layout-is-ellipsized}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-ellipsize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_is_ellipsized ()
-;;;
-;;; gboolean pango_layout_is_ellipsized (PangoLayout *layout);
-;;;
-;;; Queries whether the layout had to ellipsize any paragraphs.
-;;;
-;;; This returns TRUE if the ellipsization mode for layout is not
-;;; PANGO_ELLIPSIZE_NONE, a positive width is set on layout, and there are
-;;; paragraphs exceeding that width that have to be ellipsized.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     TRUE if any paragraphs had to be ellipsized, FALSE otherwise.
-;;;
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_is_ellipsized" pango-layout-is-ellipsized) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-13}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @em{True} if any paragraphs had to be ellipsized, @em{false} otherwise.
+  @end{return}
+  @begin{short}
+    Queries whether the layout had to ellipsize any paragraphs.
+  @end{short}
+
+  This returns @em{true} if the ellipsization mode for the layout is not
+  @code{PANGO_ELLIPSIZE_NONE}, a positive width is set on the layout, and there
+  are paragraphs exceeding that width that have to be ellipsized.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-is-ellipsized)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_indent ()
-;;;
-;;; void pango_layout_set_indent (PangoLayout *layout, int indent);
-;;;
-;;; Sets the width in Pango units to indent each paragraph. A negative value of
-;;; indent will produce a hanging indentation. That is, the first line will have
-;;; the full width, and subsequent lines will be indented by the absolute value
-;;; of indent.
-;;;
-;;; The indent setting is ignored if layout alignment is set to
-;;; PANGO_ALIGN_CENTER.
-;;;
-;;; layout :
-;;;     a PangoLayout.
-;;;
-;;; indent :
-;;;     the amount by which to indent
+;;; pango_layout_get_indent ()
+;;; pango_layout_set_indent () -> pango-layout-indent
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-indent) (indent layout)
@@ -1003,46 +927,34 @@
                    :void)
   indent)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_indent ()
-;;;
-;;; int pango_layout_get_indent (PangoLayout *layout);
-;;;
-;;; Gets the paragraph indent width in Pango units. A negative value indicates
-;;; a hanging indentation.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the indent in Pango units
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_ident" pango-layout-indent) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-indent layout) => indent}
+  @syntax[]{(setf (pango-layout-indent layout) indent)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[indent]{an integer with the amount by which to indent}
+  @begin{short}
+    Accessor of the indent in Pango units of the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-indent} gets the paragraph indent width in
+  Pango units. A negative value indicates a hanging indentation. The function
+  @sym{(setf pango-layout-indent)} sets the width in Pango units to indent each
+  paragraph. A negative value of indent will produce a hanging indentation.
+  That is, the first line will have the full width, and subsequent lines will
+  be indented by the absolute value of indent.
+
+  The indent setting is ignored if the layout alignment is set to
+  @code{PANGO_ALIGN_CENTER}.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-indent)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_spacing ()
-;;;
-;;; void pango_layout_set_spacing (PangoLayout *layout, int spacing);
-;;;
-;;; Sets the amount of spacing in Pango unit between the lines of the layout.
-;;; When placing lines with spacing, Pango arranges things so that
-;;;
-;;; line2.top = line1.bottom + spacing
-;;;
-;;; Note: Since 1.44, Pango defaults to using the line height (as determined by
-;;; the font) for placing lines. The spacing set with this function is only
-;;; taken into account when the line-height factor is set to zero with
-;;; pango_layout_set_line_spacing().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; spacing :
-;;;     the amount of spacing
+;;; pango_layout_get_spacing ()
+;;; pango_layout_set_spacing () -> pango-layout-spacing
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-spacing) (spacing layout)
@@ -1052,54 +964,42 @@
                    :void)
   spacing)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_spacing ()
-;;;
-;;; int pango_layout_get_spacing (PangoLayout *layout);
-;;;
-;;; Gets the amount of spacing between the lines of the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the spacing in Pango units.
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_spacing" pango-layout-spacing) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-spacing layout) => spacing}
+  @syntax[]{(setf (pango-layout-spacing layout) spacing)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[spacing]{an integer with the amount of spacing}
+  @begin{short}
+    Accessor of the spacing in Pango units of the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-spacing} gets the amount of spacing between the
+  lines of the layout. The function @sym{(setf pango-layout-spacing)} sets the
+  amount of spacing in Pango unit between the lines of the layout. When placing
+  lines with spacing, Pango arranges things so that
+  @begin{pre}
+line2.top = line1.bottom + spacing
+  @end{pre}
+  @begin[Note]{dictionary}
+    Since 1.44, Pango defaults to using the line height (as determined by the
+    font) for placing lines. The spacing set with this function is only taken
+    into account when the line-height factor is set to zero with the function
+    @func{pango-layout-line-spacing}.
+  @end{dictionary}
+  @see-class{pango-layout-spacing}
+  @see-function{pango-layout-line-spacing}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-spacing)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_line_spacing ()
-;;;
-;;; void
-;;; pango_layout_set_line_spacing (PangoLayout *layout,
-;;;                                float factor);
-;;;
-;;; Sets a factor for line spacing. Typical values are: 0, 1, 1.5, 2. The
-;;; default values is 0.
-;;;
-;;; If factor is non-zero, lines are placed so that
-;;;
-;;; baseline2 = baseline1 + factor * height2
-;;;
-;;; where height2 is the line height of the second line (as determined by the
-;;; font(s)). In this case, the spacing set with pango_layout_set_spacing() is
-;;; ignored.
-;;;
-;;; If factor is zero, spacing is applied as before.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; factor :
-;;;     the new line spacing factor
-;;;
-;;; Since 1.44
+;;; pango_layout_get_line_spacing ()
+;;; pango_layout_set_line_spacing () -> pango-layout-line-spacing
 ;;; ----------------------------------------------------------------------------
 
+#+pango-1-44
 (defun (setf pango-layout-line-spacing) (factor layout)
   (foreign-funcall "pango_layout_set_line_spacing"
                    (g-object pango-layout) layout
@@ -1107,43 +1007,43 @@
                    :void)
   factor)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_line_spacing ()
-;;;
-;;; float
-;;; pango_layout_get_line_spacing (PangoLayout *layout);
-;;;
-;;; Gets the value that has been set with pango_layout_set_line_spacing().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Since 1.44
-;;; ----------------------------------------------------------------------------
-
+#+pango-1-44
 (defcfun ("pango_layout_get_line_spacing" pango-layout-line-spacing) :float
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-line-spacing layout) => factor}
+  @syntax[]{(setf (pango-layout-line-spacing layout) factor)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[factor]{a float with the new line spacing factor}
+  @begin{short}
+    Accessor of the line spacing for the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-line-spacing} gets the value of the line
+  spacing. The function @sym{(setf pango-layout-line-spacing)} sets a factor
+  for line spacing. Typical values are: 0, 1, 1.5, 2. The default values is 0.
+
+  If @arg{factor} is non-zero, lines are placed so that
+  @begin{pre}
+baseline2 = baseline1 + factor * height2
+  @end{pre}
+  where @code{height2} is the line height of the second line (as determined by
+  the font(s)). In this case, the spacing set with the function
+  @fun{pango-layout-spacing} is ignored.
+
+  If @arg{factor} is zero, spacing is applied as before.
+
+  Since 1.44
+  @see-class{pango-laoyut}
+  @see-function{pango-layout-spacing}"
   (layout (g-object pango-layout)))
 
+#+pango-1-44
 (export 'pango-layout-line-spacing)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_justify ()
-;;;
-;;; void pango_layout_set_justify (PangoLayout *layout, gboolean justify);
-;;;
-;;; Sets whether each complete line should be stretched to fill the entire
-;;; width of the layout. This stretching is typically done by adding whitespace,
-;;; but for some scripts (such as Arabic), the justification may be done in more
-;;; complex ways, like extending the characters.
-;;;
-;;; Note that this setting is not implemented and so is ignored in Pango older
-;;; than 1.18.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; justify :
-;;;     whether the lines in the layout should be justified.
+;;; pango_layout_get_justify ()
+;;; pango_layout_set_justify () -> pango-layout-justify
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-justify) (justify layout)
@@ -1153,55 +1053,32 @@
                    :void)
   justify)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_justify ()
-;;;
-;;; gboolean pango_layout_get_justify (PangoLayout *layout);
-;;;
-;;; Gets whether each complete line should be stretched to fill the entire
-;;; width of the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the justify
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_justify" pango-layout-justify) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-justify layout) => justify}
+  @syntax[]{(setf (pango-layout-justify layout) justify)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[justify]{a boolean whether the lines in the layout should be
+    justified}
+  @begin{short}
+    Accessor of the justify value of the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-justify} gets whether each complete line should
+  be stretched to fill the entire width of the layout. The function
+  @sym{(setf pango-layout-justify)} sets the justify. This stretching is
+  typically done by adding whitespace, but for some scripts (such as Arabic),
+  the justification may be done in more complex ways, like extending the
+  characters.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-justify)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_auto_dir ()
-;;;
-;;; void pango_layout_set_auto_dir (PangoLayout *layout, gboolean auto_dir);
-;;;
-;;; Sets whether to calculate the bidirectional base direction for the layout
-;;; according to the contents of the layout; when this flag is on (the default),
-;;; then paragraphs in layout that begin with strong right-to-left characters
-;;; (Arabic and Hebrew principally), will have right-to-left layout, paragraphs
-;;; with letters from other scripts will have left-to-right layout. Paragraphs
-;;; with only neutral characters get their direction from the surrounding
-;;; paragraphs.
-;;;
-;;; When FALSE, the choice between left-to-right and right-to-left layout is
-;;; done according to the base direction of the layout's PangoContext. (See
-;;; pango_context_set_base_dir()).
-;;;
-;;; When the auto-computed direction of a paragraph differs from the base
-;;; direction of the context, the interpretation of PANGO_ALIGN_LEFT and
-;;; PANGO_ALIGN_RIGHT are swapped.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; auto_dir :
-;;;     if TRUE, compute the bidirectional base direction from the layout's
-;;;     contents.
-;;;
-;;; Since 1.4
+;;; pango_layout_get_auto_dir ()
+;;; pango_layout_set_auto_dir () -> pango-layout-auto-dir
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-auto-dir) (auto-dir layout)
@@ -1211,70 +1088,68 @@
                    :void)
   auto-dir)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_auto_dir ()
-;;;
-;;; gboolean pango_layout_get_auto_dir (PangoLayout *layout);
-;;;
-;;; Gets whether to calculate the bidirectional base direction for the layout
-;;; according to the contents of the layout. See pango_layout_set_auto_dir().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     TRUE if the bidirectional base direction is computed from the layout's
-;;;     contents, FALSE otherwise.
-;;;
-;;; Since 1.4
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_auto_dir" pango-layout-auto-dir) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-auto-dir layout) => auto-dir}
+  @syntax[]{(setf (pango-layout-auto-dir layout) auto-dir)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[auto-dir]{if @em{true}, compute the bidirectional base direction
+    from the layout's contents}
+  @begin{short}
+    The function @sym{pango-layout-auto-dir} gets whether to calculate the
+    bidirectional base direction for the layout according to the contents of
+    the layout.
+  @end{short}
+
+  The function @sym{(setf pango-layout-auto-dir)} sets whether to calculate the
+  bidirectional base direction for the layout according to the contents of the
+  layout. When this flag is on (the default), then paragraphs in layout that
+  begin with strong right-to-left characters (Arabic and Hebrew principally),
+  will have right-to-left layout, paragraphs with letters from other scripts
+  will have left-to-right layout. Paragraphs with only neutral characters get
+  their direction from the surrounding paragraphs.
+
+  When @em{false}, the choice between left-to-right and right-to-left layout is
+  done according to the base direction of the layout's Pango context. (See the
+  function @fun{pango-context-base-dir}).
+
+  When the auto-computed direction of a paragraph differs from the base
+  direction of the context, the interpretation of @code{PANGO_ALIGN_LEFT} and
+  @code{PANGO_ALIGN_RIGHT} are swapped.
+  @see-class{pango-layout}
+  @see-function{pango-context-base-dir}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-auto-dir)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_direction () -> pango-layout-direction
-;;;
-;;; PangoDirection
-;;; pango_layout_get_direction (PangoLayout *layout,
-;;;                             int index);
-;;;
-;;; Gets the text direction at the given character position in layout .
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; index :
-;;;     the byte index of the char
-;;;
-;;; Returns :
-;;;     the text direction at index
-;;;
-;;; Since 1.46
 ;;; ----------------------------------------------------------------------------
 
+#+pango-1-46
 (defcfun ("pango_layout_get_direction" pango-layout-direction) pango-direction
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[index]{an integer with the byte index of the char}
+  @return{a @symbol{pango-direction} value for the text direction at
+    @arg{index}}
+  @begin{short}
+    Gets the text direction at the given character position in the layout.
+  @end{short}
+
+  Since 1.46
+  @see-class{pango-layout}"
   (layout (g-object pango-layout))
   (index :int))
 
+#+pango-1-46
 (export 'pango-layout-direction)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_alignment ()
-;;;
-;;; void pango_layout_set_alignment (PangoLayout *layout,
-;;;                                  PangoAlignment alignment);
-;;;
-;;; Sets the alignment for the layout: how partial lines are positioned within
-;;; the horizontal space available.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; alignment :
-;;;     the alignment
+;;; pango_layout_get_alignment ()
+;;; pango_layout_set_alignment () -> pango-layout-alignment
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-alignment) (alignment layout)
@@ -1284,41 +1159,28 @@
                    :void)
   alignment)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_alignment ()
-;;;
-;;; PangoAlignment pango_layout_get_alignment (PangoLayout *layout);
-;;;
-;;; Gets the alignment for the layout: how partial lines are positioned within
-;;; the horizontal space available.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the alignment
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_alignment" pango-layout-alignment) pango-alignment
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-alignment layout) => alignment}
+  @syntax[]{(setf (pango-layout-alignment layout) alignment)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[alignment]{a @symbol{pango-alignment} value}
+  @begin{short}
+    Accessor of the alignement of the layout.
+  @end{short}
+
+  The function @sym{pango-layout-alignment} gets the alignment for the layout:
+  how partial lines are positioned within the horizontal space available. The
+  function @sym{(setf pango-layout-alignment)} sets the alignment.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-alignment)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_set_tabs ()
-;;;
-;;; void pango_layout_set_tabs (PangoLayout *layout,
-;;;                             PangoTabArray *tabs);
-;;;
-;;; Sets the tabs to use for layout, overriding the default tabs (by default,
-;;; tabs are every 8 spaces). If tabs is NULL, the default tabs are reinstated.
-;;; tabs is copied into the layout; you must free your copy of tabs yourself.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; tabs :
-;;;     a PangoTabArray, or NULL
+;;; pango_layout_get_tabs ()
+;;; pango_layout_set_tabs () -> pango-layout-tabs
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-tabs) (tabs layout)
@@ -1328,45 +1190,34 @@
                    :void)
   tabs)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_tabs ()
-;;;
-;;; PangoTabArray * pango_layout_get_tabs (PangoLayout *layout);
-;;;
-;;; Gets the current PangoTabArray used by this layout. If no PangoTabArray has
-;;; been set, then the default tabs are in use and NULL is returned. Default
-;;; tabs are every 8 spaces. The return value should be freed with
-;;; pango_tab_array_free().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     a copy of the tabs for this layout, or NULL
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_tabs" pango-layout-tabs)
     (g-boxed-foreign pango-tab-array)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-tabs layout) => tabs}
+  @syntax[]{(setf (pango-layout-tabs layout) tabs)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[tabs]{a @class{pango-tab-array}, or @code{nil}}
+  @begin{short}
+    Accessor of the tabs for the Pango layout.
+  @end{short}
+
+  The function @sym{pango-layout-tabs} gets the current @symbol{pango-tab-array}
+  instance used by this layout. The function @sym{(setf pango-layout-tabs)} sets
+  the tabs to use for the layout.
+
+  If no PangoTabArray has been set, then the default tabs are in use and
+  @code{nil} is returned. Default tabs are every 8 spaces. The return value
+  should be freed with the function @fun{pango-tab-array-free}.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-tabs)
 
 ;;; ----------------------------------------------------------------------------
+;;; pango_layout_get_single_paragraph_mode ()
 ;;; pango_layout_set_single_paragraph_mode ()
-;;;
-;;; void pango_layout_set_single_paragraph_mode (PangoLayout *layout,
-;;;                                              gboolean setting);
-;;;
-;;; If setting is TRUE, do not treat newlines and similar characters as
-;;; paragraph separators; instead, keep all text in a single paragraph, and
-;;; display a glyph for paragraph separator characters. Used when you want to
-;;; allow editing of newlines on a single text line.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; setting :
-;;;     new setting
+;;;   -> pango-layout-single-paragraph-mode
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf pango-layout-single-paragraph-mode) (setting layout)
@@ -1376,337 +1227,280 @@
                    :void)
   setting)
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_single_paragraph_mode ()
-;;;
-;;; gboolean pango_layout_get_single_paragraph_mode (PangoLayout *layout);
-;;;
-;;; Obtains the value set by pango_layout_set_single_paragraph_mode().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     TRUE if the layout does not break paragraphs at paragraph separator
-;;;     characters, FALSE otherwise.
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("pango_layout_get_single_paragraph_mode"
            pango-layout-single-paragraph-mode) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @syntax[]{(pango-layout-tabs layout) => tabs}
+  @syntax[]{(setf (pango-layout-tabs layout) tabs)}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[setting]{wether the layout does not break paragraphs at paragraph
+    separator characters}
+  @begin{short}
+    Accessor of the single paragraph mode of the Pango Layout.
+  @end{short}
+
+  If @arg{setting} is @em{true}, do not treat newlines and similar characters
+  as paragraph separators. Instead, keep all text in a single paragraph, and
+  display a glyph for paragraph separator characters. Used when you want to
+  allow editing of newlines on a single text line.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-single-paragraph-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_unknown_glyphs_count ()
-;;;
-;;; int pango_layout_get_unknown_glyphs_count (PangoLayout *layout);
-;;;
-;;; Counts the number unknown glyphs in layout. That is, zero if glyphs for all
-;;; characters in the layout text were found, or more than zero otherwise.
-;;;
-;;; This function can be used to determine if there are any fonts available to
-;;; render all characters in a certain string, or when used in combination with
-;;; PANGO_ATTR_FALLBACK, to check if a certain font supports all the characters
-;;; in the string.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     The number of unknown glyphs in layout.
-;;;
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_unknown_glyphs_count"
            pango-layout-unknown-glyphs-count) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @return{An integer with the number of unknown glyphs in @arg{layout}.}
+  @begin{short}
+    Counts the number unknown glyphs in layout.
+  @end{short}
+  That is, zero if glyphs for all characters in the layout text were found, or
+  more than zero otherwise.
+
+  This function can be used to determine if there are any fonts available to
+  render all characters in a certain string, or when used in combination with
+  @code{PANGO_ATTR_FALLBACK}, to check if a certain font supports all the
+  characters in the string.
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-unknown-glyphs-count)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_log_attrs ()
-;;;
-;;; void pango_layout_get_log_attrs (PangoLayout *layout,
-;;;                                  PangoLogAttr **attrs,
-;;;                                  gint *n_attrs);
-;;;
-;;; Retrieves an array of logical attributes for each character in the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; attrs :
-;;;     Location to store a pointer to an array of logical attributes.
-;;;     This value must be freed with g_free().
-;;;
-;;; n_attrs :
-;;;     location to store the number of the attributes in the array. (The
-;;;     stored value will be one more than the total number of characters in
-;;;     the layout, since there need to be attributes corresponding to both the
-;;;     position before the first character and the position after the last
-;;;     character.)
+;;; pango_layout_get_log_attrs () -> pango-layout-log-attrs
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_log_attrs" pango-layout-log-attrs) :void
+;; FIXME: This implementation does not work.
+
+(defcfun ("pango_layout_get_log_attrs" %pango-layout-log-attrs) :void
   (layout (g-object pango-layout))
   (attrs (:pointer (:struct pango-log-attr)))
-  (n-attrs :int))
+  (n-attrs (:pointer :int)))
+
+(defun pango-layout-log-attrs (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    A list of logical attributes of type @symbol{pango-log-attr}.
+  @end{return}
+  @begin{short}
+    Retrieves a list of logical attributes for each character in the layout.
+  @end{short}
+  @see-class{pango-layout}
+  @see-symbol{pango-log-attr}"
+  (with-foreign-objects ((attrs-ptr :pointer) (n-attrs :int))
+    (%pango-layout-log-attrs layout attrs-ptr n-attrs)
+    (loop with attrs-ar = (mem-ref attrs-ptr :pointer)
+          for i from 0 below (mem-ref n-attrs :int)
+          for attr = (mem-aref attrs-ar :pointer i)
+          collect attr
+          finally (g-free attrs-ptr))))
 
 (export 'pango-layout-log-attrs)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_log_attrs_readonly ()
-;;;
-;;; const PangoLogAttr * pango_layout_get_log_attrs_readonly
-;;;                                                        (PangoLayout *layout,
-;;;                                                         gint *n_attrs);
-;;;
-;;; Retrieves an array of logical attributes for each character in the layout.
-;;;
-;;; This is a faster alternative to pango_layout_get_log_attrs(). The returned
-;;; array is part of layout and must not be modified. Modifying the layout will
-;;; invalidate the returned array.
-;;;
-;;; The number of attributes returned in n_attrs will be one more than the total
-;;; number of characters in the layout, since there need to be attributes
-;;; corresponding to both the position before the first character and the
-;;; position after the last character.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; n_attrs :
-;;;     location to store the number of the attributes in the array
-;;;
-;;; Returns :
-;;;     an array of logical attributes
-;;;
-;;; Since 1.30
+;;; pango_layout_get_log_attrs_readonly () -> pango-layout-log-attrs-readonly
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_log_attrs_readonly" pango-layout-log-attrs-readonly)
-    (:pointer (:struct pango-log-attr))
+;; FIXME: This implementation does not work.
+
+(defcfun ("pango_layout_get_log_attrs_readonly"
+          %pango-layout-log-attrs-readonly) (:pointer (:struct pango-log-attr))
   (layout (g-object pango-layout))
-  (n-attrs :int))
+  (n-attrs (:pointer :int)))
+
+(defun pango-layout-log-attrs-readonly (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @return{a list of logical attributes of type @symbol{pango-log-attr}}
+  @begin{short}
+    Retrieves a list of logical attributes for each character in the layout.
+  @end{short}
+
+  This is a faster alternative to the function @fun{pango-layout-log-attrs}. The
+  returned list is part of @arg{layout} and must not be modified. Modifying the
+  layout will invalidate the returned list.
+  @see-class{pango-layout}
+  @see-function{pango-layout-log-attrs}"
+  (with-foreign-object (n-attrs :int)
+    (let ((attrs-ptr (%pango-layout-log-attrs-readonly layout n-attrs)))
+      (loop with attrs-ar = (mem-ref attrs-ptr :pointer)
+            for i from 0 below (mem-ref n-attrs :int)
+            for attr = (mem-ref attrs-ar :pointer i)
+            collect attr
+            finally (g-free attrs-ptr)))))
 
 (export 'pango-layout-log-attrs-readonly)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_index_to_pos ()
-;;;
-;;; void pango_layout_index_to_pos (PangoLayout *layout,
-;;;                                 int index_,
-;;;                                 PangoRectangle *pos);
-;;;
-;;; Converts from an index within a PangoLayout to the onscreen position
-;;; corresponding to the grapheme at that index, which is represented as
-;;; rectangle. Note that pos->x is always the leading edge of the grapheme and
-;;; pos->x + pos->width the trailing edge of the grapheme. If the directionality
-;;; of the grapheme is right-to-left, then pos->width will be negative.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; index_ :
-;;;     byte index within layout
-;;;
-;;; pos :
-;;;     rectangle in which to store the position of the grapheme
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_index_to_pos" pango-layout-index-to-pos) :void
+(defcfun ("pango_layout_index_to_pos" %pango-layout-index-to-pos) :void
   (layout (g-object pango-layout))
   (index :int)
   (pos (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-index-to-pos (layout index)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[index]{an integer with the byte index within @arg{layout}}
+  @begin{return}
+    A @symbol{pango-rectangle} instance with the position of the grapheme.
+  @end{return}
+  @begin{short}
+    Converts from an index within a Pango layout to the onscreen position
+    corresponding to the grapheme at that index, which is represented as
+    rectangle.
+  @end{short}
+  Note that pos->x is always the leading edge of the grapheme and
+  pos->x + pos->width the trailing edge of the grapheme. If the directionality
+  of the grapheme is right-to-left, then pos->width will be negative.
+  @see-class{pango-layout}"
+  (with-foreign-object (pos '(:pointer (:struct pango-rectangle)))
+    (%pango-layout-index-to-pos layout index pos)
+    pos))
 
 (export 'pango-layout-index-to-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_index_to_line_x ()
-;;;
-;;; void pango_layout_index_to_line_x (PangoLayout *layout,
-;;;                                    int index_,
-;;;                                    gboolean trailing,
-;;;                                    int *line,
-;;;                                    int *x_pos);
-;;;
-;;; Converts from byte index_ within the layout to line and X position. (X
-;;; position is measured from the left edge of the line)
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; index_ :
-;;;     the byte index of a grapheme within the layout.
-;;;
-;;; trailing :
-;;;     an integer indicating the edge of the grapheme to retrieve the position
-;;;     of. If 0, the trailing edge of the grapheme, if > 0, the leading of the
-;;;     grapheme.
-;;;
-;;; line :
-;;;     location to store resulting line index. (which will between 0 and
-;;;     pango_layout_get_line_count(layout) - 1), or NULL
-;;;
-;;; x_pos :
-;;;     location to store resulting position within line (PANGO_SCALE units per
-;;;     device unit), or NULL
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_index_to_line_x" pango-layout-index-to-line-x) :void
+(defcfun ("pango_layout_index_to_line_x" %pango-layout-index-to-line-x) :void
   (layout (g-object pango-layout))
   (index :int)
   (trailing :boolean)
   (line (:pointer :int))
   (x-pos (:pointer :int)))
 
+(defun pango-layout-index-to-line-x (layout index trailing)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[index]{an integer with the byte index of a grapheme within the
+    layout}
+  @argument[trailing]{an integer indicating the edge of the grapheme to
+    retrieve the position of, if 0, the trailing edge of the grapheme, if > 0,
+    the leading of the grapheme}
+  @begin{return}
+    @code{line} -- an integer with the resulting line index, (which will
+    between 0 and @code{(pango-layout-line-count layout) - 1, or NULL @br{}
+    @code{x-pos} -- an integer with the resulting position within line
+    (@code{+pango-scale+} units per device unit), or NULL}
+  @end{return}
+  @begin{short}
+    Converts from byte @arg{index} within the layout to line and x position.
+  @end{short}
+  x position is measured from the left edge of the line.
+  @see-class{pango-layout}"
+  (with-foreign-objects ((line :int) (x-pos :int))
+    (%pango-layout-index-to-line-x layout index trailing line x-pos)
+    (values (mem-ref line :int)
+            (mem-ref x-pos :int))))
+
 (export 'pango-layout-index-to-line-x)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_xy_to_index ()
-;;;
-;;; gboolean pango_layout_xy_to_index (PangoLayout *layout,
-;;;                                    int x,
-;;;                                    int y,
-;;;                                    int *index_,
-;;;                                    int *trailing);
-;;;
-;;; Converts from X and Y position within a layout to the byte index to the
-;;; character at that logical position. If the Y position is not inside the
-;;; layout, the closest position is chosen (the position will be clamped inside
-;;; the layout). If the X position is not within the layout, then the start or
-;;; the end of the line is chosen as described for pango_layout_x_to_index().
-;;; If either the X or Y positions were not inside the layout, then the function
-;;; returns FALSE; on an exact hit, it returns TRUE.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; x :
-;;;     the X offset (in Pango units) from the left edge of the layout.
-;;;
-;;; y :
-;;;     the Y offset (in Pango units) from the top edge of the layout
-;;;
-;;; index_ :
-;;;     location to store calculated byte index
-;;;
-;;; trailing :
-;;;     location to store a integer indicating where in the grapheme the user
-;;;     clicked. It will either be zero, or the number of characters in the
-;;;     grapheme. 0 represents the trailing edge of the grapheme
-;;;
-;;; Returns :
-;;;     TRUE if the coordinates were inside text, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_xy_to_index" pango-layout-xy-to-index) :boolean
+(defcfun ("pango_layout_xy_to_index" %pango-layout-xy-to-index) :boolean
   (layout (g-object pango-layout))
   (x :int)
   (y :int)
   (index (:pointer :int))
-  (trainling (:pointer :int)))
+  (trailing (:pointer :int)))
+
+(defun pango-layout-xy-to-index (layout x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[x]{the integer y offset (in Pango units) from the left edge of the
+    layout}
+  @argument[y]{the integer y offset (in Pango units) from the top edge of the
+    layout}
+  @begin{return}
+    @code{index} -- an integer with the calculated byte index @br{}
+    @code{trailing} -- an integer indicating where in the grapheme the user
+    clicked, it will either be zero, or the number of characters in the
+    grapheme, 0 represents the trailing edge of the grapheme @br{}
+    @em{true} -- if the coordinates were inside text, @em{false} otherwise
+  @end{return}
+  @begin{short}
+    Converts from x and y position within a layout to the byte index to the
+    character at that logical position.
+  @end{short}
+  If the y position is not inside the layout, the closest position is chosen
+  (the position will be clamped inside the layout). If the x position is not
+  within the layout, then the start or the end of the line is chosen as
+  described for the function @fun{pango-layout-x-to-index}. If either the x or
+  y positions were not inside the layout, then the function returns @em{false};
+  on an exact hit, it returns @em{true}.
+  @see-class{pango-layout}"
+  (with-foreign-objects ((index :int) (trailing :int))
+    (let ((bool (%pango-layout-xy-to-index layout x y index trailing)))
+      (values (mem-ref index :int)
+              (mem-ref trailing :int)
+              bool))))
 
 (export 'pango-layout-xy-to-index)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_cursor_pos ()
-;;;
-;;; void pango_layout_get_cursor_pos (PangoLayout *layout,
-;;;                                   int index_,
-;;;                                   PangoRectangle *strong_pos,
-;;;                                   PangoRectangle *weak_pos);
-;;;
-;;; Given an index within a layout, determines the positions that of the strong
-;;; and weak cursors if the insertion point is at that index. The position of
-;;; each cursor is stored as a zero-width rectangle. The strong cursor location
-;;; is the location where characters of the directionality equal to the base
-;;; direction of the layout are inserted. The weak cursor location is the
-;;; location where characters of the directionality opposite to the base
-;;; direction of the layout are inserted.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; index_ :
-;;;     the byte index of the cursor
-;;;
-;;; strong_pos :
-;;;     location to store the strong cursor position (may be NULL)
-;;;
-;;; weak_pos :
-;;;     location to store the weak cursor position (may be NULL)
+;;; pango_layout_get_cursor_pos () -> pango-layout-cursor-pos
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_cursor_pos" pango-layout-cursor-pos) :void
+(defcfun ("pango_layout_get_cursor_pos" %pango-layout-cursor-pos) :void
   (layout (g-object pango-layout))
   (index :int)
   (strong-pos (:pointer (:struct pango-rectangle)))
   (weak-pos (:pointer (:struct pango-rectangle))))
 
+(defun pango-layout-cursor-pos (layout index)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[index]{an integer with the byte index of the cursor}
+  @begin{return}
+    @code{strong-pos} -- a @symbol{pango-rectangle} instance with the strong
+    cursor position (may be NULL) @br{}
+    @code{weak-pos} -- a @symbol{pango-rectangle} instance the weak cursor
+    position (may be NULL)
+  @end{return}
+  @begin{short}
+    Given an index within a layout, determines the positions that of the strong
+    and weak cursors if the insertion point is at that index.
+  @end{short}
+  The position of each cursor is stored as a zero-width rectangle. The strong
+  cursor location is the location where characters of the directionality equal
+  to the base direction of the layout are inserted. The weak cursor location is
+  the location where characters of the directionality opposite to the base
+  direction of the layout are inserted.
+  @see-class{pango-layout}"
+  (with-foreign-objects ((strong-pos '(:pointer (:struct pango-rectangle)))
+                         (weak-pos '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-cursor-pos layout index strong-pos weak-pos)
+    (values strong-pos weak-pos)))
+
 (export 'pango-layout-cursor-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_move_cursor_visually ()
-;;;
-;;; void pango_layout_move_cursor_visually (PangoLayout *layout,
-;;;                                         gboolean strong,
-;;;                                         int old_index,
-;;;                                         int old_trailing,
-;;;                                         int direction,
-;;;                                         int *new_index,
-;;;                                         int *new_trailing);
-;;;
-;;; Computes a new cursor position from an old position and a count of positions
-;;; to move visually. If direction is positive, then the new strong cursor
-;;; position will be one position to the right of the old cursor position. If
-;;; direction is negative, then the new strong cursor position will be one
-;;; position to the left of the old cursor position.
-;;;
-;;; In the presence of bidirectional text, the correspondence between logical
-;;; and visual order will depend on the direction of the current run, and there
-;;; may be jumps when the cursor is moved off of the end of a run.
-;;;
-;;; Motion here is in cursor positions, not in characters, so a single call to
-;;; pango_layout_move_cursor_visually() may move the cursor over multiple
-;;; characters when multiple characters combine to form a single grapheme.
-;;;
-;;; layout :
-;;;     a PangoLayout.
-;;;
-;;; strong :
-;;;     whether the moving cursor is the strong cursor or the weak cursor. The
-;;;     strong cursor is the cursor corresponding to text insertion in the base
-;;;     direction for the layout.
-;;;
-;;; old_index :
-;;;     the byte index of the grapheme for the old index
-;;;
-;;; old_trailing :
-;;;     if 0, the cursor was at the trailing edge of the grapheme indicated by
-;;;     old_index, if > 0, the cursor was at the leading edge.
-;;;
-;;; direction :
-;;;     direction to move cursor. A negative value indicates motion to the left.
-;;;
-;;; new_index :
-;;;     location to store the new cursor byte index. A value of -1 indicates
-;;;     that the cursor has been moved off the beginning of the layout. A value
-;;;     of G_MAXINT indicates that the cursor has been moved off the end of the
-;;;     layout
-;;;
-;;; new_trailing :
-;;;     number of characters to move forward from the location returned for
-;;;     new_index to get the position where the cursor should be displayed.
-;;;     This allows distinguishing the position at the beginning of one line
-;;;     from the position at the end of the preceding line. new_index is always
-;;;     on the line where the cursor should be displayed.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_move_cursor_visually" pango-layout-move-cursor-visually)
-    :void
+(defcfun ("pango_layout_move_cursor_visually"
+          %pango-layout-move-cursor-visually) :void
   (layout (g-object pango-layout))
   (strong :boolean)
   (old-index :int)
@@ -1715,72 +1509,139 @@
   (new-index (:pointer :int))
   (new-traling (:pointer :int)))
 
+(defun pango-layout-move-cursor-visually (layout
+                                          strong
+                                          old-index
+                                          old-trailing
+                                          direction)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[strong]{a boolean whether the moving cursor is the strong cursor or
+    the weak cursor, the strong cursor is the cursor corresponding to text
+    insertion in the base direction for the layout}
+  @argument[old-index]{an integer with the byte index of the grapheme for the
+    old index}
+  @argument[old-trailing]{an integer, if 0, the cursor was at the trailing edge
+    of the grapheme indicated by @arg{old-index}, if > 0, the cursor was at the
+    leading edge}
+  @argument[direction]{an integer with the direction to move cursor, a negative
+    value indicates motion to the left}
+  @begin{return}
+    @code{new-index} -- an integer with the new cursor byte index, a value of
+    -1 indicates that the cursor has been moved off the beginning of the layout,
+    a value of @code{G_MAXINT} indicates that the cursor has been moved off the
+    end of the layout @br{}
+    @code{new-trailing} --an integer with the number of characters to move
+    forward from the location returned for new_index to get the position where
+    the cursor should be displayed, this allows distinguishing the position at
+    the beginning of one line from the position at the end of the preceding
+    line, @arg{new-index} is always on the line where the cursor should be
+    displayed
+  @end{return}
+  @begin{short}
+    Computes a new cursor position from an old position and a count of positions
+    to move visually.
+  @end{short}
+  If @arg{direction} is positive, then the new strong cursor position will be
+  one position to the right of the old cursor position. If @arg{direction} is
+  negative, then the new strong cursor position will be one position to the
+  left of the old cursor position.
+
+  In the presence of bidirectional text, the correspondence between logical
+  and visual order will depend on the direction of the current run, and there
+  may be jumps when the cursor is moved off of the end of a run.
+
+  Motion here is in cursor positions, not in characters, so a single call to
+  the function @sym{pango-layout-move-cursor-visually} may move the cursor over
+  multiple characters when multiple characters combine to form a single
+  grapheme.
+  @see-class{pango-layout}"
+  (with-foreign-objects ((new-index :int) (new-trailing :int))
+    (%pango-layout-move-cursor-visually layout
+                                        strong
+                                        old-index
+                                        old-trailing
+                                        direction
+                                        new-index
+                                        new-trailing)
+    (values (mem-ref new-index :int)
+            (mem-ref new-trailing :int))))
+
 (export 'pango-layout-move-cursor-visually)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_extents ()
-;;;
-;;; void pango_layout_get_extents (PangoLayout *layout,
-;;;                                PangoRectangle *ink_rect,
-;;;                                PangoRectangle *logical_rect);
-;;;
-;;; Computes the logical and ink extents of layout. Logical extents are usually
-;;; what you want for positioning things. Note that both extents may have
-;;; non-zero x and y. You may want to use those to offset where you render the
-;;; layout. Not doing that is a very typical bug that shows up as right-to-left
-;;; layouts not being correctly positioned in a layout with a set width.
-;;;
-;;; The extents are given in layout coordinates and in Pango units; layout
-;;; coordinates begin at the top left corner of the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; ink_rect :
-;;;     rectangle used to store the extents of the layout as drawn or NULL to
-;;;     indicate that the result is not needed
-;;;
-;;; logical_rect :
-;;;     rectangle used to store the logical extents of the layout or NULL to
-;;;     indicate that the result is not needed
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_extents" pango-layout-extents) :void
+(defcfun ("pango_layout_get_extents" %pango-layout-extents) :void
   (layout (g-object pango-layout))
   (ink-rect (:pointer (:struct pango-rectangle)))
   (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-extents (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with the extents of
+    the layout as drawn or NULL to indicate that the result is not needed @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with the logical
+    extents of the layout or NULL to indicate that the result is not needed
+  @end{return}
+  @begin{short}
+    Computes the logical and ink extents of layout.
+  @end{short}
+  Logical extents are usually what you want for positioning things. Note that
+  both extents may have non-zero x and y. You may want to use those to offset
+  where you render the layout. Not doing that is a very typical bug that shows
+  up as right-to-left layouts not being correctly positioned in a layout with
+  a set width.
+
+  The extents are given in layout coordinates and in Pango units; layout
+  coordinates begin at the top left corner of the layout.
+  @see-class{pango-layout}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-extents layout ink-rect logical-rect)
+    (values ink-rect logical-rect)))
 
 (export 'pango-layout-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_pixel_extents ()
-;;;
-;;; void pango_layout_get_pixel_extents (PangoLayout *layout,
-;;;                                      PangoRectangle *ink_rect,
-;;;                                      PangoRectangle *logical_rect);
-;;;
-;;; Computes the logical and ink extents of layout in device units. This
-;;; function just calls pango_layout_get_extents() followed by two
-;;; pango_extents_to_pixels() calls, rounding ink_rect and logical_rect such
-;;; that the rounded rectangles fully contain the unrounded one (that is, passes
-;;; them as first argument to pango_extents_to_pixels()).
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; ink_rect :
-;;;     rectangle used to store the extents of the layout as drawn or NULL to
-;;;     indicate that the result is not needed
-;;;
-;;; logical_rect :
-;;;     rectangle used to store the logical extents of the layout or NULL to
-;;;     indicate that the result is not needed
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_layout_get_pixel_extents" pango-layout-pixel-extents) :void
+(defcfun ("pango_layout_get_pixel_extents" %pango-layout-pixel-extents) :void
   (layout (g-object pango-layout))
   (ink-rect (:pointer (:struct pango-rectangle)))
   (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-pixel-extents (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with the extents of
+    the layout as drawn or NULL to indicate that the result is not needed @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with the logical
+    extents of the layout or NULL to indicate that the result is not needed
+  @end{return}
+  @begin{short}
+    Computes the logical and ink extents of layout in device units.
+  @end{short}
+  This function just calls the function @fun{pango-layout-extents} followed by
+  two @fun{pango-extents-to-pixels} calls, rounding @arg{ink-rect} and
+  @arg{logical-rect} such that the rounded rectangles fully contain the
+  unrounded one (that is, passes them as first argument to the function
+  @fun{pango-extents-to-pixels}).
+  @see-class{pango-layout}
+  @see-function{pango-layout-extents}
+  @see-function{pango-extents-to-pixels}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-pixel-extents layout ink-rect logical-rect)
+    (values ink-rect logical-rect)))
 
 (export 'pango-layout-pixel-extents)
 
@@ -1795,20 +1656,20 @@
 
 (defun pango-layout-size (layout)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-25}
+ "@version{2021-1-15}
   @argument[layout]{a @class{pango-layout} object}
   @begin{return}
     @code{width}  -- an integer with the logical width, or @code{nil} @br{}
     @code{height} -- an integer with the logical height, or @code{nil}
   @end{return}
   @begin{short}
-    Determines the logical width and height of a @class{pango-layout} in Pango
-    units, device units scaled by the constand @var{+pango-scale+}.
+    Determines the logical width and height of a layout in Pango units, device
+    units scaled by the constant @var{+pango-scale+}.
   @end{short}
   This is simply a convenience function around the function
-  @fun{pango-layout-get-extents}.
+  @fun{pango-layout-extents}.
   @see-class{pango-layout}
-  @see-function{pango-layout-get-extents}
+  @see-function{pango-layout-extents}
   @see-variable{+pango-scale+}"
   (with-foreign-objects ((width :int) (height :int))
     (%pango-layout-size layout width height)
@@ -1818,25 +1679,7 @@
 (export 'pango-layout-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_pixel_size ()
-;;;
-;;; void pango_layout_get_pixel_size (PangoLayout *layout,
-;;;                                   int *width,
-;;;                                   int *height);
-;;;
-;;; Determines the logical width and height of a PangoLayout in device units.
-;;; (pango_layout_get_size() returns the width and height scaled by
-;;; PANGO_SCALE.) This is simply a convenience function around
-;;; pango_layout_get_pixel_extents().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; width :
-;;;     location to store the logical width, or NULL
-;;;
-;;; height :
-;;;     location to store the logical height, or NULL
+;;; pango_layout_get_pixel_size () -> pango-layout-pixel-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_pixel_size" %pango-layout-get-pixel-size) :void
@@ -1845,6 +1688,22 @@
   (height (:pointer :int)))
 
 (defun pango-layout-pixel-size (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @code{width} - an integer with the logical width @br{}
+    @code{height} - an integer with the logical height
+  @end{return}
+  @begin{short}
+    Determines the logical width and height of a Pango layout in device units.
+  @end{short}
+  The function @fun{pango-layout-size} returns the width and height scaled by
+  @code{+pango-scale+}. This is simply a convenience function around the
+  function @fun{pango-layout-pixel-extents}.
+  @see-class{pango-layout}
+  @see-funciton{pango-layout-size}
+  @see-function{pango-layout-pixel-extents}"
   (with-foreign-objects ((width :int) (height :int))
     (%pango-layout-get-pixel-size layout width height)
     (values (mem-ref width :int)
@@ -1853,731 +1712,930 @@
 (export 'pango-layout-pixel-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_baseline ()
-;;;
-;;; int pango_layout_get_baseline (PangoLayout *layout);
-;;;
-;;; Gets the Y position of baseline of the first line in layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     baseline of first line, from top of layout.
-;;;
-;;; Since 1.22
+;;; pango_layout_get_baseline () -> pango-layout-baseline
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_baseline" pango-layout-baseline) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @return{An integer with the baseline of first line, from top of @arg{layout}.}
+  @begin{short}
+    Gets the y position of baseline of the first line in layout.
+  @end{short}
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-baseline)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_line_count ()
-;;;
-;;; int pango_layout_get_line_count (PangoLayout *layout);
-;;;
-;;; Retrieves the count of lines for the layout.
-;;;
-;;; layout :
-;;;     PangoLayout
-;;;
-;;; Returns :
-;;;     the line count
+;;; pango_layout_get_line_count () -> pango-layout-line-count
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_line_count" pango-layout-line-count) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @return{An integer witht the line count.}
+  @begin{short}
+    Retrieves the count of lines for the layout.
+  @end{short}
+  @see-class{pango-layout}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-line-count)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_line ()
-;;;
-;;; PangoLayoutLine * pango_layout_get_line (PangoLayout *layout, int line);
-;;;
-;;; Retrieves a particular line from a PangoLayout.
-;;;
-;;; Use the faster pango_layout_get_line_readonly() if you do not plan to modify
-;;; the contents of the line (glyphs, glyph widths, etc.).
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; line :
-;;;     the index of a line, which must be between 0 and
-;;;     pango_layout_get_line_count(layout) - 1, inclusive.
-;;;
-;;; Returns :
-;;;     the requested PangoLayoutLine, or NULL if the index is out of range.
-;;;     This layout line can be ref'ed and retained, but will become invalid
-;;;     if changes are made to the PangoLayout
+;;; pango_layout_get_line () -> pango-layout-line
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_line" pango-layout-line)
     (g-boxed-foreign pango-layout-line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[line]{an integer with the index of a line, which must be between 0
+    and @code{(pango-layout-line-count layout)} - 1, inclusive}
+  @begin{return}
+    The requested @class{pango-layout-line} instance, or @code{nil} if the
+    index is out of range. This layout line can be ref'ed and retained, but
+    will become invalid if changes are made to the Pango layout.
+  @end{return}
+  @begin{short}
+    Retrieves a particular line from a Pango layout.
+  @end{short}
+
+  Use the faster function @fun{pango-layout-line-readonly} if you do not plan
+  to modify the contents of the line (glyphs, glyph widths, etc.).
+  @see-class{pango-layout}
+  @see-class{pango-layout-line}
+  @see-function{pango-layout-line-readonly}"
   (layout (g-object pango-layout))
   (line :int))
 
 (export 'pango-layout-line)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_line_readonly ()
-;;;
-;;; PangoLayoutLine * pango_layout_get_line_readonly (PangoLayout *layout,
-;;;                                                   int line);
-;;;
-;;; Retrieves a particular line from a PangoLayout.
-;;;
-;;; This is a faster alternative to pango_layout_get_line(), but the user is not
-;;; expected to modify the contents of the line (glyphs, glyph widths, etc.).
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; line :
-;;;     the index of a line, which must be between 0 and
-;;;     pango_layout_get_line_count(layout) - 1, inclusive.
-;;;
-;;; Returns :
-;;;     the requested PangoLayoutLine, or NULL if the index is out of range.
-;;;     This layout line can be ref'ed and retained, but will become invalid if
-;;;     changes are made to the PangoLayout. No changes should be made to the
-;;;     line
-;;;
-;;; Since 1.16
+;;; pango_layout_get_line_readonly () -> pango-layout-line-readonly
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_line_readonly" pango-layout-line-readonly)
     (g-boxed-foreign pango-layout-line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[line]{an integer with the index of a line, which must be between 0
+    and (@code{pango-layout-line-count layout)} - 1, inclusive}
+  @begin{return}
+    The requested @class{pango-layout-line} instance, or NULL if the index is
+    out of range. This layout line can be ref'ed and retained, but will become
+    invalid if changes are made to the PangoLayout. No changes should be made
+    to the line.
+  @end{return}
+  @begin{short}
+    Retrieves a particular line from a Pango layout.
+  @end{short}
+
+  This is a faster alternative to the function @fun{pango-layout-line}, but the
+  user is not expected to modify the contents of the line (glyphs, glyph widths,
+  etc.).
+  @see-class{pango-layout}
+  @see-function{pango-layout-line}"
   (layout (g-object pango-layout))
   (line :int))
 
 (export 'pango-layout-line-readonly)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_lines ()
-;;;
-;;; GSList * pango_layout_get_lines (PangoLayout *layout);
-;;;
-;;; Returns the lines of the layout as a list.
-;;;
-;;; Use the faster pango_layout_get_lines_readonly() if you do not plan to
-;;; modify the contents of the lines (glyphs, glyph widths, etc.).
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     a GSList containing the lines in the layout. This points to internal
-;;;     data of the PangoLayout and must be used with care. It will become
-;;;     invalid on any change to the layout's text or properties
+;;; pango_layout_get_lines () -> pango-layout-lines
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_lines" pango-layout-lines)
     (g-slist (g-boxed-foreign pango-layout-line :free-from-foreign nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    A list containing the @class{pango-layout-line} instances in the layout.
+    This points to internal data of the Pango layout and must be used with
+    care. It will become invalid on any change to the layout's text or
+    properties.
+  @end{return}
+  @begin{short}
+    Returns the lines of the layout as a list.
+  @end{short}
+
+  Use the faster function @fun{pango-layout-lines-readonly} if you do not plan
+  to modify the contents of the lines (glyphs, glyph widths, etc.).
+  @see-class{pango-layout}
+  @see-class{pango-layout-line}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-lines)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_lines_readonly ()
-;;;
-;;; GSList * pango_layout_get_lines_readonly (PangoLayout *layout);
-;;;
-;;; Returns the lines of the layout as a list.
-;;;
-;;; This is a faster alternative to pango_layout_get_lines(), but the user is
-;;; not expected to modify the contents of the lines (glyphs, glyph widths,
-;;; etc.).
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     a GSList containing the lines in the layout. This points to internal
-;;;     data of the PangoLayout and must be used with care. It will become
-;;;     invalid on any change to the layout's text or properties. No changes
-;;;     should be made to the lines
-;;;
-;;; Since 1.16
+;;; pango_layout_get_lines_readonly () -> pango-layout-lines-readonly
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_lines_readonly" pango-layout-lines-readonly)
     (g-slist (g-boxed-foreign pango-layout-line :free-from-foreign nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    A list containing the @class{pango-layout-line} instances in the layout.
+    This points to internal data of the Pango layout and must be used with care.
+    It will become invalid on any change to the layout's text or properties. No
+    changes should be made to the lines.
+  @end{return}
+  @begin{short}
+    Returns the lines of the layout as a list.
+  @end{short}
+
+  This is a faster alternative to the function @fun{pango-layout-lines}, but
+  the user is not expected to modify the contents of the lines (glyphs, glyph
+  widths, etc.).
+  @see-class{pango-layout}
+  @see-class{pango-layout-line}
+  @see-function{pango-layout-lines}"
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-lines-readonly)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_get_iter ()
-;;;
-;;; PangoLayoutIter * pango_layout_get_iter (PangoLayout *layout);
-;;;
-;;; Returns an iterator to iterate over the visual extents of the layout.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the new PangoLayoutIter that should be freed using
-;;;     pango_layout_iter_free().
+;;; pango_layout_get_iter () -> pango-layout-iter
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_iter" pango-layout-iter)
+    (g-boxed-foreign pango-layout-iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    The new @symbol{pango-layout-iter} that should be freed using the function
+    @fun{pango-layout-iter-free}.
+  @end{return}
+  @begin{short}
+    Returns an iterator to iterate over the visual extents of the layout.
+  @end{short}
+  @see-class{pango-layout}
+  @see-function{pango-layout-iter-free}"
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_copy ()
-;;;
-;;; PangoLayoutIter * pango_layout_iter_copy (PangoLayoutIter *iter);
-;;;
-;;; Copies a PangoLayoutIter.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter, may be NULL
-;;;
-;;; Returns :
-;;;     the newly allocated PangoLayoutIter, which should be freed with
-;;;     pango_layout_iter_free(), or NULL if iter was NULL.
-;;;
-;;; Since 1.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_copy" pango-layout-iter-copy)
+    (g-boxed-foreign pango-layout-iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[iter]{a @class{pango-layout-iter} instance, may be NULL}
+  @begin{return}
+    The newly allocated @class{pango-layout-iter} instance, which should be
+    freed with the function @fun{pango-layout-iter-free}, or NULL if @arg{iter}
+    was NULL.
+  @end{return}
+  @begin{short}
+    Copies a @class{pango-layout-iter} instance.
+  @end{short}
+  @see-class{pango-layout-iter}
+  @see-function{pango-layout-iter-free}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_free ()
-;;;
-;;; void pango_layout_iter_free (PangoLayoutIter *iter);
-;;;
-;;; Frees an iterator that's no longer in use.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter, may be NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_free" pango-layout-iter-free) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[iter]{a @class{pango-layout-iter} instance, may be NULL}
+  @begin{short}
+    Frees an iterator that is no longer in use.
+  @end{short}
+  @see-class{pango-layout-iter}"
+  (iter (g-object pango-layout-iter)))
+
+(export 'pango-layout-iter-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_next_run ()
-;;;
-;;; gboolean pango_layout_iter_next_run (PangoLayoutIter *iter);
-;;;
-;;; Moves iter forward to the next run in visual order. If iter was already at
-;;; the end of the layout, returns FALSE.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     whether motion was possible.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_next_run" pango-layout-iter-next-run) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A boolean whether motion was possible.}
+  @begin{short}
+    Moves @arg{iter} forward to the next run in visual order.
+  @end{short}
+  If @arg{iter} was already at the end of the layout, returns @em{false}.
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-next-run)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_next_char ()
-;;;
-;;; gboolean pango_layout_iter_next_char (PangoLayoutIter *iter);
-;;;
-;;; Moves iter forward to the next character in visual order. If iter was
-;;; already at the end of the layout, returns FALSE.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     whether motion was possible
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_next_char" pango-layout-iter-next-char) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A boolean whether motion was possible.}
+  @begin{short}
+    Moves @arg{iter} forward to the next character in visual order.
+  @end{short}
+  If @arg{iter} was already at the end of the layout, returns @em{false}.
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-next-char)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_next_cluster ()
-;;;
-;;; gboolean pango_layout_iter_next_cluster (PangoLayoutIter *iter);
-;;;
-;;; Moves iter forward to the next cluster in visual order. If iter was already
-;;; at the end of the layout, returns FALSE.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     whether motion was possible
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_next_cluster" pango-layout-iter-next-cluster)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A boolean whether motion was possible.}
+  @begin{short}
+    Moves @arg{iter} forward to the next cluster in visual order.
+  @end{short}
+  If @arg{iter} was already at the end of the layout, returns @em{false}.
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-next-cluster)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_next_line ()
-;;;
-;;; gboolean pango_layout_iter_next_line (PangoLayoutIter *iter);
-;;;
-;;; Moves iter forward to the start of the next line. If iter is already on the
-;;; last line, returns FALSE.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     whether motion was possible
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_next_line" pango-layout-iter-next-line) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A boolean whether motion was possible.}
+  @begin{short}
+    Moves @arg{iter} forward to the start of the next line.
+  @end{short}
+  If @arg{iter} is already on the last line, returns @em{false}.
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-next-line)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_at_last_line ()
-;;;
-;;; gboolean pango_layout_iter_at_last_line (PangoLayoutIter *iter);
-;;;
-;;; Determines whether iter is on the last line of the layout.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     TRUE if iter is on the last line
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_index ()
-;;;
-;;; int pango_layout_iter_get_index (PangoLayoutIter *iter);
-;;;
-;;; Gets the current byte index. Note that iterating forward by char moves in
-;;; visual order, not logical order, so indexes may not be sequential. Also,
-;;; the index may be equal to the length of the text in the layout, if on the
-;;; NULL run (see pango_layout_iter_get_run()).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     current byte index.
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_iter_at_last_line" pango-layout-iter-at-last-line)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{@em{True} if @arg{iter} is on the last line.}
+  @begin{short}
+    Determines whether @arg{iter} is on the last line of the layout.
+  @end{short}
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-at-last-line)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_baseline ()
-;;;
-;;; int pango_layout_iter_get_baseline (PangoLayoutIter *iter);
-;;;
-;;; Gets the Y position of the current line's baseline, in layout coordinates
-;;; (origin at top left of the entire layout).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     baseline of current line
+;;; pango_layout_iter_get_index () -> pango-layout-iter-index
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_run ()
-;;;
-;;; PangoLayoutRun * pango_layout_iter_get_run (PangoLayoutIter *iter);
-;;;
-;;; Gets the current run. When iterating by run, at the end of each line,
-;;; there's a position with a NULL run, so this function can return NULL. The
-;;; NULL run at the end of each line ensures that all lines have at least one
-;;; run, even lines consisting of only a newline.
-;;;
-;;; Use the faster pango_layout_iter_get_run_readonly() if you do not plan to
-;;; modify the contents of the run (glyphs, glyph widths, etc.).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     the current run
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_get_iter_index" pango-layout-iter-index) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{An integer with the current byte index.}
+  @begin{short}
+    Gets the current byte index.
+  @end{short}
+  Note that iterating forward by char moves in visual order, not logical order,
+  so indexes may not be sequential. Also, the index may be equal to the length
+  of the text in the layout, if on the NULL run (see the function
+  @fun{pango-layout-iter-run}).
+  @see-class{pango-layout-iter}
+  @see-function{pango-layout-iter-run}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-index)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_run_readonly ()
-;;;
-;;; PangoLayoutRun * pango_layout_iter_get_run_readonly (PangoLayoutIter *iter);
-;;;
-;;; Gets the current run. When iterating by run, at the end of each line,
-;;; there's a position with a NULL run, so this function can return NULL. The
-;;; NULL run at the end of each line ensures that all lines have at least one
-;;; run, even lines consisting of only a newline.
-;;;
-;;; This is a faster alternative to pango_layout_iter_get_run(), but the user
-;;; is not expected to modify the contents of the run (glyphs, glyph widths,
-;;; etc.).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     the current run, that should not be modified
-;;;
-;;; Since 1.16
+;;; pango_layout_iter_get_baseline () -> pango-layout-iter-baseline
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_line ()
-;;;
-;;; PangoLayoutLine * pango_layout_iter_get_line (PangoLayoutIter *iter);
-;;;
-;;; Gets the current line.
-;;;
-;;; Use the faster pango_layout_iter_get_line_readonly() if you do not plan to
-;;; modify the contents of the line (glyphs, glyph widths, etc.).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     the current line
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_iter_get_baseline" pango-layout-iter-baseline) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{An integer with the baseline of current line.}
+  @begin{short}
+    Gets the y position of the current line's baseline, in layout coordinates
+    (origin at top left of the entire layout).
+  @end{short}
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-baseline)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_line_readonly ()
-;;;
-;;; PangoLayoutLine * pango_layout_iter_get_line_readonly
-;;;                                                      (PangoLayoutIter *iter)
-;;;
-;;; Gets the current line for read-only access.
-;;;
-;;; This is a faster alternative to pango_layout_iter_get_line(), but the user
-;;; is not expected to modify the contents of the line (glyphs, glyph widths,
-;;; etc.).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     the current line, that should not be modified.
-;;;
-;;; Since 1.16
+;;; pango_layout_iter_get_run () -> pango-layout-iter-run
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_layout ()
-;;;
-;;; PangoLayout * pango_layout_iter_get_layout (PangoLayoutIter *iter);
-;;;
-;;; Gets the layout associated with a PangoLayoutIter.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; Returns :
-;;;     the layout associated with iter
-;;;
-;;; Since 1.20
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_iter_get_run" pango-layout-iter-run)
+    (g-boxed-foreign pango-glyph-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @class{pango-glyph-item} instance with the current run.}
+  @begin{short}
+    Gets the current run.
+  @end{short}
+  When iterating by run, at the end of each line, there is a position with a
+  NULL run, so this function can return NULL. The NULL run at the end of each
+  line ensures that all lines have at least one run, even lines consisting of
+  only a newline.
+
+  Use the faster function @fun{pango-layout-iter-run-readonly} if you do not
+  plan to modify the contents of the run (glyphs, glyph widths, etc.).
+  @see-class{pango-layout-iter}
+  @see-class{pango-glyph-item}
+  @see-function{pango-layout-iter-run-readonly}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-run)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_char_extents ()
-;;;
-;;; void pango_layout_iter_get_char_extents (PangoLayoutIter *iter,
-;;;                                          PangoRectangle *logical_rect);
-;;;
-;;; Gets the extents of the current character, in layout coordinates (origin is
-;;; the top left of the entire layout). Only logical extents can sensibly be
-;;; obtained for characters; ink extents make sense only down to the level of
-;;; clusters.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; logical_rect :
-;;;     rectangle to fill with logical extents
+;;; pango_layout_iter_get_run_readonly () -> pango-layout-iter-run-readonly
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_run_readonly" pango-layout-iter-run-readonly)
+    (g-boxed-foreign pango-glyph-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @class{pango-layout-iter} instance with the current run, that
+    should not be modified.}
+  @begin{short}
+    Gets the current run.
+  @end{short}
+  When iterating by run, at the end of each line, there is a position with a
+  NULL run, so this function can return NULL. The NULL run at the end of each
+  line ensures that all lines have at least one run, even lines consisting of
+  only a newline.
+
+  This is a faster alternative to the function @fun{pango-layout-iter-run}, but
+  the user is not expected to modify the contents of the run (glyphs,
+  glyph widths, etc.).
+  @see-class{pango-layout-iter}
+  @see-function{pango-layout-iter-run}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-run-readonly)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_line () -> pango-layout-iter-line
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_line" pango-layout-iter-line)
+    (g-boxed-foreign pango-layout-line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @class{pango-layout-line} instance with the current line.}
+  @begin{short}
+    Gets the current line.
+  @end{short}
+
+  Use the faster function @fun{pango-layout-iter-line-readonly} if you do not
+  plan to modify the contents of the line (glyphs, glyph widths, etc.).
+  @see-class{pango-layout-iter}
+  @see-class{pango-layout-line}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-line)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_line_readonly () -> pango-layout-iter-line-readonly
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_line_readonly" pango-layout-iter-line-readonly)
+    (g-boxed-foreign pango-layout-line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @class{pango-layout-line} instance with the current line, that
+    should not be modified.}
+  @begin{short}
+    Gets the current line for read-only access.
+  @end{short}
+
+  This is a faster alternative to the function @fun{pango-layout-iter-line},
+  but the user is not expected to modify the contents of the line (glyphs,
+  glyph widths, etc.).
+  @see-class{pango-layout-iter}
+  @see-class{pango-layout-line}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-line-readonly)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_layout () -> pango-layout-iter-layout
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_layout" pango-layout-iter-layout)
+    (g-object pango-layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @class{pango-layout} object with the layout associated with
+    @arg{iter}.}
+  @begin{short}
+    Gets the layout associated with a Pango layout iterator.
+  @end{short}
+  @see-class{pango-layout-iter}"
+  (iter (g-boxed-foreign pango-layout-iter)))
+
+(export 'pango-layout-iter-layout)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_char_extents () -> pango-layout-iter-char-extents
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_char_extents" %pango-layout-iter-char-extents)
+    :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-iter-char-extents (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @return{A @symbol{pango-rectangle} instance with logical extents.}
+  @begin{short}
+    Gets the extents of the current character, in layout coordinates (origin is
+    the top left of the entire layout).
+  @end{short}
+  Only logical extents can sensibly be obtained for characters; ink extents
+  make sense only down to the level of clusters.
+  @see-class{pango-layout-iter}
+  @see-symbol{pango-rectangle}"
+  (with-foreign-object (logical-rect '(:pointer (:struct pango-rectangle)))
+    (%pango-layout-iter-char-extents iter logical-rect)
+    (values logical-rect)))
+
+(export 'pango-layout-iter-char-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_iter_get_cluster_extents ()
-;;;
-;;; void pango_layout_iter_get_cluster_extents (PangoLayoutIter *iter,
-;;;                                             PangoRectangle *ink_rect,
-;;;                                             PangoRectangle *logical_rect);
-;;;
-;;; Gets the extents of the current cluster, in layout coordinates (origin is
-;;; the top left of the entire layout).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; ink_rect :
-;;;     rectangle to fill with ink extents, or NULL
-;;;
-;;; logical_rect :
-;;;     rectangle to fill with logical extents, or NULL
+;;;   -> pango-layout-iter-cluster-extents
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_run_extents ()
-;;;
-;;; void pango_layout_iter_get_run_extents (PangoLayoutIter *iter,
-;;;                                         PangoRectangle *ink_rect,
-;;;                                         PangoRectangle *logical_rect);
-;;;
-;;; Gets the extents of the current run in layout coordinates (origin is the
-;;; top left of the entire layout).
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; ink_rect :
-;;;     rectangle to fill with ink extents, or NULL
-;;;
-;;; logical_rect :
-;;;     rectangle to fill with logical extents, or NULL
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_iter_get_cluster_extents"
+          %pango-layout-iter-cluster-extents) :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-iter-cluster-extents (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with ink extents
+    @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with logical
+    extents
+  @end{return}
+  @begin{short}
+    Gets the extents of the current cluster, in layout coordinates (origin is
+    the top left of the entire layout).
+  @end{short}
+  @see-class{pango-layout-iter}
+  @see-symbol{pango-rectangle}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-iter-cluster-extents iter ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-iter-cluster-extents)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_line_yrange ()
-;;;
-;;; void pango_layout_iter_get_line_yrange (PangoLayoutIter *iter,
-;;;                                         int *y0_,
-;;;                                         int *y1_);
-;;;
-;;; Divides the vertical space in the PangoLayout being iterated over between
-;;; the lines in the layout, and returns the space belonging to the current
-;;; line. A line's range includes the line's logical extents, plus half of the
-;;; spacing above and below the line, if pango_layout_set_spacing() has been
-;;; called to set layout spacing. The Y positions are in layout coordinates
-;;; (origin at top left of the entire layout).
-;;;
-;;; Note: Since 1.44, Pango uses line heights for placing lines, and there may
-;;; be gaps between the ranges returned by this function.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; y0_ :
-;;;     start of line, or NULL
-;;;
-;;; y1_ :
-;;;     end of line, or NULL
+;;; pango_layout_iter_get_run_extents () -> pango-layout-iter-run-extents
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_line_extents ()
-;;;
-;;; void pango_layout_iter_get_line_extents (PangoLayoutIter *iter,
-;;;                                          PangoRectangle *ink_rect,
-;;;                                          PangoRectangle *logical_rect);
-;;;
-;;; Obtains the extents of the current line. ink_rect or logical_rect can be
-;;; NULL if you aren't interested in them. Extents are in layout coordinates
-;;; (origin is the top-left corner of the entire PangoLayout). Thus the extents
-;;; returned by this function will be the same width/height but not at the same
-;;; x/y as the extents returned from pango_layout_line_get_extents().
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; ink_rect :
-;;;     rectangle to fill with ink extents, or NULL
-;;;
-;;; logical_rect :
-;;;     rectangle to fill with logical extents, or NULL
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_iter_get_run_extents" %pango-layout-iter-run-extents)
+    :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-iter-run-extents (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with ink extents
+    @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with logical
+    extents
+  @end{return}
+  @begin{short}
+    Gets the extents of the current run in layout coordinates (origin is the
+    top left of the entire layout).
+  @end{short}
+  @see-class{pango-layout-iter}
+  @see-symbol{pango-rectangle}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-iter-run-extents iter ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-iter-run-extents)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_iter_get_layout_extents ()
-;;;
-;;; void pango_layout_iter_get_layout_extents (PangoLayoutIter *iter,
-;;;                                            PangoRectangle *ink_rect,
-;;;                                            PangoRectangle *logical_rect);
-;;;
-;;; Obtains the extents of the PangoLayout being iterated over. ink_rect or
-;;; logical_rect can be NULL if you aren't interested in them.
-;;;
-;;; iter :
-;;;     a PangoLayoutIter
-;;;
-;;; ink_rect :
-;;;     rectangle to fill with ink extents, or NULL
-;;;
-;;; logical_rect :
-;;;     rectangle to fill with logical extents, or NULL
+;;; pango_layout_iter_get_line_yrange () -> pango-layout-iter-line-yrange
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_line_yrange" %pango-layout-iter-line-yrange)
+    :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (y0 (:pointer :int))
+  (y1 (:pointer :int)))
+
+(defun pango-layout-iter-line-yrange (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{y0} -- an integer with the start of line, or NULL @br{}
+    @code{y1} -- an integer with the end of line, or NULL
+  @end{return}
+  @begin{short}
+    Divides the vertical space in the Pango layout being iterated over between
+    the lines in the layout, and returns the space belonging to the current
+    line.
+  @end{short}
+  A line's range includes the line's logical extents, plus half of the spacing
+  above and below the line, if the function @fun{pango-layout-spacing} has been
+  called to set layout spacing. The y positions are in layout coordinates
+  (origin at top left of the entire layout).
+  @begin[Note]{dictionary}
+    Since 1.44, Pango uses line heights for placing lines, and there may be
+    gaps between the ranges returned by this function.
+  @end{dictionary}
+  @see-class{pango-layout-iter}
+  @see-function{pango-layout-spacing}"
+  (with-foreign-objects ((y0 :int) (y1 :int))
+    (%pango-layout-iter-line-yrange iter y0 y1)
+    (values (mem-ref y0 :int)
+            (mem-ref y1 :int))))
+
+(export 'pango-layout-iter-line-yrange)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_line_extents () -> pango-layout-iter-line-extents
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_line_extents" %pango-layout-iter-line-extents)
+    :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-iter-line-extents (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with ink extents
+    @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with logical
+    extents
+  @end{return}
+  @begin{short}
+    Obtains the extents of the current line.
+  @end{short}
+  @arg{ink-rect} or @arg{logical-rect} can be NULL if you are not interested in
+  them. Extents are in layout coordinates (origin is the top-left corner of the
+  entire Pango layout). Thus the extents returned by this function will be the
+  same width/height but not at the same x/y as the extents returned from the
+  function @fun{pango-layout-line-extents}.
+  @see-class{pango-layout-iter}
+  @see-symbol{pango-rectangle}
+  @see-function{pango-layout-line-extents}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-iter-line-extents iter ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-iter-line-extents)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_iter_get_layout_extents () -> pango-layout-iter-layout-extents
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_iter_get_layout_extents"
+          %pango-layout-iter-layout-extents) :void
+  (iter (g-boxed-foreign pango-layout-iter))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-iter-layout-extents (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with ink extents
+    @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with logical
+    extents
+  @end{return}
+  @begin{short}
+    Obtains the extents of the Pango layout being iterated over.
+  @end{short}
+  @arg{ink-rect} or @arg{logical-rect} can be NULL if you are not interested in
+  them.
+  @see-class{pango-layout-iter}
+  @see-symbol{pango-rectangle}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-iter-layout-extents iter ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-iter-layout-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_line_ref ()
-;;;
-;;; PangoLayoutLine * pango_layout_line_ref (PangoLayoutLine *line);
-;;;
-;;; Increase the reference count of a PangoLayoutLine by one.
-;;;
-;;; line :
-;;;     a PangoLayoutLine, may be NULL
-;;;
-;;; Returns :
-;;;     the line passed in
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_line_ref" pango-layout-line-ref)
+    (g-boxed-foreign pango-layout-line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[line]{a @class{pango-layout-line} instance, may be NULL}
+  @return{A @class{pango-layout-line} instance with the line passed in.}
+  @begin{short}
+    Increase the reference count of a @class{pango-layout-line} instance by one.
+  @end{short}
+  @see-class{pango-layout-line}"
+  (line (g-boxed-foreign pango-layout-line)))
+
+(export 'pango-layout-line-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_line_unref ()
-;;;
-;;; void pango_layout_line_unref (PangoLayoutLine *line);
-;;;
-;;; Decrease the reference count of a PangoLayoutLine by one. If the result is
-;;; zero, the line and all associated memory will be freed.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_line_get_extents ()
-;;;
-;;; void pango_layout_line_get_extents (PangoLayoutLine *line,
-;;;                                     PangoRectangle *ink_rect,
-;;;                                     PangoRectangle *logical_rect);
-;;;
-;;; Computes the logical and ink extents of a layout line. See
-;;; pango_font_get_glyph_extents() for details about the interpretation of the
-;;; rectangles.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; ink_rect :
-;;;     rectangle used to store the extents of the glyph string as drawn, or
-;;;     NULL
-;;;
-;;; logical_rect :
-;;;     rectangle used to store the logical extents of the glyph string, or NULL
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_line_unref" pango-layout-line-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[line]{a @class{pango-layout-line} instance}
+  @begin{short}
+    Decrease the reference count of a @class{pango-layout-line} instance by one.
+  @end{short}
+  If the result is zero, the line and all associated memory will be freed.
+  @see-class{pango-layout-line}"
+  (line (g-boxed-foreign pango-layout-line)))
+
+(export 'pango-layout-line-unref)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_line_get_pixel_extents ()
-;;;
-;;; void pango_layout_line_get_pixel_extents (PangoLayoutLine *layout_line,
-;;;                                           PangoRectangle *ink_rect,
-;;;                                           PangoRectangle *logical_rect);
-;;;
-;;; Computes the logical and ink extents of layout_line in device units. This
-;;; function just calls pango_layout_line_get_extents() followed by two
-;;; pango_extents_to_pixels() calls, rounding ink_rect and logical_rect such
-;;; that the rounded rectangles fully contain the unrounded one (that is, passes
-;;; them as first argument to pango_extents_to_pixels()).
-;;;
-;;; layout_line :
-;;;     a PangoLayoutLine
-;;;
-;;; ink_rect :
-;;;     rectangle used to store the extents of the glyph string as drawn, or
-;;;     NULL
-;;;
-;;; logical_rect :
-;;;     rectangle used to store the logical extents of the glyph string, or NULL
+;;; pango_layout_line_get_extents () -> pango-layout-line-extents
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_line_get_extents" %pango-layout-line-extents) :void
+  (line (g-boxed-foreign pango-layout-line))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-line-extents (line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with the extents of
+    the glyph string as drawn, or NULL @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with extents of
+    the glyph string, or NULL
+  @end{return}
+  @begin{short}
+    Computes the logical and ink extents of a layout line.
+  @end{short}
+  See the function @fun{pango-font-glyph-extents} for details about the
+  interpretation of the rectangles.
+  @see-class{pango-layout-line}
+  @see-symbol{pango-rectangle}
+  @see-function{pango-font-glyph-extents}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-line-extents line ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-line-extents)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_line_get_pixel_extents () -> pango-layout-line-pixel-extents
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_line_get_pixel_extents"
+          %pango-layout-line-pixel-extents) :void
+  (line (g-boxed-foreign pango-layout-line))
+  (ink-rect (:pointer (:struct pango-rectangle)))
+  (logical-rect (:pointer (:struct pango-rectangle))))
+
+(defun pango-layout-line-pixel-extents (line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @begin{return}
+    @code{ink-rect} -- a @symbol{pango-rectangle} instance with the extents of
+    the glyph string as drawn, or NULL @br{}
+    @code{logical-rect} -- a @symbol{pango-rectangle} instance with extents of
+    the glyph string, or NULL
+  @end{return}
+  @begin{short}
+    Computes the logical and ink extents of @arg{line} in device units.
+  @end{short}
+  This function just calls the function @fun{pango-layout-line-extents}
+  followed by two @fun{pango-extents-to-pixels} calls, rounding @arg{ink-rect}
+  and @arg{logical-rect} such that the rounded rectangles fully contain the
+  unrounded one (that is, passes them as first argument to the function
+  @fun{pango-extents-to-pixels}).
+  @see-class{pango-layout-line}
+  @see-symbol{pango-rectangle}
+  @see-function{pango-layout-line-extents}
+  @see-function{pango-extents-to-pixels}"
+  (with-foreign-objects ((ink-rect '(:pointer (:struct pango-rectangle)))
+                         (logical-rect '(:pointer (:struct pango-rectangle))))
+    (%pango-layout-line-pixel-extents line ink-rect logical-rect)
+    (values ink-rect logical-rect)))
+
+(export 'pango-layout-line-pixel-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_line_index_to_x ()
-;;;
-;;; void pango_layout_line_index_to_x (PangoLayoutLine *line,
-;;;                                    int index_,
-;;;                                    gboolean trailing,
-;;;                                    int *x_pos);
-;;;
-;;; Converts an index within a line to a X position.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; index_ :
-;;;     byte offset of a grapheme within the layout
-;;;
-;;; trailing :
-;;;     an integer indicating the edge of the grapheme to retrieve the position
-;;;     of. If > 0, the trailing edge of the grapheme, if 0, the leading of the
-;;;     grapheme.
-;;;
-;;; x_pos :
-;;;     location to store the x_offset (in Pango unit)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_line_index_to_x" %pango-layout-line-index-to-x) :void
+  (line (g-boxed-foreign pango-layout-line))
+  (index :int)
+  (trailing :boolean)
+  (x-pos (:pointer :int)))
+
+(defun pango-layout-line-index-to-x (line index trailing)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @argument[index]{an integer with the byte offset of a grapheme within the
+    layout}
+  @argument[trailing]{a boolean indicating the edge of the grapheme to retrieve
+    the position of, if @em{true}, the trailing edge of the grapheme, if
+    @em{false}, the leading of the grapheme}
+  @begin{return}
+    An integer with the x offset (in Pango unit).
+  @end{return}
+  @begin{short}
+    Converts an index within a line to a x position.
+  @end{short}
+  @see-class{pango-layout-line}"
+  (with-foreign-object (x-pos :int)
+    (%pango-layout-line-index-to-x line index trailing x-pos)
+    (values (mem-ref x-pos :int))))
+
+(export 'pango-layout-line-index-to-x)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_line_x_to_index ()
-;;;
-;;; gboolean pango_layout_line_x_to_index (PangoLayoutLine *line,
-;;;                                        int x_pos,
-;;;                                        int *index_,
-;;;                                        int *trailing);
-;;;
-;;; Converts from x offset to the byte index of the corresponding character
-;;; within the text of the layout. If x_pos is outside the line, index_ and
-;;; trailing will point to the very first or very last position in the line.
-;;; This determination is based on the resolved direction of the paragraph; for
-;;; example, if the resolved direction is right-to-left, then an X position to
-;;; the right of the line (after it) results in 0 being stored in index_ and
-;;; trailing. An X position to the left of the line results in index_ pointing
-;;; to the (logical) last grapheme in the line and trailing being set to the
-;;; number of characters in that grapheme. The reverse is true for a
-;;; left-to-right line.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; x_pos :
-;;;     the X offset (in Pango units) from the left edge of the line.
-;;;
-;;; index_ :
-;;;     location to store calculated byte index for the grapheme in which the
-;;;     user clicked
-;;;
-;;; trailing :
-;;;     location to store an integer indicating where in the grapheme the user
-;;;     clicked. It will either be zero, or the number of characters in the
-;;;     grapheme. 0 represents the leading edge of the grapheme
-;;;
-;;; Returns :
-;;;     FALSE if x_pos was outside the line, TRUE if inside
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; pango_layout_line_get_x_ranges ()
-;;;
-;;; void pango_layout_line_get_x_ranges (PangoLayoutLine *line,
-;;;                                      int start_index,
-;;;                                      int end_index,
-;;;                                      int **ranges,
-;;;                                      int *n_ranges);
-;;;
-;;; Gets a list of visual ranges corresponding to a given logical range. This
-;;; list is not necessarily minimal - there may be consecutive ranges which are
-;;; adjacent. The ranges will be sorted from left to right. The ranges are with
-;;; respect to the left edge of the entire layout, not with respect to the line.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; start_index :
-;;;     Start byte index of the logical range. If this value is less than the
-;;;     start index for the line, then the first range will extend all the way
-;;;     to the leading edge of the layout. Otherwise it will start at the
-;;;     leading edge of the first character.
-;;;
-;;; end_index :
-;;;     Ending byte index of the logical range. If this value is greater than
-;;;     the end index for the line, then the last range will extend all the way
-;;;     to the trailing edge of the layout. Otherwise, it will end at the
-;;;     trailing edge of the last character.
-;;;
-;;; ranges :
-;;;     location to store a pointer to an array of ranges. The array will be of
-;;;     length 2*n_ranges, with each range starting at (*ranges)[2*n] and of
-;;;     width (*ranges)[2*n + 1] - (*ranges)[2*n]. This array must be freed
-;;;     with g_free(). The coordinates are relative to the layout and are in
-;;;     Pango units
-;;;
-;;; n_ranges :
-;;;     The number of ranges stored in ranges.
-;;; ----------------------------------------------------------------------------
+(defcfun ("pango_layout_line_x_to_index" %pango-layout-line-x-to-index) :boolean
+  (line  (g-boxed-foreign pango-layout-line))
+  (x-pos :int)
+  (index (:pointer :int))
+  (trailing (:pointer :int)))
+
+(defun pango-layout-line-x-to-index (line x-pos)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @argument[x-pos]{an integer weth the x offset (in Pango units) from the left
+    edge of the line}
+  @begin{return}
+    @code{index} -- an integer with the calculated byte index for the grapheme
+    in which the user clicked @br{}
+    @code{trailing} -- an integer indicating where in the grapheme the user
+    clicked. It will either be zero, or the number of characters in the
+    grapheme. 0 represents the leading edge of the grapheme.
+    @code{bool} -- @em{false} if @arg{x-pos} was outside the line, @em{true}
+    if inside
+  @end{return}
+  @begin{short}
+    Converts from x offset to the byte index of the corresponding character
+    within the text of the layout.
+  @end{short}
+  If @arg{x-pos} is outside the line, @arg{index} and @arg{trailing} will point
+  to the very first or very last position in the line. This determination is
+  based on the resolved direction of the paragraph; for example, if the resolved
+  direction is right-to-left, then an x position to the right of the line (after
+  it) results in 0 being stored in @arg{index} and @arg{trailing}. An x position
+  to the left of the line results in @arg{index} pointing to the (logical) last
+  grapheme in the line and trailing being set to the number of characters in
+  that grapheme. The reverse is true for a left-to-right line.
+  @see-class{pango-layout-line-x-to-index}"
+  (with-foreign-objects ((index :int) (trailing :int))
+    (let ((bool (%pango-layout-line-x-to-index line x-pos index trailing)))
+      (values (mem-ref index :int)
+              (mem-ref trailing :int)
+              bool))))
+
+(export 'pango-layout-line-x-to-index)
 
 ;;; ----------------------------------------------------------------------------
-;;; pango_layout_line_get_height ()
-;;;
-;;; void
-;;; pango_layout_line_get_height (PangoLayoutLine *line,
-;;;                               int *height);
-;;;
-;;; Computes the height of the line, ie the distance between this and the
-;;; previous lines baseline.
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; height :
-;;;     return location for the line height.
-;;;
-;;; Since 1.44
+;;; pango_layout_line_get_x_ranges () -> pango-layout-line-x-ranges
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Return a Lisp with the values.
+
+(defcfun ("pango_layout_line_get_x_ranges" pango-layout-line-x-ranges) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-16}
+  @argument[iter]{a @class{pango-layout-iter} instance}
+  @argument[start-index]{an integer with the start byte index of the logical
+    range. If this value is less than the start index for the line, then the
+    first range will extend all the way to the leading edge of the layout.
+    Otherwise it will start at the leading edge of the first character.}
+  @argument[end-index]{an integer with the ending byte index of the logical
+    range. If this value is greater than the end index for the line, then the
+    last range will extend all the way to the trailing edge of the layout.
+    Otherwise, it will end at the trailing edge of the last character.}
+  @begin{return}
+    @code{ranges} -- a pointer to an array of ranges. The array will be of
+    length 2*n_ranges, with each range starting at (*ranges)[2*n] and of
+    width (*ranges)[2*n + 1] - (*ranges)[2*n]. This array must be freed with
+    @fun{g-free}. The coordinates are relative to the layout and are in
+    Pango units @br{}
+    @code{n-ranges} -- The number of ranges stored in ranges.
+  @end{return}
+  @begin{short}
+    Gets a list of visual ranges corresponding to a given logical range.
+  @end{short}
+  This list is not necessarily minimal - there may be consecutive ranges which
+  are adjacent. The ranges will be sorted from left to right. The ranges are
+  with respect to the left edge of the entire layout, not with respect to the
+  line.
+  @see-class{pango-layout-line}"
+  (line (g-boxed-foreign pango-layout-line))
+  (start-index :int)
+  (end-index :int)
+  (ranges :pointer)
+  (n-ranges (:pointer :int)))
+
+(export 'pango-layout-line-x-ranges)
+
+;;; ----------------------------------------------------------------------------
+;;; pango_layout_line_get_height () -> pango-layout-line-height
+;;; ----------------------------------------------------------------------------
+
+#+pango-1-44
+(defcfun ("pango_layout_line_get_height" %pango-layout-line-height) :void
+  (line (g-boxed-foreign pango-layout-line))
+  (height (:pointer :int)))
+
+#+pango-1-44
+(defun pango-layout-line-height (line)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-15}
+  @argument[line]{a @class{pango-layout-line} instance}
+  @return{An integer with the line height.}
+  @begin{short}
+    Computes the height of the line, i.e. the distance between this and the
+    previous lines baseline.
+  @end{short}
+
+  Since 1.44
+  @see-class{pango-layout-line}"
+  (with-foreign-object (height :int)
+    (%pango-layout-line-height line height)
+    (values (mem-ref height :int))))
+
+#+pango-1-44
+(export 'pango-layout-line-height)
 
 ;;; --- End of file pango.layout.lisp ------------------------------------------
