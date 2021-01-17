@@ -87,3 +87,8 @@ TODO
 /test/rtest-resources.gresource
 /test/rtest-gio-resources.gresource
 /test/*.rc
+/test/image.png
+/demo/cairo-example/*.png
+/demo/cairo-example/*.pdf
+/demo/cairo-example/*.svg
+/demo/cairo-example/*.gresource
