@@ -116,9 +116,9 @@
 ;;;
 ;;; Description
 ;;;
-;;;     pango_shape() produces a string of glyphs which can be measured or drawn
-;;;     to the screen. The following structures are used to store information
-;;;     about glyphs.
+;;;     pango_shape() produces a string of glyphs which can be measured or
+;;;     drawn to the screen. The following structures are used to store
+;;;     information about glyphs.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -185,6 +185,25 @@
   @see-function{pango-font-glyph-extents}")
 
 (export 'pango-rectangle)
+
+;;; ----------------------------------------------------------------------------
+
+(defun pango-rectangle-x (rect)
+  (foreign-slot-value rect '(:struct pango-rectangle) 'x))
+
+(defun pango-rectangle-y (rect)
+  (foreign-slot-value rect '(:struct pango-rectangle) 'y))
+
+(defun pango-rectangle-width (rect)
+  (foreign-slot-value rect '(:struct pango-rectangle) 'width))
+
+(defun pango-rectangle-height (rect)
+  (foreign-slot-value rect '(:struct pango-rectangle) 'height))
+
+(export 'pango-rectangle-x)
+(export 'pango-rectangle-y)
+(export 'pango-rectangle-width)
+(export 'pango-rectangle-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoMatrix
