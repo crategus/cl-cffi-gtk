@@ -338,10 +338,13 @@
 ;;; pango_cairo_font_map_get_font_type () -> pango-cairo-font-map-font-type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_cairo_font_map_get_font_type" pango-cairo-font-map-font-type)
+(defcfun ("pango_cairo_font_map_get_font_type" %pango-cairo-font-map-font-type)
     cairo-font-type-t
+  (fontmap :pointer)) ; pango-font-map
+
+(defun pango-cairo-font-map-font-type (fontmap)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-9}
+ "@version{2021-1-19}
   @argument[fontmap]{a @class{pango-cairo-font-map} object}
   @begin{return}
     A value of the @symbol{cairo-font-type-t} enumeration for the Cairo font
@@ -350,9 +353,16 @@
   @begin{short}
     Gets the type of Cairo font backend that @arg{fontmap} uses.
   @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+(pango-cairo-font-map-font-type (pango-cairo-font-map-default)) => :FT
+    @end{pre}
+  @end{dictionary}
   @see-class{pango-cairo-font-map}
   @see-symbol{cairo-font-type-t}"
-  (fontmap (g-object pango-cairo-font-map))) ; pango-cairo-font-map
+  (%pango-cairo-font-map-font-type (if (pointerp fontmap)
+                                       fontmap
+                                       (pointer fontmap))))
 
 (export 'pango-cairo-font-map-font-type)
 
@@ -363,15 +373,18 @@
 
 (defun (setf pango-cairo-font-map-resolution) (dpi fontmap)
   (foreign-funcall "pango_cairo_font_map_set_resolution"
-                   (g-object pango-cairo-font-map) fontmap
+                   :pointer (if (pointerp fontmap) fontmap (pointer fontmap))
                    :double dpi
                    :void)
   dpi)
 
-(defcfun ("pango_cairo_font_map_get_resolution" pango-cairo-font-map-resolution)
-    :double
+(defcfun ("pango_cairo_font_map_get_resolution"
+          %pango-cairo-font-map-resolution) :double
+  (fontmap :pointer))
+
+(defun pango-cairo-font-map-resolution (fontmap)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-9}
+ "@version{2021-1-19}
   @argument[fontmap]{a @class{pango-cairo-font-map} object}
   @argument[dpi]{a double float with the resolution in \"dots per inch\",
     physical inches are not actually involved, the terminology is conventional}
@@ -384,10 +397,17 @@
   the resolution for the fontmap. This is a scale factor between points
   specified in a @class{pango-font-description} and Cairo units. The default
   value is 96, meaning that a 10 point font will be 13 units high:
- (10 * 96 / 72 = 13.3).
+  (10 * 96 / 72 = 13.3).
+  @begin[Example]{dictionary}
+    @begin{pre}
+(pango-cairo-font-map-resolution (pango-cairo-font-map-default)) => 96.0d0
+    @end{pre}
+  @end{dictionary}
   @see-class{pango-cairo-font-map}
   @see-class{pango-font-description}"
-  (fontmap (g-object pango-cairo-font-map)))
+  (%pango-cairo-font-map-resolution (if (pointerp fontmap)
+                                        fontmap
+                                        (pointer fontmap))))
 
 (export 'pango-cairo-font-map-resolution)
 
