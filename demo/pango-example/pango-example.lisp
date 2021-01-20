@@ -1,6 +1,7 @@
 (defpackage :pango-example
   (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :iterate :common-lisp)
   (:export #:example-text-centered
+           #:example-text-metrics
            #:example-text-soulmate
   ))
 
@@ -10,4 +11,4 @@
   (let ((system-path (asdf:system-source-directory :pango-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-1-17
+;;; 2021-1-19
