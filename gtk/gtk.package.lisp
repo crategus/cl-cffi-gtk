@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -3256,6 +3256,7 @@ setup_tree (void)
       @about-function{gtk-font-chooser-font-family}
       @about-function{gtk-font-chooser-font-face}
       @about-function{gtk-font-chooser-font-size}
+      @about-symbol{gtk-font-filter-func-cb}
       @about-function{gtk-font-chooser-set-filter-func}
       @about-function{gtk-font-chooser-font-map}
     @end{subsection}
