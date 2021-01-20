@@ -347,7 +347,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-layout 'type)
- "@version{2021-1-16}
+ "@version{2021-1-18}
   @begin{short}
     The @sym{pango-layout} class represents an entire paragraph of text.
   @end{short}
@@ -362,7 +362,7 @@
   and simply treat the results of a @sym{pango-layout} object as a list of
   lines.
   @image[layout]{Figure. Adjustable parameters (on the left) and font metrics
-    (on the right) for a PangoLayout}
+    (on the right) for a Pango layout}
 
   The @sym{pango-layout} class is opaque, and has no user-visible fields.
   @see-class{pango-context}")
@@ -511,8 +511,8 @@
 (defun (setf pango-layout-text) (text layout)
   (foreign-funcall "pango_layout_set_text"
                    (g-object pango-layout) layout
-                   g-string text
-                   :int (length text))
+                   :string text
+                   :int -1)  ;; (length text) is wrong, byte length is needed
   text)
 
 (defcfun ("pango_layout_get_text" pango-layout-text) :string
@@ -966,7 +966,7 @@
 
 (defcfun ("pango_layout_get_spacing" pango-layout-spacing) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-1-15}
+ "@version{2021-1-19}
   @syntax[]{(pango-layout-spacing layout) => spacing}
   @syntax[]{(setf (pango-layout-spacing layout) spacing)}
   @argument[layout]{a @class{pango-layout} object}
@@ -975,9 +975,9 @@
     Accessor of the spacing in Pango units of the Pango layout.
   @end{short}
 
-  The function @sym{pango-layout-spacing} gets the amount of spacing between the
-  lines of the layout. The function @sym{(setf pango-layout-spacing)} sets the
-  amount of spacing in Pango unit between the lines of the layout. When placing
+  The function @sym{pango-layout-spacing} gets the amount of spacing in Pango
+  units between the lines of the layout. The function
+  @sym{(setf pango-layout-spacing)} sets the amount of spacing. When placing
   lines with spacing, Pango arranges things so that
   @begin{pre}
 line2.top = line1.bottom + spacing
@@ -986,7 +986,7 @@ line2.top = line1.bottom + spacing
     Since 1.44, Pango defaults to using the line height (as determined by the
     font) for placing lines. The spacing set with this function is only taken
     into account when the line-height factor is set to zero with the function
-    @func{pango-layout-line-spacing}.
+    @fun{pango-layout-line-spacing}.
   @end{dictionary}
   @see-class{pango-layout-spacing}
   @see-function{pango-layout-line-spacing}"
@@ -1387,7 +1387,7 @@ baseline2 = baseline1 + factor * height2
 
 (defun pango-layout-index-to-line-x (layout index trailing)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-15}
+ "@version{2021-1-18}
   @argument[layout]{a @class{pango-layout} object}
   @argument[index]{an integer with the byte index of a grapheme within the
     layout}
@@ -1395,10 +1395,10 @@ baseline2 = baseline1 + factor * height2
     retrieve the position of, if 0, the trailing edge of the grapheme, if > 0,
     the leading of the grapheme}
   @begin{return}
-    @code{line} -- an integer with the resulting line index, (which will
-    between 0 and @code{(pango-layout-line-count layout) - 1, or NULL @br{}
+    @code{line} -- an integer with the resulting line index, (which will between
+    0 and @code{(pango-layout-line-count layout)} - 1, or @code{nil} @br{}
     @code{x-pos} -- an integer with the resulting position within line
-    (@code{+pango-scale+} units per device unit), or NULL}
+    (@code{+pango-scale+} units per device unit), or @code{nil}
   @end{return}
   @begin{short}
     Converts from byte @arg{index} within the layout to line and x position.
