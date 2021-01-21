@@ -80,7 +80,6 @@
   @begin{short}
     Describes the panning direction of a @class{gtk-gesture-pan}.
   @end{short}
-  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkPanDirection\" gtk-pan-direction
   (:export t
@@ -136,7 +135,7 @@
  lambda (gesture n-press x y)    : Run Last
     @end{pre}
     This signal is emitted once a panning gesture along the expected axis is
-    detected. Since 3.14
+    detected.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-pan} object which received the
         signal.}
@@ -157,7 +156,7 @@
       't)
  "The @code{orientation} property of type @symbol{gtk-orientation}
   (Read / Write) @br{}
-  The expected orientation of pan gestures. Since 3.14 @br{}
+  The expected orientation of pan gestures. @br{}
   Default value: @code{:horizontal}")
 
 #+cl-cffi-gtk-documentation
@@ -178,8 +177,6 @@
   orientation of the pan gestures that this gesture expects. The slot access
   function @sym{(setf gtk-gesture-pan-orientation)} sets the orientation to be
   expected on pan gestures.
-
-  Since 3.14
   @see-class{gtk-gesture-pan}")
 
 ;;; ----------------------------------------------------------------------------
@@ -197,8 +194,6 @@
   @begin{short}
     Returns a newly created gesture that recognizes pan gestures.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-pan}
   @see-symbol{gtk-orientation}"
   (make-instance 'gtk-gesture-pan

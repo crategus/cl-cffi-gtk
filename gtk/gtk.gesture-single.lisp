@@ -104,8 +104,6 @@
   @fun{gtk-gesture-single-button}, or react to any mouse button by setting 0.
   While the gesture is active, the button being currently pressed can be known
   through the function @fun{gtk-gesture-single-current-button}.
-
-  Since 3.14
   @see-slot{gtk-gesture-single-button}
   @see-slot{gtk-gesture-single-exclusive}
   @see-slot{gtk-gesture-single-touch-only}
@@ -121,8 +119,7 @@
 (setf (documentation (atdoc:get-slot-from-name "button"
                                                'gtk-gesture-single) 't)
  "The @code{button} property of type @code{:uint} (Read / Write) @br{}
-  Mouse button number to listen to, or 0 to listen for any button. Since 3.14
-  @br{}
+  Mouse button number to listen to, or 0 to listen for any button. @br{}
   Default value: 1")
 
 #+cl-cffi-gtk-documentation
@@ -144,8 +141,6 @@
   slot access function @sym{(setf gtk-gesture-single-button)} sets the button
   number gesture listens to. If non-0, every button press from a different
   button number will be ignored. Touch events implicitly match with button 1.
-
-  Since 3.14
   @see-class{gtk-gesture-single}")
 
 ;;; --- gtk-gesture-single-exclusive -------------------------------------------
@@ -155,7 +150,7 @@
                                                'gtk-gesture-single) 't)
  "The @code{exclusive} property of type @code{:boolean} (Read / Write) @br{}
   Whether the gesture is exclusive. Exclusive gestures only listen to pointer
-  and pointer emulated events. Since 3.14@br{}
+  and pointer emulated events. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -178,8 +173,6 @@
   An exclusive gesture will only handle pointer and \"pointer emulated\" touch
   events, so at any given time, there is only one sequence able to interact
   with those.
-
-  Since 3.14
   @see-class{gtk-gesture-single}")
 
 ;;; --- gtk-gesture-single-touch-only ------------------------------------------
@@ -188,7 +181,7 @@
 (setf (documentation (atdoc:get-slot-from-name "touch-only"
                                                'gtk-gesture-single) 't)
  "The @code{touch-only} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the gesture handles only touch events. Since 3.14 @br{}
+  Whether the gesture handles only touch events. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -212,8 +205,6 @@
   is only triggered by touch events. If @arg{touch-only} is @em{true}, gesture
   will only handle events of type @code{:touch-begin}, @code{:touch-update} or
   @code{:touch-end}. If @em{false}, mouse events will be handled too.
-
-  Since 3.14
   @see-class{gtk-gesture-single}")
 
 ;;; ----------------------------------------------------------------------------
@@ -231,8 +222,6 @@
     Returns the button number currently interacting with @arg{gesture}, or 0 if
     there is none.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-single}"
   (gesture (g-object gtk-gesture-single)))
 
@@ -255,8 +244,6 @@
   @end{short}
   This is only meaningful if the function @fun{gtk-gesture-is-active} returns
   @em{true}.
-
-  Since 3.14
   @see-class{gtk-gesture-single}
   @see-function{gtk-gesture-is-active}"
   (gesture (g-object gtk-gesture-single)))

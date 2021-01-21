@@ -119,11 +119,9 @@
    (position-set
     gtk-paned-position-set
     "position-set" "gboolean" t t)
-   #+gtk-3-16
    (wide-handle
     gtk-pandes-wide-handle
-    "wide-handle" "gboolean" t t)
-   ))
+    "wide-handle" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
@@ -419,15 +417,15 @@
 
 ;;; --- gtk-paned-wide-handled -------------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wide-handle" 'gtk-paned) 't)
  "The @code{wide-handled} property of type @code{:boolean} (Read / Write) @br{}
   Setting this property to @em{true} indicates that the paned needs to provide
   stronger visual separation, e.g. because it separates between two notebooks,
-  whose tab rows would otherwise merge visually. Since 3.16 @br{}
+  whose tab rows would otherwise merge visually. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-wide-handle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-wide-handle 'function)
@@ -445,8 +443,6 @@
   The slot access function @sym{gtk-paned-wide-handled} gets the
   @code{wide-handle} property. The slot access function
   @sym{(setf gtk-paned-wide-handled)} sets the @code{wide-handle} property.
-
-  Since 3.16
   @see-class{gtk-paned}")
 
 ;;; ----------------------------------------------------------------------------

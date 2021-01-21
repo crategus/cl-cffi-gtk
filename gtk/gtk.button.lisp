@@ -137,8 +137,7 @@
                 "GtkActionable"
                 "GtkActivatable")
    :type-initializer "gtk_button_get_type")
-  (#+gtk-3-6
-   (always-show-image
+  ((always-show-image
     gtk-button-always-show-image
     "always-show-image" "gboolean" t t)
    (focus-on-click
@@ -363,7 +362,7 @@
 
 ;;; --- gtk-button-always-show-image -------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "always-show-image"
                                                'gtk-button) t)
  "The @code{always-show-image} property of type @code{:boolean}
@@ -371,10 +370,10 @@
   If @em{true}, the button will ignore the
   @slot[gtk-settings]{gtk-button-images} setting and always show the image, if
   available. Use this property if the button would be useless or hard to use
-  without the image. Since 3.6 @br{}
+  without the image. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-always-show-image 'function)
@@ -396,8 +395,6 @@
 
   Use this property if the button would be useless or hard to use without
   the image.
-
-  Since 3.6
   @see-class{gtk-button}
   @see-class{gtk-settings}
   @see-function{gtk-settings-gtk-button-images}")
@@ -818,8 +815,6 @@
 
   This function is a convenience wrapper around @fun{gtk-button-new} and
   @fun{gtk-button-image}.
-
-  Since 3.10
   @see-class{gtk-button}
   @see-symbol{gtk-icon-size}
   @see-function{gtk-button-new}

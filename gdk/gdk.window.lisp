@@ -249,9 +249,7 @@
   (:temp 3)
   (:foreign 4)
   (:offscreen 5)
-  #+gdk-3-14
-  (:subsurface 6)
-)
+  (:subsurface 6))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"
@@ -282,7 +280,7 @@
       \"Offscreen Windows\".}
     @entry[:subsurface]{Subsurface-based window. This window is visually tied
       to a toplevel, and is moved/stacked with it. Currently this window type
-      is only implemented in Wayland. Since 3.14}
+      is only implemented in Wayland.}
   @end{table}
   @see-class{gdk-window}
   @see-class{gtk-window}
@@ -1054,14 +1052,13 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; enum GdkFullscreenMode
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (define-g-enum "GdkFullscreenMode" gdk-fullscreen-mode
   (:export t
    :type-initializer "gdk_fullscreen_mode_get_type")
   (:current-monitor 0)
   (:all-monitors 1))
 
-#+(and gdk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-fullscreen-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-fullscreen-mode atdoc:*external-symbols*)
  "@version{2020-9-6}
@@ -1069,8 +1066,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     Indicates which monitor (in a multi-head setup) a window should span over
     when in fullscreen mode.
   @end{short}
-
-  Since 3.8
   @begin{pre}
 (define-g-enum \"GdkFullscreenMode\" gdk-fullscreen-mode
   (:export t
@@ -2069,7 +2064,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_set_fullscreen_mode () -> gdk-window-fullscreen-mode
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (defun (setf gdk-window-fullscreen-mode) (mode window)
   (foreign-funcall "gdk_window_set_fullscreen_mode"
                    (g-object gdk-window) window
@@ -2077,7 +2071,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
                    :void)
   mode)
 
-#+gdk-3-8
 (defcfun ("gdk_window_get_fullscreen_mode" gdk-window-fullscreen-mode)
     gdk-fullscreen-mode
  #+cl-cffi-gtk-documentation
@@ -2109,14 +2102,11 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   Not all window managers support this, so you can not rely on the fullscreen
   window to span over the multiple monitors when @code{:on-all-monitors} is
   specified.
-
-  Since 3.8
   @see-class{gdk-window}
   @see-class{gdk-screen}
   @see-symbol{gdk-fullscreen-mode}"
   (window (g-object gdk-window)))
 
-#+gdk-3-8
 (export 'gdk-window-fullscreen-mode)
 
 ;;; ----------------------------------------------------------------------------
@@ -2865,7 +2855,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_show_window_menu ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-14
 (defcfun ("gdk_window_show_window_menu" gdk-window-show-window-menu) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-9-22}
@@ -2879,13 +2868,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   traditional windows managed by the window manager. This is useful for windows
   using client-side decorations, activating it with a right-click on the window
   decorations.
-
-  Since 3.14
   @see-class{gdk-window}"
   (window (g-object gdk-window))
   (event (g-boxed-foreign gdk-event)))
 
-#+gdk-3-14
 (export 'gdk-window-show-window-menu)
 
 ;;; ----------------------------------------------------------------------------
@@ -2955,7 +2941,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_get_scale_factor () -> gdk-window-scale-factor
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_window_get_scale_factor" gdk-window-scale-factor) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-9-23}
@@ -2975,19 +2960,15 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
   The scale of a window may change during runtime, if this happens a configure
   event will be sent to the toplevel window.
-
-  Since 3.10
   @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
-#+gdk-3-10
 (export 'gdk-window-scale-factor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_opaque_region ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_window_set_opaque_region" gdk-window-set-opaque-region) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-9-23}
@@ -3006,14 +2987,11 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   GTK+ will update this property automatically if the window background is
   opaque, as we know where the opaque regions are. If your window background
   is not opaque, please update this property in your \"style-updated\" handler.
-
-  Since 3.10
   @see-class{gdk-window}
   @see-symbol{cairo-region-t}"
   (window (g-object gdk-window))
   (region (:pointer (:struct cairo-region-t))))
 
-#+gdk-3-10
 (export 'gdk-window-set-opaque-region)
 
 ;;; ----------------------------------------------------------------------------
@@ -3723,7 +3701,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_get_frame_clock () -> gdk-window-frame-clock
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (defcfun ("gdk_window_get_frame_clock" gdk-window-frame-clock)
     (g-object gdk-frame-clock)
  #+cl-cffi-gtk-documentation
@@ -3735,13 +3712,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   The frame clock for a window never changes unless the window is reparented to
   a new toplevel window.
-
-  Since 3.8
   @see-class{gdk-window}
   @see-class{gdk-frame-clock}"
   (window (g-object gdk-window)))
 
-#+gdk-3-8
 (export 'gdk-window-frame-clock)
 
 ;;; ----------------------------------------------------------------------------
@@ -4573,7 +4547,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_set_shadow_width ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-12
 (defcfun ("gdk_window_set_shadow_width" gdk-window-set-shadow-width) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-9-24}
@@ -4593,8 +4566,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   Note that this property is automatically updated by GTK+, so this function
   should only be used by applications which do not use GTK+ to create toplevel
   windows.
-
-  Since 3.12
   @see-class{gdk-window}"
   (window (g-object gdk-window))
   (left :int)
@@ -4602,7 +4573,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   (top :int)
   (bottom :int))
 
-#+gdk-3-12
 (export 'gdk-window-set-shadow-width)
 
 ;;; ----------------------------------------------------------------------------
@@ -4930,7 +4900,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; -> gdk-window-device-position-double
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_window_get_device_position_double"
           %gdk-window-device-position-double) (g-object gdk-window)
   (window (g-object gdk-window))
@@ -4939,7 +4908,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   (y (:pointer :double))
   (mask (:pointer gdk-modifier-type)))
 
-#+gdk-3-10
 (defun gdk-window-device-position-double (window device)
  #+cl-cffi-gtk-documentation
  "@version{2020-4-28}
@@ -4958,8 +4926,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   The position is given in coordinates relative to the upper left corner of
   the window.
-
-  Since 3.10
   @see-class{gdk-window}
   @see-function{gdk-window-device-position}"
   (with-foreign-objects ((x :double) (y :double) (mask 'gdk-modifier-type))
@@ -4969,7 +4935,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
               (mem-ref y :double)
               (mem-ref mask 'gdk-modifier-type)))))
 
-#+gdk-3-10
 (export 'gdk-window-device-position-double)
 
 ;;; ----------------------------------------------------------------------------
@@ -5054,7 +5019,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_get_children_with_user_data ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_window_get_children_with_user_data"
            gdk-window-children-with-user-data) (g-list (g-object gdk-window))
  #+cl-cffi-gtk-documentation
@@ -5071,13 +5035,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
   The list is returned in (relative) stacking order, i.e. the lowest window
   is first.
-
-  Since 3.10
   @see-class{gdk-window}"
   (window (g-object gdk-window))
   (user-data :pointer))
 
-#+gdk-3-10
 (export 'gdk-window-children-with-user-data)
 
 ;;; ----------------------------------------------------------------------------
@@ -5552,7 +5513,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; gdk_window_set_event_compression () -> gdk-window-event-compression
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-12
 (defun (setf gdk-window-event-compression) (event-compression window)
   (foreign-funcall "gdk_window_set_event_compression"
                    (g-object gdk-window) window
@@ -5560,7 +5520,6 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
                    :void)
   event-compression)
 
-#+gdk-3-12
 (defcfun ("gdk_window_get_event_compression" gdk-window-event-compression)
     :boolean
  #+cl-cffi-gtk-documentation
@@ -5578,12 +5537,9 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   Some types of applications, e.g. paint programs, need to see all motion
   events and will benefit from turning off event compression. By default, event
   compression is enabled.
-
-  Since 3.12
   @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
-#+gdk-3-12
 (export 'gdk-window-event-compression)
 
 ;;; ----------------------------------------------------------------------------

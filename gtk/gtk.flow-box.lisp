@@ -142,7 +142,7 @@
       The \"activate\" signal is emitted when the user activates a child widget
       in a @class{gtk-flow-box}, either by clicking or double-clicking, or by
       using the Space or Enter key. While this signal is used as a keybinding
-      signal, it can be used by applications for their own purposes. Since 3.12
+      signal, it can be used by applications for their own purposes.
       @begin[code]{table}
         @entry[child]{The @sym{gtk-flow-box-child} widget on which the signal
         is emitted.}
@@ -237,7 +237,7 @@
  lambda (flowbox)
       @end{pre}
       The \"activate-cursor-child\" signal is a keybinding signal which gets
-      emitted when the user activates the flow box. Since 3.12
+      emitted when the user activates the flow box.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
           is emitted.}
@@ -247,7 +247,7 @@
  lambda (flowbox child)
       @end{pre}
       The \"child-activated signal\" is emitted when a child has been activated
-      by the user. Since 3.12
+      by the user.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
           is emitted.}
@@ -267,7 +267,6 @@
       Shift modifer does not. There are too many key combinations to list them
       all here. Arrow keys move by individual children. Home/End keys move to
       the ends of the box. PageUp/PageDown keys move vertically by pages.
-      Since 3.12
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
           is emitted.}
@@ -283,7 +282,7 @@
       @end{pre}
       The \"select-all\" signal is a keybinding signal which gets emitted to
       select all children of the box, if the selection mode permits it. The
-      default bindings for this signal is Ctrl-a. Since 3.12
+      default bindings for this signal is Ctrl-a.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
         is emitted.}
@@ -296,7 +295,6 @@
       selected children changes. Use the functions
       @fun{gtk-flow-box-selected-foreach} or
       @fun{gtk-flow-box-selected-children} to obtain the selected children.
-      Since 3.12
       @begin[code]{table}
         @entry[box]{The @sym{gtk-flow-box} on which the signal is emitted.}
       @end{table}
@@ -306,7 +304,7 @@
       @end{pre}
       The \"toggle-cursor-child\" signal is a keybinding signal which toggles
       the selection of the child that has the focus. The default binding for
-      this signal is Ctrl-Space. Since 3.12
+      this signal is Ctrl-Space.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
         is emitted.}
@@ -317,7 +315,7 @@
       @end{pre}
       The \"unselect-all\" signal is a keybinding signal which gets emitted to
       unselect all children of the box, if the selection mode permits it. The
-      default bindings for this signal is Ctrl-Shift-a. Since 3.12
+      default bindings for this signal is Ctrl-Shift-a.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
         is emitted.}
@@ -368,8 +366,6 @@
   whether children activate on single clicks. If @arg{single} is @em{true},
   children will be activated when you click on them, otherwise you need to
   double click.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-column-spacing --------------------------------------------
@@ -399,8 +395,6 @@
   horizontal spacing. The slot access function
   @sym{(setf gtk-flow-box-column-spacing)} sets the horizontal space to add
   between children.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-homogeneous -----------------------------------------------
@@ -432,8 +426,6 @@
   @sym{(setf gtk-flow-box-column-spacing)} sets the @code{homogeneous} property
   of the flow box, controlling whether or not all children of box are given
   equal space in the box.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-max-children-per-line -------------------------------------
@@ -470,8 +462,6 @@
   Setting the maximum number of children per line limits the overall natural
   size request to be no more than @arg{n-children} children long in the given
   orientation.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-min-children-per-line -------------------------------------
@@ -505,8 +495,6 @@
   minimum number of children per line. The slot access function
   @sym{(setf gtk-flow-box-max-children-per-line)} sets the minimum number of
   children to line up in the orientation of the flow box before flowing.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-row-spacing -----------------------------------------------
@@ -536,8 +524,6 @@
   vertical spacing. The slot access function
   @sym{(setf gtk-flow-box-max-children-per-line)} sets the vertical space to
   add between children.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; --- gtk-flow-box-selection-mode --------------------------------------------
@@ -568,8 +554,6 @@
   mode of the flow box. The slot access function
   @sym{(setf gtk-flow-box-selection-mode)} sets how selection works in the flow
   box.
-
-  Since 3.12
   @see-class{gtk-flow-box}")
 
 ;;; ----------------------------------------------------------------------------
@@ -585,8 +569,6 @@
   @begin{short}
     Creates a new flow box container.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (make-instance 'gtk-flow-box))
 
@@ -612,8 +594,6 @@
 
   If @arg{position} is -1, or larger than the total number of children in the
   flow box, then the widget will be appended to the end.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box))
   (widget (g-object gtk-widget))
@@ -636,8 +616,6 @@
   @begin{short}
     Gets the nth child in the flow box.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}
   @see-class{gtk-flow-box-child}"
   (flowbox (g-object gtk-flow-box))
@@ -692,8 +670,6 @@
 
   The adjustments have to be in pixel units and in the same coordinate system
   as the allocation for immediate children of the box.
-
-  Since 3.12
   @see-class{gtk-flow-box}
   @see-function{gtk-scrolled-window-hadjustment}"
   (flowbox (g-object gtk-flow-box))
@@ -721,8 +697,6 @@
 
   The adjustments have to be in pixel units and in the same coordinate system
   as the allocation for immediate children of the box.
-
-  Since 3.12
   @see-class{gtk-flow-box}
   @see-function{gtk-scrolled-window-vadjustment}"
   (flowbox (g-object gtk-flow-box))
@@ -780,8 +754,6 @@
   @end{short}
 
   Note that the selection cannot be modified from within this function.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (with-stable-pointer (ptr func)
     (%gtk-flow-box-selected-foreach flowbox
@@ -803,8 +775,6 @@
   @begin{short}
     Creates a list of all selected children.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box)))
 
@@ -822,8 +792,6 @@
   @begin{short}
     Selects a single child of the flow box, if the selection mode allows it.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box))
   (child (g-object gtk-flow-box-child)))
@@ -842,8 +810,6 @@
   @begin{short}
     Unselects a single child of the flow box, if the selection mode allows it.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box))
   (child (g-object gtk-flow-box-child)))
@@ -861,8 +827,6 @@
   @begin{short}
     Select all children of the flow box, if the selection mode allows it.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box)))
 
@@ -880,8 +844,6 @@
   @begin{short}
     Unselect all children of the flow box, if the selection mode allows it.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box)))
 
@@ -943,8 +905,6 @@
 
   Note that using a filter function is incompatible with using a model. See
   the function @fun{gtk-flow-box-bind-model}.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (%gtk-flow-box-set-filter-func flowbox
                                  (callback gtk-flow-box-filter-func-cb)
@@ -969,8 +929,6 @@
   changed due ot an external factor. For instance, this would be used if the
   filter function just looked for a specific search term, and the entry with
   the string has changed.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box)))
 
@@ -1035,8 +993,6 @@
 
   Note that using a sort function is incompatible with using a model. See
   the function @fun{gtk-flow-box-bind-model}.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (%gtk-flow-box-set-sort-func flowbox
                                (callback gtk-flow-box-sort-func-cb)
@@ -1059,8 +1015,6 @@
 
   Call this when the result of the sort function on the flow box is changed due
   to an external factor.
-
-  Since 3.12
   @see-class{gtk-flow-box}"
   (flowbox (g-object gtk-flow-box)))
 
@@ -1145,8 +1099,6 @@
     Creates a new @class{gtk-flow-box-child} widget, to be used as a child of a
     @class{gtk-flow-box} container.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flox-box-child}
   @see-class{gtk-flox-box}"
   (make-instance 'gtk-flow-box-child))
@@ -1166,8 +1118,6 @@
   @begin{short}
     Gets the current index of the child in its @class{gtk-flow-box} container.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flox-box-child}
   @see-class{gtk-flox-box}"
   (child (g-object gtk-flow-box-child)))
@@ -1188,8 +1138,6 @@
     Returns whether the child is currently selected in its @class{gtk-flow-box}
     container.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-flox-box-child}
   @see-class{gtk-flox-box}"
   (child (g-object gtk-flow-box-child)))
@@ -1222,8 +1170,6 @@
   into the widgets themselves. Another alternative is to call
   @fun{gtk-flow-box-invalidate-sort} on any model change, but that is more
   expensive.
-
-  Since 3.12
   @see-class{gtk-flox-box-child}
   @see-class{gtk-flox-box}
   @see-function{gtk-flow-box-invalidate-sort}"

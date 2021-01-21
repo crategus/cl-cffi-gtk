@@ -168,7 +168,6 @@
    (label
     gtk-label-label
     "label" "gchararray" t t)
-   #+gtk-3-10
    (lines
     gtk-label-lines
     "lines" "gint" t t)
@@ -211,15 +210,12 @@
    (wrap-mode
     gtk-label-wrap-mode
     "wrap-mode" "PangoWrapMode" t t)
-   #+gtk-3-16
    (xalign
     gtk-label-xalign
     "xalign" "gfloat" t t)
-   #+gtk-3-16
    (yalign
     gtk-label-yalign
-    "yalign" "gfloat" t t)
-   ))
+    "yalign" "gfloat" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-label 'type)
@@ -708,17 +704,16 @@
 
 ;;; --- gtk-label-lines --------------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "lines" 'gtk-label) 't)
  "The @code{lines} property of type @code{:int} (Read / Write) @br{}
   The number of lines to which an ellipsized, wrapping label should be limited.
   This property has no effect if the label is not wrapping or ellipsized. Set
-  this property to -1 if you do not want to limit the number of lines.
-  Since 3.10 @br{}
+  this property to -1 if you do not want to limit the number of lines. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-lines 'function)
@@ -738,8 +733,6 @@
   ellipsized, wrapping label should be limited. This has no effect if the label
   is not wrapping or ellipsized. Set this to -1 if you do not want to limit the
   number of lines.
-
-  Since 3.10
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-max-width-chars ----------------------------------------------
@@ -1156,18 +1149,17 @@
 
 ;;; --- gtk-label-xalign -------------------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-label) 't)
  "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
   The @code{xalign} property determines the horizontal aligment of the label
   text inside the labels size allocation. Compare this to the
   @slot[gtk-widget]{halign} property, which determines how the labels size
-  allocation is positioned in the space available for the label.
-  Since 3.16 @br{}
+  allocation is positioned in the space available for the label. @br{}
   Allowed values: [0,1] @br{}
   Default value: 0.5")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-xalign 'function)
@@ -1184,24 +1176,22 @@
   The slot access function @sym{gtk-label-xalign} sets the @code{xalign}
   property for the label. The slot access function @sym{(setf gtk-label-xalign)}
   sets the @code{xalign} property for the label.
-
-  Since 3.16
   @see-class{gtk-label}
   @see-function{gtk-label-yalign}")
 
 ;;; --- gtk-label-yalign -------------------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-label) 't)
  "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
   The @code{yalign} property determines the vertical aligment of the label text
   inside the labels size allocation. Compare this to @slot[gtk-widget]{valign},
   which determines how the labels size allocation is positioned in the space
-  available for the label. Since 3.16 @br{}
+  available for the label. @br{}
   Allowed values: [0,1] @br{}
   Default value: 0.5")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-yalign 'function)
@@ -1218,8 +1208,6 @@
   The slot access function @sym{gtk-label-yalign} sets the @code{yalign}
   property for the label. The slot access function @sym{(setf gtk-label-yalign)}
   sets the @code{yalign} property for the label.
-
-  Since 3.16
   @see-class{gtk-label}
   @see-function{gtk-label-yalign}")
 

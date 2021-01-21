@@ -110,9 +110,7 @@
    :type-initializer "gtk_dialog_flags_get_type")
   (:modal               #.(ash 1 0))
   (:destroy-with-parent #.(ash 1 1))
-  #+gtk-3-12
-  (:use-header-bar      #.(ash 1 2))
-  )
+  (:use-header-bar      #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
@@ -133,7 +131,7 @@
     @entry[:destroy-with-parent]{Destroy the dialog when its parent is
       destroyed, see the function @fun{gtk-window-destroy-with-parent}.}
     @entry[:use-header-bar]{Create the dialog with actions in the header bar
-      instead of an action area. Since 3.12}
+      instead of an action area.}
   @end{table}
   @see-class{gtk-dialog}
   @see-function{gtk-window-modal}
@@ -211,11 +209,9 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable")
    :type-initializer "gtk_dialog_get_type")
-  (#+gtk-3-12
-   (use-header-bar
+  ((use-header-bar
     gtk-dialog-use-header-bar
-    "use-header-bar" "gint" t t)
-    ))
+    "use-header-bar" "gint" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
@@ -444,18 +440,18 @@
 
 ;;; --- gtk-dialog-use-header-bar ----------------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-header-bar"
                                                'gtk-dialog) 't)
  "The @code{use-header-bar} property of type @code{:int}
   (Read / Write / Construct) @br{}
   @em{True} if the dialog uses a header bar for action buttons instead of the
   action area. For technical reasons, this property is declared as an integer
-  property, use the value 1 for @em{true} or -1 for @em{false}. Since 3.12 @br{}
+  property, use the value 1 for @em{true} or -1 for @em{false}. @br{}
   Allowed values: [-1, 1] @br{}
   Default value: -1")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-use-header-bar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-dialog-use-header-bar 'function)
@@ -472,8 +468,6 @@
   @em{True} if the dialog uses a header bar for action buttons instead of the
   action area. For technical reasons, this property is declared as an integer
   property, use the value 1 for @em{true} or -1 for @em{false}.
-
-  Since 3.12
   @see-class{gtk-dialog}")
 
 ;;; ----------------------------------------------------------------------------
@@ -886,7 +880,6 @@
 ;;; gtk_dialog_get_header_bar () -> gtk-dialog-header-bar
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defcfun ("gtk_dialog_get_header_bar" gtk-dialog-header-bar)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
@@ -898,14 +891,11 @@
   @end{short}
   Note that the header bar is only used by the dialog if the
   @slot[gtk-dialog]{use-header-bar} property is @em{true}.
-
-  Since 3.12
   @see-class{gtk-dialog}
   @see-class{gtk-box}
   @see-function{gtk-dialog-action-area}"
   (dialog (g-object gtk-dialog)))
 
-#+gtk-3-12
 (export 'gtk-dialog-header-bar)
 
 ;;; ----------------------------------------------------------------------------

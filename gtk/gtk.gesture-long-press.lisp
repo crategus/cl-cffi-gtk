@@ -88,7 +88,7 @@
  lambda (gesture)    : Run Last
       @end{pre}
       This signal is emitted whenever a press moved too far, or was released
-      before \"pressed\" happened. Since 3.14
+      before \"pressed\" happened.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-long-press} object which received
           the signal.}
@@ -98,7 +98,7 @@
  lambda (gesture x y)    : Run Last
       @end{pre}
       This signal is emitted whenever a press goes unmoved/unreleased longer
-      than what the GTK+ defaults tell. Since 3.14
+      than what the GTK+ defaults tell.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-long-press} object which received
           the signal.}
@@ -117,7 +117,7 @@
 (setf (documentation (atdoc:get-slot-from-name "delay-factor"
                       'gtk-gesture-long-press) 't)
  "The @code{delay-factor} property of type @code{:double} (Read / Write) @br{}
-  Factor by which to modify the default timeout. Since 3.14 @br{}
+  Factor by which to modify the default timeout. @br{}
   Allowed values: [0.5d0, 2.0d0] @br{}
   Default value: 1.0d0")
 
@@ -135,8 +135,6 @@
     Accessor of the @slot[gtk-gesture-long-press]{delay-factor} slot of the
     @class{gtk-gesture-long-press} class.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-long-press}")
 
 ;;; ----------------------------------------------------------------------------
@@ -153,8 +151,6 @@
   @begin{short}
     Returns a newly created gesture that recognizes long presses.
   @end{short}
-
-  Since 3.14
   @see-function{gtk-gesture-long-press}"
   (make-instance 'gtk-gesture-long-press
                  :widget widget))

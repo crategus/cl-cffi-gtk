@@ -528,8 +528,6 @@
   @begin{short}
     Creates a new model button widget.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-model-button}"
   (make-instance 'gtk-model-button))
 

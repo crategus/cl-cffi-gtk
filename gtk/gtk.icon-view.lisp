@@ -209,8 +209,7 @@
                 "GtkBuildable"
                 "GtkCellLayout")
    :type-initializer "gtk_icon_view_get_type")
-  (#+gtk-3-8
-   (activate-on-single-click
+  ((activate-on-single-click
     gtk-icon-view-activate-on-single-click
     "activate-on-single-click" "gboolean" t t)
    (cell-area
@@ -441,16 +440,16 @@
 
 ;;; --- gtk-icon-view-activate-on-single-click ---------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
                                                'gtk-icon-view) 't)
  "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
   Specifies whether the \"item-activated\" signal will be emitted after a
-  single click. Since 3.8 @br{}
+  single click. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-activate-on-single-click
                atdoc:*function-name-alias*)
       "Accessor"
@@ -468,8 +467,6 @@
 
   Causes the \"item-activated\" signal to be emitted on a single click instead
   of a double click.
-
-  Since 3.8
   @see-class{gtk-icon-view}")
 
 ;;; --- gtk-icon-view-cell-area ------------------------------------------------
@@ -1283,14 +1280,12 @@
 ;;; gtk_icon_view_get_cell_rect () -> gtk-icon-view-cell-rect
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_icon_view_get_cell_rect" %gtk-icon-view-cell-rect) :boolean
   (icon-view (g-object gtk-icon-view))
   (path (g-boxed-foreign gtk-tree-path))
   (cell (g-object gtk-cell-renderer))
   (rect (g-boxed-foreign gdk-rectangle)))
 
-#+gtk-3-6
 (defun gtk-icon-view-cell-rect (icon-view path cell)
  #+cl-cffi-gtk-documentation
  "@version{2020-12-3}
@@ -1304,8 +1299,6 @@
   @end{short}
   If @arg{cell} is @code{nil} the main cell area is used. This function is only
   valid if @arg{icon-view} is realized.
-
-  Since 3.6
   @see-class{gtk-icon-view}
   @see-class{gtk-tree-path}
   @see-class{gtk-cell-renderer}
@@ -1314,7 +1307,6 @@
     (when (%gtk-icon-view-cell-rect icon-view path cell rect)
       rect)))
 
-#+gtk-3-6
 (export 'gtk-icon-view-cell-rect)
 
 ;;; ----------------------------------------------------------------------------

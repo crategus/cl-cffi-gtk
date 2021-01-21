@@ -102,8 +102,7 @@
                 "GtkBuildable"
                 "GtkOrientable")
    :type-initializer "gtk_grid_get_type")
-  (#+gtk-3-10
-   (baseline-row
+  ((baseline-row
     gtk-grid-baseline-row
     "baseline-row" "gint" t t)
    (column-homogeneous
@@ -184,16 +183,16 @@
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "baseline-row"
                                                'gtk-grid) 't)
  "The @code{baseline-row} property of type @code{:int} (Read / Write) @br{}
   The row to align to the baseline when @slot[gtk-widget]{valign} has the value
-  @code{:center} of the @symbol{gtk-align} enumeration. Since 3.10 @br{}
+  @code{:center} of the @symbol{gtk-align} enumeration. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0 @br{}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-baseline-row atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-baseline-row 'function)
@@ -213,8 +212,6 @@
   for the entire grid. Each row in the grid can have its own local baseline,
   but only one of those is global, meaning it will be the baseline in the
   parent of the grid.
-
-  Since 3.10
   @see-class{gtk-grid}")
 
 ;;; --- gtk-grid-column-homogeneous --------------------------------------------
@@ -603,7 +600,6 @@
 ;;; gtk_grid_remove_row ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_grid_remove_row" gtk-grid-remove-row) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-4-23}
@@ -616,22 +612,18 @@
   Children that are placed in this row are removed, spanning children that
   overlap this row have their height reduced by one, and children below the
   row are moved up.
-
-  Since 3.10
   @see-class{gtk-grid}
   @see-function{gtk-grid-remove-column}
   @see-function{gtk-grid-insert-row}"
   (grid (g-object gtk-grid))
   (position :int))
 
-#+gtk-3-10
 (export 'gtk-grid-remove-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_remove_column ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_grid_remove_column" gtk-grid-remove-column) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-4-21}
@@ -644,15 +636,12 @@
   Children that are placed in this column are removed, spanning children that
   overlap this column have their width reduced by one, and children after the
   column are moved to the left.
-
-  Since 3.10
   @see-class{gtk-grid}
   @see-function{gtk-grid-remove-row}
   @see-function{gtk-grid-insert-column}"
   (grid (g-object gtk-grid))
   (position :int))
 
-#+gtk-3-10
 (export 'gtk-grid-remove-column)
 
 ;;; ----------------------------------------------------------------------------
@@ -689,7 +678,6 @@
 ;;; gtk_grid_set_row_baseline_position () -> gtk-grid-row-baseline-position
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defun (setf gtk-grid-row-baseline-position) (position grid row)
   (foreign-funcall "gtk_grid_set_row_baseline_position"
                    (g-object gtk-grid) grid
@@ -698,7 +686,6 @@
                    :void)
   position)
 
-#+gtk-3-10
 (defcfun ("gtk_grid_get_row_baseline_position"
            gtk-grid-row-baseline-position) gtk-position-type
  #+cl-cffi-gtk-documentation
@@ -716,14 +703,11 @@
   position of @arg{row} as set by the function
   @sym{(setf gtk-grid-row-baseline-position)} or the default value
   @code{:center}.
-
-  Since 3.10
   @see-class{gtk-grid}
   @see-symbol{gtk-position-type}"
   (grid (g-object gtk-grid))
   (row :int))
 
-#+gtk-3-10
 (export 'gtk-grid-row-baseline-position)
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------

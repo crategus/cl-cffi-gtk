@@ -61,9 +61,6 @@
     ;; gtk-minor-version because GTK is not compiled at this time.
     (cffi:foreign-funcall "gtk_get_major_version" :int)
     (cffi:foreign-funcall "gtk_get_minor_version" :int)
-    3 4
-    3 6
-    3 8
     3 10
     3 12
     3 14
@@ -72,8 +69,6 @@
     3 20
     3 22
     3 24
-    3 26
-    3 28
-    3 30)
+    )
 
 ;;; End of file gdk.init.lisp --------------------------------------------------

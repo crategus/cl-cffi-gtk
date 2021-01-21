@@ -221,7 +221,6 @@
 ;;; gdk_set_allowed_backends ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_set_allowed_backends" gdk-set-allowed-backends) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-11-6}
@@ -249,12 +248,9 @@
   This call must happen prior to the functions @fun{gdk-display-open},
   @code{gtk_init()}, @code{gtk_init_with_args()} or @code{gtk_init_check()} in
   order to take effect.
-
-  Since 3.10
   @see-function{gdk-display-open}"
   (backends :string))
 
-#+gdk-3-10
 (export 'gdk-set-allowed-backends)
 
 ;;; ----------------------------------------------------------------------------

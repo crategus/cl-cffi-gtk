@@ -85,7 +85,7 @@
       @begin{pre}
  lambda (gesture start-x start-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever dragging starts. Since 3.14
+      This signal is emitted whenever dragging starts.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
@@ -98,7 +98,7 @@
       @begin{pre}
  lambda (gesture offset-x offset-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever the dragging is finished. Since 3.14
+      This signal is emitted whenever the dragging is finished.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
@@ -111,7 +111,7 @@
       @begin{pre}
  lambda (gesture offset-x offset-y)    : Run Last
       @end{pre}
-      This signal is emitted whenever the dragging point moves. Since 3.14
+      This signal is emitted whenever the dragging point moves.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-drag} object which received the
           signal.}
@@ -135,8 +135,6 @@
   @argument[widget]{a @class{gtk-widget} object}
   @return{A newly created @class{gtk-gesture-drag}.}
   @short{Returns a newly created gesture that recognizes drags.}
-
-  Since 3.14
   @see-class{gtk-gesture-drag}"
   (make-instance 'gtk-gesture-drag
                  :widget widget))
@@ -165,8 +163,6 @@
     If the gesture is active, this function returns the drag start coordinates,
     in window-relative coordinates.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-drag}"
   (with-foreign-objects ((x :double) (y :double))
     (when (%gtk-gesture-drag-start-point gesture x y)
@@ -196,8 +192,6 @@
     If the gesture is active, this function returns the coordinates of the
     current point, as an offset to the starting drag point.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-drag}"
   (with-foreign-objects ((x :double) (y :double))
     (when (%gtk-gesture-drag-offset gesture x y)

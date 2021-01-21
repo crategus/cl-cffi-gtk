@@ -87,11 +87,9 @@
   ((active
     gtk-switch-active
     "active" "gboolean" t t)
-   #+gtk-3-14
    (state
     gtk-switch-state
-    "state" "gboolean" t t)
-   ))
+    "state" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-switch 'type)
@@ -164,8 +162,6 @@
       Visually, the underlying state is represented by the trough color of the
       switch, while the @code{active} property is represented by the position of
       the switch.
-
-      Since 3.14
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-switch} widget which received the signal.}
         @entry[state]{A boolean with the state of the switch.}
@@ -213,7 +209,7 @@
 (setf (documentation (atdoc:get-slot-from-name "state" 'gtk-switch) 't)
  "The @code{state} property of type @code{:boolean} (Read / Write) @br{}
   The backend state that is controlled by the switch. See the \"state-set\"
-  signal for details. Since 3.14 @br{}
+  signal for details. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -238,8 +234,6 @@
   the switch is set up for delayed state changes. This function is typically
   called from a \"state-set\" signal handler. See the \"state-set\" signal for
   details.
-
-  Since 3.14
   @see-class{gtk-switch}")
 
 ;;; ----------------------------------------------------------------------------

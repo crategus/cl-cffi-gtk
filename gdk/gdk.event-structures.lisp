@@ -393,8 +393,8 @@
     @entry[:below]{The window is kept below other windows.}
     @entry[:focused]{The window is presented as focused (with active
       decorations).}
-    @entry[:tiled]{The window is in a tiled state, Since 3.10. Since 3.22,
-      this is deprecated in favor of per-edge information.}
+    @entry[:tiled]{The window is in a tiled state. Since 3.22, this is
+      deprecated in favor of per-edge information.}
     @entry[:top-tiled]{Whether the top edge is tiled. Since 3.22}
     @entry{:top-resizable]{Whether the top edge is resizable. Since 3.22}
     @entry[:right-tiled]{Whether the right edge is tiled. Since 3.22}

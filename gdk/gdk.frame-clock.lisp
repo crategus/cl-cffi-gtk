@@ -118,7 +118,6 @@
     @entry[:after-paint]{Corresponds to the signal \"after-paint\".
       Should not be handled by applications.}
   @end{table}
-  Since 3.8
   @see-class{gdk-frame-clock}")
 
 ;;; ----------------------------------------------------------------------------
@@ -261,8 +260,6 @@
   position of everything in a frame. Outside of a frame, it is the time of the
   conceptual \"previous frame\", which may be either the actual previous frame
   time, or if that is too old, an updated time.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-function{g-get-monotonic-time}"
   (frame-clock (g-object gdk-frame-clock)))
@@ -289,8 +286,6 @@
   continually request the @code{:update} phase for a period of time, you should
   use the function @fun{gdk-frame-clock-begin-updating} instead, since this
   allows GTK+ to adjust system parameters to get maximally smooth animations.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-symbol{gdk-frame-clock-phase}
   @see-function{gdk-frame-clock-begin-updating}"
@@ -315,8 +310,6 @@
   @code{:update} phase. This function may be called multiple times and frames
   will be requested until the function @fun{gdk-frame-clock-end-updating} is
   called the same number of times.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-function{gdk-frame-clock-end-updating}"
   (frame-clock (g-object gdk-frame-clock)))
@@ -335,8 +328,6 @@
     Stops updates for an animation.
   @end{short}
   See the documentation for the function @fun{gdk-frame-clock-begin-updating}.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-function{gdk-frame-clock-begin-updating}"
   (frame-clock (g-object gdk-frame-clock)))
@@ -361,8 +352,6 @@
     A frame clock maintains a 64-bit counter that increments for each frame
     drawn.
   @end{short}
-
-  Since 3.8
   @see-class{gdk-frame-clock}"
   (frame-clock (g-object gdk-frame-clock)))
 
@@ -389,8 +378,6 @@
   The set of stored frames is the set from the counter values given by the
   function @sym{gdk-frame-clock-history-start} and the function
   @fun{gdk-frame-clock-frame-counter}, inclusive.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-class{gdk-frame-timings}
   @see-function{gdk-frame-clock-timings}
@@ -421,8 +408,6 @@
   @end{short}
   The @class{gkd-frame-timings} object may not yet be complete. See the function
   @fun{gdk-frame-timings-complete}.
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-class{gdk-frame-timings}
   @see-function{gdk-frame-clock-history-start}
@@ -449,8 +434,6 @@
   @begin{short}
     Gets the frame timings for the current frame.
   @end{short}
-
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-class{gdk-frame-timings}"
   (frame-clock (g-object gdk-frame-clock)))
@@ -488,8 +471,6 @@
     a multiple of the refresh interval after the last presentation time, and
     later than @arg{base-time}.
   @end{short}
-
-  Since 3.8
   @see-class{gdk-frame-clock}"
   (with-foreign-objects ((refresh-interval :int64)
                          (presentation-time-return :int64))

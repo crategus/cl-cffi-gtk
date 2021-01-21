@@ -85,7 +85,7 @@
  lambda (gesture velocity-x velocity-y)    : Run Last
     @end{pre}
     This signal is emitted when the recognized gesture is finished, velocity
-    and direction are a product of previously recorded events. Since 3.14
+    and direction are a product of previously recorded events.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
@@ -111,8 +111,6 @@
   @begin{short}
     Returns a newly created gesture that recognizes swipes.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-swipe}"
   (make-instance 'gtk-gesture-swipe
                  :widget widget
@@ -143,8 +141,6 @@
     If the gesture is recognized, this function returns the recorded velocity,
     as per the last event(s) processed.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-swipe}"
   (with-foreign-objects ((velocity-x :double) (velocity-y :double))
     (when (%gtk-gesture-swipe-velocity gesture velocity-x velocity-y)

@@ -127,7 +127,7 @@
     @entry[:expand]{Buttons expand to fill the box. This entails giving buttons
       a \"linked\" appearance, making button sizes homogeneous, and setting
       spacing to 0 (same as calling the functions @fun{gtk-box-homogeneous} and
-      @fun{gtk-box-spacing} manually). Since 3.12.}
+      @fun{gtk-box-spacing} manually).}
   @end{table}
   @see-class{gtk-button-box}")
 

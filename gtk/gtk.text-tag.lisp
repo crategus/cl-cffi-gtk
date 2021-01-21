@@ -180,11 +180,9 @@
    (editable-set
     gtk-text-tag-editable-set
     "editable-set" "gboolean" t t)
-   #+gtk-3-16
    (fallback
     gtk-text-tag-fallback
     "fallback" "gboolean" t t)
-   #+gtk-3-16
    (fallback-set
     gtk-text-tag-fallback-set
     "fallback-set" "gboolean" t t)
@@ -250,11 +248,9 @@
    (left-margin-set
     gtk-text-tag-left-margin-set
     "left-margin-set" "gboolean" t t)
-   #+gtk-3-16
    (letter-spacing
     gtk-text-tag-letter-spacing
     "letter-spacing" "gint" t t)
-   #+gtk-3-16
    (letter-spacing-set
     gtk-text-tag-letter-spacing-set
     "letter-spacing-set" "gboolean" t t)
@@ -327,11 +323,9 @@
    (strikethrough
     gtk-text-tag-strikethrough
     "strikethrough" "gboolean" t t)
-   #+gtk-3-16
    (strikethrough-rgba
     gtk-text-tag-strikethrough-rgba
     "strikethrough-rgba" "GdkRGBA" t t)
-   #+gtk-3-16
    (strikethrough-rgba-set
     gtk-text-tag-strikethrough-rgba-set
     "strikethrough-rgba-set" "gboolean" t t)
@@ -353,11 +347,9 @@
    (underline
     gtk-text-tag-underline
     "underline" "PangoUnderline" t t)
-   #+gtk-3-16
    (underline-rgba
     gtk-text-tag-underline-rgba
     "underline-rgba" "GdkRGBA" t t)
-   #+gtk-3-16
    (underline-rgba-set
     gtk-text-tag-underline-rgba-set
     "underline-rgba-set" "gboolean" t t)
@@ -701,14 +693,14 @@
 
 ;;; --- gtk-text-tag-fallback --------------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fallback" 'gtk-text-tag) 't)
  "The @code{fallback} property of type @code{:boolean} (Read / Write) @br{}
   Whether font fallback is enabled. When set to @em{true}, other fonts will be
-  substituted where the current font is missing glyphs. Since 3.16 @br{}
+  substituted where the current font is missing glyphs. @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-fallback atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback 'function)
@@ -721,13 +713,13 @@
 
 ;;; --- gtk-text-tag-fallback-set ----------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fallback-set" 'gtk-text-tag) 't)
  "The @code{fallback-set} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this tag affects font fallback. Since 3.16 @br{}
+  Whether this tag affects font fallback. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-fallback-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback-set 'function)
@@ -736,8 +728,6 @@
     Accessor of the @slot[gtk-text-tag]{fallback-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-family ----------------------------------------------------
@@ -1195,15 +1185,15 @@
 
 ;;; --- gtk-text-tag-letter-spacing --------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "letter-spacing" 'gtk-text-tag)
       't)
  "The @code{letter-spacing} property of type @code{:int} (Read / Write) @br{}
-  Extra spacing between graphemes, in Pango units. Since 3.16 @br{}
+  Extra spacing between graphemes, in Pango units. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-letter-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing 'function)
@@ -1212,21 +1202,19 @@
     Accessor of the @slot[gtk-text-tag]{letter-spacing} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-letter-spacing-set ----------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "letter-spacing-set"
                                                'gtk-text-tag) 't)
  "The @code{letter-spacing-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether this tag affects letter spacing. Since 3.16 @br{}
+  Whether this tag affects letter spacing. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-letter-spacing-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing-set 'function)
@@ -1235,8 +1223,6 @@
     Accessor of the @slot[gtk-text-tag]{letter-spacing-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-name ------------------------------------------------------
@@ -1718,15 +1704,15 @@
 
 ;;; --- gtk-text-tag-strikethrough-rgba ----------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "strikethrough-rgba"
                                                'gtk-text-tag) 't)
  "The @code{strikethrough-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
   This property modifies the color of strikeouts. If not set, strikeouts will
-  use the forground color. Since 3.16")
+  use the forground color.")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-strikethrough-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba 'function)
@@ -1735,21 +1721,19 @@
     Accessor of the @slot[gtk-text-tag]{strikethrough-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-strikethrough-rgba-set ------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "strikethrough-rgba-set"
                                                'gtk-text-tag) 't)
  "The @code{strikethrough-rgba-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  If the @code{strikethrough-rgba} property has been set. Since 3.16 @br{}
+  If the @code{strikethrough-rgba} property has been set. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-strikethrough-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba-set 'function)
@@ -1758,8 +1742,6 @@
     Accessor of the @slot[gtk-text-tag]{strikethrough-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-strikethrough-set -----------------------------------------
@@ -1881,7 +1863,7 @@
 
 ;;; --- gtk-text-tag-underline-rgba --------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "underline-rgba"
                                                'gtk-text-tag) 't)
  "The @code{underline-rgba} property of type @class{gdk-rgba}
@@ -1890,9 +1872,9 @@
   use the forground color. If the @code{underline} property is set to the value
   @code{:error} of the @symbol{pango-underline} enumeration, an alternate color
   may be applied instead of the foreground. Setting this property will always
-  override those defaults. Since 3.16")
+  override those defaults.")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-underline-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba 'function)
@@ -1901,21 +1883,19 @@
     Accessor of the @slot[gtk-text-tag]{underline-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-underline-rgba-set ----------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "underline-rgba-set"
                                                'gtk-text-tag) 't)
  "The @code{underline-rgba-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  If the @code{underline-rgba} property has been set. Since 3.16 @br{}
+  If the @code{underline-rgba} property has been set. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-underline-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba-set 'function)
@@ -1924,8 +1904,6 @@
     Accessor of the @slot[gtk-text-tag]{underline-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-underline-set ---------------------------------------------

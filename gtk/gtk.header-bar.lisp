@@ -96,15 +96,12 @@
   ((custom-title
     gtk-header-bar-custom-title
     "custom-title" "GtkWidget" t t)
-   #+gtk-3-12
    (decoration-layout
     gtk-header-bar-decoration-layout
     "decoration-layout" "gchararray" t t)
-   #+gtk-3-12
    (decoration-layout-set
     gtk-header-bar-decoration-layout-set
     "decoration-layout-set" "gboolean" t t)
-   #+gtk-3-12
    (has-subtitle
     gtk-header-bar-has-subtitle
     "has-subtitle" "gboolean" t t)
@@ -140,8 +137,6 @@
 
   @sym{gtk-header-bar} can add typical window frame controls, such as minimize,
   maximize and close buttons, or the window icon.
-
-  Since 3.10
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
       @begin[pack-type]{entry}
@@ -209,15 +204,13 @@
 
   You should set the custom title to @code{nil}, for the header title label to
   be visible again.
-
-  Since 3.10
   @see-class{gtk-header-bar}
   @see-function{gtk-header-bar-title}
   @see-function{gtk-header-bar-subtitle}")
 
 ;;; --- gtk-header-bar-decoration-layout ---------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "decoration-layout"
                                                'gtk-header-bar) 't)
  "The @code{decoration-layout} property of type @code{:string}
@@ -225,10 +218,10 @@
   The decoration layout for buttons. If this property is not set, the
   @slot[gtk-settings]{gtk-decoration-layout} setting is used. See the function
   @fun{gtk-header-bar-decoration-layout} for information about the format of
-  this string. Since 3.12 @br{}
+  this string. @br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-decoration-layout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-decoration-layout 'function)
@@ -260,23 +253,20 @@
 
   For example, \"menu:minimize,maximize,close\" specifies a menu on the left,
   and minimize, maximize and close buttons on the right.
-
-  Since 3.12
   @see-class{gtk-header-bar}
   @see-class{gtk-settings}")
 
 ;;; --- gtk-header-bar-decoration-layout-set -----------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "decoration-layout-set"
                                                'gtk-header-bar) 't)
  "The @code{decoration-layout-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Set to @em{true} if the @code{decoration-layout} property is set.
-  Since 3.12 @br{}
+  Set to @em{true} if the @code{decoration-layout} property is set. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-decoration-layout-set
                atdoc:*function-name-alias*)
       "Accessor"
@@ -293,21 +283,19 @@
 
   Set to @em{true} if the @slot[gtk-header-bar]{decoration-layout} property
   is set.
-
-  Since 3.12
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-has-subtitle --------------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-subtitle"
                                                'gtk-header-bar) 't)
  "The @code{has-subtitle} property of type @code{:boolean} (Read / Write) @br{}
   If @em{true}, reserve space for a subtitle, even if none is currently set.
-  Since 3.12 @br{}
+  @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-has-subtitle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-has-subtitle 'function)
@@ -325,8 +313,6 @@
   the header bar reserves space for a subtitle, regardless if one is currently
   set or not. The slot access function @sym{(setf gtk-header-bar-has-subtitle)}
   sets whether the header bar should reserve space for a subtitle.
-
-  Since 3.12
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-show-close-button ---------------------------------------
@@ -361,8 +347,6 @@
   function @sym{(setf gtk-header-bar-close-button)} sets whether the header bar
   shows the standard window decorations, including close, maximize, and
   minimize.
-
-  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-spacing -------------------------------------------------
@@ -390,8 +374,6 @@
   @end{short}
 
   The amount of space between children in pixels.
-
-  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-subtitle ------------------------------------------------
@@ -425,8 +407,6 @@
   Note that @class{gtk-header-bar} by default reserves room for the subtitle,
   even if none is currently set. If this is not desired, set the
   @slot[gtk-header-bar]{has-subtitle} property to @em{false}.
-
-  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-title ---------------------------------------------------
@@ -458,8 +438,6 @@
 
   The title should help a user identify the current view. A good title should
   not include the application name.
-
-  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -490,8 +468,6 @@
 
   A value of the @symbol{gtk-pack-type} enumeration indicating whether the
   child widget is packed with reference to the start or end of the parent.
-
-  Since 3.10
   @see-class{gtk-header-bar}
   @see-symbol{gtk-pack-type}")
 
@@ -518,8 +494,6 @@
   @end{short}
 
   The index of the child widget in the heaer bar.
-
-  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -535,8 +509,6 @@
   @begin{short}
     Creates a new @class{gtk-header-bar} container.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-header-bar}"
   (make-instance 'gtk-header-bar))
 
@@ -556,8 +528,6 @@
     Adds a child widget to the header bar, packed with reference to the start
     of the header bar.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-header-bar}
   @see-function{gtk-header-bar-pack-end}"
   (header-bar (g-object gtk-header-bar))
@@ -579,8 +549,6 @@
     Adds a child widget to the header bar, packed with reference to the end of
     the header bar.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-header-bar}
   @see-function{gtk-header-bar-pack-start}"
   (header-bar (g-object gtk-header-bar))

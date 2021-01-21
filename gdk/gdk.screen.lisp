@@ -848,7 +848,6 @@
 ;;; gdk_screen_get_monitor_scale_factor () -> gdk-screen-monitor-scale-factor
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_screen_get_monitor_scale_factor" gdk-screen-monitor-scale-factor)
     :int
  #+cl-cffi-gtk-documentation
@@ -867,8 +866,6 @@
   This can be used if you want to create pixel based data for a particula
   monitor, but most of the time you are drawing to a window where it is better
   to use the function @fun{gdk-window-scale-factor} instead.
-
-  Since 3.10
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-monitor-scale-factor} has been deprecated since
     version 3.22 and should not be used in newly-written code. Use the function
@@ -879,7 +876,6 @@
   (screen (g-object gdk-screen))
   (monitor-num :int))
 
-#+gdk-3-10
 (export 'gdk-screen-monitor-scale-factor)
 
 ;;; ----------------------------------------------------------------------------

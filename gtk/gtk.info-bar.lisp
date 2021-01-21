@@ -106,11 +106,9 @@
    (revealed
     gtk-info-bar-revealed
     "revealed" "gboolean" t t)
-   #+gtk-3-10
    (show-close-button
     gtk-info-bar-show-close-button
-    "show-close-button" "gboolean" t t)
-  ))
+    "show-close-button" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-info-bar 'type)
@@ -344,15 +342,15 @@
 
 ;;; --- gtk-info-bar-show-close-button -----------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-close-button"
                                                'gtk-info-bar) 't)
  "The @code{show-close-button} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  Whether to include a standard close button. Since 3.10 @br{}
+  Whether to include a standard close button. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-info-bar-show-close-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-info-bar-show-close-button 'function)
@@ -369,8 +367,6 @@
   The slot access function @sym{gtk-info-bar-show-close-button} returns whether
   the widget will display a standard close button. If @em{true}, a standard
   close button is shown. When clicked it emits the response @code{:close}.
-
-  Since 3.10
   @see-class{gtk-info-bar}")
 
 ;;; ----------------------------------------------------------------------------

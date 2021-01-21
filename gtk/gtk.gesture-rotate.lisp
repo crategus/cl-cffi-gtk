@@ -102,8 +102,6 @@
   @begin{short}
     Returns a newly created gesture that recognizes 2-touch rotation gestures.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-rotate}"
   (make-instance 'gtk-gesture-rotate
                  :widget widget))
@@ -125,8 +123,6 @@
     radians since the gesture was first recognized.
   @end{short}
   If gesture is not active, 0.0d0 is returned.
-
-  Since 3.14
   @see-class{gtk-gesture-rotate}"
   (gesture (g-object gtk-gesture-rotate)))
 

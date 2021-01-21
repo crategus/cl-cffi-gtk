@@ -203,7 +203,6 @@
 ;;; enum GtkTextViewLayer
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (define-g-enum "GtkTextViewLayer" gtk-text-view-layer
   (:export t
    :type-initializer "gtk_text_view_layer_get_type")
@@ -215,7 +214,7 @@
   (:above-text 3)
   )
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-layer atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-view-layer atdoc:*external-symbols*)
  "@version{2020-6-7}
@@ -223,8 +222,6 @@
     Used to reference the layers of @class{gtk-text-view} for the purpose of
     customized drawing with the @code{::draw_layer} vfunc.
   @end{short}
-
-  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkTextViewLayer\" gtk-text-view-layer
   (:export t
@@ -290,14 +287,13 @@
 ;;; enum GtkTextExtendSelection
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (define-g-enum "GtkTextExtendSelection" gtk-text-extend-selection
   (:export t
    :type-initializer "gtk_text_extend_selection_get_type")
   (:word 0)
   (:line 1))
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-extend-selection atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-extend-selection atdoc:*external-symbols*)
  "@version{2020-11-25}
@@ -305,8 +301,6 @@
     Granularity types that extend the text selection. Use the
     \"extend-selection\" signal to customize the selection.
   @end{short}
-
-  Since 3.16
   @begin{pre}
 (define-g-enum \"GtkTextExtendSelection\" gtk-text-extend-selection
   (:export t
@@ -376,11 +370,9 @@
    (indent
     gtk-text-view-indent
     "indent" "gint" t t)
-   #+gtk-3-6
    (input-hints
     gtk-text-view-input-hints
     "input-hints" "GtkInputHints" t t)
-   #+gtk-3-6
    (input-purpose
     gtk-text-view-input-purpose
     "input-purpose" "GtkInputPurpose" t t)
@@ -502,7 +494,7 @@
       @code{:chars}, GTK+ deletes the selection if there is one, otherwise it
       deletes the requested number of characters. The default bindings for this
       signal are Delete for deleting a character, Ctrl-Delete for deleting a
-      word and Ctrl-Backspace for deleting a word backwords. Since 3.16
+      word and Ctrl-Backspace for deleting a word backwords.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
         @entry[type]{The granularity of the deletion, as a
@@ -926,14 +918,14 @@
 
 ;;; --- gtk-text-view-input-hints ----------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-text-view) 't)
  "The @code{input-hints} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
   Additional hints, beyond the \"input-purpose\" signal, that allow input
-  methods to fine-tune their behaviour. Since 3.6")
+  methods to fine-tune their behaviour.")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-hints 'function)
@@ -951,23 +943,21 @@
   the @code{input-hints} property. The slot access function
   @sym{(setf gtk-text-view-input-hints)} sets the @code{input-hints} property,
   which allows input methods to fine-tune their behaviour.
-
-  Since 3.6
   @see-class{gtk-text-view}
   @see-symbol{gtk-input-hints}")
 
 ;;; --- gtk-text-view-input-purpose --------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-purpose"
                                                'gtk-text-view) 't)
  "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
   (Read / Write) @br{}
   The purpose of this text field. This property can be used by on-screen
-  keyboards and other input methods to adjust their behaviour. Since 3.6 @br{}
+  keyboards and other input methods to adjust their behaviour. @br{}
   Default value: @code{:free-form}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-purpose 'function)
@@ -986,8 +976,6 @@
   @sym{(setf gtk-text-view-input-purpose)} sets the @code{input-purpose}
   property which can be used by on-screen keyboards and other input methods to
   adjust their behaviour.
-
-  Since 3.6
   @see-class{gtk-text-view}
   @see-symbol{gtk-input-purpose}")
 
@@ -1057,14 +1045,14 @@
 
 ;;; --- gtk-text-view-monospace ------------------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "monospace"
                                                'gtk-text-view) 't)
  "The @code{monospace} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to use a monospace font. Since 3.16 @br{}
+  Whether to use a monospace font. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-monospace atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-monospace 'function)
@@ -1082,8 +1070,6 @@
   @code{monospace} property. The slot access function
   @sym{(setf gtk-text-view-monospace)} sets the @code{monospace} property,
   which indicates that the text view should use monospace fonts.
-
-  Since 3.16
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-overwrite ------------------------------------------------
@@ -1216,15 +1202,15 @@
 
 ;;; --- gtk-text-view-populate-all ---------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "populate-all"
                                                'gtk-text-view) 't)
  "The @code{populate-all} property of type @code{:boolean} (Read / Write) @br{}
   If @code{populate-all} is @em{true}, the \"populate-popup\" signal is also
-  emitted for touch popups. Since 3.8 @br{}
+  emitted for touch popups. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-populate-all atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-populate-all 'function)
@@ -1241,8 +1227,6 @@
 
   If @code{populate-all} is @em{true}, the \"populate-popup\" signal is also
   emitted for touch popups.
-
-  Since 3.8
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-right-margin ---------------------------------------------

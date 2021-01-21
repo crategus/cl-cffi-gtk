@@ -140,9 +140,7 @@
   (:animation 4)
   (:icon-name 5)
   (:gicon 6)
-  #+gtk-3-10
-  (:surface 7)
-  )
+  (:surface 7))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*) "Enum"
@@ -179,8 +177,7 @@
       object.}
     @entry[:icon-name]{The widget contains a named icon.}
     @entry[:gicon]{The widget contains a @class{g-icon} object.}
-    @entry[:surface]{The widget contains a @symbol{cairo-surface-t} instance.
-      Since 3.10}
+    @entry[:surface]{The widget contains a @symbol{cairo-surface-t} instance.}
   @end{table}
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
@@ -227,7 +224,6 @@
    (pixel-size
     gtk-image-pixel-size
     "pixel-size" "gint" t t)
-   #+gtk-3-8
    (resource
     gtk-image-resource
     "resource" "gchararray" t t)
@@ -237,7 +233,6 @@
    (storage-type
     gtk-image-storage-type
     "storage-type" "GtkImageType" t nil)
-   #+gtk-3-10
    (surface
     gtk-image-surface
     "surface" "CairoSurface" t t)
@@ -562,13 +557,13 @@
 
 ;;; --- gtk-image-resource -----------------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resource" 'gtk-image) 't)
  "The @code{resource} property of type @code{g-string} (Read / Write) @br{}
-  A path to a resource file to display. Since 3.8 @br{}
+  A path to a resource file to display. @br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-resource atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-resource 'function)
@@ -582,8 +577,6 @@
   @end{short}
 
   A path to a resource file to display.
-
-  Since 3.8
   @see-class{gtk-image}")
 
 ;;; --- gtk-image-stock --------------------------------------------------------
@@ -653,12 +646,12 @@
 
 ;;; --- gtk-image-surface ------------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "surface" 'gtk-image) 't)
  "The @code{surface} property of type @code{g-string} (Read / Write) @br{}
-  A @symbol{cairo-surface-t} instance to display. Since 3.10")
+  A @symbol{cairo-surface-t} instance to display.")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-surface atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-surface 'function)
@@ -671,8 +664,6 @@
     Accessor of the @slot[gtk-image]{surface} slot of the @class{gtk-image}
     class.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-image}
   @see-class{cairo-surface}")
 
@@ -1089,7 +1080,6 @@
 ;;; gtk_image_new_from_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_image_new_from_surface" gtk-image-new-from-surface)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
@@ -1099,13 +1089,10 @@
   @begin{short}
     Creates a new image displaying @arg{surface}.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-image}
   @see-symbol{cairo-surface-t}"
   (surface (:pointer (:struct cairo-surface-t))))
 
-#+gtk-3-10
 (export 'gtk-image-new-from-surface)
 
 ;;; ----------------------------------------------------------------------------
@@ -1288,7 +1275,6 @@
 ;;; gtk_image_set_from_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_image_set_from_surface" gtk-image-set-from-surface) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
@@ -1303,7 +1289,6 @@
   (image (g-object gtk-image))
   (surface (:pointer (:struct cairo-surface-t))))
 
-#+gtk-3-10
 (export 'gtk-image-set-from-surface)
 
 ;;; ----------------------------------------------------------------------------

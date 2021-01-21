@@ -185,7 +185,6 @@
    (max-width-chars
     gtk-cell-renderer-text-max-width-chars
     "max-width-chars" "gint" t t)
-   #+gtk-3-6
    (placeholder-text
     gtk-cell-renderer-text-placeholder-text
     "placeholder-text" "gchararray" t t)

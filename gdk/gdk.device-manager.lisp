@@ -293,8 +293,6 @@
   applications that do mixed GDK/Xlib calls could want to disable multidevice
   support if such Xlib code deals with input devices in any way and does not
   observe the presence of XInput 2.
-
-  Since 3.0
   @see-class{gdk-device-manager}
   @see-function{gdk-display-open}")
 
@@ -349,8 +347,6 @@
   You should use this function sheldomly, only in code that is not triggered by
   a @class{gdk-event} event and there are not other means to get a meaningful
   @class{gdk-device} object to operate on.
-
-  Since 3.0
   @begin[Warning]{dictionary}
     The function @sym{gdk-device-manager-get-client-pointer} has been deprecated
     since version 3.20 and should not be used in newly-written code. Use the

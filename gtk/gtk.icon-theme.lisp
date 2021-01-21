@@ -219,15 +219,10 @@
   (:use-builtin      #.(ash 1 2))
   (:generic-fallback #.(ash 1 3))
   (:force-size       #.(ash 1 4))
-  #+gtk-3-14
   (:force-regular    #.(ash 1 5))
-  #+gtk-3-14
   (:force-symbolic   #.(ash 1 6))
-  #+gtk-3-14
   (:dir-ltr          #.(ash 1 7))
-  #+gtk-3-14
-  (:dir-rtl          #.(ash 1 8))
-  )
+  (:dir-rtl          #.(ash 1 8)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
@@ -266,13 +261,13 @@
       @fun{gtk-icon-theme-choose-icon}.}
     @entry[:force-size]{Always get the icon scaled to the requested size.}
     @entry[:force-regular]{Try to always load regular icons, even when symbolic
-      icon names are given. Since 3.14}
+      icon names are given.}
     @entry[:force-symbolic]{Try to always load symbolic icons, even when regular
-      icon names are given. Since 3.14}
+      icon names are given.}
     @entry[:dir-ltr]{Try to load a variant of the icon for left-to-right
-      text direction. Since 3.14}
+      text direction.}
     @entry[:dir-ltr]{Try to load a variant of the icon for right-to-left text
-      direction. Since 3.14}
+      direction.}
   @end{table}
   @see-class{gtk-icon-theme}
   @see-class{gdk-pixbuf}
@@ -526,7 +521,6 @@
 ;;; gtk_icon_theme_add_resource_path ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_icon_theme_add_resource_path" gtk-icon-theme-add-resource-path)
     :void
  #+cl-cffi-gtk-documentation
@@ -545,13 +539,10 @@
   as @file{@@path/16x16/actions/run.png}. Icons that are directly placed in the
   resource path instead of a subdirectory are also considered as ultimate
   fallback.
-
-  Since 3.14
   @see-class{gtk-icon-theme}"
   (icon-theme (g-object gtk-icon-theme))
   (path :string))
 
-#+gtk-3-14
 (export 'gtk-icon-theme-add-resource-path)
 
 ;;; ----------------------------------------------------------------------------
@@ -636,7 +627,6 @@
 ;;; gtk_icon_theme_lookup_icon_for_scale ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_theme_lookup_icon_for_scale"
            gtk-icon-theme-lookup-icon-for-scale)
     (:pointer (:struct gtk-icon-info))
@@ -660,8 +650,6 @@
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}. The funcion @fun{gtk-icon-theme-load-icon}
   combines these two steps if all you need is the pixbuf.
-
-  Since 3.10
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
   @see-function{gtk-info-load-icon}
@@ -672,7 +660,6 @@
   (scale :int)
   (flags gtk-icon-lookup-flags))
 
-#+gtk-3-10
 (export 'gtk-icon-theme-lookup-icon-for-scale)
 
 ;;; ----------------------------------------------------------------------------
@@ -717,7 +704,6 @@
 ;;; gtk_icon_theme_choose_icon_for_scale ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_theme_choose_icon_for_scale"
            gtk-icon-theme-choose-icon-for-scale)
     (:pointer (:struct gtk-icon-info))
@@ -743,8 +729,6 @@
 
   If @arg{icon-names} contains more than one name, this function tries them all
   in the given order before falling back to inherited icon themes.
-
-  Since 3.10
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-info-load-icon}
@@ -755,7 +739,6 @@
   (scale :int)
   (flags gtk-icon-lookup-flags))
 
-#+gtk-3-10
 (export 'gtk-icon-theme-choose-icon-for-scale)
 
 ;;; ----------------------------------------------------------------------------
@@ -794,7 +777,6 @@
 ;;; gtk_icon_theme_lookup_by_gicon_for_scale ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_theme_lookup_by_gicon_for_scale"
            gtk-icon-theme-lookup-by-gicon-for-scale)
     (:pointer (:struct gtk-icon-info))
@@ -815,8 +797,6 @@
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}.
-
-  Since 3.10
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-info-load-icon}"
@@ -826,7 +806,6 @@
   (scale :int)
   (flags gtk-icon-lookup-flags))
 
-#+gtk-3-10
 (export 'gtk-icon-theme-lookup-by-gicon-for-scale)
 
 ;;; ----------------------------------------------------------------------------
@@ -878,7 +857,6 @@
 ;;; gtk_icon_theme_load_icon_for_scale ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_theme_load_icon_for_scale"
           %gtk-icon-theme-load-icon-for-scale) (g-object gdk-pixbuf)
   (icon-theme (g-object gtk-icon-theme))
@@ -888,7 +866,6 @@
   (flags gtk-icon-lookup-flags)
   (error :pointer))
 
-#+gtk-3-10
 (defun gtk-icon-theme-load-icon-for-scale (theme name size scale flags)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-5}
@@ -914,8 +891,6 @@
   changes, you should consider using the function @fun{gdk-pixbuf-copy} to make
   a private copy of the pixbuf returned by this function. Otherwise GTK+ may
   need to keep the old icon theme loaded, which would be a waste of memory.
-
-  Since 3.10
   @see-class{gtk-icon-theme}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-lookup-icon}
@@ -923,14 +898,12 @@
   (with-g-error (err)
     (%gtk-icon-theme-load-icon-for-scale theme name size scale flags err)))
 
-#+gtk-3-10
 (export 'gtk-icon-theme-load-icon-for-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_load_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_theme_load_surface" %gtk-icon-theme-load-surface)
     (:pointer (:struct cairo-surface-t))
   (theme (g-object gtk-icon-theme))
@@ -941,7 +914,6 @@
   (flags gtk-icon-lookup-flags)
   (error :pointer))
 
-#+gtk-3-10
 (defun gtk-icon-theme-load-surface (theme name size scale for-window flags)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-5}
@@ -964,8 +936,6 @@
 
   Note that you probably want to listen for icon theme changes and update the
   icon. This is usually done by connecting to the \"style-set\" signal.
-
-  Since 3.10
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-theme-lookup-icon}
@@ -973,7 +943,6 @@
   (with-g-error (err)
     (%gtk-icon-theme-load-surface theme name size scale for-window flags err)))
 
-#+gtk-3-10
 (export 'gtk-icon-theme-load-surface)
 
 ;;; ----------------------------------------------------------------------------
@@ -1241,7 +1210,6 @@
 ;;; gtk_icon_info_get_base_scale () -> gtk-icon-info-base-scale
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_info_get_base_scale" gtk-icon-info-base-scale) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-12-4}
@@ -1253,8 +1221,6 @@
   The base scale is a scale for the icon that was specified by the icon theme
   creator. For instance an icon drawn for a high DPI screen with window scale 2
   for a base size of 32 will be 64 pixels tall and have a base scale of 2.
-
-  Since 3.10
   @begin[Example]{dictionary}
     @begin{pre}
 (gtk-icon-theme-lookup-icon (gtk-icon-theme-default) \"battery\" 0 0)
@@ -1267,7 +1233,6 @@
   @see-function{gtk-icon-info-base-size}"
   (icon-info (:pointer (:struct gtk-icon-info))))
 
-#+gtk-3-10
 (export 'gtk-icon-info-base-scale)
 
 ;;; ----------------------------------------------------------------------------
@@ -1373,14 +1338,12 @@
 ;;; gtk_icon_info_load_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_icon_info_load_surface" %gtk-icon-info-load-surface)
     (:pointer (:struct cairo-surface-t))
   (icon-info (:pointer (:struct gtk-icon-info)))
   (for-window (g-object gdk-window))
   (err :pointer))
 
-#+gtk-3-10
 (defun gtk-icon-info-load-surface (icon-info for-window)
  #+cl-cffi-gtk-documentation
  "@version{2020-12-4}
@@ -1401,8 +1364,6 @@
   @symbol{gtk-icon-lookup-flags} when obtaining the @class{gtk-icon-info}
   structure. If this flag has been specified, the pixbuf returned by this
   function will be scaled to the exact size.
-
-  Since 3.10
   @see-symbol{gtk-icon-info}
   @see-class{gdk-window}
   @see-symbol{cairo-surface-t}
@@ -1411,7 +1372,6 @@
   (with-g-error (err)
     (%gtk-icon-info-load-surface icon-info for-window err)))
 
-#+gtk-3-10
 (export 'gtk-icon-info-load-surface)
 
 ;;; ----------------------------------------------------------------------------
@@ -1888,7 +1848,6 @@
 ;;; gtk_icon_info_is_symbolic ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defcfun ("gtk_icon_info_is_symbolic" gtk-icon-info-is-symbolic) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-12-4}
@@ -1899,13 +1858,10 @@
   @end{short}
   This currently uses only the file name and not the file contents for
   determining this. This behaviour may change in the future.
-
-  Since 3.12
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-theme-lookup-icon}"
   (icon-info (:pointer (:struct gtk-icon-info))))
 
-#+gtk-3-12
 (export 'gtk-icon-info-is-symbolic)
 
 ;;; --- End of file gtk.icon-theme.lisp ----------------------------------------

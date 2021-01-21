@@ -142,8 +142,8 @@
     @entry[:insensitive]{The cell is drawn in an insensitive manner.}
     @entry[:sorted]{The cell is in a sorted row.}
     @entry[:focused]{The cell is in the focus row.}
-    @entry[:expandable]{The cell is in a row that can be expanded. Since 3.4}
-    @entry[:expanded]{The cell is in a row that is expanded. Since 3.4}
+    @entry[:expandable]{The cell is in a row that can be expanded.}
+    @entry[:expanded]{The cell is in a row that is expanded.}
   @end{table}
   @see-class{gtk-cell-renderer}")
 

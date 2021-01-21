@@ -501,7 +501,6 @@
   ((direction
     gtk-style-context-direction
     "direction" "GtkTextDirection" t t)
-   #+gtk-3-8
    (paint-clock
     gtk-style-context-paint-clock
     "paint-clock" "GdkFrameClock" t t)
@@ -638,14 +637,14 @@
 
 ;;; --- gtk-style-context-paint-clock ------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "paint-clock"
                                                'gtk-style-context) 't)
  "The @code{paint-clock} property of type @class{gdk-frame-clock} (Read / Write)
   @br{}
   The associated frame clock object.")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-paint-clock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-paint-clock 'function)
@@ -985,7 +984,6 @@
 ;;; gtk_style_context_set_frame_clock () -> gtk-style-context-frame-clock
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defun (setf gtk-style-context-frame-clock) (frame-clock context)
   (foreign-funcall "gtk_style_context_set_frame_clock"
                    (g-object gtk-style-context) context
@@ -993,7 +991,6 @@
                    :void)
   frame-clock)
 
-#+gtk-3-8
 (defcfun ("gtk_style_context_get_frame_clock" gtk-style-context-frame-clock)
     (g-object gdk-frame-clock)
  #+cl-cffi-gtk-documentation
@@ -1014,14 +1011,11 @@
   The frame clock is used for the timing of animations. If you are using a style
   context returned from the function @fun{gtk-widget-style-context}, you do
   not need to call this yourself.
-
-  Since 3.8
   @see-class{gtk-style-context}
   @see-class{gdk-frame-clock}
   @see-function{gtk-widget-style-context}"
   (context (g-object gtk-style-context)))
 
-#+gtk-3-8
 (export 'gtk-style-context-frame-clock)
 
 ;;; ----------------------------------------------------------------------------
@@ -2074,7 +2068,6 @@
 ;;; gtk_style_context_set_scale () -> gtk-style-context-scale
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defun (setf gtk-style-context-scale) (scale context)
   (foreign-funcall "gtk_style_context_set_scale"
                    (g-object gtk-style-context) context
@@ -2082,7 +2075,6 @@
                    :void)
   scale)
 
-#+gtk-3-10
 (defcfun ("gtk_style_context_get_scale" gtk-style-context-scale) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-9-13}
@@ -2098,12 +2090,9 @@
   assets for the style context. The function
   @sym{(setf gtk-style-context-scale)} sets the scale to use when getting image
   assets for the style context.
-
-  Since 3.10
   @see-class{gtk-style-context}"
   (context (g-object gtk-style-context)))
 
-#+gtk-3-10
 (export 'gtk-style-context-scale)
 
 ;;; ----------------------------------------------------------------------------
@@ -2701,7 +2690,6 @@
 ;;; gtk_render_icon_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_render_icon_surface" gtk-render-icon-surface) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-3-8}
@@ -2714,8 +2702,6 @@
   @begin{short}
     Renders the icon in surface at the specified x and y coordinates.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-style-context}
   @see-symbol{cairo-t}"
   (context (g-object gtk-style-context))
@@ -2724,7 +2710,6 @@
   (x :double)
   (y :double))
 
-#+gtk-3-10
 (export 'gtk-render-icon-surface)
 
 ;;; ----------------------------------------------------------------------------

@@ -153,7 +153,7 @@
 (setf (documentation (atdoc:get-slot-from-name "stack" 'gtk-stack-switcher)
                      't)
  "The @code{stack} property of type @class{gtk-stack} (Read / Write) @br{}
-  The @class{gtk-stack}. Since 3.10 @br{}")
+  The @class{gtk-stack}. @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-switcher-stack atdoc:*function-name-alias*)
@@ -172,8 +172,6 @@
   The slot access function @sym{gtk-stack-switcher-stack} retrieves the stack.
   The slot access function @sym{(setf gtk-stack-switcher-stack)} sets the stack
   to control.
-
-  Since 3.10
   @see-class{gtk-stack-switcher}")
 
 ;;; ----------------------------------------------------------------------------
@@ -187,8 +185,6 @@
  "@version{2020-5-8}
   @return{The new @class{gtk-stack-switcher} widget.}
   @short{Creates a new stack switcher.}
-
-  Since 3.10
   @see-class{gtk-stack-switcher}"
   (make-instance 'gtk-stack-switcher))
 

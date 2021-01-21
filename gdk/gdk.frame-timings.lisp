@@ -74,7 +74,6 @@
 (define-g-boxed-opaque gdk-frame-timings \"GdkFrameTimings\"
   :alloc (error \"GdkFrameTimings cannot be created from the Lisp side.\"))
   @end{pre}
-  Since 3.8
   @see-class{gdk-frame-clock}
   @see-function{gdk-frame-clock-timings}
   @see-function{gdk-frame-clock-current-timings}")
@@ -130,8 +129,6 @@
   @begin{short}
     Gets the frame counter value of the frame clock when this frame was drawn.
   @end{short}
-
-  Since 3.8
   @see-class{gdk-frame-timings}"
   (timings (g-boxed-foreign gdk-frame-timings)))
 
@@ -160,8 +157,6 @@
   the function @sym{gdk-frame-timings-complete} returns @em{true} for a frame,
   you can be certain that no further values will become available and be stored
   in the @class{gdk-frame-timings} structure.
-
-  Since 3.8
   @see-class{gdk-frame-timings}"
   (timings (g-boxed-foreign gdk-frame-timings)))
 
@@ -185,8 +180,6 @@
   @end{short}
   This is the time value that is typically used to time animations for the
   frame. See the function @fun{gdk-frame-clock-frame-time}.
-
-  Since 3.8
   @see-class{gdk-frame-timings}
   @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-clock-frame-time}"
@@ -212,8 +205,6 @@
     Returns the presentation time.
   @end{short}
   This is the time at which the frame became visible to the user.
-
-  Since 3.8
   @see-class{gdk-frame-timings}
   @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-timings-complete}"
@@ -241,8 +232,6 @@
     this frame was displayed on.
   @end{short}
   Frame presentation usually happens during the \"vertical blanking interval\".
-
-  Since 3.8
   @see-class{gdk-frame-timings}
   @see-function{gdk-frame-timings-complete}"
   (timings (g-boxed-foreign gdk-frame-timings)))
@@ -275,8 +264,6 @@
   but this function is useful for applications that want exact control over
   latency. For example, a movie player may want this information for Audio/Video
   synchronization.
-
-  Since 3.8
   @see-class{gdk-frame-timings}
   @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-clock-frame-time}

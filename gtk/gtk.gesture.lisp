@@ -101,7 +101,6 @@
     Describes the state of a @class{gdk-event-sequence} in a
     @class{gtk-gesture}.
   @end{short}
-  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkEventSequenceState\" gtk-event-sequence-state
   (:export t
@@ -241,7 +240,7 @@
       handler(s) returned @em{true}. Note: These conditions may also happen when
       an extra touch (e.g. a third touch on a 2-touches gesture) is lifted, in
       that situation sequence will not pertain to the current set of active
-      touches, so do not rely on this being true. Since 3.14
+      touches, so do not rely on this being true.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture} object which received the signal.}
         @entry[sequence]{The @class{gdk-event-sequence} that made the gesture
@@ -257,7 +256,7 @@
       grabs ...), or the individual sequence was claimed by parent widgets'
       controllers (see the function @fun{gtk-gesture-set-sequence-state}).
       @arg{gesture} must forget everything about sequence as a reaction to this
-      signal. Since 3.14
+      signal.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture} object which received the signal.}
         @entry[sequence]{The @class{gdk-event-sequence} that was cancelled.}
@@ -273,7 +272,7 @@
       sequences that were previously triggering recognition on gesture (i.e. a
       just pressed touch sequence that exceeds @code{n-points}). This situation
       may be detected by checking through the function
-      @fun{gtk-gesture-handles-sequence}. Since 3.14
+      @fun{gtk-gesture-handles-sequence}.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture} object which received the signal.}
         @entry[sequence]{The @class{gdk-event-sequence} that made gesture
@@ -285,7 +284,7 @@
       @end{pre}
       This signal is emitted whenever a sequence state changes. See the function
       @fun{gtk-gesture-set-sequence-state} to know more about the expectable
-      sequence lifetimes. Since 3.14
+      sequence lifetimes.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture} object which received the signal.}
         @entry[sequence]{The @class{gdk-event-sequence} that was cancelled.}
@@ -297,7 +296,7 @@
       @end{pre}
       This signal is emitted whenever an event is handled while the gesture is
       recognized. @arg{sequence} is guaranteed to pertain to the set of active
-      touches. Since 3.14
+      touches.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture} object which received the signal.}
         @entry[sequence]{The @class{gdk-event-sequence} that was updated.}
@@ -317,8 +316,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "n-points" 'gtk-gesture) 't)
  "The @code{n-points} property of type @code{:int} (Read / Write) @br{}
-  The number of touch points that trigger recognition on this gesture.
-  Since 3.14 @br{}
+  The number of touch points that trigger recognition on this gesture. @br{}
   Allowed values: >= 1 @br{}
   Default value: 1 @br{}")
 
@@ -337,8 +335,6 @@
   @end{short}
 
   The number of touch points that trigger recognition on this gesture.
-
-  Since 3.14
   @see-class{gtk-gesture}")
 
 ;;; --- gtk-gesture-window -----------------------------------------------------
@@ -347,7 +343,7 @@
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-gesture) 't)
  "The @code{window} property of type @class{GdkWindow} (Read / Write) @br{}
   If non-@code{nil}, the gesture will only listen for events that happen on this
-  @class{gdk-window}, or a child of it. Since 3.14")
+  @class{gdk-window}, or a child of it.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-gesture-window atdoc:*function-name-alias*)
@@ -369,8 +365,6 @@
   events about, so gesture will effectively handle only events targeting window,
   or a child of it. @arg{window} must pertain to the function
   @fun{gtk-event-controller-widget}.
-
-  Since 3.14
   @see-class{gtk-gesture}")
 
 ;;; ----------------------------------------------------------------------------
@@ -403,8 +397,6 @@
     Returns @em{true} if the gesture is currently active.
   @end{short}
   A gesture is active meanwhile there are touch sequences interacting with it.
-
-  Since 3.14
   @see-class{gtk-gesture}"
   (gesture (g-object gtk-gesture)))
 

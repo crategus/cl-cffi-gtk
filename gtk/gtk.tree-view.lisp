@@ -307,8 +307,7 @@
                 "GtkBuildable"
                 "GtkScrollable")
    :type-initializer "gtk_tree_view_get_type")
-  (#+gtk-3-8
-   (activate-on-single-click
+  ((activate-on-single-click
     gtk-tree-view-activate-on-single-click
     "activate-on-single-click" "gboolean" t t)
    (enable-grid-lines
@@ -693,16 +692,16 @@
 
 ;;; --- gtk-tree-view-activate-on-single-click ---------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
                                                'gtk-tree-view) 't)
  "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write) @br{}
   The @code{activate-on-single-click} property specifies whether the
-  \"row-activated\" signal will be emitted after a single click. Since 3.8 @br{}
+  \"row-activated\" signal will be emitted after a single click. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-activate-on-single-click
                atdoc:*function-name-alias*)
       "Accessor"
@@ -720,8 +719,6 @@
 
   Cause the \"row-activated\" signal to be emitted on a single click instead of
   a double click.
-
-  Since 3.8
   @see-class{gtk-tree-view}")
 
 ;;; --- gtk-tree-view-enable-grid-lines ----------------------------------------

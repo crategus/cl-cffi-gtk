@@ -439,7 +439,7 @@
     @entry[:declaration]{The section defines the declaration of a CSS variable.}
     @entry[:value]{The section defines the value of a CSS declaration.}
     @entry[:keyframes]{The section defines keyframes. See CSS animations for
-      details. Since 3.6.}
+      details.}
   @end{table}
   @see-class{gtk-css-provider}")
 

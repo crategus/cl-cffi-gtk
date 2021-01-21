@@ -174,8 +174,6 @@
 
   The generic function @sym{gdk-gl-context-display} retrieves the
   @class{gdk-display} the context is created for.
-
-  Since 3.16
   @see-class{gdk-gl-context}")
 
 ;;; --- gdk-gl-context-shared-context ------------------------------------------
@@ -202,8 +200,6 @@
 
   The generic function @sym{gdk-gl-context-shared-context} retrieves the
   @class{gdk-gl-context} that this context share data with.
-
-  Since 3.16
   @see-class{gdk-gl-context}")
 
 ;;; --- gdk-gl-context-window --------------------------------------------------
@@ -228,8 +224,6 @@
 
   The generic function @sym{gdk-gl-context-window} retrieves the
   @class{gdk-window} used by the context.
-
-  Since 3.16
   @see-class{gdk-gl-context}")
 
 ;;; ----------------------------------------------------------------------------

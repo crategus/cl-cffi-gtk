@@ -791,8 +791,6 @@
   @begin{short}
     Returns the drag protocol thats used by this context.
   @end{short}
-
-  Since 3.0
   @see-class{gdk-drag-context}
   @see-symbol{gdk-drag-protocol}"
   (context (g-object gdk-drag-context)))

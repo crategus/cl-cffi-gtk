@@ -112,8 +112,7 @@
                 "GtkBuildable"
                 "GtkOrientable")
    :type-initializer "gtk_box_get_type")
-  (#+gtk-3-10
-   (baseline-position
+  ((baseline-position
     gtk-box-base-line-position
     "baseline-position" "GtkBaselinePosition" t t)
    (homogeneous
@@ -248,15 +247,14 @@
 
 ;;; --- gtk-box-baseline-position ----------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "baseline-position" 'gtk-box) 't)
  "The @code{baseline-position} property of type @symbol{gtk-baseline-position}
   (Read / Write) @br{}
-  The position of the baseline aligned widgets if extra space is available.
-  Since 3.10 @br{}
+  The position of the baseline aligned widgets if extra space is available.@br{}
   Default value: @code{:center}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-baseline-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-baseline-position 'function)
@@ -279,8 +277,6 @@
   widget. If there is more vertical space available than requested, and the
   baseline is not allocated by the parent widget then @arg{position} is used
   to allocate the baseline wrt the extra space available.
-
-  Since 3.10
   @see-class{gtk-box}
   @see-symbol{gtk-baseline-position}")
 
@@ -742,7 +738,6 @@
 ;;; gtk_box_set_center_widget () -> gtk-box-center-widget
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defun (setf gtk-box-center-widget) (widget box)
   (foreign-funcall "gtk_box_set_center_widget"
                    (g-object gtk-box) box
@@ -750,7 +745,6 @@
                    :void)
   widget)
 
-#+gtk-3-12
 (defcfun ("gtk_box_get_center_widget" gtk-box-center-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
@@ -768,13 +762,10 @@
   That is a child widget that will be centered with respect to the full width
   of the box, even if the children at either side take up different amounts of
   space.
-
-  Since 3.12
   @see-class{gtk-box}
   @see-class{gtk-widget}"
   (box (g-object gtk-box)))
 
-#+gtk-3-12
 (export 'gtk-box-center-widget)
 
 ;;; ----------------------------------------------------------------------------

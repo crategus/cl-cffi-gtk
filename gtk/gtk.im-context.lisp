@@ -61,15 +61,12 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_im_context_get_type")
-   (#+gtk-3-6
-    (input-hints
+   ((input-hints
     gtk-im-context-input-hints
     "input-hints" "GtkInputHints" t t)
-    #+gtk-3-6
     (input-purpose
      gtk-im-context-input-purpose
-     "input-purpose" "GtkInputPurpose" t t)
-   ))
+     "input-purpose" "GtkInputPurpose" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-im-context 'type)
@@ -230,14 +227,14 @@ void im_module_list(const <a class=\"link\"
 
 ;;; --- gtk-im-context-input-hints ---------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-hints"
                                                'gtk-im-context) 't)
  "The @code{input-hints} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
   Hints for the text field behaviour. @br{}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-context-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-im-context-input-hints 'function)
@@ -256,7 +253,7 @@ void im_module_list(const <a class=\"link\"
 
 ;;; --- gtk-im-context-input-purpose -------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-purpose"
                                                'gtk-im-context) 't)
  "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
@@ -264,7 +261,7 @@ void im_module_list(const <a class=\"link\"
   Purpose of the text field. @br{}
   Default value: @code{:free-from}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-context-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-im-context-input-purpose 'function)

@@ -135,8 +135,7 @@
    :interfaces ("GActionGroup"
                 "GActionMap")
    :type-initializer "gtk_application_get_type")
-   (#+gtk-3-6
-    (active-window
+   ((active-window
      gtk-application-active-window
      "active-window" "GtkWindow" t nil)
     (app-menu
@@ -322,13 +321,13 @@
 
 ;;; --- gtk-application-active-window ------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active-window"
                                                'gtk-application) 't)
  "The @code{active-window} property of type @class{gtk-window} (Read) @br{}
-  The window which most recently had focus. Since 3.6")
+  The window which most recently had focus.")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-active-window 'function)
@@ -348,8 +347,6 @@
   application. This window may not have the focus at the moment if another
   application has it - this is just the most recently focused window within
   this application.
-
-  Since 3.6
   @see-class{gtk-application}
   @see-class{gtk-window}")
 
@@ -630,7 +627,6 @@
 ;;; gtk_application_get_window_by_id () -> gtk-application-window-by-id
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_application_get_window_by_id" gtk-application-window-by-id)
     (g-object gtk-window)
  #+cl-cffi-gtk-documentation
@@ -644,15 +640,12 @@
   @end{short}
   The ID of an application window can be retrieved with the function
   @fun{gtk-application-window-id}.
-
-  Since 3.6
   @see-class{gtk-application}
   @see-class{gtk-application-window}
   @see-function{gtk-application-window-id}"
   (application (g-object gtk-application))
   (window-id :uint))
 
-#+gtk-3-6
 (export 'gtk-application-window-by-id)
 
 ;;; ----------------------------------------------------------------------------
@@ -761,7 +754,6 @@
 ;;; gtk_application_prefers_app_menu ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_application_prefers_app_menu" gtk-application-prefers-app-menu)
     :boolean
  #+cl-cffi-gtk-documentation
@@ -807,14 +799,12 @@
   @see-function{gtk-application-app-menu}"
   (application (g-object gtk-application)))
 
-#+gtk-3-14
 (export 'gtk-application-prefers-app-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_menu_by_id () -> gtk-application-menu-by-id
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_application_get_menu_by_id" gtk-application-menu-by-id)
     (g-object g-menu)
  #+cl-cffi-gtk-documentation
@@ -826,14 +816,11 @@
   @begin{short}
     Gets a menu from automatically loaded resources.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-application}
   @see-class{g-menu}"
   (application (g-object gtk-application))
   (menu-id g-string))
 
-#+gtk-3-14
 (export 'gtk-application-menu-by-id)
 
 ;;; ----------------------------------------------------------------------------
@@ -931,7 +918,6 @@
 ;;; gtk_application_list_action_descriptions ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defcfun ("gtk_application_list_action_descriptions"
            gtk-application-list-action-descriptions) g-strv
  #+cl-cffi-gtk-documentation
@@ -942,13 +928,10 @@
     Lists the detailed action names which have associated accelerators.
   @end{short}
   See the function @fun{gtk-application-accels-for-action}.
-
-  Since 3.12
   @see-class{gtk-application}
   @see-function{gtk-applicaton-accels-for-action}"
   (application (g-object gtk-application)))
 
-#+gtk-3-12
 (export 'gtk-application-list-action-descriptions)
 
 ;;; ----------------------------------------------------------------------------
@@ -956,7 +939,6 @@
 ;;; gtk_application_set_accels_for_action () -> gtk-application-accels-for-action
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defun (setf gtk-application-accels-for-action) (accels application action-name)
   (foreign-funcall "gtk_application_set_accels_for_action"
                    (g-object gtk-application) application
@@ -965,7 +947,6 @@
                    :void)
   accels)
 
-#+gtk-3-12
 (defcfun ("gtk_application_get_accels_for_action"
            gtk-application-accels-for-action) g-strv
  #+cl-cffi-gtk-documentation
@@ -992,22 +973,18 @@
 
   For the detailed action name, see the functions
   @fun{g-action-parse-detailed-name} and @fun{g-action-print-detailed-name}.
-
-  Since 3.12
   @see-class{gtk-application}
   @see-function{g-action-parse-detailed-name}
   @see-function{g-action-print-detailed-name}"
   (application (g-object gtk-application))
   (action-name g-string))
 
-#+gtk-3-12
 (export 'gtk-application-accels-for-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_actions_for_accel () -> gtk-application-actions-for-accel
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_application_get_actions_for_accel"
            gtk-application-actions-for-accel) g-strv
  "@version{*2020-5-14}
@@ -1032,14 +1009,11 @@
 
   It is a programmer error to pass an invalid accelerator string. If you are
   unsure, check it with the function @fun{gtk-accelerator-parse} first.
-
-  Since 3.14
   @see-class{gtk-application}
   @see-function{gtk-accelerator-parse}"
   (application (g-object gtk-application))
   (accel g-string))
 
-#+gtk-3-14
 (export 'gtk-application-actions-for-accel)
 
 ;;; --- End of file gtk.application.lisp ---------------------------------------

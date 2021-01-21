@@ -294,7 +294,6 @@
    (is-active
     gtk-window-is-active
     "is-active" "gboolean" t nil)
-   #+gtk-3-12
    (is-maximized
     gtk-window-is-maximized
     "is-maximized" "gboolean" t nil)
@@ -1138,13 +1137,13 @@
 
 ;;; --- gtk-window-is-maximized ------------------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-maximized" 'gtk-window) 't)
  "The @code{is-maximized} property of type @code{:boolean} (Read) @br{}
   Whether the window is maximized. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-is-maximized atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-is-maximized 'function)
@@ -1163,8 +1162,6 @@
   return value of this function changing immediately (or at all), as an effect
   of calling the functions @fun{gtk-window-maximize} or
   @fun{gtk-window-unmaximize}.
-
-  Since 3.12
   @see-class{gtk-window}
   @see-function{gtk-window-maximize}
   @see-function{gtk-window-unmaximize}")
@@ -2276,7 +2273,6 @@
 ;;; gtk_window_close ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_window_close" gtk-window-close) :void
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-26}
@@ -2286,12 +2282,9 @@
     manager close button is clicked.
   @end{short}
   This function can be used with close buttons in custom titlebars.
-
-  Since 3.10
   @see-class{gtk-window}"
   (window (g-object gtk-window)))
 
-#+gtk-3-10
 (export 'gtk-window-close)
 
 ;;; ----------------------------------------------------------------------------
@@ -3407,7 +3400,6 @@
 ;;; gtk_window_get_titlebar () -> gtk-window-titlebar
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defun (setf gtk-window-titlebar) (widget window)
   (foreign-funcall "gtk_window_set_titlebar"
                    (g-object gtk-window) window
@@ -3415,7 +3407,6 @@
                    :void)
   widget)
 
-#+gtk-3-16
 (defcfun ("gtk_window_get_titlebar" gtk-window-titlebar) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-26}
@@ -3435,20 +3426,16 @@
   manager not to put its own titlebar on the window. Depending on the system,
   this function may not work for a window that is already visible, so you set
   the titlebar before calling the function @fun{gtk-widget-show}.
-
-  Since 3.16
   @see-class{gtk-window}
   @see-function{gtk-widget-show}"
   (window (g-object gtk-window)))
 
-#+gtk-3-16
 (export 'gtk-window-titlebar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_interactive_debugging () -> gtk-window-interactice-debugging
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_window_set_interactive_debugging"
            gtk-window-interactive-debugging) :void
  #+cl-cffi-gtk-documentation
@@ -3458,12 +3445,9 @@
     Opens or closes the interactive debugger, which offers access to the widget
     hierarchy of the application and to useful debugging tools.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-window}"
   (enable :boolean))
 
-#+gtk-3-14
 (export 'gtk-window-interactive-debugging)
 
 ;;; --- End of file gtk.window.lisp --------------------------------------------

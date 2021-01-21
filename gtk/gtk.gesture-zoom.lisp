@@ -69,15 +69,13 @@
     sequences changes, the \"scale-changed\" signal is emitted to report the
     scale factor.
   @end{short}
-
-  Since 3.14
   @begin[Signal Details]{dictionary}
     @subheading{The \"scale-changed\" signal}
     @begin{pre}
   lambda (gesture scale)    : Run First
     @end{pre}
     This signal is emitted whenever the distance between both tracked sequences
-    changes. Since 3.14
+    changes.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-zoom} object on which the signal
         is emitted.}
@@ -102,8 +100,6 @@
     Returns a newly created gesture that recognizes zoom in/out gestures
     (usually known as pinch/zoom).
   @end{short}
-
-  Since 3.14
   @see-class{gtk-gesture-rotate}"
   (make-instance 'gtk-gesture-zoom
                  :widget widget))
@@ -125,8 +121,6 @@
     the gesture was recognized (hence the starting point is considered 1:1).
   @end{short}
   If the gesture is not active, 1 is returned.
-
-  Since 3.14
   @see-class{gtk-gesture-rotate}"
   (gesture (g-object gtk-gesture-zoom)))
 

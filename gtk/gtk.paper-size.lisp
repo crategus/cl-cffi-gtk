@@ -273,14 +273,12 @@
 ;;; gtk_paper_size_new_from_ipp ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_paper_size_new_from_ipp" %gtk-paper-size-new-from-ipp)
     (g-boxed-foreign gtk-paper-size)
   (name :string)
   (width :double)
   (height :double))
 
-#+gtk-3-16
 (defun gtk-paper-size-new-from-ipp (name &optional (width 0.0d0) (height 0.0d0))
  #+cl-cffi-gtk-documentation
  "@version{2020-3-28}
@@ -296,14 +294,11 @@
 
   If @arg{name} is not a recognized IPP paper name, @arg{width} and @arg{height}
   are used to construct a custom @class{gtk-paper-size} structure.
-
-  Since 3.16
   @see-class{gtk-paper-size}"
   (%gtk-paper-size-new-from-ipp name
                                 (coerce width 'double-float)
                                 (coerce height 'double-float)))
 
-#+gtk-3-16
 (export 'gtk-paper-size-new-from-ipp)
 
 ;;; ----------------------------------------------------------------------------

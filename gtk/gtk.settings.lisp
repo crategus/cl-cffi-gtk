@@ -268,11 +268,9 @@
    (gtk-cursor-theme-size
     gtk-settings-gtk-cursor-theme-size
     "gtk-cursor-theme-size" "gint" t t)
-   #+gtk-3-12
    (gtk-decoration-layout
     gtk-settings-gtk-decoration-layout
     "gtk-decoration-layout" "gchararray" t t)
-   #+gtk-3-12
    (gtk-dialogs-use-header
     gtk-settings-gtk-dialogs-use-header
     "gtk-dialogs-use-header" "gboolean" t t)
@@ -358,7 +356,6 @@
    (gtk-label-select-on-focus
     gtk-settings-gtk-label-select-on-focus
     "gtk-label-select-on-focus" "gboolean" t t)
-   #+gtk-3-14
    (gtk-long-press-time
     gtk-settings-gtk-long-press-time
     "gtk-long-press-time" "guint" t t)
@@ -380,7 +377,6 @@
    (gtk-modules
     gtk-settings-gtk-modules
     "gtk-modules" "gchararray" t t)
-   #+gtk-3-6
    (gtk-primary-button-warps-slider
     gtk-settings-gtk-primary-button-warps-slider
     "gtk-primary-button-warps-slider" "gboolean" t t)
@@ -390,7 +386,6 @@
    (gtk-print-preview-command
     gtk-settings-gtk-print-preview-command
     "gtk-print-preview-command" "gchararray" t t)
-   #+gtk-3-8
    (gtk-recent-files-enabled
     gtk-settings-gtk-recent-files-enabled
     "gtk-settings-gtk-recent-files-enabled" "gboolean" t t)
@@ -406,7 +401,6 @@
    (gtk-shell-shows-app-menu
     gtk-settings-gtk-shell-shows-app-menu
     "gtk-shell-shows-app-menu" "gboolean" t t)
-   #+gtk-3-10
    (gtk-shell-shows-desktop
     gtk-settings-gtk-shell-shows-desktop
     "gtk-shell-shows-desktop" "gboolean" t t)
@@ -437,15 +431,12 @@
    (gtk-timeout-repeat
     gtk-settings-gtk-timeout-repeat
     "gtk-timeout-repeat" "gint" t t)
-   #+gtk-3-14
    (gtk-titlebar-double-click
     gtk-settings-gtk-titlebar-double-click
     "gtk-titlebar-double-click" "gchararray" t t)
-   #+gtk-3-14
    (gtk-titlebar-middle-click
     gtk-settings-gtk-titlebar-middle-click
     "gtk-titlebar-middle-click" "gchararray" t t)
-   #+gtk-3-14
    (gtk-titlebar-right-click
     gtk-settings-gtk-titlebar-right-click
     "gtk-titlebar-right-click" "gchararray" t t)
@@ -971,7 +962,7 @@ name1: color1; name2: color2; ...
 
 ;;; --- gtk-settings-gtk-decoration-layout -------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-decoration-layout"
                                                'gtk-settings) 't)
  "The @code{gtk-decoration-layout} property of type @code{:string}
@@ -987,10 +978,10 @@ name1: color1; name2: color2; ...
   when they are meaningful. E.g. a menu button only appears when the desktop
   shell does not show the app menu, and a close button only appears on a window
   that can be closed. Also note that the setting can be overridden with the
-  @code{decoration-layout} property. Since 3.12 @br{}
+  @code{decoration-layout} property. @br{}
   Default value: \"menu:minimize,maximize,close\"")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-decoration-layout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-decoration-layout 'function)
@@ -1022,14 +1013,12 @@ name1: color1; name2: color2; ...
 
   Also note that the setting can be overridden with the
   @slot[gtk-header-bar]{decoration-layout} property of a header bar.
-
-  Since 3.12
   @see-class{gtk-settings}
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-settings-gtk-dialogs-use-header ------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-dialogs-use-header"
                                                'gtk-settings) 't)
  "The @code{gtk-dialogs-use-header} property of type @code{:boolean}
@@ -1037,10 +1026,10 @@ name1: color1; name2: color2; ...
   Whether builtin GTK+ dialogs such as the file chooser, the color chooser or
   the font chooser will use a header bar at the top to show action widgets, or
   an action area at the bottom. This setting does not affect custom dialogs
-  using @class{gtk-dialog} directly, or message dialogs. Since 3.12 @br{}
+  using @class{gtk-dialog} directly, or message dialogs. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-dialogs-use-header atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-dialogs-use-header 'function)
@@ -1049,8 +1038,6 @@ name1: color1; name2: color2; ...
     Accessor of the @slot[gtk-settings]{gtk-dialogs-use-header} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-dnd-drag-threshold ------------------------------------
@@ -1685,17 +1672,16 @@ size-name = width , height
 
 ;;; --- gtk-settings-gtk-long-press-time ---------------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-long-press-time"
                                                'gtk-settings) 't)
  "The @code{gtk-long-press-time} property of type @code{:uint} (Read / Write)
   @br{}
-  The time for a button or touch press to be considered a \"long press\".
-  Since 3.14 @br{}
+  The time for a button or touch press to be considered a \"long press\". @br{}
   Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 50")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-long-press-time
                atdoc:*function-name-alias*)
       "Accessor"
@@ -1705,8 +1691,6 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-long-press-time} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-menu-bar-accel ----------------------------------------
@@ -1852,17 +1836,16 @@ size-name = width , height
 
 ;;; --- gtk-settings-gtk-primary-button-warps-slider ---------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-primary-button-warps-slider"
                                                'gtk-settings) t)
  "The @code{gtk-primary-button-warps-slider} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether a click in a @class{gtk-range} widget trough should scroll to the
-  click position or scroll by a single page in the respective direction.
-  Since 3.6 @br{}
+  click position or scroll by a single page in the respective direction. @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-primary-button-warps-slider
                atdoc:*function-name-alias*)
       "Accessor"
@@ -1872,8 +1855,6 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-primary-buton-warps-slider} slot of
     the @class{gtk-settings} class.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-print-backends ----------------------------------------
@@ -1926,16 +1907,16 @@ size-name = width , height
 
 ;;; --- gtk-settings-gtk-recent-files-enabled ----------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-recent-files-enabled"
                                                'gtk-settings) 't)
  "The @code{gtk-recent-files-enabled} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether GTK+ should keep track of items inside the recently used resources
-  list. If set to @em{false}, the list will always be empty. Since 3.8 @br{}
+  list. If set to @em{false}, the list will always be empty. @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-recent-files-enabled
                atdoc:*function-name-alias*)
       "Accessor"
@@ -1945,8 +1926,6 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-recent-files-enabled} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.8
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-recent-files-limit ------------------------------------
@@ -2059,16 +2038,16 @@ size-name = width , height
 
 ;;; --- gtk-settings-gtk-shell-shows-desktop -----------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-shell-shows-desktop"
                                                'gtk-settings) 't)
  "The @code{gtk-shell-shows-desktop} property of type @code{:boolean}
   (Read / Write) @br{}
   Set to @em{true} if the desktop environment is displaying the desktop folder,
-  @em{false} if not. Since 3.10 @br{}
+  @em{false} if not. @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-shell-shows-desktop
                atdoc:*function-name-alias*)
       "Accessor"
@@ -2078,8 +2057,6 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-shell-shows-desktop} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-settings}")
 
 ;;; gtk-settings-gtk-shell-shows-menubar ---------------------------------------
@@ -2283,18 +2260,17 @@ size-name = width , height
 
 ;;; --- gtk-settings-gtk-titlebar-double-click ---------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-titlebar-double-click"
                                                'gtk-settings) 't)
  "The @code{gtk-titlebar-double-click} property of type @code{:string}
   (Read / Write) @br{}
   This setting determines the action to take when a double click occures on the
   titlebar of client-side decorated windows. Recognized actions are
-  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
-  Since 3.14 @br{}
+  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\". @br{}
   Default value: \"toggle-maximize\"")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-titlebar-double-click
                atdoc:*function-name-alias*)
       "Accessor"
@@ -2312,24 +2288,21 @@ size-name = width , height
   This setting determines the action to take when a double click occures on the
   titlebar of client-side decorated windows. Recognized actions are
   \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
-
-  Since 3.14
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-titlebar-middle-click ---------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-titlebar-middle-click"
                                                'gtk-settings) 't)
  "The @code{gtk-titlebar-middle-click} property of type @code{:string}
   (Read / Write) @br{}
   This setting determines the action to take when a middle-click occurs on the
   titlebar of client-side decorated windows. Recognized actions are
-  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
-  Since 3.14 @br{}
+  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\". @br{}
   Default value: \"none\"")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-titlebar-middle-click
                atdoc:*function-name-alias*)
       "Accessor"
@@ -2339,24 +2312,21 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-titlebar-middle-click} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-titlebar-right-click ----------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-titlebar-right-click"
                                                'gtk-settings) 't)
  "The @code{gtk-titlebar-right-click} property of type @code{:string}
   (Read / Write) @br{}
   This setting determines the action to take when a right-click occurs on the
   titlebar of client-side decorated windows. Recognized actions are
-  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\".
-  Since 3.14 @br{}
+  \"minimize\", \"toggle-maximize\", \"menu\", \"lower\" or \"none\". @br{}
   Default value: \"menu\"")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-titlebar-right-click
                atdoc:*function-name-alias*)
       "Accessor"
@@ -2366,8 +2336,6 @@ size-name = width , height
     Accessor of the @slot[gtk-settings]{gtk-titlebar-right-click} slot of the
     @class{gtk-settings} class.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-toolbar-icon-size -------------------------------------

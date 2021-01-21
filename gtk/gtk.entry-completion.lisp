@@ -245,7 +245,7 @@
       @begin{pre}
  lambda (widget)    : Run Last
       @end{pre}
-      Gets emitted when the entry completion is out of suggestions. Since 3.14
+      Gets emitted when the entry completion is out of suggestions.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-entry-completion} object which received the
           signal.}

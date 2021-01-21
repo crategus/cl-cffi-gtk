@@ -91,7 +91,7 @@
     Windows 10.
    </para>
    <para>
-    The minimum version requirements are GTK+ 3.4 and GLIB 2.32.
+    The minimum version requirements are GTK+ 3.16 and GLIB 2.32.
    </para>
    <para>
     GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and Cairo. These libraries
@@ -13875,6 +13875,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
 
 
 

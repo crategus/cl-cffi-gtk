@@ -550,9 +550,7 @@
   (:start 1)
   (:end 2)
   (:center 3)
-  #+gtk-3-10
-  (:baseline 4)
-  )
+  (:baseline 4))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
@@ -591,7 +589,7 @@
     @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
     @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
     @entry[:center]{Center natural width of widget inside the allocation.}
-    @entry[:baseline]{Align the widget according to the baseline. Since 3.10}
+    @entry[:baseline]{Align the widget according to the baseline.}
   @end{table}
   @see-class{gtk-widget}
   @see-function{gtk-widget-halign}
@@ -662,7 +660,6 @@
    (margin-bottom
     gtk-widget-margin-bottom
     "margin-bottom" "gint" t t)
-   #+gtk-3-12
    (margin-end
     gtk-widget-margin-end
     "margin-end" "gint" t t)
@@ -672,7 +669,6 @@
    (margin-right
     gtk-widget-margin-right
     "margin-right" "gint" t t)
-   #+gtk-3-12
    (margin-start
     gtk-widget-margin-start
     "margin-start" "gint" t t)
@@ -685,7 +681,6 @@
    (no-show-all
     gtk-widget-no-show-all
     "no-show-all" "gboolean" t t)
-   #+gtk-3-8
    (opacity
     gtk-widget-opacity
     "opacity" "gdouble" t t)
@@ -695,7 +690,6 @@
    (receives-default
     gtk-widget-receives-default
     "receives-default" "gboolean" t t)
-   #+gtk-3-10
    (scale-factor
     gtk-widget-scale-factor
     "scale-factor" "gint" t nil)
@@ -2970,7 +2964,7 @@ drag_data_received (GtkWidget        *widget,
   Margin on end of the widget, horizontally. This property supports
   left-to-right text directions. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example. Since 3.12. @br{}
+  from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
 
@@ -2991,8 +2985,6 @@ drag_data_received (GtkWidget        *widget,
 
   The generic function @sym{(setf gtk-widget-margin-end)} sets the end margin
   of the widget.
-
-  Since 3.12
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
@@ -3085,7 +3077,7 @@ drag_data_received (GtkWidget        *widget,
   left-to-right and right-to-left text directions. This property adds margin
   outside of the widget's normal size request, the margin will be added in
   addition to the size from the function @fun{gtk-widget-size-request} for
-  example. Since 3.12 @br{}
+  example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
 
@@ -3106,8 +3098,6 @@ drag_data_received (GtkWidget        *widget,
 
   The generic function @sym{(setf gtk-widget-margin-start)} sets the start
   margin of the widget. See the @slot[gtk-widget]{margin-start} property.
-
-  Since 3.12
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
@@ -3217,16 +3207,16 @@ drag_data_received (GtkWidget        *widget,
 
 ;;; --- gtk-widget-opacity -----------------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
  "The @code{opacity} property of type @code{:double} (Read / Write) @br{}
   The requested opacity of the widget. See the function @fun{gtk-widget-opacity}
   for more details about window opacity. Before version 3.8 this was only
-  available in @class{gtk-window}. Since 3.8 @br{}
+  available in @class{gtk-window}. @br{}
   Allowed values: [0,1] @br{}
   Default value: 1")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-opacity atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-opacity 'function)
  "@version{2020-9-26}
@@ -3258,7 +3248,6 @@ drag_data_received (GtkWidget        *widget,
       window, or disables double buffering.
     @end{item}
   @end{itemize}
-  Since 3.8
   @see-class{gtk-widget}
   @see-function{gtk-widget-is-composited}")
 
@@ -3335,15 +3324,15 @@ drag_data_received (GtkWidget        *widget,
 
 ;;; --- gtk-widget-scale-factor ------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gtk-widget) 't)
  "The @code{scale-factor} property of type @code{:int} (Read) @br{}
   The scale factor of the widget. See the function @fun{gtk-widget-scale-factor}
-  for more details about widget scaling. Since 3.10 @br{}
+  for more details about widget scaling. @br{}
   Allowed values: >= 1 @br{}
   Default value: 1")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-scale-factor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-scale-factor 'function)
@@ -3358,8 +3347,6 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
   On traditional systems this is 1, on high density outputs, it can be a higher
   value (typically 2).
-
-  Since 3.10
   @see-class{gtk-widget}
   @see-function{gdk-window-scale-factor}")
 
@@ -4132,8 +4119,6 @@ drag_data_received (GtkWidget        *widget,
   clock.
 
   Unrealized widgets do not have a frame clock.
-
-  Since 3.8
   @see-class{gtk-widget}
   @see-class{gdk-frame-clock}"
 
@@ -4168,7 +4153,6 @@ drag_data_received (GtkWidget        *widget,
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defcallback gtk-tick-callback :boolean
     ((widget (g-object gtk-widget))
      (frame-clock (g-object gdk-frame-clock))
@@ -4182,14 +4166,12 @@ drag_data_received (GtkWidget        *widget,
 ;;; gtk_widget_add_tick_callback ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defcfun ("gtk_widget_add_tick_callback" %gtk-widget-add-tick-callback) :uint
   (widget (g-object gtk-widget))
   (func :pointer)
   (data :pointer)
   (notify :pointer))
 
-#+gtk-3-8
 (defun gtk-widget-add-tick-callback (widget func)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-12}
@@ -4220,22 +4202,18 @@ drag_data_received (GtkWidget        *widget,
   This is a more convenient alternative to connecting directly to the \"update\"
   signal of @class{gdk-frame-clock}, since you do not have to worry about when a
   @class{gdk-frame-clock} is assigned to a widget.
-
-  Since 3.8
   @see-class{gtk-widget}"
   (%gtk-widget-add-tick-callback widget
                                  (callback gtk-tick-callback)
                                  (allocate-stable-pointer func)
                                  (callback stable-pointer-destroy-notify-cb)))
 
-#+gtk-3-8
 (export 'gtk-widget-add-tick-callback)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_remove_tick_callback ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defcfun ("gtk_widget_remove_tick_callback" gtk-widget-remove-tick-callback)
     :void
  #+cl-cffi-gtk-documentation
@@ -4247,13 +4225,10 @@ drag_data_received (GtkWidget        *widget,
     Removes a tick callback previously registered with the function
     @fun{gtk-widget-add-tick-callback}.
   @end{short}
-
-  Since 3.8
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (id :uint))
 
-#+gtk-3-8
 (export 'gtk-widget-remove-tick-callback)
 
 ;;; ----------------------------------------------------------------------------
@@ -7669,7 +7644,6 @@ drag_data_received (GtkWidget        *widget,
 ;;; gtk_widget_get_allocated_baseline () -> gtk-widget-allocated-baseline
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_widget_get_allocated_baseline" gtk-widget-allocated-baseline)
     :int
  "@version{2020-9-16}
@@ -7680,12 +7654,9 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
   This function is intended to be used when implementing handlers for the
   \"draw\" function, and when allocating child widgets in \"size_allocate\".
-
-  Since 3.10
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
-#+gtk-3-10
 (export 'gtk-widget-allocated-baseline)
 
 ;;; ----------------------------------------------------------------------------
@@ -7809,7 +7780,6 @@ drag_data_received (GtkWidget        *widget,
 ;;; gtk_widget_is_visible ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defcfun ("gtk_widget_is_visible" gtk-widget-is-visible) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-11-24}
@@ -7822,13 +7792,10 @@ drag_data_received (GtkWidget        *widget,
   This function does not check if the widget is obscured in any way.
 
   See also the function @fun{gtk-widget-visible}.
-
-  Since 3.8
   @see-class{gtk-widget}
   @see-function{gtk-widget-visible}"
   (widget (g-object gtk-widget)))
 
-#+gtk-3-8
 (export 'gtk-widget-is-visible)
 
 ;;; ----------------------------------------------------------------------------

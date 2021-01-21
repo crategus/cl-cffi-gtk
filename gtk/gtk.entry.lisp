@@ -248,7 +248,6 @@
 ;;; enum GtkInputPurpose
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (define-g-enum "GtkInputPurpose" gtk-input-purpose
   (:export t
    :type-initializer "gtk_input_purpose_get_type")
@@ -263,7 +262,7 @@
   (:password 8)
   (:pin 9))
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-input-purpose atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-input-purpose atdoc:*external-symbols*)
  "@version{2020-5-29}
@@ -285,8 +284,6 @@
 
   This enumeration may be extended in the future. Input methods should
   interpret unknown values as 'free form'.
-
-  Since 3.6
   @begin{pre}
 (define-g-enum \"GtkInputPurpose\" gtk-input-purpose
   (:export t
@@ -321,7 +318,6 @@
 ;;; enum GtkInputHints
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (define-g-flags "GtkInputHints" gtk-input-hints
   (:export t
    :type-initializer "gtk_input_hints_get_type")
@@ -342,7 +338,7 @@
   (:no-emoji            #.(ash 1 10))
 )
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-input-hints atdoc:*external-symbols*)
  "@version{2020-5-29}
@@ -357,8 +353,6 @@
 
   This flags may be extended in the future. Input methods should ignore
   unknown values.
-
-  Since 3.6
   @begin{pre}
 (define-g-flags \"GtkInputHints\" gtk-input-hints
   (:export t
@@ -411,7 +405,6 @@
   ((activates-default
     gtk-entry-activates-default
     "activates-default" "gboolean" t t)
-   #+gtk-3-6
    (attributes
     gtk-entry-attributes
     "attributes" "PangoAttrlist" t t)
@@ -443,11 +436,9 @@
    (inner-border
     gtk-entry-inner-border
     "inner-border" "GtkBorder" t t)
-   #+gtk-3-6
    (input-hints
     gtk-entry-input-hints
     "input-hints" "GtkInputHints" t t)
-   #+gtk-3-6
    (input-purpose
     gtk-entry-input-purpose
     "input-purpose" "GtkInputPurpose" t t)
@@ -460,7 +451,6 @@
    (max-length
     gtk-entry-max-length
     "max-length" "gint" t t)
-   #+gtk-3-12
    (max-width-chars
     gtk-entry-max-width-chars
     "max-width-chars" "gint" t t)
@@ -470,7 +460,6 @@
    (placeholder-text
     gtk-entry-placeholder-text
     "placeholder-text" "gchararray" t t)
-   #+gtk-3-8
    (populate-all
     gtk-entry-populate-all
     "populate-all" "gboolean" t t)
@@ -547,7 +536,6 @@
    (show-emoji-icon
     gtk-entry-show-emoji-icon
     "show-emoji-icon" "gboolean" t t)
-   #+gtk-3-10
    (tabs
     gtk-entry-tabs
     "tabs" "PangoTabArray" t t)
@@ -936,14 +924,14 @@
 
 ;;; --- gtk-entry-attributes ---------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-entry) t)
  "The @code{attributes} property of type @class{pango-attr-list} (Read / Write)
   @br{}
   A list of Pango attributes to apply to the text of the entry. This is mainly
-  useful to change the size or weight of the text. Since 3.6")
+  useful to change the size or weight of the text.")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-attributes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-attributes 'function)
@@ -960,8 +948,6 @@
   The slot access function @sym{gtk-entry-attributes} gets the attribute list,
   if any. The slot access function @sym{(setf gtk-entry-attributes)} sets a
   attributes list. The attributes in the list are applied to the entry text.
-
-  Since 3.6
   @see-class{gtk-entry}
   @see-class{pango-attr-list}")
 
@@ -1250,14 +1236,14 @@
 
 ;;; --- gtk-entry-input-hints --------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-entry) t)
  "The @code{input-hints} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
   Additional hints, beyond the @code{input-purpose} property, that allow
-  input methods to fine-tune their behaviour. Since 3.6")
+  input methods to fine-tune their behaviour.")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-input-hints 'function)
@@ -1275,24 +1261,22 @@
   @slot[gtk-entry]{input-hints} property. The slot access function
   @sym{(setf gtk-entry-input-hints)} sets the @slot[gtk-entry]{input-hints}
   property, which allows input methods to fine-tune their behaviour.
-
-  Since 3.6
   @see-class{gtk-entry}
   @see-symbol{gtk-input-hints}")
 
 ;;; --- gtk-entry-input-purpose ------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-purpose" 'gtk-entry) t)
  "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
   (Read / Write) @br{}
   The purpose of this text field. This property can be used by on-screen
   keyboards and other input methods to adjust their behaviour. Note that setting
   the purpose to @code{:password} or @code{:pin} is independent from setting the
-  @code{visibility} property. Since 3.6 @br{}
+  @code{visibility} property. @br{}
   Default value: @code{:free-form}")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-input-purpose 'function)
@@ -1311,8 +1295,6 @@
   @sym{(setf gtk-entry-input-purpose)} sets the @slot[gtk-entry]{input-purpose}
   property which can be used by on-screen keyboards and other input methods to
   adjust their behaviour.
-
-  Since 3.6
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-invisible-char -----------------------------------------------
@@ -1426,11 +1408,11 @@
 
 ;;; --- gtk-entry-max-width-chars ----------------------------------------------
 
-#+(and gtk-3-12 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-entry) 't)
  "The @code{max-width-chars} property of type @code{:int} (Read / Write) @br{}
   The desired maximum width of the entry, in characters. If this property is set
-  to -1, the width will be calculated automatically. Since 3.12 @br{}
+  to -1, the width will be calculated automatically. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -1452,8 +1434,6 @@
   desired maximum width of the entry, in characters. The slot access function
   @sym{(setf gtk-entry-max-width-chars)} sets the desired maximum width in
   characters of the entry.
-
-  Since 3.12
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-overwrite-mode -----------------------------------------------
@@ -1525,14 +1505,14 @@
 
 ;;; --- gtk-entry-populate-all -------------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "populate-all" 'gtk-entry) 't)
  "The @code{populate-all} property of type @code{:boolean} (Read / Write) @br{}
   If @code{populate-all} is @em{true}, the \"populate-popup\" signal is
-  also emitted for touch popups. Since 3.8 @br{}
+  also emitted for touch popups. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-populate-all atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-populate-all 'function)
@@ -1549,8 +1529,6 @@
 
   If @code{populate-all} is @em{true}, the \"populate-popup\" signal is
   also emitted for touch popups.
-
-  Since 3.8
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-primary-icon-activatable -------------------------------------
@@ -2288,12 +2266,12 @@
 
 ;;; --- gtk-entry-tabs ---------------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-entry) 't)
  "The @code{tabs} property of type @class{pango-tab-array} (Read / Write) @br{}
-  A list of tabstop locations to apply to the text of the entry. Since 3.10")
+  A list of tabstop locations to apply to the text of the entry.")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-tabs 'function)
@@ -2311,8 +2289,6 @@
   any.
 
   The tabstops in the array are applied to the entry text.
-
-  Since 3.10
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-text ---------------------------------------------------------
@@ -3421,7 +3397,6 @@
 ;;; gtk_entry_grab_focus_without_selecting ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_entry_grab_focus_without_selecting"
            gtk-entry-grab-focus-without-selecting) :void
  #+cl-cffi-documentation
@@ -3435,12 +3410,9 @@
   does not select the contents of the entry. You only want to call this on some
   special entries which the user usually does not want to replace all text in,
   such as search-as-you-type entries.
-
-  Since 3.16
   @see-class{gtk-entry}"
   (entry (g-object gtk-entry)))
 
-#+gtk-3-16
 (export 'gtk-entry-grab-focus-without-selecting)
 
 ;;; --- End of file gtk.entry.lisp ---------------------------------------------

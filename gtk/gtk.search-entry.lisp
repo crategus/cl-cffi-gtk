@@ -106,7 +106,7 @@
       The \"next-match\" signal is a keybinding signal which gets emitted when
       the user initiates a move to the next match for the current search string.
       Applications should connect to it, to implement moving between matches.
-      The default bindings for this signal is Ctrl-g. Since 3.16
+      The default bindings for this signal is Ctrl-g.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -119,7 +119,6 @@
       when the user initiates a move to the previous match for the current
       search string. Applications should connect to it, to implement moving
       between matches. The default bindings for this signal is Ctrl-Shift-g.
-      Since 3.16
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -129,7 +128,7 @@
  lambda (entry)    : Run Last
       @end{pre}
       The \"search-changed\" signal is emitted with a short delay of 150
-      milliseconds after the last change to the entry text. Since 3.10
+      milliseconds after the last change to the entry text.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -141,7 +140,7 @@
       The \"stop-search\" signal is a keybinding signal which gets emitted when
       the user stops a search via keyboard input. Applications should connect
       to it, to implement hiding the search entry in this case. The default
-      bindings for this signal is Escape. Since 3.16
+      bindings for this signal is Escape.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -153,10 +152,8 @@
 ;;; gtk_search_entry_new ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (declaim (inline gtk-search-entry-new))
 
-#+gtk-3-6
 (defun gtk-search-entry-new ()
  #+cl-cffi-gtk-documentation
  "@version{2020-6-1}
@@ -165,19 +162,15 @@
     Creates a search entry, with a find icon when the search field is empty,
     and a clear icon when it is not.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-search-entry}"
   (make-instance 'gtk-search-entry))
 
-#+gtk-3-6
 (export 'gtk-search-entry-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_search_entry_handle_event ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_search_entry_handle_event" gtk-search-entry-handle-event)
     :boolean
  #+cl-cffi-gtk-documentation
@@ -197,13 +190,10 @@
   If the key event is handled by the search entry and starts or continues a
   search, @var{+gdk-event-stop+} will be returned. The caller should ensure that
   the entry is shown in this case, and not propagate the event further.
-
-  Since 3.16
   @see-class{gtk-search-entry}"
   (entry (g-object gtk-search-entry))
   (event (g-boxed-foreign gdk-event)))
 
-#+gtk-3-16
 (export 'gtk-search-entry-handle-event)
 
 ;;; --- End of file gtk.search-entry.lisp --------------------------------------

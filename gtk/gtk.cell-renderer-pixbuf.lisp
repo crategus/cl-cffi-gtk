@@ -98,11 +98,9 @@
    (stock-size
     gtk-cell-renderer-pixbuf-stock-size
     "stock-size" "guint" t t)
-   #+gtk-3-10
    (surface
     gtk-cell-renderer-pixbuf-surface
-    "surface" "CairoSurface" t t)
-   ))
+    "surface" "CairoSurface" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer-pixbuf 'type)
@@ -397,7 +395,7 @@
 (setf (documentation (atdoc:get-slot-from-name "surface"
                                                'gtk-cell-renderer-pixbuf) 't)
  "The @code{surface} property of type @code{CairoSurface} (Read / Write) @br{}
-  The Cairo surface to render. Since 3.10 @br{}")
+  The Cairo surface to render. @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-pixbuf-surface atdoc:*function-name-alias*)

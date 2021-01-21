@@ -526,7 +526,6 @@
 ;;; gdk_cursor_new_from_surface ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_cursor_new_from_surface" gdk-cursor-new-from-surface)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
@@ -553,8 +552,6 @@
 
   On the X backend, support for RGBA cursors requires a sufficently new version
   of the X Render extension.
-
-  Since 3.10
   @see-class{gdk-cursor}
   @see-class{gdk-display}
   @see-function{gdk-display-supports-cursor-alpha}
@@ -566,7 +563,6 @@
   (x :double)
   (y :double))
 
-#+gdk-3-10
 (export 'gdk-cursor-new-from-surface)
 
 ;;; ----------------------------------------------------------------------------
@@ -683,14 +679,12 @@
 ;;; gdk_cursor_get_surface () -> gdk-cursor-surface
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_cursor_get_surface" %gdk-cursor-surface)
     (:pointer (:struct cairo-surface-t))
   (cursor (g-object gdk-cursor))
   (x-hot (:pointer :double))
   (y-hot (:pointer :double)))
 
-#+gdk-3-10
 (defun gdk-cursor-surface (cursor)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-16}
@@ -707,8 +701,6 @@
   Note that depending on the capabilities of the windowing system and on the
   cursor, GDK may not be able to obtain the image data. In this case, @code{nil}
   is returned.
-
-  Since 3.10
   @see-class{gdk-cursor}
   @see-symbol{cairo-surface-t}"
   (with-foreign-objects ((x-hot :double) (y-hot :double))
@@ -716,7 +708,6 @@
       (when surface
         (values surface (mem-ref x-hot :double) (mem-ref y-hot :double))))))
 
-#+gdk-3-10
 (export 'gdk-cursor-surface)
 
 ;;; ----------------------------------------------------------------------------

@@ -147,7 +147,6 @@
 ;;; gtk_get_locale_direction () -> gtk-locale-direction
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
 (defcfun ("gtk_get_locale_direction" gtk-locale-direction) gtk-text-direction
  #+cl-cffi-gtk-documentation
  "@version{2020-8-21}
@@ -171,8 +170,6 @@
 
   This function is only needed rare cases when the locale is changed after GTK+
   has already been initialized.
-
-  Since 3.12
   @begin[Example]{dictionary}
     You can use the function @sym{gtk-locale-direction} to update the default
     text direction as follows:
@@ -184,7 +181,6 @@
   @see-symbol{gtk-text-direction}
   @see-function{gtk-widget-default-direction}")
 
-#+gtk-3-12
 (export 'gtk-locale-direction)
 
 ;;; ----------------------------------------------------------------------------

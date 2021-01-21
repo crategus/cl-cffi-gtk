@@ -262,7 +262,6 @@
 ;;; gtk_application_window_get_id ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_application_window_get_id" gtk-application-window-id) :uint
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-15}
@@ -275,13 +274,10 @@
     Returns the unique ID of the application window. If the application window
     has not yet been added to a @class{gtk-application}, returns 0.
   @end{short}
-
-  Since 3.6
   @see-class{gtk-application}
   @see-class{gtk-application-window}"
   (window (g-object gtk-application-window)))
 
-#+gtk-3-6
 (export 'gtk-application-window-id)
 
 ;;; ----------------------------------------------------------------------------

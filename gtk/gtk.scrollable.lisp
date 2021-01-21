@@ -299,12 +299,10 @@
 ;;; gtk_scrollable_get_border () -> gtk-scrollable-border
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_scrollable_get_border" %gtk-scrollable-border) :boolean
   (scrollable (g-object gtk-scrollable))
   (border (g-boxed-foreign gtk-border)))
 
-#+gtk-3-16
 (defun gtk-scrollable-border (scrollable)
  "@version{2020-8-18}
   @argument[scrollable]{a @class{gtk-scrollable} widget}
@@ -316,15 +314,12 @@
   An example for this would be tree view headers. GTK+ can use this information
   to display overlayed graphics, like the overshoot indication, at the right
   position.
-
-  Since 3.16
   @see-class{gtk-scrollable}
   @see-class{gtk-border}"
   (let ((border (make-gtk-border)))
     (%gtk-scrollable-border scrollable border)
     border))
 
-#+gtk-3-16
 (export 'gtk-scrollable-border)
 
 ;;; --- End of file gtk.scrollable.lisp ----------------------------------------

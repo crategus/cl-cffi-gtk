@@ -519,7 +519,6 @@
 ;;; gtk_builder_new_from_file ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_builder_new_from_file" gtk-builder-new-from-file)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
@@ -534,19 +533,15 @@
   If there is an error opening the file or parsing the description then the
   program will be aborted. You should only ever attempt to parse user interface
   descriptions that are shipped as part of your program.
-
-  Since 3.10
   @see-class{gtk-builder}"
   (filename :string))
 
-#+gtk-3-10
 (export 'gtk-builder-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new_from_resource ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_builder_new_from_resource" gtk-builder-new-from-resource)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
@@ -558,8 +553,6 @@
   @end{short}
   If there is an error locating the resurce or parsing the description then the
   program will be aborted.
-
-  Since 3.10
   @see-class{gtk-builder}
   @see-class{g-resource}
   @see-function{gtk-builder-new}
@@ -567,20 +560,17 @@
   @see-function{gtk-builder-new-from-string}"
   (resource-path :string))
 
-#+gtk-3-10
 (export 'gtk-builder-new-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new_from_string ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_builder_new_from_string" %gtk-builder-new-from-string)
     (g-object gtk-builder)
   (string :string)
   (length :int))
 
-#+gtk-3-10
 (defun gtk-builder-new-from-string (string)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-27}
@@ -595,15 +585,12 @@
   If there is an error parsing string then the program will be aborted. You
   should not attempt to parse user interface description from untrusted
   sources.
-
-  Since 3.10
   @see-class{gtk-builder}
   @see-function{gtk-builder-new}
   @see-function{gtk-builder-new-from-file}
   @see-function{gtk-builder-new-from-resource}"
   (%gtk-builder-new-from-string string -1))
 
-#+gtk-3-10
 (export 'gtk-builder-new-from-string)
 
 ;;; ----------------------------------------------------------------------------
@@ -1020,7 +1007,6 @@
 ;;; gtk_builder_expose_object ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-8
 (defcfun ("gtk_builder_expose_object" gtk-builder-expose-object) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-11-27}
@@ -1031,15 +1017,12 @@
     Adds an object to the builder object pool so it can be referenced just like
     any other object built by the builder.
   @end{short}
-
-  Since 3.8
   @see-class{gtk-builder}
   @see-class{g-object}"
   (builder (g-object gtk-builder))
   (name :string)
   (object g-object))
 
-#+gtk-3-8
 (export 'gtk-builder-expose-object)
 
 ;;; ----------------------------------------------------------------------------
@@ -1181,7 +1164,6 @@
 ;;; gtk_builder_set_application () -> gtk-builder-application
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defun (setf gtk-builder-application) (application builder)
   (foreign-funcall "gtk_builder_set_application"
                    (g-object gtk-builder) builder
@@ -1189,7 +1171,6 @@
                    :void)
   application)
 
-#+gtk-3-10
 (defcfun ("gtk_builder_get_application" gtk-builder-application)
     (g-object gtk-application)
  #+cl-cffi-gtk-documentation
@@ -1217,15 +1198,12 @@
   You only need this function if there is more than one
   @class{g-application} object in your process. The argument
   @arg{application} cannot be @code{nil}.
-
-  Since 3.10
   @see-class{gtk-builder}
   @see-class{gtk-application}
   @see-class{g-application}
   @see-function{g-application-default}"
   (builder (g-object gtk-builder)))
 
-#+gtk-3-10
 (export 'gtk-builder-application)
 
 ;;; ----------------------------------------------------------------------------

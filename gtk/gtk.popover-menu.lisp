@@ -175,7 +175,7 @@
         @br{}
         Specifies the name of the submenu. If it is @code{nil} or @code{main},
         the child is used as the main menu, which is shown initially when the
-        popover is mapped. Since 3.16 @br{}
+        popover is mapped. @br{}
         Default value: @code{nil}
       @end{entry}
     @end{table}
@@ -266,8 +266,6 @@
   The @code{submenu} child property specifies the name of the submenu. If it is
   @code{nil} or @code{main}, the child is used as the main menu, which is shown
   initially when the popover is mapped.
-
-  Since 3.16
   @see-class{gtk-popover-menu}
   @see-class{gtk-widget}")
 
@@ -283,8 +281,6 @@
   @begin{short}
     Creates a new popover menu.
   @end{short}
-
-  Since 3.16
   @see-class{gtk-popover-menu}"
   (make-instance 'gtk-popover-menu))
 
@@ -307,8 +303,6 @@
   @class{gtk-model-button} will open submenus automatically when the
   @slot[gtk-model-button]{menu-name} property is set, so this function is only
   needed when you are using other kinds of widgets to initiate menu changes.
-
-  Since 3.16
   @see-class{gtk-popover-menu}
   @see-class{gtk-model-button}"
   (popover (g-object gtk-popover-menu))

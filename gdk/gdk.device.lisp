@@ -519,7 +519,7 @@
     @entry[:not-viewable]{The grab window or the @arg{confine-to} window are
       not viewable.}
     @entry[:frozen]{The resource is frozen by an active grab of another client.}
-    @entry[:failed]{The grab failed for some other reason. Since 3.16}
+    @entry[:failed]{The grab failed for some other reason.}
   @end{table}
   @see-class{gdk-device}
   @see-function{gdk-seat-grab}")
@@ -595,7 +595,6 @@
    (num-touches
     gdk-device-num-touches
     "num-touches" "guint" t t)
-   #+gdk-3-16
    (product-id
     gdk-device-product-id
     "product-id" "gchararray" t t)
@@ -610,11 +609,9 @@
    (type
     gdk-device-type
     "type" "GdkDeviceType" t t)
-   #+gdk-3-16
    (vendor-id
     gdk-device-vendor-id
-    "vendor-id" "gchararray" t t)
-   ))
+    "vendor-id" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-device 'type)
@@ -955,14 +952,14 @@
 
 ;;; --- gdk-device-product-id --------------------------------------------------
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "product-id" 'gdk-device) 't)
  "The @code{product-id} property of type @code{:string}
   (Read / Write / Construct) @br{}
-  Product ID of this device. Since 3.16 @br{}
+  Product ID of this device. @br{}
   Default value: @code{nil}")
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-product-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-product-id 'function)
@@ -979,8 +976,6 @@
   of this device, or @code{nil} if this information could not be obtained. This
   ID is retrieved from the device, and is thus constant for it. See the
   function @fun{gdk-device-vendor-id} for more information.
-
-  Since 3.16
   @see-class{gdk-device}
   @see-function{gdk-device-vendor-id}")
 
@@ -1064,14 +1059,14 @@
 
 ;;; --- gdk-device-vendor-id ---------------------------------------------------
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vendor-id" 'gdk-device) 't)
  "The @code{vendor-id} property of type @code{:string}
   (Read / Write / Construct) @br{}
-  Vendor ID of this device. Since 3.16 @br{}
+  Vendor ID of this device. @br{}
   Default value: @code{nil}")
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-vendor-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-vendor-id 'function)
@@ -1112,7 +1107,6 @@ get_device_settings (GdkDevice *device)
 @}
     @end{pre}
   @end{dictionary}
-  Since 3.16
   @see-class{gdk-device}
   @see-function{gdk-device-product-id}")
 
@@ -1516,14 +1510,12 @@ get_device_settings (GdkDevice *device)
 ;;; gdk_device_get_position_double () -> gdk-device-position-double
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_device_get_position_double" %gdk-device-position-double) :void
   (device (g-object gdk-device))
   (screen (g-object gdk-screen))
   (x (:pointer :double))
   (y (:pointer :double)))
 
-#+gdk-3-10
 (defun gdk-device-position-double (device)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-5}
@@ -1551,7 +1543,6 @@ get_device_settings (GdkDevice *device)
             (mem-ref x :double)
             (mem-ref y :double))))
 
-#+gdk-3-10
 (export 'gdk-device-position-double)
 
 ;;; ----------------------------------------------------------------------------
@@ -1811,7 +1802,6 @@ get_device_settings (GdkDevice *device)
 ;;; gdk_device_get_last_event_window ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-12
 (defcfun ("gdk_device_get_last_event_window" gdk-device-last-event-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
@@ -1826,13 +1816,10 @@ get_device_settings (GdkDevice *device)
   If another application has a pointer grab, or this application has a grab
   with @code{owner-events} = @em{false}, @code{nil} may be returned even if the
   pointer is physically over one of this application's windows.
-
-  Since 3.12
   @see-class{gdk-device}
   @see-class{gdk-window}"
   (device (g-object gdk-device)))
 
-#+gdk-3-12
 (export 'gdk-device-last-event-window)
 
 ;;; ----------------------------------------------------------------------------

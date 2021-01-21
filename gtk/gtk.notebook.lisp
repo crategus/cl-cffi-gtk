@@ -359,8 +359,7 @@
         The @code{has-tab-gap} property defines whether the active tab is draw
         with a gap at the bottom. When @em{true} the theme engine uses
         @fun{gtk-render-extension} to draw the active tab. When @em{false}
-        @fun{gtk-render-background} and @fun{gtk-render-frame} are used.
-        Since 3.12 @br{}
+        @fun{gtk-render-background} and @fun{gtk-render-frame} are used. @br{}
         @em{Warning:} The @code{has-tab-gap} style property has been deprecated
         since version 3.20 and should not be used in newly-written code.
         This function always behaves as if it was set to @em{false}. @br{}
@@ -1225,7 +1224,6 @@
 ;;; gtk_notebook_detach_tab ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_notebook_detach_tab" gtk-notebook-detach-tab) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-5-1}
@@ -1238,14 +1236,11 @@
   This function is very similar to the function @fun{gtk-container-remove}, but
   additionally informs the notebook that the removal is happening as part of a
   tab DND operation, which should not be cancelled.
-
-  Since 3.16
   @see-class{gtk-notebook}
   @see-function{gtk-container-remove}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget)))
 
-#+gtk-3-16
 (export 'gtk-notebook-detach-tab)
 
 ;;; ----------------------------------------------------------------------------

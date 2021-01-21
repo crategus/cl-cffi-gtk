@@ -605,7 +605,6 @@
 ;;; gtk_widget_path_iter_get_state ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_widget_path_iter_get_state" gtk-widget-path-iter-get-state)
     gtk-state-flags
  #+cl-cffi-gtk-documentation
@@ -618,14 +617,11 @@
     Returns the state flags corresponding to the widget found at the position
     @arg{pos} in the widget hierarchy defined by @arg{path}.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-widget-path}
   @see-symbol{gtk-state-flags}"
   (path (g-boxed-foreign gtk-widget-path))
   (pos :int))
 
-#+gtk-3-14
 (export 'gtk-widget-path-iter-get-state)
 
 ;;; ----------------------------------------------------------------------------
@@ -965,7 +961,6 @@
 ;;; gtk_widget_path_iter_set_state ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-14
 (defcfun ("gtk_widget_path_iter_set_state" gtk-widget-path-iter-set-state) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-2-29}
@@ -979,8 +974,6 @@
 
   If you want to update just a single state flag, you need to do this manually,
   as this function updates all state flags.
-
-  Since 3.14
   @begin[Example]{dictionary}
     Setting more flags
     @begin{pre}
@@ -1002,7 +995,6 @@
   (pos :int)
   (state gtk-state-flags))
 
-#+gtk-3-14
 (export 'gtk-widget-path-iter-set-state)
 
 ;;; ----------------------------------------------------------------------------

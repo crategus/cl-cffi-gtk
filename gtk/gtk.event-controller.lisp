@@ -81,8 +81,6 @@
     Describes the stage at which events are fed into a
     @class{gtk-event-controller}.
   @end{short}
-
-  Since 3.14
   @begin{pre}
 (define-g-enum \"GtkPropagationPhase\" gtk-propagation-phase
   (:export t
@@ -137,8 +135,6 @@
   @end{short}
   Those react to a series of @class{gdk-event}, and possibly trigger actions as
   a consequence of those.
-
-  Since 3.14
   @see-slot{gtk-event-controller-propagate-phase}
   @see-slot{gtk-event-controller-widget}
   @see-class{gdk-event}
@@ -156,8 +152,7 @@
                                                'gtk-event-controller) 't)
  "The @code{propagation-phase} property of type
   @symbol{gtk-propagation-phase} (Read / Write) @br{}
-  The propagation phase at which this controller will handle events. Since 3.14
-  @br{}
+  The propagation phase at which this controller will handle events. @br{}
   Default value: @code{:phase-bubble}")
 
 #+cl-cffi-gtk-documentation
@@ -184,22 +179,20 @@
   performed, but other additional gesture maintenance will. In that phase, the
   events can be managed by calling the function
   @fun{gtk-event-controller-handle-event}.
-
-  Since 3.14
   @see-class{gtk-event-controller}
   @see-symbol{gtk-propagation-phase}
   @see-function{gtk-event-controller-handle-event}")
 
 ;;; --- gtk-event-controller-widget --------------------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "widget"
                                                'gtk-event-controller) 't)
  "The @code{widget} property of type @class{gtk-widget} (Read / Write) @br{}
   The widget receiving the @class{gdk-event} that the controller will handle.
-  Since 3.14 @br{}")
+  @br{}")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-controller-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-controller-widget 'function)
@@ -214,8 +207,6 @@
 
   The slot access function @sym{gtk-event-controller-widget} returns the
   @class{gtk-widget} this controller relates to.
-
-  Since 3.14
   @see-class{gtk-event-controller}")
 
 ;;; ----------------------------------------------------------------------------
@@ -234,8 +225,6 @@
     Feeds an events into the controller, so it can be interpreted and the
     controller actions triggered.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-event-controller}
   @see-class{gdk-event}"
   (controller (g-object gtk-event-controller))
@@ -256,8 +245,6 @@
   @end{short}
   Every interaction the controller did through \"handle-event\" will be dropped
   at this point.
-
-  Since 3.14
   @see-class{gtk-event-controller}"
   (controller (g-object gtk-event-controller)))
 

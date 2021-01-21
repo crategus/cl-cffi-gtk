@@ -655,8 +655,6 @@
   @argument[keymap]{a @class{gdk-keymap} object}
   @return{The current modifier state of type @symbol{gdk-modifier-type}.}
   @short{Returns the current modifier state.}
-
-  Since 3.4
   @see-class{gdk-keymap}"
   (keymap (g-object gdk-keymap)))
 

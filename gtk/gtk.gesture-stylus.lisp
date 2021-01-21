@@ -78,8 +78,6 @@
     to stylus input.
   @end{short}
   The provided signals just provide the basic information.
-
-  Since 3.14
   @begin[Signal Details]{dictionary}
     @subheading{The \"down\" signal}
     @begin{pre}

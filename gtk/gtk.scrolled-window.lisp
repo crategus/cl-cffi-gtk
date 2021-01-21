@@ -130,9 +130,7 @@
   (:always 0)
   (:automatic 1)
   (:never 2)
-  #+gtk-3-16
-  (:external)
-  )
+  (:external))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*) "Enum"
@@ -160,7 +158,7 @@
       determines the size.}
     @entry[:external]{Do not show a scrollbar, but do not force the size to
       follow the content. This can be used e.g. to make multiple scrolled
-      windows share a scrollbar. Since 3.16}
+      windows share a scrollbar.}
   @end{table}
   @see-class{gtk-scrolled-window}")
 
@@ -239,7 +237,6 @@
    (min-content-width
     gtk-scrolled-window-min-content-width
     "min-content-width" "gint" t t)
-   #+gtk-3-16
    (overlay-scrolling
     gtk-scrolled-window-overlay-scrolling
     "overlay-scrolling" "gboolean" t t)
@@ -380,7 +377,7 @@
       A similar behavior without edge resistance is provided by the
       \"edge-reached\" signal.
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
-      too if intending to provide behavior on horizontal edges. Since 3.16
+      too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
         @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
           received the signal.}
@@ -395,7 +392,7 @@
       by the adjustment in that orientation. A similar behavior with edge
       resistance is provided by the \"edge-overshot\" signal.
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
-      too if intending to provide behavior on horizontal edges. Since 3.16
+      too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
         @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
           received the signal.}
@@ -700,17 +697,17 @@
 
 ;;; --- gtk-scrolled-window-overlay-scrolling ----------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "overlay-scrolling"
                                                'gtk-scrolled-window) 't)
  "The @code{overlay-scrolling} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether overlay scrolling is enabled or not. If it is, the scrollbars are only
   added as traditional widgets when a mouse is present. Otherwise, they are
-  overlayed on top of the content, as narrow indicators. Since 3.16 @br{}
+  overlayed on top of the content, as narrow indicators. @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrolled-window-overlay-scrolling
                atdoc:*function-name-alias*)
       "Accessor"
@@ -730,8 +727,6 @@
   whether overlay scrolling is enabled for this scrolled window. The slot
   access function @sym{(setf gtk-scrolled-window-overlay-scrolling)} enables or
   disables overlay scrolling for this scrolled window.
-
-  Since 3.16
   @see-class{gtk-scrolled-window}")
 
 ;;; --- gtk-scrolled-window-propagate-natural-height ---------------------------

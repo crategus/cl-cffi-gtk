@@ -95,8 +95,6 @@
     When circumstances require it, @sym{gtk-stack-sidebar} adds the
     .needs-attention style class to the widgets representing the stack pages.
   @end{dictionary}
-
-  Since 3.16
   @see-slot{gtk-stack-sidebar-stack}
   @see-class{gtk-stack}")
 
@@ -110,7 +108,7 @@
 (setf (documentation (atdoc:get-slot-from-name "stack" 'gtk-stack-sidebar)
                      't)
  "The @code{stack} property of type @class{gtk-stack} (Read / Write) @br{}
-  Associated stack for this @sym{gtk-stack-sidebar}.  Since 3.16")
+  Associated stack for this @sym{gtk-stack-sidebar}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-sidebar-stack atdoc:*function-name-alias*)
@@ -132,8 +130,6 @@
 
   The stack sidebar widget will automatically update according to the order
   (packing) and items within the given stack.
-
-  Since 3.16
   @see-class{gtk-stack-sidebar}
   @see-class{gtk-stack}")
 
@@ -148,8 +144,6 @@
  "@version{2020-5-8}
   @return{The new @class{gtk-stack-sidebar} widget.}
   @short{Creates a new stack sidebar.}
-
-  Since 3.16
   @see-class{gtk-stack-sidebar}"
   (make-instance 'gtk-stack-sidebar))
 

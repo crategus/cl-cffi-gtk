@@ -200,7 +200,6 @@
    (show-desktop
     gtk-places-sidebar-show-desktop
     "show-desktop" "gboolean" t t)
-   #+gtk-3-14
    (show-enter-location
     gtk-places-sidebar-show-enter-location
     "show-enter-location" "gboolean" t t)
@@ -421,7 +420,7 @@
       The places sidebar emits this signal when it needs the calling application
       to present an way to directly enter a location. For example, the
       application may bring up a dialog box asking for a URL like
-      \"http://http.example.com\". Since 3.14
+      \"http://http.example.com\".
       @begin[code]{table}
         @entry[sidebar]{The @sym{gtk-places-sidebar} widget which received the
           signal.}
@@ -726,16 +725,16 @@
 
 ;;; --- gtk-places-sidebar-show-enter-location ---------------------------------
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-enter-location"
                                                'gtk-places-sidebar) 't)
  "The @code{show-enter-location} property of type @code{:boolean} (Read / Write)
   @br{}
   Whether the sidebar includes a builtin shortcut to manually enter a location.
-  Since 3.14 @br{}
+  @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-14 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-places-sidebar-show-enter-location
                atdoc:*function-name-alias*)
       "Accessor"
@@ -756,8 +755,6 @@
   entering URLs is an expected user action.
 
   If you enable this, you should connect to the \"show-enter-location\" signal.
-
-  Since 3.14
   @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-other-locations --------------------------------

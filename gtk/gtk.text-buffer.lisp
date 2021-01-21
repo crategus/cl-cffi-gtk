@@ -963,14 +963,12 @@
 ;;; gtk_text_buffer_insert_markup ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-16
 (defcfun ("gtk_text_buffer_insert_markup" %gtk-text-buffer-insert-markup) :void
   (buffer (g-object gtk-text-buffer))
   (iter (g-boxed-foreign gtk-text-iter))
   (markup g-string)
   (len :int))
 
-#+gtk-3-16
 (defun gtk-text-buffer-insert-markup (buffer iter markup)
  #+cl-cffi-gtk-documentation
  "@version{2020-3-15}
@@ -985,11 +983,9 @@
   UTF-8. Emits the \"insert-text\" signal, possibly multiple times; insertion
   actually occurs in the default handler for the signal. The iterator will
   point to the end of the inserted text on return.
-
   @see-class{gtk-text-buffer}"
   (%gtk-text-buffer-insert-markup buffer iter markup -1))
 
-#+gtk-3-16
 (export 'gtk-text-buffer-insert-markup)
 
 ;;; ----------------------------------------------------------------------------

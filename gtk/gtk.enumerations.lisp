@@ -68,7 +68,6 @@
 ;;; enum GtkBaselinePosition
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (define-g-enum "GtkBaselinePosition" gtk-baseline-position
   (:export t
    :type-initializer "gtk_baseline_position_get_type")
@@ -76,7 +75,7 @@
   (:center 1)
   (:bottom 2))
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-baseline-position atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-baseline-position atdoc:*external-symbols*)
  "@version{2014-7-26}
@@ -101,7 +100,6 @@
     @entry[:center]{Center the baseline.}
     @entry[:bottom]{Align the baseline at the bottom.}
   @end{table}
-  Since 3.10
   @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
@@ -744,15 +742,10 @@
   (:inconsistent #.(ash 1 4))
   (:focused      #.(ash 1 5))
   (:backdrop     #.(ash 1 6))
-  #+gtk-3-8
   (:dir-ltr      #.(ash 1 7))
-  #+gtk-3-8
   (:dir-rtl      #.(ash 1 8))
-  #+gtk-3-12
   (:link         #.(ash 1 9))
-  #+gtk-3-12
   (:visited      #.(ash 1 10))
-  #+gtk-3-14
   (:checked      #.(ash 1 11))
   #+gtk-3-20
   (:drop-active  #.(ash 1 12))
@@ -793,12 +786,12 @@
     @entry[:inconsistent]{Widget is inconsistent.}
     @entry[:focused]{Widget has the keyboard focus.}
     @entry[:backdrop]{Widget is in a background toplevel window.}
-    @entry[:dir-ltr]{Widget is in left-to-right text direction. Since 3.8.}
-    @entry[:dir-rtl]{Widget is in right-to-left text direction. Since 3.8.}
-    @entry[:link]{Widget is a link. Since 3.12.}
-    @entry[:visited]{The location the widget points to has already been visited.
-      Since 3.12.}
-    @entry[:checked]{Widget is checked. Since 3.14}
+    @entry[:dir-ltr]{Widget is in left-to-right text direction.}
+    @entry[:dir-rtl]{Widget is in right-to-left text direction.}
+    @entry[:link]{Widget is a link.}
+    @entry[:visited]{The location the widget points to has already been
+      visited.}
+    @entry[:checked]{Widget is checked.}
     @entry[:drop-active]{Widget is highlighted as a drop target for DND.
       Since 3.20}
   @end{table}")

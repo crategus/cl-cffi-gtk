@@ -207,7 +207,7 @@
                                                'gtk-menu-button) 't)
  "The @code{align-widget} property of type @class{gtk-container} (Read / Write)
   @br{}
-  The widget to use to align the menu with. Since 3.6")
+  The widget to use to align the menu with.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-align-widget atdoc:*function-name-alias*)
@@ -234,8 +234,6 @@
 
   Note that this property is only used with menus currently, and not for
   popovers.
-
-  Since 3.6
   @see-class{gtk-menu-button}")
 
 ;;; --- gtk-menu-button-direction ----------------------------------------------
@@ -245,7 +243,7 @@
  "The @code{direction} property of type @symbol{gtk-arrow-type} (Read / Write)
   @br{}
   The arrow type representing the direction in which the menu or popover will
-  be popped out. Since 3.6 @br{}
+  be popped out. @br{}
   Default value: @code{:down}")
 
 #+cl-cffi-gtk-documentation
@@ -273,8 +271,6 @@
 
   If you pass @code{:none} for a direction, the popup will behave as if
   you passed @code{:down}, although you will not see any arrows.
-
-  Since 3.6
   @see-class{gtk-menu-button}
   @see-symbol{gtk-arrow-type}")
 
@@ -288,7 +284,7 @@
   The menu model from which the popup will be created. Depending on the
   @code{use-popover} property, that may be a menu or a popover. See the
   function @fun{gtk-menu-button-menu-model} for the interaction with the
-  @code{popup} property. Since 3.6")
+  @code{popup} property.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-menu-model atdoc:*function-name-alias*)
@@ -320,8 +316,6 @@
   If the @slot[gtk-menu-button]{popup} or @slot[gtk-menu-button]{popover}
   properties are already set, those widgets are dissociated from the menu
   button, and those properties are set to @code{nil}.
-
-  Since 3.6
   @see-class{gtk-menu-button}
   @see-function{gtk-menu-new-from-model}
   @see-function{gtk-popover-new-from-model}")
@@ -331,7 +325,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popover" 'gtk-menu-button) 't)
  "The @code{popover} property of type @class{gtk-popover} (Read / Write) @br{}
-  The popover that will be popped up when the button is clicked. Since 3.12")
+  The popover that will be popped up when the button is clicked.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-popover atdoc:*function-name-alias*)
@@ -358,8 +352,6 @@
   If the @slot[gtk-menu-button]{menu-model} or @slot[gtk-menu-button]{popup}
   properties are set, those objects are dissociated from the menu button, and
   those properties are set to @code{nil}.
-
-  Since 3.12
   @see-class{gtk-menu-button}")
 
 ;;; --- gtk-menu-button-popup --------------------------------------------------
@@ -367,7 +359,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup" 'gtk-menu-button) 't)
  "The @code{popup} property of type @class{gtk-menu} (Read / Write) @br{}
-  The menu that will be popped up when the button is clicked. Since 3.6")
+  The menu that will be popped up when the button is clicked.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-popup atdoc:*function-name-alias*)
@@ -394,8 +386,6 @@
   If the @slot[gtk-menu-button]{menu-model} or @slot[gtk-menu-button]{popover}
   are set, those objects are dissociated from the menu button, and those
   properties are set to @code{nil}.
-
-  Since 3.6
   @see-class{gtk-menu-button}")
 
 ;;; --- gtk-menu-button-use-popover --------------------------------------------
@@ -405,7 +395,7 @@
                                                'gtk-menu-button) 't)
  "The @code{use-popover} property of type @code{:boolean} (Read / Write) @br{}
   Whether to construct a @class{gtk-popover} from the menu model, or a
-  @class{gtk-menu}. Since 3.12 @br{}
+  @class{gtk-menu}. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -428,8 +418,6 @@
   whether to construct a popover instead of a menu when the function
   @fun{gtk-menu-button-menu-model} is called. Note that this property is only
   consulted when a new menu model is set.
-
-  Since 3.12
   @see-class{gtk-menu-button}
   @see-function{gtk-menu-button-menu-model}")
 
@@ -447,8 +435,6 @@
     Creates a new menu button with downwards pointing arrow as the only child.
   @end{short}
   You can replace the child widget with another widget should you wish to.
-
-  Since 3.6
   @see-class{gtk-menu-button}"
   (make-instance 'gtk-menu-button))
 

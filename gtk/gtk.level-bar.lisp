@@ -162,8 +162,7 @@
                 "GtkBuildable"
                 "GtkOrientable")
    :type-initializer "gtk_level_bar_get_type")
-  (#+gtk-3-8
-   (inverted
+  ((inverted
     gtk-level-bar-inverted
     "inverted" "gboolean" t t)
    (max-value
@@ -316,14 +315,14 @@
 
 ;;; --- gtk-level-bar-inverted -------------------------------------------------
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-level-bar) 't)
  "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
   Level bars normally grow from top to bottom or left to right. Inverted level
-  bars grow in the opposite direction. Since 3.8 @br{}
+  bars grow in the opposite direction. @br{}
   Default value: @em{false}")
 
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-inverted atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-inverted 'function)
@@ -341,8 +340,6 @@
   if the level bar is inverted. The slot acess function
   @sym{(setf gtk-level-bar-inverted)} sets the value of the
   @slot[gtk-level-bar]{inverted} property.
-
-  Since 3.8
   @see-class{gtk-level-bar}")
 
 ;;; --- gtk-level-bar-max-value ------------------------------------------------

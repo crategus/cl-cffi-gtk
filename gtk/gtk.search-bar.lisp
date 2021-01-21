@@ -201,8 +201,6 @@ main (gint argc,
   @end{short}
 
   Switches the search mode on or off.
-
-  Since 3.10
   @see-class{gtk-search-bar}")
 
 ;;; --- gtk-search-bar-show-close-button ---------------------------------------
@@ -236,8 +234,6 @@ main (gint argc,
   Applications that already have a \"search\" toggle button should not show a
   close button in their search bar, as it duplicates the role of the toggle
   button.
-
-  Since 3.10
   @see-class{gtk-search-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -253,8 +249,6 @@ main (gint argc,
   @end{short}
   You will need to tell it about which widget is going to be your text entry
   using the function @fun{gtk-search-bar-connect-entry}.
-
-  Since 3.10
   @see-class{gtk-search-bar}
   @see-function{gtk-search-bar-connect-entry}"
   (make-instance 'gtk-search-bar))
@@ -275,8 +269,6 @@ main (gint argc,
   @end{short}
   The entry should be a descendant of the search bar. This is only required if
   the entry is not the direct child of the search bar, as in our main example.
-
-  Since 3.10
   @see-class{gtk-search-bar}"
   (search-bar (g-object gtk-search-bar))
   (entry (g-object gtk-entry)))
@@ -320,8 +312,6 @@ main (gint argc,
   If no entry has been connected to the search bar, using the function
   @fun{gtk-search-bar-connect-entry}, this function will return immediately
   with a warning.
-
-  Since 3.10
   @begin[Example]{dictionary}
     Showing the search bar on key presses
     @begin{pre}

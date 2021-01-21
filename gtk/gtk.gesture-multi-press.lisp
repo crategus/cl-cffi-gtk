@@ -89,7 +89,6 @@
  lambda (gesture n-press x y)    : Run Last
       @end{pre}
       This signal is emitted whenever a button or touch press happens.
-      Since 3.14
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
@@ -107,7 +106,7 @@
       This signal is emitted when a button or touch is released. @arg{n-press}
       will report the number of press that is paired to this event, note that
       \"stopped\" may have been emitted between the press and its release,
-      @arg{n-press} will only start over at the next press. Since 3.14
+      @arg{n-press} will only start over at the next press.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
@@ -123,7 +122,7 @@
  lambda (gesture)    : Run Last
       @end{pre}
       This signal is emitted whenever any time/distance threshold has been
-      exceeded. Since 3.14
+      exceeded.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
@@ -145,8 +144,6 @@
   @begin{short}
     Returns a newly created gesture that recognizes single and multiple presses.
   @end{short}
-
-  Since 3.14
   @see-function{gtk-gesture-multi-press}"
   (make-instance 'gtk-gesture-multi-press
                  :widget widget))
@@ -191,8 +188,6 @@
 
   Note: The rectangle is only used to determine whether any non-first click
   falls within the expected area. This is not akin to an input shape.
-
-  Since 3.14
   @see-class{gtk-gesture-multi-press}
   @see-class{gdk-rectangle}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))

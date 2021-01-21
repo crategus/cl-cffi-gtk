@@ -157,8 +157,6 @@ cairo_surface_t *surface =
   Note that unlike the function @fun{cairo-surface-create-similar-image}, the
   new surface's device scale is set to @arg{scale}, or to the scale factor of
   @arg{window} if @arg{scale} is 0.
-
-  Since 3.10
   @see-class{gdk-window}
   @see-symbol{cairo-surface-t}
   @see-symbol{cairo-format-t}
@@ -444,7 +442,6 @@ cairo_surface_t *surface =
 ;;; gdk_cairo_surface_create_from_pixbuf ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-10
 (defcfun ("gdk_cairo_surface_create_from_pixbuf"
            gdk-cairo-surface-create-from-pixbuf)
     (:pointer (:struct cairo-surface-t))
@@ -462,8 +459,6 @@ cairo_surface_t *surface =
   @begin{short}
     Creates an image surface with the same contents as the pixbuf.
   @end{short}
-
-  Since 3.10
   @see-class{gdk-pixbuf}
   @see-class{gdk-window}
   @see-symbol{cairo-surface-t}
@@ -472,14 +467,12 @@ cairo_surface_t *surface =
   (scale :int)
   (for-window (g-object gdk-window)))
 
-#+gdk-3-10
 (export 'gdk-cairo-surface-create-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_draw_from_gl ()
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-16
 (defcfun ("gdk_cairo_draw_from_gl" gdk-cairo-draw-from-gl) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-12-30}
@@ -517,8 +510,6 @@ cairo_surface_t *surface =
   using alpha.
 
   Calling this may change the current GL context.
-
-  Since 3.16
   @see-symbol{cairo-t}
   @see-class{gdk-window}"
   (cr (:pointer (:struct cairo-t)))
@@ -531,7 +522,6 @@ cairo_surface_t *surface =
   (width :int)
   (height :int))
 
-#+gdk-3-16
 (export 'gdk-cairo-draw-from-gl)
 
 ;;; --- End of file gdk.cairo.lisp ---------------------------------------------

@@ -61,15 +61,12 @@
                       :if-feature :gdk-3-22)
 
                (:file "gdk.window")           ; Onscreen display areas
-               (:file "gdk.frame-timings"     ; Frame timings
-                      :if-feature :gdk-3-8)
-               (:file "gdk.frame-clock"       ; Frame clock
-                      :if-feature :gdk-3-8)
+               (:file "gdk.frame-timings")    ; Frame timings)
+               (:file "gdk.frame-clock")      ; Frame clock
                (:file "gdk.drawing-context"   ; Drawing context for GDK windows
                       :if-feature :gdk-3-22)
 
-               (:file "gdk.gl-context"        ; Open GL context
-                      :if-feature :gdk-3-16)
+               (:file "gdk.gl-context")       ; Open GL context
                (:file "gdk.events")           ; Functions for handling events
                (:file "gdk.general")          ; Miscellaneous functions
                (:file "gdk.key-values")       ; Manipulating keyboard codes

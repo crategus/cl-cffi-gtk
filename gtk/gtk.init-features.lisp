@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.init-features.lisp
 ;;;
-;;; Copyright (C) 2019 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,25 +30,20 @@
   (pushnew :gtk *features*))
 
 (glib-init::push-library-version-features gtk
-                                     (cffi:foreign-funcall "gtk_get_major_version" :int)
-                                     (cffi:foreign-funcall "gtk_get_minor_version" :int)
-                                     3 4
-                                     3 6
-                                     3 8
-                                     3 10
-                                     3 12
-                                     3 14
-                                     3 16
-                                     3 18
-                                     3 20
-                                     3 22
-                                     3 24
-                                     3 26
-                                     3 28
-                                     3 30)
+    (cffi:foreign-funcall "gtk_get_major_version" :int)
+    (cffi:foreign-funcall "gtk_get_minor_version" :int)
+    3 10
+    3 12
+    3 14
+    3 16   ; Since 23.03.2015
+    3 18   ; Since 22.09.2015
+    3 20   ; Since 21.03.2016
+    3 22   ; Since 20.09.2016
+    3 24   ; Since 03.09.2018
+    )
 
-(glib-init::require-library-version "GTK+" 3 4
-                              (cffi:foreign-funcall "gtk_get_major_version" :int)
-                              (cffi:foreign-funcall "gtk_get_minor_version" :int))
+(glib-init::require-library-version "GTK+" 3 16
+    (cffi:foreign-funcall "gtk_get_major_version" :int)
+    (cffi:foreign-funcall "gtk_get_minor_version" :int))
 
 ;;; --- End of file gtk.init-features.lisp -------------------------------------

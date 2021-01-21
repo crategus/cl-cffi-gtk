@@ -150,11 +150,9 @@
    (relative-to
     gtk-popover-relative-to
     "relative-to" "GtkWidget" t t)
-   #+gtk-3-16
    (transitions-enabled
     gtk-popover-transitions-enabled
-    "transitions-enabled" "gboolean" t t)
-   ))
+    "transitions-enabled" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-popover 'type)
@@ -412,12 +410,12 @@
 
 ;;; --- gtk-popover-transitions-enabled ----------------------------------------
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transitions-enabled"
                                                'gtk-popover) 't)
  "The @code{transitions-enabled} property of type @code{:boolean} (Read / Write)
   @br{}
-  Whether show/hide transitions are enabled for this popover. Since 3.16 @br{}
+  Whether show/hide transitions are enabled for this popover. @br{}
   @em{Warning:} The @code{transitions-enabled} property has been deprecated
   since version 3.22 and should not be used in newly-written code. You can show
   or hide the popover without transitions using the functions
@@ -426,7 +424,7 @@
   @br{}
   Default value: @em{true}")
 
-#+(and gtk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-popover-transitions-enabled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-transitions-enabled 'function)
@@ -444,8 +442,6 @@
   show/hide transitions are enabled on this popover. The slot access function
   @sym{(setf gtk-popover-transitions-enabled)} sets whether show/hide
   transitions are enabled on this popover.
-
-  Since 3.16
   @begin[Warning]{dictionary}
     The slot access function @sym{gtk-popover-transitions-enabled} has been
     deprecated since version 3.22 and should not be used in newly-written code.
@@ -502,8 +498,6 @@
   Actions can also be added using the function
   @fun{gtk-widget-insert-action-group} on the menus attach widget or on any of
   its parent widgets.
-
-  Since 3.12
   @see-class{gtk-popover}
   @see-class{gtk-widget}
   @see-class{gtk-application-window}
@@ -551,8 +545,6 @@
   @fun{gtk-widget-insert-action-group}. As an example, if you created a group
   with a \"quit\" action and inserted it with the name \"mygroup\" then you
   would use the action name \"mygroup.quit\" in your @class{g-menu-model}.
-
-  Since 3.12
   @see-class{gtk-popover}
   @see-class{g-menu-model}
   @see-class{gtk-actionable}

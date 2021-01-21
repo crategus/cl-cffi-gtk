@@ -93,8 +93,6 @@
     These enumeration values describe the possible transitions when the child
     of a @class{gtk-revealer} widget is shown or hidden.
   @end{short}
-
-  Since 3.10
   @begin{pre}
 (define-g-enum \"GtkRevealerTransitionType\" gtk-revealer-transition-type
   (:export t
@@ -188,8 +186,6 @@
   The slot access function @sym{gtk-revealer-child-revealed} returns whether
   the child is fully revealed, in other words whether the transition to the
   revealed state is completed.
-
-  Since 3.10
   @see-class{gtk-revealer}")
 
 ;;; --- gtk-revealer-reveal-child ----------------------------------------------
@@ -226,8 +222,6 @@
 
   The transition will be animated with the current transition type of the
   revealer.
-
-  Since 3.10
   @see-class{gtk-revealer}
   @see-function{gtk-revealer-child-revealed}")
 
@@ -259,8 +253,6 @@
   amount of time in milliseconds that transitions will take. The slot access
   function @sym{(setf gtk-revealer-transition-duration)} sets the duration that
   transitions will take.
-
-  Since 3.10
   @see-class{gtk-revealer}")
 
 ;;; --- gtk-revealer-transition-type -------------------------------------------
@@ -292,8 +284,6 @@
   function @sym{(setf gtk-revealer-transition-duration)} sets the type of
   animation that will be used for transitions in revealer. Available types
   include various kinds of fades and slides.
-
-  Since 3.10
   @see-class{gtk-revealer}")
 
 ;;; ----------------------------------------------------------------------------
@@ -307,8 +297,6 @@
  "@version{2020-4-23}
   @return{The new @class{gtk-revealer} objekt.}
   @short{Creates a new revealer.}
-
-  Since 3.10
   @see-class{gtk-revealer}"
   (make-instance 'gtk-revealer))
 

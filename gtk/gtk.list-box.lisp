@@ -178,7 +178,7 @@
                                                'gtk-list-box-row) 't)
  "The @code{activatable} property of type @code{:boolean} (Read / Write) @br{}
   The property determines whether the \"row-activated\" signal will be emitted
-  for this row. Since 3.14 @br{}
+  for this row. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -199,8 +199,6 @@
   the @code{activatable} property for this row. The slot access function
   @sym{(setf gtk-list-box-row-activatable)} sets the @code{activatable} property
   for this row.
-
-  Since 3.14
   @see-class{gtk-list-box-row}")
 
 ;;; --- gtk-list-box-row-selectable --------------------------------------------
@@ -209,7 +207,7 @@
 (setf (documentation (atdoc:get-slot-from-name "selectable"
                                                'gtk-list-box-row) 't)
  "The @code{selectable} property of type @code{:boolean} (Read / Write) @br{}
-  The property determines whether this row can be selected. Since 3.14 @br{}
+  The property determines whether this row can be selected. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -230,8 +228,6 @@
   the @code{selectable} property for this row. The slot access function
   @sym{(setf gtk-list-box-row-selectable)} sets the @code{selectable} property
   for this row.
-
-  Since 3.14
   @see-class{gtk-list-box-row}")
 
 ;;; ----------------------------------------------------------------------------
@@ -278,8 +274,6 @@
   is activatable, \"row-activated\" will be emitted for it when the user tries
   to activate it. If it is selectable, the row will be marked as selected when
   the user tries to select it.
-
-  Since 3.10
   @begin[CSS Nodes]{dictionary}
     @begin{pre}
   list
@@ -338,7 +332,7 @@
       @end{pre}
       The \"select-all\" signal is a keybinding signal which gets emitted to
       select all children of the box, if the selection mode permits it.
-      The default bindings for this signal is Ctrl-a. Since 3.14
+      The default bindings for this signal is Ctrl-a.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} container on which the signal
           is emitted.}
@@ -348,7 +342,7 @@
   lambda (listbox)
       @end{pre}
       The \"selected-rows-changed\" signal is emitted when the set of selected
-      rows changes. Since 3.14
+      rows changes.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} container on which the signal
           is emitted.}
@@ -367,7 +361,7 @@
       @end{pre}
         The \"unselect-all\" signal is a keybinding signal which gets emitted to
         unselect all children of the box, if the selection mode permits it.
-        The default bindings for this signal is Ctrl-Shift-a. Since 3.14
+        The default bindings for this signal is Ctrl-Shift-a.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
       @end{table}
@@ -460,8 +454,6 @@
   @begin{short}
     Creates a new list box container.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (make-instance 'gtk-list-box))
 
@@ -482,8 +474,6 @@
   If a sort function is set, the child widget will actually be inserted at the
   calculated position and this function has the same effect as the function
   @fun{gtk-container-add}.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-insert}"
   (listbox (g-object gtk-list-box))
@@ -511,8 +501,6 @@
 
   If the position is -1, or larger than the total number of items in the list
   box, then the child widget will be appended to the end.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-prepend}"
   (listbox (g-object gtk-list-box))
@@ -533,8 +521,6 @@
   @begin{short}
     Make @arg{row} the currently selected row.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (row (g-object gtk-list-box-row)))
@@ -553,8 +539,6 @@
   @begin{short}
     Unselects a single row of the list box, if the selection mode allows it.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (row (g-object gtk-list-box-row)))
@@ -581,8 +565,6 @@
   the rows must have the value @em{true} and the selection mode of the list box
   must have the value @code{:multiple} of the @symbol{gtk-selection-mode}
   enumeration.
-
-  Since 3.14
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -598,8 +580,6 @@
   @begin{short}
     Unselect all children of the list box, if the selection mode allows it.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-list-box}"
   (box (g-object gtk-list-box)))
 
@@ -621,8 +601,6 @@
   Note that the list box may allow multiple selection, in which case you should
   use the function @fun{gtk-list-box-selected-rows} to find all selected
   rows.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-selected-rows}"
   (listbox (g-object gtk-list-box)))
@@ -679,8 +657,6 @@
   @end{short}
 
   Note that the selection cannot be modified from within this function.
-
-  Since 3.14
   @see-class{gtk-list-box}"
   (with-stable-pointer (ptr func)
     (%gtk-list-box-selected-foreach listbox
@@ -702,8 +678,6 @@
   @begin{short}
     Creates a list of all selected rows in the list box.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -743,8 +717,6 @@
   In the normal case when the list box is packed inside a
   @class{gtk-scrolled-window} the adjustment from that will be picked up
   automatically, so there is no need to manually do that.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-class{gtk-scrolled-window}"
   (listbox (g-object gtk-list-box)))
@@ -764,8 +736,6 @@
     Sets the placeholder widget that is shown in the list when it does not
     display any visible children.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (placeholder (g-object gtk-widget)))
@@ -788,8 +758,6 @@
   @end{short}
   If @arg{index} is negative or larger than the number of items in the list box,
   @code{nil} is returned.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (index :int))
@@ -810,8 +778,6 @@
   @begin{short}
     Gets the row at the y position in the list box.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (y :int))
@@ -833,8 +799,6 @@
   due to an external factor. For instance, this would be used if the filter
   function just looked for a specific search string and the entry with the
   search string has changed.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -854,8 +818,6 @@
   @end{short}
   Call this when the result of the header function on the box is changed due to
   an external factor.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -874,8 +836,6 @@
   @end{short}
   Call this when the result of the sort function on the list box is changed due
   to an external factor.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -937,8 +897,6 @@
 
   Note that using a filter function is incompatible with using a model,
   see the function @fun{gtk-list-box-bind-model}.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (%gtk-list-box-set-filter-func listbox
                                  (callback gtk-list-box-filter-func-cb)
@@ -1018,8 +976,6 @@
   @fun{gtk-list-box-row-changed} on the previous row, or when the previous row
   becomes a different row). It is also called for all rows when the function
   @fun{gtk-list-box-invalidate-headers} is called.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (%gtk-list-box-set-header-func listbox
                                  (callback gtk-list-box-header-func-cb)
@@ -1088,8 +1044,6 @@
 
   Note that using a sort function is incompatible with using a model. See the
   function @fun{gtk-list-box-bind-model}.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (%gtk-list-box-set-sort-func listbox
                                (callback gtk-list-box-sort-func-cb)
@@ -1116,8 +1070,6 @@
   unhighlighted.
 
   The row will also be unhighlighted when the widget gets a drag leave event.
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box))
   (row (g-object gtk-list-box-row)))
@@ -1137,8 +1089,6 @@
     If a row has previously been highlighted via the function
     @fun{gtk-list-box-drag-highlight-row} it will have the highlight removed.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}"
   (listbox (g-object gtk-list-box)))
 
@@ -1228,8 +1178,6 @@
   @begin{short}
     Creates a new list box row, to be used as a child of a list box.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (make-instance 'gtk-list-box-row))
@@ -1261,8 +1209,6 @@
   widgets themselves. Another alternative is to call
   @fun{gtk-list-box-invalidate-sort} on any model change, but that is more
   expensive.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
@@ -1281,8 +1227,6 @@
     Returns a boolean whether the child is currently selected in its list box
     container.
   @end{short}
-
-  Since 3.14
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
@@ -1319,8 +1263,6 @@
   the list box row. This is only allowed to be called from a
   @code{GtkListBoxUpdateHeaderFunc}. It will replace any existing header in the
   row, and be shown in front of the row in the list box.
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
@@ -1340,8 +1282,6 @@
   @begin{short}
     Gets the current index of the row in its list box container.
   @end{short}
-
-  Since 3.10
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))

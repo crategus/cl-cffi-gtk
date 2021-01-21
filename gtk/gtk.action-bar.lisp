@@ -90,8 +90,6 @@
   an internal centered box which is centered with respect to the full width of
   the box, even if the children at either side take up different amounts of
   space.
-
-  Since 3.12
   @begin[CSS nodes]{dictionary}
     @sym{gtk-action-bar} has a single CSS node with name @code{actionbar}.
   @end{dictionary}
@@ -144,8 +142,6 @@
 
   A value of the @symbol{gtk-pack-type} enumeration indicating whether the
   child widget is packed with reference to the start or end of the parent.
-
-  Since 3.12
   @see-class{gtk-action-bar}
   @see-symbol{gtk-pack-type}")
 
@@ -171,8 +167,6 @@
   @end{short}
 
   The index of the child widget in the parent.
-
-  Since 3.12
   @see-class{gtk-action-bar}")
 
 ;;; ----------------------------------------------------------------------------
@@ -186,8 +180,6 @@
  "@version{2020-5-9}
   @return{The new @class{gtk-action-bar} container.}
   @short{Creates a new action bar.}
-
-  Since 3.12
   @see-class{gtk-action-bar}"
   (make-instance 'gtk-action-bar))
 
@@ -206,8 +198,6 @@
     Adds the child widget to the action bar, packed with reference to the start
     of the action bar.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-action-bar}"
   (action-bar (g-object gtk-action-bar))
   (child (g-object gtk-widget)))
@@ -227,8 +217,6 @@
     Adds the child widget to @arg{action-bar}, packed with reference to the end
     of the action bar.
   @end{short}
-
-  Since 3.12
   @see-class{gtk-action-bar}"
   (action-bar (g-object gtk-action-bar))
   (child (g-object gtk-widget)))
@@ -262,8 +250,6 @@
   The function @sym{gtk-action-bar-center-widget} retrieves the center bar
   widget of the bar. The function @sym{(setf gtk-action-bar-center-widget)}
   sets the center widget for the action bar.
-
-  Since 3.12
   @see-class{gtk-action-bar}"
   (action-bar (g-object gtk-action-bar)))
 

@@ -564,8 +564,6 @@
   @fun{gtk-menu-new-from-model} or @fun{gtk-menu-bar-new-from-model} or just
   directly passing the @class{g-menu-model} to the functions
   @fun{gtk-application-app-menu} or @fun{gtk-application-menu-bar}.
-
-  Since 3.6
   @see-class{gtk-menu-shell}
   @see-function{gtk-menu-new-from-model}
   @see-function{gtk-menu-bar-new-from-model}
