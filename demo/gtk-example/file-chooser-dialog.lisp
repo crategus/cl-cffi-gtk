@@ -6,8 +6,8 @@
                                              :open
                                              "gtk-cancel" :cancel
                                              "gtk-open" :accept)))
-    (if (eql (gtk-dialog-run dialog)
-             (foreign-enum-value 'gtk-response-type :accept))
+    (if (eq (gtk-dialog-run dialog)
+            (foreign-enum-value 'gtk-response-type :accept))
       (let ((filename (gtk-file-chooser-filename dialog)))
         (format t "~& OPEN THE FILE ~A~%" filename)
       ))
@@ -26,8 +26,8 @@
         (setf (gtk-file-chooser-filename dialog) filename)
         (setf (gtk-file-chooser-current-name dialog) "Untitled document"))
 
-    (if (eql (gtk-dialog-run dialog)
-             (foreign-enum-value 'gtk-response-type :accept))
+    (if (eq (gtk-dialog-run dialog)
+            (foreign-enum-value 'gtk-response-type :accept))
       (let ((filename (gtk-file-chooser-filename dialog)))
         (format t "~& SAVW TO FILE ~A~%" filename)
       ))

@@ -30,7 +30,7 @@ button:last-child label {
   (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
     (gtk-container-forall widget
                           (lambda (widget)
-                            (apply-css widget provider)))))
+                            (apply-css-to-widget widget provider)))))
 
 (defun demo-box-simple ()
   (within-main-loop
