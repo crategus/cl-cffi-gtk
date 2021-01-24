@@ -290,7 +290,9 @@
   (destructuring-bind (name type &key count initform inline) slot
     (if inline
         (make-cstruct-inline-slot-description :name name
-                                              :type (list :union (generated-cunion-name type))
+                                              :type
+                                              (list :union
+                                                    (generated-cunion-name type))
                                               :count count
                                               :initform initform
                                               :inline-p inline
@@ -350,7 +352,8 @@
         (memcpy copy
                 native
                 (foreign-type-size
-                  (list :struct (generated-cstruct-name (g-boxed-info-name info)))))
+                  (list :struct
+                        (generated-cstruct-name (g-boxed-info-name info)))))
         copy)))
 
 (defmethod boxed-free-fn ((info g-boxed-cstruct-wrapper-info) native)
@@ -701,7 +704,8 @@
         (memcpy copy
                 native
                 (foreign-type-size
-                  (list :struct (generated-cunion-name (g-boxed-info-name info)))))
+                  (list :struct
+                        (generated-cunion-name (g-boxed-info-name info)))))
         copy)))
 
 (defmethod boxed-free-fn ((info g-boxed-variant-cstruct-info) native)
