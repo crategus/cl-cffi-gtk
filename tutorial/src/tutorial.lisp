@@ -2511,9 +2511,25 @@ happen.")
 
 ;;; ----------------------------------------------------------------------------
 
-;; FIXME: The tooltip window does not vanish.
+;; Lisp function which applies CSS styles to a widget and its children
 
-(let ((tooltip nil))
+(defun apply-css-to-widget (widget provider)
+  (gtk-style-context-add-provider (gtk-widget-style-context widget)
+                                  provider
+                                  +gtk-style-provider-priority-user+)
+  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
+    (gtk-container-forall widget
+                          (lambda (widget)
+                            (apply-css-to-widget widget provider)))))
+
+(let ((tooltip nil)
+      (provider (make-instance 'gtk-css-provider))
+      (css-tooltip "label {
+                      color: white;
+                      background-color: black;
+                      font: 14px 'Monospace'; }
+                    textview {
+                      font: 14px 'Monospace'; }"))
   (defun get-tip (word)
     (cdr (assoc word
                 '(("printf" . "(const char *format, ...)")
@@ -2534,14 +2550,10 @@ happen.")
                                     :border-width 1))
           (label (make-instance 'gtk-label
                                 :label tip-text)))
-      (gtk-widget-override-font label
-                                (pango-font-description-from-string "Monospace"))
-      (gtk-widget-override-background-color win
-                                            :normal
-                                            (gdk-rgba-parse "Black"))
-      (gtk-widget-override-color win :normal (gdk-rgba-parse "White"))
       (gtk-container-add event-box label)
       (gtk-container-add win event-box)
+      ;; Apply CSS to the label
+      (apply-css-to-widget label provider)
       win))
 
   (defun insert-open-brace (window text-view location)
@@ -2602,13 +2614,14 @@ happen.")
                (when tooltip
                  (gtk-widget-destroy tooltip)
                  (setf tooltip nil)))))
-        ;; Change the default font
-        (gtk-widget-override-font
-            text-view
-            (pango-font-description-from-string "Monospace 12"))
         ;; Add the widgets to window and show all
         (gtk-container-add scrolled text-view)
         (gtk-container-add window scrolled)
+
+        ;; Load CSS from data into the provider
+        (gtk-css-provider-load-from-data provider css-tooltip)
+        (apply-css-to-widget text-view provider)
+
         (gtk-widget-show-all window)))))
 
 ;;; ----------------------------------------------------------------------------
@@ -2969,7 +2982,7 @@ happen.")
 
 ;;; Color Button
 
-(let ((color (gdk-rgba-parse "Gray")))
+(let ((color (gdk-rgba-parse "Blue")))
   (defun example-color-button ()
     (within-main-loop
       (let ((window (make-instance 'gtk-window
@@ -2995,7 +3008,8 @@ happen.")
 
 ;;; Color Chooser Dialog
 
-(let ((color (gdk-rgba-parse "Blue"))
+(let ((message "Click to change the background color.")
+      (bg-color (gdk-rgba-parse "White"))
       ;; Color palette with 4 rgba colors
       (palette1 (list (gdk-rgba-parse "Red")
                       (gdk-rgba-parse "Yellow")
@@ -3005,43 +3019,59 @@ happen.")
       (palette2 (list (gdk-rgba-parse "White")
                       (gdk-rgba-parse "Gray")
                       (gdk-rgba-parse "Black"))))
-  (defun drawing-area-event (widget event area)
+
+  (defun drawing-area-event (widget event)
     (declare (ignore widget))
-    (let ((handled nil))
-      (when (eql (gdk-event-type event) :button-press)
-        (let ((dialog (make-instance 'gtk-color-chooser-dialog
-                                      :color color
-                                      :use-alpha nil)))
-          (setq handled t)
-          ;; Add a custom palette to the dialog
-          (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
-          ;; Add a second coustom palette to the dialog
-          (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
-          ;; Run the color chooser dialog
-          (let ((response (gtk-dialog-run dialog)))
-            (when (eql response :ok)
-              (setq color (gtk-color-chooser-rgba dialog)))
-            ;; Set the color of the area widget
-            (gtk-widget-override-background-color area :normal color)
-            ;; Destroy the color chooser dialog
-            (gtk-widget-destroy dialog))))
-      handled))
+    (when (eq (gdk-event-type event) :button-press)
+      (let ((dialog (make-instance 'gtk-color-chooser-dialog
+                                   :color bg-color
+                                   :use-alpha nil)))
+        ;; Add a custom palette to the dialog
+        (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
+        ;; Add a second coustom palette to the dialog
+        (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
+        ;; Run the color chooser dialog
+        (let ((response (gtk-dialog-run dialog)))
+          (when (eq response :ok)
+            ;; Change the background color for the drawing area
+            (setf bg-color (gtk-color-chooser-rgba dialog)))
+          ;; Destroy the color chooser dialog
+          (gtk-widget-destroy dialog)))))
 
   (defun example-color-chooser-dialog ()
     (within-main-loop
       (let ((window (make-instance 'gtk-window
                                    :title "Example Color Chooser Dialog"
-                                   :default-width 300))
+                                   :default-width 400))
             (area (make-instance 'gtk-drawing-area)))
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
                             (leave-gtk-main)))
-        (gtk-widget-override-background-color area :normal color)
-        (setf (gtk-widget-events area) :button-press-mask)
+        (g-signal-connect area "draw"
+                          (lambda (widget cr)
+                            (declare (ignore widget))
+                            (let ((cr (pointer cr)))
+                              ;; Paint the current color on the drawing area
+                              (cairo-set-source-rgb cr
+                                                    (gdk-rgba-red bg-color)
+                                                    (gdk-rgba-green bg-color)
+                                                    (gdk-rgba-blue bg-color))
+                              (cairo-paint cr)
+                              ;; Print a hint on the drawing area
+                              (cairo-set-source-rgb cr 0.1 0.1 0.1)
+                              (cairo-select-font-face cr "Sans"
+                                                         :normal :normal)
+                              (cairo-set-font-size cr 12)
+                              (cairo-move-to cr 12 24)
+                              (cairo-show-text cr message)
+                              (cairo-destroy cr))))
         (g-signal-connect area "event"
                           (lambda (widget event)
-                            (drawing-area-event widget event area)))
+                            (drawing-area-event widget event)))
+        ;; Set the event mask for the drawing area
+        (setf (gtk-widget-events area) :button-press-mask)
+        ;; Add the drawing area to the window
         (gtk-container-add window area)
         (gtk-widget-show-all window)))))
 
@@ -3071,7 +3101,7 @@ happen.")
                  (gtk-widget-modify-bg area :normal color))))
           (let ((response (gtk-dialog-run colorseldlg)))
             (gtk-widget-destroy colorseldlg)
-            (if (eql response :ok)
+            (if (eq response :ok)
                 (setq color (gtk-color-selection-current-color colorsel))
                 (gtk-widget-modify-bg area :normal color)))))
       handled))

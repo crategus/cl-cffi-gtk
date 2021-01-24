@@ -5549,16 +5549,6 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Formatted_Text_in_Text_Widget">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Formatted_Text_in_Text_Widget">
-      <primary>widget-override-font, gtk-widget-override-font</primary>
-     </indexterm>
-     <indexterm zone="Formatted_Text_in_Text_Widget">
-      <primary>text-view-tabs, gtk-text-view-tabs</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Formatted Text in Text Widget</title>
    <figure id="figure-text-view-attributes">
     <title>Changing Text Attributes of a Text View</title>
@@ -6555,7 +6545,25 @@ bad things will happen.")
    <example id="example-text-view-tooltip">
     <title>Show tooltips in a Text View</title>
     <programlisting> 
-(let ((tooltip nil))
+;; Lisp function which applies CSS styles to a widget and its children
+
+(defun apply-css-to-widget (widget provider)
+  (gtk-style-context-add-provider (gtk-widget-style-context widget)
+                                  provider
+                                  +gtk-style-provider-priority-user+)
+  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
+    (gtk-container-forall widget
+                          (lambda (widget)
+                            (apply-css-to-widget widget provider)))))
+
+(let ((tooltip nil)
+      (provider (make-instance 'gtk-css-provider))
+      (css-tooltip "label {
+                      color: white;
+                      background-color: black;
+                      font: 14px 'Monospace'; }
+                    textview {
+                      font: 14px 'Monospace'; }"))
   (defun get-tip (word)
     (cdr (assoc word
                 '(("printf" . "(const char *format, ...)")
@@ -6576,32 +6584,26 @@ bad things will happen.")
                                     :border-width 1))
           (label (make-instance 'gtk-label
                                 :label tip-text)))
-      (gtk-widget-override-font
-          label
-          (pango-font-description-from-string "Courier"))
-      (gtk-widget-override-background-color win
-                                            :normal
-                                            (gdk-rgba-parse "Black"))
-      (gtk-widget-override-color win :normal (gdk-rgba-parse "Blue"))
       (gtk-container-add event-box label)
       (gtk-container-add win event-box)
+      ;; Apply CSS to the label
+      (apply-css-to-widget label provider)
       win))
 
   (defun insert-open-brace (window text-view location)
+    (declare (ignore window))
     (let ((start (gtk-text-iter-copy location)))
       (when (gtk-text-iter-backward-word-start start)
-        (let* ((word (string-trim " "
-                                  (gtk-text-iter-text start location)))
+        (let* ((word (string-trim " " (gtk-text-iter-text start location)))
                (tip-text (get-tip word)))
           (when tip-text
-            (let ((rect (gtk-text-view-get-iter-location text-view location))
-                  (win (gtk-text-view-get-window text-view :widget)))
+            (let ((rect (gtk-text-view-iter-location text-view location))
+                  (win (gtk-text-view-window text-view :widget)))
               (multiple-value-bind (win-x win-y)
-                  (gtk-text-view-buffer-to-window-coords
-                      text-view
-                      :widget
-                      (gdk-rectangle-x rect)
-                      (gdk-rectangle-y rect))
+                  (gtk-text-view-buffer-to-window-coords text-view
+                                                         :widget
+                                                         (gdk-rectangle-x rect)
+                                                         (gdk-rectangle-y rect))
                 (multiple-value-bind (x y)
                     (gdk-window-origin win)
                   ;; Destroy any previous tool tip window
@@ -6646,13 +6648,14 @@ bad things will happen.")
                (when tooltip
                  (gtk-widget-destroy tooltip)
                  (setf tooltip nil)))))
-        ;; Change the default font
-        (gtk-widget-override-font
-            text-view
-            (pango-font-description-from-string "Courier 12"))
         ;; Add the widgets to window and show all
         (gtk-container-add scrolled text-view)
         (gtk-container-add window scrolled)
+
+        ;; Load CSS from data into the provider
+        (gtk-css-provider-load-from-data provider css-tooltip)
+        (apply-css-to-widget text-view provider)
+
         (gtk-widget-show-all window)))))
     </programlisting>
    </example>
@@ -7988,8 +7991,8 @@ bad things will happen.")
      <code>"foreground"</code> and <code>"foreground-rgba"</code> properties of
      <ulink url="&gtk-cell-renderer-text;"><code>gtk-cell-renderer-text</code></ulink> (which specify the
      text colour).  The <code>"foreground"</code> property take a colour in string form, such as "Orange"
-     or "CornflowerBlue", whereas "foreground-rgba" takes a <ulink url="&gdk-rgba;">
-     <code>gdk-rgba</code></ulink> argument.  It is up to you to decide which one to use - the effect will
+     or "CornflowerBlue", whereas "foreground-rgba" takes a &gdk-rgba;
+     argument.  It is up to you to decide which one to use - the effect will
      be the same.  The other thing worth mentioning is that most properties have a <code>"foo-set"</code>
      property taking a boolean value as argument, such as <code>"foreground-set"</code>.  This is useful when
      you want to have a certain setting have an effect or not.  If you set the <code>"foreground"</code>
@@ -8628,40 +8631,6 @@ main (int argc, char **argv)
   <title>Dialogs</title>
 
   <section id="General_Dialog">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="General_Dialog">
-      <primary>GtkDialog</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog, gtk-dialog</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-new, gtk-dialog-new</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-new-with-buttons, gtk-dialog-new-with-buttons</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-content-area, gtk-dialog-content-area</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-add-button, gtk-dialog-add-button</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>GtkResponseType</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>response-type, gtk-response-type</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-action-area, gtk-dialog-action-area</primary>
-     </indexterm>
-     <indexterm zone="General_Dialog">
-      <primary>dialog-run, gtk-dialog-run</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>General Dialog</title>
    <figure id="figure-dialog-window">
     <title>General Dialog Window</title>
@@ -9115,22 +9084,32 @@ main (int argc, char **argv)
    <section id="Representing_Colors">
     <title>Representing Colors</title>
     <para>
-     Colors are represented as a structure of the type <ulink url="&gdk-rgba;"><code>gdk-rgba</code></ulink>,
-     which is defined in the library GDK.  The stucture has the properties <code>red</code>,
-     <code>green</code>, <code>blue</code>, and <code>alpha</code> to represent rgba colors.  It is based on
-     cairo's way to deal with colors and mirrors its behavior.  All values are in the range from
-     <code>0.0d0</code> to <code>1.0d0</code> inclusive.  So the color
-     <code>(0.0d0, 0.0d0, 0.0d0, 0.0d0)</code> represents transparent black and
-     <code>(1.0d0, 1.0d0, 1.0d0, 1.0d0)</code> is opaque white.  Other values will be clamped to this range
-     when drawing.
+     Colors are represented as a &gdk-rgba; structure, which is defined in the GDK library. The structure
+     has the properties <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> to
+     represent RGBA colors. It is based on Cairo's way to deal with colors and mirrors its behavior. All
+     values are in the range from 0.0 to 1.0 inclusive.
     </para>
     <para>
-     To create a representation of the color red use <code>(make-gdk-rgba :red 1.0d0)</code>.  The function
-     <ulink url="&make-gdk-rgba;"><code>make-gdk-rgba</code></ulink> is the constructor of the Lisp
-     implementation for creating a <ulink url="&gdk-rgba;"><code>gdk-rgba</code></ulink> structure.
-     Alternatively, the function <ulink url="&gdk-rgba-parse;"><code>gdk-rgba-parse</code></ulink> parses a
-     textual representation of a color, filling in the red, green, blue and alpha fields of the
-     <ulink url="&gdk-rgba;"><code>gdk-rgba</code></ulink> structure.  The string can be either one of:
+     To create a representation of the color red use
+     <programlisting>
+(gdk-rgba-new :red 1.0)
+     </programlisting>
+     The function
+     &gdk-rgba-new; is the constructor of the Lisp implementation for creating a &gdk-rgba; structure.
+     The color
+     <programlisting>
+(gdk-rgba-new :red 0.0 :green 0.0 :blue 0.0 :alpha 0.0)
+     </programlisting>
+     represents transparent black and
+     <programlisting>
+(gdk-rgba-new :red 1.0 :green 1.0 :blue 1.0 :alpha 1.0)
+     </programlisting>
+     is opaque white. Other values will be clamped to this range when drawing.
+    </para>
+    <para>
+     Alternatively, the function &gdk-rgba-parse; parses a textual representation of a color, filling in the
+     <code>red</code>, <code>green</code>, <code>blue</code> and <code>alpha</code> fields of the &gdk-rgba;
+     structure. The string can be either one of:
     </para>
     <itemizedlist>
      <listitem>
@@ -9148,38 +9127,34 @@ main (int argc, char **argv)
      </listitem>
     </itemizedlist>
     <para>
-     Where <code>r</code>, <code>g</code>, <code>b</code> and <code>a</code> are respectively the red, green,
-     blue and alpha color values. In the last two cases, <code>r</code>,  <code>g</code> and <code>b</code>
-     are either integers in the range 0 to 255 or precentage values in the range 0% to 100%, and a is a
-     floating point value in the range 0 to 1.
+     Where <code>r</code>, <code>g</code>, <code>b</code> and <code>a</code> are respectively the
+     <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> color values. In the
+     last two cases, <code>r</code>, <code>g</code> and <code>b</code> are either integers in the range 0 to
+     255 or precentage values in the range 0 % to 100 %, and a is a floating point value in the range 0.0 to
+     1.0.
     </para>
     <para>
-     Conversely, the function <ulink url="&gdk-rgba-to-string;"><code>gdk-rgba-to-string</code></ulink>
-     returns a textual specification of the rgba color in the form <code>rgb (r, g, b)</code> or
-     <code>rgba (r, g, b, a)</code>, where <code>r</code>, <code>g</code>, <code>b</code> and <code>a</code>
-     represent the red, green, blue and alpha values respectively.  <code>r</code>, <code>g</code>, and
-     <code>b</code> are represented as integers in the range 0 to 255, and <code>a</code> is represented as
-     floating point value in the range 0 to 1.
+     Conversely, the function &gdk-rgba-to-string; returns a textual specification of the RGBA color in the
+     form <code>rgb(r, g, b)</code> or <code>rgba(r, g, b, a)</code>, where <code>r</code>, <code>g</code>,
+     <code>b</code> and <code>a</code> represent the <code>red</code>, <code>green</code>, <code>blue</code>,
+     and <code>alpha</code> values respectively. <code>r</code>, <code>g</code>, and <code>b</code> are
+     represented as integers in the range 0 to 255, and <code>a</code> is represented as a floating point
+     value in the range 0.0 to 1.0.
     </para>
     <para>
-     These string forms are string forms those supported by the CSS3 colors module, and can be parsed by the
-     function <ulink url="&gdk-rgba-parse;"><code>gdk-rgba-parse</code></ulink>.
-    </para>
-    <para>
-     Note that this string representation may loose some precision, since <code>r</code>, <code>g</code>,
-     and <code>b</code> are represented as 8-bit integers. If this is a concern, you should use a different
-     representation.
+     These string forms are supported by the CSS3 colors module, and can be parsed by the function
+     &gdk-rgba-parse;. Note that this string representation may loose some precision, since <code>r</code>,
+     <code>g</code>, and <code>b</code> are represented as 8-bit integers. If this is a concern, you should
+     use a different representation.
     </para>
     <para>
      A simple example is the representation of the color red, which can be created with the call
      <code>(gdk-rgba-parse "Red")</code> from a string and converted back to a textual with the call
      <code>(gdk-rgba-to-string (gdk-rgba-parse "Red"))</code>.  The result of the last function is
-     <code>"rgba(255,0,0,0)"</code>.
+     <code>"rgb(255,0,0)"</code>.
     </para>
     <para>
-     Note, that GTK+ knows a second representation of colors as a structure of type <ulink url="&gdk-color;">
-     <code>gdk-color</code></ulink>.  The implementation is semilar.  The widgets for choosing a color know
-     both representations.
+     Note, that GTK+ knows a second deprecated representation of colors as a &gdk-color; structure.
     </para>
    </section>
 
@@ -9194,24 +9169,22 @@ main (int argc, char **argv)
      </mediaobject>
     </figure>
     <para>
-     The <ulink url="&gtk-color-button;"><code>gtk-color-button</code></ulink> is a button which displays the
-     currently selected color and allows to open a color selection dialog to change the color.  It is
-     suitable widget for selecting a color in a preference dialog.  It implements the
-     <ulink url="&gtk-color-chooser;"><code>gtk-color-chooser</code></ulink> interface.
+     The &gtk-color-button; widget is a button which displays the currently selected color and allows to
+     open a color selection dialog to change the color. It is a suitable widget for selecting a color in a
+     preference dialog. It implements the &gtk-color-chooser; interface.
     </para>
     <para>
      Example <link linkend="example-color-button">Color Button</link> shows a simple implementation of a
-     <ulink url="&gtk-color-button;"><code>gtk-color-button</code></ulink>.  The example displays a button
-     with the predefined color gray.  When clicking the button, a color selection dialog is opened.  The
-     dialog is shown in figure <link linkend="figure-color-button">Color Button</link>.  To get the currently
-     selected color you should connect a signal handler to the signal "color-set" and retrieve the color with
-     the <ulink url="&gtk-color-chooser-rgba;"><code>gtk-color-chooser-rgba</code></ulink> slot access
-     function.
+     &gtk-color-button; widget. The example displays a button with the predefined color gray. When clicking
+     the button, a color selection dialog is opened. The dialog is shown in figure
+     <link linkend="figure-color-button">Color Button</link>. To get the currently selected color you should
+     connect a signal handler to the signal "color-set" and retrieve the color with the slot access function
+     &gtk-color-chooser-rgba;.
     </para>
     <example id="example-color-button">
      <title>Color Button</title>
      <programlisting>
-(let ((color (gdk-rgba-parse "Gray")))
+(let ((color (gdk-rgba-parse "Blue")))
   (defun example-color-button ()
     (within-main-loop
       (let ((window (make-instance 'gtk-window
@@ -9235,29 +9208,21 @@ main (int argc, char **argv)
      </programlisting>
     </example>
     <para>
-     The <ulink url="&gtk-color-chooser-dialog;"><code>gtk-color-chooser-dialog</code></ulink> widget is a
-     dialog for choosing a color.  It implements the <ulink url="&gtk-color-chooser;">
-     <code>gtk-color-chooser</code></ulink> interface.  To provide a dialog in the
-     <ulink url="&gtk-color-chooser-dialog;"><code>gtk-color-chooser-dialog</code></ulink> the
-     <ulink url="&gtk-color-chooser-widget;"><code>gtk-color-chooser-widget</code></ulink> is used.
+     The &gtk-color-chooser-dialog; widget is a dialog for choosing a color. It implements the
+     &gtk-color-chooser; interface. The &gtk-color-chooser-widget; widget is used in the dialog to provide a
+     dialog for selecting colors.
     </para>
     <para>
      By default, the chooser presents a prefined palette of colors, plus a small number of settable custom
-     colors.  It is also possible to select a different color with the single-color editor.  To enter the
+     colors. It is also possible to select a different color with the single-color editor. To enter the
      single-color editing mode, use the context menu of any color of the palette, or use the '+' button to
-     add a new custom color.
-    </para>
-    <para>
-     The chooser automatically remembers the last selection, as well as custom colors.
-    </para>
-    <para>
-     To change the initially selected color or to get the selected color use the
-     <ulink url="&gtk-color-chooser-rgba;"><code>gtk-color-chooser-rgba</code></ulink> slot access function.
+     add a new custom color. The chooser automatically remembers the last selection, as well as custom colors.
+     To change the initially selected color or to get the selected color use the slot access function
+     &gtk-color-chooser-rgba;.
     </para>
     <para>
      Example <link linkend="example-color-chooser-dialog">Chooser Dialog</link> shows how to replace the
-     default color palette and the default gray palette with the function
-     <ulink url="&gtk-color-chooser-add-palette;"><code>gtk-color-chooser-add-palette</code></ulink>.
+     default color palette and the default gray palette with the function &gtk-color-chooser-add-palette;.
     </para>
     <figure id="figure-color-chooser-dialog">
      <title>Color Selecting Dialog with a custom color and gray palette</title>
@@ -9270,7 +9235,8 @@ main (int argc, char **argv)
     <example id="example-color-chooser-dialog">
      <title>Color Chooser Dialog</title>
      <programlisting>    
-(let ((color (gdk-rgba-parse "Blue"))
+(let ((message "Click to change the background color.")
+      (bg-color (gdk-rgba-parse "White"))
       ;; Color palette with 4 rgba colors
       (palette1 (list (gdk-rgba-parse "Red")
                       (gdk-rgba-parse "Yellow")
@@ -9280,43 +9246,59 @@ main (int argc, char **argv)
       (palette2 (list (gdk-rgba-parse "White")
                       (gdk-rgba-parse "Gray")
                       (gdk-rgba-parse "Black"))))
-  (defun drawing-area-event (widget event area)
+
+  (defun drawing-area-event (widget event)
     (declare (ignore widget))
-    (let ((handled nil))
-      (when (eql (gdk-event-type event) :button-press)
-        (let ((dialog (make-instance 'gtk-color-chooser-dialog
-                                      :color color
-                                      :use-alpha nil)))
-          (setq handled t)
-          ;; Add a custom palette to the dialog
-          (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
-          ;; Add a second coustom palette to the dialog
-          (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
-          ;; Run the color chooser dialog
-          (let ((response (gtk-dialog-run dialog)))
-            (when (eql response :ok)
-              (setq color (gtk-color-chooser-rgba dialog)))
-            ;; Set the color of the area widget
-            (gtk-widget-override-background-color area :normal color)
-            ;; Destroy the color chooser dialog
-            (gtk-widget-destroy dialog))))
-      handled))
+    (when (eq (gdk-event-type event) :button-press)
+      (let ((dialog (make-instance 'gtk-color-chooser-dialog
+                                   :color bg-color
+                                   :use-alpha nil)))
+        ;; Add a custom palette to the dialog
+        (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
+        ;; Add a second coustom palette to the dialog
+        (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
+        ;; Run the color chooser dialog
+        (let ((response (gtk-dialog-run dialog)))
+          (when (eq response :ok)
+            ;; Change the background color for the drawing area
+            (setf bg-color (gtk-color-chooser-rgba dialog)))
+          ;; Destroy the color chooser dialog
+          (gtk-widget-destroy dialog)))))
 
   (defun example-color-chooser-dialog ()
     (within-main-loop
       (let ((window (make-instance 'gtk-window
                                    :title "Example Color Chooser Dialog"
-                                   :default-width 300))
+                                   :default-width 400))
             (area (make-instance 'gtk-drawing-area)))
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
                             (leave-gtk-main)))
-        (gtk-widget-override-background-color area :normal color)
-        (setf (gtk-widget-events area) :button-press-mask)
+        (g-signal-connect area "draw"
+                          (lambda (widget cr)
+                            (declare (ignore widget))
+                            (let ((cr (pointer cr)))
+                              ;; Paint the current color on the drawing area
+                              (cairo-set-source-rgb cr
+                                                    (gdk-rgba-red bg-color)
+                                                    (gdk-rgba-green bg-color)
+                                                    (gdk-rgba-blue bg-color))
+                              (cairo-paint cr)
+                              ;; Print a hint on the drawing area
+                              (cairo-set-source-rgb cr 0.1 0.1 0.1)
+                              (cairo-select-font-face cr "Sans"
+                                                         :normal :normal)
+                              (cairo-set-font-size cr 12)
+                              (cairo-move-to cr 12 24)
+                              (cairo-show-text cr message)
+                              (cairo-destroy cr))))
         (g-signal-connect area "event"
                           (lambda (widget event)
-                            (drawing-area-event widget event area)))
+                            (drawing-area-event widget event)))
+        ;; Set the event mask for the drawing area
+        (setf (gtk-widget-events area) :button-press-mask)
+        ;; Add the drawing area to the window
         (gtk-container-add window area)
         (gtk-widget-show-all window)))))
      </programlisting>
@@ -13875,6 +13857,14 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </index>
 
 </book>
+
+
+
+
+
+
+
+
 
 
 

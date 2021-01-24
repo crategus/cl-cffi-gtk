@@ -30,7 +30,10 @@
 <!ENTITY g-application                       "&api;gio_class_g-application.html">
 <!ENTITY g-menu-model                        "&api;gio_class_g-menu-model.html">
 
-<!ENTITY gdk-color                           "&api;gdk_class_gdk-color.html">
+<!ENTITY gdk-color
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_class_gdk-color.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-color</code></ulink>">
 
 <!ENTITY gdk-cursor                          "&api;gdk_class_gdk-cursor.html">
 <!ENTITY gdk-cursor-new                      "&api;gdk_fun_gdk-cursor-new.html">
@@ -52,10 +55,22 @@
 <!ENTITY gdk-rectangle-height                "&api;gdk_fun_gdk-rectangle-height.html">
 <!ENTITY gdk-rectangle-width                 "&api;gdk_fun_gdk-rectangle-width.html">
 
-<!ENTITY gdk-rgba                            "&api;gdk_class_gdk-rgba.html">
-<!ENTITY make-gdk-rgba                       "&api;gdk_fun_make-gdk-rgba.html">
-<!ENTITY gdk-rgba-parse                      "&api;gdk_fun_gdk-rgba-parse.html">
-<!ENTITY gdk-rgba-to-string                  "&api;gdk_fun_gdk-rgba-to-string.html">
+<!ENTITY gdk-rgba
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_class_gdk-rgba.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-rgba</code></ulink>">
+<!ENTITY gdk-rgba-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-rgba-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-rgba-new</code></ulink>">
+<!ENTITY gdk-rgba-parse
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-rgba-parse.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-rgba-parse</code></ulink>">
+<!ENTITY gdk-rgba-to-string
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-rgba-to-string.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-rgba-to-string</code></ulink>">
 
 <!ENTITY gdk-window                          "&api;gdk_class_gdk-window.html">
 <!ENTITY gdk-window-cursor                   "&api;gdk_fun_gdk-window-cursor.html">
@@ -217,14 +232,33 @@
 <!ENTITY gtk-cell-renderer-text              "&api;gtk_class_gtk-cell-renderer-text.html">
 <!ENTITY gtk-cell-renderer-toggle            "&api;gtk_class_gtk-cell-renderer-toggle.html">
 
-<!ENTITY gtk-color-button                    "&api;gtk_class_gtk-color-button.html">
+<!ENTITY gtk-color-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-color-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-button</code></ulink>">
 
-<!ENTITY gtk-color-chooser                   "&api;gtk_class_gtk-color-chooser.html">
-<!ENTITY gtk-color-chooser-add-palette       "&api;gtk_fun_gtk-color-chooser-add-palette.html">
-<!ENTITY gtk-color-chooser-rgba              "&api;gtk_fun_gtk-color-chooser-rgba.html">
+<!ENTITY gtk-color-chooser
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-color-chooser.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser</code></ulink>">
+<!ENTITY gtk-color-chooser-add-palette
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-color-chooser-add-palette.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-add-palette</code></ulink>">
+<!ENTITY gtk-color-chooser-rgba
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-color-chooser-rgba.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-rgba</code></ulink>">
 
-<!ENTITY gtk-color-chooser-dialog            "&api;gtk_class_gtk-color-chooser-dialog.html">
-<!ENTITY gtk-color-chooser-widget            "&api;gtk_class_gtk-color-chooser-widget.html">
+<!ENTITY gtk-color-chooser-dialog
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-color-chooser-dialog.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-dialog</code></ulink>">
+
+<!ENTITY gtk-color-chooser-widget
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-color-chooser-widget.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-widget</code></ulink>">
 
 <!ENTITY gtk-combo-box                       "&api;gtk_class_gtk-combo-box.html">
 
