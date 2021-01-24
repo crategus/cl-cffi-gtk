@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; atdoc.lisp
 ;;;
-;;; Copyright (C) 2012, 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -98,6 +98,12 @@
 
 (unexport 'gdk:gdk-atom-as-string :gdk)
 
+(unexport 'gdk:make-gdk-color :gdk)
+(unexport 'gdk:copy-gdk-color :gdk)
+
+(unexport 'gdk:make-gdk-rgba :gdk)
+(unexport 'gdk:copy-gdk-rgba :gdk)
+
 #-windows
 (progn
   (unexport 'gdk:gdk-x11-device-manager-core :gdk)
@@ -110,7 +116,6 @@
 #+ubuntu
 (unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
 (unexport 'gtk:with-text-buffer-user-action :gtk)
-
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
@@ -146,9 +151,5 @@
       :single-page-p t
       :include-slot-definitions-p t
       :include-internal-symbols-p nil)))
-
-(generate-html-single-page)
-(generate-html)
-(room)
 
 ;;; --- End of file atdoc.lisp -------------------------------------------------

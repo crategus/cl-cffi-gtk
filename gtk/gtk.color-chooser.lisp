@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -76,17 +76,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-color-chooser 'type)
- "@version{2020-5-22}
+ "@version{2021-1-23}
   @begin{short}
-    @sym{gtk-color-chooser} is an interface that is implemented by widgets for
-    choosing colors.
+    The @sym{gtk-color-chooser} interface is an interface that is implemented
+    by widgets for choosing colors.
   @end{short}
   Depending on the situation, colors may be allowed to have alpha
   (translucency).
 
-  In GTK+, the main widgets that implement this interface are
-  @class{gtk-color-chooser-widget}, @class{gtk-color-chooser-dialog} and
-  @class{gtk-color-button}.
+  The main widgets that implement this interface are @class{gtk-color-button},
+  @class{gtk-color-chooser-widget}, and @class{gtk-color-chooser-dialog}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"color-activated\" signal}
       @begin{pre}
@@ -98,15 +97,15 @@
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-color-chooser} widget which received
           the signal.}
-        @entry[color]{The @class{gdk-rgba} color.}
+        @entry[color]{The @struct{gdk-rgba} color.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-color-chooser-rgba}
   @see-slot{gtk-color-chooser-use-alpha}
-  @see-class{gtk-color-chooser-widget}
-  @see-class{gtk-color-chooser-dialog}
+  @see-struct{gdk-rgba}
   @see-class{gtk-color-button}
-  @see-class{gdk-rgba}")
+  @see-class{gtk-color-chooser-dialog}
+  @see-class{gtk-color-chooser-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -116,21 +115,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "rgba" 'gtk-color-chooser) 't)
- "The @code{rgba} property of type @class{gdk-rgba} (Read / Write) @br{}
+ "The @code{rgba} property of type @struct{gdk-rgba} (Read / Write) @br{}
   The @code{rgba} property contains the currently selected color, as a
-  @class{gdk-rgba} color. The property can be set to change the current
-  selection programmatically.")
+  RGBA color. The property can be set to change the current selection
+  programmatically.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-chooser-rgba 'function)
- "@version{2020-5-22}
+ "@version{*2021-1-24}
   @syntax[]{(gtk-color-chooser-rgba object) => color}
   @syntax[]{(setf (gtk-color-chooser-rgba object) color)}
   @argument[object]{a @class{gtk-color-chooser} widget}
-  @argument[color]{a @class{gdk-rgba} color}
-  @return{Returns the currently selected color.}
+  @argument[color]{a @struct{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-color-chooser]{rgba} slot of the
     @class{gtk-color-chooser} class.
@@ -139,6 +137,11 @@
   The slot access function @sym{gtk-color-chooser-rgba} gets the currently
   selected color. The slot access function @sym{(setf gtk-color-chooser-rgba)}
   sets the color.
+
+  The @code{rgba} property contains the currently selected color, as a
+  @struct{gdk-rgba} color. The property can be set to change the current
+  selection programmatically.
+  @see-struct{gdk-rgba}
   @see-class{gtk-color-chooser}")
 
 ;;; --- gtk-color-chooser-use-alpha --------------------------------------------
@@ -148,8 +151,8 @@
                                                'gtk-color-chooser) 't)
  "The @code{use-alpha} property of type @code{:boolean} (Read / Write) @br{}
   When @code{use-alpha} is @em{true}, colors may have alpha (translucency)
-  information. When it is @em{false}, the @class{gdk-rgba} color obtained
-  via the @code{rgba} property will be forced to have alpha == 1.
+  information. When it is @em{false}, the RGBA color obtained via the
+  @code{rgba} property will be forced to have the alpha value 1.0.
   Implementations are expected to show alpha by rendering the color over a
   non-uniform background (like a checkerboard pattern). @br{}
   Default value: @em{true}")
@@ -191,33 +194,31 @@
                                       colors-per-line
                                       colors)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-22}
+ "@version{*2021-1-24}
   @argument[chooser]{a @class{gtk-color-chooser} widget}
-  @argument[orientation]{@code{:horizontal} if the palette should be displayed
-  in rows, @code{:vertical} for columns}
+  @argument[orientation]{a value of the @symbol{gtk-orientation} enumeration}
   @argument[colors-per-line]{an integer with the number of colors to show in
     each row/column}
-  @argument[colors]{a list with the @class{gdk-rgba} colors of the palette,
+  @argument[colors]{a list with the @struct{gdk-rgba} colors of the palette,
     or @code{nil}}
   @begin{short}
     Adds a palette to the color chooser.
   @end{short}
-  If the orientation is horizontal, the colors are grouped in rows, with
-  @arg{colors-per-line} colors in each row. If the orientation is vertical,
-  the colors are grouped in columns instead.
+  If the orientation is @code{:horizontal}, the colors are grouped in rows,
+  with @arg{colors-per-line} colors in each row. If the orientation is
+  @code{:vertical}, the colors are grouped in columns instead.
 
   The default color palette of the color chooser widget has 27 colors,
   organized in columns of 3 colors. The default gray palette has 9 grays in a
-  single row.
-
-  The layout of the color chooser widget works best when the palettes have
-  9-10 columns.
+  single row. The layout of the color chooser widget works best when the
+  palettes have 9-10 columns.
 
   Calling this function for the first time has the side effect of removing the
-  default color and gray palettes from the color chooser.
-
-  If colors is @code{nil}, removes all previously added palettes.
-  @see-class{gtk-color-chooser}"
+  default color and gray palettes from the color chooser. If @arg{colors} is
+  @code{nil}, removes all previously added palettes.
+  @see-struct{gdk-rgba}
+  @see-class{gtk-color-chooser}
+  @see-symbol{gtk-orientation}"
   (with-foreign-boxed-array (n-colors colors-ptr gdk-rgba colors)
     (%gtk-color-chooser-add-palette chooser
                                     orientation

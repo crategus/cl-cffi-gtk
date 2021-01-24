@@ -2537,42 +2537,47 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "events" 'gtk-widget) 't)
- "The @code{events} property of type @symbol{gdk-event-mask}
-  (Read / Write) @br{}
-  The event mask that decides what kind of @class{gdk-event} this widget
+ "The @code{events} property of type @symbol{gdk-event-mask} (Read / Write)@br{}
+  The event mask that decides what kind of @class{gdk-event} events this widget
   gets. @br{}
   Default value: @code{:structure-mask}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-events atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-events 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{*2021-1-24}
   @syntax[]{(gtk-widget-events object) => events}
   @syntax[]{(setf (gtk-widget-events object) events)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[events]{the event mask of type @symbol{gdk-event-mask}}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{events} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{events} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-events} returns the event mask for the
-  widget. The event mask is a bitfield containing flags from the
-  @symbol{gdk-event-mask} flags. These are the events that the widget will
-  receive.
+  The slot access function @sym{gtk-widget-events} gets the event mask for the
+  widget. The slot access function @sym{(setf gtk-widget-events)} sets the
+  event mask for @arg{widget}. The event mask is a bitfield containing flags
+  from the @symbol{gdk-event-mask} flags. These are the events that the widget
+  will receive.
 
-  The generic function @sym{(setf gtk-widget-events)} sets the event mask for
-  @arg{widget}.
-
-  The event mask determines which events a widget will receive. Keep in mind
-  that different widgets have different default event masks, and by changing
-  the event mask you may disrupt a widget's functionality, so be careful. This
-  function must be called while a widget is unrealized. Consider the function
-  @fun{gtk-widget-add-events} for widgets that are already realized, or if
-  you want to preserve the existing event mask. This function can not be used
-  with @code{:no-window} widgets; to get events on those widgets, place them
-  inside a @class{gtk-event-box} and receive events on the event box.
+  Keep in mind that different widgets have different default event masks, and
+  by changing the event mask you may disrupt a widget's functionality, so be
+  careful. This function must be called while a widget is unrealized. Consider
+  the function @fun{gtk-widget-add-events} for widgets that are already
+  realized, or if you want to preserve the existing event mask. This function
+  cannot be used with widgets that have no window. To get events on those
+  widgets, place them inside a @class{gtk-event-box} object and receive events
+  on the event box.
+  @begin[Note]{dictionary}
+    Internally, the widget event mask will be the logical @code{OR} of the
+    event mask set through the functions @sym{(setf gtk-widget-events)} or
+    @fun{gtk-widget-add-events}, and the event mask necessary to cater for
+    every @class{gtk-event-controller} object created for the widget.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-event-box}
+  @see-class{gtk-event-controller}
   @see-symbol{gdk-event-mask}
   @see-function{gtk-widget-add-events}")
 
@@ -3719,7 +3724,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_destroy" gtk-widget-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{*2021-1-24}
   @argument[widget]{a @class{gtk-widget} object}
   @short{Destroys a widget.}
 
@@ -3865,12 +3870,14 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_show_all" gtk-widget-show-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{*2021-1-24}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Recursively shows a widget, and any child widgets if the widget is a
     container.
   @end{short}
+  See the function @fun{gtk-widget-show} for more information and the function
+  @fun{gtk-widget-hide} to hide the widget.
   @see-class{gtk-widget}
   @see-function{gtk-widget-show}
   @see-function{gtk-widget-hide}"
@@ -5499,29 +5506,29 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_override_background_color"
            gtk-widget-override-background-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2016-1-12}
+ "@version{2021-1-23}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
     the background color}
   @argument[color]{the @class{gdk-rgba} color to assign, or @code{nil} to undo
-    the effect of previous calls to the function
-    @sym{gtk-widget-override-background-color}}
+    the effect of previous calls}
   @short{Sets the background color to use for a widget.}
-
   All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-background-color} has been deprecated
-    since version 3.16 and should not be used in newly-written code.
-
-    This function is not useful in the context of CSS-based rendering. If you
-    wish to change the way a widget renders its background you should use a
-    custom CSS style, through an application-specific @class{gtk-style-provider}
-    and a CSS style class. You can also override the default drawing of a widget
+    since version 3.16 and should not be used in newly-written code. This
+    function is not useful in the context of CSS-based rendering. If you wish
+    to change the way a widget renders its background you should use a custom
+    CSS style, through an application-specific @class{gtk-style-provider} and
+    a CSS style class. You can also override the default drawing of a widget
     through the \"draw\" signal, and use Cairo to draw a specific color,
     regardless of the CSS style.
   @end{dictionary}
   @see-class{gtk-widget}
+  @see-struct{gdk-rgba}
+  @see-class{gtk-style-provider}
+  @see-symbol{gtk-state-flags}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-flags)

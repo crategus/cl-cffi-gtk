@@ -102,6 +102,9 @@
 
 (unexport 'gdk:gdk-atom-as-string :gdk)
 
+(unexport 'make-gdk-rgba :gdk)
+(unexport 'copy-gdk-rgba :gdk)
+
 #-windows
 (progn
   (unexport 'gdk:gdk-x11-device-manager-core :gdk)

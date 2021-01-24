@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -117,18 +117,46 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-button 'type)
- "@version{2020-5-23}
+ "@version{*2021-1-24}
   @begin{short}
-    @sym{gtk-color-button} is a button which displays the currently selected
-    color and allows to open a color selection dialog to change the color. It
-    is a suitable widget for selecting a color in a preference dialog.
+    The @sym{gtk-color-button} widget is a button which displays the currently
+    selected color and allows to open a color selection dialog to change the
+    color. It is a suitable widget for selecting a color in a preference dialog.
   @end{short}
 
   @image[color-button]{}
+  @begin[Example]{dictionary}
+    The example shows a color button. The button is initialized with the color
+    \"Blue\". The handler for the \"color-set\" signal prints the selected
+    color on the console.
+    @begin{pre}
+(let ((color (gdk-rgba-parse \"Blue\")))
+  (defun example-color-button ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title \"Example Color Button\"
+                                   :border-width 12
+                                   :default-width 250
+                                   :default-height 200))
+            (button (make-instance 'gtk-color-button
+                                   :rgba color)))
+        (g-signal-connect window \"destroy\"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (leave-gtk-main)))
+        (g-signal-connect button \"color-set\"
+           (lambda (widget)
+             (let ((rgba (gtk-color-chooser-rgba widget)))
+               (format t \"Selected color is ~A~%\"
+                         (gdk-rgba-to-string rgba)))))
+        (gtk-container-add window button)
+        (gtk-widget-show-all window)))))
+    @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"color-set\" signal}
       @begin{pre}
- lambda (widget)    : Run First
+ lambda (button)    : Run First
       @end{pre}
       The \"color-set\" signal is emitted when the user selects a color. When
       handling this signal, use the functions @fun{gtk-color-button-color}
@@ -138,7 +166,7 @@
       If you need to react to programmatic color changes as well, use the
       \"notify::color\" signal.
       @begin[code]{table}
-        @entry[widget]{The @sym{gtk-color-button} widget which received the
+        @entry[button]{The @sym{gtk-color-button} widget which received the
           signal.}
       @end{table}
   @end{dictionary}
@@ -147,7 +175,9 @@
   @see-slot{gtk-color-button-rgba}
   @see-slot{gtk-color-button-show-editor}
   @see-slot{gtk-color-button-title}
-  @see-slot{gtk-color-button-use-alpha}")
+  @see-slot{gtk-color-button-use-alpha}
+  @see-class{gtk-color-chooser}
+  @see-class{gtk-color-chooser-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -187,11 +217,11 @@
   @see-class{gtk-color-button}
   @see-function{gtk-color-chooser-rgba}")
 
-;;; gtk-color-button-color -----------------------------------------------------
+;;; --- gtk-color-button-color -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "color" 'gtk-color-button) 't)
- "The @code{color} property of type @class{gdk-color} (Read / Write) @br{}
+ "The @code{color} property of type @struct{gdk-color} (Read / Write) @br{}
   The selected color. @br{}
   @em{Warning:} The @code{color} property has been deprecated since version 3.4
   and should not be used in newly-written code. Use the @code{rgba}
@@ -201,48 +231,50 @@
 (setf (gethash 'gtk-color-button-color atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-button-color 'function)
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @syntax[]{(gtk-color-button-color object) => color)}
   @syntax[]{(setf (gtk-color-button-color object) color)}
   @argument[object]{a @class{gtk-color-button} widget}
-  @argument[color]{a @class{gdk-color} to set the current color with}
+  @argument[color]{a @struct{gdk-color} to set the current color with}
   @begin{short}
     Accessor of the @slot[gtk-color-button]{color} slot of the
     @class{gtk-color-button} class.
   @end{short}
 
-  The slot access function @sym{(setf gtk-color-button-color)} sets
-  @arg{color} to be the current color in the color button.
+  The slot access function @sym{gtk-color-button-color} gets the current color
+  in the color button. The slot access function
+  @sym{(setf gtk-color-button-color)} sets the current color to be @arg{color}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-button-color} is deprecated and should not be
     used in newly-written code. Use the function @fun{gtk-color-chooser-rgba}
     instead.
   @end{dictionary}
   @see-class{gtk-color-button}
+  @see-struct{gdk-color}
   @see-function{gtk-color-chooser-rgba}")
 
 ;;; --- gtk-color-button-rgba --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "rgba" 'gtk-color-button) 't)
- "The @code{rgba} property of type @class{gdk-rgba} (Read / Write) @br{}
+ "The @code{rgba} property of type @struct{gdk-rgba} (Read / Write) @br{}
   The selected RGBA color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-button-rgba 'function)
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @syntax[]{(gtk-color-button-rgba object) => rgba)}
   @syntax[]{(setf (gtk-color-button-rgba object) rgba)}
   @argument[object]{a @class{gtk-color-button} widget}
-  @argument[rgba]{a @class{gdk-rgba} color to set the current color with}
+  @argument[rgba]{a @struct{gdk-rgba} color to set the current color with}
   @begin{short}
     Accessor of the @slot[gtk-color-button]{rgba} slot of the
     @class{gtk-color-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-color-button-rgba} returns the current color
+  The slot access function @sym{gtk-color-button-rgba} gets the current color
   in the color button. The slot access function @sym{(setf gtk-color-button)}
   sets the current color to be @arg{rgba}.
   @begin[Warning]{dictionary}
@@ -251,6 +283,7 @@
     @fun{gtk-color-chooser-rgba} instead.
   @end{dictionary}
   @see-class{gtk-color-button}
+  @see-struct{gdk-rgba}
   @see-function{gtk-color-chooser-rgba}")
 
 ;;; --- gtk-color-button-show-editor -------------------------------------------
@@ -299,11 +332,11 @@
 (setf (gethash 'gtk-color-button-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-button-title 'function)
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @syntax[]{(gtk-color-button-title object) => title)}
   @syntax[]{(setf (gtk-color-button-title object) title)}
   @argument[object]{a @class{gtk-color-button} widget}
-  @argument[title]{string containing the window title}
+  @argument[title]{a string containing the window title}
   @begin{short}
     Accessor of the @slot[gtk-color-button]{title} slot of the
     @class{gtk-color-button} class.
@@ -311,8 +344,7 @@
 
   The slot access function @sym{gtk-color-button-title} gets the title of the
   color selection dialog. The slot access function
-  @sym{(setf gtk-color-button-title)} sets the title for the color selection
-  dialog.
+  @sym{(setf gtk-color-button-title)} sets the title.
   @see-class{gtk-color-button}")
 
 ;;; gtk-color-button-use-alpha -------------------------------------------------
@@ -322,8 +354,8 @@
                                                'gtk-color-button) 't)
  "The @code{use-alpha} property of type @code{:boolean} (Read / Write) @br{}
   If this property is set to @em{true}, the color swatch on the button is
-  rendered against a checkerboard background to show its opacity and the opacity
-  slider is displayed in the color selection dialog. @br{}
+  rendered against a checkerboard background to show its opacity and the
+  opacity slider is displayed in the color selection dialog. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -358,7 +390,7 @@
 
 (defun gtk-color-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @return{A new @class{gtk-color-button} widget.}
   @short{Creates a new color button.}
 
@@ -366,7 +398,8 @@
   representing the current selected color. When the button is clicked, a
   color-selection dialog will open, allowing the user to select a color. The
   swatch will be updated to reflect the new color when the user finishes.
-  @see-class{gtk-color-button}"
+  @see-class{gtk-color-button}
+  @see-function{gtk-color-button-new-with-rgba}"
   (make-instance 'gtk-color-button))
 
 (export 'gtk-color-button-new)
@@ -379,16 +412,17 @@
 
 (defun gtk-color-button-new-with-color (color)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-23}
-  @argument[color]{a @class{gdk-color} to set the current color with}
+ "@version{2021-1-23}
+  @argument[color]{a @struct{gdk-color} to set the current color with}
   @return{A new @class{gtk-color-button} widget.}
   @short{Creates a new color button.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-new-with-color} has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the function
-    @fun{gtk-color-button-new-with-rgba} instead.
+    The function @sym{gtk-color-button-new-with-color} has been deprecated
+    since version 3.4 and should not be used in newly-written code. Use the
+    function @fun{gtk-color-button-new-with-rgba} instead.
   @end{dictionary}
   @see-class{gtk-color-button}
+  @see-struct{gdk-color}
   @see-function{gtk-color-button-new-with-rgba}"
   (make-instance 'gtk-color-button
                  :color color))
@@ -403,11 +437,19 @@
 
 (defun gtk-color-button-new-with-rgba (rgba)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-23}
-  @argument[rgba]{a @class{gdk-rgba} color to set the current color with}
+ "@version{2021-1-23}
+  @argument[rgba]{a @struct{gdk-rgba} color to set the current color with}
   @return{A new @class{gtk-color-button} widget.}
-  @short{Creates a new color button.}
-  @see-class{gtk-color-button}"
+  @short{Creates a new color button with the given RGBA color.}
+  @see-class{gtk-color-button}
+
+  This returns a widget in the form of a small button containing a swatch
+  representing the current selected color. When the button is clicked, a
+  color-selection dialog will open, allowing the user to select a color. The
+  swatch will be updated to reflect the new color when the user finishes.
+  @see-class{gtk-color-button}
+  @see-struct{gdk-rgba}
+  @see-function{gtk-color-button-new}"
   (make-instance 'gtk-color-button
                  :rgba rgba))
 

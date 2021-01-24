@@ -1381,12 +1381,12 @@
 
 (defun g-signal-connect (instance detailed-signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
+ "@version{*2021-1-24}
   @argument[instance]{the @class{g-object} instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
   @argument[handler]{the Lisp callback function to connect}
-  @argument[key]{if @em{true} the handler is called after the default handler}
-  @return{A @code{:ulong} with the handler ID.}
+  @argument[after]{if @em{true} the handler is called after the default handler}
+  @return{A unsigned long with the handler ID.}
   @begin{short}
     Connects a Lisp callback function to a signal for a particular object.
   @end{short}
@@ -1452,11 +1452,11 @@
 
 (defun g-signal-connect-after (instance detailed-signal handler)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
+ "@version{2021-1-24}
   @argument[instance]{the @class{g-object} instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
   @argument[handler]{the Lisp callback function to connect}
-  @return{A @code{:ulong} with the handler ID.}
+  @return{A unsigned long with the handler ID.}
   @begin{short}
     Connects a Lisp callback function to a signal for a particular object.
   @end{short}

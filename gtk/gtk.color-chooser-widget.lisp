@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -77,29 +77,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-chooser-widget 'type)
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @begin{short}
-    The @sym{gtk-color-chooser-widget} widget lets the user select a color. By
-    default, the chooser presents a prefined palette of colors, plus a small
-    number of settable custom colors. It is also possible to select a different
-    color with the single-color editor. To enter the single-color editing mode,
-    use the context menu of any color of the palette, or use the '+' button to
-    add a new custom color.
+    The @sym{gtk-color-chooser-widget} widget lets the user select a color.
   @end{short}
+  By default, the chooser presents a prefined palette of colors, plus a small
+  number of settable custom colors. It is also possible to select a different
+  color with the single-color editor. To enter the single-color editing mode,
+  use the context menu of any color of the palette, or use the '+' button to
+  add a new custom color.
 
   The chooser automatically remembers the last selection, as well as custom
+  colors. To change the initially selected color or to get the selected color
+  use the slot access function @fun{gtk-color-chooser-rgba}.
+
+  The @sym{gtk-color-chooser-widget} widget is used in the
+  @class{gtk-color-chooser-dialog} widget to provide a dialog for selecting
   colors.
-
-  To change the initially selected color or to get the selected font use the
-  slot access function @fun{gtk-color-chooser-rgba}.
-
-  The @sym{gtk-color-chooser-widget} is used in the
-  @class{gtk-color-chooser-dialog} to provide a dialog for selecting colors.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-color-chooser-widget} class has a single CSS node with name
     @code{colorchooser}.
   @end{dictionary}
-  @see-slot{gtk-color-chooser-widget-show-editor}")
+  @see-slot{gtk-color-chooser-widget-show-editor}
+  @see-class{gtk-color-chooser}
+  @see-class{gtk-color-chooser-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accesor Details

@@ -556,7 +556,7 @@
 
 (defcfun ("gtk_container_add" gtk-container-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
+ "@version{*2021-1-24}
   @argument[container]{a @class{gtk-container} widget}
   @argument[widget]{a @class{gtk-widget} object to be placed inside
     @arg{container}}
@@ -564,15 +564,15 @@
     Adds a widget to the container.
   @end{short}
   Typically used for simple containers such as @class{gtk-window},
-  @class{gtk-frame}, or @class{gtk-button}.
+  @class{gtk-frame}, or @class{gtk-button} widgets.
 
   For more complicated layout containers such as @class{gtk-box} or
-  @class{gtk-grid}, this function will pick default packing parameters that may
-  not be correct. So consider functions such as @fun{gtk-box-pack-start} and
-  @fun{gtk-grid-attach} as an alternative to the function
-  @sym{gtk-container-add} in those cases.
+  @class{gtk-grid} widgets, this function will pick default packing parameters
+  that may not be correct. So consider functions such as
+  @fun{gtk-box-pack-start} and @fun{gtk-grid-attach} as an alternative to the
+  function @sym{gtk-container-add} in those cases.
 
-  A widget may be added to only one container at a time; you cannot place the
+  A widget may be added to only one container at a time. You cannot place the
   same widget inside two different containers.
   @see-class{gtk-container}
   @see-class{gtk-window}

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -541,8 +541,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
- "@version{2019-3-18}
-  @short{Specifies the type of the event.}
+ "@version{*2021-1-24}
+  @short{Specifies the type of a @struct{gdk-event} instance.}
 
   Do not confuse these events with the signals that GTK+ widgets emit.
   Although many of these events result in corresponding signals being emitted,
@@ -616,11 +616,11 @@
     @entry[:button-press]{A mouse button has been pressed.}
     @entry[:2button-press]{A mouse button has been double-clicked. Note that
       each click also generates a @code{:button-press} event.}
-    @entry[:double-button-press]{Alias for @code{:2button-press}, added in 3.6.}
+    @entry[:double-button-press]{Alias for @code{:2button-press}.}
     @entry[:3button-press]{A mouse button has been clicked 3 times in a short
       period of time. Note that each click also generates a @code{:button-press}
       event.}
-    @entry[:triple-button-press]{Alias for @code{:3button-press}, added in 3.6.}
+    @entry[:triple-button-press]{Alias for @code{:3button-press}.}
     @entry[:button-release]{A mouse button has been released.}
     @entry[:key-press]{A key has been pressed.}
     @entry[:key-release]{A key has been released.}
@@ -628,8 +628,8 @@
     @entry[:leave-notify]{The pointer has left the window.}
     @entry[:focus-change]{The keyboard focus has entered or left the window.}
     @entry[:configure]{The size, position or stacking order of the window has
-      changed. Note that GTK+ discards these events for @code{:child} windows
-      of type @symbol{gdk-window-type}.}
+      changed. Note that GTK+ discards these events for windows with the type
+      @code{:child} of the @symbol{gdk-window-type} enumeration.}
     @entry[:map]{The window has been mapped.}
     @entry[:unmap]{The window has been unmapped.}
     @entry[:property-notify]{A property on the window has been changed or
@@ -657,41 +657,28 @@
       application.}
     @entry[:visibility-notify]{The window visibility status has changed.}
     @entry[:scroll]{The scroll wheel was turned.}
-    @entry[:window-state]{The state of a window has changed. See
-      @symbol{gdk-window-state} for the possible window states.}
+    @entry[:window-state]{The state of a window has changed. See the
+      @symbol{gdk-window-state} flags for the possible window states.}
     @entry[:setting]{A setting has been modified.}
-    @entry[:owner-change]{The owner of a selection has changed. This event
-      type was added in 2.6.}
-    @entry[:grab-broken]{A pointer or keyboard grab was broken. This event
-      type was added in 2.8.}
-    @entry[:damage]{The content of the window has been changed. This event
-      type was added in 2.14.}
-    @entry[:touch-begin]{A new touch event sequence has just started. This
-      event type was addedin 3.4.}
-    @entry[:touch-update]{A touch event sequence has been updated. This event
-      type was added in 3.4.}
-    @entry[:touch-end]{A touch event sequence has finished. This event type was
-      added in 3.4.}
-    @entry[:touch-cancel]{A touch event sequence has been canceled. This event
-      type was added in 3.4.}
+    @entry[:owner-change]{The owner of a selection has changed.}
+    @entry[:grab-broken]{A pointer or keyboard grab was broken.}
+    @entry[:damage]{The content of the window has been changed.}
+    @entry[:touch-begin]{A new touch event sequence has just started.}
+    @entry[:touch-update]{A touch event sequence has been updated.}
+    @entry[:touch-end]{A touch event sequence has finished.}
+    @entry[:touch-cancel]{A touch event sequence has been canceled.}
     @entry[:touchpad-swipe]{A touchpad swipe gesture event, the current state is
-      determined by its phase field. This event type was added in 3.18.}
+      determined by its phase field. Since 3.18}
     @entry[:touchpad-pinch]{A touchpad pinch gesture event, the current state is
-      determined by its phase field. This event type was added in 3.18.}
-    @entry[:pad-button-press]{A tablet pad button press event. This event type
-      was added in 3.22.}
-    @entry{:pad-button-release]{A tablet pad button release event. This event
-      type was added in 3.22.}
-    @entry[:pad-ring]{A tablet pad axis event from a \"ring\". This event type
-      was added in 3.22.}
-    @entry[:pad-strip]{A tablet pad axis event from a \"strip\". This event type
-      was added in 3.22.}
-    @entry[:pad-group-mode]{A tablet pad group mode change. This event type was
-      added in 3.22.}
-    @entry[:event-last]{Marks the end of the @sym{gdk-event-type} enumeration.
-      Added in 2.18.}
+      determined by its phase field. Since 3.18}
+    @entry[:pad-button-press]{A tablet pad button press event. Since 3.22}
+    @entry{:pad-button-release]{A tablet pad button release event.Since 3.22}
+    @entry[:pad-ring]{A tablet pad axis event from a \"ring\". Since 3.22}
+    @entry[:pad-strip]{A tablet pad axis event from a \"strip\". Since 3.22}
+    @entry[:pad-group-mode]{A tablet pad group mode change. Since 3.22}
+    @entry[:event-last]{Marks the end of the @sym{gdk-event-type} enumeration.}
   @end{table}
-  @see-class{gdk-event}
+  @see-struct{gdk-event}
   @see-symbol{gdk-window-type}
   @see-symbol{gdk-window-state}")
 
@@ -1432,9 +1419,29 @@
 (setf (gethash 'gdk-event-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-type 'function)
- "@version{2019-3-18}
-  Accessor of the slot @code{type} of the @class{gdk-event} structure.
-  @see-class{gdk-event}")
+ "@version{*2021-1-24}
+  @syntax[]{(gdk-event-type instance) => type}
+  @syntax[]{(setf (gdk-event-type instance) type)}
+  @argument[instance]{a @struct{gdk-event} structure}
+  @argument[type]{a value of the @symbol{gdk-event-type} enumeration}
+  @begin{short}
+    Accessor of the @code{type} slot of the @struct{gdk-event} structure.
+  @end{short}
+
+  The type of the event as a value of the @symbol{gdk-event-type} enumeration.
+  @begin[Example]{dictionary}
+    Check for a button press event in a handler for the \"event\" signal on
+    a drawing area.
+    @begin{pre}
+(defun drawing-area-event (widget event)
+  (declare (ignore widget))
+  ;; Check for a button press event on the drawing area
+  (when (eq (gdk-event-type event) :button-press)
+    ... ))
+    @end{pre}
+  @end{dictionary}
+  @see-struct{gdk-event}
+  @see-symbol{gdk-event-type}")
 
 ;;; --- gdk-event-window -------------------------------------------------------
 

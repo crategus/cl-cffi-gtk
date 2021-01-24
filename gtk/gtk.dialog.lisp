@@ -568,7 +568,7 @@
 
 (defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{*2021-1-24}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The response ID, which is a positive integer or a value of the
     @symbol{gtk-response-type} enumeration.}
@@ -601,7 +601,7 @@
     Typical usage of this function might be:
     @begin{pre}
  (let ((response (gtk-dialog-run dialog)))
-   (cond ((eql response :ok)
+   (cond ((eq response :ok)
           (do-application-specific-something))
          (t
           (do-nothing-since-dialog-was-cancelled)))

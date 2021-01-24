@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -66,7 +66,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color atdoc:*class-name-alias*)
-      "CStruct"
+      "Boxed CStruct"
       (documentation 'gdk-color 'type)
  "@version{2020-12-30}
   @begin{short}
@@ -101,11 +101,6 @@
   @see-class{gdk-rgba}")
 
 (export (boxed-related-symbols 'gdk-color))
-
-;; Do not export the Lisp constructors. These are replaced with the functions
-;; gdk-color-new and gdk-color-copy
-(unexport 'make-gdk-color)
-(unexport 'copy-gdk-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Constructors for GdkColor structure

@@ -276,17 +276,26 @@
     @about-function{gdk-pixbuf-from-surface}
   @end{section}
   @begin[RGBA Colors]{section}
-    RGBA colors
+    The @struct{gdk-rgba} structure is a convenient way to pass RGBA colors
+    around. It is based on Cairo's way to deal with colors and mirrors its
+    behavior. All values are in the range from 0.0 to 1.0 inclusive. So the
+    color
+    @begin{pre}
+(gdk-rgba-new :red 0.0 :green 0.0 :blue 0.0 :alpha 0.0)
+    @end{pre}
+    represents transparent black and
+    @begin{pre}
+(gdk-rgba-new :red 1.0 :green 1.0 :blue 1.0 :alpha 1.0)
+    @end{pre}
+    is opaque white. Other values will be clamped to this range when drawing.
 
     @about-struct{gdk-rgba}
-    @about-function{make-gdk-rgba}
-    @about-function{copy-gdk-rgba}
     @about-function{gdk-rgba-red}
     @about-function{gdk-rgba-green}
     @about-function{gdk-rgba-blue}
     @about-function{gdk-rgba-alpha}
+    @about-function{gdk-rgba-new}
     @about-function{gdk-rgba-copy}
-    @about-function{gdk-rgba-free}
     @about-function{gdk-rgba-parse}
     @about-function{gdk-rgba-equal}
     @about-function{gdk-rgba-hash}
@@ -1276,8 +1285,8 @@ got_value (gpointer user_data)
       A @class{gdk-color} structure represents a color.
 
       When working with Cairo, it is often more convenient to use a
-      @class{gdk-rgba} color instead, and @class{gdk-color} has been deprecated
-      in favor of @class{gdk-rgba}.
+      @class{gdk-rgba} color instead. The @class{gdk-color} structure has
+      been deprecated in favor of the @class{gdk-rgba} structure.
 
       @about-struct{gdk-color}
       @about-function{gdk-color-red}

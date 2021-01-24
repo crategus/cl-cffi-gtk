@@ -78,14 +78,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-chooser-dialog 'type)
- "@version{2020-5-23}
+ "@version{2021-1-23}
   @begin{short}
     The @sym{gtk-color-chooser-dialog} widget is a dialog for choosing a color.
     It implements the @class{gtk-color-chooser} interface.
   @end{short}
 
   @image[colorchooser]{}
-  @see-slot{gtk-color-chooser-dialog-show-editor}")
+  @see-slot{gtk-color-chooser-dialog-show-editor}
+  @see-class{gtk-color-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accesor Details
@@ -129,6 +130,7 @@
     or @code{nil}}
   @return{A new @class{gtk-color-chooser-dialog} widget.}
   @short{Creates a new color chooser dialog.}
+  @see-class{gtk-window}
   @see-class{gtk-color-chooser-dialog}"
   (make-instance 'gtk-color-chooser-dialog
                  :title (if title title (null-pointer))
