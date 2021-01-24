@@ -241,7 +241,7 @@
 (test gtk-icon-info-load-symbolic
   (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
-    (is (typep (gtk-icon-info-load-symbolic icon-info (make-gdk-rgba) nil nil nil)
+    (is (typep (gtk-icon-info-load-symbolic icon-info (gdk-rgba-new) nil nil nil)
                'gdk-pixbuf))))
 
 ;;;     gtk_icon_info_load_symbolic_async

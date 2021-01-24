@@ -29,8 +29,6 @@
     (is (= 155 (gdk-color-green color2)))
     (is (=  55 (gdk-color-blue color2)))))
 
-;;;     gdk_color_free
-
 ;;;     gdk_color_parse
 
 (test gdk-color-parse.1
@@ -88,4 +86,4 @@
   (let ((color (gdk-color-parse "#ffff0000aaaa")))
     (is (string= "#ffff0000aaaa" (gdk-color-to-string color)))))
 
-;;; 2020-12-30
+;;; 2021-1-22

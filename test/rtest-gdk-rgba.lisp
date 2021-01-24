@@ -12,25 +12,28 @@
   (is (eq (gtype "GdkRGBA")
           (gtype (foreign-funcall "gdk_rgba_get_type" g-size)))))
 
-;;; --- Constructors -----------------------------------------------------------
-
-(test gdk-rgba-accessors
-  (is (typep (make-gdk-rgba) 'gdk-rgba))
-  (is (typep (copy-gdk-rgba (make-gdk-rgba)) 'gdk-rgba)))
-
 ;;; --- Accessors --------------------------------------------------------------
 
 (test gdk-rgba-accessors
-  (let ((rgba (make-gdk-rgba :red 1.0d0 :green 2.0d0 :blue 3.0d0 :alpha 0.5d0)))
-    (is (= 1.0d0 (gdk-rgba-red rgba)))
-    (is (= 2.0d0 (gdk-rgba-green rgba)))
-    (is (= 3.0d0 (gdk-rgba-blue rgba)))
+  (let ((rgba (gdk-rgba-new :red 0.1d0 :green 0.2d0 :blue 0.3d0 :alpha 0.5d0)))
+    (is (= 0.1d0 (gdk-rgba-red rgba)))
+    (is (= 0.2d0 (gdk-rgba-green rgba)))
+    (is (= 0.3d0 (gdk-rgba-blue rgba)))
     (is (= 0.5d0 (gdk-rgba-alpha rgba)))))
 
 ;;; --- Functions --------------------------------------------------------------
 
+;;;    gdk-rgba-new
+
+(test gdk-rgba-new
+  (is (typep (gdk-rgba-new) 'gdk-rgba))
+  (is (typep (gdk-rgba-new :red 0.1 :green 0.2 :blue 0.3 :alpha 0.5) 'gdk-rgba)))
+
 ;;;     gdk_rgba_copy
-;;;     gdk_rgba_free
+
+(test gdk-rgba-copy
+  (let ((color (gdk-rgba-new :red 0.1 :green 0.2 :blue 0.3 :alpha 0.4)))
+    (is (gdk-rgba-equal color (gdk-rgba-copy color)))))
 
 ;;;     gdk_rgba_parse
 
@@ -53,4 +56,4 @@
 (test gdk-rgba-to-string
   (is (string= "rgb(255,0,0)" (gdk-rgba-to-string (gdk-rgba-parse "red")))))
 
-;;; 2020-11-10
+;;; 2021-1-22

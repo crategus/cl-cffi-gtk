@@ -386,15 +386,22 @@
   (let ((context (gtk-style-context-new)))
     (is (eq 'gdk-rgba
             (type-of (gtk-style-context-property context "color" :normal))))
-    (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0  :alpha 1.0d0)
-                             (gtk-style-context-property context "color" :normal)))
+    (is-true (gdk-rgba-equal (gdk-rgba-new :red 1.0d0
+                                           :green 1.0d0
+                                           :blue 1.0d0
+                                           :alpha 1.0d0)
+                             (gtk-style-context-property context
+                                                         "color" :normal)))
     (is (eq 'double-float
             (type-of (gtk-style-context-property context "opacity" :normal))))
     (is (= 1.0d0 (gtk-style-context-property context "opacity" :normal)))
     (is (eq 'gdk-rgba
-            (type-of (gtk-style-context-property context "background-color" :normal))))
-    (is-true (gdk-rgba-equal (make-gdk-rgba)
-                             (gtk-style-context-property context "background-color" :normal)))
+            (type-of (gtk-style-context-property context
+                                                 "background-color" :normal))))
+    (is-true (gdk-rgba-equal (gdk-rgba-new)
+                             (gtk-style-context-property context
+                                                         "background-color"
+                                                         :normal)))
     (is (eq 'pango-font-description
             (type-of (gtk-style-context-property context "font" :normal))))
     (is (string= "Ubuntu 11"
@@ -431,24 +438,31 @@
 
 (test gtk-style-context-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-color context :normal))))
-    (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0 :alpha 1.0d0)
+    (is (typep (gtk-style-context-color context :normal) 'gdk-rgba))
+    (is-true (gdk-rgba-equal (gdk-rgba-new :red 1.0d0
+                                           :green 1.0d0
+                                           :blue 1.0d0
+                                           :alpha 1.0d0)
                              (gtk-style-context-color context :normal)))))
 
 ;;;     gtk-style-context-background-color
 
 (test gtk-style-context-background-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-background-color context :normal))))
-    (is-true (gdk-rgba-equal (make-gdk-rgba)
-                             (gtk-style-context-background-color context :normal)))))
+    (is (typep (gtk-style-context-background-color context :normal) 'gdk-rgba))
+    (is-true (gdk-rgba-equal (gdk-rgba-new)
+                             (gtk-style-context-background-color context
+                                                                 :normal)))))
 
 ;;;     gtk-style-context-border-color
 
 (test gtk-style-context-border-color
   (let ((context (gtk-style-context-new)))
     (is (eq 'gdk-rgba (type-of (gtk-style-context-border-color context :normal))))
-    (is-true (gdk-rgba-equal (make-gdk-rgba :red 1.0d0 :green 1.0d0 :blue 1.0d0 :alpha 1.0d0)
+    (is-true (gdk-rgba-equal (gdk-rgba-new :red 1.0d0
+                                           :green 1.0d0
+                                           :blue 1.0d0
+                                           :alpha 1.0d0)
                              (gtk-style-context-border-color context :normal)))))
 
 ;;;     gtk-style-context-border
