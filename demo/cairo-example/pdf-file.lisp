@@ -9,7 +9,7 @@
     ;; Draw in blue ink.
     (cairo-set-source-rgba cr 0 0 1.0 1.0)
     ;; Choose a font type and set its size.
-    (cairo-select-font-face cr "Sans" :normal :normal)
+    (cairo-select-font-face cr "Sans")
     (cairo-set-font-size cr 20.0)
     ;; Move to a position within the image and draw the text.
     (cairo-move-to cr 20.0 70.0)
@@ -20,4 +20,4 @@
     (cairo-surface-destroy surface)
     (cairo-destroy cr)))
 
-;;; 2020-12-21
+;;; 2021-1-25

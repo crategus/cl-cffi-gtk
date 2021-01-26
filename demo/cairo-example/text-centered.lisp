@@ -7,7 +7,7 @@
     ;; Set the color.
     (cairo-set-source-rgb cr 0.1 0.1 0.1)
     ;; Select the font face
-    (cairo-select-font-face cr "Courier" :normal :bold)
+    (cairo-select-font-face cr "Courier" :weight :bold)
     ;; Specify the font size
     (cairo-set-font-size cr 60)
     (let* ((extents (cairo-text-extents cr "Crategus"))
@@ -35,4 +35,4 @@
       (gtk-container-add window area)
       (gtk-widget-show-all window))))
 
-;;; 2020-12-28
+;;; 2021-1-25

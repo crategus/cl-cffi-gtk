@@ -16,7 +16,7 @@
                 ;; Draw in black ink.
                 (cairo-set-source-rgb cr 0 0 0)
                 ;; Choose a font type and set its size.
-                (cairo-select-font-face cr "Sans" :normal :normal)
+                (cairo-select-font-face cr "Sans")
                 (cairo-set-font-size cr 20.0)
                 ;; Move to a position within the context and draw the text.
                 (cairo-move-to cr 10.0 50.0)
@@ -30,4 +30,4 @@
       (gtk-container-add window area)
       (gtk-widget-show-all window))))
 
-;;; 2020-12-22
+;;; 2021-1-25

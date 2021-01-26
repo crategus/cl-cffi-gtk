@@ -266,14 +266,21 @@
 ;;; cairo_select_font_face ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_select_font_face" cairo-select-font-face) :void
+(defcfun ("cairo_select_font_face" %cairo-select-font-face) :void
+  (cr (:pointer (:struct cairo-t)))
+  (family :string)
+  (slant cairo-font-slant-t)
+  (weight cairo-font-weight-t))
+
+(defun cairo-select-font-face (cr family &key (slant :normal) (weight :normal))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{*2021-1-25}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[family]{a string with the font family name, encoded in UTF-8}
-  @argument[slant]{the slant of type @symbol{cairo-font-slant-t} for the font}
+  @argument[slant]{the slant of type @symbol{cairo-font-slant-t} for the font,
+    default value is @code{:normal}}
   @argument[weight]{the weight of type @symbol{cairo-font-weight-t} for the
-    font}
+    font, default value is @code{:normal}}
   @begin{short}
     Selects a family and style of font from a simplified description as a
     family name, slant and weight.
@@ -316,7 +323,7 @@
   @fun{cairo-toy-font-face-create} followed by the function
   @fun{cairo-set-font-face}.
   @begin[Note]{dictionary}
-    The @sym{cairo-select-font-face} function call is part of what the cairo
+    The function @sym{cairo-select-font-face} is part of what the Cairo
     designers call the \"toy\" text API. It is convenient for short demos
     and simple programs, but it is not expected to be adequate for serious
     text-using applications.
@@ -326,10 +333,7 @@
   @see-symbol{cairo-font-weight-t}
   @see-function{cairo-toy-font-face-create}
   @see-function{cairo-set-font-face}"
-  (cr (:pointer (:struct cairo-t)))
-  (family :string)
-  (slant cairo-font-slant-t)
-  (weight cairo-font-weight-t))
+  (%cairo-select-font-face cr family slant weight))
 
 (export 'cairo-select-font-face)
 

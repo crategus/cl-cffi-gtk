@@ -6,7 +6,7 @@
     ;; Set the color.
     (cairo-set-source-rgb cr 0.1 0.1 0.1)
     ;; Select the font face
-    (cairo-select-font-face cr "Purisa" :normal :bold)
+    (cairo-select-font-face cr "Purisa" :weight :bold)
     ;; Specify the font size
     (cairo-set-font-size cr 13)
     ;; Display text on the drawing area
@@ -44,4 +44,4 @@
       (gtk-container-add window area)
       (gtk-widget-show-all window))))
 
-;;; 2020-12-28
+;;; 2021-1-25

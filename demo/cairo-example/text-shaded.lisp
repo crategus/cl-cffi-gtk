@@ -6,7 +6,7 @@
         (cr (pointer cr)))
 
     ;; Select the font face
-    (cairo-select-font-face cr "Serif" :normal :bold)
+    (cairo-select-font-face cr "Serif" :weight :bold)
     ;; Specify the font size
     (cairo-set-font-size cr (truncate (/ height 5)))
 
@@ -45,4 +45,4 @@
       (gtk-container-add window area)
       (gtk-widget-show-all window))))
 
-;;; 2020-12-28
+;;; 2021-1-25

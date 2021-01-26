@@ -52,7 +52,7 @@
       ;; Draw in black ink.
       (cairo-set-source-rgba context 0.0 0.0 0.0 1.0)
       ;; Choose a font type and set its size.
-      (cairo-select-font-face context "Sans" :normal :normal)
+      (cairo-select-font-face context "Sans")
       (cairo-set-font-size context 18.0)
       ;; Show the array of glyphs
       (cairo::%cairo-show-glyphs context glyphs-ptr num-glyphs)
@@ -69,7 +69,7 @@
     ;; Draw in black ink.
     (cairo-set-source-rgba context 0.0 0.0 0.0 1.0)
     ;; Choose a font type and set its size.
-    (cairo-select-font-face context "Sans" :normal :normal)
+    (cairo-select-font-face context "Sans")
     (cairo-set-font-size context 18.0)
     ;; Show the list of glyphs
     (cairo-show-glyphs context glyphs)
@@ -85,7 +85,7 @@
          (context (cairo-create surface))
          (extents nil))
     ;; Set a font and a font size
-    (cairo-select-font-face context "Sans" :normal :normal)
+    (cairo-select-font-face context "Sans")
     (cairo-set-font-size context 18)
     (setf extents (cairo-font-extents context))
     ;; Check the slots of cairo-font-extents-t structure
@@ -102,7 +102,7 @@
          (context (cairo-create surface))
          (extents nil))
     ;; Set a font and a font size
-    (cairo-select-font-face context "Sans" :normal :normal)
+    (cairo-select-font-face context "Sans")
     (cairo-set-font-size context 18)
     (setf extents (cairo-text-extents context "Crategus"))
     ;; Check the slots of cairo-text-extents-t structure
@@ -120,7 +120,7 @@
          (context (cairo-create surface))
          (extents nil))
     ;; Set a font and a font size
-    (cairo-select-font-face context "Sans" :normal :normal)
+    (cairo-select-font-face context "Sans")
     (cairo-set-font-size context 18)
     (setf extents (cairo-glyph-extents context '((36 10 20))))
     ;; Check the slots of cairo-text-extents-t structure

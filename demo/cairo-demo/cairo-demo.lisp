@@ -103,7 +103,7 @@
                         (gdk-window-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0.0 0.0 0.0)
-           (cairo-select-font-face cr "Georgia" :normal :bold)
+           (cairo-select-font-face cr "Georgia" :weight :bold)
            (cairo-set-font-size cr 1.2)
            (let ((text-extents (cairo-text-extents cr "a")))
              (cairo-move-to cr
@@ -383,4 +383,4 @@
            t)))
       (gtk-widget-show-all window))))
 
-;;; 2020-11-26
+;;; 2021-1-25
