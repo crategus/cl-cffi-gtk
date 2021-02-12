@@ -813,10 +813,31 @@ scale-factor
 ;;;     gtk_widget_get_window
 ;;;     gtk_cairo_should_draw_window
 ;;;     gtk_cairo_transform_to_window
+
 ;;;     gtk_widget_get_allocated_width
 ;;;     gtk_widget_get_allocated_height
 ;;;     gtk_widget_get_allocation
 ;;;     gtk_widget_set_allocation
+
+(test gtk-widget-allocation
+  (let ((window (make-instance 'gtk-window :type :toplevel)))
+    (is (typep (gtk-widget-allocation window) 'gdk-rectangle))
+    (is (= 1 (gdk-rectangle-width (gtk-widget-allocation window))))
+    (is (= 1 (gdk-rectangle-height (gtk-widget-allocation window))))
+    (is (= 1 (gtk-widget-allocated-width window)))
+    (is (= 1 (gtk-widget-allocated-height window)))
+    (is (typep (setf (gtk-widget-allocation window)
+                     (make-gdk-rectangle :width 100 :height 200))
+               'gdk-rectangle))
+    (is (= 100 (gdk-rectangle-width (gtk-widget-allocation window))))
+    (is (= 200 (gdk-rectangle-height (gtk-widget-allocation window))))
+    (is (= 100 (gtk-widget-allocated-width window)))
+    (is (= 200 (gtk-widget-allocated-height window)))
+    (is (= (gtk-widget-allocated-width window)
+           (gdk-rectangle-width (gtk-widget-allocation window))))
+    (is (= (gtk-widget-allocated-height window)
+           (gdk-rectangle-height (gtk-widget-allocation window))))))
+
 ;;;     gtk_widget_get_app_paintable
 ;;;     gtk_widget_get_can_default
 ;;;     gtk_widget_set_can_default
@@ -940,4 +961,4 @@ scale-factor
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
 
-;;; 2020-11-28
+;;; 2021-2-9

@@ -280,9 +280,12 @@ dargestellt werden.")
 
 (test gtk-text-buffer-create-tag
   (let ((buffer (make-instance 'gtk-text-buffer :text "Some sample text.")))
-    (is (eq 'gtk-text-tag (type-of (gtk-text-buffer-create-tag buffer "bold" :weight 400))))
-    (is (eq 'gtk-text-tag
-            (type-of (gtk-text-buffer-create-tag buffer "font-italic" :font "fixed" :style :italic))))))
+    (is (eq (typep (gtk-text-buffer-create-tag buffer "bold" :weight 400)
+                   'gtk-text-tag)))
+    (is (eq (typep (gtk-text-buffer-create-tag buffer "font-italic"
+                                                      :font "fixed"
+                                                      :style :italic)
+                   'gtk-text-tag)))))
 
 ;;;     gtk_text_buffer_get_iter_at_line_offset
 ;;;     gtk_text_buffer_get_iter_at_offset

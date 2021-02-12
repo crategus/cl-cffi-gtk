@@ -21,7 +21,16 @@
 ;;;     cairo_get_font_face
 ;;;     cairo_set_scaled_font
 ;;;     cairo_get_scaled_font
+
 ;;;     cairo_show_text
+
+(test cairo-show-text
+  (let* ((surface (cairo-image-surface-create :rgb24 400 300))
+         (context (cairo-create surface)))
+    (is-false (cairo-show-text context ""))
+    (is-false (cairo-show-text context "Ägypten"))
+    (is-false (cairo-show-text context nil))
+    (is-false (cairo-show-text context (null-pointer)))))
 
 ;;;     cairo_show_glyphs
 

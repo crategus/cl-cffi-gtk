@@ -367,6 +367,7 @@
 ;;; G_TYPE_FROM_INSTANCE
 
 (test g-type-from-instance
+  (signals (error) (g-type-from-instance nil))
   (is (eq (gtype "GtkButton")
           (g-type-from-instance (make-instance 'gtk-button)))))
 
@@ -524,4 +525,4 @@
 ;;;     G_DEFINE_POINTER_TYPE                              not implemented
 ;;;     G_DEFINE_POINTER_TYPE_WITH_CODE                    not implemented
 
-;;; 2020-11-15
+;;; 2021-1-28

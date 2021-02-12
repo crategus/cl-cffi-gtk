@@ -85,6 +85,7 @@
 
 ;;;  Multiline Text Editor
 
+(load "rtest-gtk-text-attributes.lisp")
 ;(load "rtest-gtk-text-iter.lisp")
 ;(load "rtest-gtk-text-mark.lisp")
 ;(load "rtest-gtk-text-buffer.lisp")
@@ -151,11 +152,11 @@
 ;    gtk.color-chooser-widget.lisp
 ;    gtk.color-chooser-dialog.lisp
 
-;    gtk.file-chooser.lisp
+(load "rtest-gtk-file-chooser.lisp")
 ;    gtk.file-chooser-button.lisp
 ;    gtk.file-chooser-native.lisp
 ;    gtk.file-chooser-dialog.lisp
-;    gtk.file-chooser-widget.lisp
+(load "rtest-gtk-file-chooser-widget.lisp")
 ;    gtk.file-filter.lisp
 
 ;    gtk.font-chooser.lisp
@@ -284,4 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2020-11-27
+;;; 2021-1-26

@@ -49,32 +49,41 @@
   ;; Check the parent
   (is (eq (gtype "GtkWidget") (g-type-parent "GtkContainer")))
   ;; Check the children
-  (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox" "GtkFlowBox"
-               "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout" "GtkNotebook" "GtkFixed"
-               "GtkTextView" "GtkTreeView" "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
-               "GtkToolPalette" "GtkSocket" "GtkTable")
-             (mapcar #'g-type-name (g-type-children "GtkContainer"))))
+  (is (or (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox"
+                   "GtkFlowBox" "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout"
+                   "GtkNotebook" "GtkFixed" "GtkTextView" "GtkTreeView"
+                   "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
+                   "GtkToolPalette" "GtkSocket" "GtkTable")
+                 (mapcar #'g-type-name (g-type-children "GtkContainer")))
+          (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox"
+                   "GtkFlowBox" "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout"
+                   "GtkNotebook" "GtkFixed" "GtkTextView" "GtkTreeView"
+                   "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
+                   "GtkToolPalette" "GtkSocket" "GtkTable" "GtkPathBar")
+                 (mapcar #'g-type-name (g-type-children "GtkContainer")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkContainer"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "name" "no-show-all" "opacity"
-               "parent" "receives-default" "resize-mode" "scale-factor" "sensitive" "style"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window")
+               "composite-child" "double-buffered" "events" "expand"
+               "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
+               "height-request" "hexpand" "hexpand-set" "is-focus" "margin"
+               "margin-bottom" "margin-end" "margin-left" "margin-right"
+               "margin-start" "margin-top" "name" "no-show-all" "opacity"
+               "parent" "receives-default" "resize-mode" "scale-factor"
+               "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
+               "vexpand" "vexpand-set" "visible" "width-request" "window")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkContainer"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkContainer"))))
   ;; Get the names of the child properties
@@ -404,4 +413,4 @@
 
 ;;;     gtk_container_class_handle_border_width
 
-;;; 2020-10-13
+;;; 2021-1-27

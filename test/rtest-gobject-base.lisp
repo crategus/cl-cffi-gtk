@@ -33,12 +33,14 @@
 ;;;     g-object-type
 
 (test g-object-type
+  (is-false (g-object-type nil))
   (is (eq (gtype "GtkButton")
           (g-object-type (make-instance 'gtk-button)))))
 
 ;;;     g-object-type-name
 
 (test g-object-type-name
+  (is-false (g-object-type-name nil))
   (is (string= "GtkButton" (g-object-type-name (make-instance 'gtk-button)))))
 
 ;;;     g-object-class-type
@@ -60,7 +62,8 @@
 
 (test g-object-class-find-property
   (is (g-is-param-spec (g-object-class-find-property "GtkLabel" "label")))
-  (is (g-is-param-spec (g-object-class-find-property (gtype-id (gtype "GtkLabel")) "label")))
+  (is (g-is-param-spec (g-object-class-find-property (gtype-id (gtype "GtkLabel"))
+                                                     "label")))
   (is (g-is-param-spec (g-object-class-find-property (gtype "GtkLabel") "label")))
   ;; Unknown property-name returns nil
   (is-false (g-object-class-find-property "GtkLabel" "xxx")))
@@ -360,4 +363,4 @@
 ;;;     g_weak_ref_set
 ;;;     g_assert_finalize_object
 
-;;; 2020-10-17
+;;; 2021-1-28

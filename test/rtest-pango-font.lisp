@@ -93,9 +93,13 @@
 
 (test pango-font-description-weight
   (let ((desc (pango-font-description-from-string "Sans Bold 16")))
-    (is (eq :bold (pango-font-description-weight desc)))
-    (is (eq :thin (setf (pango-font-description-weight desc) :thin)))
-    (is (eq :thin (pango-font-description-weight desc)))))
+    (is (= (foreign-enum-value 'pango-weight :bold)
+            (pango-font-description-weight desc)))
+    (is (= (foreign-enum-value 'pango-weight :thin)
+           (setf (pango-font-description-weight desc)
+                 (foreign-enum-value 'pango-weight :thin))))
+    (is (= (foreign-enum-value 'pango-weight :thin)
+           (pango-font-description-weight desc)))))
 
 ;;;     pango_font_description_set_stretch
 ;;;     pango_font_description_get_stretch
