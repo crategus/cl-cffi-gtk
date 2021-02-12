@@ -544,7 +544,7 @@
   @see-class{gdk-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_get_pixels_with_length () ->gdk-pixbuf-pixels-with-length
+;;; gdk_pixbuf_get_pixels_with_length () -> gdk-pixbuf-pixels-with-length
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_get_pixels_with_length" gdk-pixbuf-pixels-with-length)

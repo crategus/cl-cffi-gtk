@@ -76,13 +76,13 @@
 
     The GDK-Pixbuf library provides a simple mechanism for loading an image
     from a file in synchronous fashion. This means that the library takes
-    control of the application while the file is being loaded; from the user's
+    control of the application while the file is being loaded. From the user's
     point of view, the application will block until the image is done loading.
 
     This interface can be used by applications in which blocking is acceptable
     while an image is being loaded. It can also be used to load small images in
     general. Applications that need progressive loading can use the
-    @class{gdk-pixbuf-loader} functionality instead.
+    @class{gdk-pixbuf-loader} class functionality instead.
 
     @about-function{gdk-pixbuf-new-from-file}
     @about-function{gdk-pixbuf-new-from-file-at-size}

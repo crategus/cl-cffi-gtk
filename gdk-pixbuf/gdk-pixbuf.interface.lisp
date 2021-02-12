@@ -469,8 +469,8 @@ GdkPixbufModulePattern *signature[] = {
  #+cl-cffi-gtk-documentation
  "@version{2020-11-22}
   @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @return{A list of strings with the mime types.}
-  @short{Returns the mime types supported by the format.}
+  @return{A list of strings with the MIME types.}
+  @short{Returns the MIME types supported by the format.}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
 

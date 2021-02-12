@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -73,7 +73,7 @@
 
 (defun gdk-pixbuf-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-1-30}
   @argument[filename]{a string with the name of a file to load, in the GLib
     file name encoding}
   @begin{return}
@@ -90,95 +90,109 @@
   error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
   @code{G_FILE_ERROR} domains.
   @see-class{gdk-pixbuf}"
-  (with-g-error (err)
+  (with-ignore-g-error (err)
     (%gdk-pixbuf-new-from-file filename err)))
 
 (export 'gdk-pixbuf-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_file_at_size ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_new_from_file_at_size (const char *filename,
-;;;                                               int width,
-;;;                                               int height,
-;;;                                               GError **error);
-;;;
-;;; Creates a new pixbuf by loading an image from a file. The file format is
-;;; detected automatically. If NULL is returned, then error will be set.
-;;; Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
-;;;
-;;; The image will be scaled to fit in the requested size, preserving the
-;;; image's aspect ratio. Note that the returned pixbuf may be smaller than
-;;; width x height, if the aspect ratio requires it. To load and image at the
-;;; requested size, regardless of aspect ratio, use
-;;; gdk_pixbuf_new_from_file_at_scale().
-;;;
-;;; filename :
-;;;     Name of file to load, in the GLib file name encoding
-;;;
-;;; width :
-;;;     The width the image should have or -1 to not constrain the width
-;;;
-;;; height :
-;;;     The height the image should have or -1 to not constrain the height
-;;;
-;;; error :
-;;;     Return location for an error
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
-;;;     several error conditions occurred: the file could not be opened, there
-;;;     was no loader for the file's format, there was not enough memory to
-;;;     allocate the image buffer, or the image file contained invalid data.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new_from_file_at_size" %gdk-pixbuf-new-from-file-at-size)
+    (g-object gdk-pixbuf)
+  (filename :string)
+  (width :int)
+  (height :int)
+  (err :pointer))
+
+(defun gdk-pixbuf-new-from-file-at-size (filename width height)
+ #+cl-cffi-gtk-documentation
+ "@version{*2021-2-4}
+  @argument[filename]{a string with the name of file to load, in the GLib file
+    name encoding}
+  @argument[width]{an integer with the width the image should have or -1 to not
+    constrain the width}
+  @argument[height]{an integer with the height the image should have or -1 to
+    not constrain the height}
+  @begin{return}
+    A newly-created @class{gdk-pixbuf} object with a reference count of 1, or
+    @code{nil} if any of several error conditions occurred: the file could not
+    be opened, there was no loader for the file's format, there was not enough
+    memory to allocate the image buffer, or the image file contained invalid
+    data.
+  @end{return}
+  @begin{short}
+    Creates a new pixbuf by loading an image from a file.
+  @end{short}
+  The file format is detected automatically. If @code{nil} is returned, then
+  error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
+  @code{G_FILE_ERROR} domains.
+
+  The image will be scaled to fit in the requested size, preserving the image's
+  aspect ratio. Note that the returned pixbuf may be smaller than @arg{width} x
+  @arg{height}, if the aspect ratio requires it. To load and image at the
+  requested size, regardless of aspect ratio, use the
+  @fun{gdk-pixbuf-new-from-file-at-scale}.
+  @see-class{gdk-pixbuf}
+  @see-function{gdk-pixbuf-new-from-file-at-scale}"
+  (with-ignore-g-error (err)
+    (%gdk-pixbuf-new-from-file-at-size filename width height err)))
+
+(export 'gdk-pixbuf-new-from-file-at-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_file_at_scale ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_new_from_file_at_scale
-;;;                                             (const char *filename,
-;;;                                              int width,
-;;;                                              int height,
-;;;                                              gboolean preserve_aspect_ratio,
-;;;                                              GError **error);
-;;;
-;;; Creates a new pixbuf by loading an image from a file. The file format is
-;;; detected automatically. If NULL is returned, then error will be set.
-;;; Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains. The
-;;; image will be scaled to fit in the requested size, optionally preserving
-;;; the image's aspect ratio.
-;;;
-;;; When preserving the aspect ratio, a width of -1 will cause the image to be
-;;; scaled to the exact given height, and a height of -1 will cause the image
-;;; to be scaled to the exact given width. When not preserving aspect ratio,
-;;; a width or height of -1 means to not scale the image at all in that
-;;; dimension. Negative values for width and height are allowed since 2.8.
-;;;
-;;; filename :
-;;;     Name of file to load, in the GLib file name encoding
-;;;
-;;; width :
-;;;     The width the image should have or -1 to not constrain the width
-;;;
-;;; height :
-;;;     The height the image should have or -1 to not constrain the height
-;;;
-;;; preserve_aspect_ratio :
-;;;     TRUE to preserve the image's aspect ratio
-;;;
-;;; error :
-;;;     Return location for an error
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
-;;;     several error conditions occurred: the file could not be opened, there
-;;;     was no loader for the file's format, there was not enough memory to
-;;;     allocate the image buffer, or the image file contained invalid data.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new_from_file_at_scale"
+          %gdk-pixbuf-new-from-file-at-scale) (g-object gdk-pixbuf)
+  (filename :string)
+  (width :int)
+  (height :int)
+  (preserve-aspect-ratio :boolean)
+  (err :pointer))
+
+(defun gdk-pixbuf-new-from-file-at-scale (filename
+                                          width height preserve-aspect-ratio)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-30}
+  @argument[filename]{a string with the name of file to load, in the GLib file
+    name encoding}
+  @argument[width]{an integer with the width the image should have or -1 to not
+    constrain the width}
+  @argument[height]{an integer with the height the image should have or -1 to
+    not constrain the height}
+  @argument[preserve-aspect-ratio]{@em{true} to preserve the image's aspect
+    ratio}
+  @begin{return}
+    A newly-created @class{gdk-pixbuf} object with a reference count of 1, or
+    @code{nil} if any of several error conditions occurred: the file could not
+    be opened, there was no loader for the file's format, there was not enough
+    memory to allocate the image buffer, or the image file contained invalid
+    data.
+  @end{return}
+  @begin{short}
+    Creates a new pixbuf by loading an image from a file.
+  @end{short}
+  The file format is detected automatically. If @code{nil} is returned, then
+  error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
+  @code{G_FILE_ERROR} domains. The image will be scaled to fit in the requested
+  size, optionally preserving the image's aspect ratio.
+
+  When preserving the aspect ratio, a width of -1 will cause the image to be
+  scaled to the exact given height, and a height of -1 will cause the image to
+  be scaled to the exact given width. When not preserving aspect ratio, a width
+  or height of -1 means to not scale the image at all in that dimension.
+  @see-class{gdk-pixbuf}"
+  (with-ignore-g-error (err)
+    (%gdk-pixbuf-new-from-file-at-scale filename
+                                        width
+                                        height
+                                        preserve-aspect-ratio
+                                        err)))
+
+(export 'gdk-pixbuf-new-from-file-at-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_file_info ()
@@ -192,12 +206,12 @@
 
 (defun gdk-pixbuf-file-info (filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{2021-1-30}
   @argument[filename]{a string with the name of the file to identify}
   @begin{return}
-    @code{format} -- a @symbol{gdk-pixbuf-format} structure describing the image
-    format of the file or @code{nil} if the image format was not recognized
-    @br{}
+    @code{format} -- a @symbol{gdk-pixbuf-format} structure describing the
+    image format of the file or @code{nil} if the image format was not
+    recognized @br{}
     @code{width} -- an integer with the width of the image, or @code{nil} @br{}
     @code{height} -- an integer with the height of the image, or @code{nil}
   @end{return}
@@ -272,87 +286,93 @@
 ;;;     a GError, or NULL
 ;;;
 ;;; Returns :
-;;;     A GdkPixbufFormat describing the image format of the file or NULL if the
-;;;     image format wasn't recognized. The return value is owned by GdkPixbuf
-;;;     and should not be freed.
+;;;     A GdkPixbufFormat describing the image format of the file or NULL if
+;;;     the image format wasn't recognized. The return value is owned by
+;;;     GdkPixbuf and should not be freed.
 ;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_resource ()
-;;;
-;;; GdkPixbuf *
-;;; gdk_pixbuf_new_from_resource (const char *resource_path,
-;;;                               GError **error);
-;;;
-;;; Creates a new pixbuf by loading an image from an resource.
-;;;
-;;; The file format is detected automatically. If NULL is returned, then error
-;;; will be set.
-;;;
-;;; resource_path :
-;;;     the path of the resource file
-;;;
-;;; error :
-;;;     Return location for an error
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf, or NULL if any of several error conditions
-;;;     occurred: the file could not be opened, the image format is not
-;;;     supported, there was not enough memory to allocate the image buffer,
-;;;     the stream contained invalid data, or the operation was cancelled.
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new_from_resource" %gdk-pixbuf-new-from-resource)
+    (g-object gdk-pixbuf)
+  (resource-path :string)
+  (err :pointer))
+
+(defun gdk-pixbuf-new-from-resource (resource-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-30}
+  @argument[resource-path]{a string with the path of the resource file}
+  @begin{return}
+    A newly-created @class{gdk-pixbuf} object, or @code{nil} if any of several
+    error conditions occurred: the file could not be opened, the image format
+    is not supported, there was not enough memory to allocate the image buffer,
+    the stream contained invalid data, or the operation was cancelled.
+  @end{return}
+  @begin{short}
+    Creates a new pixbuf by loading an image from a resource.
+  @end{short}
+  The file format is detected automatically.
+  @see-class{gdk-pixbuf}"
+  (with-ignore-g-error (err)
+    (%gdk-pixbuf-new-from-resource resource-path err)))
+
+(export 'gdk-pixbuf-new-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_resource_at_scale ()
-;;;
-;;; GdkPixbuf *
-;;; gdk_pixbuf_new_from_resource_at_scale (const char *resource_path,
-;;;                                        int width,
-;;;                                        int height,
-;;;                                        gboolean preserve_aspect_ratio,
-;;;                                        GError **error);
-;;;
-;;; Creates a new pixbuf by loading an image from an resource.
-;;;
-;;; The file format is detected automatically. If NULL is returned, then error
-;;; will be set.
-;;;
-;;; The image will be scaled to fit in the requested size, optionally preserving
-;;; the image's aspect ratio. When preserving the aspect ratio, a width of -1
-;;; will cause the image to be scaled to the exact given height, and a height of
-;;; -1 will cause the image to be scaled to the exact given width. When not
-;;; preserving aspect ratio, a width or height of -1 means to not scale the
-;;; image at all in that dimension.
-;;;
-;;; The stream is not closed.
-;;;
-;;; resource_path :
-;;;     the path of the resource file
-;;;
-;;; width :
-;;;     The width the image should have or -1 to not constrain the width
-;;;
-;;; height :
-;;;     The height the image should have or -1 to not constrain the height
-;;;
-;;; preserve_aspect_ratio :
-;;;     TRUE to preserve the image's aspect ratio
-;;;
-;;; error :
-;;;     Return location for an error
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf, or NULL if any of several error conditions
-;;;     occurred: the file could not be opened, the image format is not
-;;;     supported, there was not enough memory to allocate the image buffer,
-;;;     the stream contained invalid data, or the operation was cancelled.
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new_from_resource_at_scale"
+          %gdk-pixbuf-new-from-resource-at-scale) (g-object gdk-pixbuf)
+  (resource-path :string)
+  (width :int)
+  (height :int)
+  (preserve-aspect-ratio :boolean)
+  (err :pointer))
+
+(defun gdk-pixbuf-new-from-resource-at-scale (resource-path width height
+                                              preserve-aspect-ratio)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-1-30}
+  @argument[resource-path]{a string with the path of the resource file}
+  @argument[width]{an integer with the width the image should have or -1 to not
+    constrain the width}
+  @argument[height]{an integer with the height the image should have or -1 to
+    not constrain the height}
+  @argument[preserve-aspect-ratio]{@em{true} to preserve the image's aspect
+    ratio}
+  @begin{return}
+    A newly-created @class{gdk-pixbuf} object, or @code{nil} if any of several
+    error conditions occurred: the file could not be opened, the image format
+    is not supported, there was not enough memory to allocate the image buffer,
+    the stream contained invalid data, or the operation was cancelled.
+  @end{return}
+  @begin{short}
+    Creates a new pixbuf by loading an image from an resource.
+  @end{short}
+
+  The file format is detected automatically. If @code{nil} is returned, then
+  error will be set.
+
+  The image will be scaled to fit in the requested size, optionally preserving
+  the image's aspect ratio. When preserving the aspect ratio, a width of -1
+  will cause the image to be scaled to the exact given height, and a height of
+  -1 will cause the image to be scaled to the exact given width. When not
+  preserving aspect ratio, a width or height of -1 means to not scale the image
+  at all in that dimension.
+  @see-class{gdk-pixbuf}"
+  (with-ignore-g-error (err)
+    (%gdk-pixbuf-new-from-resource-at-scale resource-path
+                                            width
+                                            height
+                                            preserve-aspect-ratio
+                                            err)))
+
+(export 'gdk-pixbuf-new-from-resource-at-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_stream ()
@@ -366,8 +386,8 @@
 ;;; The file format is detected automatically. If NULL is returned, then error
 ;;; will be set. The cancellable can be used to abort the operation from another
 ;;; thread. If the operation was cancelled, the error GIO_ERROR_CANCELLED will
-;;; be returned. Other possible errors are in the
-;;; GDK_PIXBUF_ERROR and G_IO_ERROR domains.
+;;; be returned. Other possible errors are in the GDK_PIXBUF_ERROR and
+;;; G_IO_ERROR domains.
 ;;;
 ;;; The stream is not closed.
 ;;;
