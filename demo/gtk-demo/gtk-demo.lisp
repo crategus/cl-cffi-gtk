@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-demo.lisp
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -231,8 +231,8 @@
                                              "Multiline Text Editor")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Text View"
-                                "simple-text-view.lisp"
-                                "EXAMPLE-SIMPLE-TEXT-VIEW")
+                                "text-view-simple.lisp"
+                                "EXAMPLE-TEXT-VIEW-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Attributes"
                                 "text-view-attributes.lisp"
@@ -276,21 +276,50 @@
                                 "color-button.lisp"
                                 "EXAMPLE-COLOR-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Color Button Label"
+                                "color-button-label.lisp"
+                                "EXAMPLE-COLOR-BUTTON-LABEL")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Color Chooser Widget"
+                                "color-chooser-widget.lisp"
+                                "EXAMPLE-COLOR-CHOOSER-WIDGET")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Dialog"
                                 "color-chooser-dialog.lisp"
                                 "EXAMPLE-COLOR-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                 "Simple File Chooser Dialog"
-                                 "simple-file-chooser.lisp"
-                                 "EXAMPLE-SIMPLE-FILE-CHOOSER-DIALOG")
+                                "Color Chooser Palette"
+                                "color-chooser-palette.lisp"
+                                "EXAMPLE-COLOR-CHOOSER-PALETTE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "File Chooser Button"
                                 "file-chooser-button.lisp"
-                                "EXAMPLE-FILE-CHOOSER-BUTTON")
+                                "EXAMPLE-FILE-CHOOSER-BUTTON"
+                                "file-chooser-button.ui")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                 "File Chooser Dialog"
+                                 "file-chooser-dialog.lisp"
+                                 "CREATE-FILE-CHOOSER-DIALOG")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                 "File Chooser Preview"
+                                 "file-chooser-preview.lisp"
+                                 "CREATE-FILE-CHOOSER-PREVIEW")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                 "File Chooser Widget"
+                                 "file-chooser-widget.lisp"
+                                 "CREATE-FILE-CHOOSER-WIDGET")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                 "File Chooser Custom Filter"
+                                 "file-chooser-custom-filter.lisp"
+                                 "CREATE-FILE-CHOOSER-CUSTOM-FILTER")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button"
                                 "font-button.lisp"
                                 "EXAMPLE-FONT-BUTTON")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Font Button Label"
+                                "font-button-label.lisp"
+                                "EXAMPLE-FONT-BUTTON-LABEL")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Layout Containers")))
@@ -466,8 +495,8 @@
                                  :application application
                                  :type :toplevel
                                  :title "GTK+ Lisp Code Demos"
-                                 :default-width 800
-                                 :default-height 600))
+                                 :default-width 1000
+                                 :default-height 800))
           ;; A horizontal pane
           (content (make-instance 'gtk-paned
                                   :orientation :horizontal))

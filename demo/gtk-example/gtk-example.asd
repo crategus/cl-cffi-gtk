@@ -11,9 +11,8 @@
                (:file "bloat-pad")
                (:file "custom-window")
                (:file "dialog")
+               (:file "drawing-area")
                (:file "event-handler")
-               (:file "file-chooser-dialog")
-;               (:file "geometry-hints")
                (:file "grab")
                (:file "grid-packing")
                (:file "image-button-press")
@@ -33,4 +32,4 @@
                (:file "widget-pointer")
               ))
 
-;;; 2020-12-19
+;;; 2021-1-29

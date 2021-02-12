@@ -6,7 +6,11 @@
            #:example-dialog-new
            #:example-dialog-new-with-buttons
            #:example-dialog-ui
+           #:example-drawing-area
+           #:example-file-chooser-custom-filter
            #:example-file-chooser-dialog
+           #:example-file-chooser-preview
+           #:example-file-chooser-widget
            #:example-grab
            #:example-grid-packing
            #:example-image-button-press
@@ -39,4 +43,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2020-12-19
+;;; 2021-1-29
