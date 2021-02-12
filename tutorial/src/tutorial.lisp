@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; tutorial.lisp
 ;;;
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -84,38 +84,6 @@
         (gtk-widget-show dialog)))
     (join-gtk-main)
     (format t "Back from message dialog with response-id ~A~%" response)))
-
-(defun example-simple-file-chooser-dialog ()
-  (let ((file-name nil))
-    (within-main-loop
-      (let ((dialog (gtk-file-chooser-dialog-new "Open File"
-                                                 nil
-                                                 :open
-                                                 "gtk-cancel" :cancel
-                                                 "gtk-open" :accept)))
-        ;; Signal handler for the dialog to handle the signal "destroy".
-        (g-signal-connect dialog "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            ;; Quit the main loop and destroy the thread
-                            (leave-gtk-main)))
-        ;; Signal handler for the dialog to handle the signal "response".
-        (g-signal-connect dialog "response"
-           (lambda (dialog response-id)
-             ;; Check the response id from the file chooser dialog
-             (when (eql response-id
-                        ;; Convert the symbol :accept to the number value.
-                        (foreign-enum-value 'gtk-response-type :accept))
-               ;; Get the file name and store it.
-               (setf file-name (gtk-file-chooser-filename dialog)))
-             ;; Destroy the dialog.
-             (gtk-widget-destroy dialog)))
-        ;; Show the dialog.
-        (gtk-widget-show dialog)))
-    ;; Wait until the dialog is finished.
-    (join-gtk-main)
-    (when file-name
-      (format t "~A~%" file-name))))
 
 (defun example-getting-started ()
   (within-main-loop
@@ -2057,20 +2025,27 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(defun example-simple-text-view ()
+(defun example-text-view-simple ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Simple Text View"
-                                  :default-width 300
-                                  :default-height 200))
+                                  :default-width 350))
            (view (make-instance 'gtk-text-view))
            (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
+          (lambda (widget)
+            (declare (ignore widget))
+            (let ((start (gtk-text-buffer-start-iter buffer))
+                  (end (gtk-text-buffer-end-iter buffer))
+                  (include-hidden-chars t))
+              (print (gtk-text-buffer-get-text buffer
+                                               start
+                                               end
+                                               include-hidden-chars))
+              (terpri)
+              (leave-gtk-main))))
+      (setf (gtk-text-buffer-text buffer) "Some text for the text view.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
@@ -2082,6 +2057,7 @@
                                   :type :toplevel
                                   :title "Example Text View Attributes"
                                   :default-width 350))
+           (provider (gtk-css-provider-new))
            (view (make-instance 'gtk-text-view))
            (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
@@ -2089,24 +2065,22 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
-      ;; Change default font throughout the widget
-      (gtk-widget-override-font
-                             view
-                             (pango-font-description-from-string "Serif 20"))
-      ;; Change default color throughout the widget
-      (gtk-widget-override-color view
-                                 :normal
-                                 (gdk-rgba-parse "red"))
+      ;; Change default font and color throughout the widget
+      (gtk-css-provider-load-from-data provider
+                                       "textview, text {
+                                          color : Green;
+                                          font : 20px Purisa; }")
+      (gtk-style-context-add-provider (gtk-widget-style-context view)
+                                      provider
+                                      +gtk-style-provider-priority-application+)
       ;; Change left margin throughout the widget
       (setf (gtk-text-view-left-margin view) 30)
       ;; Use a tag to change the color for just one part of the widget
-      (let ((tag (make-instance 'gtk-text-tag
-                                :name "blue_foreground"
-                                :foreground "blue"))
+      (let ((tag (gtk-text-buffer-create-tag buffer
+                                             "blue_foreground"
+                                             :foreground "blue"))
             (start (gtk-text-buffer-iter-at-offset buffer 7))
             (end (gtk-text-buffer-iter-at-offset buffer 12)))
-        ;; Add the tag to the tag table of the buffer
-        (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
         ;; Apply the tag to a region of the text in the buffer
         (gtk-text-buffer-apply-tag buffer tag start end))
       ;; Add the view to the window and show all
@@ -2999,8 +2973,7 @@ happen.")
         (g-signal-connect button "color-set"
            (lambda (widget)
              (let ((rgba (gtk-color-chooser-rgba widget)))
-               (format t "Selected color is ~A~%"
-                       (gdk-rgba-to-string rgba)))))
+               (format t "Selected color is ~A~%" (gdk-rgba-to-string rgba)))))
         (gtk-container-add window button)
         (gtk-widget-show-all window)))))
 
@@ -3010,12 +2983,12 @@ happen.")
 
 (let ((message "Click to change the background color.")
       (bg-color (gdk-rgba-parse "White"))
-      ;; Color palette with 4 rgba colors
+      ;; Color palette with 4 RGBA colors
       (palette1 (list (gdk-rgba-parse "Red")
                       (gdk-rgba-parse "Yellow")
                       (gdk-rgba-parse "Blue")
                       (gdk-rgba-parse "Green")))
-      ;; Gray palette with 3 rgba grays
+      ;; Gray palette with 3 RGBA grays
       (palette2 (list (gdk-rgba-parse "White")
                       (gdk-rgba-parse "Gray")
                       (gdk-rgba-parse "Black"))))
@@ -3051,17 +3024,19 @@ happen.")
         (g-signal-connect area "draw"
                           (lambda (widget cr)
                             (declare (ignore widget))
-                            (let ((cr (pointer cr)))
+                            (let ((cr (pointer cr))
+                                  (red (gdk-rgba-red bg-color))
+                                  (green (gdk-rgba-green bg-color))
+                                  (blue (gdk-rgba-blue bg-color)))
                               ;; Paint the current color on the drawing area
-                              (cairo-set-source-rgb cr
-                                                    (gdk-rgba-red bg-color)
-                                                    (gdk-rgba-green bg-color)
-                                                    (gdk-rgba-blue bg-color))
+                              (cairo-set-source-rgb cr red green blue)
                               (cairo-paint cr)
                               ;; Print a hint on the drawing area
-                              (cairo-set-source-rgb cr 0.1 0.1 0.1)
-                              (cairo-select-font-face cr "Sans"
-                                                         :normal :normal)
+                              (cairo-set-source-rgb cr
+                                                    (- 1.0d0 red)
+                                                    (- 1.0d0 green)
+                                                    (- 1.0d0 blue))
+                              (cairo-select-font-face cr "Sans")
                               (cairo-set-font-size cr 12)
                               (cairo-move-to cr 12 24)
                               (cairo-show-text cr message)
@@ -3077,7 +3052,7 @@ happen.")
 
 ;;; ----------------------------------------------------------------------------
 
-;;; Color Selection Widget (deprecated)
+;;; Color Selection Dialog (deprecated)
 
 (let ((color (gdk-color-new :red 0
                             :blue 65535
@@ -3137,10 +3112,7 @@ happen.")
                                  :default-width 300
                                  :default-height 100))
           (button (make-instance 'gtk-button
-                                 :label "Select a file for save ..."
-                                 :image
-                                 (gtk-image-new-from-stock "gtk-save"
-                                                           :button))))
+                                 :label "Select a file for save ...")))
       ;; Handle the signal "destroy" for the window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -3157,42 +3129,7 @@ happen.")
                                                       "gtk-cancel" :cancel)))
              (when (eq (gtk-dialog-run dialog) :accept)
                (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-filename dialog)))
-             (gtk-widget-destroy dialog))))
-      (gtk-container-add window button)
-      (gtk-widget-show-all window))))
-
-#+nil
-(defun example-file-chooser-dialog ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example File Chooser Dialog"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 100))
-          (button (make-instance 'gtk-button
-                                 :label "Select a file for save ..."
-                                 :image
-                                 (gtk-image-new-from-stock "gtk-save"
-                                                           :button))))
-      ;; Handle the signal "destroy" for the window.
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Handle the signal "clicked" for the button.
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let ((dialog (make-instance 'gtk-file-chooser-dialog
-                                        :title "Speichern"
-                                        :action :save)))
-             (gtk-dialog-add-button dialog "gtk-save" :accept)
-             (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
-             (when (eq (gtk-dialog-run dialog) :accept)
-               (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-filename dialog)))
+                         (gtk-file-chooser-filename dialog)))
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
@@ -3218,8 +3155,8 @@ happen.")
       (g-signal-connect button "file-set"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (format t "File set: ~A~%"
-                                  (gtk-file-chooser-filename button))))
+                          (format t "File set: ~a~%"
+                                    (gtk-file-chooser-filename button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 
@@ -3253,15 +3190,15 @@ happen.")
            (declare (ignore widget))
            (format t "Font is set:~%")
            (format t "   Font name   : ~A~%"
-                   (gtk-font-chooser-font button))
+                     (gtk-font-chooser-font button))
            (format t "   Font family : ~A~%"
-                   (pango-font-family-name
-                     (gtk-font-chooser-font-family button)))
+                     (pango-font-family-name
+                       (gtk-font-chooser-font-family button)))
            (format t "   Font face   : ~A~%"
-                   (pango-font-face-face-name
-                     (gtk-font-chooser-font-face button)))
+                     (pango-font-face-face-name
+                       (gtk-font-chooser-font-face button)))
            (format t "   Font size   : ~A~%"
-                   (gtk-font-chooser-font-size button))))
+                     (gtk-font-chooser-font-size button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 

@@ -2656,7 +2656,7 @@ int main( int argc, char *argv[] )
     <para>
      <ulink url="&gtk-label-justify;"><code>gtk-label-justify</code></ulink> sets how the lines in a label
      align with one another.  The first argument is the label and the second argument one of the following
-     values of the enumeration type <ulink url="&gtk-justification;"><code>gtk-justification</code></ulink>. 
+     values of the enumeration type &gtk-justification;. 
      The possible values are shown in table <link linkend="table-gtk-justification">Justification</link>. 
      If you want to set how the label as a whole aligns in its available space, see the function
      <ulink url="&gtk-misc-set-alignment;"><code>gtk-misc-set-alignment</code></ulink>.
@@ -3536,13 +3536,13 @@ int main( int argc, char *argv[] )
    <para>
     <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is a widget that can be used to show
     messages to the user without showing a dialog.  It is often temporarily shown at the top or bottom of
-    a document.  In contrast to <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, which has a
+    a document.  In contrast to &gtk-dialog;, which has a
     horizontal action area at the bottom, <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink>
     has a vertical action area at the side.
    </para>
    <para>
     The API of <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is very similar to
-    <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, allowing you to add buttons to the action
+    &gtk-dialog;, allowing you to add buttons to the action
     area with <ulink url="&gtk-info-bar-add-button;"><code>gtk-info-bar-add-button</code></ulink> or
     <ulink url="&gtk-info-bar-new-with-buttons;"><code>gtk-info-bar-new-with-buttons</code></ulink>.  The
     sensitivity of action widgets can be controlled with <ulink url="&gtk-info-bar-set-response-sensitive;">
@@ -4394,119 +4394,75 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Fixed_Container">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Fixed_Container">
-      <primary>GtkFixed</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>fixed, gtk-fixed</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>fixed-new, gtk-fixed-new</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>fixed-put, gtk-fixed-put</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>fixed-move, gtk-fixed-move</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>GdkRectanble</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>rectangle, gdk-rectangle</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>rectangle-height, gdk-rectangle-height</primary>
-     </indexterm>
-     <indexterm zone="Fixed_Container">
-      <primary>rectangle-width, gdk-rectangle-width</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
+  <!-- 2021-2-9 -->
    <title>Fixed Container</title>
    <figure id="figure-fixed">
     <title>Fixed Container</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/fixed302x254.png" format="png"></imagedata>
+      <imagedata fileref="figures/fixed.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
    <para>
-    The <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink> widget is a container widget which allows to
-    place child widgets at a fixed position within the container, relative to the upper left hand corner.
-    The position of the child widgets can be changed dynamically.  Only a few functions are associated with
-    the <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink> widget like <ulink url="&gtk-fixed-new;">
-    <code>gtk-fixed-new</code></ulink>, <ulink url="&gtk-fixed-put;"><code>gtk-fixed-put</code></ulink>, and
-    <ulink url="&gtk-fixed-move;"><code>gtk-fixed-move</code></ulink>.
+    The &gtk-fixed; widget is a container widget which allows to place child widgets at a fixed position
+    within the container, relative to the upper left hand corner. The position of the child widgets can be
+    changed dynamically. Only a few functions are associated with the fixed container like the functions
+    &gtk-fixed-new;, &gtk-fixed-put;, and &gtk-fixed-move;.
    </para>
    <para>
-    The function <ulink url="&gtk-fixed-new;"><code>gtk-fixed-new</code></ulink> creates a new
-    <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink> widget.  The function
-    <ulink url="&gtk-fixed-put;"><code>gtk-fixed-put</code></ulink> places a widget in the container fixed at
-    the position specified by the arguments <code>x</code> and <code>y</code>.  The function
-    <ulink url="&gtk-fixed-move;"><code>gtk-fixed-move</code></ulink> allows the specified widget to be moved
-    to a new position.
+    The function &gtk-fixed-new; creates a new &gtk-fixed; container. The function &gtk-fixed-put; places a
+    widget in the container fixed at the position specified by the arguments <code>x</code> and
+    <code>y</code>. The function &gtk-fixed-move; allows the specified widget to be moved to a new position.
    </para>
    <para>
-    For most applications, you should not use this container.  It keeps you from having to learn about the
-    other GTK+ containers, but it results in broken applications.  With <ulink url="&gtk-fixed;">
-    <code>gtk-fixed</code></ulink>, the following things will result in truncated text, overlapping widgets,
-    and other display bugs:
+    For most applications, you should not use this container. It keeps you from having to learn about the
+    other GTK+ containers, but it results in broken applications. With the fixed container, the following
+    things will result in truncated text, overlapping widgets, and other display bugs:
    </para>
    <itemizedlist>
     <listitem>
-      <para>Themes, which may change widget sizes.</para>
+      Themes, which may change widget sizes.
     </listitem>
     <listitem>
-     <para>
       Fonts other than the one you used to write the application will of course change the size of widgets
-      containing text; keep in mind that users may use a larger font because of difficulty reading the
+      containing text. Keep in mind that users may use a larger font because of difficulty reading the
       default, or they may be using Windows or the framebuffer port of GTK+, where different fonts are
       available.
-     </para>
     </listitem>
     <listitem>
-     <para>
-      Translation of text into other languages changes its size.  Also, display of non-English text will use
+      Translation of text into other languages changes its size. Also, display of non-English text will use
       a different font in many cases.
-     </para>
     </listitem>
    </itemizedlist>
    <para>
-    In addition, the fixed widget can not properly be mirrored in right-to-left languages such as Hebrew and
-    Arabic. i.e. normally GTK+ will flip the interface to put labels to the right of the thing they label,
-    but it can't do that with <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink>.  So your application
-    will not be usable in right-to-left languages.
+    In addition, the fixed container can not properly be mirrored in right-to-left languages such as Hebrew
+    and Arabic. I.e. normally GTK+ will flip the interface to put labels to the right of the thing they label,
+    but it cannot do that with the fixed container. So your application will not be usable in right-to-left
+    languages.
    </para>
    <para>
     Finally, fixed positioning makes it kind of annoying to add/remove GUI elements, since you have to
-    reposition all the other elements.  This is a long-term maintenance problem for your application.
+    reposition all the other elements. This is a long-term maintenance problem for your application.
    </para>
    <para>
-    If you know none of these things are an issue for your application, and prefer the simplicity of
-    <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink>, by all means use the widget. But you
-    should be aware of the tradeoffs.
+    If you know none of these things are an issue for your application, and prefer the simplicity of the
+    &gtk-fixed; container, by all means use the widget. But you should be aware of the tradeoffs.
    </para>
    <para>
     The following example illustrates how to use a fixed container. In this example three buttons are put
-    into the fixed widget at random positions. A click on a button moves the button to a new random position.
-    To retrieve the size of the fixed widget the function <ulink url="&gtk-widget-allocation;">
-    <code>gtk-widget-allocation</code></ulink> is used, which returns a rectangle of type
-    <ulink url="&gdk-rectangle;"><code>gdk-rectangle</code></ulink>. The width and the height of the fixed
-    widget are then get with the functions <ulink url="&gdk-rectangle-width;">
-    <code>gdk-rectangle-width</code></ulink> and <ulink url="&gdk-rectangle-height;">
-    <code>gdk-rectangle-height</code></ulink>.
+    into the fixed container at random positions. A click on a button moves the button to a new random
+    position. To retrieve the size of the fixed container and the buttons the functions
+    &gtk-widget-allocated-width; and &gtk-widget-allocated-height; are used.
    </para>
    <example id="example-fixed">
     <title>Fixed Container</title>
     <programlisting>
-(defun move-button (button fixed)
-  (let* ((allocation (gtk-widget-allocation fixed))
-         (width (- (gdk-rectangle-width allocation) 20))
-         (height (- (gdk-rectangle-height allocation) 10)))
+(defun move-button (fixed button)
+  (let ((width (- (gtk-widget-allocated-width fixed)
+                  (gtk-widget-allocated-width button)))
+        (height (- (gtk-widget-allocated-height fixed)
+                   (gtk-widget-allocated-height button))))
     (gtk-fixed-move fixed button (random width) (random height))))
 
 (defun example-fixed ()
@@ -4514,7 +4470,7 @@ int main( int argc, char *argv[] )
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Fixed Container"
-                                 :default-width 300
+                                 :default-width 350
                                  :default-height 200
                                  :border-width 12))
           (fixed (make-instance 'gtk-fixed)))
@@ -4522,14 +4478,14 @@ int main( int argc, char *argv[] )
                         (lambda (window)
                           (declare (ignore window))
                           (leave-gtk-main)))
-      (gtk-container-add window fixed)
       (dotimes (i 3)
         (let ((button (gtk-button-new-with-label "Press me")))
           (g-signal-connect button "clicked"
                             (lambda (widget)
-                              (move-button widget fixed)))
-          (gtk-fixed-put fixed button (random 250) (random 150))))
-      (gtk-widget-show window))))
+                              (move-button fixed widget)))
+          (gtk-fixed-put fixed button (random 250) (random 180))))
+      (gtk-container-add window fixed)
+      (gtk-widget-show-all window))))
     </programlisting>
    </example>
   </section>
@@ -4560,7 +4516,7 @@ int main( int argc, char *argv[] )
    <title>Layout Container</title>
    <para>
     The layout container <ulink url="&gtk-layout;"><code>gtk-layout</code></ulink> is similar to the fixed
-    container <ulink url="&gtk-fixed;"><code>gtk-fixed</code></ulink> except that it implements an infinite
+    container &gtk-fixed; except that it implements an infinite
     (where infinity is less than 2^32) scrolling area.  The X window system has a limitation where windows
     can be at most 32767 pixels wide or tall.  The layout container gets around this limitation by doing some
     exotic stuff using window and bit gravities, so that you can have smooth scrolling even when you have
@@ -4896,8 +4852,8 @@ int main( int argc, char *argv[] )
     &gtk-grid;, &gtk-box;, and so on.
    </para>
    <para>
-    If a widget has native scrolling abilities, such as <ulink url="&gtk-text-view;">
-    <code>gtk-text-view</code></ulink>, <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>
+    If a widget has native scrolling abilities, such as &gtk-text-view;,
+    <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>
     or <ulink url="&gtk-icon-view;"><code>gtk-icon-view</code></ulink>, it can be added to a
     <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> with the function
     &gtk-container-add;. If a widget does not, you must first add the widget to a <ulink url="&gtk-viewport;">
@@ -4950,7 +4906,7 @@ int main( int argc, char *argv[] )
     The scrolled window can work in two ways.  Some widgets have native scrolling support; these widgets
     implement the <ulink url="&gtk-scrollable;"><code>gtk-scrollable</code></ulink> interface. Widgets with
     native scroll support include <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>,
-    <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink>, and <ulink url="&gtk-layout;">
+    &gtk-text-view;, and <ulink url="&gtk-layout;">
     <code>gtk-layout</code></ulink>.
    </para>
    <para>
@@ -5375,208 +5331,225 @@ int main( int argc, char *argv[] )
  <chapter id="Multiline_Text_Editor">
   <title>Multiline Text Editor</title>
 
-  <section id="Text_Widget_Overview">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextBuffer</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-buffer, gtk-text-buffer</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextView</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-view, gtk-text-view</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextTag</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-tag, gtk-text-tag</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextTagTable</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-tag-table, gtk-text-tag-table</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextIter</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-iter, gtk-text-iter</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>GtkTextMark</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-mark, gtk-text-mark</primary>
-     </indexterm>
-     <indexterm zone="Text_Widget_Overview">
-      <primary>text-buffer-place-cursor, gtk-text-buffer-place-cursor</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
+  <section id="Text_Widget_Overview" revision="2021-2-12">
    <title>Text Widget Overview</title>
    <para>
-    GTK+ has an extremely powerful framework for multiline text editing.  The primary objects involved in the
-    process are <ulink url="&gtk-text-buffer;"><code>gtk-text-buffer</code></ulink>, which represents the
-    text being edited, and <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink>, a widget which
-    can display a <ulink url="&gtk-text-buffer;"><code>gtk-text-buffer</code></ulink>.  Each buffer can be
-    displayed by any number of views.
+    GTK+ has an powerful framework for multiline text editing. The primary objects involved in the process
+    are the &gtk-text-buffer; object, which represents the text being edited, and the &gtk-text-view; widget,
+    a widget which can display a &gtk-text-buffer; object. Each text buffer can be displayed by any number of
+    text views.
    </para>
    <para>
-    One of the important things to remember about text in GTK+ is that it's in the UTF-8 encoding.  This
-    means that one character can be encoded as multiple bytes.  Character counts are usually referred to as
-    offsets, while byte counts are called indexes.  If you confuse these two, things will work fine with
-    ASCII, but as soon as your buffer contains multibyte characters, bad things will happen.
+    One of the important things to remember about text in GTK+ is that it is in the UTF-8 encoding. This
+    means that one character can be encoded as multiple bytes. Character counts are usually referred to as
+    offsets, while byte counts are called indexes. If you confuse these two, things will work fine with
+    ASCII, but as soon as your text buffer contains multibyte characters, bad things will happen.
    </para>
    <para>
-    Text in a buffer can be marked with tags.  A tag is an attribute that can be applied to some range of
-    text.  For example, a tag might be called "bold" and make the text inside the tag bold.  However, the tag
-    concept is more general than that; tags don't have to affect appearance.  They can instead affect the
-    behavior of mouse and key presses, "lock" a range of text so the user can't edit it, or countless other
-    things.  A tag is represented by a <ulink url="&gtk-text-tag;"><code>gtk-text-tag</code></ulink> object.
-    One <ulink url="&gtk-text-tag;"><code>gtk-text-tag</code></ulink> can be applied to any number of text
-    ranges in any number of buffers.
+    Text in a text buffer can be marked with tags. A tag is an attribute that can be applied to some range of
+    text. For example, a tag might be called "bold" and make the text inside the tag bold. However, the tag
+    concept is more general than that. Tags do not have to affect appearance. They can instead affect the
+    behavior of mouse and key presses, "lock" a range of text so the user cannot edit it, or countless other
+    things. A tag is represented by a &gtk-text-tag; object. One &gtk-text-tag; object can be applied to any
+    number of text ranges in any number of text buffers.
    </para>
    <para>
-    Each tag is stored in a <ulink url="&gtk-text-tag-table;"><code>gtk-text-tag-table</code></ulink>.  A tag
-    table defines a set of tags that can be used together.  Each buffer has one tag table associated with
-    it; only tags from that tag table can be used with the buffer.  A single tag table can be shared between
-    multiple buffers, however.
+    Each tag is stored in a &gtk-text-tag-table; object. A tag table defines a set of tags that can be used
+    together. Each text buffer has one tag table associated with it. Only tags from that tag table can be
+    used with the text buffer. A single tag table can be shared between multiple text buffers, however.
    </para>
    <para>
-    Tags can have names, which is convenient sometimes (for example, you can name your tag that makes things
-    bold "bold"), but they can also be anonymous (which is convenient if you're creating tags on-the-fly).
+    Tags can have names, which is convenient sometimes. For example, you can name your tag that makes things
+    bold "bold", but they can also be anonymous, which is convenient if you are creating tags on-the-fly.
    </para>
    <para>
-    Most text manipulation is accomplished with iterators, represented by a <ulink url="&gtk-text-iter;">
-    <code>gtk-text-iter</code></ulink>.  An iterator represents a position between two characters in the text
-    buffer.  <ulink url="&gtk-text-iter;"><code>gtk-text-iter</code></ulink> is a struct designed to be
-    allocated on the stack; it is guaranteed to be copiable by value and never contain any heap-allocated
-    data.  Iterators are not valid indefinitely; whenever the buffer is modified in a way that affects the
-    number of characters in the buffer, all outstanding iterators become invalid.  (Note that deleting 5
-    characters and then reinserting 5 still invalidates iterators, though you end up with the same number of
-    characters you pass through a state with a different number).
+    Most text manipulation is accomplished with iterators, represented by a &gtk-text-iter; instance. An
+    iterator represents a position between two characters in the text buffer. The &gtk-text-iter; structure
+    is a structure designed to be allocated on the stack. It is guaranteed to be copiable by value and never
+    contain any heap allocated data. Iterators are not valid indefinitely. Whenever the text buffer is
+    modified in a way that affects the number of characters in the text buffer, all outstanding iterators
+    become invalid. Note that deleting 5 characters and then reinserting 5 still invalidates iterators,
+    though you end up with the same number of characters you pass through a state with a different number.
    </para>
    <para>
-    Because of this, iterators can't be used to preserve positions across buffer modifications.  To preserve
-    a position, the <ulink url="&gtk-text-mark;"><code>gtk-text-mark</code></ulink> object is ideal.  You can
-    think of a mark as an invisible cursor or insertion point; it floats in the buffer, saving a position.
-    If the text surrounding the mark is deleted, the mark remains in the position the text once occupied; if
-    text is inserted at the mark, the mark ends up either to the left or to the right of the new text,
-    depending on its gravity.  The standard text cursor in left-to-right languages is a mark with right
-    gravity, because it stays to the right of inserted text.
+    Because of this, iterators cannot be used to preserve positions across text buffer modifications. To
+    preserve a position, the &gtk-text-mark; object is ideal. You can think of a text mark as an invisible
+    cursor or insertion point. It floats in the text buffer, saving a position. If the text surrounding the
+    text mark is deleted, the text mark remains in the position the text once occupied. If text is inserted
+    at the text mark, the text mark ends up either to the left or to the right of the new text, depending on
+    its gravity. The standard text cursor in left-to-right languages is a text mark with right gravity,
+    because it stays to the right of inserted text.
    </para>
    <para>
-    Like tags, marks can be either named or anonymous.  There are two marks built-in to
-    <ulink url="&gtk-text-buffer;"><code>gtk-text-buffer</code></ulink>; these are named "insert" and
-    "selection_bound" and refer to the insertion point and the boundary of the selection which is not the
-    insertion point, respectively.  If no text is selected, these two marks will be in the same position.
-    You can manipulate what is selected and where the cursor appears by moving these marks around.  If you
-    want to place the cursor in response to a user action, be sure to use
-    <ulink url="&gtk-text-buffer-place-cursor;"><code>gtk-text-buffer-place-cursor</code></ulink>, which
-    moves both at once without causing a temporary selection (moving one then the other temporarily selects
-    the range in between the old and new positions).
+    Like tags, marks can be either named or anonymous. There are two marks built-in to the &gtk-text-buffer;
+    class. These are named "insert" and "selection_bound" and refer to the insertion point and the boundary
+    of the selection which is not the insertion point, respectively. If no text is selected, these two marks
+    will be in the same position. You can manipulate what is selected and where the cursor appears by moving
+    these marks around. If you want to place the cursor in response to a user action, be sure to use the
+    function &gtk-text-buffer-place-cursor;, which moves both at once without causing a temporary selection.
+    Moving one then the other temporarily selects the range in between the old and new positions.
    </para>
    <para>
-    Text buffers always contain at least one line, but may be empty (that is, buffers can contain zero
-    characters).  The last line in the text buffer never ends in a line separator (such as newline); the
-    other lines in the buffer always end in a line separator.  Line separators count as characters when
-    computing character counts and character offsets.  Note that some Unicode line separators are represented
+    Text buffers always contain at least one line, but may be empty, that is, text buffers can contain zero
+    characters. The last line in the text buffer never ends in a line separator (such as newline). The
+    other lines in the buffer always end in a line separator. Line separators count as characters when
+    computing character counts and character offsets. Note that some Unicode line separators are represented
     with multiple bytes in UTF-8, and the two-character sequence "\r\n" is also considered a line separator.
    </para>
   </section>
 
-  <section id="Simple_Multiline_Text_Widget">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Simple_Multiline_Text_Widget">
-      <primary>text-buffer-new, gtk-text-buffer-new</primary>
-     </indexterm>
-     <indexterm zone="Simple_Multiline_Text_Widget">
-      <primary>text-view-new-with-buffer, gtk-text-view-new-with-buffer</primary>
-     </indexterm>
-     <indexterm zone="Simple_Multiline_Text_Widget">
-      <primary>text-view-buffer, gtk-text-view-buffer</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
+  <section id="Simple_Multiline_Text_Widget" revision="2021-2-12">
    <title>Simple Multiline Text Widget</title>
    <figure id="figure-simple-text-view">
-    <title>Most Simple Text View</title>
+    <title>Simple Text View</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/simple-text-view302x229.png" format="png"></imagedata>
+      <imagedata fileref="figures/text-view-simple.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
    <para>
-    The simplest usage of <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> might look like in
-    <link linkend="example-simple-text-view">Simple Text View</link>.  The output is shown in
+    The &gtk-text-view; widget can be created using the function &gtk-text-view-new;. This function takes no
+    arguments. When the text view is created this way, a &gtk-text-buffer; object associated with this text
+    view is also created. The text buffer is responsible for storing the text and associated attributes,
+    while the text view is responsible for displaying the text, i.e. it provides an I/O interface to buffer.
+   </para>
+   <para>
+    All text modification operations are related to the &gtk-text-buffer; object. The text buffer associated
+    with a &gtk-text-view; widget can be obtained using the function &gtk-text-view-buffer; which takes
+    the &gtk-text-view; widget as the argument.
+   </para>
+   <para>
+    Some common operations performed on a multiline text view widget are, setting the entire text and reading
+    the entire text from the text buffer. The entire text of the text buffer can be set using the slot access
+    function &gtk-text-buffer-text;.
+   </para>
+   <para>
+    Getting the entire text of a text buffer, could be a little more complicated than setting the entire text
+    of the text buffer. You cannot use the slot access function &gtk-text-buffer-text; to retrieve the text
+    from the text buffer, but you must use the function &gtk-text-buffer-get-text;, which takes iterators
+    as arguments to select the desired text. Iterators are &gtk-text-iter; objects that represent positions
+    between two characters in a text buffer. Iterators in a text buffer can be obtained using many different
+    functions, but for our simple case the functions &gtk-text-buffer-start-iter; and
+    &gtk-text-buffer-end-iter; can be used to get the iterators at the start and end of the text buffer.
+   </para>
+   <para>
+    To retrieve the entire contents of the text buffer you can use the function &gtk-text-buffer-get-text;
+    the following way
+   </para>
+   <programlisting>
+(let* (;; Get the start and end iterators of the text buffer
+       (start (gtk-text-buffer-start-iter buffer))
+       (end (gtk-text-buffer-end-iter buffer))
+       (include-hidden-chars t)
+       ;; Get the entire contents of the text buffer
+       (text (gtk-text-buffer-get-text buffer start end include-hidden-chars)))
+  ... )
+   </programlisting>
+   <para>
+    The argument <code>include-hidden-chars</code> is used to specify whether are not to include text that
+    has the invisible attribute set. Text attributes and how to set them will be discussed later in this
+    tutorial.
+   </para>
+   <para>
+    In many cases it is also convenient to first create the text buffer with the function
+    &gtk-text-buffer-new;, then create a text view for that text buffer with the function
+    &gtk-text-view-new-with-buffer;. Or you can change the text buffer the text view displays after the
+    text view is created with the slot access function &gtk-text-view-buffer;.
+   </para>
+   <para>
+    Below is a sample program, that implements the simple multiline text widget. The program assigns a
+    default text to the text buffer. The text in the text buffer can be modified by the user and when the
+    window is closed it prints the contents of the text buffer and quits. The window is shown in figure
     <link linkend="figure-simple-text-view">Simple Text View</link>.
    </para>
    <example id="example-simple-text-view">
-    <title>Most Simple Text View</title>
+    <title>Simple Text View</title>
     <programlisting>
-(defun example-simple-text-view ()
+(defun example-text-view-simple ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Simple Text View"
-                                  :default-width 300))
+                                  :default-width 350))
            (view (make-instance 'gtk-text-view))
            (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
+          (lambda (widget)
+            (declare (ignore widget))
+            (let ((start (gtk-text-buffer-start-iter buffer))
+                  (end (gtk-text-buffer-end-iter buffer))
+                  (include-hidden-chars t))
+              (print (gtk-text-buffer-get-text buffer
+                                               start
+                                               end
+                                               include-hidden-chars))
+              (terpri)
+              (leave-gtk-main))))
+      (setf (gtk-text-buffer-text buffer) "Some text for the text view.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
     </programlisting>
    </example>
+
+   <bridgehead renderas='sect3'>Other functions for text buffers</bridgehead>
    <para>
-    In many cases it is also convenient to first create the buffer with <ulink url="&gtk-text-buffer-new;">
-    <code>gtk-text-buffer-new</code></ulink>, then create a widget for that buffer with
-    <ulink url="&gtk-text-view-new-with-buffer;"><code>gtk-text-view-new-with-buffer</code></ulink>.  Or you
-    can change the buffer the widget displays after the widget is created with
-    <ulink url="&gtk-text-view-buffer;"><code>gtk-text-view-buffer</code></ulink>.
+    The function &gtk-text-buffer-delete; can be used to delete text from a text buffer. It takes the
+    &gtk-text-buffer; object and two &gtk-text-iter; iterators for the start and the end of the text as
+    arguments. Since this function modifies the text buffer, all outstanding iterators become invalid after
+    a call to this function. But, the iterators passed to the function are re-initialized to point to the
+    location where the text was deleted.
+   </para>
+   <para>
+    The function &gtk-text-buffer-insert; can be used to insert text into a text buffer at a position
+    specified by an iterator or at the current cursor position. In the Lisp implementation the function
+    &gtk-text-buffer-insert; combines the functions &gtk-text-buffer-insert;,
+    &gtk-text-buffer-insert-at-cursor;, &gtk-text-buffer-insert-interactive;, and
+    &gtk-text-buffer-insert-interactive-at-cursor; into one function using the keyword arguments
+    <code>position</code>, <code>interative</code>, and <code>editable</code>. As with the function
+    &gtk-text-buffer-delete;, the text buffer is modified and hence all outstanding iterators become invalid,
+    and the start and end iterators are re-initialized. Hence the same iterator can be used for a series of
+    consecutive inserts.
+   </para>
+   <para>
+    The function &gtk-text-buffer-bounds; can be used to get iterators at the beginning and end of the text
+    buffer in one go. The variant &gtk-text-buffer-selection-bounds; can be used to obtain iterators at the
+    beginning and end of the current selection. The functions &gtk-text-buffer-iter-at-offset;,
+    &gtk-text-buffer-iter-at-line;, &gtk-text-buffer-iter-at-line-offset;, and
+    &gtk-text-buffer-iter-at-line-index; can be used to obtain an iterator at a specified character offset
+    into the text buffer, at the start of the given line, at an character offset into a given line, or at
+    a byte offset into a given line, respectively.
    </para>
   </section>
 
   <section id="Formatted_Text_in_Text_Widget">
    <title>Formatted Text in Text Widget</title>
-   <figure id="figure-text-view-attributes">
-    <title>Changing Text Attributes of a Text View</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-attributes352x229.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    There are two ways to affect text attributes in <ulink url="&gtk-text-view;">
-    <code>gtk-text-view</code></ulink>.  You can change the default attributes for a given
-    <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink>, and you can apply tags that change the
-    attributes for a region of text.  For text features that come from the theme - such as font and
-    foreground color - use standard &gtk-widget; functions such
-    as <ulink url="&gtk-widget-override-font;"><code>gtk-widget-override-font</code></ulink>.  For other
-    attributes there are dedicated methods on <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink>
-    such as <ulink url="&gtk-text-view-tabs;"><code>gtk-text-view-tabs</code></ulink>.
-   </para>
-   <example id="example-text-view-attributes">
-    <title>Changing Text Attributes of a Text View</title>
-    <programlisting>
+
+   <section id="Example_of_Changing_Text_Attributes" revision="2021-2-12">
+    <title>Example of Changing Text Attributes</title>
+    <para>
+     The way to affect text attributes in the &gtk-text-view; widget is to apply tags that change the
+     attributes for a region of text. For text features that come from the theme — such as font and
+     foreground color — use CSS to override their default values.
+    </para>
+    <figure id="figure-text-view-attributes">
+     <title>Changing Text Attributes of a Text View</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/text-view-attributes.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+    <example id="example-text-view-attributes">
+     <title>Changing Text Attributes of a Text View</title>
+     <programlisting>
 (defun example-text-view-attributes ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Text View Attributes"
                                   :default-width 350))
+           (provider (gtk-css-provider-new))
            (view (make-instance 'gtk-text-view))
            (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
@@ -5584,58 +5557,123 @@ int main( int argc, char *argv[] )
                           (declare (ignore widget))
                           (leave-gtk-main)))
       (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
-      ;; Change default font throughout the widget
-      (gtk-widget-override-font
-                             view
-                             (pango-font-description-from-string "Serif 20"))
-      ;; Change default color throughout the widget
-      (gtk-widget-override-color view
-                                 :normal
-                                 (gdk-rgba-parse "red"))
+      ;; Change default font and color throughout the widget
+      (gtk-css-provider-load-from-data provider
+                                       "textview, text {
+                                          color : Green;
+                                          font : 20px Purisa; }")
+      (gtk-style-context-add-provider (gtk-widget-style-context view)
+                                      provider
+                                      +gtk-style-provider-priority-application+)
       ;; Change left margin throughout the widget
       (setf (gtk-text-view-left-margin view) 30)
       ;; Use a tag to change the color for just one part of the widget
-      (let ((tag (make-instance 'gtk-text-tag
-                                :name "blue_foreground"
-                                :foreground "blue"))
-            (start (gtk-text-buffer-get-iter-at-offset buffer 7))
-            (end (gtk-text-buffer-get-iter-at-offset buffer 12)))
-        ;; Add the tag to the tag table of the buffer
-        (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer) tag)
+      (let ((tag (gtk-text-buffer-create-tag buffer
+                                             "blue_foreground"
+                                             :foreground "blue"))
+            (start (gtk-text-buffer-iter-at-offset buffer 7))
+            (end (gtk-text-buffer-iter-at-offset buffer 12)))
         ;; Apply the tag to a region of the text in the buffer
         (gtk-text-buffer-apply-tag buffer tag start end))
       ;; Add the view to the window and show all
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
+     </programlisting>
+    </example>
+   </section>
 
-   <section id="More_about_Tags">
+   <section id="More_about_Tags" revsion="2021-2-12">
     <title>More about Tags</title>
     <para>
-     Tag objects are associated with a buffer and are created using the function
-     <ulink url="&gtk-text-buffer-create-tag;"><code>gtk-text-buffer-create-tag</code></ulink>.  Tags can be
-     optionally associated with a name <code>tag-name</code>.  Thus, the tag could be referred using the
-     returned pointer or using the <code>tag-name</code>.  For anonymous tags, <code>nil</code> is passed
-     to <code>tag-name</code>.  The group of properties represented by this tag is listed as name/value pairs
-     after the <code>tag-name</code>.  The list of property/value pairs is terminated with a
-     <code>NULL</code> pointer.  "style", "weight", "editable", "justification" are some common property
-     names.  The following table lists their meaning and assignable values.
+      The &gtk-text-view; widget can also be used to display formatted text. This usually involves creating
+      tags which represent a group of attributes and then applying them to a range of text.
     </para>
     <para>
-     See the GTK+ manual <ulink url="http://crategus.com/books/cl-cffi-gtk">
-     www.crategus.com/books/cl-cffi-gtk</ulink>, for a complete list of properties and their corresponding
+     Tag objects are associated with a text buffer and are created using the function
+     &gtk-text-buffer-create-tag;. This function takes as arguments a &gtk-text-buffer; object, a string for
+     a optional tag name, and keyword/value pairs for the properties of the &gtk-text-tag; object. Tags can
+     be optionally associated with a name. Thus, the tag could be referred using the returned &gtk-text-tag;
+     object or using the tag name. For anonymous tags, <code>nil</code> is passed as an argument. The group
+     of properties represented by this tag is listed as keyword/value pairs after the tag name argument.
+     Common property keywords are <code>:style</code>, <code>:weight</code>, <code>:editable</code>,
+     <code>:justification</code>. The following table lists some properties with their meaning and assignable
+     values. See the &gtk-text-tag; documentation for a complete list of properties and their corresponding
      values.
     </para>
+    <table id="table-gtk-text-tag-properties" frame='all'>
+     <title>Properties used for creating Tags</title>
+     <tgroup cols='3' align='left' colsep='0' rowsep='0'>
+      <thead>
+       <row>
+        <entry>Property</entry>
+        <entry>Description</entry>
+        <entry>Values</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry valign="top"><code>:style</code></entry>
+        <entry valign="top">Font style as a value of the &pango-style; enumeration.</entry>
+        <entry valign="top"><code>:normal</code> <code>:oblique</code> <code>:italic</code></entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:weight</code></code></entry>
+        <entry valign="top">
+         Font weight as an integer. See predefined values in the &pango-weight; enumeration.
+        </entry>
+        <entry valign="top"><code>:thin</code> <code>:normal</code> <code>:bold</code></entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:editable</code></code></entry>
+        <entry valign="top">Whether the text can be modified by the user.</entry>
+        <entry valign="top"><emphasis>true</emphasis> <emphasis>false</emphasis></entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:justification</code></code></entry>
+        <entry valign="top">
+          Justification of the text as an value of the &gtk-justification; enumeration.
+        </entry>
+        <entry valign="top">
+          <code>:left</code> <code>:right</code> <code>:center</code> <code>:fill</code>
+        </entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:foreground</code></code></entry>
+        <entry valign="top">The foreground color as a string.</entry>
+        <entry valign="top">e. g. "Red" or "rgb(255,0,0)"</entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:background</code></code></entry>
+        <entry valign="top">The background color as a string.</entry>
+        <entry valign="top">e. g. "Red" or "rgb(255,0,0)"</entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:wrap-mode</code></code></entry>
+        <entry valign="top">
+         A value of the &gtk-wrap-mode; enumeration whether to wrap lines never, at word boundaries, or at
+         character boundaries.
+        </entry>
+        <entry valign="top">
+         <code>:none</code> <code>:char</code> <code>:word</code> <code>:word-char</code>
+        </entry>
+       </row>
+       <row>
+        <entry valign="top"><code><code>:font</code></code></entry>
+        <entry valign="top">Font description as a string.</entry>
+        <entry valign="top">e. g. "Sans Italic 12"</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+
     <para>
-     The created tag can then be applied to a range of text using the functions
-     <ulink url="&gtk-text-buffer-apply-tag;"><code>gtk-text-buffer-apply-tag</code></ulink> and
-     <ulink url="&gtk-text-buffer-apply-tag-by-name;"><code>gtk-text-buffer-apply-tag-by-name</code></ulink>.
-     The first function specifies the tag to be applied by a tag object and the second function specifies the
-     tag by it's name.  The range of text over with the tag is to applies is specified by the start and end
-     iters.  Below is an extension of the previous example, that has a tool-bar to apply different tags
-     to selected regions of text.
+     The created tag can then be applied to a range of text using the functions &gtk-text-buffer-apply-tag;
+     and &gtk-text-buffer-apply-tag-by-name;. The first function specifies the tag to be applied by a
+     &gtk-text-tag; object and the second function specifies the tag by it's name. The range of text over
+     with the tag is to applies is specified by start and end iterators. Below is an extension of the
+     previous example, that has a toolbar to apply different tags to selected regions of the text.
     </para>
+
     <figure id="figure-text-tags">
      <title>Searching text in a text view</title>
      <mediaobject>
@@ -5644,6 +5682,7 @@ int main( int argc, char *argv[] )
       </imageobject>
      </mediaobject>
     </figure>
+
     <example id="example-text-tags">
      <title>Applying tags</title>
      <programlisting>
@@ -5726,8 +5765,8 @@ int main( int argc, char *argv[] )
    <section id="More_Functions_for_Applying_and_Removing_tags">
     <title>More Functions for Applying and Removing tags</title>
     <para>
-     In the previous section, the function <ulink url="&gtk-text-buffer-insert;">
-     <code>gtk-text-buffer-insert</code></ulink> was introduced.  A variant
+     In the previous section, the function &gtk-text-buffer-insert;
+     was introduced.  A variant
      <ulink url="&gtk-text-buffer-insert-with-tags;"><code>gtk-text-buffer-insert-with-tags</code></ulink>
      of this function can be used to insert text with tags applied.
     </para>
@@ -5748,7 +5787,7 @@ int main( int argc, char *argv[] )
     <title>Formatting the Entire Widget</title>
     <para>
      The above functions apply attributes to portions of text in a buffer.  If attributes have to be applied
-     for the entire <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> widget, the
+     for the entire &gtk-text-view; widget, the
      <code>(setf gtk-text-view-*)</code> functions can be used.  For example, the function
      <ulink url="&gtk-text-view-editable;"><code>gtk-text-view-editable</code></ulink> makes
      <code>text-view</code> editable/non-editable.
@@ -5818,8 +5857,8 @@ int main( int argc, char *argv[] )
     search.
    </para>
    <para>
-    The function <ulink url="&gtk-text-buffer-selection-bounds;">
-    <code>gtk-text-buffer-selection-bounds</code></ulink> was introduced earlier, to obtain the iterators
+    The function &gtk-text-buffer-selection-bounds;
+    was introduced earlier, to obtain the iterators
     around the current selection.  To set the current selection programmatically the function
     <ulink url="&gtk-text-buffer-select-range;"><code>gtk-text-buffer-select-range</code></ulink> with the
     arguments <code>buffer</code>, <code>start</code>, <code>end</code> can be used.  The function sets the
@@ -5961,9 +6000,9 @@ bad things will happen.")
      function <ulink url="&gtk-text-view-scroll-mark-onscreen;">
      <code>gtk-text-view-scroll-mark-onscreen</code></ulink> with the arguments <code>text-view</code> and
      <code>mark</code> scrolls to a position in the buffer.  The argument <code>mark</code> specifies the
-     position to scroll to.  Note that this is a method of the <ulink url="&gtk-text-view;">
-     <code>gtk-text-view</code></ulink> widget rather than a <ulink url="&gtk-text-buffer;">
-     <code>gtk-text-buffer</code></ulink> object.  Since it does not change the contents of the buffer, it
+     position to scroll to.  Note that this is a method of the &gtk-text-view;
+     widget rather than a &gtk-text-buffer;
+     object.  Since it does not change the contents of the buffer, it
      only changes the way a buffer is viewed.
     </para>
     <para>
@@ -6062,7 +6101,7 @@ bad things will happen.")
      <ulink url="&gtk-text-buffer-delete-mark;"><code>gtk-text-buffer-delete-mark</code></ulink>
      or <ulink url="&gtk-text-buffer-delete-mark-by-name;">
      <code>gtk-text-buffer-delete-mark-by-name</code></ulink>.  There are two marks built-in to
-     <ulink url="&gtk-text-buffer;"><code>gtk-text-buffer</code></ulink> - "insert" and "selection-bound".
+     &gtk-text-buffer; - "insert" and "selection-bound".
      The "insert" mark refers to the cursor position, also called the insertion point.  A selection is
      bounded by two marks.  One is the "insert" mark and the other is "selection-bound" mark.  When no text
      is selected the two marks are in the same position.
@@ -6098,7 +6137,7 @@ bad things will happen.")
     Examining and modifying text is another common operation performed on text buffers.  Examples are
     converting a selected portion of text into a comment while editing a program, determining and inserting
     the correct end tag while editing HTML, inserting a pair of HTML tags around the current word, etc.  The
-    <ulink url="&gtk-text-iter;"><code>gtk-text-iter</code></ulink> object provides functions to do such
+    &gtk-text-iter; instance provides functions to do such
     processing.
    </para>
    <para>
@@ -6360,7 +6399,7 @@ bad things will happen.")
     <para>
      Images in a buffer are represented by the character <code>0xFFFC</code> (Unicode object replacement
      character).  When text containing images is retrieved from a buffer using the function
-     <ulink url="&gtk-text-buffer-get-text;"><code>gtk-text-buffer-get-text</code></ulink> the
+     &gtk-text-buffer-get-text; the
      <code>0xFFFC</code> characters representing images are dropped off in the returned text.  If these
      characters representing images are required, use the slice variant -
      <ulink url="&gtk-text-buffer-get-slice;"><code>gtk-text-buffer-get-slice</code></ulink>.  The image at a
@@ -6373,8 +6412,8 @@ bad things will happen.")
     <title>Inserting Widgets</title>
     <para>
      Inserting a widget, unlike inserting an image, is a two step process.  The additional complexity is due
-     to the functionality split between <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> and
-     <ulink url="&gtk-text-buffer;"><code>gtk-text-buffer</code></ulink>.  The first step is to create and
+     to the functionality split between &gtk-text-view; and
+     &gtk-text-buffer;.  The first step is to create and
      insert a <ulink url="&gtk-text-child-anchor;"><code>gtk-text-child-anchor</code></ulink>.  A widget is
      held in a buffer using a <ulink url="&gtk-text-child-anchor;">
      <code>gtk-text-child-anchor</code></ulink>.  A child anchor according to the GTK manual is a spot in the
@@ -6389,7 +6428,7 @@ bad things will happen.")
     <para>
      An anchor can hold only one widget, it could be a container widget, which in turn can contain many
      widgets, unless you are doing tricky things like displaying the same buffer using different
-     <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> objects.  The following program inserts
+     &gtk-text-view; objects.  The following program inserts
      a button widget into a text buffer, whenever the user clicks on the Insert button.
     </para>
     <figure id="figure-text-view-insert-widget">
@@ -6665,7 +6704,7 @@ bad things will happen.")
     <para>
      In the previous section we obtained the screen coordinates for a position in the buffer.  What if we
      want to do the exact opposite, i.e. what if we want to find the position in the buffer corresponding to
-     a particular X-Y coordinate.  The <ulink url="&gtk-text-view;"><code>gtk-text-view</code></ulink> has
+     a particular X-Y coordinate.  The &gtk-text-view; has
      functions for these as well.
     </para>
     <para>
@@ -8642,8 +8681,8 @@ main (int argc, char **argv)
    </figure>
    <para>
     The dialog widget is just a window with a few things pre-packed into it.  The dialog widget is of type
-    <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink> which is represented by the Lisp class
-    <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>.  A dialog widget can be created with the
+    &gtk-dialog; which is represented by the Lisp class
+    &gtk-dialog;.  A dialog widget can be created with the
     function <ulink url="&gtk-dialog-new;"><code>gtk-dialog-new</code></ulink> or the call
     <code>(make-instance 'gtk-dialog)</code>.  The function <ulink url="&gtk-dialog-new;">
     <code>gtk-dialog-new</code></ulink> does not take an argument.  In addition the function
@@ -8669,11 +8708,10 @@ main (int argc, char **argv)
    <para>
     The action area can be filled with the desired buttons for the dialog window. Standard buttons can be
     added with the function <ulink url="&gtk-dialog-add-button;"><code>gtk-dialog-add-button</code></ulink>.
-    The function takes three arguments.  The first argument is the dialog window the button is added to.  The
-    second argument is a string which is the text of the button or a stock ID.  The last argument is of the
-    enumeration type <ulink url="&gtk-response-type;"><code>gtk-response-type</code></ulink> and defines the
-    response type of the button.  Possible values of <ulink url="&gtk-response-type;">
-    <code>gtk-response-type</code></ulink> are shown in table <link linkend="table-gtk-response-type">
+    The function takes three arguments.  The first argument is the dialog window the button is added to. The
+    second argument is a string which is the text of the button or a stock ID. The last argument is a value
+    of the &gtk-response-type; enumeration and defines the response type of the button. Possible values of
+    the &gtk-response-type; enumeration are shown in table <link linkend="table-gtk-response-type">
     GtkResponseType</link>.
    </para>
    <para>
@@ -8747,9 +8785,8 @@ main (int argc, char **argv)
    <para>
     After creation and configuration of the dialog window the dialog is executed with the function
     <ulink url="&gtk-dialog-run;"><code>gtk-dialog-run</code></ulink>.  The function takes the dialog window
-    of type <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink> as the only argument.  After closing
-    the dialog window with one of the buttons the response is returned as an integer value of type
-    <ulink url="&gtk-response-type;"><code>gtk-response-type</code></ulink>.
+    of type &gtk-dialog; as the only argument. After closing the dialog window with one of the buttons the
+    response is returned as an integer value of the &gtk-response-type; enumeration.
    </para>
   </section>
 
@@ -8787,7 +8824,7 @@ main (int argc, char **argv)
    </figure>
    <para>
     A message dialog <ulink url="&gtk-message-dialog;"><code>gtk-message-dialog</code></ulink> is a subclass
-    of the more general class <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink> and gives an easy way
+    of the more general class &gtk-dialog; and gives an easy way
     to display messages to the user. The figure <link linkend="figure-message-dialog">Message Dialog</link>
     shows an example for an informational message.
    </para>
@@ -8924,7 +8961,7 @@ main (int argc, char **argv)
    </para>
    <para>
     It is possible to show a <ulink url="&gtk-about-dialog;"><code>gtk-about-dialog</code></ulink> like any
-    other <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, e.g. using
+    other &gtk-dialog;, e.g. using
     <ulink url="&gtk-dialog-run;"><code>gtk-dialog-run</code></ulink>.  In this case, you might need to know
     that the 'Close' button returns the <code>:cancel</code> response ID.
    </para>
@@ -9087,29 +9124,29 @@ main (int argc, char **argv)
      Colors are represented as a &gdk-rgba; structure, which is defined in the GDK library. The structure
      has the properties <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> to
      represent RGBA colors. It is based on Cairo's way to deal with colors and mirrors its behavior. All
-     values are in the range from 0.0 to 1.0 inclusive.
+     values are in the range from 0.0 to 1.0 inclusive. Other values will be clamped to this range when
+     drawing.
     </para>
     <para>
-     To create a representation of the color red use
+     The function &gdk-rgba-new; is the constructor for creating a &gdk-rgba; instance. To create a
+     representation of the color red use
      <programlisting>
 (gdk-rgba-new :red 1.0)
      </programlisting>
-     The function
-     &gdk-rgba-new; is the constructor of the Lisp implementation for creating a &gdk-rgba; structure.
      The color
      <programlisting>
 (gdk-rgba-new :red 0.0 :green 0.0 :blue 0.0 :alpha 0.0)
      </programlisting>
-     represents transparent black and
+     represents transparent black and the color
      <programlisting>
 (gdk-rgba-new :red 1.0 :green 1.0 :blue 1.0 :alpha 1.0)
      </programlisting>
-     is opaque white. Other values will be clamped to this range when drawing.
+     is opaque white. 
     </para>
     <para>
      Alternatively, the function &gdk-rgba-parse; parses a textual representation of a color, filling in the
      <code>red</code>, <code>green</code>, <code>blue</code> and <code>alpha</code> fields of the &gdk-rgba;
-     structure. The string can be either one of:
+     instance. The textual representation can be either one of:
     </para>
     <itemizedlist>
      <listitem>
@@ -9130,41 +9167,41 @@ main (int argc, char **argv)
      Where <code>r</code>, <code>g</code>, <code>b</code> and <code>a</code> are respectively the
      <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> color values. In the
      last two cases, <code>r</code>, <code>g</code> and <code>b</code> are either integers in the range 0 to
-     255 or precentage values in the range 0 % to 100 %, and a is a floating point value in the range 0.0 to
-     1.0.
+     255 or precentage values in the range 0 % to 100 %, and <code>a</code> is a floating point value in the
+     range 0.0 to 1.0.
     </para>
     <para>
      Conversely, the function &gdk-rgba-to-string; returns a textual specification of the RGBA color in the
-     form <code>rgb(r, g, b)</code> or <code>rgba(r, g, b, a)</code>, where <code>r</code>, <code>g</code>,
-     <code>b</code> and <code>a</code> represent the <code>red</code>, <code>green</code>, <code>blue</code>,
-     and <code>alpha</code> values respectively. <code>r</code>, <code>g</code>, and <code>b</code> are
-     represented as integers in the range 0 to 255, and <code>a</code> is represented as a floating point
-     value in the range 0.0 to 1.0.
+     form <code>rgb(r,g,b)</code> or <code>rgba(r,g,b,a)</code>. These string forms are supported by the CSS3
+     colors module, and can be parsed by the function &gdk-rgba-parse;. Note that this string representation
+     may loose some precision, since <code>r</code>, <code>g</code>, and <code>b</code> are represented as
+     8-bit integers. If this is a concern, you should use a different representation.
     </para>
     <para>
-     These string forms are supported by the CSS3 colors module, and can be parsed by the function
-     &gdk-rgba-parse;. Note that this string representation may loose some precision, since <code>r</code>,
-     <code>g</code>, and <code>b</code> are represented as 8-bit integers. If this is a concern, you should
-     use a different representation.
+     A simple example is the representation of the color red, which can be created from a string with the call
+     <programlisting>
+(gdk-rgba-parse "Red")
+=> #S(GDK-RGBA :RED 1.0d0 :GREEN 0.0d0 :BLUE 0.0d0 :ALPHA 1.0d0)
+     </programlisting>
+     and converted back to a textual representation with
+     <programlisting>
+(gdk-rgba-to-string (gdk-rgba-parse "Red"))
+=> "rgb(255,0,0)"
+     </programlisting>
     </para>
-    <para>
-     A simple example is the representation of the color red, which can be created with the call
-     <code>(gdk-rgba-parse "Red")</code> from a string and converted back to a textual with the call
-     <code>(gdk-rgba-to-string (gdk-rgba-parse "Red"))</code>.  The result of the last function is
-     <code>"rgb(255,0,0)"</code>.
-    </para>
-    <para>
-     Note, that GTK+ knows a second deprecated representation of colors as a &gdk-color; structure.
-    </para>
+    <note>
+     GTK+ knows a second deprecated representation of colors as a &gdk-color; structure. All functions that
+     use the &gdk-color; representation are also deprecated.
+    </note>
    </section>
 
-   <section id="Color_Button_and_Color_Chooser_Dialog">
+   <section id="Color_Button_and_Color_Chooser_Dialog" revision="2021-2-11">
     <title>Color Button and Color Chooser Dialog</title>
-    <figure id="figure-color-button">
-     <title>Color Selecting Dialog</title>
+    <figure id="figure-color-button-label">
+     <title>Color Button</title>
      <mediaobject>
       <imageobject>
-       <imagedata fileref="figures/color-button.gif" format="gif"></imagedata>
+       <imagedata fileref="figures/color-button-label.png" format="png"></imagedata>
       </imageobject>
      </mediaobject>
     </figure>
@@ -9174,37 +9211,62 @@ main (int argc, char **argv)
      preference dialog. It implements the &gtk-color-chooser; interface.
     </para>
     <para>
-     Example <link linkend="example-color-button">Color Button</link> shows a simple implementation of a
-     &gtk-color-button; widget. The example displays a button with the predefined color gray. When clicking
-     the button, a color selection dialog is opened. The dialog is shown in figure
-     <link linkend="figure-color-button">Color Button</link>. To get the currently selected color you should
-     connect a signal handler to the signal "color-set" and retrieve the color with the slot access function
-     &gtk-color-chooser-rgba;.
+     Example <link linkend="example-color-button-label">Color Button</link> shows a simple implementation
+     of a &gtk-color-button; widget. The example displays a color button and a label "Color Button". When
+     clicking the button, a color selection dialog is opened. The dialog is shown in figure
+     <link linkend="figure-color-chooser-dialog">Color Chooser Dialog</link>. To get the currently selected
+     color you should connect a handler to the signal "color-set" and retrieve the color with the slot access
+     function &gtk-color-chooser-rgba;. To change the color of the label the CSS color is loaded in a CSS
+     provider with the function &gtk-css-provider-load-from-data; and the style context of the label is
+     updated with the function &gtk-style-context-add-provider;.
     </para>
-    <example id="example-color-button">
+    <figure id="figure-color-chooser-dialog">
+     <title>Color Chooser Dialog</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/color-chooser-dialog.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+    <example id="example-color-button-label">
      <title>Color Button</title>
      <programlisting>
-(let ((color (gdk-rgba-parse "Blue")))
-  (defun example-color-button ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :title "Example Color Button"
-                                   :border-width 12
-                                   :default-width 250
-                                   :default-height 200))
-            (button (make-instance 'gtk-color-button
-                                   :rgba color)))
-        (g-signal-connect window "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        (g-signal-connect button "color-set"
-           (lambda (widget)
-             (let ((rgba (gtk-color-chooser-rgba widget)))
-               (format t "Selected color is ~A~%"
-                       (gdk-rgba-to-string rgba)))))
-        (gtk-container-add window button)
-        (gtk-widget-show-all window)))))
+(defun example-color-button-label ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Color Button"
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 200))
+          (provider (gtk-css-provider-new))
+          (box (make-instance 'gtk-box
+                              :orientation :horizontal))
+          (label (make-instance 'gtk-label
+                                :label "&lt;big>&lt;b>Color button&lt;/b>&lt;/big>"
+                                :use-markup t))
+          (button (make-instance 'gtk-color-button
+                                 :rgba (gdk-rgba-parse "Black"))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Handler for the "color-set" signal
+      (g-signal-connect button "color-set"
+         (lambda (widget)
+           (let* ((rgba (gtk-color-chooser-rgba widget))
+                  (css-label (format nil "label { color : ~a }"
+                                         (gdk-rgba-to-string rgba)))
+                  (context (gtk-widget-style-context label)))
+             ;; Update the color of the label
+             (gtk-css-provider-load-from-data provider css-label)
+             (gtk-style-context-add-provider context
+                                             provider
+                                             +gtk-style-provider-priority-user+))))
+      ;; Pack and show the widgets
+      (gtk-box-pack-start box button)
+      (gtk-box-pack-start box label)
+      (gtk-container-add window box)
+      (gtk-widget-show-all window))))
      </programlisting>
     </example>
     <para>
@@ -9214,56 +9276,53 @@ main (int argc, char **argv)
     </para>
     <para>
      By default, the chooser presents a prefined palette of colors, plus a small number of settable custom
-     colors. It is also possible to select a different color with the single-color editor. To enter the
-     single-color editing mode, use the context menu of any color of the palette, or use the '+' button to
-     add a new custom color. The chooser automatically remembers the last selection, as well as custom colors.
-     To change the initially selected color or to get the selected color use the slot access function
-     &gtk-color-chooser-rgba;.
+     colors. The dialog is shown in figure <link linkend="figure-color-chooser-dialog">
+     Color Chooser Dialog</link> It is also possible to select a different color with the single-color editor.
+     To enter the single-color editing mode, use the context menu of any color of the palette, or use the '+'
+     button to add a new custom color. The chooser automatically remembers the last selection, as well as
+     custom colors. To change the initially selected color or to get the selected color use the slot access
+     function &gtk-color-chooser-rgba;.
     </para>
     <para>
-     Example <link linkend="example-color-chooser-dialog">Chooser Dialog</link> shows how to replace the
-     default color palette and the default gray palette with the function &gtk-color-chooser-add-palette;.
+     Example <link linkend="example-color-chooser-palette">Color Chooser Palette</link> shows how to replace
+     the default color palette and the default gray palette with the function &gtk-color-chooser-add-palette;.
+     The custom color palettes are shown in figure <link linkend="figure-color-chooser-palette">
+     Color Chooser Palette</link>. Clicking on the drawing area opens a color chooser dialog to select a new
+     background color for the drawing area.
     </para>
-    <figure id="figure-color-chooser-dialog">
-     <title>Color Selecting Dialog with a custom color and gray palette</title>
+    <figure id="figure-color-chooser-palette">
+     <title>Color Chooser Dialog with a custom color and gray palette</title>
      <mediaobject>
       <imageobject>
-       <imagedata fileref="figures/color-chooser-dialog.gif" format="gif"></imagedata>
+       <imagedata fileref="figures/color-chooser-palette.png" format="png"></imagedata>
       </imageobject>
      </mediaobject>
     </figure>
-    <example id="example-color-chooser-dialog">
-     <title>Color Chooser Dialog</title>
-     <programlisting>    
+    <example id="example-color-chooser-palette">
+     <title>Color Chooser Dialog with custom palettes</title>
+     <programlisting>
 (let ((message "Click to change the background color.")
       (bg-color (gdk-rgba-parse "White"))
-      ;; Color palette with 4 rgba colors
-      (palette1 (list (gdk-rgba-parse "Red")
-                      (gdk-rgba-parse "Yellow")
-                      (gdk-rgba-parse "Blue")
-                      (gdk-rgba-parse "Green")))
-      ;; Gray palette with 3 rgba grays
-      (palette2 (list (gdk-rgba-parse "White")
+      ;; Color palette with 9 Red RGBA colors
+      (palette1 (list (gdk-rgba-parse "IndianRed")
+                      (gdk-rgba-parse "LightCoral")
+                      (gdk-rgba-parse "Salmon")
+                      (gdk-rgba-parse "DarkSalmon")
+                      (gdk-rgba-parse "LightSalmon")
+                      (gdk-rgba-parse "Crimson")
+                      (gdk-rgba-parse "Red")
+                      (gdk-rgba-parse "FireBrick")
+                      (gdk-rgba-parse "DarkRed")))
+      ;; Gray palette with 9 gray RGBA colors
+      (palette2 (list (gdk-rgba-parse "Gainsboro")
+                      (gdk-rgba-parse "LightGray")
+                      (gdk-rgba-parse "Silver")
+                      (gdk-rgba-parse "DarkGray")
                       (gdk-rgba-parse "Gray")
-                      (gdk-rgba-parse "Black"))))
-
-  (defun drawing-area-event (widget event)
-    (declare (ignore widget))
-    (when (eq (gdk-event-type event) :button-press)
-      (let ((dialog (make-instance 'gtk-color-chooser-dialog
-                                   :color bg-color
-                                   :use-alpha nil)))
-        ;; Add a custom palette to the dialog
-        (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
-        ;; Add a second coustom palette to the dialog
-        (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
-        ;; Run the color chooser dialog
-        (let ((response (gtk-dialog-run dialog)))
-          (when (eq response :ok)
-            ;; Change the background color for the drawing area
-            (setf bg-color (gtk-color-chooser-rgba dialog)))
-          ;; Destroy the color chooser dialog
-          (gtk-widget-destroy dialog)))))
+                      (gdk-rgba-parse "DimGray")
+                      (gdk-rgba-parse "LightSlateGray")
+                      (gdk-rgba-parse "SlateGray")
+                      (gdk-rgba-parse "DarkSlateGray"))))
 
   (defun example-color-chooser-dialog ()
     (within-main-loop
@@ -9275,27 +9334,44 @@ main (int argc, char **argv)
                           (lambda (widget)
                             (declare (ignore widget))
                             (leave-gtk-main)))
+        ;; Draw the background color and a hint on the drawing area
         (g-signal-connect area "draw"
-                          (lambda (widget cr)
-                            (declare (ignore widget))
-                            (let ((cr (pointer cr)))
-                              ;; Paint the current color on the drawing area
-                              (cairo-set-source-rgb cr
-                                                    (gdk-rgba-red bg-color)
-                                                    (gdk-rgba-green bg-color)
-                                                    (gdk-rgba-blue bg-color))
-                              (cairo-paint cr)
-                              ;; Print a hint on the drawing area
-                              (cairo-set-source-rgb cr 0.1 0.1 0.1)
-                              (cairo-select-font-face cr "Sans"
-                                                         :normal :normal)
-                              (cairo-set-font-size cr 12)
-                              (cairo-move-to cr 12 24)
-                              (cairo-show-text cr message)
-                              (cairo-destroy cr))))
+            (lambda (widget cr)
+              (declare (ignore widget))
+              (let ((cr (pointer cr))
+                    (red (gdk-rgba-red bg-color))
+                    (green (gdk-rgba-green bg-color))
+                    (blue (gdk-rgba-blue bg-color)))
+                    ;; Paint the current color on the drawing area
+                    (cairo-set-source-rgb cr red green blue)
+                    (cairo-paint cr)
+                    ;; Print a hint on the drawing area
+                    (cairo-set-source-rgb cr (- 1 red) (- 1 green) (- 1 blue))
+                    (cairo-select-font-face cr "Sans")
+                    (cairo-set-font-size cr 12)
+                    (cairo-move-to cr 12 24)
+                    (cairo-show-text cr message)
+                    (cairo-destroy cr))))
+        ;; Create and run a color chooser dialog to select a background color
         (g-signal-connect area "event"
-                          (lambda (widget event)
-                            (drawing-area-event widget event)))
+            (lambda (widget event)
+              (declare (ignore widget))
+              (when (eq (gdk-event-type event) :button-press)
+                (let ((dialog (make-instance 'gtk-color-chooser-dialog
+                                             :use-alpha nil)))
+                  ;; Add a custom palette to the dialog
+                  (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
+                  ;; Add a second coustom palette to the dialog
+                  (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
+                  ;; Set the actual background color for the color chooser
+                  (setf (gtk-color-chooser-rgba dialog) bg-color)
+                  ;; Run the color chooser dialog
+                  (let ((response (gtk-dialog-run dialog)))
+                    (when (eq response :ok)
+                      ;; Change the background color for the drawing area
+                      (setf bg-color (gtk-color-chooser-rgba dialog)))
+                      ;; Destroy the color chooser dialog
+                      (gtk-widget-destroy dialog))))))
         ;; Set the event mask for the drawing area
         (setf (gtk-widget-events area) :button-press-mask)
         ;; Add the drawing area to the window
@@ -9306,31 +9382,27 @@ main (int argc, char **argv)
    </section>
   </section>
 
-  <section id="Selecting_Files">
+  <section id="Selecting_Files" revision="2021-2-11">
    <title>Selecting Files</title>
    <figure id="figure-file-chooser-dialog">
     <title>File Chooser Dialog</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/file-chooser-dialog.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/file-chooser-dialog.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
    <para>
-    <ulink url="&gtk-file-chooser;"><code>gtk-file-chooser</code></ulink> is an interface that can be
-    implemented by file selection widgets. In GTK+, the main objects that implement this interface are
-    <ulink url="&gtk-file-chooser-widget;"><code>gtk-file-chooser-widget</code></ulink>,
-    <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink>, and
-    <ulink url="&gtk-file-chooser-button;"><code>gtk-file-chooser-button</code></ulink>. You do not need to
-    write an object that implements the <ulink url="&gtk-file-chooser;"><code>gtk-file-chooser</code></ulink>
-    interface unless you are trying to adapt an existing file selector to expose a standard programming
-    interface.
+    The &gtk-file-chooser; interface is an interface that can be implemented by file selection widgets. In
+    GTK+, the main objects that implement this interface are the &gtk-file-chooser-widget;,
+    &gtk-file-chooser-dialog;, and &gtk-file-chooser-button; widgets. You do not need to write an object that
+    implements the &gtk-file-chooser; interface unless you are trying to adapt an existing file selector to
+    expose a standard programming interface.
    </para>
    <para>
-    <ulink url="&gtk-file-chooser;"><code>gtk-file-chooser</code></ulink> allows for shortcuts to various
-    places in the filesystem.  In the default implementation these are displayed in the left pane.
-    It may be a bit confusing at first that these shortcuts come from various sources and in various
-    flavours, so lets explain the terminology here:
+    The &gtk-file-chooser; interface allows for shortcuts to various places in the filesystem.  In the
+    default implementation these are displayed in the left pane. It may be a bit confusing at first that
+    these shortcuts come from various sources and in various flavours, so lets explain the terminology here:
    </para>
    <variablelist>
     <varlistentry>
@@ -9350,98 +9422,85 @@ main (int argc, char **argv)
     <varlistentry>
      <term>Volumes</term>
      <listitem>
-      are provided by the underlying filesystem abstraction. They are the "roots" of the filesystem.
+      are provided by the underlying filesystem abstraction. Volumes are the "roots" of the filesystem.
      </listitem>
     </varlistentry>
    </variablelist>
 
    <bridgehead renderas='sect3'>File Names and Encodings</bridgehead>
    <para>
-    When the user is finished selecting files in a <ulink url="&gtk-file-chooser;">
-    <code>gtk-file-chooser</code></ulink>, your program can get the selected names either as filenames or as
-    URIs.  For URIs, the normal escaping rules are applied if the URI contains non-ASCII characters. However,
-    filenames are always returned in the character set specified by the <code>G_FILENAME_ENCODING</code>
-    environment variable.  Please see the Glib documentation for more details about this variable.
+    When the user has finished selecting files in a &gtk-file-chooser; object, the program can receive the
+    selected names either as filenames or as URIs. For URIs, the normal escaping rules are applied if the URI
+    contains non-ASCII characters. However, filenames are always returned in the character set specified by
+    the <code>G_FILENAME_ENCODING</code> environment variable. Please see the Glib documentation for more
+    details about this variable.
    </para>
    <para>
-    <emphasis>Note:</emphasis> This means that while you can pass the result of
-    <ulink url="&gtk-file-chooser-filename;"><code>gtk-file-chooser-filename</code></ulink> to
-    <code>open(2)</code> or <code>fopen(3)</code>, you may not be able to directly set it as the text of a
-    &gtk-label; widget unless you convert it first to UTF-8,
-    which all GTK+ widgets expect. You should use the function <ulink url="&g-filename-to-utf8;">
-    <code>g-filename-to-utf8</code></ulink> to convert filenames into strings that can be passed to GTK+
-    widgets.
+    <emphasis>Note:</emphasis> You may not be able to directly set the result of the function
+    &gtk-file-chooser-filename; as the text of a &gtk-label; widget unless you convert it first to UTF-8,
+    which all GTK+ widgets expect. You should use the function &g-filename-to-utf8; to convert filenames into
+    strings that can be passed to GTK+ widgets.
    </para>
 
    <bridgehead renderas='sect3'>Adding a Preview Widget</bridgehead>
    <para>
     You can add a custom preview widget to a file chooser and then get notification about when the preview
-    needs to be updated. To install a preview widget, use <ulink url="&gtk-file-chooser-preview-widget;">
-    <code>gtk-file-chooser-preview-widget</code></ulink>. Then, connect to the "update-preview" signal to get
-    notified when you need to update the contents of the preview.
+    needs to be updated. To install a preview widget, use the function &gtk-file-chooser-preview-widget;.
+    Then, connect to the "update-preview" signal to get notified when you need to update the contents of the
+    preview.
    </para>
    <para>
-    Your callback should use <ulink url="&gtk-file-chooser-preview-filename;">
-    <code>gtk-file-chooser-preview-filename</code></ulink> to see what needs previewing.  Once you have
-    generated the preview for the corresponding file, you must call
-    <ulink url="&gtk-file-chooser-preview-widget-active;">
-    <code>gtk-file-chooser-preview-widget-active</code></ulink> with a boolean flag that indicates whether
-    your callback could successfully generate a preview.
+    Your callback should use the function &gtk-file-chooser-preview-filename; to see what needs previewing.
+    Once you have generated the preview for the corresponding file, you must call the function
+    &gtk-file-chooser-preview-widget-active; with a boolean flag that indicates whether your callback could
+    successfully generate a preview.
    </para>
 
    <bridgehead renderas='sect3'>Adding Extra Widgets</bridgehead>
    <para>
     You can add extra widgets to a file chooser to provide options that are not present in the default
-    design.  For example, you can add a toggle button to give the user the option to open a file in read-only
-    mode. You can use <ulink url="&gtk-file-chooser-extra-widget;">
-    <code>gtk-file-chooser-extra-widget</code></ulink> to insert additional widgets in a file chooser.
+    design. For example, you can add a toggle button to give the user the option to open a file in read-only
+    mode. You can use the function &gtk-file-chooser-extra-widget; to insert additional widgets in a file
+    chooser.
    </para>
    <para>
-    <emphasis>Note:</emphasis> If you want to set more than one extra widget in the file chooser, you can use
-    a container such as a &gtk-box; or a &gtk-table; and include your widgets in it.  Then, set the container
-    as the whole
-    extra widget.
+    <emphasis>Note:</emphasis> If you want to set more than one extra widget in the file chooser, you can
+    use a container such as a &gtk-box; or a &gtk-grid; widget and include your widgets in it. Then, set the
+    container as the whole extra widget.
    </para>
    <para>
-    <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink> is a dialog box
-    suitable for use with "File/Open" or "File/Save as" commands.  This widget works by putting a
-    <ulink url="&gtk-file-chooser-widget;"><code>gtk-file-chooser-widget</code></ulink> inside a
-    <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>.  It exposes the
-    <code>GtkFileChooserIface</code> interface, so you can use all of the <ulink url="&gtk-file-chooser;">
-    <code>gtk-file-chooser</code></ulink> functions on the file chooser dialog as well as those for
-    <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>.
+    The &gtk-file-chooser-dialog; widget is a dialog box suitable for use with "File/Open" or "File/Save as"
+    commands. This widget works by putting a &gtk-file-chooser-widget; widget inside a &gtk-dialog; widget.
+    It exposes the &gtk-file-chooser; interface, so you can use all of the &gtk-file-chooser; functions on
+    the file chooser dialog as well as those for the &gtk-dialog; class.
    </para>
    <para>
-    Note that <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink> does not
-    have any methods of its own. Instead, you should use the functions that work on a
-    <ulink url="&gtk-file-chooser;"><code>gtk-file-chooser</code></ulink>.
+    Note that the &gtk-file-chooser-dialog; class does not have any methods of its own. Instead, you should
+    use the functions that work on a &gtk-file-chooser; object.
    </para>
 
-   <section id="Setting up a file chooser dialog">
+   <section id="Setting_up_a_file_chooser_dialog">
     <title>Setting up a file chooser dialog</title>
     <para>
-     The enumeration <ulink url="&gtk-file-chooser-action;"><code>gtk-file-chooser-action</code></ulink>
-     describes whether a <ulink url="&gtk-file-chooser;"><code>gtk-file-chooser</code></ulink> is being used
-     to open existing files or to save to a possibly new file.  These are the cases in which you may need to
-     use a <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink>.
+     The &gtk-file-chooser-action; enumeration describes whether a &gtk-file-chooser; widget is being used
+     to open existing files or to save to a possibly new file. These are the cases in which you may need to
+     use a &gtk-file-chooser-dialog; widget.
     </para>
     <itemizedlist>
      <listitem>
-      To select a file for opening, as for a File/Open command.  Use the keyword <code>:open</code> for the
+      To select a file for opening, as for a File/Open command. Use the keyword <code>:open</code> for the
       slot <code>:action</code>, when creating a file chooser dialog.
      </listitem>
      <listitem>
-      To save a file for the first time, as for a File/Save command.  Use the keyword <code>:save</code>,
-      and suggest a name such as "Untitled" with <ulink url="&gtk-file-chooser-current-name;">
-      <code>gtk-file-chooser-current-name</code></ulink>.
+      To save a file for the first time, as for a File/Save command. Use the keyword <code>:save</code>,
+      and suggest a name such as "Untitled" with the function &gtk-file-chooser-current-name;.
      </listitem>
      <listitem>
       To save a file under a different name, as for a File/Save As command. Use the keyword
-      <code>:save</code>, and set the existing filename with <ulink url="&gtk-file-chooser-filename;">
-      <code>gtk-file-chooser-filename</code></ulink>.
+      <code>:save</code>, and set the existing filename with the function &gtk-file-chooser-filename;.
      </listitem>
      <listitem>
-      To choose a folder instead of a file. Use the keyword <code>select-folder</code>.
+      To choose a folder instead of a file. Use the keyword <code>:select-folder</code>.
      </listitem>
     </itemizedlist>
    </section>
@@ -9449,198 +9508,277 @@ main (int argc, char **argv)
    <section id="Response_Codes">
     <title>Response Codes</title>
     <para>
-     <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink> inherits from
-     <ulink url="&gtk-dialog;"><code>gtk-dialog</code></ulink>, so buttons that go in its action area have
-     response codes such as <code>:accept</code> and <code>:canel</code>.  For example, you could create a
-     file chooser dialog as follows:
+     The &gtk-file-chooser-dialog; class inherits from the &gtk-dialog; class, so buttons that go in its
+     action area have response codes such as <code>:accept</code> and <code>:canel</code>. For example, you
+     could create a file chooser dialog as follows:
     </para>
     <programlisting>
-(let ((dialog (gtk-file-chooser-dialog-new "Speichern"
+(let ((dialog (gtk-file-chooser-dialog-new "Save"
                                            nil
                                            :save
                                            "gtk-save" :accept
                                            "gtk-cancel" :cancel)))
-[...]
+  [...] )
     </programlisting>
     <para>
-     This will create buttons for "Cancel" and "Save" that use stock response identifiers from
-     <ulink url="&gtk-response-type;"><code>gtk-response-type</code></ulink>.  For most dialog boxes you can
-     use your own custom response codes rather than the ones in <ulink url="&gtk-response-type;">
-     <code>gtk-response-type</code></ulink>, but <ulink url="&gtk-file-chooser-dialog;">
-     <code>gtk-file-chooser-dialog</code></ulink> assumes that its "accept"-type action, e.g. an "Open" or
-     "Save" button, will have one of the following response codes <code>:accept</code>, <code>:ok</code>,
-     <code>:yes</code>, or <code>:apply</code>.
+     This will create buttons for "Cancel" and "Save" that use stock response identifiers from the
+     &gtk-response-type; enumeration. For most dialog boxes you can use your own custom response codes rather
+     than the ones in the &gtk-response-type; enumeration, but the &gtk-file-chooser-dialog; widget assumes
+     that its "accept"-type action, e.g. an "Open" or "Save" button, will have one of the following response
+     codes <code>:accept</code>, <code>:ok</code>, <code>:yes</code>, or <code>:apply</code>.
     </para>
     <para>
-     This is because <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink> must
-     intercept responses and switch to folders if appropriate, rather than letting the dialog terminate - the
-     implementation uses these known response codes to know which responses can be blocked if appropriate.
-     To summarize, make sure you use a stock response code when you use
-     <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink> to ensure proper
-     operation.
+     This is because the &gtk-file-chooser-dialog; widget must intercept responses and switch to folders if
+     appropriate, rather than letting the dialog terminate - the implementation uses these known response
+     codes to know which responses can be blocked if appropriate. To summarize, make sure you use a stock
+     response code when you use the &gtk-file-chooser-dialog; widget to ensure proper operation.
     </para>
     <para>
      Example <link linkend="example-file-chooser-dialog">File Chooser Dialog</link> shows an example for
-     selecting a file for save.  The dialog is shown in figure <link linkend="figure-file-chooser-dialog">
+     selecting a file for open. The dialog is shown in figure <link linkend="figure-file-chooser-dialog">
      File Chooser Dialog</link>.
     </para>
     <example id="example-file-chooser-dialog">
      <title>File Chooser Dialog</title>
      <programlisting>
-(defun example-file-chooser-dialog ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example File Chooser Dialog"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 100))
-          (button (make-instance 'gtk-button
-                                 :label "Select a file for save ..."
-                                 :image
-                                 (gtk-image-new-from-stock "gtk-save"
-                                                           :button))))
-      ;; Handle the signal "destroy" for the window.
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Handle the signal "clicked" for the button.
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let ((dialog (gtk-file-chooser-dialog-new "Speichern"
-                                                      nil
-                                                      :save
-                                                      "gtk-save" :accept
-                                                      "gtk-cancel" :cancel)))
-             (when (eq (gtk-dialog-run dialog) :accept)
-               (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-get-filename dialog)))
-             (gtk-widget-destroy dialog))))
-      (gtk-container-add window button)
-      (gtk-widget-show-all window))))
+(defun create-file-chooser-dialog ()
+  (let ((dialog (gtk-file-chooser-dialog-new "Example File Chooser Dialog"
+                                             nil
+                                             :open
+                                             "gtk-open" :accept
+                                             "gtk-cancel" :cancel)))
+    (when (eq :accept (gtk-dialog-run dialog))
+      (format t "Save to file ~A~%"
+                (gtk-file-chooser-filename dialog)))
+    (gtk-widget-destroy dialog)))
      </programlisting>
     </example>
+    <figure id="figure-file-chooser-button">
+     <title>File Chooser Button</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/file-chooser-button.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
     <para>
-     The <ulink url="&gtk-file-chooser-button;"><code>gtk-file-chooser-button</code></ulink> is a widget
-     that lets the user select a file. It implements the <ulink url="&gtk-file-chooser;">
-     <code>gtk-file-chooser</code></ulink> interface.  Visually, it is a file name with a button to bring up
-     a <ulink url="&gtk-file-chooser-dialog;"><code>gtk-file-chooser-dialog</code></ulink>.  The user can
-     then use that dialog to change the file associated with that button.
+     The &gtk-file-chooser-button; widget is a widget that lets the user select a file. It implements the
+     &gtk-file-chooser; interface. Visually, it is a file name with a button to bring up a
+     &gtk-file-chooser-dialog; widget. The user can then use that dialog to change the file associated with
+     that button.
     </para>
     <para>
      Example <link linkend="example-file-chooser-button">File Chooser Button</link> shows an example for a
-     file chooser button to open a file.
+     file chooser button to select a folder and a second file chooser button to select a file. When a folder
+     is selected, the second button is set to that folder accordingly and vice versa. Also, this example
+     shows how to set some filters to allow the user to filter text and images files.
     </para>
     <example id="example-file-chooser-button">
      <title>File Chooser Button</title>
      <programlisting>
+(defun show-file-chooser-info (label chooser)
+  (let ((filename (gtk-file-chooser-filename chooser))
+        (uri (gtk-file-chooser-uri chooser))
+        (current-folder (gtk-file-chooser-current-folder chooser))
+        (current-folder-uri (gtk-file-chooser-current-folder-uri chooser))
+        (preview-filename (gtk-file-chooser-preview-filename chooser))
+        (preview-uri (gtk-file-chooser-preview-uri chooser)))
+    (setf (gtk-label-label label)
+          (format nil "&lt;small>&lt;tt>~{~20@a ~@a~%~}&lt;/tt>&lt;/small>"
+                      (list "Filename :" filename
+                            "URI :" uri
+                            "Current Folder :" current-folder
+                            "Current Folder URI :" current-folder-uri
+                            "Preview Filename :" preview-filename
+                            "Preview URI :" preview-uri)))))
+
 (defun example-file-chooser-button ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example File Chooser Button"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 100))
-          (button (make-instance 'gtk-file-chooser-button
-                                 :action :open)))
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Example File Chooser Button"
+                                  :type :toplevel
+                                  :border-width 24
+                                  :default-width 300
+                                  :default-height 100))
+           (info-box (make-instance 'gtk-box
+                                    :orientation :vertical
+                                    :valign :start
+                                    :spacing 12))
+           (info-label (make-instance 'gtk-label
+                                      :use-markup t))
+           (filter-all (make-instance 'gtk-file-filter))
+           (filter-image (make-instance 'gtk-file-filter))
+           (filter-text (make-instance 'gtk-file-filter))
+           (hbox (make-instance 'gtk-box
+                                :orientation :horizontal
+                                :expand nil
+                                :spacing 36
+                                :halign :start))
+           (vbox (make-instance 'gtk-box
+                                :orientation :vertical
+                                :expand nil
+                                :spacing 6
+                                :valign :start))
+           (button-folder (make-instance 'gtk-file-chooser-button
+                                         :action :select-folder))
+           (button-open (make-instance 'gtk-file-chooser-button
+                                       :action :open)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (g-signal-connect button "file-set"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "File set: ~A~%"
-                                  (gtk-file-chooser-get-filename button))))
-      (gtk-container-add window button)
+
+      (g-signal-connect button-folder "file-set"
+                        (lambda (chooser)
+                          (show-file-chooser-info info-label chooser)
+                          (setf (gtk-file-chooser-filename button-open)
+                                (gtk-file-chooser-filename chooser))))
+
+      (g-signal-connect button-open "file-set"
+                        (lambda (chooser)
+                          (show-file-chooser-info info-label chooser)
+                          (setf (gtk-file-chooser-filename button-folder)
+                                (gtk-file-chooser-current-folder chooser))))
+      ;; Set some filters on the file chooser
+      (setf (gtk-file-filter-name filter-all) "All Files")
+      (gtk-file-filter-add-pattern filter-all "*")
+      (gtk-file-chooser-add-filter button-open filter-all)
+      ;; Filter for Image Files
+      (setf (gtk-file-filter-name filter-image) "Image Files")
+      (gtk-file-filter-add-mime-type filter-image "image/*")
+      (gtk-file-chooser-add-filter button-open filter-image)
+      ;; Filter for Text Files
+      (setf (gtk-file-filter-name filter-text) "Text Files")
+      (gtk-file-filter-add-mime-type filter-text "text/*")
+      (gtk-file-chooser-add-filter button-open filter-text)
+      ;; Pack and show the widgets
+      (gtk-box-pack-start vbox (make-instance 'gtk-label
+                                              :label "&lt;b>Select Folder&lt;/b>"
+                                              :use-markup t
+                                              :halign :start))
+      (gtk-box-pack-start vbox button-folder)
+      (gtk-box-pack-start vbox (make-instance 'gtk-label
+                                              :label "&lt;b>Select File&lt;/b>"
+                                              :use-markup t
+                                              :margin-top 6
+                                              :halign :start))
+      (gtk-box-pack-start vbox button-open)
+      (gtk-box-pack-start hbox vbox)
+      (gtk-box-pack-start info-box
+                          (make-instance 'gtk-label
+                                         :use-markup t
+                                         :label
+                                         "&lt;b>Selected Folder and File&lt;/b>"))
+      (gtk-box-pack-start info-box info-label)
+      (gtk-box-pack-start hbox info-box)
+      (gtk-container-add window hbox)
       (gtk-widget-show-all window))))
      </programlisting>
     </example>
    </section>
   </section>
 
-  <section id="Selecting_Fonts">
+  <section id="Selecting_Fonts" revision="2021-2-11">
    <title>Selecting Fonts</title>
-   <figure id="figure-font-chooser-widget">
+   <figure id="figure-font-chooser-dialog">
     <title>Font Chooser Dialog</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/font-chooser-dialog.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/font-chooser-dialog.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
    <para>
-    The <ulink url="&gtk-font-chooser-widget;"><code>gtk-font-chooser-widget</code></ulink> widget lists the
-    available fonts, styles and sizes, allowing the user to select a font.  It is used in the
-    <ulink url="&gtk-font-chooser-dialog;"><code>gtk-font-chooser-dialog</code></ulink> widget to provide a
-    dialog box for selecting fonts.
+    The &gtk-font-chooser-widget; widget lists the available fonts, styles and sizes, allowing the user to
+    select a font. It is used in the &gtk-font-chooser-dialog; widget to provide a dialog box for selecting
+    fonts. It implements the &gtk-font-chooser; interface.
    </para>
    <para>
-    The <ulink url="&gtk-font-chooser-dialog;"><code>gtk-font-chooser-dialog</code></ulink> widget is a
-    dialog for selecting a font.  It implements the <ulink url="&gtk-font-chooser;">
-    <code>gtk-font-chooser</code></ulink> interface.
+    To set or get the font which is initially selected, use the slot access functions &gtk-font-chooser-font;
+    or &gtk-font-chooser-font-desc;. To change the text which is shown in the preview area, use the function
+    &gtk-font-chooser-preview-text;.
    </para>
+   <figure id="figure-font-button">
+    <title>Font Button</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/font-button-label.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
    <para>
-    To set the font which is initially selected, use the functions <ulink url="&gtk-font-chooser-font;">
-    <code>gtk-font-chooser-font</code></ulink> or <ulink url="&gtk-font-chooser-font-desc;">
-    <code>gtk-font-chooser-font-desc</code></ulink>.
-   </para>
-   <para>
-    To get the selected font use the functions <ulink url="&gtk-font-chooser-font;">
-    <code>gtk-font-chooser-font</code></ulink> or <ulink url="&gtk-font-chooser-font-desc;">
-    <code>gtk-font-chooser-font-desc</code></ulink>.
-   </para>
-   <para>
-    To change the text which is shown in the preview area, use the function
-    <ulink url="&gtk-font-chooser-preview-text;"><code>gtk-font-chooser-preview-text</code></ulink>.
-   </para>
-   <para>
-    The <ulink url="&gtk-font-button;"><code>gtk-font-button</code></ulink> is a button which displays the
-    currently selected font and allows to open a font chooser dialog to change the font.  It is a suitable
-    widget for selecting a font in a preference dialog.
+    The &gtk-font-button; is a button which displays the currently selected font and allows to open a font
+    chooser dialog to change the font. It is a suitable widget for selecting a font in a preference dialog.
+    The example <link linkend="example-font-button">Font Button</link> shows how to retrieve the Pango font
+    description from the font chooser dialog with the function &gtk-font-chooser-font-desc; and to use it to
+    change the font of a label with CSS.
    </para>
    <example id="example-font-button">
-    <title>Font Chooser Dialog with a filter to select fonts</title>
+    <title>Font Button with a filter to select fonts</title>
     <programlisting>
 (defun font-filter (family face)
   (declare (ignore face))
   (member (pango-font-family-name family)
-          '("Sans" "Serif")
+          '("Purisa" "Sans" "Serif" "Times New Roman")
           :test #'equal))
 
-(defun example-font-button ()
+(defun example-font-button-label ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Font Chooser Button"
                                  :type :toplevel
-                                 :border-width 12
+                                 :border-width 18
                                  :default-width 300
                                  :default-height 100))
+          (provider (gtk-css-provider-new))
+          (box (make-instance 'gtk-box
+                              :orientation :horizontal
+                              :spacing 12))
+          (label (make-instance 'gtk-label
+                                :label "Font Button"
+                                :use-markup t))
           (button (make-instance 'gtk-font-button)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
+      (g-signal-connect button "font-set"
+         (lambda (chooser)
+           (let* (;; Get the font description
+                  (desc (gtk-font-chooser-font-desc chooser))
+                  ;; Get font informations from the font description
+                  (family (pango-font-description-family desc))
+                  (size (pango-pixels (pango-font-description-size desc)))
+                  (style (pango-font-description-style desc))
+                  (weight (pango-font-description-weight desc))
+                  (variant (pango-font-description-variant desc))
+                  (stretch (pango-font-description-stretch desc))
+                  ;; Write the CSS string
+                  (css-label (format nil "label { font-family : ~a; ~
+                                                  font-weight : ~a; ~
+                                                  font-style : ~a; ~
+                                                  font-variant : ~a; ~
+                                                  font-stretch : ~a; ~
+                                                  font-size : ~apx; }"
+                                         family
+                                         weight
+                                         style
+                                         variant
+                                         stretch
+                                         size))
+                  ;; Get the style of the label
+                  (context (gtk-widget-style-context label)))
+             ;; Update the font of the label
+             (gtk-css-provider-load-from-data provider css-label)
+             (gtk-style-context-add-provider context
+                                             provider
+                                             +gtk-style-provider-priority-user+))))
       ;; Set a filter function to select fonts for the font chooser
       (gtk-font-chooser-set-filter-func button #'font-filter)
-      (g-signal-connect button "font-set"
-         (lambda (widget)
-           (declare (ignore widget))
-           (format t "Font is set:~%")
-           (format t "   Font name   : ~A~%"
-                   (gtk-font-chooser-font button))
-           (format t "   Font family : ~A~%"
-                   (pango-font-family-name
-                     (gtk-font-chooser-font-family button)))
-           (format t "   Font face   : ~A~%"
-                   (pango-font-face-face-name
-                     (gtk-font-chooser-get-font-face button)))
-           (format t "   Font size   : ~A~%"
-                   (gtk-font-chooser-get-font-size button))))
-      (gtk-container-add window button)
+      ;; Pack and show the widgets
+      (gtk-box-pack-start box button)
+      (gtk-box-pack-start box label)
+      (gtk-container-add window box)
       (gtk-widget-show-all window))))
     </programlisting>
    </example>
@@ -13852,53 +13990,6 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
   </para>
  </appendix>
 
- <index>
-  <title>Index</title>
- </index>
-
 </book>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
