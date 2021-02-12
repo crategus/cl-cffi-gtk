@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -124,7 +124,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-box 'type)
- "@version{2020-9-27}
+ "@version{*2021-2-4}
   @begin{short}
     The @sym{gtk-box} widget arranges child widgets into a single row or
     column, depending upon the value @code{:horizontal} or @code{:vertical}
@@ -146,11 +146,11 @@
   widgets from end to start. You may intersperse these calls and add widgets
   from both ends of the same box.
 
-  Because @sym{gtk-box} is a @class{gtk-container} widget, you may also use the
-  function @fun{gtk-container-add} to insert widgets into the box, and they
-  will be packed with the default values for the @code{expand} and @code{fill}
-  child properties. Use the function @fun{gtk-container-remove} to remove
-  widgets from the box.
+  Because the @sym{gtk-box} widget is a @class{gtk-container} widget, you may
+  also use the function @fun{gtk-container-add} to insert widgets into the box,
+  and they will be packed with the default values for the @code{expand} and
+  @code{fill} child properties. Use the function @fun{gtk-container-remove} to
+  remove widgets from the box.
 
   Use the slot access function @fun{gtk-box-homogeneous} to specify whether or
   not all children of the box are forced to get the same amount of space.
@@ -523,7 +523,7 @@
 
 (defun gtk-box-pack-start (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-27}
+ "@version{*2021-2-4}
   @argument[box]{a @class{gtk-box} container widget}
   @argument[child]{the @class{gtk-widget} child widget to be added to @arg{box}}
   @argument[expand]{@em{true} if @arg{child} is to be given extra space

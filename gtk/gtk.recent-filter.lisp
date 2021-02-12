@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -102,7 +102,7 @@
     @entry[:uri]{The URI of the file being tested.}
     @entry[:display-name]{The string that will be used to display the file in
       the recent chooser.}
-    @entry[:mime-type]{The mime type of the file.}
+    @entry[:mime-type]{The MIME type of the file.}
     @entry[:application]{The list of applications that have registered the
       file.}
     @entry[:group]{The groups to which the file belongs to.}
@@ -163,15 +163,15 @@
     a @class{gtk-recent-chooser}.
   @end{short}
   Files can be filtered based on their name with the function
-  @fun{gtk-recent-filter-add-pattern}, on their mime type with the function
+  @fun{gtk-recent-filter-add-pattern}, on their MIME type with the function
   @fun{gtk-file-filter-add-mime-type}, on the application that has registered
   them with the function @fun{gtk-recent-filter-add-application}, or by a
   custom filter function with the function @fun{gtk-recent-filter-add-custom}.
 
-  Filtering by mime type handles aliasing and subclassing of mime types; e.g.
-  a filter for text/plain also matches a file with mime type application/rtf,
+  Filtering by MIME type handles aliasing and subclassing of mime types; e.g.
+  a filter for text/plain also matches a file with MIME type application/rtf,
   since application/rtf is a subclass of text/plain. Note that
-  @sym{gtk-recent-filter} allows wildcards for the subtype of a mime type, so
+  @sym{gtk-recent-filter} allows wildcards for the subtype of a MIME type, so
   you can e.g. filter for image/*.
 
   Normally, filters are used by adding them to a @class{gtk-recent-chooser},

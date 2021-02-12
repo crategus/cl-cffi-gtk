@@ -174,8 +174,8 @@
 
   The slot access function @sym{gtk-color-chooser-use-alpha} returns whether
   the color chooser shows the alpha channel. The slot access function
-  @sym{(setf gtk-color-chooser-use-alpha)} slot access function
-  sets whether or not the color chooser should use the alpha channel.
+  @sym{(setf gtk-color-chooser-use-alpha)} sets whether or not the color
+  chooser should use the alpha channel.
   @see-class{gtk-color-chooser}")
 
 ;;; ----------------------------------------------------------------------------
@@ -219,12 +219,18 @@
   @see-struct{gdk-rgba}
   @see-class{gtk-color-chooser}
   @see-symbol{gtk-orientation}"
-  (with-foreign-boxed-array (n-colors colors-ptr gdk-rgba colors)
-    (%gtk-color-chooser-add-palette chooser
-                                    orientation
-                                    colors-per-line
-                                    n-colors
-                                    colors-ptr)))
+  (if colors
+      (with-foreign-boxed-array (n-colors colors-ptr gdk-rgba colors)
+        (%gtk-color-chooser-add-palette chooser
+                                        orientation
+                                        colors-per-line
+                                        n-colors
+                                        colors-ptr))
+      (%gtk-color-chooser-add-palette chooser
+                                      orientation
+                                      colors-per-line
+                                      0
+                                      (null-pointer))))
 
 (export 'gtk-color-chooser-add-palette)
 

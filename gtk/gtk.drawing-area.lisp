@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -67,10 +67,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-drawing-area 'type)
- "@version{2020-6-3}
+ "@version{*2021-1-26}
   @begin{short}
-    The @sym{gtk-drawing-area} widget is used for creating custom user interface
-    elements. It is essentially a blank widget. You can draw on it.
+    The @sym{gtk-drawing-area} widget is used for creating custom user
+    interface elements. It is essentially a blank widget. You can draw on it.
   @end{short}
   After creating a drawing area, the application may want to connect to:
   @begin{itemize}
@@ -91,43 +91,6 @@
       The \"draw\" signal to handle redrawing the contents of the widget.
     @end{item}
   @end{itemize}
-  The following code portion demonstrates using a drawing area to display a
-  circle in the normal widget foreground color.
-
-  Note that GDK automatically clears the exposed area to the background color
-  before sending the expose event, and that drawing is implicitly clipped to
-  the exposed area.
-
-  @b{Example:} Simple @sym{gtk-drawing-area} usage
-  @begin{pre}
- gboolean
- draw_callback (GtkWidget *widget, cairo_t *cr, gpointer data)
-   {
-     guint width, height;
-     GdkRGBA color;
-
-     width = gtk_widget_get_allocated_width (widget);
-     height = gtk_widget_get_allocated_height (widget);
-     cairo_arc (cr,
-                width / 2.0, height / 2.0,
-                MIN (width, height) / 2.0,
-                0, 2 * G_PI);
-
-     gtk_style_context_get_color (gtk_widget_get_style_context (widget),
-                                  0,
-                                  &color);
-     gdk_cairo_set_source_rgba (cr, &color);
-
-     cairo_fill (cr);
-
-    return FALSE;
-   @}
-   [...]
-   GtkWidget *drawing_area = gtk_drawing_area_new ();
-   gtk_widget_set_size_request (drawing_area, 100, 100);
-   g_signal_connect (G_OBJECT (drawing_area), \"draw\",
-                     G_CALLBACK (draw_callback), NULL);
-  @end{pre}
   Draw signals are normally delivered when a drawing area first comes
   onscreen, or when it is covered by another window and then uncovered. You can
   also force an expose event by adding to the \"damage region\" of the drawing
@@ -135,21 +98,67 @@
   @fun{gdk-window-invalidate-rect} are equally good ways to do this. You will
   then get a draw signal for the invalid region.
 
-  The available routines for drawing are documented on the GDK Drawing
-  Primitives page and the cairo documentation.
-
   To receive mouse events on a drawing area, you will need to enable them with
-  the function @fun{gtk-widget-add-events}. To receive keyboard events, you will
-  need to set the @slot[gtk-widget]{can-focus} property on the drawing area, and
-  you should probably draw some user-visible indication that the drawing area is
-  focused. Use the function @fun{gtk-widget-has-focus} in your expose event
-  handler to decide whether to draw the focus indicator. See the function
-  @see-function{gtk-render-focus} for one way to draw focus.
+  the function @fun{gtk-widget-add-events}. To receive keyboard events, you
+  will need to set the @slot[gtk-widget]{can-focus} property on the drawing
+  area, and you should probably draw some user-visible indication that the
+  drawing area is focused. Use the function @fun{gtk-widget-has-focus} in your
+  expose event handler to decide whether to draw the focus indicator. See the
+  function @see-function{gtk-render-focus} for one way to draw focus.
+  @begin[Example]{dictionary}
+    The following example demonstrates using a drawing area to display a
+    circle in the normal widget foreground color.
+
+    Note that GDK automatically clears the exposed area before sending the
+    expose event, and that drawing is implicitly clipped to the exposed area.
+    If you want to have a theme-provided background, you need to call the
+    function @fun{gtk-render-background} in your \"draw\" signal handler.
+    @begin{pre}
+(defun example-drawing-area ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title \"Example Drawing Area\"
+                                 :default-width 400
+                                 :default-height 300))
+          ;; Create the drawing area
+          (area (make-instance 'gtk-drawing-area)))
+      ;; Signal handler for the drawing area
+      (g-signal-connect area \"draw\"
+          (lambda (widget cr)
+            (let* ((cr (pointer cr))
+                   (width (gtk-widget-allocated-width widget))
+                   (height (gtk-widget-allocated-height widget))
+                   (context (gtk-widget-style-context widget))
+                   (color (gtk-style-context-color context :focused)))
+                ;; Set the color from the style context of the widget
+                (gdk-cairo-set-source-rgba cr color)
+                ;; Draw and fill a circle on the drawing area
+                (cairo-arc cr
+                           (/ width 2.0)
+                           (/ height 2.0)
+                           (- (/ (min width height) 2.0) 12)
+                           0.0
+                           (* 2.0 pi))
+                (cairo-fill cr)
+                ;; Destroy the Cairo context
+                (cairo-destroy cr))))
+      ;; Signal handler for the window to handle the signal \"destroy\"
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Show the window
+      (gtk-container-add window area)
+      (gtk-widget-show-all window))))
+    @end{pre}
+  @end{dictionary}
   @see-function{gtk-widget-add-events}
   @see-function{gtk-widget-queue-draw-area}
   @see-function{gdk-window-invalidate-rect}
   @see-function{gtk-widget-has-focus}
-  @see-function{gtk-render-focus}")
+  @see-function{gtk-render-focus}
+  @see-function{gtk-render-background}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drawing_area_new ()

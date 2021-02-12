@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -104,14 +104,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-widget 'type)
- "@version{2020-6-5}
+ "@version{2021-2-5}
   @begin{short}
-    @sym{gtk-file-chooser-widget} is a widget for choosing files.
+    The @sym{gtk-file-chooser-widget} widget is a widget for choosing files.
   @end{short}
   It exposes the @class{gtk-file-chooser} interface, and you should use the
   methods of this interface to interact with the widget.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-file-chooser-widget} has a single CSS node with name
+    The @sym{gtk-file-chooser-widget} widget has a single CSS node with name
     @code{filechooser}.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -119,10 +119,9 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"desktop-folder\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to make the file chooser show the
-      user's Desktop folder in the file list. The default binding for this
-      signal is Alt + D.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show the user's Desktop folder in the file
+      list. The default binding for this signal is Alt + D.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -131,13 +130,13 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"down-folder\" signal is a keybinding signal which gets emitted when
-      the user asks for it. This is used to make the file chooser go to a child
-      of the current folder in the file hierarchy. The subfolder that will be
-      used is displayed in the path bar widget of the file chooser. For example,
-      if the path bar is showing \"/foo/bar/baz\", with bar currently displayed,
-      then this will cause the file chooser to switch to the \"baz\" subfolder.
-      The default binding for this signal is Alt + Down.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser go to a child of the current folder in the
+      file hierarchy. The subfolder that will be used is displayed in the path
+      bar widget of the file chooser. For example, if the path bar is showing
+      \"/foo/bar/baz\", with bar currently displayed, then this will cause the
+      file chooser to switch to the \"baz\" subfolder. The default binding for
+      this signal is Alt + Down.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -146,10 +145,9 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"home-folder\" signal is a keybinding signal which gets emitted when
-      the user asks for it. This is used to make the file chooser show the
-      user's home folder in the file list. The default binding for this signal
-      is Alt + Home.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show the user's home folder in the file
+      list. The default binding for this signal is Alt + Home.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -158,14 +156,14 @@
       @begin{pre}
  lambda (widget path)    : Action
       @end{pre}
-      The \"location-popup\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to make the file chooser show a
-      \"Location\" prompt which the user can use to manually type the name of
-      the file he wishes to select. The default bindings for this signal are
-      Control + L with a path string of \"\" (the empty string). It is also
-      bound to / with a path string of \"/\" (a slash): this lets you type / and
-      immediately type a path name. On Unix systems, this is bound to ~ (tilde)
-      with a path string of \"~\" itself for access to home directories.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show a \"Location\" prompt which the user
+      can use to manually type the name of the file he wishes to select. The
+      default bindings for this signal are Control + L with a path string of
+      \"\" (the empty string). It is also bound to / with a path string of
+      \"/\" (a slash): this lets you type / and immediately type a path name.
+      On Unix systems, this is bound to ~ (tilde) with a path string of \"~\"
+      itself for access to home directories.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -176,11 +174,10 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"location-popup-on-paste\" signal is a keybinding signal which gets
-      emitted when the user asks for it. This is used to make the file chooser
-      show a \"Location\" prompt when the user pastes into a
-      @sym{gtk-file-chooser-widget}. The default binding for this signal is
-      Control + V.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show a \"Location\" prompt when the user
+      pastes into a @sym{gtk-file-chooser-widget} widget. The default binding
+      for this signal is Control + V.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -189,11 +186,10 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"location-toggle-popup\" signal is a keybinding signal which gets
-      emitted when the user asks for it. This is used to toggle the visibility
-      of a \"Location\" prompt which the user can use to manually type the name
-      of the file he wishes to select. The default binding for this signal is
-      Control + L.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to toggle the visibility of a \"Location\" prompt which the user can
+      use to manually type the name of the file he wishes to select. The default
+      binding for this signal is Control + L.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -202,9 +198,9 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"places-shortcut\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to move the focus to the places
-      sidebar. The default binding for this signal is Alt + P.
+      A keybinding signal which gets emitted when the user asks for it. This
+      is used to move the focus to the places sidebar. The default binding for
+      this signal is Alt + P.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -213,28 +209,27 @@
       @begin{pre}
  lambda (widget bookmark-index)    : Action
       @end{pre}
-      The \"quick-bookmark\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to make the file chooser switch
-      to the bookmark specified in the bookmark_index parameter. For example,
-      if you have three bookmarks, you can pass 0, 1, 2 to this signal to switch
-      to each of them, respectively. The default binding for this signal is
-      Alt + 1, Alt + 2, etc. until Alt + 0. Note that in the default binding,
-      that Alt + 1 is actually defined to switch to the bookmark at index 0, and
-      so on successively; Alt + 0 is defined to switch to the bookmark at index
-      10.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser switch to the bookmark specified in the
+      bookmark_index parameter. For example, if you have three bookmarks, you
+      can pass 0, 1, 2 to this signal to switch to each of them, respectively.
+      The default binding for this signal is Alt + 1, Alt + 2, etc. until
+      Alt + 0. Note that in the default binding, that Alt + 1 is actually
+      defined to switch to the bookmark at index 0, and so on successively;
+      Alt + 0 is defined to switch to the bookmark at index 10.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
-        @entry[bookmark-index]{an integer with the number of the bookmark to
-          switch to}
+        @entry[bookmark-index]{An integer with the number of the bookmark to
+          switch to.}
       @end{table}
     @subheading{The \"recent-shortcut\" signal}
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"recent-shortcut\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to make the file chooser show the
-      Recent location. The default binding for this signal is Alt + R.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show the Recent location. The default
+      binding for this signal is Alt + R.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -243,9 +238,9 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"search-shortcut\" signal is a keybinding signal which gets emitted
-      when the user asks for it. This is used to make the file chooser show the
-      search entry. The default binding for this signal is Alt + S.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser show the search entry. The default binding
+      for this signal is Alt + S.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -254,9 +249,9 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"show-hidden\" signal is a keybinding signal which gets emitted when
-      the user asks for it. This is used to make the file chooser display hidden
-      files. The default binding for this signal is Control + H.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser display hidden files. The default binding
+      for this signal is Control + H.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
@@ -265,16 +260,16 @@
       @begin{pre}
  lambda (widget)    : Action
       @end{pre}
-      The \"up-folder\" signal is a keybinding signal which gets emitted when
-      the user asks for it. This is used to make the file chooser go to the
-      parent of the current folder in the file hierarchy. The default binding
-      for this signal is Alt + Up.
+      A keybinding signal which gets emitted when the user asks for it. This is
+      used to make the file chooser go to the parent of the current folder in
+      the file hierarchy. The default binding for this signal is Alt + Up.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}
       @end{table}
   @end{dictionary}
-  @see-class{gtk-file-chooser}")
+  @see-class{gtk-file-chooser}
+  @see-class{gtk-file-chooser-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -293,7 +288,7 @@
 (setf (gethash 'gtk-file-chooser-widget-search-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-widget-search-mode 'function)
- "@version{2020-6-5}
+ "@version{2021-2-5}
   @syntax[]{(gtk-file-chooser-widget object) => search-mode}
   @syntax[]{(setf (gtk-file-chooser-widget object) search-mode)}
   @argument[object]{a @class{gtk-file-chooser-widget} widget}
@@ -317,7 +312,7 @@
 (setf (gethash 'gtk-file-chooser-widget-subtitle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-widget-subtitle 'function)
- "@version{2020-6-5}
+ "@version{2021-2-5}
   @syntax[]{(gtk-file-chooser-widget object) => subtitle}
   @syntax[]{(setf (gtk-file-chooser-widget object) subtitle)}
   @argument[object]{a @class{gtk-file-chooser-widget} widget}
@@ -329,95 +324,6 @@
   @see-class{gtk-file-chooser-widget}")
 
 ;;; ----------------------------------------------------------------------------
-;;; Accessors of Child Properties
-;;; ----------------------------------------------------------------------------
-
-;; TODO: GtkFileChooserWidget has no documented child properties
-;;       We remove the implementation of the child properties.
-
-#|
-
-;;; --- gtk-file-chooser-widget-child-expand -----------------------------------
-
-(define-child-property "GtkFileChooserWidget"
-                       gtk-file-chooser-widget-child-expand
-                       "expand" "gboolean" t t t)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-expand atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-file-chooser-widget-child-expand 'function)
- "@version{2013-8-27}
-  Accessor of the @code{expand} child property of the
-  @class{gtk-file-chooser-widget} class.
-  @see-class{gtk-file-chooser-widget}")
-
-;;; --- gtk-file-chooser-widget-child-fill -------------------------------------
-
-(define-child-property "GtkFileChooserWidget"
-                       gtk-file-chooser-widget-child-fill
-                       "fill" "gboolean" t t t)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-fill atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-file-chooser-widget-child-fill 'function)
- "@version{2013-8-27}
-  Accessor of the @code{fill} child property of the
-  @class{gtk-file-chooser-widget} class.
-  @see-class{gtk-file-chooser-widget}")
-
-;;; --- gtk-file-chooser-widget-child-padding ----------------------------------
-
-(define-child-property "GtkFileChooserWidget"
-                       gtk-file-chooser-widget-child-padding
-                       "padding" "guint" t t t)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-padding
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-file-chooser-widget-child-padding 'function)
- "@version{2013-8-27}
-  Accessor of the @code{padding} child property of the
-  @class{gtk-file-chooser-widget} class.
-  @see-class{gtk-file-chooser-widget}")
-
-;;; --- gtk-file-chooser-widget-child-pack-type --------------------------------
-
-(define-child-property "GtkFileChooserWidget"
-                       gtk-file-chooser-widget-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-pack-type
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-file-chooser-widget-child-pack-type 'function)
- "@version{2013-8-27}
-  Accessor of the @code{pack-type} child property of the
-  @class{gtk-file-chooser-widget} class.
-  @see-class{gtk-file-chooser-widget}")
-
-;;; --- gtk-file-chooser-widget-child-position ---------------------------------
-
-(define-child-property "GtkFileChooserWidget"
-                       gtk-file-chooser-widget-child-position
-                       "position" "gint" t t t)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-position
-               atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-file-chooser-widget-child-position 'function)
- "@version{2013-8-27}
-  Accessor of the @code{position} child property of the
-  @class{gtk-file-chooser-widget} class.
-  @see-class{gtk-file-chooser-widget}")
-
-|#
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_widget_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -425,15 +331,15 @@
 
 (defun gtk-file-chooser-widget-new (action)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-5}
-  @argument[action]{open or save mode for the widget, a value of the
-    @symbol{gtk-file-chooser-action} enumeration}
+ "@version{2021-2-5}
+  @argument[action]{a value of the @symbol{gtk-file-chooser-action} enumeration
+    for open or save mode}
   @return{A new @class{gtk-file-chooser-widget} widget.}
   @begin{short}
     Creates a new file chooser widget.
   @end{short}
   This is a file chooser widget that can be embedded in custom windows, and it
-  is the same widget that is used by @class{gtk-file-chooser-dialog}.
+  is the same widget that is used by the @class{gtk-file-chooser-dialog} widget.
   @see-class{gtk-file-chooser-widget}
   @see-class{gtk-file-chooser-dialog}
   @see-symbol{gtk-file-chooser-action}"

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -117,17 +117,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-button 'type)
- "@version{2020-6-6}
+ "@version{*2021-2-11}
   @begin{short}
-    The @sym{gtk-font-button} is a button which displays the currently selected
-    font and allows to open a font chooser dialog to change the font. It is a
-    suitable widget for selecting a font in a preference dialog.
+    The @sym{gtk-font-button} widget is a button which displays the currently
+    selected font and allows to open a font chooser dialog to change the font.
   @end{short}
+  It is a suitable widget for selecting a font in a preference dialog.
 
   @image[font-button]{}
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-font-button} has a single CSS node with name @code{button} and
-    style class @code{.font}.
+    The @sym{gtk-font-button} widget has a single CSS node with name
+    @code{button} and style class @code{.font}.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"font-set\" signal}
@@ -135,7 +135,7 @@
  lambda (widget)    : Run First
       @end{pre}
       The \"font-set\" signal is emitted when the user selects a font. When
-      handling this signal, use the function @fun{gtk-font-button-font-name} to
+      handling this signal, use the function @fun{gtk-font-chooser-font} to
       find out which font was just selected. Note that this signal is only
       emitted when the user changes the font. If you need to react to
       programmatic font changes as well, use the \"notify::font-name\" signal.

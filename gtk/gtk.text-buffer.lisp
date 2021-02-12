@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -2619,7 +2619,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-7-16}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[mime-type]{the format's mime-type}
+  @argument[mime-type]{the format's MIME type}
   @argument[func]{the deserialize function to register}
   @begin{return}
     The @symbol{gdk-atom} that corresponds to the newly registered format's
@@ -2651,7 +2651,7 @@
   @argument[tagset-name]{an string with an optional tagset name, on @code{nil}}
   @begin{return}
     The @symbol{gdk-atom} that corresponds to the newly registered format's
-    mime-type.
+    MIME type.
   @end{return}
   @begin{short}
     This function registers GTK+'s internal rich text serialization format with
@@ -2681,7 +2681,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-6-16}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[mime-type]{a string with the format's mime-type}
+  @argument[mime-type]{a string with the format's MIME type}
   @argument[function]{the serialize function to register}
   @begin{return}
     The @symbol{gdk-atom} that corresponds to the newly registered format's
@@ -2713,7 +2713,7 @@
   @argument[tagset-name]{a string with an optional tagset name, or @code{nil}}
   @begin{return}
     The @symbol{gdk-atom} that corresponds to the newly registered format's
-    mime-type.
+    MIME type.
   @end{return}
   @begin{short}
     This function registers GTK+'s internal rich text serialization format with
@@ -2724,7 +2724,7 @@
   all of a text buffer's tags and embedded pixbufs.
 
   This function is just a wrapper around the function
-  @fun{gtk-text-buffer-register-serialize-format}. The mime type used for
+  @fun{gtk-text-buffer-register-serialize-format}. The MIME type used for
   registering is \"application/x-gtk-text-buffer-rich-text\", or
   \"application/x-gtk-text-buffer-rich-text;format=tagset_name\" if a
   @arg{tagset-name} was passed.

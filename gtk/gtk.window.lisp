@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -353,7 +353,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window 'type)
- "@version{*2020-5-25}
+ "@version{*2021-2-4}
   @begin{short}
     A @sym{gtk-window} widget is a toplevel window which can contain other
     widgets.
@@ -394,20 +394,21 @@
  ├── <titlebar child>.titlebar [.default-decoration]
  ╰── <child>
     @end{pre}
-    @sym{gtk-window} has a main CSS node with name @code{window} and style
-    class @code{.background}, and a subnode with name @code{decoration}.
+    The @sym{gtk-window} widget has a main CSS node with name @code{window} and
+    style class @code{.background}, and a subnode with name @code{decoration}.
 
     Style classes that are typically used with the main CSS node are
     @code{.csd}, when client-side decorations are in use, @code{.solid-csd},
     for client-side decorations without invisible borders, @code{.ssd}, used by
-    mutter when rendering server-side decorations. @sym{gtk-window} also
-    represents window states with the following style classes on the main node:
-    @code{.tiled}, @code{.maximized}, @code{.fullscreen}. Specialized types of
-    window often add their own discriminating style classes, such as
+    mutter when rendering server-side decorations. The @sym{gtk-window} widget
+    also represents window states with the following style classes on the main
+    node: @code{.tiled}, @code{.maximized}, @code{.fullscreen}. Specialized
+    types of window often add their own discriminating style classes, such as
     @code{.popup} or @code{.tooltip}.
 
-    @sym{gtk-window} adds the @code{.titlebar} and @code{.default-decoration}
-    style classes to the widget that is added as a titlebar child.
+    The @sym{gtk-window} class adds the @code{.titlebar} and
+    @code{.default-decoration} style classes to the widget that is added as a
+    titlebar child.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -546,7 +547,7 @@
 (setf (gethash 'gtk-window-accept-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-accept-focus 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-accept-focus object) => accept-focus}
   @syntax[]{(setf (gtk-window-accept-focus object) accept-focus)}
   @argument[object]{a @class{gtk-window} widget}
@@ -581,7 +582,7 @@
 (setf (gethash 'gtk-window-application atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-application 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-application object) => application}
   @syntax[]{(setf (gtk-window-application object) application)}
   @argument[object]{a @class{gtk-window} widget}
@@ -616,7 +617,7 @@
 (setf (gethash 'gtk-window-attached-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-attached-to 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-attached-to object) => attach-widget}
   @syntax[]{(setf (gtk-window-attached-to object) attach-widget)}
   @argument[object]{a @class{gtk-window} widget}
@@ -660,7 +661,7 @@
 (setf (gethash 'gtk-window-decorated atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-decorated 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-decorated object) => setting}
   @syntax[]{(setf (gtk-window-decorated object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -700,7 +701,7 @@
 (setf (gethash 'gtk-window-default-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-default-height 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-default-height object) => height}
   @syntax[]{(setf (gtk-window-default-height object) height)}
   @argument[object]{a @class{gtk-window} widget}
@@ -728,7 +729,7 @@
 (setf (gethash 'gtk-window-default-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-default-width 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-default-width object) => width}
   @syntax[]{(setf (gtk-window-default-width object) width)}
   @argument[object]{a @class{gtk-window} widget}
@@ -755,7 +756,7 @@
 (setf (gethash 'gtk-window-deletable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-deletable 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-deletable object) => setting}
   @syntax[]{(setf (gtk-window-deletable object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -796,7 +797,7 @@
 (setf (gethash 'gtk-window-destroy-with-parent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-destroy-with-parent 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-destroy-with-parent object) => setting}
   @syntax[]{(setf (gtk-window-destroy-with-parent object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -831,7 +832,7 @@
 (setf (gethash 'gtk-window-focus-on-map atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-focus-on-map 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-focus-on-map object) => setting}
   @syntax[]{(setf (gtk-window-focus-on-map object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -860,7 +861,7 @@
 (setf (gethash 'gtk-window-focus-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-focus-visible 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-focus-visible object) => setting}
   @syntax[]{(setf (gtk-window-focus-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -891,7 +892,7 @@
 (setf (gethash 'gtk-window-gravity atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-gravity 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-gravity object) => gravity}
   @syntax[]{(setf (gtk-window-gravity object) gravity)}
   @argument[object]{a @class{gtk-window} widget}
@@ -931,7 +932,7 @@
 (setf (gethash 'gtk-window-has-resize-grip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-has-resize-grip 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-has-resize-grip object) => value}
   @syntax[]{(setf (gtk-window-has-resize-grip object) value)}
   @argument[object]{a @class{gtk-window} widget}
@@ -970,7 +971,7 @@
 (setf (gethash 'gtk-window-has-toplevel-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-has-toplevel-focus 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-has-toplevel-focus object) => value}
   @syntax[]{(setf (gtk-window-has-toplevel-focus object) value)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1002,7 +1003,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-hide-titlebar-when-maximized 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-hide-titlebar-when-maximized object) => setting}
   @syntax[]{(setf (gtk-window-hide-titlebar-when-maximized object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1037,7 +1038,7 @@
 (setf (gethash 'gtk-window-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-icon 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-icon object) => icon}
   @syntax[]{(setf (gtk-window-icon object) icon)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1083,7 +1084,7 @@
 (setf (gethash 'gtk-window-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-icon-name 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-window-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1115,7 +1116,7 @@
 (setf (gethash 'gtk-window-is-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-is-active 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-is-active object) => is-active}
   @syntax[]{(setf (gtk-window-is-active object) is-active)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1147,7 +1148,7 @@
 (setf (gethash 'gtk-window-is-maximized atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-is-maximized 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-is-maximized object) => is-maximized}
   @syntax[]{(setf (gtk-window-is-maximized object) is-maximized)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1182,7 +1183,7 @@
 (setf (gethash 'gtk-window-mnemonics-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-mnemonics-visible 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-mnemonics-visible object) => setting}
   @syntax[]{(setf (gtk-window-mnemonics-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1211,7 +1212,7 @@
 (setf (gethash 'gtk-window-modal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-modal 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-modal object) => modal}
   @syntax[]{(setf (gtk-window-modal object) modal)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1246,7 +1247,7 @@
 (setf (gethash 'gtk-window-opacity atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-opacity 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-opacity object) => opacity}
   @syntax[]{(setf (gtk-window-opacity object) opacity)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1290,7 +1291,7 @@
 (setf (gethash 'gtk-window-resizable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-resizable 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-resizable object) => resizable}
   @syntax[]{(setf (gtk-window-resizable object) resizable)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1320,7 +1321,7 @@
 (setf (gethash 'gtk-window-resize-grip-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-resize-grip-visible 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-resize-grip-visible object) => setting}
   @syntax[]{(setf (gtk-window-resize-grip-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1351,7 +1352,7 @@
 (setf (gethash 'gtk-window-role atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-role 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-role object) => role}
   @syntax[]{(setf (gtk-window-role object) role)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1389,7 +1390,7 @@
 (setf (gethash 'gtk-window-screen atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-screen 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-screen object) => screen}
   @syntax[]{(setf (gtk-window-screen object) screen)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1420,7 +1421,7 @@
 (setf (gethash 'gtk-window-skip-pager-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-skip-pager-hint 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-skip-pager-hint object) => setting}
   @syntax[]{(setf (gtk-window-skip-pager-hint object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1451,7 +1452,7 @@
 (setf (gethash 'gtk-window-skip-taskbar-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-skip-taskbar-hint 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-skip-taskbar-hint object) => setting}
   @syntax[]{(setf (gtk-window-skip-taskbar-hint object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1480,7 +1481,7 @@
 (setf (gethash 'gtk-window-startup-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-startup-id 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(setf (gtk-window-startup-id object) startup-id)}
   @argument[object]{a @class{gtk-window} widget}
   @argument[startup-id]{a string with the startup ID}
@@ -1517,7 +1518,7 @@
 (setf (gethash 'gtk-window-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-title 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-title object) => title}
   @syntax[]{(setf (gtk-window-title object) title)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1552,7 +1553,7 @@
 (setf (gethash 'gtk-window-transient-for atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-transient-for 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-transient-for object) => parent}
   @syntax[]{(setf (gtk-window-transient-for object) parent)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1595,7 +1596,7 @@
 (setf (gethash 'gtk-window-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-type 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-type object) => type}
   @syntax[]{(setf (gtk-window-type object) type)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1622,7 +1623,7 @@
 (setf (gethash 'gtk-window-type-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-type-hint 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-type-hint object) => hint}
   @syntax[]{(setf (gtk-window-type-hint object) hint)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1657,7 +1658,7 @@
 (setf (gethash 'gtk-window-urgency-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-urgency-hint 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-urgency-hint object) => setting}
   @syntax[]{(setf (gtk-window-urgency-hint object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1685,7 +1686,7 @@
 (setf (gethash 'gtk-window-window-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-window-position 'function)
- "@version{*2020-5-25}
+ "@version{2020-5-25}
   @syntax[]{(gtk-window-window-position object) => position}
   @syntax[]{(setf (gtk-window-window-position object) position)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1709,7 +1710,7 @@
 
 (defun gtk-window-new (type)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[type]{type of the window, a value of the @symbol{gtk-window-type}
     enumeration}
   @return{A new @class{gtk-window} widget.}
@@ -1768,7 +1769,7 @@
 
 (defcfun ("gtk_window_add_accel_group" gtk-window-add-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{the @class{gtk-window} widget to attach accelerator group
     to}
   @argument[accel-group]{a @class{gtk-accel-group} object}
@@ -1790,7 +1791,7 @@
 
 (defcfun ("gtk_window_remove_accel_group" gtk-window-remove-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[accel-group]{a @class{gtk-accel-group} object}
   @begin{short}
@@ -1809,7 +1810,7 @@
 
 (defcfun ("gtk_window_activate_focus" gtk-window-activate-focus) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a widget got activated.}
   @begin{short}
@@ -1827,7 +1828,7 @@
 
 (defcfun ("gtk_window_activate_default" gtk-window-activate-default) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a widget got activated.}
   @begin{short}
@@ -1855,7 +1856,7 @@
 
 (defun gtk-window-default-size (window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-window-default-size window) => width, height}
   @syntax[]{(setf (gtk-window-default-size window) (list width height))}
   @argument[window]{a @class{gtk-window} widget}
@@ -1925,7 +1926,7 @@
 (defcfun ("gtk_window_set_default_geometry" gtk-window-set-default-geometry)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[width]{an integer with the width in resize increments, or -1 to
     unset the default width}
@@ -1995,7 +1996,7 @@
 (defcfun ("gtk_window_list_toplevels" gtk-window-list-toplevels)
     (g-list (g-object gtk-window) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @return{List of toplevel @class{gtk-widget} objects.}
   @begin{short}
     Returns a list of all existing toplevel windows.
@@ -2010,7 +2011,7 @@
 
 (defcfun ("gtk_window_add_mnemonic" gtk-window-add-mnemonic) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{an unsigned integer with the mnemonic}
   @argument[target]{the @class{gtk-widget} object that gets activated by the
@@ -2033,7 +2034,7 @@
 
 (defcfun ("gtk_window_remove_mnemonic" gtk-window-remove-mnemonic) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{an unsigned integer with the mnemonic}
   @argument[target]{the @class{gtk-widget} object that gets activated by the
@@ -2055,7 +2056,7 @@
 
 (defcfun ("gtk_window_mnemonic_activate" gtk-window-mnemonic-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{an unsigned integer with the mnemonic}
   @argument[modifier]{the modifiers of type @symbol{gdk-modifier-type}}
@@ -2078,7 +2079,7 @@
 
 (defcfun ("gtk_window_activate_key" gtk-window-activate-key) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[event]{a @class{gdk-event-key} event}
   @return{@em{True} if a mnemonic or accelerator was found and activated.}
@@ -2102,7 +2103,7 @@
 (defcfun ("gtk_window_propagate_key_event" gtk-window-propagate-key-event)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[event]{a @class{gdk-event-key} event}
   @return{@em{True} if a widget in the focus chain handled the event.}
@@ -2135,7 +2136,7 @@
 
 (defcfun ("gtk_window_get_focus" gtk-window-focus) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-window-focus window) => focus}
   @syntax[]{(setf (gtk-window-focus window) focus)}
   @argument[window]{a @class{gtk-window} widget}
@@ -2172,7 +2173,7 @@
 (defcfun ("gtk_window_get_default_widget" gtk-window-default-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @return{The @class{gtk-widget} default widget, or @code{nil} if there is
     none.}
@@ -2192,7 +2193,7 @@
 
 (defcfun ("gtk_window_set_default" gtk-window-set-default) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[default-widget]{the @class{gtk-widget} object to be the default,
     or @code{nil} to unset the default widget for the toplevel}
@@ -2219,7 +2220,7 @@
 
 (defcfun ("gtk_window_present" gtk-window-present) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Presents a window to the user.
@@ -2252,7 +2253,7 @@
 
 (defcfun ("gtk_window_present_with_time" gtk-window-present-with-time) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[timestamp]{an unsigned integer with the timestamp of the user
     interaction, typically a button or key press event, which triggered this
@@ -2275,7 +2276,7 @@
 
 (defcfun ("gtk_window_close" gtk-window-close) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Requests that the window is closed, similar to what happens when a window
@@ -2293,7 +2294,7 @@
 
 (defcfun ("gtk_window_iconify" gtk-window-iconify) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to iconify, i.e. minimize, the specified window.
@@ -2320,7 +2321,7 @@
 
 (defcfun ("gtk_window_deiconify" gtk-window-deiconify) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to deiconify, i.e. unminimize, the specified window.
@@ -2342,7 +2343,7 @@
 
 (defcfun ("gtk_window_stick" gtk-window-stick) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to stick the window, which means that it will appear on all user
@@ -2368,7 +2369,7 @@
 
 (defcfun ("gtk_window_unstick" gtk-window-unstick) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to unstick the window, which means that it will appear on only one of
@@ -2392,7 +2393,7 @@
 
 (defcfun ("gtk_window_maximize" gtk-window-maximize) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to maximize the window, so that it becomes full screen.
@@ -2419,7 +2420,7 @@
 
 (defcfun ("gtk_window_unmaximize" gtk-window-unmaximize) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to unmaximize the window.
@@ -2443,7 +2444,7 @@
 
 (defcfun ("gtk_window_fullscreen" gtk-window-fullscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to place the window in the fullscreen state.
@@ -2469,7 +2470,7 @@
 (defcfun ("gtk_window_fullscreen_on_monitor" gtk-window-fullscreen-on-monitor)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[screen]{a @class{gdk-screen} object to draw on}
   @argument[monitor]{an integer which monitor to go fullscreen on}
@@ -2497,7 +2498,7 @@
 
 (defcfun ("gtk_window_unfullscreen" gtk-window-unfullscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to toggle off the fullscreen state for the window.
@@ -2521,7 +2522,7 @@
 
 (defcfun ("gtk_window_set_keep_above" gtk-window-set-keep-above) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[setting]{a boolean whether to keep @arg{window} above other windows}
   @begin{short}
@@ -2553,7 +2554,7 @@
 
 (defcfun ("gtk_window_set_keep_below" gtk-window-set-keep-below) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[setting]{a boolean whether to keep @arg{window} below other windows}
   @begin{short}
@@ -2585,7 +2586,7 @@
 
 (defcfun ("gtk_window_begin_resize_drag" gtk-window-begin-resize-drag) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[edge]{@symbol{gdk-window-edge} position of the resize control}
   @argument[button]{an integer with the mouse button that initiated the drag}
@@ -2619,7 +2620,7 @@
 
 (defcfun ("gtk_window_begin_move_drag" gtk-window-begin-move-drag) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[button]{an integer with the mouse button that initiated the drag}
   @argument[root-x]{an integer with the x position where the user clicked to
@@ -2660,7 +2661,7 @@
 (defcfun ("gtk_window_get_mnemonic_modifier" gtk-window-mnemonic-modifier)
     gdk-modifier-type
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-window-mnemonic-modifier window) => modifier}
   @syntax[]{(setf (gtk-window-mnemonic-modifier window) modifier)}
   @argument[window]{a @class{gtk-window} widget}
@@ -2726,7 +2727,7 @@
 (defcfun ("gtk_window_get_default_icon_name" gtk-window-default-icon-name)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-window-default-icon-name) => icon-name}
   @syntax[]{(setf (gtk-window-default-icon-name) icon-name)}
   @argument[icon-name]{a string with the name of the themed icon}
@@ -2815,7 +2816,7 @@
 
 (defun gtk-window-position (window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{return}
     @code{root-x} -- an integer with the x coordinate of gravity-determined
@@ -2882,7 +2883,7 @@
 
 (defun gtk-window-size (window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{return}
     @code{width} -- an integer with the width, or @code{nil}@br{}
@@ -2954,7 +2955,7 @@
 (defcfun ("gtk_window_get_group" gtk-window-group)
     (g-object gtk-window-group)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget, or @code{nil}}
   @return{The @class{gtk-window-group} object for @arg{window} or the default
     group.}
@@ -2973,7 +2974,7 @@
 
 (defcfun ("gtk_window_has_group" gtk-window-has-group) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if @arg{window} has an explicit window group.}
   @short{Returns whether the window has an explicit window group.}
@@ -2994,7 +2995,7 @@
 
 (defcfun ("gtk_window_move" gtk-window-move) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[x]{an integer with the x coordinate to move the window to}
   @argument[y]{an integer with the y coordinate to move the window to}
@@ -3045,7 +3046,7 @@
 
 (defcfun ("gtk_window_parse_geometry" gtk-window-parse-geometry) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[geometry]{geometry string}
   @return{@em{True} if @arg{string} was parsed successfully.}
@@ -3133,7 +3134,7 @@
 (defcfun ("gtk_window_reshow_with_initial_size"
           gtk-window-reshow-with-initial-size) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Hides the window, then reshows it, resetting the default size and position
@@ -3161,7 +3162,7 @@
 
 (defcfun ("gtk_window_resize" gtk-window-resize) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[width]{an integer with the width in pixels to resize the window to}
   @argument[height]{an integer with the height in pixels to resize the window
@@ -3191,7 +3192,7 @@
 
 (defcfun ("gtk_window_resize_to_geometry" gtk-window-resize-to-geometry) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[width]{an integer with the width in resize increments to resize
     the window to}
@@ -3247,7 +3248,7 @@
 
 (defun gtk-window-set-default-icon-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[filename]{a string with the location of icon file}
   @return{@em{True} if setting the icon succeeded.}
   @begin{short}
@@ -3273,7 +3274,7 @@
 
 (defun gtk-window-set-icon-from-file (window filename)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @argument[filename]{a string with the location of icon file}
   @return{@em{True} if setting the icon succeeded.}
@@ -3297,7 +3298,7 @@
 (defcfun ("gtk_window_set_auto_startup_notification"
            gtk-window-set-auto-startup-notification) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[setting]{@em{true} to automatically do startup notification}
   @begin{short}
     Call this function to disable the automatic startup notification.
@@ -3324,7 +3325,7 @@
 
 (defun gtk-window-resize-grip-is-visible (window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a resize grip exists and is visible.}
   @begin{short}
@@ -3352,7 +3353,7 @@
 
 (defun gtk-window-resize-grip-area (window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[window]{a @class{gtk-window} widget}
   @begin{return}
     @code{rect} -- a @class{gdk-rectangle} with the resize grip area.
@@ -3409,7 +3410,7 @@
 
 (defcfun ("gtk_window_get_titlebar" gtk-window-titlebar) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-window-titlebar window) => widget}
   @syntax[]{(setf (gtk-window-titlebar window) widget)}
   @argument[window]{a @class{gtk-window} widget}

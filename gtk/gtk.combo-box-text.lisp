@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -83,21 +83,22 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-combo-box-text 'type)
- "@version{2020-6-2}
+ "@version{*2021-2-4}
   @begin{short}
-    A @sym{gtk-combo-box-text} is a simple variant of @class{gtk-combo-box}
-    that hides the model-view complexity for simple text-only use cases.
+    The @sym{gtk-combo-box-text} widget is a simple variant of the
+    @class{gtk-combo-box} widget that hides the model-view complexity for
+    simple text-only use cases.
   @end{short}
 
-  To create a @sym{gtk-combo-box-text}, use the functions
+  To create a @sym{gtk-combo-box-text} widget, use the functions
   @fun{gtk-combo-box-text-new} or @fun{gtk-combo-box-text-new-with-entry}.
 
-  You can add items to a @sym{gtk-combo-box-text} with the functions
+  You can add items to a @sym{gtk-combo-box-text} widget with the functions
   @fun{gtk-combo-box-text-append-text}, @fun{gtk-combo-box-text-insert-text} or
   @fun{gtk-combo-box-text-prepend-text} and remove options with the function
   @fun{gtk-combo-box-text-remove}.
 
-  If the @sym{gtk-combo-box-text} contains an entry via the
+  If the @sym{gtk-combo-box-text} widget contains an entry via the
   @slot[gtk-combo-box]{has-entry} property, its contents can be retrieved using
   the function @fun{gtk-combo-box-text-active-text}. The entry itself can be
   accessed by calling the function @fun{gtk-bin-child} on the combo box.
@@ -132,10 +133,10 @@
      ├── button.combo
      ╰── window.popup
     @end{pre}
-    @sym{gtk-combo-box-text} has a single CSS node with name @code{combobox}.
-    It adds the style class @code{.combo} to the main CSS nodes of its entry
-    and button children, and the @code{.linked} class to the node of its
-    internal box.
+    The @sym{gtk-combo-box-text} widget has a single CSS node with name
+    @code{combobox}. It adds the style class @code{.combo} to the main CSS
+    nodes of its entry and button children, and the @code{.linked} class to the
+    node of its internal box.
   @end{dictionary}
   @see-function{gtk-combo-box-text-new}
   @see-function{gtk-combo-box-text-new-with-entry}
@@ -400,7 +401,7 @@
 (defcfun ("gtk_combo_box_text_get_active_text"
            gtk-combo-box-text-active-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
+ "@version{*2021-2-4}
   @argument[combo-box]{a @class{gtk-combo-box-text} widget}
   @begin{return}
     A string containing the currently active text.

@@ -479,6 +479,7 @@
       @about-function{gtk-list-box-invalidate-sort}
       @about-function{gtk-list-box-set-filter-func}
       @about-function{gtk-list-box-set-header-func}
+      @about-symbol{gtk-list-box-sort-func}
       @about-function{gtk-list-box-set-sort-func}
       @about-function{gtk-list-box-drag-highlight-row}
       @about-function{gtk-list-box-drag-unhighlight-row}
@@ -1186,7 +1187,7 @@
       @about-function{gtk-scale-clear-marks}
     @end{subsection}
     @begin[GtkSpinButton]{subsection}
-      Retrieve an integer or floating-point number from the user.
+      Retrieve an integer or floating point number from the user.
 
       @about-symbol{gtk-spin-button-update-policy}
       @about-symbol{gtk-spin-type}
@@ -1202,13 +1203,11 @@
       @about-function{gtk-spin-button-configure}
       @about-function{gtk-spin-button-new}
       @about-function{gtk-spin-button-new-with-range}
-      @about-function{gtk-spin-button-set-increments}
-      @about-function{gtk-spin-button-set-range}
+      @about-function{gtk-spin-button-increments}
+      @about-function{gtk-spin-button-range}
       @about-function{gtk-spin-button-value-as-int}
       @about-function{gtk-spin-button-spin}
       @about-function{gtk-spin-button-update}
-      @about-function{gtk-spin-button-get-increments}
-      @about-function{gtk-spin-button-get-range}
     @end{subsection}
     @begin[GtkSearchEntry]{subsection}
       An entry which shows a search icon.
@@ -1662,8 +1661,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-tag-changed}
 
       @about-struct{gtk-text-attributes}
-      @about-function{make-gtk-text-attributes}
-      @about-function{copy-gtk-text-attributes}
       @about-function{gtk-text-attributes-refcount}
       @about-function{gtk-text-attributes-appearance}
       @about-function{gtk-text-attributes-justification}
@@ -1684,7 +1681,6 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-attributes-editable}
       @about-function{gtk-text-attributes-no-fallback}
       @about-function{gtk-text-attributes-letter-spacing}
-
       @about-function{gtk-text-attributes-new}
       @about-function{gtk-text-attributes-copy}
       @about-function{gtk-text-attributes-copy-values}
@@ -3178,13 +3174,11 @@ setup_tree (void)
       @about-function{gtk-file-chooser-add-shortcut-folder-uri}
       @about-function{gtk-file-chooser-remove-shortcut-folder-uri}
       @about-function{gtk-file-chooser-list-shortcut-folder-uris}
-      @about-function{gtk-file-chooser-get-current-folder-file}
-      @about-function{gtk-file-chooser-get-file}
-      @about-function{gtk-file-chooser-get-files}
-      @about-function{gtk-file-chooser-get-preview-file}
+      @about-function{gtk-file-chooser-current-folder-file}
+      @about-function{gtk-file-chooser-file}
+      @about-function{gtk-file-chooser-files}
+      @about-function{gtk-file-chooser-preview-file}
       @about-function{gtk-file-chooser-select-file}
-      @about-function{gtk-file-chooser-set-current-folder-file}
-      @about-function{gtk-file-chooser-set-file}
       @about-function{gtk-file-chooser-unselect-file}
     @end{subsection}
     @begin[GtkFileChooserButton]{subsection}
@@ -3228,15 +3222,20 @@ setup_tree (void)
 
       @about-symbol{gtk-file-filter-flags}
       @about-symbol{gtk-file-filter-info}
+      @about-function{gtk-file-filter-info-contains}
+      @about-function{gtk-file-filter-info-filename}
+      @about-function{gtk-file-filter-info-uri}
+      @about-function{gtk-file-filter-info-display-name}
+      @about-function{gtk-file-filter-info-mime-type}
       @about-class{gtk-file-filter}
       @about-function{gtk-file-filter-new}
-      @about-function{gtk-file-filter-set-name}
-      @about-function{gtk-file-filter-get-name}
+      @about-function{gtk-file-filter-name}
       @about-function{gtk-file-filter-add-mime-type}
       @about-function{gtk-file-filter-add-pattern}
       @about-function{gtk-file-filter-add-pixbuf-formats}
+      @about-symbol{gtk-file-filter-func}
       @about-function{gtk-file-filter-add-custom}
-      @about-function{gtk-file-filter-get-needed}
+      @about-function{gtk-file-filter-needed}
       @about-function{gtk-file-filter-filter}
       @about-function{gtk-file-filter-new-from-gvariant}
       @about-function{gtk-file-filter-to-gvariant}
@@ -3256,7 +3255,7 @@ setup_tree (void)
       @about-function{gtk-font-chooser-font-family}
       @about-function{gtk-font-chooser-font-face}
       @about-function{gtk-font-chooser-font-size}
-      @about-symbol{gtk-font-filter-func-cb}
+      @about-symbol{gtk-font-filter-func}
       @about-function{gtk-font-chooser-set-filter-func}
       @about-function{gtk-font-chooser-font-map}
     @end{subsection}
@@ -4519,6 +4518,9 @@ setup_tree (void)
       @about-function{gtk-main}
       @about-function{gtk-main-level}
       @about-function{gtk-main-quit}
+      @about-macro{within-main-loop}
+      @about-function{leave-gtk-main}
+      @about-function{join-gtk-main}
       @about-function{gtk-main-iteration}
       @about-function{gtk-main-iteration-do}
       @about-function{gtk-main-do-event}

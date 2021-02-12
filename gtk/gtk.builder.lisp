@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -375,7 +375,7 @@
   disambiguate short strings, and comments which may help the translators.
 
   The @sym{gtk-builder} class can parse textual representations for the most
-  common property types: characters, strings, integers, floating-point numbers,
+  common property types: characters, strings, integers, floating point numbers,
   booleans, strings like \"TRUE\", \"t\", \"yes\", \"y\", \"1\" are interpreted
   as @em{true}, strings like \"FALSE\", \"f\", \"no\", \"n\", \"0\" are
   interpreted as @em{false}), enumerations, can be specified by their name, nick
@@ -522,7 +522,7 @@
 (defcfun ("gtk_builder_new_from_file" gtk-builder-new-from-file)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{*2021-2-7}
   @argument[filename]{a string with the filename}
   @return{A @class{gtk-builder} object containing the described interface.}
   @begin{short}
@@ -573,7 +573,7 @@
 
 (defun gtk-builder-new-from-string (string)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{*2021-2-4}
   @argument[string]{a string with the user interface description}
   @return{A @class{gtk-builder} object containing the interface described by
     @arg{string}.}
@@ -582,7 +582,7 @@
     @class{gtk-builder} UI definition format.
   @end{short}
 
-  If there is an error parsing string then the program will be aborted. You
+  If there is an error parsing the string then the program will be aborted. You
   should not attempt to parse user interface description from untrusted
   sources.
   @see-class{gtk-builder}
@@ -961,7 +961,7 @@
 
 (defcfun ("gtk_builder_get_object" gtk-builder-object) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{*2021-2-4}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[name]{a string with the name of object to get}
   @return{The @class{g-object} instance named @arg{name} or @code{nil} if it
@@ -969,8 +969,6 @@
   @begin{short}
     Gets the object named @arg{name}.
   @end{short}
-  Note that this function does not increment the reference count of the
-  returned object.
   @see-class{gtk-builder}
   @see-class{g-object}
   @see-function{gtk-builder-objects}"

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1972,7 +1972,7 @@
 (setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-text-tag) 't)
  "The @code{weight} property of type @code{:int} (Read / Write) @br{}
   Font weight as an integer, see predefined values in the @symbol{pango-weight}
-  enumeration; for example, @code{:bold}. @br{}
+  enumeration, for example, @code{:bold}. @br{}
   Allowed values: >= 0 @br{}
   Default value: 400")
 
@@ -1980,12 +1980,21 @@
 (setf (gethash 'gtk-text-tag-weight atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-weight 'function)
- "@version{2020-3-21}
+ "@version{2021-2-4}
+  @syntax[]{(gtk-text-tag-weight object) => weight}
+  @syntax[]{(setf (gtk-text-tag-weight object) weight)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[weight]{an integer for the font weight}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{weight} slot of the @class{gtk-text-tag}
     class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font weight as an integer, see predefined values in the @symbol{pango-weight}
+  enumeration, for example, @code{:bold}.
+  @see-class{gtk-text-tag}
+  @see-symbol{pango-weight}
+  @see-function{gtk-text-tag-weight-set}")
 
 ;;; --- gtk-text-tag-weight-set ------------------------------------------------
 
@@ -1999,12 +2008,19 @@
 (setf (gethash 'gtk-text-tag-weight-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-weight-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-4}
+  @syntax[]{(gtk-text-tag-weight-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-weight-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the font weight}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{weight-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Wether this tag affects the font weight.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-weight}")
 
 ;;; --- gtk-text-tag-wrap-mode -------------------------------------------------
 

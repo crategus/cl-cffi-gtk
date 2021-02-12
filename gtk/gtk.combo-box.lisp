@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -423,10 +423,10 @@
 (setf (gethash 'gtk-combo-box-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-combo-box-active 'function)
- "@version{2020-6-1}
+ "@version{*2021-2-4}
   @syntax[]{(gtk-combo-box-active object) => index}
   @syntax[]{(setf (gtk-combo-box-active object) index)}
-  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[object]{a @class{gtk-combo-box} widget}
   @argument[index]{an integer with the index in the model passed during
     construction, or -1 to have no active item}
   @begin{short}
@@ -436,14 +436,14 @@
 
   The slot access function @sym{gtk-combo-box-active} returns the index of the
   currently active item, or -1 if there is no active item. The slot access
-  @sym{(setf gtk-combo-box-active)} sets the active item of the combo box to be
-  the item at @arg{index}.
+  @sym{(setf gtk-combo-box-active)} sets the active item.
 
-  If the model is a non-flat tree model, and the active item is not an immediate
-  child of the root of the tree, this function returns
-  @code{gtk_tree_path_get_indices (path)[0]}, where path is the
-  @class{gtk-tree-path} of the active item.
-  @see-class{gtk-combo-box}")
+  If the model is a non-flat tree model, and the active item is not an
+  immediate child of the root of the tree, this function returns
+  @code{(first (gtk-tree-path-indices path))}, where @code{path} is the
+  @class{gtk-tree-path} object of the active item.
+  @see-class{gtk-combo-box}
+  @see-class{gtk-tree-path}")
 
 ;;; --- gtk-combo-box-active-id ------------------------------------------------
 

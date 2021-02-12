@@ -217,7 +217,7 @@
 (setf (gethash 'gtk-font-chooser-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-font 'function)
- "@version{2021-1-20}
+ "@version{*2021-2-11}
   @syntax[]{(gtk-font-chooser-font object) => fontname}
   @syntax[]{(setf (gtk-font-chooser-font object) fontname)}
   @argument[object]{a @class{gtk-font-chooser} object}
@@ -256,7 +256,7 @@
 (setf (gethash 'gtk-font-chooser-font-desc atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-font-desc 'function)
- "@version{2021-1-20}
+ "@version{*2021-1-20}
   @syntax[]{(gtk-font-chooser-font-desc object) => font-desc}
   @syntax[]{(setf (gtk-font-chooser-font-desc object) font-desc)}
   @argument[object]{a @class{gtk-font-chooser} object}
@@ -268,8 +268,7 @@
 
   The slot access function @sym{gtk-font-chooser-font-desc} gets the Pango
   font description for the currently selected font. The slot access function
-  @sym{(setf gtk-font-chooser-font-desc)} sets the currently selected font from
-  @arg{font-desc}.
+  @sym{(setf gtk-font-chooser-font-desc)} sets the currently selected font.
 
   Use the function @fun{pango-font-description-equal} if you want to compare
   two Pango font descriptions.
@@ -445,7 +444,7 @@
 (defcfun ("gtk_font_chooser_get_font_family" gtk-font-chooser-font-family)
     (g-object pango-font-family)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-20}
+ "@version{*2021-2-11}
   @argument[fontchooser]{a @class{gtk-font-chooser} object}
   @begin{return}
     A @class{pango-font-family} object representing the selected font family,
@@ -479,7 +478,7 @@
 (defcfun ("gtk_font_chooser_get_font_face" gtk-font-chooser-font-face)
     (g-object pango-font-face)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-20}
+ "@version{*2021-2-11}
   @argument[fontchooser]{a @class{gtk-font-chooser} object}
   @begin{return}
     A @class{pango-font-face} object representing the selected font group
@@ -502,7 +501,7 @@
 
 (defcfun ("gtk_font_chooser_get_font_size" gtk-font-chooser-font-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-1-20}
+ "@version{*2021-2-11}
   @argument[fontchooser]{a @class{gtk-font-chooser} object}
   @begin{return}
     An integer representing the selected font size in Pango units,
@@ -520,17 +519,17 @@
 ;;; GtkFontFilterFunc ()
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-font-filter-func-cb :boolean
+(defcallback gtk-font-filter-func :boolean
     ((family (g-object pango-font-family))
      (face (g-object pango-font-face))
      (data :pointer))
   (funcall (get-stable-pointer-value data) family face))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-font-filter-func-cb atdoc:*symbol-name-alias*)
+(setf (gethash 'gtk-font-filter-func atdoc:*symbol-name-alias*)
       "Callback"
-      (gethash 'gtk-font-filter-func-cb atdoc:*external-symbols*)
- "@version{2021-1-20}
+      (gethash 'gtk-font-filter-func atdoc:*external-symbols*)
+ "@version{2021-1-31}
   @begin{short}
     The callback function that is used for deciding what fonts get shown in a
     @class{gtk-font-chooser} object.
@@ -544,12 +543,12 @@
     @entry[face]{A @class{pango-font-face} object belonging to @arg{family}.}
     @entry[Return]{@em{True} if the font should be displayed.}
   @end{table}
-  @see-class{gkt-font-chooser}
-  @see-class{gtk-font-family}
-  @see-class{gtk-font-face}
+  @see-class{gtk-font-chooser}
+  @see-class{pango-font-family}
+  @see-class{pango-font-face}
   @see-function{gtk-font-chooser-set-filter-func}")
 
-(export 'gtk-font-filter-func-cb)
+(export 'gtk-font-filter-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_filter_func ()
@@ -564,9 +563,9 @@
 
 (defun gtk-font-chooser-set-filter-func (fontchooser func)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-20}
+ "@version{*2021-2-11}
   @argument[fontchooser]{a @class{gtk-font-chooser} object}
-  @argument[filter]{a @symbol{gtk-font-filter-func-cb} callback, or @code{nil}}
+  @argument[filter]{a @symbol{gtk-font-filter-func} callback, or @code{nil}}
   @begin{short}
     Adds a filter function that decides which fonts to display in the font
     chooser.
@@ -588,11 +587,11 @@
     @end{pre}
   @end{dictionary}
   @see-class{gtk-font-chooser}
-  @see-symbol{gtk-font-filter-func-cb}"
+  @see-symbol{gtk-font-filter-func}"
   (if func
       (%gtk-font-chooser-set-filter-func
           fontchooser
-          (callback gtk-font-filter-func-cb)
+          (callback gtk-font-filter-func)
           (allocate-stable-pointer func)
           (callback stable-pointer-destroy-notify-cb))
       (%gtk-font-chooser-set-filter-func

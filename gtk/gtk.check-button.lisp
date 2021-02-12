@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,25 +82,23 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-button 'type)
- "@version{2020-5-10}
+ "@version{*2021-2-5}
   @begin{short}
-    A @sym{gtk-check-button} places a discrete @class{gtk-toggle-button} next
-    to a widget, usually a @class{gtk-label}. See the section on
-    @class{gtk-toggle-button} widgets for more information about toggle/check
-    buttons.
+    A @sym{gtk-check-button} widget places a discrete @class{gtk-toggle-button}
+    widget next to a widget, usually a @class{gtk-label} widget.
   @end{short}
+  See the section on @class{gtk-toggle-button} widgets for more information
+  about toggle/check buttons. The important signal \"toggled\" is also
+  inherited from the @class{gtk-toggle-button} widget.
 
   @image[check-button]{}
-
-  The important signal \"toggled\" is also inherited from
-  @class{gtk-toggle-button}.
   @begin[CSS nodes]{dictionary}
     @begin{pre}
  checkbutton
  ├── check
  ╰── <child>
     @end{pre}
-    A @sym{gtk-check-button} with indicator, see the function
+    A @sym{gtk-check-button} widget with indicator, see the function
     @fun{gtk-toggle-button-mode}, has a main CSS node with name
     @code{checkbutton} and a subnode with name @code{check}.
     @begin{pre}
@@ -108,15 +106,15 @@
  ├── check
  ╰── <child>
     @end{pre}
-    A @sym{gtk-check-button} without indicator changes the name of its main node
-    to @code{button} and adds a @code{.check} style class to it. The subnode is
-    invisible in this case.
+    A @sym{gtk-check-button} widget without indicator changes the name of its
+    main node to @code{button} and adds a @code{.check} style class to it. The
+    subnode is invisible in this case.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[indicator-size]{entry}
-        The @code{indicator-size} style property of type @code{:int}
-        (Read) @br{}
+        The @code{indicator-size} style property of type @code{:int} (Read)
+        @br{}
         Size of check or radio indicator. @br{}
         @em{Warning:} The @code{indicator-size} style property has been
         deprecated since version 3.20 and should not be used in newly-written
@@ -138,7 +136,6 @@
       @end{entry}
     @end{table}
   @end{dictionary}
-  @see-class{gtk-check-menu-item}
   @see-class{gtk-button}
   @see-class{gtk-toggle-button}
   @see-class{gtk-radio-button}")
@@ -167,14 +164,16 @@
 
 (defun gtk-check-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{*2021-2-5}
   @argument[label]{a string with the text for the check button}
   @return{A @class{gtk-check-button} widget.}
   @begin{short}
-    Creates a new check button widget with a @class{gtk-label} widget to the
-    right of it.
+    Creates a new check button with a @class{gtk-label} widget to the right
+    of it.
   @end{short}
-  @see-class{gtk-check-button}"
+  @see-class{gtk-check-button}
+  @see-function{gtk-check-button-new}
+  @see-function{gtk-check-button-new-with-mnemonic}"
   (make-instance 'gtk-check-button
                  :label label))
 

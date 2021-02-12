@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -249,7 +249,7 @@
   Each recently used file is identified by its URI, and has meta-data associated
   to it, like the names and command lines of the applications that have
   registered it, the number of time each application has registered the same
-  file, the mime type of the file and whether the file should be displayed only
+  file, the MIME type of the file and whether the file should be displayed only
   by the applications that have registered it.
 
   The recently used files list is per user.

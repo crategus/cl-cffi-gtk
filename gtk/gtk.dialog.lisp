@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -115,7 +115,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @short{Flags used to influence the dialog construction.}
   @begin{pre}
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
@@ -157,9 +157,10 @@
   (:help -11))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-response-type atdoc:*external-symbols*)
- "@version{*2020-5-26}
+ "@version{*2021-1-26}
   @begin{short}
     Predefined values for use as response IDs in the function
     @fun{gtk-dialog-add-button}.
@@ -215,7 +216,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @begin{short}
     Dialog windows are a convenient way to prompt the user for a small amount
     of input, e.g. to display a message, ask a question, or anything else that
@@ -455,7 +456,7 @@
 (setf (gethash 'gtk-dialog-use-header-bar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-dialog-use-header-bar 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-dialog-use-header-bar object) => header-bar}
   @syntax[]{(setf (gtk-dialog-use-header-bar object) header-bar)}
   @argument[object]{a @class{gtk-dialog} window}
@@ -478,7 +479,7 @@
 
 (defun gtk-dialog-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @return{The new @class{gtk-dialog} window.}
   @short{Creates a new dialog window.}
 
@@ -498,7 +499,7 @@
 
 (defun gtk-dialog-new-with-buttons (title parent flags &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[title]{a string with the title of the dialog, or @code{nil}}
   @argument[parent]{a @class{gtk-window} transient parent of the dialog,
     or @code{nil}}
@@ -627,7 +628,7 @@
 
 (defcfun ("gtk_dialog_response" gtk-dialog-response) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{response ID, which is a positive integer or a value of
     the @symbol{gtk-response-type} enumeration}
@@ -651,7 +652,7 @@
 
 (defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[button-text]{a string with text of the button, or stock ID}
   @argument[response-id]{response ID for the button, wich is a positive integer
@@ -680,7 +681,7 @@
 
 (defun gtk-dialog-add-buttons (dialog &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[buttons]{pairs with a button text or stock ID and the response ID,
     which is a positive integer or a value of the @symbol{gtk-response-type}
@@ -711,7 +712,7 @@
 
 (defcfun ("gtk_dialog_add_action_widget" gtk-dialog-add-action-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[child]{an activatable @class{gtk-widget} widget}
   @argument[response-id]{response ID for @arg{child}, which is a positive
@@ -741,7 +742,7 @@
 (defcfun ("gtk_dialog_set_default_response" gtk-dialog-set-default-response)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{a response ID, which is a positive integer or a value
     of the @symbol{gtk-response-type} enumeration}
@@ -764,7 +765,7 @@
 (defcfun ("gtk_dialog_set_response_sensitive" gtk-dialog-set-response-sensitive)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{a response ID, which is a positive integer or a value
     of the @symbol{gtk-response-type} enumeration}
@@ -790,7 +791,7 @@
 (defcfun ("gtk_dialog_get_response_for_widget" gtk-dialog-response-for-widget)
     :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[widget]{a @class{gtk-widget} widget in the action area of
     @arg{dialog}}
@@ -815,7 +816,7 @@
 (defcfun ("gtk_dialog_get_widget_for_response" gtk-dialog-widget-for-response)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{the response ID, which is a positive integer or a value
     of the @symbol{gtk-response-type} enumeration}
@@ -840,7 +841,7 @@
 (defcfun ("gtk_dialog_get_action_area" gtk-dialog-action-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The @class{gtk-widget} action area of the dialog.}
   @short{Returns the action area of the dialog.}
@@ -863,7 +864,7 @@
 (defcfun ("gtk_dialog_get_content_area" gtk-dialog-content-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @begin{return}
     The @class{gtk-box} content area with a @code{:vertical} orientation.
@@ -883,7 +884,7 @@
 (defcfun ("gtk_dialog_get_header_bar" gtk-dialog-header-bar)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The @class{gtk-header-bar} widget.}
   @begin{short}
@@ -905,7 +906,7 @@
 (defcfun ("gtk_alternative_dialog_button_order"
           gtk-alternative-dialog-button-order) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[screen]{a @class{gdk-screen} object, or @code{nil} to use the
     default screen}
   @return{A boolean whether the alternative button order should be used.}
@@ -937,7 +938,7 @@
 
 (defun gtk-dialog-set-alternative-button-order (dialog response-list)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-list]{a list of response IDs, which are positive integer
     or values of the  @symbol{gtk-response-type} enumeration}
@@ -1010,7 +1011,7 @@
 (defcfun ("gtk_dialog_set_alternative_button_order_from_array"
           %gtk-dialog-set-alternative-button-order-from-array) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[n-params]{the number of response IDs in @arg{new-order}}
   @argument[new-order]{an array of response IDs of dialog's buttons}

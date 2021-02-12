@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -170,7 +170,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2020-12-3}
+ "@version{*2021-2-9}
   @short{A widget that emits a signal when clicked on.}
 
   @image[button]{}
@@ -180,8 +180,8 @@
   them are outlined below.
 
   The @sym{gtk-button} widget can hold any valid child widget. That is, it can
-  hold almost any other standard @class{gtk-widget}. The most commonly used
-  child is the @class{gtk-label} widget.
+  hold almost any other standard @class{gtk-widget} object. The most commonly
+  used child is the @class{gtk-label} widget.
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-button} widget has a single CSS node with name @code{button}.
     The node will get the style classes @code{.image-button} or
@@ -744,9 +744,9 @@
 
 (defun gtk-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-20}
-  @argument[label]{a string with the text you want the @class{gtk-label} widget
-    to hold}
+ "@version{*2021-2-9}
+  @argument[label]{a string with the text you want the @class{gtk-label} child
+    widget to hold}
   @return{The newly created @class{gtk-button} widget.}
   @begin{short}
     Creates a button widget with a label child widget containing the given text

@@ -121,36 +121,40 @@
   @begin{short}
     The @sym{gtk-color-button} widget is a button which displays the currently
     selected color and allows to open a color selection dialog to change the
-    color. It is a suitable widget for selecting a color in a preference dialog.
+    color.
   @end{short}
+  It is a suitable widget for selecting a color in a preference dialog.
 
   @image[color-button]{}
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-color-button} class has a single CSS node with name
+    @arg{button}. To differentiate it from a plain @class{gtk-button} class,
+    it gets the @code{.color} style class.
+  @end{dictionary}
   @begin[Example]{dictionary}
     The example shows a color button. The button is initialized with the color
     \"Blue\". The handler for the \"color-set\" signal prints the selected
     color on the console.
     @begin{pre}
-(let ((color (gdk-rgba-parse \"Blue\")))
-  (defun example-color-button ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :title \"Example Color Button\"
-                                   :border-width 12
-                                   :default-width 250
-                                   :default-height 200))
-            (button (make-instance 'gtk-color-button
-                                   :rgba color)))
-        (g-signal-connect window \"destroy\"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        (g-signal-connect button \"color-set\"
-           (lambda (widget)
-             (let ((rgba (gtk-color-chooser-rgba widget)))
-               (format t \"Selected color is ~A~%\"
-                         (gdk-rgba-to-string rgba)))))
-        (gtk-container-add window button)
-        (gtk-widget-show-all window)))))
+(defun example-color-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title \"Example Color Button\"
+                                 :border-width 12
+                                 :default-width 250
+                                 :default-height 200))
+          (button (make-instance 'gtk-color-button
+                                 :rgba (gdk-rgba-parse \"Blue\"))))
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (g-signal-connect button \"color-set\"
+         (lambda (widget)
+           (let ((rgba (gtk-color-chooser-rgba widget)))
+             (format t \"Selected color is ~A~%\" (gdk-rgba-to-string rgba)))))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -159,12 +163,10 @@
  lambda (button)    : Run First
       @end{pre}
       The \"color-set\" signal is emitted when the user selects a color. When
-      handling this signal, use the functions @fun{gtk-color-button-color}
-      and @fun{gtk-color-button-alpha}, or the function
-      @fun{gtk-color-button-rgba} to find out which color was just selected.
-      Note that this signal is only emitted when the user changes the color.
-      If you need to react to programmatic color changes as well, use the
-      \"notify::color\" signal.
+      handling this signal, use the function @fun{gtk-color-chooser-rgba} to
+      find out which color was just selected. Note that this signal is only
+      emitted when the user changes the color. If you need to react to
+      programmatic color changes as well, use the \"notify::color\" signal.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-color-button} widget which received the
           signal.}

@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -763,10 +763,11 @@
 
 (defcfun ("gtk_style_context_add_provider" gtk-style-context-add-provider) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
+ "@version{*2021-2-4}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[provider]{a @class{gtk-style-provider} object}
-  @argument[priority]{the priority of type @code{:uint} of the style provider}
+  @argument[priority]{an unsigned integer with the priority of the style
+    provider}
   @begin{short}
     Adds a style provider to the style context, to be used in style
     construction.

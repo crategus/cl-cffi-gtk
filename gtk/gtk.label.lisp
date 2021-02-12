@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -219,12 +219,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-label 'type)
- "@version{2020-4-14}
+ "@version{*2021-2-4}
   @begin{short}
     The @sym{gtk-label} widget displays a small amount of text.
   @end{short}
   As the name implies, most labels are used to label another widget such as
-  a @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-combo-box}.
+  a @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-combo-box}
+  widget.
 
   @subheading{Mnemonics}
   Labels may contain mnemonics. Mnemonics are underlined characters in the
@@ -367,10 +368,11 @@
  ┊
  ╰── [link]
     @end{pre}
-    @sym{gtk-label} has a single CSS node with the name @code{label}. A wide
-    variety of style classes may be applied to labels, such as @code{.title},
-    @code{.subtitle}, @code{.dim-label}. In @class{gtk-shortcuts-window},
-    labels are used wth the @code{.keycap} style class.
+    The @sym{gtk-label} widget has a single CSS node with the name @code{label}.
+    A wide variety of style classes may be applied to labels, such as
+    @code{.title}, @code{.subtitle}, @code{.dim-label}. In the
+    @class{gtk-shortcuts-window} widget, labels are used wth the @code{.keycap}
+    style class.
 
     If the label has a selection, it gets a subnode with name @code{selection}.
 
@@ -681,7 +683,7 @@
 (setf (gethash 'gtk-label-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-label 'function)
- "@version{2020-4-15}
+ "@version{*2021-2-7}
   @syntax[]{(gtk-label-label object) => text}
   @syntax[]{(setf (gtk-label-label object) text)}
   @argument[object]{a @class{gtk-label} widget}

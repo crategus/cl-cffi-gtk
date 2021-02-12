@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2020 Dieter Kaiser
+;;; Copyright (C) 2020 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -49,9 +49,10 @@
   (:word-char 3))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-wrap-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-wrap-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-wrap-mode atdoc:*external-symbols*)
- "@version{2020-3-21}
+ "@version{2021-2-8}
   @short{Describes a type of line wrapping.}
   @begin{pre}
 (define-g-enum \"GtkWrapMode\" gtk-wrap-mode
@@ -66,11 +67,15 @@
     @entry[:none]{Do not wrap lines, just make the text area wider.}
     @entry[:char]{Wrap text, breaking lines anywhere the cursor can appear
       between characters, usually. If you want to be technical, between
-      graphemes, see the function @code{pango_get_log_attrs ()}.}
+      graphemes, see the function @fun{pango-log-attrs}.}
     @entry[:word]{Wrap text, breaking lines in between words.}
     @entry[:word-char]{Wrap text, breaking lines in between words, or if that
       is not enough, also between graphemes.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-text-tag}
+  @see-class{gtk-text-view}
+  @see-class{gtk-text-attributes}
+  @see-function{pango-log-attrs}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTextAppearance
@@ -153,7 +158,7 @@
 
 (define-g-boxed-cstruct gtk-text-attributes "GtkTextAttributes"
   (refcount :uint :initform 0)
-  (appearance :pointer :initform (null-pointer))
+  (appearance :pointer :initform (null-pointer)) ; type is gtk-text-appearance
   (justification gtk-justification)
   (direction gtk-text-direction)
   (font (g-boxed-foreign pango-font-description))
@@ -171,7 +176,7 @@
   (bg-full-height :boolean)
   (editable :boolean)
   (no-fallback :boolean)
-  (letter-spacing :int))
+  (letter-spacing :int :initform 0))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-attributes atdoc:*class-name-alias*) "CStruct"
@@ -279,6 +284,8 @@
   @see-class{gtk-text-attributes}
   @see-function{copy-gtk-text-attributes}")
 
+(unexport 'make-gtk-text-attributes)
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-text-attributes 'function)
  "@version{2020-3-21}
@@ -287,6 +294,8 @@
   @end{short}
   @see-class{gtk-text-attributes}
   @see-function{make-gtk-text-attributes}")
+
+(unexport 'copy-gtk-text-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors for GtkTextAttributes
@@ -554,6 +563,11 @@
 ;;;     a new GtkTextAttributes, free with gtk_text_attributes_unref().
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-text-attributes-new ()
+  (make-gtk-text-attributes))
+
+(export 'gtk-text-attributes-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy ()
 ;;;
@@ -567,6 +581,11 @@
 ;;; Returns :
 ;;;     a copy of src, free with gtk_text_attributes_unref()
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-text-attributes-copy (src)
+  (copy-gtk-text-attributes src))
+
+(export 'gtk-text-attributes-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy_values ()
@@ -583,6 +602,13 @@
 ;;; dest :
 ;;;     another GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk-text-attributes-copy-value" gtk-text-attributes-copy-values)
+    :void
+  (src (g-boxed-foreign gtk-text-attributes))
+  (dest (g-boxed-foreign gtk-text-attributes)))
+
+(export 'gtk-text-attributes-copy-values)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_unref ()

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -78,24 +78,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-fixed 'type)
- "@version{2013-5-18}
+ "@version{*2021-2-9}
   @begin{short}
     The @sym{gtk-fixed} widget is a container which can place child widgets at
     fixed positions and with fixed sizes, given in pixels.
   @end{short}
-  @sym{gtk-fixed} performs no automatic layout management.
+  The fixed container performs no automatic layout management.
 
   For most applications, you should not use this container. It keeps you from
   having to learn about the other GTK+ containers, but it results in broken
-  applications. With @sym{gtk-fixed}, the following things will result in
-  truncated text, overlapping widgets, and other display bugs:
+  applications. With the @sym{gtk-fixed} container, the following things will
+  result in truncated text, overlapping widgets, and other display bugs:
   @begin{itemize}
     @begin{item}
       Themes, which may change widget sizes.
     @end{item}
     @begin{item}
-      Fonts other than the one you used to write the app will of course
-      change the size of widgets containing text; keep in mind that users may
+      Fonts other than the one you used to write the application will of course
+      change the size of widgets containing text. Keep in mind that users may
       use a larger font because of difficulty reading the default, or they
       may be using Windows or the framebuffer port of GTK+, where different
       fonts are available.
@@ -105,10 +105,10 @@
       display of non-English text will use a different font in many cases.
     @end{item}
   @end{itemize}
-  In addition, the fixed widget cannot properly be mirrored in right-to-left
+  In addition, the fixed container cannot properly be mirrored in right-to-left
   languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
   interface to put labels to the right of the thing they label, but it cannot
-  do that with @sym{gtk-fixed}. So your application will not be usable in
+  do that with the fixed container. So your application will not be usable in
   right-to-left languages.
 
   Finally, fixed positioning makes it kind of annoying to add/remove GUI
@@ -116,11 +116,11 @@
   long-term maintenance problem for your application.
 
   If you know none of these things are an issue for your application, and
-  prefer the simplicity of @class{gtk-fixed}, by all means use the widget. But
-  you should be aware of the tradeoffs.
+  prefer the simplicity of the @sym{gtk-fixed} container, by all means use the
+  fixed container. But you should be aware of the tradeoffs.
 
-  See also @class{gtk-layout}, which shares the ability to perform fixed
-  positioning of child widgets and additionally adds custom drawing and
+  See also the @class{gtk-layout} widget, which shares the ability to perform
+  fixed positioning of child widgets and additionally adds custom drawing and
   scrollability.
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -216,7 +216,7 @@
 
 (defcfun ("gtk_fixed_put" gtk-fixed-put) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
+ "@version{*2021-2-9}
   @argument[fixed]{a @class{gtk-fixed} container}
   @argument[widget]{the @class{gtk-widget} child widget to add}
   @argument[x]{an integer with the horizontal position to place the child
@@ -241,7 +241,7 @@
 
 (defcfun ("gtk_fixed_move" gtk-fixed-move) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
+ "@version{*2021-2-9}
   @argument[fixed]{a @class{gtk-fixed} container}
   @argument[widget]{the @class{gtk-widget} child widget}
   @argument[x]{an integer with the horizontal position to move the child widget

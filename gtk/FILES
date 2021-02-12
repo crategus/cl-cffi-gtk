@@ -157,12 +157,12 @@ GTK+ Widgets and Objects
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
     gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24 &
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
     gtk.file-chooser-native.lisp     - GtkFileChooserNative        - GTK+ 3.24 %
     gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.24
     gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.24
-    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24 &
+    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24
 
     gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.24
     gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.24
@@ -339,4 +339,4 @@ Deprecated
 
     not implemented                  - GtkStyleProperties
 
-;;; 2020-11-27
+;;; 2021-2-11

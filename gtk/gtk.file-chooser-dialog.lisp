@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -73,25 +73,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-dialog 'type)
- "@version{2020-6-5}
+ "@version{*2021-2-4}
   @begin{short}
-    @sym{gtk-file-chooser-dialog} is a dialog box suitable for use with
-    \"File/Open\" or \"File/Save as\" commands. This widget works by putting a
-    @class{gtk-file-chooser-widget} inside a @class{gtk-dialog}. It exposes the
-    @code{GtkFileChooserIface} interface, so you can use all of the
-    @class{gtk-file-chooser} functions on the file chooser dialog as well as
-    those for @class{gtk-dialog}.
+    The @sym{gtk-file-chooser-dialog} widget is a dialog box suitable for use
+    with \"File/Open\" or \"File/Save as\" commands.
   @end{short}
+  This widget works by putting a @class{gtk-file-chooser-widget} widget inside
+  a @class{gtk-dialog} widget. It exposes the @class{gtk-file-chooser}
+  interface, so you can use all of the @class{gtk-file-chooser} functions on
+  the file chooser dialog as well as those for the @class{gtk-dialog} widget.
 
   @image[file-chooser-dialog]{}
+  Note that the @sym{gtk-file-chooser-dialog} widget does not have any methods
+  of its own. Instead, you should use the functions that work on a
+  @class{gtk-file-chooser} interface.
 
-  Note that @sym{gtk-file-chooser-dialog} does not have any methods of its own.
-  Instead, you should use the functions that work on a @class{gtk-file-chooser}.
-
-  @b{Example:} Typical usage
-
-  In the simplest of cases, you can the following code to use
-  @sym{gtk-file-chooser-dialog} to select a file for opening:
+  @b{Example:} Typical usage @br{}
+  In the simplest of cases, you can the following code to use the
+  @sym{gtk-file-chooser-dialog} widget to select a file for opening:
   @begin{pre}
 (defun create-file-chooser-dialog-open (window)
   (let ((dialog (gtk-file-chooser-dialog-new \"Open File\"
@@ -99,12 +98,10 @@
                                              :open
                                              \"gtk-cancel\" :cancel
                                              \"gtk-open\" :accept)))
-    (if (eq (gtk-dialog-run dialog)
-            (foreign-enum-value 'gtk-response-type :accept))
+    (if (eq :accept (gtk-dialog-run dialog))
       (let ((filename (gtk-file-chooser-filename dialog)))
         ...
       ))
-
     (gtk-widget-destroy dialog)))
   @end{pre}
   To use a dialog for saving, you can use this:
@@ -119,17 +116,15 @@
     (if filename
         (setf (gtk-file-chooser-filename dialog) filename)
         (setf (gtk-file-chooser-current-name dialog) \"Untitled document\"))
-    (if (eq (gtk-dialog-run dialog)
-            (foreign-enum-value 'gtk-response-type :accept))
+    (if (eq :accept (gtk-dialog-run dialog))
       (let ((filename (gtk-file-chooser-filename dialog)))
         ...
       ))
-
     (gtk-widget-destroy dialog)))
   @end{pre}
   @subheading{Setting up a file chooser dialog}
     There are various cases in which you may need to use a
-    @sym{gtk-file-chooser-dialog}:
+    @sym{gtk-file-chooser-dialog} widget:
     @begin{itemize}
       @begin{item}
         To select a file for opening, as for a File/Open command. Use
@@ -160,10 +155,10 @@
     doing a File/Save As command and you already have a file saved somewhere.
 
   @subheading{Response Codes}
-    @sym{gtk-file-chooser-dialog} inherits from @class{gtk-dialog}, so buttons
-    that go in its action area have response codes such as @code{:accept} and
-    @code{:cancel}. For example, you could call the function
-    @fun{gtk-file-chooser-dialog-new} as follows:
+    The @sym{gtk-file-chooser-dialog} widget inherits from the
+    @class{gtk-dialog} widget, so buttons that go in its action area have
+    response codes such as @code{:accept} and @code{:cancel}. For example, you
+    could call the function @fun{gtk-file-chooser-dialog-new} as follows:
     @begin{pre}
  (let ((dialog (gtk-file-chooser-dialog-new \"Open File\"
                                             parent-window
@@ -172,26 +167,27 @@
                                             \"gtk-open\" :accept)))
    ... )
     @end{pre}
-    This will create buttons for \"Cancel\" and \"Open\" that use stock response
-    identifiers from @symbol{gtk-response-type}. For most dialog boxes you can
-    use your own custom response codes rather than the ones in
-    @symbol{gtk-response-type}, but @sym{gtk-file-chooser-dialog} assumes that
-    its \"accept\"-type action, e.g. an \"Open\"
-    or \"Save\" button, will have one of the following response codes:
+    This will create buttons for \"Cancel\" and \"Open\" that use stock
+    response identifiers from the @symbol{gtk-response-type} enumeration. For
+    most dialog boxes you can use your own custom response codes rather than
+    the ones in the @symbol{gtk-response-type} enumeration, but the
+    @sym{gtk-file-chooser-dialog} widget assumes that its \"accept\"-type
+    action, e.g. an \"Open\" or \"Save\" button, will have one of the following
+    response codes:
     @begin{pre}
      @code{:accept}
      @code{:ok}
      @code{:yes}
      @code{:apply}
     @end{pre}
-    This is because @sym{gtk-file-chooser-dialog} must intercept responses and
-    switch to folders if appropriate, rather than letting the dialog terminate
-    - the implementation uses these known response codes to know which responses
-    can be blocked if appropriate.
+    This is because the @sym{gtk-file-chooser-dialog} widget must intercept
+    responses and switch to folders if appropriate, rather than letting the
+    dialog terminate - the implementation uses these known response codes to
+    know which responses can be blocked if appropriate.
 
   @subheading{Note}
-    To summarize, make sure you use a stock response code when you use
-    @sym{gtk-file-chooser-dialog} to ensure proper operation.
+    To summarize, make sure you use a stock response code when you use the
+    @sym{gtk-file-chooser-dialog} widget to ensure proper operation.
   @see-class{gtk-dialog}
   @see-class{gtk-file-chooser}
   @see-class{gtk-file-chooser-widget}
@@ -205,14 +201,13 @@
 
 (defun gtk-file-chooser-dialog-new (title parent action &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-5}
+ "@version{*2021-2-4}
   @argument[title]{a string with title of the dialog, or @code{nil}}
   @argument[parent]{a @class{gtk-window} transient parent of the dialog,
     or @code{nil}}
-  @argument[action]{open or save mode for the dialog of type
-    @symbol{gtk-file-chooser-action}}
+  @argument[action]{a value of the @symbol{gtk-file-chooser-action} enumeration}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
-    for the button of type @symbol{gtk-response-type}}
+    of type @symbol{gtk-response-type} for the button}
   @return{A new @class{gtk-file-chooser-dialog} widget.}
   @begin{short}
     Creates a new file chooser dialog.

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -555,10 +555,15 @@
   (:end 15))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-scroll-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-scroll-type atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-scroll-type atdoc:*external-symbols*)
- "@version{2020-8-19}
-  @short{Scrolling types.}
+ "@version{2021-2-10}
+  @begin{short}
+    The scrolling types of this enumeration are a parameter for signal
+    handlers in various widgets such as @class{gtk-spin-button},
+    @class{gtk-scrolled-window}, or @class{gtk-combo-box}.
+  @end{short}
   @begin{pre}
 (define-g-enum \"GtkScrollType\" gtk-scroll-type
   (:export t
@@ -579,7 +584,10 @@
   (:page-right 13)
   (:start 14)
   (:end 15))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-spin-button}
+  @see-class{gtk-scrolled-window}
+  @see-class{gtk-combo-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSelectionMode

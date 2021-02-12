@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -191,7 +191,7 @@
 (setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
- "@version{2020-6-7}
+ "@version{*2021-2-5}
   @syntax[]{(gtk-toggle-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-button-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-button} widget}
@@ -206,7 +206,7 @@
   is pressed in and @em{false} if it is raised. The slot access function
   @sym{(setf gtk-toggle-button-active)} sets the status of the toggle button.
 
-  This action causes the toggled signal to be emitted.
+  This action causes the \"toggled\" signal to be emitted.
   @see-class{gtk-toggle-button}")
 
 ;;; --- gtk-toggle-button-draw-indicator ---------------------------------------

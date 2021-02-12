@@ -77,7 +77,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-chooser-widget 'type)
- "@version{2021-1-23}
+ "@version{*2021-1-23}
   @begin{short}
     The @sym{gtk-color-chooser-widget} widget lets the user select a color.
   @end{short}
@@ -97,6 +97,29 @@
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-color-chooser-widget} class has a single CSS node with name
     @code{colorchooser}.
+  @end{dictionary}
+  @begin[Example]{dictionary}
+    This example shows a color chooser widget in a window. The selected color
+    is print on the console.
+    @begin{pre}
+(defun example-color-chooser-widget ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title \"Example Color Chooser Widget\"
+                                 :border-width 12
+                                 :default-width 400))
+          (color-chooser (make-instance 'gtk-color-chooser-widget)))
+        (g-signal-connect window \"destroy\"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (leave-gtk-main)))
+        (g-signal-connect color-chooser \"color-activated\"
+            (lambda (chooser color)
+              (declare (ignore chooser))
+              (format t \"Selected color is ~a~%\" (gdk-rgba-to-string color))))
+        (gtk-container-add window color-chooser)
+        (gtk-widget-show-all window))))
+    @end{pre}
   @end{dictionary}
   @see-slot{gtk-color-chooser-widget-show-editor}
   @see-class{gtk-color-chooser}

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -242,12 +242,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image 'type)
- "@version{2020-4-17}
+ "@version{*2021-2-4}
   @begin{short}
-    The @sym{gtk-image} widget displays an image. Various kinds of object can be
-    displayed as an image; most typically, you would load a @class{gdk-pixbuf}
-    object from a file, and then display that.
+    The @sym{gtk-image} widget displays an image.
   @end{short}
+  Various kinds of objects can be displayed as an image. Most typically, you
+  would load a @class{gdk-pixbuf} object from a file, and then display that.
 
   @image[image]{}
 
@@ -261,21 +261,28 @@
   \"broken image\" icon similar to that used in many web browsers. If you want
   to handle errors in loading the file yourself, for example by displaying an
   error message, then load the image with the function
-  @fun{gdk-pixbuf-new-from-file}, then create the @sym{gtk-image} with
+  @fun{gdk-pixbuf-new-from-file}, then create the @sym{gtk-image} widget with
   the function @fun{gtk-image-new-from-pixbuf}.
 
-  The image file may contain an animation, if so the @sym{gtk-image} will
-  display an animation of type @class{gdk-pixbuf-animation} instead of a static
+  The image file may contain an animation, if so the @sym{gtk-image} widget
+  will display a @class{gdk-pixbuf-animation} animation instead of a static
   image.
 
-  @sym{gtk-image} is a subclass of @class{gtk-misc}, which implies that you can
-  align it (center, left, right) and add padding to it, using @class{gtk-misc}
-  methods.
+  The @sym{gtk-image} widget is a subclass of the @class{gtk-misc} widget,
+  which implies that you can align it (center, left, right) and add padding to
+  it, using the @class{gtk-misc} methods.
 
-  @sym{gtk-image} is a \"no window\" widget (has no @class{gdk-window} of its
-  own), so by default does not receive events. If you want to receive events on
-  the image, such as button clicks, place the image inside a
-  @class{gtk-event-box}, then connect to the event signals on the event box.
+  The @sym{gtk-image} widget is a \"no window\" widget (has no
+  @class{gdk-window} object of its own), so by default does not receive events.
+  If you want to receive events on the image, such as button clicks, place the
+  image inside a @class{gtk-event-box} widget, then connect to the event
+  signals on the event box.
+
+  Sometimes an application will want to avoid depending on external data files,
+  such as image files. GTK+ comes with a program to avoid this, called
+  @code{gdk-pixbuf-csource}. This library allows you to convert an image into a
+  C variable declaration, which can then be loaded into a @class{gdk-pixbuf}
+  object using the function @fun{gdk-pixbuf-new-from-inline}.
   @begin[Example]{dictionary}
     Handling button press events on a @sym{gtk-image}.
     @begin{pre}
@@ -299,10 +306,15 @@
     @end{pre}
     When handling events on the event box, keep in mind that coordinates in the
     image may be different from event box coordinates due to the alignment and
-    padding settings on the image, see @class{gtk-misc}. The simplest way to
-    solve this is to set the alignment to 0.0 (left/top), and set the padding
-    to zero. Then the origin of the image will be the same as the origin of the
-    event box.
+    padding settings on the image, see the @class{gtk-misc} class. The simplest
+    way to solve this is to set the alignment to 0.0 (left/top), and set the
+    padding to zero. Then the origin of the image will be the same as the
+    origin of the event box.
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-image} widget has a single CSS node with the name @code{image}.
+    The style classes may appear on image CSS nodes:
+    @code{.icon-dropshadow}, @code{.lowres-icon}.
   @end{dictionary}
   @see-slot{gtk-image-file}
   @see-slot{gtk-image-gicon}
@@ -472,7 +484,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixbuf" 'gtk-image) 't)
  "The @code{pixbuf} property of type @class{gdk-pixbuf} (Read / Write) @br{}
-  A @class{gdk-pixbuf} object to display.")
+  A pixbuf to display.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-pixbuf atdoc:*function-name-alias*)
@@ -506,7 +518,7 @@
                                                'gtk-image) 't)
  "The @code{pixbuf-animation} property of type @class{gdk-pixbuf-animation}
   (Read / Write) @br{}
-  The @class{gdk-pixbuf-animation} object to display.")
+  The pixbuf animation to display.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-pixbuf-animation atdoc:*function-name-alias*)
@@ -529,9 +541,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixel-size" 'gtk-image) 't)
  "The @code{pixel-size} property of type @code{:int} (Read / Write) @br{}
-  The @code{pixel-size} property can be used to specify a fixed size
-  overriding the @code{icon-size} property for images of type
-  @code{:icon-name}. @br{}
+  Can be used to specify a fixed size overriding the @code{icon-size} property
+  for images of type @code{:icon-name}. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -648,8 +659,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "surface" 'gtk-image) 't)
- "The @code{surface} property of type @code{g-string} (Read / Write) @br{}
-  A @symbol{cairo-surface-t} instance to display.")
+ "The @code{surface} property of type @class{cairo-surface} (Read / Write) @br{}
+  A Cairo surface instance to display.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-surface atdoc:*function-name-alias*)
@@ -672,9 +683,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-fallback" 'gtk-image) 't)
  "The @code{use-fallback} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the icon displayed in the @sym{gtk-image} will use standard icon
-  names fallback. The value of this property is only relevant for images of
-  type @code{:icon-name} and @code{:gicon}. @br{}
+  Whether the icon displayed in the image will use standard icon names fallback.
+  The value of this property is only relevant for images of type
+  @code{:icon-name} and @code{:gicon}. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -1147,12 +1158,13 @@
 
 (defcfun ("gtk_image_set_from_pixbuf" gtk-image-set-from-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-2-4}
   @argument[image]{a @class{gtk-image} widget}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
-    See the function @fun{gtk-image-new-from-pixbuf} for details.
+    Creates an image displaying @arg{pixbuf}.
   @end{short}
+  See the function @fun{gtk-image-new-from-pixbuf} for more details.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
   @see-function{gtk-image-new-from-pixbuf}"

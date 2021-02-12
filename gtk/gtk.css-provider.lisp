@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -210,19 +210,19 @@
 
 (defun gtk-css-provider-load-from-data (provider data)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-26}
+ "@version{*2021-2-4}
   @argument[provider]{a @class{gtk-css-provider} object}
   @argument[data]{a string with the CSS data}
   @begin{return}
-    @emd{True}. The return value is deprecated and @em{false} will only be
-    returned for backwards compatibility reasons if an error is not @code{NULL}
-    and a loading error occured. To track errors while loading CSS, connect to
-    the \"parsing-error\" signal of @class{gtk-css-provider}.
+    @em{True}. The return value is deprecated and @em{false} will only be
+    returned for backwards compatibility reasons if an error occured.
   @end{return}
   @begin{short}
     Loads data into the CSS provider, making it clear any previously loaded
     information.
   @end{short}
+  To track errors while loading CSS, connect to the \"parsing-error\" signal of
+  the @class{gtk-css-provider} object.
   @see-class{gtk-css-provider}"
   (with-ignore-g-error (err)
     (%gtk-css-provider-load-from-data provider data -1 err)))
@@ -313,9 +313,9 @@
 
 (defun gtk-css-provider-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
+ "@version{*2021-2-4}
   @return{A new @class{gtk-css-provider} object.}
-  Returns a newly created provider object.
+  @short{Returns a newly created provider object.}
   @see-class{gtk-css-provider}"
   (make-instance 'gtk-css-provider))
 

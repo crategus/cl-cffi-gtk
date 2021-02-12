@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -986,35 +986,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxSortFunc ()
-;;;
-;;; gint (*GtkListBoxSortFunc) (GtkListBoxRow *row1,
-;;;                             GtkListBoxRow *row2,
-;;;                             gpointer user_data);
-;;;
-;;; Compare two rows to determine which should be first.
-;;;
-;;; row1 :
-;;;     the first row
-;;;
-;;; row2 :
-;;;     the second row
-;;;
-;;; user_data :
-;;;     user data.
-;;;
-;;; Returns :
-;;;     < 0 if row1 should be before row2 , 0 if they are equal and > 0
-;;;     otherwise
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-list-box-sort-func-cb :int
+(defcallback gtk-list-box-sort-func :int
     ((row1 (g-object gtk-list-box-row))
      (row2 (g-object gtk-list-box-row))
      (data :pointer))
   (let ((ptr (get-stable-pointer-value data)))
     (funcall ptr row1 row2)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-list-box-sort-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-list-box-sort-func atdoc:*external-symbols*)
+ "@version{2021-1-29}
+  @begin{short}
+    The type of the callback function that compares two rows to determine which
+    should be first.
+  @end{short}
+  @begin{pre}
+ lambda (row1 row2)
+  @end{pre}
+  @begin[code]{table}
+    @entry[row1]{A @class{gtk-list-box-row} object with the first row.}
+    @entry[row2]{A @class{gtk-list-box-row} object with the second row.}
+    @entry[Return]{An integer which is < 0 if @arg{row1} should be before
+      @arg{row2}, 0 if they are equal and > 0 otherwise.}
+  @end{table}
+  @see-class{gtk-list-box-row}
+  @see-function{gtk-list-box-set-sort-func}")
+
+(export 'gtk-list-box-sort-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_sort_func ()
@@ -1028,10 +1030,10 @@
 
 (defun gtk-list-box-set-sort-func (listbox sort-func)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-7}
-  @argument[listbox]{a @class{gtk-list-box} container}
-  @argument[sort-func]{callback for the sort function}
-
+ "@version{2021-1-29}
+  @argument[listbox]{a @class{gtk-list-box} widget}
+  @argument[sort-func]{@symbol{gtk-list-box-sort-func} callback for the sort
+   function}
   @begin{short}
     By setting a sort function on the list box one can dynamically reorder the
     rows of the list, based on the contents of the rows.
@@ -1044,9 +1046,13 @@
 
   Note that using a sort function is incompatible with using a model. See the
   function @fun{gtk-list-box-bind-model}.
-  @see-class{gtk-list-box}"
+  @see-class{gtk-list-box}
+  @see-symbol{gtk-list-box-sort-func}
+  @see-function{gtk-list-box-row-changed}
+  @see-function{gtk-list-box-invalidate-sort}
+  @see-function{gtk-list-box-bind-model}"
   (%gtk-list-box-set-sort-func listbox
-                               (callback gtk-list-box-sort-func-cb)
+                               (callback gtk-list-box-sort-func)
                                (allocate-stable-pointer sort-func)
                                (callback stable-pointer-destroy-notify-cb)))
 
