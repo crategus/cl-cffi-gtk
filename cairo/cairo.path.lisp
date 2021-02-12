@@ -758,7 +758,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-move-to (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the new position}
   @argument[y]{a double float y coordinate of the new position}

@@ -616,7 +616,7 @@
 
 (defcfun ("cairo_destroy" cairo-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Decreases the reference count on @arg{cr} by one.
@@ -934,7 +934,7 @@
 
 (defun cairo-set-source-rgb (cr red green blue)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-23}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[red]{a double float red component of the color}
   @argument[green]{a double float green component of the color}
@@ -953,6 +953,11 @@
   @begin{pre}
 (cairo-set-source-rgb cr 0.0 0.0 0.0)
   @end{pre}
+  @begin[Note]{dictionary}
+    The color arguments are converted to the type @code{double-float} before
+    being passed to the C function. So you can enter any number as an argument
+    for the colors.
+  @end{dictionary}
   @see-symbol{cairo-t}
   @see-function{cairo-set-source-rgba}"
   (%cairo-set-source-rgb cr
@@ -975,7 +980,7 @@
 
 (defun cairo-set-source-rgba (cr red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-23}
+ "@version{2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[red]{a double float red component of the color}
   @argument[green]{a double float green component of the color}
@@ -994,6 +999,11 @@
   @begin{pre}
 (cairo-set-source-rgba cr 0.0 0.0 0.0 1.0)
   @end{pre}
+  @begin[Note]{dictionary}
+    The color arguments are converted to the type @code{double-float} before
+    being passed to the C function. So you can enter any number as an argument
+    for the colors.
+  @end{dictionary}
   @see-symbol{cairo-t}
   @see-function{cairo-set-source-rgb}"
   (%cairo-set-source-rgba cr
@@ -2055,12 +2065,21 @@
 
 (defcfun ("cairo_paint" cairo-paint) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that paints the current source everywhere within the
     current clip region.
   @end{short}
+  @begin[Example]{dictionary}
+    Code fragement to paint the background of a widget in a \"draw\" handler
+    with a given color.
+    @begin{pre}
+;; Paint the current color on the drawing area
+(cairo-set-source-rgb cr red green blue)
+(cairo-paint cr)
+    @end{pre}
+  @end{dictionary}
   @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t))))
 

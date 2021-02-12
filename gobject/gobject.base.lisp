@@ -1129,10 +1129,11 @@
 
 (defun g-object-type (object)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-15}
+ "@version{2021-1-28}
   @argument[object]{a @class{g-object} instance to return the type ID for}
   @return{A @class{g-type} ID of @arg{object}.}
   @short{Gets the type ID for the instance of an object.}
+  Returns @code{nil} if @arg{object} is @code{nil}.
   @begin[Examples]{dictionary}
     @begin{pre}
 (g-object-type (make-instance 'gtk-label))
@@ -1142,7 +1143,8 @@
   @see-class{g-type}
   @see-class{g-object}
   @see-function{g-object-type-name}"
-  (g-type-from-instance object))
+  (when object
+    (g-type-from-instance object)))
 
 (export 'g-object-type)
 
@@ -1152,10 +1154,11 @@
 
 (defun g-object-type-name (object)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-15}
+ "@version{2021-1-28}
   @argument[object]{a @class{g-object} instance to return the type name for}
   @return{A string with type name of @arg{object}.}
   @short{Gets the name of the type for an instance.}
+  Returns @code{nil}, if @arg{object} is @code{nil}.
   @begin[Examples]{dictionary}
     @begin{pre}
 (g-object-type-name (make-instance 'gtk-label)) => \"GtkLabel\"
@@ -1163,7 +1166,8 @@
   @end{dictionary}
   @see-class{g-object}
   @see-function{g-object-type}"
-  (g-type-name (g-object-type object)))
+  (when object
+    (g-type-name (g-object-type object))))
 
 (export 'g-object-type-name)
 

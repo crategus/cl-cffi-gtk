@@ -1840,11 +1840,15 @@
 
 (defun g-type-from-instance (instance)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-13}
+ "@version{2021-1-28}
   @argument[instance]{a valid @symbol{g-type-instance} structure}
   @return{The @class{g-type} ID of @arg{instance}.}
   @short{Get the type identifier from a given instance structure.}
   This function should only be used in type implementations.
+  @begin[Note]{dictionary}
+    Signals an error if @arg{instance} is not a valid @symbol{g-type-instance}
+    structure.
+  @end{dictionary}
   @begin[Examples]{dictionary}
     @begin{pre}
 (g-type-from-instance (make-instance 'gtk-button))
@@ -1856,7 +1860,8 @@
   @see-function{g-type-from-class}"
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (g-type-from-class (foreign-slot-value ptr
-                                           '(:struct g-type-instance) :class))))
+                                           '(:struct g-type-instance)
+                                           :class))))
 
 (export 'g-type-from-instance)
 

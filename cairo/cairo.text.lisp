@@ -347,21 +347,22 @@
 
 (defun cairo-set-font-size (cr size)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-25}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[size]{a double float with the new font size, in user space units}
+  @argument[size]{a number coerced to a double float with the new font size,
+    in user space units}
   @begin{short}
-    Sets the current font matrix to a scale by a factor of size, replacing any
-    font matrix previously set with the functions @sym{cairo-set-font-size} or
-    @fun{cairo-set-font-matrix}.
+    Sets the current font matrix to a scale by a factor of @arg{size},
+    replacing any font matrix previously set with the functions
+    @sym{cairo-set-font-size} or @fun{cairo-set-font-matrix}.
   @end{short}
-  This results in a font size of size user space units. More precisely, this
-  matrix will result in the font's em-square being a size by size square in
-  user space.
+  This results in a font size of @arg{size} user space units. More precisely,
+  this matrix will result in the font's em-square being a @arg{size} by
+  @arg{size} square in user space.
 
   If text is drawn without a call to the function @sym{cairo-set-font-size},
-  nor the function @fun{cairo-set-font-matrix} nor the function
-  @fun{cairo-set-scaled-font}, the default font size is 10.0.
+  nor the functions @fun{cairo-set-font-matrix} or @fun{cairo-set-scaled-font},
+  the default font size is 10.0.
   @see-symbol{cairo-t}
   @see-function{cairo-set-font-matrix}
   @see-function{cairo-set-scaled-font}"
@@ -584,11 +585,15 @@
 ;;; cairo_show_text ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_show_text" cairo-show-text) :void
+(defcfun ("cairo_show_text" %cairo-show-text) :void
+  (cr (:pointer (:struct cairo-t)))
+  (utf8 :string))
+
+(defun cairo-show-text (cr utf8)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{*2021-1-26}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[utf8]{a string of text encoded in UTF-8, or @code{NULL}}
+  @argument[utf8]{a string of text encoded in UTF-8, or @code{nil}}
   @begin{short}
     A drawing operator that generates the shape from a string of UTF-8
     characters, rendered according to the current font face, font size
@@ -614,8 +619,7 @@
   @end{dictionary}
   @see-symbol{cairo-t}
   @see-function{cairo-show-glyphs}"
-  (cr (:pointer (:struct cairo-t)))
-  (utf8 :string))
+  (%cairo-show-text cr (if utf8 utf8 (null-pointer))))
 
 (export 'cairo-show-text)
 

@@ -164,11 +164,11 @@
  "@version{2020-11-28}
   @argument[content-type]{a content type string}
   @begin{return}
-    A string with the registered mime type for the given type, or @code{nil}
+    A string with the registered MIME type for the given type, or @code{nil}
     if unknown.
   @end{return}
   @begin{short}
-    Gets the mime type for the content type, if one is registered.
+    Gets the MIME type for the content type, if one is registered.
   @end{short}"
   (content-type :string))
 

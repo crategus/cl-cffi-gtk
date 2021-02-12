@@ -97,7 +97,7 @@
 (setf (gethash 'gdk-rgba-red atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-red 'function)
- "@version{2021-1-22}
+ "@version{*2021-1-22}
   @syntax[]{(gdk-rgba-red instance) => red}
   @syntax[]{(setf (gdk-rgba-red instance) red)}
   @argument[instance]{a @struct{gdk-rgba} color}
@@ -114,7 +114,7 @@
 (setf (gethash 'gdk-rgba-green atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-green 'function)
- "@version{2021-1-22}
+ "@version{*2021-1-22}
   @syntax[]{(gdk-rgba-green instance) => green}
   @syntax[]{(setf (gdk-rgba-green instance) green)}
   @argument[instance]{a @struct{gdk-rgba} color}
@@ -132,7 +132,7 @@
 (setf (gethash 'gdk-rgba-blue atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-blue 'function)
- "@version{2021-1-22}
+ "@version{*2021-1-22}
   @syntax[]{(gdk-rgba-blue instance) => blue}
   @syntax[]{(setf (gdk-rgba-blue instance) blue)}
   @argument[instance]{a @struct{gdk-rgba} color}

@@ -265,7 +265,7 @@
 (setf (gethash 'pango-weight atdoc:*symbol-name-alias*)
       "Enum"
       (gethash 'pango-weight atdoc:*external-symbols*)
- "@version{2021-1-14}
+ "@version{2021-2-4}
   @begin{short}
     An enumeration specifying the weight (boldness) of a font.
   @end{short}
@@ -302,7 +302,8 @@
     @entry[:heavy]{The heavy weight.}
     @entry[:ultraheavy]{The ultraheavy weight.}
   @end{table}
-  @see-class{pango-font-description}")
+  @see-class{pango-font-description}
+  @see-function{pango-font-description-weight}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoVariant
@@ -846,7 +847,7 @@
 (defcfun ("pango_font_description_get_family" pango-font-description-family)
     :string
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-1-14}
   @syntax[]{(pango-font-description-family desc) => family}
   @syntax[]{(setf (pango-font-description-family desc) family)}
   @argument[desc]{a @class{pango-font-description} instance}
@@ -908,7 +909,7 @@
 (defcfun ("pango_font_description_get_style" pango-font-description-style)
     pango-style
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-1-14}
   @syntax[]{(pango-font-description-style desc) => style}
   @syntax[]{(setf (pango-font-description-style desc) style)}
   @argument[desc]{a @class{pango-font-description} instance}
@@ -947,7 +948,7 @@
 (defcfun ("pango_font_description_get_variant" pango-font-description-variant)
     pango-variant
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-1-14}
   @syntax[]{(pango-font-description-variant desc) => variant}
   @syntax[]{(setf (pango-font-description-variant desc) variant)}
   @argument[desc]{a @class{pango-font-description} instance}
@@ -958,8 +959,8 @@
   @end{short}
 
   The function @sym{pango-font-description-variant} gets the variant field of a
-  font description. The function @sym{(setf pango-font-descripton-variant)} sets
-  the variant field. The @symbol{pango-variant} value can either be
+  font description. The function @sym{(setf pango-font-descripton-variant)}
+  sets the variant field. The @symbol{pango-variant} value can either be
   @code{:normal} or @code{:small-caps}.
   @see-class{pango-font-description}
   @see-symbol{pango-variant}"
@@ -972,22 +973,25 @@
 ;;; pango_font_description_set_weight () -> pango-font-description-weight
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: The pango-weight enumeration contains predefined values for the weight
+;; of a font, but the weight can be any postive integer, therefore  we declare
+;; the type as an integer and not pango-weight, generalize this behavior
+
 (defun (setf pango-font-description-weight) (weight desc)
   (foreign-funcall "pango_font_description_set_weight"
                    (g-boxed-foreign pango-font-description) desc
-                   pango-weight weight
+                   :int weight ; not pango-weight
                    :void)
   weight)
 
 (defcfun ("pango_font_description_get_weight" pango-font-description-weight)
-    pango-weight
+    :int ; not pango-weight
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-2-4}
   @syntax[]{(pango-font-description-weight desc) => weight}
   @syntax[]{(setf (pango-font-description-weight desc) weight)}
   @argument[desc]{a @class{pango-font-description} instance}
-  @argument[weight]{a @symbol{pango-weight} value for the weight for the font
-    description}
+  @argument[weight]{an integer for the weight of the font description}
   @begin{short}
     Accessor of the weight field of a font description.
   @end{short}
@@ -1018,7 +1022,7 @@
 (defcfun ("pango_font_description_get_stretch" pango-font-description-stretch)
     pango-stretch
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-1-14}
   @syntax[]{(pango-font-description-stretch desc) => stretch}
   @syntax[]{(setf (pango-font-description-stretch desc) stretch)}
   @argument[desc]{a @class{pango-font-description} instance}
@@ -1052,7 +1056,7 @@
 
 (defcfun ("pango_font_description_get_size" pango-font-description-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-1-14}
+ "@version{*2021-1-14}
   @syntax[]{(pango-font-description-size desc) => size}
   @syntax[]{(setf (pango-font-description-size desc) size)}
   @argument[desc]{a @class{pango-font-description} instance}
@@ -2036,13 +2040,13 @@
 
 (defcfun ("pango_font_family_get_name" pango-font-family-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-1-8}
+ "@version{*2021-2-11}
   @argument[family]{a @class{pango-font-family} object}
   @begin{return}
     A string with the name of @arg{family}.
   @end{return}
   @begin{short}
-    Gets the name of the family.
+    Gets the name of the font family.
   @end{short}
   The name is unique among all fonts for the font backend and can be used in a
   @class{pango-font-description} instance to specify that a face from this
