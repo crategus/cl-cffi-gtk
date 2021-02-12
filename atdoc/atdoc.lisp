@@ -117,6 +117,8 @@
 (unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
 (unexport 'gtk:with-text-buffer-user-action :gtk)
 
+(unexport 'gtk:let-ui :gtk)
+
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
          (output-directory (merge-pathnames "../atdoc/" base)))
