@@ -298,8 +298,7 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "File Chooser Button"
                                 "file-chooser-button.lisp"
-                                "EXAMPLE-FILE-CHOOSER-BUTTON"
-                                "file-chooser-button.ui")
+                                "EXAMPLE-FILE-CHOOSER-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Dialog"
                                  "file-chooser-dialog.lisp"
