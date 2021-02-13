@@ -896,7 +896,15 @@
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-interactive-at-cursor</code></ulink>">
 
 <!ENTITY gtk-text-buffer-insert-pixbuf       "&api;gtk_fun_gtk-text-buffer-insert-pixbuf.html">
-<!ENTITY gtk-text-buffer-insert-with-tags    "&api;gtk_fun_gtk-text-buffer-insert-with-tags.html">
+
+<!ENTITY gtk-text-buffer-insert-with-tags
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-buffer-insert-with-tags.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-with-tags</code></ulink>">
+<!ENTITY gtk-text-buffer-insert-with-tags-by-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-buffer-insert-with-tags-by-name.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-with-tags-by-name</code></ulink>">
 
 <!ENTITY gtk-text-buffer-iter-at-line
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -929,10 +937,18 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-place-cursor.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-place-cursor</code></ulink>">
-
-<!ENTITY gtk-text-buffer-remove-tag          "&api;gtk_fun_gtk-text-buffer-remove-tag.html">
-<!ENTITY gtk-text-buffer-remove-all-tags     "&api;gtk_fun_gtk-text-buffer-remove-all-tags.html">
-
+<!ENTITY gtk-text-buffer-remove-tag
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-buffer-remove-tag.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-remove-tag</code></ulink>">
+<!ENTITY gtk-text-buffer-remove-tag-by-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-buffer-remove-tag-by-name.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-remove-tag-by-name</code></ulink>">
+<!ENTITY gtk-text-buffer-remove-all-tags
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-buffer-remove-all-tags.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-remove-all-tags</code></ulink>">
 <!ENTITY gtk-text-buffer-selection-bounds
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-selection-bounds.html'>
@@ -1002,7 +1018,12 @@
 
 <!ENTITY gtk-text-view-scroll-mark-onscreen  "&api;gtk_fun_gtk-text-view-scroll-mark-onscreen.html">
 <!ENTITY gtk-text-view-tabs                  "&api;gtk_fun_gtk-text-view-tabs.html">
-<!ENTITY gtk-text-view-editable              "&api;gtk_fun_gtk-text-view-editable.html">
+
+<!ENTITY gtk-text-view-editable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-text-view-editable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-view-editable</code></ulink>">
+
 <!ENTITY gtk-text-view-window                "&api;gtk_fun_gtk-text-view-window.html">
 <!ENTITY gtk-text-view-window-to-buffer-coords
                                              "&api;gtk_fun_gtk-text-view-window-to-buffer-coords.html">

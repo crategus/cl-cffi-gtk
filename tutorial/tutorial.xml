@@ -5791,65 +5791,33 @@ int main( int argc, char *argv[] )
    <bridgehead renderas='sect3'>More Functions for Applying and Removing tags</bridgehead>
    <para>
     In the previous section, the function &gtk-text-buffer-insert; was introduced. A variant
-    <ulink url="&gtk-text-buffer-insert-with-tags;"><code>gtk-text-buffer-insert-with-tags</code></ulink>
-    of this function can be used to insert text with tags applied.
-   </para>
-   <para>
-    The tags argument list is terminated by a <code>NULL</code> pointer. The <code>_by_name</code> suffixed
-    variants are also available, in which the tags to be applied are specified by the tag names.  Tags
-    applied to a range of text can be removed by using the function
-    <ulink url="&gtk-text-buffer-remove-tag;"><code>gtk-text-buffer-remove-tag</code></ulink>.
-   </para>
-   <para>
-    This function also has the <code>_by_name</code> prefixed variant.  All tags on a range of text can be
-    removed in one go using the function <ulink url="&gtk-text-buffer-remove-all-tags;">
-    <code>gtk-text-buffer-remove-all-tags</code></ulink>.
+    &gtk-text-buffer-insert-with-tags; of this function can be used to insert text with tags applied.
+    The variant &gtk-text-buffer-insert-with-tags-by-name; is also available, in which the tags to be applied
+    are specified by the tag names. Tags applied to a range of text can be removed by using the function
+    &gtk-text-buffer-remove-tag;. This function also has the &gtk-text-buffer-remove-tag-by-name; variant.
+    All tags on a range of text can be removed in one go using the function &gtk-text-buffer-remove-all-tags;.
    </para>
 
-   <section id="Formatting_the_Entire_Widget">
-    <title>Formatting the Entire Widget</title>
-    <para>
-     The above functions apply attributes to portions of text in a buffer.  If attributes have to be applied
-     for the entire &gtk-text-view; widget, the
-     <code>(setf gtk-text-view-*)</code> functions can be used.  For example, the function
-     <ulink url="&gtk-text-view-editable;"><code>gtk-text-view-editable</code></ulink> makes
-     <code>text-view</code> editable/non-editable.
-    </para>
-    <para>
-     See the GTK+ API documentation <ulink url="http://crategus.com/books/cl-cffi-gtk">
-     www.crategus.com/books/cl-cffi-gtk</ulink> for a complete list of available functions.  The attributes
-     set by these functions, on the entire widget, can be overridden by applying tags to portions of text in
-     the buffer.
-    </para>
-   </section>
+   <bridgehead renderas='sect3'>Formatting the Entire Text View</bridgehead>
+   <para>
+    The above functions apply attributes to portions of text in a buffer. If attributes have to be applied
+    for the entire &gtk-text-view; widget, the functions for the text view can be used. For example, the
+    function &gtk-text-view-editable; makes the text view editable/non-editable. See the
+    <ulink url="http://crategus.com/books/cl-cffi-gtk">cl-cffi-gtk API documentation</ulink> for a complete
+    documentation of available functions. The attributes set by these functions, on the entire widget, can be
+    overridden by applying tags to portions of text in the text buffer.
+   </para>
   </section>
 
+<!-- TODO: Implement an example
   <section id="Cut_Copy_and_Paste">
    <title>Cut, Copy and Paste</title>
    <para>
    </para>
   </section>
+-->
 
   <section id="Searching">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Searching">
-      <primary>text-iter-forward-search, gtk-text-iter-forward-search</primary>
-     </indexterm>
-     <indexterm zone="Searching">
-      <primary>text-iter-backward-search, gtk-text-iter-backward-search</primary>
-     </indexterm>
-     <indexterm zone="Searching">
-      <primary>text-iter-search, gtk-text-iter-search</primary>
-     </indexterm>
-     <indexterm zone="Searching">
-      <primary>text-buffer-selection-bounds, gtk-text-buffer-selections-bounds</primary>
-     </indexterm>
-     <indexterm zone="Searching">
-      <primary>text-buffer-select-range, gtk-text-buffer-select-range</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Searching</title>
    <para>
     The functions <ulink url="&gtk-text-iter-forward-search;">
