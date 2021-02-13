@@ -237,6 +237,10 @@
                                 "Text View Attributes"
                                 "text-view-attributes.lisp"
                                 "EXAMPLE-TEXT-VIEW-ATTRIBUTES")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Tags"
+                                "text-view-tags.lisp"
+                                "EXAMPLE-TEXT-VIEW-TAGS")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Tree, List and Icon Grid Widgets")))

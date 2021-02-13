@@ -83,6 +83,7 @@
                (:file "text-entry")
                (:file "text-view-attributes")
                (:file "text-view-simple")
+               (:file "text-view-tags")
                (:file "toggle-buttons")
                (:file "tool-palette")
                (:file "../cairo-demo/cairo-demo")

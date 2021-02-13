@@ -89,5 +89,7 @@ switch.lisp
 table-packing.lisp
 text-entry.lisp
 text-view-attributes.lisp
+text-view-simple.lisp
+text-view-tags.lisp
 toggle-buttons.lisp
 tool-palette.lisp
