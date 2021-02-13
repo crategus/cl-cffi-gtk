@@ -2125,74 +2125,98 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun on-button-clicked (buffer tag)
-  (multiple-value-bind (start end)
-      (gtk-text-buffer-selection-bounds buffer)
-    (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
+(defun on-toggle-tool-button-clicked (button buffer tag)
+  (when (gtk-text-buffer-has-selection buffer)
+    (multiple-value-bind (start end)
+        (gtk-text-buffer-selection-bounds buffer)
+      (if (gtk-toggle-tool-button-active button)
+          (gtk-text-buffer-apply-tag-by-name buffer tag start end)
+          (gtk-text-buffer-remove-tag-by-name buffer tag start end)))))
 
 (defun example-text-view-tags ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
-                                  :title "Multiline Text Input"
+                                  :title "Example Text View Tags"
                                   :type :toplevel
-                                  :default-width 300
-                                  :default-height 200))
-           (vbox (make-instance 'gtk-grid
+                                  :default-width 350
+                                  :default-height 250))
+           (vbox (make-instance 'gtk-box
                                 :orientation :vertical))
-           (bbox (make-instance 'gtk-grid
-                                :orientation :horizontal))
-           (text-view (make-instance 'gtk-text-view
-                                     :hexpand t
-                                     :vexpand t))
-           (buffer (gtk-text-view-buffer text-view)))
+           (textview (make-instance 'gtk-text-view))
+           (buffer (gtk-text-view-buffer textview))
+           (toolbar (make-instance 'gtk-toolbar)))
       (g-signal-connect window "destroy"
-                               (lambda (widget)
-                                 (declare (ignore widget))
-                                 (leave-gtk-main)))
-      (gtk-container-add vbox bbox)
-      (gtk-container-add vbox text-view)
-      (setf (gtk-text-buffer-text buffer) "Hello World Text View")
-      ;; Create tags associated with the buffer.
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Signal handler for cursor movements in the text buffer
+      (g-signal-connect buffer "notify::cursor-position"
+          (lambda (object pspec)
+            (declare (ignore pspec))
+            (let* ((cursor (gtk-text-buffer-cursor-position object))
+                   (iter (gtk-text-buffer-iter-at-offset buffer cursor))
+                   (tags (mapcar #'gtk-text-tag-name
+                                 (gtk-text-iter-tags iter))))
+              ;; Iterate over the toggle tool buttons
+              (dotimes (item (gtk-toolbar-n-items toolbar))
+                (let* ((button (gtk-toolbar-nth-item toolbar item))
+                       (label (gtk-tool-button-label button)))
+                  ;; Activate/Deactivate the buttons
+                  (if (member label tags :test #'string=)
+                      (setf (gtk-toggle-tool-button-active button) t)
+                      (setf (gtk-toggle-tool-button-active button) nil)))))))
+      ;; Create toggle tool button for Bold
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :icon-name "format-text-bold"
+                                   :label "Bold")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (on-toggle-tool-button-clicked widget buffer "Bold")))
+        (gtk-container-add toolbar button))
+      ;; Create toogle tool button for Italic
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :icon-name "format-text-italic"
+                                   :label "Italic")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (on-toggle-tool-button-clicked widget buffer "Italic")))
+        (gtk-container-add toolbar button))
+      ;; Create toggle tool button for Underline
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :icon-name "format-text-underline"
+                                   :label "Underline")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (on-toggle-tool-button-clicked widget buffer "Underline")))
+        (gtk-container-add toolbar button))
+      ;; Create toggle tool button for Strikethrough
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :icon-name "format-text-strikethrough"
+                                   :label "Strikethrough")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (on-toggle-tool-button-clicked widget buffer "Strikethrough")))
+        (gtk-container-add toolbar button))
+      ;; Create tags associated with the text buffer
       (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
-                                             :name "bold"
-                                             :weight 700)) ; :bold
+                                             :name "Bold"
+                                             :weight 700))
       (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
-                                             :name "italic"
+                                             :name "Italic"
                                              :style :italic))
       (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
                               (make-instance 'gtk-text-tag
-                                             :name "font"
-                                             :font "fixed"))
-      ;; Create button for bold.
-      (let ((button (make-instance 'gtk-button :label "Bold")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (on-button-clicked buffer "bold")))
-        (gtk-container-add bbox button))
-      ;; Create button for italic.
-      (let ((button (make-instance 'gtk-button :label "Italic")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (on-button-clicked buffer "italic")))
-        (gtk-container-add bbox button))
-      ;; Create button for fixed font.
-      (let ((button (make-instance 'gtk-button :label "Font Fixed")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (on-button-clicked buffer "font")))
-        (gtk-container-add bbox button))
-      ;; Create the close button.
-      (let ((button (make-instance 'gtk-button :label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-container-add vbox button))
+                                             :name "Underline"
+                                             :underline :single))
+      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "Strikethrough"
+                                             :strikethrough t))
+      ;; Pack and show the widgets
+      (gtk-box-pack-start vbox toolbar :expand nil)
+      (gtk-box-pack-start vbox textview :expand t)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
