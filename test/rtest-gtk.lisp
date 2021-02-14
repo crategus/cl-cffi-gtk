@@ -88,7 +88,7 @@
 (load "rtest-gtk-text-attributes.lisp")
 ;(load "rtest-gtk-text-iter.lisp")
 ;(load "rtest-gtk-text-mark.lisp")
-;(load "rtest-gtk-text-buffer.lisp")
+(load "rtest-gtk-text-buffer.lisp")
 ;(load "rtest-gtk-text-tag.lisp")
 ;(load "rtest-gtk-text-tag-table.lisp")
 ;(load "rtest-gtk-text-view.lisp")

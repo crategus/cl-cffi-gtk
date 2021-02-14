@@ -231,17 +231,87 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_insert_range
 ;;;     gtk_text_buffer_insert_range_interactive
 
-
-
 ;;;     gtk_text_buffer_insert_with_tags
+
+(test gtk-text-buffer-insert-with-tags
+  (let* ((buffer (make-instance 'gtk-text-buffer))
+         (iter (gtk-text-buffer-start-iter buffer))
+         (tag-bold (make-instance 'gtk-text-tag
+                                  :name "bold"
+                                  :weight 700))
+         (tag-underline (make-instance 'gtk-text-tag
+                                       :name "underline"
+                                       :underline :single)))
+
+    (is-true (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                                     tag-bold))
+    (is-true (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                                     tag-underline))
+
+    (is-true (gtk-text-buffer-insert-with-tags buffer iter "text1"))
+    (is (string= "text1" (gtk-text-buffer-text buffer)))
+    (is (= 5 (gtk-text-buffer-cursor-position buffer)))
+
+
+    (is-true (setf iter (gtk-text-buffer-end-iter buffer)))
+    (is-true (gtk-text-buffer-insert-with-tags buffer iter "text2" tag-bold))
+    (is (string= "text1text2" (gtk-text-buffer-text buffer)))
+    (is (= 10 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (gtk-text-buffer-insert-with-tags buffer
+                                               iter
+                                               "text3"
+                                               tag-bold tag-underline))
+    (is (string= "text1text2text3" (gtk-text-buffer-text buffer)))
+    (is (= 15 (gtk-text-buffer-cursor-position buffer)))
+
+))
+
 ;;;     gtk_text_buffer_insert_with_tags_by_name
+
+(test gtk-text-buffer-insert-with-tags-by-name
+  (let* ((buffer (make-instance 'gtk-text-buffer))
+         (iter (gtk-text-buffer-start-iter buffer))
+         (tag-bold (make-instance 'gtk-text-tag
+                                  :name "bold"
+                                  :weight 700))
+         (tag-underline (make-instance 'gtk-text-tag
+                                       :name "underline"
+                                       :underline :single)))
+
+    (is-true (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                                     tag-bold))
+    (is-true (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
+                                     tag-underline))
+
+    (is-true (gtk-text-buffer-insert-with-tags-by-name buffer iter "text1"))
+    (is (string= "text1" (gtk-text-buffer-text buffer)))
+    (is (= 5 (gtk-text-buffer-cursor-position buffer)))
+
+
+    (is-true (setf iter (gtk-text-buffer-end-iter buffer)))
+    (is-true (gtk-text-buffer-insert-with-tags-by-name buffer
+                                                       iter
+                                                       "text2"
+                                                       "bold"))
+    (is (string= "text1text2" (gtk-text-buffer-text buffer)))
+    (is (= 10 (gtk-text-buffer-cursor-position buffer)))
+
+    (is-true (gtk-text-buffer-insert-with-tags-by-name buffer
+                                                       iter
+                                                       "text3"
+                                                       "bold"
+                                                       "underline"))
+    (is (string= "text1text2text3" (gtk-text-buffer-text buffer)))
+    (is (= 15 (gtk-text-buffer-cursor-position buffer)))
+
+))
 
 ;;;     gtk_text_buffer_delete
 ;;;     gtk_text_buffer_delete_interactive
 ;;;     gtk_text_buffer_backspace
 
 ;;;   gtk_text_buffer_set_text
-;; Replaced with the accessor gtk-text-buffer-text
 
 (test gtk-text-buffer-text.1
   (let ((buffer (gtk-text-buffer-new)))
@@ -280,12 +350,11 @@ dargestellt werden.")
 
 (test gtk-text-buffer-create-tag
   (let ((buffer (make-instance 'gtk-text-buffer :text "Some sample text.")))
-    (is (eq (typep (gtk-text-buffer-create-tag buffer "bold" :weight 400)
-                   'gtk-text-tag)))
-    (is (eq (typep (gtk-text-buffer-create-tag buffer "font-italic"
-                                                      :font "fixed"
-                                                      :style :italic)
-                   'gtk-text-tag)))))
+    (is (typep (gtk-text-buffer-create-tag buffer "bold" :weight 400) 'gtk-text-tag))
+    (is (typep (gtk-text-buffer-create-tag buffer "font-italic"
+                                                  :font "fixed"
+                                                  :style :italic)
+               'gtk-text-tag))))
 
 ;;;     gtk_text_buffer_get_iter_at_line_offset
 ;;;     gtk_text_buffer_get_iter_at_offset
@@ -336,3 +405,4 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_unregister_deserialize_format
 ;;;     gtk_text_buffer_unregister_serialize_format
 
+;;; 2021-2-14
