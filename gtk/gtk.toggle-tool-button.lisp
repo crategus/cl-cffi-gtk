@@ -131,11 +131,11 @@
 (setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-tool-button-active 'function)
- "@version{2020-9-5}
+ "@version{*2021-2-14}
   @syntax[]{(gtk-toggle-tool-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-tool-button-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-tool-button} widget}
-  @argument[is-active]{a @code{:boolean} whether @arg{button} should be active}
+  @argument[is-active]{a boolean whether @arg{button} should be active}
   @begin{short}
     Accessor of the @slot[gtk-toggle-tool-button]{active} slot of the
     @class{gtk-toggle-tool-button} class.
@@ -143,8 +143,7 @@
 
   The slot access function @sym{gtk-toggle-tool-button-active} queries a toggle
   tool button and returns its current state. The slot access function
-  @sym{(setf gtk-toggle-tool-button-active)} sets the status of the toggle tool
-  button.
+  @sym{(setf gtk-toggle-tool-button-active)} sets the status.
 
   Set to @em{true} if you want the toggle tool button to be 'pressed in',
   and @em{false} to raise it. This action causes the toggled signal to be

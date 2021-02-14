@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -180,6 +180,7 @@
 ;;;     │   ╰── GtkWidget
 ;;;     │       ╰── GtkContainer
 ;;;     │           ╰── GtkTextView
+;;;     │
 ;;;     ╰── GtkTextChildAnchor
 ;;;
 ;;; Implemented Interfaces
@@ -415,7 +416,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-view 'type)
- "@version{2013-5-5}
+ "@version{*2021-2-14}
   @image[multiline-text]{}
 
   @begin{short}
@@ -434,16 +435,16 @@
  ├── border.bottom
  ╰── [window.popup]
     @end{pre}
-    @sym{gtk-text-view} has a main css node with name @code{textview} and style
-    class @code{.view}, and subnodes for each of the border windows, and the
-    main text area, with names @code{border} and @code{text}, respectively. The
-    border nodes each get one of the style classes @code{.left}, @code{.right},
-    @code{.top} or @code{.bottom}.
+    The @sym{gtk-text-view} widget has a main CSS node with name
+    @code{textview} and style class @code{.view}, and subnodes for each of the
+    border windows, and the main text area, with names @code{border} and
+    @code{text}, respectively. The border nodes each get one of the style
+    classes @code{.left}, @code{.right}, @code{.top} or @code{.bottom}.
 
     A node representing the selection will appear below the text node.
 
-    If a context menu is opened, the window node will appear as a subnode of the
-    main node.
+    If a context menu is opened, the window node will appear as a subnode of
+    the main node.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -459,9 +460,9 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"backspace\" signal is a keybinding signal which gets emitted when
-      the user asks for it. The default bindings for this signal are Backspace
-      and Shift-Backspace.
+      This signal is a keybinding signal which gets emitted when the user asks
+      for it. The default bindings for this signal are Backspace and
+      Shift-Backspace.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -469,9 +470,9 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"copy-clipboard\" signal is a keybinding signal which gets emitted to
-      copy the selection to the clipboard. The default bindings for this signal
-      are Ctrl-c and Ctrl-Insert.
+      This  signal is a keybinding signal which gets emitted to copy the
+      selection to the clipboard. The default bindings for this signal are
+      Ctrl-c and Ctrl-Insert.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -479,9 +480,9 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"cut-clipboard\" signal is a keybinding signal which gets emitted to
-      cut the selection to the clipboard. The default bindings for this signal
-      are Ctrl-x and Shift-Delete.
+      This signal is a keybinding signal which gets emitted to cut the selection
+      to the clipboard. The default bindings for this signal are Ctrl-x and
+      Shift-Delete.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -489,28 +490,28 @@
       @begin{pre}
  lambda (view type count)    : Action
       @end{pre}
-      The \"delete-from-cursor\" signal is a keybinding signal which gets
-      emitted when the user initiates a text deletion. If the type is
-      @code{:chars}, GTK+ deletes the selection if there is one, otherwise it
-      deletes the requested number of characters. The default bindings for this
-      signal are Delete for deleting a character, Ctrl-Delete for deleting a
-      word and Ctrl-Backspace for deleting a word backwords.
+      This signal is a keybinding signal which gets emitted when the user
+      initiates a text deletion. If the type is @code{:chars}, GTK+ deletes the
+      selection if there is one, otherwise it deletes the requested number of
+      characters. The default bindings for this signal are Delete for deleting
+      a character, Ctrl-Delete for deleting a word and Ctrl-Backspace for
+      deleting a word backwords.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
-        @entry[type]{The granularity of the deletion, as a
-          @symbol{gtk-delete-type}.}
-        @entry[count]{The number of type units to delete.}
+        @entry[type]{The granularity of the deletion, as a value of the
+          @symbol{gtk-delete-type} enumeration.}
+        @entry[count]{An integer with the number of type units to delete.}
       @end{table}
     @subheading{The \"extend-selection\" signal}
       @begin{pre}
  lambda (view granularity location start end)    : Run Last
       @end{pre}
-      The \"extend-selection\" signal is emitted when the selection needs to be
-      extended at @arg{location}.
+      This signal is emitted when the selection needs to be extended at
+      @arg{location}.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
-        @entry[granularity]{The granularity of type
-          @symbol{gtk-text-extend-selection}.}
+        @entry[granularity]{The granularity as a value of the
+          @symbol{gtk-text-extend-selection} enumeration.}
         @entry[location]{The @class{gtk-text-iter} iterator where to extend the
           selection.}
         @entry[start]{The @class{gtk-text-iter} iterator where the selection
@@ -518,16 +519,16 @@
         @entry[end]{The @class{gtk-text-iter} iterator where the selection
           should end.}
         @entry[Returns]{@var{+gdk-event-stop+} to stop other handlers from being
-          invoked for the event. @var{+gdk-event-propagate+} to propagate the
+          invoked for the event, @var{+gdk-event-propagate+} to propagate the
           event further.}
       @end{table}
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
  lambda (view string)
       @end{pre}
-      The \"insert-at-cursor\" signal is a keybinding signal which gets emitted
-      when the user initiates the insertion of a fixed string at the cursor.
-      This signal has no default bindings.
+      This signal is a keybinding signal which gets emitted when the user
+      initiates the insertion of a fixed string at the cursor. This signal has
+      no default bindings.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
         @entry[string]{The string to insert.}
@@ -536,9 +537,9 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"insert-emoji\" signal is a keybinding signal which gets emitted to
-      present the Emoji chooser for the @arg{text-view}. The default bindings
-      for this signal are @code{Ctrl-.} and @code{Ctrl-;}. Since 3.22
+      This signal is a keybinding signal which gets emitted to present the Emoji
+      chooser for the text view. The default bindings for this signal are
+      @code{Ctrl-.} and @code{Ctrl-;}. Since 3.22
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -546,10 +547,10 @@
       @begin{pre}
  lambda (view step count extended-selection)    : Action
       @end{pre}
-      The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement. If the cursor is not visible in the
-      text view, this signal causes the viewport to be moved instead.
-      Applications should not connect to it, but may emit it with the function
+      This signal is a keybinding signal which gets emitted when the user
+      initiates a cursor movement. If the cursor is not visible in the text
+      view, this signal causes the viewport to be moved instead. Applications
+      should not connect to it, but may emit it with the function
       @fun{g-signal-emit} if they need to control the cursor programmatically.
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the
@@ -560,9 +561,9 @@
       Ctrl-PageUp/PageDown keys move horizontally by pages.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
-        @entry[step]{The granularity of the move, as a
-          @symbol{gtk-movement-step}.}
-        @entry[count]{The number of step units to move.}
+        @entry[step]{The granularity of the move, as a value of the
+          @symbol{gtk-movement-step} enumeration.}
+        @entry[count]{An integer with the number of step units to move.}
         @entry[extend-selection]{@em{True} if the move should extend the
           selection.}
       @end{table}
@@ -570,23 +571,23 @@
       @begin{pre}
  lambda (view step count)    : Action
       @end{pre}
-      The \"move-viewport\" signal is a keybinding signal which can be bound to
-      key combinations to allow the user to move the viewport, i.e. change what
-      part of the text view is visible in a containing scrolled window. There
-      are no default bindings for this signal.
+      This signal is a keybinding signal which can be bound to key combinations
+      to allow the user to move the viewport, i.e. change what part of the text
+      view is visible in a containing scrolled window. There are no default
+      bindings for this signal.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
-        @entry[step]{The granularity of the move, as a
-          @symbol{gtk-movement-step}.}
-        @entry[count]{The number of step units to move.}
+        @entry[step]{The granularity of the move, as a value of the
+          @symbol{gtk-movement-step} enumeration.}
+        @entry[count]{An integer with the number of step units to move.}
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"paste-clipboard\" signal is a keybinding signal which gets emitted
-      to paste the contents of the clipboard into the text view. The default
-      bindings for this signal are Ctrl-v and Shift-Insert.
+      This signal is a keybinding signal which gets emitted to paste the
+      contents of the clipboard into the text view. The default bindings for
+      this signal are Ctrl-v and Shift-Insert.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -594,15 +595,15 @@
       @begin{pre}
  lambda (view popup)    : Run Last
       @end{pre}
-      The \"populate-popup\" signal gets emitted before showing the context
-      menu of the text view. If you need to add items to the context menu,
-      connect to this signal and append your items to the popup, which will be
-      a @class{gtk-menu} in this case. If the @code{populate-all} property is
-      @em{true}, this signal will also be emitted to populate touch popups. In
-      this case, popup will be a different container, e.g. a
-      @class{gtk-toolbar}. The signal handler should not make assumptions about
-      the type of the widget, but check whether popup is a @class{gtk-menu} or
-      @class{gtk-toolbar} or another kind of container.
+      This signal gets emitted before showing the context menu of the text view.
+      If you need to add items to the context menu, connect to this signal and
+      append your items to the popup, which will be a @class{gtk-menu} widget
+      in this case. If the @code{populate-all} property is @em{true}, this
+      signal will also be emitted to populate touch popups. In this case, popup
+      will be a different container, e.g. a @class{gtk-toolbar} widget. The
+      signal handler should not make assumptions about the type of the widget,
+      but check whether popup is a @class{gtk-menu} widget or
+      @class{gtk-toolbar} widget or another kind of container.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget on which the signal is
           emitted.}
@@ -624,10 +625,10 @@
       @begin{pre}
  lambda (view select)    : Action
       @end{pre}
-      The \"select-all\" signal is a keybinding signal which gets emitted to
-      select or unselect the complete contents of the text view. The default
-      bindings for this signal are Ctrl-a and Ctrl-/ for selecting and
-      Shift-Ctrl-a and Ctrl-\ for unselecting.
+      This signal is a keybinding signal which gets emitted to select or
+      unselect the complete contents of the text view. The default bindings for
+      this signal are Ctrl-a and Ctrl-/ for selecting and Shift-Ctrl-a and
+      Ctrl-\ for unselecting.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-viw} widget which received the signal.}
         @entry[select]{@em{True} to select, @em{false} to unselect.}
@@ -636,10 +637,10 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"set-anchor\" signal is a keybinding signal which gets emitted when
-      the user initiates setting the \"anchor\" mark. The \"anchor\" mark gets
-      placed at the same position as the \"insert\" mark. This signal has no
-      default bindings.
+      This signal is a keybinding signal which gets emitted when the user
+      initiates setting the \"anchor\" mark. The \"anchor\" mark gets placed at
+      the same position as the \"insert\" mark. This signal has no default
+      bindings.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -647,9 +648,8 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"toggle-cursor-visible signal\" is a keybinding signal which gets
-      emitted to toggle the visibility of the cursor. The default binding for
-      this signal is F7.
+      This  signal is a keybinding signal which gets emitted to toggle the
+      visibility of the cursor. The default binding for this signal is F7.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -657,9 +657,9 @@
       @begin{pre}
  lambda (view)    : Action
       @end{pre}
-      The \"toggle-overwrite\" signal is a keybinding signal which gets emitted
-      to toggle the overwrite mode of the text view. The default bindings for
-      this signal is Insert.
+      This signal is a keybinding signal which gets emitted to toggle the
+      overwrite mode of the text view. The default bindings for this signal is
+      Insert.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -684,7 +684,8 @@
   @see-slot{gtk-text-view-right-margin}
   @see-slot{gtk-text-view-tabs}
   @see-slot{gtk-text-view-top-margin}
-  @see-slot{gtk-text-view-wrap-mode}")
+  @see-slot{gtk-text-view-wrap-mode}
+  @see-class{gtk-text-buffer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -702,7 +703,7 @@
 (setf (gethash 'gtk-text-view-accepts-tab atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-accepts-tab 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-accepts-tab object) => accepts-tab}
   @syntax[]{(setf (gtk-text-view-accepts-tab object) accepts-tab)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -715,13 +716,12 @@
   @end{short}
 
   The slot access function function @sym{gtk-text-view-accepts-tab} returns
-  whether pressing the Tab key inserts a tab characters. The slot access
-  function @sym{(setf gtk-text-view-accepts-tab)} sets the behavior of the text
-  widget when the Tab key is pressed.
+  the behavior of the text view when the Tab key is pressed. The slot access
+  function @sym{(setf gtk-text-view-accepts-tab)} sets the behavior.
 
   If @arg{accepts-tab} is @em{true}, a tab character is inserted. If
-  @arg{accepts-tab} is @em{false} the keyboard focus is moved to the next widget
-  in the focus chain.
+  @arg{accepts-tab} is @em{false} the keyboard focus is moved to the next
+  widget in the focus chain.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-bottom-margin --------------------------------------------
@@ -732,7 +732,7 @@
  "The @code{bottom-margin} property of type @code{:int} (Read / Write) @br{}
   The bottom margin for text in the text view. Note that this property is
   confusingly named. In CSS terms, the value set here is padding, and it is
-  applied in addition to the padding from the theme. Don't confuse this
+  applied in addition to the padding from the theme. Do not confuse this
   property with the @slot[gtk-widget]{margin-bottom} property. Since 3.18 @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -741,11 +741,11 @@
 (setf (gethash 'gtk-text-view-bottom-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-bottom-margin 'function)
- "@version{2020-3-22}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-bottom-margin object) => bottom-margin}
   @syntax[]{(setf (gtk-text-view-bottom-margin object) bottom-margin)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[bottom-margin]{a @code{:int} with the bottom margin in pixels}
+  @argument[bottom-margin]{an integer with the bottom margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{bottom-margin} slot of the
     @class{gtk-text-view} class.
@@ -753,8 +753,7 @@
 
   The slot access function @sym{gtk-text-view-margin-bottom} gets the bottom
   margin for text in the text view. The slot access function
-  @sym{(setf gtk-text-view-margin-bottom)} sets the bottom margin for text in
-  the text view.
+  @sym{(setf gtk-text-view-margin-bottom)} sets the bottom margin.
 
   Note that this function is confusingly named. In CSS terms, the value set
   here is padding.
@@ -768,12 +767,12 @@
 (setf (documentation (atdoc:get-slot-from-name "buffer" 'gtk-text-view) 't)
  "The @code{buffer} property of type  @class{gtk-text-buffer} (Read / Write)
   @br{}
-  The buffer which is displayed.")
+  The text buffer which is displayed.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-buffer atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-text-view-buffer 'function)
- "@version{2020-6-7}
+ "@version{*2021-2-14}
   @syntax[]{(gtk-text-view-buffer object) => buffer}
   @syntax[]{(setf (gtk-text-view-buffer object) buffer)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -785,8 +784,7 @@
 
   The slot access function @sym{gtk-text-view-buffer} returns the text buffer
   being displayed by the text view. The slot access function
-  @sym{(setf gtk-text-view-buffer)} sets @arg{buffer} as the buffer being
-  displayed by the text view.
+  @sym{(setf gtk-text-view-buffer)} sets the text buffer.
   @see-class{gtk-text-view}
   @see-class{gtk-text-buffer}")
 
@@ -797,18 +795,18 @@
                                                'gtk-text-view) 't)
  "The @code{cursor-visible} property of type @code{:boolean} (Read / Write)
   @br{}
-  If the insertion cursor is shown. @br{}
+  Wether the insertion cursor is shown. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-cursor-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-cursor-visible 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-cursor-visible object) => setting}
   @syntax[]{(setf (gtk-text-view-cursor-visible object) setting)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[setting]{a @code{:boolean} whether to show the insertion cursor}
+  @argument[setting]{a boolean whether to show the insertion cursor}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{cursor-visible} slot of the
     @class{gtk-text-view} class.
@@ -835,11 +833,11 @@
 (setf (gethash 'gtk-text-view-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-editable 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-editable object) => setting}
   @syntax[]{(setf (gtk-text-view-editable object) setting)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[setting]{a @code{:boolean} whether the text view is editable}
+  @argument[setting]{a boolean whether the text view is editable}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{editable} slot of the
     @class{gtk-text-view} class.
@@ -847,12 +845,12 @@
 
   The slot access function @sym{gtk-text-view-editable} returns the default
   editability of the text view. The slot access function
-  @sym{(setf gtk-text-view-editable)} sets the default editability of the text
-  view.
+  @sym{(setf gtk-text-view-editable)} sets the default editability.
 
-  You can override this default setting with tags in the buffer, using the
+  You can override this default setting with tags in the text buffer, using the
   @slot[gtk-text-tag]{editable} attribute of tags.
-  @see-class{gtk-text-view}")
+  @see-class{gtk-text-view}
+  @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-view-im-module ------------------------------------------------
 
@@ -869,7 +867,7 @@
 (setf (gethash 'gtk-text-view-im-module atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-im-module 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-im-module object) => im-module}
   @syntax[]{(setf (gtk-text-view-im-module object) im-module)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -883,7 +881,8 @@
   @class{gtk-im-context} class. Setting this to a non-@code{nil} value overrides
   the system-wide IM module setting. See the @slot[gtk-settings]{gtk-im-module}
   setting.
-  @see-class{gtk-text-view}")
+  @see-class{gtk-text-view}
+  @see-class{gtk-im-context}")
 
 ;;; --- gtk-text-view-indent ---------------------------------------------------
 
@@ -897,11 +896,11 @@
 (setf (gethash 'gtk-text-view-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-indent 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-indent object) => indent}
   @syntax[]{(setf (gtk-text-view-indent object) indent)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[indent]{a @code{:int} with the indentation in pixels}
+  @argument[indent]{an integer with the indentation in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{indent} slot of the
     @class{gtk-text-view} class.
@@ -909,11 +908,10 @@
 
   The slot access function @sym{gtk-text-view-indent} gets the default
   indentation of paragraphs in the text view. The slot access function
-  @sym{(setf gtk-text-view-indent)} sets the default indentation for paragraphs
-  in the text view.
+  @sym{(setf gtk-text-view-indent)} sets the default indentation.
 
-  Tags in the view's buffer may override the default. The indentation may be
-  negative.
+  Tags in the view's text buffer may override the default. The indentation may
+  be negative.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-input-hints ----------------------------------------------
@@ -929,20 +927,21 @@
 (setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-hints 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-input-hints object) => hints}
   @syntax[]{(setf (gtk-text-view-input-hints object) hints)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[hints]{the hints of type @symbol{gtk-input-hints}}
+  @argument[hints]{the hints as a value of the @symbol{gtk-input-hints} flags}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{input-hints} slot of the
     @class{gtk-text-view} class.
   @end{short}
 
   The slot access function @sym{gtk-text-view-input-hints} gets the value of
-  the @code{input-hints} property. The slot access function
-  @sym{(setf gtk-text-view-input-hints)} sets the @code{input-hints} property,
-  which allows input methods to fine-tune their behaviour.
+  the @slot[gtk-text-view]{input-hints} property, which allows input methods to
+  fine-tune their behaviour. The slot access function
+  @sym{(setf gtk-text-view-input-hints)} sets the
+  @slot[gtk-text-view]{input-hints} property.
   @see-class{gtk-text-view}
   @see-symbol{gtk-input-hints}")
 
@@ -961,21 +960,22 @@
 (setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-purpose 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-input-purpose object) => purpose}
   @syntax[]{(setf (gtk-text-view-input-purpose object) purpose)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[purpose]{the purpose of type @symbol{gtk-input-purpose}}
+  @argument[purpose]{the purpose as value of the @symbol{gtk-input-purpose}
+    enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{input-purpose} slot of the
     @class{gtk-text-view} class.
   @end{short}
 
   The slot access function @sym{gtk-text-view-input-purpose} gets the value of
-  the @code{input-purpose} property. The slot access function
-  @sym{(setf gtk-text-view-input-purpose)} sets the @code{input-purpose}
-  property which can be used by on-screen keyboards and other input methods to
-  adjust their behaviour.
+  the @slot[gtk-text-view]{input-purpose} property, which can be used by
+  on-screen keyboards and other input methods to adjust their behaviour. The
+  slot access function @sym{(setf gtk-text-view-input-purpose)} sets the
+  @slot[gtk-text-view]{input-purpose} property.
   @see-class{gtk-text-view}
   @see-symbol{gtk-input-purpose}")
 
@@ -993,11 +993,12 @@
 (setf (gethash 'gtk-text-view-justification atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-justification 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-justification object) => justification}
   @syntax[]{(setf (gtk-text-view-justification object) justification)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[justification]{justification of type @symbol{gtk-justification}}
+  @argument[justification]{a value of the @symbol{gtk-justification}
+    enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{justification} slot of the
     @class{gtk-text-view} class.
@@ -1005,8 +1006,7 @@
 
   The slot access function @sym{gtk-text-view-justification} gets the default
   justification of paragraphs in the text view. The slot access function
-  @sym{(setf gtk-text-view-justification)} sets the default justification of
-  text in the text view.
+  @sym{(setf gtk-text-view-justification)} sets the default justification.
 
   Tags in the buffer may override the default.
   @see-class{gtk-text-view}
@@ -1025,11 +1025,11 @@
 (setf (gethash 'gtk-text-view-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-left-margin 'function)
- "@version{2020-6-7}
+ "@version{*2021-2-14}
   @syntax[]{(gtk-text-view-left-margin object) => left-margin}
   @syntax[]{(setf (gtk-text-view-left-margin object) left-margin)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[left-margin]{a @code{:int} with the left margin in pixels}
+  @argument[left-margin]{an integer with the left margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{left-margin} slot of the
     @class{gtk-text-view} class.
@@ -1037,8 +1037,7 @@
 
   The slot access function @sym{gtk-text-view-left-margin} gets the default
   left margin size of paragraphs in the text view. The slot access function
-  @sym{(setf gtk-text-view-left-margin)} sets the default left margin for text
-  in the text view.
+  @sym{(setf gtk-text-view-left-margin)} sets the default left margin.
 
   Tags in the buffer may override the default.
   @see-class{gtk-text-view}")
@@ -1056,7 +1055,7 @@
 (setf (gethash 'gtk-text-view-monospace atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-monospace 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-monospace object) => monospace}
   @syntax[]{(setf (gtk-text-view-monospace object) monospace)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -1067,9 +1066,10 @@
   @end{short}
 
   The slot access function @sym{gtk-text-view-monospace} gets the value of the
-  @code{monospace} property. The slot access function
-  @sym{(setf gtk-text-view-monospace)} sets the @code{monospace} property,
-  which indicates that the text view should use monospace fonts.
+  @slot[gtk-text-view]{monospace} property, which indicates that the text view
+  should use monospace fonts. The slot access function
+  @sym{(setf gtk-text-view-monospace)} sets the @slot[gtk-text-view]{monospace}
+  property.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-overwrite ------------------------------------------------
@@ -1084,7 +1084,7 @@
 (setf (gethash 'gtk-text-view-overwrite atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-overwrite 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-overwrite object) => overwrite}
   @syntax[]{(setf (gtk-text-view-overwrite object) overwrite)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -1115,22 +1115,22 @@
 (setf (gethash 'gtk-text-view-pixels-above-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-above-lines 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-pixels-above-lines object) => pixels-above-lines}
   @syntax[]{(setf (gtk-text-view-pixels-above-lines object) pixels-above-lines)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[pixels-above-lines]{a @code{:int} with the pixels above paragraphs}
+  @argument[pixels-above-lines]{an integer with the pixels above paragraphs}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{pixels-above-lines} slot of the
     @class{gtk-text-view} class.
   @end{short}
 
   The slot access function @sym{gtk-text-view-pixels-above-lines} gets the
-  default number of pixels to put above paragraphs. The slot access function
-  @sym{(setf gtk-text-view-pixels-above-lines)} sets the default number of
-  blank pixels above paragraphs in the text view.
+  default number of pixels to put above paragraphs in the text view. The slot
+  access function @sym{(setf gtk-text-view-pixels-above-lines)} sets the default
+  number of blank pixels.
 
-  Tags in the buffer for the text view may override the defaults.
+  Tags in the text buffer for the text view may override the defaults.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-pixels-below-lines ---------------------------------------
@@ -1148,22 +1148,22 @@
 (setf (gethash 'gtk-text-view-pixels-below-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-below-lines 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-pixels-below-lines object) => pixels-below-lines}
   @syntax[]{(setf (gtk-text-view-pixels-below-lines object) pixels-below-lines)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[pixels-below-lines]{a @code{:int} with the pixels below paragraphs}
+  @argument[pixels-below-lines]{an integer with the pixels below paragraphs}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{pixels-below-lines} slot of the
     @class{gtk-text-view} class.
   @end{short}
 
   The slot access function @sym{gtk-text-view-pixels-below-lines} gets the
-  default number of pixels to put below paragraphs. The slot access function
-  @sym{(setf gtk-text-view-pixels-below-lines)} sets the default number of
-  pixels of blank space to put below paragraphs in the text view.
+  default number of pixels to put below paragraphs in the text view. The slot
+  access function @sym{(setf gtk-text-view-pixels-below-lines)} sets the default
+  number of pixels of blank space to put below paragraphs.
 
-  May be overridden by tags applied to the text view's buffer.
+  May be overridden by tags applied to the text view's text buffer.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-pixels-inside-wrap ---------------------------------------
@@ -1181,11 +1181,12 @@
 (setf (gethash 'gtk-text-view-pixels-inside-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-inside-wrap 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-pixels-inside-wrap object) => pixels-inside-wrap}
   @syntax[]{(setf (gtk-text-view-pixels-inside-wrap object) pixels-inside-wrap)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[pixels-inside-wrap]{default number of pixels between wrapped lines}
+  @argument[pixels-inside-wrap]{an integer with the default number of pixels
+    between wrapped lines}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{pixels-inside-wrap} slot of the
     @class{gtk-text-view} class.
@@ -1197,7 +1198,7 @@
   @sym{(setf gtk-text-view-pixels-inside-wrap)} sets the default number of
   pixels.
 
-  May be overridden by tags in the text view's buffer.
+  May be overridden by tags in the text view's text buffer.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-populate-all ---------------------------------------------
@@ -1214,7 +1215,7 @@
 (setf (gethash 'gtk-text-view-populate-all atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-populate-all 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-populate-all object) => populate-all}
   @syntax[]{(setf (gtk-text-view-populate-all object) populate-all)}
   @argument[object]{a @class{gtk-text-view} widget}
@@ -1243,11 +1244,11 @@
 (setf (gethash 'gtk-text-view-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-right-margin 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-right-margin object) => right-margin}
   @syntax[]{(setf (gtk-text-view-right-margin object) right-margin)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[right-margin]{a @code{:int} with the right margin in pixels}
+  @argument[right-margin]{an integer with the right margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{right-margin} slot of the
     @class{gtk-text-view} class.
@@ -1255,8 +1256,7 @@
 
   The slot access function @sym{gtk-text-view-right-margin} gets the default
   right margin for text in the text view. The slot access function
-  @sym{(setf gtk-text-view-right-margin)} sets the default right margin for
-  text in the text view.
+  @sym{(setf gtk-text-view-right-margin)} sets the default right margin.
 
   Tags in the buffer may override the default.
   @see-class{gtk-text-view}")
@@ -1272,23 +1272,24 @@
 (setf (gethash 'gtk-text-view-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-tabs 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-tabs object) => tabs}
   @syntax[]{(setf (gtk-text-view-tabs object) tabs)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[tabs]{tabs as a @class{pango-tab-array} structure}
+  @argument[tabs]{tabs as a @class{pango-tab-array} instance}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{tabs} slot of the
     @class{gtk-text-view} class.
   @end{short}
 
   The slot access function @sym{gtk-text-view-tabs} gets a copy of the default
-  tab array, or @code{nil} if \"standard\" tabs are used. The slot access
+  Pango tab array, or @code{nil} if \"standard\" tabs are used. The slot access
   function @sym{(setf gtk-text-view-tabs)} sets the default tab stops for
-  paragraphs in the text view.
+  paragraphs.
 
-  Tags in the buffer may override the defaults.
-  @see-class{gtk-text-view}")
+  Tags in the text buffer may override the defaults.
+  @see-class{gtk-text-view}
+  @see-class{pango-tab-array}")
 
 ;;; --- gtk-text-view-top-margin -----------------------------------------------
 
@@ -1306,11 +1307,11 @@
 (setf (gethash 'gtk-text-view-top-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-top-margin 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-top-margin object) => top-margin}
   @syntax[]{(setf (gtk-text-view-top-margin object) top-margin)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[top-margin]{a @code{:int} with the top margin in pixels}
+  @argument[top-margin]{an integer with the top margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{top-margin} slot of the
     @class{gtk-text-view} class.
@@ -1318,8 +1319,7 @@
 
   The slot access function @sym{gtk-text-view-top-margin} gets the top margin
   for text in the text view. The slot access function
-  @sym{(setf gtk-text-view-top-margin)} sets the top margin for text in the
-  text view.
+  @sym{(setf gtk-text-view-top-margin)} sets the top margin.
 
   Note that this function is confusingly named. In CSS terms, the value set
   here is padding.
@@ -1341,11 +1341,11 @@
 (setf (gethash 'gtk-text-view-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-wrap-mode 'function)
- "@version{2020-6-7}
+ "@version{2021-2-14}
   @syntax[]{(gtk-text-view-wrap-mode object) => wrap-mode}
   @syntax[]{(setf (gtk-text-view-wrap-mode object) wrap-mode)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[wrap-mode]{a @symbol{gtk-wrap-mode}}
+  @argument[wrap-mode]{a value of the @symbol{gtk-wrap-mode} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{wrap-mode} slot of the
     @class{gtk-text-view} class.
@@ -1353,7 +1353,7 @@
 
   The slot access function @sym{gtk-text-view-wrap-mode} gets the line wrapping
   for the text view. The slot access function
-  @sym{(setf gtk-text-view-wrap-mode)} sets the line wrapping for the text view.
+  @sym{(setf gtk-text-view-wrap-mode)} sets the line wrapping.
   @see-class{gtk-text-view}
   @see-symbol{gtk-wrap-mode}")
 

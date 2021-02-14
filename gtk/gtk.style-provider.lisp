@@ -155,7 +155,7 @@
                atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-application+ 'variable)
- "@version{2020-10-16}
+ "@version{*2021-2-14}
   @variable-value{600}
   @begin{short}
     A priority that can be used when adding a @class{gtk-style-provider} object
