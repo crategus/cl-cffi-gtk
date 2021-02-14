@@ -67,10 +67,10 @@
              (list `(export ',property-name)))))
 
 (defun child-property-name (type-name property-name package-name)
-  (intern (format nil "~A-CHILD-~A"
-                  (symbol-name (registered-object-type-by-name type-name))
-                  (string-upcase property-name))
-          (find-package package-name)))
+  (format-symbol package-name
+                 "~A-CHILD-~A"
+                 (registered-object-type-by-name type-name)
+                 (string-upcase property-name)))
 
 (defun generate-child-properties (&optional (type-root "GtkContainer") (package-name "GTK"))
   (setf type-root (gtype type-root))

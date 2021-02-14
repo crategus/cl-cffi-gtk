@@ -55,6 +55,7 @@
   :depends-on (:cl-cffi-gtk-glib
                :cffi
                :trivial-garbage
+               :alexandria
                :iterate
                :bordeaux-threads
                :closer-mop))

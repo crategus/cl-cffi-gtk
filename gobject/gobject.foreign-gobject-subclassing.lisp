@@ -279,12 +279,10 @@
   (iter (for item in items)
         (when (eq :skip (first item)) (next-iteration))
         (destructuring-bind (name (return-type &rest args) &key impl-call) item
-          (for method-name = (intern (format nil "~A-~A-IMPL"
-                                             (symbol-name iface-name)
-                                             (symbol-name name))))
-          (for callback-name = (intern (format nil "~A-~A-CALLBACK"
-                                               (symbol-name iface-name)
-                                               (symbol-name name))))
+          (for method-name = (format-symbol t "~A-~A-IMPL"
+                                            iface-name name))
+          (for callback-name = (format-symbol t "~A-~A-CALLBACK"
+                                              iface-name name))
           (collect (make-vtable-method-info :slot-name name
                                             :name method-name
                                             :return-type return-type
@@ -300,7 +298,7 @@
   methods)
 
 (defmacro define-vtable ((type-name name) &body items)
-  (let ((cstruct-name (intern (format nil "~A-VTABLE" (symbol-name name))))
+  (let ((cstruct-name (format-symbol t "~A-VTABLE" name))
         (methods (vtable-methods name items)))
     `(progn
        (defcstruct ,cstruct-name ,@(mapcar #'vtable-item->cstruct-item items))

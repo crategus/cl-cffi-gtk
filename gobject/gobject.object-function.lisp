@@ -30,8 +30,7 @@
 
 (defmacro define-cb-methods (name return-type (&rest args))
   (flet ((make-name (control-string)
-           (intern (format nil control-string (symbol-name name))
-                   (symbol-package name))))
+           (format-symbol (symbol-package name) control-string name)))
     (let ((call-cb (make-name "~A-CB"))
           (destroy-cb (make-name "~A-DESTROY-NOTIFY"))
           (object (gensym "OBJECT"))
