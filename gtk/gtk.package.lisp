@@ -1591,9 +1591,7 @@
 
       @about-symbol{gtk-wrap-mode}
       @about-symbol{gtk-text-appearance}
-
       @about-class{gtk-text-tag}
-
       @about-generic{gtk-text-tag-accumulative-margin}
       @about-generic{gtk-text-tag-background}
       @about-generic{gtk-text-tag-background-full-height}
@@ -1668,12 +1666,10 @@
       @about-generic{gtk-text-tag-weight-set}
       @about-generic{gtk-text-tag-wrap-mode}
       @about-generic{gtk-text-tag-wrap-mode-set}
-
       @about-function{gtk-text-tag-new}
       @about-function{gtk-text-tag-priority}
       @about-function{gtk-text-tag-event}
       @about-function{gtk-text-tag-changed}
-
       @about-struct{gtk-text-attributes}
       @about-function{gtk-text-attributes-refcount}
       @about-function{gtk-text-attributes-appearance}
@@ -3059,7 +3055,7 @@ setup_tree (void)
       @about-function{gtk-menu-tool-button-set-arrow-tooltip-markup}
     @end{subsection}
     @begin[GtkToggleToolButton]{subsection}
-      A @class{gtk-tool-item} containing a toggle button.
+      A @class{gtk-tool-item} widget containing a toggle button.
 
       @about-class{gtk-toggle-tool-button}
       @about-generic{gtk-toggle-tool-button-active}

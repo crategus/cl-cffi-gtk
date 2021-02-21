@@ -88,10 +88,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-tool-button 'type)
- "@version{2020-9-5}
+ "@version{*2021-2-21}
   @begin{short}
-    A @sym{gtk-toggle-tool-button} is a @class{gtk-tool-item} that contains a
-    toggle button.
+    A @sym{gtk-toggle-tool-button} widget is a @class{gtk-tool-item} widget
+    that contains a toggle button.
   @end{short}
 
   Use the function @fun{gtk-toggle-tool-button-new} to create a new toggle tool
@@ -113,8 +113,7 @@
   @end{dictionary}
   @see-slot{gtk-toggle-tool-button-active}
   @see-class{gtk-tool-item}
-  @see-function{gtk-toggle-tool-button-new}
-  @see-function{gtk-toggle-tool-button-new-from-stock}")
+  @see-class{gtk-radio-tool-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -131,11 +130,12 @@
 (setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-tool-button-active 'function)
- "@version{*2021-2-14}
+ "@version{*2021-2-21}
   @syntax[]{(gtk-toggle-tool-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-tool-button-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-tool-button} widget}
-  @argument[is-active]{a boolean whether @arg{button} should be active}
+  @argument[is-active]{a boolean whether the toggle tool button should be
+    active}
   @begin{short}
     Accessor of the @slot[gtk-toggle-tool-button]{active} slot of the
     @class{gtk-toggle-tool-button} class.

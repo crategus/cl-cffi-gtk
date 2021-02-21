@@ -334,34 +334,35 @@
 ;; The Lisp implementation does not support pairs of an index and a value.
 ;; Consider to change the implemenation.
 
-(defun gtk-list-store-set (list-store iter &rest values)
+(defun gtk-list-store-set (store iter &rest values)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-22}
-  @argument[list_store]{a @class{gtk-list-store} object}
-  @argument[iter]{row iterator}
+ "@version{2021-2-21}
+  @argument[store]{a @class{gtk-list-store} object}
+  @argument[iter]{a @class{gtk-tree-iter} row iterator}
   @argument[values]{values to set}
   @begin{short}
     Sets the value of one or more cells in the row referenced by @arg{iter}.
   @end{short}
   The variable argument list should contain the values to be set.
-
-  @subheading{Note:}
+  @begin[Note]{dictionary}
     The Lisp implemenation does not support pairs of an index and a value, but
     only a list of values. Therefore, it is not possible to set individual
     columns.
-  @see-class{gtk-list-store}"
+  @end{dictionary}
+  @see-class{gtk-list-store}
+  @see-class{gtk-tree-iter}"
   (let ((n (length values)))
     (with-foreign-objects ((value-ar '(:struct g-value) n)
                            (columns-ar :int n))
       (iter (for i from 0 below n)
             (for value in values)
-            (for type = (gtk-tree-model-column-type list-store i))
+            (for gtype = (gtk-tree-model-column-type store i))
             (setf (mem-aref columns-ar :int i) i)
             (set-g-value (mem-aptr value-ar '(:struct g-value) i)
                          value
-                         type
+                         gtype
                          :zero-g-value t))
-      (%gtk-list-store-set-valuesv list-store iter columns-ar value-ar n)
+      (%gtk-list-store-set-valuesv store iter columns-ar value-ar n)
       (iter (for i from 0 below n)
             (g-value-unset (mem-aptr value-ar '(:struct g-value) i)))
       iter)))
@@ -457,9 +458,8 @@
 
 ;; Only for internal use. Not exported.
 
-(defcfun ("gtk_list_store_set_valuesv"
-          %gtk-list-store-set-valuesv) :void
-  (list-store (g-object gtk-list-store))
+(defcfun ("gtk_list_store_set_valuesv" %gtk-list-store-set-valuesv) :void
+  (store (g-object gtk-list-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (columns :pointer)
   (values :pointer)

@@ -377,7 +377,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag 'type)
- "@version{2020-3-20}
+ "@version{*2021-2-21}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -385,30 +385,28 @@
   @end{short}
 
   Tags should be in the @class{gtk-text-tag-table} object for a given
-  @class{gtk-text-buffer} object before using them with that buffer.
+  @class{gtk-text-buffer} object before using them with that text buffer. The
+  function @fun{gtk-text-buffer-create-tag} is the best way to create tags.
 
-  The @fun{gtk-text-buffer-create-tag} function is the best way to create tags.
-  See gtk3-demo for numerous examples.
-
-  For each property of @sym{gtk-text-tag}, there is a \"set\" property, e.g.
-  \"font-set\" corresponds to \"font\". These \"set\" properties reflect whether
-  a property has been set or not. They are maintained by GTK+ and you should not
-  set them independently.
+  For each property of the @sym{gtk-text-tag} class, there is a \"set\"
+  property, e.g. \"font-set\" corresponds to \"font\". These \"set\" properties
+  reflect whether a property has been set or not. They are maintained by GTK+
+  and you should not set them independently.
   @begin[Signal Details]{dictionary}
     @subheading{The \"event\" signal}
       @begin{pre}
  lambda (tag object event iter)    : Run Last
       @end{pre}
-      The \"event\" signal is emitted when an event occurs on a region of the
+      The signal is emitted when an event occurs on a region of the text
       buffer marked with this tag.
       @begin[code]{table}
         @entry[tag]{The @sym{gtk-text-tag} object on which the signal is
           emitted.}
-        @entry[object]{The object the event was fired from (typically a
-          @class{gtk-text-view} object).}
-        @entry[event]{The event which triggered the signal.}
-        @entry[iter]{A @class{gtk-text-iter} pointing at the location the event
-          occured.}
+        @entry[object]{The object the event was fired from, typically a
+          @class{gtk-text-view} widget.}
+        @entry[event]{The @class{gdk-event} event which triggered the signal.}
+        @entry[iter]{A @class{gtk-text-iter} iterator pointing at the location
+          the event occured.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @em{False} to propagate the event further.}
       @end{table}
@@ -476,7 +474,9 @@
   @see-slot{gtk-text-tag-weight}
   @see-slot{gtk-text-tag-weight-set}
   @see-slot{gtk-text-tag-wrap-mode}
-  @see-slot{gtk-text-tag-wrap-mode-set}")
+  @see-slot{gtk-text-tag-wrap-mode-set}
+  @see-class{gtk-text-buffer}
+  @see-class{gtk-text-tag-table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -499,11 +499,20 @@
 (setf (gethash 'gtk-text-tag-accumulative-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-accumulative-margin 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-accumulative-margin object) => setting}
+  @syntax[]{(setf (gtk-text-tag-accumulative-margin object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether the margins accumulate}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{accumulative-margin} slot of the
     @class{gtk-text-tag} class.
   @end{short}
+
+  Whether the margins accumulate or override each other. When set to @em{true}
+  the margins of this tag are added to the margins of any other non-accumulative
+  margins present. When set to @em{false} the margins override one another,
+  the default.
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-background ------------------------------------------------
@@ -518,12 +527,20 @@
 (setf (gethash 'gtk-text-tag-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background object) => background}
+  @syntax[]{(setf (gtk-text-tag-background object) background)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[background]{a string with the background color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The background color as a string.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-background-rgba}
+  @see-function{gtk-text-tag-background-set}")
 
 ;;; --- gtk-text-tag-background-full-height ------------------------------------
 
@@ -540,12 +557,21 @@
 (setf (gethash 'gtk-text-tag-background-full-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background-full-height object) => setting}
+  @syntax[]{(setf (gtk-text-tag-background-full-height object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether the background fills the entire line
+    height}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-full-height} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether the background color fills the entire line height or only the height
+  of the tagged characters.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-background-full-height-set}")
 
 ;;; --- gtk-text-tag-background-full-height-set --------------------------------
 
@@ -562,21 +588,28 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background-full-height-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-background-full-height-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects background height}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-full-height-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects background height.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-background-full-height}")
 
 ;;; --- gtk-text-tag-background-gdk --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-gdk"
                                                'gtk-text-tag) 't)
- "The @code{background-gdk} property of type @class{gdk-color}
-  (Read / Write) @br{}
-  Background color as a @sym{gdk-color}. @br{}
+ "The @code{background-gdk} property of type @class{gdk-color} (Read / Write)
+  @br{}
+  The background color. @br{}
   @em{Warning:} The @code{background-gdk} property has been deprecated since
   version 3.4 and should not be used in newly-written code. Use the
   @code{background-rgba} property instead.")
@@ -585,40 +618,62 @@
 (setf (gethash 'gtk-text-tag-background-gdk atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-gdk 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background-gdk object) => color}
+  @syntax[]{(setf (gtk-text-tag-background-gdk object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-color} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-gdk} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The background color.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-text-tag-background-gdk} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the funcion
+    @fun{gtk-text-tag-background-rgba} instead.
+  @end{dictionary}
+  @see-class{gtk-text-tag}
+  @see-class{gdk-color}
+  @see-function{gtk-text-tag-background-rgba}")
 
 ;;; --- gtk-text-tag-background-rgba -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-rgba"
                                                'gtk-text-tag) 't)
- "The @code{background-rgba} property of type @class{gdk-rgba}
-  (Read / Write) @br{}
-  The @class{gdk-rgba} background color.")
+ "The @code{background-rgba} property of type @class{gdk-rgba} (Read / Write)
+  @br{}
+  The background color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-background-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-rgba 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background-rgba object) => color}
+  @syntax[]{(setf (gtk-text-tag-background-rgba object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The background color.
+  @see-class{gtk-text-tag}
+  @see-class{gdk-rgba}
+  @see-function{gtk-text-tag-background}
+  @see-function{gtk-text-tag-background-set}")
 
 ;;; --- gtk-text-tag-background-set --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background-set"
                                                'gtk-text-tag) 't)
- "The @code{background-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{background-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects the background color. @br{}
   Default value: @em{false}")
 
@@ -626,12 +681,20 @@
 (setf (gethash 'gtk-text-tag-background-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-background-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-background-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the background color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the background color.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-background}
+  @see-function{gtk-text-tag-background-rgba}")
 
 ;;; --- gtk-text-tag-direction -------------------------------------------------
 
@@ -639,19 +702,26 @@
 (setf (documentation (atdoc:get-slot-from-name "direction" 'gtk-text-tag) 't)
  "The @code{direction} property of type @symbol{gtk-text-direction}
   (Read / Write) @br{}
-  Text direction, e.g. right-to-left or left-to-right. @br{}
+  Text direction, e.g. @code{:ltr} for left-to-right. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-direction 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-direction object) => direction}
+  @syntax[]{(setf (gtk-text-tag-direction object) direction)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[direction]{a value of the @symbol{gtk-text-direction} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{direction} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The text direction.
+  @see-class{gtk-text-tag}
+  @see-symbol{gtk-text-direction}")
 
 ;;; --- gtk-text-tag-editable --------------------------------------------------
 
@@ -665,12 +735,19 @@
 (setf (gethash 'gtk-text-tag-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-editable 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-editable object) => editable}
+  @syntax[]{(setf (gtk-text-tag-editable object) editable)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[editable]{a boolean wether the text can be modified}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{editable} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether the text can be modified by the user.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-editable-set}")
 
 ;;; --- gtk-text-tag-editable-set ----------------------------------------------
 
@@ -684,12 +761,19 @@
 (setf (gethash 'gtk-text-tag-editable-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-editable-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-editable-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-editable-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects text editability}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{editable-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects text editability.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-editable}")
 
 ;;; --- gtk-text-tag-fallback --------------------------------------------------
 
@@ -704,12 +788,20 @@
 (setf (gethash 'gtk-text-tag-fallback atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-fallback object) => fallback}
+  @syntax[]{(setf (gtk-text-tag-fallback object) fallback)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[fallback]{a boolean wether font fallback is enabled}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{fallback} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether font fallback is enabled. When set to @em{true}, other fonts will be
+  substituted where the current font is missing glyphs.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-fallback-set}")
 
 ;;; --- gtk-text-tag-fallback-set ----------------------------------------------
 
@@ -723,12 +815,17 @@
 (setf (gethash 'gtk-text-tag-fallback-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback-set 'function)
- "@version{2019-4-12}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-fallback-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-fallback-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this affects font fallback}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{fallback-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-fallback}")
 
 ;;; --- gtk-text-tag-family ----------------------------------------------------
 
@@ -742,9 +839,9 @@
 (setf (gethash 'gtk-text-tag-family atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-family 'function)
- "@version{2021-1-7}
+ "@version{2021-2-21}
   @syntax[]{(gtk-text-tag-family object) => family}
-  @syntax[]{(setf (gtk-text-tag-family object) familiy)}
+  @syntax[]{(setf (gtk-text-tag-family object) family)}
   @argument[object]{a @class{gtk-text-tag} object}
   @argument[family]{a string with the name of the font family}
   @begin{short}
@@ -753,7 +850,8 @@
   @end{short}
 
   Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
-  @see-class{gtk-text-tag}")
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-family-set}")
 
 ;;; --- gtk-text-tag-family-set ------------------------------------------------
 
@@ -864,7 +962,8 @@
   OpenType font features, as a string.
 
   Since 3.18
-  @see-class{gtk-text-tag}")
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-font-features-set}")
 
 ;;; --- gtk-text-tag-font-features-set -----------------------------------------
 
@@ -908,21 +1007,29 @@
 (setf (gethash 'gtk-text-tag-foreground atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-foreground object) => color}
+  @syntax[]{(setf (gtk-text-tag-foreground object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a string with the foreground color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{foreground} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Foreground color as a string.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-foreground-rgba}
+  @see-function{gtk-text-tag-foreground-set}")
 
 ;;; --- gtk-text-tag-foreground-gdk --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-gdk"
                                                'gtk-text-tag) 't)
- "The @code{foreground-gdk} property of type @class{gdk-color}
-  (Read / Write) @br{}
-  Foreground color as a @sym{gdk-color} @br{}
+ "The @code{foreground-gdk} property of type @class{gdk-color} (Read / Write)
+  @br{}
+  The foreground color. @br{}
   @em{Warning:} The @code{foreground-gdk} property has been deprecated since
   version 3.4 and should not be used in newly-written code. Use the
   @code{foreground-rgba} property instead.")
@@ -931,40 +1038,62 @@
 (setf (gethash 'gtk-text-tag-foreground-gdk atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-gdk 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-foreground-gdk object) => color}
+  @syntax[]{(setf (gtk-text-tag-foreground-gdk object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-color} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{foreground-gdk} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The foreground color.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-text-tag-foreground-gdk} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the function
+    @fun{gtk-text-tag-foreground-rgba} instead.
+  @end{dictionary}
+  @see-class{gtk-text-tag}
+  @see-class{gdk-color}
+  @see-function{gtk-text-tag-foreground-rgba}")
 
 ;;; --- gtk-text-tag-foreground-rgba -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-rgba"
                                                'gtk-text-tag) 't)
- "The @code{foreground-rgba} property of type @class{gdk-rgba}
-  (Read / Write) @br{}
-  The @class{gdk-rgba} foreground color.")
+ "The @code{foreground-rgba} property of type @class{gdk-rgba} (Read / Write)
+  @br{}
+  The foreground color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-foreground-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-rgba 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-foreground-rgba object) => color}
+  @syntax[]{(setf (gtk-text-tag-foreground-rgba object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{foreground-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The foreground color.
+  @see-class{gtk-text-tag}
+  @see-class{gdk-rgba}
+  @see-function{gtk-text-tag-foreground}
+  @see-function{gtk-text-tag-foreground-set}")
 
 ;;; --- gtk-text-tag-foreground-set --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "foreground-set"
                                                'gtk-text-tag) 't)
- "The @code{foreground-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{foreground-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects the foreground color. @br{}
   Default value: @em{false}")
 
@@ -972,12 +1101,20 @@
 (setf (gethash 'gtk-text-tag-foreground-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-foreground-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-foreground-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{foreground-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the foreground color.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-foreground}
+  @see-function{gtk-text-tag-foreground-rgba}")
 
 ;;; --- gtk-text-tag-indent ----------------------------------------------------
 
@@ -991,12 +1128,19 @@
 (setf (gethash 'gtk-text-tag-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-indent 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-indent object) => indent}
+  @syntax[]{(setf (gtk-text-tag-indent object) indent)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[indent]{an integer with the amount to indent}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{indent} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Amount to indent the paragraph, in pixels.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-indent-set}")
 
 ;;; --- gtk-text-tag-indent-set ------------------------------------------------
 
@@ -1010,34 +1154,49 @@
 (setf (gethash 'gtk-text-tag-indent-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-indent-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-indent-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-indent-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects indentation}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{indent-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects indentation.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-indent}")
 
 ;;; --- gtk-text-tag-invisible -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "invisible" 'gtk-text-tag) 't)
  "The @code{invisible} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this text is hidden.
-  Note that there may still be problems with the support for invisible text,
-  in particular when navigating programmatically inside a buffer containing
-  invisible segments. @br{}
+  Whether this text is hidden. Note that there may still be problems with the
+  support for invisible text, in particular when navigating programmatically
+  inside a text buffer containing invisible segments. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-invisible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-invisible 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-invisible object) => invisible}
+  @syntax[]{(setf (gtk-text-tag-invisible object) invisible)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[invisible]{a boolean wether this text is hidden}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{invisible} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this text is hidden. Note that there may still be problems with the
+  support for invisible text, in particular when navigating programmatically
+  inside a text buffer containing invisible segments.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-invisible-set}")
 
 ;;; --- gtk-text-tag-invisible-set ---------------------------------------------
 
@@ -1052,12 +1211,19 @@
 (setf (gethash 'gtk-text-tag-invisible-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-invisible-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-invisible-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-invisible-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects visibility}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{invisible-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects text visibility.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-invisible}")
 
 ;;; --- gtk-text-tag-justification ---------------------------------------------
 
@@ -1073,20 +1239,28 @@
 (setf (gethash 'gtk-text-tag-justification atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-justification 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-justification object) => justification}
+  @syntax[]{(setf (gtk-text-tag-justification object) justification)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[justification]{a value of the @symbol{gtk-justification}
+    enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{justification} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Left, right, or center justification.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-justification-set}")
 
 ;;; --- gtk-text-tag-justification-set -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justification-set"
                                                'gtk-text-tag) 't)
- "The @code{justification-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{justification-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects paragraph justification. @br{}
   Default value: @em{false}")
 
@@ -1094,12 +1268,19 @@
 (setf (gethash 'gtk-text-tag-justification-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-justification-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-justification-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-justification-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects paragraph justification}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{justification-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects paragraph justification.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-justification}")
 
 ;;; --- gtk-text-tag-language --------------------------------------------------
 
@@ -1116,12 +1297,23 @@
 (setf (gethash 'gtk-text-tag-language atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-language 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-language object) => language}
+  @syntax[]{(setf (gtk-text-tag-language object) language)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[language]{a string with language this text is in}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{language} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The language this text is in, as an ISO code. Pango can use this as a hint
+  when rendering the text. If not set, an appropriate default will be used.
+  Note that the initial value of this property depends on the current locale,
+  see also the function @fun{gtk-default-language}.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-default-language}
+  @see-function{gtk-text-tag-language-set}")
 
 ;;; --- gtk-text-tag-language-set ----------------------------------------------
 
@@ -1135,12 +1327,19 @@
 (setf (gethash 'gtk-text-tag-language-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-language-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-language-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-language-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the language}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{language-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the language the text is rendered as.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-language}")
 
 ;;; --- gtk-text-tag-left-margin -----------------------------------------------
 
@@ -1155,12 +1354,19 @@
 (setf (gethash 'gtk-text-tag-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-left-margin 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-left-margin object) => margin}
+  @syntax[]{(setf (gtk-text-tag-left-margin object) margin)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[margin]{an integer with the width of the left margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{left-margin} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Width of the left margin in pixels.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-left-margin-set}")
 
 ;;; --- gtk-text-tag-left-margin-set -------------------------------------------
 
@@ -1176,12 +1382,19 @@
 (setf (gethash 'gtk-text-tag-left-margin-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-left-margin-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-left-margin-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-left-margin-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the left margin}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{left-margin-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the left margin.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-left-margin}")
 
 ;;; --- gtk-text-tag-letter-spacing --------------------------------------------
 
@@ -1197,20 +1410,28 @@
 (setf (gethash 'gtk-text-tag-letter-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing 'function)
- "@version{2019-4-12}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-letter-spacing object) => spacing}
+  @syntax[]{(setf (gtk-text-tag-letter-spacing object) spacing)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[spacing]{an integer with extra spacing between graphems in Pango
+    units}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{letter-spacing} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Extra spacing between graphemes, in Pango units.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-letter-spacing-set}")
 
 ;;; --- gtk-text-tag-letter-spacing-set ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "letter-spacing-set"
                                                'gtk-text-tag) 't)
- "The @code{letter-spacing-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{letter-spacing-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects letter spacing. @br{}
   Default value: @em{false}")
 
@@ -1218,31 +1439,43 @@
 (setf (gethash 'gtk-text-tag-letter-spacing-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing-set 'function)
- "@version{2019-4-12}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-letter-spacing-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-letter-spacing-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects letter spacing}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{letter-spacing-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects letter spacing.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-letter-spacing}")
 
 ;;; --- gtk-text-tag-name ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-text-tag) 't)
- "The @code{name} property of type @code{:string}
-  (Read / Write / Construct) @br{}
-  Name used to refer to the text tag. @code{Nil} for anonymous tags. @br{}
+ "The @code{name} property of type @code{:string} (Read / Write / Construct)
+  @br{}
+  Name used to refer to the text tag, @code{nil} for anonymous tags. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-name 'function)
- "@version{2020-3-21}
+ "@version{*2021-2-21}
+  @syntax[]{(gtk-text-tag-name name) => name}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[name]{a string with the name of the text tag}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{name} slot of the
     @class{gtk-text-tag} class.
   @end{short}
+
+  Name used to refer to the text tag, @code{nil} for anonymous tags.
   @see-class{gtk-text-tag}")
 
 ;;; --- gtk-text-tag-paragraph-background --------------------------------------
@@ -1259,12 +1492,20 @@
 (setf (gethash 'gtk-text-tag-paragraph-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-paragraph-background object) => color}
+  @syntax[]{(setf (gtk-text-tag-paragraph-background object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a string with the paragraph background color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{paragraph-background} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The paragraph background color as a string.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-paragraph-background-rgba}
+  @see-function{gtk-text-tag-paragraph-background-set}")
 
 ;;; --- gtk-text-tag-paragraph-background-gdk ----------------------------------
 
@@ -1283,12 +1524,25 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-gdk 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-paragraph-background-gdk object) => color}
+  @syntax[]{(setf (gtk-text-tag-paragraph-background-gdk object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-color} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{paragraph-background-gdk} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The paragraph background color.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-text-tag-paragraph-background-gdk} has been deprecated
+    since version 3.4 and should not be used in newly-written code. Use the
+    funtion @fun{gtk-text-tag-paragraph-background-rgba} instead.
+  @end{dictionary}
+  @see-class{gtk-text-tag}
+  @see-class{gdk-color}
+  @see-function{gtk-text-tag-paragraph-background-rgba}")
 
 ;;; --- gtk-text-tag-paragraph-background-rgba ---------------------------------
 
@@ -1297,19 +1551,28 @@
                                                'gtk-text-tag) 't)
  "The @code{paragraph-background-rgba} property of type @class{gdk-rgba}
   (Read / Write) @br{}
-  The @class{gdk-rgba} paragraph background color.")
+  The paragraph background color.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-paragraph-background-rgba
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-rgba 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-paragraph-background-rgba object) => color}
+  @syntax[]{(setf (gtk-text-tag-paragraph-background-rgba object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{paragraph-background-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  The paragraph background color.
+  @see-class{gtk-text-tag}
+  @see-class{gdk-rgba}
+  @see-function{gtk-text-tag-paragraph-background}
+  @see-function{gtk-text-tag-paragraph-background-set}")
 
 ;;; --- gtk-text-tag-paragraph-background-set ----------------------------------
 
@@ -1326,20 +1589,29 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-paragraph-background-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-paragraph-background-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this affects the paragraph background
+    color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{paragraph-background-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the paragraph background color.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-paragraph-background}
+  @see-function{gtk-text-tag-paragraph-background-rgba}")
 
 ;;; --- gtk-text-tag-pixels-above-lines ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixels-above-lines"
                                                'gtk-text-tag) 't)
- "The @code{pixels-above-lines} property of type @code{:int}
-  (Read / Write) @br{}
+ "The @code{pixels-above-lines} property of type @code{:int} (Read / Write)
+  @br{}
   Pixels of blank space above paragraphs. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -1348,12 +1620,19 @@
 (setf (gethash 'gtk-text-tag-pixels-above-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-above-lines object) => pixels}
+  @syntax[]{(setf (gtk-text-tag-pixels-above-lines object) pixels)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[pixels]{an integer with the pixels of blank space above paragraphs}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-above-lines} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Pixels of blank space above paragraphs.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-above-lines-set}")
 
 ;;; --- gtk-text-tag-pixels-above-lines-set ------------------------------------
 
@@ -1369,12 +1648,20 @@
 (setf (gethash 'gtk-text-tag-pixels-above-lines-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-above-lines-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-pixels-above-lines-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the number of pixels
+    above lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-above-lines-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the number of pixels above lines.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-above-lines}")
 
 ;;; --- gtk-text-tag-pixels-below-lines ----------------------------------------
 
@@ -1391,12 +1678,19 @@
 (setf (gethash 'gtk-text-tag-pixels-below-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-below-lines object) => pixels}
+  @syntax[]{(setf (gtk-text-tag-pixels-below-lines object) pixels)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[pixels]{an integer with the pixels of blank space below paragraphs}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-below-lines} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-clas{gtk-text-tag}")
+
+  Pixels of blank space below paragraphs.
+  @see-clas{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-below-lines-set}")
 
 ;;; --- gtk-text-tag-pixels-below-lines-set ------------------------------------
 
@@ -1405,27 +1699,35 @@
                                                'gtk-text-tag) 't)
  "The @code{pixels-below-lines-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether this tag affects the number of pixels above lines. @br{}
+  Whether this tag affects the number of pixels below lines. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-pixels-below-lines-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-below-lines-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-pixels-below-lines-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the number of pixels
+    below lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-below-lines-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the number of pixels below lines.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-below-lines}")
 
 ;;; --- gtk-text-tag-pixels-inside-wrap ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixels-inside-wrap"
                                                'gtk-text-tag) 't)
- "The @code{pixels-inside-wrap} property of type @code{:int}
-  (Read / Write) @br{}
+ "The @code{pixels-inside-wrap} property of type @code{:int} (Read / Write)
+  @br{}
   Pixels of blank space between wrapped lines in a paragraph. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -1434,12 +1736,20 @@
 (setf (gethash 'gtk-text-tag-pixels-inside-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-inside-wrap object) => pixels}
+  @syntax[]{(setf (gtk-text-tag-pixels-inside-wrap object) pixels)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[pixels]{an integer with the pixels of blank space between wrapped
+    lines in a paragraph}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-inside-wrap} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Pixels of blank space between wrapped lines in a paragraph.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-inside-wrap-set}")
 
 ;;; --- gtk-text-tag-pixels-inside-wrap-set ------------------------------------
 
@@ -1455,12 +1765,20 @@
 (setf (gethash 'gtk-text-tag-pixels-inside-wrap-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-pixels-inside-wrap-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-pixels-inside-wrap-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the number of pixels
+    between wrapped lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-inside-wrap-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the number of pixels between wrapped lines.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-pixels-inside-wrap}")
 
 ;;; --- gtk-text-tag-right-margin ----------------------------------------------
 
@@ -1475,20 +1793,27 @@
 (setf (gethash 'gtk-text-tag-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-right-margin 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-right-margin object) => margin}
+  @syntax[]{(setf (gtk-text-tag-right-margin object) margin)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[margin]{an integer with the right margin in pixels}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{right-margin} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Width of the right margin in pixels.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-right-margin-set}")
 
 ;;; --- gtk-text-tag-right-margin-set ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "right-margin-set"
                                                'gtk-text-tag) 't)
- "The @code{right-margin-set} property of type @code{:boolean}
-  Read / Write) @br{}
+ "The @code{right-margin-set} property of type @code{:boolean} Read / Write)
+  @br{}
   Whether this tag affects the right margin. @br{}
   Default value: @em{false}")
 
@@ -1496,12 +1821,19 @@
 (setf (gethash 'gtk-text-tag-right-margin-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-right-margin-set 'function)
- "@version{2029-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-right-margin-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-right-margin-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the right margin}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{right-margin-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the right margin.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-right-margin}")
 
 ;;; --- gtk-text-tag-rise ------------------------------------------------------
 
@@ -1516,12 +1848,21 @@
 (setf (gethash 'gtk-text-tag-rise atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-rise 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-rise object) => rise}
+  @syntax[]{(setf (gtk-text-tag-rise object) rise)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[rise]{an integer with the offset of text above the baseline in
+    Pango units}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{rise} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Offset of text above the baseline (below the baseline if rise is negative)
+  in Pango units.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-rise-set}")
 
 ;;; --- gtk-text-tag-rise-set --------------------------------------------------
 
@@ -1535,12 +1876,19 @@
 (setf (gethash 'gtk-text-tag-rise-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-rise-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-rise-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-rise-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the rise}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{rise-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the rise.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-rise}")
 
 ;;; --- gtk-text-tag-scale -----------------------------------------------------
 
@@ -1557,12 +1905,21 @@
 (setf (gethash 'gtk-text-tag-scale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-scale 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-scale object) => scale}
+  @syntax[]{(setf (gtk-text-tag-scale object) scale)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[scale]{a double float with the font size as a scale factor}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{scale} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font size as a scale factor relative to the default font size. This properly
+  adapts to theme changes etc. so is recommended. Pango predefines some scales
+  such as @var{+pango-scale-x-large+}.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-scale-set}")
 
 ;;; --- gtk-text-tag-scale-set -------------------------------------------------
 
@@ -1576,12 +1933,19 @@
 (setf (gethash 'gtk-text-tag-scale-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-scale-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-21}
+  @syntax[]{(gtk-text-tag-scale-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-scale-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag scales the font size}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{scale-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag scales the font size by a factor.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-scale}")
 
 ;;; --- gtk-text-tag-size ------------------------------------------------------
 

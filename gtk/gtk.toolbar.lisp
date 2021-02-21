@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -577,9 +577,10 @@
 
 (defcfun ("gtk_toolbar_get_n_items" gtk-toolbar-n-items) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
+ "@version{*2021-2-21}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @return{A @code{:int} with the number of items on the toolbar.}
+  @return{An integer with the number of @class{gtk-tool-item} widgets on the
+    toolbar.}
   @short{Returns the number of items on the toolbar.}
   @see-class{gtk-toolbar}
   @see-class{gtk-tool-item}"
@@ -593,11 +594,11 @@
 
 (defcfun ("gtk_toolbar_get_nth_item" gtk-toolbar-nth-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
+ "@version{*2021-2-21}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[n]{a @code{:int} with a position on the toolbar}
-  @return{The n'th @class{gtk-tool-item} on @arg{toolbar}, or @code{nil} if
-    there is not an n'th item.}
+  @argument[n]{an integer with a position on the toolbar}
+  @return{The n'th @class{gtk-tool-item} widget on @arg{toolbar}, or
+    @code{nil} if there is not an n'th item.}
   @begin{short}
     Returns the n'th item on the toolbar, or @code{nil} if the toolbar does
     not contain an n'th item.
@@ -610,7 +611,7 @@
 (export 'gtk-toolbar-nth-item)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_toolbar_get_drop_index ()
+;;; gtk_toolbar_get_drop_index () -> gtk-toolbar-drop-index
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_toolbar_get_drop_index" gtk-toolbar-drop-index) :int

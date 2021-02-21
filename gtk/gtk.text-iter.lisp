@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -843,7 +843,7 @@
 (defcfun ("gtk_text_iter_get_tags" gtk-text-iter-tags)
     (g-slist (g-object gtk-text-tag) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-13}
+ "@version{*2021-2-21}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @return{List of @class{gtk-text-tag} objects.}
   @begin{short}

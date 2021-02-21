@@ -431,7 +431,7 @@
 (setf (gethash 'gtk-text-buffer-cursor-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-cursor-position 'function)
- "@version{2021-2-14}
+ "@version{*2021-2-14}
   @syntax[]{(gtk-text-buffer-cursor-position object) => position}
   @syntax[]{(setf (gtk-text-buffer-cursor-position object) position)}
   @argument[object]{a @class{gtk-text-buffer} object}
@@ -510,13 +510,13 @@
 (setf (documentation (atdoc:get-slot-from-name "tag-table" 'gtk-text-buffer) 't)
  "The @code{tag-table} property of type @class{gtk-text-tag-table}
   (Read / Write / Construct) @br{}
-  The text tag table associated witht the text bufffer.")
+  The text tag table associated with the text bufffer.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-tag-table atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-tag-table 'function)
- "@version{2021-2-14}
+ "@version{*2021-2-21}
   @syntax[]{(gtk-text-buffer-tag-table object) => tag-table}
   @argument[object]{a @class{gtk-text-buffer} object}
   @argument[tag-table]{a @class{gtk-text-tag-table} object}
@@ -525,7 +525,7 @@
     @class{gtk-text-buffer} class.
   @end{short}
 
-  Gets the @class{gtk-text-tag-table} object associated with the text buffer.
+  Gets the text tag table associated with the text buffer.
   @see-class{gtk-text-buffer}
   @see-class{gtk-text-tag-table}")
 

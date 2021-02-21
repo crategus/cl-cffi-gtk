@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -257,18 +257,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-tool-button) 't)
  "The @code{label} property of type @code{:string} (Read / Write) @br{}
-  Text to show in the item. @br{}
+  Text to show in the tool item. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-label 'function)
- "@version{2020-9-5}
+ "@version{*2021-2-21}
   @syntax[]{(gtk-tool-button-label object) => label}
   @syntax[]{(setf (gtk-tool-button-label object) label)}
   @argument[button]{a @class{gtk-tool-button} widget}
-  @argument[label]{a @code{:string} that will be used as label, or @code{nil}}
+  @argument[label]{a string that will be used as label, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{label} slot of the
     @class{gtk-tool-button} class.
@@ -277,17 +277,18 @@
   The slot access function @sym{gtk-tool-button-label} returns the label used
   by the tool button, or @code{nil} if the tool button does not have a label or
   uses a label from a stock item. The slot access function
-  @sym{(setf gtk-tool-button-label)} sets @arg{label} as the label used for the
-  tool button.
+  @sym{(setf gtk-tool-button-label)} sets the label.
 
   The @slot[gtk-tool-button]{label} property only has an effect if not
   overridden by a non-@code{nil} @slot[gtk-tool-button]{label-widget} property.
   If both the @slot[gtk-tool-button]{label-widget} and
   @slot[gtk-tool-button]{label} properties are @code{nil}, the label is
   determined by the @slot[gtk-tool-button]{stock-id} property. If the
-  @slot[gtk-tool-button]{stock-id} property is also @code{nil}, @arg{button}
-  will not have a label.
-  @see-class{gtk-tool-button}")
+  @slot[gtk-tool-button]{stock-id} property is also @code{nil}, the tool
+  button will not have a label.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-label-widget}
+  @see-function{gtk-tool-button-stock-id}")
 
 ;;; --- gtk-tool-button-label-widget -------------------------------------------
 

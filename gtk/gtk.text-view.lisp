@@ -1638,31 +1638,36 @@
 (export 'gtk-text-view-visible-rect)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_view_get_iter_location ()
+;;; gtk_text_view_get_iter_location () -> gtk-text-view-iter-location
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_view_get_iter_location" %gtk-text-view-iter-location) :void
-  (text-view (g-object gtk-text-view))
+  (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter))
   (location (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-text-view-iter-location (text-view iter)
+(defun gtk-text-view-iter-location (view iter)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
-  @argument[text-view]{a @class{gtk-text-view} widget}
+ "@version{2021-2-19}
+  @argument[view]{a @class{gtk-text-view} widget}
   @argument[iter]{a @class{gtk-text-iter} object}
-  @return{A @class{gdk-rectangle} with the bounds of the character at
-    @arg{iter}.}
+  @begin{return}
+    A @class{gdk-rectangle} instance with the bounds of the character at
+    @arg{iter}.
+  @end{return}
   @begin{short}
-    Gets a rectangle which roughly contains the character at @arg{iter}.
+    Gets a rectangle which roughly contains the coordinates of the character at
+    the position of the iterator.
   @end{short}
-  The rectangle position is in buffer coordinates. Use the function
+  The rectangle position is in text buffer coordinates. Use the function
   @fun{gtk-text-view-buffer-to-window-coords} to convert these coordinates to
   coordinates for one of the windows in the text view.
   @see-class{gtk-text-view}
+  @see-class{gtk-text-iter}
+  @see-class{gdk-rectangle}
   @see-function{gtk-text-view-buffer-to-window-coords}"
   (let ((rect (make-gdk-rectangle)))
-    (%gtk-text-view-iter-location text-view iter rect)
+    (%gtk-text-view-iter-location view iter rect)
     rect))
 
 (export 'gtk-text-view-iter-location)
@@ -1792,29 +1797,33 @@
 
 (defcfun ("gtk_text_view_get_iter_at_location" %gtk-text-view-iter-at-location)
     :void
-  (text-view (g-object gtk-text-view))
+  (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter))
   (x :int)
   (y :int))
 
-(defun gtk-text-view-iter-at-location (view x y)
+(defun gtk-text-view-iter-at-location (view buffer-x buffer-y)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
-  @argument[text-view]{a @class{gtk-text-view} widget}
+ "@version{2021-2-19}
+  @argument[view]{a @class{gtk-text-view} widget}
   @argument[iter]{a @class{gtk-text-iter} object}
-  @argument[x]{an integer with the x position, in buffer coordinates}
-  @argument[y]{an integer with the y position, in buffer coordinates}
+  @argument[buffer-x]{an integer with the x position, in text buffer
+    coordinates}
+  @argument[buffer-y]{an integer with the y position, in text buffer
+    coordinates}
   @begin{short}
-    Retrieves the iterator at buffer coordinates @arg{x} and @arg{y}.
+    Retrieves the iterator at text buffer coordinates
+    (@arg{buffer-x} and @arg{buffer-y}).
   @end{short}
-  Buffer coordinates are coordinates for the entire buffer, not just the
-  currently-displayed portion. If you have coordinates from an event, you have
-  to convert those to buffer coordinates with the function
+  Text buffer coordinates are coordinates for the entire text buffer, not just
+  the currently displayed portion. If you have coordinates from an event, you
+  have to convert those to text buffer coordinates with the function
   @fun{gtk-text-view-window-to-buffer-coords}.
   @see-class{gtk-text-view}
+  @see-class{gtk-text-iter}
   @see-function{gtk-text-view-window-to-buffer-coords}"
   (let ((iter (make-instance 'gtk-text-iter)))
-    (%gtk-text-view-iter-at-location view iter x y)
+    (%gtk-text-view-iter-at-location view iter buffer-x buffer-y)
     iter))
 
 (export 'gtk-text-view-iter-at-location)
@@ -1871,29 +1880,29 @@
 
 (defcfun ("gtk_text_view_buffer_to_window_coords"
           %gtk-text-view-buffer-to-window-coords) :void
-  (text-view (g-object gtk-text-view))
-  (win gtk-text-window-type)
+  (view (g-object gtk-text-view))
+  (win-type gtk-text-window-type)
   (buffer-x :int)
   (buffer-y :int)
   (window-x (:pointer :int))
   (window-y (:pointer :int)))
 
-(defun gtk-text-view-buffer-to-window-coords (text-view window-type
-                                                        buffer-x buffer-y)
+(defun gtk-text-view-buffer-to-window-coords (view win-type buffer-x buffer-y)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[win]{a @symbol{gtk-text-window-type} except @code{:private}}
-  @argument[buffer-x]{an integer with the buffer x coordinate}
-  @argument[buffer-y]{an integer with the buffer y coordinate}
+ "@version{2021-2-19}
+  @argument[view]{a @class{gtk-text-view} widget}
+  @argument[win-type]{a value of the @symbol{gtk-text-window-type} enumeration,
+    except @code{:private}}
+  @argument[buffer-x]{an integer with the text buffer x coordinate}
+  @argument[buffer-y]{an integer with the text buffer y coordinate}
   @begin{return}
-    @code{window-x} -- an integer with the window x coordinate or @code{nil}
-                       @br{}
-    @code{window-y} -- an integer with the window y coordinate or @code{nil}
+    @code{window-x} -- an integer with the window x coordinate @br{}
+    @code{window-y} -- an integer with the window y coordinate
   @end{return}
   @begin{short}
-    Converts coordinate (@arg{buffer-x}, @arg{buffer-y}) to coordinates for the
-    window win (@arg{window-x}, @arg{window-y}).
+    Converts the text buffer coordinates (@arg{buffer-x}, @arg{buffer-y}) to
+    window coordinates (@arg{window-x}, @arg{window-y}) for the text view
+    window of type @arg{win-type}.
   @end{short}
 
   Note that you cannot convert coordinates for a nonexisting window, see the
@@ -1902,11 +1911,12 @@
   @see-symbol{gtk-text-window-type}
   @see-function{gtk-text-view-border-window-size}"
   (with-foreign-objects ((window-x :int) (window-y :int))
-    (%gtk-text-view-buffer-to-window-coords text-view
-                                            window-type
+    (%gtk-text-view-buffer-to-window-coords view
+                                            win-type
                                             buffer-x buffer-y
                                             window-x window-y)
-    (values (mem-ref window-x :int) (mem-ref window-y :int))))
+    (values (mem-ref window-x :int)
+            (mem-ref window-y :int))))
 
 (export 'gtk-text-view-buffer-to-window-coords)
 
@@ -1916,37 +1926,39 @@
 
 (defcfun ("gtk_text_view_window_to_buffer_coords"
           %gtk-text-view-window-to-buffer-coords) :void
-  (text-view (g-object gtk-text-view))
-  (win gtk-text-window-type)
+  (view (g-object gtk-text-view))
+  (win-type gtk-text-window-type)
   (window-x :int)
   (window-y :int)
   (buffer-x :pointer)
   (buffer-y :pointer))
 
-(defun gtk-text-view-window-to-buffer-coords (text-view win window-x window-y)
+(defun gtk-text-view-window-to-buffer-coords (view win-type window-x window-y)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[win]{a @symbol{gtk-text-window-type} except @code{:private}}
+ "@version{2021-2-19}
+  @argument[view]{a @class{gtk-text-view} widget}
+  @argument[win-type]{a value of the @symbol{gtk-text-window-type} enumeration,
+    except @code{:private}}
   @argument[window-x]{an integer with the window x coordinate}
   @argument[window-y]{an integer with the window y coordinate}
   @begin{return}
-    @code{buffer-x} -- an integer with the buffer x coordinate or @code{nil}
-                       @br{}
-    @code{buffer-y} -- an integer with the buffer y coordinate or @code{nil}
+    @code{buffer-x} -- an integer with the text buffer x coordinate or @br{}
+    @code{buffer-y} -- an integer with the text buffer y coordinate
   @end{return}
   @begin{short}
-    Converts coordinates on the window identified by win to buffer coordinates,
-    storing the result in (@arg{buffer-x} ,@arg{buffer-y}).
+    Converts window coordinates (@arg{window-x}, @arg{window-y}) on the text
+    view window identified by @arg{win-type} to text buffer coordinates
+    (@arg{buffer-x}, @arg{buffer-y}).
   @end{short}
 
   Note that you cannot convert coordinates for a nonexisting window, see the
-  function @fun{gtk-text-view-border-window-size}).
+  function @fun{gtk-text-view-border-window-size}.
   @see-class{gtk-text-view}
+  @see-symbol{gkt-text-view-window-type}
   @see-function{gtk-text-view-border-window-size}"
   (with-foreign-objects ((buffer-x :int) (buffer-y :int))
-    (%gtk-text-view-window-to-buffer-coords text-view
-                                            win
+    (%gtk-text-view-window-to-buffer-coords view
+                                            win-type
                                             window-x window-y
                                             buffer-x buffer-y)
     (values (mem-ref buffer-x :int)

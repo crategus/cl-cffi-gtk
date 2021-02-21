@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -162,17 +162,17 @@
 
 (defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
+ "@version{*2021-2-21}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @return{A @code{:boolean} which is @em{true} on success.}
+  @return{A boolean which is @em{true} on success.}
   @begin{short}
-    Add a tag to the table.
+    Adds a tag to the text tag table.
   @end{short}
-  The tag is assigned the highest priority in the table.
+  The tag is assigned the highest priority in the text tag table.
 
-  The tag must not be in a tag table already, and may not have the same name
-  as an already-added tag.
+  The tag must not be in a text tag table already, and may not have the same
+  name as an already-added tag.
   @see-class{gtk-text-tag-table}
   @see-class{gtk-text-tag}"
   (table (g-object gtk-text-tag-table))

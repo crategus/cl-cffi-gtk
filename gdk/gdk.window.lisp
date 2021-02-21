@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -4690,11 +4690,11 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-root-origin (window)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2021-2-19}
   @argument[window]{a toplevel @class{gdk-window} object}
   @begin{return}
-    @code{x} -- a @code{:int} with the x position of window frame @br{}
-    @code{y} -- a @code{:int} with the y position of window frame
+    @code{x} -- an integer with the x position of window frame @br{}
+    @code{y} -- an integer with the y position of window frame
   @end{return}
   @begin{short}
     Obtains the top-left corner of the window manager frame in root window
@@ -4749,11 +4749,11 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-origin (window)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2021-2-19}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
-    @code{x} -- a @code{:int} with the x coordinate @br{}
-    @code{y} -- a @code{:int} with the y coordinate
+    @code{x} -- an integer with the x coordinate @br{}
+    @code{y} -- an integer with the y coordinate
   @end{return}
   @begin{short}
     Obtains the position of a window in root window coordinates.
@@ -4784,18 +4784,18 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-root-coords (window x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2021-2-19}
   @argument[window]{a @class{gdk-window} object}
-  @argument[x]{a @code{:int} with the x coordinate in window}
-  @argument[y]{a @code{:int} with the y coordinate in window}
+  @argument[x]{an integer with the x coordinate in window}
+  @argument[y]{an integer with the y coordinate in window}
   @begin{return}
-    @code{root-x} -- a @code{:int} with the x coordinate @br{}
-    @code{root-y} -- a @code{:int} with the y coordinate
+    @code{root-x} -- an integer with the x root coordinate @br{}
+    @code{root-y} -- an integer with the y root coordinate
   @end{return}
   @begin{short}
     Obtains the position of a window position in root window coordinates.
   @end{short}
-  This is similar to the function @fun{gdk-window-origin} but allows you go
+  This is similar to the function @fun{gdk-window-origin} but allows you to
   pass in any position in the window, not just the origin.
   @see-class{gdk-window}
   @see-function{gdk-window-origin}"
