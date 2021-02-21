@@ -843,6 +843,10 @@
 ;;; The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
 ;;; ----------------------------------------------------------------------------
 
+(defconstant +pango-scale-xx-small+ 0.5787037037037d0)
+
+(export '+pango-scale-xx-small+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_X_SMALL
 ;;;
@@ -850,6 +854,10 @@
 ;;;
 ;;; The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
 ;;; ----------------------------------------------------------------------------
+
+(defconstant +pango-scale-x-small+ 0.6444444444444d0)
+
+(export '+pango-scale-x-small+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_SMALL
@@ -859,6 +867,10 @@
 ;;; The scale factor for one shrinking step (1 / 1.2).
 ;;; ----------------------------------------------------------------------------
 
+(defconstant +pango-scale-small+ 0.8333333333333d0)
+
+(export '+pango-scale-small+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_MEDIUM
 ;;;
@@ -866,6 +878,10 @@
 ;;;
 ;;; The scale factor for normal size (1.0).
 ;;; ----------------------------------------------------------------------------
+
+(defconstant +pango-scale-medium+ 1.0d0)
+
+(export '+pango-scale-medium+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_LARGE
@@ -875,6 +891,10 @@
 ;;; The scale factor for one magnification step (1.2).
 ;;; ----------------------------------------------------------------------------
 
+(defconstant +pango-scale-large+ 1.2d0)
+
+(export '+pango-scale-large+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_X_LARGE
 ;;;
@@ -883,6 +903,10 @@
 ;;; The scale factor for two magnification steps (1.2 * 1.2).
 ;;; ----------------------------------------------------------------------------
 
+(defconstant +pango-scale-x-large+ 1.44d0)
+
+(export '+pango-scale-x-large+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE_XX_LARGE
 ;;;
@@ -890,6 +914,10 @@
 ;;;
 ;;; The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
 ;;; ----------------------------------------------------------------------------
+
+(defconstant +pango-scale-xx-large+ 1.728d0)
+
+(export '+pango-scale-xx-large+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoShowFlags
