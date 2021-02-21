@@ -231,23 +231,43 @@
                                              "Multiline Text Editor")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Text View"
-                                "text-view-simple.lisp"
+                                "../../tutorial/src/text-view-simple.lisp"
                                 "EXAMPLE-TEXT-VIEW-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Attributes"
-                                "text-view-attributes.lisp"
+                                "../../tutorial/src/text-view-attributes.lisp"
                                 "EXAMPLE-TEXT-VIEW-ATTRIBUTES")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Tags"
-                                "text-view-tags.lisp"
+                                "../../tutorial/src/text-view-tags.lisp"
                                 "EXAMPLE-TEXT-VIEW-TAGS")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Search"
+                                "../../tutorial/src/text-view-find-next.lisp"
+                                "EXAMPLE-TEXT-VIEW-FIND-NEXT")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Insert"
+                                "../../tutorial/src/text-view-insert.lisp"
+                                "EXAMPLE-TEXT-VIEW-INSERT")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Insert Image"
+                                "../../tutorial/src/text-view-insert-image.lisp"
+                                "EXAMPLE-TEXT-VIEW-INSERT-IMAGE")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Insert Widget"
+                                "../../tutorial/src/text-view-insert-widget.lisp"
+                                "EXAMPLE-TEXT-VIEW-INSERT-WIDGET")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text View Tooltip"
+                                "../../tutorial/src/text-view-tooltip.lisp"
+                                "EXAMPLE-TEXT-VIEW-TOOLTIP")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Tree, List and Icon Grid Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Tree View"
-                                "simple-tree-view.lisp"
-                                "EXAMPLE-SIMPLE-TREE-VIEW")
+                                "tree-view-simple.lisp"
+                                "EXAMPLE-TREE-VIEW-SIMPLE")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Menus, Combo Box, Toolbar")))

@@ -4,7 +4,8 @@
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :depends-on (:cl-cffi-gtk :split-sequence)
+  :depends-on (:gtk-tutorial
+               :cl-cffi-gtk :split-sequence)
   :components ((:file "package")
                (:file "alignment")
                (:file "app-chooser-button")
@@ -74,20 +75,16 @@
                (:file "simple-application-window")
                (:file "simple-drag-and-drop")
                (:file "simple-message")
-               (:file "simple-tree-view")
                (:file "simple-window")
                (:file "spin-button")
                (:file "statusbar")
                (:file "switch")
                (:file "table-packing")
                (:file "text-entry")
-               (:file "text-view-attributes")
-               (:file "text-view-simple")
-               (:file "text-view-tags")
                (:file "toggle-buttons")
                (:file "tool-palette")
                (:file "../cairo-demo/cairo-demo")
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2020-11-26
+;;; 2021-2-16
