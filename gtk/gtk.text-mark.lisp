@@ -173,7 +173,7 @@
 
 (defun gtk-text-mark-new (name left-gravity)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-11}
+ "@version{*2021-2-18}
   @argument[name]{a string with the name of the text mark or @code{nil}}
   @argument[left-gravity]{a boolean whether the text mark should have left
     gravity}
@@ -200,7 +200,7 @@
                      :name name
                      :left-gravity left-gravity)
       (make-instance 'gtk-text-mark
-                     :left-grafity left-gravity)))
+                     :left-gravity left-gravity)))
 
 (export 'gtk-text-mark-new)
 
