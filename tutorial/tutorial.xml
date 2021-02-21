@@ -1080,39 +1080,45 @@ int main( int argc, char *argv[] )
     to determine a horizontal or a vertical box. Because &gtk-box; implements the interface &gtk-orientable;
     an instance of &gtk-box; has the property &gtk_orientable_orientation; of type &gtk-orientation;.
    </para>
-   <table id="table-gtk-box" frame='all'>
-    <title>Functions for GtkBox</title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Function</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>gtk-box-new</code></entry>
-       <entry valign="top">Creates a new <code>gtk-box</code> container.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>gtk-box-homogeneous</code></entry>
-       <entry valign="top">Accessor of the <code>homogeneous</code> property.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>gtk-box-spacing</code></entry>
-       <entry valign="top">Accessor of the <code>spacing</code> property.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>gtk-box-pack-start</code></entry>
-       <entry valign="top">Adds a child to the box, packed with reference to the start of the box.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>gtk-box-pack-end</code></entry>
-       <entry valign="top">Adds a child to the box, packed with reference to the end of the box.</entry>
-      </row>
-     </tbody>
-    </tgroup>
+
+   <table id="table-gtk-box">
+    <caption>Functions for GtkBox</caption>
+    <colgroup>
+     <col style="width:30%"/>
+     <col style="width:70%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Function</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>gtk-box-new</code></td>
+     <td>Creates a new <code>gtk-box</code> container.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>gtk-box-homogeneous</code></td>
+     <td>Accessor of the <code>homogeneous</code> property.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>gtk-box-spacing</code></td>
+     <td>Accessor of the <code>spacing</code> property.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>gtk-box-pack-start</code></td>
+     <td>Adds a child to the box, packed with reference to the start of the box.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>gtk-box-pack-end</code></td>
+     <td>Adds a child to the box, packed with reference to the end of the box.</td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
    </table>
+
    <para>
     The following examples show two equivalent ways to create an instance of a horizontal box. The first
     argument of the function &gtk-box-new; takes the value of the property &gtk_orientable_orientation;. The
@@ -1393,64 +1399,64 @@ int main( int argc, char *argv[] )
     whole top row of a 2 x 2 table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
     <code>top-attach = 0</code>, <code>bottom-attach = 1</code>.
    </para>
-   <table id="table-gtk-table-attach" frame='all'>
-    <title>Arguments of the function <code>gtk-table-attach</code></title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Argument&#x2003;&#x2003;&#x2003;</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>table</code></entry>
-       <entry valign="top">The GtkTable to add a new widget to.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>child</code></entry>
-       <entry valign="top">The widet to add.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>left-attach</code></entry>
-       <entry valign="top">The column number to attach the left side of a child widget to.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>right-attach</code></entry>
-       <entry valign="top">The column number to attach the right side of a child widget to.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>top-attach</code></entry>
-       <entry valign="top">The row number to attach the top of a child widget to.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>bottom-attach</code></entry>
-       <entry valign="top">The row number to attach the bottom of a child widget to.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:xoptions</code></entry>
-       <entry valign="top">
-        Used to specify the properties of the child widget when the table is resized.
-        The default value is <code>'(:expand :fill)</code>.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:yoptions</code></entry>
-       <entry valign="top">
-        The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
-        The default value is <code>'(:expand :fill)</code>.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:xpadding</code></entry>
-       <entry valign="top">
-        An integer value specifying the padding on the left and right of the widget being added to the table.
-        The default value is <code>0</code>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
+
+   <table id="table-gtk-table-attach">
+    <caption>Arguments of the function <code>gtk-table-attach</code></caption>
+    <colgroup>
+     <col style="width:30%"/>
+     <col style="width:70%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Argument</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>table</code></td>
+     <td>The GtkTable to add a new widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>child</code></td>
+     <td>The widet to add.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>left-attach</code></td>
+     <td>The column number to attach the left side of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>right-attach</code></td>
+     <td>The column number to attach the right side of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>top-attach</code></td>
+     <td>The row number to attach the top of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>bottom-attach</code></td>
+     <td>The row number to attach the bottom of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:xoptions</code></td>
+     <td>Used to specify the properties of the child widget when the table is resized.
+        The default value is <code>'(:expand :fill)</code>.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:yoptions</code></td>
+     <td>The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
+        The default value is <code>'(:expand :fill)</code>.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:xpadding</code></td>
+     <td>An integer value specifying the padding on the left and right of the widget being added to the table.
+        The default value is <code>0</code>.</td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
    </table>
+
    <para>
     The arguments <code>:xoptions</code> and <code>:yoptions</code> are of the enumeration type
     &gtk-attach-options; and used to specify packing options. The packing options can be OR'ed together to
@@ -3035,7 +3041,7 @@ int main( int argc, char *argv[] )
     If the file is not loaded successfully, the image will contain a "broken image" icon similar to that
     used in many web browsers.  If you want to handle errors in loading the file yourself, for example by
     displaying an error message, then load the image with the function
-    <ulink url="&gdk-pixbuf-new-from-file;"><code>gdk-pixbuf-new-from-file</code></ulink>, then create the
+    &gdk-pixbuf-new-from-file;, then create the
     &gtk-image; with the function
     &gtk-image-new-from-pixbuf;.
    </para>
@@ -3051,7 +3057,7 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     &gtk-image; is a "no window" widget (has no
-    <ulink url="&gdk-window;"><code>gdk-window</code></ulink> of its own), so by default does not receive
+    &gdk-window; of its own), so by default does not receive
     events.  If you want to receive events on the image, such as button clicks, place the image inside a
     <ulink url="&gtk-event-box;"><code>gtk-event-box</code></ulink>, then connect to the event signals on
     the event box.
@@ -4853,7 +4859,7 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     If a widget has native scrolling abilities, such as &gtk-text-view;,
-    <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>
+    &gtk-tree-view;
     or <ulink url="&gtk-icon-view;"><code>gtk-icon-view</code></ulink>, it can be added to a
     <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> with the function
     &gtk-container-add;. If a widget does not, you must first add the widget to a <ulink url="&gtk-viewport;">
@@ -4905,7 +4911,7 @@ int main( int argc, char *argv[] )
    <para>
     The scrolled window can work in two ways.  Some widgets have native scrolling support; these widgets
     implement the <ulink url="&gtk-scrollable;"><code>gtk-scrollable</code></ulink> interface. Widgets with
-    native scroll support include <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>,
+    native scroll support include &gtk-tree-view;,
     &gtk-text-view;, and <ulink url="&gtk-layout;">
     <code>gtk-layout</code></ulink>.
    </para>
@@ -5328,13 +5334,13 @@ int main( int argc, char *argv[] )
   </section>
  </chapter>
 
- <chapter id="Multiline_Text_Editor">
-  <title>Multiline Text Editor</title>
+ <chapter id="Multiline_Text_Widget">
+  <title>Multiline Text Widget</title>
 
-  <section id="Text_Widget_Overview" revision="2021-2-12">
+  <section id="Text_Widget_Overview" revision="2021-2-17">
    <title>Text Widget Overview</title>
    <para>
-    GTK+ has an powerful framework for multiline text editing. The primary objects involved in the process
+    GTK+ has a powerful framework for multiline text editing. The primary objects involved in the process
     are the &gtk-text-buffer; object, which represents the text being edited, and the &gtk-text-view; widget,
     a widget which can display a &gtk-text-buffer; object. Each text buffer can be displayed by any number of
     text views.
@@ -5386,28 +5392,21 @@ int main( int argc, char *argv[] )
     of the selection which is not the insertion point, respectively. If no text is selected, these two marks
     will be in the same position. You can manipulate what is selected and where the cursor appears by moving
     these marks around. If you want to place the cursor in response to a user action, be sure to use the
-    function &gtk-text-buffer-place-cursor;, which moves both at once without causing a temporary selection.
-    Moving one then the other temporarily selects the range in between the old and new positions.
+    function &gtk-text-buffer-place-cursor;, which moves both marks at once without causing a temporary
+    selection. Moving one mark then the other temporarily selects the range in between the old and new
+    positions.
    </para>
    <para>
     Text buffers always contain at least one line, but may be empty, that is, text buffers can contain zero
     characters. The last line in the text buffer never ends in a line separator (such as newline). The
-    other lines in the buffer always end in a line separator. Line separators count as characters when
+    other lines in the text buffer always end in a line separator. Line separators count as characters when
     computing character counts and character offsets. Note that some Unicode line separators are represented
     with multiple bytes in UTF-8, and the two-character sequence "\r\n" is also considered a line separator.
    </para>
   </section>
 
-  <section id="Simple_Multiline_Text_Widget" revision="2021-2-12">
-   <title>Simple Multiline Text Widget</title>
-   <figure id="figure-simple-text-view">
-    <title>Simple Text View</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-simple.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
+  <section id="Simple_Text_Widget" revision="2021-2-12">
+   <title>Simple Text Widget</title>
    <para>
     The &gtk-text-view; widget can be created using the function &gtk-text-view-new;. This function takes no
     arguments. When the text view is created this way, a &gtk-text-buffer; object associated with this text
@@ -5420,8 +5419,8 @@ int main( int argc, char *argv[] )
     the &gtk-text-view; widget as the argument.
    </para>
    <para>
-    Some common operations performed on a multiline text view widget are, setting the entire text and reading
-    the entire text from the text buffer. The entire text of the text buffer can be set using the slot access
+    Some common operations performed on a text view widget are, setting the entire text and reading the
+    entire text from the text buffer. The entire text of the text buffer can be set using the slot access
     function &gtk-text-buffer-text;.
    </para>
    <para>
@@ -5447,9 +5446,9 @@ int main( int argc, char *argv[] )
   ... )
    </programlisting>
    <para>
-    The argument <code>include-hidden-chars</code> is used to specify whether are not to include text that
-    has the invisible attribute set. Text attributes and how to set them will be discussed later in this
-    tutorial.
+    The argument <code>include-hidden-chars</code> is used to specify whether text for which the text
+    attribute invisible is set should be included or not. Text attributes and how to set them will be
+    discussed later in this tutorial.
    </para>
    <para>
     In many cases it is also convenient to first create the text buffer with the function
@@ -5457,38 +5456,28 @@ int main( int argc, char *argv[] )
     &gtk-text-view-new-with-buffer;. Or you can change the text buffer the text view displays after the
     text view is created with the slot access function &gtk-text-view-buffer;.
    </para>
+   <figure id="figure-simple-text-view">
+    <title>Simple Text View</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/text-view-simple.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
    <para>
-    Below is a sample program, that implements the simple multiline text widget. The program assigns a
-    default text to the text buffer. The text in the text buffer can be modified by the user and when the
-    window is closed it prints the contents of the text buffer and quits. The window is shown in figure
-    <link linkend="figure-simple-text-view">Simple Text View</link>.
+    Below is a sample program, that implements a simple text widget. The program assigns a default text to
+    the text buffer. To wrap the text lines at word boundaries the &gtk_text_view_wrap-mode; property is set
+    to <code>:word</code>. Other possible values of the &gtk-wrap-mode; enumeration are <code>:none</code>,
+    <code>:char</code>, and <code>:word-char</code>. Furthermore, the text gets a small distance of 6 pixel
+    to the window using the &gtk_text_view_top-margin;, &gtk_text_view_left-margin;, and
+    &gtk_text_view_right-margin; properties of the &gtk-text-view; widget. The text in the text buffer can be
+    modified by the user and when the window is closed it prints the contents of the text buffer and quits.
+    The window is shown in figure <link linkend="figure-simple-text-view">Simple Text View</link>.
    </para>
    <example id="example-simple-text-view">
     <title>Simple Text View</title>
-    <programlisting>
-(defun example-text-view-simple ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Example Simple Text View"
-                                  :default-width 350))
-           (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-buffer view)))
-      (g-signal-connect window "destroy"
-          (lambda (widget)
-            (declare (ignore widget))
-            (let ((start (gtk-text-buffer-start-iter buffer))
-                  (end (gtk-text-buffer-end-iter buffer))
-                  (include-hidden-chars t))
-              (print (gtk-text-buffer-get-text buffer
-                                               start
-                                               end
-                                               include-hidden-chars))
-              (terpri)
-              (leave-gtk-main))))
-      (setf (gtk-text-buffer-text buffer) "Some text for the text view.")
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-simple.lisp" parse="text"/>
     </programlisting>
    </example>
 
@@ -5522,11 +5511,11 @@ int main( int argc, char *argv[] )
    </para>
   </section>
 
-  <section id="Formatted_Text_in_Text_Widget">
-   <title>Formatted Text in Text Widget</title>
+  <section id="Formatted_Text_in_the_Text_Widget">
+   <title>Formatted Text in the Text Widget</title>
 
-   <section id="Example_of_Changing_Text_Attributes" revision="2021-2-12">
-    <title>Example of Changing Text Attributes</title>
+   <section id="Changing_Text_Attributes" revision="2021-2-12">
+    <title>Changing Text Attributes</title>
     <para>
      The way to affect text attributes in the &gtk-text-view; widget is to apply tags that change the
      attributes for a region of text. For text features that come from the theme — such as font and
@@ -5542,43 +5531,9 @@ int main( int argc, char *argv[] )
     </figure>
     <example id="example-text-view-attributes">
      <title>Changing Text Attributes of a Text View</title>
-     <programlisting>
-(defun example-text-view-attributes ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Example Text View Attributes"
-                                  :default-width 350))
-           (provider (gtk-css-provider-new))
-           (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-buffer view)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (setf (gtk-text-buffer-text buffer) "Hello, this is some text.")
-      ;; Change default font and color throughout the widget
-      (gtk-css-provider-load-from-data provider
-                                       "textview, text {
-                                          color : Green;
-                                          font : 20px Purisa; }")
-      (gtk-style-context-add-provider (gtk-widget-style-context view)
-                                      provider
-                                      +gtk-style-provider-priority-application+)
-      ;; Change left margin throughout the widget
-      (setf (gtk-text-view-left-margin view) 30)
-      ;; Use a tag to change the color for just one part of the widget
-      (let ((tag (gtk-text-buffer-create-tag buffer
-                                             "blue_foreground"
-                                             :foreground "blue"))
-            (start (gtk-text-buffer-iter-at-offset buffer 7))
-            (end (gtk-text-buffer-iter-at-offset buffer 12)))
-        ;; Apply the tag to a region of the text in the buffer
-        (gtk-text-buffer-apply-tag buffer tag start end))
-      ;; Add the view to the window and show all
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-     </programlisting>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-attributes.lisp" parse="text"/>
+    </programlisting>
     </example>
    </section>
 
@@ -5600,81 +5555,77 @@ int main( int argc, char *argv[] )
      values. See the &gtk-text-tag; documentation for a complete list of properties and their corresponding
      values.
     </para>
-    <table id="table-gtk-text-tag-properties" frame='all'>
-     <title>Properties used for creating Tags</title>
-     <tgroup cols='3' align='left' colsep='0' rowsep='0'>
-      <thead>
-       <row>
-        <entry>Property</entry>
-        <entry>Description</entry>
-        <entry>Values</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry valign="top"><code>:style</code></entry>
-        <entry valign="top">Font style as a value of the &pango-style; enumeration.</entry>
-        <entry valign="top"><code>:normal</code> <code>:oblique</code> <code>:italic</code></entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:weight</code></code></entry>
-        <entry valign="top">
-         Font weight as an integer. See predefined values in the &pango-weight; enumeration.
-        </entry>
-        <entry valign="top"><code>:thin</code> <code>:normal</code> <code>:bold</code></entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:editable</code></code></entry>
-        <entry valign="top">Whether the text can be modified by the user.</entry>
-        <entry valign="top"><emphasis>true</emphasis> <emphasis>false</emphasis></entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:justification</code></code></entry>
-        <entry valign="top">
-          Justification of the text as an value of the &gtk-justification; enumeration.
-        </entry>
-        <entry valign="top">
-          <code>:left</code> <code>:right</code> <code>:center</code> <code>:fill</code>
-        </entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:foreground</code></code></entry>
-        <entry valign="top">The foreground color as a string.</entry>
-        <entry valign="top">e. g. "Red" or "rgb(255,0,0)"</entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:background</code></code></entry>
-        <entry valign="top">The background color as a string.</entry>
-        <entry valign="top">e. g. "Red" or "rgb(255,0,0)"</entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:wrap-mode</code></code></entry>
-        <entry valign="top">
-         A value of the &gtk-wrap-mode; enumeration whether to wrap lines never, at word boundaries, or at
-         character boundaries.
-        </entry>
-        <entry valign="top">
-         <code>:none</code> <code>:char</code> <code>:word</code> <code>:word-char</code>
-        </entry>
-       </row>
-       <row>
-        <entry valign="top"><code><code>:font</code></code></entry>
-        <entry valign="top">Font description as a string.</entry>
-        <entry valign="top">e. g. "Sans Italic 12"</entry>
-       </row>
-      </tbody>
-     </tgroup>
+    <table>
+     <caption>Properties used for creating Tags</caption>
+     <colgroup>
+        <col style="width:20%"/>
+        <col style="width:50%"/>
+        <col style="width:30%"/>
+     </colgroup>
+     <tr>
+      <th align="left">Property</th>
+      <th align="left">Description</th>
+      <th align="left">Values</th>
+     </tr>
+     <tr>
+      <td colspan="3" style="border-top:1px solid #000;"></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:style</code></td>
+      <td>Font style as a value of the &pango-style; enumeration.</td>
+      <td><code>:normal</code> <code>:oblique</code> <code>:italic</code></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:weight</code></td>
+      <td>Font weight as an integer. See predefined values in the &pango-weight; enumeration.</td>
+      <td><code>:thin</code>, <code>:normal</code>, <code>:bold</code></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:editable</code></td>
+      <td>Whether the text can be modified by the user.</td>
+      <td><emphasis>true</emphasis> <emphasis>false</emphasis></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:justification</code></td>
+      <td>Justification of the text as an value of the &gtk-justification; enumeration.</td>
+      <td><code>:left</code> <code>:right</code> <code>:center</code> <code>:fill</code></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:foreground</code></td>
+      <td>The foreground color as a string.</td>
+      <td>e.g. "Red" or "rgb(255,0,0)"</td>
+     </tr>
+     <tr valign="top">
+      <td><code>:background</code></td>
+      <td>The background color as a string.</td>
+      <td>e.g. "Red" or "rgb(255,0,0)"</td>
+     </tr>
+     <tr valign="top">
+      <td><code>:wrap-mode</code></td>
+      <td>
+       A value of the &gtk-wrap-mode; enumeration whether to wrap lines never, at word boundaries, or at
+       character boundaries.
+      </td>
+      <td><code>:none</code> <code>:char</code> <code>:word</code> <code>:word-char</code></td>
+     </tr>
+     <tr valign="top">
+      <td><code>:font</code></td>
+      <td>Font description as a string.</td>
+      <td>e.g. "Sans Italic 12"</td>
+     </tr>
+     <tr>
+      <td colspan="3" style="border-top:1px solid #000;"></td>
+     </tr>
     </table>
-
     <para>
      The created tag can then be applied to a range of text using the functions &gtk-text-buffer-apply-tag;
      and &gtk-text-buffer-apply-tag-by-name;. The first function specifies the tag to be applied by a
      &gtk-text-tag; object and the second function specifies the tag by it's name. The range of text over
-     with the tag is to applies is specified by start and end iterators. Below is an extension of the
-     previous example, that has a toolbar to apply different tags to selected regions of the text.
+     with the tag is to applies is specified by start and end iterators. Tags applied to a range of text can
+     be removed by using the function &gtk-text-buffer-remove-tag;. This function also has the
+     &gtk-text-buffer-remove-tag-by-name; variant. All tags on a range of text can be removed in one go using
+     the function &gtk-text-buffer-remove-all-tags;.
     </para>
-
-   <!-- TODO: More text for the example -->
 
     <figure id="figure-text-tags">
      <title>Applying tags to text</title>
@@ -5685,117 +5636,27 @@ int main( int argc, char *argv[] )
      </mediaobject>
     </figure>
 
+   <!-- TODO: More text for the example -->
+
+    <para>
+     Below is an extension of the previous example, that has a toolbar to apply different tags to selected
+     regions of the text.
+    </para>
+
     <example id="example-text-tags">
      <title>Applying tags to text</title>
-     <programlisting>
-(defun on-toggle-tool-button-clicked (button buffer tag)
-  (when (gtk-text-buffer-has-selection buffer)
-    (multiple-value-bind (start end)
-        (gtk-text-buffer-selection-bounds buffer)
-      (if (gtk-toggle-tool-button-active button)
-          (gtk-text-buffer-apply-tag-by-name buffer tag start end)
-          (gtk-text-buffer-remove-tag-by-name buffer tag start end)))))
-
-(defun example-text-view-tags ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :title "Example Text View Tags"
-                                  :type :toplevel
-                                  :default-width 350
-                                  :default-height 250))
-           (vbox (make-instance 'gtk-box
-                                :orientation :vertical))
-           (textview (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-buffer textview))
-           (toolbar (make-instance 'gtk-toolbar)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Signal handler for cursor movements in the text buffer
-      (g-signal-connect buffer "notify::cursor-position"
-          (lambda (object pspec)
-            (declare (ignore pspec))
-            (let* ((cursor (gtk-text-buffer-cursor-position object))
-                   (iter (gtk-text-buffer-iter-at-offset buffer cursor))
-                   (tags (mapcar #'gtk-text-tag-name
-                                 (gtk-text-iter-tags iter))))
-              ;; Iterate over the toggle tool buttons
-              (dotimes (item (gtk-toolbar-n-items toolbar))
-                (let* ((button (gtk-toolbar-nth-item toolbar item))
-                       (label (gtk-tool-button-label button)))
-                  ;; Activate/Deactivate the buttons
-                  (if (member label tags :test #'string=)
-                      (setf (gtk-toggle-tool-button-active button) t)
-                      (setf (gtk-toggle-tool-button-active button) nil)))))))
-      ;; Create toggle tool button for Bold
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :icon-name "format-text-bold"
-                                   :label "Bold")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (on-toggle-tool-button-clicked widget buffer "Bold")))
-        (gtk-container-add toolbar button))
-      ;; Create toogle tool button for Italic
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :icon-name "format-text-italic"
-                                   :label "Italic")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (on-toggle-tool-button-clicked widget buffer "Italic")))
-        (gtk-container-add toolbar button))
-      ;; Create toggle tool button for Underline
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :icon-name "format-text-underline"
-                                   :label "Underline")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (on-toggle-tool-button-clicked widget buffer "Underline")))
-        (gtk-container-add toolbar button))
-      ;; Create toggle tool button for Strikethrough
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :icon-name "format-text-strikethrough"
-                                   :label "Strikethrough")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (on-toggle-tool-button-clicked widget buffer "Strikethrough")))
-        (gtk-container-add toolbar button))
-      ;; Create tags associated with the text buffer
-      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
-                              (make-instance 'gtk-text-tag
-                                             :name "Bold"
-                                             :weight 700))
-      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
-                              (make-instance 'gtk-text-tag
-                                             :name "Italic"
-                                             :style :italic))
-      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
-                              (make-instance 'gtk-text-tag
-                                             :name "Underline"
-                                             :underline :single))
-      (gtk-text-tag-table-add (gtk-text-buffer-tag-table buffer)
-                              (make-instance 'gtk-text-tag
-                                             :name "Strikethrough"
-                                             :strikethrough t))
-      ;; Pack and show the widgets
-      (gtk-box-pack-start vbox toolbar :expand nil)
-      (gtk-box-pack-start vbox textview :expand t)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
-     </programlisting>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-tags.lisp" parse="text"/>
+    </programlisting>
     </example>
    </section>
-
-<!-- TODO: gtk-text-buffer-insert-with-tags is not implemented -->
 
    <bridgehead renderas='sect3'>More Functions for Applying and Removing tags</bridgehead>
    <para>
     In the previous section, the function &gtk-text-buffer-insert; was introduced. A variant
     &gtk-text-buffer-insert-with-tags; of this function can be used to insert text with tags applied.
     The variant &gtk-text-buffer-insert-with-tags-by-name; is also available, in which the tags to be applied
-    are specified by the tag names. Tags applied to a range of text can be removed by using the function
-    &gtk-text-buffer-remove-tag;. This function also has the &gtk-text-buffer-remove-tag-by-name; variant.
-    All tags on a range of text can be removed in one go using the function &gtk-text-buffer-remove-all-tags;.
+    are specified by the tag names. 
    </para>
 
    <bridgehead renderas='sect3'>Formatting the Entire Text View</bridgehead>
@@ -5817,1006 +5678,526 @@ int main( int argc, char *argv[] )
   </section>
 -->
 
-  <section id="Searching">
-   <title>Searching</title>
-   <para>
-    The functions <ulink url="&gtk-text-iter-forward-search;">
-    <code>gtk-text-iter-forward-search</code></ulink> and <ulink url="&gtk-text-iter-backward-search;">
-    <code>gtk-text-iter-backward-search</code></ulink> with the arguments <code>iter</code>,
-    <code>str</code>, <code>flags</code>, <code>limit</code> can be used to search for a given text within a
-    buffer.  Both functions return as the first value a boolean to indicate wether the search was sucessful.
-    If this is the case the second and third values contain the iterators <code>match-start</code> and
-    <code>match-end</code>.
-   </para>
-   <para>
-    The function <ulink url="&gtk-text-iter-forward-search;">
-    <code>gtk-text-iter-forward-search</code></ulink> searches for <code>str</code> starting from
-    <code>iter</code> in the forward direction.  The start and end iterators of the first matched string are
-    return as the values <code>match-start</code> and <code>match-end</code>.  The search is limited to the
-    iterator <code>limit</code>, if specified.  The function returns <code>nil</code>, if no match is found.
-    The function <ulink url="&gtk-text-iter-backward-search;">
-    <code>gtk-text-iter-backward-search</code></ulink> is same as
-    <ulink url="&gtk-text-iter-forward-search;"><code>gtk-text-iter-forward-search</code></ulink> but, as its
-    name suggests, it searches in the backward direction.
-   </para>
-   <para>
-    In the Lips binding to GTK+ we have in addition the function <ulink url="&gtk-text-iter-search;">
-    <code>gtk-text-iter-search</code></ulink> which combines the functions for forward and backward search
-    and handles the arguments <code>flags</code> and <code>limit</code> as keyword arguments.  In addition
-    the keyword argument <code>direction</code> with a default value of <code>:forward</code> indicates the
-    direction of the search.  Set the value of <code>direction</code> to <code>:backward</code> for backward
-    search.
-   </para>
-   <para>
-    The function &gtk-text-buffer-selection-bounds;
-    was introduced earlier, to obtain the iterators
-    around the current selection.  To set the current selection programmatically the function
-    <ulink url="&gtk-text-buffer-select-range;"><code>gtk-text-buffer-select-range</code></ulink> with the
-    arguments <code>buffer</code>, <code>start</code>, <code>end</code> can be used.  The function sets the
-    selection bounds of <code>buffer</code> to <code>start</code> and <code>end</code>.  The following
-    example which demonstrates searching, uses this function to highlight matched text.
-   </para>
-   <figure id="figure-text-view-search">
-    <title>Searching text in a text view</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-search.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-text-view-search">
-    <title>Searching text in a text view</title>
-    <programlisting>
-(defvar *some-text*
-        "One of the important things to remember about text in GTK+ is that
-it is in the UTF-8 encoding. This means that one character can be encoded as
-multiple bytes. Character counts are usually referred to as offsets, while
-byte counts are called indexes. If you confuse these two, things will work
-fine with ASCII, but as soon as your buffer contains multibyte characters,
-bad things will happen.")
+  <section id="Searching_in_the_Text_Widget">
+   <title>Searching in the Text Widget</title>
 
-(defun example-text-view-search ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Text View Search"
-                                 :type :toplevel
-                                 :default-width 300
-                                 :default-height 200))
-          (entry (make-instance 'gtk-entry))
-          (button (make-instance 'gtk-button
-                                 :label "Search"))
-          (scrolled (make-instance 'gtk-scrolled-window))
-          (text-view (make-instance 'gtk-text-view
-                                    :wrap-mode :word
-                                    :hexpand t
-                                    :vexpand t))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical))
-          (hbox (make-instance 'gtk-grid
-                               :orientation :horizontal)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Signal handler for the search button
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-buffer text-view))
-                  (iter (gtk-text-buffer-start-iter buffer)))
-             (multiple-value-bind (found start end)
-                 (gtk-text-iter-search iter text)
-               (when found
-                 (gtk-text-buffer-select-range buffer start end))))))
-      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
-            *some-text*)
-      (gtk-container-add scrolled text-view)
-      (gtk-container-add hbox entry)
-      (gtk-container-add hbox button)
-      (gtk-container-add vbox hbox)
-      (gtk-container-add vbox scrolled)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
+   <section id="Indroduction_to_Searching" revison="2021-2-16">
+   <title>Introduction to Searching</title>
+    <para>
+     The functions &gtk-text-iter-forward-search; and &gtk-text-iter-backward-search; can be used to search
+     for a given text within a text buffer. Both functions return as the first value a boolean to indicate
+     wether the search was sucessful. If this is the case the second and third values contain the
+     <code>match-start</code> and <code>match-end</code> iterators.
+    </para>
+
+    <para>
+     The function &gtk-text-iter-forward-search; searches for <code>str</code> starting from the
+     <code>iter</code> iterator in the forward direction. The start and end iterators of the first matched
+     string are return as the values <code>match-start</code> and <code>match-end</code>. The search is
+     limited to the <code>limit</code> iterator, if specified. The function returns <code>nil</code>, if no
+     match is found. The function &gtk-text-iter-backward-search; is same as &gtk-text-iter-forward-search;
+     but searches in the backward direction.
+    </para>
+
+    <para>
+     In the Lisp binding to GTK+, we have in addition the function &gtk-text-iter-search; which combines the
+     functions for forward and backward search and handles the arguments <code>flags</code> and
+     <code>limit</code> as keyword arguments. In addition the keyword argument <code>direction</code> with a
+     default value of <code>:forward</code> indicates the direction of the search. Set the value of
+     <code>direction</code> to <code>:backward</code> for backward search.
+    </para>
+
+    <para>
+     The function &gtk-text-buffer-selection-bounds; was introduced earlier, to obtain the iterators around
+     the current selection. To set the current selection programmatically the function
+     &gtk-text-buffer-select-range; with the arguments <code>buffer</code>, <code>start</code>,
+     <code>end</code> can be used. The function sets the selection bounds of <code>buffer</code> to
+     <code>start</code> and <code>end</code>.
+    </para>
+
+    <figure id="figure-text-view-search">
+     <title>Searching text in a text view</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/text-view-search.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+
+    <para>
+     The following example which demonstrates searching, uses this function to highlight matched text.
+    </para>
+
+    <example id="example-text-view-search">
+     <title>Searching text in a text view</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-search.lisp" parse="text"/>
     </programlisting>
-   </example>
+    </example>
+   </section>
 
-   <section id="Continuing_the_search_with_Marks">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="Continuing_the_search_with_Marks">
-       <primary>text-buffer-create-mark, gtk-text-buffer-create-mark</primary>
-      </indexterm>
-      <indexterm zone="Continuing_the_search_with_Marks">
-       <primary>text-buffer-mark, gtk-text-buffer-mark</primary>
-      </indexterm>
-      <indexterm zone="Continuing_the_search_with_Marks">
-       <primary>text-buffer-iter-at-mark, gtk-text-buffer-iter-at-mark</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
-    <title>Continuing the search with Marks</title>
+   <section id="Continuing_the_Search_with_Marks">
+    <title>Continuing the Search with Marks</title>
     <para>
      If you had executed the above program you would have noted that, if there were more than one occurrence
-     of the text in the buffer, pressing search will only highlight the first occurrence of the text.  To
-     provide a feature similarly to Find Next; the program has to remember the location where the previous
-     search stopped.  So that you can start searching from that location.  And this should happen even if the
-     buffer were modified between the two searches.  We could store the <code>match-end</code> iter passed on
-     the function <ulink url="&gtk-text-iter-search;"><code>gtk-text-iter-search</code></ulink> and use it as
-     the starting point for the next search.  But the problem is that if the buffer were modified in between,
-     the iter would get invalidated. This takes us to marks.
+     of the text in the text buffer, typing text into the search entry will only highlight the first
+     occurrence of the text. To provide a feature similarly to Find Next the program has to remember the
+     location where the previous search stopped. So that you can start searching from that location. And this
+     should happen even if the text buffer were modified between the two searches. We could store the
+     <code>match-end</code> iterator passed on the function &gtk-text-iter-search; and use it as the starting
+     point for the next search. But the problem is that if the text buffer were modified in between,
+     the iterator would get invalidated. This takes us to marks.
     </para>
     <para>
-     A mark preserves a position in the buffer between modifications.  This is possible because their
-     behavior is defined when text is inserted or deleted.  When text containing a mark is deleted, the mark
-     remains in the position originally occupied by the deleted text.  When text is inserted at a mark, a
+     A mark preserves a position in the text buffer between modifications. This is possible because their
+     behavior is defined when text is inserted or deleted. When text containing a mark is deleted, the mark
+     remains in the position originally occupied by the deleted text. When text is inserted at a mark, a
      mark with left gravity will be moved to the beginning of the newly-inserted text, and a mark with right
      gravity will be moved to the end.
     </para>
     <para>
-     The gravity of the mark is specified while creation.  The function
-     <ulink url="&gtk-text-buffer-create-mark;"><code>gtk-text-buffer-create-mark</code></ulink> with the
+     The gravity of the mark is specified while creation. The function &gtk-text-buffer-create-mark; with the
      arguments <code>buffer</code>, <code>mark-name</code>, <code>where</code> and <code>left-grafity</code>
-     can be used to create a mark associated with a buffer.
+     can be used to create a mark associated with a text buffer. The iterator <code>where</code> specifies a
+     position in the text buffer which has to be marked. The argument <code>left-gravity</code> determines
+     how the mark moves when text is inserted at the mark. The argument <code>mark-name</code> is a string
+     that can be used to identify the mark. If <code>mark-name</code> is specified, the mark can be retrieved
+     using the function &gtk-text-buffer-mark;.
     </para>
     <para>
-     The iter <code>where</code> specifies a position in the buffer which has to be marked.
-     <code>left-gravity</code> determines how the mark moves when text is inserted at the mark.  The argument
-     <code>mark-name</code> is a string that can be used to identify the mark.  If <code>mark-name</code> is
-     specified, the mark can be retrieved using the function <ulink url="&gtk-text-buffer-mark;">
-     <code>gtk-text-buffer-mark</code></ulink>.
+     With named marks, you do not have to carry around a pointer to the marker, which can be easily retrieved
+     using the function &gtk-text-buffer-mark;. A mark by itself cannot be used for text buffer operations,
+     it has to converted into an iterator just before text buffer operations are to be performed. The function
+     &gtk-text-buffer-iter-at-mark; with the arguments <code>buffer</code> and <code>mark</code> returns the
+     iterator at the position of <code>mark</code>.
     </para>
     <para>
-     With named tags, you do not have to carry around a pointer to the marker, which can be easily retrieved
-     using the function <ulink url="&gtk-text-buffer-mark;"><code>gtk-text-buffer-mark</code></ulink>.  A
-     mark by itself cannot be used for buffer operations, it has to converted into an iter just before buffer
-     operations are to be performed.  The function <ulink url="&gtk-text-buffer-iter-at-mark;">
-     <code>gtk-text-buffer-iter-at-mark</code></ulink> with the arguments <code>buffer</code> and
-     <code>mark</code> returns the iter at the position of <code>mark</code>.
+     When a mark is no longer required, it can be deleted using the functions &gtk-text-buffer-delete-mark;
+     or &gtk-text-buffer-delete-mark-by-name;.
     </para>
    </section>
 
-   <section id="Scrolling_Problem">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="Scrolling_Problem">
-       <primary>text-view-scroll-mark-onscreen, gtk-text-view-scroll-mark-onscreen</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
+   <section id="The_Scrolling_Problem">
     <title>The Scrolling Problem</title>
     <para>
      Before we show an example, we have to solve the problem that the text view should scroll to the matched
-     text.  It can be irritating when the matched text is not in the visible portion of the buffer.  The
-     function <ulink url="&gtk-text-view-scroll-mark-onscreen;">
-     <code>gtk-text-view-scroll-mark-onscreen</code></ulink> with the arguments <code>text-view</code> and
-     <code>mark</code> scrolls to a position in the buffer.  The argument <code>mark</code> specifies the
-     position to scroll to.  Note that this is a method of the &gtk-text-view;
-     widget rather than a &gtk-text-buffer;
-     object.  Since it does not change the contents of the buffer, it
-     only changes the way a buffer is viewed.
+     text. It can be irritating when the matched text is not in the visible portion of the text buffer. The
+     function &gtk-text-view-scroll-mark-onscreen; with the arguments <code>text-view</code> and
+     <code>mark</code> scrolls to a position in the text buffer. The argument <code>mark</code> specifies the
+     position to scroll to. Note that this is a method of the &gtk-text-view; widget rather than a
+     &gtk-text-buffer; object. Since it does not change the contents of the buffer, it only changes the way a
+     text buffer is viewed.
     </para>
+
     <para>
-     The following example shows the usage of marks to continue the search.
+     The function &gtk-text-view-scroll-mark-onscreen; scrolls just enough, for the mark to be visible. But,
+     what if you want the mark to be centered, or to be the first line on the screen. This can be done using
+     the function &gtk-text-view-scroll-to-mark;, which scrolls the text view so that the mark is on the
+     screen in the position indicated by the arguments <code>xalign</code> and <code>yalign</code>.
     </para>
-   <figure id="figure-text-view-find-next">
-    <title>Searching text in a text view</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-find-next.jpg" format="jpg"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
+
+    <para>
+     The following example shows the usage of marks to continue the search. 
+    </para>
+
     <example id="example-text-view-find-next">
      <title>Searching text in a text view</title>
-     <programlisting>
-(defun find-text (text-view text iter)
-  (let ((buffer (gtk-text-view-buffer text-view)))
-    (multiple-value-bind (found start end)
-        (gtk-text-iter-search iter text)
-      (when found
-        (gtk-text-buffer-select-range buffer start end)
-        (let ((last-pos (gtk-text-buffer-create-mark buffer "last-pos" end)))
-          (gtk-text-view-scroll-mark-onscreen text-view last-pos))))))
-
-(defun example-text-view-find-next ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Multiline Text Search"
-                                 :type :toplevel
-                                 :default-width 450
-                                 :default-height 200))
-          (entry (make-instance 'gtk-entry))
-          (button-search (make-instance 'gtk-button
-                                        :label "Search"))
-          (button-next (make-instance 'gtk-button
-                                      :label "Next"))
-          (scrolled (make-instance 'gtk-scrolled-window))
-          (text-view (make-instance 'gtk-text-view
-                                    :hexpand t
-                                    :vexpand t))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical))
-          (hbox (make-instance 'gtk-grid
-                               :orientation :horizontal)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect button-search "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-buffer text-view))
-                  (iter (gtk-text-buffer-start-iter buffer)))
-             (find-text text-view text iter))))
-      (g-signal-connect button-next "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-buffer text-view))
-                  (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
-             (when last-pos
-               (find-text text-view
-                          text
-                          (gtk-text-buffer-get-iter-at-mark buffer
-                                                            last-pos))))))
-      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
-            *some-text*)
-      (gtk-container-add scrolled text-view)
-      (gtk-container-add hbox entry)
-      (gtk-container-add hbox button-search)
-      (gtk-container-add hbox button-next)
-      (gtk-container-add vbox hbox)
-      (gtk-container-add vbox scrolled)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-find-next.lisp" parse="text"/>
      </programlisting>
     </example>
    </section>
-
-   <section id="More_on_Marks">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="More_on_Marks">
-       <primary>text-buffer-delete-mark, gtk-text-buffer-delete-mark</primary>
-      </indexterm>
-      <indexterm zone="More_on_Marks">
-       <primary>text-buffer-delete-mark-by-name, gtk-text-buffer-delete-mark-by-name</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
-    <title>More on Marks</title>
-    <para>
-     When a mark is no longer required, it can be deleted using the functions
-     <ulink url="&gtk-text-buffer-delete-mark;"><code>gtk-text-buffer-delete-mark</code></ulink>
-     or <ulink url="&gtk-text-buffer-delete-mark-by-name;">
-     <code>gtk-text-buffer-delete-mark-by-name</code></ulink>.  There are two marks built-in to
-     &gtk-text-buffer; - "insert" and "selection-bound".
-     The "insert" mark refers to the cursor position, also called the insertion point.  A selection is
-     bounded by two marks.  One is the "insert" mark and the other is "selection-bound" mark.  When no text
-     is selected the two marks are in the same position.
-    </para>
-   </section>
   </section>
 
-  <section id="Examing_and_Modify_Text">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-line-offset, gtk-text-iter-line-offset</primary>
-     </indexterm>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-forward-to-line-end, gtk-text-iter-forward-to-line-end</primary>
-     </indexterm>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-find-char, gtk-text-iter-find-char</primary>
-     </indexterm>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-backward-find-char, gtk-text-iter-backward-find-char</primary>
-     </indexterm>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-forward-char, gtk-text-iter-forward-char</primary>
-     </indexterm>
-     <indexterm zone="Examing_and_Modify_Text">
-      <primary>text-iter-char, gtk-text-iter-char</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
-   <title>Examing and Modify Text</title>
+  <section id="Examing_and_Modifying_Text" revision="2021-2-19">
+   <title>Examing and Modifying Text</title>
    <para>
-    Examining and modifying text is another common operation performed on text buffers.  Examples are
+    Examining and modifying text is another common operation performed on text buffers. Examples are
     converting a selected portion of text into a comment while editing a program, determining and inserting
-    the correct end tag while editing HTML, inserting a pair of HTML tags around the current word, etc.  The
-    &gtk-text-iter; instance provides functions to do such
-    processing.
+    the correct end tag while editing HTML, inserting a pair of HTML tags around the current word, etc. The
+    &gtk-text-iter; iterator provides functions to do such processing.
    </para>
    <para>
-    In this section we will develop two programs to demonstrate these functions.  The first program will
-    insert start/end li tags (not to be confused with text attribute tags) around the current line, when a
-    button is clicked.  The second program will insert an end tag for an unclosed start tag.
+    In this section we will develop a program to demonstrate these functions. The program will insert
+    start/end <code>&lt;li&gt;</code> tags around the current line or a selection of text, when the
+    Make List Item button is clicked. Furthermore, the program will insert an end tag for an unclosed start
+    tag, when the Insert Close Tag is clicked.
    </para>
-   <para>
-    To insert tags around the current line, we first obtain an iter at the current cursor position.  Then we
-    move the iter to the beginning of the line, insert the start tag, move the iter to the end of the line,
-    and insert the end tag.  An iter can be moved to a specified offset in the same line using the function 
-    <ulink url="&gtk-text-iter-line-offset;"><code>gtk-text-iter-line-offset</code></ulink> with the
-    arguments <code>iter</code> and <code>char-on-line</code>.  The function moves <code>iter</code> within
-    the line, to the character offset specified by <code>char-on-line</code>.  If <code>char-on-line</code>
-    is equal to the no. of characters in the line, the iter is moved to the start of the next line.  A
-    character offset of zero, will move the iter to the beginning of the line.  The <code>iter</code> can be
-    moved to the end of the line using the function <ulink url="&gtk-text-iter-forward-to-line-end;">
-    <code>gtk-text-iter-forward-to-line-end</code></ulink>.  Now that we know the functions required to
-    implement the first program, here is the code.
-   </para>
-   <figure id="figure-text-view-editing-1">
-    <title>Multiline Text Editing</title>
+
+   <figure id="figure-text-view-insert">
+    <title>Inserting text in the Text View</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/text-view-editing-1.png" format="png"></imagedata>
+      <imagedata fileref="figures/text-view-insert.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
-   <example id="example-text-view-editing-1">
-    <title>Modify text in a text view</title>
-    <programlisting>
-(defun example-text-editing-text-1 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Multiline Text Editing"
-                                 :type :toplevel
-                                 :default-width 300
-                                 :default-height 200))
-          (text-view (make-instance 'gtk-text-view
-                                    :hexpand t
-                                    :vexpand t))
-          (button (make-instance 'gtk-button
-                                 :label "Make List Item"))
-          (vbox (make-instance 'gtk-grid
-                                :orientation :vertical)))
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (leave-gtk-main)))
-    (g-signal-connect button "clicked"
-       (lambda (widget)
-         (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-mark buffer "insert"))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
-           (setf (gtk-text-iter-line-offset iter) 0)
-           (gtk-text-buffer-insert buffer "&#x3c;li>" :position iter)
-           (gtk-text-iter-forward-to-line-end iter)
-           (gtk-text-buffer-insert buffer "&#x3c;/li>" :position iter))))
-   (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
-         (format nil "Item 1~%Item 2~%Item 3~%"))
-   (gtk-container-add vbox text-view)
-   (gtk-container-add vbox button)
-   (gtk-container-add window vbox)
-   (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
+
    <para>
-    For the second program, we will have to first get the iter at the current cursor position.  We then
-    search backwards from the cursor position, through the buffer till we hit on an unclosed tag.  We then
-    insert the corresponding end tag at the current cursor position.  Note that the procedure given does not
-    take care of many special cases, and might not be the best way to determine an unclosed tag.  But it
-    serves our purpose of explaining text manipulation functions.  Developing a perfect algorithm to
-    determine an unclosed tag, is out of the scope of this tutorial.  We can identify tags using the left
-    angle bracket.  So searching for start/end tags involves search for the left angle bracket.  This can be
-    done using the function <ulink url="&gtk-text-iter-backward-find-char;">
-    <code>gtk-text-iter-backward-find-char</code></ulink> or the function
-    <ulink url="&gtk-text-iter-backward-find-char;"><code>gtk-text-iter-backward-find-char</code></ulink>
-    with a value <code>:backward</code> for the keyword argument <code>direction</code>.
+    To insert <code>&lt;li&gt;</code> tags around the current line, we first obtain an iterator at the
+    current cursor position. Then we move the iterator to the beginning of the line, insert the start tag,
+    move the iterator to the end of the line, and insert the end tag. An iterator can be moved to a specified
+    offset in the same line using the accessor function <code>(setf &gtk-text-iter-line-offset;)</code> with
+    the argument <code>iter</code> and the value <code>char-on-line</code>. The function moves
+    <code>iter</code> within the line, to the character offset specified by <code>char-on-line</code>. If
+    <code>char-on-line</code> is equal to the number of characters in the line, the iterator is moved to the
+    start of the next line. A character offset of zero, will move the iterator to the beginning of the line.
+    The iterator can be moved to the end of the line using the function &gtk-text-iter-forward-to-line-end;.
+   </para>
+
+   <para>
+    To insert the <code>&lt;li&gt;</code> tags around the current selection, we use the "insert" mark, the
+    "selecton_bound" mark, and create an anonymous mark with right-gravity to remember the selection bound
+    of the text. First, we insert the tag at the position of the "insert" mark. We get the mark with the
+    function &gtk-text-buffer-mark; and the iterator for the position to insert the text with the function
+    &gtk-text-buffer-iter-at-mark;. Then we get the mark at the current selection bound, create an anonymus
+    mark with the function &gtk-text-mark-new; and add the mark with the function &gtk-text-buffer-add-mark;
+    to the text buffer. Now, we get the iterator at this mark for inserting the end tag. After inserting the
+    start and end tags we retrieve the iterators for the "insert" mark and the anonymous mark and reselect
+    the previous selection. At last, we delete the anonymous mark.
+   </para>
+
+   <para>
+    Note: We cannot use the "selection_bound" mark to remember the selection of the text. The
+    "selection_bound" mark has left-gravity and changes its position after inserting the end tag. Therefore,
+    we create an anonymous mark with right-gravity, which does not change its position in the text buffer.
+   </para>
+
+   <para>
+    For the second part of the program, we will have to first get the iterator at the current cursor position.
+    We then search backwards from the cursor position, through the text buffer till we hit on an unclosed tag.
+    We then insert the corresponding end tag at the current cursor position. Note that the procedure given
+    does not take care of many special cases, and might not be the best way to determine an unclosed tag. We
+    can identify tags using the left angle bracket. So searching for start/end tags involves search for the
+    left angle bracket. This can be done using the function &gtk-text-iter-backward-find-char; or the function
+    &gtk-text-iter-find-char; with a value <code>:backward</code> for the keyword argument
+    <code>direction</code>.
+   </para>
+
+   <para>
+    The function proceeds backwards from <code>iter</code>, and calls <code>predicate</code> for each
+    character in the text buffer, with the character as argument, till <code>predicate</code> returns
+    <emphasis>true</emphasis>. If a match is found, the function moves <code>iter</code> to the matching
+    position and returns <emphasis>true</emphasis>. If a match is not found, the function moves
+    <code>iter</code> to the beginning of the text buffer or the position <code>limit</code> (if not
+    <code>nil</code>) and returns <code>nil</code>. For our purpose we write a predicate that returns
+    <emphasis>true</emphasis> when the character is a left angle bracket. When we hit on a left angle bracket
+    we check whether the corresponding tag is a start tag or an end tag. This is done by examining the
+    character immediately after the left angle bracket. If it is a '/' it is an end tag. To extract the
+    character after the angle bracket we move the left angle bracket iterator by one character. And
+    then extract the character at that position. To move an iterator forward by one character, the
+    function &gtk-text-iter-forward-char; can be used.
    </para>
    <para>
-    The function proceeds backwards from <code>iter</code>, and calls <code>pred</code> for each character in
-    the buffer, with the character as argument, till <code>pred</code> returns <emphasis>true</emphasis>. If
-    a match is found, the function moves <code>iter</code> to the matching position and returns
-    <emphasis>{true</emphasis>.  If a match is not found, the function moves <code>iter</code> to the
-    beginning of the buffer or <code>limit</code> (if not <code>nil</code>) and returns <code>nil</code>.
-    For our purpose we write a predicate that returns <emphasis>true</emphasis> when the character is a left
-    angle bracket.  When we hit on a left angle bracket we check whether the corresponding tag is a start tag
-    or an end tag.  This is done by examining the character immediately after the left angle bracket.  If it
-    is a '/' it is an end tag.  To extract the character after the angle bracket we move the left angle
-    bracket <code>iter</code> by one character.  And then extract the character at that position.  To move an
-    <code>iter</code> forward by one character, the function <ulink url="&gtk-text-iter-forward-char;">
-    <code>gtk-text-iter-forward-char</code></ulink> can be used.
-   </para>
-   <para>
-    To extract the character at an <code>iter</code> the function <ulink url="&gtk-text-iter-char;">
-    <code>gtk-text-iter-char</code></ulink> can be used.  After determining the tag type we do the following,
+    To extract the character at an iterator the function &gtk-text-iter-char; can be used. After determining
+    the tag type we do the following:
    </para>
    <itemizedlist>
     <listitem>
      If the tag is an end tag, we push the tag name into a stack and then proceed to find more tags.
     </listitem>
     <listitem>
-     If it is a start tag, we pop out it's matching tag from the stack.  While poping out, if there were no
-     more items in the stack, we have hit on an unmatched start tag!  We then insert the corresponding end
+     If it is a start tag, we pop out it's matching tag from the stack. While poping out, if there were no
+     more items in the stack, we have hit on an unmatched start tag. We then insert the corresponding end
      tag at the current cursor position.
     </listitem>
    </itemizedlist>
    <para>
-    We have not mentioned how we extract the tag name.  The tag name is extracted using two iters (start and
-    end iter).  The start iter is obtained by starting from the left angle bracket iter and searching for an
-    alphanumeric character, in the forward direction.  The end iter is obtained by starting from the start
-    iter and searching for a non-alphanumeric character, in the forward direction.  The search can be done
-    using the forward variant of the the function <ulink url="&gtk-text-iter-backward-find-char;">
-    <code>gtk-text-iter-backward-find-char</code></ulink>.  The code for the second example follows.
+    We have not mentioned how we extract the tag name. The tag name is extracted using two iterators (start
+    and end iterators). The start iterator is obtained by starting from the left angle bracket iterator and
+    searching for an alphanumeric character, in the forward direction. The end iterator is obtained by
+    starting from the start iterator and searching for a non-alphanumeric character, in the forward direction.
+    The search can be done using the forward variant of the function &gtk-text-iter-backward-find-char;.
    </para>
-   <figure id="figure-text-view-editing-2">
-    <title>Multiline Text Editing</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-editing-2.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-text-view-editing-2">
-    <title>Modify text in a text view</title>
-    <programlisting>
-(defun get-this-tag (iter buffer)
-  (let* ((start-tag (gtk-text-iter-copy iter))
-         end-tag)
-    (and (gtk-text-iter-find-char start-tag #'alpha-char-p)
-         (setq end-tag (gtk-text-iter-copy start-tag))
-         (gtk-text-iter-find-char end-tag
-                                  (lambda (ch) (not (alphanumericp ch))))
-         (gtk-text-buffer-get-text buffer start-tag end-tag nil))))
 
-(defun closing-tag-p (iter)
-  (let ((slash (gtk-text-iter-copy iter)))
-    (gtk-text-iter-forward-char slash)
-    (eql (gtk-text-iter-char slash) #\/)))
-
-(defun example-text-view-editing-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Multiline Editing Text"
-                                 :type :toplevel
-                                 :default-width 300
-                                 :defalut-height 200))
-          (text-view (make-instance 'gtk-text-view
-                                    :hexpand t
-                                    :vexpand t))
-          (button (make-instance 'gtk-button
-                                 :label "Insert Close Tag"))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let* ((buffer (gtk-text-view-buffer text-view))
-                  (cursor (gtk-text-buffer-get-mark buffer "insert"))
-                  (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
-
-             (do ((stack '()))
-                 ((not (gtk-text-iter-find-char iter
-                                               (lambda (ch) (eq ch #\&#x3c;))
-                                               :direction :backward)))
-               (let ((tag (get-this-tag iter buffer)))
-                 (if (closing-tag-p iter)
-                     (push tag stack)
-                     (let ((tag-in-stack (pop stack)))
-                       (when (not tag-in-stack)
-                         (gtk-text-buffer-insert buffer
-                                                 (format nil "&#x3c;/&#x7e;a>" tag))
-                         (return)))))))))
-      (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
-            (format nil
-                    "&#x3c;html>&#x7e;%&#x7e;
-                     &#x3c;head>&#x3c;title>Title&#x3c;/title>&#x3c;/head>&#x7e;%&#x7e;
-                     &#x3c;body>~%&#x7e;
-                     &#x3c;h1>Heading&#x3c;/h1>&#x7e;%"))
-      (gtk-container-add vbox text-view)
-      (gtk-container-add vbox button)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
-    </programlisting>
+   <example id="example-text-view-insert">
+    <title>Inserting text in the Text View</title>
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-insert.lisp" parse="text"/>
+     </programlisting>
    </example>
   </section>
 
-  <section id="Images_and_Widgets">
-   <title>Images and Widgets</title>
+  <section id="Images_and_Widgets" revision="2021-2-19">
+   <title>Images and Widgets in the Text Widget</title>
 
-   <section id="Inserting_Images">
-    <title>Inserting Images</title>
+   <section id="Inserting_and_Retrieving_Images" revision="2021-2-19">
+    <title>Inserting and Retrieving Images</title>
     <para>
-     A text buffer can hold images and anchor location for widgets. An image can be inserted into a buffer
-     using the function <ulink url="&gtk-text-buffer-insert-pixbuf;">
-     <code>gtk-text-buffer-insert-pixbuf</code></ulink> with the arguments <code>buffer</code>,
+     A text buffer can hold images and anchor location for widgets. An image can be inserted into a text
+     buffer using the function &gtk-text-buffer-insert-pixbuf; with the arguments <code>buffer</code>,
      <code>iter</code>, and <code>pixbuf</code>. An image represented by <code>pixbuf</code> is inserted
-     at <code>iter</code>. The <code>pixbuf</code> can be created from an image file using the function
-     <ulink url="&gdk-pixbuf-new-from-file;"><code>gdk-pixbuf-new-from-file</code></ulink>. See the API
-     documentation for <ulink url="&gdk-pixbuf;"><code>gdk-pixbuf</code></ulink> for more details.
+     at the position <code>iter</code> in the text buffer. The pixbuf can be created from an image file using
+     the function &gdk-pixbuf-new-from-file;.
     </para>
+
     <para>
-     The example program given below takes an image filename and inserts the corresponding image into a
-     buffer.
+     Images in a text buffer are represented by the character <code>0xFFFC</code> (Unicode object replacement
+     character). When text containing images is retrieved from a buffer using the function
+     &gtk-text-buffer-get-text; the <code>0xFFFC</code> characters representing images are dropped off in the
+     returned text. If these characters representing images are required, use the slice variant -
+     &gtk-text-buffer-get-slice;. The image at a given position can be retrieved using the function
+     &gtk-text-iter-pixbuf;.
     </para>
+
     <figure id="figure-text-view-insert-image">
-     <title>Multiline Text Editing</title>
+     <title>Insert an Image</title>
      <mediaobject>
       <imageobject>
        <imagedata fileref="figures/text-view-insert-image.png" format="png"></imagedata>
       </imageobject>
      </mediaobject>
     </figure>
+
+    <para>
+     The example program given loads an image and inserts the image into the text buffer, whenever the user
+     clicks on the Insert Image button.
+    </para>
+
     <example id="example-text-view-insert-image">
      <title>Insert an Image</title>
-     <programlisting>
-(defun example-text-view-insert-image ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Multiline Text Widget"
-                                 :default-width 300
-                                 :default-height 200))
-          (text-view (make-instance 'gtk-text-view
-                                    :hexpand t
-                                    :vexpand t))
-          (button (make-instance 'gtk-button
-                                 :label "Insert Image"))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical)))
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (leave-gtk-main)))
-    ;; Signal handler to insert an image at the current cursor position.
-    (g-signal-connect button "clicked"
-       (lambda (widget)
-         (declare (ignore widget))
-         (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
-                (buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-insert buffer))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
-           (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
-    (gtk-container-add vbox text-view)
-    (gtk-container-add vbox button)
-    (gtk-container-add window vbox)
-    (gtk-widget-show-all window))))
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-insert-image.lisp" parse="text"/>
      </programlisting>
     </example>
    </section>
 
-   <section id="Retrieving_Images">
-    <title>Retrieving Images</title>
+   <section id="Inserting_and_Retrieving_Widgets" revision="2021-2-19">
+    <title>Inserting and Retrieving Widgets</title>
     <para>
-     Images in a buffer are represented by the character <code>0xFFFC</code> (Unicode object replacement
-     character).  When text containing images is retrieved from a buffer using the function
-     &gtk-text-buffer-get-text; the
-     <code>0xFFFC</code> characters representing images are dropped off in the returned text.  If these
-     characters representing images are required, use the slice variant -
-     <ulink url="&gtk-text-buffer-get-slice;"><code>gtk-text-buffer-get-slice</code></ulink>.  The image at a
-     given position can be retrieved using the function <ulink url="&gtk-text-iter-pixbuf;">
-     <code>gtk-text-iter-pixbuf</code></ulink>.
+     Unlike inserting an image, inserting a widget is a two step process. The additional complexity is due
+     to the functionality split between the &gtk-text-view; class and the &gtk-text-buffer; class. The first
+     step is to create and insert a &gtk-text-child-anchor; object. A widget is held in a text buffer using a
+     &gtk-text-child-anchor; object. A child anchor is a spot in the text buffer where child widgets can be
+     anchored. A child anchor can be created and inserted into a text buffer using the function
+     &gtk-text-buffer-create-child-anchor; with the arguments <code>buffer</code> and <code>iter</code>,
+     where the argument <code>iter</code> specifies the position in the buffer, where the widget is to be
+     inserted. The next step is to add a child widget to the text view, at the anchor location with the
+     function &gtk-text-view-add-child-at-anchor;.
     </para>
-   </section>
 
-   <section id="Inserting Widgets">
-    <title>Inserting Widgets</title>
-    <para>
-     Inserting a widget, unlike inserting an image, is a two step process.  The additional complexity is due
-     to the functionality split between &gtk-text-view; and
-     &gtk-text-buffer;.  The first step is to create and
-     insert a <ulink url="&gtk-text-child-anchor;"><code>gtk-text-child-anchor</code></ulink>.  A widget is
-     held in a buffer using a <ulink url="&gtk-text-child-anchor;">
-     <code>gtk-text-child-anchor</code></ulink>.  A child anchor according to the GTK manual is a spot in the
-     buffer where child widgets can be anchored.  A child anchor can be created and inserted into a buffer
-     using the function <ulink url="&gtk-text-buffer-create-child-anchor;">
-     <code>gtk-text-buffer-create-child-anchor</code></ulink> with the arguments <code>buffer</code> and
-     <code>iter</code>.  Where <code>iter</code> specifies the position in the buffer, where the widget is to
-     be inserted.  The next step is to add a child widget to the text view, at the anchor location with the
-     function <ulink url="&gtk-text-view-add-child-at-anchor;">
-     <code>gtk-text-view-add-child-at-anchor</code></ulink>.
-    </para>
     <para>
      An anchor can hold only one widget, it could be a container widget, which in turn can contain many
      widgets, unless you are doing tricky things like displaying the same buffer using different
-     &gtk-text-view; objects.  The following program inserts
-     a button widget into a text buffer, whenever the user clicks on the Insert button.
+     &gtk-text-view; objects.
     </para>
+
+    <para>
+     Child anchors are represented in the text buffer using the object replacement character
+     <code>0xFFFC</code>. Retrieving a widget is also a two step process. First, the child anchor has to be
+     retrieved. This can be done using the function &gtk-text-iter-child-anchor;. Next, the widget associated
+     with the child anchor has to be retrieved. This can be done using the function
+     &gtk-text-child-anchor-widgets;. The function returns a list of widgets. As mentioned earlier, if you
+     are not doing tricky things like multiple views for the same text buffer, you will find only one widget
+     in this list.
+    </para>
+
     <figure id="figure-text-view-insert-widget">
-     <title>Multiline Text Editing</title>
+     <title>Insert a Widget</title>
      <mediaobject>
       <imageobject>
        <imagedata fileref="figures/text-view-insert-widget.png" format="png"></imagedata>
       </imageobject>
      </mediaobject>
     </figure>
+
+    <para>
+     The following program inserts a button widget into a text buffer, whenever the user clicks on the
+     Insert Widget button.
+    </para>
+
     <example id="example-text-view-insert-widget">
-     <title>Insert a widget</title> 
-     <programlisting>
-(defun example-text-view-insert-widget ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Multiline Text Widget"
-                                 :default-width 300
-                                 :default-height 200))
-          (text-view (make-instance 'gtk-text-view
-                                    :hexpand t
-                                    :vexpand t))
-          (button (make-instance 'gtk-button
-                                 :label "Insert Widget"))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical)))
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (leave-gtk-main)))
-    ;; Signal handler to insert a widget at the current cursor position.
-    (g-signal-connect button "clicked"
-       (lambda (widget)
-         (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-buffer text-view))
-                (cursor (gtk-text-buffer-get-insert buffer))
-                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor))
-                (anchor (gtk-text-buffer-create-child-anchor buffer iter))
-                (button (gtk-button-new-with-label "New Button")))
-           (gtk-text-view-add-child-at-anchor text-view button anchor)
-           (gtk-widget-show button))))
-    (gtk-container-add vbox text-view)
-    (gtk-container-add vbox button)
-    (gtk-container-add window vbox)
-    (gtk-widget-show-all window))))
+     <title>Insert a widget</title>
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-insert-widget.lisp" parse="text"/>
      </programlisting>
     </example>
-   </section>
 
-   <section id="Retrieving_Widgets">
-    <title>Retrieving Widgets</title>
-    <para>
-     Child anchors are also represented in the buffer using the object replacement character
-     <code>0xFFFC</code>.  Retrieving a widget is also a two step process.  First, the child anchor has to be
-     retrieved.  This can be done using the function <ulink url="&gtk-text-iter-child-anchor;">
-     <code>gtk-text-iter-child-anchor</code></ulink>.  Next, the widget(s) associated with the child anchor
-     has to be retrieved.  This can be done using the function <ulink url="&gtk-text-child-anchor-widgets;">
-     <code>gtk-text-child-anchor-widgets</code></ulink>.  The function returns a list of widgets.  As
-     mentioned earlier, if you are not doing tricky things like multiple views for the same buffer, you will
-     find only one widget in this list.
-    </para>
    </section>
   </section>
 
-  <section id="Buffer_and_Window_Coordinates">
-   <title>Buffer and Window Coordinates</title>
-   <para>
-    Sometimes it is necessary to know the position of the text cursor on the screen, or the word in a buffer
-    under the mouse cursor.  For example, when you want to display the prototype of a function as a tooltip,
-    when the user types open parenthesis.  To do this, you will have to understand buffer coordinates and
-    window coordinates.
-   </para>
-   <para>
-    Both the buffer and window coordinates are pixel level coordinates.  The difference is that the window
-    coordinates takes into account only the portion of the buffer displayed on the screen.  The concept would
-    be better explained using a diagram.  The large white box (with grid lines) in the following diagram
-    depicts the text buffer.  And the smaller inner grey box is the visible portion of the text buffer,
-    displayed by the text view widget.
-   </para>
-   <figure id="figure-buffercoord">
-    <title>Multiline Text Editing</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/buffercoord.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    The buffer coordinates of the red dot (represented as (x, y)) is (4, 3).  But the window coordinates of
-    the red dot is (2, 1).  This is because the window coordinates are calculated relative the visible
-    portion of the text buffer.  Similarly, the buffer coordinates of the blue dot is (3, 5) and the window
-    coordinates is (1, 3).
-   </para>
-   <para>
-    In this section, you will learn how to display tooltips under the text cursor.  The procedure is as
-    follows,
-   </para>
-   <itemizedlist>
-    <listitem>The buffer coordinates of the text cursor is obtained.</listitem>
-    <listitem>The buffer coordinates is converted to window coordinates (x1, y1).</listitem>
-    <listitem>The position (x2, y2) of the text view widget on the screen is obtained.</listitem>
-    <listitem>A window with the tooltip is displayed at (x1+x2, y1+y2).</listitem>
-   </itemizedlist>
-   <para>
-    The buffer coordinates of a particular character in a buffer can be obtained using the function
-    <ulink url="&gtk-text-view-iter-at-location;"><code>gtk-text-view-iter-at-location</code></ulink> with
-    the argument <code>iter</code>.  The function gets the rectangle that contains the character at
-    <code>iter</code> and returns it.  The <code>x</code> and <code>y</code> members of <code>location</code>
-    gives us the buffer coordinates.
-   </para>
-   <para>
-    The buffer coordinates can be converted into window coordinates using the function
-    <ulink url="&gtk-text-view-buffer-to-window-coords;">
-    <code>gtk-text-view-buffer-to-window-coords</code></ulink>.  The function converts buffer coordinates
-    <code>(buffer-x, buffer-y)</code>, to window coordinates <code>(window-x, window-y)</code>.
-   </para>
-   <para>
-    Now that we know the position of the character within the text view widget, we will have to find the
-    position of the text view widget on the screen.
-   </para>
-   <para>
-    Each GTK widget has a corresponding <ulink url="&gdk-window;"><code>gdk-window</code></ulink> associated
-    with it.  Once we know the <ulink url="&gdk-window;"><code>gdk-window</code></ulink> associated with a
-    widget, we can obtain it's X-Y coordinates using <ulink url="&gdk-window-origin;">
-    <code>gdk-window-origin</code></ulink>.  The <ulink url="&gdk-window;">
-    <code>gdk-window</code></ulink> of the text view widget can be obtained using the function
-    <ulink url="&gtk-text-view-window;"><code>gtk-text-view-window</code></ulink>.  Here again you will have
-    to pass <code>:widget</code> for the argument <code>win</code>.
-   </para>
-   <para>
-    We now know the functions required to display a tooltip under the text cursor.  Before we proceed to the
-    example, you will have to know which signal has to be trapped to do display the tooltip. Since we want
-    the tooltip to be displayed when the user inserts open parenthesis, "insert-text" emitted by the buffer
-    object can be used.  As the signal's name suggests it is called whenever the user inserts text into the
-    buffer.  The callback prototype is <code>lambda (buffer pos text length)</code>.
-   </para>
-   <para>
-    The function is called with <code>position</code> after the inserted text <code>pos</code>, the inserted
-    text <code>text</code> and the length of the inserted text <code>length</code>.
-   </para>
-   <para>
-    Below is an example program that displays a tooltip for the printf family of functions.
-   </para>
-   <figure id="figure-text-view-tooltip">
-    <title>Multiline Text Editing</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/text-view-tooltip.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-text-view-tooltip">
-    <title>Show tooltips in a Text View</title>
-    <programlisting> 
-;; Lisp function which applies CSS styles to a widget and its children
+  <section id="Buffer_and_Window_Coordinates" revision="2021-2-19">
+   <title>Text Buffer and Window Coordinates</title>
 
-(defun apply-css-to-widget (widget provider)
-  (gtk-style-context-add-provider (gtk-widget-style-context widget)
-                                  provider
-                                  +gtk-style-provider-priority-user+)
-  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
-    (gtk-container-forall widget
-                          (lambda (widget)
-                            (apply-css-to-widget widget provider)))))
+   <section id="About_Buffer_and_Window_Coordinates" revision="2021-2-19">
+    <title>About Text Buffer and Window Coordinates</title>
+    <para>
+     Sometimes it is necessary to know the position of the text cursor on the screen, or the word in a text
+     buffer under the mouse cursor. For example, when you want to display a tooltip, when the user types
+     text. To do this, you will have to understand text buffer coordinates and window coordinates.
+    </para>
+    <para>
+     Both the text buffer and window coordinates are pixel level coordinates. The difference is that the
+     window coordinates takes into account only the portion of the text buffer displayed on the screen. The
+     large white box (with grid lines) in the following figure depicts the text buffer. And the smaller
+     inner grey box is the visible portion of the text buffer, displayed by the text view widget.
+    </para>
 
-(let ((tooltip nil)
-      (provider (make-instance 'gtk-css-provider))
-      (css-tooltip "label {
-                      color: white;
-                      background-color: black;
-                      font: 14px 'Monospace'; }
-                    textview {
-                      font: 14px 'Monospace'; }"))
-  (defun get-tip (word)
-    (cdr (assoc word
-                '(("printf" . "(const char *format, ...)")
-                  ("fprintf" . "(FILE *stream, const char *format, ...)")
-                  ("sprintf" . "(char *str, const char *format, ...)")
-                  ("fputc" . "(int c, FILE *stream)")
-                  ("fputs" . "(const char *s, FILE *stream)")
-                  ("putc" . "(int c, FILE *stream)")
-                  ("putchar" . "(int c)")
-                  ("puts" . "(const char *s)"))
-                :test #'equal)))
+    <figure id="figure-buffercoord">
+     <title>Text Buffer and Window Coordinates</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/buffercoord.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
 
-  (defun tip-window-new (tip-text)
-    (let ((win (make-instance 'gtk-window
-                              :type :popup
-                              :border-width 0))
-          (event-box (make-instance 'gtk-event-box
-                                    :border-width 1))
-          (label (make-instance 'gtk-label
-                                :label tip-text)))
-      (gtk-container-add event-box label)
-      (gtk-container-add win event-box)
-      ;; Apply CSS to the label
-      (apply-css-to-widget label provider)
-      win))
+    <para>
+     The text buffer coordinates of the red dot are (4, 3). But the window coordinates of the red dot are
+     (2, 1). This is because the window coordinates are calculated relative to the visible portion of the
+     text buffer. Similarly, the buffer coordinates of the blue dot are (3, 5) and the window coordinates are
+     (1, 3).
+    </para>
 
-  (defun insert-open-brace (window text-view location)
-    (declare (ignore window))
-    (let ((start (gtk-text-iter-copy location)))
-      (when (gtk-text-iter-backward-word-start start)
-        (let* ((word (string-trim " " (gtk-text-iter-text start location)))
-               (tip-text (get-tip word)))
-          (when tip-text
-            (let ((rect (gtk-text-view-iter-location text-view location))
-                  (win (gtk-text-view-window text-view :widget)))
-              (multiple-value-bind (win-x win-y)
-                  (gtk-text-view-buffer-to-window-coords text-view
-                                                         :widget
-                                                         (gdk-rectangle-x rect)
-                                                         (gdk-rectangle-y rect))
-                (multiple-value-bind (x y)
-                    (gdk-window-origin win)
-                  ;; Destroy any previous tool tip window
-                  (when tooltip
-                    (gtk-widget-destroy tooltip)
-                    (setf tooltip nil))
-                  ;; Create a new tool tip window
-                  (setf tooltip (tip-window-new tip-text))
-                  ;; Place it at the calculated position.
-                  (gtk-window-move tooltip
-                                   (+ win-x x)
-                                   (+ win-y y (gdk-rectangle-height rect)))
-                  (gtk-widget-show-all tooltip)))))))))
+    <para>
+     The text buffer coordinates of a particular character in a text buffer can be obtained using the
+     function &gtk-text-view-iter-location;. The function gets the rectangle that contains the character at
+     the iterator and returns it. The <code>x</code> and <code>y</code> members of the rectangle gives us
+     the buffer coordinates.
+    </para>
 
-  (defun example-text-view-tooltip ()
-    (within-main-loop
-      (let* ((window (make-instance 'gtk-window
-                                    :title "Multiline Text Search"
-                                    :type :toplevel
-                                    :default-width 450
-                                    :default-height 200))
-             (scrolled (make-instance 'gtk-scrolled-window))
-             (text-view (make-instance 'gtk-text-view
-                                       :hexpand t
-                                       :vexpand t))
-             (buffer (gtk-text-view-buffer text-view)))
-        ;; Signal handler for the window
-        (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (when tooltip
-                            (gtk-widget-destroy tooltip)
-                            (setf tooltip nil))
-                          (leave-gtk-main)))
-        ;; Signal handler for the buffer of the text view
-        (g-signal-connect buffer "insert-text"
-           (lambda (buffer location text len)
-             (declare (ignore buffer len))
-             (when (equal text "(")
-               (insert-open-brace window text-view location))
-             (when (equal text ")")
-               (when tooltip
-                 (gtk-widget-destroy tooltip)
-                 (setf tooltip nil)))))
-        ;; Add the widgets to window and show all
-        (gtk-container-add scrolled text-view)
-        (gtk-container-add window scrolled)
-
-        ;; Load CSS from data into the provider
-        (gtk-css-provider-load-from-data provider css-tooltip)
-        (apply-css-to-widget text-view provider)
-
-        (gtk-widget-show-all window)))))
+    <para>
+     The buffer coordinates can be converted into window coordinates using the function
+     &gtk-text-view-buffer-to-window-coords;. The function converts text buffer coordinates
+     <code>(buffer-x, buffer-y)</code> to window coordinates <code>(window-x, window-y)</code>.
+    </para>
+    <programlisting>
+(let* ((rect (gtk-text-view-iter-location textview location))
+       (buffer-x (gdk-rectangle-x rect))
+       (buffer-y (gdk-rectangle-y rect))
+       (win (gtk-text-view-window textview :widget)))
+  (multiple-value-bind (window-x window-y)
+      (gtk-text-view-buffer-to-window-coords textview
+                                             :widget
+                                             buffer-x
+                                             buffer-y)
+    ... )
     </programlisting>
-   </example>
-
-   <section id="More_on_Buffer_and_Window_Coordinates">
-    <title>More on Buffer and Window Coordinates</title>
     <para>
-     In the previous section we obtained the screen coordinates for a position in the buffer.  What if we
-     want to do the exact opposite, i.e. what if we want to find the position in the buffer corresponding to
-     a particular X-Y coordinate.  The &gtk-text-view; has
-     functions for these as well.
-    </para>
-    <para>
-     Window coordinates can be converted to buffer coordinates using the function
-     <ulink url="&gtk-text-view-window-to-buffer-coords;">
-     <code>gtk-text-view-window-to-buffer-coords</code></ulink>.
-    </para>
-    <para>
-     The iter at a buffer coordinate can be obtained using the function
-     <ulink url="&gtk-text-view-iter-at-location;"><code>gtk-text-view-iter-at-location</code></ulink>.
+     We can find the position in the text buffer corresponding to a particular (window-x, window-y)
+     coordinate. The window coordinates can be converted to text buffer coordinates using the function
+     &gtk-text-view-window-to-buffer-coords;. The iterator at a text buffer coordinate can be obtained using
+     the function &gtk-text-view-iter-at-location;.
     </para>
    </section>
-  </section>
 
-  <section id="Final_Notes">
-   <title>Final Notes</title>
-   <para>
-   </para>
+   <section id="Tooltips_under_the_Text_Cursor" revision="2021-2-19">
+    <title>Tooltips under the Text Cursor</title>
+
+    <para>
+     We use the functions for text buffer and window coordinates to display tooltips under the cursor in the
+     text view. The procedure is as follows,
+    </para>
+    <itemizedlist>
+     <listitem>
+      Get the text buffer coordinates of the text cursor with the function &gtk-text-view-iter-location;.
+     </listitem>
+     <listitem>
+      The text buffer coordinates (<code>buffer-x</code>, <code>buffer-y</code>) are converted to window
+      coordinates (<code>window-x</code>, <code>window-y</code>) with the function
+      &gtk-text-view-buffer-to-window-coords;.
+     </listitem>
+     <listitem>
+      The position (<code>screen-x</code>, <code>screen-y</code>) of the text view widget on the screen is
+      obtained with the function &gdk-window-origin;.
+     </listitem>
+     <listitem>
+      The window with the tooltip is displayed at the position (<code>window-x + screen-x</code>,
+      <code>window-y + screen-y</code>).
+     </listitem>
+    </itemizedlist>
+
+    <para>
+     Now that we know the position of the character within the text view widget, we will have to find the
+     position of the text view widget on the screen. Each GTK widget has a corresponding &gdk-window; object
+     associated with it. Once we know the window associated with a widget, we can obtain it's
+     (<code>screen-x</code>, <code>screen-y</code>) coordinates using the function &gdk-window-origin;. The
+     &gdk-window; object for the text view widget can be obtained using the function &gtk-text-view-window;.
+     Here you will have to pass in the value <code>:widget</code> of the &gtk-text-window-type; enumeration
+     for the argument <code>win-type</code>.
+    </para>
+
+    <para>
+     We now know the functions required to display a tooltip under the text cursor. Before we proceed to the
+     example, you will have to know which signal has to be trapped to do display the tooltip. Since we want
+     the tooltip to be displayed when the user inserts text, the "insert-text" signal emitted by the text
+     buffer object can be used. As the signal's name suggests it is called whenever the user inserts text
+     into the buffer. The callback prototype of the signal handler is
+     <programlisting>
+lambda (buffer location text len)
+     </programlisting>
+     The callback function is called with the position after the inserted text in the <code>location</code>
+     iterator, a UTF-8 string with the inserted text in <code>text</code> and an integer with the length of
+     the inserted text <code>len</code>.
+    </para>
+
+    <figure id="figure-text-view-tooltip">
+     <title>Multiline Text Editing</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/text-view-tooltip.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+
+    <para>
+     Below is an example program that displays a tooltip when the inserted text matches a Lisp function
+     in a list of functions.
+    </para>
+
+    <example id="example-text-view-tooltip">
+     <title>Show tooltips in a Text View</title>
+      <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/text-view-tooltip.lisp" parse="text"/>
+      </programlisting>
+    </example>
+   </section>
   </section>
  </chapter>
 
- <chapter id="Tree_and_List_Widgets">
+ <chapter id="Tree_and_List_Widgets" revision="2021-2-20">
   <title>Tree and List Widgets</title>
 
-  <section id="Overview">
-   <title>Overview</title>
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Overview">
-      <primary>GtkTreeModel</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>tree-model, gtk-tree-model</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>tree-view, gtk-tree-view</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>GtkTreeViewColumn</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>tree-view-column, gtk-tree-view-column</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>GtkCellRenderer</primary>
-     </indexterm>
-     <indexterm zone="Overview">
-      <primary>cell-renerer, gtk-cell-renderer</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
+  <section id="Tree_and_List_Widget_Overview" revision="2021-2-20">
+   <title>Tree and List Widget Overview</title>
    <para>
-    To create a tree or list in GTK+, use the <ulink url="&gtk-tree-model;">
-    <code>gtk-tree-model</code></ulink> interface in conjunction with the <ulink url="&gtk-tree-view;">
-    <code>gtk-tree-view</code></ulink> widget.  This widget is designed around a Model/View/Controller
-    design and consists of four major parts:
+    To create a tree or list in GTK+, use the &gtk-tree-model; interface in conjunction with the
+    &gtk-tree-view; widget. This widget is designed around a Model/View/Controller design and consists of
+    four major parts:
    </para>
    <itemizedlist>
     <listitem>
-     The tree view widget <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>.
+     The tree view widget implemented as the &gtk-tree-view; class.
     </listitem>
     <listitem>
-     The view column <ulink url="&gtk-tree-view-column;"><code>gtk-tree-view-column</code></ulink>.
+     The view column implemented as the &gtk-tree-view-column; class.
     </listitem>
     <listitem>
-     The cell renderers <ulink url="&gtk-cell-renderer;"><code>gtk-cell-renderer</code></ulink> etc.
+     The cell renderers etc. implemented as the &gtk-cell-renderer; class.
     </listitem>
     <listitem>
-     The model interface <ulink url="&gtk-tree-model;"><code>gtk-tree-model</code></ulink>.
+     The model interface implemented as the &gtk-tree-model; interface.
     </listitem>
    </itemizedlist>
    <para>
-    The View is composed of the first three objects, while the last is the Model.  One of the prime benefits
-    of the MVC design is that multiple views can be created of a single model.  For example, a model mapping
-    the file system could be created for a file manager.  Many views could be created to display various
+    The View is composed of the first three objects, while the last is the Model. One of the prime benefits
+    of the MVC design is that multiple views can be created of a single model. For example, a model mapping
+    the file system could be created for a file manager. Many views could be created to display various
     parts of the file system, but only one copy need be kept in memory.
    </para>
    <para>
     The purpose of the cell renderers is to provide extensibility to the widget and to allow multiple ways of
-    rendering the same type of data.  For example, consider how to render a boolean variable.  Should it
+    rendering the same type of data. For example, consider how to render a boolean variable. Should it
     render as a string of "True" or "False", "On" or "Off", or should it be rendered as a checkbox?
    </para>
 
-   <section id="Creating_a_model">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="Creating_a_model">
-       <primary>GtkTreeStore</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>tree-store, gtk-tree-store</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>GtkListStore</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>list-store, gtk-list-store</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>GtkTreeIter</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>tree-iter, gtk-tree-iter</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>list-store-set, gtk-list-store-set</primary>
-      </indexterm>
-      <indexterm zone="Creating_a_model">
-       <primary>tree-store-set, gtk-tree-store-set</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
+   <section id="Creating_a_model" revision="2021-2-20">
     <title>Creating a model</title>
     <para>
-     GTK+ provides two simple models that can be used: the <ulink url="&gtk-list-store;">
-     <code>gtk-list-store</code></ulink> and the <ulink url="&gtk-tree-store;">
-     <code>gtk-tree-store</code></ulink>.  <ulink url="&gtk-list-store;"><code>gtk-list-store</code></ulink>
-     is used to model list widgets, while the <ulink url="&gtk-tree-store;">
-     <code>gtk-tree-store</code></ulink> models trees.  It is possible to develop a new type of model, but
-     the existing models should be satisfactory for all but the most specialized of situations.  Creating
-     the model is quite simple:
+     GTK+ provides two simple models that can be used: the &gtk-list-store; object and the &gtk-tree-store;
+     object. The &gtk-list-store; object is used to model list widgets, while the &gtk-tree-store; object is
+     used to model trees. It is possible to develop a new type of model, but the existing models should be
+     satisfactory for all but the most specialized of situations. Creating the model is quite simple:
     </para>
     <programlisting>
 (let ((model (make-instance 'gtk-list-store
@@ -6824,101 +6205,100 @@ bad things will happen.")
   ... )
     </programlisting>
     <para>
-     This creates a list store with two columns: a string column and a boolean column.  Adding data to the
-     model is done using <ulink url="&gtk-tree-store-set;"><code>gtk-tree-store-set</code></ulink> or
-     <ulink url="&gtk-list-store-set;"><code>gtk-list-store-set</code></ulink>, depending upon which sort of
-     model was created.  To do this, a <ulink url="&gtk-tree-iter;"><code>gtk-tree-iter</code></ulink> must
-     be acquired.  The iterator points to the location where data will be added.
-    </para>
-    <para>
-     Once an iterator has been acquired, <ulink url="&gtk-tree-store-set;">
-     <code>gtk-tree-store-set</code></ulink> is used to apply data to the part of the model that the iterator
-     points to.  Consider the following example:
+     or with the function &gtk-list-store-new;
     </para>
     <programlisting>
-(let ((model (make-instance 'gtk-list-store
-                            :column-types '("gchararray" "guint"))))
-  (let ((iter (gtk-list-store-append model)))
-    (gtk-list-store-set model iter "Klaus-Dieter Mustermann" 51))
+(let ((model (gtk-list-store-new "gchararray" "guint")))
   ... )
     </programlisting>
     <para>
-     This can be written more compact as:
+     This creates a list store with two columns: a string column and a boolean column. The next example
+     creates a tree store with 3 columns with the function &gtk-tree-store-new;:
     </para>
     <programlisting>
-(let ((model (make-instance 'gtk-list-store
-                            :column-types '("gchararray" "guint"))))
-  (gtk-list-store-set model (gtk-list-store-append model)
-                            "Klaus-Dieter Mustermann" 51)
+(let ((model (gtk-tree-store-new "gchararray"   ; Book title
+                                 "gchararray"   ; Author
+                                 "gboolean")))  ; Is checked out?
+   ... )
+    </programlisting>
+
+    <para>
+     Adding data to the model is done using the functions &gtk-list-store-set; or &gtk-tree-store-set;,
+     depending upon which sort of model was created. To do this, a &gtk-tree-iter; instance must be acquired.
+     The iterator points to the location where data will be added.
+    </para>
+
+    <para>
+     Once an iterator has been acquired, the function &gtk-tree-store-set; is used to apply data to the part
+     of the model that the iterator points to. Consider the following example:
+    </para>
+    <programlisting>
+(let* ((model (gtk-tree-store-new "gchararray" "gchararray" "gboolean"))
+       (iter (gtk-tree-store-append model nil)))
+  (gtk-tree-store-set model iter "The Principle of Reason"
+                                 "Martin Heidegger"
+                                 t)
   ... )
     </programlisting>
+
     <para>
      It can be used to set the data in any or all columns in a given row.
     </para>
+    <para>
+     The second argument to the function &gtk-tree-store-append; is the parent iterator. It is used to add a
+     row to a &gtk-tree-store; object as a child of an existing row. This means that the new row will only
+     be visible when its parent is visible and in its expanded state. Consider the following example:
+    </para>
+    <programlisting>
+(let ((iter (gtk-tree-store-append store nil)))  ; Acquire a top-level iterator
+  ;; Set the top-level row
+  (gtk-tree-store-set store
+                      iter
+                      "The Art of Computer Programming"
+                      "Donald E. Knuth"
+                      nil)
+  ;; Append and set three child rows
+  (gtk-tree-store-set store
+                      (gtk-tree-store-append store iter1)  ; Acquire a child iterator
+                      "Volume 1: Fundamental Algorithms")
+  (gtk-tree-store-set store
+                      (gtk-tree-store-append store iter1)  ; Acquire a child iterator
+                      "Volume 2: Seminumerical Algorithms")
+  (gtk-tree-store-set store
+                      (gtk-tree-store-append store iter1)  ; Acquire a child iterator
+                      "Volume 3: Sorting and Searching")
+    </programlisting>
    </section>
 
-   <section id="Creating_the_view_component">
+   <section id="Creating_the_view_component" revision="2021-2-20">
     <title>Creating the view component</title>
     <para>
      While there are several different models to choose from, there is only one view widget to deal with.
-     It works with either the list or the tree store.  Setting up a <ulink url="&gtk-tree-view;">
-     <code>gtk-tree-view</code></ulink> is not a difficult matter.  It needs a <ulink url="&gtk-tree-model;">
-     <code>gtk-tree-model</code></ulink> to know where to retrieve its data from.
+     It works with either the list or the tree store. Setting up a &gtk-tree-view; widget is not a difficult
+     matter. It needs a &gtk-tree-model; object to know where to retrieve its data from. The following
+     example uses the function &gtk-tree-view-new-with-model;:
     </para>
-
     <programlisting>
-(let ((model (create-and-fill-model))
-      (view (make-instance 'gtk-tree-view
-                           :model model)))
+(let* ((model (create-and-fill-model))
+       (view (gtk-tree-view-new-with-model model)))
   ... )
     </programlisting>
 
-    <section id="Columns_and_cell_renderers">
-     <sectioninfo>
-      <itermset>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>GtkCellRendererText</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>cell-renderer-text, gtk-cell-renderer-text</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>GtkCellRendererPixbuf</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>cell-renderer-pixbuf, gtk-cell-renderer-pixbuf</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>GtkCellRendererToggle</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>cell-renderer-toggle, gtk-cell-renderer-toggle</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>GtkTreeViewColumn</primary>
-       </indexterm>
-       <indexterm zone="Columns_and_cell_renderers">
-        <primary>tree-view-column, gtk-tree-view-column</primary>
-       </indexterm>
-      </itermset>
-     </sectioninfo>
+    <section id="Columns_and_cell_renderers" revision="2021-2-20">
      <title>Columns and cell renderers</title>
      <para>
-      Once the <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink> widget has a model, it will
-      need to know how to display the model.  It does this with columns and cell renderers.
+      Once the &gtk-tree-view; widget has a model, it will need to know how to display the model. It does
+      this with columns and cell renderers.
      </para>
      <para>
-      Cell renderers are used to draw the data in the tree model in a way.  There are a number of cell
-      renderers that come with GTK+, including the <ulink url="&gtk-cell-renderer-text;">
-      <code>gtk-cell-renderer-text</code></ulink>, <ulink url="&gtk-cell-renderer-pixbuf;">
-      <code>gtk-cell-renderer-pixbuf</code></ulink> and the <ulink url="&gtk-cell-renderer-toggle;">
-      <code>gtk-cell-renderer-toggle</code></ulink>.  It is relatively easy to write a custom renderer.
+      Cell renderers are used to draw the data in the tree model in a way. There are a number of cell
+      renderers that come with GTK+, including the &gtk-cell-renderer-text;, &gtk-cell-renderer-pixbuf;
+      and the &gtk-cell-renderer-toggle; objects. It is relatively easy to write a custom renderer.
      </para>
      <para>
-      A <ulink url="&gtk-tree-view-column;"><code>gtk-tree-view-column</code></ulink> is the object that
-      <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink> uses to organize the vertical columns
-      in the tree view.  It needs to know the name of the column to label for the user, what type of cell
-      renderer to use, and which piece of data to retrieve from the model for a given row.
+      A &gtk-tree-view-column; object is the object that the &gtk-tree-view; widget uses to organize the
+      vertical columns in the tree view. It needs to know the name of the column to label for the user, what
+      type of cell renderer to use, and which piece of data to retrieve from the model for a given row.
      </para>
      <programlisting>
 ;; Create renderers for the cells
@@ -6930,7 +6310,7 @@ bad things will happen.")
   ... )
      </programlisting>
      <para>
-      At this point, all the steps in creating a displayable tree have been covered.  The model is created,
+      At this point, all the steps in creating a displayable tree have been covered. The model is created,
       data is stored in it, a tree view is created and columns are added to it.
      </para>
     </section>
@@ -6939,7 +6319,7 @@ bad things will happen.")
      <title>Selection handling</title>
      <para>
       Most applications will need to not only deal with displaying data, but also receiving input events from
-      users.  To do this, simply get a reference to a selection object, connect to the "changed" signal and
+      users. To do this, simply get a reference to a selection object, connect to the "changed" signal and
       then to retrieve data for the row selected:
      </para>
      <programlisting>
@@ -6950,9 +6330,9 @@ bad things will happen.")
   (setf (gtk-tree-selection-mode select) :single)
   (g-signal-connect select "changed"
      (lambda (selection)
-       (let* ((model (gtk-tree-view-get-model view))
-              (iter (gtk-tree-selection-get-selected selection))
-              (name (gtk-tree-model-get-value model iter 0)))
+       (let* ((model (gtk-tree-view-model view))
+              (iter (gtk-tree-selection-selected selection))
+              (name (gtk-tree-model-value model iter 0)))
          (format t "You selected the name ~A.~%" name))))
   ... )
      </programlisting>
@@ -6965,113 +6345,95 @@ bad things will happen.")
      <title>Simple Tree View</title>
      <mediaobject>
       <imageobject>
-       <imagedata fileref="figures/simple-tree-view.png" format="png"></imagedata>
+       <imagedata fileref="figures/tree-view-simple.png" format="png"></imagedata>
       </imageobject>
      </mediaobject>
     </figure>
     <para>
-     Here is a simple example of using a <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>
-     widget in context of the other widgets.  It simply creates a simple model and view, and puts them
-     together.
+     Here is a simple example of using a &gtk-tree-view; widget in context of the other widgets. It simply
+     creates a simple model and view, and puts them together.
     </para>
     <example id="example-simple-tree-view">
      <title>A Simple Tree View</title>
-     <programlisting>
-(defun create-and-fill-model ()
-  (let ((model (make-instance 'gtk-list-store
-                              :column-types '("gchararray" "guint"))))
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Klaus-Dieter Mustermann" 51)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Ulrike Langhals" 23)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Marius Kalinowski" 91)
-    model))
-
-(defun create-view-and-model ()
-  (let* ((model (create-and-fill-model))
-         (view (make-instance 'gtk-tree-view
-                              :model model)))
-    ;; Create renderers for the cells
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Name"
-                                                             renderer
-                                                             "text" 0)))
-      (gtk-tree-view-append-column view column))
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Age"
-                                                             renderer
-                                                             "text" 1)))
-      (gtk-tree-view-append-column view column))
-    view))
-
-(defun example-simple-tree-view ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Simple Tree View"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 200))
-          (view (create-view-and-model)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-     </programlisting>
+      <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/tree-view-simple.lisp" parse="text"/>
+      </programlisting>
     </example>
    </section>
   </section>
 
-  <section id="GtkListStore_and_GtkTreeStore">
+  <section id="GtkListStore_and_GtkTreeStore" revision="2021-2-20">
    <title>GtkListStore and GtkTreeStore</title>
-   <para>
-    Gtk+ comes with two built-in data stores (models): <ulink url="&gtk-list-store;">
-    <code>gtk-list-store</code></ulink> and <ulink url="&gtk-tree-store;">
-    <code>gtk-tree-store</code></ulink>.  As the names imply, <ulink url="&gtk-tree-store;">
-    <code>gtk-tree-store</code></ulink> is used for simple lists of data items where items have no
-    hierarchical parent-child relationships, and <ulink url="&gtk-tree-store;">
-    <code>gtk-tree-store</code></ulink> is used for tree-like data structures, where items can have
-    parent-child relationships.  A list of files in a directory would be an example of a simple list
-    structure, whereas a directory tree is an example for a tree structure.  A list is basically just a
-    special case of a tree with none of the items having any children, so one could use a tree store to
-    maintain a simple list of items as well. The only reason <ulink url="&gtk-tree-store;">
-    <code>gtk-tree-store</code></ulink> exists is in order to provide an easier interface that does not need
-    to cater for child-parent relationships, and because a simple list model can be optimised for the special
-    case where no children exist, which makes it faster and more efficient.  <ulink url="&gtk-tree-store;">
-    <code>gtk-tree-store</code></ulink> and <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink>
-    should cater for most types of data an application developer might want to display in a
-    <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink>.
-   </para>
-   <para>
-    Tree model implementations like <ulink url="&gtk-list-store;"><code>gtk-list-store</code></ulink> and
-    <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink> will take care of the view side for you
-    once you have configured the <ulink url="&gtk-tree-view;"><code>gtk-tree-view</code></ulink> to display
-    what you want. If you change data in the store, the model will notify the tree view and your data display
-    will be updated. If you add or remove rows, the model will also notify the store, and your row will
-    appear in or disappear from the view as well.
-   </para>
 
-   <section id="How_Data_is_Organised_in_a_Store">
+   <section id="Introduction_GtkListStore_and_GtkTreeStore" revision="2021-2-20">
+   <title>Introduction to GtkListStore and GtkTreeStore</title>
+
+    <para>
+     It is important to realise what the &gtk-tree-model; interface is and what it is not. The
+     &gtk-tree-model; interface is basically just an 'interface' to the data store, meaning that it is a
+     standardised set of functions that allows a &gtk-tree-view; widget (and the application programmer) to
+     query certain characteristics of a data store, for example how many rows there are, which rows have
+     children, and how many children a particular row has. It also provides functions to retrieve data from
+     the data store, and tell the tree view what type of data is stored in the model. Every data store must
+     implement the &gtk-tree-model; interface and provide these functions. The &gtk-tree-model; interface
+     itself only provides a way to query a data store's characteristics and to retrieve existing data, it
+     does not provide a way to remove or add rows to the store or put data into the store. This is done using
+     the specific store's functions.
+    </para>
+
+    <para>
+     Gtk+ comes with two built-in data stores (models): the &gtk-list-store; object and the &gtk-tree-store;
+     object. As the names imply, the &gtk-tree-store; object is used for simple lists of data items where
+     items have no hierarchical parent-child relationships, and the &gtk-tree-store; object is used for
+     tree-like data structures, where items can have parent-child relationships. A list of files in a
+     directory would be an example of a simple list structure, whereas a directory tree is an example for a
+     tree structure. A list is basically just a special case of a tree with none of the items having any
+     children, so one could use a tree store to maintain a simple list of items as well. The only reason
+     the &gtk-tree-store; object exists is in order to provide an easier interface that does not need to
+     cater for child-parent relationships, and because a simple list model can be optimised for the special
+     case where no children exist, which makes it faster and more efficient. The &gtk-list-store; and the
+     &gtk-tree-store; objects should cater for most types of data an application developer might want to
+     display in a &gtk-tree-view; widget.
+    </para>
+
+    <para>
+     The &gtk-list-store; and &gtk-tree-store; objects should cater for most types of data an application
+     developer might want to display in a &gtk-tree-view; widget. However, it should be noted that the
+     &gtk-list-store; and &gtk-tree-store; objects have been designed with flexibility in mind. If you plan
+     to store a lot of data, or have a large number of rows, you should consider implementing your own custom
+     model that stores and manipulates data your own way and implements the &gtk-tree-model; interface. This
+     will not only be more efficient, but probably also lead to saner code in the long run, and give you more
+     control over your data. See section <link linkend="Writing_Custom_Models">Writing Custom Models</link>
+     for more details on how to implement custom models.
+    </para>
+
+    <para>
+     Tree model implementations like the &gtk-list-store; and &gtk-tree-store; objects will take care of the
+     view side for you once you have configured the &gtk-tree-view; widget to display what you want. If you
+     change data in the store, the model will notify the tree view and your data display will be updated. If
+     you add or remove rows, the model will also notify the store, and your row will appear in or disappear
+     from the view as well.
+    </para>
+   </section>
+
+   <section id="How_Data_is_Organised_in_a_Store" revision="2021-2-20">
     <title>How Data is Organised in a Store</title>
     <para>
-     A model (data store) has model columns and rows.  While a tree view will display each row in the model
-     as a row in the view, the model's columns are not to be confused with a view's columns.  A model column
-     represents a certain data field of an item that has a fixed data type.  You need to know what kind of
+     A model (data store) has model columns and rows. While a tree view will display each row in the model
+     as a row in the view, the model's columns are not to be confused with a view's columns. A model column
+     represents a certain data field of an item that has a fixed data type. You need to know what kind of
      data you want to store when you create a list store or a tree store, as you can not add new fields later
      on.
     </para>
     <para>
      For example, we might want to display a list of files. We would create a list store with two fields: a
      field that stores the filename (i.e. a string) and a field that stores the file size (i.e. an unsigned
-     integer).  The filename would be stored in column 0 of the model, and the file size would be stored in
-     column 1 of the model.  For each file we would add a row to the list store, and set the row's fields to
+     integer). The filename would be stored in column 0 of the model, and the file size would be stored in
+     column 1 of the model. For each file we would add a row to the list store, and set the row's fields to
      the filename and the file size.
     </para>
     <para>
-     The GLib type system (GType) is used to indicate what type of data is stored in a model column.  These
+     The GLib type system (GType) is used to indicate what type of data is stored in a model column. These
      are the most commonly used types:
     </para>
     <itemizedlist>
@@ -7087,7 +6449,7 @@ bad things will happen.")
     </itemizedlist>
     <para>
      You do not need to understand the type system, it will usually suffice to know the above types, so you
-     can tell a list store or tree store what kind of data you want to store.  Storing GObject-derived types
+     can tell a list store or tree store what kind of data you want to store. Storing GObject-derived types
      is a special case that is dealt with further below.
     </para>
     <para>
@@ -7099,269 +6461,273 @@ bad things will happen.")
   ... )
     </programlisting>
     <para>
-     This creates a new list store with two columns.  Column 0 stores a string and column 1 stores an
-     unsigned integer for each row.  At this point the model has no rows yet of course.  Before we start to
-     add rows, let's have a look at the different ways used to refer to a particular row.
+     This creates a new list store with two columns. Column 0 stores a string and column 1 stores an unsigned
+     integer for each row. At this point the model has no rows yet of course. Before we start to add rows,
+     let's have a look at the different ways used to refer to a particular row.
     </para>
    </section>
 
-   <section id="Refering_to_Rows">
+   <section id="Refering_to_Rows" revision="2021-2-20">
     <title>Refering to Rows</title>
 
-    <section id="GtkTreePath">
+    <section id="GtkTreePath" revision="2021-2-21">
      <title>GtkTreePath</title>
+
      <para>
-      There are different ways to refer to a specific row.  The two you will have to deal with are
-      <ulink url="&gtk-tree-iter;"><code>gtk-tree-iter</code></ulink> and <ulink url="&gtk-tree-path;">
-      <code>gtk-tree-path</code></ulink>.
+      There are different ways to refer to a specific row. The two you will have to deal with are a
+      &gtk-tree-iter; structure and a &gtk-tree-path; structure.
      </para>
+
      <para>
-      A <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> is a comparatively straight-forward
-      way to describe the logical position of a row in the model.  As a <ulink url="&gtk-tree-view;">
-      <code>gtk-tree-view</code></ulink> always displays all rows in a model, a tree path always describes
-      the same row in both model and view.
+      A &gtk-tree-path; structure is a comparatively straight-forward way to describe the logical position of
+      a row in the model. As a &gtk-tree-view; widget always displays all rows in a model, a tree path always
+      describes the same row in both model and view.
      </para>
+
      <figure id="figure-tree-path">
       <title>Tree Path</title>
       <mediaobject>
        <imageobject>
-        <imagedata fileref="figures/tree-path.png" format="png"></imagedata>
+        <imagedata fileref="figures/tree-view-path.png" format="png"></imagedata>
        </imageobject>
       </mediaobject>
      </figure>
+
      <para>
-      The picture shows the tree path in string form next to the label.  Basically, it just counts the
-      children from the imaginary root of the tree view.  An empty tree path string would specify that
-      imaginary invisible root.  Now 'Songs' is the first child (from the root) and thus its tree path is
-      just "0". 'Videos' is the second child from the root, and its tree path is "1".  'oggs' is the second
-      child of the first item from the root, so its tree path is "0:1".  So you just count your way down from
+      The picture shows the tree path in string form next to the label. Basically, it just counts the
+      children from the imaginary root of the tree view. An empty tree path string would specify that
+      imaginary invisible root. Now 'Songs' is the first child (from the root) and thus its tree path is
+      just "0". 'Videos' is the second child from the root, and its tree path is "1". 'Oggs' is the second
+      child of the first item from the root, so its tree path is "0:1". So you just count your way down from
       the root to the row in question, and you get your tree path.
      </para>
      <para>
       The implication of this way of refering to rows is as follows: if you insert or delete rows in the
       middle or if the rows are resorted, a tree path might suddenly refer to a completely different row than
-      it refered to before the insertion/deletion/resorting.  This is important to keep in mind.  See the
-      section on <code>GtkTreeRowReferences</code> below for a tree path that keeps updating itself to make
-      sure it always refers to the same row when the model changes.
+      it refered to before the insertion/deletion/resorting. This is important to keep in mind. See the
+      section on <link linkend="GtkTreeRowReference">GtkTreeRowReferences</link> below for a tree path that
+      keeps updating itself to make sure it always refers to the same row when the model changes.
      </para>
+
      <para>
-      You can get a new <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> from a path in string
-      form using the function <ulink url="&gtk-tree-path-new-from-string;">
-      <code>gtk-tree-path-new-from-string</code></ulink>, and you can convert a given
-      <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> into its string notation with the
-      function <ulink url="&gtk-tree-path-to-string;"><code>gtk-tree-path-to-string</code></ulink>.  Usually
-      you will rarely have to handle the string notation, it is described here merely to demonstrate the
-      concept of tree paths.
+      You can get a new &gtk-tree-path; instance from a path in string form using the function
+      &gtk-tree-path-new-from-string;, and you can convert a given &gtk-tree-path; instance into its string
+      notation with the function &gtk-tree-path-to-string;. Usually you will rarely have to handle the string
+      notation, it is described here merely to demonstrate the concept of tree paths.
      </para>
+
      <para>
-      Instead of the string notation, <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> uses an
-      integer array internally.  You can get the depth, i.e. the nesting level, of a tree path with the
-      function <ulink url="&gtk-tree-path-depth;"><code>gtk-tree-path-depth</code></ulink>.  A depth of 0 is
-      the imaginary invisible root node of the tree view and model.  A depth of 1 means that the tree path
-      describes a top-level row.  As lists are just trees without child nodes, all rows in a list always have
-      tree paths of depth 1.  The function <ulink url="&gtk-tree-path-indices;">
-      <code>gtk-tree-path-indices</code></ulink> returns the internal integer array of a tree path.  You will
-      rarely need to operate with those either.
+      Instead of the string notation, the &gtk-tree-path; structure uses an integer array internally. You can
+      get the depth, i.e. the nesting level, of a tree path with the function &gtk-tree-path-depth;. A depth
+      of 0 is the imaginary invisible root node of the tree view and model. A depth of 1 means that the tree
+      path describes a top-level row. As lists are just trees without child nodes, all rows in a list always
+      have tree paths of depth 1. The function &gtk-tree-path-indices; returns the internal integer array of
+      a tree path. You will rarely need to operate with those either.
      </para>
+
      <para>
       If you operate with tree paths, you are most likely to use a given tree path, and use functions like
-      <ulink url="&gtk-tree-path-up;"><code>gtk-tree-path-up</code></ulink>,
-      <ulink url="&gtk-tree-path-down;"><code>gtk-tree-path-down</code></ulink>,
-      <ulink url="&gtk-tree-path-next;"><code>gtk-tree-path-next</code></ulink>,
-      <ulink url="&gtk-tree-path-prev;"><code>gtk-tree-path-prev</code></ulink>,
-      <ulink url="&gtk-tree-path-is-ancestor;"><code>gtk-tree-path-is-ancestor</code></ulink>, or
-      <ulink url="&gtk-tree-path-is-descendant;"><code>gtk-tree-path-is-descendant</code></ulink>.  Note
-      that this way you can construct and operate on tree paths that refer to rows that do not exist in model
-      or view.  The only way to check whether a path is valid for a specific model, i.e. the row described
-      by the path exists, is to convert the path into an iter using the function
-      <ulink url="&gtk-tree-model-iter;"><code>gtk-tree-model-iter</code></ulink>.
+      &gtk-tree-path-up;, &gtk-tree-path-down;, &gtk-tree-path-next;, &gtk-tree-path-prev;,
+      &gtk-tree-path-is-ancestor;, or &gtk-tree-path-is-descendant;. Note that this way you can construct and
+      operate on tree paths that refer to rows that do not exist in model or view. The only way to check
+      whether a path is valid for a specific model, i.e. the row described by the path exists, is to convert
+      the path into an iterator using the function &gtk-tree-model-iter;.
      </para>
+
      <para>
-      <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink> is an opaque structure, with its
-      details hidden from the compiler.  If you need to make a copy of a tree path, use the function
-      <ulink url="&gtk-tree-path-copy;"><code>gtk-tree-path-copy</code></ulink>.
+      The &gtk-tree-path; structure is an opaque structure, with its details hidden from the compiler. If you
+      need to make a copy of a tree path, use the function &gtk-tree-path-copy;.
      </para>
     </section>
 
-    <section id="GtkTreeIter">
+    <section id="GtkTreeIter" revision="2021-2-21">
      <title>GtkTreeIter</title>
+
      <para>
-      Another way to refer to a row in a list or tree is <ulink url="&gtk-tree-iter;">
-      <code>gtk-tree-iter</code></ulink>.  A tree iter is just a structure that contains a couple of pointers
-      that mean something to the model you are using.  Tree iters are used internally by models, and they
-      often contain a direct pointer to the internal data of the row in question.  You should never look at
-      the content of a tree iter and you must not modify it directly either.  All tree models, and therefore
-      also <ulink url="&gtk-list-store;"><code>gtk-list-store</code></ulink> and
-      <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink>, must support the
-      <ulink url="&gtk-tree-model;"><code>gtk-tree-model</code></ulink> functions that operate on tree iters.
-      Some of these functions are:
+      Another way to refer to a row in a list or tree is a &gtk-tree-iter; instance. A tree iterator is just
+      a structure that contains a couple of pointers that mean something to the model you are using. Tree
+      iterators are used internally by models, and they often contain a direct pointer to the internal data
+      of the row in question. You should never look at the content of a tree iterator and you must not modify
+      it directly either. All tree models, and therefore also &gtk-list-store; and &gtk-tree-store; objects,
+      must support the &gtk-tree-model; functions that operate on tree iters. Some of these functions are:
      </para>
-     <table id="table-gtk-tree-model" frame='all'>
-      <title>Functions for GtkTreeModel</title>
-      <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-       <thead>
-        <row>
-         <entry>Function&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;&#x2003;</entry>
-         <entry>Description</entry>
-        </row>
-       </thead>
-       <tbody>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-first</code></entry>
-         <entry valign="top">Sets the given iter to the first top-level item in the list or tree.</entry>
-        </row>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-next</code></entry>
-         <entry valign="top">
-          Sets the given iter to the next item at the current level in a list or tree.
-         </entry>
-        </row>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-children</code></entry>
-         <entry valign="top">
-          Sets the first given iter to the first child of the row referenced by the second iter; not very
-          useful for lists, mostly useful for trees.
-         </entry>
-        </row>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-n-children</code></entry>
-         <entry valign="top">
-          Returns the number of children the row referenced by the provided iter has. If you pass
-          <code>nil</code> instead of iter structure, this function will return the number of top-level
-          rows. You can also use this function to count the number of items in a list store.
-         </entry>
-        </row>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-nth-child</code></entry>
-         <entry valign="top">
-          Sets the first iter to the n-th child of the row referenced by the second iter. If you pass
-          <code>nil</code> instead of an iter structure as the second iter, you can get the first iter set
-          to the n-th row of a list.
-         </entry>
-        </row>
-        <row>
-         <entry valign="top"><code>gtk-tree-model-iter-parent</code></entry>
-         <entry valign="top">
-          Sets the first iter to the parent of the row referenced by the second iter; does nothing for
-          lists, only useful for trees.
-         </entry>
-        </row>
-       </tbody>
-      </tgroup>
+
+     <table id="table-gtk-tree-model">
+      <caption>Functions for GtkTreeModel</caption>
+      <colgroup>
+       <col style="width:35%"/>
+       <col style="width:65%"/>
+      </colgroup>
+      <tr>
+       <th align="left">Function</th>
+       <th align="left">Description</th>
+      </tr>
+      <tr>
+       <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-first</code></td>
+       <td>Sets the given iterator to the first top-level item in the list or tree.</td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-next</code></td>
+       <td>Sets the given iterator to the next item at the current level in a list or tree.</td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-children</code></td>
+       <td>
+        Sets the first given iterator to the first child of the row referenced by the second iterator.
+        Not very useful for lists, mostly useful for trees.
+       </td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-n-children</code></td>
+       <td>
+        Returns the number of children the row referenced by the provided iterator has. If you pass
+        <code>nil</code> instead of a iterator instance, this function will return the number of top-level
+        rows. You can also use this function to count the number of items in a list store.
+       </td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-nth-child</code></td>
+       <td>
+        Sets the first iterator to the n-th child of the row referenced by the second iterator. If you pass
+        <code>nil</code> instead of an iterator instance as the second iterator, you can get the first
+        iterator set to the n-th row of a list.
+       </td>
+      </tr>
+      <tr valign="top">
+       <td><code>gtk-tree-model-iter-parent</code></td>
+       <td>
+        Sets the first iterator to the parent of the row referenced by the second iterator. Does nothing
+        for lists, only useful for trees.
+       </td>
+      </tr>
+      <tr>
+       <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+      </tr>
      </table>
+
      <para>
       Almost all of those functions return <emphasis>true</emphasis> if the requested operation succeeded,
-      and return <code>nil</code> otherwise.  There are more functions that operate on iters.  Check out the
-      <ulink url="&gtk-tree-model;"><code>gtk-tree-model</code></ulink> API reference for details.
+      and return <emphasis>false</emphasis> otherwise. There are more functions that operate on iterators.
+      Check out the &gtk-tree-model; API reference for details.
      </para>
+
      <para>
-      You might notice that there is no <code>gtk-tree-model-iter-prev</code>.  This is unlikely to be
-      implemented for a variety of reasons.  It should be fairly simple to write a helper function that
+      You might notice that there is no function <code>gtk-tree-model-iter-prev</code>. This is unlikely to
+      be implemented for a variety of reasons. It should be fairly simple to write a helper function that
       provides this functionality though once you have read this section.
      </para>
+
      <para>
-      Tree iters are used to retrieve data from the store, and to put data into the store.  You also get a
-      tree iter as result if you add a new row to the store using the functions
-      <ulink url="&gtk-list-store-append;"><code>gtk-list-store-append</code></ulink> or
-      <ulink url="&gtk-tree-store-append;"><code>gtk-tree-store-append</code></ulink>.
+      Tree iterators are used to retrieve data from the store, and to put data into the store. You also get a
+      tree iterator as result if you add a new row to the store using the functions &gtk-list-store-append;
+      or &gtk-tree-store-append;.
      </para>
+
      <para>
-      Tree iters are often only valid for a short time, and might become invalid if the store changes with
-      some models.  It is therefore usually a bad idea to store tree iters, unless you really know what you
-      are doing.  You can use the function <ulink url="&gtk-tree-model-flags;">
-      <code>gtk-tree-model-flags</code></ulink> to get a model's flags, and check whether the
-      <code>:iters-persist</code> flag is set, in which case a tree iter will be valid as long as a row
-      exists, yet still it is not advisable to store iter structures unless you really mean to do that.
-      There is a better way to keep track of a row over time: <code>GtkTreeRowReference</code>.
+      Tree iterators are often only valid for a short time, and might become invalid if the store changes with
+      some models. It is therefore usually a bad idea to store tree iterators, unless you really know what you
+      are doing. You can use the function &gtk-tree-model-flags; to get a model's flags, and check whether the
+      <code>:iters-persist</code> flag is set, in which case a tree iterator will be valid as long as a row
+      exists, yet still it is not advisable to store iterator instances unless you really mean to do that.
+      There is a better way to keep track of a row over time with a &gtk-tree-row-reference; instance.
      </para>
     </section>
 
     <section id="GtkTreeRowReference">
      <title>GtkTreeRowReference</title>
+
      <para>
-      A <ulink url="&gtk-tree-row-reference;"><code>gtk-tree-row-reference</code></ulink> is basically an
-      object that takes a tree path, and watches a model for changes.  If anything changes, like rows getting
-      inserted or removed, or rows getting re-ordered, the tree row reference object will keep the given tree
-      path up to date, so that it always points to the same row as before.  In case the given row is removed,
-      the tree row reference will become invalid.
+      A &gtk-tree-row-reference; structure is basically a structure that takes a tree path, and watches a
+      model for changes. If anything changes, like rows getting inserted or removed, or rows getting
+     re-ordered, the tree row reference object will keep the given tree path up to date, so that it always
+     points to the same row as before. In case the given row is removed, the tree row reference will become
+     invalid.
      </para>
+
      <para>
-      A new tree row reference can be created with the function <ulink url="&gtk-tree-row-reference-new;">
-      <code>gtk-tree-row-reference-new</code></ulink>, given a model and a tree path.  After that, the tree
-      row reference will keep updating the path whenever the model changes. The current tree path of the row
-      originally refered to when the tree row reference was created can be retrieved with the function
-      <ulink url="&gtk-tree-row-reference-path;"><code>gtk-tree-row-reference-path</code></ulink>.  If the
-      row has been deleted, <code>nil</code> will be returned instead of of a tree path.
+      A new tree row reference can be created with the function &gtk-tree-row-reference-new;, given a model
+      and a tree path. After that, the tree row reference will keep updating the path whenever the model
+      changes. The current tree path of the row originally refered to when the tree row reference was created
+      can be retrieved with the function &gtk-tree-row-reference-path;. If the row has been deleted,
+      <code>nil</code> will be returned instead of of a tree path.
      </para>
+
      <para>
-      You can check whether the row referenced still exists with the function
-      <ulink url="&gtk-tree-row-reference-valid;"><code>gtk-tree-row-reference-valid</code></ulink>.
+      You can check whether the row referenced still exists with the function &gtk-tree-row-reference-valid;.
      </para>
+
      <para>
       For the curious: internally, the tree row reference connects to the tree model's "row-inserted",
       "row-deleted", and "rows-reordered" signals and updates its internal tree path whenever something
       happened to the model that affects the position of the referenced row.
      </para>
+
      <para>
-      Note that using tree row references entails a small overhead.  This is hardly significant for 99.9 % of
+      Note that using tree row references entails a small overhead. This is hardly significant for 99.9 % of
       all applications out there, but when you have multiple thousands of rows and/or row references, this
       might be something to keep in mind, because whenever rows are inserted, removed, or reordered, a signal
       will be sent out and processed for each row reference.
      </para>
+
      <para>
       If you have read the tutorial only up to here so far, it is hard to explain really what tree row
-      references are good for.  An example where tree row references come in handy can be found further below
+      references are good for. An example where tree row references come in handy can be found further below
       in the section on removing multiple rows in one go.
      </para>
+
      <para>
       In practice, a programmer can either use tree row references to keep track of rows over time, or store
-      tree iters directly, if, and only if, the model has persistent iters.  Both
-      <ulink url="&gtk-list-store;"><code>gtk-list-store</code></ulink> and
-      <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink> have persistent iters, so storing
-      iters is possible.  However, using tree row references is definitively the right way to do things, even
-      though it comes with some overhead that might impact performance in case of trees that have a very
-      large number of rows, in that case it might be preferable to write a custom model anyway though.
-      Especially beginners might find it easier to handle and store tree row references than iters, because
-      tree row references are handled by pointer value, which you can easily add to a list or pointer array,
-      while it is easy to store tree iters in a wrong way.
+      tree iterators directly, if, and only if, the model has persistent iterators.  Both &gtk-list-store;
+      and &gtk-tree-store; objects have persistent iterators, so storing iterators is possible.  However,
+      using tree row references is definitively the right way to do things, even though it comes with some
+      overhead that might impact performance in case of trees that have a very large number of rows, in that
+      case it might be preferable to write a custom model anyway though. Especially beginners might find it
+      easier to handle and store tree row references than iterators, because tree row references are handled
+      by pointer value, which you can easily add to a list or pointer array, while it is easy to store tree
+      iterators in a wrong way.
      </para>
     </section>
 
-    <section id="Usage">
+    <section id="Usage" revision="2021-2-21">
      <title>Usage</title>
+
      <para>
-      Tree iters can easily be converted into tree paths using the function
-      <ulink url="&gtk-tree-model-path;"><code>gtk-tree-model-path</code></ulink>, and tree paths can easily
-      be converted into tree iters using the function <ulink url="&gtk-tree-model-iter;">
-      <code>gtk-tree-model-iter</code></ulink>.  Here is an example that shows how to get the iter from the
-      tree path that is passed to us from the tree view in the "row-activated" signal callback.  We need the
-      iter here to retrieve data from the store.
+      Tree iterators can easily be converted into tree paths using the function &gtk-tree-model-path;, and
+      tree paths can easily be converted into tree iterators using the function &gtk-tree-model-iter;.
+      Here is an example that shows how to get the iterator from the tree path that is passed to us from the
+      tree view in the "row-activated" signal callback. We need the iterator here to retrieve data from the
+      store.
      </para>
+
      <example id="example-row-activated">
       <title>Converting a gtk-tree-path into a gtk-tree-iter</title>
       <programlisting>
 ;; Signal handler for the signal "row-activated"
 (g-signal-connect view "row-activated"
-   (lambda (view path col)
-     (declare (ignore col))
-     (let* ((model (gtk-tree-view-get-model view))
-            ;; Get the iter from the path
-            (iter (gtk-tree-model-get-iter model path)))
-       (when iter
-         (format t
-                 "The row containing the name ~A has been double-clicked.~%"
-                 (gtk-tree-model-get-value model iter 0))))))
+    (lambda (treeview path column)
+      (declare (ignore column))
+      (let* ((model (gtk-tree-view-model treeview))
+             ;; Get the iterator from the tree path
+             (iter (gtk-tree-model-iter model path)))
+        (when iter
+          (format t
+                  "The row containing the name ~A has been double-clicked.~%"
+                  (gtk-tree-model-value model iter 0))))))
       </programlisting>
      </example>
+
      <para>
-      Tree row references reveal the current path of a row with the function
-      <ulink url="&gtk-tree-row-reference-path;"><code>gtk-tree-row-reference-path</code></ulink>.  There is
-      no direct way to get a tree iter from a tree row reference, you have to retrieve the tree row
-      reference's path first and then convert that into a tree iter.  As tree iters are only valid for a
-      short time, they are usually allocated on the stack, as in the following example (keep in mind that
-      <ulink url="&gtk-tree-iter;"><code>gtk-tree-iter</code></ulink> is just a structure that contains data
-      fields you do not need to know anything about).
+      Tree row references reveal the current path of a row with the function &gtk-tree-row-reference-path;.
+      There is no direct way to get a tree iterator from a tree row reference, you have to retrieve the tree
+      row reference's path first and then convert that into a tree iterator. As tree iterators are only valid
+      for a short time, they are usually allocated on the stack, as in the following example (keep in mind
+      that a &gtk-tree-iter; instance is just a structure that contains data fields you do not need to know
+      anything about).
      </para>
+
      <example id="example-traverse-list">
       <title>Going through every row in a list store</title>
       <programlisting>
@@ -7369,69 +6735,63 @@ bad things will happen.")
 (g-signal-connect button "clicked"
    (lambda (button)
      (declare (ignore button))
-     (let ((model (gtk-tree-view-get-model view)))
-       (do ((iter (gtk-tree-model-get-iter-first model)
+     (let ((model (gtk-tree-view-model view)))
+       (do ((iter (gtk-tree-model-iter-first model)
                   (gtk-tree-model-iter-next model iter)))
            ((not iter))
            (gtk-list-store-set-value model iter 1 0)))))
       </programlisting>
      </example>
+
      <para>
-      The code above asks the model to fill the iter structure to make it point to the first row in the list
-      store.  If there is a first row and the list store is not empty, the iter will be set, and the function
-      <ulink url="&gtk-tree-model-iter-first;"><code>gtk-tree-model-iter-first</code></ulink> will return
-      <emphasis>true</emphasis>.  If there is no first row, it will just return <code>nil</code>.  If a first
-      row exists, the while loop will be entered and we change some of the first row's data.  Then we ask
-      the model to make the given iter point to the next row, until there are no more rows, which is when the
-      function <ulink url="&gtk-tree-model-iter-next;"><code>gtk-tree-model-iter-next</code></ulink> returns
-      <code>nil</code>.  Instead of traversing the list store we could also have used
-      <ulink url="&gtk-tree-model-foreach;"><code>gtk-tree-model-foreach</code></ulink>.
+      The code above asks the model to fill the iterator structure to make it point to the first row in the
+      list store. If there is a first row and the list store is not empty, the iterator will be set, and the
+      function &gtk-tree-model-iter-first; will return <emphasis>true</emphasis>. If there is no first row,
+      it will just return <emphasis>false</emphasis>. If a first row exists, the do loop will be entered and
+      we change some of the first row's data. Then we ask the model to make the given iterator point to the
+      next row, until there are no more rows, which is when the function &gtk-tree-model-iter-next; returns
+      <emphasis>false</emphasis>. Instead of traversing the list store we could also have used the function
+      &gtk-tree-model-foreach;.
      </para>
     </section>
    </section>
 
-   <section id="Adding_Rows_to_a_Store">
+   <section id="Adding_Rows_to_a_Store" revision="2021-2-21">
     <title>Adding Rows to a Store</title>
 
-    <section id="Adding Rows to a List Store">
+    <section id="Adding Rows to a List Store" revision="2021-2-21">
      <title>Adding Rows to a List Store</title>
      <para>
-      Rows are added to a list store with the function <ulink url="&gtk-list-store-append;">
-      <code>gtk-list-store-append</code></ulink>. This will insert a new empty row at the end of the list.
-      There are other functions, documented in the <ulink url="&gtk-list-store;">
-      <code>gtk-list-store</code></ulink> API reference, that give you more control about where exactly the
-      new row is inserted, but as they work very similar to the function
-      <ulink url="&gtk-list-store-append;"><code>gtk-list-store-append</code></ulink> and are fairly
-      straight-forward to use, we will not deal with them here.  Here is a simple example of how to create a
-      list store and add an empty row to it.
+      Rows are added to a list store with the function &gtk-list-store-append;. This will insert a new empty
+      row at the end of the list. There are other functions, documented in the &gtk-list-store; API reference,
+      that give you more control about where exactly the new row is inserted, but as they work very similar to
+      the function &gtk-list-store-append; and are fairly straight-forward to use, we will not deal with them
+      here. Here is a simple example of how to create a list store and add an empty row to it.
      </para>
      <programlisting>
-(let* ((model (make-instance 'gtk-tree-store
-                             :column-types '("gchararray")))
+(let* ((model (gtk-list-store-new "gchararray"))
        ;; Append an empty row to the list store
        (iter (gtk-list-store-append model nil)))
   ... )
      </programlisting>
      <para>
-      This in itself is not very useful yet of course.  We will add data to the rows in the next section.
+      This in itself is not very useful yet of course. We will add data to the rows in the next section.
      </para>
     </section>    
 
-    <section id="Adding Rows to a Tree Store">
+    <section id="Adding Rows to a Tree Store" revision="2021-2-21">
      <title>Adding Rows to a Tree Store</title>
      <para>
       Adding rows to a tree store works similar to adding rows to a list store, only that the function
-      <ulink url="&gtk-tree-store-append;"><code>gtk-tree-store-append</code></ulink> is the function to use
-      and one more argument is required, namely the tree iter to the parent of the row to insert.  If you
-      supply <code>nil</code> instead of providing the tree iter of another row, a new top-level row will be
-      inserted.  If you do provide a parent tree iter, the new empty row will be inserted after any already
-      existing children of the parent.  Again, there are other ways to insert a row into the tree store and
-      they are documented in the <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink> API
-      reference manual.  Another short example
+      &gtk-tree-store-append; is the function to use and one more argument is required, namely the tree
+      iterator to the parent of the row to insert. If you supply <code>nil</code> instead of providing the
+      tree iterator of another row, a new top-level row will be inserted. If you do provide a parent tree
+      iterator, the new empty row will be inserted after any already existing children of the parent. Again,
+      there are other ways to insert a row into the tree store and they are documented in the &gtk-tree-store;
+      API reference manual. Another short example
      </para>
      <programlisting>
-(let* ((model (make-instance 'gtk-tree-store
-                             :column-types '("gchararray")))
+(let* ((model (gtk-tree-store-new "gchararray"))
        ;; Append an empty top-level row to the tree store.
        ;; Iter will point to the new row.
        (iter (gtk-tree-store-append model nil))
@@ -7440,23 +6800,23 @@ bad things will happen.")
   (setf iter (gtk-tree-store-append model nil))
   ;; Append a child to the row we just added.
   (setf child (gtk-tree-store-append model iter))
-  ;; Get the first row, and add a child to it as well (could have been done
-  ;; right away earlier of course, this is just for demonstration purposes)
-  (setf iter (gtk-tree-model-get-iter-first model))
+  ;; Get the first row, and add a child to it as well, could have been done
+  ;; right away earlier of course, this is just for demonstration purposes
+  (setf iter (gtk-tree-model-iter-first model))
   (setf child (gtk-tree-store-append model iter))
   ... )
      </programlisting>
     </section>
 
-    <section id="Speed_Issues_when_Adding_a_Lot_of_Rows">
+    <section id="Speed_Issues_when_Adding_a_Lot_of_Rows" revision="2021-2-21">
      <title>Speed Issues when Adding a Lot of Rows</title>
      <para>
       A common scenario is that a model needs to be filled with a lot of rows at some point, either at
-      start-up, or when some file is opened.  An equally common scenario is that this takes an awfully long
+      start-up, or when some file is opened. An equally common scenario is that this takes an awfully long
       time even on powerful machines once the model contains more than a couple of thousand rows, with an
-      exponentially decreasing rate of insertion.  As already pointed out above, writing a custom model might
-      be the best thing to do in this case.  Nevertheless, there are some things you can do to work around
-      this problem and speed things up a bit even with the stock Gtk+ models:
+      exponentially decreasing rate of insertion. As already pointed out above, writing a custom model might
+      be the best thing to do in this case. Nevertheless, there are some things you can do to work around
+      this problem and speed things up a bit even with the stock GTK+ models:
      </para>
      <para>
       Firstly, you should detach your list store or tree store from the tree view before doing your mass
@@ -7464,122 +6824,100 @@ bad things will happen.")
       done with your insertions. Like this:
      </para>
      <programlisting>
-(let ((model (gtk-tree-view-get-model view)))
+(let ((model (gtk-tree-view-model view)))
   ;; Detach model from view
-  (gtk-tree-view-set-model view nil)
+  (setf (gtk-tree-view-model view) nil)
 
   ... insert a couple of thousand rows ...
 
   ;; Re-attach model to view
-  (gtk-tree-view-set-model view model)
-
-  ...)
+  (setf (gtk-tree-view-model view) model)
+  ... )
      </programlisting>
      <para>
       Secondly, you should make sure that sorting is disabled while you are doing your mass insertions,
       otherwise your store might be resorted after each and every single row insertion, which is going to be
-      everything but fast.  Thirdly, you should not keep around a lot of tree row references if you have so
+      everything but fast. Thirdly, you should not keep around a lot of tree row references if you have so
       many rows, because with each insertion (or removal) every single tree row reference will check whether
       its path needs to be updated or not.
      </para>
     </section>
    </section>
 
-   <section id="Manipulating Row Data">
+   <section id="Manipulating Row Data" revision="2021-2-21">
     <title>Manipulating Row Data</title>
+
     <para>
      Adding empty rows to a data store is not terribly exciting, so let's see how we can add or change data
-     in the store.  The functions <ulink url="&gtk-list-store-set;"><code>gtk-list-store-set</code></ulink>
-     and <ulink url="&gtk-tree-store-set;"><code>gtk-tree-store-set</code></ulink> are used to manipulate a
-     given row's data. There is also <ulink url="&gtk-list-store-set-value;">
-     <code>gtk-list-store-set-value</code></ulink> and <ulink url="&gtk-tree-store-set-value;">
-     <code>gtk-tree-store-set-value</code></ulink>, but those should only be used by people familiar with
-     GLib's GValue system.
+     in the store. The functions &gtk-list-store-set; and &gtk-tree-store-set; are used to manipulate a given
+     row's data. There is also the function &gtk-list-store-set-value; and &gtk-tree-store-set-value;, but
+     those should only be used by people familiar with GLib's GValue system.
     </para>
+
     <para>
-     Both functions <ulink url="&gtk-list-store-set;"><code>gtk-list-store-set</code></ulink> and
-     <ulink url="&gtk-tree-store-set;"><code>gtk-tree-store-set</code></ulink> take a variable number of
-     arguments.  The first two arguments are a pointer to the model, and the iter pointing to the row whose
-     data we want to change.  They are followed by a variable number of (column, data) argument pairs.  The
-     column refers to the model column number and is usually an enum value (to make the code more readable
-     and to make changes easier).  The data should be of the same data type as the model column.  Here is an
-     example where we create a store that stores two strings and one integer for each row:
+     Both functions &gtk-list-store-set; and &gtk-tree-store-set; take a variable number of arguments. The
+     first two arguments are a pointer to the model, and the iterator pointing to the row whose data we want
+     to change. They are followed by a variable number of data arguments. The data should be of the same data
+     type as the model column. Here is an example where we create a store that stores a string and one
+     integer for the row:
     </para>
+
     <programlisting>
-(let ((model (make-instance 'gtk-list-store
-                            :column-types '("gchararray" "guint"))))
+(let ((model (gtk-list-store-new "gchararray" "guint")))
   (gtk-list-store-set model (gtk-list-store-append model)
                             "Klaus-Dieter Mustermann" 51)
   ... )
     </programlisting>
+
     <para>
-     You do not need to worry about allocating and freeing memory for the data to store.  The model (or more
-     precisely: the GLib/GObject GType and GValue system) will take care of that for you.  If you store a
-     string, for example, the model will make a copy of the string and store that.  If you then set the field
+     You do not need to worry about allocating and freeing memory for the data to store. The model (or more
+     precisely: the GLib/GObject GType and GValue system) will take care of that for you. If you store a
+     string, for example, the model will make a copy of the string and store that. If you then set the field
      to a new string later on, the model will automatically free the old string and again make a copy of the
-     new string and store the copy.  This applies to almost all types, be it <code>G_TYPE_STRING</code> or
-     <code>GDK_TYPE_PIXBUF</code>.
+     new string and store the copy. This applies to almost all types, be it "gchararray" or "GdkPixbuf".
     </para>
+
     <para>
-     The exception to note is <code>G_TYPE_POINTER</code>.  If you allocate a chunk of data or a complex
-     structure and store it in a <code>G_TYPE_POINTER</code> field, only the pointer value is stored.  The
-     model does not know anything about the size or content of the data your pointer refers to, so it could
-     not even make a copy if it wanted to, so you need to allocate and free the memory yourself in this case.
-     However, if you do not want to do that yourself and want the model to take care of your custom data for
-     you, then you need to register your own type and derive it from one of the GLib fundamental types
-     (usually <code>G_TYPE_BOXED</code>).  See the GObject GType reference manual for details.  Making a copy
-     of data involves memory allocation and other overhead of course, so one should consider the performance
-     implications of using a custom GLib type over a <code>G_TYPE_POINTER</code> carefully before taking that
-     approach.  Again, a custom model might be the better alternative, depending on the overall amount of
-     data to be stored (and retrieved).
+     The exception to note is "gpointer". If you allocate a chunk of data or a complex structure and store it
+     in a "gpointer" field, only the pointer value is stored. The model does not know anything about the size
+     or content of the data your pointer refers to, so it could not even make a copy if it wanted to, so you
+     need to allocate and free the memory yourself in this case. However, if you do not want to do that
+     yourself and want the model to take care of your custom data for you, then you need to register your own
+     type and derive it from one of the GLib fundamental types (usually "GBoxed"). See the GObject GType
+     reference manual for details. Making a copy of data involves memory allocation and other overhead of
+     course, so one should consider the performance implications of using a custom GLib type over a "gpointer"
+     carefully before taking that approach. Again, a custom model might be the better alternative, depending
+     on the overall amount of data to be stored (and retrieved).
     </para>
    </section>
 
-   <section id="Retrieving Row Data">
+   <section id="Retrieving Row Data" revision="2021-2-21">
     <title>Retrieving Row Data</title>
+
     <para>
-     Storing data is not very useful if it cannot be retrieved again.  This is done using the function
-     <ulink url="&gtk-tree-model-get;"><code>gtk-tree-model-get</code></ulink>, which takes similar arguments
-     as the functions <ulink url="&gtk-list-store-set;"><code>gtk-list-store-set</code></ulink> or
-     <ulink url="&gtk-tree-store-set;"><code>gtk-tree-store-set</code></ulink> do, only that it takes
-     (column, pointer) arguments.  The pointer must point to a variable that is of the same type as the data
-     stored in that particular model column.
+     Storing data is not very useful if it cannot be retrieved again. This is done using the function
+     &gtk-tree-model-get;, which takes similar arguments as the functions &gtk-list-store-set; or
+     &gtk-tree-store-set; do, only that it takes (column, pointer) arguments. The pointer must point to a
+     variable that is of the same type as the data stored in that particular model column.
     </para>
     <para>
-     Here is the previous example extended to traverse the list store and print out the data stored.  As an
-     extra, we use the function <ulink url="&gtk-tree-model-foreach;">
-     <code>gtk-tree-model-foreach</code></ulink> to traverse the store and retrieve the row number from the
+     Here is the previous example extended to traverse the list store and print out the data stored. As an
+     extra, we use the function &gtk-tree-model-foreach;
+     to traverse the store and retrieve the row number from the
      GtkTreePath passed to us in the foreach callback function:
     </para>
-    <programlisting>
-(defun foreach-func (model path iter)
-  (let ((first-name (gtk-tree-model-get-value model iter 0))
-        (last-name (gtk-tree-model-get-value model iter 1))
-        (age (gtk-tree-model-get-value model iter 2))
-        (tree-path (gtk-tree-path-to-string path)))
-    (format t "Row ~A: ~A ~A, age ~A~%" tree-path first-name last-name age)))
 
-(defun create-and-fill-and-dump-model ()
-  (let ((model (make-instance 'gtk-list-store
-                              :column-types
-                              '("gchararray" "gchararray" "guint"))))
-    ;; Fill the model with data
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Klaus-Dieter" "Mustermann" 51)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Ulrike" "Langhals" 23)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Marius" "Kalinowski" 91)
-    ;; Now traverse the list
-    (gtk-tree-model-foreach model #'foreach-func)))
-    </programlisting>
+      <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/tree-view-dump-model.lisp" parse="text"/>
+      </programlisting>
+
     <para>
      Note that when a new row is created, all fields of a row are set to a default <code>nil</code> value
-     appropriate for the data type in question.  A field of type <code>G_TYPE_INT</code> will automatically
+     appropriate for the data type in question. A field of type <code>G_TYPE_INT</code> will automatically
      contain the value 0 until it is set to a different value, and strings and all kind of pointer types will
-     be <code>nil</code> until set to something else.  Those are valid contents for the model, and if you
+     be <code>nil</code> until set to something else. Those are valid contents for the model, and if you
      are not sure that row contents have been set to something, you need to be prepared to handle
-     <code>NULL</code> pointers and the like in your code.  Run the above program with an additional empty
+     <code>NULL</code> pointers and the like in your code. Run the above program with an additional empty
      row and look at the output to see this in effect.
     </para>
    </section>
@@ -7587,9 +6925,8 @@ bad things will happen.")
    <section id="Removing Rows">
     <title>Removing Rows</title>
     <para>
-     Rows can easily be removed with the functions <ulink url="&gtk-list-store-remove;">
-     <code>gtk-list-store-remove</code></ulink> and <ulink url="&gtk-tree-store-remove;">
-     <code>gtk-tree-store-remove</code></ulink>.  The removed row will automatically be removed from the tree
+     Rows can easily be removed with the functions &gtk-list-store-remove;
+     and &gtk-tree-store-remove;. The removed row will automatically be removed from the tree
      view as well, and all data stored will automatically be freed, with the exception of G_TYPE_POINTER
      columns (see above).
     </para>
@@ -7610,10 +6947,10 @@ bad things will happen.")
     </programlisting>
     <para>
      If you want to remove the n-th row from a list (or the n-th child of a tree node), you have two
-     approaches: either you first create a <ulink url="&gtk-tree-path;"><code>gtk-tree-path</code></ulink>
+     approaches: either you first create a &gtk-tree-path;
      that describes that row and then turn it into an iter and remove it; or you take the iter of the parent
-     node and use the function <ulink url="&gtk-tree-model-iter-nth-child;">
-     <code>gtk-tree-model-iter-nth-child</code></ulink> (which will also work for list stores if you use
+     node and use the function &gtk-tree-model-iter-nth-child;
+     (which will also work for list stores if you use
      <code>nil</code> as the parent iter. Of course you could also start with the iter of the first top-level
      row, and then step-by-step move it to the row you want, although that seems a rather awkward way of
      doing it.  The following code snippet will remove the n-th row of a list if it exists:
@@ -7632,7 +6969,7 @@ bad things will happen.")
     <para>
      Removing multiple rows at once can be a bit tricky at times, and requires some thought on how to do this
      best.  For example, it is not possible to traverse a store with the function
-     <ulink url="&gtk-tree-model-foreach;"><code>gtk-tree-model-foreach</code></ulink>, check in the callback
+     &gtk-tree-model-foreach;, check in the callback
      function whether the given row should be removed and then just remove it by calling one of the stores'
      remove functions.  This will not work, because the model is changed from within the foreach loop, which
      might suddenly invalidate formerly valid tree iters in the foreach function, and thus lead to
@@ -7667,8 +7004,7 @@ bad things will happen.")
 ...
     </programlisting>
     <para>
-     The functions <ulink url="&gtk-list-store-clear;"><code>gtk-list-store-clear</code></ulink> and
-     <ulink url="&gtk-tree-store-clear;"><code>gtk-tree-store-clear</code></ulink> come in handy if you want
+     The functions &gtk-list-store-clear; and &gtk-tree-store-clear; come in handy if you want
      to remove all rows.
     </para>
  
@@ -7692,13 +7028,13 @@ bad things will happen.")
     <title>Connecting Tree View and Model</title>
     <para>
      Before we proceed to the next section where we display data on the screen, we need connect our data
-     store to the tree view, so it knows where to get the data to display from.  This is achieved with the
+     store to the tree view, so it knows where to get the data to display from. This is achieved with the
      function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink>, which will by
-     itself do very little.  However, it is a prerequisite for what we do in the following sections.
+     itself do very little. However, it is a prerequisite for what we do in the following sections.
     </para>
     <para>
-     The function <ulink url="&gtk-tree-view-new-with-model;">
-     <code>gtk-tree-view-new-with-model</code></ulink> is a convenience function for the previous two.  The
+     The function &gtk-tree-view-new-with-model;
+     is a convenience function for the previous two. The
      function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink> will return the
      model that is currently attached to a given tree view, which is particularly useful in callbacks where
      you only get passed the tree view widget (after all, we do not want to go down the road of global
@@ -7708,9 +7044,9 @@ bad things will happen.")
     <section id="Reference_counting">
      <title>Reference counting</title>
      <para>
-      Tree models like <ulink url="&gtk-list-store;"><code>gtk-list-store</code></ulink> and
-      <ulink url="&gtk-tree-store;"><code>gtk-tree-store</code></ulink> are GObjects and have a reference
-      count of 1 after creation.  The tree view will add its own reference to the model when you add the
+      Tree models like &gtk-list-store; and
+      &gtk-tree-store; are GObjects and have a reference
+      count of 1 after creation. The tree view will add its own reference to the model when you add the
       model with the function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink>,
       and will unref it again when you replace the model with another model, unset the model by passing
       <code>nil</code> as a model, or when the tree view is destroyed.
@@ -7770,7 +7106,7 @@ bad things will happen.")
     header with a column name and can be resized or sorted.  A tree view is made up of tree view columns,
     and you need at least one tree view column in order to display something in the tree view.  Tree view
     columns, however, do not display anything by themselves, this is done by specialised
-    <ulink url="&gtk-cell-renderer;"><code>gtk-cell-renderer</code></ulink> objects.  Cell renderers are
+    &gtk-cell-renderer; objects.  Cell renderers are
     packed into tree view columns much like widgets are packed into &gtk-box; widgets.
    </para>
    <para>
@@ -7796,7 +7132,7 @@ bad things will happen.")
     <title>Cell Renderers</title>
     <para>
      Cell renderers are objects that are responsible for the actual rendering of data within a
-     <ulink url="&gtk-tree-view-column;"><code>gtk-tree-view-column</code></ulink>.  They are basically just
+     &gtk-tree-view-column;.  They are basically just
      GObjects (i.e. not widgets) that have certain properties, and those properties determine how a
      single cell is drawn.
     </para>
@@ -7849,8 +7185,8 @@ bad things will happen.")
          Is a special cell that implements editable cells (i.e. <ulink url="&gtk-entry;">
          <code>gtk-entry</code></ulink> or <ulink url="&gtk-spin-button;">
          <code>gtk-spin-button</code></ulink> in a treeview).  This is not a cell renderer!  If you
-         want to have editable text cells, use <ulink url="&gtk-cell-renderer-text;">
-         <code>gtk-cell-renderer-text</code></ulink> and make sure the "editable" property is set.
+         want to have editable text cells, use &gtk-cell-renderer-text;
+         and make sure the "editable" property is set.
          <ulink url="&gtk-cell-editable;"><code>gtk-cell-editable</code></ulink> is only used by
          implementations of editable cells and widgets that can be inside of editable cells.  You are
          unlikely to ever need it.
@@ -7897,8 +7233,7 @@ bad things will happen.")
    </para>
    <para>
     Here is a silly and utterly useless little example that demonstrates this behaviour, and introduces some
-    of the most commonly used properties of <ulink url="&gtk-cell-renderer-text;">
-    <code>gtk-cell-renderer-text</code></ulink>:
+    of the most commonly used properties of &gtk-cell-renderer-text;:
    </para>
    <programlisting>
 (defun create-and-fill-model ()
@@ -8007,10 +7342,10 @@ bad things will happen.")
      same as the data type that a property requires as argument.  Check the API reference manual to see the
      data type that is required for each property.  When reading through the example a bit further above,
      you might have noticed that we set the "cell-background" property of a
-     <ulink url="&gtk-cell-renderer-text;"><code>gtk-cell-renderer-text</code></ulink>, even though the API
+     &gtk-cell-renderer-text;, even though the API
      documentation does not list such a property.  We can do this, because
-     <ulink url="&gtk-cell-renderer-text;"><code>gtk-cell-renderer-text</code></ulink> is derived from
-     <ulink url="&gtk-cell-renderer;"><code>gtk-cell-renderer</code></ulink>, which does in fact have such a
+     &gtk-cell-renderer-text; is derived from
+     &gtk-cell-renderer;, which does in fact have such a
      property. Derived classes inherit the properties of their parents.  This is the same as with widgets
      that you can cast into one of their ancestor classes.  The API reference has an object hierarchy that
      shows you which classes a widget or some other object is derived from.
@@ -8019,7 +7354,7 @@ bad things will happen.")
      There are two more noteworthy things about @xurl{gtk-cell-renderer} properties: one is that sometimes
      there are different properties which do the same, but take different arguments, such as the
      <code>"foreground"</code> and <code>"foreground-rgba"</code> properties of
-     <ulink url="&gtk-cell-renderer-text;"><code>gtk-cell-renderer-text</code></ulink> (which specify the
+     &gtk-cell-renderer-text; (which specify the
      text colour).  The <code>"foreground"</code> property take a colour in string form, such as "Orange"
      or "CornflowerBlue", whereas "foreground-rgba" takes a &gdk-rgba;
      argument.  It is up to you to decide which one to use - the effect will
@@ -8188,7 +7523,7 @@ bad things will happen.")
     <title>GtkCellRendererText, UTF8, and pango markup</title>
     <para>
      All text used in Gtk+-2.0 widgets needs to be in UTF8 encoding, and
-     <ulink url="&gtk-cell-renderer-text;"><code>gtk-cell-renderer-text</code></ulink> is no exception.  Text
+     &gtk-cell-renderer-text; is no exception.  Text
      in plain ASCII is automatically valid UTF8, but as soon as you have special characters that do not
      exist in plain ASCII (usually characters that are not used in the English language alphabet), they need
      to be in UTF8 encoding.  There are many different character encodings that all specify different ways to
@@ -8210,8 +7545,8 @@ bad things will happen.")
      for others and yourself to spot problems with non-English locales later on.
     </para>
     <para>
-     In addition to the <code>"text"</code> property, <ulink url="&gtk-cell-renderer-text;">
-     <code>gtk-cell-renderer-text</code></ulink> also has a <code>"markup"</code> property that takes text
+     In addition to the <code>"text"</code> property, &gtk-cell-renderer-text;
+     also has a <code>"markup"</code> property that takes text
      with pango markup as input. Pango markup allows you to place special tags into a text string that affect
      the style the text is rendered (see the pango documentation).  Basically you can achieve everything you
      can achieve with the other properties also with pango markup (only that using properties is more
@@ -8613,48 +7948,69 @@ main (int argc, char **argv)
      Note that the tree view will not resize icons for you, but displays them in their original size.  If
      you want to display stock icons instead of <ulink url="&gdk-pixbuf;"><code>gdk-pixbuf</code></ulink>
      objects loaded from file, you should have a look at the <code>"stock-id"</code> property of
-     <ulink url="&gtk-cell-renderer-pixbuf;"><code>gtk-cell-renderer-pixbuf</code></ulink> (and your model
+     &gtk-cell-renderer-pixbuf; (and your model
      column should be of type <code>G_TYPE_STRING</code>, as all stock IDs are just strings by which to
      identify the stock icon).
     </para>
    </section>
   </section>
 
+<!--
   <section id="Selections_Double-Clicks_and_Context_Menus">
    <title>Selections, Double-Clicks and Context Menus</title>
    <para>
    </para>
   </section>
+-->
 
+<!--
   <section id="Sorting">
    <title>Sorting</title>
    <para>
    </para>
   </section>
+-->
 
+<!--
   <section id="Editable_Cells">
    <title>Editable Cells</title>
    <para>
    </para>
   </section>
+-->
 
+<!--
   <section id="Miscellaneous">
    <title>Miscellaneous</title>
    <para>
    </para>
   </section>
+-->
 
+<!--
   <section id="Drag_and_Drop">
    <title>Drag and Drop</title>
    <para>
    </para>
   </section>
+-->
 
-  <section id="Writing Custom Models">
+<!--
+  <section id="Writing_Custom_Models">
    <title>Writing Custom Models</title>
    <para>
    </para>
   </section>
+-->
+
+<!--
+  <section id="Writing_Custom_Cell_Renderers">
+   <title>Writing Custom Cell Renderers</title>
+   <para>
+   </para>
+  </section>
+-->
+
  </chapter>
 
  <chapter id="Dialogs">
@@ -10116,19 +9472,19 @@ main (int argc, char **argv)
    </para>
    <para>
     In addition, example <link linkend="example-event-box">Event Box</link> shows how to change the cursor
-    over a window. Every widget has an associated window of type <ulink url="&gdk-window;">
-    <code>gdk-window</code></ulink>, which can be get with the function <ulink url="&gtk-widget-window;">
+    over a window. Every widget has an associated window of type &gdk-window;,
+    which can be get with the function <ulink url="&gtk-widget-window;">
     <code>gtk-widget-window</code></ulink>. The function <ulink url="&gdk-window-cursor;">
-    <code>gdk-window-cursor</code></ulink> sets a cursor for this <ulink url="&gdk-window;">
-    <code>gdk-window</code></ulink>. A new cursor is created with the function
+    <code>gdk-window-cursor</code></ulink> sets a cursor for this &gdk-window;.
+    A new cursor is created with the function
     <ulink url="&gdk-cursor-new-from-name;"><code>gdk-cursor-new-from-name</code></ulink>. The function
     takes two arguments. The first argument is the <ulink url="&gdk-display;">
     <code>gdk-display</code></ulink> object for which the cursor will be created. The second argument is a
     string with the name of the cursor. Look at the documentation of the function
     <ulink url="&gdk-cursor-new-from-name;"><code>gdk-cursor-new-from-name</code></ulink> for available
     cursor names. In example <link linkend="example-event-box">Event Box</link> the cursor with the name
-    "pointer" is choosen. This cursor is associated to the <ulink url="&gdk-window;">
-    <code>gdk-window</code></ulink> with the function <ulink url="&gdk-window-cursor;">
+    "pointer" is choosen. This cursor is associated to the &gdk-window;
+    with the function <ulink url="&gdk-window-cursor;">
     <code>gdk-window-cursor</code></ulink>.
    </para>
    <example id="example-event-box">
@@ -13982,6 +13338,16 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
+
+
+
+
+
+
+
+
 
 
 
