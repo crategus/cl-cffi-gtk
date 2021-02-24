@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -216,13 +216,12 @@
 ;; Returns : TRUE if the sort column is not one of the special sort column ids.
 
 (defcfun ("gtk_tree_sortable_get_sort_column_id"
-          %gtk-tree-sortable-get-sort-column-id) :boolean
+          %gtk-tree-sortable-sort-column-id) :boolean
   (sortable (g-object gtk-tree-sortable))
   (sort-column-id (:pointer :int))
   (order (:pointer gtk-sort-type)))
 
-(defun gtk-tree-sortable-get-sort-column-id (sortable)
-
+(defun gtk-tree-sortable-sort-column-id (sortable)
  #+cl-cffi-gtk-documentation
  "@version{2019-5-6}
   @argument[sortable]{a @class{gtk-tree-sortable} object}
@@ -235,11 +234,11 @@
   @end{short}
   @see-class{gtk-tree-sortable}"
   (with-foreign-objects ((sort-column-id :int) (order 'gtk-sort-type))
-    (%gtk-tree-sortable-get-sort-column-id sortable sort-column-id order)
+    (%gtk-tree-sortable-sort-column-id sortable sort-column-id order)
     (values (mem-ref sort-column-id :int)
             (mem-ref order 'gtk-sort-type))))
 
-(export 'gtk-tree-sortable-get-sort-column-id)
+(export 'gtk-tree-sortable-sort-column-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_sortable_set_sort_column_id ()
