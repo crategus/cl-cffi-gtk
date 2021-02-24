@@ -266,8 +266,12 @@
                                             "Tree, List and Icon Grid Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Tree View"
-                                "tree-view-simple.lisp"
+                                "../../tutorial/src/tree-view-simple.lisp"
                                 "EXAMPLE-TREE-VIEW-SIMPLE")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Tree View Path"
+                                "../../tutorial/src/tree-view-path.lisp"
+                                "EXAMPLE-TREE-VIEW-PATH")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Menus, Combo Box, Toolbar")))
@@ -301,7 +305,7 @@
                                 "EXAMPLE-COLOR-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Button Label"
-                                "color-button-label.lisp"
+                                "../../tutorial/src/color-button-label.lisp"
                                 "EXAMPLE-COLOR-BUTTON-LABEL")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Widget"
@@ -309,7 +313,7 @@
                                 "EXAMPLE-COLOR-CHOOSER-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Dialog"
-                                "color-chooser-dialog.lisp"
+                                "../../tutorial/src/color-chooser-dialog.lisp"
                                 "EXAMPLE-COLOR-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Palette"
@@ -317,7 +321,7 @@
                                 "EXAMPLE-COLOR-CHOOSER-PALETTE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "File Chooser Button"
-                                "file-chooser-button.lisp"
+                                "../../tutorial/src/file-chooser-button.lisp"
                                 "EXAMPLE-FILE-CHOOSER-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Dialog"
@@ -341,7 +345,7 @@
                                 "EXAMPLE-FONT-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button Label"
-                                "font-button-label.lisp"
+                                "../../tutorial/src/font-button-label.lisp"
                                 "EXAMPLE-FONT-BUTTON-LABEL")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)

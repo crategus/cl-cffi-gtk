@@ -29,9 +29,7 @@ buttons.lisp
 calendar.lisp
 clipboard.lisp
 color-button.lisp
-color-button-label.lisp
 color-chooser-widget.lisp
-color-chooser-dialog.lisp
 color-chooser-palette.lisp
 combo-box.lisp
 combo-box-text.lisp
@@ -42,14 +40,12 @@ drawing.lisp
 entry-buffer.lisp
 entry-completion.lisp
 event-box.lisp
-file-chooser-button.lisp
 file-chooser-custom-filter.lisp
 file-chooser-dialog.lisp
 file-chooser-preview.lisp
 file-chooser-widget.lisp
 fixed.lisp
 floppybuddy.gif
-font-button.lisp
 frame.lisp
 gnome-applets.png
 gnome-calendar.png
@@ -81,7 +77,6 @@ scrolled-window.lisp
 search-entry.lisp
 selections-1.lisp
 simple-message.lisp
-simple-tree-view.lisp
 simple-window.lisp
 spin-button.lisp
 statusbar.lisp
