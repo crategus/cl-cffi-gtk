@@ -2171,6 +2171,7 @@ setup_tree (void)
       @about-function{gtk-tree-view-column-clear}
       @about-function{gtk-tree-view-column-add-attribute}
       @about-function{gtk-tree-view-column-set-attributes}
+      @about-symbol{gtk-tree-cell-data-func}
       @about-function{gtk-tree-view-column-set-cell-data-func}
       @about-function{gtk-tree-view-column-clear-attributes}
       @about-function{gtk-tree-view-column-clicked}
@@ -2375,8 +2376,7 @@ setup_tree (void)
       @about-class{gtk-tree-sortable}
       @about-class{gtk-tree-sortable-iface}
       @about-function{gtk-tree-sortable-sort-column-changed}
-      @about-function{gtk-tree-sortable-get-sort-column-id}
-      @about-function{gtk-tree-sortable-set-sort-column-id}
+      @about-function{gtk-tree-sortable-sort-column-id}
       @about-function{gtk-tree-sortable-set-sort-func}
       @about-function{gtk-tree-sortable-set-default-sort-func}
       @about-function{gtk-tree-sortable-has-default-sort-func}
