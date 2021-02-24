@@ -240,7 +240,15 @@
 <!ENTITY gtk-calendar-set-detail-func        "&api;gtk_fun_gtk-calendar-set-detail-func.html">
 <!ENTITY gtk-calendar-unmark-day             "&api;gtk_fun_gtk-calendar-unmark-day.html">
 
-<!ENTITY gtk-cell-editable                   "&api;gtk_class_gtk-cell-editable.html">
+<!--     gtk-cell-editable     -->
+
+<!ENTITY gtk-cell-editable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-editable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-editable</code></ulink>">
+
+<!--     gtk-cell-layout     -->
+
 <!ENTITY gtk-cell-layout                     "&api;gtk_class_gtk-cell-layout.html">
 
 <!--     gtk-cell-renderer    -->
@@ -377,10 +385,18 @@
 <!ENTITY gtk-editable-editable               "&api;gtk_fun_gtk-editable-editable.html">
 <!ENTITY gtk-editable-select-region          "&api;gtk_fun_gtk-editable-select-region.html">
 
-<!ENTITY gtk-entry                           "&api;gtk_class_gtk-entry.html">
+<!--     gtk-entry     -->
+
+<!ENTITY gtk-entry
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-entry.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-entry</code></ulink>">
+
 <!ENTITY gtk-entry-new                       "&api;gtk_fun_gtk-entry-new.html">
 <!ENTITY gtk-entry-text                      "&api;gtk_fun_gtk-entry-text.html">
 <!ENTITY gtk-entry-visibility                "&api;gtk_fun_gtk-entry-visibility.html">
+
+<!--     gtk-event-box     -->
 
 <!ENTITY gtk-event-box                       "&api;gtk_class_gtk-event-box.html">
 <!ENTITY gtk-event-box-new                   "&api;gtk_fun_gtk-event-box-new.html">
@@ -814,7 +830,13 @@
                  url='&api;gtk_fun_gtk-show-uri.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-show-uri</code></ulink>">
 
-<!ENTITY gtk-spin-button                     "&api;gtk_class_gtk-spin-button.html">
+<!--     gtk-spin-button     -->
+
+<!ENTITY gtk-spin-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-spin-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button</code></ulink>">
+
 <!ENTITY gtk-spin-button-adjustment          "&api;gtk_fun_gtk-spin-button-adjustment.html">
 <!ENTITY gtk-spin-button-configure           "&api;gtk_fun_gtk-spin-button-configure.html">
 <!ENTITY gtk-spin-button-digits              "&api;gtk_fun_gtk-spin-button-digits.html">
@@ -827,6 +849,8 @@
 <!ENTITY gtk-spin-button-value               "&api;gtk_fun_gtk-spin-button-value.html">
 <!ENTITY gtk-spin-button-value-as-int        "&api;gtk_fun_gtk-spin-button-value-as-int.html">
 <!ENTITY gtk-spin-button-wrap                "&api;gtk_fun_gtk-spin-button-wrap.html">
+
+<!--     gtk-statusbar     -->
 
 <!ENTITY gtk-statusbar                       "&api;gtk_class_gtk-statusbar.html">
 <!ENTITY gtk-statusbar-context-id            "&api;gtk_fun_gtk-statusbar-context-id.html">
@@ -1196,10 +1220,14 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-tree-view-column.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column</code></ulink>">
-
-<!ENTITY gtk-tree-view-column-add-attribute  "&api;gtk_fun_gtk-tree-view-column-add-attribute.html">
+<!ENTITY gtk-tree-view-column-add-attribute
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-column-add-attribute.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-add-attribute</code></ulink>">
 <!ENTITY gtk-tree-view-column-set-cell-data-func
-                                             "&api;gtk_fun_gtk-tree-view-column-set-cell-data-func.html">
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-column-set-cell-data-func.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-set-cell-data-func</code></ulink>">
 
 <!--     gtk-text-tag     -->
 
@@ -1410,8 +1438,11 @@
 <!ENTITY gtk-tree-view-expander-column       "&api;gtk_fun_gtk-tree-view-expander-column.html">
 <!ENTITY gtk-tree-view-headers-clickable     "&api;gtk_fun_gtk-tree-view-headers-clickable.html">
 <!ENTITY gtk-tree-view-headers-visible       "&api;gtk_fun_gtk-tree-view-headers-visible.html">
-<!ENTITY gtk-tree-view-model                 "&api;gtk_fun_gtk-tree-view-model.html">
 
+<!ENTITY gtk-tree-view-model
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-model.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-model</code></ulink>">
 <!ENTITY gtk-tree-view-new-with-model
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-view-new-with-model.html'>

@@ -1,4 +1,4 @@
-;;; Text View Insert Image
+;;;; Text View Insert Image
 
 (in-package :gtk-tutorial)
 

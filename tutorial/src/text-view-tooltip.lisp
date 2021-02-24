@@ -1,4 +1,4 @@
-;;; Text View Tooltip
+;;;; Text View Tooltip
 
 (in-package :gtk-tutorial)
 

@@ -2558,8 +2558,8 @@ int main( int argc, char *argv[] )
   [...] )
     </programlisting>
     <para>
-     To create a mnemonic for a widget alongside the label, such as a <ulink url="&gtk-entry;">
-     <code>gtk-entry</code></ulink>, you have to point the label at the entry with
+     To create a mnemonic for a widget alongside the label, such as a &gtk-entry;,
+     you have to point the label at the entry with
      <ulink url="&gtk-label-mnemonic-widget;"><code>gtk-label-mnemonic-widget</code></ulink>:
     </para>
     <programlisting>
@@ -5568,7 +5568,7 @@ int main( int argc, char *argv[] )
       <th align="left">Values</th>
      </tr>
      <tr>
-      <td colspan="3" style="border-top:1px solid #000;"></td>
+      <td colspan="3" style="border-top:2px solid #ff9900;"></td>
      </tr>
      <tr valign="top">
       <td><code>:style</code></td>
@@ -5614,7 +5614,7 @@ int main( int argc, char *argv[] )
       <td>e.g. "Sans Italic 12"</td>
      </tr>
      <tr>
-      <td colspan="3" style="border-top:1px solid #000;"></td>
+      <td colspan="3" style="border-top:1px solid #ff9900;"></td>
      </tr>
     </table>
     <para>
@@ -6636,7 +6636,7 @@ lambda (buffer location text len)
      </para>
     </section>
 
-    <section id="GtkTreeRowReference">
+    <section id="GtkTreeRowReference" revision="2021-2-23">
      <title>GtkTreeRowReference</title>
 
      <para>
@@ -6680,8 +6680,8 @@ lambda (buffer location text len)
 
      <para>
       In practice, a programmer can either use tree row references to keep track of rows over time, or store
-      tree iterators directly, if, and only if, the model has persistent iterators.  Both &gtk-list-store;
-      and &gtk-tree-store; objects have persistent iterators, so storing iterators is possible.  However,
+      tree iterators directly, if, and only if, the model has persistent iterators. Both &gtk-list-store;
+      and &gtk-tree-store; objects have persistent iterators, so storing iterators is possible. However,
       using tree row references is definitively the right way to do things, even though it comes with some
       overhead that might impact performance in case of trees that have a very large number of rows, in that
       case it might be preferable to write a custom model anyway though. Especially beginners might find it
@@ -6691,7 +6691,7 @@ lambda (buffer location text len)
      </para>
     </section>
 
-    <section id="Usage" revision="2021-2-21">
+    <section id="Usage" revision="2021-2-23">
      <title>Usage</title>
 
      <para>
@@ -6756,17 +6756,17 @@ lambda (buffer location text len)
     </section>
    </section>
 
-   <section id="Adding_Rows_to_a_Store" revision="2021-2-21">
+   <section id="Adding_Rows_to_a_Store" revision="2021-2-23">
     <title>Adding Rows to a Store</title>
 
-    <section id="Adding Rows to a List Store" revision="2021-2-21">
+    <section id="Adding Rows to a List Store" revision="2021-2-23">
      <title>Adding Rows to a List Store</title>
      <para>
       Rows are added to a list store with the function &gtk-list-store-append;. This will insert a new empty
       row at the end of the list. There are other functions, documented in the &gtk-list-store; API reference,
-      that give you more control about where exactly the new row is inserted, but as they work very similar to
-      the function &gtk-list-store-append; and are fairly straight-forward to use, we will not deal with them
-      here. Here is a simple example of how to create a list store and add an empty row to it.
+      that give you more control about where exactly the new row is inserted, but as they work very similar
+      to the function &gtk-list-store-append; and are fairly straight-forward to use, we will not deal with
+      them here. Here is a simple example of how to create a list store and add an empty row to it.
      </para>
      <programlisting>
 (let* ((model (gtk-list-store-new "gchararray"))
@@ -6779,7 +6779,7 @@ lambda (buffer location text len)
      </para>
     </section>    
 
-    <section id="Adding Rows to a Tree Store" revision="2021-2-21">
+    <section id="Adding Rows to a Tree Store" revision="2021-2-23">
      <title>Adding Rows to a Tree Store</title>
      <para>
       Adding rows to a tree store works similar to adding rows to a list store, only that the function
@@ -6808,7 +6808,7 @@ lambda (buffer location text len)
      </programlisting>
     </section>
 
-    <section id="Speed_Issues_when_Adding_a_Lot_of_Rows" revision="2021-2-21">
+    <section id="Speed_Issues_when_Adding_a_Lot_of_Rows" revision="2021-2-23">
      <title>Speed Issues when Adding a Lot of Rows</title>
      <para>
       A common scenario is that a model needs to be filled with a lot of rows at some point, either at
@@ -6844,7 +6844,7 @@ lambda (buffer location text len)
     </section>
    </section>
 
-   <section id="Manipulating Row Data" revision="2021-2-21">
+   <section id="Manipulating Row Data" revision="2021-2-23">
     <title>Manipulating Row Data</title>
 
     <para>
@@ -6891,7 +6891,7 @@ lambda (buffer location text len)
     </para>
    </section>
 
-   <section id="Retrieving Row Data" revision="2021-2-21">
+   <section id="Retrieving Row Data" revision="2021-2-23">
     <title>Retrieving Row Data</title>
 
     <para>
@@ -6913,22 +6913,23 @@ lambda (buffer location text len)
 
     <para>
      Note that when a new row is created, all fields of a row are set to a default <code>nil</code> value
-     appropriate for the data type in question. A field of type <code>G_TYPE_INT</code> will automatically
-     contain the value 0 until it is set to a different value, and strings and all kind of pointer types will
-     be <code>nil</code> until set to something else. Those are valid contents for the model, and if you
-     are not sure that row contents have been set to something, you need to be prepared to handle
-     <code>NULL</code> pointers and the like in your code. Run the above program with an additional empty
-     row and look at the output to see this in effect.
+     appropriate for the data type in question. A field of type "gint" will automatically contain the value 0
+     until it is set to a different value, and strings and all kind of pointer types will be <code>nil</code>
+     until set to something else. Those are valid contents for the model, and if you are not sure that row
+     contents have been set to something, you need to be prepared to handle <code>NULL</code> pointers and
+     the like in your code. Run the above program with an additional empty row and look at the output to see
+     this in effect.
     </para>
    </section>
 
-   <section id="Removing Rows">
+<!-- 3.5.1 Freeing Retrieved Row Data is not inclucded -->
+
+   <section id="Removing Rows" revision="2021-2-23">
     <title>Removing Rows</title>
     <para>
-     Rows can easily be removed with the functions &gtk-list-store-remove;
-     and &gtk-tree-store-remove;. The removed row will automatically be removed from the tree
-     view as well, and all data stored will automatically be freed, with the exception of G_TYPE_POINTER
-     columns (see above).
+     Rows can easily be removed with the functions &gtk-list-store-remove; and &gtk-tree-store-remove;. The
+     removed row will automatically be removed from the tree view as well, and all data stored will
+     automatically be freed, with the exception of "gpointer" columns (see above).
     </para>
     <para>
      Removing a single row is fairly straight forward: you need to get the iter that identifies the row you
@@ -6938,22 +6939,22 @@ lambda (buffer location text len)
     <programlisting>
 ;; Signal handler for the signal "row-activated"
 (g-signal-connect view "row-activated"
-  (lambda (view path col)
-    (declare (ignore col))
-    (let* ((model (gtk-tree-view-get-model view))
-           (iter (gtk-tree-model-get-iter model path)))
+  (lambda (view path column)
+    (declare (ignore column))
+    (let* ((model (gtk-tree-view-model view))
+           (iter (gtk-tree-model-iter model path)))
       (when iter
         (gtk-list-store-remove model iter)))))
     </programlisting>
+
     <para>
      If you want to remove the n-th row from a list (or the n-th child of a tree node), you have two
-     approaches: either you first create a &gtk-tree-path;
-     that describes that row and then turn it into an iter and remove it; or you take the iter of the parent
-     node and use the function &gtk-tree-model-iter-nth-child;
-     (which will also work for list stores if you use
-     <code>nil</code> as the parent iter. Of course you could also start with the iter of the first top-level
-     row, and then step-by-step move it to the row you want, although that seems a rather awkward way of
-     doing it.  The following code snippet will remove the n-th row of a list if it exists:
+     approaches: either you first create a &gtk-tree-path; object that describes that row and then turn it
+     into an iterator and remove it, or you take the iterator of the parent node and use the function
+     &gtk-tree-model-iter-nth-child; (which will also work for list stores if you use <code>nil</code> as the
+     parent iterator. Of course you could also start with the iterator of the first top-level row, and then
+     step-by-step move it to the row you want, although that seems a rather awkward way of doing it. The
+     following code snippet will remove the n-th row of a list if it exists:
     </para>
     <programlisting>
 ;; Removes the nth row of a list store if it exists.
@@ -6966,15 +6967,16 @@ lambda (buffer location text len)
     (when iter
       (gtk-list-store-remove store iter))))
     </programlisting>
+
     <para>
      Removing multiple rows at once can be a bit tricky at times, and requires some thought on how to do this
-     best.  For example, it is not possible to traverse a store with the function
-     &gtk-tree-model-foreach;, check in the callback
-     function whether the given row should be removed and then just remove it by calling one of the stores'
-     remove functions.  This will not work, because the model is changed from within the foreach loop, which
-     might suddenly invalidate formerly valid tree iters in the foreach function, and thus lead to
-     unpredictable results.
+     best. For example, it is not possible to traverse a store with the function &gtk-tree-model-foreach;,
+     check in the callback function whether the given row should be removed and then just remove it by calling
+     one of the stores' remove functions. This will not work, because the model is changed from within the
+     foreach loop, which might suddenly invalidate formerly valid tree iterators in the foreach function, and
+     thus lead to unpredictable results.
     </para>
+
     <para>
      Here is an example for an alternative approach to removing multiple rows in one go. Here we want to
      remove all rows from the store that contain persons that are older than 30, but it could just as well be
@@ -6985,7 +6987,7 @@ lambda (buffer location text len)
 
 (let ((rowref-list nil))
   (defun foreach-func (model path iter)
-    (let ((age (gtk-tree-model-get-value model iter 2)))
+    (let ((age (gtk-tree-model-value model iter 2)))
       (when (> age 30)
         (let ((rowref (gtk-tree-row-reference-new model path)))
           (setf rowref-list (cons rowref rowref-list))))
@@ -6997,7 +6999,7 @@ lambda (buffer location text len)
     (dolist (rowref rowref-list)
       (let ((path (gtk-tree-row-reference-path rowref)))
       (when path
-        (let ((iter (gtk-tree-model-get-iter model path)))
+        (let ((iter (gtk-tree-model-iter model path)))
           (when iter
             (gtk-list-store-remove model iter))))))))
 
@@ -7007,47 +7009,50 @@ lambda (buffer location text len)
      The functions &gtk-list-store-clear; and &gtk-tree-store-clear; come in handy if you want
      to remove all rows.
     </para>
- 
-<!-- @subsection Storing GObjects (Pixbufs etc.) -->
-
    </section>
+
+<!-- 3.8 and 3.9 are not included -->
+
   </section>
 
-  <section id="Creating_a_Tree_View">
+  <section id="Creating_a_Tree_View" revision="2021-2-23">
    <title>Creating a Tree View</title>
-   <para>
-    In order to display data in a tree view widget, we need to create one first, and we need to instruct it
-    where to get the data to display from.  A new tree view is created with:
-   </para>
-   <programlisting>
-(let ((view (make-instance 'gtk-tree-view)))
-  ... )
-   </programlisting>
 
    <section id="Connecting_Tree_View_and_Model">
     <title>Connecting Tree View and Model</title>
+
+    <para>
+     In order to display data in a tree view widget, we need to create one first, and we need to instruct it
+     where to get the data to display from. A new tree view is created with:
+    </para>
+    <programlisting>
+(let ((view (gtk-tree-view-new)))
+  ... )
+    </programlisting>
+
     <para>
      Before we proceed to the next section where we display data on the screen, we need connect our data
      store to the tree view, so it knows where to get the data to display from. This is achieved with the
-     function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink>, which will by
-     itself do very little. However, it is a prerequisite for what we do in the following sections.
-    </para>
-    <para>
-     The function &gtk-tree-view-new-with-model;
-     is a convenience function for the previous two. The
-     function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink> will return the
-     model that is currently attached to a given tree view, which is particularly useful in callbacks where
-     you only get passed the tree view widget (after all, we do not want to go down the road of global
-     variables, which will inevitably lead to the Dark Side, do we?).
+     function &gtk-tree-view-model;, which will by itself do very little. However, it is a prerequisite for
+     what we do in the following sections. The function &gtk-tree-view-new-with-model; is a convenience
+     function for the previous two.
     </para>
 
+    <para>
+     The function &gtk-tree-view-model; will return the model that is currently attached to a given tree view,
+     which is particularly useful in callbacks where you only get passed the tree view widget (after all, we
+     do not want to go down the road of global variables, which will inevitably lead to the Dark Side, do
+     we?).
+    </para>
+
+<!-- Not needed
     <section id="Reference_counting">
      <title>Reference counting</title>
      <para>
       Tree models like &gtk-list-store; and
       &gtk-tree-store; are GObjects and have a reference
       count of 1 after creation. The tree view will add its own reference to the model when you add the
-      model with the function <ulink url="&gtk-tree-view-model;"><code>gtk-tree-view-model</code></ulink>,
+      model with the function &gtk-tree-view-model;,
       and will unref it again when you replace the model with another model, unset the model by passing
       <code>nil</code> as a model, or when the tree view is destroyed.
      </para>
@@ -7068,12 +7073,14 @@ lambda (buffer location text len)
   ... )
      </programlisting>
     </section>
+-->
    </section>
 
-   <section id="Tree View Look and Feel">
+   <section id="Tree View Look and Feel" revusuib="2021-2-23">
     <title>Tree View Look and Feel</title>
+
     <para>
-     There are a couple of ways to influence the look and feel of the tree view.  You can hide or show
+     There are a couple of ways to influence the look and feel of the tree view. You can hide or show
      column headers with the function <ulink url="&gtk-tree-view-headers-visible;">
      <code>gtk-tree-view-headers-visible</code></ulink>, and set them clickable or not with the function
      <ulink url="&gtk-tree-view-headers-clickable;"><code>gtk-tree-view-headers-clickable</code></ulink>
@@ -7081,10 +7088,10 @@ lambda (buffer location text len)
     </para>
     <para>
      The function <ulink url="&gtk-tree-view-rules-hint;"><code>gtk-tree-view-rules-hint</code></ulink> will
-     enable or disable rules in the tree view.  'Rules' means that every second line of the tree view has a
+     enable or disable rules in the tree view. 'Rules' means that every second line of the tree view has a
      shaded background, which makes it easier to see which cell belongs to which row in tree views that have
-     a lot of columns.  As the function name implies, this setting is only a hint; in the end it depends on
-     the active Gtk+ theme engine if the tree view shows ruled lines or not.  Users seem to have strong
+     a lot of columns. As the function name implies, this setting is only a hint; in the end it depends on
+     the active Gtk+ theme engine if the tree view shows ruled lines or not. Users seem to have strong
      feelings about rules in tree views, so it is probably a good idea to provide an option somewhere to
      disable rule hinting if you set it on tree views (but then, people also seem to have strong feelings
      about options abundance and 'sensible' default options, so whatever you do will probably upset someone
@@ -7092,237 +7099,198 @@ lambda (buffer location text len)
     </para>
     <para>
      The expander column can be set with the function <ulink url="&gtk-tree-view-expander-column;">
-     <code>gtk-tree-view-expander-column</code></ulink>.  This is the column where child elements are
+     <code>gtk-tree-view-expander-column</code></ulink>. This is the column where child elements are
      indented with respect to their parents, and where rows with children have an 'expander' arrow with which
      a node's children can be collapsed (hidden) or expanded (shown). By default, this is the first column.
     </para>
    </section>
   </section>
 
-  <section id="Mapping_Data_to_the_Screen">
+  <section id="Mapping_Data_to_the_Screen" revision="2021-2-23">
    <title>Mapping Data to the Screen</title>
-   <para>
-    As outlined above, tree view columns represent the visible columns on the screen that have a column
-    header with a column name and can be resized or sorted.  A tree view is made up of tree view columns,
-    and you need at least one tree view column in order to display something in the tree view.  Tree view
-    columns, however, do not display anything by themselves, this is done by specialised
-    &gtk-cell-renderer; objects.  Cell renderers are
-    packed into tree view columns much like widgets are packed into &gtk-box; widgets.
-   </para>
-   <para>
-    Here is a diagram (courtesy of Owen Taylor) that pictures the relationship between tree view columns and
-    cell renderers:
-   </para>
-   <figure id="figure-tree-view-column">
-    <title>GtkTreeViewColumn</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/tree-view-column.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    In the above diagram, both 'Country' and 'Representative' are tree view columns, where the 'Country' and
-    'Representative' labels are the column headers.  The 'Country' column contains two cell renderers, one to
-    display the flag icons, and one to display the country name.  The 'Representative' column only contains
-    one cell renderer to display the representative's name.
-   </para>
 
-   <section id="Cell_Renderers">
+   <section id="Indrotuction_to_Mapping_Data" revision="2021-2-23">
+    <title>Introduction to Mapping Data</title>
+
+    <para>
+     As outlined above, tree view columns represent the visible columns on the screen that have a column
+     header with a column name and can be resized or sorted. A tree view is made up of tree view columns,
+     and you need at least one tree view column in order to display something in the tree view. Tree view
+     columns, however, do not display anything by themselves, this is done by specialised &gtk-cell-renderer;
+     objects. Cell renderers are packed into tree view columns much like widgets are packed into &gtk-box;
+     widgets.
+    </para>
+
+    <para>
+     Here is a diagram (courtesy of Owen Taylor) that pictures the relationship between tree view columns and
+     cell renderers:
+    </para>
+
+    <figure id="figure-tree-view-column">
+     <title>GtkTreeViewColumn</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/tree-view-column.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+
+    <para>
+     In the above diagram, both 'Country' and 'Representative' are tree view columns, where the 'Country' and
+     'Representative' labels are the column headers. The 'Country' column contains two cell renderers, one to
+     display the flag icons, and one to display the country name. The 'Representative' column only contains
+     one cell renderer to display the representative's name.
+    </para>
+   </section>
+
+   <section id="Cell_Renderers" revision="2021-2-23">
     <title>Cell Renderers</title>
+
     <para>
      Cell renderers are objects that are responsible for the actual rendering of data within a
-     &gtk-tree-view-column;.  They are basically just
-     GObjects (i.e. not widgets) that have certain properties, and those properties determine how a
-     single cell is drawn.
+     &gtk-tree-view-column;. They are basically just GObjects (i.e. not widgets) that have certain properties,
+     and those properties determine how a single cell is drawn.
     </para>
     <para>
      In order to draw cells in different rows with different content, a cell renderer's properties need to be
-     set accordingly for each single row/cell to render.  This is done either via attributes or cell data
-     functions (see below). If you set up attributes, you tell Gtk which model column contains the data from
-     which a property should be set before rendering a certain row.  Then the properties of a cell renderer
-     are set automatically according to the data in the model before each row is rendered.  Alternatively,
+     set accordingly for each single row/cell to render. This is done either via attributes or cell data
+     functions (see below). If you set up attributes, you tell GTK+ which model column contains the data from
+     which a property should be set before rendering a certain row. Then the properties of a cell renderer
+     are set automatically according to the data in the model before each row is rendered. Alternatively,
      you can set up cell data functions, which are called for each row to be rendererd, so that you can
-     manually set the properties of the cell renderer before it is rendered.  Both approaches can be used at
-     the same time as well.  Lastly, you can set a cell renderer property when you create the cell renderer.
+     manually set the properties of the cell renderer before it is rendered. Both approaches can be used at
+     the same time as well. Lastly, you can set a cell renderer property when you create the cell renderer.
      That way it will be used for all rows/cells to be rendered (unless it is changed later of course).
     </para>
     <para>
      Different cell renderers exist for different purposes:
     </para>
-    <table id="table-gtk-cell-renderer" frame='all'>
-     <title>GtkCellRenderer</title>
-     <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-      <thead>
-       <row>
-        <entry>Class&#x2001;&#x2001;&#x2001;&#x2001;&#x2001;</entry>
-        <entry>Description</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry valign="top"><code>gtk-cell-renderer-text</code></entry>
-        <entry valign="top">
-         Renders strings or numbers or boolean values as text ("Joe", "99.32", "true").
-        </entry>
-       </row>
-       <row>
-        <entry valign="top"><code>gtk-cell-renderer-pixbuf</code></entry>
-        <entry valign="top">
-         Is used to display images; either user-defined images, or one of the stock icons that come with
-         Gtk+.
-        </entry>
-       </row>
-       <row>
-        <entry valign="top"><code>gtk-cell-renderer-toggle</code></entry>
-        <entry valign="top">
-         Displays a boolean value in form of a check box or as a radio button.
-        </entry>
-       </row>
-       <row>
-        <entry valign="top"><code>gtk-cell-editable</code></entry>
-        <entry valign="top">
-         Is a special cell that implements editable cells (i.e. <ulink url="&gtk-entry;">
-         <code>gtk-entry</code></ulink> or <ulink url="&gtk-spin-button;">
-         <code>gtk-spin-button</code></ulink> in a treeview).  This is not a cell renderer!  If you
-         want to have editable text cells, use &gtk-cell-renderer-text;
-         and make sure the "editable" property is set.
-         <ulink url="&gtk-cell-editable;"><code>gtk-cell-editable</code></ulink> is only used by
-         implementations of editable cells and widgets that can be inside of editable cells.  You are
-         unlikely to ever need it.
-        </entry>
-       </row>
-     </tbody>
-    </tgroup>
-   </table>
-   <para>
-    Contrary to what one may think, a cell renderer does not render just one single cell, but is responsible
-    for rendering part or whole of a tree view column for each single row.  It basically starts in the first
-    row and renders its part of the column there.  Then it proceeds to the next row and renders its part of
-    the column there again.  And so on.
-   </para>
-   <para>
-    How does a cell renderer know what to render? A cell renderer object has certain 'properties' that are
-    documented in the API reference (just like most other objects, and widgets).  These properties determine
-    what the cell renderer is going to render and how it is going to be rendered.  Whenever the cell renderer 
-    is called upon to render a certain cell, it looks at its properties and renders the cell accordingly.
-    This means that whenever you set a property or change a property of the cell renderer, this will affect
-    all rows that are rendered after the change, until you change the property again.
-   </para>
-   <para>
-    Here is a diagram (courtesy of Owen Taylor) that tries to show what is going on when rows are rendered:
-   </para>
-   <figure id="figure-cell-renderer-properties">
-    <title>Cell Renderer Properties</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/cell-renderer-properties.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    The above diagram shows the process when attributes are used. In the example, a text cell renderer's
-    "text" property has been linked to the first model column. The "text" property contains the string to be
-    rendered.  The "foreground" property, which contains the colour of the text to be shown, has been linked
-    to the second model column.  Finally, the "strikethrough" property, which determines whether the text
-    should be with a horizontal line that strikes through the text, has been connected to the third model
-    column (of type <code>G_TYPE_BOOLEAN</code>).
-   </para>
-   <para>
-    With this setup, the cell renderer's properties are 'loaded' from the model before each cell is rendered.
-   </para>
-   <para>
-    Here is a silly and utterly useless little example that demonstrates this behaviour, and introduces some
-    of the most commonly used properties of &gtk-cell-renderer-text;:
-   </para>
-   <programlisting>
-(defun create-and-fill-model ()
-  (let ((model (make-instance 'gtk-tree-store
-                              :column-types '("gchararray" "gchararray"))))
-    ;; Append a top level row and leave it empty
-    (gtk-tree-store-append model nil)
-    ;; Append a second top level row, and fill it with some data
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Joe" "Average")))
-      ;; Append a child to the second top level row, and fill in some data
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Jane" "Average"))
-    model))
 
-(defun create-view-and-model ()
-  (let* ((model (create-and-fill-model))
-         (view (make-instance 'gtk-tree-view
-                              :model model)))
-  ;; Create the first column
-  (let* ((column (make-instance 'gtk-tree-view-column
-                                :title "First Name"))
-         (renderer (make-instance 'gtk-cell-renderer-text
-                                  :text "Booooo!")))
-    ;; pack tree view column into tree view
-    (gtk-tree-view-append-column view column)
-    ;; pack cell renderer into tree view column
-    (gtk-tree-view-column-pack-start column renderer))
+    <table id="table-gtk-cell-renderer">
+     <caption>GtkCellRenderer</caption>
+     <colgroup>
+      <col style="width:30%"/>
+      <col style="width:70%"/>
+     </colgroup>
+     <tr>
+      <th align="left">Class</th>
+      <th align="left">Description</th>
+     </tr>
+     <tr>
+      <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+     </tr>
+     <tr valign="top">
+      <td><code>gtk-cell-renderer-text</code></td>
+      <td>
+       Renders strings or numbers or boolean values as text ("Joe", "99.32", "true"). Sets the given
+       iterator to the first top-level item in the list or tree.
+      </td>
+     </tr>
+     <tr valign="top">
+      <td><code>gtk-cell-renderer-pixbuf</code></td>
+      <td>
+        Is used to display images, either user-defined images, or one of the stock icons that come with GTK+.
+      </td>
+     </tr>
+     <tr valign="top">
+      <td><code>gtk-cell-renderer-toggle</code></td>
+      <td>
+        Displays a boolean value in form of a check box or as a radio button.
+      </td>
+     </tr>
+     <tr valign="top">
+      <td><code>gtk-cell-renderer-editable</code></td>
+      <td>
+        Is a special cell that implements editable cells (i.e. the &gtk-entry; or &gtk-spin-button; widgets
+        in a tree view). This is not a cell renderer. If you want to have editable text cells, use
+        the &gtk-cell-renderer-text; object and make sure the "editable" property is set. The
+        &gtk-cell-editable; widget is only used by implementations of editable cells and widgets that can be
+        inside of editable cells. You are unlikely to ever need it.
+      </td>
+     </tr>
+     <tr>
+      <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+     </tr>
+    </table>
 
-  ;; Create the second column
-  (let* ((column (make-instance 'gtk-tree-view-column
-                                :title "Last Name"))
-         (renderer (make-instance 'gtk-cell-renderer-text
-                                  :cell-background "Orange"
-                                  :cell-background-set t)))
-    ;; pack tree view column into tree view
-    (gtk-tree-view-append-column view column)
-    ;; pack cell renderer into tree view column
-    (gtk-tree-view-column-pack-start column renderer))
-  ;; No selection possible
-  (setf (gtk-tree-selection-mode (gtk-tree-view-selection view)) :none)
-  view))
+    <para>
+     Contrary to what one may think, a cell renderer does not render just one single cell, but is responsible
+     for rendering part or whole of a tree view column for each single row. It basically starts in the first
+     row and renders its part of the column there. Then it proceeds to the next row and renders its part of
+     the column there again. And so on.
+    </para>
+    <para>
+     How does a cell renderer know what to render? A cell renderer object has certain 'properties' that are
+     documented in the API reference (just like most other objects, and widgets). These properties determine
+     what the cell renderer is going to render and how it is going to be rendered. Whenever the cell renderer 
+     is called upon to render a certain cell, it looks at its properties and renders the cell accordingly.
+     This means that whenever you set a property or change a property of the cell renderer, this will affect
+     all rows that are rendered after the change, until you change the property again.
+    </para>
+    <para>
+     Here is a diagram (courtesy of Owen Taylor) that tries to show what is going on when rows are rendered:
+    </para>
+    <figure id="figure-cell-renderer-properties">
+     <title>Cell Renderer Properties</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/cell-renderer-properties.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+    <para>
+     The above diagram shows the process when attributes are used. In the example, a text cell renderer's
+     "text" property has been linked to the first model column. The "text" property contains the string to be
+     rendered. The "foreground" property, which contains the colour of the text to be shown, has been linked
+     to the second model column. Finally, the "strikethrough" property, which determines whether the text
+     should be with a horizontal line that strikes through the text, has been connected to the third model
+     column (of type "gboolean").
+    </para>
+    <para>
+     With this setup, the cell renderer's properties are 'loaded' from the model before each cell is rendered.
+    </para>
+    <para>
+     Here is a silly and utterly useless little example that demonstrates this behaviour, and introduces some
+     of the most commonly used properties of the &gtk-cell-renderer-text; object:
+    </para>
 
-(defun example-cell-renderer-properties ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Cell Renderer Properties"
-                                 :type :toplevel
-                                 :default-width 350
-                                 :default-height 200))
-          (view (create-view-and-model-3)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-   </programlisting>
-   <para>
-    The above code should produce something looking like this:
-   </para>
-   <figure id="figure-renderer-properties">
-    <title>Persistent Cell Renderer Properties</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/renderer-properties.jpg" format="jpg"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    It looks like the tree view display is partly correct and partly incomplete.  On the one hand the tree
-    view renders the correct number of rows, and it displays the hierarchy correctly (on the left), but it
-    does not display any of the data that we have stored in the model.  This is because we have made no
-    connection between what the cell renderers should render and the data in the model.  We have simply set
-    some cell renderer properties on start-up, and the cell renderers adhere to those set properties
-    meticulously.
-   </para>
-   <para>
-    There are two different ways to connect cell renderers to data in the model: attributes and cell data
-    functions.
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/cell-renderer-properties.lisp" parse="text"/>
+    </programlisting>
+
+    <para>
+     The above code should produce something looking like this:
+    </para>
+
+    <figure id="figure-renderer-properties">
+     <title>Persistent Cell Renderer Properties</title>
+     <mediaobject>
+      <imageobject>
+       <imagedata fileref="figures/cell-renderer-properties.png" format="png"></imagedata>
+      </imageobject>
+     </mediaobject>
+    </figure>
+
+    <para>
+     It looks like the tree view display is partly correct and partly incomplete. On the one hand the tree
+     view renders the correct number of rows, and it displays the hierarchy correctly (on the left), but it
+     does not display any of the data that we have stored in the model. This is because we have made no
+     connection between what the cell renderers should render and the data in the model. We have simply set
+     some cell renderer properties on start-up, and the cell renderers adhere to those set properties
+     meticulously.
+    </para>
+    <para>
+     There are two different ways to connect cell renderers to data in the model: attributes and cell data
+     functions.
     </para>
    </section>
 
-   <section id="Attributes">
+   <section id="Attributes" revision="2021-2-23">
     <title>Attributes</title>
     <para>
-     An attribute is a connection between a cell renderer property and a field/column in the model.  Whenever
+     An attribute is a connection between a cell renderer property and a field/column in the model. Whenever
      a cell is to be rendered, a cell renderer property will be set to the values of the specified model
-     column of the row that is to be rendered.  It is very important that the column's data type is the same
+     column of the row that is to be rendered. It is very important that the column's data type is the same
      type that a property takes according to the API reference manual. Here is some code to look at:
     </para>
     <programlisting>
@@ -7339,38 +7307,34 @@ lambda (buffer location text len)
     </para>
     <para>
      Again, when setting attributes it is very important that the data type stored in a model column is the
-     same as the data type that a property requires as argument.  Check the API reference manual to see the
-     data type that is required for each property.  When reading through the example a bit further above,
-     you might have noticed that we set the "cell-background" property of a
-     &gtk-cell-renderer-text;, even though the API
-     documentation does not list such a property.  We can do this, because
-     &gtk-cell-renderer-text; is derived from
-     &gtk-cell-renderer;, which does in fact have such a
-     property. Derived classes inherit the properties of their parents.  This is the same as with widgets
-     that you can cast into one of their ancestor classes.  The API reference has an object hierarchy that
-     shows you which classes a widget or some other object is derived from.
+     same as the data type that a property requires as argument. Check the API reference manual to see the
+     data type that is required for each property. When reading through the example a bit further above, you
+     might have noticed that we set the "cell-background" property of a &gtk-cell-renderer-text; object, even
+     though the API documentation does not list such a property. We can do this, because the
+     &gtk-cell-renderer-text; object is derived from the &gtk-cell-renderer; object, which does in fact have
+     such a property. Derived classes inherit the properties of their parents. This is the same as with
+     widgets that you can cast into one of their ancestor classes. The API reference has an object hierarchy
+     that shows you which classes a widget or some other object is derived from.
+    </para>
+
+    <para>
+     There are two more noteworthy things about &gtk-cell-renderer; properties: one is that sometimes there
+     are different properties which do the same, but take different arguments, such as the
+     <code>"foreground"</code> and <code>"foreground-rgba"</code> properties of the &gtk-cell-renderer-text;
+     object (which specify the text colour). The <code>"foreground"</code> property take a colour in string
+     form, such as "Orange" or "CornflowerBlue", whereas "foreground-rgba" takes a &gdk-rgba; color argument.
+     It is up to you to decide which one to use - the effect will be the same. The other thing worth
+     mentioning is that most properties have a <code>"foo-set"</code> property taking a boolean value as
+     argument, such as <code>"foreground-set"</code>. This is useful when you want to have a certain setting
+     have an effect or not. If you set the <code>"foreground"</code> property, but set
+     <code>"foreground-set"</code> to <code>nil</code>, then your foreground color setting will be
+     disregarded. This is useful in cell data functions (see below), or, for example, if you want set the
+     foreground colour to a certain value at start-up, but only want this to be in effect in some columns,
+     but not in others (in which case you could just connect the <code>"foreground-set"</code> property to a
+     model column of type "gboolean" with the function &gtk-tree-view-column-add-attribute;.
     </para>
     <para>
-     There are two more noteworthy things about @xurl{gtk-cell-renderer} properties: one is that sometimes
-     there are different properties which do the same, but take different arguments, such as the
-     <code>"foreground"</code> and <code>"foreground-rgba"</code> properties of
-     &gtk-cell-renderer-text; (which specify the
-     text colour).  The <code>"foreground"</code> property take a colour in string form, such as "Orange"
-     or "CornflowerBlue", whereas "foreground-rgba" takes a &gdk-rgba;
-     argument.  It is up to you to decide which one to use - the effect will
-     be the same.  The other thing worth mentioning is that most properties have a <code>"foo-set"</code>
-     property taking a boolean value as argument, such as <code>"foreground-set"</code>.  This is useful when
-     you want to have a certain setting have an effect or not.  If you set the <code>"foreground"</code>
-     property, but set <code>"foreground-set"</code> to <code>nil</code>, then your foreground color setting
-     will be disregarded.  This is useful in cell data functions (see below), or, for example, if you want
-     set the foreground colour to a certain value at start-up, but only want this to be in effect in some
-     columns, but not in others (in which case you could just connect the <code>"foreground-set"</code>
-     property to a model column of type <code>G_TYPE_BOOLEAN</code> with the function
-     <ulink url="&gtk-tree-view-column-add-attribute;">
-     <code>gtk-tree-view-column-add-attribute</code></ulink>.
-    </para>
-    <para>
-     Setting column attributes is the most straight-forward way to get your model data to be displayed.  This
+     Setting column attributes is the most straight-forward way to get your model data to be displayed. This
      is usually used whenever you want the data in the model to be displayed exactly as it is in the model.
     </para>
     <para>
@@ -7378,68 +7342,28 @@ lambda (buffer location text len)
     </para>
    </section>
 
-   <section id="Cell_Data_Functions">
+   <section id="Cell_Data_Functions" revision="2021-2-23">
     <title>Cell Data Functions</title>
     <para>
      A cell data function is a function that is called for a specific cell renderer for each single row
-     before that row is rendered.  It gives you maximum control over what exactly is going to be rendered, as
-     you can set the cell renderer's properties just like you want to have them.  Remember not only to set a
+     before that row is rendered. It gives you maximum control over what exactly is going to be rendered, as
+     you can set the cell renderer's properties just like you want to have them. Remember not only to set a
      property if you want it to be active, but also to unset a property if it should not be active (and it
      might have been set in the previous row).
     </para>
     <para>
      Cell data functions are often used if you want more fine-grained control over what is to be displayed,
-     or if the standard way to display something is not quite like you want it to be.  A case in point are
-     floating point numbers.  If you want floating point numbers to be displayed in a certain way, say with
-     only one digit after the colon/comma, then you need to use a cell data function.  Use
-     <ulink url="&gtk-tree-view-column-set-cell-data-func;">
-     <code>gtk-tree-view-column-set-cell-data-func</code></ulink> to set up a cell data function for a
-     particular cell renderer. Here is an example:
+     or if the standard way to display something is not quite like you want it to be. A case in point are
+     floating point numbers. If you want floating point numbers to be displayed in a certain way, say with
+     only one digit after the colon/comma, then you need to use a cell data function. Use the function
+     &gtk-tree-view-column-set-cell-data-func; to set up a cell data function for a particular cell renderer.
+     Here is an example:
     </para>
-    <programlisting>
-   enum
-   {
-     COLUMN_NAME = 0,
-     COLUMN_AGE_FLOAT,
-     NUM_COLS
-   };
 
-   ...
-
-   void
-   age_cell_data_function (GtkTreeViewColumn *col,
-                           GtkCellRenderer   *renderer,
-                           GtkTreeModel      *model,
-                           GtkTreeIter       *iter,
-                           gpointer           user_data)
-   {
-     gfloat  age;
-     gchar   buf[20];
-
-     gtk_tree_model_get(model, iter, COLUMN_AGE_FLOAT, &#x26;age, -1);
-
-     g_snprintf(buf, sizeof(buf), "%.1f", age);
-
-     g_object_set(renderer, "text", buf, NULL);
-   }
-
-   ...
-
-   liststore = gtk_list_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_FLOAT);
-
-   col = gtk_tree_view_column_new();
-
-   cell = gtk_cell_renderer_text_new();
-
-   gtk_tree_view_column_pack_start(col, cell, TRUE);
-
-   gtk_tree_view_column_set_cell_data_func(col,
-                                           cell,
-                                           age_cell_data_func,
-                                           NULL, NULL);
-
-   ...
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/tree-view-column-data-func.lisp" parse="text"/>
     </programlisting>
+
     <para>
      For each row to be rendered by this particular cell renderer, the cell data function is going to be
      called, which then retrieves the float from the model, and turns it into a string where the float has
@@ -7447,125 +7371,110 @@ lambda (buffer location text len)
     </para>
     <para>
      This is only a simple example, you can make cell data functions a lot more complicated if you want to.
-     As always, there is a trade-off to keep in mind though.  Your cell data function is going to be called
-     every single time a cell in that (renderer) column is going to be rendered.  Go and check how often this
-     function is called in your program if you ever use one.  If you do time-consuming operations within a
-     cell data function, things are not going to be fast, especially if you have a lot of rows.  The
+     As always, there is a trade-off to keep in mind though. Your cell data function is going to be called
+     every single time a cell in that (renderer) column is going to be rendered. Go and check how often this
+     function is called in your program if you ever use one. If you do time-consuming operations within a
+     cell data function, things are not going to be fast, especially if you have a lot of rows. The
      alternative in this case would have been to make an additional column
      <code>COLUMN_AGE_FLOAT_STRING</code> of type <code>G_TYPE_STRING</code>, and to set the float in string
      form whenever you set the float itself in a row, and then hook up the string column to a text cell
-     renderer using attributes.  This way the float to string conversion would only need to be done once.
+     renderer using attributes. This way the float to string conversion would only need to be done once.
      This is a cpu cycles / memory trade-off, and it depends on your particular case which one is more
-     suitable.  Things you should probably not do is to convert long strings into UTF8 format in a cell data
+     suitable. Things you should probably not do is to convert long strings into UTF8 format in a cell data
      function, for example.
     </para>
     <para>
      You might notice that your cell data function is called at times even for rows that are not visible at
-     the moment.  This is because the tree view needs to know its total height, and in order to calculate
+     the moment. This is because the tree view needs to know its total height, and in order to calculate
      this it needs to know the height of each and every single row, and it can only know that by having it
      measured, which is going to be slow when you have a lot of rows with different heights (if your rows all
      have the same height, there should not be any visible delay though).
     </para>
 
-    <section id="GtkCellRendererText_and_Integer_Boolean_and_Float_Types">
+    <section id="GtkCellRendererText_and_Integer_Boolean_and_Float_Types" revision="2021-2-23">
      <title>GtkCellRendererText and Integer, Boolean and Float Types</title>
+
      <para>
       It has been said before that, when using attributes to connect data from the model to a cell renderer
-      property, the data in the model column specified in the function
-      <ulink url="&gtk-tree-view-column-add-attribute;">
-      <code>gtk-tree-view-column-add-attribute</code></ulink> must always be of the same type as the data
-      type that the property requires.
+      property, the data in the model column specified in the function &gtk-tree-view-column-add-attribute;
+      must always be of the same type as the data type that the property requires.
      </para>
      <para>
       This is usually true, but there is an exception: if you use the function
-      <ulink url="&gtk-tree-view-column-add-attribute;">
-      <code>gtk-tree-view-column-add-attribute</code></ulink> to connect a text cell renderer's "text"
-      property to a model column, the model column does not need to be of <code>G_TYPE_STRING</code>, it can
-      also be one of most other fundamental GLib types, e.g. <code>G_TYPE_BOOLEAN</code>,
-      <code>G_TYPE_INT</code>, <code>G_TYPE_UINT</code>, <code>G_TYPE_LONG</code>, <code>G_TYPE_ULONG</code>,
-      <code>G_TYPE_INT64</code>, <code>G_TYPE_UINT64</code>, <code>G_TYPE_FLOAT</code>, or
-      <code>G_TYPE_DOUBLE</code>.  The text cell renderer will automatically display the values of these
-      types correctly in the tree view. For example:
+      &gtk-tree-view-column-add-attribute; to connect a text cell renderer's "text" property to a model
+      column, the model column does not need to be of "gchararray", it can also be one of most other
+      fundamental GLib types, e.g. "gboolean", "gint", "guint", "glong", "gulong", "gint64", "guint64",
+      "gfloat", or "gdouble". The text cell renderer will automatically display the values of these types
+      correctly in the tree view. For example:
      </para>
+
      <programlisting>
-  enum
-  {
-    COL_NAME = 0,
-    COL_YEAR_BORN,
-    NUM_COLS
-  };
-
-  liststore = gtk_list_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
-
-  ...
-
-  cell = gtk_cell_renderer_text_new();
-  col = gtk_tree_view_column_new();
-  gtk_tree_view_column_add_attribute(col, cell, "text", COL_YEAR_BORN);
-
-  ...
+(let ((store (gtk-list-store-new "gchararray" "guint"))
+      (renderer (gtk-cell-renderer-text-new))
+      (column (gtk-tree-view-column-new)))
+  (gtk-tree-view-column-add-attribute column renderer "text" 1)
+  ... )
      </programlisting>
+
      <para>
       Even though the "text" property would require a string value, we use a model column of an integer type
-      when setting attributes.  The integer will then automatically be converted into a string before the
+      when setting attributes. The integer will then automatically be converted into a string before the
       cell renderer property is set.
      </para>
      <para>
-      If you are using a floating point type, i.e. <code>G_TYPE_FLOAT</code> or <code>G_TYPE_DOUBLE</code>,
-      there is no way to tell the text cell renderer how many digits after the floating point (or comma)
-      should be rendered.  If you only want a certain amount of digits after the point/comma, you will need
-      to use a cell data function.
+      If you are using a floating point type, i.e. "gfloat" or "gdouble", there is no way to tell the text
+      cell renderer how many digits after the floating point (or comma) should be rendered. If you only want
+      a certain amount of digits after the point/comma, you will need to use a cell data function.
      </para>
     </section>
    </section>
 
-   <section id="GtkCellRendererText, UTF8, and pango markup">
-    <title>GtkCellRendererText, UTF8, and pango markup</title>
+   <section id="GtkCellRendererText, UTF8, and Pango markup" revision="2021-2-23">
+    <title>GtkCellRendererText, UTF8, and Pango markup</title>
     <para>
-     All text used in Gtk+-2.0 widgets needs to be in UTF8 encoding, and
-     &gtk-cell-renderer-text; is no exception.  Text
-     in plain ASCII is automatically valid UTF8, but as soon as you have special characters that do not
+     All text used in GTK+ widgets needs to be in UTF8 encoding, and &gtk-cell-renderer-text; is no exception.
+     Text in plain ASCII is automatically valid UTF8, but as soon as you have special characters that do not
      exist in plain ASCII (usually characters that are not used in the English language alphabet), they need
-     to be in UTF8 encoding.  There are many different character encodings that all specify different ways to
-     tell the computer which character is meant.  Gtk+-2.0 uses UTF8, and whenever you have text that is in a
-     different encoding, you need to convert it to UTF8 encoding first, using one of the GLib
-     <code>g_convert</code> family of functions.  If you only use text input from other Gtk+ widgets, you are
-     on the safe side, as they will return all text in UTF8 as well.
+     to be in UTF8 encoding. There are many different character encodings that all specify different ways to
+     tell the computer which character is meant. GTK+ uses UTF8, and whenever you have text that is in a
+     different encoding, you need to convert it to UTF8 encoding first. If you only use text input from other
+     GTK+ widgets, you are on the safe side, as they will return all text in UTF8 as well.
     </para>
     <para>
      However, if you use 'external' sources of text input, then you must convert that text from the text's
      encoding (or the user's locale) to UTF8, or it will not be rendered correctly (either not at all, or it
-     will be cut off after the first invalid character).  Filenames are especially hard, because there is no
+     will be cut off after the first invalid character). Filenames are especially hard, because there is no
      indication whatsoever what character encoding a filename is in (it might have been created when the user
-     was using a different locale, so filename encoding is basically unreliable and broken).  You may want to
-     convert to UTF8 with fallback characters in that case.  You can check whether a string is valid UTF8
-     with <code>g_utf8_validate</code>.  You should, in this author's opinion at least, put these checks into
+     was using a different locale, so filename encoding is basically unreliable and broken). You may want to
+     convert to UTF8 with fallback characters in that case. You can check whether a string is valid UTF8
+     with <code>g_utf8_validate</code>. You should, in this author's opinion at least, put these checks into
      your code at crucial places wherever it is not affecting performance, especially if you are an
-     English-speaking programmer that has little experience with non-English locales.  It will make it easier
+     English-speaking programmer that has little experience with non-English locales. It will make it easier
      for others and yourself to spot problems with non-English locales later on.
     </para>
     <para>
-     In addition to the <code>"text"</code> property, &gtk-cell-renderer-text;
-     also has a <code>"markup"</code> property that takes text
-     with pango markup as input. Pango markup allows you to place special tags into a text string that affect
-     the style the text is rendered (see the pango documentation).  Basically you can achieve everything you
-     can achieve with the other properties also with pango markup (only that using properties is more
-     efficient and less messy).  Pango markup has one distinct advantage though that you cannot achieve with
-     text cell renderer properties: with pango markup, you can change the text style in the middle of the
-     text, so you could, for example, render one part of a text string in bold print, and the rest of the
-     text in normal.  Here is an example of a string with pango markup:
+     In addition to the <code>"text"</code> property, the &gtk-cell-renderer-text; object also has a
+     <code>"markup"</code> property that takes text with Pango markup as input. Pango markup allows you to
+     place special tags into a text string that affect the style the text is rendered (see the Pango
+     documentation). Basically you can achieve everything you can achieve with the other properties also with
+     Pango markup (only that using properties is more efficient and less messy). Pango markup has one distinct
+     advantage though that you cannot achieve with text cell renderer properties: with Pango markup, you can
+     change the text style in the middle of the text, so you could, for example, render one part of a text
+     string in bold print, and the rest of the text in normal. Here is an example of a string with Pango
+     markup:
     </para>
-    <para>
-     "You can have text in <code>&#x3c;b>bold&#x3c;/b></code> or in a 
-     <code>&#x3c;span color='Orange'>different color&#x3c;/span></code>"
-    </para>
+    <programlisting>
+"You can have text in <code>&#x3c;b>bold&#x3c;/b></code> or in a
+<code>&#x3c;span color='Orange'>different color&#x3c;/span></code>"
+    </programlisting>
     <para>
      When using the <code>"markup"</code> property, you need to take into account that the
      <code>"markup"</code> and <code>"text"</code> properties do not seem to be mutually exclusive (I suppose
      this could be called a bug). In other words: whenever you set <code>"markup"</code> (and have used the
      <code>"text"</code> property before), set the <code>"text"</code> property to <code>nil</code>, and
-     vice versa. Example:
+     vice versa.
     </para>
+
     <programlisting>
   ...
 
@@ -7583,10 +7492,12 @@ lambda (buffer location text len)
 
   ...
     </programlisting>
+
     <para>
-     Another thing to keep in mind when using pango markup text is that you might need to escape text if you
-     construct strings with pango markup on the fly using random input data. For example:
+     Another thing to keep in mind when using Pango markup text is that you might need to escape text if you
+     construct strings with Pango markup on the fly using random input data.
     </para>
+
     <programlisting>
   ...
 
@@ -7608,21 +7519,22 @@ lambda (buffer location text len)
 
   ...
     </programlisting>
+
     <para>
      The above example will not work if artist_string is "Simon &#x26; Garfunkel" for example, because the
-     &#x26; character is one of the characters that is special.  They need to be escaped, so that pango knows
-     that they do not refer to any pango markup, but are just characters.  In this case the string would need
-     to be "Simon &#x26; Garfunkel" in order to make sense in between the pango markup in which it is going
-     to be pasted.  You can escape a string with <code>g_markup_escape</code> (and you will need to free the
+     &#x26; character is one of the characters that is special. They need to be escaped, so that pango knows
+     that they do not refer to any pango markup, but are just characters. In this case the string would need
+     to be "Simon &#x26; Garfunkel" in order to make sense in between the Pango markup in which it is going
+     to be pasted. You can escape a string with <code>g_markup_escape</code> (and you will need to free the
      resulting newly-allocated string again with <code>g_free</code>).
     </para>
     <para>
-     It is possible to combine both pango markup and text cell renderer properties. Both will be 'added'
+     It is possible to combine both Pango markup and text cell renderer properties. Both will be 'added'
      together to render the string in question, only that the text cell renderer properties will be applied
-     to the whole string. If you set the <code>"markup"</code> property to normal text without any pango
+     to the whole string. If you set the <code>"markup"</code> property to normal text without any Pango
      markup, it will render as normal text just as if you had used the <code>"text"</code> property. However,
      as opposed to the <code>"text"</code> property, special characters in the <code>"markup"</code> property
-     text would still need to be escaped, even if you do not use pango markup in the text.
+     text would still need to be escaped, even if you do not use Pango markup in the text.
     </para>
    </section>
 
@@ -7630,7 +7542,7 @@ lambda (buffer location text len)
     <title>A Working Example</title>
     <para>
      Here is our example from the very beginning again (with an additional column though), only that the
-     contents of the model are rendered properly on the screen this time.  Both attributes and a cell data
+     contents of the model are rendered properly on the screen this time. Both attributes and a cell data
      function are used for demonstration purposes.
     </para>
     <programlisting>
@@ -8577,43 +8489,8 @@ main (int argc, char **argv)
     </figure>
     <example id="example-color-button-label">
      <title>Color Button</title>
-     <programlisting>
-(defun example-color-button-label ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Color Button"
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 200))
-          (provider (gtk-css-provider-new))
-          (box (make-instance 'gtk-box
-                              :orientation :horizontal))
-          (label (make-instance 'gtk-label
-                                :label "&lt;big>&lt;b>Color button&lt;/b>&lt;/big>"
-                                :use-markup t))
-          (button (make-instance 'gtk-color-button
-                                 :rgba (gdk-rgba-parse "Black"))))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Handler for the "color-set" signal
-      (g-signal-connect button "color-set"
-         (lambda (widget)
-           (let* ((rgba (gtk-color-chooser-rgba widget))
-                  (css-label (format nil "label { color : ~a }"
-                                         (gdk-rgba-to-string rgba)))
-                  (context (gtk-widget-style-context label)))
-             ;; Update the color of the label
-             (gtk-css-provider-load-from-data provider css-label)
-             (gtk-style-context-add-provider context
-                                             provider
-                                             +gtk-style-provider-priority-user+))))
-      ;; Pack and show the widgets
-      (gtk-box-pack-start box button)
-      (gtk-box-pack-start box label)
-      (gtk-container-add window box)
-      (gtk-widget-show-all window))))
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/color-button-label.lisp" parse="text"/>
      </programlisting>
     </example>
     <para>
@@ -8647,83 +8524,8 @@ main (int argc, char **argv)
     </figure>
     <example id="example-color-chooser-palette">
      <title>Color Chooser Dialog with custom palettes</title>
-     <programlisting>
-(let ((message "Click to change the background color.")
-      (bg-color (gdk-rgba-parse "White"))
-      ;; Color palette with 9 Red RGBA colors
-      (palette1 (list (gdk-rgba-parse "IndianRed")
-                      (gdk-rgba-parse "LightCoral")
-                      (gdk-rgba-parse "Salmon")
-                      (gdk-rgba-parse "DarkSalmon")
-                      (gdk-rgba-parse "LightSalmon")
-                      (gdk-rgba-parse "Crimson")
-                      (gdk-rgba-parse "Red")
-                      (gdk-rgba-parse "FireBrick")
-                      (gdk-rgba-parse "DarkRed")))
-      ;; Gray palette with 9 gray RGBA colors
-      (palette2 (list (gdk-rgba-parse "Gainsboro")
-                      (gdk-rgba-parse "LightGray")
-                      (gdk-rgba-parse "Silver")
-                      (gdk-rgba-parse "DarkGray")
-                      (gdk-rgba-parse "Gray")
-                      (gdk-rgba-parse "DimGray")
-                      (gdk-rgba-parse "LightSlateGray")
-                      (gdk-rgba-parse "SlateGray")
-                      (gdk-rgba-parse "DarkSlateGray"))))
-
-  (defun example-color-chooser-dialog ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :title "Example Color Chooser Dialog"
-                                   :default-width 400))
-            (area (make-instance 'gtk-drawing-area)))
-        (g-signal-connect window "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        ;; Draw the background color and a hint on the drawing area
-        (g-signal-connect area "draw"
-            (lambda (widget cr)
-              (declare (ignore widget))
-              (let ((cr (pointer cr))
-                    (red (gdk-rgba-red bg-color))
-                    (green (gdk-rgba-green bg-color))
-                    (blue (gdk-rgba-blue bg-color)))
-                    ;; Paint the current color on the drawing area
-                    (cairo-set-source-rgb cr red green blue)
-                    (cairo-paint cr)
-                    ;; Print a hint on the drawing area
-                    (cairo-set-source-rgb cr (- 1 red) (- 1 green) (- 1 blue))
-                    (cairo-select-font-face cr "Sans")
-                    (cairo-set-font-size cr 12)
-                    (cairo-move-to cr 12 24)
-                    (cairo-show-text cr message)
-                    (cairo-destroy cr))))
-        ;; Create and run a color chooser dialog to select a background color
-        (g-signal-connect area "event"
-            (lambda (widget event)
-              (declare (ignore widget))
-              (when (eq (gdk-event-type event) :button-press)
-                (let ((dialog (make-instance 'gtk-color-chooser-dialog
-                                             :use-alpha nil)))
-                  ;; Add a custom palette to the dialog
-                  (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
-                  ;; Add a second coustom palette to the dialog
-                  (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
-                  ;; Set the actual background color for the color chooser
-                  (setf (gtk-color-chooser-rgba dialog) bg-color)
-                  ;; Run the color chooser dialog
-                  (let ((response (gtk-dialog-run dialog)))
-                    (when (eq response :ok)
-                      ;; Change the background color for the drawing area
-                      (setf bg-color (gtk-color-chooser-rgba dialog)))
-                      ;; Destroy the color chooser dialog
-                      (gtk-widget-destroy dialog))))))
-        ;; Set the event mask for the drawing area
-        (setf (gtk-widget-events area) :button-press-mask)
-        ;; Add the drawing area to the window
-        (gtk-container-add window area)
-        (gtk-widget-show-all window)))))
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/color-chooser-dialog.lisp" parse="text"/>
      </programlisting>
     </example>
    </section>
@@ -8922,104 +8724,8 @@ main (int argc, char **argv)
     </para>
     <example id="example-file-chooser-button">
      <title>File Chooser Button</title>
-     <programlisting>
-(defun show-file-chooser-info (label chooser)
-  (let ((filename (gtk-file-chooser-filename chooser))
-        (uri (gtk-file-chooser-uri chooser))
-        (current-folder (gtk-file-chooser-current-folder chooser))
-        (current-folder-uri (gtk-file-chooser-current-folder-uri chooser))
-        (preview-filename (gtk-file-chooser-preview-filename chooser))
-        (preview-uri (gtk-file-chooser-preview-uri chooser)))
-    (setf (gtk-label-label label)
-          (format nil "&lt;small>&lt;tt>~{~20@a ~@a~%~}&lt;/tt>&lt;/small>"
-                      (list "Filename :" filename
-                            "URI :" uri
-                            "Current Folder :" current-folder
-                            "Current Folder URI :" current-folder-uri
-                            "Preview Filename :" preview-filename
-                            "Preview URI :" preview-uri)))))
-
-(defun example-file-chooser-button ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :title "Example File Chooser Button"
-                                  :type :toplevel
-                                  :border-width 24
-                                  :default-width 300
-                                  :default-height 100))
-           (info-box (make-instance 'gtk-box
-                                    :orientation :vertical
-                                    :valign :start
-                                    :spacing 12))
-           (info-label (make-instance 'gtk-label
-                                      :use-markup t))
-           (filter-all (make-instance 'gtk-file-filter))
-           (filter-image (make-instance 'gtk-file-filter))
-           (filter-text (make-instance 'gtk-file-filter))
-           (hbox (make-instance 'gtk-box
-                                :orientation :horizontal
-                                :expand nil
-                                :spacing 36
-                                :halign :start))
-           (vbox (make-instance 'gtk-box
-                                :orientation :vertical
-                                :expand nil
-                                :spacing 6
-                                :valign :start))
-           (button-folder (make-instance 'gtk-file-chooser-button
-                                         :action :select-folder))
-           (button-open (make-instance 'gtk-file-chooser-button
-                                       :action :open)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-
-      (g-signal-connect button-folder "file-set"
-                        (lambda (chooser)
-                          (show-file-chooser-info info-label chooser)
-                          (setf (gtk-file-chooser-filename button-open)
-                                (gtk-file-chooser-filename chooser))))
-
-      (g-signal-connect button-open "file-set"
-                        (lambda (chooser)
-                          (show-file-chooser-info info-label chooser)
-                          (setf (gtk-file-chooser-filename button-folder)
-                                (gtk-file-chooser-current-folder chooser))))
-      ;; Set some filters on the file chooser
-      (setf (gtk-file-filter-name filter-all) "All Files")
-      (gtk-file-filter-add-pattern filter-all "*")
-      (gtk-file-chooser-add-filter button-open filter-all)
-      ;; Filter for Image Files
-      (setf (gtk-file-filter-name filter-image) "Image Files")
-      (gtk-file-filter-add-mime-type filter-image "image/*")
-      (gtk-file-chooser-add-filter button-open filter-image)
-      ;; Filter for Text Files
-      (setf (gtk-file-filter-name filter-text) "Text Files")
-      (gtk-file-filter-add-mime-type filter-text "text/*")
-      (gtk-file-chooser-add-filter button-open filter-text)
-      ;; Pack and show the widgets
-      (gtk-box-pack-start vbox (make-instance 'gtk-label
-                                              :label "&lt;b>Select Folder&lt;/b>"
-                                              :use-markup t
-                                              :halign :start))
-      (gtk-box-pack-start vbox button-folder)
-      (gtk-box-pack-start vbox (make-instance 'gtk-label
-                                              :label "&lt;b>Select File&lt;/b>"
-                                              :use-markup t
-                                              :margin-top 6
-                                              :halign :start))
-      (gtk-box-pack-start vbox button-open)
-      (gtk-box-pack-start hbox vbox)
-      (gtk-box-pack-start info-box
-                          (make-instance 'gtk-label
-                                         :use-markup t
-                                         :label
-                                         "&lt;b>Selected Folder and File&lt;/b>"))
-      (gtk-box-pack-start info-box info-label)
-      (gtk-box-pack-start hbox info-box)
-      (gtk-container-add window hbox)
-      (gtk-widget-show-all window))))
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/file-chooser-button.lisp" parse="text"/>
      </programlisting>
     </example>
    </section>
@@ -9062,72 +8768,9 @@ main (int argc, char **argv)
    </para>
    <example id="example-font-button">
     <title>Font Button with a filter to select fonts</title>
-    <programlisting>
-(defun font-filter (family face)
-  (declare (ignore face))
-  (member (pango-font-family-name family)
-          '("Purisa" "Sans" "Serif" "Times New Roman")
-          :test #'equal))
-
-(defun example-font-button-label ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Font Chooser Button"
-                                 :type :toplevel
-                                 :border-width 18
-                                 :default-width 300
-                                 :default-height 100))
-          (provider (gtk-css-provider-new))
-          (box (make-instance 'gtk-box
-                              :orientation :horizontal
-                              :spacing 12))
-          (label (make-instance 'gtk-label
-                                :label "Font Button"
-                                :use-markup t))
-          (button (make-instance 'gtk-font-button)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect button "font-set"
-         (lambda (chooser)
-           (let* (;; Get the font description
-                  (desc (gtk-font-chooser-font-desc chooser))
-                  ;; Get font informations from the font description
-                  (family (pango-font-description-family desc))
-                  (size (pango-pixels (pango-font-description-size desc)))
-                  (style (pango-font-description-style desc))
-                  (weight (pango-font-description-weight desc))
-                  (variant (pango-font-description-variant desc))
-                  (stretch (pango-font-description-stretch desc))
-                  ;; Write the CSS string
-                  (css-label (format nil "label { font-family : ~a; ~
-                                                  font-weight : ~a; ~
-                                                  font-style : ~a; ~
-                                                  font-variant : ~a; ~
-                                                  font-stretch : ~a; ~
-                                                  font-size : ~apx; }"
-                                         family
-                                         weight
-                                         style
-                                         variant
-                                         stretch
-                                         size))
-                  ;; Get the style of the label
-                  (context (gtk-widget-style-context label)))
-             ;; Update the font of the label
-             (gtk-css-provider-load-from-data provider css-label)
-             (gtk-style-context-add-provider context
-                                             provider
-                                             +gtk-style-provider-priority-user+))))
-      ;; Set a filter function to select fonts for the font chooser
-      (gtk-font-chooser-set-filter-func button #'font-filter)
-      ;; Pack and show the widgets
-      (gtk-box-pack-start box button)
-      (gtk-box-pack-start box label)
-      (gtk-container-add window box)
-      (gtk-widget-show-all window))))
-    </programlisting>
+     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="src/font-button-label.lisp" parse="text"/>
+     </programlisting>
    </example>
   </section>
  </chapter>
@@ -9136,40 +8779,6 @@ main (int argc, char **argv)
   <title>Miscellaneous Widgets</title>
 
   <section id="Arrows">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Arrows">
-      <primary>GtkArrow</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>arrow, gtk-arrow</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>arrow-new, gtk-arrow-new</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>arrow-set, gtk-arrow-set</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>GtkArrowType</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>arrow-type, gtk-arrow-type</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>GtkShadowType</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>shadow-type, gtk-shadow-type</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>arrow-scaling</primary>
-     </indexterm>
-     <indexterm zone="Arrows">
-      <primary>widget-tooltip-text, gtk-widget-tooltip-text</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Arrows</title>
    <figure id="figure-arrows">
     <title>Arrows</title>
@@ -9260,43 +8869,6 @@ main (int argc, char **argv)
   </section>
 
   <section id="Calendar">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Calendar">
-      <primary>GtkCalendar</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar, gtk-calendar</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-new, gtk-calendar-new</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-select-month, gtk-calendar-select-month</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-select-day, gtk-calendar-select-day</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-mark-day, gtk-calendar-mark-day</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-unmark-day, gtk-calendar-unmark-day</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-clear-marks, gtk-calendar-clear-marks</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-display-options, gtk-calendar-display-options</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-date, gtk-calendar-date</primary>
-     </indexterm>
-     <indexterm zone="Calendar">
-      <primary>calendar-set-detail-func, gtk-calendar-set-detail-func</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Calendar</title>
    <figure id="figure-calendar">
     <title>Calendar</title>
@@ -10097,8 +9669,8 @@ main (int argc, char **argv)
     </para>
     <para>
      To allow the user to enter values not in the model, the <code>has-entry</code> property allows the
-     <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> to contain a <ulink url="&gtk-entry;">
-     <code>gtk-entry</code></ulink>.  This entry can be accessed by calling <ulink url="&gtk-bin-child;">
+     <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> to contain a &gtk-entry;.  This entry
+     can be accessed by calling <ulink url="&gtk-bin-child;">
      <code>gtk-bin-child</code></ulink> on the combo box.
     </para>
     <para>
@@ -13338,6 +12910,8 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
 
 
 
