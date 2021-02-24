@@ -1960,12 +1960,20 @@
 (setf (gethash 'gtk-text-tag-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-size object) => size}
+  @syntax[]{(setf (gtk-text-tag-size object) size)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[size]{an integer with the the font size in Pango units}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{size} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font size in Pango units.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-size-points}
+  @see-function{gtkt-text-tag-size-set}")
 
 ;;; --- gtk-text-tag-size-points -----------------------------------------------
 
@@ -1980,12 +1988,20 @@
 (setf (gethash 'gtk-text-tag-size-points atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size-points 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-size-points object) => size}
+  @syntax[]{(setf (gtk-text-tag-size-points object) size)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[size]{a double float with the the font size in points}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{size-points} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font size in points.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-size}
+  @see-function{gtk-text-tag-size-set}")
 
 ;;; --- gtk-text-tag-size-set --------------------------------------------------
 
@@ -1999,33 +2015,50 @@
 (setf (gethash 'gtk-text-tag-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-size-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-size-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the font size}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{size-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the font size.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-size}
+  @see-function{gtk-text-tag-size-points}")
 
 ;;; --- gtk-text-tag-stretch ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-text-tag) 't)
- "The @code{stretch} property of type @code{PangoStretch}
-  (Read / Write) @br{}
-  Font stretch as a @symbol{pango-stretch} enumeration, e.g. the value
-  @code{:condensed}. @br{}
+ "The @code{stretch} property of type @symbol{pango-stretch} (Read / Write)
+  @br{}
+  Font stretch as a value of the @symbol{pango-stretch} enumeration, e.g.
+  the value @code{:condensed}. @br{}
   Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-stretch atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-stretch 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-stretch object) => stretch}
+  @syntax[]{(setf (gtk-text-tag-stretch object) stretch)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[stretch]{a value of the @symbol{pango-stretch} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{stretch} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font stretch as a value of the @symbol{pango-stretch} enumeration, e.g. the
+  value @code{:condensed}.
+  @see-class{gtk-text-tag}
+  @see-symbol{pango-stretch}
+  @see-function{gtk-text-tag-stretch-set}")
 
 ;;; --- gtk-text-tag-stretch-set -----------------------------------------------
 
@@ -2039,12 +2072,19 @@
 (setf (gethash 'gtk-text-tag-stretch-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-stretch-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-stretch-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-stretch-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag afects the font stretch}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{stretch-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the font stretch.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-stretch}")
 
 ;;; --- gtk-text-tag-strikethrough ---------------------------------------------
 
@@ -2059,20 +2099,28 @@
 (setf (gethash 'gtk-text-tag-strikethrough atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-strikethrough object) => strikethrough}
+  @syntax[]{(setf (gtk-text-tag-strikethrough object) strikethrough)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[strikethrough]{a boolean wether to strike through the text}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether to strike through the text.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-strikethrough-rgba}
+  @see-function{gtk-text-tag-strikethrough-set}")
 
 ;;; --- gtk-text-tag-strikethrough-rgba ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "strikethrough-rgba"
                                                'gtk-text-tag) 't)
- "The @code{strikethrough-rgba} property of type @class{gdk-rgba}
-  (Read / Write) @br{}
+ "The @code{strikethrough-rgba} property of type @class{gdk-rgba} (Read / Write)
+  @br{}
   This property modifies the color of strikeouts. If not set, strikeouts will
   use the forground color.")
 
@@ -2080,12 +2128,21 @@
 (setf (gethash 'gtk-text-tag-strikethrough-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba 'function)
- "@version{2019-4-12}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-strikethrough-rgba object) => color}
+  @syntax[]{(setf (gtk-text-tag-strikethrough-rgba object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  This property modifies the color of strikeouts. If not set, strikeouts will
+  use the forground color.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-strikethrough}
+  @see-function{gtk-text-tag-strikethrough-rgba-set}")
 
 ;;; --- gtk-text-tag-strikethrough-rgba-set ------------------------------------
 
@@ -2101,20 +2158,28 @@
 (setf (gethash 'gtk-text-tag-strikethrough-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba-set 'function)
- "@version{2019-4-12}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-strikethrough-rgba-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-strikethrough-rgba-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether a @slot[gtk-text-tag]{strikethrough-rgba}
+    property has been set}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  If the @slot[gtk-text-tag]{strikethrough-rgba} property has been set.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-strikethrough-rgba}")
 
 ;;; --- gtk-text-tag-strikethrough-set -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "strikethrough-set"
                                        'gtk-text-tag) 't)
- "The @code{strikethrough-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{strikethrough-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether this tag affects strikethrough. @br{}
   Default value: @em{false}")
 
@@ -2122,12 +2187,19 @@
 (setf (gethash 'gtk-text-tag-strikethrough-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-strikethrough-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-strikethrough-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects strikethrough}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects strikethrough.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-strikethrough}")
 
 ;;; --- gtk-text-tag-style -----------------------------------------------------
 
@@ -2142,12 +2214,21 @@
 (setf (gethash 'gtk-text-tag-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-style 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-style object) => style}
+  @syntax[]{(setf (gtk-text-tag-style object) style)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[style]{a value of the @symbol{pango-style} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{style} slot of the @class{gtk-text-tag}
     class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font style as a value of the @symbol{pango-style} enumeration, e.g.
+  @code{:italic}.
+  @see-class{gtk-text-tag}
+  @see-symbol{pango-style}
+  @see-function{gtk-text-tag-style-set}")
 
 ;;; --- gtk-text-tag-style-set -------------------------------------------------
 
@@ -2161,12 +2242,19 @@
 (setf (gethash 'gtk-text-tag-style-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-style-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-style-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-style-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects the font style}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{style-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the font style.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-style}")
 
 ;;; --- gtk-text-tag-tabs ------------------------------------------------------
 
@@ -2179,12 +2267,20 @@
 (setf (gethash 'gtk-text-tag-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-tabs 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-tabs object) => tabs}
+  @syntax[]{(setf (gtk-text-tag-tabs object) tabs)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[tabs]{custom tabs of type @class{pango-tab-array}}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{tabs} slot of the @class{gtk-text-tag}
     class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Custom tabs for this text.
+  @see-class{gtk-text-tag}
+  @see-class{pango-tab-array}
+  @see-function{gtk-text-tag-tabs-set}")
 
 ;;; --- gtk-text-tag-tabs-set --------------------------------------------------
 
@@ -2198,19 +2294,26 @@
 (setf (gethash 'gtk-text-tag-tabs-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-tabs-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-tabs-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-tabs-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this affects tabs}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{tabs-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects tabs.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-tabs}")
 
 ;;; --- gtk-text-tag-underline -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "underline" 'gtk-text-tag) 't)
- "The @code{underline} property of type @symbol{pango-underline}
-  (Read / Write) @br{}
+ "The @code{underline} property of type @symbol{pango-underline} (Read / Write)
+  @br{}
   Style of underline for this text. @br{}
   Default value: @code{:none}")
 
@@ -2218,20 +2321,29 @@
 (setf (gethash 'gtk-text-tag-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-underline object) => underline}
+  @syntax[]{(setf (gtk-text-tag-underline object) underline)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[underline]{a value of the @symbol{pango-underline} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Style of underline for this text.
+  @see-class{gtk-text-tag}
+  @see-symbol{pango-underline}
+  @see-function{gtk-text-tag-underline-rgba}
+  @see-function{gtk-text-tag-underline-set}")
 
 ;;; --- gtk-text-tag-underline-rgba --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "underline-rgba"
                                                'gtk-text-tag) 't)
- "The @code{underline-rgba} property of type @class{gdk-rgba}
-  (Read / Write) @br{}
+ "The @code{underline-rgba} property of type @class{gdk-rgba} (Read / Write)
+  @br{}
   This property modifies the color of underlines. If not set, underlines will
   use the forground color. If the @code{underline} property is set to the value
   @code{:error} of the @symbol{pango-underline} enumeration, an alternate color
@@ -2242,20 +2354,34 @@
 (setf (gethash 'gtk-text-tag-underline-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba 'function)
- "@version{2019-4-12}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-underline-rgba object) => color}
+  @syntax[]{(setf (gtk-text-tag-underline-rgba object) color)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[color]{a @class{gdk-rgba} color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline-rgba} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  This property modifies the color of underlines. If not set, underlines will
+  use the forground color. If the @slot[gtk-text-tag]{underline} property is
+  set to the value @code{:error} of the @symbol{pango-underline} enumeration,
+  an alternate color may be applied instead of the foreground. Setting this
+  property will always override those defaults.
+  @see-class{gtk-text-tag}
+  @see-class{gdk-rgba}
+  @see-symbol{pango-underline}
+  @see-function{gtk-text-tag-underline}
+  @see-function{gtk-text-tag-underline-rgba-set}")
 
 ;;; --- gtk-text-tag-underline-rgba-set ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "underline-rgba-set"
                                                'gtk-text-tag) 't)
- "The @code{underline-rgba-set} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{underline-rgba-set} property of type @code{:boolean} (Read / Write)
+  @br{}
   If the @code{underline-rgba} property has been set. @br{}
   Default value: @em{false}")
 
@@ -2263,12 +2389,20 @@
 (setf (gethash 'gtk-text-tag-underline-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba-set 'function)
- "@version{2019-4-12}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-underline-rgba-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-underline-rgba-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether the @slot[gtk-text-tag]{underline-rgba}
+    property has been set}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline-rgba-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  If the @slot[gtk-text-tag]{underline-rgba} property has been set.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-underline-rgba}")
 
 ;;; --- gtk-text-tag-underline-set ---------------------------------------------
 
@@ -2283,12 +2417,20 @@
 (setf (gethash 'gtk-text-tag-underline-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-underline-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-underline-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects underlining}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects underlining.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-underline}
+  @see-function{gtk-text-tag-underline-rgba}")
 
 ;;; --- gtk-text-tag-variant ---------------------------------------------------
 
@@ -2304,12 +2446,21 @@
 (setf (gethash 'gtk-text-tag-variant atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-variant 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-variant object) => variant}
+  @syntax[]{(setf (gtk-text-tag-variant object) variant)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[variant]{a value of the @symbol{pango-variant} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{variant} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Font variant as a value of the @symbol{pango-variant} enumeration, e.g.
+  @code{:small-caps}.
+  @see-class{gtk-text-tag}
+  @see-symbol{pango-variant}
+  @see-function{gtk-text-tag-variant-set}")
 
 ;;; --- gtk-text-tag-variant-set -----------------------------------------------
 
@@ -2323,12 +2474,19 @@
 (setf (gethash 'gtk-text-tag-variant-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-variant-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-variant-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-variant-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this affects the font variant}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{variant-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects the font variant.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-variant}")
 
 ;;; --- gtk-text-tag-weight ----------------------------------------------------
 
@@ -2390,22 +2548,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-text-tag) 't)
- "The @code{wrap-mode} property of type @symbol{gtk-wrap-mode}
-  (Read / Write) @br{}
-  Whether to wrap lines never, at word boundaries, or at character
-  boundaries. @br{}
+ "The @code{wrap-mode} property of type @symbol{gtk-wrap-mode} (Read / Write)
+  @br{}
+  Whether to wrap lines never, at word boundaries, or at character boundaries.
+  @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-wrap-mode object) => wrap-mode}
+  @syntax[]{(setf (gtk-text-tag-wrap-mode object) wrap-mode)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[wrap-mode]{a value of the @symbol{gtk-wrap-mode} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{wrap-mode} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether to wrap lines never, at word boundaries, or at character boundaries.
+  @see-class{gtk-text-tag}
+  @see-symbol{gtk-wrap-mode}
+  @see-function{gtk-text-tag-wrap-mode-set}")
 
 ;;; --- gtk-text-tag-wrap-mode-set ---------------------------------------------
 
@@ -2420,12 +2586,19 @@
 (setf (gethash 'gtk-text-tag-wrap-mode-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode-set 'function)
- "@version{2020-3-21}
+ "@version{2021-2-22}
+  @syntax[]{(gtk-text-tag-wrap-mode-set object) => setting}
+  @syntax[]{(setf (gtk-text-tag-wrap-mode-set object) setting)}
+  @argument[object]{a @class{gtk-text-tag} object}
+  @argument[setting]{a boolean wether this tag affects line wrap mode}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{wrap-mode-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
-  @see-class{gtk-text-tag}")
+
+  Whether this tag affects line wrap mode.
+  @see-class{gtk-text-tag}
+  @see-function{gtk-text-tag-wrap-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_new ()
@@ -2433,16 +2606,19 @@
 
 (defun gtk-text-tag-new (name &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
-  @argument[name]{a @code{:string} with the tag name, or @code{nil}}
+ "@version{2021-2-22}
+  @argument[name]{a string with the tag name, or @code{nil}}
   @argument[args]{list of property keywords and values}
   @return{A new @class{gtk-text-tag} object.}
   @begin{short}
-    Creates a @class{gtk-text-tag} object.
+    Creates a new tag.
   @end{short}
   @begin[Example]{dictionary}
- (gtk-text-tag-new \"font-italic\" :font \"fixed\" :style :italic)
+    Create a tag with name \"font-italic\":
+    @begin{pre}
+(gtk-text-tag-new \"font-italic\" :font \"fixed\" :style :italic)
 => #<GTK-TEXT-TAG {1006C86E63@}>
+    @end{pre}
   @end{dictionary}
   @see-class{gtk-text-tag}"
   (apply #'make-instance (list* 'gtk-text-tag :name name args)))
@@ -2451,7 +2627,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_get_priority ()
-;;; gtk_text_tag_set_priority ()
+;;; gtk_text_tag_set_priority () -> gtk-text-tag-priority
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-tag-priority) (priority tag)
@@ -2461,30 +2637,30 @@
 
 (defcfun ("gtk_text_tag_get_priority" gtk-text-tag-priority) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-3-21}
+ "@version{2021-2-22}
   @syntax[]{(gtk-text-tag-priority tag) => priority}
   @syntax[]{(setf (gtk-text-tag-priority tag) priority)}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[priority]{a @code{:int} with the priority}
+  @argument[priority]{an integer with the priority}
   @begin{short}
     Accessor for the priority of a @class{gtk-text-tag} object.
   @end{short}
 
   The function @sym{gtk-text-tag-priority} gets the tag priority. The function
-  @sym{(setf gtk-text-tag-priority)} sets the priority of a
-  @class{gtk-text-tag}.
+  @sym{(setf gtk-text-tag-priority)} sets the priority.
 
-  Valid priorities are start at 0 and go to one less than the value of
-  @fun{gtk-text-tag-table-size}. Each tag in a table has a unique priority;
-  setting the priority of one tag shifts the priorities of all the other tags
-  in the table to maintain a unique priority for each tag. Higher priority tags
-  \"win\" if two tags both set the same text attribute. When adding a tag to a
-  tag table, it will be assigned the highest priority in the table by default;
-  so normally the precedence of a set of tags is the order in which they were
-  added to the table, or created with the function
-  @fun{gtk-text-buffer-create-tag}, which adds the tag to the buffer's table
-  automatically.
+  Valid priorities are start at 0 and go to one less than the value of the
+  result of the function @fun{gtk-text-tag-table-size}. Each tag in a tag table
+  has a unique priority. Setting the priority of one tag shifts the priorities
+  of all the other tags in the tag table to maintain a unique priority for each
+  tag. Higher priority tags \"win\" if two tags both set the same text
+  attribute. When adding a tag to a tag table, it will be assigned the highest
+  priority in the tag table by default. So normally the precedence of a set of
+  tags is the order in which they were added to the tag table, or created with
+  the function @fun{gtk-text-buffer-create-tag}, which adds the tag to the
+  text buffer's tag table automatically.
   @see-class{gtk-text-tag}
+  @see-class{gtk-text-tag-table}
   @see-function{gtk-text-tag-table-size}
   @see-function{gtk-text-buffer-create-tag}"
   (tag (g-object gtk-text-tag)))
@@ -2497,13 +2673,13 @@
 
 (defcfun ("gtk_text_tag_event" gtk-text-tag-event) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
+ "@version{2021-2-22}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[event-object]{the @class{g-object} that received the event}
-  @argument[event]{the event of type @class{gdk-event}}
+  @argument[object]{the @class{g-object} object that received the event}
+  @argument[event]{the @class{gdk-event} event}
   @argument[iter]{a @class{gtk-text-iter} iterator with the location where the
     event was received}
-  @return{A @code{:boolean} wether the event was handled.}
+  @return{A boolean wether the event was handled.}
   @begin{short}
     Emits the \"event\" signal on the tag object.
   @end{short}
@@ -2511,7 +2687,7 @@
   @see-class{gtk-text-iter}
   @see-class{gdk-event}"
   (tag (g-object gtk-text-tag))
-  (event-object g-object)
+  (object g-object)
   (event (g-boxed-foreign gdk-event))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -2524,9 +2700,9 @@
 #+gtk-3-20
 (defcfun ("gtk_text_tag_changed" gtk-text-tag-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
+ "@version{2021-2-22}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[size-changed]{a @code{:boolean} wether the change affects the
+  @argument[size-changed]{a boolean wether the change affects the
     @class{gtk-text-view} layout}
   @begin{short}
     Emits the \"tag-changed\" signal on the @class{gtk-text-tag-table} object
@@ -2538,6 +2714,7 @@
 
   Since 3.20
   @see-class{gtk-text-tag}
+  @see-class{gtk-text-tag-table}
   @see-class{gtk-text-iter}
   @see-class{gdk-event}"
   (tag (g-object gtk-text-tag))
