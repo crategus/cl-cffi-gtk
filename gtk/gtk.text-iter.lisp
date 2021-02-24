@@ -146,8 +146,6 @@
 
 (in-package :gtk)
 
-(glib-init::at-init () (foreign-funcall "gtk_text_iter_get_type" g-size))
-
 ;;; ----------------------------------------------------------------------------
 
 (define-foreign-type unichar ()
@@ -162,8 +160,51 @@
   (char-code value))
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkTextSearchFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkTextSearchFlags" gtk-text-search-flags
+  (:export t
+   :type-initializer "gtk_text_search_flags_get_type")
+  (:visible-only 1)
+  (:text-only 2)
+  (:case-insensitive 4))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-search-flags atdoc:*symbol-name-alias*)
+      "Flags"
+      (gethash 'gtk-text-search-flags atdoc:*external-symbols*)
+ "@version{2020-3-14}
+  @short{Flags affecting how a search is done.}
+
+  If neither @code{:visible-only} nor @code{:text-only} are enabled, the match
+  must be exact; the special @code{0xFFFC} character will match embedded pixbufs
+  or child widgets.
+  @begin{pre}
+(define-g-flags \"GtkTextSearchFlags\" gtk-text-search-flags
+  (:export t
+   :type-initializer \"gtk_text_search_flags_get_type\")
+  (:visible-only 1)
+  (:text-only 2)
+  (:case-insensitive 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:visible-only]{Search only visible data. A search match may have
+      invisible text interspersed.}
+    @entry[:text-only]{Search only text. A match may have pixbufs or child
+      widgets mixed inside the matched range.}
+    @entry[:case-insensitive]{The text will be matched regardless of what case
+      it is in.}
+  @end{table}
+  @see-class{gtk-text-iter}
+  @see-function{gtk-text-iter-forward-search}
+  @see-function{gtk-text-iter-backward-search}")
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkTextIter
 ;;; ----------------------------------------------------------------------------
+
+(glib-init::at-init () (foreign-funcall "gtk_text_iter_get_type" g-size))
 
 (define-g-boxed-opaque gtk-text-iter "GtkTextIter"
   :alloc (%gtk-text-iter-alloc))
@@ -210,7 +251,7 @@
     (%gtk-text-iter-copy iter)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_buffer ()
+;;; gtk_text_iter_get_buffer () -> gtk-text-iter-buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_buffer" gtk-text-iter-buffer)
@@ -274,7 +315,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_offset ()
-;;; gtk_text_iter_set_offset ()
+;;; gtk_text_iter_set_offset () -> gtk-text-iter-offset
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-offset) (char-offset iter)
@@ -309,7 +350,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_line ()
-;;; gtk_text_iter_set_line ()
+;;; gtk_text_iter_set_line () -> gtk-text-iter-line
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-line) (line-number iter)
@@ -343,7 +384,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_line_offset ()
-;;; gtk_text_iter_set_line_offset ()
+;;; gtk_text_iter_set_line_offset () -> gtk-text-iter-line-offset
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-line-offset) (char-on-line iter)
@@ -382,7 +423,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_line_index ()
-;;; gtk_text_iter_set_line_index ()
+;;; gtk_text_iter_set_line_index () -> gtk-text-iter-line-index
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-line-index) (byte-on-line iter)
@@ -419,7 +460,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_visible_line_index ()
-;;; gtk_text_iter_set_visible_line_index ()
+;;; gtk_text_iter_set_visible_line_index () -> gtk-text-iter-visible-line-index
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-visible-line-index) (byte-on-line iter)
@@ -451,6 +492,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_visible_line_offset ()
 ;;; gtk_text_iter_set_visible_line_offset ()
+;;; -> gtk-text-iter-visible-line-offset
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-text-iter-visible-line-offset) (char-on-line iter)
@@ -481,7 +523,7 @@
 (export 'gtk-text-iter-visible-line-offset)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_char ()
+;;; gtk_text_iter_get_char () -> gtk-text-iter-char
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_char" gtk-text-iter-char) unichar
@@ -496,7 +538,7 @@
 (export 'gtk-text-iter-char)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_slice ()
+;;; gtk_text_iter_get_slice () -> gtk-text-iter-slice
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_slice" gtk-text-iter-slice)
@@ -523,7 +565,7 @@
 (export 'gtk-text-iter-slice)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_text ()
+;;; gtk_text_iter_get_text () -> gtk-text-iter-text
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_text" gtk-text-iter-text)
@@ -549,7 +591,7 @@
 (export 'gtk-text-iter-text)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_visible_slice ()
+;;; gtk_text_iter_get_visible_slice () -> gtk-text-iter-visible-slice
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_visible_slice" gtk-text-iter-visible-slice)
@@ -575,7 +617,7 @@
 (export 'gtk-text-iter-visible-slice)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_visible_text ()
+;;; gtk_text_iter_get_visible_text () -> gtk-text-iter-visible-text
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_visible_text" gtk-text-iter-visible-text)
@@ -601,7 +643,7 @@
 (export 'gtk-text-iter-visible-text)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_pixbuf ()
+;;; gtk_text_iter_get_pixbuf () -> gtk-text-iter-pixbuf
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_pixbuf" gtk-text-iter-pixbuf) (g-object gdk-pixbuf)
@@ -619,7 +661,7 @@
 (export 'gtk-text-iter-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_marks ()
+;;; gtk_text_iter_get_marks () -> gtk-text-iter-marks
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_marks" gtk-text-iter-marks)
@@ -641,7 +683,7 @@
 (export 'gtk-text-iter-marks)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_toggled_tags ()
+;;; gtk_text_iter_get_toggled_tags () -> gtk-text-iter-toggled-tags
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_toggled_tags" gtk-text-iter-toggled-tags)
@@ -837,7 +879,7 @@
 (export 'gtk-text-iter-has-tag)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_tags ()
+;;; gtk_text_iter_get_tags () -> gtk-text-iter-tags
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_tags" gtk-text-iter-tags)
@@ -1117,7 +1159,7 @@
 (export 'gtk-text-iter-is-cursor-position)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_chars_in_line ()
+;;; gtk_text_iter_get_chars_in_line () -> gtk-text-iter-chars-in-line
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_chars_in_line" gtk-text-iter-chars-in-line) :int
@@ -1135,7 +1177,7 @@
 (export 'gtk-text-iter-chars-in-line)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_bytes_in_line ()
+;;; gtk_text_iter_get_bytes_in_line () -> gtk-text-iter-bytes-in-line
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_bytes_in_line" gtk-text-iter-bytes-in-line) :int
@@ -1153,7 +1195,7 @@
 (export 'gtk-text-iter-bytes-in-line)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_attributes ()
+;;; gtk_text_iter_get_attributes () ->gtk-text-iter-attributes
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Is this implementation correct? Argument attributes can be modified!
@@ -1182,7 +1224,7 @@
 (export 'gtk-text-iter-attributes)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_language ()
+;;; gtk_text_iter_get_language () -> gtk-text-iter-language
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_get_language" gtk-text-iter-language)
@@ -1289,7 +1331,7 @@
                              :visible-word :visible-line
                              :visible-cursor-position)))
   (assert (typep direction '(member :forward :backward)))
-  (when (and (member by '(:char :ine :cursor-position :visible-line
+  (when (and (member by '(:char :line :cursor-position :visible-line
                            :visible-cursor-position))
              (eq direction :backward))
     (setf count (- count)))
@@ -2296,46 +2338,6 @@
                                            limit))))
 
 (export 'gtk-text-iter-find-char)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkTextSearchFlags
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkTextSearchFlags" gtk-text-search-flags
-  (:export t
-   :type-initializer "gtk_text_search_flags_get_type")
-  (:visible-only 1)
-  (:text-only 2)
-  (:case-insensitive 4))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-search-flags atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-text-search-flags atdoc:*external-symbols*)
- "@version{2020-3-14}
-  @short{Flags affecting how a search is done.}
-
-  If neither @code{:visible-only} nor @code{:text-only} are enabled, the match
-  must be exact; the special @code{0xFFFC} character will match embedded pixbufs
-  or child widgets.
-  @begin{pre}
-(define-g-flags \"GtkTextSearchFlags\" gtk-text-search-flags
-  (:export t
-   :type-initializer \"gtk_text_search_flags_get_type\")
-  (:visible-only 1)
-  (:text-only 2)
-  (:case-insensitive 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:visible-only]{Search only visible data. A search match may have
-      invisible text interspersed.}
-    @entry[:text-only]{Search only text. A match may have pixbufs or child
-      widgets mixed inside the matched range.}
-    @entry[:case-insensitive]{The text will be matched regardless of what case
-      it is in.}
-  @end{table}
-  @see-class{gtk-text-iter}
-  @see-function{gtk-text-iter-forward-search}
-  @see-function{gtk-text-iter-backward-search}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_search ()
