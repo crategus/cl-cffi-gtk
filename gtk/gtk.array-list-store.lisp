@@ -1,3 +1,126 @@
+;;; ----------------------------------------------------------------------------
+;;; struct GtkTreeModelIface
+;;;
+;;; struct GtkTreeModelIface {
+;;;   GTypeInterface g_iface;
+;;;
+;;;   /* Signals */
+;;;   void         (* row_changed)           (GtkTreeModel *tree_model,
+;;;                                           GtkTreePath  *path,
+;;;                                           GtkTreeIter  *iter);
+;;;   void         (* row_inserted)          (GtkTreeModel *tree_model,
+;;;                                           GtkTreePath  *path,
+;;;                                           GtkTreeIter  *iter);
+;;;   void         (* row_has_child_toggled) (GtkTreeModel *tree_model,
+;;;                                           GtkTreePath  *path,
+;;;                                           GtkTreeIter  *iter);
+;;;   void         (* row_deleted)           (GtkTreeModel *tree_model,
+;;;                                           GtkTreePath  *path);
+;;;   void         (* rows_reordered)        (GtkTreeModel *tree_model,
+;;;                                           GtkTreePath  *path,
+;;;                                           GtkTreeIter  *iter,
+;;;                                           gint         *new_order);
+;;;
+;;;   /* Virtual Table */
+;;;   GtkTreeModelFlags (* get_flags)  (GtkTreeModel *tree_model);
+;;;
+;;;   gint         (* get_n_columns)   (GtkTreeModel *tree_model);
+;;;   GType        (* get_column_type) (GtkTreeModel *tree_model,
+;;;                                     gint          index_);
+;;;   gboolean     (* get_iter)        (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter,
+;;;                                     GtkTreePath  *path);
+;;;   GtkTreePath *(* get_path)        (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   void         (* get_value)       (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter,
+;;;                                     gint          column,
+;;;                                     GValue       *value);
+;;;   gboolean     (* iter_next)       (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   gboolean     (* iter_previous)   (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   gboolean     (* iter_children)   (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter,
+;;;                                     GtkTreeIter  *parent);
+;;;   gboolean     (* iter_has_child)  (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   gint         (* iter_n_children) (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   gboolean     (* iter_nth_child)  (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter,
+;;;                                     GtkTreeIter  *parent,
+;;;                                     gint          n);
+;;;   gboolean     (* iter_parent)     (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter,
+;;;                                     GtkTreeIter  *child);
+;;;   void         (* ref_node)        (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;;   void         (* unref_node)      (GtkTreeModel *tree_model,
+;;;                                     GtkTreeIter  *iter);
+;;; };
+;;; ----------------------------------------------------------------------------
+
+(define-vtable ("GtkTreeModel" gtk-tree-model)
+  (:skip parent-instance (:pointer (:struct g-type-interface)))
+  ;; some signals
+  (:skip tree-model-row-changed :pointer)
+  (:skip tree-model-row-inserted :pointer)
+  (:skip tree-model-row-has-child-toggled :pointer)
+  (:skip tree-model-row-deleted :pointer)
+  (:skip tree-model-rows-reordered :pointer)
+  ;; methods
+  (get-flags (gtk-tree-model-flags (tree-model g-object)))
+  (get-n-columns (:int (tree-model g-object)))
+  (get-column-type (g-type (tree-model g-object) (index :int)))
+  (get-iter (:boolean
+             (tree-model g-object)
+             (iter (g-boxed-foreign gtk-tree-iter))
+             (path (g-boxed-foreign gtk-tree-path))))
+  (get-path ((g-boxed-foreign gtk-tree-path :return)
+             (tree-model g-object)
+             (iter (g-boxed-foreign gtk-tree-iter))))
+  (get-value (:void
+              (tree-model g-object)
+              (iter (g-boxed-foreign gtk-tree-iter))
+              (n :int)
+              (value (:pointer (:struct g-value))))
+             :impl-call
+             ((tree-model iter n)
+              (multiple-value-bind (v type)
+                  (gtk-tree-model-get-value-impl tree-model iter n)
+                (set-g-value value v type))))
+  (iter-next (:boolean
+              (tree-model g-object)
+              (iter (g-boxed-foreign gtk-tree-iter))))
+  (iter-previous (:boolean
+                  (tree-model g-object)
+                  (iter (g-boxed-foreign gtk-tree-iter))))
+  (iter-children (:boolean
+                  (tree-model g-object)
+                  (iter (g-boxed-foreign gtk-tree-iter))
+                  (parent (g-boxed-foreign gtk-tree-iter))))
+  (iter-has-child (:boolean
+                   (tree-model g-object)
+                   (iter (g-boxed-foreign gtk-tree-iter))))
+  (iter-n-children (:int
+                    (tree-model g-object)
+                    (iter (g-boxed-foreign gtk-tree-iter))))
+  (iter-nth-child (:boolean
+                   (tree-model g-object)
+                   (iter (g-boxed-foreign gtk-tree-iter))
+                   (parent (g-boxed-foreign gtk-tree-iter))
+                   (n :int)))
+  (iter-parent (:boolean
+                (tree-model g-object)
+                (iter (g-boxed-foreign gtk-tree-iter))
+                (child (g-boxed-foreign gtk-tree-iter))))
+  (ref-node (:void
+             (tree-model g-object)
+             (iter (g-boxed-foreign gtk-tree-iter))))
+  (unref-node (:void
+               (tree-model g-object)
+                (iter (g-boxed-foreign gtk-tree-iter)))))
 
 ;;; ----------------------------------------------------------------------------
 
