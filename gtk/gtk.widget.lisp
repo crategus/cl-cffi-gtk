@@ -335,100 +335,91 @@
   (height :int :initform 0))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-requisition atdoc:*class-name-alias*)
+      "Boxed CStruct"
       (documentation 'gtk-requisition 'type)
- "@version{2020-9-16}
+ "@version{2021-3-2}
   @begin{short}
-    A @sym{gtk-requisition} represents the desired size of a widget.
+    A @sym{gtk-requisition} structure represents the desired size of a widget.
   @end{short}
   See the section called \"Height-for-width Geometry Management\" in the
-  documentation of @class{gtk-widget} for more information.
+  @class{gtk-widget} documentation for more information.
   @begin{pre}
 (define-g-boxed-cstruct gtk-requisition \"GtkRequisition\"
   (width :int :initform 0)
   (height :int :initform 0))
   @end{pre}
   @begin[code]{table}
-    @entry[width]{A  @code{:int} with the widget's desired width.}
-    @entry[height]{A @code{:int} with the widget's desired height.}
+    @entry[width]{An integer with the widget's desired width.}
+    @entry[height]{An integer with the widget's desired height.}
   @end{table}
   @see-slot{gtk-requisition-width}
   @see-slot{gtk-requisition-height}
-  @see-constructor{make-gtk-requisition}
-  @see-constructor{copy-gtk-requisition}
   @see-class{gtk-widget}
   @see-function{gtk-widget-preferred-size}")
 
-(export (boxed-related-symbols 'gtk-requisition))
-
-;;; ----------------------------------------------------------------------------
-;;; Constructors of GtkRequisition
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-requisition 'function)
- "@version{2020-9-16}
-  @argument[width]{a @code{:int} with the desired width}
-  @argument[height]{a @code{:int} with the desired height}
-  @short{Creates a @class{gtk-requisition} structure.}
-  @see-class{gtk-requisition}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-requisition 'function)
- "@version{2020-9-16}
-  @argument[instance]{a @class{gtk-requisition} structure}
-  @short{Copy constructor of a @class{gtk-requisition} structure.}
-  @see-class{gtk-requisition}")
+(export 'gtk-requisition)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of GtkRequistion
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-requisition-height -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-requisition-height 'function)
+ "@version{2021-2-3}
+  @syntax[]{(gtk-requisition-height instance) => height}
+  @syntax[]{(setf (gtk-requisition-height instance) height)}
+  @argument[instance]{a @class{gtk-requisition} structure}
+  @argument[height]{an integer with the height}
+  @begin{short}
+    Accessor of the @arg{height} slot of the @class{gtk-requisition} structure.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+(defvar requisition (gtk-requisition-new))
+=> REQUISITION
+(setf (gtk-requisition-height requisition) 100)
+=> 100
+(gtk-requisition-height requisition)
+=> 100
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-requisition}
+  @see-function{gtk-requisition-width}")
+
+(export 'gtk-requisition-height)
+
+;;; --- gtk-requisition-width --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2020-9-16}
+ "@version{2021-3-2}
   @syntax[]{(gtk-requisition-width instance) => width}
   @syntax[]{(setf (gtk-requisition-width instance) width)}
   @argument[instance]{a @class{gtk-requisition} structure}
-  @argument[instance]{a @code{:int} with the width}
+  @argument[width]{an integer with the width}
   @begin{short}
     Accessor of the @arg{width} slot of the @class{gtk-requisition} structure.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
-  (defvar requistion (make-gtk-requisition))
-=> REQUISTION
-  (setf (gtk-requisition-width requistion) 100)
+(defvar requisition (gtk-requisition-new))
+=> REQUISITION
+(setf (gtk-requisition-width requisition) 100)
 => 100
-  (gtk-requisition-width requistion)
+(gtk-requisition-width requisition)
 => 100
     @end{pre}
   @end{dictionary}
-  @see-class{gtk-requisition}")
+  @see-class{gtk-requisition}
+  @see-function{gtk-requisition-height}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-requisition-height 'function)
- "@version{2020-9-16}
-  @syntax[]{(gtk-requisition-height instance) => height}
-  @syntax[]{(setf (gtk-requisition-height instance) height)}
-  @argument[instance]{a @class{gtk-requisition} structure}
-  @argument[instance]{a @code{:int} with the height}
-  @begin{short}
-    Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
-  @end{short}
-  @begin[Example]{dictionary}
-    @begin{pre}
-  (defvar requistion (make-gtk-requisition))
-=> REQUISTION
-  (setf (gtk-requisition-height requistion) 100)
-=> 100
-  (gtk-requisition-height requistion)
-=> 100
-    @end{pre}
-  @end{dictionary}
-  @see-class{gtk-requisition}")
+(export 'gtk-requisition-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAllocation
@@ -8353,32 +8344,44 @@ drag_data_received (GtkWidget        *widget,
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_requisition_new ()
-;;;
-;;; GtkRequisition * gtk_requisition_new (void);
-;;;
-;;; Allocates a new GtkRequisition structure and initializes its elements to
-;;; zero.
-;;;
-;;; Returns :
-;;;     a new empty GtkRequisition. The newly allocated GtkRequisition should be
-;;;     freed with gtk_requisition_free().
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-requisition-new))
+
+(defun gtk-requisition-new (&key (width 0) (height 0))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-2}
+  @argument[width]{an integer with the width, default 0}
+  @argument[height]{an integer with the height, default 0}
+  @begin{return}
+    A new @class{gtk-requisition} instance.
+  @end{return}
+  @begin{short}
+    Allocates a new @class{gtk-requisition} instance.
+  @end{short}
+  @see-class{gtk-requisition}"
+  (make-gtk-requisition :width width :height height))
+
+(export 'gtk-requisition-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_requisition_copy ()
-;;;
-;;; GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-;;;
-;;; Copies a GtkRequisition.
-;;;
-;;; requisition :
-;;;     a GtkRequisition
-;;;
-;;; Returns :
-;;;     a copy of requisition
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-requisition-copy))
+
+(defun gtk-requisition-copy (requisition)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-2}
+  @argument[requisition]{a @class{gtk-requisition} instance}
+  @return{A copy of @arg{requisition}.}
+  @begin{short}
+    Copies a @class{gtk-requisition} instance.
+  @end{short}
+  @see-class{gtk-requisition}"
+  (copy-gtk-requisition requisition))
+
+(export 'gtk-requisition-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_requisition_free ()
