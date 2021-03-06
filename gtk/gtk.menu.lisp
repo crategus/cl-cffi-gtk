@@ -1267,6 +1267,12 @@ menu
 ;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_menu_popup_at_pointer" gtk-menu-popup-at-pointer) :void
+  (menu (g-object gtk-menu))
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gtk-menu-popup-at-pointer)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkMenuPositionFunc ()
 ;;;
