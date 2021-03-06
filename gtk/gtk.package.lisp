@@ -2085,9 +2085,8 @@ setup_tree (void)
       @about-function{gtk-tree-iter-copy}
       @about-function{gtk-tree-iter-free}
 
-      @about-class{gtk-tree-model}
-      @about-symbol{gtk-tree-model-iface}
       @about-symbol{gtk-tree-model-flags}
+      @about-class{gtk-tree-model}
       @about-function{gtk-tree-model-flags}
       @about-function{gtk-tree-model-n-columns}
       @about-function{gtk-tree-model-column-type}
@@ -2108,6 +2107,7 @@ setup_tree (void)
       @about-function{gtk-tree-model-unref-node}
       @about-function{gtk-tree-model-get}
       @about-function{gtk-tree-model-get-valist}
+      @about-symbol{gtk-tree-model-foreach-func}
       @about-function{gtk-tree-model-foreach}
       @about-function{gtk-tree-model-row-changed}
       @about-function{gtk-tree-model-row-inserted}
@@ -2120,6 +2120,8 @@ setup_tree (void)
 
       @about-class{gtk-tree-selection}
       @about-generic{gtk-tree-selection-mode}
+      @about-symbol{gtk-tree-selection-func}
+      @about-symbol{gtk-tree-selection-foreach-func}
       @about-function{gtk-tree-selection-set-select-function}
       @about-function{gtk-tree-selection-get-select-function}
       @about-function{gtk-tree-selection-user-data}
@@ -2188,7 +2190,6 @@ setup_tree (void)
       A widget for displaying both trees and lists.
 
       @about-symbol{gtk-tree-view-drop-position}
-      @about-symbol{gtk-tree-view-private}
       @about-symbol{gtk-tree-view-grid-lines}
       @about-class{gtk-tree-view}
       @about-generic{gtk-tree-view-activate-on-single-click}
@@ -2226,6 +2227,7 @@ setup_tree (void)
       @about-function{gtk-tree-view-column}
       @about-function{gtk-tree-view-columns}
       @about-function{gtk-tree-view-move-column-after}
+      @about-symbol{gtk-tree-view-column-drop-func}
       @about-function{gtk-tree-view-set-column-drag-function}
       @about-function{gtk-tree-view-scroll-to-point}
       @about-function{gtk-tree-view-scroll-to-cell}
@@ -2238,6 +2240,7 @@ setup_tree (void)
       @about-function{gtk-tree-view-expand-to-path}
       @about-function{gtk-tree-view-expand-row}
       @about-function{gtk-tree-view-collapse-row}
+      @about-symbol{gtk-tree-view-mapping-func}
       @about-function{gtk-tree-view-map-expanded-rows}
       @about-function{gtk-tree-view-row-expanded}
       @about-function{gtk-tree-view-path-at-pos}
@@ -2261,13 +2264,15 @@ setup_tree (void)
       @about-function{gtk-tree-view-get-drag-dest-row}
       @about-function{gtk-tree-view-get-dest-row-at-pos}
       @about-function{gtk-tree-view-create-row-drag-icon}
+      @about-symbol{gtk-tree-view-search-equal-func}
       @about-function{gtk-tree-view-get-search-equal-func}
       @about-function{gtk-tree-view-set-search-equal-func}
-      @about-function{gtk-tree-view-get-search-entry}
-      @about-function{gtk-tree-view-set-search-entry}
+      @about-function{gtk-tree-view-search-entry}
+      @about-symbol{gtk-tree-view-search-position-func}
       @about-function{gtk-tree-view-get-search-position-func}
       @about-function{gtk-tree-view-set-search-position-func}
       @about-function{gtk-tree-view-set-destroy-count-func}
+      @about-symbol{gtk-tree-view-row-separator-func}
       @about-function{gtk-tree-view-get-row-separator-func}
       @about-function{gtk-tree-view-set-row-separator-func}
       @about-function{gtk-tree-view-is-rubber-banding-active}
@@ -2277,15 +2282,13 @@ setup_tree (void)
       @about-function{gtk-tree-view-tooltip-context}
     @end{subsection}
     @begin[GtkTreeView drag and drop]{subsection}
-      Interfaces for drag-and-drop support in @class{gtk-tree-view}.
+      Interfaces for drag-and-drop support in @class{gtk-tree-view} widgets.
 
       @about-class{gtk-tree-drag-source}
-      @about-class{gtk-tree-drag-source-iface}
       @about-function{gtk-tree-drag-source-drag-data-delete}
       @about-function{gtk-tree-drag-source-drag-data-get}
-      @about-function{gtk-tree-drag-source-drag-row-draggable}
+      @about-function{gtk-tree-drag-source-row-draggable}
       @about-class{gtk-tree-drag-dest}
-      @about-class{gtk-tree-drag-dest-iface}
       @about-function{gtk-tree-drag-dest-drag-data-received}
       @about-function{gtk-tree-drag-dest-row-drop-possible}
       @about-function{gtk-tree-set-row-drag-data}
@@ -2371,12 +2374,14 @@ setup_tree (void)
       @about-function{gtk-icon-view-create-drag-icon}
     @end{subsection}
     @begin[GtkTreeSortable]{subsection}
-      The interface for sortable models used by @class{gtk-tree-view}.
+      The interface for sortable models used by @class{gtk-tree-view} widgets.
 
+      @about-variable{+gtk-tree-sortable-default-sort-column-id+}
+      @about-variable{+gtk-tree-sortable-unsorted-sort-column-id+}
       @about-class{gtk-tree-sortable}
-      @about-class{gtk-tree-sortable-iface}
       @about-function{gtk-tree-sortable-sort-column-changed}
       @about-function{gtk-tree-sortable-sort-column-id}
+      @about-symbol{gtk-tree-iter-compare-func}
       @about-function{gtk-tree-sortable-set-sort-func}
       @about-function{gtk-tree-sortable-set-default-sort-func}
       @about-function{gtk-tree-sortable-has-default-sort-func}
@@ -2396,13 +2401,16 @@ setup_tree (void)
       @about-function{gtk-tree-model-sort-iter-is-valid}
     @end{subsection}
     @begin[GtkTreeModelFilter]{subsection}
-      A @class{gtk-tree-model} which hides parts of an underlying tree model.
+      A @class{gtk-tree-model} object which hides parts of an underlying tree
+      model.
 
       @about-class{gtk-tree-model-filter}
       @about-generic{gtk-tree-model-filter-child-model}
       @about-generic{gtk-tree-model-filter-virtual-root}
       @about-function{gtk-tree-model-filter-new}
+      @about-symbol{gtk-tree-model-filter-visible-func}
       @about-function{gtk-tree-model-filter-set-visible-func}
+      @about-symbol{gtk-tree-model-filter-modify-func}
       @about-function{gtk-tree-model-filter-set-modify-func}
       @about-function{gtk-tree-model-filter-set-visible-column}
       @about-function{gtk-tree-model-filter-model}
@@ -2703,7 +2711,7 @@ setup_tree (void)
     @end{subsection}
     @begin[GtkListStore]{subsection}
       A list-like data structure that can be used with the
-      @class{gtk-tree-view}.
+      @class{gtk-tree-view} widget.
 
       @about-class{gtk-list-store}
       @about-function{gtk-list-store-new}
@@ -2736,10 +2744,10 @@ setup_tree (void)
       @about-function{gtk-tree-store-new}
       @about-function{gtk-tree-store-newv}
       @about-function{gtk-tree-store-set-column-types}
-      @about-function{gtk-tree-store-set-value}
       @about-function{gtk-tree-store-set}
       @about-function{gtk-tree-store-set-valist}
       @about-function{gtk-tree-store-set-valuesv}
+      @about-function{gtk-tree-store-set-value}
       @about-function{gtk-tree-store-remove}
       @about-function{gtk-tree-store-insert}
       @about-function{gtk-tree-store-insert-before}
@@ -3812,17 +3820,13 @@ setup_tree (void)
       Base class for all widgets.
 
       @about-struct{gtk-requisition}
-      @about-function{make-gtk-requisition}
-      @about-function{copy-gtk-requisition}
       @about-function{gtk-requisition-width}
       @about-function{gtk-requisition-height}
       @about-symbol{gtk-widget-help-type}
-
       @about-symbol{gtk-text-direction}
       @about-symbol{gtk-size-request-mode}
       @about-symbol{gtk-requested-size}
       @about-symbol{gtk-align}
-
       @about-class{gtk-widget}
       @about-generic{gtk-widget-app-paintable}
       @about-generic{gtk-widget-can-default}

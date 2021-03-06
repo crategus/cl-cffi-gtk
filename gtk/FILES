@@ -99,14 +99,14 @@ GTK+ Widgets and Objects
 
   Tree, List and Icon Grid Widgets
 
-    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24 &
-    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24 &
-    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24 &
+    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24
+    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24
+    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24
     gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.24 &
-    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24 &
+    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24
     gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24 &
  +  gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.24
- +  gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24 &
+    gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24
  +  gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.24 &
  +  gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.24 &
     gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.24 &
