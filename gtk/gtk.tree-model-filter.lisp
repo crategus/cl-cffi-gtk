@@ -224,36 +224,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeModelFilterVisibleFunc ()
-;;;
-;;; gboolean (*GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,
-;;;                                            GtkTreeIter *iter,
-;;;                                            gpointer data);
-;;;
-;;; A function which decides whether the row indicated by iter is visible.
-;;;
-;;; model :
-;;;     the child model of the GtkTreeModelFilter
-;;;
-;;; iter :
-;;;     a GtkTreeIter pointing to the row in model whose visibility is
-;;;     determined
-;;;
-;;; data :
-;;;     user data given to gtk_tree_model_filter_set_visible_func()
-;;;
-;;; Returns :
-;;;     Whether the row indicated by iter is visible.
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-tree-model-filter-visible-func-callback :boolean
-    ((tree-model g-object)
+(defcallback gtk-tree-model-filter-visible-func :boolean
+    ((model (g-object gtk-tree-model))
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (glib:get-stable-pointer-value data)))
+  (let ((fn (get-stable-pointer-value data)))
     (restart-case
-        (funcall fn tree-model iter)
+      (funcall fn model iter)
       (return-true () t)
       (return-false () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-model-filter-visible-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-tree-model-filter-visible-func atdoc:*external-symbols*)
+ "@version{2021-2-3}
+  @begin{short}
+    A callback function which decides whether the row indicated by @arg{iter}
+    is visible.
+  @end{short}
+  @begin{pre}
+ lambda (model iter)
+  @end{pre}
+  @begin[code]{table}
+    @entry[model]{The child model of the @class{gtk-tree-model-filter} object.}
+    @entry[iter]{A @class{gtk-tree-iter} iterator pointing to the row in model
+      whose visibility is determined.}
+    @entry[Returns]{Whether the row indicated by @arg{iter} is visible.}
+  @end{table}
+  @see-class{gtk-tree-model-filter}
+  @see-symbol{gtk-tree-model-filter-visible-func}")
+
+(export 'gtk-tree-model-filter-visible-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_set_visible_func ()
@@ -266,49 +270,34 @@
   (data :pointer)
   (destroy-notify :pointer))
 
-(defun gtk-tree-model-filter-set-visible-func (tree-model-filter func)
+(defun gtk-tree-model-filter-set-visible-func (filter func)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2021-3-2}
   @argument[filter]{a @class{gtk-tree-model-filter} object}
-  @argument[func]{a @code{GtkTreeModelFilterVisibleFunc}, the visible function}
+  @argument[func]{a @symbol{gtk-tree-model-filter-visible-func}, the visible
+    callback function}
   @begin{short}
     Sets the visible function used when filtering the filter to be @arg{func}.
-    The function should return @em{true} if the given row should be visible and
-    @code{nil} otherwise.
   @end{short}
+  The function should return @em{true} if the given row should be visible and
+  @em{false} otherwise.
 
   If the condition calculated by the function changes over time, e.g. because
   it depends on some global parameters, you must call the function
-  @fun{gtk-tree-model-filter-refilter} to keep the visibility information of the
-  model uptodate.
+  @fun{gtk-tree-model-filter-refilter} to keep the visibility information of
+  the model uptodate.
 
   Note that @arg{func} is called whenever a row is inserted, when it may still
   be empty. The visible function should therefore take special care of empty
-  rows, like in the example below.
-  @begin{pre}
- static gboolean
- visible_func (GtkTreeModel *model,
-               GtkTreeIter  *iter,
-               gpointer      data)
- {
-   /* Visible if row is non-empty and first column is \"HI\" */
-   gchar *str;
-   gboolean visible = FALSE;
-
-   gtk_tree_model_get (model, iter, 0, &str, -1);
-   if (str && strcmp (str, \"HI\") == 0)
-     visible = TRUE;
-   g_free (str);
-
-   return visible;
- @}
-  @end{pre}
+  rows.
+  @see-class{gtk-tree-model-filter}
+  @see-symbol{gtk-tree-model-filter-visible-func}
   @see-function{gtk-tree-model-filter-refilter}"
   (%gtk-tree-model-filter-set-visible-func
-      tree-model-filter
-      (callback gtk-tree-model-filter-visible-func-callback)
-      (glib:allocate-stable-pointer func)
-      (callback glib:stable-pointer-destroy-notify-cb)))
+              filter
+              (callback gtk-tree-model-filter-visible-func)
+              (allocate-stable-pointer func)
+              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-model-filter-set-visible-func)
 
