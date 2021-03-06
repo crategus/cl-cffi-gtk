@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -241,22 +241,23 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer 'type)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @begin{short}
-    The @sym{gtk-cell-renderer} is a base class of a set of objects used for
-    rendering a cell to a @symbol{cairo-t}. These objects are used primarily by
-    the @class{gtk-tree-view} widget, though they are not tied to them in any
-    specific way. It is worth noting that @sym{gtk-cell-renderer} is not a
-    @class{gtk-widget} and cannot be treated as such.
+    The @sym{gtk-cell-renderer} class is a base class of a set of objects used
+    for rendering a cell to a @symbol{cairo-t} context.
   @end{short}
+  These objects are used primarily by the @class{gtk-tree-view} widget, though
+  they are not tied to them in any specific way. It is worth noting that the
+  @sym{gtk-cell-renderer} object is not a @class{gtk-widget} object and cannot
+  be treated as such.
 
-  The primary use of a @sym{gtk-cell-renderer} is for drawing a certain
-  graphical elements on a @symbol{cairo-t}. Typically, one cell renderer is
-  used to draw many cells on the screen. To this extent, it is not expected
-  that a @sym{gtk-cell-renderer} keep any permanent state around. Instead, any
+  The primary use of a @sym{gtk-cell-renderer} object is for drawing a certain
+  graphical elements on a Cairo context. Typically, one cell renderer is used
+  to draw many cells on the screen. To this extent, it is not expected that a
+  @sym{gtk-cell-renderer} object keep any permanent state around. Instead, any
   state is set just prior to use using GObjects property system. Then, the cell
-  is measured using the function @fun{gtk-cell-renderer-size}. Finally, the
-  cell is rendered in the correct location using the function
+  is measured using the function @fun{gtk-cell-renderer-preferred-size}.
+  Finally, the cell is rendered in the correct location using the function
   @fun{gtk-cell-renderer-render}.
 
   There are a number of rules that must be followed when writing a new
@@ -266,16 +267,16 @@
   generic properties that are expected to be honored by all children.
 
   Beyond merely rendering a cell, cell renderers can optionally provide active
-  user interface elements. A cell renderer can be \"activatable\" like
-  @class{gtk-cell-renderer-toggle}, which toggles when it gets activated by a
-  mouse click, or it can be \"editable\" like @class{gtk-cell-renderer-text},
-  which allows the user to edit the text using a @class{gtk-entry}. To make a
-  cell renderer activatable or editable, you have to implement the
-  @code{GtkCellRendererClass.activate} or
+  user interface elements. A cell renderer can be \"activatable\" like the
+  @class{gtk-cell-renderer-toggle} object, which toggles when it gets activated
+  by a mouse click, or it can be \"editable\" like the
+  @class{gtk-cell-renderer-text} object, which allows the user to edit the text
+  using a @class{gtk-entry} widget. To make a cell renderer activatable or
+  editable, you have to implement the @code{GtkCellRendererClass.activate} or
   @code{GtkCellRendererClass.start_editing} virtual functions, respectively.
 
-  Many properties of @sym{gtk-cell-renderer} and its subclasses have a
-  corresponding @code{set} property, e.g. @code{cell-background-set}
+  Many properties of the @sym{gtk-cell-renderer} class and its subclasses have
+  a corresponding @code{set} property, e.g. @code{cell-background-set}
   corresponds to @code{cell-background}. These @code{set} properties reflect
   whether a property has been set or not. You should not set them independently.
   @begin[Signal Details]{dictionary}
@@ -295,34 +296,17 @@
       @begin{pre}
  lambda (renderer editable path)    : Run First
       @end{pre}
-      This signal gets emitted when a cell starts to be edited. The intended use
-      of this signal is to do special setup on editable, e.g. adding a
-      @class{gtk-entry-completion} or setting up additional columns in a
-      @class{gtk-combo-box}. Note that GTK+ does not guarantee that cell
+      This signal gets emitted when a cell starts to be edited. The intended
+      use of this signal is to do special setup on editable, e.g. adding a
+      @class{gtk-entry-completion} object or setting up additional columns in a
+      @class{gtk-combo-box} widget. Note that GTK+ does not guarantee that cell
       renderers will continue to use the same kind of widget for editing in
       future releases, therefore you should check the type of editable before
-      doing any specific setup, as in the following example:
-      @begin{pre}
- static void
- text_editing_started (GtkCellRenderer *cell,
-                       GtkCellEditable *editable,
-                       const gchar     *path,
-                       gpointer         data)
- {
-   if (GTK_IS_ENTRY (editable))
-     {
-       GtkEntry *entry = GTK_ENTRY (editable);
-
-       /* ... create a GtkEntryCompletion */
-
-       gtk_entry_set_completion (entry, completion);
-     @}
- @}
-      @end{pre}
+      doing any specific setup.
       @begin[code]{table}
         @entry[renderer]{The @sym{gtk-cell-renderer} object which received the
           signal.}
-        @entry[editable]{The @class{gtk-cell-editable}.}
+        @entry[editable]{The @class{gtk-cell-editable} widget.}
         @entry[path]{A string with the path identifying the edited cell.}
       @end{table}
   @end{dictionary}
@@ -341,7 +325,8 @@
   @see-slot{gtk-cell-renderer-xalign}
   @see-slot{gtk-cell-renderer-xpad}
   @see-slot{gtk-cell-renderer-yalign}
-  @see-slot{gtk-cell-renderer-ypad}")
+  @see-slot{gtk-cell-renderer-ypad}
+  @see-class{gtk-cell-editable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -360,8 +345,7 @@
 (setf (gethash 'gtk-cell-renderer-cell-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background 'function)
- "@version{2020-6-20}
-  @syntax[]{(gtk-cell-renderer-cell-background object) => background}
+ "@version{2021-3-2}
   @syntax[]{(setf (gtk-cell-renderer-cell-background object) background)}
   @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[background]{a string with the cell background color}
@@ -370,8 +354,11 @@
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  Cell background color as a string.
-  @see-class{gtk-cell-renderer}")
+  Cell background color as a string. This property is not readable. After
+  setting the background color is readable with the function
+  @fun{gtk-cell-renderer-cell-background-rgba}.
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-cell-background-rgba}")
 
 ;;; --- gtk-cell-renderer-cell-background-gdk ----------------------------------
 
@@ -390,18 +377,25 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-gdk 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-cell-background-gdk object) => background}
   @syntax[]{(setf (gtk-cell-renderer-cell-background-gdk object) background)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[background]{a @class{gdk-color} with the cell background color}
+  @argument[background]{a @class{gdk-color} color with the cell background
+    color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{cell-background-gdk} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
   Cell background color.
-  @see-class{gtk-cell-renderer}")
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-cell-renderer-cell-background-gdk} has been deprecated
+    since version 3.4 and should not be used in newly-written code. Use the
+    function @fun{gtk-cell-renderer-cell-background-rgba} instead.
+  @end{dictionary}
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-cell-background-rgba}")
 
 ;;; --- gtk-cell-renderer-cell-background-rgba ---------------------------------
 
@@ -417,7 +411,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-rgba 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-cell-background-rgba object) => background}
   @syntax[]{(setf (gtk-cell-renderer-cell-background-rgba object) background)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -428,7 +422,8 @@
   @end{short}
 
   Cell background RGBA color.
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-cell-background-set}")
 
 ;;; --- gtk-cell-renderer-cell-background-set ----------------------------------
 
@@ -445,7 +440,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-cell-background-set 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-cell-background-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-cell-background-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -457,7 +452,9 @@
   @end{short}
 
   Whether this tag affects the cell background color.
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-cell-background}
+  @see-function{gtk-cell-renderer-cell-background-rgba}")
 
 ;;; --- gtk-cell-renderer-editing ----------------------------------------------
 
@@ -471,9 +468,8 @@
 (setf (gethash 'gtk-cell-renderer-editing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-editing 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-editing object) => setting}
-  @syntax[]{(setf (gtk-cell-renderer-editing object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[setting]{a boolean wether the cell renderer is in editing mode}
   @begin{short}
@@ -497,7 +493,7 @@
 (setf (gethash 'gtk-cell-renderer-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-height 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-height object) => height}
   @syntax[]{(setf (gtk-cell-renderer-height object) height)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -508,7 +504,8 @@
   @end{short}
 
   The fixed height.
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-width}")
 
 ;;; --- gtk-cell-renderer-is-expanded ------------------------------------------
 
@@ -523,7 +520,7 @@
 (setf (gethash 'gtk-cell-renderer-is-expanded atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-is-expanded 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-is-expanded object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-is-expanded object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -549,7 +546,7 @@
 (setf (gethash 'gtk-cell-renderer-is-expander atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-is-expander 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-is-expander object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-is-expander object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -575,18 +572,19 @@
 (setf (gethash 'gtk-cell-renderer-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-mode 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-mode object) => mode}
   @syntax[]{(setf (gtk-cell-renderer-mode object) mode)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[mode]{a @symbol{gtk-cell-renderer-mode} value}
+  @argument[mode]{a value of the @symbol{gtk-cell-renderer-mode} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{mode} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
   Editable mode of the cell renderer.
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-cell-renderer}
+  @see-sybmol{gtk-cell-renderer-mode}")
 
 ;;; --- gtk-cell-renderer-sensitive --------------------------------------------
 
@@ -601,10 +599,10 @@
 (setf (gethash 'gtk-cell-renderer-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-sensitive 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-cell-renderer-sensitive object) sensitive)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[sensitive]{a boolean with the sensitivity of the cell}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{sensitive} slot of the
@@ -613,7 +611,7 @@
 
   The slot access function @sym{gtk-cell-renderer-sensitive} returns the cell
   renderer's sensitivity. The slot access function
-  @sym{(setf gtk-cell-renderer-sensitive)} sets the cell renderer's sensitivity.
+  @sym{(setf gtk-cell-renderer-sensitive)} sets the sensitivity.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-visible ----------------------------------------------
@@ -628,10 +626,10 @@
 (setf (gethash 'gtk-cell-renderer-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-visible 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-visible object) => visible}
   @syntax[]{(setf (gtk-cell-renderer-visible object) visible)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[visible]{a boolean with the visibility of the cell}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{visible} of the
@@ -640,7 +638,7 @@
 
   The slot access function @sym{gtk-cell-renderer-sensitive} returns the cell
   renderer's visibility. The slot access function
-  @sym{(setf gtk-cell-renderer-sensitive)} sets the cell renderer's visibility.
+  @sym{(setf gtk-cell-renderer-sensitive)} sets the visibility.
   @see-class{gtk-cell-renderer}")
 
 ;;; --- gtk-cell-renderer-width ------------------------------------------------
@@ -656,10 +654,10 @@
 (setf (gethash 'gtk-cell-renderer-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-width 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-width object) => width}
   @syntax[]{(setf (gtk-cell-renderer-width object) width)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[width]{an integer with the fixed width}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{width} slot of the
@@ -667,109 +665,116 @@
   @end{short}
 
   The fixed width.
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-height}")
 
 ;;; --- gtk-cell-renderer-xalign -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-cell-renderer) 't)
  "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
-  The x-align. @br{}
-  Allowed values: [0,1] @br{}
+  The horizontal alignment, from 0.0 (left) to 1.0 (right). Reversed for
+  RTL layouts. @br{}
+  Allowed values: [0.0,1.0] @br{}
   Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-xalign 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-xalign object) => align}
   @syntax[]{(setf (gtk-cell-renderer-xalign object) align)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[align]{a @code{:float} with the x-align}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[align]{a float with the x-align}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{xalign} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The x-align.
-  @see-class{gtk-cell-renderer}")
+  The horizontal alignment, from 0.0 (left) to 1.0 (right). Reversed for RTL
+  layouts.
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-yalign}")
 
 ;;; --- gtk-cell-renderer-xpad -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xpad" 'gtk-cell-renderer) 't)
  "The @code{xpad} property of type @code{:uint} (Read / Write) @br{}
-  The xpad. @br{}
+  The amount of space to add on the left and right, in pixels. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-xpad atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-xpad 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-xpad object) => padding}
   @syntax[]{(setf (gtk-cell-renderer-xpad object) padding)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[padding]{a unsigned integer with the padding}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{xpad} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The xpad.
-  @see-class{gtk-cell-renderer}")
+  The amount of space to add on the left and right, in pixels.
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-ypad}")
 
 ;;; --- gtk-cell-renderer-yalign -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-cell-renderer) 't)
  "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
-  The y-align. @br{}
-  Allowed values: [0,1] @br{}
+  The vertical alignment, from 0.0 (top) to 1.0 (bottom). @br{}
+  Allowed values: [0.0,1.0] @br{}
   Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-yalign 'function)
- "@version{2020-6-20}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-yalign object) => align}
   @syntax[]{(setf (gtk-cell-renderer-yalign object) align)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[align]{a @code{:float} with the y-align}
+  @argument[object]{a @class{gtk-cell-renderer} object}
+  @argument[align]{a float with the y-align}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{yalign} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The y-align.
-  @see-class{gtk-cell-renderer}")
+  The vertical alignment, from 0.0 (top) to 1.0 (bottom).
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-xalign}")
 
 ;;; --- gtk-cell-renderer-ypad -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ypad" 'gtk-cell-renderer) 't)
  "The @code{ypad} property of tpye @code{:uint} (Read / Write) @br{}
-  The ypad. @br{}
+  The amount of space to add on the top and bottom, in pixels. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-ypad atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-ypad 'function)
- "@version{2013-11-29}
+ "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-ypad object) => padding}
   @syntax[]{(setf (gtk-cell-renderer-ypad object) padding)}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[object]{a @class{gtk-cell-renderer} object}
   @argument[padding]{a unsigned integer with the padding}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{ypad} slot of the
     @class{gtk-cell-renderer} class.
   @end{short}
 
-  The ypad.
-  @see-class{gtk-cell-renderer}")
+  The amount of space to add on the top and bottom, in pixels.
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-cell-renderer-xpad}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_class_set_accessible_type ()
@@ -1283,6 +1288,22 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_preferred_size"
+          %gtk-cell-renderer-preferred-size) :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (min-size (g-boxed-foreign gtk-requisition))
+  (max-size (g-boxed-foreign gtk-requisition)))
+
+(defun gtk-cell-renderer-preferred-size (cell widget)
+  (let ((min-size (make-gtk-requisition))
+        (max-size (make-gtk-requisition)))
+    (%gtk-cell-renderer-preferred-size cell widget min-size max-size)
+    (values min-size
+            max-size)))
+
+(export 'gtk-cell-renderer-preferred-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_width ()
