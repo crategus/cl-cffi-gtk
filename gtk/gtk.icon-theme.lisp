@@ -848,7 +848,7 @@
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-lookup-icon}
   @see-function{gdk-pixbuf-copy}"
-  (with-g-error (err)
+  (with-ignore-g-error (err)
     (%gtk-icon-theme-load-icon theme name size flags err)))
 
 (export 'gtk-icon-theme-load-icon)
