@@ -257,12 +257,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"clicked\" signal}
       @begin{pre}
- lambda (treeviewcolumn)    : Run Last
+ lambda (column)    : Run Last
       @end{pre}
     Emitted when the tree view column is clicked with the mouse or activated
     with the keyboard.
     @begin[code]{table}
-      @entry[treeviewcolumn]{The @class{gtk-tree-view-column} object which
+      @entry[column]{The @class{gtk-tree-view-column} object which
         emitted the signal.}
     @end{table}
   @end{dictionary}

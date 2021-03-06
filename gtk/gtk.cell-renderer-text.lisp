@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -335,7 +335,8 @@
   @see-slot{gtk-cell-renderer-text-weight-set}
   @see-slot{gtk-cell-renderer-text-width-chars}
   @see-slot{gtk-cell-renderer-text-wrap-mode}
-  @see-slot{gtk-cell-renderer-text-wrap-width}")
+  @see-slot{gtk-cell-renderer-text-wrap-width}
+  @see-class{gtk-cell-renderer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

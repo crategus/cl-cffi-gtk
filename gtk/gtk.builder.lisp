@@ -775,7 +775,7 @@
 
 (defun gtk-builder-add-objects-from-file (builder filename object-ids)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-2-25}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[filename]{a string with the name of the file to parse}
   @argument[object-ids]{a list of strings with the object IDs to build}
@@ -785,7 +785,6 @@
     the requested objects and merges them with the current contents of builder.
   @end{short}
   Upon errors 0 will be returned.
-
   @begin[Note]{dictionary}
     If you are adding an object that depends on an object that is not its
     child, for instance a @class{gtk-tree-view} widget that depends on its
