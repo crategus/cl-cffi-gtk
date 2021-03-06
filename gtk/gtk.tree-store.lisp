@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,10 +38,10 @@
 ;;;     gtk_tree_store_new
 ;;;     gtk_tree_store_newv
 ;;;     gtk_tree_store_set_column_types
-;;;     gtk_tree_store_set_value
 ;;;     gtk_tree_store_set
 ;;;     gtk_tree_store_set_valist
 ;;;     gtk_tree_store_set_valuesv
+;;;     gtk_tree_store_set_value
 ;;;     gtk_tree_store_remove
 ;;;     gtk_tree_store_insert
 ;;;     gtk_tree_store_insert_before
@@ -89,37 +89,36 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-store 'type)
- "@version{2013-9-13}
+ "@version{2021-3-3}
   @begin{short}
     The @sym{gtk-tree-store} object is a list model for use with a
-    @class{gtk-tree-view} widget. It implements the @class{gtk-tree-model}
-    interface, and consequentialy, can use all of the methods available there.
-    It also implements the @class{gtk-tree-sortable} interface so it can be
-    sorted by the view. Finally, it also implements the tree drag and drop
-    interfaces.
+    @class{gtk-tree-view} widget.
   @end{short}
-
-  @subheading{GtkTreeStore as GtkBuildable}
+  It implements the @class{gtk-tree-model} interface, and consequentialy, can
+  use all of the methods available there. It also implements the
+  @class{gtk-tree-sortable} interface so it can be sorted by the tree view.
+  Finally, it also implements the tree drag and drop interfaces.
+  @begin[GtkTreeStore as GtkBuildable]{dictionary}
     The @sym{gtk-tree-store} implementation of the @class{gtk-buildable}
     interface allows to specify the model columns with a @code{<columns>}
     element that may contain multiple @code{<column>} elements, each specifying
-    one model column. The @code{\"type\"} attribute specifies the data type for
+    one model column. The \"type\" attribute specifies the data type for
     the column.
 
-  @b{Example:} A UI Definition fragment for a tree store
-  @begin{pre}
-    <object class=\"GtkTreeStore\">
-     <columns>
-       <column type=\"gchararray\"/>
-       <column type=\"gchararray\"/>
-       <column type=\"gint\"/>
-     </columns>
-   </object>
-  @end{pre}
+    @b{Example:} A UI Definition fragment for a tree store
+    @begin{pre}
+<object class=\"GtkTreeStore\">
+  <columns>
+    <column type=\"gchararray\"/>
+    <column type=\"gchararray\"/>
+    <column type=\"gint\"/>
+  </columns>
+</object>
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-model}
-  @see-class{gtk-tree-sortable}
-  @see-class{gtk-buildable}")
+  @see-class{gtk-tree-sortable}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -140,20 +139,23 @@
 
 (defun gtk-tree-store-new (&rest column-types)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-16}
+ "@version{2021-3-3}
   @argument[column-types]{all @class{g-type} types for the columns, from first
     to last}
   @return{A new @class{gtk-tree-store} object.}
   @begin{short}
     Creates a new tree store as with columns of the types passed in.
   @end{short}
-  Note that only types derived from standard @code{GObject} fundamental types
-  are supported.
-
-  As an example,
-  @code{(gtk-tree-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")}; will create
-  a new @class{gtk-tree-store} with three columns, of type @code{:int},
-  @code{:string} and @code{GdkPixbuf} respectively.
+  Note that only types derived from standard GType fundamental types are
+  supported.
+  @begin[Example]{dictionary}
+    The following example creates a new @class{gtk-tree-store} object with
+    three columns, of type \"gint\", \"gchararray\", and \"GdkPixbuf\"
+    respectively.
+    @begin{pre}
+(gtk-tree-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-tree-store}"
   (make-instance 'gtk-tree-store
                  :column-types column-types))
@@ -211,62 +213,47 @@
 (export 'gtk-tree-store-set-column-types)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_store_set_value ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_tree_store_set_value" %gtk-tree-store-set-value) :void
-  (tree-store (g-object gtk-tree-store))
-  (iter (g-boxed-foreign gtk-tree-iter))
-  (column :int)
-  (value :pointer))
-
-(defun gtk-tree-store-set-value (tree-store iter column value)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-13}
-  @argument[tree-store]{a @class{gtk-tree-store} object}
-  @argument[iter]{a valid @class{gtk-tree-iter} for the row being modified}
-  @argument[column]{column number to modify}
-  @argument[value]{new value for the cell}
-  @begin{short}
-    Sets the data in the cell specified by @arg{iter} and @arg{column}.
-  @end{short}
-  The type of value must be convertible to the type of the column.
-  @see-class{gtk-tree-store}
-  @see-class{gtk-tree-iter}
-  @see-function{gtk-tree-store-set}"
-  (with-foreign-object (v '(:struct g-value))
-    (set-g-value v
-                 value
-                 (gtk-tree-model-column-type tree-store column)
-                 :zero-g-value t)
-    (%gtk-tree-store-set-value tree-store iter column v)
-    (g-value-unset v)
-    (values)))
-
-(export 'gtk-tree-store-set-value)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-tree-store-set (tree-store iter &rest values)
+(defun gtk-tree-store-set (store iter &rest values)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-13}
-  @argument[tree-store]{a @class{gtk-tree-store} object}
-  @argument[iter]{a valid @class{gtk-tree-iter} for the row being modified}
-  @argument[values]{pairs of column number and value}
-  @return{The @class{gtk-tree-iter} for the row being modified.}
+ "@version{2021-3-3}
+  @argument[store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} iterator for the row being
+    modified}
+  @argument[values]{the values to set}
+  @return{The @class{gtk-tree-iter} iterator for the row being modified.}
   @begin{short}
-    Sets the value of one or more cells in the row referenced by @arg{iter}. The
-    variable argument list should contain integer column numbers, each column
-    number followed by the value to be set. For example, to set column 0 with
-    type @var{+g-type-string+} to \"Foo\", you would write
-    @code{(gtk-tree-store-set store iter 0 \"Foo\")}.
+    Sets the values of one or more cells in the row referenced by @arg{iter}.
   @end{short}
-
-  The value will be referenced by the store if it is a @var{+g-type-object+},
-  and it will be copied if it is a @var{+g-type-string+} or
-  @var{+g-type-boxed+}.
+  The variable argument list should contain the values to be set.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(let ((model (gtk-tree-store-new \"gchararray\" \"gchararray\" \"guint\")))
+  ;; First Book
+  (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+    ;; Set the top-level row
+    (gtk-tree-store-set model
+                        iter
+                        \"The Art of Computer Programming\"
+                        \"Donald E. Knuth\"
+                        2011)
+    ;; Append and set three child rows
+    (gtk-tree-store-set model
+                        (gtk-tree-store-append model iter) ; Child iterator
+                        \"Volume 1: Fundamental Algorithms\"
+                        \"\"
+                        1997)
+  ... ))
+    @end{pre}
+  @end{dictionary}
+  @begin[Note]{dictionary}
+    The Lisp implemenation does not support pairs of a column index and a value,
+    but a list of values. Therefore, it is not possible to set individual
+    columns. See the function @fun{gtk-tree-store-set-value} for setting the
+    value of single columns.
+  @end{dictionary}
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-set-value}"
@@ -275,13 +262,13 @@
                            (columns-ar :int n))
       (iter (for i from 0 below n)
             (for value in values)
-            (for type = (gtk-tree-model-column-type tree-store i))
+            (for gtype = (gtk-tree-model-column-type store i))
             (setf (mem-aref columns-ar :int i) i)
             (set-g-value (mem-aptr value-ar '(:struct g-value) i)
                          value
-                         type
+                         gtype
                          :zero-g-value t))
-      (gtk-tree-store-set-valuesv tree-store iter columns-ar value-ar n)
+      (gtk-tree-store-set-valuesv store iter columns-ar value-ar n)
       (iter (for i from 0 below n)
             (g-value-unset (mem-aptr value-ar '(:struct g-value) i)))
       iter)))
@@ -308,6 +295,44 @@
 ;;;     va_list of column/value pairs
 ;;; ----------------------------------------------------------------------------
 
+;; Implementation not needed
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_tree_store_set_value ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_store_set_value" %gtk-tree-store-set-value) :void
+  (store (g-object gtk-tree-store))
+  (iter (g-boxed-foreign gtk-tree-iter))
+  (column :int)
+  (value :pointer))
+
+(defun gtk-tree-store-set-value (store iter column value)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-3}
+  @argument[store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} iterator for the row being
+    modified}
+  @argument[column]{an integer with the column number to modify}
+  @argument[value]{new value for the cell}
+  @begin{short}
+    Sets the data in the cell specified by @arg{iter} and @arg{column}.
+  @end{short}
+  The type of value must be convertible to the type of the column.
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}
+  @see-function{gtk-tree-store-set}"
+  (with-foreign-object (gvalue '(:struct g-value))
+    (set-g-value gvalue
+                 value
+                 (gtk-tree-model-column-type store column)
+                 :zero-g-value t)
+    (%gtk-tree-store-set-value store iter column gvalue)
+    (g-value-unset gvalue)
+    (values)))
+
+(export 'gtk-tree-store-set-value)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set_valuesv ()
 ;;; ----------------------------------------------------------------------------
@@ -330,7 +355,7 @@
     known until run-time.
   @end{short}
   @see-function{gtk-tree-store-set}"
-  (tree-store (g-object gtk-tree-store))
+  (store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (columns :pointer)
   (values :pointer)
@@ -342,19 +367,19 @@
 
 (defcfun ("gtk_tree_store_remove" gtk-tree-store-remove) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-9-13}
-  @argument[tree-store]{a @class{gtk-tree-store} object}
-  @argument[iter]{a valid @class{gtk-tree-iter}}
+ "@version{2021-3-5}
+  @argument[store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} iterator}
   @return{@em{True} if @arg{iter} is still valid, @code{nil} if not.}
   @begin{short}
-    Removes @arg{iter} from @arg{tree-store}.
+    Removes the given row from the tree store.
   @end{short}
   After being removed, @arg{iter} is set to the next valid row at that level, or
-  invalidated if it previously pointed to the last one.
+  invalidated if it previously pointed to the last one in the tree store.
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-insert}"
-  (tree-store (g-object gtk-tree-store))
+  (store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-store-remove)
@@ -602,27 +627,30 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_append" %gtk-tree-store-append) :void
-  (tree-store (g-object gtk-tree-store))
+  (store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter)))
 
-(defun gtk-tree-store-append (tree-store parent)
+(defun gtk-tree-store-append (store parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-15}
-  @argument[tree-store]{a @class{gtk-tree-store} object}
-  @argument[parent]{a valid @class{gtk-tree-iter} structure, or @code{nil}}
-  @return{The @class{gtk-tree-iter} of the appended row.}
-  Appends a new row to @arg{tree-store}. If @arg{parent} is non-@code{nil}, then
-  it will append the new row after the last child of @arg{parent}, otherwise it
-  will append a row to the top level. The row will be empty after this function
-  is called. To fill in values, you need to call the functions
-  @fun{gtk-tree-store-set} or @fun{gtk-tree-store-set-value}.
+ "@version{2021-3-3}
+  @argument[store]{a @class{gtk-tree-store} object}
+  @argument[parent]{a valid @class{gtk-tree-iter} iterator, or @code{nil}}
+  @return{The @class{gtk-tree-iter} iterator of the appended row.}
+  @begin{short}
+    Appends a new row to the tree store.
+  @end{short}
+  If @arg{parent} is non-@code{nil}, then it will append the new row after the
+  last child of @arg{parent}, otherwise it will append a row to the top level.
+  The row will be empty after this function is called. To fill in values, you
+  need to call the functions @fun{gtk-tree-store-set} or
+  @fun{gtk-tree-store-set-value}.
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-set}
   @see-function{gtk-tree-store-set-value}"
   (let ((iter (make-gtk-tree-iter)))
-    (%gtk-tree-store-append tree-store iter parent)
+    (%gtk-tree-store-append store iter parent)
     iter))
 
 (export 'gtk-tree-store-append)
@@ -679,11 +707,11 @@
 
 (defcfun ("gtk_tree_store_clear" gtk-tree-store-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-16}
-  @argument[tree-store]{a @class{gtk-tree-store} object}
-  Removes all rows from @arg{tree-store}
+ "@version{2021-3-5}
+  @argument[store]{a @class{gtk-tree-store} object}
+  @short{Removes all rows from the tree store.}
   @see-class{gtk-tree-store}"
-  (tree-store (g-object gtk-tree-store)))
+  (store (g-object gtk-tree-store)))
 
 (export 'gtk-tree-store-clear)
 
