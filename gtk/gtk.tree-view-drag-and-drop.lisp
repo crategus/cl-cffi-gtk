@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -68,9 +68,10 @@
    :type-initializer "gtk_tree_drag_source_get_type"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-drag-source atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'gtk-tree-drag-source atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'gtk-tree-drag-source 'type)
- "@version{2013-5-31}
+ "@version{2021-3-5}
   @begin{short}
     GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
@@ -91,12 +92,10 @@
   bookkeeping of rows is done for you, as well as things like hover-to-open
   and auto-scroll, but your models have to implement the
   @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.
-  @see-function{gtk-tree-view-set-drag-dest-row}
-  @see-function{gtk-tree-view-get-drag-dest-row}
-  @see-function{gtk-tree-view-get-dest-row-at-pos}
-  @see-function{gtk-tree-view-create-row-drag-icon}
-  @see-function{gtk-tree-set-row-drag-data}
-  @see-function{gtk-tree-get-row-drag-data}")
+  @see-class{gtk-list-store}
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-model-filter}
+  @see-class{gtk-tree-model-sort}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragSourceIface
@@ -134,70 +133,81 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_drag_data_delete ()
-;;;
-;;; gboolean gtk_tree_drag_source_drag_data_delete
-;;;                                             (GtkTreeDragSource *drag_source,
-;;;                                              GtkTreePath *path);
-;;;
-;;; Asks the GtkTreeDragSource to delete the row at path, because it was moved
-;;; somewhere else via drag-and-drop. Returns FALSE if the deletion fails
-;;; because path no longer exists, or for some model-specific reason. Should
-;;; robustly handle a path no longer found in the model!
-;;;
-;;; drag_source :
-;;;     a GtkTreeDragSource
-;;;
-;;; path :
-;;;     row that was being dragged
-;;;
-;;; Returns :
-;;;     TRUE if the row was successfully deleted
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_drag_source_drag_data_delete"
+           gtk-tree-drag-source-drag-data-delete) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[source]{a @class{gtk-tree-drag-source} object}
+  @argument[path]{a @class{gtk-tree-path} instance with the row that was being
+    dragged}
+  @return{@em{True} if the row was successfully deleted.}
+  @begin{short}
+    Asks the @class{gtk-tree-drag-source} object to delete the row at
+    @arg{path}, because it was moved somewhere else via drag-and-drop.
+  @end{short}
+  Returns @em{false} if the deletion fails because @arg{path} no longer exists,
+  or for some model-specific reason. Should robustly handle a path no longer
+  found in the model.
+  @see-class{gtk-tree-drag-source}
+  @see-class{gtk-tree-path}"
+  (source (g-object gtk-tree-drag-source))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-drag-source-drag-data-delete)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_drag_data_get ()
-;;;
-;;; gboolean gtk_tree_drag_source_drag_data_get
-;;;                                          (GtkTreeDragSource *drag_source,
-;;;                                           GtkTreePath *path,
-;;;                                           GtkSelectionData *selection_data);
-;;;
-;;; Asks the GtkTreeDragSource to fill in selection_data with a representation
-;;; of the row at path. selection_data->target gives the required type of the
-;;; data. Should robustly handle a path no longer found in the model!
-;;;
-;;; drag_source :
-;;;     a GtkTreeDragSource
-;;;
-;;; path :
-;;;     row that was dragged
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData to fill with data from the dragged row
-;;;
-;;; Returns :
-;;;     TRUE if data of the required type was provided
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_drag_source_drag_data_get"
+           gtk-tree-drag-source-drag-data-get) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[source]{a @class{gtk-tree-drag-source} object}
+  @argument[path]{a @class{gtk-tree-path} insance with the row that was dragged}
+  @argument[data]{a @class{gtk-selection-data} instance to fill with data from
+    the dragged row}
+  @return{@em{True} if data of the required type was provided.}
+  @begin{short}
+    Asks the @class{gtk-tree-drag-source} object to fill in @arg{data} with a
+    representation of the row at @arg{path}.
+  @end{short}
+  The function @fun{gtk-selection-data-target} gives the required type of the
+  data. Should robustly handle a path no longer found in the model.
+  @see-class{gtk-tree-drag-source}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-selection-data}"
+  (source (g-object gtk-tree-drag-source))
+  (path (g-boxed-foreign gtk-tree-path))
+  (data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-tree-drag-source-drag-data-get)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_row_draggable ()
-;;;
-;;; gboolean gtk_tree_drag_source_row_draggable (GtkTreeDragSource *drag_source,
-;;;                                              GtkTreePath *path);
-;;;
-;;; Asks the GtkTreeDragSource whether a particular row can be used as the
-;;; source of a DND operation. If the source does not implement this interface,
-;;; the row is assumed draggable.
-;;;
-;;; drag_source :
-;;;     a GtkTreeDragSource
-;;;
-;;; path :
-;;;     row on which user is initiating a drag
-;;;
-;;; Returns :
-;;;     TRUE if the row can be dragged
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_drag_source_row_draggable"
+           gtk-tree-drag-source-row-draggable) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[source]{a @class{gtk-tree-drag-source} object}
+  @argument[path]{a @class{gtk-tree-path} instance with the row on which user
+    is initiating a drag}
+  @return{@em{True} if the row can be dragged.}
+  @begin{short}
+    Asks the @class{gtk-tree-drag-source} object whether a particular row can
+    be used as the source of a DND operation.
+  @end{short}
+  If the source does not implement this interface, the row is assumed draggable.
+  @see-class{gtk-tree-drag-source}
+  @see-class{g-boxed-foreign gtk-tree-path}"
+  (source (g-object gtk-tree-drag-source))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-drag-source-row-draggable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeDragDest
@@ -208,9 +218,10 @@
    :type-initializer "gtk_tree_drag_dest_get_type"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-drag-dest atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'gtk-tree-drag-dest atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'gtk-tree-drag-dest 'type)
- "@version{2013-6-21}
+ "@version{2021-3-5}
   @begin{short}
     GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
@@ -230,12 +241,8 @@
   bookkeeping of rows is done for you, as well as things like hover-to-open
   and auto-scroll, but your models have to implement the
   @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.
-  @see-function{gtk-tree-view-set-drag-dest-row}
-  @see-function{gtk-tree-view-get-drag-dest-row}
-  @see-function{gtk-tree-view-get-dest-row-at-pos}
-  @see-function{gtk-tree-view-create-row-drag-icon}
-  @see-function{gtk-tree-set-row-drag-data}
-  @see-function{gtk-tree-get-row-drag-data}")
+  @see-class{gtk-list-store}
+  @see-class{gtk-tree-store}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragDestIface
@@ -269,109 +276,117 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_dest_drag_data_received ()
-;;;
-;;; gboolean gtk_tree_drag_dest_drag_data_received
-;;;                                          (GtkTreeDragDest *drag_dest,
-;;;                                           GtkTreePath *dest,
-;;;                                           GtkSelectionData *selection_data);
-;;;
-;;; Asks the GtkTreeDragDest to insert a row before the path dest, deriving the
-;;; contents of the row from selection_data. If dest is outside the tree so that
-;;; inserting before it is impossible, FALSE will be returned. Also, FALSE may
-;;; be returned if the new row is not created for some model-specific reason.
-;;; Should robustly handle a dest no longer found in the model!
-;;;
-;;; drag_dest :
-;;;     a GtkTreeDragDest
-;;;
-;;; dest :
-;;;     row to drop in front of
-;;;
-;;; selection_data :
-;;;     data to drop
-;;;
-;;; Returns :
-;;;     whether a new row was created before position dest
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_drag_dest_drag_data_received"
+           gtk-tree-drag-dest-drag-data-received) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[dest]{a @class{gtk-tree-drag-dest} object}
+  @argument[path]{a @class{gtk-tree-path} instance with the row to drop in
+    front of}
+  @argument[data]{a @class{gtk-selection-data} instance with the data to drop}
+  @return{A boolen whether a new row was created before position @arg{dest}.}
+  @begin{short}
+    Asks the @class{gtk-tree-drag-dest} object to insert a row before the path
+    @arg{dest}, deriving the contents of the row from @arg{data}.
+  @end{short}
+  If @arg{dest} is outside the tree so that inserting before it is impossible,
+  @em{false} will be returned. Also, @em{false} may be returned if the new row
+  is not created for some model-specific reason. Should robustly handle a dest
+  no longer found in the model.
+  @see-class{gtk-tree-drag-dest}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-selection-data}"
+  (dest (g-object gtk-tree-drag-dest))
+  (path (g-boxed-foreign gtk-tree-path))
+  (data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-tree-drag-dest-drag-data-received)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_dest_row_drop_possible ()
-;;;
-;;; gboolean gtk_tree_drag_dest_row_drop_possible
-;;;                                          (GtkTreeDragDest *drag_dest,
-;;;                                           GtkTreePath *dest_path,
-;;;                                           GtkSelectionData *selection_data);
-;;;
-;;; Determines whether a drop is possible before the given dest_path, at the
-;;; same depth as dest_path. i.e., can we drop the data in selection_data at
-;;; that location. dest_path does not have to exist; the return value will
-;;; almost certainly be FALSE if the parent of dest_path does not exist, though.
-;;;
-;;; drag_dest :
-;;;     a GtkTreeDragDest
-;;;
-;;; dest_path :
-;;;     destination row
-;;;
-;;; selection_data :
-;;;     the data being dragged
-;;;
-;;; Returns :
-;;;     TRUE if a drop is possible before dest_path
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_drag_dest_row_drop_possible"
+           gtk-tree-drag-dest-row-drop-possible) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[dest]{a @class{gtk-tree-drag-dest} object}
+  @argument[path]{a @class{gtk-tree-path} instance with the destination row}
+  @argument[data]{a @class{gtk-selection-data} instance with the data being
+    dragged}
+  @return{@em{True} if a drop is possible before @arg{dest}.}
+  @begin{short}
+    Determines whether a drop is possible before the given @arg{dest}, at the
+    same depth as @arg{dest}.
+  @end{short}
+  I.e., can we drop the data in @arg{data} at that location. The argument
+  @arg{dest} does not have to exist. The return value will almost certainly be
+  @em{false} if the parent of @arg{dest} does not exist, though.
+  @see-class{gtk-tree-drag-dest}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-selection-data}"
+  (dest (g-object gtk-tree-drag-dest))
+  (path (g-boxed-foreign gtk-tree-path))
+  (data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-tree-drag-dest-row-drop-possible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_set_row_drag_data ()
-;;;
-;;; gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,
-;;;                                      GtkTreeModel *tree_model,
-;;;                                      GtkTreePath *path);
-;;;
-;;; Sets selection data of target type GTK_TREE_MODEL_ROW. Normally used in a
-;;; drag_data_get handler.
-;;;
-;;; selection_data :
-;;;     some GtkSelectionData
-;;;
-;;; tree_model :
-;;;     a GtkTreeModel
-;;;
-;;; path :
-;;;     a row in tree_model
-;;;
-;;; Returns :
-;;;     TRUE if the GtkSelectionData had the proper target type to allow us to
-;;;     set a tree row
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_set_row_drag_data" gtk-tree-set-row-drag-data) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[data]{a @class{gtk-selection-data} instance}
+  @argument[model]{a @class{gtk-tree-model} object}
+  @argument[path]{a @class{gtk-tree-path} instance with a row in @arg{model}}
+  @return{@em{True} if @arg{data} had the proper target type to allow us to
+    set a tree row.}
+  @begin{short}
+    Sets selection data of target type @code{GTK_TREE_MODEL_ROW}.
+  @end{short}
+  Normally used in a @code{drag_data_get} handler.
+  @see-class{gtk-selection-data}
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-path}"
+  (data (g-boxed-foreign gtk-selection-data))
+  (model (g-object gtk-tree-model))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-set-row-drag-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_get_row_drag_data ()
-;;;
-;;; gboolean gtk_tree_get_row_drag_data (GtkSelectionData *selection_data,
-;;;                                      GtkTreeModel **tree_model,
-;;;                                      GtkTreePath **path);
-;;;
-;;; Obtains a tree_model and path from selection data of target type
-;;; GTK_TREE_MODEL_ROW. Normally called from a drag_data_received handler. This
-;;; function can only be used if selection_data originates from the same process
-;;; that's calling this function, because a pointer to the tree model is being
-;;; passed around. If you aren't in the same process, then you'll get memory
-;;; corruption. In the GtkTreeDragDest drag_data_received handler, you can
-;;; assume that selection data of type GTK_TREE_MODEL_ROW is in from the current
-;;; process. The returned path must be freed with gtk_tree_path_free().
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; tree_model :
-;;;     a GtkTreeModel
-;;;
-;;; path :
-;;;     row in tree_model
-;;;
-;;; Returns :
-;;;     TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is
-;;;     otherwise valid
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_get_row_drag_data" gtk-tree-get-row-drag-data) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-5}
+  @argument[data]{a @class{gtk-selection-data} instance}
+  @argument[model]{a @class{gtk-tree-model} object}
+  @argument[path]{a @class{gtk-tree-path} with a row in @arg{model}.}
+  @return{@em{True} if @arg{data} had target type @code{GTK_TREE_MODEL_ROW} and
+  is otherwise valid.}
+  @begin{short}
+    Obtains a tree_model and path from selection data of target type
+    @code{GTK_TREE_MODEL_ROW}.
+  @end{short}
+  Normally called from a @code{drag_data_received} handler. This function can
+  only be used if @arg{data} originates from the same process that is calling
+  this function, because a pointer to the tree model is being passed around. If
+  you are not in the same process, then you will get memory corruption. In the
+  @code{drag_data_received} handler, you can assume that selection data of type
+  @code{GTK_TREE_MODEL_ROW} is in from the current process.
+  @see-class{gtk-selection-data}
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-path}"
+  (data (g-boxed-foreign gtk-selection-data))
+  (model (g-object gtk-tree-model))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-get-row-drag-data)
 
 ;;; --- End of file gtk.tree-view-drag-and-drop.lisp ---------------------------
