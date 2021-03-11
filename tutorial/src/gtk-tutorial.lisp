@@ -24,11 +24,7 @@
 (defpackage :gtk-tutorial
   (:use :gtk :gdk :gdk-pixbuf :gobject
         :glib :gio :pango :cairo :cffi :common-lisp)
-  (:export #:example-cell-renderer-properties
-           #:example-color-button-label
-           #:example-color-chooser-dialog
-           #:example-file-chooser-button
-           #:example-font-button-label
+  (:export ;; Chapter 8: Multiline Text Widget
            #:example-text-view-attributes
            #:example-text-view-find-next
            #:example-text-view-insert
@@ -38,10 +34,23 @@
            #:example-text-view-simple
            #:example-text-view-tags
            #:example-text-view-tooltip
-           #:example-tree-view-column-data-func
+           ;; Chapter 9: Tree and List Widgets
+           #:example-cell-renderer-properties
+           #:example-tree-view-content-type
+           #:example-tree-view-context-menu
+           #:example-tree-view-drag-and-drop
            #:example-tree-view-dump-model
+           #:example-tree-view-editable
+           #:example-tree-view-example
            #:example-tree-view-path
            #:example-tree-view-simple
+           #:example-tree-view-sortable
+           #:example-icon-view
+           ;; Chapter 11: Selecting, Colors, Files and Fonts
+           #:example-color-button-label
+           #:example-color-chooser-dialog
+           #:example-file-chooser-button
+           #:example-font-button-label
   ))
 
 (in-package :gtk-tutorial)
@@ -2112,117 +2121,6 @@ sem venenatis, vitae ultricies arcu laoreet."))
 ;;;
 ;;; Chapter 10. Tree and List Widgets
 ;;;
-;;; ----------------------------------------------------------------------------
-
-(defun example-tree-view-selection ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :title "Example Tree View selection"
-                                  :type :toplevel
-                                  :border-width 12
-                                  :default-width 300
-                                  :default-height 200))
-          (view (create-view-and-model))
-          ;; Get the selection of the view
-          (select (gtk-tree-view-selection view)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Setup the selection handler
-      (setf (gtk-tree-selection-mode select) :single)
-      (g-signal-connect select "changed"
-         (lambda (selection)
-           (let* ((model (gtk-tree-view-model view))
-                  (iter (gtk-tree-selection-selected selection))
-                  (name (gtk-tree-model-value model iter 0)))
-             (format t "You selected the name ~A.~%" name))))
-
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Example Row activated
-
-(defun create-view-and-model-2 ()
-  (let* ((model (create-and-fill-model))
-         (view (make-instance 'gtk-tree-view
-                              :model model)))
-    ;; Signal handler for the signal "row-activated"
-    (g-signal-connect view "row-activated"
-       (lambda (view path col)
-         (declare (ignore col))
-         (let* ((model (gtk-tree-view-model view))
-                (iter (gtk-tree-model-iter model path)))
-           (when iter
-             (format t "The row containing the name ~A has been double-clicked.~%"
-                       (gtk-tree-model-value model iter 0))))))
-
-    ;; Create renderers for the cells
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Name"
-                                                             renderer
-                                                             "text" 0)))
-      (gtk-tree-view-append-column view column))
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Age"
-                                                             renderer
-                                                             "text" 1)))
-      (gtk-tree-view-append-column view column))
-    view))
-
-(defun example-row-activated ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Row Activated"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 200))
-          (view (create-view-and-model-2)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Example Taverse List
-
-(defun example-traverse-list ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Traverse List"
-                                 :type :toplevel
-                                 :border-width 12))
-          (button(make-instance 'gtk-button
-                                :margin-top 6
-                                :label "Clear Age"))
-          (view (create-view-and-model-2))
-          (vgrid (make-instance 'gtk-grid
-                                :orientation :vertical)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; A signal handler which goes through every row in a list store
-      (g-signal-connect button "clicked"
-         (lambda (button)
-           (declare (ignore button))
-           (let ((model (gtk-tree-view-model view)))
-             (do ((iter (gtk-tree-model-iter-first model)
-                        (gtk-tree-model-iter-next model iter)))
-                 ((not iter))
-                 (gtk-list-store-set-value model iter 1 0)))))
-      ;; Put the widgets into the container
-      (gtk-container-add vgrid view)
-      (gtk-container-add vgrid button)
-      (gtk-container-add window vgrid)
-      (gtk-widget-show-all window))))
-
 ;;; ----------------------------------------------------------------------------
 
 ;;; Retrieving Row Data

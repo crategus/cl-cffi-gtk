@@ -13,19 +13,21 @@
                  url='&api;gtk_fun_leave-gtk-main.html'>
           <code xmlns='http://docbook.org/ns/docbook'>leave-gtk-main</code></ulink>">
 
+<!-- GLIB Library -->
+
 <!ENTITY g-filename-to-utf8
          "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_g-filename-to-utf8.html'>
+                 url='&api;glib_fun_g-filename-to-utf8.html'>
           <code xmlns='http://docbook.org/ns/docbook'>g-filename-to-utf8</code></ulink>">
+
+<!ENTITY g-idle-add
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;glib_fun_g-idle-add.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>g-idle-add</code></ulink>">
 
 <!ENTITY g-timeout-add                       "&api;glib_fun_g-timeout-add.html">
 
-<!ENTITY g-object                            "&api;gobject_class_g-object.html">
-
-<!ENTITY g-signal-connect
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gobject_fun_g-signal-connect.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>g-signal-connect</code></ulink>">
+<!-- GIO Library -->
 
 <!ENTITY g-action-group-activate-action      "&api;gio_fun_g-action-group-activate-action.html">
 
@@ -33,6 +35,21 @@
 <!ENTITY g-action-map                        "&api;gio_class_g-action-map.html">
 <!ENTITY g-application                       "&api;gio_class_g-application.html">
 <!ENTITY g-menu-model                        "&api;gio_class_g-menu-model.html">
+
+<!-- GOBJECT Library -->
+
+<!ENTITY g-object                            "&api;gobject_class_g-object.html">
+
+<!ENTITY g-signal-connect
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gobject_fun_g-signal-connect.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>g-signal-connect</code></ulink>">
+<!ENTITY g-signal-connect-after
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gobject_fun_g-signal-connect-after.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>g-signal-connect-after</code></ulink>">
+
+<!-- GDK Library -->
 
 <!ENTITY gdk-color
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -50,7 +67,13 @@
 <!ENTITY gdk-event-propagate                 "&api;gdk_var_+gdk-event-propagate+.html">
 <!ENTITY gdk-event-stop                      "&api;gdk_var_+gdk-event-stop+.html">
 
-<!ENTITY gdk-pixbuf                          "&api;gdk-pixbuf_class_gdk-pixbuf.html">
+<!--     gdk-pixbuf     -->
+
+<!ENTITY gdk-pixbuf
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk-pixbuf_class_gdk-pixbuf.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-pixbuf</code></ulink>">
+
 <!ENTITY gdk-pixbuf-animation                "&api;gdk-pixbuf_class_gdk-pixbuf-animation.html">
 <!ENTITY gdk-pixbuf-loader                   "&api;gdk-pixbuf_class_gdk-pixbuf-loader.html">
 
@@ -58,6 +81,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gdk_fun_gdk-pixbuf-new-from-file.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-pixbuf-new-from-file</code></ulink>">
+
+<!--     gdk-rectangle     -->
 
 <!ENTITY gdk-rectangle                       "&api;gdk_class_gdk-rectangle.html">
 <!ENTITY gdk-rectangle-height                "&api;gdk_fun_gdk-rectangle-height.html">
@@ -91,6 +116,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gdk_fun_gdk-window-origin.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-window-origin</code></ulink>">
+
+<!-- GTK Library -->
 
 <!ENTITY gtk-about-dialog                    "&api;gtk_class_gtk-about-dialog.html">
 
@@ -258,12 +285,29 @@
                  url='&api;gtk_class_gtk-cell-renderer.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-renderer</code></ulink>">
 
+<!ENTITY gtk_cell_renderer_cell-background
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer.html#gtk_slot_gtk-cell-renderer-cell-background'>
+          <code xmlns='http://docbook.org/ns/docbook'>cell-background</code></ulink>">
+
+<!--     gtk-cell-renderer-combo     -->
+
+<!ENTITY gtk-cell-renderer-combo
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-combo.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-renderer-combo</code></ulink>">
+
 <!--     gtk-cell-renderer-pixbuf    -->
 
 <!ENTITY gtk-cell-renderer-pixbuf
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-cell-renderer-pixbuf.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-renderer-pixbuf</code></ulink>">
+
+<!ENTITY gtk_cell_renderer_pixbuf_icon-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-pixbuf.html#gtk_slot_gtk-cell-renderer-pixbuf-icon-name'>
+          <code xmlns='http://docbook.org/ns/docbook'>icon-name</code></ulink>">
 
 <!--     gtk-cell-renderer-text    -->
 
@@ -272,12 +316,49 @@
                  url='&api;gtk_class_gtk-cell-renderer-text.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-renderer-text</code></ulink>">
 
+<!ENTITY gtk_cell_renderer_text_editable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-editable'>
+          <code xmlns='http://docbook.org/ns/docbook'>editable</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_foreground
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-foreground'>
+          <code xmlns='http://docbook.org/ns/docbook'>foreground</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_foreground-rgba
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-foreground-rgba'>
+          <code xmlns='http://docbook.org/ns/docbook'>foreground-rgba</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_foreground-set
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-foreground-set'>
+          <code xmlns='http://docbook.org/ns/docbook'>foreground-set</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_markup
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-markup'>
+          <code xmlns='http://docbook.org/ns/docbook'>markup</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_strikethrough
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-strikethrough'>
+          <code xmlns='http://docbook.org/ns/docbook'>strikethrough</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-text'>
+          <code xmlns='http://docbook.org/ns/docbook'>text</code></ulink>">
+<!ENTITY gtk_cell_renderer_text_weight
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-text.html#gtk_slot_gtk-cell-renderer-text-weight'>
+          <code xmlns='http://docbook.org/ns/docbook'>weight</code></ulink>">
+
 <!--     gtk-cell-renderer-toggle    -->
 
 <!ENTITY gtk-cell-renderer-toggle
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-cell-renderer-toggle.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-renderer-toggle</code></ulink>">
+<!ENTITY gtk_cell_renderer_toggle_activatable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-renderer-toggle.html#gtk_slot_gtk-cell-renderer-toggle-activatable'>
+          <code xmlns='http://docbook.org/ns/docbook'>activatable</code></ulink>">
 
 <!--     gtk-color-button    -->
 
@@ -285,6 +366,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-color-button.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-color-button</code></ulink>">
+
+<!--     gtk-color-chooser     -->
 
 <!ENTITY gtk-color-chooser
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -298,6 +381,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-color-chooser-rgba.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-rgba</code></ulink>">
+
+<!--     gtk-color-chooser-dialog     -->
 
 <!ENTITY gtk-color-chooser-dialog
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -395,6 +480,13 @@
 <!ENTITY gtk-entry-new                       "&api;gtk_fun_gtk-entry-new.html">
 <!ENTITY gtk-entry-text                      "&api;gtk_fun_gtk-entry-text.html">
 <!ENTITY gtk-entry-visibility                "&api;gtk_fun_gtk-entry-visibility.html">
+
+<!--     gtk-entry-completion     -->
+
+<!ENTITY gtk-entry-completion
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-entry-completion.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-entry-completion</code></ulink>">
 
 <!--     gtk-event-box     -->
 
@@ -521,7 +613,17 @@
                  url='&api;gtk_class_gtk-grid.html#gtk_slot_gtk-grid-row-spacing'>
           <code xmlns='http://docbook.org/ns/docbook'>row-spacing</code></ulink>">
 
-<!ENTITY gtk-icon-view                       "&api;gtk_class_gtk-icon-view.html">
+<!--     gtk-icon-view     -->
+
+<!ENTITY gtk-icon-view
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-icon-view.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-icon-view</code></ulink>">
+
+<!ENTITY gtk-icon-view-selection-mode
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-icon-view-selection-mode.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-icon-view-selection-mode</code></ulink>">
 
 <!ENTITY gtk-image
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -800,6 +902,11 @@
 <!ENTITY gtk-scrolled-window-add-with-viewport
                                              "&api;gtk_fun_gtk-scrolled-window-add-with-viewport.html">
 <!ENTITY gtk-scrolled-window-policy          "&api;gtk_fun_gtk-scrolled-window-policy.html">
+
+<!ENTITY gtk-selection-mode
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-selection-mode.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-selection-mode</code></ulink>">
 
 <!ENTITY gtk-separator
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -1214,21 +1321,6 @@
                  url='&api;gtk_sym_gtk-text-window-type.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-window-type</code></ulink>">
 
-<!--     gtk-tree-view-column     -->
-
-<!ENTITY gtk-tree-view-column
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_class_gtk-tree-view-column.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column</code></ulink>">
-<!ENTITY gtk-tree-view-column-add-attribute
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-tree-view-column-add-attribute.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-add-attribute</code></ulink>">
-<!ENTITY gtk-tree-view-column-set-cell-data-func
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-tree-view-column-set-cell-data-func.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-set-cell-data-func</code></ulink>">
-
 <!--     gtk-text-tag     -->
 
 <!ENTITY gtk-text-tag
@@ -1314,6 +1406,10 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-model-iter-first.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-iter-first</code></ulink>">
+<!ENTITY gtk-tree-model-iter-from-string
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-model-iter-from-string.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-iter-from-string</code></ulink>">
 <!ENTITY gtk-tree-model-iter-next
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-model-iter-next.html'>
@@ -1326,6 +1422,29 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-model-path.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-path</code></ulink>">
+
+<!--     gtk-tree-model-sort     -->
+
+<!ENTITY gtk-tree-model-sort
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tree-model-sort.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-sort</code></ulink>">
+<!ENTITY gtk-tree-model-sort-convert-child-iter-to-iter
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-model-sort-convert-child-iter-to-iter.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-sort-convert-child-iter-to-iter</code></ulink>">
+<!ENTITY gtk-tree-model-sort-convert-child-path-to-path
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-model-sort-convert-child-path-to-path.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-sort-convert-child-path-to-path</code></ulink>">
+<!ENTITY gtk-tree-model-sort-convert-iter-to-child-iter
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-model-sort-convert-iter-to-child-iter.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-sort-convert-iter-to-child-iter</code></ulink>">
+<!ENTITY gtk-tree-model-sort-convert-path-to-child-path
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-model-sort-convert-path-to-child-path.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-model-sort-convert-path-to-child-path</code></ulink>">
 
 <!--     gtk-tree-path     -->
 
@@ -1397,6 +1516,84 @@
                  url='&api;gtk_fun_gtk-tree-row-reference-valid.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-row-reference-valid</code></ulink>">
 
+<!--     gtk-tree-selection     -->
+
+<!ENTITY gtk-tree-selection
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tree-selection.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection</code></ulink>">
+<!ENTITY gtk-tree-selection-count-selected-rows
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-count-selected-rows.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-count-selected-rows</code></ulink>">
+<!ENTITY gtk-tree-selection-iter-is-selected
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-iter-is-selected.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-iter-is-selected</code></ulink>">
+<!ENTITY gtk-tree-selection-mode
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-mode.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-mode</code></ulink>">
+<!ENTITY gtk-tree-selection-path-is-selected
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-path-is-selected.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-path-is-selected</code></ulink>">
+<!ENTITY gtk-tree-selection-select-all
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-select-all.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-select-all</code></ulink>">
+<!ENTITY gtk-tree-selection-select-iter
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-select-iter.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-select-iter</code></ulink>">
+<!ENTITY gtk-tree-selection-select-path
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-select-path.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-select-path</code></ulink>">
+<!ENTITY gtk-tree-selection-selected
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-selected.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-selected</code></ulink>">
+<!ENTITY gtk-tree-selection-selected-foreach
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-selected-foreach.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-selected-foreach</code></ulink>">
+<!ENTITY gtk-tree-selection-selected-rows
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-selected-rows.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-selected-rows</code></ulink>">
+<!ENTITY gtk-tree-selection-set-select-function
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-set-select-function.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-set-select-function</code></ulink>">
+<!ENTITY gtk-tree-selection-unselect-all
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-unselect-all.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-unselect-all</code></ulink>">
+<!ENTITY gtk-tree-selection-unselect-iter
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-unselect-iter.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-unselect-iter</code></ulink>">
+<!ENTITY gtk-tree-selection-unselect-path
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-selection-unselect-path.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-selection-unselect-path</code></ulink>">
+
+<!--     gtk-tree-sortable     -->
+
+<!ENTITY gtk-tree-sortable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tree-sortable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable</code></ulink>">
+<!ENTITY gtk-tree-sortable-set-sort-column-id
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-sortable-set-sort-column-id.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable-set-sort-column-id</code></ulink>">
+<!ENTITY gtk-tree-sortable-set-sort-func
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-sortable-set-sort-func.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable-set-sort-func</code></ulink>">
+
 <!--     gtk-tree-store     -->
 
 <!ENTITY gtk-tree-store
@@ -1434,11 +1631,22 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-tree-view.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view</code></ulink>">
-
-<!ENTITY gtk-tree-view-expander-column       "&api;gtk_fun_gtk-tree-view-expander-column.html">
-<!ENTITY gtk-tree-view-headers-clickable     "&api;gtk_fun_gtk-tree-view-headers-clickable.html">
-<!ENTITY gtk-tree-view-headers-visible       "&api;gtk_fun_gtk-tree-view-headers-visible.html">
-
+<!ENTITY gtk-tree-view-expander-column
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-expander-column.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-expander-column</code></ulink>">
+<!ENTITY gtk-tree-view-get-cursor
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-get-cursor.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-get-cursor</code></ulink>">
+<!ENTITY gtk-tree-view-headers-clickable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-headers-clickable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-headers-clickable</code></ulink>">
+<!ENTITY gtk-tree-view-headers-visible
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-headers-visible.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-headers-visible</code></ulink>">
 <!ENTITY gtk-tree-view-model
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-view-model.html'>
@@ -1447,8 +1655,41 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-view-new-with-model.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-new-with-model</code></ulink>">
+<!ENTITY gtk-tree-view-rules-hint
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-rules-hint.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-rules-hint</code></ulink>">
+<!ENTITY gtk-tree-view-selection
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-selection.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-selection</code></ulink>">
+<!ENTITY gtk-tree-view-set-cursor
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-set-cursor.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-set-cursor</code></ulink>">
+<!ENTITY gtk-tree-view-set-cursor-on-cell
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-set-cursor-on-cell.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-set-cursor-on-cell</code></ulink>">
 
-<!ENTITY gtk-tree-view-rules-hint            "&api;gtk_fun_gtk-tree-view-rules-hint.html">
+<!--     gtk-tree-view-column     -->
+
+<!ENTITY gtk-tree-view-column
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tree-view-column.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column</code></ulink>">
+<!ENTITY gtk-tree-view-column-add-attribute
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-column-add-attribute.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-add-attribute</code></ulink>">
+<!ENTITY gtk-tree-view-column-set-cell-data-func
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-column-set-cell-data-func.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-set-cell-data-func</code></ulink>">
+<!ENTITY gtk-tree-view-column-sort-column-id
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tree-view-column-sort-column-id.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-view-column-sort-column-id</code></ulink>">
 
 <!--     gtk-ui-manager     -->
 

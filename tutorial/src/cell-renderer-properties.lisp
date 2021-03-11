@@ -2,7 +2,7 @@
 
 (in-package :gtk-tutorial)
 
-(defun create-and-fill-model-3 ()
+(defun create-and-fill-model-properties ()
   (let ((model (make-instance 'gtk-tree-store
                               :column-types '("gchararray" "gchararray"))))
     ;; Append a top level row and leave it empty
@@ -15,8 +15,8 @@
                                 "Jane" "Average"))
     model))
 
-(defun create-view-and-model-3 ()
-  (let* ((model (create-and-fill-model-3))
+(defun create-view-and-model-properties ()
+  (let* ((model (create-and-fill-model-properties))
          (view (make-instance 'gtk-tree-view
                               :model model)))
   ;; Create the first column
@@ -50,7 +50,7 @@
                                  :type :toplevel
                                  :default-width 350
                                  :default-height 200))
-          (view (create-view-and-model-3)))
+          (view (create-view-and-model-properties)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

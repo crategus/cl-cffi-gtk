@@ -1,58 +1,100 @@
-;;;; Simple Tree View
+;;;; Tree View Simple
 
 (in-package :gtk-tutorial)
 
-(defvar *shoppinglist*
-        '((500 "ml"    "Milch")
-          (300 "g"     "Zucker")
-          ( 10 "Stück" "Äpfel")
-          (  2 "Glas"  "Honig")
-          (  1 "Tüte"  "Haferflocken")
-          (  2 "Stück" "Feldsalat")
-          ( 12 "Stück" "Tomaten")
-          (  1 "Glas"  "Gurken")))
+(let ((col-title 0) (col-author 1) (col-year 2))
 
-(defun create-and-fill-model ()
-  (let ((model (gtk-list-store-new "guint" "gchararray" "gchararray")))
-    (dolist (entry *shoppinglist*)
-      (gtk-list-store-set model (gtk-list-store-append model)
-                                (first entry)
-                                (second entry)
-                                (third entry)))
-    model))
+  (defun create-and-fill-model-simple ()
+    (let ((model (gtk-tree-store-new "gchararray" "gchararray" "guint")))
+      ;; First Book
+      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+        ;; Set the top-level row
+        (gtk-tree-store-set model
+                            iter
+                            "The Art of Computer Programming"
+                            "Donald E. Knuth"
+                            2011)
+        ;; Append and set child rows
+        (gtk-tree-store-set model
+                            (gtk-tree-store-append model iter) ; Child iterator
+                            "Volume 1: Fundamental Algorithms"
+                            ""
+                            1997)
+        (gtk-tree-store-set model
+                            (gtk-tree-store-append model iter) ; Child iterator
+                            "Volume 2: Seminumerical Algorithms"
+                            ""
+                            1998)
+        (gtk-tree-store-set model
+                            (gtk-tree-store-append model iter) ; Child iterator
+                            "Volume 3: Sorting and Searching"
+                            ""
+                            1998))
+      ;; Second Book
+      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+        (gtk-tree-store-set model
+                            iter
+                            "Let Over Lambda"
+                            "Doug Hoyte"
+                            2008))
+      ;; Third Book
+      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+        (gtk-tree-store-set model
+                            iter
+                            "On Lisp"
+                            "Paul Graham"
+                            1993))
+      model))
 
-(defun create-view-and-model ()
-  (let* ((model (create-and-fill-model))
-         (view (gtk-tree-view-new-with-model model)))
-    ;; Create renderers for the cells
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Menge"
-                                                             renderer
-                                                             "text" 0)))
-      (gtk-tree-view-append-column view column))
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Angabe"
-                                                             renderer
-                                                             "text" 1)))
-      (gtk-tree-view-append-column view column))
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Produkt"
-                                                             renderer
-                                                             "text" 2)))
-      (gtk-tree-view-append-column view column))
-    view))
+  (defun create-view-and-model-simple ()
+    (let* ((model (create-and-fill-model-simple))
+           (view (gtk-tree-view-new-with-model model)))
+      ;; Create renderer for Title column
+      (let* ((renderer (gtk-cell-renderer-text-new))
+             (column (gtk-tree-view-column-new-with-attributes "Title"
+                                                               renderer
+                                                               "text"
+                                                                col-title)))
+        (gtk-tree-view-append-column view column))
+      ;; Create renderer for Author column
+      (let* ((renderer (gtk-cell-renderer-text-new))
+             (column (gtk-tree-view-column-new-with-attributes "Author"
+                                                               renderer
+                                                               "text"
+                                                               col-author)))
+        (gtk-tree-view-append-column view column))
+      ;; Create renderer for Year column
+      (let* ((renderer (gtk-cell-renderer-text-new))
+             (column (gtk-tree-view-column-new-with-attributes "Year"
+                                                               renderer
+                                                               "text"
+                                                               col-year)))
+        (gtk-tree-view-append-column view column))
+      view))
 
-(defun example-tree-view-simple ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Simple Tree View"
-                                 :type :toplevel
-                                 :default-width 350
-                                 :default-height 200))
-          (view (create-view-and-model)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
+  (defun example-tree-view-simple ()
+    (within-main-loop
+      (let* ((window (make-instance 'gtk-window
+                                    :title "Example Simple Tree View"
+                                    :type :toplevel
+                                    :default-width 350
+                                    :default-height 200))
+             (view (create-view-and-model-simple))
+             ;; Get the selection of the view
+             (select (gtk-tree-view-selection view)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (leave-gtk-main)))
+        ;; Setup the selection handler
+        (setf (gtk-tree-selection-mode select) :single)
+        (g-signal-connect select "changed"
+           (lambda (selection)
+             (let* ((view (gtk-tree-selection-tree-view selection))
+                    (model (gtk-tree-view-model view))
+                    (iter (gtk-tree-selection-selected selection))
+                    (title (gtk-tree-model-value model iter col-title)))
+               (format t "Selected title is ~a~%" title))))
+        ;; Pack and show the widgets
+        (gtk-container-add window view)
+        (gtk-widget-show-all window)))))
