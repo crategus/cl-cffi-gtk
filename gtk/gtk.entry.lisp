@@ -2542,7 +2542,7 @@
   the function @fun{gtk-entry-icon-area}.
   @see-class{gtk-entry}
   @see-function{gtk-entry-icon-area}"
-  (let ((text-area (make-gdk-rectangle)))
+  (let ((text-area (gdk-rectangle-new)))
     (%gtk-entry-get-text-area entry text-area)
     text-area))
 
@@ -3387,7 +3387,7 @@
   See also the function @fun{gtk-entry-text-area}.
   @see-class{gtk-entry}
   @see-function{gtk-entry-text-area}"
-  (let ((icon-area (make-gdk-rectangle)))
+  (let ((icon-area (gdk-rectangle-new)))
     (%gtk-entry-get-icon-area entry icon-pos icon-area)
     icon-area))
 

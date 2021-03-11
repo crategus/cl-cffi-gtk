@@ -238,7 +238,7 @@ cairo_surface_t *surface =
   indicating if a clip area exists.
   @see-symbol{cairo-t}
   @see-class{gdk-rectangle}"
-  (let ((rect (make-gdk-rectangle)))
+  (let ((rect (gdk-rectangle-new)))
     (when (%gdk-cairo-clip-rectangle cr rect)
       rect)))
 

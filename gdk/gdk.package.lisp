@@ -254,12 +254,12 @@
     type, they make up the central types for representing graphical data.
 
     @about-struct{gdk-rectangle}
-    @about-function{make-gdk-rectangle}
-    @about-function{copy-gdk-rectangle}
     @about-function{gdk-rectangle-x}
     @about-function{gdk-rectangle-y}
     @about-function{gdk-rectangle-width}
     @about-function{gdk-rectangle-height}
+    @about-function{gdk-rectangle-new}
+    @about-function{gdk-rectangle-copy}
     @about-function{gdk-rectangle-intersect}
     @about-function{gdk-rectangle-union}
     @about-function{gdk-rectangle-equal}

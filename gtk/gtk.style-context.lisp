@@ -2281,7 +2281,7 @@
   Since 3.20
   @see-class{gtk-style-context}
   @see-symbol{cairo-t}"
-  (let ((out-clip (make-gdk-rectangle)))
+  (let ((out-clip (gdk-rectangle-new)))
     (%gtk-render-background-get-clip context x y width height out-clip)
     out-clip))
 

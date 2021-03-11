@@ -1021,7 +1021,7 @@
              (y-root :double :initform 0.0d0))
             ;; GdkEventExpose
             ((:expose) gdk-event-expose
-             (area gdk-rectangle :inline t :initform (make-gdk-rectangle))
+             (area gdk-rectangle :inline t :initform (gdk-rectangle-new))
              (region (:pointer (:struct cairo-region-t)) :initform (null-pointer))
              (count :int :initform 0))
             ;; GdkEventVisibility

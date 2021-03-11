@@ -190,7 +190,7 @@
   falls within the expected area. This is not akin to an input shape.
   @see-class{gtk-gesture-multi-press}
   @see-class{gdk-rectangle}"
-  (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
+  (let ((rect (gdk-rectangle-new)))
     (when (%gtk-gesture-multi-press-area gesture rect)
       rect)))
 

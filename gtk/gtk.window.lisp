@@ -3368,7 +3368,7 @@
     been removed.
   @end{dictionary}
   @see-class{gtk-window}"
-  (let ((rect (make-gdk-rectangle)))
+  (let ((rect (gdk-rectangle-new)))
     (when (%gtk-window-get-resize-grip-area window rect)
       rect)))
 

@@ -4732,7 +4732,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   the function @fun{gdk-window-origin}.
   @see-class{gdk-window}
   @see-function{gdk-window-origin}"
-  (let ((rectangle (make-gdk-rectangle)))
+  (let ((rectangle (gdk-rectangle-new)))
     (%gdk-window-frame-extents window rectangle)
     rectangle))
 

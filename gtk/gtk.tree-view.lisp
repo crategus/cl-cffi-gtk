@@ -1733,7 +1733,9 @@
      (next (g-object gtk-tree-view-column))
      (data :pointer))
   (let ((fn (get-stable-pointer-value data)))
-    (funcall fn view column prev next)))
+    (restart-case
+      (funcall fn view column prev next)
+      (return () nil))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-drop-func atdoc:*symbol-name-alias*)
@@ -2391,7 +2393,7 @@
   @see-class{gtk-tree-view-column}
   @see-class{gdk-rectangle}
   @see-function{gtk-cell-renderer-render}"
-  (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
+  (let ((rect (gdk-rectangle-new)))
     (%gtk-tree-view-cell-area view path column rect)
     rect))
 
@@ -2435,7 +2437,7 @@
   @see-class{gdk-rectangle}
   @see-function{gtk-cell-renderer-render}
   @see-function{gtk-tree-view-cell-area}"
-  (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
+  (let ((rect (gdk-rectangle-new)))
     (%gtk-tree-view-background-area view path column rect)
     rect))
 
@@ -2464,7 +2466,7 @@
   area of the tree view.
   @see-class{gtk-tree-view}
   @see-class{gdk-rectangle}"
-  (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
+  (let ((rect (gdk-rectangle-new)))
     (%gtk-tree-view-visible-rect view rect)
     rect))
 

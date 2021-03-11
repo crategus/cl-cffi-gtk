@@ -789,7 +789,7 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
   @see-class{gtk-range}"
-  (let ((range-rect (make-gdk-rectangle)))
+  (let ((range-rect (gdk-rectangle-new)))
     (%gtk-range-get-range-rect range range-rect)
     range-rect))
 

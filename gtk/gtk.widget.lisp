@@ -4634,7 +4634,7 @@ drag_data_received (GtkWidget        *widget,
   there was an intersection.
   @see-class{gtk-widget}
   @see-class{gdk-rectangle}"
-  (let ((intersection (make-gdk-rectangle)))
+  (let ((intersection (gdk-rectangle-new)))
     (when (%gtk-widget-intersect widget area intersection)
       intersection)))
 
@@ -7652,7 +7652,7 @@ drag_data_received (GtkWidget        *widget,
   @see-function{gtk-widget-size-allocate}
   @see-function{gtk-widget-allocated-width}
   @see-function{gtk-widget-allocated-height}"
-  (let ((allocation (make-gdk-rectangle)))
+  (let ((allocation (gdk-rectangle-new)))
     (%gtk-widget-allocation widget allocation)
     allocation))
 

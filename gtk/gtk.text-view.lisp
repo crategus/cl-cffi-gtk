@@ -1631,7 +1631,7 @@
   @see-class{gtk-text-view}
   @see-class{gdk-rectangle}
   @see-function{gtk-text-view-buffer-to-window-coords}"
-  (let ((rect (make-gdk-rectangle)))
+  (let ((rect (gdk-rectangle-new)))
     (%gtk-text-view-visible-rect text-view rect)
     rect))
 
@@ -1666,7 +1666,7 @@
   @see-class{gtk-text-iter}
   @see-class{gdk-rectangle}
   @see-function{gtk-text-view-buffer-to-window-coords}"
-  (let ((rect (make-gdk-rectangle)))
+  (let ((rect (gdk-rectangle-new)))
     (%gtk-text-view-iter-location view iter rect)
     rect))
 
@@ -1715,8 +1715,8 @@
   coordinates for one of the windows in the text view.
   @see-class{gtk-text-view}
   @see-function{gtk-text-view-buffer-to-window-coords}"
-  (let ((strong (make-gdk-rectangle))
-        (weak (make-gdk-rectangle)))
+  (let ((strong (gdk-rectangle-new))
+        (weak (gdk-rectangle-new)))
     (%gtk-text-view-cursor-locations text-view iter strong weak)
     (values strong weak)))
 

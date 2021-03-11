@@ -33,16 +33,16 @@
       (background nil)
       (back-height nil)
       (back-width nil)
-      (back-rect (make-gdk-rectangle))
-      (src-rect (make-gdk-rectangle))
+      (back-rect (gdk-rectangle-new))
+      (src-rect (gdk-rectangle-new))
       (surface nil))
 
   (defun load-pixbufs ()
     (setf background (gdk-pixbuf-new-from-file (rel-path "background.jpg")))
     (setf back-width (gdk-pixbuf-width background)
           back-height (gdk-pixbuf-height background))
-    (setf back-rect (make-gdk-rectangle :x 0 :y 0
-                                        :width back-width :height back-height))
+    (setf back-rect (gdk-rectangle-new :x 0 :y 0
+                                       :width back-width :height back-height))
     (loop for i from 0 and file-name in *image-files*
           do (setf (aref *image-pixbufs* i)
                    (gdk-pixbuf-new-from-file (rel-path file-name)))))

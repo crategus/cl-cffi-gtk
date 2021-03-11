@@ -651,7 +651,7 @@
   @see-function{gdk-screen-n-monitors}
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-height}"
-  (let ((dest (make-gdk-rectangle)))
+  (let ((dest (gdk-rectangle-new)))
     (%gdk-screen-monitor-geometry screen monitor-num dest)
     dest))
 
@@ -690,7 +690,7 @@
   @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-n-monitors}"
-  (let ((dest (make-gdk-rectangle)))
+  (let ((dest (gdk-rectangle-new)))
     (%gdk-screen-monitor-workarea screen monitor-num dest)
     dest))
 
