@@ -1043,7 +1043,7 @@
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value "GdkRectangle")
     (is (eq 'gdk-rectangle
-            (type-of (setf (g-value-boxed value) (make-gdk-rectangle)))))
+            (type-of (setf (g-value-boxed value) (gdk-rectangle-new)))))
 ;    (is-false (g-param-spec-type (g-value-boxed value)))
     (g-value-unset value)))
 

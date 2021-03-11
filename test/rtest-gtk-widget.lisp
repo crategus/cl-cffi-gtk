@@ -12,15 +12,15 @@
   (is (eq (gtype "GtkRequisition")
           (gtype (foreign-funcall "gtk_requisition_get_type" g-size)))))
 
-(test make-gtk-requisition
-  (is (eq 'gtk-requisition (type-of (make-gtk-requisition)))))
+(test gtk-requisition-new
+  (is (typep (gtk-requisition-new) 'gtk-requisition)))
 
-(test copy-gtk-requisition
-  (let ((requisition (make-gtk-requisition)))
-    (is (eq 'gtk-requisition (type-of (copy-gtk-requisition requisition))))))
+(test gtk-requisition-copy
+  (let ((requisition (gtk-requisition-new)))
+    (is (typep (gtk-requisition-copy requisition) 'gtk-requisition))))
 
 (test gtk-requisition-accessors
-  (let ((requisition (make-gtk-requisition)))
+  (let ((requisition (gtk-requisition-new)))
     (is (= 0 (gtk-requisition-width requisition)))
     (is (= 0 (gtk-requisition-height requisition)))))
 
@@ -827,7 +827,7 @@ scale-factor
     (is (= 1 (gtk-widget-allocated-width window)))
     (is (= 1 (gtk-widget-allocated-height window)))
     (is (typep (setf (gtk-widget-allocation window)
-                     (make-gdk-rectangle :width 100 :height 200))
+                     (gdk-rectangle-new :width 100 :height 200))
                'gdk-rectangle))
     (is (= 100 (gdk-rectangle-width (gtk-widget-allocation window))))
     (is (= 200 (gdk-rectangle-height (gtk-widget-allocation window))))

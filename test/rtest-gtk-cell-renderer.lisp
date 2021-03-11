@@ -43,7 +43,7 @@
     (is (equal '(0 0 4 21)
                 (multiple-value-list (gtk-cell-renderer-size renderer
                                                              (make-instance 'gtk-button)
-                                                             (make-gdk-rectangle)))))))
+                                                             (gdk-rectangle-new)))))))
 
 ;;;     gtk_cell_renderer_render
 ;;;     gtk_cell_renderer_activate
