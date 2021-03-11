@@ -2348,6 +2348,7 @@ setup_tree (void)
       @about-function{gtk-icon-view-convert-widget-to-bin-window-coords}
       @about-function{gtk-icon-view-set-cursor}
       @about-function{gtk-icon-view-get-cursor}
+      @about-symbol{gtk-icon-view-foreach-func}
       @about-function{gtk-icon-view-selected-foreach}
       @about-function{gtk-icon-view-cell-rect}
       @about-function{gtk-icon-view-select-path}
@@ -2387,7 +2388,8 @@ setup_tree (void)
       @about-function{gtk-tree-sortable-has-default-sort-func}
     @end{subsection}
     @begin[GtkTreeModelSort]{subsection}
-      A @class{gtk-tree-model} which makes an underlying tree model sortable.
+      A @class{gtk-tree-model} object which makes an underlying tree model
+      sortable.
 
       @about-class{gtk-tree-model-sort}
       @about-generic{gtk-tree-model-sort-model}
@@ -2547,26 +2549,24 @@ setup_tree (void)
       @about-generic{gtk-cell-renderer-xpad}
       @about-generic{gtk-cell-renderer-yalign}
       @about-generic{gtk-cell-renderer-ypad}
-      @about-function{gtk-cell-renderer-get-aligned-area}
+      @about-function{gtk-cell-renderer-class-set-accessible-type}
+      @about-function{gtk-cell-renderer-aligned-area}
       @about-function{gtk-cell-renderer-size}
       @about-function{gtk-cell-renderer-render}
       @about-function{gtk-cell-renderer-activate}
       @about-function{gtk-cell-renderer-start-editing}
       @about-function{gtk-cell-renderer-stop-editing}
-      @about-function{gtk-cell-renderer-get-fixed-size}
-      @about-function{gtk-cell-renderer-set-fixed-size}
-      @about-function{gtk-cell-renderer-get-alignment}
-      @about-function{gtk-cell-renderer-set-alignment}
-      @about-function{gtk-cell-renderer-get-padding}
-      @about-function{gtk-cell-renderer-set-padding}
-      @about-function{gtk-cell-renderer-get-state}
+      @about-function{gtk-cell-renderer-fixed-size}
+      @about-function{gtk-cell-renderer-alignment}
+      @about-function{gtk-cell-renderer-padding}
+      @about-function{gtk-cell-renderer-state}
       @about-function{gtk-cell-renderer-is-activatable}
       @about-function{gtk-cell-renderer-preferred-height}
       @about-function{gtk-cell-renderer-preferred-height-for-width}
       @about-function{gtk-cell-renderer-preferred-size}
       @about-function{gtk-cell-renderer-preferred-width}
       @about-function{gtk-cell-renderer-preferred-width-for-height}
-      @about-function{gtk-cell-renderer-get-request-mode}
+      @about-function{gtk-cell-renderer-request-mode}
     @end{subsection}
     @begin[GtkCellEditable]{subsection}
       Interface for widgets which can are used for editing cells.
