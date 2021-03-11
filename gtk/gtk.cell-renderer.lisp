@@ -119,9 +119,10 @@
   (:expanded    #.(ash 1 6)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-state atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gtk-cell-renderer-state atdoc:*symbol-name-alias*)
+      "Flags"
       (gethash 'gtk-cell-renderer-state atdoc:*external-symbols*)
- "@version{2020-6-20}
+ "@version{2021-3-7}
   @short{Tells how a cell is to be rendererd.}
   @begin{pre}
 (define-g-flags \"GtkCellRendererState\" gtk-cell-renderer-state
@@ -159,9 +160,10 @@
   (:editable 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-cell-renderer-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-cell-renderer-mode atdoc:*external-symbols*)
- "@version{2013-6-22}
+ "@version{2021-3-7}
   @short{Identifies how the user can interact with a particular cell.}
   @begin{pre}
 (define-g-enum \"GtkCellRendererMode\" gtk-cell-renderer-mode
@@ -801,34 +803,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_aligned_area ()
-;;;
-;;; void gtk_cell_renderer_get_aligned_area (GtkCellRenderer *cell,
-;;;                                          GtkWidget *widget,
-;;;                                          GtkCellRendererState flags,
-;;;                                          const GdkRectangle *cell_area,
-;;;                                          GdkRectangle *aligned_area);
-;;;
-;;; Gets the aligned area used by cell inside cell_area. Used for finding the
-;;; appropriate edit and focus rectangle.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; flags :
-;;;     render flags
-;;;
-;;; cell_area :
-;;;     cell area which would be passed to gtk_cell_renderer_render()
-;;;
-;;; aligned_area :
-;;;     the return location for the space inside cell_area that would acually be
-;;;     used to render
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_aligned_area" %gtk-cell-renderer-aligned-area)
+    :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (flags gtk-cell-renderer-state)
+  (area (g-boxed-foreign gdk-rectangle))
+  (aligned (g-boxed-foreign gdk-rectangle)))
+
+(defun gtk-cell-renderer-aligned-area (cell widget flags area)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell will be rendering
+    to}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} render flags}
+  @argument[area]{a @class{gdk-rectangle} instance  with the cell area which
+    would be passed to the function @fun{gtk-cell-renderer-render}}
+  @begin{return}
+    A @class{gdk-rectangle} area for the space inside @arg{area} that would
+    acually be used to render.
+  @end{return}
+  @begin{short}
+    Gets the aligned area used by @arg{cell} inside @arg{area}.
+  @end{short}
+  Used for finding the appropriate edit and focus rectangle.
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}
+  @see-class{gdk-rectangle}
+  @see-symbol{gtk-cell-renderer-state}
+  @see-function{gtk-cell-renderer-render}"
+  (let ((aligned (gdk-rectangle-new)))
+    (%gtk-cell-renderer-aligned-area cell widget flags area aligned)
+    aligned))
+
+(export 'gtk-cell-renderer-aligned-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_size () -> gtk-cell-renderer-size
@@ -837,24 +848,24 @@
 (defcfun ("gtk_cell_renderer_get_size" %gtk-cell-renderer-size) :void
   (cell (g-object gtk-cell-renderer))
   (widget (g-object gtk-widget))
-  (cell-area (g-boxed-foreign gdk-rectangle))
+  (area (g-boxed-foreign gdk-rectangle))
   (x-offset (:pointer :int))
   (y-offset (:pointer :int))
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun gtk-cell-renderer-size (cell widget cell-area)
+(defun gtk-cell-renderer-size (cell widget area)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-25}
+ "@version{2021-3-7}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[widget]{the @class{gtk-widget} object the renderer is rendering to}
-  @argument[cell-area]{a @class{gdk-rectangle} with the area a cell will be
+  @argument[area]{a @class{gdk-rectangle} with the area a cell will be
     allocated, or @code{nil}}
   @begin{return}
     @code{x-offset} -- an integer with the x offset of cell relative to
-                       @arg{cell-area}, or @code{nil} @br{}
+                       @arg{area}, or @code{nil} @br{}
     @code{y-offset} -- an integer with the y offset of cell relative to
-                       @arg{cell-area}, or @code{nil} @br{}
+                       @arg{area}, or @code{nil} @br{}
     @code{width}    -- an integer with the width needed to render a cell,
                        or @code{nil} @br{}
     @code{height}   -- an integer with the height needed to render a cell,
@@ -863,9 +874,9 @@
   @begin{short}
     Obtains the width and height needed to render the cell.
   @end{short}
-  Used by view widgets to determine the appropriate size for the
-  @arg{cell-area} passed to the function @fun{gtk-cell-renderer-render}. If
-  @arg{cell-area} is not @code{nil}, fills in the x and y offsets (if set)
+  Used by tree view widgets to determine the appropriate size for the
+  cell area passed to the function @fun{gtk-cell-renderer-render}. If
+  @arg{area} is not @code{nil}, fills in the x and y offsets (if set)
   of the cell relative to this location.
 
   Please note that the values set in @arg{width} and @arg{height}, as well as
@@ -887,7 +898,7 @@
                          (height :int))
     (%gtk-cell-renderer-size cell
                              widget
-                             cell-area
+                             area
                              x-offset
                              y-offset
                              width
@@ -905,113 +916,123 @@
 
 (defcfun ("gtk_cell_renderer_render" gtk-cell-renderer-render) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2021-3-7}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[cr]{a Cairo context to draw to}
-  @argument[widget]{the widget owning window}
-  @argument[background-area]{entire cell area including tree expanders and
-    maybe padding on the sides}
-  @argument[cell-area]{area normally rendered by a cell renderer}
-  @argument[flags]{flags that affect rendering}
+  @argument[cr]{a @symbol{cario-t} context to draw to}
+  @argument[widget]{a @class{gtk-widget} object owning window}
+  @argument[background]{a @class{gdk-rectangle} instance with entire cell area
+    including tree expanders and maybe padding on the sides}
+  @argument[cell]{a @class{gdk-rectangle} instance with the area normally
+    rendered by a cell renderer}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} flags] that affect
+    rendering}
   @begin{short}
-    Invokes the virtual render function of the @class{gtk-cell-renderer}.
+    Invokes the virtual render function of the cell renderer.
   @end{short}
-  The three passed-in rectangles are areas in @arg{cr}. Most renderers will
-  draw within @arg{cell-area}; the @code{xalign}, @code{yalign}, @code{xpad},
-  and @code{ypad} fields of the @class{gtk-cell-renderer} should be honored with
-  respect to @arg{cell-area}. @arg{background-area} includes the blank space
-  around the cell, and also the area containing the tree expander; so the
-  @arg{background-area} rectangles for all cells tile to cover the entire
-  window."
+  The passed-in rectangles are areas in @arg{cr}. Most renderers will draw
+  within @arg{area}. The @code{xalign}, @code{yalign}, @code{xpad},
+  and @code{ypad} fields of the cell renderer should be honored with respect to
+  @arg{area}. The argument @arg{background} includes the blank space around the
+  cell, and also the area containing the tree expander. So the @arg{background}
+  rectangles for all cells tile to cover the entire window.
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}
+  @see-class{gdk-rectangle}
+  @see-symbol{cairo-t}
+  @see-symbol{gtk-cell-renderer-state}"
   (cell (g-object gtk-cell-renderer))
   (cr (:pointer (:struct cairo-t)))
   (widget (g-object gtk-widget))
-  (background-area (g-boxed-foreign gdk-rectangle))
-  (cell-area (g-boxed-foreign gdk-rectangle))
+  (background (g-boxed-foreign gdk-rectangle))
+  (area (g-boxed-foreign gdk-rectangle))
   (flags gtk-cell-renderer-state))
 
 (export 'gtk-cell-renderer-render)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_activate ()
-;;;
-;;; gboolean gtk_cell_renderer_activate (GtkCellRenderer *cell,
-;;;                                      GdkEvent *event,
-;;;                                      GtkWidget *widget,
-;;;                                      const gchar *path,
-;;;                                      const GdkRectangle *background_area,
-;;;                                      const GdkRectangle *cell_area,
-;;;                                      GtkCellRendererState flags);
-;;;
-;;; Passes an activate event to the cell renderer for possible processing. Some
-;;; cell renderers may use events; for example, GtkCellRendererToggle toggles
-;;; when it gets a mouse click.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; widget :
-;;;     widget that received the event
-;;;
-;;; path :
-;;;     widget-dependent string representation of the event location; e.g. for
-;;;     GtkTreeView, a string representation of GtkTreePath
-;;;
-;;; background_area :
-;;;     background area as passed to gtk_cell_renderer_render()
-;;;
-;;; cell_area :
-;;;     cell area as passed to gtk_cell_renderer_render()
-;;;
-;;; flags :
-;;;     render flags
-;;;
-;;; Returns :
-;;;     TRUE if the event was consumed/handled
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_activate" gtk-cell-renderer-activate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[event]{a @class{gdk-event} event}
+  @argument[widget]{a @class{gtk-widget} object that received the event}
+  @argument[path]{widget-dependent string representation of the event location,
+    e.g. for a @class{gtk-tree-view} widget, a string representation of
+    @class{gtk-tree-path} instance}
+  @argument[background]{a @class{gdk-rectangle} with the background area as
+    passed to the function @fun{gtk-cell-renderer-render}}
+  @argument[area]{a @class{gdk-rectangle} instance with the cell area as passed
+    to the function @fun{gtk-cell-renderer-render}}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} render flags}
+  @return{@em{True} if the event was consumed/handled.}
+  @begin{short}
+    Passes an activate event to the cell renderer for possible processing.
+  @end{short}
+  Some cell renderers may use events. For example, the
+  @class{gtk-cell-renderer-toggle} object toggles when it gets a mouse click.
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-cell-renderer-toggle}
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-widget}
+  @see-class{gdk-rectangle}
+  @see-class{gdk-event}
+  @see-symbol{gtk-cell-renderer-state}
+  @see-function{gtk-cell-renderer-render}"
+  (cell (g-object gtk-cell-renderer))
+  (event (g-boxed-foreign gdk-event))
+  (widget (g-object gtk-widget))
+  (path :string)
+  (background (g-boxed-foreign gdk-rectangle))
+  (area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state))
+
+(export 'gtk-cell-renderer-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_start_editing ()
-;;;
-;;; GtkCellEditable * gtk_cell_renderer_start_editing
-;;;                                        (GtkCellRenderer *cell,
-;;;                                         GdkEvent *event,
-;;;                                         GtkWidget *widget,
-;;;                                         const gchar *path,
-;;;                                         const GdkRectangle *background_area,
-;;;                                         const GdkRectangle *cell_area,
-;;;                                         GtkCellRendererState flags);
-;;;
-;;; Passes an activate event to the cell renderer for possible processing.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; widget :
-;;;     widget that received the event
-;;;
-;;; path :
-;;;     widget-dependent string representation of the event location; e.g. for
-;;;     GtkTreeView, a string representation of GtkTreePath
-;;;
-;;; background_area :
-;;;     background area as passed to gtk_cell_renderer_render()
-;;;
-;;; cell_area :
-;;;     cell area as passed to gtk_cell_renderer_render()
-;;;
-;;; flags :
-;;;     render flags
-;;;
-;;; Returns :
-;;;     A new GtkCellEditable, or NULL.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_start_editing" gtk-cell-renderer-start-editing)
+    (g-object gtk-cell-editable)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[event]{a @class{gdk-event} event}
+  @argument[widget]{a @class{gtk-widget} object that received the event}
+  @argument[path]{widget-dependent string representation of the event location,
+    e.g. for @class{gtk-tree-view} widget, a string representation of
+    a @class{gtk-tree-path} instance}
+  @argument[background]{a @class{gdk-rectangle} instance with the background
+    area as passed to the function @fun{gtk-cell-renderer-render}}
+  @argument[area]{a @class{gdk-rectangle} instance with the cell area as passed
+    to the function @fun{gtk-cell-renderer-render}}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} render flags}
+  @return{A new @class{gtk-cell-editable} widget, or @code{nil}.}
+  @begin{short}
+    Passes an activate event to the cell renderer for possible processing.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}
+  @see-class{gdk-event}
+  @see-class{gtk-cell-editable}
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-path}
+  @see-class{gdk-rectangle}
+  @see-symbol{gtk-cell-renderer-state}
+  @see-function{gtk-cell-renderer-render}"
+  (cell (g-object gtk-cell-renderer))
+  (event (g-boxed-foreign gdk-event))
+  (widget (g-object gtk-widget))
+  (path :string)
+  (background (g-boxed-foreign gdk-rectangle))
+  (area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state))
+
+(export 'gtk-cell-renderer-start-editing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_stop_editing ()
@@ -1019,7 +1040,7 @@
 
 (defcfun ("gtk_cell_renderer_stop_editing" gtk-cell-renderer-stop-editing) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
+ "@version{2021-3-7}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[canceled]{@em{true} if the editing has been canceled}
   @begin{short}
@@ -1029,7 +1050,7 @@
   \"editing-canceled\" signal.
 
   This function should be called by cell renderer implementations in response
-  to the \"editing-done\" signal of @class{gtk-cell-editable}.
+  to the \"editing-done\" signal of the @class{gtk-cell-editable} widget.
   @see-class{gtk-cell-renderer}
   @see-class{gtk-cell-editable}
   @see-function{gtk-cell-renderer-start-editing}"
@@ -1040,343 +1061,375 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_fixed_size ()
+;;; gtk_cell_renderer_set_fixed_size () -> gtk-cell-renderer-fixed-size
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_renderer_get_fixed_size" %gtk-cell-renderer-get-fixed-size)
+(defun (setf gtk-cell-renderer-fixed-size) (value cell)
+  (destructuring-bind (width height) value
+    (foreign-funcall "gtk_cell_renderer_set_fixed_size"
+                     (g-object gtk-cell-renderer) cell
+                     :int width
+                     :int height
+                     :void)
+    (values width height)))
+
+(defcfun ("gtk_cell_renderer_get_fixed_size" %gtk-cell-renderer-fixed-size)
     :void
   (cell (g-object gtk-cell-renderer))
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun gtk-cell-renderer-get-fixed-size (cell)
+(defun gtk-cell-renderer-fixed-size (cell)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-22}
+ "@version{2021-3-7}
+  @syntax[]{(gtk-cell-renderer-fixed-size cell) => width, height}
+  @syntax[]{(setf (gtk-cell-renderer-fixe-size cell) (list width height))}
   @argument[cell]{a @class{gtk-cell-renderer} object}
-  @begin{return}
-    @code{width} -- the fixed width of the cell, or @code{nil} @br{}
-    @code{height} -- the fixed height of the cell, or @code{nil}
-  @end{return}
-  Returns @arg{width} and @arg{height} with the appropriate size of cell."
+  @argument[width]{an integer with the width of the cell renderer, or -1}
+  @argument[height]{an integer with the height of the cell renderer, or -1}
+  @begin{short}
+    The function @sym{gtk-cell-renderer-fixed-size} returns @arg{width} and
+    @arg{height} with the appropriate size of @arg{cell}.
+  @end{short}
+  The function @sym{(setf gtk-cell-renderer-fixed-size)} sets the renderer size
+  to be explicit, independent of the properties set.
+  @see-class{gtk-cell-renderer}"
   (with-foreign-objects ((width :int) (height :int))
-    (%gtk-cell-renderer-get-fixed-size cell width height)
+    (%gtk-cell-renderer-fixed-size cell width height)
     (values (mem-ref width :int)
             (mem-ref height :int))))
 
-(export 'gtk-cell-renderer-get-fixed-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_renderer_set_fixed_size ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_cell_renderer_set_fixed_size" gtk-cell-renderer-set-fixed-size)
-    :void
- #+cl-cffi-gtk-documentation
- "@version{2013-6-22}
-  @argument[cell]{a @class{gtk-cell-renderer} object}
-  @argument[width]{the width of the cell renderer, or -1}
-  @argument[height]{the height of the cell renderer, or -1}
-  Sets the renderer size to be explicit, independent of the properties set."
-  (cell (g-object gtk-cell-renderer))
-  (width :int)
-  (height :int))
-
-(export 'gtk-cell-renderer-set-fixed-size)
+(export 'gtk-cell-renderer-fixed-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_alignment ()
-;;;
-;;; void gtk_cell_renderer_get_alignment (GtkCellRenderer *cell,
-;;;                                       gfloat *xalign,
-;;;                                       gfloat *yalign);
-;;;
-;;; Fills in xalign and yalign with the appropriate values of cell.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; xalign :
-;;;     location to fill in with the x alignment of the cell, or NULL
-;;;
-;;; yalign :
-;;;     location to fill in with the y alignment of the cell, or NULL
-;;;
-;;; Since 2.18
+;;; gtk_cell_renderer_set_alignment () -> gtk-cell-renderer-alignment
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_renderer_set_alignment ()
-;;;
-;;; void gtk_cell_renderer_set_alignment (GtkCellRenderer *cell,
-;;;                                       gfloat xalign,
-;;;                                       gfloat yalign);
-;;;
-;;; Sets the renderer's alignment within its available space.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; xalign :
-;;;     the x alignment of the cell renderer
-;;;
-;;; yalign :
-;;;     the y alignment of the cell renderer
-;;;
-;;; Since 2.18
-;;; ----------------------------------------------------------------------------
+(defun (setf gtk-cell-renderer-alignment) (value cell)
+  (destructuring-bind (xalign yalign) value
+    (foreign-funcall "gtk_cell_renderer_set_alignment"
+                     (g-object gtk-cell-renderer) cell
+                     :float xalign
+                     :float yalign
+                     :void)
+     (values xalign yalign)))
+
+(defcfun ("gtk_cell_renderer_get_alignment" %gtk-cell-renderer-alignment) :void
+  (cell (g-object gtk-cell-renderer))
+  (xalign (:pointer :float))
+  (yalign (:pointer :float)))
+
+(defun gtk-cell-renderer-alignment (cell)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @syntax[]{(gtk-cell-renderer-alignment cell) => xalign, yalign}
+  @syntax[]{(setf (gtk-cell-renderer-alignment cell) (list xalign yalign))}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[xalign]{a float with the x alignment of the cell renderer}
+  @argument[yalign]{a float with the y alignment of the cell renderer}
+  @begin{short}
+    The function @sym{gtk-cell-renderer-alignment} returns the appropriate
+    @arg{xalign} and @arg{yalign} of @arg{cell}.
+  @end{short}
+  The function @sym{(setf gtk-cell-renderer-alignment)} sets the cell renderer's
+  alignment within its available space.
+  @see-class{gtk-cell-renderer}"
+  (with-foreign-objects ((xalign :float) (yalign :float))
+    (%gtk-cell-renderer-alignment cell xalign yalign)
+    (values (mem-ref xalign :float)
+            (mem-ref yalign :float))))
+
+(export 'gtk-cell-renderer-alignment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_padding ()
-;;;
-;;; void gtk_cell_renderer_get_padding (GtkCellRenderer *cell,
-;;;                                     gint *xpad,
-;;;                                     gint *ypad);
-;;;
-;;; Fills in xpad and ypad with the appropriate values of cell.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; xpad :
-;;;     location to fill in with the x padding of the cell, or NULL
-;;;
-;;; ypad :
-;;;     location to fill in with the y padding of the cell, or NULL
-;;;
-;;; Since 2.18
+;;; gtk_cell_renderer_set_padding () -> gtk-cell-renderer-padding
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_renderer_set_padding ()
-;;;
-;;; void gtk_cell_renderer_set_padding (GtkCellRenderer *cell,
-;;;                                     gint xpad,
-;;;                                     gint ypad);
-;;;
-;;; Sets the renderer's padding.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; xpad :
-;;;     the x padding of the cell renderer
-;;;
-;;; ypad :
-;;;     the y padding of the cell renderer
-;;;
-;;; Since 2.18
-;;; ----------------------------------------------------------------------------
+(defun (setf gtk-cell-renderer-padding) (value cell)
+  (destructuring-bind (xpad ypad) value
+    (foreign-funcall "gtk_cell_renderer_set_padding"
+                     (g-object gtk-cell-renderer) cell
+                     :int xpad
+                     :int ypad
+                     :void)
+     (values xpad ypad)))
+
+(defcfun ("gtk_cell_renderer_get_padding" %gtk-cell-renderer-padding) :void
+  (cell (g-object gtk-cell-renderer))
+  (xpad (:pointer :int))
+  (ypad (:pointer :int)))
+
+(defun gtk-cell-renderer-padding (cell)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @syntax[]{(gtk-cell-renderer-padding cell) => xpad, ypad}
+  @syntax[]{(setf gtk-cell-renderer-padding cell) (list xpad ypad))}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[xpad]{an integer with the x padding of the cell renderer}
+  @argument[ypad]{an integer with the y padding of the cell renderer}
+  @begin{short}
+    The function @sym{gtk-cell-renderer-padding} returns the appropriate
+    @arg{xpad} and @arg{ypad} of the cell renderer.
+  @end{short}
+  The function @sym{(setf gtk-cell-renderer-padding)} sets the cell renderer's
+  padding.
+  @see-class{gtk-cell-renderer}"
+  (with-foreign-objects ((xpad :int) (ypad :int))
+    (%gtk-cell-renderer-padding cell xpad ypad)
+    (values (mem-ref xpad :int)
+            (mem-ref ypad :int))))
+
+(export 'gtk-cell-renderer-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_state ()
-;;;
-;;; GtkStateFlags gtk_cell_renderer_get_state (GtkCellRenderer *cell,
-;;;                                            GtkWidget *widget,
-;;;                                            GtkCellRendererState cell_state);
-;;;
-;;; Translates the cell renderer state to GtkStateFlags, based on the cell
-;;; renderer and widget sensitivity, and the given GtkCellRendererState.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer, or NULL
-;;;
-;;; widget :
-;;;     a GtkWidget, or NULL
-;;;
-;;; cell_state :
-;;;     cell renderer state
-;;;
-;;; Returns :
-;;;     the widget state flags applying to cell
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_state" gtk-cell-renderer-state)
+    gtk-state-flags
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer}, or @code{nil}}
+  @argument[widget]{a @class{gtk-widget}, or @code{nil}}
+  @argument[state]{the @symbol{gtk-cell-renderer-state} cell renderer state}
+  @return{The widget @symbol{gtk-state-flags} state flags applying to the cell
+    renderer.}
+  @begin{short}
+    Translates the cell renderer state to @symbol{gtk-state-flags} flags,
+    based on the cell renderer and widget sensitivity, and the given
+    @symbol{gtk-cell-renderer-state} flags.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}
+  @see-symbol{gtk-state-flags}
+  @see-symbol{gtk-cell-renderer-state}"
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (state gtk-cell-renderer-state))
+
+(export 'gtk-cell-renderer-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_is_activatable ()
-;;;
-;;; gboolean gtk_cell_renderer_is_activatable (GtkCellRenderer *cell);
-;;;
-;;; Checks whether the cell renderer can do something when activated.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; Returns :
-;;;     TRUE if the cell renderer can do anything when activated
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_is_activatable" gtk-cell-renderer-is-activatable)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @return{@em{True} if the cell renderer can do anything when activated.}
+  @begin{short}
+    Checks whether the cell renderer can do something when activated.
+  @end{short}
+  @see-class{gtk-cell-renderer}"
+  (cell (g-object gtk-cell-renderer)))
+
+(export 'gtk-cell-renderer-is-activatable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_height ()
-;;;
-;;; void gtk_cell_renderer_get_preferred_height (GtkCellRenderer *cell,
-;;;                                              GtkWidget *widget,
-;;;                                              gint *minimum_size,
-;;;                                              gint *natural_size);
-;;;
-;;; Retreives a renderer's natural size when rendered to widget.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; minimum_size :
-;;;     location to store the minimum size, or NULL
-;;;
-;;; natural_size :
-;;;     location to store the natural size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_preferred_height"
+          %gtk-cell-renderer-preferred-height) :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (minimum-size (:pointer :int))
+  (natural-size (:pointer :int)))
+
+(defun gtk-cell-renderer-preferred-height (cell widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell renderer will be
+    rendering to}
+  @begin{return}
+    @code{minimum-size} -- an integer with the minimum size @br{}
+    @code{natural-size} -- an integer with the natural size
+  @end{return}
+  @begin{short}
+    Retreives a cell renderer's natural size when rendered to widget.
+  @end{short}
+  @see-class{gtk-cell-renderer}"
+  (with-foreign-objects ((minimum-size :int) (natural-size :int))
+    (%gtk-cell-renderer-preferred-height cell widget minimum-size natural-size)
+    (values (mem-ref minimum-size :int)
+            (mem-ref natural-size :int))))
+
+(export 'gtk-cell-renderer-preferred-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_height_for_width ()
-;;;
-;;; void gtk_cell_renderer_get_preferred_height_for_width
-;;;                                                      (GtkCellRenderer *cell,
-;;;                                                       GtkWidget *widget,
-;;;                                                       gint width,
-;;;                                                       gint *minimum_height,
-;;;                                                       gint *natural_height);
-;;;
-;;; Retreives a cell renderers's minimum and natural height if it were rendered
-;;; to widget with the specified width.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; width :
-;;;     the size which is available for allocation
-;;;
-;;; minimum_height :
-;;;     location for storing the minimum size, or NULL
-;;;
-;;; natural_height :
-;;;     location for storing the preferred size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_preferred_height_for_width"
+          %gtk-cell-renderer-preferred-height-for-width) :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (width :int)
+  (minimum-height (:pointer :int))
+  (natural-height (:pointer :int)))
+
+(defun gtk-cell-renderer-preferred-height-for-width (cell widget width)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell renderer will be
+    rendering to}
+  @argument[width]{an integer with the size which is available for allocation}
+  @begin{return}
+    @code{minimum-height} -- an integer with the minimum size @br{}
+    @code{natural-height} -- an integer with  the preferred size
+  @end{return}
+  @begin{short}
+    Retreives a cell renderers's minimum and natural height if it were rendered
+    to @arg{widget} with the specified width.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}"
+  (with-foreign-objects ((minimum-height :int) (natural-height :int))
+    (%gtk-cell-renderer-preferred-height-for-width cell
+                                                   widget
+                                                   width
+                                                   minimum-height
+                                                   natural-height)
+    (values (mem-ref minimum-height :int)
+            (mem-ref natural-height :int))))
+
+(export 'gtk-cell-renderer-preferred-height-for-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_size ()
-;;;
-;;; void gtk_cell_renderer_get_preferred_size (GtkCellRenderer *cell,
-;;;                                            GtkWidget *widget,
-;;;                                            GtkRequisition *minimum_size,
-;;;                                            GtkRequisition *natural_size);
-;;;
-;;; Retrieves the minimum and natural size of a cell taking into account the
-;;; widget's preference for height-for-width management.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; minimum_size :
-;;;     location for storing the minimum size, or NULL
-;;;
-;;; natural_size :
-;;;     location for storing the natural size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_get_preferred_size"
           %gtk-cell-renderer-preferred-size) :void
   (cell (g-object gtk-cell-renderer))
   (widget (g-object gtk-widget))
-  (min-size (g-boxed-foreign gtk-requisition))
-  (max-size (g-boxed-foreign gtk-requisition)))
+  (minimum-size (g-boxed-foreign gtk-requisition))
+  (natural-size (g-boxed-foreign gtk-requisition)))
 
 (defun gtk-cell-renderer-preferred-size (cell widget)
-  (let ((min-size (make-gtk-requisition))
-        (max-size (make-gtk-requisition)))
-    (%gtk-cell-renderer-preferred-size cell widget min-size max-size)
-    (values min-size
-            max-size)))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell renderer will be
+    rendering to}
+  @begin{return}
+    @code{minimum-size} -- a @symbol{gtk-requisition} instance with the minimum
+    size @br{}
+    @code{natural-size} -- a @symbol{gtk-requisition} instance with the natural
+    size
+  @end{return}
+  @begin{short}
+    Retrieves the minimum and natural size of a cell renderer taking into
+    account the widget's preference for height-for-width management.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}"
+  (let ((minimum-size (make-gtk-requisition))
+        (natural-size (make-gtk-requisition)))
+    (%gtk-cell-renderer-preferred-size cell widget minimum-size natural-size)
+    (values minimum-size
+            natural-size)))
 
 (export 'gtk-cell-renderer-preferred-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_width ()
-;;;
-;;; void gtk_cell_renderer_get_preferred_width (GtkCellRenderer *cell,
-;;;                                             GtkWidget *widget,
-;;;                                             gint *minimum_size,
-;;;                                             gint *natural_size);
-;;;
-;;; Retreives a renderer's natural size when rendered to widget.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; minimum_size :
-;;;     location to store the minimum size, or NULL
-;;;
-;;; natural_size :
-;;;     location to store the natural size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_preferred_width"
+          %gtk-cell-renderer-preferred-width) :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (minimum-size (:pointer :int))
+  (natural-size (:pointer :int)))
+
+(defun gtk-cell-renderer-preferred-width (cell widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell renderer will be
+    rendering to}
+  @begin{return}
+    @code{minimum-size} -- an integer with the minimum size @br{}
+    @code{natural-size} -- an integer the natural size
+  @end{return}
+  @begin{short}
+    Retreives a cell renderer's natural size when rendered to widget.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}"
+  (with-foreign-objects ((minimum-size :int) (natural-size :int))
+    (%gtk-cell-renderer-preferred-width cell widget minimum-size natural-size)
+    (values (mem-ref minimum-size :int)
+            (mem-ref natural-size :int))))
+
+(export 'gtk-cell-renderer-preferred-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_width_for_height ()
-;;;
-;;; void gtk_cell_renderer_get_preferred_width_for_height
-;;;                                                      (GtkCellRenderer *cell,
-;;;                                                       GtkWidget *widget,
-;;;                                                       gint height,
-;;;                                                       gint *minimum_width,
-;;;                                                       gint *natural_width);
-;;;
-;;; Retreives a cell renderers's minimum and natural width if it were rendered
-;;; to widget with the specified height.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; widget :
-;;;     the GtkWidget this cell will be rendering to
-;;;
-;;; height :
-;;;     the size which is available for allocation
-;;;
-;;; minimum_width :
-;;;     location for storing the minimum size, or NULL
-;;;
-;;; natural_width :
-;;;     location for storing the preferred size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_preferred_width_for_height"
+          %gtk-cell-renderer-preferred-width-for-height) :void
+  (cell (g-object gtk-cell-renderer))
+  (widget (g-object gtk-widget))
+  (height :int)
+  (minimum-width (:pointer :int))
+  (natural-width (:pointer :int)))
+
+(defun gtk-cell-renderer-preferred-width-for-height (cell widget height)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[widget]{the @class{gtk-widget} object this cell renderer will be
+    rendering to}
+  @argument[height]{an integer with the size which is available for allocation}
+  @begin{return}
+    @code{minimum-width} -- an integer with the minimum size @br{}
+    @code{natural-width} -- an integer with the preferred size
+  @end{return}
+  @begin{short}
+    Retreives a cell renderers's minimum and natural width if it were rendered
+    to @arg{widget} with the specified height.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-widget}"
+  (with-foreign-objects ((minimum-width :int) (natural-width :int))
+    (%gtk-cell-renderer-preferred-width-for-height cell
+                                                   widget
+                                                   height
+                                                   minimum-width
+                                                   natural-width)
+    (values (mem-ref minimum-width :int)
+            (mem-ref natural-width :int))))
+
+(export 'gtk-cell-renderer-preferred-width-for-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_request_mode ()
-;;;
-;;; GtkSizeRequestMode gtk_cell_renderer_get_request_mode
-;;;                                                     (GtkCellRenderer *cell);
-;;;
-;;; Gets whether the cell renderer prefers a height-for-width layout or a
-;;; width-for-height layout.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer instance
-;;;
-;;; Returns :
-;;;     The GtkSizeRequestMode preferred by this renderer.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_get_request_mode" gtk-cell-renderer-request-mode)
+    gtk-size-request-mode
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-7}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @return{The @symbol{gtk-size-request-mode} mode preferred by this cell
+    renderer.}
+  @begin{short}
+    Gets whether the cell renderer prefers a height-for-width layout or a
+    width-for-height layout.
+  @end{short}
+  @see-class{gtk-cell-renderer}
+  @see-symbol{gtk-size-request-mode}"
+  (cell (g-object gtk-cell-renderer)))
+
+(export 'gtk-cell-renderer-request-mode)
 
 ;;; --- End of file gtk.cell-renderer.lisp -------------------------------------
