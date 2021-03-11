@@ -373,7 +373,7 @@
 (let* ((model (gtk-tree-view-model view))
        (selection (gtk-tree-view-selection view))
        ;; This will only work in single or browse selection mode
-       (iter (gtk-tree-selection-selected selection model)))
+       (iter (gtk-tree-selection-selected selection)))
   (if iter
       ;; A row is selected
       ...

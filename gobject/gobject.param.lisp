@@ -2580,7 +2580,7 @@
   @return{A newly created @symbol{g-param-spec-string} parameter specification.}
   @begin{short}
     Creates a new parameter specification instance specifying a property of
-    type @var{+g-type-string+}.
+    type \"gchararray\".
   @end{short}
 
   See the function @fun{g-param-spec-internal} for details on property names.
@@ -2613,7 +2613,7 @@
  "@version{2020-8-27}
   @syntax[]{(g-value-string gvalue) => value}
   @syntax[]{(setf (g-value-string gvalue) value)}
-  @argument[gvalue]{a @symbol{g-value} of type @var{+g-type-string+}}
+  @argument[gvalue]{a @symbol{g-value} of type \"gchararray\"}
   @argument[value]{caller-owned string to be duplicated for the
     @symbol{g-value}}
   @begin{short}
@@ -2621,7 +2621,7 @@
   @end{short}
 
   The function @sym{g-value-string} gets the contents of a @symbol{g-value}
-  of type @var{+g-type-string+}. The function @sym{(setf g-value-string)} sets
+  of type \"gchararray\". The function @sym{(setf g-value-string)} sets
   the contents of a @symbol{g-value} to @arg{value}.
   @see-symbol{g-value}
   @see-variable{+g-type-string+}"

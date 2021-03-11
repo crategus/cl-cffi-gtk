@@ -263,29 +263,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer-text 'type)
- "@version{2020-6-13}
+ "@version{2021-3-9}
   @begin{short}
-    A @sym{gtk-cell-renderer-text} renders a given text in its cell, using the
-    font, color and style information provided by its properties.
+    A @sym{gtk-cell-renderer-text} object renders a given text in its cell,
+    using the font, color and style information provided by its properties.
   @end{short}
   The text will be ellipsized if it is too long and the @code{ellipsize}
   property allows it.
 
   If the @code{mode} property is @code{:editable}, the
-  @sym{gtk-cell-renderer-text} allows to edit its text using an entry.
+  @sym{gtk-cell-renderer-text} allows to edit its text using a @class{gtk-entry}
+  widget.
   @begin[Signal Details]{dictionary}
     @subheading{The \"edited\" signal}
       @begin{pre}
- lambda (renderer path new-text)    : Run Last
+ lambda (renderer pathstr text)    : Run Last
       @end{pre}
-      This signal is emitted after renderer has been edited. It is the
+      This signal is emitted after @arg{renderer} has been edited. It is the
       responsibility of the application to update the model and store
-      @arg{new-text} at the position indicated by path.
+      @arg{text} at the position indicated by @arg{pathstr}.
       @begin[code]{table}
         @entry[renderer]{The @sym{gtk-cell-renderer-text} object which received
           the signal.}
-        @entry[path]{A string with the path identifying the edited cell.}
-        @entry[new-text]{A string with the new text.}
+        @entry[pathstr]{A string with the path identifying the edited cell.}
+        @entry[text]{A string with the new text.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-cell-renderer-text-align-set}

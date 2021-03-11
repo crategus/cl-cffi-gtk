@@ -120,7 +120,6 @@
 
   Memory management of @sym{cairo-region-t} is done with the functions
   @fun{cairo-region-reference} and @fun{cairo-region-destroy}.
-  @see-symbol{cairo-region-t}
   @see-function{cairo-region-union}
   @see-function{cairo-region-intersect}
   @see-function{cairo-region-reference}
