@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -104,17 +104,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer-pixbuf 'type)
- "@version{2020-6-14}
+ "@version{*2021-3-13}
   @begin{short}
-    A @sym{gtk-cell-renderer-pixbuf} can be used to render an image in a cell.
+    A @sym{gtk-cell-renderer-pixbuf} object can be used to render an image in
+    a cell.
   @end{short}
-  It allows to render either a given @class{gdk-pixbuf}, set via the
-  @code{pixbuf} property, or a stock icon, set via the @code{stock-id} property.
+  It allows to render either a given @class{gdk-pixbuf} object, set via the
+  @code{pixbuf} property, or a named icon, set via the @code{icon-name}
+  property.
 
-  To support the tree view, @sym{gtk-cell-renderer-pixbuf} also supports
-  rendering two alternative pixbufs, when the @code{is-expander} property is
-  @em{true}. If the @code{is-expanded} property is @em{true} and the
-  @code{pixbuf-expander-open} property is set to a pixbuf, it renders that
+  To support the tree view, the @sym{gtk-cell-renderer-pixbuf} object also
+  supports rendering two alternative pixbufs, when the @code{is-expander}
+  property is @em{true}. If the @code{is-expanded} property is @em{true} and
+  the @code{pixbuf-expander-open} property is set to a pixbuf, it renders that
   pixbuf, if the @code{is-expanded} property is @em{false} and the
   @code{pixbuf-expander-closed} property is set to a pixbuf, it renders that
   one.
@@ -127,6 +129,7 @@
   @see-slot{gtk-cell-renderer-pixbuf-stock-detail}
   @see-slot{gtk-cell-renderer-pixbuf-stock-id}
   @see-slot{gtk-cell-renderer-pixbuf-stock-size}
+  @see-class{gtk-cell-renderer}
   @see-class{gdk-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
@@ -141,14 +144,17 @@
  "The @code{follow-state} property of type @code{:boolean} (Read / Write) @br{}
   Specifies whether the rendered pixbuf should be colorized according to the
   @symbol{gtk-cell-renderer-state}. @br{}
-  Default value: @em{false}")
+  @em{Warning:} The @code{follow-state} property has been deprecated since
+  version 3.16 and should not be used in newly-written code. Cell renderers
+  always follow state. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-pixbuf-follow-state
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-follow-state 'function)
- "@version{2020-6-14}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-follow-state object) => state}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-follow-state object) state)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -159,7 +165,12 @@
   @end{short}
 
   Specifies whether the rendered pixbuf should be colorized according to the
-  @symbol{gtk-cell-renderer-state}.
+  @symbol{gtk-cell-renderer-state} flags.
+  @begin[Warning]{dictionary}
+    The @code{follow-state} property has been deprecated since version 3.16 and
+    should not be used in newly-written code. Cell renderers always follow
+    state.
+  @end{dictionary}
   @see-class{gtk-cell-renderer-pixbuf}
   @see-symbol{gtk-cell-renderer-state}")
 
@@ -176,7 +187,7 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-gicon 'function)
- "@version{2020-6-14}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-gicon object) => icon}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-gicon object) icon)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -205,7 +216,7 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-icon-name 'function)
- "@version{2020-6-14}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -231,7 +242,7 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-pixbuf 'function)
- "@version{2020-6-14}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -242,7 +253,7 @@
   @end{short}
 
   The pixbuf to render.
-  @see-class{gtk-cell-renderer}
+  @see-class{gtk-cell-renderer-pixbuf}
   @see-class{gdk-pixbuf}")
 
 ;;; --- gtk-cell-renderer-pixbuf-pixbuf-expander-closed ------------------------
@@ -259,14 +270,14 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-pixbuf-expander-closed 'function)
- "@version{2020-6-20}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-pixbuf-expander-closed object) => pixbuf}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-pixbuf-expander-closed object) pixbuf)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
-    Accessor of the @slot[gtk-cell-renderer-pixbuf]{pixbuf-expander-closed} slot
-    of the @class{gtk-cell-renderer-pixbuf} class.
+    Accessor of the @slot[gtk-cell-renderer-pixbuf]{pixbuf-expander-closed}
+    slot of the @class{gtk-cell-renderer-pixbuf} class.
   @end{short}
 
   Pixbuf for closed expander.
@@ -287,14 +298,14 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-pixbuf-expander-open 'function)
- "@version{2020-6-20}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-pixbuf-expander-open object) => pixbuf}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-pixbuf-expander-open object) pixbuf)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
-    Accessor of the @slot[gtk-cell-renderer-pixbuf]{pixbuf-expander-open} slot of
-    the @class{gtk-cell-renderer-pixbuf} class.
+    Accessor of the @slot[gtk-cell-renderer-pixbuf]{pixbuf-expander-open} slot
+    of the @class{gtk-cell-renderer-pixbuf} class.
   @end{short}
 
   The pixbuf for open expander.
@@ -315,7 +326,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-stock-detail 'function)
- "@version{2020-6-20}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-stock-detail object) => detail}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-stock-detail object) detail)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -344,7 +355,7 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-stock-id 'function)
- "@version{2020-6-20}
+ "@version{2021-3-13}
   @syntax[]{(gtk-cell-renderer-pixbuf-stock-id object) => stock-id}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
@@ -376,9 +387,9 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-stock-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-stock-size 'function)
- "@version{2020-6-20}
-  @syntax[]{(gtk-cell-renderer-pixbuf-stock-size object) => stock-size}
-  @syntax[]{(setf (gtk-cell-renderer-pixbuf-stock-size object) stock-size)}
+ "@version{2021-3-13}
+  @syntax[]{(gtk-cell-renderer-pixbuf-stock-size object) => size}
+  @syntax[]{(setf (gtk-cell-renderer-pixbuf-stock-size object) size)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
   @argument[size]{an unsigned integer with sitze that the size of the icon}
   @begin{short}
@@ -401,11 +412,11 @@
 (setf (gethash 'gtk-cell-renderer-pixbuf-surface atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-pixbuf-surface 'function)
- "@version{2020-6-20}
-  @syntax[]{(gtk-cell-renderer-pixbuf-surface object) => stock-size}
-  @syntax[]{(setf (gtk-cell-renderer-pixbuf-surface object) stock-size)}
+ "@version{2021-3-13}
+  @syntax[]{(gtk-cell-renderer-pixbuf-surface object) => surface}
+  @syntax[]{(setf (gtk-cell-renderer-pixbuf-surface object) surface)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
-  @argument[surface]{the @class{cairo-surface} object to render}
+  @argument[surface]{the @class{cairo-surface} instance to render}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-pixbuf]{surface} slot of the
     @class{gtk-cell-renderer-pixbuf} class.
@@ -423,18 +434,18 @@
 
 (defun gtk-cell-renderer-pixbuf-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-31}
+ "@version{*2021-3-13}
   @return{The new @class{gtk-cell-renderer-pixbuf} object.}
   @begin{short}
     Creates a new cell renderer pixbuf.
   @end{short}
   Adjust rendering parameters using object properties. Object properties can
-  be set globally with the function @fun{g-object-property}. Also, with
-  @class{gtk-tree-view-column}, you can bind a property to a value in a
-  @class{gtk-tree-model}. For example, you can bind the
+  be set globally with the function @fun{g-object-property}. Also, with the
+  @class{gtk-tree-view-column} widget, you can bind a property to a value in a
+  @class{gtk-tree-model} widget. For example, you can bind the
   @slot[gtk-cell-renderer-pixbuf]{pixbuf} property on the cell renderer to a
   pixbuf value in the model, thus rendering a different image in each row of
-  the @class{gtk-tree-view}.
+  the @class{gtk-tree-view} widget.
   @see-class{gtk-cell-renderer-pixbuf}
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-view-column}
