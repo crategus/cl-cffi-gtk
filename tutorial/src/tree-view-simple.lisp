@@ -79,22 +79,21 @@
                                     :type :toplevel
                                     :default-width 350
                                     :default-height 200))
-             (view (create-view-and-model-simple))
-             ;; Get the selection of the view
-             (select (gtk-tree-view-selection view)))
+             (view (create-view-and-model-simple)))
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
                             (leave-gtk-main)))
         ;; Setup the selection handler
-        (setf (gtk-tree-selection-mode select) :single)
-        (g-signal-connect select "changed"
-           (lambda (selection)
-             (let* ((view (gtk-tree-selection-tree-view selection))
-                    (model (gtk-tree-view-model view))
-                    (iter (gtk-tree-selection-selected selection))
-                    (title (gtk-tree-model-value model iter col-title)))
-               (format t "Selected title is ~a~%" title))))
+        (let ((selection (gtk-tree-view-selection view)))
+          (setf (gtk-tree-selection-mode selection) :single)
+          (g-signal-connect selection "changed"
+             (lambda (object)
+               (let* ((view (gtk-tree-selection-tree-view object))
+                      (model (gtk-tree-view-model view))
+                      (iter (gtk-tree-selection-selected object))
+                      (title (gtk-tree-model-value model iter col-title)))
+                 (format t "Selected title is ~a~%" title)))))
         ;; Pack and show the widgets
         (gtk-container-add window view)
         (gtk-widget-show-all window)))))

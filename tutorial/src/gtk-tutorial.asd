@@ -6,7 +6,7 @@
   :serial t
   :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-tutorial")
-               ;; Chapter 8: Multiline Text Widget
+               ;; Chapter Multiline Text Widget
                (:file "text-view-attributes")
                (:file "text-view-find-next")
                (:file "text-view-insert")
@@ -16,7 +16,7 @@
                (:file "text-view-simple")
                (:file "text-view-tags")
                (:file "text-view-tooltip")
-               ;; Chapter 9: Tree and List Widgets
+               ;; Chapter Tree and List Widgets
                (:file "cell-renderer-properties")
                (:file "tree-view-content-type")
                (:file "tree-view-context-menu")
@@ -28,11 +28,11 @@
                (:file "tree-view-simple")
                (:file "tree-view-sortable")
                (:file "icon-view-example")
-               ;; Chapter 11: Selecting Colors, Files and Fonts
+               ;; Chapter Selecting Colors, Files and Fonts
                (:file "color-button-label")
                (:file "color-chooser-dialog")
                (:file "file-chooser-button")
                (:file "font-button-label")
               ))
 
-;;; 2021-3-11
+;;; 2021-3-13

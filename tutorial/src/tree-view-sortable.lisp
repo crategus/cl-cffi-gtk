@@ -42,12 +42,12 @@
             (- (gtk-tree-model-value sortable iter2 col-yearborn)
                (gtk-tree-model-value sortable iter1 col-yearborn))))
 
-      (gtk-tree-sortable-set-sort-column-id model col-yearborn :descending)
+      (setf (gtk-tree-sortable-sort-column-id model) '(col-yearborn :descending))
 
       model))
 
   (defun create-view-and-model-sortable ()
-    (let* ((model (create-and-fill-model-sorting))
+    (let* ((model (create-and-fill-model-sortable))
            (view (gtk-tree-view-new-with-model model)))
       ;; Create renderer for first column
       (let* ((renderer (gtk-cell-renderer-text-new))
@@ -96,7 +96,7 @@
             (button (make-instance 'gtk-tool-button
                                    :label "Add year"))
             (vbox (make-instance 'gtk-box :orientation :vertical))
-            (view (create-view-and-model-sorting)))
+            (view (create-view-and-model-sortable)))
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))

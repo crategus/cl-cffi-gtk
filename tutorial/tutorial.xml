@@ -2495,8 +2495,8 @@ int main( int argc, char *argv[] )
     Labels are used a lot in GTK+, and are relatively simple. The &gtk-label; widget displays a small amount
     of text.  As the name implies, most labels
     are used to label another widget such as a &gtk-button;, a
-    <ulink url="&gtk-menu-item;"><code>gtk-menu-item</code></ulink>, or a <ulink url="&gtk-combo-box;">
-    <code>gtk-combo-box</code></ulink>.  Labels emit no signals as they do not have an associated X window.
+    <ulink url="&gtk-menu-item;"><code>gtk-menu-item</code></ulink>, or a &gtk-combo-box;.
+    Labels emit no signals as they do not have an associated X window.
     If you need to catch signals, or do clipping, place it inside a <ulink url="&gtk-event-box;">
     <code>gtk-event-box</code></ulink> widget or a button widget.
    </para>
@@ -6345,8 +6345,8 @@ lambda (buffer location text len)
     </mediaobject>
    </figure>
     <para>
-     Here is an example of using a &gtk-tree-view; widget in context of the other widgets. It a model and
-     view, and puts them together. The window is show in <xref linkend="figure-tree-view-simple"/>.
+     Here is an example of using a &gtk-tree-view; widget in context of the other widgets. It creates a model
+     and view, and puts them together. The window is show in <xref linkend="figure-tree-view-simple"/>.
     </para>
     <example id="example-simple-tree-view">
      <title>Simple Tree View</title>
@@ -7758,14 +7758,14 @@ lambda (buffer location text len)
      column ID' integer for every criterion you might want to sort by and tell the tree sortable which
      function should be called to compare two rows (represented by two tree iterators) for every sort ID with
      the function &gtk-tree-sortable-set-sort-func;. Then you sort the model by setting the sort column ID and
-     sort order with the function &gtk-tree-sortable-set-sort-column-id;, and the model will be re-sorted
-     using the compare function you have set up. Your sort column IDs can correspond to your model columns,
-     but they do not have to (you might want to sort according to a criterion that is not directly represented
+     sort order with the function &gtk-tree-sortable-sort-column-id;, and the model will be re-sorted using
+     the compare function you have set up. Your sort column IDs can correspond to your model columns, but
+     they do not have to (you might want to sort according to a criterion that is not directly represented
      by the data in one single model column, for example). Some code to illustrate this:
     </para>
 
     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
-<xi:include href="src/tree-view-sorting.lisp" parse="text"/>
+<xi:include href="src/tree-view-sortable.lisp" parse="text"/>
     </programlisting>
 
     <para>
@@ -9712,248 +9712,81 @@ lambda (buffer location text len)
    </example>
   </section>
 
-  <section id="Combo_Box">
-   <title>Combo Box</title>
+  <section id="Combo_Box_and_Combo_Box_Text" revision="2021-3-13">
+   <title>Combo Box and Combo Box Text</title>
 
-   <section id="General_Combo_Box">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="General_Combo_Box">
-       <primary>GtkComboBox</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>combo-box, gtk-combo-text</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>GtkCellLayout</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>cell-layout, gtk-cell-layout</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>has-entry</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>GtkEntry</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>entry, gtk-entry</primary>
-      </indexterm>
-      <indexterm zone="General_Combo_Box">
-       <primary>bin-child, gtk-bin-child</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
-    <title>General Combo Box</title>
-    <figure id="figure-combo-box">
-     <title>Combo Box</title>
-     <mediaobject>
-      <imageobject>
-       <imagedata fileref="figures/combo-box386x131.gif" format="gif"></imagedata>
-      </imageobject>
-     </mediaobject>
-    </figure>
-    <para>
-     A <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> is a widget that allows the user to
-     choose from a list of valid choices.  The <ulink url="&gtk-combo-box;">
-     <code>gtk-combo-box</code></ulink> displays the selected choice.  When activated, the
-     <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> displays a popup which allows the user
-     to make a new choice.  The style in which the selected value is displayed, and the style of the popup is
-     determined by the current theme.  It may be similar to a Windows-style combo box.
-    </para>
-    <para>
-     The <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> uses the model-view pattern; the
-     list of valid choices is specified in the form of a tree model, and the display of the choices can be
-     adapted to the data in the model by using cell renderers, as you would in a tree view.  This is possible
-     since <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> implements the
-     <ulink url="&gtk-cell-layout;"><code>gtk-cell-layout</code></ulink> interface.  The tree model holding
-     the valid choices is not restricted to a flat list, it can be a real tree, and the popup will reflect 
-     the tree structure.
-    </para>
-    <para>
-     To allow the user to enter values not in the model, the <code>has-entry</code> property allows the
-     <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> to contain a &gtk-entry;.  This entry
-     can be accessed by calling <ulink url="&gtk-bin-child;">
-     <code>gtk-bin-child</code></ulink> on the combo box.
-    </para>
-    <para>
-     For a simple list of textual choices, the model-view API of <ulink url="&gtk-combo-box;">
-     <code>gtk-combo-box</code></ulink> can be a bit overwhelming.  In this case,
-     <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> offers a simple alternative.
-     Both <ulink url="&gtk-combo-box;"><code>gtk-combo-box</code></ulink> and
-     <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> can contain an entry.
-    </para>
-    <example id="Combo Box">
-     <title>Combo Box</title>
-     <programlisting>
-(defun example-combo-box ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :border-width 12
-                                  :title "Example Combo Box"))
-           (model (make-instance 'gtk-list-store
-                                 :column-types '("gchararray" "gint")))
-           (combo-box (make-instance 'gtk-combo-box :model model))
-           (title-label (make-instance 'gtk-label :label "Title:"))
-           (value-label (make-instance 'gtk-label :label "Value:"))
-           (title-entry (make-instance 'gtk-entry))
-           (value-entry (make-instance 'gtk-entry))
-           (button (make-instance 'gtk-button :label "Add"))
-           (table (make-instance 'gtk-table
-                                 :n-rows 3
-                                 :n-columns 3)))
-      ;; Fill in data into the columns
-      (gtk-list-store-set model (gtk-list-store-append model) "Monday" 1)
-      (gtk-list-store-set model (gtk-list-store-append model) "Tuesday" 2)
-      (gtk-list-store-set model (gtk-list-store-append model) "Wednesday" 3)
-      (gtk-list-store-set model (gtk-list-store-append model) "Thursday" 4)
-      (gtk-list-store-set model (gtk-list-store-append model) "Friday" 5)
-      (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
-      (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
-      ;; Set the first entry to active
-      (setf (gtk-combo-box-active combo-box) 0)
-      ;; Define the signal handlers
-      (g-signal-connect window "destroy"
-                        (lambda (w)
-                          (declare (ignore w))
-                          (leave-gtk-main)))
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (gtk-list-store-set model
-                               (gtk-list-store-append model)
-                               (gtk-entry-text title-entry)
-                               (or (parse-integer
-                                     (gtk-entry-text value-entry)
-                                     :junk-allowed t)
-                                   0))))
-      (g-signal-connect combo-box "changed"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let ((dialog (gtk-message-dialog-new
-                             window
-                             '(:destroy-with-parent)
-                             :info
-                             :close
-                             "You selected row ~A"
-                             (gtk-combo-box-active combo-box))))
-             (gtk-dialog-run dialog)
-             (gtk-widget-destroy dialog))))
-      ;; Create renderers for the cells
-      (let ((renderer (make-instance 'gtk-cell-renderer-text
-                                     :text "A text")))
-        (gtk-cell-layout-pack-start combo-box renderer :expand t)
-        (gtk-cell-layout-add-attribute combo-box renderer "text" 0))
-      (let ((renderer (make-instance 'gtk-cell-renderer-text
-                                     :text "A number")))
-        (gtk-cell-layout-pack-start combo-box renderer :expand nil)
-        (gtk-cell-layout-add-attribute combo-box renderer "text" 1))
-      ;; Align the labels
-      (gtk-misc-set-alignment title-label 0.0 0.0)
-      (gtk-misc-set-alignment value-label 0.0 0.0)
-      ;; Put the widgets into the table
-      (gtk-table-attach table title-label 0 1 0 1)
-      (gtk-table-attach table value-label 1 2 0 1)
-      (gtk-table-attach table title-entry 0 1 1 2)
-      (gtk-table-attach table value-entry 1 2 1 2)
-      (gtk-table-attach table button      2 3 1 2)
-      (gtk-table-attach table combo-box   0 3 2 3)
-      ;; Put the table into the window
-      (gtk-container-add window table)
-      ;; Show the window
-      (gtk-widget-show-all window))))
-     </programlisting>
-    </example>
-   </section>
+   <figure id="figure-combo-box">
+    <title>Combo Box</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/combo-box.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
 
-   <section id="Combo_Box_Text">
-    <sectioninfo>
-     <itermset>
-      <indexterm zone="Combo_Box_Text">
-       <primary>GtkComboBoxText</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text, gtk-combo-box-text</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-new, gtk-combo-box-text-new</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-new-with-entry, gtk-combo-box-text-new-with-entry</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-append-text, gtk-combo-box-text-append-text</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-insert-text, gtk-combo-box-text-insert-text</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-prepend-text, gtk-combo-box-text-prepend-text</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-remove, gtk-combo-box-text-remove</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>combo-box-text-active-text, gtk-combo-box-text-active-text</primary>
-      </indexterm>
-      <indexterm zone="Combo_Box_Text">
-       <primary>bin-child, gtk-bin-child</primary>
-      </indexterm>
-     </itermset>
-    </sectioninfo>
+   <para>
+    A &gtk-combo-box; widget allows the user to choose from a list of valid choices. The &gtk-combo-box;
+    widget displays the selected choice. When activated, the &gtk-combo-box; widget displays a popup which
+    allows the user to make a new choice. The style in which the selected value is displayed, and the style
+    of the popup is determined by the current theme. It may be similar to a Windows-style combo box.
+   </para>
+   <para>
+    The &gtk-combo-box; widget uses the model-view pattern; the list of valid choices is specified in the
+    form of a tree model, and the display of the choices can be adapted to the data in the model by using
+    cell renderers, as you would in a tree view. This is possible since the &gtk-combo-box; widget
+    implements the &gtk-cell-layout; interface. The tree model holding the valid choices is not restricted
+    to a flat list, it can be a real tree, and the popup will reflect the tree structure.
+   </para>
+   <para>
+    To allow the user to enter values not in the model, the &gtk_combo_box_has-entry; property allows the
+    &gtk-combo-box; widget to contain a &gtk-entry; widget. This entry can be accessed by calling the
+    function &gtk-bin-child; on the combo box.
+   </para>
+   <para>
+    For a simple list of textual choices, the model-view API of the &gtk-combo-box; widget can be a bit
+    overwhelming. In this case, the &gtk-combo-box-text; widget offers a simple alternative. Both
+    the &gtk-combo-box; and the &gtk-combo-box-text; widget can contain an entry.
+   </para>
+
+   <example id="example-combo-box">
+    <title>Combo Box</title>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/combo-box.lisp" parse="text"/>
+   </programlisting>
+   </example>
+
+   <para>
+    A &gtk-combo-box-text; widget is a simple variant of a &gtk-combo-box; widget that hides the model-view
+    complexity for simple text-only use cases.
+   </para>
+
+   <figure id="figure-combo-box-text">
     <title>Combo Box Text</title>
-    <figure id="figure-combo-box-text">
-     <title>Combo Box Text</title>
-     <mediaobject>
-      <imageobject>
-       <imagedata fileref="figures/combo-box-text151x85.gif" format="gif"></imagedata>
-      </imageobject>
-     </mediaobject>
-    </figure>
-    <para>
-     A <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> is a simple variant of
-     <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> that hides the model-view
-     complexity for simple text-only use cases.
-    </para>
-    <para>
-     To create a <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink>, use the functions
-     <ulink url="&gtk-combo-box-text-new;"><code>gtk-combo-box-text-new</code></ulink> or
-     <ulink url="&gtk-combo-box-text-new-with-entry;"><code>gtk-combo-box-text-new-with-entry</code></ulink>.
-    </para>
-    <para>
-     You can add items to a <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> with
-     the functions <ulink url="&gtk-combo-box-text-append-text;">
-     <code>gtk-combo-box-text-append-text</code></ulink>, <ulink url="&gtk-combo-box-text-insert-text;">
-     <code>gtk-combo-box-text-insert-text</code></ulink> or <ulink url="&gtk-combo-box-text-prepend-text;">
-     <code>gtk-combo-box-text-prepend-text</code></ulink> and remove options with the function    
-     <ulink url="&gtk-combo-box-text-remove;"><code>gtk-combo-box-text-remove</code></ulink>.
-    </para>
-    <para>
-     If the <ulink url="&gtk-combo-box-text;"><code>gtk-combo-box-text</code></ulink> contains an entry via
-     the <code>has-entry</code> property, its contents can be retrieved using
-     <ulink url="&gtk-combo-box-text-active-text;"><code>gtk-combo-box-text-active-text</code></ulink>.  The
-     entry itself can be accessed by calling <ulink url="&gtk-bin-child;"><code>gtk-bin-child</code></ulink>
-     on the combo box.
-    </para>
-    <example id="example-combo-box-text">
-     <title>Combo Box Text</title>
-     <programlisting>
-(defun example-combo-box-text ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :border-width 12
-                                 :title "Example Combo Box Text"))
-          (combo (make-instance 'gtk-combo-box-text)))
-      (gtk-combo-box-text-append-text combo "First entry")
-      (gtk-combo-box-text-append-text combo "Second entry")
-      (gtk-combo-box-text-append-text combo "Third entry")
-      (setf (gtk-combo-box-active combo) 0)
-      (gtk-container-add window combo)
-      (gtk-widget-show window))))
-     </programlisting>
-    </example>
-   </section>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/combo-box-text.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    To create a &gtk-combo-box-text; widget, use the functions &gtk-combo-box-text-new; or
+    &gtk-combo-box-text-new-with-entry;. You can add items to a &gtk-combo-box-text; widget with the
+    functions &gtk-combo-box-text-append-text;, &gtk-combo-box-text-insert-text;
+    or &gtk-combo-box-text-prepend-text; and remove options with the function &gtk-combo-box-text-remove;.
+   </para>
+   <para>
+    If the &gtk-combo-box-text; widget contains an entry via the &gtk_combo_box_has-entry; property, its
+    contents can be retrieved using the function &gtk-combo-box-text-active-text;. The entry itself can be
+    accessed by calling the function &gtk-bin-child; on the combo box.
+   </para>
+
+   <example id="example-combo-box-text">
+    <title>Combo Box Text</title>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/combo-box-text.lisp" parse="text"/>
+   </programlisting>
+   </example>
   </section>
  </chapter>
 
@@ -13013,6 +12846,9 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
+
 
 
 

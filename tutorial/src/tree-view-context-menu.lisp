@@ -3,6 +3,7 @@
 (in-package :gtk-tutorial)
 
 (defun create-popup-menu (view event)
+  (declare (ignore view))
   (let ((menu (gtk-menu-new))
         (item (gtk-menu-item-new-with-label "Do something")))
     (g-signal-connect item "activate"

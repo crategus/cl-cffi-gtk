@@ -24,7 +24,7 @@
 (defpackage :gtk-tutorial
   (:use :gtk :gdk :gdk-pixbuf :gobject
         :glib :gio :pango :cairo :cffi :common-lisp)
-  (:export ;; Chapter 8: Multiline Text Widget
+  (:export ;; Chapter Multiline Text Widget
            #:example-text-view-attributes
            #:example-text-view-find-next
            #:example-text-view-insert
@@ -34,7 +34,7 @@
            #:example-text-view-simple
            #:example-text-view-tags
            #:example-text-view-tooltip
-           ;; Chapter 9: Tree and List Widgets
+           ;; Chapter Tree and List Widgets
            #:example-cell-renderer-properties
            #:example-tree-view-content-type
            #:example-tree-view-context-menu
@@ -46,7 +46,7 @@
            #:example-tree-view-simple
            #:example-tree-view-sortable
            #:example-icon-view
-           ;; Chapter 11: Selecting, Colors, Files and Fonts
+           ;; Chapter Selecting, Colors, Files and Fonts
            #:example-color-button-label
            #:example-color-chooser-dialog
            #:example-file-chooser-button
@@ -2972,194 +2972,6 @@ sem venenatis, vitae ultricies arcu laoreet."))
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;; Combo Box
-
-(defun example-combo-box ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :border-width 12
-                                  :title "Example Combo Box"))
-           (model (make-instance 'gtk-list-store
-                                 :column-types '("gchararray" "gint")))
-           (combo-box (make-instance 'gtk-combo-box :model model))
-           (title-label (make-instance 'gtk-label :label "Title:"))
-           (value-label (make-instance 'gtk-label :label "Value:"))
-           (title-entry (make-instance 'gtk-entry))
-           (value-entry (make-instance 'gtk-entry))
-           (button (make-instance 'gtk-button :label "Add"))
-           (table (make-instance 'gtk-table
-                                 :n-rows 3
-                                 :n-columns 3)))
-      ;; Fill in data into the columns
-      (gtk-list-store-set model (gtk-list-store-append model) "Monday" 1)
-      (gtk-list-store-set model (gtk-list-store-append model) "Tuesday" 2)
-      (gtk-list-store-set model (gtk-list-store-append model) "Wednesday" 3)
-      (gtk-list-store-set model (gtk-list-store-append model) "Thursday" 4)
-      (gtk-list-store-set model (gtk-list-store-append model) "Friday" 5)
-      (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
-      (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
-      ;; Set the first entry to active
-      (setf (gtk-combo-box-active combo-box) 0)
-      ;; Define the signal handlers
-      (g-signal-connect window "destroy"
-                        (lambda (w)
-                          (declare (ignore w))
-                          (leave-gtk-main)))
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (gtk-list-store-set model
-                               (gtk-list-store-append model)
-                               (gtk-entry-text title-entry)
-                               (or (parse-integer (gtk-entry-text value-entry)
-                                                  :junk-allowed t)
-                                   0))))
-      (g-signal-connect combo-box "changed"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let ((dialog (gtk-message-dialog-new
-                             window
-                             '(:destroy-with-parent)
-                             :info
-                             :close
-                             "You selected row ~A"
-                             (gtk-combo-box-active combo-box))))
-             (gtk-dialog-run dialog)
-             (gtk-widget-destroy dialog))))
-      ;; Create renderers for the cells
-      (let ((renderer (make-instance 'gtk-cell-renderer-text
-                                     :text "A text")))
-        (gtk-cell-layout-pack-start combo-box renderer :expand t)
-        (gtk-cell-layout-add-attribute combo-box renderer "text" 0))
-      (let ((renderer (make-instance 'gtk-cell-renderer-text
-                                     :text "A number")))
-        (gtk-cell-layout-pack-start combo-box renderer :expand nil)
-        (gtk-cell-layout-add-attribute combo-box renderer "text" 1))
-      ;; Align the labels
-      (gtk-misc-set-alignment title-label 0.0 0.0)
-      (gtk-misc-set-alignment value-label 0.0 0.0)
-      ;; Put the widgets into the table
-      (gtk-table-attach table title-label 0 1 0 1)
-      (gtk-table-attach table value-label 1 2 0 1)
-      (gtk-table-attach table title-entry 0 1 1 2)
-      (gtk-table-attach table value-entry 1 2 1 2)
-      (gtk-table-attach table button      2 3 1 2)
-      (gtk-table-attach table combo-box   0 3 2 3)
-      ;; Put the table into the window
-      (gtk-container-add window table)
-      ;; Show the window
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Combo Box Text
-
-(defun example-simple-combo-box-text ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :border-width 12
-                                 :title "Example Combo Box Text"))
-          (combo (make-instance 'gtk-combo-box-text)))
-      (gtk-combo-box-text-append-text combo "First entry")
-      (gtk-combo-box-text-append-text combo "Second entry")
-      (gtk-combo-box-text-append-text combo "Third entry")
-      (setf (gtk-combo-box-active combo) 0)
-      (gtk-container-add window combo)
-      (gtk-widget-show-all window))))
-
-(defun example-combo-box-text ()
-  (within-main-loop
-    (let* (;; Create a toplevel window
-           (window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Demo Combo Box"
-                                  :border-width 12))
-           ;; A horizontal Box for the content of the window
-           (content (make-instance 'gtk-grid
-                                   :orientation :horizontal
-                                   :column-spacing 24))
-           ;; A vertical Grid for the actions
-           (action (make-instance 'gtk-grid
-                                  :orientation :vertical
-                                  :row-spacing 6))
-           ;; A ComboBoxText
-           (combo (make-instance 'gtk-combo-box-text)))
-
-      ;; Signal handler for the window to handle the signal "destroy".
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-
-      ;; Put some entries into the Combo Box
-      (gtk-combo-box-text-append-text combo "First entry")
-      (gtk-combo-box-text-append-text combo "Second entry")
-      (gtk-combo-box-text-append-text combo "Third entry")
-      (setf (gtk-combo-box-active combo) 0)
-
-      ;; Append an entry to the Combo Box
-      (let ((entry (make-instance 'gtk-entry
-                                  :secondary-icon-stock "gtk-ok"
-                                  :secondary-icon-tooltip-text
-                                  "Append to Combo Box Text")))
-        (g-signal-connect entry "icon-press"
-           (lambda (entry icon-pos event)
-             (declare (ignore icon-pos event))
-             (gtk-combo-box-text-append combo
-                                        nil ; no ID
-                                        (gtk-entry-text entry))))
-        (gtk-container-add action
-                           (make-instance 'gtk-label
-                                          :use-markup t
-                                          :xalign 0.0
-                                          :label
-                                          "<b>Append an item</b>"))
-        ;; Pack the entry in the action widget.
-        (gtk-container-add action entry))
-
-      ;; Prepend an entry to the Combo Box
-      (let ((entry (make-instance 'gtk-entry
-                                  :secondary-icon-stock "gtk-ok"
-                                  :secondary-icon-tooltip-text
-                                  "Prepend to Combo Box Text")))
-        (g-signal-connect entry "icon-press"
-           (lambda (entry icon-pos event)
-             (declare (ignore icon-pos event))
-             (gtk-combo-box-text-prepend combo
-                                         nil ; no ID
-                                         (gtk-entry-text entry))))
-        (gtk-container-add action
-                           (make-instance 'gtk-label
-                                          :use-markup t
-                                          :xalign 0.0
-                                          :label
-                                          "<b>Prepend an item</b>"))
-        ;; Pack the entry in the action widget.
-        (gtk-container-add action entry))
-
-
-
-
-      ;; A Quit button
-      (let ((button (make-instance 'gtk-button
-                                   :label "Quit"
-                                   :margin-top 12)))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-widget-destroy window)))
-        (gtk-container-add action button))
-
-      ;; Add Combo Box, content, and action to the window
-      (gtk-container-add content combo)
-      (gtk-container-add content action)
-      (gtk-container-add window content)
-      ;; Show the window.
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------

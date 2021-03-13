@@ -49,6 +49,7 @@
                                                                col-done)))
         (g-signal-connect renderer "toggled"
             (lambda (cell pathstr)
+              (declare (ignore cell))
               (let* ((iter (gtk-tree-model-iter-from-string model pathstr))
                      (value (not (gtk-tree-model-value model iter col-done))))
                 (gtk-list-store-set-value model iter col-done value))))
@@ -91,7 +92,7 @@
 
         (g-signal-connect renderer "editing-started"
             (lambda (renderer editable path)
-              (declare (ignore renderer))
+              (declare (ignore renderer editable path))
               (let ((data (get-values-from-list-store model col-unit)))
                 (gtk-list-store-clear combo)
                 (dolist (entry data)
@@ -125,6 +126,7 @@
 
         (g-signal-connect renderer "editing-started"
             (lambda (renderer editable path)
+              (declare (ignore renderer path))
               (setf (gtk-entry-completion editable) entry)
               (setf (gtk-entry-completion-text-column entry) 0)
               (setf (gtk-entry-completion-popup-completion entry) nil)
@@ -157,7 +159,7 @@
              (remove-item (make-instance 'gtk-tool-button
                                          :icon-name "list-remove"))
              (scrolled (make-instance 'gtk-scrolled-window))
-             (view (create-view-and-model-shopping-list)))
+             (view (create-view-and-model-editable)))
 
         (g-signal-connect window "destroy"
                           (lambda (widget)
@@ -179,6 +181,7 @@
         ;; Add item to the shopping list
         (g-signal-connect add-item "clicked"
             (lambda (button)
+              (declare (ignore button))
               (let* ((selection (gtk-tree-view-selection view))
                      (model (gtk-tree-view-model view))
                      (iter (gtk-list-store-append model)))
@@ -188,6 +191,7 @@
         ;; Remove item from the shopping list
         (g-signal-connect remove-item "clicked"
             (lambda (button)
+              (declare (ignore button))
               (let* ((selection (gtk-tree-view-selection view))
                      (model (gtk-tree-view-model view))
                      (iter (gtk-tree-selection-selected selection)))

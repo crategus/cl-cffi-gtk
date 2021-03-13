@@ -178,12 +178,19 @@
                  url='&api;gtk_sym_gtk-attach-options.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-attach-options</code></ulink>">
 
+<!--     GTK-BIN     -->
+
 <!ENTITY gtk-bin
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-bin.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-bin</code></ulink>">
 
-<!ENTITY gtk-bin-child                       "&api;gtk_fun_gtk-bin-child.html">
+<!ENTITY gtk-bin-child
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-bin-child.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-bin-child</code></ulink>">
+
+<!--     GTK-BOX     -->
 
 <!ENTITY gtk-box
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -276,7 +283,10 @@
 
 <!--     gtk-cell-layout     -->
 
-<!ENTITY gtk-cell-layout                     "&api;gtk_class_gtk-cell-layout.html">
+<!ENTITY gtk-cell-layout
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-cell-layout.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-cell-layout</code></ulink>">
 
 <!--     gtk-cell-renderer    -->
 
@@ -394,16 +404,55 @@
                  url='&api;gtk_class_gtk-color-chooser-widget.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-color-chooser-widget</code></ulink>">
 
-<!ENTITY gtk-combo-box                       "&api;gtk_class_gtk-combo-box.html">
+<!-- ... GTK-COMBO ....................................................................................... -->
 
-<!ENTITY gtk-combo-box-text                  "&api;gtk_class_gtk-combo-box-text.html">
-<!ENTITY gtk-combo-box-text-active-text      "&api;gtk_fun_gtk-combo-box-text-active-text.html">
-<!ENTITY gtk-combo-box-text-append-text      "&api;gtk_fun_gtk-combo-box-text-append-text.html">
-<!ENTITY gtk-combo-box-text-insert-text      "&api;gtk_fun_gtk-combo-box-text-insert-text.html">
-<!ENTITY gtk-combo-box-text-new              "&api;gtk_fun_gtk-combo-box-text-new.html">
-<!ENTITY gtk-combo-box-text-new-with-entry   "&api;gtk_fun_gtk-combo-box-text-new-with-entry.html">
-<!ENTITY gtk-combo-box-text-prepend-text     "&api;gtk_fun_gtk-combo-box-text-prepend-text.html">
-<!ENTITY gtk-combo-box-text-remove           "&api;gtk_fun_gtk-combo-box-text-remove.html">
+<!ENTITY gtk-combo-box
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-combo-box.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box</code></ulink>">
+
+<!ENTITY gtk_combo_box_has-entry
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-combo-box.html#gtk_slot_gtk-combo-box-has-entry'>
+          <code xmlns='http://docbook.org/ns/docbook'>has-entry</code></ulink>">
+
+<!-- ... GTK-COMBO-TEXT .................................................................................. -->
+
+<!ENTITY gtk-combo-box-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-combo-box-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text</code></ulink>">
+
+<!ENTITY gtk-combo-box-text-active-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-active-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-active-text</code></ulink>">
+<!ENTITY gtk-combo-box-text-append-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-append-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-append-text</code></ulink>">
+<!ENTITY gtk-combo-box-text-insert-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-insert-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-insert-text</code></ulink>">
+<!ENTITY gtk-combo-box-text-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-new</code></ulink>">
+<!ENTITY gtk-combo-box-text-new-with-entry
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-new-with-entry.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-new-with-entry</code></ulink>">
+<!ENTITY gtk-combo-box-text-prepend-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-prepend-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-prepend-text</code></ulink>">
+<!ENTITY gtk-combo-box-text-remove
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-combo-box-text-remove.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-combo-box-text-remove</code></ulink>">
+
+<!-- ... GTK-CONTAINER ................................................................................... -->
 
 <!ENTITY gtk-container
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -1585,10 +1634,10 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-tree-sortable.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable</code></ulink>">
-<!ENTITY gtk-tree-sortable-set-sort-column-id
+<!ENTITY gtk-tree-sortable-sort-column-id
          "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-tree-sortable-set-sort-column-id.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable-set-sort-column-id</code></ulink>">
+                 url='&api;gtk_fun_gtk-tree-sortable-sort-column-id.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tree-sortable-sort-column-id</code></ulink>">
 <!ENTITY gtk-tree-sortable-set-sort-func
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-tree-sortable-set-sort-func.html'>
