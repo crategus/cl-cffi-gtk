@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1603,7 +1603,7 @@
 (setf (gethash 'gtk-entry-primary-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-primary-icon-name 'function)
- "@version{2020-5-29}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-primary-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-entry-primary-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-entry} widget}
@@ -1614,7 +1614,9 @@
   @end{short}
 
   The icon name to use for the primary icon for the entry.
-  @see-class{gtk-entry}")
+  @see-class{gtk-entry}
+  @see-function{gtk-entry-icon-name}
+  @see-function{gtk-entry-secondary-icon-name}")
 
 ;;; --- gtk-entry-primary-icon-pixbuf ------------------------------------------
 
@@ -1633,7 +1635,7 @@
   @syntax[]{(gtk-entry-primary-icon-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-entry-primary-icon-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
     Accessor of the @slot[gtk-entry]{primary-icon-pixbuf} slot of the
     @class{gtk-entry} class.
@@ -1651,15 +1653,15 @@
   (Read / Write) @br{}
   Whether the primary icon is sensitive. An insensitive icon appears grayed out.
   GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and does
-  not allow DND from insensitive icons. An icon should be set insensitive if the
-  action that would trigger when clicked is currently not available. @br{}
+  not allow DND from insensitive icons. An icon should be set insensitive if
+  the action that would trigger when clicked is currently not available. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-primary-icon-sensitive 'function)
- "@version{2020-5-29}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-primary-icon-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-entry-primary-icon-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-entry} widget}
@@ -1671,9 +1673,11 @@
 
   Whether the primary icon is sensitive. An insensitive icon appears grayed out.
   GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and does
-  not allow DND from insensitive icons. An icon should be set insensitive if the
-  action that would trigger when clicked is currently not available.
-  @see-class{gtk-entry}")
+  not allow DND from insensitive icons. An icon should be set insensitive if
+  the action that would trigger when clicked is currently not available.
+  @see-class{gtk-entry}
+  @see-function{gtk-entry-icon-sensitive}
+  @see-function{gtk-entry-secondary-icon-sensitive}")
 
 ;;; --- gtk-entry-primay-icon-stock --------------------------------------------
 
@@ -1777,15 +1781,14 @@
                                                'gtk-entry) 't)
  "The @code{primary-icon-tooltip-text} property of type @code{:string}
   (Read / Write) @br{}
-  The contents of the tooltip on the primary icon. Also see the function
-  @fun{gtk-entry-icon-tooltip-text}. @br{}
+  The contents of the tooltip on the primary icon. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-tooltip-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-primary-icon-tooltip-text 'function)
- "@version{2020-5-30}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-primary-icon-tooltip-text object) => text}
   @syntax[]{(setf (gtk-entry-primary-icon-tooltip-text object) text)}
   @argument[object]{a @class{gtk-entry} widget}
@@ -1798,7 +1801,8 @@
   The contents of the tooltip on the primary icon. Also see the function
   @fun{gtk-entry-icon-tooltip-text}.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-icon-tooltip-text}")
+  @see-function{gtk-entry-icon-tooltip-text}
+  @see-function{gtk-entry-secondary-icon-tooltip-text}")
 
 ;;; --- gtk-entry-progress-fraction --------------------------------------------
 
@@ -1911,13 +1915,13 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-activatable 'function)
- "@version{2020-5-30}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-activatable object) => activatable}
   @syntax[]{(setf (gtk-entry-secondary-icon-activatable object) activatable)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[activatable]{a boolean wether the secondary icon is activatable}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-activatable} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-activatable} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -1940,13 +1944,13 @@
 (setf (gethash 'gtk-entry-secondary-icon-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-gicon 'function)
- "@version{2020-5-30}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-gicon object) => icon}
   @syntax[]{(setf (gtk-entry-secondary-icon-gicon object) icon)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[icon]{a @class{g-icon} object}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-gicon} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-gicon} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -1968,19 +1972,20 @@
 (setf (gethash 'gtk-entry-secondary-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-name 'function)
- "@version{2020-5-30}
+ "@version{*2020-3-12}
   @syntax[]{(gtk-entry-secondary-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-entry-secondary-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[icon-name]{a string with the icon name}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-name} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-name} slot of the
     @class{gtk-entry} class.
   @end{short}
 
   The icon name to use for the secondary icon for the entry.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-icon-name}")
+  @see-function{gtk-entry-icon-name}
+  @see-function{gtk-entry-primary-icon-name}")
 
 ;;; --- gtk-entry-secondary-icon-pixbuf ----------------------------------------
 
@@ -1995,13 +2000,13 @@
 (setf (gethash 'gtk-entry-secondary-icon-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-pixbuf 'function)
- "@version{2020-11-21}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-entry-secondary-icon-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-pixbuf} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-pixbuf} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -2026,13 +2031,13 @@
 (setf (gethash 'gtk-entry-secondary-icon-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-sensitive 'function)
- "@version{2020-5-30}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-entry-secondary-icon-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[sensitive]{a boolean wether the icon is sensitive}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-sensitive} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-sensitive} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -2041,9 +2046,10 @@
   does not allow DND from insensitive icons. An icon should be set insensitive
   if the action that would trigger when clicked is currently not available.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-icon-sensitive}")
+  @see-function{gtk-entry-icon-sensitive}
+  @see-function{gtk-entry-secondary-icon-sensitive}")
 
-;;; --- gtk-entry-icon-stock ---------------------------------------------------
+;;; --- gtk-entry-secondary-icon-stock -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-stock"
@@ -2060,13 +2066,13 @@
 (setf (gethash 'gtk-entry-secondary-icon-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-stock 'function)
- "@version{2020-5-30}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-stock object) => icon-stock}
   @syntax[]{(setf (gtk-entry-secondary-icon-stock object) icon-stock)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[icon-stock]{a string with the stock ID to use for the icon}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-stock} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-stock} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -2093,18 +2099,19 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-storage-type 'function)
- "@version{2020-5-30}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-storage-type object) => storage-type}
   @syntax[]{(setf (gtk-entry-secondary-icon-storage-type object) storage-type)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[storage-type]{a value of the @symbol{gtk-image-type} enumeration}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-storage-type} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-storage-type} slot of the
     @class{gtk-entry} class.
   @end{short}
 
   The representation which is used for the secondary icon of the entry.
   @see-class{gtk-entry}
+  @see-symbol{gtk-image-type}
   @see-function{gtk-entry-icon-storage-type}")
 
 ;;; --- gtk-entry-secondary-icon-tooltip-markup --------------------------------
@@ -2124,13 +2131,13 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-tooltip-markup 'function)
- "@version{2020-5-30}
+ "@version{2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-tooltip-markup object) => markup}
   @syntax[]{(setf (gtk-entry-secondary-icon-tooltip-markup object) markup)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[markup]{a string with the contents of the tooltip}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-tooltip-markup} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-tooltip-markup} slot of the
     @class{gtk-entry} class.
   @end{short}
 
@@ -2147,8 +2154,7 @@
                                                'gtk-entry) 't)
  "The @code{secondary-icon-tooltip-text} property of type @code{:string}
   (Read / Write) @br{}
-  The contents of the tooltip on the secondary icon. Also see the function
-  @fun{gtk-entry-icon-tooltip-text}. @br{}
+  The contents of the tooltip on the secondary icon. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -2156,20 +2162,21 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-tooltip-text 'function)
- "@version{2020-5-30}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-tooltip-text object) => text}
   @syntax[]{(setf (gtk-entry-secondary-icon-tooltip-text object) text)}
   @argument[object]{a @class{gtk-entry} widget}
   @argument[text]{a string with the contents of the tooltip}
   @begin{short}
-    Accessor of the @slot[gtk-entry]{seconary-icon-tooltip-text} slot of the
+    Accessor of the @slot[gtk-entry]{secondary-icon-tooltip-text} slot of the
     @class{gtk-entry} class.
   @end{short}
 
   The contents of the tooltip on the secondary icon. Also see the function
   @fun{gtk-entry-icon-tooltip-text}.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-icon-tooltip-text}")
+  @see-function{gtk-entry-icon-tooltip-text}
+  @see-function{gtk-entry-primary-icon-tooltip-text}")
 
 ;;; --- gtk-entry-selection-bound ----------------------------------------------
 
@@ -2303,7 +2310,7 @@
 (setf (gethash 'gtk-entry-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-text 'function)
- "@version{2020-5-30}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-text object) => text}
   @syntax[]{(setf (gtk-entry-text object) text)}
   @argument[object]{a @class{gtk-entry} widget}
@@ -2314,12 +2321,12 @@
 
   The slot access function @sym{gtk-entry-text} retrieves the contents of the
   entry widget as a string. The slot access function @sym{(setf gtk-entry-text)}
-  sets the text in the entry to the given value, replacing the current contents.
+  sets the text, replacing the current contents.
 
   See also the functions @fun{gtk-editable-chars} and
   @fun{gtk-entry-buffer-text}. This is equivalent to:
   @begin{pre}
- (gtk-entry-buffer-text (gtk-entry-buffer object))
+(gtk-entry-buffer-text (gtk-entry-buffer object))
   @end{pre}
   @see-class{gtk-entry}
   @see-function{gtk-entry-buffer-text}
@@ -2842,10 +2849,10 @@
 
 (defcfun ("gtk_entry_set_icon_from_pixbuf" gtk-entry-set-icon-from-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-3-12}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure, or @code{nil}}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object, or @code{nil}}
   @begin{short}
     Sets the icon shown in the specified position using a pixbuf.
   @end{short}
@@ -2982,11 +2989,11 @@
 
 (defun gtk-entry-icon-pixbuf (entry icon-pos)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-3-12}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of @symbol{gtk-entry-icon-position}}
   @begin{return}
-    A @class{gdk-pixbuf} structure, or @code{nil} if no icon is set for this
+    A @class{gdk-pixbuf} object, or @code{nil} if no icon is set for this
     position.
   @end{return}
   @begin{short}
@@ -2995,7 +3002,7 @@
 
   Unlike the other methods of setting and getting icon data, this method will
   work regardless of whether the icon was set using a @class{gdk-pixbuf}
-  structure, a @class{g-icon} object, a stock item, or an icon name.
+  object, a @class{g-icon} object, a stock item, or an icon name.
   @see-class{gtk-entry}
   @see-class{g-icon}
   @see-class{gdk-pixbuf}

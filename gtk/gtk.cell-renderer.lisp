@@ -601,7 +601,7 @@
 (setf (gethash 'gtk-cell-renderer-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-sensitive 'function)
- "@version{2021-3-2}
+ "@version{*2021-3-2}
   @syntax[]{(gtk-cell-renderer-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-cell-renderer-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-cell-renderer} object}
@@ -711,7 +711,7 @@
 (setf (gethash 'gtk-cell-renderer-xpad atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-xpad 'function)
- "@version{2021-3-2}
+ "@version{*2021-3-13}
   @syntax[]{(gtk-cell-renderer-xpad object) => padding}
   @syntax[]{(setf (gtk-cell-renderer-xpad object) padding)}
   @argument[object]{a @class{gtk-cell-renderer} object}

@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -110,16 +110,15 @@
 
 (defcfun ("gtk_bin_get_child" gtk-bin-child) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-1}
+ "@version{*2021-3-12}
   @argument[bin]{a @class{gtk-bin} widget}
-  @return{The @class{gtk-widget} child of @arg{bin}.}
+  @return{The @class{gtk-widget} child widget of @arg{bin}.}
   @begin{short}
-    Gets the child of the bin widget, or @code{nil} if @arg{bin} contains no
-    child widget.
+    Gets the child widget of the bin widget, or @code{nil} if @arg{bin}
+    contains no child widget.
   @end{short}
-  The returned widget does not have a reference added, so you do not need to
-  unref it.
-  @see-class{gtk-bin}"
+  @see-class{gtk-bin}
+  @see-class{gtk-widget}"
   (bin (g-object gtk-bin)))
 
 (export 'gtk-bin-child)

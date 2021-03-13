@@ -1276,9 +1276,9 @@
 
 (defcfun ("gtk_label_set_markup" gtk-label-set-markup) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-15}
+ "@version{*2021-3-12}
   @argument[label]{a @class{gtk-label} widget}
-  @argument[text]{a markup string (see Pango markup format)}
+  @argument[text]{a markup string}
   @begin{short}
     Parses @arg{text} which is marked up with the Pango text markup language,
     setting the label's text and attribute list based on the parse results.
@@ -1287,7 +1287,7 @@
   @see-function{gtk-label-text}
   @see-function{gtk-label-set-markup-with-mnemonic}"
   (label (g-object gtk-label))
-  (text g-string))
+  (text :string))
 
 (export 'gtk-label-set-markup)
 

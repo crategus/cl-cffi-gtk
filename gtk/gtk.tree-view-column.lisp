@@ -953,7 +953,7 @@
 (defun gtk-tree-view-column-new-with-attributes (title renderer
                                                  &rest attributes)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-24}
+ "@version{2021-3-13}
   @argument[title]{a string with the title to set the header to}
   @argument[renderer]{the @class{gtk-cell-renderer} object}
   @argument[attributes]{a list of attributes}
@@ -983,8 +983,7 @@
   (let ((column (make-instance 'gtk-tree-view-column
                                :title title)))
     (gtk-tree-view-column-pack-start column renderer :expand t)
-    (apply #'gtk-tree-view-column-set-attributes
-           (cons column (cons renderer attributes)))
+    (apply #'gtk-tree-view-column-set-attributes column renderer attributes)
     column))
 
 (export 'gtk-tree-view-column-new-with-attributes)
@@ -1102,7 +1101,7 @@
 
 (defun gtk-tree-view-column-set-attributes (column renderer &rest attributes)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-24}
+ "@version{2021-3-13}
   @argument[column]{a @class{gtk-tree-view-column} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object we are setting the
     attributes of}
@@ -1116,13 +1115,8 @@
   @see-class{gtk-tree-view-column}
   @see-class{gtk-cell-renderer}
   @see-function{gtk-tree-view-column-add-attribute}"
-  (let ((n (/ (length attributes) 2)))
-    (assert (eql n (truncate (length attributes) 2)))
-    (dotimes (i n)
-      (gtk-tree-view-column-add-attribute column
-                                          renderer
-                                          (pop attributes)
-                                          (pop attributes)))))
+  (loop for (attribute col) on attributes by #'cddr
+        do (gtk-tree-view-column-add-attribute column renderer attribute col)))
 
 (export 'gtk-tree-view-column-set-attributes)
 

@@ -83,7 +83,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-combo-box-text 'type)
- "@version{*2021-2-4}
+ "@version{*2021-3-12}
   @begin{short}
     The @sym{gtk-combo-box-text} widget is a simple variant of the
     @class{gtk-combo-box} widget that hides the model-view complexity for
@@ -138,15 +138,7 @@
     nodes of its entry and button children, and the @code{.linked} class to the
     node of its internal box.
   @end{dictionary}
-  @see-function{gtk-combo-box-text-new}
-  @see-function{gtk-combo-box-text-new-with-entry}
-  @see-function{gtk-combo-box-text-append-text}
-  @see-function{gtk-combo-box-text-insert-text}
-  @see-function{gtk-combo-box-text-prepend-text}
-  @see-function{gtk-combo-box-text-remove}
-  @see-function{gtk-combo-box-text-active-text}
-  @see-function{gtk-combo-box-model}
-  @see-function{gtk-bin-child}")
+  @see-class{gtk-combo-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_new ()
@@ -156,11 +148,11 @@
 
 (defun gtk-combo-box-text-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
+ "@version{2021-3-12}
   @return{A new @class{gtk-combo-box-text} widget.}
   @begin{short}
-    Creates a new combo box text widget, which is a @class{gtk-combo-box} just
-    displaying strings.
+    Creates a new combo box text widget, which is a @class{gtk-combo-box}
+    widget just displaying strings.
   @end{short}
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-new-with-entry}"
@@ -172,15 +164,15 @@
 ;;; gtk_combo_box_text_new_with_entry ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: A ComboBoxText with an entry seems not to work as expected.
+(declaim (inline gtk-combo-box-text-new-with-entry))
 
 (defun gtk-combo-box-text-new-with-entry ()
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
+ "@version{2021-3-12}
   @return{A new @class{gtk-combo-box-text} widget.}
   @begin{short}
-    Creates a new combo box text widget, which is a @class{gtk-combo-box} just
-    displaying strings.
+    Creates a new combo box text widget, which is a @class{gtk-combo-box}
+    widget just displaying strings.
   @end{short}
   The combo box created by this function has an entry.
   @see-class{gtk-combo-box-text}
@@ -195,18 +187,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_text_append" %gtk-combo-box-text-append) :void
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (id :string)
   (text :string))
 
-(defun gtk-combo-box-text-append (combo-box id text)
+(defun gtk-combo-box-text-append (combo id text)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @argument[id]{a string ID for this value, or @code{nil}}
   @argument[text]{a string with the text}
   @begin{short}
-    Appends text to the list of strings stored in the combo box.
+    Appends @arg{text} to the list of strings stored in the combo box.
   @end{short}
   If the ID is non-@code{nil} then it is used as the ID of the row.
 
@@ -215,7 +207,7 @@
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}
   @see-function{gtk-combo-box-text-prepend}"
-  (%gtk-combo-box-text-append combo-box
+  (%gtk-combo-box-text-append combo
                               (if id id (null-pointer))
                               text))
 
@@ -226,18 +218,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_text_prepend" %gtk-combo-box-text-prepend) :void
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (id :string)
   (text :string))
 
-(defun gtk-combo-box-text-prepend (combo-box id text)
+(defun gtk-combo-box-text-prepend (combo id text)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box} widget}
   @argument[id]{a string ID for this value, or @code{nil}}
   @argument[text]{a string with the text}
   @begin{short}
-    Prepends text to the list of strings stored in the combo box.
+    Prepends @arg{text} to the list of strings stored in the combo box.
   @end{short}
   If the ID is non-@code{nil} then it is used as the ID of the row.
 
@@ -245,7 +237,7 @@
   a position of 0.
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}"
-  (%gtk-combo-box-text-prepend combo-box
+  (%gtk-combo-box-text-prepend combo
                                (if id id (null-pointer))
                                text))
 
@@ -256,28 +248,29 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_text_insert" %gtk-combo-box-text-insert) :void
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (position :int)
   (id :string)
   (text :string))
 
-(defun gtk-combo-box-text-insert (combo-box position id text)
+(defun gtk-combo-box-text-insert (combo position id text)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @argument[position]{an integer with an index to insert text}
   @argument[id]{a string ID for this value, or @code{nil}}
-  @argument[text]{a string to display}
+  @argument[text]{a string with the text}
   @begin{short}
-    Inserts text at the given position in the list of strings stored in the
-    combo box.
+    Inserts @arg{text} at the given position in the list of strings stored in
+    the combo box.
   @end{short}
   If the ID is non-@code{nil} then it is used as the ID of the row. See the
   @slot[gtk-combo-box]{id-column} property.
 
   If @arg{position} is negative then the text is appended.
-  @see-class{gtk-combo-box-text}"
-  (%gtk-combo-box-text-insert combo-box
+  @see-class{gtk-combo-box-text}
+  @see-function{gtk-combo-box-id-column}"
+  (%gtk-combo-box-text-insert combo
                               position
                               (if id id (null-pointer))
                               text))
@@ -290,11 +283,11 @@
 
 (defcfun ("gtk_combo_box_text_append_text" gtk-combo-box-text-append-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{*2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @argument[text]{a string with the text}
   @begin{short}
-    Appends text to the list of strings stored in the combo box.
+    Appends @arg{text} to the list of strings stored in the combo box.
   @end{short}
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert-text}
@@ -302,7 +295,7 @@
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert-text}
   @see-function{gtk-combo-box-text-prepend}"
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (text :string))
 
 (export 'gtk-combo-box-text-append-text)
@@ -314,11 +307,11 @@
 (defcfun ("gtk_combo_box_text_prepend_text" gtk-combo-box-text-prepend-text)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box} widget}
   @argument[text]{a string with the text}
   @begin{short}
-    Prepends text to the list of strings stored in the combo box.
+    Prepends @arg{text} to the list of strings stored in the combo box.
   @end{short}
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert-text}
@@ -326,7 +319,7 @@
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert-text}
   @see-function{gtk-combo-box-text-append-text}"
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (text :string))
 
 (export 'gtk-combo-box-text-prepend-text)
@@ -337,13 +330,13 @@
 
 (defcfun ("gtk_combo_box_text_insert_text" gtk-combo-box-text-insert-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @argument[position]{an integer with an index to insert text}
   @argument[text]{a string with the text}
   @begin{short}
-    Inserts text at the given position in the list of strings stored in the
-    combo box.
+    Inserts @arg{text} at the given position in the list of strings stored in
+    the combo box.
   @end{short}
 
   If @arg{position} is negative then the text is appended.
@@ -352,7 +345,7 @@
   a @code{nil} ID string.
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}"
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (position :int)
   (text :string))
 
@@ -364,15 +357,15 @@
 
 (defcfun ("gtk_combo_box_text_remove" gtk-combo-box-text-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box} widget}
+ "@version{*2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box} widget}
   @argument[position]{an integer with index of the item to remove}
   @begin{short}
-    Removes the string at position from the combo box.
+    Removes the string at @arg{position} from the combo box.
   @end{short}
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-remove-all}"
-  (combo-box (g-object gtk-combo-box-text))
+  (combo (g-object gtk-combo-box-text))
   (position :int))
 
 (export 'gtk-combo-box-text-remove)
@@ -383,14 +376,14 @@
 
 (defcfun ("gtk_combo_box_text_remove_all" gtk-combo-box-text-remove-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @begin{short}
     Removes all the text entries from the combo box.
   @end{short}
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-remove}"
-  (combo-box (g-object gtk-combo-box-text)))
+  (combo (g-object gtk-combo-box-text)))
 
 (export 'gtk-combo-box-text-remove-all)
 
@@ -401,20 +394,20 @@
 (defcfun ("gtk_combo_box_text_get_active_text"
            gtk-combo-box-text-active-text) :string
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-4}
-  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+ "@version{*2021-3-12}
+  @argument[combo]{a @class{gtk-combo-box-text} widget}
   @begin{return}
     A string containing the currently active text.
   @end{return}
   @begin{short}
-    Returns the currently active string in the combo box, or @code{nil} if
+    Returns the currently active text in the combo box, or @code{nil} if
     none is selected.
   @end{short}
 
   If the combo box contains an entry, this function will return its
   contents which will not necessarily be an item from the list.
   @see-class{gtk-combo-box-text}"
-  (combo-box (g-object gtk-combo-box-text)))
+  (combo (g-object gtk-combo-box-text)))
 
 (export 'gtk-combo-box-text-active-text)
 

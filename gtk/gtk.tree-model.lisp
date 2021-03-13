@@ -343,7 +343,7 @@
 
 (defcfun ("gtk_tree_path_to_string" gtk-tree-path-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-3-4}
+ "@version{*2021-3-4}
   @argument[path]{a @class{gtk-tree-path} instance}
   @return{A string with the representation of the tree path.}
   @short{Generates a string representation of the tree path.}
@@ -1341,12 +1341,12 @@
 (defcfun ("gtk_tree_model_get_path" gtk-tree-model-path)
      (g-boxed-foreign gtk-tree-path :return)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-4}
+ "@version{*2021-3-4}
   @argument[model]{a @class{gtk-tree-model} object}
   @argument[iter]{a @class{gtk-tree-iter} iterator}
   @return{A newly created @class{gtk-tree-path} instance.}
   @begin{short}
-    Returns a tree path referenced by @arg{iter}.
+    Returns a tree path referenced by the given iterator.
   @end{short}
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}
@@ -1368,7 +1368,7 @@
 
 (defun gtk-tree-model-value (model iter column)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-28}
+ "@version{*2021-3-13}
   @argument[model]{a @class{gtk-tree-model} object}
   @argument[iter]{the @class{gtk-tree-iter} iterator}
   @argument[column]{an integer with the column to lookup the value at}

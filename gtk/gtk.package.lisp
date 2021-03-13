@@ -2435,6 +2435,7 @@ setup_tree (void)
       @about-function{gtk-cell-layout-clear}
       @about-function{gtk-cell-layout-set-attributes}
       @about-function{gtk-cell-layout-add-attribute}
+      @about-symbol{gtk-cell-layout-cell-data-func}
       @about-function{gtk-cell-layout-set-cell-data-func}
       @about-function{gtk-cell-layout-clear-attributes}
     @end{subsection}

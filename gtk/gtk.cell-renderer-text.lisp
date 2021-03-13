@@ -1681,18 +1681,18 @@
 
 (defun gtk-cell-renderer-text-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-31}
+ "@version{*2021-3-13}
   @return{The new @class{gtk-cell-renderer-text} object.}
   @begin{short}
     Creates a new cell renderer text.
   @end{short}
   Adjust how text is drawn using object properties. Object properties can be
-  set globally, with the function @fun{g-object-property}. Also, with
-  @class{gtk-tree-view-column}, you can bind a property to a value in a
-  @class{gtk-tree-model}. For example, you can bind the
+  set globally, with the function @fun{g-object-property}. Also, with the
+  @class{gtk-tree-view-column} object, you can bind a property to a value in a
+  @class{gtk-tree-model} object. For example, you can bind the
   @slot[gtk-cell-renderer-text]{text} property on the cell renderer to a string
   value in the model, thus rendering a different string in each row of the
-  @class{gtk-tree-view}.
+  @class{gtk-tree-view} widget.
   @see-class{gtk-cell-renderer-text}
   @see-class{gtk-tree-view}
   @see-class{gtk-tree-view-column}

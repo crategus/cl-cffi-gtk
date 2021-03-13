@@ -274,12 +274,6 @@
 ;;; gtk_tree_sortable_get_sort_column_id ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_sortable_set_sort_column_id"
-           gtk-tree-sortable-set-sort-column-id) :void
-  (sortable (g-object gtk-tree-sortable))
-  (column-id :int)
-  (order gtk-sort-type))
-
 (defun (setf gtk-tree-sortable-sort-column-id) (value sortable)
   (destructuring-bind (column-id order)
       (if (listp value)

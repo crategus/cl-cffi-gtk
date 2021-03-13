@@ -3255,7 +3255,7 @@
 (setf (gethash 'gtk-tree-view-row-separator-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-tree-view-row-separator-func atdoc:*external-symbols*)
- "@version{2021-2-26}
+ "@version{2021-3-13}
   @begin{short}
     Callback function type for determining whether the row pointed to by
     @arg{iter} should be rendered as a separator.
@@ -3268,8 +3268,9 @@
   @begin[code]{table}
     @entry[model]{A @class{gtk-tree-model} object.}
     @entry[iter]{A @class{gtk-tree-iter} instance pointing at a row in model.}
-    @entry{Return]{@em{True} if the row is a separator.}
+    @entry[Return]{@em{True} if the row is a separator.}
   @end{table}
+  @see-class{gtk-tree-view}
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}")
 
