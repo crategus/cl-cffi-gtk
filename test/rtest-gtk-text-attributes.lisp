@@ -81,6 +81,7 @@
 (test gtk-text-attributes-new.1
   (is (typep (gtk-text-attributes-new) 'gtk-text-attributes)))
 
+#+nil
 (test gtk-text-attributes-new.2
   (let ((attr (gtk-text-attributes-new)))
 ;    (is (= 1 (gtk-text-attributes-refcount attr)))
@@ -112,6 +113,7 @@
 
 ;;;     gtk-text-attributes-values
 
+#+nil
 (test gtk-text-attributes-copy-values
   (let ((dest (gtk-text-attributes-new))
         (src (gtk-text-attributes-new)))

@@ -30,7 +30,8 @@
 ;;;     g_resources_register
 ;;;     g_resources_unregister
 
-(test g-resource-load
+#+nil
+(test g-resource-register
   (let ((image nil)
         (resource (g-resource-load "rtest-resources.gresource")))
     (is (typep resource 'g-resource))
@@ -50,4 +51,4 @@
 ;;;     g_resources_enumerate_children
 ;;;     g_resources_get_info
 
-;;; 2020-11-27
+;;; 2021-3-13
