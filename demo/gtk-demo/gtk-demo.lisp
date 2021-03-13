@@ -277,11 +277,11 @@
                                             "Menus, Combo Box, Toolbar")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Combo Box"
-                                "combo-box.lisp"
+                                "../gtk-example/combo-box.lisp"
                                 "EXAMPLE-COMBO-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Combo Box Text"
-                                "combo-box-text.lisp"
+                                "../gtk-example/combo-box-text.lisp"
                                 "EXAMPLE-COMBO-BOX-TEXT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Menu"

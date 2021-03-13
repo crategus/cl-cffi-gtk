@@ -8,12 +8,13 @@
     ;; Connect a signal to the event box
     (g-signal-connect event-box "button-press-event"
         (lambda (box event)
+          (declare (ignore box event))
           (let* ((seat (gdk-display-default-seat (gdk-display-default)))
                  (device (gdk-seat-pointer seat)))
             ;; x,y, for pointer from device position
             (multiple-value-bind (window x y mask)
                 (gdk-window-device-position (gtk-widget-window event-box) device)
-              (declare (ignore mask))
+              (declare (ignore window mask))
               (format t "~%")
               (format t "type         : ~a~%" (gdk-device-type device))
               (format t "associated   : ~a~%" (gdk-device-associated-device device))

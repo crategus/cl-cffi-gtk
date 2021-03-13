@@ -4,7 +4,8 @@
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :depends-on (:gtk-tutorial
+  :depends-on (:gtk-example
+               :gtk-tutorial
                :cl-cffi-gtk :split-sequence)
   :components ((:file "package")
                (:file "alignment")
@@ -24,8 +25,6 @@
                (:file "color-button")
                (:file "color-chooser-widget")
                (:file "color-chooser-palette")
-               (:file "combo-box")
-               (:file "combo-box-text")
                (:file "cursor")
                (:file "drag-and-drop")
                (:file "css-accordion")

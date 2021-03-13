@@ -2,6 +2,8 @@
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :common-lisp)
   (:export #:example-custom-window
+           #:example-combo-box
+           #:example-combo-box-text
            #:example-dialog
            #:example-dialog-new
            #:example-dialog-new-with-buttons
@@ -43,4 +45,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-1-29
+;;; 2021-3-13

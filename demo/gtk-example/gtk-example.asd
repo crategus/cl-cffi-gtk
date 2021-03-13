@@ -9,6 +9,8 @@
                (:file "application-inhibit")
                (:file "application-simple")
                (:file "bloat-pad")
+               (:file "combo-box")
+               (:file "combo-box-text")
                (:file "custom-window")
                (:file "dialog")
                (:file "drawing-area")
@@ -19,7 +21,7 @@
                (:file "image-menu-item")
                (:file "info-bar")
                (:file "level-bar")
-               (:file "list-store")
+;               (:file "list-store")
                (:file "menu-builder")
                (:file "message-dialog-new")
 ;               (:file "page-setup")
@@ -32,4 +34,4 @@
                (:file "widget-pointer")
               ))
 
-;;; 2021-1-29
+;;; 2021-3-13
