@@ -35,6 +35,7 @@
            #:example-radio-button
            #:example-show-about-dialog
            #:example-simple-list-store
+           #:example-tool-palette
            #:example-widget-pointer
            #:simple-application
            ))
@@ -45,4 +46,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-3-13
+;;; 2021-3-14

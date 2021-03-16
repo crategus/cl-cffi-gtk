@@ -117,7 +117,7 @@
                  url='&api;gdk_fun_gdk-window-origin.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-window-origin</code></ulink>">
 
-<!-- GTK Library -->
+<!-- ... GTK Library ..................................................................................... -->
 
 <!ENTITY gtk-about-dialog                    "&api;gtk_class_gtk-about-dialog.html">
 
@@ -510,16 +510,20 @@
 <!ENTITY gtk-dialog-new-with-buttons         "&api;gtk_fun_gtk-dialog-new-with-buttons.html">
 <!ENTITY gtk-dialog-run                      "&api;gtk_fun_gtk-dialog-run.html">
 
+<!-- ... GTK-DRAWING-AREA ................................................................................ -->
+
 <!ENTITY gtk-drawing-area
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-drawing-area.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-drawing-area</code></ulink>">
 
+<!-- ... GTK-EDITABLE .................................................................................... -->
+
 <!ENTITY gtk-editable                        "&api;gtk_class_gtk-editable.html">
 <!ENTITY gtk-editable-editable               "&api;gtk_fun_gtk-editable-editable.html">
 <!ENTITY gtk-editable-select-region          "&api;gtk_fun_gtk-editable-select-region.html">
 
-<!--     gtk-entry     -->
+<!-- ... gtk-entry ....................................................................................... -->
 
 <!ENTITY gtk-entry
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -1411,18 +1415,59 @@
 
 <!ENTITY gtk-toggle-tool-button              "&api;gtk_class_gtk-toggle-tool-button.html">
 
-<!ENTITY gtk-tool-button                     "&api;gtk_class_gtk-tool-button.html">
+<!-- ... GTK-TOOL-BUTTON ................................................................................. -->
+
+<!ENTITY gtk-tool-button
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tool-button.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-button</code></ulink>">
+
 <!ENTITY gtk-tool-button-new                 "&api;gtk_fun_gtk-tool-button-new.html">
 <!ENTITY gtk-tool-button-new-from-stock      "&api;gtk_fun_gtk-tool-button-new-from-stock.html">
 
-<!ENTITY gtk-tool-item                       "&api;gtk_class_gtk-tool-item.html">
+<!-- ... GTK-TOOL-ITEM ................................................................................... -->
+
+<!ENTITY gtk-tool-item
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tool-item.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-item</code></ulink>">
+
 <!ENTITY gtk-tool-item-new                   "&api;gtk_fun_gtk-tool-item-new.html">
 
-<!ENTITY gtk-toolbar                         "&api;gtk_class_gtk-toolbar.html">
+<!-- ... GTK-TOOL-ITEM-GROUP ............................................................................. -->
+
+<!ENTITY gtk-tool-item-group
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tool-item-group.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-item-group</code></ulink>">
+
+<!-- ... GTK-TOOL-PALETTE ................................................................................ -->
+
+<!ENTITY gtk-tool-palette
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-tool-palette.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-palette</code></ulink>">
+
+<!ENTITY gtk-tool-palette-add-drag-dest
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tool-palette-add-drag-dest.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-palette-add-drag-dest</code></ulink>">
+<!ENTITY gtk-tool-palette-drag-item
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-tool-palette-drag-item.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-tool-palette-drag-item</code></ulink>">
+
+<!-- ... GTK-TOOLBAR ..................................................................................... -->
+
+<!ENTITY gtk-toolbar
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-toolbar.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-toolbar</code></ulink>">
+
 <!ENTITY gtk-toolbar-new                     "&api;gtk_fun_gtk-toolbar-new.html">
 <!ENTITY gtk-toolbar-insert                  "&api;gtk_fun_gtk-toolbar-insert.html">
 
-<!--     gtk-tree-iter     -->
+<!-- ... gtk-tree-iter ................................................................................... -->
 
 <!ENTITY gtk-tree-iter
          "<ulink xmlns='http://docbook.org/ns/docbook'

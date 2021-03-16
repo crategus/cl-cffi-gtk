@@ -289,8 +289,8 @@
                                 "EXAMPLE-MENU")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Tool Palette"
-                                "tool-palette.lisp"
-                                "DEMO-TOOL-PALETTE")
+                                "../gtk-example/tool-palette.lisp"
+                                "EXAMPLE-TOOL-PALETTE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Popover"
                                 "popover.lisp"

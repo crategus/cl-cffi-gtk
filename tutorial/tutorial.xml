@@ -5240,17 +5240,16 @@ int main( int argc, char *argv[] )
     A toolbar is created with a call to <ulink url="&gtk-toolbar-new;"><code>gtk-toolbar-new</code></ulink>.
    </para>
    <para>
-    A toolbar can contain instances of a subclass of <ulink url="&gtk-tool-item;">
-    <code>gtk-tool-item</code></ulink>.  To add a <ulink url="&gtk-tool-item;">
-    <code>gtk-tool-item</code></ulink> to the a toolbar, use <ulink url="&gtk-toolbar-insert;">
-    <code>gtk-toolbar-insert</code></ulink>.  To remove an item from the toolbar use the function
+    A toolbar can contain instances of a subclass of &gtk-tool-item;. To add a &gtk-tool-item;
+    to the a toolbar, use <ulink url="&gtk-toolbar-insert;">
+    <code>gtk-toolbar-insert</code></ulink>. To remove an item from the toolbar use the function
     &gtk-container-add;. To add a button to the toolbar, add an instance of
-    <ulink url="&gtk-tool-button;"><code>gtk-tool-button</code></ulink>.
+    &gtk-tool-button;.
    </para>
    <para>
     Toolbar items can be visually grouped by adding instances of <ulink url="&gtk-separator-tool-item;">
-    <code>gtk-separator-tool-item</code></ulink> to the toolbar. If the <ulink url="&gtk-toolbar;">
-    <code>gtk-toolbar</code></ulink> child property "expand" is <emphasis>true</emphasis> and the property
+    <code>gtk-separator-tool-item</code></ulink> to the toolbar. If the &gtk-toolbar;
+    child property "expand" is <emphasis>true</emphasis> and the property
     <code>"draw"</code> is set to <code>nil</code>, the effect is to force all following items to the end of
     the toolbar.
    </para>
@@ -9712,8 +9711,8 @@ lambda (buffer location text len)
    </example>
   </section>
 
-  <section id="Combo_Box_and_Combo_Box_Text" revision="2021-3-13">
-   <title>Combo Box and Combo Box Text</title>
+  <section id="Combo_Box" revision="2021-3-15">
+   <title>Combo Box</title>
 
    <figure id="figure-combo-box">
     <title>Combo Box</title>
@@ -9785,6 +9784,76 @@ lambda (buffer location text len)
     <title>Combo Box Text</title>
    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
 <xi:include href="../demo/gtk-example/combo-box-text.lisp" parse="text"/>
+   </programlisting>
+   </example>
+  </section>
+
+  <section id="Tool Palette" revision="2021-3-15">
+   <title>Tool Palette</title>
+
+   <figure id="figure-tool-palette">
+    <title>Tool Palette</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/tool-palette.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    A &gtk-tool-palette; widget is similar to a &gtk-toolbar; widget but can contain a grid of items,
+    categorized into groups. The user may hide or expand each group. As in a toolbar, the items may be
+    displayed as only icons, as only text, or as icons with text.
+   </para>
+   <para>
+    The tool palette items might be dragged or simply activated. For instance, the user might drag objects to
+    a canvas to create new items there. Or the user might click an item to activate a certain brush size in a
+    drawing application.
+   </para>
+   <para>
+    A &gtk-tool-item-group; widget should be added to the tool palette via the function &gtk-container-add;,
+    for instance like this:
+   </para>
+   <programlisting>
+(let ((group-brushes (gtk-tool-item-group-new "Brushes")))
+  (gtk-container-add palette group-brushes)
+  ... )
+   </programlisting>
+   <para>
+    &gtk-tool-item; widgets can then be added to the group. For instance, like this:
+   </para>
+   <programlisting>
+(let ((button (gtk-tool-button-new icon "Big")))
+  (setf (gtk-tool-button-tooltip-text button) "Big Brush")
+  (gtk-tool-item-group-insert group-brushes button -1)
+  ... )
+   </programlisting>
+   <para>
+    You might then handle the &gtk-tool-button; widgets "clicked" signal. Alternatively, you could allow the
+    item to be dragged to another widget, by calling the function &gtk-tool-palette-add-drag-dest; and then
+    using the function &gtk-tool-palette-drag-item; in the other widget's "drag-data-received" signal handler.
+   </para>
+
+   <bridgehead renderas='sect3'>Drag and Drop</bridgehead>
+   <para>
+    Call the function &gtk-tool-palette-add-drag-dest; to allow items or groups to be dragged from the tool
+    palette to a particular destination widget. You can then use the function &gtk-tool-palette-drag-item;
+    to discover which &gtk-tool-item; widget or &gtk-tool-item-group; widget is being dragged. For instance,
+    you might use this in your "drag-data-received" signal handler, to add a dropped item, or to show a
+    suitable icon while dragging.
+   </para>
+
+   <bridgehead renderas='sect3'>Example Tool Palette</bridgehead>
+   <para>
+    This example adds a &gtk-tool-palette; widget and a &gtk-drawing-area; widget to a window and allows the
+    user to drag icons from the tool palette to the drawing area. The tool palette contains several groups of
+    items. The combo boxes allow the user to change the style and orientation of the tool palette.
+   </para>
+
+   <example id="example-tool-palette">
+    <title>Tool Palette</title>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/tool-palette.lisp" parse="text"/>
    </programlisting>
    </example>
   </section>
@@ -10396,10 +10465,10 @@ lambda (buffer location text len)
    </figure>
    <para>
     Toolbars provide quick access to commonly used actions.  They are containers that should be populated
-    with instances of the <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink> class. Usually you
+    with instances of the &gtk-tool-item; class. Usually you
     will insert toolbar buttons into a toolbar.  Toolbar buttons belong to the
-    <ulink url="&gtk-tool-button;"><code>gtk-tool-button</code></ulink> class, which is a sub class of
-    <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink>.  There are also two subclasses of the
+    &gtk-tool-button; class, which is a sub class of
+    &gtk-tool-item;.  There are also two subclasses of the
     tool button class: <ulink url="&gtk-menu-tool-button;"><code>gtk-menu-tool-button</code></ulink> and
     <ulink url="&gtk-toggle-tool-button;"><code>gtk-toggle-tool-button</code></ulink>, which has a subclass
     &gtk-radio-tool-button;.
@@ -10461,7 +10530,7 @@ lambda (buffer location text len)
   ... )
    </programlisting>
    <para>
-    The "expand" property is inherited from <ulink url="&gtk-tool-item;"><code>gtk-tool-item</code></ulink>  
+    The "expand" property is inherited from &gtk-tool-item;  
     whereas the "draw" property is specific to the separator.  Because "draw" is a property of the
     <ulink url="&gtk-separator-tool-item;"><code>gtk-separator-tool-item</code></ulink> class, we can save
     one function call, when using the function <code>make-instance</code> to create a
@@ -12846,6 +12915,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
 
 
 

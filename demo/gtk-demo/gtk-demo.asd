@@ -77,9 +77,8 @@
                (:file "table-packing")
                (:file "text-entry")
                (:file "toggle-buttons")
-               (:file "tool-palette")
                (:file "../cairo-demo/cairo-demo")
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-2-16
+;;; 2021-3-14

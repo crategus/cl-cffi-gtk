@@ -31,7 +31,8 @@
                (:file "print-operation")
                (:file "radio-button")
                (:file "show-about-dialog")
+               (:file "tool-palette")
                (:file "widget-pointer")
               ))
 
-;;; 2021-3-13
+;;; 2021-3-14
