@@ -122,29 +122,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-button 'type)
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @begin{short}
-    @sym{gtk-tool-button}'s are @class{gtk-tool-item}'s containing buttons.
+    The @sym{gtk-tool-button} widgets are @class{gtk-tool-item} widgets
+    containing buttons.
   @end{short}
 
   Use the function @fun{gtk-tool-button-new} to create a new
-  @sym{gtk-tool-button}. Use the function @fun{gtk-tool-button-new-from-stock}
-  to create a @sym{gtk-tool-button} containing a stock item.
+  @sym{gtk-tool-button} widget.
 
-  The label of a @sym{gtk-tool-button} is determined by the properties
-  @code{label-widget}, @code{label}, and @code{stock-id}. If
-  @code{label-widget} is non-@code{nil}, then that widget is used as the
+  The label of a @sym{gtk-tool-button} widget is determined by the properties
+  @code{label-widget}, @code{label}, @code{icon-name}, and @code{stock-id}.
+  If @code{label-widget} is non-@code{nil}, then that widget is used as the
   label. Otherwise, if @code{label} is non-@code{nil}, that string is used
   as the label. Otherwise, if @code{stock-id} is non-@code{nil}, the label
   is determined by the stock item. Otherwise, the button does not have a label.
 
   The icon of a @sym{gtk-tool-button} is determined by the properties
-  @code{icon-widget} and @code{stock-id}. If @code{icon-widget} is
-  non-@code{nil}, then that widget is used as the icon. Otherwise, if
-  @code{stock-id} is non-@code{nil}, the icon is determined by the stock
-  item. Otherwise, the button does not have a icon.
+  @code{icon-widget}, @code{icon-name}, and @code{stock-id}. If
+  @code{icon-widget} is non-@code{nil}, then that widget is used as the icon.
+  Otherwise, if @code{icon-name} or @code{stock-id} is non-@code{nil}, the
+  icons are determined by the icon name or the stock item. Otherwise, the
+  button does not have a icon.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-tool-button} class has a single CSS node with name
+    The @sym{gtk-tool-button} widget has a single CSS node with name
     @code{toolbutton}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
@@ -161,12 +162,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"clicked\" signal}
       @begin{pre}
- lambda (toolbutton)    : Action
+ lambda (button)    : Action
       @end{pre}
       This signal is emitted when the tool button is clicked with the mouse or
       activated with the keyboard.
       @begin[code]{table}
-        @entry[toolbutton]{The @sym{gtk-tool-button} widget that emitted the
+        @entry[button]{The @sym{gtk-tool-button} widget that emitted the
           signal.}
       @end{table}
   @end{dictionary}
@@ -175,7 +176,13 @@
   @see-slot{gtk-tool-button-label}
   @see-slot{gtk-tool-button-label-widget}
   @see-slot{gtk-tool-button-stock-id}
-  @see-slot{gtk-tool-button-use-underline}")
+  @see-slot{gtk-tool-button-use-underline}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-toolbar}
+  @see-class{gtk-menu-tool-button}
+  @see-class{gtk-toggle-tool-button}
+  @see-class{gtk-radio-tool-button}
+  @see-class{gtk-separator-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -341,12 +348,11 @@
 (setf (gethash 'gtk-tool-button-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-stock-id 'function)
- "@version{2020-9-5}
+ "@version{2021-3-14}
   @syntax[]{(gtk-tool-button-stock-id object) => stock-id}
   @syntax[]{(setf (gtk-tool-button-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-tool-button} widget}
-  @argument[stock-id]{a @code{:string} with the name of a stock item, or
-    @code{nil}}
+  @argument[stock-id]{a string with the name of a stock item, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{stock-id} slot of the
     @class{gtk-tool-button} class.
@@ -354,20 +360,19 @@
 
   The slot access function @sym{gtk-tool-button-stock-id} returns the name of
   the stock item. The slot access function @sym{(setf gtk-tool-button-stock-id)}
-  sets the name of the stock item.
+  sets the name.
 
-  See the function @fun{gtk-tool-button-new-from-stock}. The
-  @slot[gtk-tool-button]{stock-id} property only has an effect if not
-  overridden by non-@code{nil} @slot[gtk-tool-button]{label} and
-  @slot[gtk-tool-button]{icon-widget} properties.
+  The @slot[gtk-tool-button]{stock-id} property only has an effect if not
+  overridden by non-@code{nil} @slot[gtk-tool-button]{label},
+  @slot[gtk-tool-button]{icon-name}, and @slot[gtk-tool-button]{icon-widget}
+  properties.
   @begin[Warning]{dictionary}
     The function @sym{gtk-tool-button stock-id} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-tool-button-icon-name}instead.
+    @fun{gtk-tool-button-icon-name} instead.
   @end{dictionary}
   @see-class{gtk-tool-button}
-  @see-function{gtk-tool-button-icon-name}
-  @see-function{gtk-tool-button-new-from-stock}")
+  @see-function{gtk-tool-button-icon-name}")
 
 ;;; --- gtk-tool-button-use-underline ------------------------------------------
 

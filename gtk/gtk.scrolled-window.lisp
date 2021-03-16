@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -266,30 +266,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrolled-window 'type)
- "@version{2020-8-18}
+ "@version{*2021-3-14}
   @begin{short}
-    @sym{gtk-scrolled-window} is a container that accepts a single child widget,
-    makes that child scrollable using either internally added scrollbars or
-    externally associated adjustments, and optionally draws a frame around the
-    child.
+    The @sym{gtk-scrolled-window} widget is a container that accepts a single
+    child widget, makes that child scrollable using either internally added
+    scrollbars or externally associated adjustments, and optionally draws a
+    frame around the child.
   @end{short}
 
   @image[scrolledwindow]{}
 
   Widgets with native scrolling support, i.e. those whose classes implement the
   @class{gtk-scrollable} interface, are added directly. For other types of
-  widgets, the class @class{gtk-viewport} acts as an adaptor, giving
-  scrollability to other widgets. @sym{gtk-scrolled-window}’s implementation of
-  the function @fun{gtk-container-add} intelligently accounts for whether or
-  not the added child is a @class{gtk-scrollable}. If it is not,
-  @sym{gtk-scrolled-window} wraps the child in a @class{gtk-viewport} and adds
-  that for you. Therefore, you can just add any child widget and not worry
-  about the details.
+  widgets, the @class{gtk-viewport} class acts as an adaptor, giving
+  scrollability to other widgets. The @sym{gtk-scrolled-window} widgets
+  implementation of the function @fun{gtk-container-add} intelligently accounts
+  for whether or not the added child is a @class{gtk-scrollable} widget. If it
+  is not, the @sym{gtk-scrolled-window} widget wraps the child in a
+  @class{gtk-viewport} widget and adds that for you. Therefore, you can just
+  add any child widget and not worry about the details.
 
-  If the function @fun{gtk-container-add} has added a @class{gtk-viewport} for
-  you, you can remove both your added child widget from the
-  @class{gtk-viewport}, and the @class{gtk-viewport} from the
-  @sym{gtk-scrolled-window}, like this:
+  If the function @fun{gtk-container-add} has added a @class{gtk-viewport}
+  widget for you, you can remove both your added child widget from the
+  @class{gtk-viewport} widget, and the @class{gtk-viewport} widget from the
+  @sym{gtk-scrolled-window} widget, like this:
   @begin{pre}
 (let ((scrolled-window (make-instance 'gtk-scrolled-window))
       (child-widget (make-instance 'gtk-button)))
@@ -305,40 +305,41 @@
   ... )
   @end{pre}
   Unless the @code{policy} property is @code{:never} or @code{:external},
-  @class{gtk-scrolled-window} adds internal @class{gtk-scrollbar} widgets
-  around its child. The scroll position of the child, and if applicable the
-  scrollbars, is controlled by the @code{hadjustment} and @code{vadjustment}
-  properties that are associated with the @sym{gtk-scrolled-window}. See the
-  docs on @class{gtk-scrollbar} for the details, but note that the
-  @code{step-increment} and @code{page-increment} fields are only effective if
-  the policy causes scrollbars to be present.
+  the @class{gtk-scrolled-window} widget adds internal @class{gtk-scrollbar}
+  widgets around its child. The scroll position of the child, and if applicable
+  the scrollbars, is controlled by the @code{hadjustment} and @code{vadjustment}
+  properties that are associated with the @sym{gtk-scrolled-window} widget. See
+  the docs on the @class{gtk-scrollbar} widget for the details, but note that
+  the @code{step-increment} and @code{page-increment} fields are only effective
+  if the policy causes scrollbars to be present.
 
-  If a @sym{gtk-scrolled-window} does not behave quite as you would like, or
-  does not have exactly the right layout, it is very possible to set up your
-  own scrolling with @class{gtk-scrollbar} and for example a @class{gtk-grid}.
+  If a @sym{gtk-scrolled-window} widget does not behave quite as you would like,
+  or does not have exactly the right layout, it is very possible to set up your
+  own scrolling with the @class{gtk-scrollbar} widget and for example a
+  @class{gtk-grid} widget.
 
   @subheading{Touch support}
-  @sym{gtk-scrolled-window} has built-in support for touch devices. When a
-  touchscreen is used, swiping will move the scrolled window, and will expose
-  'kinetic' behavior. This can be turned off with the @code{kinetic-scrolling}
-  property if it is undesired.
+  The @sym{gtk-scrolled-window} widget has built-in support for touch devices.
+  When a touchscreen is used, swiping will move the scrolled window, and will
+  expose 'kinetic' behavior. This can be turned off with the
+  @code{kinetic-scrolling} property if it is undesired.
 
-  @sym{gtk-scrolled-window} also displays visual 'overshoot' indication when
-  the content is pulled beyond the end, and this situation can be captured with
-  the @code{edge-overshot} signal.
+  The @sym{gtk-scrolled-window} widget also displays visual 'overshoot'
+  indication when the content is pulled beyond the end, and this situation can
+  be captured with the @code{edge-overshot} signal.
 
   If no mouse device is present, the scrollbars will overlayed as narrow,
   auto-hiding indicators over the content. If traditional scrollbars are
   desired although no mouse is present, this behaviour can be turned off with
   the @code{overlay-scrolling} property.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-scrolled-window} has a main CSS node with name
+    The @sym{gtk-scrolled-window} widget has a main CSS node with name
     @code{scrolledwindow}. It uses subnodes with names @code{overshoot} and
     @code{undershoot} to draw the overflow and underflow indications. These
     nodes get the @code{.left}, @code{.right}, @code{.top} or @code{.bottom}
     style class added depending on where the indication is drawn.
 
-    @sym{gtk-scrolled-window} also sets the positional style classes
+    The @sym{gtk-scrolled-window} widget also sets the positional style classes
     @code{.left}, @code{.right}, @code{.top}, @code{.bottom} and style classes
     related to overlay scrolling @code{.overlay-indicator}, @code{.dragging},
     @code{.hovering} on its scrollbars.
@@ -369,65 +370,66 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"edge-overshot\" signal}
       @begin{pre}
- lambda (scolled-window pos)    : Run Last
+ lambda (window pos)    : Run Last
       @end{pre}
-      The \"edge-overshot\" signal is emitted whenever user initiated scrolling
-      makes the scrolled window firmly surpass, i.e. with some edge resistance,
-      the lower or upper limits defined by the adjustment in that orientation.
-      A similar behavior without edge resistance is provided by the
-      \"edge-reached\" signal.
+      The signal is emitted whenever user initiated scrolling makes the scrolled
+      window firmly surpass, i.e. with some edge resistance, the lower or upper
+      limits defined by the adjustment in that orientation. A similar behavior
+      without edge resistance is provided by the \"edge-reached\" signal.
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
       too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
-        @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
-          received the signal.}
-        @entry[pos]{Edge side of type @symbol{gtk-position-type} that was hit.}
+        @entry[window]{The @sym{gtk-scrolled-window} widget which received the
+          signal.}
+        @entry[pos]{Edge side as a value of the @symbol{gtk-position-type}
+          enumeration that was hit.}
       @end{table}
     @subheading{The \"edge-reached\" signal}
       @begin{short}
- lambda (scrolled-window pos)    : Run Last
+ lambda (window pos)    : Run Last
       @end{short}
-      The \"edge-reached\" signal is emitted whenever user-initiated scrolling
-      makes the scrolled window exactly reach the lower or upper limits defined
-      by the adjustment in that orientation. A similar behavior with edge
-      resistance is provided by the \"edge-overshot\" signal.
+      The signal is emitted whenever user-initiated scrolling makes the scrolled
+      window exactly reach the lower or upper limits defined by the adjustment
+      in that orientation. A similar behavior with edge resistance is provided
+      by the \"edge-overshot\" signal.
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
       too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
-        @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
-          received the signal.}
-        @entry[pos]{Edge side of type @symbol{gtk-position-type} that was hit.}
+        @entry[window]{The @sym{gtk-scrolled-window} widget which received the
+          signal.}
+        @entry[pos]{Edge side as a value of the @symbol{gtk-position-type}
+          enumeration that was hit.}
       @end{table}
     @subheading{The \"move-focus-out\" signal}
       @begin{pre}
- lambda (scrolled-window direction-type)    : Action
+ lambda (window direction-type)    : Action
       @end{pre}
-      The \"move-focus-out\" signal is a keybinding signal which gets emitted
-      when focus is moved away from the scrolled window by a keybinding. The
-      \"move-focus\" signal is emitted with @arg{direction-type} on this
-      scrolled windows toplevel parent in the container hierarchy. The default
-      bindings for this signal are Tab+Ctrl and Tab+Ctrl+Shift.
+      The signal is a keybinding signal which gets emitted when focus is moved
+      away from the scrolled window by a keybinding. The \"move-focus\" signal
+      is emitted with @arg{direction-type} on this scrolled windows toplevel
+      parent in the container hierarchy. The default bindings for this signal
+      are Tab+Ctrl and Tab+Ctrl+Shift.
       @begin[code]{table}
-        @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
-          received the signal.}
+        @entry[window]{The @sym{gtk-scrolled-window} widget which received the
+          signal.}
         @entry[direction-type]{Either the value @code{:tab-forward} or
           @code{:tab-backward} of the @symbol{gtk-direction-type} enumeration.}
       @end{table}
       @subheading{The \"scroll-child\" signal}
         @begin{pre}
- lambda (scrolled-window scroll horizontal)    : Action
+ lambda (window scroll horizontal)    : Action
         @end{pre}
-        The \"scroll-child\" signal is a keybinding signal which gets emitted
-        when a keybinding that scrolls is pressed. The horizontal or vertical
-        adjustment is updated which triggers a signal that the scrolled windows
-        child may listen to and scroll itself.
+        The signal is a keybinding signal which gets emitted when a keybinding
+        that scrolls is pressed. The horizontal or vertical adjustment is
+        updated which triggers a signal that the scrolled windows child may
+        listen to and scroll itself.
         @begin[code]{table}
-          @entry[scrolled-window]{The @sym{gtk-scrolled-window} widget which
-            received the signal.}
+          @entry[window]{The @sym{gtk-scrolled-window} widget which received
+            the signal.}
           @entry[scroll]{A value of the @symbol{gtk-scroll-type} enumeration
             describing how much to scroll.}
-          @entry[horizontal]{A @code{:boolean} whether the keybinding scrolls
-            the child horizontally or not.}
+          @entry[horizontal]{A boolean whether the keybinding scrolls the child
+            horizontally or not.}
         @end{table}
   @end{dictionary}
   @see-slot{gtk-scrolled-window-hadjustment}
@@ -1044,31 +1046,32 @@
 ;;; gtk_scrolled_window_get_policy () -> gtk-scrolled-window-policy
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-scrolled-window-policy) (policy scrolled-window)
-  (destructuring-bind (hscrollbar-policy vscrollbar-policy) policy
+(defun (setf gtk-scrolled-window-policy) (policy window)
+  (destructuring-bind (hscroll-policy vscroll-policy) policy
       (foreign-funcall "gtk_scrolled_window_set_policy"
-                       (g-object gtk-scrolled-window) scrolled-window
-                       gtk-policy-type hscrollbar-policy
-                       gtk-policy-type vscrollbar-policy
+                       (g-object gtk-scrolled-window) window
+                       gtk-policy-type hscroll-policy
+                       gtk-policy-type vscroll-policy
                        :void))
   (values (first policy) (second policy)))
 
-(defun gtk-scrolled-window-policy (scrolled-window)
+(defun gtk-scrolled-window-policy (window)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-19}
-  @syntax[]{(gtk-scrolled-window-policy scrolled-window) => hscrollbar-policy, vscrollbar-policy}
-  @syntax[]{(setf (gtk-scrolled-window-policy scrolled-window) (list hscrollbar-policy vscrollbar-policy))}
-  @argument[scrolled-window]{a @class{gtk-scrolled-window} widget}
-  @argument[hscrollbar-policy]{policy for horizontal bar of type @symbol{gtk-policy-type}}
-  @argument[vscrollbar-policy]{policy for vertical bar of type @symbol{gtk-policy-type}}
+ "@version{*2021-3-14}
+  @syntax[]{(gtk-scrolled-window-policy window) => hscroll-policy, vscroll-policy}
+  @syntax[]{(setf (gtk-scrolled-window-policy window) (list hscroll-policy vscroll-policy))}
+  @argument[window]{a @class{gtk-scrolled-window} widget}
+  @argument[hscroll-policy]{a value of the @symbol{gtk-policy-type}
+    enumeration for the policy for horizontal bar}
+  @argument[vscroll-policy]{a value of the @symbol{gtk-policy-type}
+    enumeration for the policy for vertical bar}
   @begin{short}
     Accessor of the policy values of the srolled window.
   @end{short}
 
   The function @sym{gtk-scrolled-window-policy} retrieves the current policy
   values for the horizontal and vertical scrollbars. The function
-  @sym{(setf gtk-scrolled-window-policy)} sets the scrollbar policy for the
-  horizontal and vertical scrollbars.
+  @sym{(setf gtk-scrolled-window-policy)} sets the scrollbar policy.
 
   The policy determines when the scrollbar should appear. It is a value from
   the @symbol{gtk-policy-type} enumeration. If @code{:always}, the scrollbar is
@@ -1078,8 +1081,8 @@
   larger than the page size.
   @see-class{gtk-scrolled-window}
   @see-symbol{gtk-policy-type}"
-  (values (gtk-scrolled-window-hscrollbar-policy scrolled-window)
-          (gtk-scrolled-window-vscrollbar-policy scrolled-window)))
+  (values (gtk-scrolled-window-hscrollbar-policy window)
+          (gtk-scrolled-window-vscrollbar-policy window)))
 
 (export 'gtk-scrolled-window-policy)
 

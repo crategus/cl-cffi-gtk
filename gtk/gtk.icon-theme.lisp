@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -113,9 +113,10 @@
 (defcstruct gtk-icon-info)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-info atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'gtk-icon-info atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'gtk-icon-info atdoc:*external-symbols*)
- "@version{2020-12-4}
+ "@version{2021-3-14}
   @begin{short}
     Contains information found when looking up an icon in an icon theme.
   @end{short}
@@ -136,15 +137,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-icon-theme 'type)
- "@version{2020-3-3}
+ "@version{*2021-3-14}
   @begin{short}
-    @sym{gtk-icon-theme} provides a facility for looking up icons by name and
-    size.
+    The @sym{gtk-icon-theme} object provides a facility for looking up icons by
+    name and size.
   @end{short}
   The main reason for using a name rather than simply providing a filename is
   to allow different icons to be used depending on what icon theme is selected
   by the user. The operation of icon themes on Linux and Unix follows the Icon
-  Theme Specification. There is a default icon theme, named hicolor where
+  Theme Specification. There is a default icon theme, named @em{hicolor} where
   applications should install their icons, but more additional application
   themes can be installed as operating system vendors and users choose.
 
@@ -153,10 +154,10 @@
   mind:
   @begin{itemize}
     @begin{item}
-      Stock images usually are used in conjunction with Stock Items(3), such
-      as @code{\"gtk-ok\"} or @code{\"gtk-open\"}. Named icons are easier to
-      set up and therefore are more useful for new icons that an application
-      wants to add, such as application icons or window icons.
+      Stock images usually are used in conjunction with Stock Items, such
+      as \"gtk-ok\" or \"gtk-open\". Named icons are easier to set up and
+      therefore are more useful for new icons that an application wants to add,
+      such as application icons or window icons.
     @end{item}
     @begin{item}
       Stock images can only be loaded at the symbolic sizes defined by the
@@ -174,15 +175,16 @@
   use, use it, otherwise use a named icon. It turns out that internally stock
   images are generally defined in terms of one or more named icons. An
   example of the more than one case is icons that depend on writing direction;
-  @code{\"gtk-go-forward\"} uses the two themed icons
-  @code{\"gtk-stock-go-forward-ltr\"} and @code{\"gtk-stock-go-forward-rtl\"}.
+  \"gtk-go-forward\" uses the two themed icons \"gtk-stock-go-forward-ltr\" and
+  \"gtk-stock-go-forward-rtl\".
 
-  In many cases, named themes are used indirectly, via @class{gtk-image} or
-  stock items, rather than directly, but looking up icons directly is also
-  simple. The @sym{gtk-icon-theme} object acts as a database of all the icons
-  in the current theme. You can create new @sym{gtk-icon-theme} objects, but its
-  much more efficient to use the standard icon theme for the @class{gdk-screen}
-  so that the icon information is shared with other people looking up icons.
+  In many cases, named themes are used indirectly, via the @class{gtk-image}
+  widget or stock items, rather than directly, but looking up icons directly is
+  also simple. The @sym{gtk-icon-theme} object acts as a database of all the
+  icons in the current theme. You can create new @sym{gtk-icon-theme} objects,
+  but its much more efficient to use the standard icon theme for the
+  @class{gdk-screen} object so that the icon information is shared with other
+  people looking up icons.
   @begin[Example]{dictionary}
     In the case where the default screen is being used, looking up an icon can
     be as simple as:
@@ -198,14 +200,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (icon-theme)   : Run Last
+ lambda (theme)   : Run Last
       @end{pre}
       Emitted when the current icon theme is switched or GTK+ detects that a
       change has occurred in the contents of the current icon theme.
       @begin[code]{table}
-        @entry[icon-theme]{The icon theme of @sym{gtk-icon-theme}.}
+        @entry[theme]{The @sym{gtk-icon-theme} object.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-icon-info}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconLookupFlags
@@ -366,7 +369,7 @@
 (defcfun ("gtk_icon_theme_get_for_screen" gtk-icon-theme-for-screen)
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
     A unique @class{gtk-icon-theme} object associated with the given
@@ -385,6 +388,7 @@
   the screen yourself. By using this function a single icon theme object will
   be shared between users.
   @see-class{gtk-icon-theme}
+  @see-class{gdk-screen}
   @see-function{gtk-icon-theme-new}"
   (screen (g-object gdk-screen)))
 
@@ -952,16 +956,16 @@
 (defcfun ("gtk_icon_theme_list_contexts" gtk-icon-theme-list-contexts)
     (g-list (g-string :free-from-foreign t))
  #+cl-cffi-gtk-documentation
- "@version{2014-3-15}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{*2021-3-14}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @begin{return}
-    A list holding the names of all the contexts in the theme.
+    A list holding the names of all the contexts in the icon theme.
   @end{return}
   @begin{short}
     Gets the list of contexts available within the current hierarchy of icon
     themes.
   @end{short}
-  @begin[example]{dictionary}
+  @begin[Example]{dictionary}
     @begin{pre}
  (gtk-icon-theme-list-contexts (gtk-icon-theme-default))
 => (\"International\" \"Emotes\" \"Places\" \"stock\" \"FileSystems\"
@@ -969,8 +973,9 @@
     \"MimeTypes\" \"Stock\" \"Status\" \"Emblems\")
     @end{pre}
   @end{dictionary}
-  @see-class{gtk-icon-theme}"
-  (icon-theme (g-object gtk-icon-theme)))
+  @see-class{gtk-icon-theme}
+  @see-function{gtk-icon-theme-list-icons}"
+  (theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-list-contexts)
 
@@ -980,25 +985,26 @@
 
 (defcfun ("gtk_icon_theme_list_icons" %gtk-icon-theme-list-icons)
     (g-list :string)
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (context :string))
 
-(defun gtk-icon-theme-list-icons (icon-theme context)
+(defun gtk-icon-theme-list-icons (theme context)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{*2021-3-14}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[context]{a string identifying a particular type of icon, or
     @code{nil} to list all icons}
-  @return{ A list holding the names of all the icons in the theme.}
+  @return{A list holding the names of all the icons in the theme.}
   @begin{short}
     Lists the icons in the current icon theme.
   @end{short}
   Only a subset of the icons can be listed by providing a context string. The
   set of values for the context string is system dependent, but will typically
   include such values as \"Applications\" and \"MimeTypes\".
-  @see-class{gtk-icon-theme}"
+  @see-class{gtk-icon-theme}
+  @see-function{gtk-icon-theme-list-contexts}"
   (let ((context (if context context (null-pointer))))
-    (%gtk-icon-theme-list-icons icon-theme context)))
+    (%gtk-icon-theme-list-icons theme context)))
 
 (export 'gtk-icon-theme-list-icons)
 

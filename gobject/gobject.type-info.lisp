@@ -2407,9 +2407,9 @@
 
 (defcfun ("g_type_is_a" g-type-is-a) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-14}
+ "@version{*2021-3-14}
   @argument[gtype]{the @class{g-type} ID to check anchestry for}
-  @argument[is-a-type]{possible anchestor of @arg{gtype} or interface
+  @argument[is-a-type]{possible anchestor of @arg{gtype} or the interface
     @arg{gtype} could conform to}
   @return{@em{True} if @arg{gtype} is a @arg{is-a-type} holds true.}
   @begin{short}

@@ -1129,7 +1129,7 @@
 
 (defun g-object-type (object)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-28}
+ "@version{*2021-3-14}
   @argument[object]{a @class{g-object} instance to return the type ID for}
   @return{A @class{g-type} ID of @arg{object}.}
   @short{Gets the type ID for the instance of an object.}

@@ -3251,32 +3251,31 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-widget) 't)
- "The @code{parent} property of type @class{gtk-container}
-  (Read / Write) @br{}
+ "The @code{parent} property of type @class{gtk-container} (Read / Write) @br{}
   The parent widget of this widget. Must be a @class{gtk-container} widget.")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-parent atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-parent atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-parent 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{*2021-3-14}
   @syntax[]{(gtk-widget-parent object) => parent}
   @syntax[]{(setf (gtk-widget-parent object) parent)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[parent]{a @class{gtk-widget} parent container}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{parent} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{parent} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-parent} returns the parent container of
-  @arg{widget}.
+  The slot access function @sym{gtk-widget-parent} returns the parent container
+  of @arg{widget}. The slot access function @sym{(setf gtk-widget-parent)} sets
+  the container as the parent of @arg{widget}, and takes care of some details
+  such as updating the state and style of the child to reflect its new location.
+  The opposite is the function @fun{gtk-widget-unparent}.
 
-  The generic function @sym{(setf gtk-widget-parent)} sets the container as the
-  parent of @arg{widget}, and takes care of some details such as updating the
-  state and style of the child to reflect its new location. The opposite
-  function is @fun{gtk-widget-unparent}.
-
-  This function is useful only when implementing subclasses of
-  @class{gtk-container}.
+  This function is useful only when implementing subclasses of the
+  @class{gtk-container} class.
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-function{gtk-widget-unparent}")
@@ -7041,7 +7040,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_screen" gtk-widget-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-28}
+ "@version{*2021-3-14}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @class{gdk-screen} object for the toplevel for this widget.}
   @begin{short}
@@ -7602,36 +7601,37 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-allocation (widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-9}
+ "@version{*2021-3-14}
   @syntax[]{(gtk-widget-allocation widget) => allocation}
   @syntax[]{(setf (gtk-widget-allocation widget) allocation}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[allocation]{a @class{gdk-rectangle} structure}
+  @argument[allocation]{a @class{gdk-rectangle} instance}
   @begin{short}
     Accessor of the allocation of the widget.
   @end{short}
 
   The function @sym{gtk-widget-allocation} retrieves the widget's allocation.
-  The function @sym{(setf gtk-widget-allocation)} sets the widget's allocation.
+  The function @sym{(setf gtk-widget-allocation)} sets the allocation.
   This should not be used directly, but from within a widget's
   @code{size_allocate} method.
 
-  Note, when implementing a @class{gtk-container} a widget's allocation will be
-  its \"adjusted\" allocation, that is, the widget's parent container typically
-  calls the function @fun{gtk-widget-size-allocate} with an allocation, and
-  that allocation is then adjusted, to handle margin and alignment for example,
-  before assignment to the widget. The function @sym{gtk-widget-allocation}
-  returns the adjusted allocation that was actually assigned to the widget. The
-  adjusted allocation is guaranteed to be completely contained within the
-  @fun{gtk-widget-size-allocate} allocation, however. So a @class{gtk-container}
-  is guaranteed that its children stay inside the assigned bounds, but not that
-  they have exactly the bounds the container assigned. There is no way to get
-  the original allocation assigned by the function
-  @fun{gtk-widget-size-allocate}, since it is not stored; if a container
-  implementation needs that information it will have to track it itself.
+  Note, when implementing a @class{gtk-container} widget a widget's allocation
+  will be its \"adjusted\" allocation, that is, the widget's parent container
+  typically calls the function @fun{gtk-widget-size-allocate} with an
+  allocation, and that allocation is then adjusted, to handle margin and
+  alignment for example, before assignment to the widget. The function
+  @sym{gtk-widget-allocation} returns the adjusted allocation that was actually
+  assigned to the widget. The adjusted allocation is guaranteed to be completely
+  contained within the @fun{gtk-widget-size-allocate} allocation, however. So a
+  @class{gtk-container} widget is guaranteed that its children stay inside the
+  assigned bounds, but not that they have exactly the bounds the container
+  assigned. There is no way to get the original allocation assigned by the
+  function @fun{gtk-widget-size-allocate}, since it is not stored; if a
+  container implementation needs that information it will have to track it
+  itself.
 
   The allocation set should be the \"adjusted\" or actual allocation. If you
-  are implementing a @class{gtk-container}, you want to use the function
+  are implementing a @class{gtk-container} widget, you want to use the function
   @fun{gtk-widget-size-allocate} instead of @sym{gtk-widget-allocation}.
   The @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
   allocation inside the function @fun{gtk-widget-size-allocate} to create an
@@ -7639,7 +7639,7 @@ drag_data_received (GtkWidget        *widget,
   @begin[Note]{dictionary}
     In the Lisp binding to GTK+ this function does not return an allocation
     of type @code{GtkAllocation}, but the type is @class{gdk-rectangle}. In the
-    C implementation @code{GtkAllocation} is a synonym for
+    C implementation the type @code{GtkAllocation} is a synonym for the type
     @class{gdk-rectangle}.
 
     In most cases, it is more convenient to use the functions

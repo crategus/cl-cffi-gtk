@@ -120,25 +120,25 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-grid 'type)
- "@version{2020-4-23}
+ "@version{*2021-3-14}
   @begin{short}
-    @sym{gtk-grid} is a container which arranges its child widgets in rows and
-    columns, with arbitrary positions and horizontal/vertical spans.
+    The @sym{gtk-grid} widget is a container which arranges its child widgets
+    in rows and columns, with arbitrary positions and horizontal/vertical spans.
   @end{short}
 
   Children are added using the function @fun{gtk-grid-attach}. They can span
   multiple rows or columns. It is also possible to add a child next to an
   existing child, using the function @fun{gtk-grid-attach-next-to}. The
-  behaviour of @sym{gtk-grid} when several children occupy the same grid cell
-  is undefined.
+  behaviour of the @sym{gtk-grid} widget when several children occupy the same
+  grid cell is undefined.
 
-  @sym{gtk-grid} can be used like a @class{gtk-box} by just using the function
-  @fun{gtk-container-add}, which will place children next to each other in the
-  direction determined by the @slot[gtk-orientable]{orientation} property.
-  However, if all you want is a single row or column, then @class{gtk-box} is
-  the preferred widget.
+  The @sym{gtk-grid} widget can be used like a @class{gtk-box} widget by just
+  using the function @fun{gtk-container-add}, which will place children next to
+  each other in the direction determined by the
+  @slot[gtk-orientable]{orientation} property. However, if all you want is a
+  single row or column, then the @class{gtk-box} widget is the preferred widget.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-grid} uses a single CSS node with name @code{grid}.
+    The @sym{gtk-grid} widget uses a single CSS node with name @code{grid}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -174,10 +174,7 @@
   @see-slot{gtk-grid-column-spacing}
   @see-slot{gtk-grid-row-homogeneous}
   @see-slot{gtk-grid-row-spacing}
-  @see-class{gtk-box}
-  @see-function{gtk-grid-attach}
-  @see-function{gtk-grid-attach-next-to}
-  @see-function{gtk-container-add}")
+  @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

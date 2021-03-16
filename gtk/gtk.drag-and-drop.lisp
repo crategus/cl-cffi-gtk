@@ -546,10 +546,10 @@ drag_motion (GtkWidget *widget,
 (defcfun ("gtk_drag_get_source_widget" gtk-drag-source-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{*2021-3-14}
   @argument[context]{a @class{gdk-drag-context} destination side drag context}
-  @return{if the drag is occurring within a single application, a pointer to
-    the source widget, otherwise @code{nil}.}
+  @return{If the drag is occurring within a single application, returns a
+    pointer to the source widget, otherwise @code{nil}.}
   @begin{short}
     Determines the source widget for a drag.
   @end{short}

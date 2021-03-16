@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -95,7 +95,7 @@
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-orientable-orientation 'function)
- "@version{2020-4-30}
+ "@version{*2021-3-14}
   @syntax[]{(gtk-orientable-orientation object) => orientation}
   @syntax[]{(setf (gtk-orientable-orientation object) orientation)}
   @argument[object]{a @class{gtk-orientable} widget}
@@ -107,8 +107,7 @@
 
   The slot access function @sym{gtk-orientable-orientation} returns the
   orientation of the orientable widget. The slot access
-  function @sym{(setf gtk-orientable-orientation)} sets the orientation of the
-  orientable widget.
+  function @sym{(setf gtk-orientable-orientation)} sets the orientation.
   @see-class{gtk-orientable}
   @see-symbol{gtk-orientation}")
 

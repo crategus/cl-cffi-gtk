@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -123,11 +123,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-item-group 'type)
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @begin{short}
-    A @sym{gtk-tool-item-group} is used together with @class{gtk-tool-palette}
-    to add @class{gtk-tool-item} widgets to a palette like container with
-    different categories and drag and drop support.
+    A @sym{gtk-tool-item-group} widget is used together with a
+    @class{gtk-tool-palette} widget to add @class{gtk-tool-item} widgets to a
+    palette like container with different categories and drag and drop support.
   @end{short}
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-tool-item-group} class has a single CSS node named
@@ -190,7 +190,9 @@
   @see-slot{gtk-tool-item-group-ellipsize}
   @see-slot{gtk-tool-item-group-header-relief}
   @see-slot{gtk-tool-item-group-label}
-  @see-slot{gtk-tool-item-group-label-widget}")
+  @see-slot{gtk-tool-item-group-label-widget}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-palette}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -462,18 +464,24 @@
 (setf (gethash 'gtk-tool-item-group-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-position 'function)
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @syntax[]{(gtk-tool-item-group-child-position container child) => position}
   @syntax[]{(setf (gtk-tool-item-group-child-position container child) position)}
   @argument[container]{a @class{gtk-tool-item-group} widget}
-  @argument[child]{a @class{gtk-widget} child object}
-  @argument[position]{a @code{:int} with the position of the item within the
-    group}
+  @argument[child]{a @class{gtk-tool-item} child object}
+  @argument[position]{an integer with the position of the item within the group}
   @begin{short}
     Accessor of the @code{position} child property of the
     @class{gtk-tool-item-group} class.
   @end{short}
-  @see-class{gtk-tool-item-group}")
+
+  The function @sym{gtk-tool-item-group-child-position} gets the position of
+  @arg{item} in the list of children of @arg{container}, or -1 if @arg{item}
+  is no child of @arg{container}. The function
+  @sym{gtk-tool-item-group-child-position} sets the position, starting with 0,
+  the position -1 means end of list.
+  @see-class{gtk-tool-item-group}
+  @see-class{gtk-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_drop_item () -> gtk-tool-item-group-drop-item
@@ -482,11 +490,11 @@
 (defcfun ("gtk_tool_item_group_get_drop_item" gtk-tool-item-group-drop-item)
     (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @argument[group]{a @class{gtk-tool-item-group} widget}
-  @argument[x]{a @code{:int} with the x position}
-  @argument[y]{a @code{:int} with the y position}
-  @return{The @class{gtk-tool-item} at position (@arg{x}, @arg{y}).}
+  @argument[x]{an integer with the x position}
+  @argument[y]{an integer with the y position}
+  @return{The @class{gtk-tool-item} widget at position (@arg{x}, @arg{y}).}
   @short{Gets the tool item at position (@arg{x}, @arg{y}).}
   @see-class{gtk-tool-item-group}
   @see-class{gtk-tool-item}"
@@ -547,10 +555,10 @@
 
 (defcfun ("gtk_tool_item_group_insert" gtk-tool-item-group-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
+ "@version{*2021-3-14}
   @argument[group]{a @class{gtk-tool-item-group} widget}
   @argument[item]{the @class{gtk-tool-item} widget to insert into group}
-  @argument[position]{a @code{:int} with the position of @arg{item} in
+  @argument[position]{an integer with the position of @arg{item} in
     @arg{group}, starting with 0, the position -1 means end of list}
   @begin{short}
     Inserts @arg{item} at @arg{position} in the list of children of the
@@ -572,8 +580,8 @@
 
 (defun gtk-tool-item-group-new (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
-  @argument[label]{a @code{:string} with the label of the new group}
+ "@version{*2021-3-14}
+  @argument[label]{a string with the label of the new group}
   @return{A new @class{gtk-tool-item-group} widget.}
   @begin{short}
     Creates a new tool item group with label @arg{label}.

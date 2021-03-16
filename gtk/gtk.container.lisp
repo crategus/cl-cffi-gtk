@@ -591,7 +591,7 @@
 
 (defcfun ("gtk_container_remove" gtk-container-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-21}
+ "@version{*2021-3-14}
   @argument[container]{a @class{gtk-container} widget}
   @argument[widget]{a current @class{gtk-widget} child of @arg{container}}
   @begin{short}
@@ -949,9 +949,10 @@
 
 (defun gtk-container-child-get (container child &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-4}
+ "@version{*2021-3-14}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[child]{a @class{gtk-widget} which is a child of @arg{container}}
+  @argument[child]{a @class{gtk-widget} object which is a child of
+    @arg{container}}
   @arg[args]{a list of strings with the child property names to get the values
     for}
   @return{A list with the values of the properties.}

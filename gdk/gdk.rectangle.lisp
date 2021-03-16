@@ -109,7 +109,7 @@
 (setf (gethash 'gdk-rectangle-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-x 'function)
- "@version{2021-3-7}
+ "@version{*2021-3-14}
   @syntax[]{(gdk-rectangle-x instance) => x}
   @syntax[]{(setf (gdk-rectangle-x instance) x)}
   @argument[instance]{a @class{gdk-rectangle} instance}
@@ -127,7 +127,7 @@
 (setf (gethash 'gdk-rectangle-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-y 'function)
- "@version{2021-3-7}
+ "@version{*2021-3-14}
   @syntax[]{(gdk-rectangle-y instance) => y}
   @syntax[]{(setf (gdk-rectangle-y instance) y)}
   @argument[instance]{a @class{gdk-rectangle} instance}
