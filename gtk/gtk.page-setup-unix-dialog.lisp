@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,10 +75,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-page-setup-unix-dialog 'type)
- "@version{2013-5-30}
+ "@version{2021-3-17}
   @begin{short}
-    @sym{gtk-page-setup-unix-dialog} implements a page setup dialog for
-    platforms which do not provide a native page setup dialog, like Unix.
+    The @sym{gtk-page-setup-unix-dialog} widget implements a page setup dialog
+    for platforms which do not provide a native page setup dialog, like Unix.
   @end{short}
 
   @image[pagesetupdialog]{}
@@ -87,29 +87,23 @@
   portability offered by the high-level printing API.
   @begin[Example]{dictionary}
     @begin{pre}
-(defun example-page-setup-unix-dialog ()
-  (let (response page-setup)
-    (within-main-loop
-      (let ((dialog (make-instance 'gtk-page-setup-unix-dialog
-                                   :title \"Example Page Setup Dialog\"
-                                   :default-height 250
-                                   :default-width 400)))
-        ;; Signal handler for the dialog to handle the signal \"destroy\".
-        (g-signal-connect dialog \"destroy\"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        ;; Signal handler for the dialog to handle the signal \"response\".
-        (g-signal-connect dialog \"response\"
-                          (lambda (dialog response-id)
-                            (setf response response-id)
-                            (setf page-setup
-                                  (gtk-page-setup-unix-dialog-page-setup dialog))
-                            (gtk-widget-destroy dialog)))
-        ;; Show the dialog
-        (gtk-widget-show-all dialog)))
-    (join-gtk-main)
-    (values response page-setup)))
+(defun create-page-setup-dialog ()
+  (let ((page-setup (gtk-page-setup-new))
+        (dialog (make-instance 'gtk-page-setup-unix-dialog
+                               :title \"Page Setup Dialog\"
+                               :default-height 250
+                               :default-width 400)))
+    ;; Load and set Page setup from file
+    (if (gtk-page-setup-load-file page-setup (rel-path \"page-setup.ini\"))
+        (format t \"PAGE SETUP successfully loaded~%\")
+        (format t \"PAGE SETUP cannot be loaded, use standard settings~%\"))
+    (setf (gtk-page-setup-unix-dialog-page-setup dialog) page-setup)
+    ;; Run the dialog
+    (when (eq :ok (gtk-dialog-run dialog))
+      (setf page-setup (gtk-page-setup-unix-dialog-page-setup dialog))
+      (gtk-page-setup-to-file page-setup (rel-path \"page-setup.ini\")))
+    ;; Destroy the dialog
+    (gtk-widget-destroy dialog)))
     @end{pre}
   @end{dictionary}
   @see-class{gtk-page-setup}")
@@ -120,7 +114,7 @@
 
 (defun gtk-page-setup-unix-dialog-new (title parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2021-3-17}
   @argument[title]{a string with the title of the dialog, or @code{nil}}
   @argument[parent]{a @class{gtk-window} transient parent of the dialog,
     or @code{nil}}
@@ -152,11 +146,11 @@
 (defcfun ("gtk_page_setup_unix_dialog_get_page_setup"
            gtk-page-setup-unix-dialog-page-setup) (g-object gtk-page-setup)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-26}
-  @syntax[]{(gtk-page-setup-unix-dialog-page-setup dialog) => page-setup}
-  @syntax[]{(setf (gtk-page-setup-unix-dialog-page-setup dialog) page-setup)}
+ "@version{2021-3-17}
+  @syntax[]{(gtk-page-setup-unix-dialog-page-setup dialog) => setup}
+  @syntax[]{(setf (gtk-page-setup-unix-dialog-page-setup dialog) setup)}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
-  @argument[page-setup]{a @class{gtk-page-setup} object}
+  @argument[setup]{a @class{gtk-page-setup} object}
   @begin{short}
     Accessor for the page setup of the page setup dialog.
   @end{short}
@@ -186,7 +180,7 @@
 (defcfun ("gtk_page_setup_unix_dialog_get_print_settings"
            gtk-page-setup-unix-dialog-print-settings) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-26}
+ "@version{2021-3-17}
   @syntax[]{(gtk-page-setup-unix-dialog-print-settings dialog) => settings}
   @syntax[]{(setf (gtk-page-setup-unix-dialog-print-settings dialog) settings)}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
