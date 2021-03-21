@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -77,7 +77,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrollable-policy atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scrollable-policy atdoc:*external-symbols*)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @begin{short}
     Defines the policy to be used in a scrollable widget when updating the
     scrolled window adjustments in a given orientation.
@@ -118,10 +118,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrollable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-scrollable 'type)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @begin{short}
-    @sym{gtk-scrollable} is an interface that is implemented by widgets with
-    native scrolling ability.
+    The @sym{gtk-scrollable} interface is an interface that is implemented by
+    widgets with native scrolling ability.
   @end{short}
 
   To implement this interface you should override the @code{hadjustment}
@@ -155,7 +155,9 @@
   @see-slot{gtk-scrollable-hadjustment}
   @see-slot{gtk-scrollable-hscroll-policy}
   @see-slot{gtk-scrollable-vadjustment}
-  @see-slot{gtk-scrollable-vscroll-policy}")
+  @see-slot{gtk-scrollable-vscroll-policy}
+  @see-class{gtk-scrollbar}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -175,10 +177,10 @@
 (setf (gethash 'gtk-scrollable-hadjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scrollable-hadjustment 'function)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @syntax[]{(gtk-scrollable-hadjustment object) => hadjustment}
   @syntax[]{(setf (gtk-scrollable-hadjustment object) hadjustment)}
-  @argument[object]{a @class{gtk-scrollable} object}
+  @argument[object]{a @class{gtk-scrollable} widget}
   @argument[hadjustment]{a @class{gtk-adjustment} object}
   @begin{short}
     Accessor of the @slot[gtk-scrollable]{hadjustment} slot of the
@@ -187,8 +189,7 @@
 
   The slot access function @sym{gtk-scrollabe-hadjustment} retrieves the
   adjustment used for horizontal scrolling. The slot access function
-  @sym{(setf gtk-scrollabe-hadjustment)} sets the horizontal adjustment
-  of the scrollable widget.
+  @sym{(setf gtk-scrollabe-hadjustment)} sets the horizontal adjustment.
   @see-class{gtk-scrollabe}
   @see-class{gtk-adjustment}
   @see-function{gtk-scrollable-vadjustment}")
@@ -209,21 +210,22 @@
 (setf (gethash 'gtk-scrollable-hscroll-policy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scrollable-hscroll-policy 'function)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @syntax[]{(gtk-scrollable-hscroll-policy object) => policy}
   @syntax[]{(setf (gtk-scrollable-hscroll-policy object) policy)}
-  @argument[object]{a @class{gtk-scrollable} object}
-  @argument[policy]{the horizontal @symbol{gtk-scrollable-policy}}
+  @argument[object]{a @class{gtk-scrollable} widget}
+  @argument[policy]{a @symbol{gtk-scrollable-policy} value for the horizontal
+    scrolling policy}
   @begin{short}
     Accessor of the @slot[gtk-scrollable]{hscroll-policy} slot of the
     @class{gtk-scrollable} class.
   @end{short}
 
   The slot access function @sym{gtk-scrollable-hscroll-policy} gets the
-  horizontal @symbol{gtk-scrollable-policy} value. The slot access function
-  @sym{(setf gtk-scrollable-hscroll-policy)} sets the
-  @symbol{gtk-scrollable-policy} to determine whether horizontal scrolling
-  should start below the minimum width or below the natural width.
+  horizontal scrolling policy which determines whether horizontal scrolling
+  should start below the minimum width or below the natural width. The slot
+  access function @sym{(setf gtk-scrollable-hscroll-policy)} sets the
+  horizontal scrolling policy.
   @see-class{gtk-scrollable}
   @see-symbol{gtk-scrollable-policy}
   @see-function{gtk-scrollable-vscroll-policy}")
@@ -242,10 +244,10 @@
 (setf (gethash 'gtk-scrollable-vadjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scrollable-vadjustment 'function)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @syntax[]{(gtk-scrollable-vadjustment object) => vadjustment}
   @syntax[]{(setf (gtk-scrollable-vadjustment object) vadjustment)}
-  @argument[object]{a @class{gtk-scrollable} object}
+  @argument[object]{a @class{gtk-scrollable} widget}
   @argument[vadjustment]{a @class{gtk-adjustment} object}
   @begin{short}
     Accessor of the @slot[gtk-scrollable]{vadjustment} slot of the
@@ -254,8 +256,7 @@
 
   The slot access function @sym{gtk-scrollable-vadjustment} retrieves the
   adjustment used for vertical scrolling. The slot access function
-  @sym{(setf gtk-scrollable-vadjustment)} sets the vertical adjustment
-  of the scrollable widget.
+  @sym{(setf gtk-scrollable-vadjustment)} sets the vertical adjustment.
   @see-class{gtk-scrollable}
   @see-class{gtk-adjustment}
   @see-function{gtk-scrollable-hadjustment}")
@@ -276,21 +277,22 @@
 (setf (gethash 'gtk-scrollable-vscroll-policy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scrollable-vscroll-policy 'function)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @syntax[]{(gtk-scrollable-vscroll-policy object) => policy}
   @syntax[]{(setf (gtk-scrollable-vscroll-policy object) policy)}
-  @argument[object]{a @class{gtk-scrollable} object}
-  @argument[policy]{the vertical @symbol{gtk-scrollable-policy}}
+  @argument[object]{a @class{gtk-scrollable} widget}
+  @argument[policy]{a @symbol{gtk-scrollable-policy} value for the vertical
+    scrolling policy}
   @begin{short}
     Accessor of the @slot[gtk-scrollable]{vscroll-policy} slot of the
     @class{gtk-scrollable} class.
   @end{short}
 
-  The slot access function @sym{gtk-scrollable-vscroll-policy} gets the vertical
-  @symbol{gtk-scrollable-policy} value. The slot access function
-  @sym{(setf gtk-scrollable-vscroll-policy)} sets the
-  @symbol{gtk-scrollable-policy} to determine whether vertical scrolling should
-  start below the minimum height or below the natural height.
+  The slot access function @sym{gtk-scrollable-vscroll-policy} gets the
+  vertical scrolling policy which determines whether vertical scrolling
+  should start below the minimum height or below the natural height. The slot
+  access function @sym{(setf gtk-scrollable-hscroll-policy)} sets the vertical
+  scrolling policy.
   @see-class{gtk-scrollable}
   @see-symbol{gtk-scrollable-policy}
   @see-function{gtk-scrollable-hscroll-policy}")
@@ -304,9 +306,9 @@
   (border (g-boxed-foreign gtk-border)))
 
 (defun gtk-scrollable-border (scrollable)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @argument[scrollable]{a @class{gtk-scrollable} widget}
-  @return{A @class{gtk-border} structure.}
+  @return{A @class{gtk-border} instance.}
   @begin{short}
     Returns the size of a non-scrolling border around the outside of the
     scrollable.
@@ -316,7 +318,7 @@
   position.
   @see-class{gtk-scrollable}
   @see-class{gtk-border}"
-  (let ((border (make-gtk-border)))
+  (let ((border (gtk-border-new)))
     (%gtk-scrollable-border scrollable border)
     border))
 
