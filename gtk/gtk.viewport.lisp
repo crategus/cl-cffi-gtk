@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -86,30 +86,33 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-viewport 'type)
- "@version{2013-6-20}
+ "@version{2021-3-19}
   @begin{short}
     The @sym{gtk-viewport} widget acts as an adaptor class, implementing
     scrollability for child widgets that lack their own scrolling capabilities.
   @end{short}
-  Use @sym{gtk-viewport} to scroll child widgets such as @class{gtk-grid},
-  @class{gtk-box}, and so on.
+  Use the @sym{gtk-viewport} widget to scroll child widgets such as the widgets
+  @class{gtk-grid}, @class{gtk-box}, and so on.
 
-  If a widget has native scrolling abilities, such as @class{gtk-text-view},
-  @class{gtk-tree-view} or @class{gtk-icon-view}, it can be added to a
-  @class{gtk-scrolled-window} with the function @fun{gtk-container-add}. If a
-  widget does not, you must first add the widget to a @sym{gtk-viewport}, then
-  add the viewport to the scrolled window. The convenience function
-  @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you
-  can ignore the presence of the viewport.
+  If a widget has native scrolling abilities, such as the widgets
+  @class{gtk-text-view}, @class{gtk-tree-view} or @class{gtk-icon-view},
+  it can be added to a @class{gtk-scrolled-window} widget with the function
+  @fun{gtk-container-add}. If a widget does not, you must first add the widget
+  to a @sym{gtk-viewport} widget, then add the viewport to the scrolled window.
+  The function @fun{gtk-container-add} does this automatically if a child that
+  does not implement the @class{gtk-scrollable} interface is added to a
+  @class{gtk-scrolled-window} widget, so you can ignore the presence of the
+  viewport.
 
-  The @sym{gtk-viewport} will start scrolling content only if allocated less
-  than the child widget's minimum size in a given orientation.
+  The @sym{gtk-viewport} widget will start scrolling content only if allocated
+  less than the child widget's minimum size in a given orientation.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-viewport} has a single CSS node with name @code{viewport}.
+    The @sym{gtk-viewport} widget has a single CSS node with name
+    @code{viewport}.
   @end{dictionary}
   @see-slot{gtk-viewport-shadow-type}
   @see-class{gtk-scrolled-window}
-  @see-class{gtk-adjustment}")
+  @see-class{gtk-scrollable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -128,20 +131,21 @@
 (setf (gethash 'gtk-viewport-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-viewport-shadow-type 'function)
- "@version{2020-6-3}
+ "@version{2021-3-18}
   @syntax[]{(gtk-viewport-shadow-type object) => type}
   @syntax[]{(setf (gtk-viewport-shadow-type object) type)}
   @argument[viewport]{a @class{gtk-viewport} widget}
-  @argument[type]{the new shadow type of type @symbol{gtk-shadow-type}}
+  @argument[type]{a @symbol{gtk-shadow-type} value for the shadow type}
   @begin{short}
     Accessor of the @slot[gtk-viewport]{shadow-type} slot of the
     @class{gtk-viewport} class.
   @end{short}
 
   The slot access function @sym{gtk-viewport-shadow-type} gets the shadow type
-  of the @class{gtk-viewport}. The slot access function
-  @sym{(setf gtk-viewport-shadow-type)} sets the shadow type of the viewport.
-  @see-class{gtk-viewport}")
+  of the viewport. The slot access function
+  @sym{(setf gtk-viewport-shadow-type)} sets the shadow type.
+  @see-class{gtk-viewport}
+  @see-symbol{gtk-shadow-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_new ()
@@ -151,14 +155,15 @@
 
 (defun gtk-viewport-new (&optional (hadjustment nil) (vadjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2020-6-3}
+ "@version{2021-3-18}
   @argument[hadjustment]{horizontal @class{gtk-adjustment} object}
   @argument[vadjustment]{vertical @class{gtk-adjustment} object}
   @return{A new @class{gtk-viewport} widget.}
   @begin{short}
-    Creates a new viewport widget with the given adjustments.
+    Creates a new viewport with the given adjustments.
   @end{short}
-  @see-class{gtk-viewport}"
+  @see-class{gtk-viewport}
+  @see-class{gtk-adjustment}"
   (make-instance 'gtk-viewport
                  :hadjustment hadjustment
                  :vadjustment vadjustment))
@@ -254,10 +259,10 @@
 (defcfun ("gtk_viewport_get_bin_window" gtk-viewport-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-3}
+ "@version{2021-3-18}
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
-  @short{Gets the bin window of the viewport widget.}
+  @short{Gets the bin window of the viewport.}
   @see-class{gtk-viewport}
   @see-class{gdk-window}"
   (viewport (g-object gtk-viewport)))
@@ -271,11 +276,12 @@
 (defcfun ("gtk_viewport_get_view_window" gtk-viewport-view-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-3}
+ "@version{2021-3-18}
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
-  @short{Gets the view window of the viewport widget.}
-  @see-class{gtk-viewport}"
+  @short{Gets the view window of the viewport.}
+  @see-class{gtk-viewport}
+  @see-class{gdk-window}"
   (viewport (g-object gtk-viewport)))
 
 (export 'gtk-viewport-view-window)
