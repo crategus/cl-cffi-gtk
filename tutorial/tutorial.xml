@@ -3630,7 +3630,7 @@ int main( int argc, char *argv[] )
     GTK+ has various widgets that can be visually adjusted by the user using the mouse or the keyboard, such
     as the range widgets, described in <link linkend="Range_Widgets">Range Widgets</link>.  There are also a
     few widgets that display some adjustable portion of a larger area of data, such as the viewport widget
-    <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink>.
+    &gtk-viewport;.
    </para>
    <para>
     Obviously, an application needs to be able to react to changes the user makes in range widgets.  One way
@@ -3644,12 +3644,12 @@ int main( int argc, char *argv[] )
     function.
    </para>
    <para>
-    GTK+ solves this problem using the object <ulink url="&gtk-adjustment;">
-    <code>gtk-adjustment</code></ulink>, which is not a widget but a way for widgets to store and pass
+    GTK+ solves this problem using the object &gtk-adjustment;,
+    which is not a widget but a way for widgets to store and pass
     adjustment information in an abstract and flexible form.  The most obvious use of
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> is to store the configuration
+    &gtk-adjustment; is to store the configuration
     parameters and values of range widgets, such as scrollbars and scale controls.  However, since
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> is derived from
+    &gtk-adjustment; is derived from
     <ulink url="&g-object;"><code>g-object</code></ulink>, adjustments have some special powers beyond those
     of normal data structures.  Most importantly, they can emit signals, just like widgets, and these signals
     can be used not only to allow a program to react to user input on adjustable widgets, but also to
@@ -3744,7 +3744,7 @@ int main( int argc, char *argv[] )
     Ok, you say, that's nice, but what if I want to create my own handlers to respond when the user adjusts a
     range widget or a spin button, and how do I get at the value of the adjustment in these handlers? To
     answer these questions and more, let's start by taking a look at the Lisp class representing
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> itself:
+    &gtk-adjustment; itself:
    </para>
    <programlisting>
 (define-g-object-class "GtkAdjustment" gtk-adjustment
@@ -3774,7 +3774,7 @@ int main( int argc, char *argv[] )
    <para>
     The slots of the class are <code>lower</code>, <code>page-increment</code>, <code>page-size</code>,
     <code>step-increment</code>, <code>upper</code>, and <code>value</code>.  The slots represent the
-    properties of the C class <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.  The slots
+    properties of the C class &gtk-adjustment;.  The slots
     can be accessed with the corresponding Lisp accessor functions.  Alternativly, the C accessor functions
     like <code>gtk_adjustment_set_value()</code> and <code>gtk_adjustment_set_value()</code> are availabe in
     the Lisp binding through e.g. <ulink url="&gtk-adjustment-value;">
@@ -3849,63 +3849,7 @@ int main( int argc, char *argv[] )
    </para>
   </section>
 
-  <section id="Scrollbar_Widgets">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Scrollbar_Widgets"><primary>GtkScrollbar</primary></indexterm>
-     <indexterm zone="Scrollbar_Widgets"><primary>scrollbar, gtk-scrollbar</primary></indexterm>
-     <indexterm zone="Scrollbar_Widgets"><primary>scrollbar-new, gtk-scrollbar-new</primary></indexterm>
-    </itermset>
-   </sectioninfo>
-   <title>Scrollbar Widgets</title>
-   <para>
-    These are your standard, run-of-the-mill scrollbars.  These should be used only for scrolling some other
-    widget, such as a list, a text box, or a viewport (and it is generally easier to use the scrolled window
-    widget in most cases).  For other purposes, you should use scale widgets, as they are friendlier and more
-    featureful.
-   </para>
-   <para>
-    The <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink> widget is a horizontal or vertical
-    scrollbar, depending on the value of the &gtk_orientable_orientation;
-    property.  A scrollbar can be created with the function
-    <ulink url="&gtk-scrollbar-new;"><code>gtk-scrollbar-new</code></ulink>, which takes two arguments.  The
-    first argument gives the direction <code>:horizontal</code> or <code>:vertical</code> and the second a
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.  The second argument can be
-    <code>NIL</code>.  In this case a <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> is
-    created.
-   </para>
-   <para>
-    The position of the thumb in a scrollbar is controlled by the scroll adjustments.  See
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> for the fields in an adjustment - for
-    <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink>, the property
-    <ulink url="&gtk_adjustment_value;"><code>value</code></ulink> of <ulink url="&gtk-adjustment;">
-    <code>gtk-adjustment</code></ulink> represents the position of the scrollbar, which must be between the
-    <ulink url="&gtk_adjustment_lower;"><code>lower</code></ulink> and (<ulink url="&gtk_adjustment_upper;">
-    <code>upper</code></ulink> - <ulink url="&gtk_adjustment_page-size;"><code>page-size</code></ulink>)
-    properties.  The property <ulink url="&gtk_adjustment_page-size;"><code>page-size</code></ulink>
-    represents the size of the visible scrollable area.  The properties
-    <ulink url="&gtk_adjustment_step-increment;"><code>step-increment</code></ulink> and
-    <ulink url="&gtk_adjustment_page-increment;"><code>page-increment</code></ulink> are used when the user
-    asks to step down (using the small stepper arrows) or page down (using for example the PageDown key).
-   </para>
-   <note>
-    <para>
-     The <code>GtkHScrollbar</code> widget for a horizontal scrollbar and the <code>GtkVScrollbar</code>
-     widget for a vertical scrollbar are deprecated since GTK+ 3.2 and not exported in the Lisp
-     implementation.
-    </para>
-   </note>
-  </section>
-
   <section id="Scale_Widgets">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Scale_Widgets"><primary>GtkScale</primary></indexterm>
-     <indexterm zone="Scale_Widgets"><primary>scale, gtk-scale</primary></indexterm>
-     <indexterm zone="Scale_Widgets"><primary>scale-new, gtk-scale-new</primary></indexterm>
-     <indexterm zone="Scale_Widgets"><primary>scale-new-with-range, gtk-scale-new-with-range</primary></indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Scale Widgets</title>
    <para>
     Scale widgets are used to allow the user to visually select and manipulate a value within a specific
@@ -3919,22 +3863,21 @@ int main( int argc, char *argv[] )
     property.  A scale can be created with the function
     <ulink url="&gtk-scale-new;"><code>gtk-scale-new</code></ulink>, which takes two arguments.  The first
     argument gives the direction <code>:horizontal</code> or <code>:vertical</code> and the second a
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink>.
+    &gtk-adjustment;.
    </para>
    <para>
     The adjustment argument can either be an adjustment which has already been created with
     <ulink url="&gtk-adjustment-new;"><code>gtk-adjustment-new</code></ulink>, or <code>NIL</code>, in which
     case, an anonymous adjustment is created with all of its values set to 0.0 (which is not very useful in
     this case).  In order to avoid confusing yourself, you probably want to create your adjustment with a
-    <ulink url="&gtk_adjustment_page-size;"><code>page-size</code></ulink> of 0.0 so that its upper value
+    &gtk_adjustment_page-size; of 0.0 so that its upper value
     actually corresponds to the highest value the user can select.  The function
     <ulink url="&gtk-scale-new-with-range;"><code>gtk-scale-new-with-range</code></ulink> variant take care
     of creating a suitable adjustment.  The function takes four arguments.  The first argument is again the
     orientation of the scale and the next arguments represent the values for creating an
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> with intial values for the properties
-    <ulink url="&gtk_adjustment_lower;"><code>lower</code></ulink>, <ulink url="&gtk_adjustment_upper;">
-    <code>upper</code></ulink>, and <ulink url="&gtk_adjustment_step-increment;">
-    <code>step-increment</code></ulink>.  If you are already thoroughly confused, read the section
+    &gtk-adjustment; with intial values for the properties
+    &gtk_adjustment_lower;, &gtk_adjustment_upper;, and &gtk_adjustment_step-increment;.
+    If you are already thoroughly confused, read the section
     <link linkend="Adjustments">Adjustments</link> again for an explanation of what exactly adjustments do
     and how to create and manipulate them.
    </para>
@@ -4501,31 +4444,9 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Layout_Container">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Layout_Container">
-      <primary>GtkLayout</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout, gtk-layout</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout-new, gtk-layout-new</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout-move, gtk-layout-move</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout-put, gtk-layout-put</primary>
-     </indexterm>
-     <indexterm zone="Layout_Container">
-      <primary>layout-size, gtk-layout-size</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Layout Container</title>
    <para>
-    The layout container <ulink url="&gtk-layout;"><code>gtk-layout</code></ulink> is similar to the fixed
+    The layout container &gtk-layout; is similar to the fixed
     container &gtk-fixed; except that it implements an infinite
     (where infinity is less than 2^32) scrolling area.  The X window system has a limitation where windows
     can be at most 32767 pixels wide or tall.  The layout container gets around this limitation by doing some
@@ -4544,11 +4465,10 @@ int main( int argc, char *argv[] )
     <ulink url="&gtk-layout-size;"><code>gtk-layout-size</code></ulink>.
    </para>
    <para>
-    <ulink url="&gtk-layout;"><code>gtk-layout</code></ulink> implements the interface
-    <ulink url="&gtk-scrollable;"><code>gtk-scrollable</code></ulink>.  Therefore, for manipulating the
-    horizontal and vertical adjustment widgets the functions <ulink url="&gtk-scrollable-hadjustment;">
-    <code>gtk-scrollable-hadjustment</code></ulink> and <ulink url="&gtk-scrollable-vadjustment;">
-    <code>gtk-scrollable-vadjustment</code></ulink> are available.
+    &gtk-layout; implements the interface
+    &gtk-scrollable;.  Therefore, for manipulating the
+    horizontal and vertical adjustment widgets the functions &gtk-scrollable-hadjustment;
+    and &gtk-scrollable-vadjustment; are available.
    </para>
   </section>
 
@@ -4613,7 +4533,7 @@ int main( int argc, char *argv[] )
    <para>
     The function <ulink url="&gtk-frame-shadow-type;"><code>gtk-frame-shadow-type</code></ulink> alters the
     style of the box that is used to outline the frame.  The second argument is a keyword of the enumeration
-    type <ulink url="&gtk-shadow-type;"><code>gtk-shadow-type</code></ulink>.
+    type &gtk-shadow-type;.
    </para>
    <para>
     The figure <link linkend="figure-frame">Frame</link> illustrates the use of the frame widget.  The code
@@ -4828,232 +4748,170 @@ int main( int argc, char *argv[] )
    </example>
   </section>
 
-  <section id="Viewports">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Viewports">
-      <primary>GtkViewport</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>viewport, gtk-viewport</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>viewport-new, gtk-viewport-new</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>scrolled-window-add-with-viewpot, gtk-scrolled-window-add-with-viewport</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>scrollable-hadjustment, gtk-scrollable-hadjustment</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>scrollable-vadjustment, gtk-scrollable-vadjustment</primary>
-     </indexterm>
-     <indexterm zone="Viewports">
-      <primary>viewport-shadow-type, gtk-viewport-shadow-type</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
-   <title>Viewports</title>
+  <section id="Scrolled_Windows" revision="2021-3-19">
+   <title>Scrolled Windows</title>
+
+   <bridgehead>GtkScrollable</bridgehead>
    <para>
-    The <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> widget acts as an adaptor class,
-    implementing scrollability for child widgets that lack their own scrolling capabilities.  Use
-    <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> to scroll child widgets such as
+    The &gtk-scrollable; interface is an interface that is implemented by widgets with native scrolling
+    ability.This interface provides functions to access the &gtk-adjustment; objects for horizontal and
+    vertical srolling and the &gtk-scrollable-policy; settings of the scrollable widget.
+   </para>
+
+   <bridgehead>GtkScrollbar</bridgehead>
+   <para>
+    The &gtk-scrollbar; widget is a horizontal or vertical scrollbar, depending on the value of the
+    &gtk_orientable_orientation; property.
+   </para>
+   <para>
+    The position of the thumb in a scrollbar is controlled by the scroll adjustments. See the &gtk-adjustment;
+    object for the properties in an adjustment - for the &gtk-scrollbar; widget, the &gtk_adjustment_value;
+    property represents the position of the scrollbar, which must be between the &gtk_adjustment_lower;
+    value and the difference &gtk_adjustment_upper; - &gtk_adjustment_page-size;. The
+    &gtk_adjustment_page-size; property represents the size of the visible scrollable area. The
+    &gtk_adjustment_step-increment; and &gtk_adjustment_page-increment; properties are used when the user
+    asks to step down, using the small stepper arrows, or page down, using for example the PageDown key.
+   </para>
+
+   <bridgehead>GtkViewport</bridgehead>
+   <para>
+    The &gtk-viewport; widget acts as an adaptor class, implementing scrollability for child widgets that
+    lack their own scrolling capabilities. Use the &gtk-viewport; widget to scroll child widgets such as
     &gtk-grid;, &gtk-box;, and so on.
    </para>
    <para>
-    If a widget has native scrolling abilities, such as &gtk-text-view;, &gtk-tree-view; or
-    &gtk-icon-view; widgets, it can be added to a
-    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> with the function
-    &gtk-container-add;. If a widget does not, you must first add the widget to a <ulink url="&gtk-viewport;">
-    <code>gtk-viewport</code></ulink>, then add the viewport to the scrolled window. The convenience function
-    <ulink url="&gtk-scrolled-window-add-with-viewport;">
-    <code>gtk-scrolled-window-add-with-viewport</code></ulink> does exactly this, so you can ignore the
-    presence of the viewport.
+    If a widget has native scrolling abilities, such as the widgets &gtk-text-view;, &gtk-tree-view; or
+    &gtk-icon-view;, it can be added to a &gtk-scrolled-window; widget with the function &gtk-container-add;.
+    If a widget does not, you must first add the widget to a &gtk-viewport; widget, then add the viewport to
+    the scrolled window. The function &gtk-container-add; does this automatically if a child that does not
+    implement the &gtk-scrollable; interface is added to a &gtk-scrolled-window; widget, so you can ignore
+    the presence of the viewport.
    </para>
    <para>
-    The <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> will start scrolling content only if
-    allocated less than the child widget's minimum size in a given orientation.
+    The &gtk-viewport; widget will start scrolling content only if allocated less than the child widget's
+    minimum size in a given orientation.
    </para>
    <para>
-    A viewport is created with the function <ulink url="&gtk-viewport-new;">
-    <code>gtk-viewport-new</code></ulink>.  The function takes two arguments to specify the horizontal and
-    vertical adjustments that the widget is to use when you create the widget.  It will create its own if you
-    pass <code>NIL</code> as the value of the arguments.
+    A viewport is created with the function &gtk-viewport-new;. The function takes two optional arguments to
+    specify the horizontal and vertical adjustments that the widget is to use when you create the widget. It
+    will create its own if you use the optional values for the arguments.
    </para>
    <para>
-    <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> implement the interface
-    <ulink url="&gtk-scrollable;"><code>gtk-scrollable</code></ulink>.  Therefore, the you can get and set
-    the adjustments after the widget has been created using the one of the four functions
-    <ulink url="&gtk-scrollable-hadjustment;"><code>gtk-scrollable-hadjustment</code></ulink>,
-    and <ulink url="&gtk-scrollable-vadjustment;"><code>gtk-scrollable-vadjustment</code></ulink>.
+    The &gtk-viewport; widget implement the &gtk-scrollable; interface. Therefore, you can get and set the
+    adjustments after the widget has been created using the access functions &gtk-scrollable-hadjustment; and
+    &gtk-scrollable-vadjustment;.
    </para>
    <para>
-    The only other viewport function is <ulink url="&gtk-viewport-shadow-type;">
-    <code>gtk-viewport-shadow-type</code></ulink> used to alter its appearance.  The second argument is of
-    type <ulink url="&gtk-shadow-type;"><code>gtk-shadow-type</code></ulink>.
+    The viewport function &gtk-viewport-shadow-type; is used to alter the shadow type of the viewport which
+    is a value of the &gtk-shadow-type; enumeration.
    </para>
-  </section>
 
-  <section id="Scrolled_Windows">
-   <title>Scrolled Windows</title>
+   <bridgehead>GtkScrolledWindow</bridgehead>
+   <para>
+    The &gtk-scrolled-window; widget is a container that accepts a single child widget, makes that child
+    scrollable using either internally added scrollbars or externally associated adjustments, and optionally
+    draws a frame around the child.
+   </para>
+   <para>
+    Widgets with native scrolling support, i.e. those whose classes implement the &gtk-scrollable; interface,
+    are added directly. For other types of widgets, the &gtk-viewport; class acts as an adaptor, giving
+    scrollability to other widgets. The &gtk-scrolled-window; widgets implementation of the function
+    &gtk-container-add; intelligently accounts for whether or not the added child is a &gtk-scrollable;
+    widget. If it is not, the &gtk-scrolled-window; widget wraps the child in a &gtk-viewport; widget and
+    adds that for you. Therefore, you can just add any child widget and not worry about the details.
+   </para>
+   <para>
+    Unless the &gtk_scrolled_window_hscrollbar-policy; and &gtk_scrolled_window_vscrollbar-policy; properties
+    are <code>:never</code> or <code>:external</code>, the &gtk-scrolled-window; widget adds internal
+    &gtk-scrollbar; widgets around its child. The scroll position of the child, and if applicable the
+    scrollbars, is controlled by the &gtk_scrolled_window_hadjustment; and &gtk_scrolled_window_vadjustment;
+    properties that are associated with the &gtk-scrolled-window; widget. See the docs on the &gtk-scrollbar;
+    widget for the details, but note that the &gtk_adjustment_step-increment; and
+    &gtk_adjustment_page-increment; properties are only effective if the policy causes scrollbars to be
+    present.
+   </para>
+   <para>
+    If a &gtk-scrolled-window; widget does not behave quite as you would like, or does not have exactly the
+    right layout, it is very possible to set up your own scrolling with the &gtk-scrollbar; widget and for
+    example a &gtk-grid; widget.
+   </para>
+
+   <para>
+    The function &gtk-scrolled-window-new; is used to create a new scrolled window, where the first
+    optional argument is the adjustment for the horizontal direction, and the second optional argument,
+    the adjustment for the vertical direction.
+   </para>
+   <para>
+    The functions &gtk-scrolled-window-hscrollbar-policy; and &gtk-scrolled-window-vscrollbar-policy; set
+    the policy to be used with respect to the scrollbars. The scrollbar policy is a value of the
+    &gtk-policy-type; enumeration and may be one of <code>:automatic</code> or <code>:always</code>.
+    <code>:automatic</code> will automatically decide whether you need scrollbars, whereas
+    <code>:always</code> will always leave the scrollbars there. All possible values of the
+    &gtk-policy-type; enumeration are listed in <xref linkend="table-gtk-policy-type"/>.
+   </para>
+
+   <table id="table-gtk-policy-type">
+    <caption>Values of the GtkPolicyType enumeration</caption>
+    <colgroup>
+       <col style="width:20%"/>
+       <col style="width:80%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Value</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>:always</code></td>
+     <td>The scrollbar is always visible. The view size is independent of the content.</td>
+    </tr>
+    <tr>
+     <td><code>:automatic</code></td>
+     <td>
+      The scrollbar will appear and disappear as necessary. For example, when all of a &gtk-tree-view;
+      widget cannot be seen.
+     </td>
+    </tr>
+    <tr>
+     <td><code>:never</code></td>
+     <td>
+      The scrollbar should never appear. In this mode the content determines the size.
+     </td>
+    </tr>
+    <tr>
+     <td><code>:external</code></td>
+     <td>
+      Do not show a scrollbar, but do not force the size to follow the content. This can be used e.g. to make
+      multiple scrolled windows share a scrollbar.
+     </td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
+   </table>
+
+   <bridgehead>Example GtkScrolledWindow</bridgehead>
+
    <figure id="figure-scrolled-window">
     <title>Scrolled Window</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/scrolled-window352x329.png" format="png"></imagedata>
+      <imagedata fileref="figures/scrolled-window.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> is a &gtk-bin; subclass:
-    it is a container that accepts a single child widget.
-    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> adds scrollbars to the child
-    widget and optionally draws a beveled frame around the child widget.
+    <xref linkend="example-scrolled-window"/> is a simple example that packs an image into a scrolled window.
+    Try playing with resizing the window. You will notice how the scrollbars react.
    </para>
-   <para>
-    The scrolled window can work in two ways.  Some widgets have native scrolling support; these widgets
-    implement the <ulink url="&gtk-scrollable;"><code>gtk-scrollable</code></ulink> interface. Widgets with
-    native scroll support include &gtk-tree-view;,
-    &gtk-text-view;, and <ulink url="&gtk-layout;">
-    <code>gtk-layout</code></ulink>.
-   </para>
-   <para>
-    For widgets that lack native scrolling support, the <ulink url="&gtk-viewport;">
-    <code>gtk-viewport</code></ulink> widget acts as an adaptor class, implementing scrollability for child
-    widgets that lack their own scrolling capabilities.  Use <ulink url="&gtk-viewport;">
-    <code>gtk-viewport</code></ulink> to scroll child widgets such as &gtk-grid; &gtk-box;, and so on.
-   </para>
-   <para>
-    If a widget has native scrolling abilities, it can be added to the <ulink url="&gtk-scrolled-window;">
-    <code>gtk-scrolled-window</code></ulink> with the function &gtk-container-add;. If a widget does not, you
-    must first add the widget to a <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink>, then add
-    the <ulink url="&gtk-viewport;"><code>gtk-viewport</code></ulink> to the scrolled window. The convenience
-    function <ulink url="&gtk-scrolled-window-add-with-viewport;">
-    <code>gtk-scrolled-window-add-with-viewport</code></ulink> does exactly this, so you can ignore the
-    presence of the viewport.
-   </para>
-   <para>
-    The position of the scrollbars is controlled by the scroll adjustments.  See
-    <ulink url="&gtk-adjustment;"><code>gtk-adjustment</code></ulink> for the fields in an adjustment - for
-    <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink>, used by
-    <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink>, the "value" field represents
-    the position of the scrollbar, which must be between the "lower" field and "upper - page-size".  The
-    "page-size" field represents the size of the visible scrollable area.  The "step-increment" and
-    "page-increment" fields are used when the user asks to step down (using the small stepper arrows) or page
-    down (using for example the PageDown key).
-   </para>
-   <para>
-    If a <ulink url="&gtk-scrolled-window;"><code>gtk-scrolled-window</code></ulink> does not behave quite as
-    you would like, or does not have exactly the right layout, it is very possible to set up your own
-    scrolling with <ulink url="&gtk-scrollbar;"><code>gtk-scrollbar</code></ulink> and for example a
-    &gtk-grid;.
-   </para>
-   <para>
-    The function <ulink url="&gtk-scrolled-window-new;"><code>gtk-scrolled-window-new</code></ulink> is used
-    to create a new scrolled window, where the first argument is the adjustment for the horizontal direction,
-    and the second, the adjustment for the vertical direction.  These are almost always set to
-    <code>NIL</code>.
-   </para>
-   <para>
-    The function <ulink url="&gtk-scrolled-window-policy;"><code>gtk-scrolled-window-policy</code></ulink>
-    sets the policy to be used with respect to the scrollbars. The first argument is the scrolled window you
-    wish to change. The second argument is a list with the policy for the horizontal scrollbar, and the
-    policy for the vertical scrollbar.
-   </para>
-   <para>
-    The policy is of the enumeration type <ulink url="&gtk-policy-type;"><code>gtk-policy-type</code></ulink>
-    and may be one of <code>:automatic</code> or <code>:always</code>. <code>:automatic</code> will
-    automatically decide whether you need scrollbars, whereas <code>:always</code> will always leave the
-    scrollbars there. All possible values of <ulink url="&gtk-policy-type;">
-    <code>gtk-policy-type</code></ulink> are listed in the table <link linkend="table-gtk-policy-type">
-    GtkPolicyType</link>.
-   </para>
-   <table id="table-gtk-policy-type" frame='all'>
-    <title>The values of the enumeration of type GtkPolicyType</title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Value</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>:always</code></entry>
-       <entry valign="top">The scrollbar is always visible.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:automatic</code></entry>
-       <entry valign="top">
-        The scrollbar will appear and disappear as necessary. For example, when all of a GtkCList can not
-        be seen.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:never</code></entry>
-       <entry valign="top">The scrollbar will never appear.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:external</code></entry>
-       <entry valign="top">
-        Do not show a scrollbar, but do not force the size to follow the content. This can be used e.g. to
-        make multiple scrolled windows share a scrollbar. Since 3.16
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </table>
-   <para>
-    Example <link linkend="example-scrolled-window">Scrolled Window</link> is a simple example that packs a
-    table with 100 toggle buttons into a scrolled window.  Try playing with resizing the window.  You will
-    notice how the scrollbars react.  You may also wish to use the <ulink url="&gtk-widget-size-request;">
-    <code>gtk-widget-size-request</code></ulink> call to set the default size of the window or other widgets.
-   </para>
+
    <example id="example-scrolled-window">
     <title>Scrolled Window</title>
-    <programlisting>
-(defun example-scrolled-window ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-dialog
-                                 :type :toplevel
-                                 :title "Example Scrolled Window"
-                                 :border-width 0
-                                 :width-request 350
-                                 :height-request 300))
-          (scrolled (make-instance 'gtk-scrolled-window
-                                   :border-width 12
-                                   :hscrollbar-policy :automatic
-                                   :vscrollbar-policy :always))
-          (table (make-instance 'gtk-table
-                                :n-rows 10
-                                :n-columns 10
-                                :row-spacing 10
-                                :column-spacing 10
-                                :homogeneous nil)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
-      (gtk-scrolled-window-add-with-viewport scrolled table)
-      (dotimes (i 10)
-        (dotimes (j 10)
-          (gtk-table-attach table
-                            (make-instance 'gtk-button
-                                           :label
-                                           (format nil "(&#x7e;d, &#x7e;d)" i j))
-                            i (+ i 1) j (+ j 1))))
-      (let ((button (make-instance 'gtk-button
-                                   :label "Close"
-                                   :can-default t)))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
-        (gtk-widget-grab-default button))
-      (gtk-widget-show window))))
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/scrolled-window.lisp" parse="text"/>
     </programlisting>
    </example>
   </section>
@@ -8903,8 +8761,8 @@ lambda (buffer location text len)
     arrow will point.
    </para>
    <para>
-    The shadow type argument is of the enumeration type <ulink url="&gtk-shadow-type;">
-    <code>gtk-shadow-type</code></ulink> and may take one of the the values <code>:none</code>,
+    The shadow type argument is of the enumeration type &gtk-shadow-type;
+    and may take one of the the values <code>:none</code>,
     <code>:in</code>, <code>:etched-in</code> and <code>:etched-out</code>.
    </para>
    <para>
@@ -11452,61 +11310,285 @@ lambda (merge widget)
   </section>
  </chapter>
 
+ <chapter id="Printing" revision="2021-3-16">
+  <title>Printing</title>
+
+  <section id="Print_Operation" revision="2021-3-16">
+   <title>Print Operation</title>
+   <para>
+    At the application development level, the GTK+ printing API provides dialogs that are consistent across
+    applications and allows use of Cairo's common drawing API, with Pango-driven text rendering. In the
+    implementation of this common API, platform-specific backends and printer-specific drivers are used.
+   </para>
+   <para>
+    The primary object is the &gtk-print-operation; object, allocated for each print operation. To handle page
+    drawing connect to its signals, or inherit from it and override the default virtual signal handlers.
+    The &gtk-print-operation; object automatically handles all the settings affecting the print loop.
+   </para>
+
+   <bridgehead>Signals</bridgehead>
+   <para>
+    The function &gtk-print-operation-run; starts the print loop, during which various signals are emitted:
+   </para>
+   <variablelist>
+    <varlistentry>
+     <term>"begin-print"</term>
+     <listitem>
+      You must handle this signal, because this is where you create and set up a &pango-layout; object using
+      the provided &gtk-print-context; object, and break up your printing output into pages.
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>"paginate"</term>
+     <listitem>
+      Pagination is potentially slow so if you need to monitor it you can call the function
+      &gtk-print-operation-show-progress; and handle this signal.
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term></term>
+     <listitem>
+      For each page that needs to be rendered, the following signals are emitted:
+      <variablelist>
+       <varlistentry>
+        <term>"request-page-setup"</term>
+        <listitem>
+         Provides a &gtk-print-context; object, page number and &gtk-page-setup; object. Handle this signal
+         if you need to modify page setup on a per-page basis.
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term>"draw-page"</term>
+        <listitem>
+         You must handle this signal, which provides a &gtk-print-context; object and a page number. The
+         print context should be used to create a &cairo-context; instance into which the provided page
+         should be drawn. To render text, iterate over the &pango-layout; object you created in the
+         "begin-print" handler.
+        </listitem>
+       </varlistentry>
+      </variablelist>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>"end-print"</term>
+     <listitem>
+      A handler for it is a safe place to free any resources related to a print operaton. If you have your
+      custom class that inherits from the &gtk-print-operation; class, it is naturally simpler to do it in
+      the destructor.
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>"done"</term>
+     <listitem>
+      This signal is emitted when printing is finished, meaning when the print data is spooled. Note that the
+      provided &gtk-print-operation-result; value may indicate that an error occurred. In any case you
+      probably want to notify the user about the final status.
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>"status-chanded"</term>
+     <listitem>
+      Emitted whenever a print job's status changes, until it is finished. Call the function
+      &gtk-print-operation-track-print-status; to monitor the job status after spooling. To see the status,
+      use the functions &gtk-print-operation-status; or &gtk-print-operation-status-string;.
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </section>
+
+  <section id="Page_Setup" revision="2021-3-17">
+   <title>Page Setup</title>
+
+   <figure id="figure-page-setup-dialog">
+    <title>Page Setup Dialog</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/page-setup-dialog.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    The &gtk-print-operation; class has a method called &gtk-print-operation-default-page-setup; which selects
+    the default paper size, orientation and margins. To show a page setup dialog from your application, use
+    the function &gtk-print-run-page-setup-dialog;, which returns a &gtk-page-setup; object with the chosen
+    settings. Use this object to update a &gtk-print-operation; object and to access the selected
+    &gtk-paper-size; instance, &gtk-page-orientation; value and printer-specific margins.
+   </para>
+   <para>
+    You should save the chosen &gtk-page-setup; instance so you can use it again if the page setup dialog is
+    shown again.
+   </para>
+   <para>
+    The Cairo coordinate system, in the "draw-page" handler, is automatically rotated to the current page
+    orientation. It is normally within the printer margins, but you can change that via the function
+    &gtk-print-operation-use-full-page;. The default measurement unit is device pixels. To select other units,
+    use the function &gtk-print-operation-unit;.
+   </para>
+
+   <example id="create-page-setup-dialog">
+    <title>Create Page Setup Dialog</title>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/page-setup-dialog.lisp" parse="text"/>
+   </programlisting>
+   </example>
+
+  </section>
+
+  <section id="Rendering_text" revision="2021-3-16">
+   <title>Rendering text</title>
+   <para>
+    Text rendering is done using Pango. The &pango-layout; object for printing should be created by calling
+    the function &gtk-print-context-create-pango-layout;. The &gtk-print-context; object also provides the
+    page metrics, via the functions &gtk-print-context-width; and &gtk-print-context-height;. The number of
+    pages can be set with the function &gtk-print-operation-n-pages;. To actually render the Pango text in the
+    "on-draw-page" handler, get a &cairo-context; object with the function &gtk-print-context-cairo-context;
+    and show the &pango-layout-line; instances that appear within the requested page number.
+   </para>
+  </section>
+
+  <section id="Asynchronous_operations" revision="2021-3-16">
+   <title>Asynchronous operations</title>
+   <para>
+    By default, the function &gtk-print-operation-run; returns when a print operation is completed. If you
+    need to run a non-blocking print operation, call the function &gtk-print-operation-allow-async;. Note that
+    this function is not supported on all platforms, however the done signal will still be emitted.
+   </para>
+   <para>
+    The function &gtk-print-operation-run; may return the value <code>:in-progress</code> of the
+    &gtk-print-operation-result; enumeration. To track status and handle the result or error you need to
+    implement signal handlers for the "done" and "status-changed" signals:
+   </para>
+   <para>
+    For instance,
+   </para>
+   <programlisting>
+(let ((operation (make-instance 'gtk-print-operation)))
+  (g-signal-connect operation "done" #'on-print-operation-done)
+  ;; Run the print operation
+  ... )
+   </programlisting>
+   <para>
+    Second, check for an error and connect to the "status-changed" signal. For instance:
+   </para>
+   <programlisting>
+(defun on-print-operation-done (operation result)
+  (if (eq :error result)
+      ;; Notify user
+      (if (eq :apply result)
+          ;; Update print settings with the ones used in this print operation
+      ))
+  (if (not (gtk-print-operation-is-finished operation))
+      (g-signal-connect operation "status-changed" #'on-print-operation-status-changed))
+  ... )
+   </programlisting>
+   <para>
+    Finally, check the status. For instance,
+   </para>
+   <programlisting>
+(defun on-print-operaton-status-changed (operation)
+  (if (gtk-print-operation-is-finished operation)
+      ;; the print job is finished
+      ;; get the status with gtk-print-operation-status or gtk-print-operation-status-string
+  )
+  ;; Update UI
+  ... )
+   </programlisting>
+  </section>
+
+  <section id="Export_to_PDF" revision="2021-3-16">
+   <title>Export to PDF</title>
+   <para>
+    The 'Print to file' option is available in the print dialog, without the need for extra implementation.
+    However, it is sometimes useful to generate a PDF file directly from code. For instance,
+   </para>
+   <programlisting>
+(let ((operation (make-instance 'gtk-print-operation)))
+  (setf (gtk-print-operation-export-filename operation) "test.pdf")
+  (gtk-print-operation-run operation :export parent)
+  ... )
+   </programlisting>
+  </section>
+
+  <section id="Extending_the_print_dialog" revision="2021-3-16">
+   <title>Extending the print dialog</title>
+   <para>
+    You may add a custom tab to the print dialog:
+   </para>
+   <itemizedlist>
+    <listitem>
+     Set the title of the tab via the function &gtk-print-operation-custom-tab-label;, create a new widget
+     and return it from the "create-custom-widget" signal handler. You'll probably want this to be a
+     container widget, packed with some others.
+    </listitem>
+    <listitem>
+     Get the data from the widgets in the "custom-widget-apply" signal handler.
+    </listitem>
+   </itemizedlist>
+   <para>
+    The "custom-widget-apply" signal provides the widget you previously created, to simplify things you can
+    keep the widgets you expect to contain some user input as global to the signal handlers. For example,
+    let's say you have a &gtk-entry; widget:
+   </para>
+   <programlisting>
+(let ((entry (make-instance 'gtk-entry)))
+
+  (defun on-create-custom-widget (operation)
+    (let ((hbox (make-instance 'gtk-box
+                               :orientation :horizontal
+                               :border-width 6))
+          (label (make-instance 'gtk-label
+                                :label "Enter some text: ")))
+    (setf (gtk-print-operation-custom-label operation) "My custom tab")
+    (gtk-box-pack-start hbox label :expand nil)
+    (gtk-box-pack-start hbox entry :expand nil)
+    (gtk-widget-show-all hbox)
+    hbox))
+
+  (defun on-custom-widget-apply (operation widget)
+    (let* ((user-input (gtk-entry-text entry)))
+      ... )))
+   </programlisting>
+   <para>
+    The example in examples/book/printing/advanced demonstrates this.
+   </para>
+  </section>
+
+  <section id="Preview" revision="2021-3-16">
+   <title>Preview</title>
+   <para>
+The native GTK+ print dialog has a preview button, but you may also start a preview directly from an application:
+   </para>
+   <programlisting>
+(let ((operation (make-instance 'gtk-print-operation)))
+  (gtk-print-operation-run operation :preview parent)
+  ... )
+   </programlisting>
+   <para>
+    On Unix, the default preview handler uses an external viewer program. On Windows, the native preview
+    dialog will be shown. If necessary you may override this behaviour and provide a custom preview dialog.
+   </para>
+  </section>
+
+  <section id="Printing_Example" revision="2021-3-17">
+   <title>Printing Example</title>
+   <para>
+    The following example demonstrates how to print some input from a user interface. It shows how to
+    implement the "begin-print" and "draw-page" handler, as well as how to track print status and update the
+    print settings.
+   </para>
+   <example id="do-print-operation">
+    <title>Do Print Operation</title>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/print-operation.lisp" parse="text"/>
+   </programlisting>
+   </example>
+  </section>
+ </chapter>
+
  <chapter id="Application_Suport">
   <title>Application Support</title>
   <section id="Application_Class">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Application_Class">
-      <primary>GtkApplication</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application, gtk-application</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>GtkApplicationWindow</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application-window, gtk-application-window</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>GApplication</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application, g-application</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>action-group-activate-action, g-action-group-activate-action</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>GMenuModel</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>menu-model, g-menu-model</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>GtkBuilder</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>builder, gtk-builder</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>GActionMap</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>action-map, g-action-map</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application-app-menu, gtk-application-app-menu</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application-menubar, gtk-application-menubar</primary>
-     </indexterm>
-     <indexterm zone="Application_Class">
-      <primary>application-inhibit, gtk-application-inhibit</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Application Class</title>
    <para>
     <ulink url="&gtk-application;"><code>gtk-application</code></ulink> is a class that handles many
@@ -12915,6 +12997,10 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
+
+
 
 
 

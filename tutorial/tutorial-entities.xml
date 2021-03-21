@@ -119,7 +119,11 @@
 
 <!-- ... GTK Library ..................................................................................... -->
 
+<!-- ... GTK-ABOUT-DIALOG ................................................................................ -->
+
 <!ENTITY gtk-about-dialog                    "&api;gtk_class_gtk-about-dialog.html">
+
+<!-- ... GTK-ACCEL-GROUP ................................................................................. -->
 
 <!ENTITY gtk-accel-group                     "&api;gtk_class_gtk-accel-group.html">
 
@@ -137,16 +141,43 @@
 <!ENTITY gtk-action-group-set-translation-domain
                                              "&api;gtk_fun_gtk-action-group-set-translation-domain.html">
 
-<!ENTITY gtk-adjustment                      "&api;gtk_class_gtk-adjustment.html">
-<!ENTITY gtk_adjustment_lower                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-lower">
-<!ENTITY gtk_adjustment_page-increment       "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-increment">
-<!ENTITY gtk_adjustment_page-size            "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-size">
-<!ENTITY gtk_adjustment_step-increment       "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-step-increment">
-<!ENTITY gtk_adjustment_upper                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-upper">
-<!ENTITY gtk_adjustment_value                "&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-value">
+<!-- ... GTK-ADJUSTMENT .................................................................................. -->
+
+<!ENTITY gtk-adjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-adjustment</code></ulink>">
+
+<!ENTITY gtk_adjustment_lower
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-lower'>
+          <code xmlns='http://docbook.org/ns/docbook'>lower</code></ulink>">
+<!ENTITY gtk_adjustment_page-increment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-increment'>
+          <code xmlns='http://docbook.org/ns/docbook'>page-increment</code></ulink>">
+<!ENTITY gtk_adjustment_page-size
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-page-size'>
+          <code xmlns='http://docbook.org/ns/docbook'>page-size</code></ulink>">
+<!ENTITY gtk_adjustment_step-increment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-step-increment'>
+          <code xmlns='http://docbook.org/ns/docbook'>step-increment</code></ulink>">
+<!ENTITY gtk_adjustment_upper
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-upper'>
+          <code xmlns='http://docbook.org/ns/docbook'>upper</code></ulink>">
+<!ENTITY gtk_adjustment_value
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-adjustment.html#gtk_slot_gtk-adjustment-value'>
+          <code xmlns='http://docbook.org/ns/docbook'>value</code></ulink>">
+
 <!ENTITY gtk-adjustment-changed              "&api;gtk_fun_gtk-adjustment-changed.html">
 <!ENTITY gtk-adjustment-new                  "&api;gtk_fun_gtk-adjustment-new.html">
 <!ENTITY gtk-adjustment-value                "&api;gtk_fun_gtk-adjustment-value.html">
+
+<!-- ... GTK-ALIGNMENT ................................................................................... -->
 
 <!ENTITY gtk-alignment                       "&api;gtk_class_gtk-alignment.html">
 <!ENTITY gtk-alignment-new                   "&api;gtk_fun_gtk-alignment-new.html">
@@ -734,11 +765,19 @@
 <!ENTITY gtk-label-set-text-with-mnemonic    "&api;gtk_fun_gtk-label-set-text-with-mnemonic.html">
 <!ENTITY gtk-label-text                      "&api;gtk_fun_gtk-label-text.html">
 
-<!ENTITY gtk-layout                          "&api;gtk_class_gtk-layout.html">
+<!-- ... GTK-LAYOUT ...................................................................................... -->
+
+<!ENTITY gtk-layout
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-layout.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-layout</code></ulink>">
+
 <!ENTITY gtk-layout-new                      "&api;gtk_fun_gtk-layout-new.html">
 <!ENTITY gtk-layout-move                     "&api;gtk_fun_gtk-layout-move.html">
 <!ENTITY gtk-layout-put                      "&api;gtk_fun_gtk-layout-put.html">
 <!ENTITY gtk-layout-size                     "&api;gtk_fun_gtk-layout-size.html">
+
+<!-- ... GTK-LINK-BUTTON ................................................................................. -->
 
 <!ENTITY gtk-link-button
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -844,10 +883,13 @@
 <!ENTITY gtk-notebook-popup-enable           "&api;gtk_fun_gtk-notebook-popup-enable.html">
 <!ENTITY gtk-notebook-popup-disable          "&api;gtk_fun_gtk-notebook-popup-disable.html">
 
+<!-- ... GTK-ORIENTABLE .................................................................................. -->
+
 <!ENTITY gtk-orientable
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-orientable.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-orientable</code></ulink>">
+
 <!ENTITY gtk_orientable_orientation
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-orientable.html#gtk_slot_gtk-orientable-orientation'>
@@ -862,9 +904,14 @@
                  url='&api;gtk_sym_gtk-orientation.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-orientation</code></ulink>">
 
-<!ENTITY gtk-policy-type                     "&api;gtk_sym_gtk-policy-type.html">
+<!-- ... GTK-PAGE-SETUP .................................................................................. -->
 
-<!ENTITY gtk-position-type                   "&api;gtk_sym_gtk-position-type.html">
+<!ENTITY gtk-page-setup
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-page-setup.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-page-setup</code></ulink>">
+
+<!-- ... GTK-PANED ....................................................................................... -->
 
 <!ENTITY gtk-paned                           "&api;gtk_class_gtk-paned.html">
 <!ENTITY gtk-paned-new                       "&api;gtk_fun_gtk-paned-new.html">
@@ -873,6 +920,117 @@
 <!ENTITY gtk-paned-pack1                     "&api;gtk_fun_gtk-paned-pack1.html">
 <!ENTITY gtk-paned-pack2                     "&api;gtk_fun_gtk-paned-pack2.html">
 <!ENTITY gtk-paned-position                  "&api;gtk_fun_gtk-paned-position.html">
+
+<!-- ... GTK-POLICY-TYPE ................................................................................. -->
+
+<!ENTITY gtk-policy-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-policy-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-policy-type</code></ulink>">
+
+<!ENTITY gtk-position-type                   "&api;gtk_sym_gtk-position-type.html">
+
+<!-- ... GTK-PAGE-ORIENTATION ............................................................................ -->
+
+<!ENTITY gtk-page-orientation
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-page-orientation.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-page-orientation</code></ulink>">
+
+<!-- ... GTK-PAPER-SIZE .................................................................................. -->
+
+<!ENTITY gtk-paper-size
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-paper-size.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-paper-size</code></ulink>">
+
+<!-- ... GTK-PRINT-CONTEXT ............................................................................... -->
+
+<!ENTITY gtk-print-context
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-print-context.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-context</code></ulink>">
+
+<!ENTITY gtk-print-context-cairo-context
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-context-cairo-context.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-context-cairo-context</code></ulink>">
+<!ENTITY gtk-print-context-height
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-context-height.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-context-height</code></ulink>">
+<!ENTITY gtk-print-context-create-pango-layout
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-context-create-pango-layout.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-context-create-pango-layout</code></ulink>">
+<!ENTITY gtk-print-context-width
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-context-width.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-context-width</code></ulink>">
+
+<!-- ... GTK-PRINT-OPERATION ............................................................................. -->
+
+<!ENTITY gtk-print-operation
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-print-operation.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation</code></ulink>">
+
+<!ENTITY gtk-print-operation-result
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-print-operation-result.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-result</code></ulink>">
+
+<!ENTITY gtk-print-operation-allow-async
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-allow-async.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-allow-async</code></ulink>">
+<!ENTITY gtk-print-operation-custom-tab-label
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-custom-tab-label.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-custom-tab-label</code></ulink>">
+<!ENTITY gtk-print-operation-default-page-setup
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-default-page-setup.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-default-page-setup</code></ulink>">
+<!ENTITY gtk-print-operation-n-pages
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-n-pages.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-n-pages</code></ulink>">
+<!ENTITY gtk-print-operation-run
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-run.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-run</code></ulink>">
+<!ENTITY gtk-print-operation-show-progress
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-show-progress.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-show-progress</code></ulink>">
+<!ENTITY gtk-print-operation-status
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-status.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-status</code></ulink>">
+<!ENTITY gtk-print-operation-status-string
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-status-string.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-status-string</code></ulink>">
+<!ENTITY gtk-print-operation-track-print-status
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-track-print-status.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-track-print-status</code></ulink>">
+<!ENTITY gtk-print-operation-unit
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-unit.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-unit</code></ulink>">
+<!ENTITY gtk-print-operation-use-full-page
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-operation-use-full-page.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-operation-use-full-page</code></ulink>">
+
+<!ENTITY gtk-print-run-page-setup-dialog
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-print-run-page-setup-dialog.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-print-run-page-setup-dialog</code></ulink>">
+
+<!-- ... GTK-PROGRESS-BAR ................................................................................ -->
 
 <!ENTITY gtk-progress-bar                    "&api;gtk_class_gtk-progress-bar.html">
 <!ENTITY gtk-progress-bar-fraction           "&api;gtk_fun_gtk-progress-bar-fraction.html">
@@ -943,18 +1101,73 @@
 <!ENTITY gtk-scale-new-with-range            "&api;gtk_fun_gtk-scale-new-with-range.html">
 <!ENTITY gtk-scale-value-pos                 "&api;gtk_fun_gtk-scale-value-pos.html">
 
-<!ENTITY gtk-scrollable                      "&api;gtk_class_gtk-scrollable.html">
-<!ENTITY gtk-scrollable-hadjustment          "&api;gtk_fun_gtk-scrollable-hadjustment.html">
-<!ENTITY gtk-scrollable-vadjustment          "&api;gtk_fun_gtk-scrollable-vadjustment.html">
+<!-- ... GTK-SCROLLABLE .................................................................................. -->
 
-<!ENTITY gtk-scrollbar                       "&api;gtk_class_gtk-scrollbar.html">
+<!ENTITY gtk-scrollable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrollable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrollable</code></ulink>">
+
+<!ENTITY gtk-scrollable-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-scrollable-policy.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrollable-policy</code></ulink>">
+<!ENTITY gtk-scrollable-hadjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-scrollable-hadjustment.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrollable-hadjustment</code></ulink>">
+<!ENTITY gtk-scrollable-vadjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-scrollable-vadjustment.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrollable-vadjustment</code></ulink>">
+
+<!-- ... GTK-SCROLLBAR ................................................................................... -->
+
+<!ENTITY gtk-scrollbar
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrollbar.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrollbar</code></ulink>">
+
 <!ENTITY gtk-scrollbar-new                   "&api;gtk_fun_gtk-scrollbar-new.html">
 
-<!ENTITY gtk-scrolled-window                 "&api;gtk_class_gtk-scrolled-window.html">
-<!ENTITY gtk-scrolled-window-new             "&api;gtk_fun_gtk-scrolled-window-new.html">
-<!ENTITY gtk-scrolled-window-add-with-viewport
-                                             "&api;gtk_fun_gtk-scrolled-window-add-with-viewport.html">
-<!ENTITY gtk-scrolled-window-policy          "&api;gtk_fun_gtk-scrolled-window-policy.html">
+<!-- ... GTK-SCROLLED-WINDOW ............................................................................. -->
+
+<!ENTITY gtk-scrolled-window
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrolled-window.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrolled-window</code></ulink>">
+
+<!ENTITY gtk_scrolled_window_hadjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrolled-window.html#gtk_slot_gtk-scrolled-window-hadjustment'>
+          <code xmlns='http://docbook.org/ns/docbook'>hadjustment</code></ulink>">
+<!ENTITY gtk_scrolled_window_hscrollbar-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrolled-window.html#gtk_slot_gtk-scrolled-window-hscrollbar-policy'>
+          <code xmlns='http://docbook.org/ns/docbook'>hscrollbar-policy</code></ulink>">
+<!ENTITY gtk_scrolled_window_vadjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrolled-window.html#gtk_slot_gtk-scrolled-window-vadjustment'>
+          <code xmlns='http://docbook.org/ns/docbook'>vadjustment</code></ulink>">
+<!ENTITY gtk_scrolled_window_vscrollbar-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-scrolled-window.html#gtk_slot_gtk-scrolled-window-vscrollbar-policy'>
+          <code xmlns='http://docbook.org/ns/docbook'>vscrollbar-policy</code></ulink>">
+
+<!ENTITY gtk-scrolled-window-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-scrolled-window-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrolled-window-new</code></ulink>">
+<!ENTITY gtk-scrolled-window-hscrollbar-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-scrolled-window-hscrollbar-policy.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrolled-window-hscrollbar-policy</code></ulink>">
+<!ENTITY gtk-scrolled-window-vscrollbar-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-scrolled-window-vscrollbar-policy.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-scrolled-window-vscrollbar-policy</code></ulink>">
+
+<!-- ... GTK-SELECTION-MODE .............................................................................. -->
 
 <!ENTITY gtk-selection-mode
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -981,7 +1194,10 @@
 <!ENTITY gtk-shell-shows-app-menu            "&api;gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-app-menu">
 <!ENTITY gtk-shell-shows-menubar             "&api;gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-menubar">
 
-<!ENTITY gtk-shadow-type                     "&api;gtk_sym_gtk-shadow-type.html">
+<!ENTITY gtk-shadow-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-shadow-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-shadow-type</code></ulink>">
 
 <!ENTITY gtk-show-about-dialog               "&api;gtk_fun_gtk-show-about-dialog.html">
 
@@ -1800,9 +2016,23 @@
 
 <!ENTITY gtk-ui-manager-item-type            "&api;gtk_sym_gtk-ui-manager-item-type.html">
 
-<!ENTITY gtk-viewport                        "&api;gtk_class_gtk-viewport.html">
-<!ENTITY gtk-viewport-new                    "&api;gtk_fun_gtk-viewport-new.html">
-<!ENTITY gtk-viewport-shadow-type            "&api;gtk_fun_gtk-viewport-shadow-type.html">
+<!-- ... GTK-VIEWPORT .................................................................................... -->
+
+<!ENTITY gtk-viewport
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-viewport.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-viewport</code></ulink>">
+
+<!ENTITY gtk-viewport-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-viewport-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-viewport-new</code></ulink>">
+<!ENTITY gtk-viewport-shadow-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-viewport-shadow-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-viewport-shadow-type</code></ulink>">
+
+<!-- ... GTK-WIDGET ...................................................................................... -->
 
 <!ENTITY gtk-widget
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -1946,6 +2176,22 @@
 
 <!ENTITY pango-attr-list                     "&api;pango_class_pango-attr-list.html">
 
+<!-- ... PANGO-LAYOUT .................................................................................... -->
+
+<!ENTITY pango-layout
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;pango_class_pango-layout.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>pango-layout</code></ulink>">
+
+<!-- ... PANGO-LAYOUT-LINES .............................................................................. -->
+
+<!ENTITY pango-layout-line
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;pango_class_pango-layout-line.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>pango-layout-line</code></ulink>">
+
+<!-- ... PANGO-STYLE ..................................................................................... -->
+
 <!ENTITY pango-style
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;pango_sym_pango-style.html'>
@@ -1954,6 +2200,13 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;pango_sym_pango-weight.html'>
           <code xmlns='http://docbook.org/ns/docbook'>pango-weight</code></ulink>">
+
+<!-- ... Cairo Libraray .................................................................................. -->
+
+<!ENTITY cairo-context
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_cairo-context.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>cairo-context</code></ulink>">
 
 <!ENTITY cairo-t                             "&api;cairo_sym_cairo-t.html">
 <!ENTITY cairo-font-options-t                "&api;cairo_sym_cairo-font-options-t.html">
