@@ -3443,7 +3443,7 @@ setup_tree (void)
       Encapsulates context for drawing pages.
 
       @about-class{gtk-print-context}
-      @about-function{gtk-print-context-get-cairo-context}
+      @about-function{gtk-print-context-cairo-context}
       @about-function{gtk-print-context-set-cairo-context}
       @about-function{gtk-print-context-page-setup}
       @about-function{gtk-print-context-width}
@@ -3868,7 +3868,6 @@ setup_tree (void)
       @about-generic{gtk-widget-visible}
       @about-generic{gtk-widget-width-request}
       @about-generic{gtk-widget-window}
-
       @about-function{gtk-widget-new}
       @about-function{gtk-widget-destroy}
       @about-function{gtk-widget-in-destruction}
@@ -3886,14 +3885,11 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
-
       @about-function{gtk-widget-frame-clock}
       @about-function{gtk-widget-scale-factor}
-
       @about-symbol{gtk-tick-callback}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
-
       @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
@@ -3912,10 +3908,8 @@ setup_tree (void)
       @about-function{gtk-widget-state}
       @about-function{gtk-widget-parent-window}
       @about-function{gtk-widget-add-events}
-
       @about-function{gtk-widget-set-device-events}
       @about-function{gtk-widget-get-device-events}
-
       @about-function{gtk-widget-add-device-events}
       @about-function{gtk-widget-set-device-enabled}
       @about-function{gtk-widget-get-device-enabled}
@@ -4026,6 +4020,7 @@ setup_tree (void)
       @about-function{gtk-widget-path}
       @about-function{gtk-widget-style-context}
       @about-function{gtk-widget-reset-style}
+      @about-function{gtk-widget-class-css-name}
       @about-function{gtk-requisition-new}
       @about-function{gtk-requisition-copy}
       @about-function{gtk-requisition-free}
@@ -4983,15 +4978,12 @@ setup_tree (void)
       @about-function{gtk-style-context-scale}
       @about-function{gtk-style-context-to-string}
       @about-struct{gtk-border}
-      @about-function{make-gtk-border}
-      @about-function{copy-gtk-border}
       @about-function{gtk-border-left}
       @about-function{gtk-border-right}
       @about-function{gtk-border-top}
       @about-function{gtk-border-bottom}
       @about-function{gtk-border-new}
       @about-function{gtk-border-copy}
-      @about-function{gtk-border-free}
       @about-function{gtk-render-arrow}
       @about-function{gtk-render-background}
       @about-function{gtk-render-background-get-clip}
