@@ -407,9 +407,10 @@
   (bottom :int16 :initform 0))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-border atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-border atdoc:*class-name-alias*)
+      "Boxed CStruct"
       (documentation 'gtk-border 'type)
- "@version{2020-9-13}
+ "@version{2021-3-19}
   @begin{short}
     A structure that specifies a border around a rectangular area that can be
     of different width on each side.
@@ -427,18 +428,18 @@
     @entry[top]{The width of the top border.}
     @entry[bottom]{The width of the bottom border.}
   @end{table}
-  @see-constructor{make-gtk-border}
-  @see-constructor{copy-gtk-border}
   @see-slot{gtk-border-left}
   @see-slot{gtk-border-right}
   @see-slot{gtk-border-top}
   @see-slot{gtk-border-bottom}")
 
-(export (boxed-related-symbols 'gtk-border))
+(export 'gtk-border)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Constructors for GtkBorder
 ;;; ----------------------------------------------------------------------------
+
+;; not exported
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-border 'function)
@@ -457,37 +458,78 @@
 ;;; Accessors for GtkBorder
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-border-left --------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-left atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-left 'function)
- "@version{2013-8-27}
-  Accessor of the @code{left} slot of the @class{gtk-border} structure.
+ "@version{2021-3-19}
+  @syntax[]{(gtk-border-left instance) => left}
+  @syntax[]{(setf gtk-border-left instance) left)}
+  @argument[instance]{a @class{gtk-border} instance}
+  @argument[left]{an integer with the width of the left border}
+  @begin{short}
+    Accessor of the @code{left} slot of the @class{gtk-border} structure.
+  @end{short}
   @see-class{gtk-border}")
+
+(export 'gtk-border-left)
+
+;;; --- gtk-border-right -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-right atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-right 'function)
- "@version{2013-8-27}
-  Accessor of the @code{right} slot of the @class{gtk-border} structure.
+ "@version{2021-3-19}
+  @syntax[]{(gtk-border-right instance) => right}
+  @syntax[]{(setf gtk-border-right instance) right)}
+  @argument[instance]{a @class{gtk-border} instance}
+  @argument[right]{an integer with the width of the right border}
+  @begin{short}
+    Accessor of the @code{right} slot of the @class{gtk-border} structure.
+  @end{short}
   @see-class{gtk-border}")
+
+(export 'gtk-border-right)
+
+;;; --- gtk-border-top ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-top atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-top 'function)
- "@version{2013-8-27}
-  Accessor of the @code{top} slot of the @class{gtk-border} structure.
+ "@version{2021-3-19}
+  @syntax[]{(gtk-border-top instance) => top}
+  @syntax[]{(setf gtk-border-top instance) top)}
+  @argument[instance]{a @class{gtk-border} instance}
+  @argument[top]{an integer with the width of the top border}
+  @begin{short}
+    Accessor of the @code{top} slot of the @class{gtk-border} structure.
+  @end{short}
   @see-class{gtk-border}")
+
+(export 'gtk-border-top)
+
+;;; --- gtk-border-bottom ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-bottom atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-bottom 'function)
- "@version{2013-8-27}
-  Accessor of the @code{bottom} slot of the @class{gtk-border} structure.
+ "@version{2021-3-19}
+
+  @syntax[]{(gtk-border-top instance) => bottom}
+  @syntax[]{(setf gtk-border-top instance) bottom)}
+  @argument[instance]{a @class{gtk-border} instance}
+  @argument[bottom]{an integer with the width of the bottom border}
+  @begin{short}
+    Accessor of the @code{bottom} slot of the @class{gtk-border} structure.
+  @end{short}
   @see-class{gtk-border}")
+
+(export 'gtk-border-bottom)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkStyleContext
@@ -1314,7 +1356,7 @@
   @see-class{gtk-style-context}
   @see-class{gtk-border}
   @see-symbol{gtk-state-flags}"
-  (let ((border (make-gtk-border)))
+  (let ((border (gtk-border-new)))
     (%gtk-style-context-border context state border)
     border))
 
@@ -1342,7 +1384,7 @@
   @see-class{gtk-style-context}
   @see-class{gtk-border}
   @see-symbol{gtk-state-flags}"
-  (let ((padding (make-gtk-border)))
+  (let ((padding (gtk-border-new)))
     (%gtk-style-context-padding context state padding)
     padding))
 
@@ -1370,7 +1412,7 @@
   @see-class{gtk-style-context}
   @see-class{gtk-border}
   @see-symbol{gtk-state-flags}"
-  (let ((margin (make-gtk-border)))
+  (let ((margin (gtk-border-new)))
     (%gtk-style-context-margin context state margin)
     margin))
 
@@ -2155,16 +2197,21 @@
 ;;; gtk_border_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-border-new ()
+(declaim (inline gtk-border-new))
+
+(defun gtk-border-new (&key (left 0) (right 0) (top 0) (bottom 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
-  @return{A newly allocated @class{gtk-border} structure.}
+ "@version{2021-3-19}
+  @argument[left]{an integer with the width of the left border}
+  @argument[right]{an integer with the width of the right border}
+  @argument[top]{an integer with the width of the top border}
+  @argument[bottom]{an integer with the width of the bottom border}
+  @return{A newly allocated @class{gtk-border} instance.}
   @begin{short}
-    Allocates a new @class{gtk-border} structure and initializes its elements
-    to zero.
+    Allocates a new @class{gtk-border} instance and initializes its elements.
   @end{short}
   @see-class{gtk-border}"
-  (make-gtk-border :left 0 :right 0 :top 0 :bottom 0))
+  (make-gtk-border :left left :right right :top top :bottom bottom))
 
 (export 'gtk-border-new)
 
@@ -2172,12 +2219,14 @@
 ;;; gtk_border_copy ()
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-border-copy))
+
 (defun gtk-border-copy (border)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
-  @argument[border]{a @class{gtk-border} structure}
+ "@version{2021-3-19}
+  @argument[border]{a @class{gtk-border} instance}
   @return{A copy of @arg{border}.}
-  @short{Copies a @class{gtk-border} structure.}
+  @short{Copies a @class{gtk-border} instance.}
   @see-class{gtk-border}"
   (copy-gtk-border border))
 
