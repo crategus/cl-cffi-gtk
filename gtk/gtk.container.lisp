@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -139,9 +139,10 @@
   (:immediate 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-resize-mode atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2021-3-20}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkResizeMode\" gtk-resize-mode
@@ -338,24 +339,22 @@
     @fun{gtk-container-child-property}, @fun{gtk-container-child-get}, or
     @fun{gtk-container-child-set}. To emit notification about child property
     changes, use the function @fun{gtk-widget-child-notify}.
-
-  @subheading{GtkContainer as GtkBuildable}
+  @begin[GtkContainer as GtkBuildable]{dictionary}
     The @sym{gtk-container} implementation of the @class{gtk-buildable}
     interface supports a @code{<packing>} element for children, which can
     contain multiple @code{<property>} elements that specify child properties
     for the child.
 
-    Since 2.16, child properties can also be marked as translatable using the
-    same \"translatable\", \"comments\" and \"context\" attributes that are
-    used for regular properties.
+    Child properties can also be marked as translatable using the same
+    \"translatable\", \"comments\" and \"context\" attributes that are used for
+    regular properties.
 
-    Since 3.16, containers can have a @code{<focus-chain>} element containing
-    multiple @code{<widget>} elements, one for each child that should be added
-    to the focus chain. The \"name\" attribute gives the ID of the widget.
+    Containers can have a @code{<focus-chain>} element containing multiple
+    @code{<widget>} elements, one for each child that should be added to the
+    focus chain. The \"name\" attribute gives the ID of the widget.
 
-    An example of these properties in UI definitions:
     @b{Example:} Child properties in UI definitions
-  @begin{pre}
+    @begin{pre}
 <object class=\"GtkBox\">
   <child>
     <object class=\"GtkEntry\" id=\"entry1\"/>
@@ -371,7 +370,8 @@
     <widget name=\"entry2\"/>
   </focus-chain>
 </object>
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"add\" signal}
       @begin{pre}
@@ -509,7 +509,7 @@
     @class{gtk-container} class.
   @end{short}
 
-  The slot access function @sym{gtk-container-resize-mode}  returns the current
+  The slot access function @sym{gtk-container-resize-mode} returns the current
   resize mode of the container. The slot access function
   @sym{(setf gtk-container-resize-mode)} sets the resize mode of the container.
 
@@ -953,8 +953,8 @@
   @argument[container]{a @class{gtk-container} widget}
   @argument[child]{a @class{gtk-widget} object which is a child of
     @arg{container}}
-  @arg[args]{a list of strings with the child property names to get the values
-    for}
+  @argument[args]{a list of strings with the child property names to get the
+    values for}
   @return{A list with the values of the properties.}
   @begin{short}
     Gets the values of one or more child properties for @arg{child} and

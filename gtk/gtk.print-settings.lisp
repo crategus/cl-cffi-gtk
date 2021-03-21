@@ -1752,23 +1752,23 @@
 
 (defcfun ("gtk_print_settings_new_from_file" %gtk-print-settings-new-from-file)
     (g-object gtk-print-settings)
-  (file-name g-string)
-  (error :pointer))
+  (filename g-string)
+  (err :pointer))
 
 (defun gtk-print-settings-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-6}
-  @argument[file-name]{a string with the filename to read the settings from}
+ "@version{2021-3-17}
+  @argument[filename]{a string with the filename to read the settings from}
   @return{The restored @class{gtk-print-settings} object.}
   @begin{short}
-    Reads the print settings from @arg{file-name}.
+    Reads the print settings from @arg{filename}.
   @end{short}
   Returns a new @class{gtk-print-settings} object with the restored settings,
-  or @code{nio} if an error occurred.
+  or @code{nil} if an error occurred.
   @see-class{gtk-print-settings}
   @see-function{gtk-print-settings-to-file}
   @see-function{gtk-print-settings-load-file}"
-  (with-g-error (err)
+  (with-ignore-g-error (err)
     (%gtk-print-settings-new-from-file filename err)))
 
 (export 'gtk-print-settings-new-from-file)

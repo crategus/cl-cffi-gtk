@@ -1560,12 +1560,12 @@
 ;;; g_object_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-object-new (object-type &rest args)
+(defun g-object-new (gtype &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-16}
-  @argument[object-type]{the @class{g-type} ID of the @class{g-object} subtype
+ "@version{2021-3-19}
+  @argument[gtype]{the @class{g-type} type of the @class{g-object} subtype
     to instantiate}
-  @argument[args]{pairs of the property name and value}
+  @argument[args]{pairs of the property keyword and value}
   @begin{short}
     Creates a new instance of a @class{g-object} subtype and sets its
     properties.
@@ -1589,8 +1589,8 @@
   @end{dictionary}
   @see-class{g-object}
   @see-class{g-type}"
-  (let ((lisp-type (gethash object-type *registered-object-types*)))
-    (apply 'make-instance (cons lisp-type args))))
+  (let ((lisp-type (gethash gtype *registered-object-types*)))
+    (apply 'make-instance lisp-type args)))
 
 (export 'g-object-new)
 

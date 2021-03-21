@@ -131,22 +131,21 @@
 ;;; gtk_print_context_get_cairo_context ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_context_get_cairo_context"
-           gtk-print-context-get-cairo-context) (:pointer (:struct cairo-t))
+(defcfun ("gtk_print_context_get_cairo_context" gtk-print-context-cairo-context)
+    (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2023-3-16}
   @argument[context]{a @class{gtk-print-context} object}
-  @return{The Cairo context of @arg{context}.}
+  @return{The @symbol{cairo-t} Cairo context of @arg{context}.}
   @begin{short}
-    Obtains the Cairo context that is associated with the
-    @class{gtk-print-context}.
+    Obtains the Cairo context that is associated with the print text.
   @end{short}
   @see-class{gtk-print-context}
   @see-symbol{cairo-t}
   @see-function{gtk-print-context-set-cairo-context}"
   (context (g-object gtk-print-context)))
 
-(export 'gtk-print-context-get-cairo-context)
+(export 'gtk-print-context-cairo-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_set_cairo_context ()
@@ -175,7 +174,7 @@
   Cairo context in that case.
   @see-class{gtk-print-context}
   @see-symbol{cairo-t}
-  @see-function{gtk-print-context-get-cairo-context}"
+  @see-function{gtk-print-context-cairo-context}"
   (%gtk-print-context-set-cairo-context context
                                         cr
                                         (coerce dpi-x 'double-float)

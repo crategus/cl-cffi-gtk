@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -330,15 +330,26 @@
    :type-initializer "gtk_print_operation_preview_get_type"))
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-print-operation-preview 'type)
- "@version{2013-7-21}
-  @short{}
-  @begin{pre}
-(define-g-interface \"GtkPrintOperationPreview\" gtk-print-operation-preview
-  (:export t
-   :type-initializer \"gtk_print_operation_preview_get_type\"))
-  @end{pre}
-  @see-class{gtk-print-operation}")
+(setf (gethash 'gtk-print-operation-preview atdoc:*class-name-alias*)
+      "Interface"
+      (documentation 'gtk-print-operation-preview 'type)
+ "@version{2021-3-17}
+  @begin{short}
+    The @sym{gtk-print-operation-preview} interface is implemented by the
+    @class{gtk-print-operation} class.
+  @end{short}
+
+  By default the @class{gtk-print-operation} object uses an external
+  application to do print preview. To implement a custom print preview, an
+  application must connect to the preview signal. The functions
+  @fun{gtk-print-operation-preview-render-page},
+  @fun{gtk-print-operation-preview-end-preview} and
+  @fun{gtk-print-operation-preview-is-selected} are useful when implementing
+  a print preview.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-preview-render-page}
+  @see-function{gtk-print-operation-preview-end-preview}
+  @see-function{gtk-print-operation-preview-is-selected}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPrintOperation
@@ -529,7 +540,7 @@
       @end{pre}
       Emitted for every page that is printed. The signal handler must render the
       @arg{page-nr}'s page onto the Cairo context obtained from @arg{context}
-      using the function @fun{gtk-print-context-get-cairo-context}. Use the
+      using the function @fun{gtk-print-context-cairo-context}. Use the
       functions @fun{gtk-print-operation-use-full-page} and
       @fun{gtk-print-operation-unit} before starting the print operation to set
       up the transformation of the Cairo context according to your needs.
@@ -537,7 +548,7 @@
 (defun draw-page (operation context page-nr)
   (declare (ignore operation page-nr))
   (let ((text-height 0)
-        (cr (gtk-print-context-get-cairo-context context))
+        (cr (gtk-print-context-cairo-context context))
         (width (floor (gtk-print-context-get-width context)))
         (layout (gtk-print-context-create-pango-layout context)))
     ;; Print a grey colored header

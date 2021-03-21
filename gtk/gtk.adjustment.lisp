@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -109,25 +109,26 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-adjustment 'type)
- "@version{2020-5-3}
+ "@version{2021-3-19}
   @begin{short}
     The @sym{gtk-adjustment} object represents a value which has an associated
     lower and upper bound, together with step and page increments, and a page
     size.
   @end{short}
-  It is used within several GTK+ widgets, including @class{gtk-spin-button},
-  @class{gtk-viewport}, and @class{gtk-range}, which is a base class for
-  @class{gtk-scrollbar}, and @class{gtk-scale}.
+  It is used within several widgets, including @class{gtk-spin-button},
+  @class{gtk-viewport}, and @class{gtk-range}, which is a base class for the
+  @class{gtk-scrollbar}, and @class{gtk-scale} widgets.
 
   The @sym{gtk-adjustment} object does not update the value itself. Instead it
-  is left up to the owner of the @sym{gtk-adjustment} to control the value.
+  is left up to the owner of the @sym{gtk-adjustment} object to control the
+  value.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
  lambda (adjustment)    : No Recursion
       @end{pre}
-      Emitted when one or more of the @sym{gtk-adjustment} fields have been
-      changed, other than the value field.
+      Emitted when one or more of the adjustment properties have been changed,
+      other than the @code{value} property.
       @begin[code]{table}
         @entry[adjustment]{The @sym{gtk-adjustment} object which received the
           signal.}
@@ -136,7 +137,7 @@
       @begin{pre}
  lambda (adjustment)    : No Recursion
       @end{pre}
-      Emitted when the @sym{gtk-adjustment} value field has been changed.
+      Emitted when the @code{value} property of the adjustment has been changed.
       @begin[code]{table}
         @entry[adjustment]{The @sym{gtk-adjustment} object which received the
           signal.}
@@ -147,7 +148,10 @@
   @see-slot{gtk-adjustment-page-size}
   @see-slot{gtk-adjustment-step-increment}
   @see-slot{gtk-adjustment-upper}
-  @see-slot{gtk-adjustment-value}")
+  @see-slot{gtk-adjustment-value}
+  @see-class{gtk-range}
+  @see-class{gtk-viewport}
+  @see-class{gtk-spin-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

@@ -648,9 +648,10 @@
   (:etched-out 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{2020-8-18}
+ "@version{2021-3-19}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.

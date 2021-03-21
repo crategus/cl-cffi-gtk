@@ -1311,8 +1311,8 @@ name1: color1; name2: color2; ...
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-error-bell"
                                                'gtk-settings) 't)
- "The @code{gtk-error-bell} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{gtk-error-bell} property of type @code{:boolean} (Read / Write)
+  @br{}
   When @em{true}, keyboard navigation and other input-related errors will cause
   a beep. Since the error bell is implemented using the function
   @fun{gdk-window-beep}, the windowing system may offer ways to configure the
@@ -1324,10 +1324,23 @@ name1: color1; name2: color2; ...
 (setf (gethash 'gtk-settings-gtk-error-bell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-error-bell 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-error-bell} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2021-3-20}
+  @syntax[]{(gtk-settings-gtk-error-bell object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-error-bell object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a boolean wether errors well cause a beep}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-error-bell} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  When @em{true}, keyboard navigation and other input-related errors will cause
+  a beep. Since the error bell is implemented using the function
+  @fun{gdk-window-beep}, the windowing system may offer ways to configure the
+  error bell in many ways, such as flashing the window or similar visual
+  effects.
+  @see-class{gtk-settings}
+  @see-function{gdk-window-beep}")
 
 ;;; --- gtk-settings-gtk-fallback-icon-theme -----------------------------------
 
@@ -1595,10 +1608,27 @@ size-name = width , height
 (setf (gethash 'gtk-settings-gtk-keynav-cursor-only atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-keynav-cursor-only 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-keynav-cursor-only} slot of the
-  @class{gtk-settings} class.
-  @see-class{gtk-settings}")
+ "@version{2021-3-20}
+  @syntax[]{(gtk-settings-gtk-keynav-cursor-only object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-keynav-cursor-only object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a boolean wether using the cursor keys only}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-keynav-cursor-only} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  When @em{true}, keyboard navigation should be able to reach all widgets by
+  using the cursor keys only. Tab, Shift etc. keys cannot be expected to be
+  present on the used input device.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-settings-gtk-keynav-cursor-only} has been deprecated
+    since version 3.10 and should not be used in newly-written code. Generally,
+    the behavior for touchscreen input should be performed dynamically based on
+    the function @fun{gdk-event-source-device}.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-function{gdk-event-source-device}")
 
 ;;; --- gtk-settings-gtk-keynav-use-caret --------------------------------------
 

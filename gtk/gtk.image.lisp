@@ -853,21 +853,21 @@
 (defcfun ("gtk_image_new_from_file" gtk-image-new-from-file)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-3-19}
   @argument[filename]{a string with the name of the file}
-  @return{A new @class{gtk-image} object.}
+  @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates an image displaying the file.
   @end{short}
   If the file is not found or cannot be loaded, the resulting @class{gtk-image}
-  object will display a \"broken image\" icon. This function never returns
+  widget will display a \"broken image\" icon. This function never returns
   @code{nil}, it always returns a valid @class{gtk-image} widget.
 
   If the file contains an animation, the image will contain an animation.
 
   If you need to detect failures to load the file, use the function
   @fun{gdk-pixbuf-new-from-file} to load the file yourself, then create the
-  @class{gtk-image} object from the pixbuf. Or for animations, use the function
+  @class{gtk-image} widget from the pixbuf. Or for animations, use the function
   @fun{gdk-pixbuf-animation-new-from-file}.
 
   The storage type, see the function @fun{gtk-image-storage-type}, of the
@@ -877,7 +877,7 @@
   @see-function{gdk-pixbuf-new-from-file}
   @see-function{gdk-pixbuf-animation-new-from-file}
   @see-function{gtk-image-storage-type}"
-  (filename g-string))
+  (filename :string))
 
 (export 'gtk-image-new-from-file)
 
