@@ -1,7 +1,10 @@
 (defpackage :gtk-example
   (:use :gtk :gdk :gdk-pixbuf :gobject
-   :glib :gio :pango :cairo :cffi :common-lisp)
-  (:export #:example-custom-window
+   :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
+  (:export #:create-page-setup-dialog
+           #:create-print-dialog
+           #:do-print-operation
+           #:example-custom-window
            #:example-combo-box
            #:example-combo-box-text
            #:example-dialog
@@ -26,13 +29,13 @@
            #:example-message-dialog-set-image
            #:example-message-dialog-set-markup
            #:example-message-dialog-ui
-           #:example-page-setup-unix-dialog
            #:example-pointer-device
            #:example-print-dialog
            #:example-print-operation
            #:example-print-run-page-setup-dialog
            #:example-print-run-page-setup-dialog-async
            #:example-radio-button
+           #:example-scrolled-window
            #:example-show-about-dialog
            #:example-simple-list-store
            #:example-tool-palette
@@ -46,4 +49,11 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-3-14
+(defun read-file (filename)
+  (with-open-file (instream filename :direction :input :if-does-not-exist nil)
+    (when instream
+      (let ((string (make-string (file-length instream))))
+        (read-sequence string instream)
+        string))))
+
+;;; 2021-3-19

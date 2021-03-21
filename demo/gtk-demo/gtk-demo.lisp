@@ -395,12 +395,29 @@
                                 "notebook.lisp"
                                 "EXAMPLE-NOTEBOOK")
     )
+    ;; Scrolling
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Scrolling")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scrolled Window"
-                                "scrolled-window.lisp"
+                                "../gtk-example/scrolled-window.lisp"
                                 "EXAMPLE-SCROLLED-WINDOW")
+    )
+    ;; Printing
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Printing")))
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Page Setup Dialog"
+                                "../gtk-example/page-setup-dialog.lisp"
+                                "CREATE-PAGE-SETUP-DIALOG")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Print Dialog"
+                                "../gtk-example/print-dialog.lisp"
+                                "CREATE-PRINT-DIALOG")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Print Operation"
+                                "../gtk-example/print-operation.lisp"
+                                "DO-PRINT-OPERATION")
     )
     ;; Cairo demos
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)

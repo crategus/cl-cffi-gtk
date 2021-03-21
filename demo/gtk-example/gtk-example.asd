@@ -4,7 +4,7 @@
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :depends-on (:cl-cffi-gtk)
+  :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-example")
                (:file "application-inhibit")
                (:file "application-simple")
@@ -24,15 +24,15 @@
 ;               (:file "list-store")
                (:file "menu-builder")
                (:file "message-dialog-new")
-;               (:file "page-setup")
-               (:file "page-setup-unix-dialog")
+               (:file "page-setup-dialog")
                (:file "pointer-device")
                (:file "print-dialog")
                (:file "print-operation")
                (:file "radio-button")
+               (:file "scrolled-window")
                (:file "show-about-dialog")
                (:file "tool-palette")
                (:file "widget-pointer")
               ))
 
-;;; 2021-3-14
+;;; 2021-3-19

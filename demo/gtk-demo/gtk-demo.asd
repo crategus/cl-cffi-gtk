@@ -60,10 +60,8 @@
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")
-               (:file "printing")
                (:file "progress-bar")
                (:file "scale-widgets")
-               (:file "scrolled-window")
                (:file "search-entry")
                (:file "selections-1")
                (:file "size-management")
@@ -81,4 +79,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-3-14
+;;; 2021-3-19
