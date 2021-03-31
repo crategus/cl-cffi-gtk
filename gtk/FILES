@@ -269,8 +269,8 @@ GTK+ Core Reference
     gtk.version.lisp                 - Version Information         - GTK+ 3.24
     gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.24 &
     gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.24 &
-    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24 &
-    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.24 &
+    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24
+    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.24
     gtk.settings.lisp                - GtkSettings                 - GTK+ 3.24 &
     gtk.bindings.lisp                - Bindings                    - GTK+ 3.24 %
     gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.24
@@ -280,7 +280,7 @@ GTK+ Core Reference
 Theming in GTK+
 
     gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.24 &
-    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.24 &
+    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.24
     gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.24
     gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.24 &
     gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.24 &

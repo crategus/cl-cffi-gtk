@@ -343,7 +343,7 @@
    ;; Deprecated
 ;   (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.alignment")             ; GtkAlignment
-   (:file "gtk.resource-files")        ; Routines for handling resource files
+;   (:file "gtk.resource-files")        ; Routines for handling resource files
    (:file "gtk.table")                 ; Pack widgets in regular patterns
    (:file "gtk.ui-manager")            ; Constructing menus and toolbars
 

@@ -174,6 +174,8 @@
     @begin[GtkWindow]{subsection}
       Toplevel which can contain other widgets.
 
+      @about-symbol{gtk-window-type}
+      @about-symbol{gtk-window-position}
       @about-class{gtk-window}
       @about-generic{gtk-window-accept-focus}
       @about-generic{gtk-window-application}
@@ -3824,7 +3826,6 @@ setup_tree (void)
       @about-function{gtk-requisition-width}
       @about-function{gtk-requisition-height}
       @about-symbol{gtk-widget-help-type}
-      @about-symbol{gtk-text-direction}
       @about-symbol{gtk-size-request-mode}
       @about-symbol{gtk-requested-size}
       @about-symbol{gtk-align}
@@ -4043,6 +4044,7 @@ setup_tree (void)
     @begin[GtkContainer]{subsection}
       Base class for widgets which contain other widgets.
 
+      @about-symbol{gtk-resize-mode}
       @about-class{gtk-container}
       @about-generic{gtk-container-border-width}
       @about-generic{gtk-container-child}
@@ -4054,7 +4056,7 @@ setup_tree (void)
       @about-function{gtk-container-foreach}
       @about-function{gtk-container-children}
       @about-function{gtk-container-path-for-child}
-      @about-function{gtk-container-reallocate-redraws}
+      @about-function{gtk-container-set-reallocate-redraws}
       @about-function{gtk-container-focus-child}
       @about-function{gtk-container-focus-vadjustment}
       @about-function{gtk-container-focus-hadjustment}
@@ -4616,12 +4618,21 @@ setup_tree (void)
       Storing data on clipboards.
 
       @about-class{gtk-clipboard}
+      @about-symbol{gtk-clipboard-received-func}
+      @about-symbol{gtk-clipboard-text-received-func}
+      @about-symbol{gtk-clipboard-image-received-func}
+      @about-symbol{gtk-clipboard-targets-received-func}
+      @about-symbol{gtk-clipboard-rich-text-received-func}
+      @about-symbol{gtk-clipboard-uri-received-func}
+      @about-symbol{gtk-clipboard-get-func}
+      @about-symbol{gtk-clipboard-clear-func}
       @about-function{gtk-clipboard-get}
       @about-function{gtk-clipboard-for-display}
-      @about-function{gtk-clipboard-get-display}
+      @about-function{gtk-clipboard-display}
+      @about-function{gtk-clipboard-default}
       @about-function{gtk-clipboard-set-with-data}
       @about-function{gtk-clipboard-set-with-owner}
-      @about-function{gtk-clipboard-get-owner}
+      @about-function{gtk-clipboard-owner}
       @about-function{gtk-clipboard-clear}
       @about-function{gtk-clipboard-set-text}
       @about-function{gtk-clipboard-set-image}
@@ -4644,6 +4655,7 @@ setup_tree (void)
       @about-function{gtk-clipboard-wait-is-target-available}
       @about-function{gtk-clipboard-set-can-store}
       @about-function{gtk-clipboard-store}
+      @about-function{gtk-clipboard-selection}
     @end{subsection}
     @begin[Drag and drop handling]{subsection}
       GTK+ has a rich set of functions for doing inter-process communication via
@@ -4673,6 +4685,8 @@ setup_tree (void)
       @about-function{gtk-drag-highlight}
       @about-function{gtk-drag-unhighlight}
       @about-function{gtk-drag-begin}
+      @about-function{gtk-drag-begin-with-coordinates}
+      @about-function{gtk-drag-cancel}
       @about-function{gtk-drag-set-icon-widget}
       @about-function{gtk-drag-set-icon-pixbuf}
       @about-function{gtk-drag-set-icon-stock}
@@ -4802,54 +4816,42 @@ setup_tree (void)
     @begin[Standard Enumerations]{subsection}
       Public enumerated types used throughout GTK+.
 
-      @about-symbol{gtk-accel-flags}
-      @about-symbol{gtk-arrow-placement}
-      @about-symbol{gtk-attach-options}
       @about-symbol{gtk-baseline-position}
       @about-symbol{gtk-delete-type}
       @about-symbol{gtk-direction-type}
-      @about-symbol{gtk-expander-style}
       @about-symbol{gtk-justification}
       @about-symbol{gtk-movement-step}
       @about-symbol{gtk-orientation}
       @about-symbol{gtk-pack-type}
-      @about-symbol{gtk-path-priority-type}
-      @about-symbol{gtk-path-type}
       @about-symbol{gtk-position-type}
       @about-symbol{gtk-relief-style}
-      @about-symbol{gtk-resize-mode}
       @about-symbol{gtk-scroll-step}
       @about-symbol{gtk-scroll-type}
       @about-symbol{gtk-selection-mode}
       @about-symbol{gtk-shadow-type}
-      @about-symbol{gtk-state-type}
       @about-symbol{gtk-state-flags}
       @about-symbol{gtk-toolbar-style}
-      @about-symbol{gtk-window-position}
-      @about-symbol{gtk-window-type}
       @about-symbol{gtk-sort-type}
-      @about-symbol{gtk-junction-sides}
-      @about-symbol{gtk-border-style}
-      @about-symbol{gtk-region-flags}
+      @about-symbol{gtk-text-direction}
+      @about-symbol{gtk-expander-style}
+      @about-symbol{gtk-state-type}
     @end{subsection}
     @begin[Selections]{subsection}
       The selection mechanism provides the basis for different types of
-      communication between processes. In particular, drag and drop and
-      @class{gtk-clipboard} work via selections. You will very seldom or never
-      need to use most of the functions in this section directly;
-      @class{gtk-clipboard} provides a nicer interface to the same
+      communication between processes. In particular, drag and drop and the
+      @class{gtk-clipboard} object work via selections. You will very seldom or
+      never need to use most of the functions in this section directly. The
+      @class{gtk-clipboard} object provides a nicer interface to the same
       functionality.
 
-      Some of the datatypes defined this section are used in the
-      @class{gtk-clipboard} and drag-and-drop API's as well. The
-      @class{gtk-target-entry} structure and @class{gtk-target-list}
-      objects represent lists of data types that are supported when sending or
-      receiving data. The @class{gtk-selection-data} object is used to store a
-      chunk of data along with the data type and other associated information.
+      Some of the datatypes defined in this section are used in the
+      @class{gtk-clipboard} object and Drag and Drop API's as well. The
+      @class{gtk-target-entry} and @class{gtk-target-list} structures represent
+      lists of data types that are supported when sending or receiving data.
+      The @class{gtk-selection-data} object is used to store a chunk of data
+      along with the data type and other associated information.
 
       @about-struct{gtk-selection-data}
-      @about-function{make-gtk-selection-data}
-      @about-function{copy-gtk-selection-data}
       @about-function{gtk-selection-data-selection}
       @about-function{gtk-selection-data-target}
       @about-function{gtk-selection-data-type}
@@ -4857,17 +4859,16 @@ setup_tree (void)
       @about-function{gtk-selection-data-data}
       @about-function{gtk-selection-data-length}
       @about-function{gtk-selection-data-display}
+      @about-function{gtk-selection-data-new}
+      @about-function{gtk-selection-data-copy}
       @about-struct{gtk-target-entry}
-      @about-function{make-gtk-target-entry}
-      @about-function{copy-gtk-target-entry}
       @about-function{gtk-target-entry-target}
       @about-function{gtk-target-entry-flags}
       @about-function{gtk-target-entry-info}
-      @about-class{gtk-target-list}
-      @about-class{gtk-target-pair}
       @about-function{gtk-target-entry-new}
       @about-function{gtk-target-entry-copy}
-      @about-function{gtk-target-entry-free}
+      @about-class{gtk-target-list}
+      @about-class{gtk-target-pair}
       @about-function{gtk-target-list-new}
       @about-function{gtk-target-list-ref}
       @about-function{gtk-target-list-unref}
@@ -4902,8 +4903,6 @@ setup_tree (void)
       @about-function{gtk-targets-include-uri}
       @about-function{gtk-targets-include-rich-text}
       @about-function{gtk-selection-remove-all}
-      @about-function{gtk-selection-data-copy}
-      @about-function{gtk-selection-data-free}
     @end{subsection}
     @begin[Filesystem utilities]{subsection}
       Functions for working with GIO
@@ -5008,26 +5007,24 @@ setup_tree (void)
       CSS-like styling for widgets.
 
       @about-symbol{gtk-css-provider-error}
-      @about-class{gtk-css-section}
-      @about-symbol{gtk-css-section-type}
       @about-class{gtk-css-provider}
       @about-function{gtk-css-provider-default}
-      @about-function{gtk-css-provider-get-named}
+      @about-function{gtk-css-provider-named}
       @about-function{gtk-css-provider-load-from-data}
       @about-function{gtk-css-provider-load-from-file}
       @about-function{gtk-css-provider-load-from-path}
       @about-function{gtk-css-provider-load-from-resource}
       @about-function{gtk-css-provider-new}
       @about-function{gtk-css-provider-to-string}
-      @about-function{gtk-css-section-get-end-line}
-      @about-function{gtk-css-section-get-end-position}
-      @about-function{gtk-css-section-get-file}
-      @about-function{gtk-css-section-get-parent}
-      @about-function{gtk-css-section-get-section-type}
-      @about-function{gtk-css-section-get-start-line}
-      @about-function{gtk-css-section-get-start-position}
-      @about-function{gtk-css-section-ref}
-      @about-function{gtk-css-section-unref}
+      @about-symbol{gtk-css-section-type}
+      @about-class{gtk-css-section}
+      @about-function{gtk-css-section-end-line}
+      @about-function{gtk-css-section-end-position}
+      @about-function{gtk-css-section-file}
+      @about-function{gtk-css-section-parent}
+      @about-function{gtk-css-section-section-type}
+      @about-function{gtk-css-section-start-line}
+      @about-function{gtk-css-section-start-position}
     @end{subsection}
     @begin[GtkStyleProvider]{subsection}
       Interface to provide style information to @class{gtk-style-context}.
@@ -5146,9 +5143,9 @@ setup_tree (void)
       Deprecated routines for handling resource files.
 
       In GTK+ 3.0, resource files have been deprecated and replaced by CSS-like
-      style sheets, which are understood by @class{gtk-css-provider}. In the
-      Lisp binding the implementation was never very complete. The few symbols
-      are not exported.
+      style sheets, which are understood by the @class{gtk-css-provider} object.
+      In the Lisp binding the implementation was never very complete. The few
+      symbols are not exported.
     @end{subsection}
     @begin[GtkStyle]{subsection}
       Deprecated object that holds style information for widgets.
@@ -5338,6 +5335,7 @@ setup_tree (void)
     @begin[GtkTable]{subsection}
       Pack widgets in regular patterns.
 
+      @about-symbol{gtk-attach-options}
       @about-class{gtk-table}
       @about-generic{gtk-table-column-spacing}
       @about-generic{gtk-table-homogeneous}
