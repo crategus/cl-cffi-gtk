@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -97,11 +97,13 @@
   :error)
 
 #+(and gdk-3-20 cl-cffi-gtk-documentation)
-(setf (gethash 'gdk-drag-cancel-reason atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-drag-cancel-reason atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-drag-cancel-reason atdoc:*external-symbols*)
- "@version{2019-3-25}
+ "@version{2021-3-24}
   @begin{short}
-    Used in @class{gdk-drag-context} to the reason of a cancelled DND operation.
+    Used in the @class{gdk-drag-context} object to the reason of a cancelled
+    DND operation.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkDragCancelReason\" gdk-drag-cancel-reason
@@ -135,12 +137,13 @@
   (:local 6))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-drag-protocol atdoc:*external-symbols*)
- "@version{2013-11-16}
+ "@version{2021-3-24}
   @begin{short}
-    Used in @class{gdk-drag-context} to indicate the protocol according to
-    which DND is done.
+    Used in the @class{gdk-drag-context} object to indicate the protocol
+    according to which DND is done.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkDragProtocol\" gdk-drag-protocol
@@ -160,7 +163,7 @@
     @entry[:xdnd]{The Xdnd protocol.}
     @entry[:rootwin]{An extension to the Xdnd protocol for unclaimed root
       window drops.}
-    @entry[:win32-dropfiles]{The simple @code{WM_DROPFILES} protocol.}
+    @entry[:win32-dropfiles]{The simple WM_DROPFILES protocol.}
     @entry[:ole2]{The complex OLE2 DND protocol (not implemented).}
     @entry[:local]{Intra-application DND.}
   @end{table}
@@ -181,12 +184,13 @@
   (:ask 32))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-drag-action atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gdk-drag-action atdoc:*symbol-name-alias*)
+      "Flags"
       (gethash 'gdk-drag-action atdoc:*external-symbols*)
- "@version{2013-10-20}
+ "@version{2021-3-24}
   @begin{short}
-    Used in @class{gdk-drag-context} to indicate what the destination should do
-    with the dropped data.
+    Used in the @class{gdk-drag-context} object to indicate what the
+    destination should do with the dropped data.
   @end{short}
   @begin{pre}
 (define-g-flags \"GdkDragAction\" gdk-drag-action
@@ -225,92 +229,91 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-drag-context 'type)
- "@version{2013-6-30}
+ "@version{2021-3-24}
   @begin{short}
     These functions provide a low level interface for drag and drop.
   @end{short}
   The X backend of GDK supports both the Xdnd and Motif drag and drop protocols
-  transparently, the Win32 backend supports the @code{WM_DROPFILES} protocol.
+  transparently, the Win32 backend supports the WM_DROPFILES protocol.
 
   GTK+ provides a higher level abstraction based on top of these functions,
   and so they are not normally needed in GTK+ applications. See the Drag and
   Drop section of the GTK+ documentation for more information.
-
   @begin[Signal Details]{dictionary}
     @subheading{The \"action-changed\" signal}
     @begin{pre}
- lambda (context action)    : Run Last
+ lambda (context action)    :run-last
     @end{pre}
-    A new action is being chosen for the drag and drop operation.
-
-    This signal will only be emitted if the @sym{gtk-drag-context} manages the
-    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
-    for more information.
+    A new action is being chosen for the drag and drop operation. This signal
+    will only be emitted if the @sym{gtk-drag-context} object manages the drag
+    and drop operation. See the function @fun{gdk-drag-context-manage-dnd} for
+    more information. Since 3.20
     @begin[code]{table}
-      @entry[context]{The object on which the signal is emitted.}
-      @entry[action]{The action currently chosen.}
+      @entry[context]{The @sym{gdk-drag-context} object on which the signal is
+        emitted.}
+      @entry[action]{The @symbol{gdk-drag-action} value currently chosen.}
     @end{table}
-    Since 3.20
-
     @subheading{The \"cancel\" signal}
     @begin{pre}
- lambda (context reason)    : Run Last
+ lambda (context reason)    :run-last
     @end{pre}
-    The drag and drop operation was cancelled.
-
-    This signal will only be emitted if the @class{gdk-drag-context} manages the
-    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
-    for more information.
-    @begin[code]{table}
-      @entry[context]{The object on which the signal is emitted.}
-      @entry[reason]{The reason the context was cancelled.}
-    @end{table}
+    The drag and drop operation was cancelled. This signal will only be emitted
+    if the @sym{gdk-drag-context} object manages the drag and drop operation.
+    See the function @fun{gdk-drag-context-manage-dnd} for more information.
     Since 3.20
-
+    @begin[code]{table}
+      @entry[context]{The @sym{gdk-drag-context} object on which the signal is
+        emitted.}
+      @entry[reason]{The @symbol{gdk-drag-cancel-reason} value the context was
+        cancelled.}
+    @end{table}
     @subheading{The \"dnd-finished\" signal}
     @begin{pre}
- lambda (context)    : Run Last
+ lambda (context)    :run-last
     @end{pre}
     The drag and drop operation was finished, the drag destination finished
-    reading all data. The drag source can now free all miscellaneous data.
-
-    This signal will only be emitted if the @class{gdk-drag-context} manages the
+    reading all data. The drag source can now free all miscellaneous data. This
+    signal will only be emitted if the @sym{gdk-drag-context} manages the
     drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
-    for more information.
+    for more information. Since 3.20
     @begin[code]{table}
-      @entry[context]{The object on which the signal is emitted.}
+      @entry[context]{The @sym{gdk-drag-context} object on which the signal is
+        emitted.}
     @end{table}
-    Since 3.20
-
     @subheading{The \"drop-performed\" signal}
     @begin{pre}
- lambda (context time)    : Run Last
+ lambda (context time)    :run-last
     @end{pre}
-    The drag and drop operation was performed on an accepting client.
-
-    This signal will only be emitted if the @sym{gdk-drag-context} manages the
+    The drag and drop operation was performed on an accepting client. This
+    signal will only be emitted if the @sym{gdk-drag-context} manages the
     drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
-    for more information.
+    for more information. Since 3.20
     @begin[code]{table}
-      @entry[context]{The object on which the signal is emitted.}
-      @entry[time]{The time at which the drop happened.}
+      @entry[context]{The @sym{gdk-drag-context} object on which the signal is
+        emitted.}
+      @entry[time]{An integer with the time at which the drop happened.}
     @end{table}
-    Since 3.20
-  @end{dictionary}")
+  @end{dictionary}
+  @see-symbol{gdk-drag-cancel-reason}
+  @see-symbol{gdk-drag-protocol}
+  @see-symbol{gdk-drag-action}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_get_selection ()
+;;; gdk_drag_get_selection () -> gdk-drag-selection
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_drag_get_selection" gdk-drag-get-selection) gdk-atom-as-string
+(defcfun ("gdk_drag_get_selection" gdk-drag-selection) gdk-atom-as-string
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2021-3-27}
   @argument[context]{a @class{gdk-drag-context} object}
-  @return{The selection atom, or @code{:none}.}
-  Returns the selection atom for the current source window."
+  @return{A @symbol{gdk-atom} as a string for the selection, or \"NONE\".}
+  @begin{short}
+    Returns the selection atom for the current source window.
+  @end{short}
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context)))
 
-(export 'gdk-drag-get-selection)
+(export 'gdk-drag-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_abort ()
@@ -318,14 +321,14 @@
 
 (defcfun ("gdk_drag_abort" gdk-drag-abort) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[time]{the timestamp for this operation}
+  @argument[time]{an unsigned integer with the timestamp for this operation}
   @begin{short}
     Aborts a drag without dropping.
   @end{short}
-
-  This function is called by the drag source."
+  This function is called by the drag source.
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (time :uint32))
 
@@ -337,16 +340,16 @@
 
 (defcfun ("gdk_drop_reply" gdk-drop-reply) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[accepted]{@em{true} if the drop is accepted}
-  @argument[time]{the timestamp for this operation}
+  @argument[time]{an unsigned integer with the timestamp for this operation}
   @begin{short}
     Accepts or rejects a drop.
   @end{short}
-
   This function is called by the drag destination in response to a drop
-  initiated by the drag source."
+  initiated by the drag source.
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (accepted :boolean)
   (time :uint32))
@@ -359,14 +362,14 @@
 
 (defcfun ("gdk_drag_drop" gdk-drag-drop) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[time]{the timestamp for this operation}
+  @argument[time]{an unsigned integer with the timestamp for this operation}
   @begin{short}
     Drops on the current destination.
   @end{short}
-
-  This function is called by the drag source."
+  This function is called by the drag source.
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (time :uint32))
 
@@ -374,29 +377,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_drop_done ()
-;;;
-;;; void
-;;; gdk_drag_drop_done (GdkDragContext *context,
-;;;                     gboolean success);
-;;;
-;;; Inform GDK if the drop ended successfully. Passing FALSE for success may
-;;; trigger a drag cancellation animation.
-;;;
-;;; This function is called by the drag source, and should be the last call
-;;; before dropping the reference to the context .
-;;;
-;;; The GdkDragContext will only take the first gdk_drag_drop_done() call as
-;;; effective, if this function is called multiple times, all subsequent calls
-;;; will be ignored.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; success :
-;;;     whether the drag was ultimatively successful
-;;;
-;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_drag_drop_done" gdk-drag-drop-done) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @argument[sucess]{a boolean wether the drag was ultimatively succesful}
+  @begin{short}
+    Inform GDK if the drop ended successfully.
+  @end{short}
+  Passing @em{false} for success may trigger a drag cancellation animation.
+  This function is called by the drag source, and should be the last call
+  before dropping the reference to the context. The @class{gdk-drag-context}
+  object will only take the first @sym{gdk-drag-drop-done} call as effective,
+  if this function is called multiple times, all subsequent calls will be
+  ignored.
+
+  Since 3.20
+  @see-class{gdk-drag-context}"
+  (context (g-object gdk-drag-context))
+  (success :boolean))
+
+#+gdk-3-20
+(export 'gdk-drag-drop-done)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_find_window_for_screen ()
@@ -414,24 +419,30 @@
 
 (defun gdk-drag-find-window-for-screen (context window screen x-root y-root)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[drag-window]{a window which may be at the pointer position, but
-    should be ignored, since it is put up by the drag source as an icon}
-  @argument[screen]{the screen where the destination window is sought}
-  @argument[x-root]{the x position of the pointer in root coordinates}
-  @argument[y-root]{the y position of the pointer in root coordinates}
+  @argument[window]{a @class{gdk-window} object which may be at the pointer
+    position, but should be ignored, since it is put up by the drag source as
+    an icon}
+  @argument[screen]{the @class{gdk-screen} object where the destination window
+    is sought}
+  @argument[x-root]{an integer with the x position of the pointer in root
+    coordinates}
+  @argument[y-root]{an integer with the y position of the pointer in root
+    coordinates}
   @begin{return}
-    @code{dest-window} -- the destination window @br{}
-    @code{protocol} -- the DND protocol
+    @code{dest-window} -- the  @class{gdk-window} destination window @br{}
+    @code{protocol} -- the @symbol{gdk-drag-protocol} DND protocol
   @end{return}
   @begin{short}
     Finds the destination window and DND protocol to use at the given pointer
     position.
   @end{short}
-
-  This function is called by the drag source to obtain the @arg{dest-window}
+  This function is called by the drag source to obtain the destination window
   and protocol parameters for the function @fun{gdk-drag-motion}.
+  @see-class{gtk-drag-context}
+  @see-class{gdk-window}
+  @see-class{gdk-screen}
   @see-function{gdk-drag-motion}"
   (with-foreign-objects ((dest-window :pointer) (protocol 'gdk-drag-protocol))
     (%gdk-drag-find-window-for-screen context
@@ -453,18 +464,20 @@
 (defcfun ("gdk_drag_begin" gdk-drag-begin)
     (g-object gdk-drag-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[window]{the source window for this drag}
-  @argument[targets]{the offered targets, as list of @symbol{gdk-atom}'s}
+ "@version{2021-3-26}
+  @argument[window]{the @class{gdk-window} source window for this drag}
+  @argument[targets]{the offered targets, as list a of @symbol{gdk-atom} as
+    strings}
   @return{A newly created @class{gdk-drag-context} object.}
   @begin{short}
     Starts a drag and creates a new drag context for it.
   @end{short}
   This function assumes that the drag is controlled by the client pointer
   device, use the function @fun{gdk-drag-begin-for-device} to begin a drag with
-  a different device.
-
-  This function is called by the drag source.
+  a different device. This function is called by the drag source.
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}
+  @see-symbol{gdk-atom}
   @see-function{gdk-drag-begin-for-device}"
   (window (g-object gdk-window))
   (targets (g-list gdk-atom-as-string)))
@@ -478,14 +491,17 @@
 (defcfun ("gdk_drag_begin_for_device" gdk-drag-begin-for-device)
     (g-object gdk-drag-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[window]{the source window for this drag}
-  @argument[device]{the device that controls this drag}
-  @argument[targets]{the offered targets, as list of @symbol{gdk-atom}'s}
+ "@version{2021-3-26}
+  @argument[window]{the @class{gdk-window} source window for this drag}
+  @argument[device]{the @class{gdk-device} object that controls this drag}
+  @argument[targets]{the offered targets, as list of @symbol{gdk-atom} as
+    strings}
   @return{A newly created @class{gdk-drag-context} object.}
   @short{Starts a drag and creates a new drag context for it.}
-
-  This function is called by the drag source."
+  This function is called by the drag source.
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-symbol{gdk-atom}"
   (window (g-object gdk-window))
   (device (g-object gdk-device))
   (targets (g-list gdk-atom-as-string)))
@@ -494,38 +510,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_begin_from_point ()
-;;;
-;;; GdkDragContext *
-;;; gdk_drag_begin_from_point (GdkWindow *window,
-;;;                            GdkDevice *device,
-;;;                            GList *targets,
-;;;                            gint x_root,
-;;;                            gint y_root);
-;;;
-;;; Starts a drag and creates a new drag context for it.
-;;;
-;;; This function is called by the drag source.
-;;;
-;;; window :
-;;;     the source window for this drag
-;;;
-;;; device :
-;;;     the device that controls this drag
-;;;
-;;; targets :
-;;;     the offered targets, as list of GdkAtoms.
-;;;
-;;; x_root :
-;;;     the x coordinate where the drag nominally started
-;;;
-;;; y_root :
-;;;     the y coordinate where the drag nominally started
-;;;
-;;; Returns :
-;;;     a newly created GdkDragContext.
-;;;
-;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_drag_begin_from_point" gdk-drag-begin-from-point)
+    (g-object gdk-drag-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[window]{the @class{gdk-window} source window for this drag}
+  @argument[device]{the @class{gdk-device} object that controls this drag}
+  @argument[targets]{the offered targets, as list of @symbol{gdk-atom} as
+    strings}
+  @argument[x-root]{an integer with the x coordinate where the drag nominally
+    started}
+  @argument[y-root]{an integer with the y coordinate where the drag nominally
+    started}
+  @return{A newly created @class{gdk-drag-context} object.}
+  @begin{short}
+    Starts a drag and creates a new drag context for it.
+  @end{short}
+  This function is called by the drag source.
+
+  Since 3.20
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-symbol{gdk-atom}"
+  (window (g-object gdk-window))
+  (device (g-object gdk-device))
+  (targets (g-list gdk-atom-as-string))
+  (x-root :int)
+  (y-root :int))
+
+#+gdk-3-20
+(export 'gdk-drag-begin-from-point)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_motion ()
@@ -535,31 +553,38 @@
 
 (defcfun ("gdk_drag_motion" gdk-drag-motion) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[dest-window]{the new destination window, obtained by
-    @fun{gdk-drag-find-window-for-screen}}
-  @argument[protocol]{the DND protocol in use, obtained by
-    @fun{gdk-drag-find-window-for-screen}}
-  @argument[x-root]{the x position of the pointer in root coordinates}
-  @argument[y-root]{the y position of the pointer in root coordinates}
-  @argument[suggested-action]{the suggested action}
-  @argument[possible-actions]{the possible actions}
-  @argument[time]{the timestamp for this operation}
+  @argument[window]{the new @class{gdk-window} destination window, obtained by
+    the function @fun{gdk-drag-find-window-for-screen}}
+  @argument[protocol]{the @symbol{gdk-drag-protocol} DND protocol in use,
+    obtained by the function @fun{gdk-drag-find-window-for-screen}}
+  @argument[x-root]{an integer with the x position of the pointer in root
+    coordinates}
+  @argument[y-root]{an integer with the the y position of the pointer in root
+    coordinates}
+  @argument[suggested]{a @symbol{gdk-drag-action} value with the suggested
+    action}
+  @argument[possible]{a @symbol{gdk-drag-action} value with the possible
+    actions}
+  @argument[time]{an unsigned integer with the timestamp for this operation}
   @begin{short}
     Updates the drag context when the pointer moves or the set of actions
     changes.
   @end{short}
-
   This function is called by the drag source.
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}
+  @see-symbol{gdk-drag-protocol}
+  @see-symbol{gdk-drag-action}
   @see-function{gdk-drag-find-window-for-screen}"
   (context (g-object gdk-drag-context))
-  (dest-window (g-object gdk-window))
+  (window (g-object gdk-window))
   (protocol gdk-drag-protocol)
   (x-root :int)
   (y-root :int)
-  (suggested-action gdk-drag-action)
-  (possible-actions gdk-drag-action)
+  (suggested gdk-drag-action)
+  (possible gdk-drag-action)
   (time :uint32))
 
 (export 'gdk-drag-motion)
@@ -570,14 +595,13 @@
 
 (defcfun ("gdk_drop_finish" gdk-drop-finish) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[success]{@em{true} if the data was successfully received}
-  @argument[time]{the timestamp for this operation}
+  @argument[time]{an unsigned integer with the timestamp for this operation}
   @begin{short}
     Ends the drag operation after a drop.
   @end{short}
-
   This function is called by the drag destination.
   @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
@@ -592,17 +616,19 @@
 
 (defcfun ("gdk_drag_status" gdk-drag-status) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[action]{the selected action which will be taken when a drop happens,
-    or 0 to indicate that a drop will not be accepted}
-  @argument[time]{the timestamp for this operation}
+  @argument[action]{the selected @symbol{gdk-drag-action} value which will be
+    taken when a drop happens, or 0 to indicate that a drop will not be
+    accepted}
+  @argument[time]{an integer with the timestamp for this operation}
   @begin{short}
     Selects one of the actions offered by the drag source.
   @end{short}
-
   This function is called by the drag destination in response to the function
   @fun{gdk-drag-motion} called by the drag source.
+  @see-class{gdk-drag-context}
+  @see-symbol{gdk-drag-action}
   @see-function{gdk-drag-motion}"
   (context (g-object gdk-drag-context))
   (action gdk-drag-action)
@@ -616,7 +642,7 @@
 
 (defcfun ("gdk_drag_drop_succeeded" gdk-drag-drop-succeeded) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
   @return{@em{True} if the drop was successful.}
   @begin{short}
@@ -631,258 +657,300 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_drag_protocol ()
-;;;
-;;; GdkDragProtocol gdk_window_get_drag_protocol (GdkWindow *window,
-;;;                                               GdkWindow **target);
-;;;
-;;; Finds out the DND protocol supported by a window.
-;;;
-;;; window :
-;;;     the destination window
-;;;
-;;; target :
-;;;     location of the window where the drop should happen. This may be window
-;;;     or a proxy window, or NULL if window does not support Drag and Drop
-;;;
-;;; Returns :
-;;;     the supported DND protocol.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_actions ()
-;;;
-;;; GdkDragAction gdk_drag_context_get_actions (GdkDragContext *context);
-;;;
-;;; Determines the bitmask of actions proposed by the source if
-;;; gdk_drag_context_get_suggested_action() returns GDK_ACTION_ASK.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     the GdkDragAction flags
-;;;
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
+(defcfun ("gdK_window_get_drag_protocol" gdk-window-drag-protocol)
+    gdk-drag-protocol
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[window]{the @class{gdk-window} destination window}
+  @argument[target]{the @class{gdk-window} object where the drop should happen.
+    This may be @arg{window} or a proxy window, or @code{nil} if @arg{window}
+    does not support Drag and Drop}
+  @return{The supported @symbol{gdk-drag-protocol} DND protocol.}
+  @begin{short}
+    Finds out the DND protocol supported by a window.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}
+  @see-symbol{gdk-drag-protocol}"
+  (window (g-object gdk-window))
+  (target (g-object gdk-window)))
+
+(export 'gdk-window-drag-protocol)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_suggested_action ()
-;;;
-;;; GdkDragAction gdk_drag_context_get_suggested_action
-;;;                                                   (GdkDragContext *context);
-;;;
-;;; Determines the suggested drag action of the context.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     a GdkDragAction value
-;;;
-;;; Since 2.22
+;;; gdk_drag_context_get_actions () -> gdk-drag-context-actions
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_drag_context_get_actions" gdk-drag-context-actions)
+    gdk-drag-action
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{The @symbol{gdk-drag-action} flags.}
+  @begin{short}
+    Determines the bitmask of actions proposed by the source if the function
+    @fun{gdk-drag-context-suggested-action} returns @code{:ask}.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-symbol{gdk-drag-action}
+  @see-function{gdk-drag-context-suggest-action}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-actions)
+
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_selected_action ()
-;;;
-;;; GdkDragAction gdk_drag_context_get_selected_action (GdkDragContext *context)
-;;;
-;;; Determines the action chosen by the drag destination.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     a GdkDragAction value
-;;;
-;;; Since 2.22
+;;; gdk_drag_context_get_suggested_action () -> gdk-drag-context-suggest-action
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_suggested_action"
+          gdk-drag-context-suggested-action) gdk-drag-action
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{The @symbol{gdk-drag-action} flags.}
+  @begin{short}
+    Determines the suggested drag action of the context.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-symbol{gdk-drag-action}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-suggested-action)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_context_get_selected_action () -> gdk-drag-context-selected-action
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_selected_action"
+           gdk-drag-context-selected-action) gdk-drag-action
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{The @symbol{gdk-drag-action} flags.}
+  @begin{short}
+    Determines the action chosen by the drag destination.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-symbol{gdk-drag-action}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-selected-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_list_targets ()
-;;;
-;;; GList * gdk_drag_context_list_targets (GdkDragContext *context);
-;;;
-;;; Retrieves the list of targets of the context.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     a GList of targets
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_list_targets" gdk-drag-context-list-targets)
+    (g-list gdk-atom-as-string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{A list of @symbol{gdk-atom} as strings.}
+  @begin{short}
+    Retrieves the list of targets of the context.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-symbol{gdk-atom}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-list-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_device ()
-;;;
-;;; GdkDevice * gdk_drag_context_get_device (GdkDragContext *context);
-;;;
-;;; Returns the GdkDevice associated to the drag context.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     The GdkDevice associated to context
+;;; gdk_drag_context_set_device () -> gdk-drag-context-device
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_set_device ()
-;;;
-;;; void gdk_drag_context_set_device (GdkDragContext *context,
-;;;                                   GdkDevice *device);
-;;;
-;;; Associates a GdkDevice to context, so all Drag and Drop events for context
-;;; are emitted as if they came from this device.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; device :
-;;;     a GdkDevice
-;;; ----------------------------------------------------------------------------
+(defun (setf gdk-drag-context-device) (device context)
+  (foreign-funcall "gdk_drag_context_set_device"
+                   (g-object gdk-drag-context) context
+                   (g-object gdk-device) device
+                   :void)
+  device)
+
+(defcfun ("gdk_drag_context_get_device" gdk-drag-context-device)
+    (g-object gdk-device)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @syntax[]{(gdk-drag-context-device context) => device}
+  @syntax[]{(setf (gdk-drag-context-device context) device)}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @argument[device]{a @class{gdk-device} object associated to @arg{context}}
+  @begin{short}
+    Associates a device to @arg{context}, so all Drag and Drop events for the
+    context are emitted as if they came from this device.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-class{gdk-device}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-device)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_source_window ()
-;;;
-;;; GdkWindow * gdk_drag_context_get_source_window (GdkDragContext *context);
-;;;
-;;; Returns the GdkWindow where the DND operation started.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     a GdkWindow
-;;;
-;;; Since 2.22
+;;; gdk_drag_context_get_source_window () -> gdk-drag-context-source-window
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_dest_window ()
-;;;
-;;; GdkWindow * gdk_drag_context_get_dest_window (GdkDragContext *context);
-;;;
-;;; Returns the destination windw for the DND operation.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     a GdkWindow
-;;;
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
+(defcfun ("gdk_drag_context_get_source_window" gdk-drag-context-source-window)
+    (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{A @class{gdk-window} object.}
+  @begin{short}
+    Returns the window where the DND operation started.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-source-window)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_protocol ()
+;;; gdk_drag_context_get_dest_window () -> gdk-drag-context-dest-window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_drag_context_get_protocol" gdk-drag-context-get-protocol)
+(defcfun ("gdk_drag_context_get_dest_window" gdk-drag-context-dest-window)
+    (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{A @class{gdk-window} object.}
+  @begin{short}
+    Returns the destination windw for the DND operation.
+  @end{short}
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-dest-window)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_context_get_protocol () -> gdk-drag-context-protocol
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_protocol" gdk-drag-context-protocol)
     gdk-drag-protocol
  #+cl-cffi-gtk-documentation
- "@version{2013-11-19}
+ "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
   @return{The drag protocol of type @symbol{gdk-drag-protocol}.}
   @begin{short}
-    Returns the drag protocol thats used by this context.
+    Returns the drag protocol that is used by this context.
   @end{short}
   @see-class{gdk-drag-context}
   @see-symbol{gdk-drag-protocol}"
   (context (g-object gdk-drag-context)))
 
-(export 'gdk-drag-context-get-protocol)
+(export 'gdk-drag-context-protocol)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_context_get_drag_window ()
-;;;
-;;; GdkWindow *
-;;; gdk_drag_context_get_drag_window (GdkDragContext *context);
-;;;
-;;; Returns the window on which the drag icon should be rendered during the drag
-;;; operation. Note that the window may not be available until the drag
-;;; operation has begun. GDK will move the window in accordance with the ongoing
-;;; drag operation. The window is owned by context and will be destroyed when
-;;; the drag operation is over.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     the drag window, or NULL.
-;;;
-;;; Since 3.20
+;;; gdk_drag_context_get_drag_window () -> gdk-drag-context-drag-window
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_drag_context_get_drag_window" gdk-drag-context-drag-window)
+    (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{The @class{gdk-window} drag window, or @code{nil}.}
+  @begin{short}
+    Returns the window on which the drag icon should be rendered during the
+    drag operation.
+  @end{short}
+  Note that the window may not be available until the drag operation has begun.
+  GDK will move the window in accordance with the ongoing drag operation. The
+  window is owned by context and will be destroyed when the drag operation is
+  over.
+
+  Since 3.20
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}"
+  (context (g-object gdk-drag-context)))
+
+#+gdk-3-20
+(export 'gdk-drag-context-drag-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_set_hotspot ()
-;;;
-;;; void
-;;; gdk_drag_context_set_hotspot (GdkDragContext *context,
-;;;                               gint hot_x,
-;;;                               gint hot_y);
-;;;
-;;; Sets the position of the drag window that will be kept under the cursor
-;;; hotspot. Initially, the hotspot is at the top left corner of the drag
-;;; window.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; hot_x :
-;;;     x coordinate of the drag window hotspot
-;;;
-;;; hot_y :
-;;;     y coordinate of the drag window hotspot
-;;;
-;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_drag_context_set_hotspot" gdk-drag-context-set-hotspot) :void
+
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @argument[hot-x]{an integer with the x coordinate of the drag window hotspot}
+  @argument[hot-y]{an integer with the y coordinate of the drag window hotspot}
+  @begin{short}
+    Sets the position of the drag window that will be kept under the cursor
+    hotspot.
+  @end{short}
+  Initially, the hotspot is at the top left corner of the drag window.
+
+  Since 3.20
+  @see-class{gdk-drag-context}"
+  (context (g-object gdk-drag-context))
+  (hot-x :int)
+  (hot-y :int))
+
+#+gdk-3-20
+(export 'gdk-drag-context-set-hotspot)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_manage_dnd ()
-;;;
-;;; gboolean
-;;; gdk_drag_context_manage_dnd (GdkDragContext *context,
-;;;                              GdkWindow *ipc_window,
-;;;                              GdkDragAction actions);
-;;;
-;;; Requests the drag and drop operation to be managed by context . When a drag
-;;; and drop operation becomes managed, the GdkDragContext will internally
-;;; handle all input and source-side GdkEventDND events as required by the
-;;; windowing system.
-;;;
-;;; Once the drag and drop operation is managed, the drag context will emit the
-;;; following signals:
-;;;
-;;; The “action-changed” signal whenever the final action to be performed by the
-;;; drag and drop operation changes.
-;;;
-;;; The “drop-performed” signal after the user performs the drag and drop
-;;; gesture (typically by releasing the mouse button).
-;;;
-;;; The “dnd-finished” signal after the drag and drop operation concludes (after
-;;; all GdkSelection transfers happen).
-;;;
-;;; The “cancel” signal if the drag and drop operation is finished but does not
-;;; happen over an accepting destination, or is cancelled through other means.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; ipc_window :
-;;;     Window to use for IPC messaging/events
-;;;
-;;; actions :
-;;;     the actions supported by the drag source
-;;;
-;;; Returns :
-;;;     TRUE if the drag and drop operation is managed.
-;;;
-;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_drag_context_manage_dnd" gdk-drag-context-manage-dnd) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-26}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @argument[window]{the @class{gdk-window} object to use for IPC
+    messaging/events}
+  @argument[actions]{the @symbol{gdk-drag-action} flags supported by the drag
+    source}
+  @return{@em{True} if the drag and drop operation is managed.}
+  @begin{short}
+    Requests the drag and drop operation to be managed by @arg{context}.
+  @end{short}
+  When a drag and drop operation becomes managed, the @class{gdk-drag-context}
+  object will internally handle all input and source-side @class{gdk-event-dnd}
+  events as required by the windowing system.
+
+  Once the drag and drop operation is managed, the drag context will emit the
+  following signals:
+  @begin{itemize}
+    @begin{item}
+      The \"action-changed\" signal whenever the final action to be performed
+      by the drag and drop operation changes.
+    @end{item}
+    @begin{item}
+      The \"drop-performed\" signal after the user performs the drag and drop
+      gesture (typically by releasing the mouse button).
+    @end{item}
+    @begin{item}
+      The \"dnd-finished\" signal after the drag and drop operation concludes
+      (after all GDK selection transfers happen).
+    @end{item}
+    @begin{item}
+      The \"cancel\" signal if the drag and drop operation is finished but does
+      not happen over an accepting destination, or is cancelled through other
+      means.
+    @end{item}
+  @end{itemize}
+  Since 3.20
+  @see-class{gdk-drag-context}
+  @see-class{gdk-window}
+  @see-symbol{gdk-drag-action}
+  @see-class{gdk-event-dnd}"
+  (context (g-object gdk-drag-context))
+  (window (g-object gdk-window))
+  (actions gdk-drag-action))
+
+#+gdk-3-20
+(export 'gdk-drag-context-manage-dnd)
 
 ;;; --- End of file gdk.drag-and-drop.lisp -------------------------------------
