@@ -1558,6 +1558,8 @@
 ;;; gtk_tree_view_insert_column_with_attributes ()
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: The argument POSITION is not used.
+
 (defun gtk-tree-view-insert-column-with-attributes (view
                                                     position
                                                     title
@@ -1584,6 +1586,7 @@
   @see-class{gtk-tree-view-column}
   @see-function{gtk-tree-view-fixed-height-mode}
   @see-function{gtk-tree-view-column-sizing}"
+  (declare (ignore position))
   (let ((column (gtk-tree-view-column-new)))
     (when (gtk-tree-view-fixed-height-mode view)
       (setf (gtk-tree-view-column-sizing column) :fixed))
@@ -1596,6 +1599,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_insert_column_with_data_func ()
 ;;; ----------------------------------------------------------------------------
+
+;; FIXME: The argument POSITION is not used.
 
 (defun gtk-tree-view-insert-column-with-data-func (view
                                                    position
@@ -1627,6 +1632,7 @@
   @see-function{gtk-tree-view-column-pack-start}
   @see-function{gtk-tree-view-fixed-height-mode}
   @see-function{gtk-tree-view-column-sizing}"
+  (declare (ignore position))
   (let ((column (gtk-tree-view-column-new)))
     (when (gtk-tree-view-fixed-height-mode view)
       (setf (gtk-tree-view-column-sizing column) :fixed))
