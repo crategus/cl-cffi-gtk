@@ -264,7 +264,7 @@
 ;    gtk.version.lisp
 (load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
-;    gtk.clipboard.lisp
+(load "rtest-gtk-clipboard.lisp")
 ;    gtk.drag-and-drop.lisp
 (load "rtest-gtk-settings.lisp")
 ;    gtk.bindings.lisp
@@ -285,4 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2021-1-26
+;;; 2021-3-25

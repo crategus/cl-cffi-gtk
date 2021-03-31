@@ -1,21 +1,11 @@
 (def-suite gdk-selections :in gdk-suite)
 (in-suite gdk-selections)
 
-;;;   GDK_SELECTION_PRIMARY
+(defparameter *verbose-gdk-selections* nil)
 
-(test gdk-selection-primary
-  (is (equal "PRIMARY" +gdk-selection-primary+)))
-
-;;;   GDK_SELECTION_SECONDARY
-
-(test gdk-selection-secondary
-  (is (equal "SECONDARY" +gdk-selection-secondary+)))
-
-;;;   GDK_SELECTION_CLIPBOARD
-
-(test gdk-selection-clipboard
-  (is (equal "CLIPBOARD" +gdk-selection-clipboard+)))
-
+;;;     GDK_SELECTION_PRIMARY
+;;;     GDK_SELECTION_SECONDARY
+;;;     GDK_SELECTION_CLIPBOARD
 ;;;     GDK_TARGET_BITMAP
 ;;;     GDK_TARGET_COLORMAP
 ;;;     GDK_TARGET_DRAWABLE
@@ -30,108 +20,109 @@
 ;;;     GDK_SELECTION_TYPE_WINDOW
 ;;;     GDK_SELECTION_TYPE_STRING
 
-;;;   gdk_selection_owner_set
+;;;     gdk_selection_owner_set
+;;;     gdk_selection_owner_get
 
-(test gdk-selection-owner-set.1
+(test gdk-selection-owner.1
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
+      ;; No owner
+      (is-false (gdk-selection-owner-get "PRIMARY"))
+      ;; Set the owner
       (is-true (gdk-selection-owner-set window
                                         "PRIMARY"
                                         +gdk-current-time+
-                                        nil)))))
+                                        nil))
+      ;; Check the owner
+      (is (eq window (gdk-selection-owner-get "PRIMARY")))
+      ;; Unset the owner
+      (is-true (gdk-selection-owner-set nil
+                                        "PRIMARY"
+                                        +gdk-current-time+ nil)))))
 
-(test gdk-selection-owner-set.2
+(test gdk-selection-owner.2
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
+      (is-false (gdk-selection-owner-get "SECONDARY"))
       (is-true (gdk-selection-owner-set window
                                         "SECONDARY"
                                         +gdk-current-time+
-                                        nil)))))
+                                        nil))
+      (is (eq window (gdk-selection-owner-get "SECONDARY")))
+      (is-true (gdk-selection-owner-set nil
+                                        "SECONDARY"
+                                        +gdk-current-time+ nil)))))
 
-(test gdk-selection-owner-set.3
+(test gdk-selection-owner.3
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
+      (is-false (gdk-selection-owner-get "CLIPBOARD"))
       (is-true (gdk-selection-owner-set window
                                         "CLIPBOARD"
                                         +gdk-current-time+
-                                        nil)))))
+                                        nil))
+      (is (eq window (gdk-selection-owner-get "CLIPBOARD")))
+      (is-true (gdk-selection-owner-set nil
+                                        "CLIPBOARD"
+                                        +gdk-current-time+ nil)))))
 
-;;;   gdk_selection_owner_set_for_display
+;;;     gdk_selection_owner_set_for_display
+;;;     gdk_selection_owner_get_for_display
 
-(test gdk-selection-owner-set-for-display
+(test gdk-selection-owner-for-display
   (let ((display (gdk-display-default))
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
-      (is-true (gdk-selection-owner-set-for-display display
-                                                    window
-                                                    "PRIMARY"
-                                                    +gdk-current-time+
-                                                    nil)))))
-
-;;;   gdk_selection_owner_get
-
-(test gdk-selection-owner-get
-  (let ((widget (make-instance 'gtk-window :type :toplevel)))
-    ;; Realize the toplevel widget to create a gdk-window
-    (gtk-widget-realize widget)
-    (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
-      (is-true (gdk-selection-owner-set window
-                                        "PRIMARY"
-                                        +gdk-current-time+
-                                        nil))
-      (is (eq 'gdk-window (type-of (gdk-selection-owner-get "PRIMARY"))))
-      (is (eq window (gdk-selection-owner-get "PRIMARY"))))))
-
-;;;   gdk_selection_owner_get_for_display
-
-(test gdk-selection-owner-get-for-display
-  (let ((display (gdk-display-default))
-        (widget (make-instance 'gtk-window :type :toplevel)))
-    ;; Realize the toplevel widget to create a gdk-window
-    (gtk-widget-realize widget)
-    (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
-      (is-true (gdk-selection-owner-set window
-                                        "PRIMARY"
-                                        +gdk-current-time+
-                                        nil))
-      (is (eq 'gdk-window (type-of (gdk-selection-owner-get "PRIMARY"))))
+      (is-false (gdk-selection-owner-get-for-display display "PRIMARY"))
       (is-true (gdk-selection-owner-set-for-display display
                                                     window
                                                     "PRIMARY"
                                                     +gdk-current-time+
                                                     nil))
-      (is (eq 'gdk-window
-              (type-of (gdk-selection-owner-get-for-display display
-                                                            "PRIMARY"))))
       (is (eq window
-              (gdk-selection-owner-get-for-display display "PRIMARY"))))))
+              (gdk-selection-owner-get-for-display display "PRIMARY")))
+      (is-true (gdk-selection-owner-set-for-display display
+                                                    nil
+                                                    "PRIMARY"
+                                                    +gdk-current-time+ nil)))))
 
-;;;   gdk_selection_convert
+;;;     gdk_selection_convert
+;;;     gdk_selection_property_get
 
 (test gdk-selection-convert
-  (let ((widget (make-instance 'gtk-window :type :toplevel)))
+  (let ((clipboard (gtk-clipboard-default (gdk-display-default)))
+        (widget (make-instance 'gtk-window :type :toplevel)))
+    (is (string= "CLIPBOARD" (gtk-clipboard-selection clipboard)))
+    ;; Put some text in  the default clipboard
+    (gtk-clipboard-set-text clipboard "This is the text.")
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
-      (is (eq 'gdk-window (type-of window)))
-      (gdk-selection-convert window "PRIMARY" "STRING" +gdk-current-time+))))
+      (gdk-selection-owner-set window "CLIPBOARD" +gdk-current-time+ nil)
+      (gdk-selection-convert window "CLIPBOARD" "STRING" +gdk-current-time+)
+      (is (eq window (gdk-selection-owner-get "CLIPBOARD")))
+      ;; FIXME: Works not as expeceted. We do not get data from the clipboard.
+      (multiple-value-bind (length data type format)
+          (gdk-selection-property-get window)
+        (when *verbose-gdk-selections*
+          (format t "~%PROPERTY-GET~%")
+          (format t " length : ~a~%" length)
+          (format t "   data : ~a~%" data)
+          (format t "   type : ~a~%" type)
+          (format t " format : ~a~%" format)))
+      (gdk-selection-owner-set nil "CLIPBOARD" +gdk-current-time+ nil))))
 
-;;;     gdk_selection_property_get
 ;;;     gdk_selection_send_notify
 ;;;     gdk_selection_send_notify_for_display
 
-;;; 2020-11-6
+;; TODO: Implement a test.
+
+;;; 2021-3-27

@@ -46,7 +46,7 @@
   (let* ((widget (make-instance 'gtk-button))
          (path (gtk-widget-path widget))
          (pspec (gtk-widget-class-find-style-property "GtkButton" "focus-padding"))
-         (provider (gtk-css-provider-default)))
+         (provider (gtk-css-provider-new)))
     ;; Check the arguments
     (is (eq 'gtk-widget-path (type-of path)))
     (is (g-is-param-spec pspec))

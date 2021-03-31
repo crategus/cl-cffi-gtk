@@ -12,14 +12,14 @@
   (is (eq (gtype "GtkSelectionData")
           (gtype (foreign-funcall "gtk_selection_data_get_type" g-size)))))
 
-(test make-gtk-selection-data
-  (let ((selection (make-gtk-selection-data)))
-    (is-false (gtk-selection-data-selection selection))
-    (is-false (gtk-selection-data-target selection))
-    (is-false (gtk-selection-data-type selection))
-    (is (eql 0 (gtk-selection-data-format selection)))
-    (is-true (null-pointer-p (gtk-selection-data-data selection)))
-    (is (eql 0 (gtk-selection-data-length selection)))
+(test gtk-selection-data-new
+  (let ((selection (gtk-selection-data-new)))
+    (is (string= "NONE" (gtk-selection-data-selection selection)))
+    (is (string= "NONE" (gtk-selection-data-target selection)))
+    (is (string= "NONE" (gtk-selection-data-type selection)))
+    (is (= 0 (gtk-selection-data-format selection)))
+    (is (null-pointer-p (gtk-selection-data-data selection)))
+    (is (= 0 (gtk-selection-data-length selection)))
     (is-false (gtk-selection-data-display selection))))
 
 ;;;   GtkTargetFlags  <-- gtk.drag-and-drop.lisp
@@ -29,18 +29,22 @@
 ;;;   gtk_target_entry_new
 
 (test gtk-target-entry-new
-  (let ((target-entry (gtk-target-entry-new "BITMAP" :same-app 0)))
-    (is (equal "BITMAP" (gtk-target-entry-target target-entry)))
-    (is (eql :same-app (gtk-target-entry-flags target-entry)))
+  (let ((target-entry (gtk-target-entry-new :target "BITMAP"
+                                            :flags :same-app
+                                            :info 0)))
+    (is (string= "BITMAP" (gtk-target-entry-target target-entry)))
+    (is (eq :same-app (gtk-target-entry-flags target-entry)))
     (is (= 0 (gtk-target-entry-info target-entry)))))
 
 ;;;   gtk_target_entry_copy
 
 (test gtk-target-entry-copy
-  (let* ((target-entry (gtk-target-entry-new "BITMAP" :same-app 0))
+  (let* ((target-entry (gtk-target-entry-new :target "BITMAP"
+                                             :flags :same-app
+                                             :info 0))
          (target-copy (gtk-target-entry-copy target-entry)))
-    (is (equal "BITMAP" (gtk-target-entry-target target-copy)))
-    (is (eql :same-app (gtk-target-entry-flags target-copy)))
+    (is (string= "BITMAP" (gtk-target-entry-target target-copy)))
+    (is (eq :same-app (gtk-target-entry-flags target-copy)))
     (is (= 0 (gtk-target-entry-info target-copy)))))
 
 ;;;   gtk_target_entry_free
@@ -49,11 +53,21 @@
 
 (test gtk-target-list-new
   (let ((target-list
-         (gtk-target-list-new (list (gtk-target-entry-new "text/html" 0 0)
-                                    (gtk-target-entry-new "STRING" 0 1)
-                                    (gtk-target-entry-new "number" 0 2)
-                                    (gtk-target-entry-new "image/jpeg" 0 3)
-                                    (gtk-target-entry-new "text/uri-list" 0 4)))))
+         (gtk-target-list-new (list (gtk-target-entry-new :target "text/html"
+                                                          :flags 0
+                                                          :info 0)
+                                    (gtk-target-entry-new :target "STRING"
+                                                          :flags 0
+                                                          :info 1)
+                                    (gtk-target-entry-new :target "number"
+                                                          :flags 0
+                                                          :info 2)
+                                    (gtk-target-entry-new :target "image/jpeg"
+                                                          :flags 0
+                                                          :info 3)
+                                    (gtk-target-entry-new :target "text/uri-list"
+                                                          :flags 0
+                                                          :info 4)))))
     (is (= 0 (gtk-target-list-find target-list "text/html")))
     (is (= 1 (gtk-target-list-find target-list "STRING")))
     (is (= 2 (gtk-target-list-find target-list "number")))
@@ -88,11 +102,21 @@
 (test gtk-target-list-add-table
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-table target-list
-                               (list (gtk-target-entry-new "text/html" 0 0)
-                                     (gtk-target-entry-new "STRING" 0 1)
-                                     (gtk-target-entry-new "number" 0 2)
-                                     (gtk-target-entry-new "image/jpeg" 0 3)
-                                     (gtk-target-entry-new "text/uri-list" 0 4)))
+                               (list (gtk-target-entry-new :target "text/html"
+                                                           :flags 0
+                                                           :info 0)
+                                     (gtk-target-entry-new :target "STRING"
+                                                           :flags 0
+                                                           :info 1)
+                                     (gtk-target-entry-new :target "number"
+                                                           :flags 0
+                                                           :info 2)
+                                     (gtk-target-entry-new :target "image/jpeg"
+                                                           :flags 0
+                                                           :info 3)
+                                     (gtk-target-entry-new :target "text/uri-list"
+                                                           :flags 0
+                                                           :info 4)))
     (is (= 0 (gtk-target-list-find target-list "text/html")))
     (is (= 1 (gtk-target-list-find target-list "STRING")))
     (is (= 2 (gtk-target-list-find target-list "number")))
@@ -120,9 +144,11 @@
 (test gtk-target-list-add-image-targets.1
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-image-targets target-list 0 t)
-    (is (equal '("application/ico" "image/bmp" "image/ico" "image/icon" "image/jpeg"
- "image/png" "image/tiff" "image/vnd.microsoft.icon" "image/x-bmp"
- "image/x-ico" "image/x-icon" "image/x-MS-bmp" "image/x-win-bitmap" "text/ico")
+    (is (equal '("application/ico" "image/bmp" "image/ico" "image/icon"
+                 "image/jpeg" "image/png" "image/tiff"
+                 "image/vnd.microsoft.icon" "image/x-bmp" "image/x-ico"
+                 "image/x-icon" "image/x-MS-bmp" "image/x-win-bitmap"
+                 "text/ico")
                (stable-sort (mapcar #'gtk-target-entry-target
                                     (gtk-target-table-new-from-list target-list))
                             #'string-lessp)))))
@@ -130,15 +156,17 @@
 (test gtk-target-list-add-image-targets.2
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-image-targets target-list 0 nil)
-    (is (equal '("application/ico" "application/x-navi-animation" "image/bmp" "image/gif"
- "image/ico" "image/icon" "image/jpeg" "image/png" "image/qtif" "image/svg"
- "image/svg+xml" "image/svg+xml-compressed" "image/svg-xml" "image/tiff"
- "image/vnd.adobe.svg+xml" "image/vnd.microsoft.icon" "image/x-bmp"
- "image/x-icns" "image/x-ico" "image/x-icon" "image/x-MS-bmp"
- "image/x-portable-anymap" "image/x-portable-bitmap" "image/x-portable-graymap"
- "image/x-portable-pixmap" "image/x-quicktime" "image/x-tga"
- "image/x-win-bitmap" "image/x-wmf" "image/x-xbitmap" "image/x-xpixmap"
- "text/ico" "text/xml-svg")
+    (is (equal '("application/ico" "application/x-navi-animation" "image/bmp"
+                 "image/gif" "image/ico" "image/icon" "image/jpeg" "image/png"
+                 "image/qtif" "image/svg" "image/svg+xml"
+                 "image/svg+xml-compressed" "image/svg-xml" "image/tiff"
+                 "image/vnd.adobe.svg+xml" "image/vnd.microsoft.icon"
+                 "image/x-bmp" "image/x-icns" "image/x-ico" "image/x-icon"
+                 "image/x-MS-bmp" "image/x-portable-anymap"
+                 "image/x-portable-bitmap" "image/x-portable-graymap"
+                 "image/x-portable-pixmap" "image/x-quicktime" "image/x-tga"
+                 "image/x-win-bitmap" "image/x-wmf" "image/x-xbitmap"
+                 "image/x-xpixmap" "text/ico" "text/xml-svg")
                (stable-sort (mapcar #'gtk-target-entry-target
                                     (gtk-target-table-new-from-list target-list))
                             #'string-lessp)))))
@@ -392,7 +420,7 @@
        (lambda (widget selection-data time)
          (declare (ignore widget time))
            (is-true (gtk-selection-data-targets-include-image selection-data nil))))
-    (gtk-selection-convert window "CLIPBOARD" "TEXT" +gdk-current-time+)))
+    (gtk-selection-convert window "CLIPBOARD" "BITMAP" +gdk-current-time+)))
 
 ;;;   gtk_selection_data_targets_include_text
 
@@ -449,6 +477,17 @@
     (gtk-selection-convert window "CLIPBOARD" "TARGETS" +gdk-current-time+)))
 
 ;;;     gtk_targets_include_image
+
+(test gtk-targets-include-image
+  (is-false (gtk-targets-include-image '() nil))
+  (is-true (gtk-targets-include-image '("application/ico" "image/bmp"
+                                        "image/ico" "image/icon"
+                                        "image/jpeg" "image/png" "image/tiff"
+                                        "image/vnd.microsoft.icon" "image/x-bmp"
+                                        "image/x-ico" "image/x-icon"
+                                        "image/x-MS-bmp" "image/x-win-bitmap"
+                                        "text/ico") nil)))
+
 ;;;     gtk_targets_include_text
 ;;;     gtk_targets_include_uri
 ;;;     gtk_targets_include_rich_text
