@@ -56,19 +56,19 @@
             (read-file (rel-path "css-basics.css")))
 
       (g-signal-connect provider "parsing-error"
-                        (lambda (provider section error)
-                          (declare (ignore provider error))
-                          (let ((start (gtk-text-buffer-iter-at-line-index
-                                           text
-                                           (gtk-css-section-get-start-line section)
-                                           (gtk-css-section-get-start-position section)))
-                                (end (gtk-text-buffer-iter-at-line-index
-                                         text
-                                         (gtk-css-section-get-end-line section)
-                                         (gtk-css-section-get-end-position section))))
-                            (format t "in signal parsing-error: ~A, ~A~%" start end)
-                            (gtk-text-buffer-apply-tag-by-name text "warning" start end)
-                            +gdk-event-stop+)))
+          (lambda (provider section err)
+            (declare (ignore provider err))
+            (let ((start (gtk-text-buffer-iter-at-line-index
+                             text
+                             (gtk-css-section-start-line section)
+                             (gtk-css-section-start-position section)))
+                  (end (gtk-text-buffer-iter-at-line-index
+                           text
+                           (gtk-css-section-end-line section)
+                           (gtk-css-section-end-position section))))
+              (format t "in signal parsing-error: ~A, ~A~%" start end)
+              (gtk-text-buffer-apply-tag-by-name text "warning" start end)
+              +gdk-event-stop+)))
 
       ;; Add the widgets to the window
       (gtk-container-add container child)

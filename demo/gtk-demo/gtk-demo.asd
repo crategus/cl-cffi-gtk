@@ -26,7 +26,6 @@
                (:file "color-chooser-widget")
                (:file "color-chooser-palette")
                (:file "cursor")
-               (:file "drag-and-drop")
                (:file "css-accordion")
                (:file "css-basics")
                (:file "css-blendmodes")
@@ -66,7 +65,6 @@
                (:file "selections-1")
                (:file "size-management")
                (:file "simple-application-window")
-               (:file "simple-drag-and-drop")
                (:file "simple-message")
                (:file "simple-window")
                (:file "spin-button")
@@ -79,4 +77,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-3-19
+;;; 2021-3-22

@@ -9,10 +9,13 @@
                (:file "application-inhibit")
                (:file "application-simple")
                (:file "bloat-pad")
+               (:file "clipboard")
                (:file "combo-box")
                (:file "combo-box-text")
                (:file "custom-window")
                (:file "dialog")
+               (:file "drag-and-drop")
+               (:file "drag-and-drop-simple")
                (:file "drawing-area")
                (:file "event-handler")
                (:file "grab")
@@ -35,4 +38,4 @@
                (:file "widget-pointer")
               ))
 
-;;; 2021-3-19
+;;; 2021-3-26

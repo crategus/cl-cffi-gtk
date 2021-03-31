@@ -1,6 +1,6 @@
-;;;; Simple Drag and Drop
+;;;; Simple Drag and Drop - 2021-3-22
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
 (defun get-image-pixbuf (image)
   (ecase (gtk-image-storage-type image)
@@ -9,7 +9,7 @@
                 (gtk-image-get-stock image)
               (gtk-widget-render-icon-pixbuf image stock-id size)))))
 
-(defun demo-simple-drag-and-drop ()
+(defun example-drag-and-drop-simple ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -78,4 +78,3 @@
                 (setf (gtk-button-image widget) image)))))
         (gtk-container-add window hgrid))
       (gtk-widget-show-all window))))
-

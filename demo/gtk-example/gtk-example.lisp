@@ -4,6 +4,7 @@
   (:export #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
+           #:example-clipboard
            #:example-custom-window
            #:example-combo-box
            #:example-combo-box-text
@@ -11,6 +12,8 @@
            #:example-dialog-new
            #:example-dialog-new-with-buttons
            #:example-dialog-ui
+           #:example-drag-and-drop
+           #:example-drag-and-drop-simple
            #:example-drawing-area
            #:example-file-chooser-custom-filter
            #:example-file-chooser-dialog
@@ -56,4 +59,4 @@
         (read-sequence string instream)
         string))))
 
-;;; 2021-3-19
+;;; 2021-3-26
