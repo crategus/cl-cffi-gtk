@@ -951,10 +951,10 @@
 (defcfun ("gdk_display_request_selection_notification"
            gdk-display-request-selection-notification) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-29}
+ "@version{2021-3-24}
   @argument[display]{a @class{gdk-display} object}
-  @argument[selection]{a string naming the selection for which ownership change
-    notification is requested}
+  @argument[selection]{an atom as a string naming the selection for which
+    ownership change notification is requested}
   @return{A boolean whether @class{gdk-event-owner-change} events will be sent.}
   @begin{short}
     Request @class{gdk-event-owner-change} events for ownership changes of the
@@ -1000,15 +1000,15 @@
   (targets :pointer)
   (n-targets :int))
 
-(defun gdk-display-store-clipboard (display clipboard-window time targets)
+(defun gdk-display-store-clipboard (display window time targets)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2021-3-24}
   @argument[display]{a @class{gdk-display} object}
-  @argument[clipboard-window]{a @class{gdk-window} object belonging to the
-    clipboard owner}
-  @argument[time]{a @code{:uint32} timestamp}
-  @argument[targets]{a list of strings with the targets that should be saved,
-    or @code{nil} if all available targets should be saved}
+  @argument[window]{a @class{gdk-window} object belonging to the clipboard
+    owner}
+  @argument[time]{an unsigned integer with the timestamp}
+  @argument[targets]{a list of atoms as strings with the targets that should
+    be saved, or @code{nil} if all available targets should be saved}
   @begin{short}
     Issues a request to the clipboard manager to store the clipboard data.
   @end{short}
@@ -1019,12 +1019,11 @@
   @see-class{gdk-window}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ptr 'gdk-atom-as-string n-targets)
-      (loop
-        for str in targets
-        for i from 0
-        do (setf (mem-aref targets-ptr 'gdk-atom-as-string i) str))
+      (loop for str in targets
+            for i from 0
+            do (setf (mem-aref targets-ptr 'gdk-atom-as-string i) str))
       (%gdk-display-store-clipboard display
-                                    clipboard-window
+                                    window
                                     time
                                     targets-ptr
                                     n-targets))))

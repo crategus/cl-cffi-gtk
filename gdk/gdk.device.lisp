@@ -1748,14 +1748,15 @@ get_device_settings (GdkDevice *device)
 (defcfun ("gdk_device_list_axes" gdk-device-list-axes)
     (g-list gdk-atom-as-string)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-5}
+ "@version{2021-3-24}
   @argument[device]{a @class{gdk-device} object}
-  @return{A list of strings.}
+  @return{A list of atoms as a string.}
   @begin{short}
-    Returns a list of strings, containing the labels for the axes that the
-    device currently has.
+    Returns a list of atoms as string, containing the labels for the axes that
+    the device currently has.
   @end{short}
-  @see-class{gdk-device}"
+  @see-class{gdk-device}
+  @see-symbol{gdk-atom}"
   (device (g-object gdk-device)))
 
 (export 'gdk-device-list-axes)
@@ -1773,16 +1774,17 @@ get_device_settings (GdkDevice *device)
 (defun gdk-device-axis-value (device axes axis-label)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-5}
-  @argument[device]{a @class{gdk-device} pointer device}
-  @argument[axes]{a list of axes of type @code{:double}}
-  @argument[axis-label]{a string with the axis label}
-  @return{A @code{:double} with the found value, or @code{nil}.}
+  @argument[device]{a @class{gdk-device} object for a pointer device}
+  @argument[axes]{a list of double float of axes}
+  @argument[axis-label]{an atom as a string with the axis label}
+  @return{A double float with the found value, or @code{nil}.}
   @begin{short}
-    Interprets a list of double as axis values for a given device, and locates
-    the value in the array for a given axis label, as returned by the function
-    @fun{gdk-device-list-axes}.
+    Interprets a list of double floats as axis values for a given device, and
+    locates the value in the array for a given axis label, as returned by the
+    function @fun{gdk-device-list-axes}.
   @end{short}
   @see-class{gdk-device}
+  @see-symbol{gdk-atom}
   @see-function{gdk-device-list-axes}"
   (assert (= (gdk-device-n-axes device) (length axes)))
   (with-foreign-objects ((axes-ar :double (gdk-device-n-axes device))

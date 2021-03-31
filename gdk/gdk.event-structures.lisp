@@ -176,12 +176,13 @@
   (:fully-obscured 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-visibility-state atdoc:*external-symbols*)
- "@version{2013-9-20}
+ "@version{2021-3-30}
   @begin{short}
     Specifies the visiblity status of a window for a
-    @class{gdk-event-visibility}.
+    @class{gdk-event-visibility} event.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkVisibilityState\" gdk-visibility-state
@@ -216,10 +217,11 @@
   :device-switch)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-crossing-mode atdoc:*external-symbols*)
- "@version{2013-9-20}
-  @short{Specifies the crossing mode for @class{gdk-event-crossing}.}
+ "@version{2021-3-30}
+  @short{Specifies the crossing mode for a @class{gdk-event-crossing} event.}
   @begin{pre}
 (define-g-enum \"GdkCrosssingMode\" gdk-crossing-mode
   (:export t
@@ -240,15 +242,15 @@
     @entry[:ungrab]{Crossing because a grab is deactivated.}
     @entry[:gtk-grab]{Crossing because a GTK+ grab is activated.}
     @entry[:gtk-ungrab]{Crossing because a GTK+ grab is deactivated.}
-    @entry[:state-changed]{Crossing because a GTK+ widget changed state (e.g.
-      sensitivity).}
+    @entry[:state-changed]{Crossing because a GTK+ widget changed state, e.g.
+      sensitivity.}
     @entry[:touch-begin]{Crossing because a touch sequence has begun, this
       event is synthetic as the pointer might have not left the window.}
     @entry[:touch-end]{Crossing because a touch sequence has ended, this event
       is synthetic as the pointer might have not left the window.}
-    @entry[:device-switch]{crossing because of a device switch (i.e. a mouse
-      taking control of the pointer after a touch device), this event is
-      synthetic as the pointer didn't leave the window.}
+    @entry[:device-switch]{crossing because of a device switch, i.e. a mouse
+      taking control of the pointer after a touch device, this event is
+      synthetic as the pointer did not leave the window.}
   @end{table}
   @see-class{gdk-event-crossing}")
 
@@ -267,11 +269,11 @@
   :unknown)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-notify-type atdoc:*external-symbols*)
- "@version{2013-9-21}
-  @short{Specifies the kind of crossing for @class{gdk-event-crossing}.}
-
+ "@version{2021-3-30}
+  @short{Specifies the kind of crossing for a @class{gdk-event-crossing} event.}
   See the X11 protocol specification of @code{LeaveNotify} for full details of
   crossing event generation.
   @begin{pre}
@@ -312,11 +314,13 @@
   :delete)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-property-state atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-property-state atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-property-state atdoc:*external-symbols*)
- "@version{2013-9-21}
+ "@version{2021-3-30}
   @begin{short}
-    Specifies the type of a property change for a @class{gdk-event-property}.
+    Specifies the type of a property change for a @class{gdk-event-property}
+    event.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkPropertyState\" gdk-property-state
@@ -418,12 +422,13 @@
   (:deleted 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-setting-action atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-setting-action atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-setting-action atdoc:*external-symbols*)
- "@version{2013-9-21}
+ "@version{2021-3-30}
   @begin{short}
     Specifies the kind of modification applied to a setting in a
-    @class{gdk-event-setting}.
+    @class{gdk-event-setting} event.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkSettingAction\" gdk-setting-action
@@ -709,9 +714,10 @@
   (:modifier-mask #x5c001fff))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*)
+      "Flags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{2013-9-21}
+ "@version{2021-3-30}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.
@@ -726,13 +732,13 @@
   or @code{:meta-mask} in the state field of key events.
 
   Note that GDK may add internal values to events which include reserved
-  values such as @code{GDK_MODIFIER_RESERVED_13_MASK}. Your code should preserve
-  and ignore them. You can use @code{:modifier-mask} to remove all reserved
-  values.
+  values such as @code{GDK_MODIFIER_RESERVED_13_MASK}. Your code should
+  preserve and ignore them. You can use @code{:modifier-mask} to remove all
+  reserved values.
 
-  Also note that the GDK X backend interprets button press events for button 4-7
-  as scroll events, so @code{:button4-mask} and @code{:button5-mask} will never
-  be set.
+  Also note that the GDK X backend interprets button press events for button
+  4-7 as scroll events, so @code{:button4-mask} and @code{:button5-mask} will
+  never be set.
   @begin{pre}
 (define-g-flags \"GdkModifierType\" gdk-modifier-type
   (:export t
@@ -758,8 +764,8 @@
   @end{pre}
   @begin[code]{table}
     @entry[:shift-mask]{The Shift key.}
-    @entry[:lock-mask]{A Lock key, depending on the modifier mapping of the X
-      server this may either be CapsLock or ShiftLock.}
+    @entry[:lock-mask]{A Lock key, depending on the modifier mapping of the
+      X server this may either be CapsLock or ShiftLock.}
     @entry[:control-mask]{The Control key.}
     @entry[:mod1-mask]{The fourth modifier key. It depends on the modifier
       mapping of the X server which key is interpreted as this modifier, but

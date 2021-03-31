@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -84,15 +84,30 @@
 (defctype gdk-atom :pointer)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-atom atdoc:*symbol-name-alias*) "Type"
+(setf (gethash 'gdk-atom atdoc:*symbol-name-alias*)
+      "Type"
       (gethash 'gdk-atom atdoc:*external-symbols*)
- "@version{2013-4-17}
-  An opaque type representing a string as an index into a table of strings on
-  the X server.
+ "@version{2021-3-24}
+  @begin{short}
+    An opaque type representing a string as an index into a table of strings on
+    the X server.
+  @end{short}
 
-  An atom is a numeric index into a string table on the X server. They are used
-  to transfer strings efficiently between clients without having to transfer the
-  entire string.")
+  An atom is a numeric index represented as a pointer into a string table on
+  the X server. They are used to transfer strings efficiently between clients
+  without having to transfer the entire string.
+
+  Use the function @fun{gdk-atom-intern} to get the pointer for a string
+  representing an atom and the function @fun{gdk-atom-name} to get the string
+  for an atom.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(gdk-atom-intern \"CLIPBOARD\") => #.(SB-SYS:INT-SAP #X00000045)
+(gdk-atom-name (make-pointer #x45)) => \"CLIPBOARD\"
+    @end{pre}
+  @end{dictionary}
+  @see-function{gdk-atom-name}
+  @see-function{gdk-atom-intern}")
 
 (export 'gdk-atom)
 
@@ -140,6 +155,8 @@
 ;;; GDK_NONE
 ;;; ----------------------------------------------------------------------------
 
+;; not exported
+
 (defparameter +gdk-none+ "NONE" ; in sbcl defconstant does not work for a string
  #+cl-cffi-gtk-documentation
  "@version{2013-6-28}
@@ -149,8 +166,6 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash '+gdk-none+ atdoc:*variable-name-alias*) "Constant")
-
-(export '+gdk-none+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_text_property_to_utf8_list_for_display ()
@@ -212,18 +227,26 @@
 ;;; gdk_atom_intern ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_atom_intern" gdk-atom-intern) gdk-atom
- #+cl-cffi-gtk-documentation
- "@version{2013-6-28}
-  @argument[atom-name]{a string}
-  @argument[only-if-exists]{if @em{true}, GDK is allowed to not create a new
-    atom, but just return @var{+gdk-none+} if the requested atom does not
-    already exists. Currently, the flag is ignored, since checking the existance
-    of an atom is as expensive as creating it.}
-  @return{The atom corresponding to @arg{atom-name}.}
-  Finds or creates an atom corresponding to a given string."
-  (atom-name :string)
+(defcfun ("gdk_atom_intern" %gdk-atom-intern) gdk-atom
+  (name :string)
   (only-if-exists :boolean))
+
+(defun gdk-atom-intern (name &optional (only-if-exists nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-24}
+  @argument[name]{a string with the atom name}
+  @argument[only-if-exists]{if @em{true}, GDK is allowed to not create a new
+    atom, but just return a @code{null-pointer} if the requested atom does not
+    already exists. Currently, the flag is ignored, since checking the
+    existance of an atom is as expensive as creating it.}
+  @return{The @symbol{gdk-atom} pointer corresponding to @arg{name}.}
+  @begin{short}
+    Finds or creates an atom corresponding to a given string.
+  @end{short}
+  The optional argument @arg{only-if-exists} has the default value @em{false}.
+  @see-symbol{gdk-atom}
+  @see-function{gdk-atom-name}"
+  (%gdk-atom-intern name only-if-exists))
 
 (export 'gdk-atom-intern)
 
@@ -257,12 +280,16 @@
 
 (defcfun ("gdk_atom_name" gdk-atom-name) (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-28}
-  @argument[atom]{a @symbol{gdk-atom}}
+ "@version{2021-3-24}
+  @argument[atom]{a @symbol{gdk-atom} pointer}
   @begin{return}
     A string containing the string corresponding to @arg{atom}.
   @end{return}
-  Determines the string corresponding to @arg{atom}."
+  @begin{short}
+    Determines the string corresponding to the given atom.
+  @end{short}
+  @see-symbol{gdk-atom}
+  @see-function{gdk-atom-intern}"
   (atom gdk-atom))
 
 (export 'gdk-atom-name)
