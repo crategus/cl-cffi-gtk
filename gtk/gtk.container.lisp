@@ -44,20 +44,20 @@
 ;;;     gtk_container_add
 ;;;     gtk_container_remove
 ;;;     gtk_container_add_with_properties
-;;;     gtk_container_get_resize_mode                      Accessor
-;;;     gtk_container_set_resize_mode                      Accessor
+;;;     gtk_container_get_resize_mode                      Accessor / deprecated
+;;;     gtk_container_set_resize_mode                      Accessor / deprecated
 ;;;     gtk_container_check_resize
 ;;;     gtk_container_foreach
 ;;;     gtk_container_get_children
 ;;;     gtk_container_get_path_for_child
-;;;     gtk_container_set_reallocate_redraws
+;;;     gtk_container_set_reallocate_redraws               deprecated
 ;;;     gtk_container_get_focus_child
 ;;;     gtk_container_set_focus_child
 ;;;     gtk_container_get_focus_vadjustment
 ;;;     gtk_container_set_focus_vadjustment
 ;;;     gtk_container_get_focus_hadjustment
 ;;;     gtk_container_set_focus_hadjustment
-;;;     gtk_container_resize_children
+;;;     gtk_container_resize_children                      deprecated
 ;;;     gtk_container_child_type
 ;;;     gtk_container_child_get
 ;;;     gtk_container_child_set
@@ -71,9 +71,9 @@
 ;;;     gtk_container_get_border_width                     Accessor
 ;;;     gtk_container_set_border_width                     Accessor
 ;;;     gtk_container_propagate_draw
-;;;     gtk_container_get_focus_chain
-;;;     gtk_container_set_focus_chain
-;;;     gtk_container_unset_focus_chain
+;;;     gtk_container_get_focus_chain                      deprecated
+;;;     gtk_container_set_focus_chain                      deprecated
+;;;     gtk_container_unset_focus_chain                    deprecated
 ;;;     gtk_container_class_find_child_property
 ;;;     gtk_container_class_install_child_property
 ;;;     gtk_container_class_install_child_properties
@@ -142,8 +142,16 @@
 (setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*)
       "Enum"
       (gethash 'gtk-resize-mode atdoc:*external-symbols*)
- "@version{2021-3-20}
-  @short{}
+ "@version{2021-3-21}
+  @begin{short}
+    An enumeration representing the values of the
+    @slot[gtk-container]{resize-mode} property.
+  @end{short}
+  @begin[Warning]{dictionary}
+    Resize modes are deprecated since version 3.12 and should not be used in
+    newly-written code. They are not necessary anymore since frame clocks and
+    might introduce obscure bugs if used.
+  @end{dictionary}
   @begin{pre}
 (define-g-enum \"GtkResizeMode\" gtk-resize-mode
   (:export t
@@ -157,7 +165,8 @@
     @entry[:queue]{Queue resizes on this widget.}
     @entry[:immediate]{Resize immediately. Deprecated.}
   @end{table}
-  @see-class{gtk-container}")
+  @see-class{gtk-container}
+  @see-function{gtk-container-resize-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkContainer
@@ -181,61 +190,63 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-container 'type)
- "@version{2013-8-1}
+ "@version{2021-3-21}
   @short{Base class for widgets which contain other widgets.}
 
   A GTK+ user interface is constructed by nesting widgets inside widgets.
   Container widgets are the inner nodes in the resulting tree of widgets: they
   contain other widgets. So, for example, you might have a @class{gtk-window}
-  containing a @class{gtk-frame} containing a @class{gtk-label}. If you wanted
-  an image instead of a textual label inside the frame, you might replace the
-  @class{gtk-label} widget with a @class{gtk-image} widget.
+  widget containing a @class{gtk-frame} widget containing a @class{gtk-label}
+  widget. If you wanted an image instead of a textual label inside the frame,
+  you might replace the @class{gtk-label} widget with a @class{gtk-image}
+  widget.
 
   There are two major kinds of container widgets in GTK+. Both are subclasses
   of the abstract @sym{gtk-container} base class.
 
   The first type of container widget has a single child widget and derives
-  from @class{gtk-bin}. These containers are decorators, which add some kind of
-  functionality to the child. For example, a @class{gtk-button} makes its child
-  into a clickable button; a @class{gtk-frame} draws a frame around its child
-  and a @class{gtk-window} places its child widget inside a top-level window.
+  from the @class{gtk-bin} class. These containers are decorators, which add
+  some kind of functionality to the child. For example, a @class{gtk-button}
+  widget makes its child into a clickable button. A @class{gtk-frame} widget
+  draws a frame around its child and a @class{gtk-window} widget places its
+  child widget inside a top-level window.
 
-  The second type of container can have more than one child; its purpose is to
+  The second type of container can have more than one child. Its purpose is to
   manage layout. This means that these containers assign sizes and positions
-  to their children. For example, a  @class{gtk-grid} arranges the widgets it
-  contains in a two-dimensional grid.
+  to their children. For example, a @class{gtk-grid} widget arranges the widgets
+  it contains in a two-dimensional grid.
 
   @subheading{Height for width geometry management}
-    GTK+ uses a height-for-width and width-for-height geometry management
-    system. Height-for-width means that a widget can change how much vertical
-    space it needs, depending on the amount of horizontal space that it is given
-    and similar for width-for-height.
+  GTK+ uses a height-for-width and width-for-height geometry management system.
+  Height-for-width means that a widget can change how much vertical space it
+  needs, depending on the amount of horizontal space that it is given and
+  similar for width-for-height.
 
-    There are some things to keep in mind when implementing container widgets
-    that make use of GTK+'s height for width geometry management system. First,
-    it is important to note that a container must prioritize one of its
-    dimensions, that is to say that a widget or container can only have a
-    @symbol{gtk-size-request-mode} that is @code{:height-for-width} or
-    @code{:width-for-height}. However, every widget and container must
-    be able to respond to the APIs for both dimensions, i.e. even if a widget
-    has a request mode that is height-for-width, it is possible that its parent
-    will request its sizes using the width-for-height APIs.
+  There are some things to keep in mind when implementing container widgets
+  that make use of GTK+'s height for width geometry management system. First,
+  it is important to note that a container must prioritize one of its
+  dimensions, that is to say that a widget or container can only have a
+  @symbol{gtk-size-request-mode} mode that is @code{:height-for-width} or
+  @code{:width-for-height}. However, every widget and container must
+  be able to respond to the APIs for both dimensions, i.e. even if a widget
+  has a request mode that is height-for-width, it is possible that its parent
+  will request its sizes using the width-for-height APIs.
 
-    To ensure that everything works properly, here are some guidelines to follow
-    when implementing height-for-width (or width-for-height) containers.
+  To ensure that everything works properly, here are some guidelines to follow
+  when implementing height-for-width or width-for-height containers.
 
-    Each request mode involves 2 virtual methods. Height-for-width APIs run
-    through the function @fun{gtk-widget-preferred-width} and then through
-    the function @fun{gtk-widget-preferred-height-for-width}. When handling
-    requests in the opposite @symbol{gtk-size-request-mode} it is important that
-    every widget request at least enough space to display all of its content at
-    all times.
+  Each request mode involves 2 virtual methods. Height-for-width APIs run
+  through the function @fun{gtk-widget-preferred-width} and then through
+  the function @fun{gtk-widget-preferred-height-for-width}. When handling
+  requests in the opposite @symbol{gtk-size-request-mode} mode it is important
+  that every widget request at least enough space to display all of its content
+  at all times.
 
-    When the function @fun{gtk-widget-preferred-height} is called on a
-    container that is height-for-width, the container must return the height for
-    its minimum width. This is easily achieved by simply calling the reverse
-    APIs implemented for itself as follows:
-    @begin{pre}
+  When the function @fun{gtk-widget-preferred-height} is called on a container
+  that is height-for-width, the container must return the height for its minimum
+  width. This is easily achieved by simply calling the reverse APIs implemented
+  for itself as follows:
+  @begin{pre}
   static void
   foo_container_get_preferred_height (GtkWidget *widget,
                                       gint *min_height, gint *nat_height)
@@ -259,11 +270,11 @@
          for this container) ...
        @}
   @}
-    @end{pre}
-    Similarly, when the function @fun{gtk-widget-preferred-width-for-height}
-    is called for a container or widget that is height-for-width, it then only
-    needs to return the base minimum width like so:
-    @begin{pre}
+  @end{pre}
+  Similarly, when the function @fun{gtk-widget-preferred-width-for-height}
+  is called for a container or widget that is height-for-width, it then only
+  needs to return the base minimum width like so:
+  @begin{pre}
   static void
   foo_container_get_preferred_width_for_height (GtkWidget *widget,
                                                 gint for_height,
@@ -282,63 +293,64 @@
          be allocated the said height ...
        @}
   @}
-    @end{pre}
-    Height for width requests are generally implemented in terms of a virtual
-    allocation of widgets in the input orientation. Assuming an height-for-width
-    request mode, a container would implement the
-    @code{get_preferred_height_for_width()} virtual function by first calling
-    the function @fun{gtk-widget-preferred-width} for each of its children.
+  @end{pre}
+  Height for width requests are generally implemented in terms of a virtual
+  allocation of widgets in the input orientation. Assuming an height-for-width
+  request mode, a container would implement the
+  @code{get_preferred_height_for_width()} virtual function by first calling
+  the function @fun{gtk-widget-preferred-width} for each of its children.
 
-    For each potential group of children that are lined up horizontally, the
-    values returned by the function @fun{gtk-widget-preferred-width} should
-    be collected in an array of @code{GtkRequestedSize} structures. Any child
-    spacing should be removed from the input for_width and then the collective
-    size should be allocated using the @fun{gtk-distribute-natural-allocation}
-    convenience function.
+  For each potential group of children that are lined up horizontally, the
+  values returned by the function @fun{gtk-widget-preferred-width} should
+  be collected in an array of @code{GtkRequestedSize} structures. Any child
+  spacing should be removed from the input for_width and then the collective
+  size should be allocated using the @fun{gtk-distribute-natural-allocation}
+  convenience function.
 
-    The container will then move on to request the preferred height for each
-    child by using the function @fun{gtk-widget-preferred-height-for-width}
-    and using the sizes stored in the @code{GtkRequestedSize} array.
+  The container will then move on to request the preferred height for each
+  child by using the function @fun{gtk-widget-preferred-height-for-width}
+  and using the sizes stored in the @code{GtkRequestedSize} array.
 
-    To allocate a height-for-width container, it is again important to consider
-    that a container must prioritize one dimension over the other. So if a
-    container is a height-for-width container it must first allocate all widgets
-    horizontally using a @code{GtkRequestedSize} array and the function
-    @fun{gtk-distribute-natural-allocation} and then add any extra space, if
-    and where appropriate, for the widget to expand.
+  To allocate a height-for-width container, it is again important to consider
+  that a container must prioritize one dimension over the other. So if a
+  container is a height-for-width container it must first allocate all widgets
+  horizontally using a @code{GtkRequestedSize} array and the function
+  @fun{gtk-distribute-natural-allocation} and then add any extra space, if
+  and where appropriate, for the widget to expand.
 
-    After adding all the expand space, the container assumes it was allocated
-    sufficient height to fit all of its content. At this time, the container
-    must use the total horizontal sizes of each widget to request the
-    height-for-width of each of its children and store the requests in a
-    @code{GtkRequestedSize} array for any widgets that stack vertically, for
-    tabular containers this can be generalized into the heights and widths of
-    rows and columns. The vertical space must then again be distributed using
-    the @fun{gtk-distribute-natural-allocation} function while this time
-    considering the allocated height of the widget minus any vertical spacing
-    that the container adds. Then vertical expand space should be added where
-    appropriate and available and the container should go on to actually
-    allocating the child widgets.
+  After adding all the expand space, the container assumes it was allocated
+  sufficient height to fit all of its content. At this time, the container
+  must use the total horizontal sizes of each widget to request the
+  height-for-width of each of its children and store the requests in a
+  @code{GtkRequestedSize} array for any widgets that stack vertically, for
+  tabular containers this can be generalized into the heights and widths of
+  rows and columns. The vertical space must then again be distributed using
+  the function @fun{gtk-distribute-natural-allocation} while this time
+  considering the allocated height of the widget minus any vertical spacing
+  that the container adds. Then vertical expand space should be added where
+  appropriate and available and the container should go on to actually
+  allocating the child widgets.
 
-    See @class{gtk-widget}'s geometry management section to learn more about
-    implementing height-for-width geometry management for widgets.
+  See @class{gtk-widget}'s geometry management section to learn more about
+  implementing height-for-width geometry management for widgets.
 
   @subheading{Child properties}
-    @sym{gtk-container} introduces child properties. These are object properties
-    that are not specific to either the container or the contained widget, but
-    rather to their relation. Typical examples of child properties are the
-    position or pack-type of a widget which is contained in a @class{gtk-box}.
+  The @sym{gtk-container} widget introduces child properties. These are object
+  properties that are not specific to either the container or the contained
+  widget, but rather to their relation. Typical examples of child properties
+  are the position or pack-type of a widget which is contained in a
+  @class{gtk-box} widget.
 
-    Use the @fun{gtk-container-class-install-child-property} function to install
-    child properties for a container class and the functions
-    @fun{gtk-container-class-find-child-property} or
-    @fun{gtk-container-class-list-child-properties} to get information about
-    existing child properties.
+  Use the function @fun{gtk-container-class-install-child-property} to install
+  child properties for a container class and the functions
+  @fun{gtk-container-class-find-child-property} or
+  @fun{gtk-container-class-list-child-properties} to get information about
+  existing child properties.
 
-    To obtain or to set the value of a child property, use the functions
-    @fun{gtk-container-child-property}, @fun{gtk-container-child-get}, or
-    @fun{gtk-container-child-set}. To emit notification about child property
-    changes, use the function @fun{gtk-widget-child-notify}.
+  To obtain or to set the value of a child property, use the functions
+  @fun{gtk-container-child-property}, @fun{gtk-container-child-get}, or
+  @fun{gtk-container-child-set}. To emit notification about child property
+  changes, use the function @fun{gtk-widget-child-notify}.
   @begin[GtkContainer as GtkBuildable]{dictionary}
     The @sym{gtk-container} implementation of the @class{gtk-buildable}
     interface supports a @code{<packing>} element for children, which can
@@ -375,47 +387,25 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"add\" signal}
       @begin{pre}
- lambda (container widget)    : Run First
+ lambda (container widget)    :run-first
       @end{pre}
     @subheading{The \"check-resize\" signal}
       @begin{pre}
- lambda (container)    : Run Last
+ lambda (container)    :run-last
       @end{pre}
     @subheading{The \"remove\" signal}
       @begin{pre}
- lambda (container widget)    : Run First
+ lambda (container widget)    :run-first
       @end{pre}
     @subheading{The \"set-focus-child\" signal}
       @begin{pre}
- lambda (container widget)    : Run First
+ lambda (container widget)    :run-first
       @end{pre}
   @end{dictionary}
   @see-slot{gtk-container-border-width}
   @see-slot{gtk-container-child}
   @see-slot{gtk-container-resize-mode}
-  @see-class{gtk-bin}
-  @see-class{gtk-grid}
-  @see-class{gtk-box}
-  @see-class{gtk-buildable}
-  @see-class{gtk-widget}
-  @see-class{gtk-window}
-  @see-class{gtk-frame}
-  @see-class{gtk-label}
-  @see-class{gtk-image}
-  @see-class{gtk-button}
-  @see-symbol{gtk-size-request-mode}
-  @see-function{gtk-widget-preferred-width}
-  @see-function{gtk-widget-preferred-height}
-  @see-function{gtk-widget-preferred-height-for-width}
-  @see-function{gtk-widget-preferred-width-for-height}
-  @see-function{gtk-distribute-natural-allocation}
-  @see-function{gtk-container-class-install-child-property}
-  @see-function{gtk-container-class-find-child-property}
-  @see-function{gtk-container-class-list-child-properties}
-  @see-function{gtk-container-child-property}
-  @see-function{gtk-container-child-get}
-  @see-function{gtk-container-child-set}
-  @see-function{gtk-widget-child-notify}")
+  @see-class{gtk-bin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -493,17 +483,20 @@
  "The @code{resize-mode} property of type @symbol{gtk-resize-mode}
   (Read / Write) @br{}
   Specify how resize events are handled. @br{}
+  @em{Warning:} Resize modes are deprecated since version 3.12 and should not
+  be used in newly-written code. They are not necessary anymore since frame
+  clocks and might introduce obscure bugs if used. @br{}
   Default value: @code{:parent}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-container-resize-mode 'function)
- "@version{2020-5-4}
-  @syntax[]{(gtk-container-resize-mode object) => resize-mode}
-  @syntax[]{(setf gtk-container-resize-mode object) resize-mode)}
+ "@version{2021-3-21}
+  @syntax[]{(gtk-container-resize-mode object) => mode}
+  @syntax[]{(setf gtk-container-resize-mode object) mode)}
   @argument[object]{a @class{gtk-container} widget}
-  @argument[resize-mode]{the resize mode of type @symbol{gtk-resize-mode}}
+  @argument[mode]{a @symbol{gtk-resize-mode} resize mode}
   @begin{short}
     Accessor of the @slot[gtk-container]{resize-mode} slot of the
     @class{gtk-container} class.
@@ -511,7 +504,7 @@
 
   The slot access function @sym{gtk-container-resize-mode} returns the current
   resize mode of the container. The slot access function
-  @sym{(setf gtk-container-resize-mode)} sets the resize mode of the container.
+  @sym{(setf gtk-container-resize-mode)} sets the resize mode.
 
   The resize mode of a container determines whether a resize request will be
   passed to the container's parent, queued for later execution or executed
@@ -522,7 +515,8 @@
     deprecated. They are not necessary anymore since frame clocks and might
     introduce obscure bugs if used.
   @end{dictionary}
-  @see-class{gtk-container}")
+  @see-class{gtk-container}
+  @see-symbol{gtk-resize-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_IS_RESIZE_CONTAINER()
@@ -751,20 +745,19 @@
 (export 'gtk-container-path-for-child)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_set_reallocate_redraws () -> gtk-container-reallocate-redraws
+;;; gtk_container_set_reallocate_redraws ()                deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_set_reallocate_redraws"
-           gtk-container-reallocate-redraws) :void
+           gtk-container-set-reallocate-redraws) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-2}
+ "@version{2021-3-21}
   @argument[container]{a @class{gtk-container} container}
-  @argument[needs-redraws]{a boolean with the value for the container's
+  @argument[redraw]{a boolean with the value for the container's
     @code{reallocate-redraws} flag}
   @begin{short}
-    Sets the @code{reallocate-redraws} flag of the container to the given value.
+    Sets the @code{reallocate_redraws} flag of the container to the given value.
   @end{short}
-
   Containers requesting reallocation redraws get automatically redrawn if any
   of their children changed allocation.
   @begin[Warning]{dictionary}
@@ -775,9 +768,9 @@
   @see-class{gtk-container}
   @see-function{gtk-widget-queue-draw}"
   (container (g-object gtk-container))
-  (needs-redraw :boolean))
+  (redraw :boolean))
 
-(export 'gtk-container-reallocate-redraws)
+(export 'gtk-container-set-reallocate-redraws)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_focus_child ()
@@ -906,12 +899,12 @@
 (export 'gtk-container-focus-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_resize_children ()
+;;; gtk_container_resize_children ()                       deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_resize_children" gtk-container-resize-children) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-4}
+ "@version{2021-3-21}
   @short{undocumented}
   @begin[Warning]{dictionary}
     The function @sym{gtk-container-resize-children} has been deprecated since
@@ -1213,41 +1206,42 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_get_focus_chain ()
+;;; gtk_container_get_focus_chain ()                       deprecated
 ;;; gtk_container_set_focus_chain () -> gtk-container-focus-chain
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_set_focus_chain" %gtk-container-set-focus-chain) :void
   (container (g-object gtk-container))
-  (focusable-widgets (g-list (g-object gtk-widget))))
+  (focusable (g-list (g-object gtk-widget))))
 
-(defun (setf gtk-container-focus-chain) (focusable-widgets container)
+(defun (setf gtk-container-focus-chain) (focusable container)
   (%gtk-container-set-focus-chain container
-                                  (mapcar #'pointer focusable-widgets))
-  focusable-widgets)
+                                  (mapcar #'pointer focusable))
+  focusable)
 
 (defcfun ("gtk_container_get_focus_chain" %gtk-container-get-focus-chain)
     :boolean
   (container (g-object gtk-container))
-  (focusable-widgets (:pointer (g-list (g-object gtk-widget)))))
+  (focusable (:pointer (g-list (g-object gtk-widget)))))
 
 (defun gtk-container-focus-chain (container)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
-  @syntax[]{(gtk-container-focus-chain container) => focusable-widgets}
-  @syntax[]{(setf (gtk-container-focus-chain container) focusable-widgets)}
+ "@version{2021-3-21}
+  @syntax[]{(gtk-container-focus-chain container) => focusable}
+  @syntax[]{(setf (gtk-container-focus-chain container) focusable)}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[focusable-widgets]{a list of widgets representing the focus chain}
+  @argument[focusable]{a list of @class{gtk-widget} objects representing the
+    focus chain}
   @begin{short}
     Accessor of the focus chain widgets of the container.
   @end{short}
+
   The function @sym{gtk-container-focus-chain} retrieves the focus chain of the
   container, if one has been set explicitly. If no focus chain has been
   explicitly set, GTK+ computes the focus chain based on the positions of the
-  children. In that case, GTK+ returns @em{false}.
-
-  The function @sym{(setf gtk-container-focus-chain)} sets a focus chain,
-  overriding the one computed automatically by GTK+.
+  children. In that case, GTK+ returns @em{false}. The function
+  @sym{(setf gtk-container-focus-chain)} sets a focus chain, overriding the one
+  computed automatically by GTK+.
 
   In principle each widget in the chain should be a descendant of the container,
   but this is not enforced by this method, since it is allowed to set the focus
@@ -1260,21 +1254,22 @@
     focus behavior, use the \"focus\" signal.
   @end{dictionary}
   @see-class{gtk-container}
+  @see-class{gtk-widget}
   @see-function{gtk-container-unset-focus-chain}"
-  (with-foreign-object (focusable-widgets '(g-list (g-object gtk-widget)))
-    (when (%gtk-container-get-focus-chain container focusable-widgets)
-      (mem-ref focusable-widgets '(g-list (g-object gtk-widget))))))
+  (with-foreign-object (focusable '(g-list (g-object gtk-widget)))
+    (when (%gtk-container-get-focus-chain container focusable)
+      (mem-ref focusable '(g-list (g-object gtk-widget))))))
 
 (export 'gtk-container-focus-chain)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_container_unset_focus_chain ()
+;;; gtk_container_unset_focus_chain ()                     deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_unset_focus_chain" gtk-container-unset-focus-chain)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
+ "@version{2021-3-21}
   @argument[container]{a @class{gtk-container} widget}
   @begin{short}
     Removes a focus chain explicitly set with the function
