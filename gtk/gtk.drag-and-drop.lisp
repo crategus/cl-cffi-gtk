@@ -8,7 +8,7 @@
 
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -95,7 +95,8 @@
   (:all 7))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-dest-defaults atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gtk-dest-defaults atdoc:*symbol-name-alias*)
+      "Flags"
       (gethash 'gtk-dest-defaults atdoc:*external-symbols*)
  "@version{2020-9-20}
   @begin{short}
@@ -222,8 +223,8 @@
   the dragged data.
 
   There is no way to set a default action here, you can use the the
-  \"drag-motion\" callback for that. Here is an example which selects the action
-  to use depending on whether the control key is pressed or not:
+  \"drag-motion\" callback for that. Here is an example which selects the
+  action to use depending on whether the control key is pressed or not:
   @begin{pre}
 static void
 drag_motion (GtkWidget *widget,
@@ -518,7 +519,8 @@ drag_motion (GtkWidget *widget,
   @argument[widget]{the @class{gtk-widget} object that will receive the
    \"drag-data-received\" signal}
   @argument[context]{the drag context}
-  @argument[target]{the target (form of the data) to retrieve}
+  @argument[target]{an atom as a string with the target (form of the data) to
+    retrieve}
   @argument[time]{a timestamp for retrieving the data. This will generally be
     the time received in a \"drag-motion\" or \"drag-drop\" signal.}
   @begin{short}
@@ -669,96 +671,104 @@ drag_motion (GtkWidget *widget,
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_begin_with_coordinates ()
-;;;
-;;; GdkDragContext *
-;;; gtk_drag_begin_with_coordinates (GtkWidget *widget,
-;;;                                  GtkTargetList *targets,
-;;;                                  GdkDragAction actions,
-;;;                                  gint button,
-;;;                                  GdkEvent *event,
-;;;                                  gint x,
-;;;                                  gint y);
-;;;
-;;; Initiates a drag on the source side. The function only needs to be used when
-;;; the application is starting drags itself, and is not needed when
-;;; gtk_drag_source_set() is used.
-;;;
-;;; The event is used to retrieve the timestamp that will be used internally to
-;;; grab the pointer. If event is NULL, then GDK_CURRENT_TIME will be used.
-;;; However, you should try to pass a real event in all cases, since that can be
-;;; used to get information about the drag.
-;;;
-;;; Generally there are three cases when you want to start a drag by hand by
-;;; calling this function:
-;;;
-;;; During a “button-press-event” handler, if you want to start a drag
-;;; immediately when the user presses the mouse button. Pass the event that you
-;;; have in your “button-press-event” handler.
-;;;
-;;; During a “motion-notify-event” handler, if you want to start a drag when the
-;;; mouse moves past a certain threshold distance after a button-press. Pass the
-;;; event that you have in your “motion-notify-event” handler.
-;;;
-;;; During a timeout handler, if you want to start a drag after the mouse button
-;;; is held down for some time. Try to save the last event that you got from the
-;;; mouse, using gdk_event_copy(), and pass it to this function (remember to
-;;; free the event with gdk_event_free() when you are done). If you really
-;;; cannot pass a real event, pass NULL instead.
-;;;
-;;; widget :
-;;;     the source widget
-;;;
-;;; targets :
-;;;     The targets (data formats) in which the source can provide the data
-;;;
-;;; actions :
-;;;     A bitmask of the allowed drag actions for this drag
-;;;
-;;; button :
-;;;     The button the user clicked to start the drag
-;;;
-;;; event :
-;;;     The event that triggered the start of the drag, or NULL if none can be
-;;;     obtained.
-;;;
-;;; x :
-;;;     The initial x coordinate to start dragging from, in the coordinate space
-;;;     of widget . If -1 is passed, the coordinates are retrieved from event or
-;;;     the current pointer position
-;;;
-;;; y :
-;;;     The initial y coordinate to start dragging from, in the coordinate space
-;;;     of widget . If -1 is passed, the coordinates are retrieved from event or
-;;;     the current pointer position
-;;;
-;;; Returns :
-;;;     the context for this drag.
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_begin_with_coordinates" gtk-drag-begin-with-coordinates)
+    (g-object gdk-drag-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-27}
+  @argument[widget]{the @class{gtk-widget} source widget}
+  @argument[targets]{the @class{gtk-target-list} targets (data formats) in
+    which the source can provide the data}
+  @argument[actions]{a @symbol{gdk-drag-action} bitmask of the allowed drag
+    actions for this drag}
+  @argument[button]{an integer with the button the user clicked to start the
+    drag}
+  @argument[event]{the @class{gdk-event} event that triggered the start of the
+    drag, or @code{nil} if none can be obtained}
+  @argument[x]{an integer with the initial x coordinate to start dragging from,
+    in the coordinate space of widget . If -1 is passed, the coordinates are
+    retrieved from event or the current pointer position}
+  @argument[y]{an integer with the initial y coordinate to start dragging from,
+    in the coordinate space of widget . If -1 is passed, the coordinates are
+    retrieved from event or the current pointer position}
+  @return{The @class{gdk-drag-context} context for this drag.}
+  @begin{short}
+    Initiates a drag on the source side.
+  @end{short}
+  The function only needs to be used when the application is starting drags
+  itself, and is not needed when the function @fun{gtk-drag-source-set} is used.
+
+  The event is used to retrieve the timestamp that will be used internally to
+  grab the pointer. If @arg{event} is @code{nil}, then @var{+gdk-current-time+}
+  will be used. However, you should try to pass a real event in all cases,
+  since that can be used to get information about the drag.
+
+  Generally there are three cases when you want to start a drag by hand by
+  calling this function:
+  @begin{enumerate}
+    @begin{item}
+      During a \"button-press-event\" handler, if you want to start a drag
+      immediately when the user presses the mouse button. Pass the event that
+      you have in your “button-press-event” handler.
+    @end{item}
+    @begin{item}
+      During a \"motion-notify-event\" handler, if you want to start a drag
+      when the mouse moves past a certain threshold distance after a
+      button-press. Pass the event that you have in your \"motion-notify-event\"
+      handler.
+    @end{item}
+    @begin{item}
+      During a timeout handler, if you want to start a drag after the mouse
+      button is held down for some time. Try to save the last event that you
+      got from the mouse, using the function @fun{gdk-event-copy}, and pass it
+      to this function. If you really cannot pass a real event, pass @code{nil}
+      instead.
+    @end{item}
+  @end{enumerate}
+  @see-class{gdk-drag-context}
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}
+  @see-symbol{gdk-drag-action}
+  @see-class{gdk-event}
+  @see-function{gtk-drag-source-set}"
+  (widget (g-object gtk-widget))
+  (targets (g-boxed-foreign gtk-target-list))
+  (actions gdk-drag-action)
+  (button :int)
+  (event (g-boxed-foreign gdk-event))
+  (x :int)
+  (y :int))
+
+(export 'gtk-drag-begin-with-coordinates)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_cancel ()
-;;;
-;;; void gtk_drag_cancel (GdkDragContext *context);
-;;;
-;;; Cancels an ongoing drag operation on the source side.
-;;;
-;;; If you want to be able to cancel a drag operation in this way, you need to
-;;; keep a pointer to the drag context, either from an explicit call to
-;;; gtk_drag_begin_with_coordinates(), or by connecting to “drag-begin”.
-;;;
-;;; If context does not refer to an ongoing drag operation, this function does
-;;; nothing.
-;;;
-;;; If a drag is cancelled in this way, the result argument of “drag-failed” is
-;;; set to GTK_DRAG_RESULT_ERROR .
-;;;
-;;; context :
-;;;     a GdkDragContext, as e.g. returned by gtk_drag_begin_with_coordinates()
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_cancel" gtk-drag-cancel) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-27}
+  @argument[context]{a @class{gdk-drag-context} object, as e.g. returned by
+    the function @fun{gtk-drag-begin-with-coordinates}}
+  @begin{short}
+    Cancels an ongoing drag operation on the source side.
+  @end{short}
+
+  If you want to be able to cancel a drag operation in this way, you need to
+  keep a pointer to the drag context, either from an explicit call to the
+  function @fun{gtk-drag-begin-with-coordinates}, or by connecting to
+  \"drag-begin\".
+
+  If @arg{context} does not refer to an ongoing drag operation, this function
+  does nothing.
+
+  If a drag is cancelled in this way, the result argument of \"drag-failed\" is
+  set to @code{:error}.
+  @see-class{gdk-drag-context}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gtk-drag-cancel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_widget ()
