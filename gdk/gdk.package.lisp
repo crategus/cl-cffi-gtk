@@ -921,8 +921,8 @@
     @about-symbol{gdk-modifier-intent}
     @about-class{gdk-keymap}
     @about-struct{gdk-keymap-key}
-    @about-function{copy-gdk-keymap-key}
-    @about-function{make-gdk-keymap-key}
+    @about-function{gdk-keymap-key-new}
+    @about-function{gdk-keymap-key-copy}
     @about-function{gdk-keymap-key-keycode}
     @about-function{gdk-keymap-key-group}
     @about-function{gdk-keymap-key-level}
@@ -956,10 +956,10 @@
 
     The X selection mechanism provides a way to transfer arbitrary chunks of
     data between programs. A selection is a essentially a named clipboard,
-    identified by a string interned as a @symol{gdk-atom}. By claiming ownership
-    of a selection, an application indicates that it will be responsible for
-    supplying its contents. The most common selections are @code{\"PRIMARY\"}
-    and @code{\"CLIPBOARD\"}.
+    identified by a string interned as a @symbol{gdk-atom}. By claiming
+    ownership of a selection, an application indicates that it will be
+    responsible for supplying its contents. The most common selections are
+    @code{\"PRIMARY\"} and @code{\"CLIPBOARD\"}.
 
     The contents of a selection can be represented in a number of formats,
     called targets. Each target is identified by an atom. A list of all possible
@@ -1007,7 +1007,7 @@
     @about-symbol{gdk-drag-protocol}
     @about-symbol{gdk-drag-action}
     @about-class{gdk-drag-context}
-    @about-function{gdk-drag-get-selection}
+    @about-function{gdk-drag-selection}
     @about-function{gdk-drag-abort}
     @about-function{gdk-drop-reply}
     @about-function{gdk-drag-drop}
@@ -1020,50 +1020,27 @@
     @about-function{gdk-drop-finish}
     @about-function{gdk-drag-status}
     @about-function{gdk-drag-drop-succeeded}
-
-    @about-function{gdk-window-get-drag-protocol}
-
-    @about-function{gdk-drag-context-get-actions}
-    @about-function{gdk-drag-context-get-suggested-action}
-    @about-function{gdk-drag-context-get-selected-action}
+    @about-function{gdk-window-drag-protocol}
+    @about-function{gdk-drag-context-actions}
+    @about-function{gdk-drag-context-suggested-action}
+    @about-function{gdk-drag-context-selected-action}
     @about-function{gdk-drag-context-list-targets}
-    @about-function{gdk-drag-context-get-device}
-    @about-function{gdk-drag-context-set-device}
-    @about-function{gdk-drag-context-get-source-window}
-    @about-function{gdk-drag-context-get-dest-window}
-    @about-function{gdk-drag-context-get-protocol}
-    @about-function{gdk-drag-context-get-drag-window}
+    @about-function{gdk-drag-context-device}
+    @about-function{gdk-drag-context-source-window}
+    @about-function{gdk-drag-context-dest-window}
+    @about-function{gdk-drag-context-protocol}
+    @about-function{gdk-drag-context-drag-window}
     @about-function{gdk-drag-context-set-hotspot}
     @about-function{gdk-drag-context-manage-dnd}
   @end{section}
   @begin[Properties and Atoms]{section}
-    Functions to manipulate properties on windows.
-
-    Each window under X can have any number of associated properties attached to
-    it. Properties are arbitrary chunks of data identified by atoms. (An atom is
-    a numeric index into a string table on the X server. They are used to
-    transfer strings efficiently between clients without having to transfer the
-    entire string.) A property has an associated type, which is also identified
-    using an atom.
-
-    A property has an associated format, an integer describing how many bits are
-    in each unit of data inside the property. It must be 8, 16, or 32. When data
-    is transferred between the server and client, if they are of different
-    endianesses it will be byteswapped as necessary according to the format of
-    the property. Note that on the client side, properties of format 32 will be
-    stored with one unit per long, even if a long integer has more than 32 bits
-    on the platform. (This decision was apparently made for Xlib to maintain
-    compatibility with programs that assumed longs were 32 bits, at the expense
-    of programs that knew better.)
-
-    The functions in this section are used to add, remove and change properties
-    on windows, to convert atoms to and from strings and to manipulate some
-    types of data commonly stored in X window properties.
+    An atom is a numeric index into a string table on the X server. They are
+    used to transfer strings efficiently between clients without having to
+    transfer the entire string.
 
     @about-symbol{gdk-atom}
     @about-symbol{GDK_ATOM_TO_POINTER}
     @about-symbol{GDK_POINTER_TO_ATOM}
-    @about-variable{+gdk-none+}
     @about-function{gdk-text-property-to-utf8-list-for-display}
     @about-function{gdk-utf8-to-string-target}
     @about-function{gdk-atom-intern}
