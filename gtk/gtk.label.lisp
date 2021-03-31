@@ -634,19 +634,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justify" 'gtk-label) 't)
- "The @code{justify} property of type @symbol{gtk-justification}
-  (Read / Write) @br{}
+ "The @code{justify} property of type @symbol{gtk-justification} (Read / Write)
+  @br{}
   The alignment of the lines in the text of the label relative to each other.
-  This does not affect the alignment of the label within its allocation.
-  See the @slot[gtk-misc]{xalign} property of the @class{gtk-misc} widget for
-  that. @br{}
+  This does not affect the alignment of the label within its allocation. See
+  the @slot[gtk-label]{xalign} property for that. @br{}
   Default value: @code{:left}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-justify atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-justify 'function)
- "@version{2020-4-15}
+ "@version{2021-3-29}
   @syntax[]{(gtk-label-justify object) => justify}
   @syntax[]{(setf (gtk-label-justify object) justify)}
   @argument[object]{a @class{gtk-label} widget}
@@ -655,21 +654,19 @@
     Accessor of the @slot[gtk-label]{justify} slot of the @class{gtk-label}
     class.
   @end{short}
-
   The slot access function @sym{gtk-label-justify} returns the justification of
-  type @symbol{gtk-justification} of the label. The slot access function
-  @sym{(setf gtk-label-justify)} sets the alignment of the lines in the text of
-  the label relative to each other.
+  the label. The slot access function @sym{(setf gtk-label-justify)} sets the
+  alignment of the lines in the text of the label relative to each other.
 
-  @code{:left} is the default value when the widget is first created with the
-  function @fun{gtk-label-new}. If you instead want to set the alignment of the
-  label as a whole, use the function @fun{gtk-misc-set-alignment} instead.
-  The slot access function @sym{gtk-label-justify} has no effect on labels
+  The @code{:left} value is the default value when the widget is first created
+  with the function @fun{gtk-label-new}. If you instead want to set the
+  alignment of the label as a whole, use the function @fun{gtk-widget-halign}
+  instead. The function @sym{(setf gtk-label-justify)} has no effect on labels
   containing only a single line.
   @see-class{gtk-label}
   @see-symbol{gtk-justification}
   @see-function{gtk-label-new}
-  @see-function{gtk-misc-set-alignment}")
+  @see-function{gtk-widget-halign}")
 
 ;;; --- gtk-label-label --------------------------------------------------------
 

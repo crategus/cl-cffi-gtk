@@ -112,9 +112,10 @@
   :alloc (gtk-icon-source-new))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-source atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-icon-source atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'gtk-icon-source 'type)
- "@version{2013-5-6}
+ "@version{2021-3-30}
   @short{}
   @begin{pre}
 (define-g-boxed-opaque gtk-icon-source \"GtkIconSource\"
@@ -203,11 +204,15 @@
   :alloc (%gtk-icon-set-new))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-set atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-icon-set atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'gtk-icon-set 'type)
- "@version{2013-5-6}
-  A @sym{gtk-icon-set} manages a set of variants of a particular icon, i.e. a
-  @sym{gtk-icon-set} contains variants for different sizes and widget states.")
+ "@version{2021-3-30}
+  @begin{short}
+  A @sym{gtk-icon-set} structure manages a set of variants of a particular icon,
+  i.e. a @sym{gtk-icon-set} instance contains variants for different sizes and
+  widget states.
+  @end{short}")
 
 (export 'gtk-icon-set)
 
@@ -595,41 +600,41 @@
 (defcfun ("gtk_icon_set_render_icon" gtk-icon-set-render-icon)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
-  @argument[icon-set]{a @class{gtk-icon-set} object}
+ "@version{2021-3-30}
+  @argument[iconset]{a @class{gtk-icon-set} object}
   @argument[style]{a @class{gtk-style} object associated with @arg{widget},
     or @code{nil}}
-  @argument[direction]{text direction}
+  @argument[direction]{a value of the @symbol{gtk-text-direction} enumeration}
   @argument[state]{a value of the @symbol{gtk-state-type} enumeration with the
     state of the widget}
-  @argument[size]{icon size, a size of @code{(GtkIconSize)-1} means render at
+  @argument[size]{a @symbol{gtk-icon-size} value, a size of -1 means render at
     the size of the source and do not scale}
-  @argument[widget]{widget that will display the icon, or @code{nil}, the only
-    use that is typically made of this is to determine the appropriate
-    @class{gdk-screen} object}
-  @argument[detail]{detail to pass to the theme engine, or @code{nil}, note that
-    passing a detail of anything but @code{nil} will disable caching}
+  @argument[widget]{a @class{gtk-widget} object that will display the icon, or
+    @code{nil}, the only use that is typically made of this is to determine the
+    appropriate @class{gdk-screen} object}
+  @argument[detail]{a string with the detail to pass to the theme engine, or
+    @code{nil}, note that passing a detail of anything but @code{nil} will
+    disable caching}
   @return{A @class{gdk-pixbuf} object to be displayed.}
   @begin{short}
     Renders an icon using the function @sym{gtk-style-render-icon}.
   @end{short}
   In most cases, the function @fun{gtk-widget-render-icon} is better, since it
   automatically provides most of the arguments from the current widget settings.
-  This function never returns @code{nil}; if the icon cannot be rendered,
+  This function never returns @code{nil}. If the icon cannot be rendered,
   perhaps because an image file fails to load, a default \"missing image\" icon
   will be returned instead.
   @begin[Warning]{dictionary}
     The function @sym{gtk-icon-set-render-icon} has been deprecated since
-    version 3.0 and should not be used in newly-written code.
-    Use the function @fun{gtk-icon-set-render-icon-pixbuf} instead.
+    version 3.0 and should not be used in newly-written code. Use the
+    @class{gtk-icon-theme} API instead.
   @end{dictionary}
   @see-class{gtk-icon-set}
   @see-class{gtk-style}
   @see-class{gdk-screen}
-  @see-function{gtk-widget-render-icon}
-  @see-function{gtk-icon-set-render-icon-pixbuf}
-  @see-function{gtk-style-render-icon}"
-  (icon-set (g-boxed-foreign gtk-icon-set))
+  @see-class{gtk-icon-theme}
+  @see-function{gtk-widget-render-icon}"
+  (iconset (g-boxed-foreign gtk-icon-set))
   (style (g-object gtk-style))
   (direction :pointer) ; type gtk-text-direction is not defined at this point
   (state gtk-state-type)
@@ -646,28 +651,28 @@
 (defcfun ("gtk_icon_set_render_icon_pixbuf" gtk-icon-set-render-icon-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
-  @argument[icon-set]{a @class{gtk-icon-set} object}
+ "@version{2021-3-30}
+  @argument[iconset]{a @class{gtk-icon-set} object}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[size]{icon size, a size of @code{(GtkIconSize)-1} means render at
-    the size of the source and do not scale}
+  @argument[size]{a @symbol{gtk-icon-size} value, a size of -1 means render
+    at the size of the source and do not scale}
   @return{A @class{gdk-pixbuf} object to be displayed.}
   @begin{short}
     Renders an icon using the function @fun{gtk-render-icon-pixbuf}.
   @end{short}
   In most cases, the function @fun{gtk-widget-render-icon-pixbuf} is better,
   since it automatically provides most of the arguments from the current widget
-  settings. This function never returns @code{nil}; if the icon cannot be
+  settings. This function never returns @code{nil}. If the icon cannot be
   rendered (perhaps because an image file fails to load), a default
   \"missing image\" icon will be returned instead.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-icon-set-render-icon-pixbuf} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
-    Use @class{gtk-icon-theme} instead.
+    The function @sym{gtk-icon-set-render-icon-pixbuf} has been deprecated
+    since version 3.10 and should not be used in newly-written code. Use
+    the @class{gtk-icon-theme} API instead.
   @end{dictionary}
   @see-function{gtk-render-icon-pixbuf}
   @see-function{gtk-widget-render-icon-pixbuf}"
-  (icon-set (g-boxed-foreign gtk-icon-set))
+  (iconset (g-boxed-foreign gtk-icon-set))
   (context (g-object gtk-style-context))
   (size gtk-icon-size))
 

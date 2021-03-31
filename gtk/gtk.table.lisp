@@ -100,9 +100,10 @@
   (:fill 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gtk-attach-options atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2021-3-28}
   @begin{short}
     Denotes the expansion properties that a widget will have when it or its
     parent is resized.
@@ -120,7 +121,8 @@
       container that has been allocated.}
     @entry[:shrink]{The widget should shrink as and when possible.}
     @entry[:fill]{The widget should fill the space allocated to it.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTable

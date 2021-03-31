@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -393,8 +393,8 @@
 
 (defcfun ("gtk_events_pending" gtk-events-pending) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-8-21}
-  @return{@em{True} if any events are pending, @code{nil} otherwise.}
+ "@version{2021-3-21}
+  @return{@em{True} if any events are pending, @em{false} otherwise.}
   @begin{short}
     Checks if any events are pending.
   @end{short}

@@ -906,8 +906,6 @@
 ;;; gtk_tree_view_column_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-tree-view-column-new))
-
 (defun gtk-tree-view-column-new ()
  #+cl-cffi-gtk-documentation
  "@version{2021-2-24}

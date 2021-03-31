@@ -380,20 +380,22 @@
 (defcfun ("gtk_style_lookup_icon_set" gtk-style-lookup-icon-set)
     (g-boxed-foreign gtk-icon-set)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-6}
+ "@version{2021-3-30}
   @argument[style]{a @class{gtk-style} object}
-  @argument[stock-id]{an icon name}
-  @return{A icon set of @arg{stock-id}.}
+  @argument[stock-id]{a string with an icon name}
+  @return{A @class{gtk-icon-set} instance of @arg{stock-id}.}
   @begin{short}
-    Looks up @arg{stock-id} in the icon factories associated with style and the
-    default icon factory, returning an icon set if found, otherwise @code{nil}.
+    Looks up @arg{stock-id} in the icon factories associated with @arg{style}
+    and the default icon factory, returning an icon set if found, otherwise
+    @code{nil}.
   @end{short}
   @begin[Warning]{dictionary}
-    @sym{gtk-style-lookup-icon-set} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-    Use the function @fun{gtk-style-context-lookup-icon-set} instead.
+    The function @sym{gtk-style-lookup-icon-set} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-style-context-lookup-icon-set} instead.
   @end{short}
   @see-class{gtk-style}
+  @see-class{gtk-icon-set}
   @see-function{gtk-style-context-lookup-icon-set}"
   (style (g-object gtk-style))
   (stock-id :string))

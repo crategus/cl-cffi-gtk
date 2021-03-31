@@ -2,7 +2,7 @@
 ;;; gtk.init.lisp
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,8 +75,12 @@
 
   (defun join-gtk-main ()
    #+cl-cffi-gtk-documentation
-   "@version{2013-8-20}
-    Wait until the GTK+ program terminates."
+   "@version{2021-3-21}
+    @begin{short}
+      Wait until the GTK+ program terminates.
+    @end{short}
+    @see-function{within-main-loop}
+    @see-function{leave-gtk-main}"
     (when *main-thread*
       (bt:join-thread *main-thread*)))
 

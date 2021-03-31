@@ -1313,7 +1313,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       @end{table}
     @subheading{The \"drag-begin\" signal}
       @begin{pre}
- lambda (widget drag-context)    :run-last
+ lambda (widget context)    :run-last
       @end{pre}
       Emitted on the drag source when a drag is started. A typical reason to
       connect to this signal is to set up a custom drag icon with e.g. the
@@ -1323,11 +1323,11 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       handler did.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The @class{gdk-drag-context} object.}
       @end{table}
     @subheading{The \"drag-data-delete\" signal}
       @begin{pre}
- lambda (widget drag-context)    :run-last
+ lambda (widget context)    :run-last
       @end{pre}
       Emitted on the drag source when a drag with the action @code{:move} of
       type @symbol{gdk-drag-action} is successfully completed. The signal
@@ -1335,22 +1335,22 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       \"delete\" means depends on the context of the drag operation.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The @class{gdk-drag-context} object.}
       @end{table}
     @subheading{The \"drag-data-get\" signal}
       @begin{pre}
- lambda (widget drag-context data info time)    :run-last
+ lambda (widget context selection info time)    :run-last
       @end{pre}
-      Emitted on the drag source when the drop site requests the data which is
-      dragged. It is the responsibility of the signal handler to fill @arg{data}
-      with the data in the format which is indicated by @arg{info}. See the
-      functions @fun{gtk-selection-data-set} and
-      @fun{gtk-selection-data-set-text}.
+      Emitted on the drag source when the drop site requests the data which
+      is dragged. It is the responsibility of the signal handler to fill
+      @arg{selection} with the data in the format which is indicated by
+      @arg{info}. See the functions @fun{gtk-selection-data-set} and
+      @fun{gtk-selection-data-text}.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
-        @entry[data]{The @class{gtk-selection-data} instance to be filled with
-          the dragged data.}
+        @entry[context]{The @class{gdk-drag-context} object.}
+        @entry[selection]{The @class{gtk-selection-data} instance to be filled
+          with the dragged data.}
         @entry[info]{An unsigned integer with the info that has been registered
           with the target in the @class{gtk-target-list} instance.}
       @entry[time]{An unsigned integer with the timestamp at which the data was
@@ -1358,7 +1358,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
     @end{table}
     @subheading{The \"drag-data-received\" signal}
       @begin{pre}
- lambda (widget drag-context x y data info time)    :run-last
+ lambda (widget context x y selection info time)    :run-last
       @end{pre}
       Emitted on the drop site when the dragged data has been received. If the
       data was received in order to determine whether the drop will be accepted,
@@ -1371,7 +1371,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       to determine why the signal was emitted and therefore whether to call the
       functions @fun{gdk-drag-status} or @fun{gtk-drag-finish}. The handler may
       inspect the selected action with the function
-      @fun{gdk-drag-context-get-selected-action} before calling the function
+      @fun{gdk-drag-context-selected-action} before calling the function
       @fun{gtk-drag-finish}, e.g. to implement the value @code{:ask} of the
       @symbol{gdk-drag-action} enumeration as shown in the following example:
       @begin{pre}
@@ -1419,10 +1419,10 @@ drag_data_received (GtkWidget          *widget,
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{An integer where the drop happened.}
         @entry[y]{An integer where the drop happened.}
-        @entry[data]{The received data of type @class{gtk-selection-data}.}
+        @entry[selection]{The received data of type @class{gtk-selection-data}.}
         @entry[info]{An unsigned integer with the info that has been registered
           with the target in the @class{gtk-target-list} instance.}
         @entry[time]{An unsigned integer with the timestamp at which the data
@@ -1430,13 +1430,13 @@ drag_data_received (GtkWidget          *widget,
       @end{table}
     @subheading{The \"drag-drop\" signal}
       @begin{pre}
- lambda (widget drag-context x y time)    :run-last
+ lambda (widget context x y time)    :run-last
       @end{pre}
-      Emitted on the drop site when the user drops the data onto the widget. The
-      signal handler must determine whether the cursor position is in a drop
-      zone or not. If it is not in a drop zone, it returns @em{false} and no
-      further processing is necessary. Otherwise, the handler returns @em{true}.
-      In this case, the handler must ensure that the function
+      Emitted on the drop site when the user drops the data onto the widget.
+      The signal handler must determine whether the cursor position is in a
+      drop zone or not. If it is not in a drop zone, it returns @em{false} and
+      no further processing is necessary. Otherwise, the handler returns
+      @em{true}. In this case, the handler must ensure that the function
       @fun{gtk-drag-finish} is called to let the source know that the drop is
       done. The call to the function @fun{gtk-drag-finish} can be done either
       directly or in a \"drag-data-received\" signal handler which gets
@@ -1444,7 +1444,7 @@ drag_data_received (GtkWidget          *widget,
       for one or more of the supported targets.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{An integer with the x coordinate of the current cursor
           position.}
         @entry[y]{An integer with the y coordinate of the current cursor
@@ -1456,18 +1456,18 @@ drag_data_received (GtkWidget          *widget,
       @end{table}
     @subheading{The \"drag-end\" signal}
       @begin{pre}
- lambda (widget drag-context)    :run-last
+ lambda (widget context)    :run-last
       @end{pre}
       Emitted on the drag source when a drag is finished. A typical reason to
       connect to this signal is to undo things done in the \"drag-begin\" signal
       handler.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-failed\" signal}
       @begin{pre}
- lambda (widget drag-context result)    :run-last
+ lambda (widget context result)    :run-last
       @end{pre}
       Emitted on the drag source when a drag has failed. The signal handler may
       hook custom code to handle a failed DND operation based on the type of
@@ -1476,7 +1476,7 @@ drag_data_received (GtkWidget          *widget,
       returns @em{false}.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
         @entry[result]{The result of the drag operation of type
           @symbol{gtk-drag-result}.}
         @entry[Returns]{@em{True} if the failed drag operation has been already
@@ -1484,7 +1484,7 @@ drag_data_received (GtkWidget          *widget,
       @end{table}
     @subheading{The \"drag-leave\" signal}
       @begin{pre}
- lambda (widget drag-context time)    :run-last
+ lambda (widget context time)    :run-last
       @end{pre}
       Emitted on the drop site when the cursor leaves the widget. A typical
       reason to connect to this signal is to undo things done in a
@@ -1494,13 +1494,13 @@ drag_data_received (GtkWidget          *widget,
       of a preview item created in the \"drag-motion\" signal handler.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
         @entry[time]{An unsigned integer with the timestamp of the motion
           event.}
       @end{table}
     @subheading{The \"drag-motion\" signal}
       @begin{pre}
- lambda (widget drag-context x y time)    :run-last
+ lambda (widget context x y time)    :run-last
       @end{pre}
       Emitted on the drop site when the user moves the cursor over the widget
       during a drag. The signal handler must determine whether the cursor
@@ -1589,7 +1589,7 @@ drag_data_received (GtkWidget        *widget,
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
+        @entry[context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{An integer with the x coordinate of the current cursor
           position.}
         @entry[y]{An integer with the y coordinate of the current cursor
@@ -2318,8 +2318,6 @@ drag_data_received (GtkWidget        *widget,
   @see-function{gtk-drag-unhighlight}
   @see-function{gtk-drag-dest-set}
   @see-function{gtk-grab-add}
-  @see-function{gtk-selection-data-set}
-  @see-function{gtk-selection-data-set-text}
   @see-function{gdk-screen-is-composited}
   @see-function{g-signal-connect-after}
   @see-function{gtk-tooltip-set-markup}
@@ -4683,7 +4681,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defun (setf gtk-widget-state) (state widget)
   (foreign-funcall "gtk-widget_set_state"
-                   (g-object gtk-widget) state
+                   (g-object gtk-widget) widget
                    gtk-state-type state
                    :void)
   state)
@@ -5203,20 +5201,20 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-3}
+ "@version{2021-3-28}
   @return{The deprecated default @code{GtkStyle} object.}
   @short{Returns the default style used by all widgets initially.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-default-style} has been deprecated since
-    version 3.0 and should not be used in newly-written code. Use
-    @class{gtk-style-context} instead, and the function
-    @fun{gtk-css-provider-default} to obtain a @class{gtk-style-provider}
+    version 3.0 and should not be used in newly-written code. Use the
+    @class{gtk-style-context} object instead, and the function
+    @fun{gtk-css-provider-new} to obtain a @class{gtk-style-provider}
     object with the default widget style information.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
-  @see-function{gtk-css-provider-default}")
+  @see-function{gtk-css-provider-new}")
 
 (export 'gtk-widget-default-style)
 
@@ -6953,9 +6951,9 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_get_clipboard" gtk-widget-clipboard)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2021-3-24}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
+  @argument[selection]{an atom as a string which identifies the clipboard to
     use, @code{\"CLIPBOARD\"} gives the default clipboard, another common value
     is @code{\"PRIMARY\"}, which gives the primary X selection}
   @return{The appropriate clipboard object. If no clipboard already exists, a
@@ -6965,12 +6963,11 @@ drag_data_received (GtkWidget        *widget,
     Returns the clipboard object for the given selection to be used with
     @arg{widget}.
   @end{short}
-  @arg{widget} must have a @class{gdk-display} object associated with it, so
-  must be attached to a toplevel window.
+  The argument @arg{widget} must have a @class{gdk-display} object associated
+  with it, so must be attached to a toplevel window.
   @see-class{gtk-widget}
   @see-class{gtk-clipboard}
-  @see-class{gdk-display}
-  @see-symbol{gdk-atom}"
+  @see-class{gdk-display}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string))
 

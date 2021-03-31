@@ -381,7 +381,7 @@
       word.}
     @entry[:uppercase-sentences]{Suggest to capitalize the first word of each
       sentence.}
-    @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e. g for a
+    @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e.g. for a
       calculator that already has all the keys.}
     @entry[:vertical-writing]{The text is vertical. Since 3.18}
     @entry[:emoji]{Suggest offering Emoji support. Since 3.22}

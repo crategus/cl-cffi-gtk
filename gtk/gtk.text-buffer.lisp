@@ -2476,11 +2476,11 @@
 (defcfun ("gtk_text_buffer_deserialize_get_can_create_tags"
            gtk-text-buffer-deserialize-can-create-tags) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @syntax[]{(gtk-text-buffer-deserialize-can-create-tags buffer format) => can-create-tags}
   @syntax[]{(setf (gtk-text-buffer-deserialize-can-create-tags buffer format) can-create-tags)}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[format]{a @symbol{gdk-atom} representing a registered rich text
+  @argument[format]{an atom as a string representing a registered rich text
     format}
   @argument[can-create-tags]{a boolean whether deserializing this format may
     create tags}
@@ -2523,9 +2523,9 @@
 
 (defun gtk-text-buffer-deserialize-formats (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{A list of @symbol{gdk-atom}'s representing the registered formats.}
+  @return{A list of atoms as strings representing the registered formats.}
   @begin{short}
     This function returns the rich text deserialize formats registered with
     @arg{buffer} using the functions
@@ -2554,9 +2554,9 @@
 
 (defun gtk-text-buffer-serialize-formats (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{A list of @symbol{gdk-atom}'s representing the registered formats.}
+  @return{A list of atoms as strings representing the registered formats.}
   @begin{short}
     This function returns the rich text serialize formats registered with
     @arg{buffer} using the functions
@@ -2588,12 +2588,12 @@
 
 (defun gtk-text-buffer-register-deserialize-format (buffer mime-type func)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[mime-type]{the format's MIME type}
+  @argument[mime-type]{a string with the format's MIME type}
   @argument[func]{the deserialize function to register}
   @begin{return}
-    The @symbol{gdk-atom} that corresponds to the newly registered format's
+    The atom as a string that corresponds to the newly registered format's
     @arg{mime-type}.
   @end{return}
   @begin{short}
@@ -2617,11 +2617,11 @@
 (defcfun ("gtk_text_buffer_register_deserialize_tagset"
           gtk-text-buffer-register-deserialize-tagset) gdk-atom-as-string
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[tagset-name]{an string with an optional tagset name, on @code{nil}}
   @begin{return}
-    The @symbol{gdk-atom} that corresponds to the newly registered format's
+    The atom as a string that corresponds to the newly registered format's
     MIME type.
   @end{return}
   @begin{short}
@@ -2655,7 +2655,7 @@
   @argument[mime-type]{a string with the format's MIME type}
   @argument[function]{the serialize function to register}
   @begin{return}
-    The @symbol{gdk-atom} that corresponds to the newly registered format's
+    The atom as a string that corresponds to the newly registered format's
     @arg{mime-type}.
   @end{return}
   @begin{short}
@@ -2679,11 +2679,11 @@
 (defcfun ("gtk_text_buffer_register_serialize_tagset"
           gtk-text-buffer-register-serialize-tagset) gdk-atom-as-string
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[tagset-name]{a string with an optional tagset name, or @code{nil}}
   @begin{return}
-    The @symbol{gdk-atom} that corresponds to the newly registered format's
+    The atom as a string that corresponds to the newly registered format's
     MIME type.
   @end{return}
   @begin{short}
@@ -2784,11 +2784,12 @@
 (defun gtk-text-buffer-serialize (register-buffer content-buffer
                                                   format start end)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[register-buffer]{the @class{gtk-text-buffer} object format is
     registered with}
   @argument[content-buffer]{the @class{gtk-text-buffer} object to serialize}
-  @argument[format]{the rich text format to use for serializing}
+  @argument[format]{an atom as a string with the rich text format to use for
+    serializing}
   @argument[start]{a @class{gtk-text-iter} start of block of text to serialize}
   @argument[end]{a @class{gtk-text-iter} end of block of test to serialize}
   @return{The serialized data, encoded as format.}
@@ -2797,7 +2798,7 @@
     @arg{end} in the rich text format represented by @arg{format}.
   @end{short}
 
-  @arg{format}'s to be used must be registered using the functions
+  The @arg{format} arguments to be used must be registered using the functions
   @fun{gtk-text-buffer-register-serialize-format} or
   @fun{gtk-text-buffer-register-serialize-tagset} beforehand.
   @see-class{gtk-text-buffer}
@@ -2824,9 +2825,9 @@
 (defcfun ("gtk_text_buffer_unregister_deserialize_format"
           gtk-text-buffer-unregister-deserialize-format) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[format]{a @symbol{gdk-atom} representing a registered rich text
+  @argument[format]{an atom as a string representing a registered rich text
     format}
   @begin{short}
     This function unregisters a rich text format that was previously registered
@@ -2848,9 +2849,9 @@
 (defcfun ("gtk_text_buffer_unregister_serialize_format"
           gtk-text-buffer-unregister-serialize-format) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{2021-3-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[format]{a @symbol{gdk-atom} representing a registered rich text
+  @argument[format]{an atom as a string representing a registered rich text
     format}
   @begin{short}
     This function unregisters a rich text format that was previously registered

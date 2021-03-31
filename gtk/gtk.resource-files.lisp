@@ -6,7 +6,7 @@
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,13 +28,18 @@
 ;;;
 ;;; Resource Files
 ;;;
-;;; Deprecated routines for handling resource files
+;;;     Deprecated routines for handling resource files
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRcStyle
+;;;     GtkRcStyleClass
 ;;;     GtkRcFlags
 ;;;     GtkRcTokenType
+;;;     GtkPathPriorityType
+;;;     GtkPathType
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_rc_scanner_new
 ;;;     gtk_rc_get_style
@@ -68,6 +73,210 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkRcFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkRcFlags" gtk-rc-flags
+  (:export nil
+   :type-initializer "gtk_rc_flags_get_type")
+  (:fg 1)
+  (:bg 2)
+  (:text 4)
+  (:base 8))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-rc-flags atdoc:*symbol-name-alias*)
+      "Flags"
+      (gethash 'gtk-rc-flags atdoc:*external-symbols*)
+ "@version{2013-4-21}
+  @short{ }
+  @begin{pre}
+(define-g-flags \"GtkRcFlags\" gtk-rc-flags
+  (:export t
+   :type-initializer \"gtk_rc_flags_get_type\")
+  (:fg 1)
+  (:bg 2)
+  (:text 4)
+  (:base 8))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkRcTokenType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkRcTokenType" gtk-rc-token-type
+  (:export nil
+   :type-initializer "gtk_rc_token_type_get_type")
+  (:invalid 270)
+  (:include 271)
+  (:normal 272)
+  (:active 273)
+  (:prelight 274)
+  (:selected 275)
+  (:insensitive 276)
+  (:fg 277)
+  (:bg 278)
+  (:text 279)
+  (:base 280)
+  (:xthickness 281)
+  (:ythickness 282)
+  (:font 283)
+  (:fontset 284)
+  (:font-name 285)
+  (:bg-pixmap 286)
+  (:pixmap-path 287)
+  (:style 288)
+  (:binding 289)
+  (:bind 290)
+  (:widget 291)
+  (:widget-class 292)
+  (:class 293)
+  (:lowest 294)
+  (:gtk 295)
+  (:application 296)
+  (:theme 297)
+  (:rc 298)
+  (:highest 299)
+  (:engine 300)
+  (:module-path 301)
+  (:im-module-path 302)
+  (:im-module-file 303)
+  (:stock 304)
+  (:ltr 305)
+  (:rtl 306)
+  (:color 307)
+  (:unbind 308)
+  (:last 309))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-rc-token-type atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gtk-rc-token-type atdoc:*external-symbols*)
+ "@version{2013-3-18}
+  @subheading{Warning}
+    @sym{gtk-rc-token-type} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use @class{gtk-css-provider} instead.
+
+  @begin{short}
+    The @sym{gtk-rc-token-type} enumeration represents the tokens in the RC
+    file. It is exposed so that theme engines can reuse these tokens when
+    parsing the theme-engine specific portions of a RC file.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkRcTokenType\" gtk-rc-token-type
+  (:export t
+   :type-initializer \"gtk_rc_token_type_get_type\")
+  (:invalid 270)
+  (:include 271)
+  (:normal 272)
+  (:active 273)
+  (:prelight 274)
+  (:selected 275)
+  (:insensitive 276)
+  (:fg 277)
+  (:bg 278)
+  (:text 279)
+  (:base 280)
+  (:xthickness 281)
+  (:ythickness 282)
+  (:font 283)
+  (:fontset 284)
+  (:font-name 285)
+  (:bg-pixmap 286)
+  (:pixmap-path 287)
+  (:style 288)
+  (:binding 289)
+  (:bind 290)
+  (:widget 291)
+  (:widget-class 292)
+  (:class 293)
+  (:lowest 294)
+  (:gtk 295)
+  (:application 296)
+  (:theme 297)
+  (:rc 298)
+  (:highest 299)
+  (:engine 300)
+  (:module-path 301)
+  (:im-module-path 302)
+  (:im-module-file 303)
+  (:stock 304)
+  (:ltr 305)
+  (:rtl 306)
+  (:color 307)
+  (:unbind 308)
+  (:last 309))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkPathPriorityType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPathPriorityType" gtk-path-priority-type
+  (:export t
+   :type-initializer "gtk_path_priority_type_get_type")
+  (:lowest 0)
+  (:gtk 4)
+  (:application 8)
+  (:theme 10)
+  (:rc 12)
+  (:highest 15))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-path-priority-type atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gtk-path-priority-type atdoc:*external-symbols*)
+ "@version{2021-3-21}
+  @begin{short}
+    Priorities for path lookups.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-path-priority-type} enumeration has been deprecated since
+    version 3.0 and should not be used in newly-written code.
+  @end{dictionary}
+  @begin{pre}
+(define-g-enum \"GtkPathPriorityType\" gtk-path-priority-type
+  (:export t
+   :type-initializer \"gtk_path_priority_type_get_type\")
+  (:lowest 0)
+  (:gtk 4)
+  (:application 8)
+  (:theme 10)
+  (:rc 12)
+  (:highest 15))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkPathType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPathType" gtk-path-type
+  (:export t
+   :type-initializer "gtk_path_type_get_type")
+  (:widget 0)
+  (:widget-class 1)
+  (:class 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-path-type atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gtk-path-type atdoc:*external-symbols*)
+ "@version{2021-3-30}
+  @short{Widget path types.}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-path-type} enumeration has been deprecated since version 3.0
+    and should not be used in newly-written code.
+  @end{dictionary}
+  @begin{pre}
+(define-g-enum \"GtkPathType\" gtk-path-type
+  (:export t
+   :type-initializer \"gtk_path_type_get_type\")
+  (:widget 0)
+  (:widget-class 1)
+  (:class 2))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRcStyle
@@ -493,140 +702,6 @@
     pattern type, then by priority and then by order of specification. The
     priorities that can be specified and their default values are the same
     as for styles.")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkRcFlags
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkRcFlags" gtk-rc-flags
-  (:export nil
-   :type-initializer "gtk_rc_flags_get_type")
-  (:fg 1)
-  (:bg 2)
-  (:text 4)
-  (:base 8))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-rc-flags atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-rc-flags atdoc:*external-symbols*)
- "@version{2013-4-21}
-  @short{ }
-  @begin{pre}
-(define-g-flags \"GtkRcFlags\" gtk-rc-flags
-  (:export t
-   :type-initializer \"gtk_rc_flags_get_type\")
-  (:fg 1)
-  (:bg 2)
-  (:text 4)
-  (:base 8))
-  @end{pre}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkRcTokenType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkRcTokenType" gtk-rc-token-type
-  (:export nil
-   :type-initializer "gtk_rc_token_type_get_type")
-  (:invalid 270)
-  (:include 271)
-  (:normal 272)
-  (:active 273)
-  (:prelight 274)
-  (:selected 275)
-  (:insensitive 276)
-  (:fg 277)
-  (:bg 278)
-  (:text 279)
-  (:base 280)
-  (:xthickness 281)
-  (:ythickness 282)
-  (:font 283)
-  (:fontset 284)
-  (:font-name 285)
-  (:bg-pixmap 286)
-  (:pixmap-path 287)
-  (:style 288)
-  (:binding 289)
-  (:bind 290)
-  (:widget 291)
-  (:widget-class 292)
-  (:class 293)
-  (:lowest 294)
-  (:gtk 295)
-  (:application 296)
-  (:theme 297)
-  (:rc 298)
-  (:highest 299)
-  (:engine 300)
-  (:module-path 301)
-  (:im-module-path 302)
-  (:im-module-file 303)
-  (:stock 304)
-  (:ltr 305)
-  (:rtl 306)
-  (:color 307)
-  (:unbind 308)
-  (:last 309))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-rc-token-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-rc-token-type atdoc:*external-symbols*)
- "@version{2013-3-18}
-  @subheading{Warning}
-    @sym{gtk-rc-token-type} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @class{gtk-css-provider} instead.
-
-  @begin{short}
-    The @sym{gtk-rc-token-type} enumeration represents the tokens in the RC
-    file. It is exposed so that theme engines can reuse these tokens when
-    parsing the theme-engine specific portions of a RC file.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkRcTokenType\" gtk-rc-token-type
-  (:export t
-   :type-initializer \"gtk_rc_token_type_get_type\")
-  (:invalid 270)
-  (:include 271)
-  (:normal 272)
-  (:active 273)
-  (:prelight 274)
-  (:selected 275)
-  (:insensitive 276)
-  (:fg 277)
-  (:bg 278)
-  (:text 279)
-  (:base 280)
-  (:xthickness 281)
-  (:ythickness 282)
-  (:font 283)
-  (:fontset 284)
-  (:font-name 285)
-  (:bg-pixmap 286)
-  (:pixmap-path 287)
-  (:style 288)
-  (:binding 289)
-  (:bind 290)
-  (:widget 291)
-  (:widget-class 292)
-  (:class 293)
-  (:lowest 294)
-  (:gtk 295)
-  (:application 296)
-  (:theme 297)
-  (:rc 298)
-  (:highest 299)
-  (:engine 300)
-  (:module-path 301)
-  (:im-module-path 302)
-  (:im-module-file 303)
-  (:stock 304)
-  (:ltr 305)
-  (:rtl 306)
-  (:color 307)
-  (:unbind 308)
-  (:last 309))
-  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_rc_scanner_new ()

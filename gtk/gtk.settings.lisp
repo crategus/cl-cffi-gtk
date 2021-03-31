@@ -928,16 +928,24 @@ name1: color1; name2: color2; ...
                                                'gtk-settings) 't)
  "The @code{gtk-cursor-theme-name} property of type @code{:string}
   (Read / Write) @br{}
-  Name of the cursor theme to use, or @code{nil} to use the default theme. @br{}
-  Default value: @code{nil}")
+  Name of the cursor theme to use, or @code{nil} to use the default theme.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-cursor-theme-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-cursor-theme-name 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-cursor-theme-name} slot of the
-  @class{gtk-settings} class.
+ "@version{2021-3-28}
+  @syntax[]{(gtk-settings-gtk-cursor-theme-name object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-cursor-theme-name object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with the cursor theme name}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-cursor-theme-name} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Name of the cursor theme to use, or @code{null-pointer} to use the default
+  theme.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-cursor-theme-size -------------------------------------
@@ -1462,16 +1470,23 @@ size-name = width , height
                                                'gtk-settings) 't)
  "The @code{gtk-icon-theme-name} property of type @code{:string} (Read / Write)
   @br{}
-  Name of icon theme to use. @br{}
-  Default value: \"hicolor\"")
+  Name of icon theme to use.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-icon-theme-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-icon-theme-name 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-icon-theme-name} slot of the
-  @class{gtk-settings} class.
+ "@version{2021-3-28}
+  @syntax[]{(gtk-settings-gtk-icon-theme-name object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-icon-theme-name object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with the icon theme name}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-icon-theme-name} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Name of icon theme to use.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settigns-gtk-im-module ---------------------------------------------
@@ -1576,16 +1591,23 @@ size-name = width , height
                                                'gtk-settings) 't)
  "The @code{gtk-key-theme-name} property of type @code{:string} (Read / Write)
   @br{}
-  Name of key theme to load. @br{}
-  Default value: @code{nil}")
+  Name of key theme to load.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-key-theme-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-key-theme-name 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-key-theme-name} slot of the
-  @class{gtk-settings} class.
+ "@version{2021-3-28}
+  @syntax[]{(gtk-settings-gtk-key-theme-name object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-key-theme-name object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with the key theme name}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-key-theme-name} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Name of key theme to load.
   @see-class{gtk-settings}")
 
 ;;; gtk-settings-gtk-keynav-cursor-only ----------------------------------------
@@ -1778,25 +1800,42 @@ size-name = width , height
  "The @code{gtk-menu-images} property of type @code{:boolean} (Read / Write)
   @br{}
   Whether images should be shown in menus. @br{}
-  @em{Warning:} The @code{gtk-menu-images} property has been deprecated since
+  @em{Warning:} The @code{gtk-menu-images} setting has been deprecated since
   version 3.10 and should not be used in newly-written code. This setting is
   deprecated. Application developers control whether or not a
-  @class{gtk-menu-item} should have an icon or not, on a per widget basis.
-  Either use a @class{gtk-menu-item} with a @class{gtk-box} containing a
-  @class{gtk-image} and a @class{gtk-accel-label}, or describe your menus using
-  a @class{g-menu} XML description. @br{}
+  @class{gtk-menu-item} widget should have an icon or not, on a per widget
+  basis. Either use a @class{gtk-menu-item} widget with a @class{gtk-box} widget
+  containing a @class{gtk-image} widget and a @class{gtk-accel-label} widget, or
+  describe your menus using a @class{g-menu} XML description. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-menu-images atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-menu-images 'function)
- "@version{2014-1-29}
+ "@version{2021-3-29}
+  @syntax[]{(gtk-settings-gtk-menu-images object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-menu-images object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a boolean wether images should be shown in menus}
   @begin{short}
     Accessor of the @slot[gtk-settings]{gtk-menu-images} slot of the
     @class{gtk-settings} class.
   @end{short}
-  @see-class{gtk-settings}")
+
+  Whether images should be shown in menus.
+  @begin[Warning]{dictionary}
+    The @code{gtk-menu-images} setting has been deprecated since version 3.10
+    and should not be used in newly-written code. This setting is deprecated.
+    Application developers control whether or not a @class{gtk-menu-item} widget
+    should have an icon or not, on a per widget basis. Either use a
+    @class{gtk-menu-item} widget with a @class{gtk-box} widget containing a
+    @class{gtk-image} widget and a @class{gtk-accel-label} widget, or describe
+    your menus using a @class{g-menu} XML description.
+  @end{dictionary}
+  @see-class{gtk-settings}
+  @see-class{gtk-menu-item}
+  @see-class{g-menu}")
 
 ;;; gtk-settings-gtk-menu-popdown-delay ----------------------------------------
 
@@ -2164,19 +2203,29 @@ size-name = width , height
                                                'gtk-settings) 't)
  "The @code{gtk-sound-theme-name} property of type @code{:string} (Read / Write)
   @br{}
-  The XDG sound theme to use for event sounds. See the Sound Theme spec for more
-  information on event sounds and sound themes. GTK+ itself does not support
-  event sounds, you have to use a loadable module like the one that comes with
-  libcanberra. @br{}
-  Default value: @code{\"freedesktop\"}")
+  The XDG sound theme to use for event sounds. See the Sound Theme spec for
+  more information on event sounds and sound themes. GTK+ itself does not
+  support event sounds, you have to use a loadable module like the one that
+  comes with libcanberra.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-sound-theme-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-sound-theme-name 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-sound-theme-name} slot of the
-  @class{gtk-settings} class.
+ "@version{2021-3-28}
+  @syntax[]{(gtk-settings-gtk-sound-theme-name object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-sound-theme-name object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with the sound theme name}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-sound-theme-name} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  The XDG sound theme to use for event sounds. See the Sound Theme spec for
+  more information on event sounds and sound themes. GTK+ itself does not
+  support event sounds, you have to use a loadable module like the one that
+  comes with libcanberra.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-split-cursor ------------------------------------------
@@ -2205,16 +2254,23 @@ size-name = width , height
 (setf (documentation (atdoc:get-slot-from-name "gtk-theme-name"
                                                'gtk-settings) 't)
  "The @code{gtk-theme-name} property of type @code{:string} (Read / Write) @br{}
-  Name of theme to load. @br{}
-  Default value: @code{\"Raleigh\"}")
+  Name of the theme to load.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-settings-gtk-theme-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-theme-name 'function)
- "@version{2014-1-29}
-  Accessor of the @slot[gtk-settings]{gtk-theme-name} slot of the
-  @class{gtk-settings} class.
+ "@version{2021-3-28}
+  @syntax[]{(gtk-settings-gtk-theme-name object) => setting}
+  @syntax[]{(setf (gtk-settings-gtk-theme-name object) setting)}
+  @argument[object]{a @class{gtk-settings} object}
+  @argument[setting]{a string with the theme name}
+  @begin{short}
+    Accessor of the @slot[gtk-settings]{gtk-theme-name} slot of the
+    @class{gtk-settings} class.
+  @end{short}
+
+  Name of the theme to load.
   @see-class{gtk-settings}")
 
 ;;; --- gtk-settings-gtk-timeout-expand ----------------------------------------
