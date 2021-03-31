@@ -436,23 +436,43 @@
 (export 'gtk-border)
 
 ;;; ----------------------------------------------------------------------------
-;;; Constructors for GtkBorder
+;;; gtk_border_new ()
 ;;; ----------------------------------------------------------------------------
 
-;; not exported
+(declaim (inline gtk-border-new))
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-border 'function)
- "@version{2013-8-27}
-  Creates and returns an structure of type @class{gtk-border}.
-  @see-class{gtk-border}
-  @see-function{copy-gtk-border}")
+(defun gtk-border-new (&key (left 0) (right 0) (top 0) (bottom 0))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-19}
+  @argument[left]{an integer with the width of the left border}
+  @argument[right]{an integer with the width of the right border}
+  @argument[top]{an integer with the width of the top border}
+  @argument[bottom]{an integer with the width of the bottom border}
+  @return{A newly allocated @class{gtk-border} instance.}
+  @begin{short}
+    Allocates a new @class{gtk-border} instance and initializes its elements.
+  @end{short}
+  @see-class{gtk-border}"
+  (make-gtk-border :left left :right right :top top :bottom bottom))
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-border 'function)
- "@version{2013-8-27}
-  Copies and returns an structure of type @class{gtk-border}.
-  @see-class{gtk-border}")
+(export 'gtk-border-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_border_copy ()
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-border-copy))
+
+(defun gtk-border-copy (border)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-19}
+  @argument[border]{a @class{gtk-border} instance}
+  @return{A copy of @arg{border}.}
+  @short{Copies a @class{gtk-border} instance.}
+  @see-class{gtk-border}"
+  (copy-gtk-border border))
+
+(export 'gtk-border-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors for GtkBorder
@@ -2194,45 +2214,6 @@
 (export 'gtk-style-context-to-string)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_border_new ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-border-new))
-
-(defun gtk-border-new (&key (left 0) (right 0) (top 0) (bottom 0))
- #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
-  @argument[left]{an integer with the width of the left border}
-  @argument[right]{an integer with the width of the right border}
-  @argument[top]{an integer with the width of the top border}
-  @argument[bottom]{an integer with the width of the bottom border}
-  @return{A newly allocated @class{gtk-border} instance.}
-  @begin{short}
-    Allocates a new @class{gtk-border} instance and initializes its elements.
-  @end{short}
-  @see-class{gtk-border}"
-  (make-gtk-border :left left :right right :top top :bottom bottom))
-
-(export 'gtk-border-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_border_copy ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-border-copy))
-
-(defun gtk-border-copy (border)
- #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
-  @argument[border]{a @class{gtk-border} instance}
-  @return{A copy of @arg{border}.}
-  @short{Copies a @class{gtk-border} instance.}
-  @see-class{gtk-border}"
-  (copy-gtk-border border))
-
-(export 'gtk-border-copy)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_border_free ()
 ;;;
 ;;; void gtk_border_free (GtkBorder *border_);
@@ -2709,19 +2690,18 @@
 
 (defcfun ("gtk_render_icon_pixbuf" gtk-render-icon-pixbuf) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2021-3-29}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[source]{the @class{gtk-icon-source} object specifying the icon to
+  @argument[source]{a @class{gtk-icon-source} instance specifying the icon to
     render}
-  @argument[size]{the size of type @symbol{gtk-icon-size} to render the icon at}
-  @return{A newly-created @class{gdk-pixbuf} containing the rendered icon.}
+  @argument[size]{a @symbol{gtk-icon-size} size to render the icon at}
+  @return{A newly-created @class{gdk-pixbuf} object containing the rendered
+    icon.}
   @begin{short}
     Renders the icon specified by @arg{source} at the given @arg{size},
     returning the result in a pixbuf.
   @end{short}
-
-  A size of @code{(GtkIconSize) - 1} means render at the size of the source and
-  do not scale.
+  A size of -1 means render at the size of the source and do not scale.
   @begin[Warning]{dictionary}
     The function @sym{gtk-render-icon-pixbuf} has been deprecated since version
     3.10 and should not be used in newly-written code. Use the function
@@ -2729,7 +2709,9 @@
   @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gtk-icon-source}
-  @see-class{gdk-pixbuf}"
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-icon-size}
+  @see-function{gtk-icon-theme-load-icon}"
   (context (g-object gtk-style-context))
   (source (g-boxed-foreign gtk-icon-source))
   (size gtk-icon-size))
