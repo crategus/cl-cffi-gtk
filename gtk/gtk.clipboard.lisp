@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,6 +36,15 @@
 ;;;     GtkClipboard
 ;;;
 ;;; Functions
+;;;
+;;;     GtkClipboardReceivedFunc
+;;;     GtkClipboardTextReceivedFunc
+;;;     GtkClipboardImageReceivedFunc
+;;;     GtkClipboardTargetsReceivedFunc
+;;;     GtkClipboardRichTextReceivedFunc
+;;;     GtkClipboardURIReceivedFunc
+;;;     GtkClipboardGetFunc
+;;;     GtkClipboardClearFunc
 ;;;
 ;;;     gtk_clipboard_get
 ;;;     gtk_clipboard_get_for_display
@@ -93,12 +102,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
- "@version{2020-9-20}
+ "@version{2021-3-24}
   @begin{short}
     The @sym{gtk-clipboard} object represents a clipboard of data shared between
     different processes or between different widgets in the same process.
   @end{short}
-  Each clipboard is identified by a name encoded as a @symbol{gdk-atom}.
+  Each clipboard is identified by a name encoded as a @symbol{gdk-atom} type.
   Conversion to and from strings can be done with the functions
   @fun{gdk-atom-intern} and @fun{gdk-atom-name}. The default clipboard
   corresponds to the @code{\"CLIPBOARD\"} atom. Another commonly used clipboard
@@ -121,9 +130,9 @@
   convert it into the various data types that you advertise. When the
   @code{clear_func} you provided is called, you simply free the data blob. The
   latter is more useful when the contents of clipboard reflect the internal
-  state of a @class{g-object}. As an example, for the @code{PRIMARY} clipboard,
-  when an entry widget provides the clipboard's contents the contents are simply
-  the text within the selected region. If the contents change, the entry widget
+  state of a GObject. As an example, for the @code{PRIMARY} clipboard, when an
+  entry widget provides the clipboard's contents the contents are simply the
+  text within the selected region. If the contents change, the entry widget
   can call the function @fun{gtk-clipboard-set-with-owner} to update the
   timestamp for clipboard ownership, without having to worry about
   @code{clear_func} being called.
@@ -134,9 +143,9 @@
   provided by another process, then the data needs to be retrieved from the
   other process, which may take some time. To avoid blocking the user
   interface, the call to request the selection,
-  @fun{gtk-clipboard-request-contents} takes a callback that will be called when
-  the contents are received or when the request fails. If you do not want to
-  deal with providing a separate callback, you can also use the function
+  @fun{gtk-clipboard-request-contents} takes a callback that will be called
+  when the contents are received or when the request fails. If you do not want
+  to deal with providing a separate callback, you can also use the function
   @fun{gtk-clipboard-wait-for-contents}. What this does is run the GLib main
   loop recursively waiting for the contents. This can simplify the code flow,
   but you still have to be aware that other callbacks in your program can be
@@ -152,204 +161,336 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"owner-change\" signal}
       @begin{pre}
- lambda (clipboard event)    : Run First
+ lambda (clipboard event)    :run-first
       @end{pre}
-      The \"owner-change\" signal is emitted when GTK+ receives an event that
-      indicates that the ownership of the selection associated with
-      @arg{clipboard} has changed.
+      The signal is emitted when GTK+ receives an event that indicates that the
+      ownership of the selection associated with @arg{clipboard} has changed.
       @begin[arg]{table}
         @entry[clipboard]{The @sym{gtk-clipboard} object on which the signal is
           emitted.}
         @entry[event]{The @class{gdk-event-owner-change} event.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-selection-data}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardReceivedFunc ()
-;;;
-;;; void (*GtkClipboardReceivedFunc) (GtkClipboard *clipboard,
-;;;                                   GtkSelectionData *selection_data,
-;;;                                   gpointer data);
-;;;
-;;; A function to be called when the results of gtk_clipboard_request_contents()
-;;; are received, or when the request fails.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData containing the data was received. If retrieving the
-;;;     data failed, then then length field of selection_data will be negative.
-;;;
-;;; data :
-;;;     the user_data supplied to gtk_clipboard_request_contents().
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-received-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (selection (g-boxed-foreign gtk-selection-data))
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard selection)
+      (return-from-gtk-clipboard-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-received-func atdoc:*external-symbols*)
+ "@version{2021-3-25}
+  @begin{short}
+    A callback function to be called when the results of the function
+    @fun{gtk-clipboard-request-contents} are received, or when the request
+    fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard selection)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[selection]{A @class{gtk-selection-data} instance containing the data
+      that was received. If retrieving the data failed, then then length field
+      of selection_data will be negative.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gtk-selection-data}
+  @see-function{gtk-clipboard-request-contents}")
+
+(export 'gtk-clipboard-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardTextReceivedFunc ()
-;;;
-;;; void (*GtkClipboardTextReceivedFunc) (GtkClipboard *clipboard,
-;;;                                       const gchar *text,
-;;;                                       gpointer data);
-;;;
-;;; A function to be called when the results of gtk_clipboard_request_text() are
-;;; received, or when the request fails.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; text :
-;;;     the text received, as a UTF-8 encoded string, or NULL if retrieving the
-;;;     data failed.
-;;;
-;;; data :
-;;;     the user_data supplied to gtk_clipboard_request_text().
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-clipboard-text-received-func-cb :void
+(defcallback gtk-clipboard-text-received-func :void
     ((clipboard (g-object gtk-clipboard))
      (text :string)
      (data :pointer))
   (let ((fn (get-stable-pointer-value data)))
     (restart-case
-        (funcall fn clipboard text)
-      (return-from-gtk-clipboard-text-received-func-cb () nil))))
+      (funcall fn clipboard text)
+      (return-from-gtk-clipboard-text-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-text-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-text-received-func atdoc:*external-symbols*)
+ "@version{2021-3-25}
+  @begin{short}
+    A function to be called when the results of the function
+    @fun{gtk-clipboard-request-text} are received, or when the request fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard text)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[text]{The text received, as a UTF-8 encoded string, or @code{nil} if
+      retrieving the data failed.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-request-text}")
+
+(export 'gtk-clipboard-text-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardImageReceivedFunc ()
-;;;
-;;; void (*GtkClipboardImageReceivedFunc) (GtkClipboard *clipboard,
-;;;                                        GdkPixbuf *pixbuf,
-;;;                                        gpointer data);
-;;;
-;;; A function to be called when the results of gtk_clipboard_request_image()
-;;; are received, or when the request fails.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; pixbuf :
-;;;     the received image
-;;;
-;;; data :
-;;;     the user_data supplied to gtk_clipboard_request_image().
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-image-received-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (pixbuf (g-object gdk-pixbuf))
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard pixbuf)
+      (return-from-gtk-clipboard-image-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-image-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-image-received-func atdoc:*external-symbols*)
+ "@version{2021-3-25}
+  @begin{short}
+    A callback function to be called when the results of the function
+    @fun{gtk-clipboard-request-image} are received, or when the request fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard pixbuf)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[pixbuf]{The text received @class{gdk-pixbuf} object.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-clipboard-request-image}")
+
+(export 'gtk-clipboard-image-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardTargetsReceivedFunc ()
-;;;
-;;; void (*GtkClipboardTargetsReceivedFunc) (GtkClipboard *clipboard,
-;;;                                          GdkAtom *atoms,
-;;;                                          gint n_atoms,
-;;;                                          gpointer data);
-;;;
-;;; A function to be called when the results of gtk_clipboard_request_targets()
-;;; are received, or when the request fails.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; atoms :
-;;;     the supported targets, as array of GdkAtom, or NULL if retrieving the
-;;;     data failed.
-;;;
-;;; n_atoms :
-;;;     the length of the atoms array.
-;;;
-;;; data :
-;;;     the user_data supplied to gtk_clipboard_request_targets().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-targets-received-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (atoms :pointer)
+     (n-atoms :int)
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard atoms n-atoms)
+      (return-from-gtk-clipboard-targets-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-targets-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-targets-received-func atdoc:*external-symbols*)
+ "@version{2021-3-27}
+  @begin{short}
+    A callback function to be called when the results of the function
+    @fun{gtk-clipboard-request-targets} are received, or when the request fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard atoms n-atoms)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[atoms]{A pointer to an array of @symbol{gdk-atom} atoms.}
+    @entry[n-atoms]{An integer with the length of the atoms array.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gdk-atom}
+  @see-function{gtk-clipboard-request-targets}")
+
+(export 'gtk-clipboard-targets-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardRichTextReceivedFunc ()
-;;;
-;;; void (*GtkClipboardRichTextReceivedFunc) (GtkClipboard *clipboard,
-;;;                                           GdkAtom format,
-;;;                                           const guint8 *text,
-;;;                                           gsize length,
-;;;                                           gpointer data);
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-rich-text-received-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (format gdk-atom)
+     (text :uint8)
+     (length g-size)
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard format text length)
+      (return-from-gtk-clipboard-rich-text-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-rich-text-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-rich-text-received-func atdoc:*external-symbols*)
+ "@version{2021-3-27}
+  @begin{short}
+    A callback function to be called when the results of the function
+    @fun{gtk-clipboard-request-rich-text} are received, or when the request
+    fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard format text length)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[format]{The @symbol{gdk-atom} for the format of the rich text.}
+    @entry[text]{The richt text received, as a UTF-8 encoded string, or
+      @code{null-pointer} if retrieving the data failed.}
+    @entry[length]{An integer with the length of the text.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gdk-atom}
+  @see-function{gtk-clipboard-request-rich-text}")
+
+(export 'gtk-clipboard-rich-text-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardURIReceivedFunc ()
-;;;
-;;; void (*GtkClipboardURIReceivedFunc) (GtkClipboard *clipboard,
-;;;                                      gchar **uris,
-;;;                                      gpointer data);
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-uri-received-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (uris :pointer)
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard uris)
+      (return-from-gtk-clipboard-uri-received-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-uri-received-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-uri-received-func atdoc:*external-symbols*)
+ "@version{2021-3-27}
+  @begin{short}
+    A callback function to be called when the results of the function
+    @fun{gtk-clipboard-request-uris} are received, or when the request fails.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard uris)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[uris]{A pointer to the list of received URIs.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gdk-atom}
+  @see-function{gtk-clipboard-request-uris}")
+
+(export 'gtk-clipboard-uri-received-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardGetFunc ()
-;;;
-;;; void (*GtkClipboardGetFunc) (GtkClipboard *clipboard,
-;;;                              GtkSelectionData *selection_data,
-;;;                              guint info,
-;;;                              gpointer user_data_or_owner);
-;;;
-;;; A function that will be called to provide the contents of the selection. If
-;;; multiple types of data were advertised, the requested type can be determined
-;;; from the info parameter or by checking the target field of selection_data.
-;;; If the data could successfully be converted into then it should be stored
-;;; into the selection_data object by calling gtk_selection_data_set() (or
-;;; related functions such as gtk_selection_data_set_text()). If no data is set,
-;;; the requestor will be informed that the attempt to get the data failed.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData argument in which the requested data should be
-;;;     stored.
-;;;
-;;; info :
-;;;     the info field corresponding to the requested target from the
-;;;     GtkTargetEntry array passed to gtk_clipboard_set_with_data() or
-;;;     gtk_clipboard_set_with_owner().
-;;;
-;;; user_data_or_owner :
-;;;     the user_data argument passed to gtk_clipboard_set_with_data(), or the
-;;;     owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-get-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (selection (g-boxed-foreign gtk-selection-data))
+     (info :uint)
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard selection info)
+      (return-from-gtk-clipboard-get-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-get-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-get-func atdoc:*external-symbols*)
+ "@version{2021-3-27}
+  @begin{short}
+    A function that will be called to provide the contents of the selection.
+  @end{short}
+  If multiple types of data were advertised, the requested type can be
+  determined from the info parameter or by checking the target field of
+  @arg{selection}. If the data could successfully be converted into then it
+  should be stored into the selection data object by calling the function
+  @fun{gtk-selection-data-set} (or related functions such as the function
+  @fun{gtk-selection-data-set-text}). If no data is set, the requestor will be
+  informed that the attempt to get the data failed.
+  @begin{pre}
+ lambda (clipboard selection info)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+    @entry[selection]{A @class{gtk-selection-data} instance in which the
+      requested data should be stored.}
+    @entry[info]{The info field corresponding to the requested target from the
+      @class{gtk-target-entry} array passed to the functions
+      @fun{gtk-clipboard-set-with-data} or @fun{gtk-clipboard-set-with-owner}.}
+  @end{table}
+  @see-class{gtk-clipboard}
+  @see-class{gtk-selection-data}
+  @see-class{gtk-target-entry}
+  @see-function{gtk-clipboard-set-with-data}")
+
+(export 'gtk-clipboard-get-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardClearFunc ()
-;;;
-;;; void (*GtkClipboardClearFunc) (GtkClipboard *clipboard,
-;;;                                gpointer user_data_or_owner);
-;;;
-;;; A function that will be called when the contents of the clipboard are
-;;; changed or cleared. Once this has called, the user_data_or_owner argument
-;;; will not be used again.
-;;;
-;;; clipboard :
-;;;     the GtkClipboard
-;;;
-;;; user_data_or_owner :
-;;;     the user_data argument passed to gtk_clipboard_set_with_data(), or the
-;;;     owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-clear-func :void
+    ((clipboard (g-object gtk-clipboard))
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+      (funcall fn clipboard)
+      (return-from-gtk-clipboard-clear-func () nil))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-clipboard-clear-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-clipboard-clear-func atdoc:*external-symbols*)
+ "@version{2021-3-27}
+  @begin{short}
+    A function that will be called when the contents of the clipboard are
+    changed or cleared.
+  @end{short}
+  @begin{pre}
+ lambda (clipboard)
+  @end{pre}
+  @begin[code]{table}
+    @entry[clipboard]{A @class{gtk-clipboard} object.}
+  @end{table}
+  @see-class{gtk-clipboard}")
+
+(export 'gtk-clipboard-clear-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_clipboard_get" gtk-clipboard-get) (g-object gtk-clipboard)
+(defcfun ("gtk_clipboard_get" gtk-clipboard-get)
+    (g-object gtk-clipboard :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
-  @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
-    use}
+ "@version{2021-3-25}
+  @argument[selection]{a @symbol{gdk-atom} as a string which identifies the
+    clipboard to use}
   @begin{return}
-    The appropriate clipboard object. If no clipboard already exists, a new
-    one will be created. Once a clipboard object has been created, it is
-    persistent and, since it is owned by GTK+, must not be freed or unrefed.
+    The appropriate @class{gtk-clipboard} object. If no clipboard already
+    exists, a new one will be created. Once a clipboard object has been
+    created, it is persistent.
   @end{return}
   @short{Returns the clipboard object for the given selection.}
   See the function @fun{gtk-clipboard-for-display} for complete details.
   @see-class{gtk-clipboard}
+  @see-symbol{gdk-atom}
   @see-function{gtk-clipboard-for-display}"
   (selection gdk-atom-as-string))
 
@@ -360,32 +501,32 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_get_for_display" gtk-clipboard-for-display)
-    (g-object gtk-clipboard)
+    (g-object gtk-clipboard :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2021-3-25}
   @argument[display]{the @class{gdk-display} object for which the clipboard is
     to be retrieved or created}
-  @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
-    use}
+  @argument[selection]{a @symbol{gdk-atom} as a string which identifies the
+    clipboard to use}
   @begin{return}
     The appropriate clipboard object. If no clipboard already exists, a new
     one will be created. Once a clipboard object has been created, it is
-    persistent and, since it is owned by GTK+, must not be freed or unrefd.
+    persistent.
   @end{return}
   @begin{short}
-    Returns the clipboard object for the given @arg{selection} of type
-    @symbol{gdk-atom}.
+    Returns the clipboard object for the given selection.
   @end{short}
   Cut/copy/paste menu items and keyboard shortcuts should use the default
-  clipboard, returned by @code{\"CLIPBOARD\"} for @arg{selection}.
-  @code{\"NONE\"} is supported as a synonym for @code{\"CLIPBOARD\"} for
-  backwards compatibility reasons. The currently-selected object or text should
-  be provided on the clipboard identified by @code{\"PRIMARY\"}.
-  Cut/copy/paste menu items conceptually copy the contents of the
-  @code{\"PRIMARY\"} clipboard to the default clipboard, i.e. they copy the
-  selection to what the user sees as the clipboard.
+  clipboard, returned by the atom @code{\"CLIPBOARD\"} for @arg{selection}.
+  The atom @code{\"NONE\"} is supported as a synonym for the atom
+  @code{\"CLIPBOARD\"} for backwards compatibility reasons. The
+  currently-selected object or text should be provided on the clipboard
+  identified by the atom @code{\"PRIMARY\"}. Cut/copy/paste menu items
+  conceptually copy the contents of the atom @code{\"PRIMARY\"} clipboard to
+  the default clipboard, i.e. they copy the selection to what the user sees as
+  the clipboard.
 
-  It is possible to have arbitrary named clipboards; if you do invent new
+  It is possible to have arbitrary named clipboards. If you do invent new
   clipboards, you should prefix the selection name with an underscore, because
   the ICCCM requires that nonstandard atoms are underscore-prefixed, and
   namespace it as well. For example, if your application called \"Foo\" has a
@@ -399,76 +540,80 @@
 (export 'gtk-clipboard-for-display)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_clipboard_get_display ()
-;;;
-;;; GdkDisplay * gtk_clipboard_get_display (GtkClipboard *clipboard);
-;;;
-;;; Gets the GdkDisplay associated with clipboard
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     the GdkDisplay associated with clipboard
-;;;
-;;; Since 2.2
+;;; gtk_clipboard_get_display () -> gtk-clipboard-display
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_clipboard_get_display" gtk-clipboard-display)
+    (g-object gdk-display)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-25}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{The @class{gdk-display} object associated with @arg{clipboard}.}
+  @begin{short}
+    Gets the display associated with the clipboard.
+  @end{short}
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-display)
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk_clipboard_get_default ()
-;;;
-;;; GtkClipboard * gtk_clipboard_get_default (GdkDisplay *display);
-;;;
-;;; Returns the default clipboard object for use with cut/copy/paste menu items
-;;; and keyboard shortcuts.
-;;;
-;;; display :
-;;;     the GdkDisplay for which the clipboard is to be retrieved.
-;;;
-;;; Returns :
-;;;     the default clipboard object.
-;;;
-;;; Since 3.16
+;;; gtk_clipboard_get_default () -> gtk-clipboard-default
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_get_default" gtk-clipboard-default)
+    (g-object gtk-clipboard)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-25}
+  @argument[display]{a @class{gdk-display} object for which the clipboard is
+    to be retrieved}
+  @return{The default @class{gtk-clipboard} object.}
+  @begin{short}
+    Returns the default clipboard object for use with cut/copy/paste menu items
+    and keyboard shortcuts.
+  @end{short}
+  @see-class{gtk-clipboard}"
+  (display (g-object gdk-display)))
+
+(export 'gtk-clipboard-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_with_data ()
-;;;
-;;; gboolean gtk_clipboard_set_with_data (GtkClipboard *clipboard,
-;;;                                       const GtkTargetEntry *targets,
-;;;                                       guint n_targets,
-;;;                                       GtkClipboardGetFunc get_func,
-;;;                                       GtkClipboardClearFunc clear_func,
-;;;                                       gpointer user_data);
-;;;
-;;; Virtually sets the contents of the specified clipboard by providing a list
-;;; of supported formats for the clipboard data and a function to call to get
-;;; the actual data when it is requested.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; targets :
-;;;     array containing information about the available forms for the clipboard
-;;;     data
-;;;
-;;; n_targets :
-;;;     number of elements in targets
-;;;
-;;; get_func :
-;;;     function to call to get the actual clipboard data
-;;;
-;;; clear_func :
-;;;     when the clipboard contents are set again, this function will be called,
-;;;     and get_func will not be subsequently called
-;;;
-;;; user_data :
-;;;     user data to pass to get_func and clear_func.
-;;;
-;;; Returns :
-;;;     TRUE if setting the clipboard data succeeded. If setting the clipboard
-;;;     data failed the provided callback functions will be ignored.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_set_with_data" %gtk-clipboard-set-with-data) :boolean
+  (clipboard (g-object gtk-clipboard))
+  (targets :pointer)
+  (n-targets :int)
+  (get-func :pointer)
+  (clear-func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-set-with-data (clipboard targets func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[targets]{a list of @class{gtk-target-entry} instances containing
+    information about the available forms for the clipboard data}
+  @argument[func]{a callback function to call to get the actual clipboard data}
+  @return{@em{True} if setting the clipboard data succeeded. If setting the
+    clipboard data failed the provided callback functions will be ignored.}
+  @begin{short}
+    Virtually sets the contents of the specified clipboard by providing a list
+    of supported formats for the clipboard data and a function to call to get
+    the actual data when it is requested.
+  @end{short}
+  @see-class{gtk-clipboard}
+  @see-class{gtk-target-entry}"
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (%gtk-clipboard-set-with-data clipboard
+                                  targets-ptr
+                                  n-targets
+                                  (callback gtk-clipboard-get-func)
+                                  (callback stable-pointer-destroy-notify-cb)
+                                  (allocate-stable-pointer func))))
+
+(export 'gtk-clipboard-set-with-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_with_owner ()
@@ -536,16 +681,17 @@
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2021-3-25}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @begin{short}
-    Clears the contents of the @arg{clipboard}.
+    Clears the contents of the clipboard.
   @end{short}
   Generally this should only be called between the time you call the functions
   @fun{gtk-clipboard-set-with-owner} or @fun{gtk-clipboard-set-with-data}, and
-  when the @code{clear_func} you supplied is called. Otherwise, the clipboard
-  may be owned by someone else.
+  when the callback function @symbol{gtk-clipboard-clear-func} you supplied is
+  called. Otherwise, the clipboard may be owned by someone else.
   @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-clear-func}
   @see-function{gtk-clipboard-set-with-owner}
   @see-function{gtk-clipboard-set-with-data}"
   (clipboard (g-object gtk-clipboard)))
@@ -563,65 +709,76 @@
 
 (defun gtk-clipboard-set-text (clipboard text)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2021-3-25}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @argument[text]{a UTF-8 string}
   @begin{short}
     Sets the contents of the clipboard to the given UTF-8 string
    @arg{text}.
   @end{short}
-  GTK+ will make a copy of the @arg{text} and take responsibility for responding
+  GTK+ will make a copy of @arg{text} and take responsibility for responding
   for requests for the text, and for converting the text into the requested
   format.
-  @see-class{gtk-clipboard}"
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-request-text}"
   (%gtk-clipboard-set-text clipboard text -1))
 
 (export 'gtk-clipboard-set-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_image ()
-;;;
-;;; void gtk_clipboard_set_image (GtkClipboard *clipboard, GdkPixbuf *pixbuf);
-;;;
-;;; Sets the contents of the clipboard to the given GdkPixbuf. GTK+ will take
-;;; responsibility for responding for requests for the image, and for converting
-;;; the image into the requested format.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard object
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_set_image" gtk-clipboard-set-image) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @begin{short}
+    Sets the contents of the clipboard to the given pixbuf.
+  @end{short}
+  GTK+ will take responsibility for responding for requests for the image, and
+  for converting the image into the requested format.
+  @see-class{gtk-clipboard}
+  @see-class{gdk-pixbuf}"
+  (clipboard (g-object gtk-clipboard))
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-clipboard-set-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_contents ()
-;;;
-;;; void gtk_clipboard_request_contents (GtkClipboard *clipboard,
-;;;                                      GdkAtom target,
-;;;                                      GtkClipboardReceivedFunc callback,
-;;;                                      gpointer user_data);
-;;;
-;;; Requests the contents of clipboard as the given target. When the results of
-;;; the result are later received the supplied callback will be called.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; target :
-;;;     an atom representing the form into which the clipboard owner should
-;;;     convert the selection.
-;;;
-;;; callback :
-;;;     A function to call when the results are received (or the retrieval
-;;;     fails). If the retrieval fails the length field of selection_data will
-;;;     be negative.
-;;;
-;;; user_data :
-;;;     user data to pass to callback
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_contents" %gtk-clipboard-request-contents)
+    :void
+  (clipboard (g-object gtk-clipboard))
+  (target gdk-atom-as-string)
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-contents (clipboard target func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[target]{a @symbol{gdk-atom} as a string representing the form into
+    which the clipboard owner should convert the selection}
+  @argument[func]{a @symbol{gtk-clipboard-received-func} callback function to
+    call when the results are received (or the retrieval fails). If the
+    retrieval fails the length field of the @class{gtk-selection-data} instance
+    will be negative.}
+  @begin{short}
+    Requests the contents of clipboard as the given target.
+  @end{short}
+  When the results of the result are later received the supplied callback will
+  be called.
+  @see-class{gtk-clipboard}"
+  (%gtk-clipboard-request-contents clipboard
+                                   target
+                                   (callback gtk-clipboard-received-func)
+                                   (allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-contents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_text ()
@@ -634,462 +791,537 @@
 
 (defun gtk-clipboard-request-text (clipboard func)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-20}
+ "@version{2021-3-25}
   @argument[clipboard]{a @class{gtk-clipboard} object}
-  @argument[func]{a function to call when the text is received, or the
-    retrieval fails, it will always be called one way or the other}
+  @argument[func]{a @symbol{gtk-clipboard-text-received-func} callback function
+    to call when the text is received, or the retrieval fails, it will always
+    be called one way or the other}
   @begin{short}
-    Requests the contents of the clipboard as text. When the text is later
-    received, it will be converted to UTF-8 if necessary, and callback will be
-    called.
+    Requests the contents of the clipboard as text.
   @end{short}
+  When the text is later received, it will be converted to UTF-8 if necessary,
+  and callback will be called.
 
-  The text parameter to callback will contain the resulting text if the
+  The @arg{text} parameter to callback will contain the resulting text if the
   request succeeded, or @code{nil} if it failed. This could happen for various
   reasons, in particular if the clipboard was empty or if the contents of the
   clipboard could not be converted into text form.
-  @see-class{gtk-clipboard}"
+  @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-text-received-func}
+  @see-function{gtk-clipboard-set-text}"
   (%gtk-clipboard-request-text clipboard
-                               (callback gtk-clipboard-text-received-func-cb)
+                               (callback gtk-clipboard-text-received-func)
                                (allocate-stable-pointer func)))
 
 (export 'gtk-clipboard-request-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_image ()
-;;;
-;;; void gtk_clipboard_request_image (GtkClipboard *clipboard,
-;;;                                   GtkClipboardImageReceivedFunc callback,
-;;;                                   gpointer user_data);
-;;;
-;;; Requests the contents of the clipboard as image. When the image is later
-;;; received, it will be converted to a GdkPixbuf, and callback will be called.
-;;;
-;;; The pixbuf parameter to callback will contain the resulting GdkPixbuf if the
-;;; request succeeded, or NULL if it failed. This could happen for various
-;;; reasons, in particular if the clipboard was empty or if the contents of the
-;;; clipboard could not be converted into an image.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; callback :
-;;;     a function to call when the image is received, or the retrieval fails.
-;;;     (It will always be called one way or the other.)
-;;;
-;;; user_data :
-;;;     user data to pass to callback.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_image" %gtk-clipboard-request-image) :void
+  (clipboard (g-object gtk-clipboard))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-image (clipboard func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[func]{a @symbol{gtk-clipboard-image-receibed-func} callback function
+    to call when the image is received, or the retrieval fails. (It will always
+    be called one way or the other.)}
+  @begin{short}
+    Requests the contents of the clipboard as image.
+  @end{short}
+  When the image is later received, it will be converted to a GdkPixbuf, and
+  callback will be called.
+
+  The pixbuf parameter to callback will contain the resulting GdkPixbuf if the
+  request succeeded, or @code{nil} if it failed. This could happen for various
+  reasons, in particular if the clipboard was empty or if the contents of the
+  clipboard could not be converted into an image.
+  @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-image-receibed-func}"
+  (%gtk-clipboard-request-image clipboard
+                                (callback gtk-clipboard-image-received-func)
+                                (allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_targets ()
-;;;
-;;; void gtk_clipboard_request_targets
-;;;                                   (GtkClipboard *clipboard,
-;;;                                    GtkClipboardTargetsReceivedFunc callback,
-;;;                                    gpointer user_data);
-;;;
-;;; Requests the contents of the clipboard as list of supported targets. When
-;;; the list is later received, callback will be called.
-;;;
-;;; The targets parameter to callback will contain the resulting targets if the
-;;; request succeeded, or NULL if it failed.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; callback :
-;;;     a function to call when the targets are received, or the retrieval
-;;;     fails. (It will always be called one way or the other.)
-;;;
-;;; user_data :
-;;;     user data to pass to callback.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_targets" %gtk-clipboard-request-targets) :void
+  (clipboard (g-object gtk-clipboard))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-targets (clipboard func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[func]{a @symbol{gtk-clipboard-targets-received-func} callback
+    function to call when the targets are received, or the retrieval fails}
+  @begin{short}
+    Requests the contents of the clipboard as list of supported targets.
+  @end{short}
+  When the list is later received, the callback function will be called.
+
+  The @arg{atoms} parameter of the callback function will contain the
+  resulting targets if the request succeeded, or @code{nil} if it failed.
+  @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-targets-received-func}"
+  (%gtk-clipboard-request-targets clipboard
+                                  (callback gtk-clipboard-targets-received-func)
+                                  (allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_rich_text ()
-;;;
-;;; void gtk_clipboard_request_rich_text
-;;;                                  (GtkClipboard *clipboard,
-;;;                                   GtkTextBuffer *buffer,
-;;;                                   GtkClipboardRichTextReceivedFunc callback,
-;;;                                   gpointer user_data);
-;;;
-;;; Requests the contents of the clipboard as rich text. When the rich text is
-;;; later received, callback will be called.
-;;;
-;;; The text parameter to callback will contain the resulting rich text if the
-;;; request succeeded, or NULL if it failed. The length parameter will contain
-;;; text's length. This function can fail for various reasons, in particular if
-;;; the clipboard was empty or if the contents of the clipboard could not be
-;;; converted into rich text form.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer
-;;;
-;;; callback :
-;;;     a function to call when the text is received, or the retrieval fails.
-;;;     (It will always be called one way or the other.)
-;;;
-;;; user_data :
-;;;     user data to pass to callback.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_rich_text" %gtk-clipboard-request-rich-text)
+    :void
+  (clipboard (g-object gtk-clipboard))
+  (buffer (g-object gtk-buffer))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-rich-text (clipboard buffer func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @argument[func]{a @symbol{gtk-clipboard-rich-text-received-func} callback
+    function to call when the text is received, or the retrieval fails. (It
+    will always be called one way or the other.)}
+  @begin{short}
+    Requests the contents of the clipboard as rich text.
+  @end{short}
+  When the rich text is later received, callback will be called.
+
+  The text parameter to callback will contain the resulting rich text if the
+  request succeeded, or @code{nil} if it failed. The length parameter will
+  contain text's length. This function can fail for various reasons, in
+  particular if the clipboard was empty or if the contents of the clipboard
+  could not be converted into rich text form.
+  @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-rich-text-received-func}"
+  (%gtk-clipboard-request-rich-text
+                                clipboard
+                                buffer
+                                (callback gtk-clipboard-rich-text-received-func)
+                                (allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-rich-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_uris ()
-;;;
-;;; void gtk_clipboard_request_uris (GtkClipboard *clipboard,
-;;;                                  GtkClipboardURIReceivedFunc callback,
-;;;                                  gpointer user_data);
-;;;
-;;; Requests the contents of the clipboard as URIs. When the URIs are later
-;;; received callback will be called.
-;;;
-;;; The uris parameter to callback will contain the resulting array of URIs if
-;;; the request succeeded, or NULL if it failed. This could happen for various
-;;; reasons, in particular if the clipboard was empty or if the contents of the
-;;; clipboard could not be converted into URI form.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; callback :
-;;;     a function to call when the URIs are received, or the retrieval fails.
-;;;     (It will always be called one way or the other.)
-;;;
-;;; user_data :
-;;;     user data to pass to callback.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_uris" %gtk-clipboard-request-uris) :void
+  (clipboard (g-object gtk-clipboard))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-uris (clipboard func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[func]{a @symbol{gtk-clipboard-uri-received-func} callback function
+    to call when the URIs are received, or the retrieval fails. (It will always
+    be called one way or the other.)}
+  @begin{short}
+    Requests the contents of the clipboard as URIs.
+  @end{short}
+  When the URIs are later received callback will be called.
+
+  The uris parameter to callback will contain the resulting array of URIs if
+  the request succeeded, or @code{nil} if it failed. This could happen for
+  various reasons, in particular if the clipboard was empty or if the contents
+  of the clipboard could not be converted into URI form.
+  @see-class{gtk-clipboard}
+  @see-symbol{gtk-clipboard-uri-received-func}"
+  (%gtk-clipboard-request-uris clipboard
+                               (callback gtk-clipboard-uri-received-func)
+                               (allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_contents ()
-;;;
-;;; GtkSelectionData * gtk_clipboard_wait_for_contents (GtkClipboard *clipboard,
-;;;                                                     GdkAtom target);
-;;;
-;;; Requests the contents of the clipboard using the given target. This function
-;;; waits for the data to be received using the main loop, so events, timeouts,
-;;; etc, may be dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; target :
-;;;     an atom representing the form into which the clipboard owner should
-;;;     convert the selection.
-;;;
-;;; Returns :
-;;;     a newly-allocated GtkSelectionData object or NULL if retrieving the
-;;;     given target failed. If non-NULL, this value must be freed with
-;;;     gtk_selection_data_free() when you are finished with it.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_contents" gtk-clipboard-wait-for-contents)
+    (g-boxed-foreign gtk-selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[target]{a @symbol{gdk-atom} as a string representing the form into
+    which the clipboard owner should convert the selection}
+  @return{a newly-allocated @class{gtk-selection-data} object or @code{nil} if
+    retrieving the given target failed.}
+  @begin{short}
+    Requests the contents of the clipboard using the given target.
+  @end{short}
+  This function waits for the data to be received using the main loop, so
+  events, timeouts, etc, may be dispatched during the wait.
+  @see-class{gtk-clipboard}
+  @see-class{gtk-selection-data}
+  @see-symbol{gdk-atom}"
+  (clipboard (g-object gtk-clipboard))
+  (target gdk-atom-as-string))
+
+(export 'gtk-clipboard-wait-for-contents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_text ()
-;;;
-;;; gchar * gtk_clipboard_wait_for_text (GtkClipboard *clipboard);
-;;;
-;;; Requests the contents of the clipboard as text and converts the result to
-;;; UTF-8 if necessary. This function waits for the data to be received using
-;;; the main loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     a newly-allocated UTF-8 string which must be freed with g_free(), or
-;;;     NULL if retrieving the selection data failed. (This could happen for
-;;;     various reasons, in particular if the clipboard was empty or if the
-;;;     contents of the clipboard could not be converted into text form.)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_text" gtk-clipboard-wait-for-text) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{a newly-allocated UTF-8 string, or @code{nil} if retrieving the
+    selection data failed. (This could happen for various reasons, in particular
+    if the clipboard was empty or if the contents of the clipboard could not be
+    converted into text form.)}
+  @begin{short}
+    Requests the contents of the clipboard as text and converts the result to
+    UTF-8 if necessary.
+  @end{short}
+  This function waits for the data to be received using the main loop, so
+  events, timeouts, etc, may be dispatched during the wait.
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-for-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_image ()
-;;;
-;;; GdkPixbuf * gtk_clipboard_wait_for_image (GtkClipboard *clipboard);
-;;;
-;;; Requests the contents of the clipboard as image and converts the result to a
-;;; GdkPixbuf. This function waits for the data to be received using the main
-;;; loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     a newly-allocated GdkPixbuf object which must be disposed with
-;;;     g_object_unref(), or NULL if retrieving the selection data failed. (This
-;;;     could happen for various reasons, in particular if the clipboard was
-;;;     empty or if the contents of the clipboard could not be converted into an
-;;;     image.)
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_image" gtk-clipboard-wait-for-image)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{a newly-allocated @class{gdk-pixbuf} object, or @code{nil} if
+    retrieving the selection data failed. (This could happen for various
+    reasons, in particular if the clipboard was empty or if the contents of the
+    clipboard could not be converted into an image.)}
+  @begin{short}
+    Requests the contents of the clipboard as image and converts the result to
+    a @class{gdk-pixbuf} object.
+  @end{short}
+  This function waits for the data to be received using the main loop, so
+  events, timeouts, etc, may be dispatched during the wait.
+  @see-class{gtk-clipboard}
+  @see-class{gdk-pixbuf}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-for-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_rich_text ()
-;;;
-;;; guint8 * gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,
-;;;                                            GtkTextBuffer *buffer,
-;;;                                            GdkAtom *format,
-;;;                                            gsize *length);
-;;;
-;;; Requests the contents of the clipboard as rich text. This function waits for
-;;; the data to be received using the main loop, so events, timeouts, etc, may
-;;; be dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer
-;;;
-;;; format :
-;;;     return location for the format of the returned data
-;;;
-;;; length :
-;;;     return location for the length of the returned data
-;;;
-;;; Returns :
-;;;     a newly-allocated binary block of data which must be freed with
-;;;     g_free(), or NULL if retrieving the selection data failed. (This could
-;;;     happen for various reasons, in particular if the clipboard was empty or
-;;;     if the contents of the clipboard could not be converted into text form.)
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_rich_text" %gtk-clipboard-wait-for-rich-text)
+    :uint8
+  (clipboard (g-object gtk-clipboard))
+  (buffer (g-object gtk-text-buffer))
+  (format :pointer)
+  (length :pointer))
+
+(defun gtk-clipboard-wait-for-rich-text (clipboard buffer)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @begin{return}
+    @code{data} -- a newly-allocated binary block of data which must be freed
+    with @code{g_free()}, or @code{nil} if retrieving the selection data failed.
+    (This could happen for various reasons, in particular if the clipboard was
+    empty or if the contents of the clipboard could not be converted into text
+    form.) @br{}
+    @code{format} -- a @symbol{gdk-atom} as a string with the format of the
+      returned data @br{}
+    @code{length} -- an integer with the length of the returned data
+  @end{return}
+  @begin{short}
+    Requests the contents of the clipboard as rich text.
+  @end{short}
+  This function waits for the data to be received using the main loop, so
+  events, timeouts, etc, may be dispatched during the wait.
+  @see-class{gtk-clipboard}
+  @see-class{gtk-buffer}
+  @see-symbol{gdk-atom}"
+  (with-foreign-objects ((format 'gdk-atom) (length :int))
+    (let ((data (%gtk-clipboard-wait-for-rich-text clipboard
+                                                   buffer
+                                                   format
+                                                   length)))
+      (when data
+        (values data
+                (mem-ref format :pointer) ; gdk-atom
+                (mem-ref length :int))))))
+
+(export 'gtk-clipboard-wait-for-rich-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_uris ()
-;;;
-;;; gchar ** gtk_clipboard_wait_for_uris (GtkClipboard *clipboard);
-;;;
-;;; Requests the contents of the clipboard as URIs. This function waits for the
-;;; data to be received using the main loop, so events, timeouts, etc, may be
-;;; dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     a newly-allocated NULL-terminated array of strings which must be freed
-;;;     with g_strfreev(), or NULL if retrieving the selection data failed.
-;;;     (This could happen for various reasons, in particular if the clipboard
-;;;     was empty or if the contents of the clipboard could not be converted
-;;;     into URI form.)
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_uris" gtk-clipboard-wait-for-uris) g-strv
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{A newly-allocated array of strings which must be freed with
+    @code{g_strfreev(}), or @code{nil} if retrieving the selection data failed.
+    (This could happen for various reasons, in particular if the clipboard
+    was empty or if the contents of the clipboard could not be converted into
+    URI form.)}
+  @begin{short}
+    Requests the contents of the clipboard as URIs.
+  @end{short}
+  This function waits for the data to be received using the main loop, so
+  events, timeouts, etc, may be dispatched during the wait.
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-for-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_is_text_available ()
-;;;
-;;; gboolean gtk_clipboard_wait_is_text_available (GtkClipboard *clipboard);
-;;;
-;;; Test to see if there is text available to be pasted This is done by
-;;; requesting the TARGETS atom and checking if it contains any of the supported
-;;; text targets. This function waits for the data to be received using the main
-;;; loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; This function is a little faster than calling gtk_clipboard_wait_for_text()
-;;; since it does not need to retrieve the actual text.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     TRUE is there is text available, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_is_text_available"
+           gtk-clipboard-wait-is-text-available) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{@em{True} is there is text available, @em{false} otherwise.}
+  @begin{short}
+    Test to see if there is text available to be pasted.
+  @end{short}
+  This is done by requesting the \"TARGETS\" atom and checking if it contains
+  any of the supported text targets. This function waits for the data to be
+  received using the main loop, so events, timeouts, etc, may be dispatched
+  during the wait.
+
+  This function is a little faster than calling the function
+  @fun{gtk-clipboard-wait-for-text} since it does not need to retrieve the
+  actual text.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-wait-for-text}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-is-text-available)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_is_image_available ()
-;;;
-;;; gboolean gtk_clipboard_wait_is_image_available (GtkClipboard *clipboard);
-;;;
-;;; Test to see if there is an image available to be pasted This is done by
-;;; requesting the TARGETS atom and checking if it contains any of the supported
-;;; image targets. This function waits for the data to be received using the
-;;; main loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; This function is a little faster than calling gtk_clipboard_wait_for_image()
-;;; since it does not need to retrieve the actual image data.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     TRUE is there is an image available, FALSE otherwise.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_is_image_available"
+           gtk-clipboard-wait-is-image-available) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{@em{True} is there is an image available, @em{false} otherwise.}
+  @begin{short}
+    Test to see if there is an image available to be pasted.
+  @end{short}
+  This is done by requesting the \"TARGETS\" atom and checking if it contains
+  any of the supported image targets. This function waits for the data to be
+  received using the main loop, so events, timeouts, etc, may be dispatched
+  during the wait.
+
+  This function is a little faster than calling the function
+  @fun{gtk-clipboard-wait-for-image} since it does not need to retrieve the
+  actual image data.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-wait-for-image}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-is-image-available)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_is_rich_text_available ()
-;;;
-;;; gboolean gtk_clipboard_wait_is_rich_text_available (GtkClipboard *clipboard,
-;;;                                                     GtkTextBuffer *buffer);
-;;;
-;;; Test to see if there is rich text available to be pasted This is done by
-;;; requesting the TARGETS atom and checking if it contains any of the supported
-;;; rich text targets. This function waits for the data to be received using the
-;;; main loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; This function is a little faster than calling
-;;; gtk_clipboard_wait_for_rich_text() since it does not need to retrieve the
-;;; actual text.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer
-;;;
-;;; Returns :
-;;;     TRUE is there is rich text available, FALSE otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_is_rich_text_available"
+           gtk-clipboard-wait-is-rich-text-available) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @return{@em{True} is there is rich text available, @em{false} otherwise.}
+  @begin{short}
+    Test to see if there is rich text available to be pasted.
+  @end{short}
+  This is done by requesting the \"TARGETS\" atom and checking if it contains
+  any of the supported rich text targets. This function waits for the data to be
+  received using the main loop, so events, timeouts, etc, may be dispatched
+  during the wait.
+
+  This function is a little faster than calling the function
+  @fun{gtk-clipboard-wait-for-rich-text} since it does not need to retrieve the
+  actual text.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-wait-for-rich-text}"
+  (clipboard (g-object gtk-clipboard))
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-clipboard-wait-is-rich-text-available)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_is_uris_available ()
-;;;
-;;; gboolean gtk_clipboard_wait_is_uris_available (GtkClipboard *clipboard);
-;;;
-;;; Test to see if there is a list of URIs available to be pasted This is done
-;;; by requesting the TARGETS atom and checking if it contains the URI targets.
-;;; This function waits for the data to be received using the main loop, so
-;;; events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; This function is a little faster than calling gtk_clipboard_wait_for_uris()
-;;; since it does not need to retrieve the actual URI data.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     TRUE is there is an URI list available, FALSE otherwise.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_is_uris_available"
+           gtk-clipboard-wait-is-uris-available) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{@em{True} is there is an URI list available, @em{false} otherwise.}
+  @begin{short}
+    Test to see if there is a list of URIs available to be pasted.
+  @end{short}
+  This is done by requesting the \"TARGETS\" atom and checking if it contains
+  the URI targets. This function waits for the data to be received using the
+  main loop, so events, timeouts, etc, may be dispatched during the wait.
+
+  This function is a little faster than calling the function
+  @fun{gtk-clipboard-wait-for-uris} since it does not need to retrieve the
+  actual URI data.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-wait-for-uris}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-wait-is-uris-available)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_for_targets ()
-;;;
-;;; gboolean gtk_clipboard_wait_for_targets (GtkClipboard *clipboard,
-;;;                                          GdkAtom **targets,
-;;;                                          gint *n_targets);
-;;;
-;;; Returns a list of targets that are present on the clipboard, or NULL if
-;;; there aren't any targets available. The returned list must be freed with
-;;; g_free(). This function waits for the data to be received using the main
-;;; loop, so events, timeouts, etc, may be dispatched during the wait.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; targets :
-;;;     location to store an array of targets. The result stored here must be
-;;;     freed with g_free()
-;;;
-;;; n_targets :
-;;;     location to store number of items in targets.
-;;;
-;;; Returns :
-;;;     TRUE if any targets are present on the clipboard, otherwise FALSE.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_for_targets" gtk-clipboard-wait-for-targets)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[targets]{location to store an array of targets. The result stored
+    here must be freed with g_free()}
+  @argument[n-targets]{location to store number of items in targets.}
+  @return{@em{True} if any targets are present on the clipboard, otherwise
+    @em{false}.}
+  @begin{short}
+    Returns a list of targets that are present on the clipboard, or @code{nil}
+    if there are not any targets available.
+  @end{short}
+  The returned list must be freed with g_free(). This function waits for the
+  data to be received using the main loop, so events, timeouts, etc, may be
+  dispatched during the wait.
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard))
+  (targets :pointer)
+  (n-targets :int))
+
+(export 'gtk-clipboard-wait-for-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_wait_is_target_available ()
-;;;
-;;; gboolean gtk_clipboard_wait_is_target_available (GtkClipboard *clipboard,
-;;;                                                  GdkAtom target);
-;;;
-;;; Checks if a clipboard supports pasting data of a given type. This function
-;;; can be used to determine if a "Paste" menu item should be insensitive or
-;;; not.
-;;;
-;;; If you want to see if there's text available on the clipboard, use
-;;; gtk_clipboard_wait_is_text_available() instead.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; target :
-;;;     A GdkAtom indicating which target to look for.
-;;;
-;;; Returns :
-;;;     TRUE if the target is available, FALSE otherwise.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_wait_is_target_available"
+           gtk-clipboard-wait-is-target-available) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[target]{a @symbol{gdk-atom} as a string indicating which target to
+    look for}
+  @return{@em{True} if the target is available, @em{false} otherwise.}
+  @begin{short}
+    Checks if a clipboard supports pasting data of a given type.
+  @end{short}
+  This function can be used to determine if a \"Paste\" menu item should be
+  insensitive or not.
+
+  If you want to see if there is text available on the clipboard, use the
+  function @fun{gtk-clipboard-wait-is-text-available} instead.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-wait-is-text-available}"
+  (clipboard (g-object gtk-clipboard))
+  (target gdk-atom-as-string))
+
+(export 'gtk-clipboard-wait-is-target-available)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_can_store ()
-;;;
-;;; void gtk_clipboard_set_can_store (GtkClipboard *clipboard,
-;;;                                   const GtkTargetEntry *targets,
-;;;                                   gint n_targets);
-;;;
-;;; Hints that the clipboard data should be stored somewhere when the
-;;; application exits or when gtk_clipboard_store() is called.
-;;;
-;;; This value is reset when the clipboard owner changes. Where the clipboard
-;;; data is stored is platform dependent, see gdk_display_store_clipboard() for
-;;; more information.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; targets :
-;;;     array containing information about which forms should be stored or NULL
-;;;     to indicate that all forms should be stored
-;;;
-;;; n_targets :
-;;;     number of elements in targets
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_set_can_store" gtk-clipboard-set-can-store) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[targets]{array containing information about which forms should be
+    stored or NULL to indicate that all forms should be stored}
+  @argument[n-targets]{number of elements in targets}
+  @begin{short}
+    Hints that the clipboard data should be stored somewhere when the
+    application exits or when the function @fun{gtk-clipboard-store} is called.
+  @end{short}
+
+  This value is reset when the clipboard owner changes. Where the clipboard
+  data is stored is platform dependent, see the function
+  @fun{gdk-display-store-clipboard} for more information.
+  @see-class{gtk-clipboard}
+  @see-function{gtk-clipboard-store}
+  @see-function{gdk-display-store-clipboard}"
+  (clipboard (g-object gtk-clipboard))
+  (targets :pointer)
+  (n-targets :int))
+
+(export 'gtk-clipboard-set-can-store)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_store ()
-;;;
-;;; void gtk_clipboard_store (GtkClipboard *clipboard);
-;;;
-;;; Stores the current clipboard data somewhere so that it will stay around
-;;; after the application has quit.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_store" gtk-clipboard-store) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @begin{short}
+    Stores the current clipboard data somewhere so that it will stay around
+    after the application has quit.
+  @end{short}
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-clipboard-store)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get_selection ()
-;;;
-;;; GdkAtom gtk_clipboard_get_selection (GtkClipboard *clipboard);
-;;;
-;;; Gets the selection that this clipboard is for.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; Returns :
-;;;     the selection
-;;;
-;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-22
+(defcfun ("gtk_clipboard_get_selection" gtk-clipboard-selection)
+    gdk-atom-as-string
+ #+cl-cffi-gtk-documentation
+ "@version{2021-3-28}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @return{The @symbol{gdk-atom} as a string with the selection.}
+  @begin{short}
+    Gets the selection that this clipboard is for.
+  @end{short}
+  Since 3.22
+  @see-class{gtk-clipboard}"
+  (clipboard (g-object gtk-clipboard)))
+
+#+gtk-3-22
+(export 'gtk-clipboard-selection)
 
 ;;; --- End of file gtk.clipboard.lisp -----------------------------------------
