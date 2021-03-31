@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -177,7 +177,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action 'type)
- "@version{2020-1-28}
+ "@version{2021-3-29}
   @begin{short}
     Actions represent operations that the user can be perform, along with some
     information how it should be presented in the interface.
@@ -188,17 +188,17 @@
   As well as the callback that is called when the action gets activated, the
   following also gets associated with the action:
   @begin{itemize}
-    @item{a name (not translated, for path lookup)}
-    @item{a label (translated, for display)}
+    @item{a name, not translated, for path lookup}
+    @item{a label, translated, for display}
     @item{an accelerator}
     @item{whether label indicates a stock ID}
-    @item{a tooltip (optional, translated)}
-    @item{a toolbar label (optional, shorter than label)}
+    @item{a tooltip, optional, translated}
+    @item{a toolbar label, optional, shorter than label}
   @end{itemize}
   The action will also have some state information:
   @begin{itemize}
-    @item{visible (shown/hidden)}
-    @item{sensitive (enabled/disabled)}
+    @item{visible, shown/hidden}
+    @item{sensitive, enabled/disabled}
   @end{itemize}
   Apart from regular actions, there are toggle actions, which can be toggled
   between two states and radio actions, of which only one in a group can be in
@@ -206,27 +206,27 @@
   subclasses.
 
   Each action can have one or more proxy widgets. To act as an action proxy,
-  widget needs to implement the @class{gtk-activatable} interface. Proxies
+  the widget needs to implement the @class{gtk-activatable} interface. Proxies
   mirror the state of the action and should change when the action's state
   changes. Properties that are always mirrored by proxies are @code{sensitive}
-  and @code{visible}. @code{gicon}, @code{icon-name}, @code{label},
+  and @code{visible}. The @code{gicon}, @code{icon-name}, @code{label},
   @code{short-label} and @code{stock-id} properties are only mirorred if the
-  proxy widget has the @slot[gtk-acivatable]{use-action-appearance} property
-  set to @arg{true}.
+  proxy widget has the @slot[gtk-activatable]{use-action-appearance} property
+  set to @em{true}.
 
   When the proxy is activated, it should activate its action.
   @begin[Warning]{dictionary}
-    @sym{gtk-action} has been deprecated since GTK+ 3.10. Use @class{g-action}
-    instead, and associate actions with @class{gtk-actionable} widgets. Use
-    @class{g-menu-model} for creating menus with the
-    @fun{gtk-menu-new-from-model} function.
+    The @sym{gtk-action} object has been deprecated since GTK+ 3.10. Use
+    the @class{g-action} interface instead, and associate actions with
+    @class{gtk-actionable} widgets. Use the @class{g-menu-model} object for
+    creating menus with the function @fun{gtk-menu-new-from-model}.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (action)   : No Recursion
+ lambda (action)    :no-recurse
       @end{pre}
-      The \"activate\" signal is emitted when the action is activated.
+      The signal is emitted when the action is activated.
       @begin[code]{table}
         @entry[action]{The @sym{gtk-action} object which received the signal.}
       @end{table}
@@ -247,7 +247,8 @@
   @see-slot{gtk-action-visible-horizontal}
   @see-slot{gtk-action-visible-overflown}
   @see-slot{gtk-action-visible-vertical}
-  @see-class{gtk-action-group}")
+  @see-class{gtk-action-group}
+  @see-class{gtk-activatable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -259,18 +260,25 @@
 (setf (documentation (atdoc:get-slot-from-name "action-group" 'gtk-action) 't)
  "The @code{action-group} property of type @class{gtk-action-group}
   (Read / Write) @br{}
-  The @class{gtk-action-group} this @sym{gtk-action} is associated with, or
-  @code{nil} for internal use.")
+  The action group this action is associated with, or @code{nil} for internal
+  use.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-action-group 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
+  @syntax[]{gtk-action-action-group object) => group}
+  @syntax[]{(setf (gtk-action-action-group object) group)}
+  @argument[object]{a @class{gtk-action} object}
+  @argument[group]{a @class{gtk-action-group} object}
   @begin{short}
     Accessor of the @slot[gtk-action]{action-group} slot of the
     @class{gtk-action} class.
   @end{short}
+
+  The action group this action is associated with, or @code{nil} for internal
+  use.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-action-group} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -284,36 +292,32 @@
                                                'gtk-action) 't)
  "The @code{always-show-image} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  If @arg{true}, the action's menu item proxies will ignore the
+  If @em{true}, the action's menu item proxies will ignore the
   @slot[gtk-settings]{gtk-menu-images} setting and always show their image, if
   available. Use this property if the menu item would be useless or hard to use
   without their image. @br{}
-  Default value: @arg{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-always-show-image 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-always-show-image object) => always-show}
   @syntax[]{(setf (gtk-action-always-show-image object) always-show)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[always-show]{@arg{true} if menu item proxies should always show
+  @argument[always-show]{@em{true} if menu item proxies should always show
     their image}
   @begin{short}
     Accessor of the @slot[gtk-action]{always-show-image} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-always-show-image} slot access function
-  returns whether the action menu item proxies will ignore the
+  The slot access function @sym{gtk-action-always-show-image} returns whether
+  the action menu item proxies will ignore the
   @slot[gtk-settings]{gtk-menu-images} setting and always show their image,
-  if available.
-
-  The @sym{(setf gtk-action-always-show-image)} slot access function
-  sets whether the action menu item proxies will ignore the
-  @slot[gtk-settings]{gtk-menu-images} setting and always show their image,
-  if available.
+  if available. The slot access function
+  @sym{(setf gtk-action-always-show-image)} sets the property.
 
   Use this if the menu item would be useless or hard to use without their
   image.
@@ -330,54 +334,65 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
  "The @code{gicon} property of type @class{g-icon} (Read / Write) @br{}
-  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock icon
-  is preferred, if the @code{stock-id} property holds the ID of an existing
-  stock icon. This is an appearance property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}.")
+  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock
+  icon is preferred, if the @code{stock-id} property holds the ID of an
+  existing stock icon. This is an appearance property and thus only applies if
+  the @slot[gtk-activatable]{use-action-appearance} property is @em{true}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-gicon 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-gicon object) => icon}
   @syntax[]{(setf (gtk-action-gicon object) icon)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[icon]{the @class{g-icon} object}
+  @argument[icon]{a @class{g-icon} object}
   @begin{short}
     Accessor of the @slot[gtk-action]{gicon} slot of the @class{gtk-action}
     class.
   @end{short}
 
-  The @sym{gtk-action-gicon} slot access function
-  sets the icon of the action.
+  The slot access function @sym{gtk-action-gicon} gets the icon of the action.
+  The slot access function @sym{(setf gtk-action-gicon)} sets the icon.
 
-  The @sym{(setf gtk-action-gicon)} slot access function
-  gets the icon of the action.
+  The @class{g-icon} object displayed in the @sym{gtk-action} object. Note that
+  the stock icon is preferred, if the @slot[gtk-action]{stock-id} property
+  holds the ID of an existing stock icon. This is an appearance property and
+  thus only applies if the @slot[gtk-activatable]{use-action-appearance}
+  property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-gicon} has been deprecated since version 3.10
     and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{g-icon}")
+  @see-class{g-icon}
+  @see-function{gtk-action-stock-id}
+  @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-hide-if-empty -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hide-if-empty" 'gtk-action) 't)
  "The @code{hide-if-empty} property of type @code{:boolean} (Read / Write) @br{}
-  When @arg{true}, empty menu proxies for this action are hidden. @br{}
-  Default value: @arg{true}")
+  When @em{true}, empty menu proxies for this action are hidden. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-hide-if-empty atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-hide-if-empty 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
+  @syntax[]{(gtk-action-hide-if-empty object) => hide-if-empty}
+  @syntax[]{(setf (gtk-action-hide-if-empty object) hide-if-empty)}
+  @argument[object]{a @class{gtk-action} object}
+  @argument[hide-if-empty]{a boolean wether empty menu proxies are hidden}
   @begin{short}
     Accessor of the @slot[gtk-action]{hide-if-empty} slot of the
     @class{gtk-action} class.
   @end{short}
+
+  When @em{true}, empty menu proxies for this action are hidden.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-hide-if-empty} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -393,68 +408,74 @@
   preferred, if the @code{stock-id} property holds the ID of an existing stock
   icon, and the @class{g-icon} is preferred if the @code{gicon} property is set.
   This is an appearance property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}. @br{}
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-icon-name 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-action-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[icon-name]{the icon name of type @code{:string} to set}
+  @argument[icon-name]{a string with the icon name to set}
   @begin{short}
     Accessor of the @slot[gtk-action]{icon-name} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-icon-name} slot access function
-  gets the icon name of the action.
+  The slot access function @sym{gtk-action-icon-name} gets the icon name of the
+  action. The slot access function @sym{(setf gtk-action-icon-name)} sets the
+  icon name.
 
-  The @sym{(setf gtk-action-icon-name)} slot access function
-  sets the icon name on the action.
+  The name of the icon from the icon theme. Note that the stock icon is
+  preferred, if the @code{stock-id} property holds the ID of an existing stock
+  icon, and the @class{g-icon} is preferred if the @code{gicon} property is set.
+  This is an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-icon-name} has been deprecated since version
     3.10 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-is-important ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-important" 'gtk-action) 't)
  "The @code{is-important} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the action is considered important. When @arg{true}, toolitem proxies
+  Whether the action is considered important. When @em{true}, toolitem proxies
   for this action show text in @code{:both-horiz} mode. @br{}
-  Default value: @arg{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-is-important 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-is-important object) => is-important}
   @syntax[]{(setf (gtk-action-is-important object) is-important)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[is-important]{@arg{true} to make the action important}
+  @argument[is-important]{@em{true} to make the action important}
   @begin{short}
     Accessor of the @slot[gtk-action]{is-important} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-is-important} slot access function
-  checks whether the action is important or not.
-
-  The @sym{(setf gtk-action-is-important)} slot access function
-  sets whether the action is important, this attribute is used primarily by
-  toolbar items to decide whether to show a label or not.
+  The slot access function @sym{gtk-action-is-important} checks whether the
+  action is important or not. The slot access function
+  @sym{(setf gtk-action-is-important)} sets whether the action is important.
+  This attribute is used primarily by toolbar items to decide whether to show a
+  label or not. When @em{true}, toolitem proxies for this action show text in
+  @code{:both-horiz} mode.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-is-important} has been deprecated since
     version 3.10 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-symbol{gtk-tool-item-toolbar-style}")
 
 ;;; --- gtk-action-label -------------------------------------------------------
 
@@ -464,41 +485,45 @@
   The label used for menu items and buttons that activate this action. If the
   label is @code{nil}, GTK+ uses the stock label specified via the
   @code{stock-id} property. This is an appearance property and thus only
-  applies if the @slot[gtk-activatable]{use-action-appearance} is @arg{true}.
-  @br{}
+  applies if the @slot[gtk-activatable]{use-action-appearance} property is
+  @em{true}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-label 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-label object) => label}
   @syntax[]{(setf (gtk-action-label object) label)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[label]{the label text of type @code{:string} to set}
+  @argument[label]{a string with the label text to set}
   @begin{short}
     Accessor of the @slot[gtk-action]{label} slot of the @class{gtk-action}
     class.
   @end{short}
 
-  The @sym{gtk-action-label} slot access function
-  gets the label text of the action.
+  The slot access function @sym{gtk-action-label} gets the label text of the
+  action. The slot access function @sym{(setf gtk-action-label)} sets the label.
 
-  The @sym{(setf gtk-action-label)} slot access function
-  sets the label of the action.
+  The label used for menu items and buttons that activate this action. If the
+  label is @code{nil}, GTK+ uses the stock label specified via the
+  @code{stock-id} property. This is an appearance property and thus only
+  applies if the @slot[gtk-activatable]{use-action-appearance} property is
+  @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-label} has been deprecated since version 3.10
     and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-name --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action) 't)
- "The @code{name} property of type @code{:string}
-  (Read / Write / Construct) @br{}
+ "The @code{name} property of type @code{:string} (Read / Write / Construct)
+  @br{}
   A unique name for the action. @br{}
   Default value: @code{nil}")
 
@@ -506,17 +531,17 @@
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-name object) => name}
   @argument[object]{a @class{gtk-action} object}
-  @argument[name]{the name of type @code{:string} of the action}
+  @argument[name]{a string with the name of the action}
   @begin{short}
     Accessor of the @slot[gtk-action]{name} slot of the @class{gtk-action}
     class.
   @end{short}
 
-  The @sym{gtk-action-label} slot access function
-  returns the name of the action.
+  The slot access function @sym{gtk-action-label} returns the unique name of
+  the action.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-name} has been deprecated since version 3.10
     and should not be used in newly-written code.
@@ -529,35 +554,34 @@
 (setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-action) 't)
  "The @code{sensitive} property of type @code{:boolean} (Read / Write) @br{}
   Whether the action is enabled. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-sensitive 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-action-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[sensitive]{@arg{true} to make the action sensitive}
+  @argument[sensitive]{@em{true} to make the action sensitive}
   @begin{short}
     Accessor of the @slot[gtk-action]{sensitive} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-label} slot access function
-  returns whether the action itself is sensitive. Note that this does not
-  necessarily mean effective sensitivity. See the function
-  @fun{gtk-action-is-sensitive} for that.
+  The slot access function @sym{gtk-action-label} returns whether the action
+  itself is sensitive. The slot access function @sym{(setf gtk-action-label)}
+  sets the sensitivity.
 
-  The @sym{(setf gtk-action-label)} slot access function sets the
-  @slot[gtk-action]{sensitive} property of the action to @arg{sensitive}.
+  Note that this does not necessarily mean effective sensitivity. See the
+  function @fun{gtk-action-is-sensitive} for that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-sensitive} has been deprecated since version
     3.10 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-functin{gtk-action-is-sensitive}")
+  @see-function{gtk-action-is-sensitive}")
 
 ;;; --- gtk-action-short-label -------------------------------------------------
 
@@ -566,33 +590,36 @@
  "The @code{short-label} property of type @code{:string} (Read / Write) @br{}
   A shorter label that may be used on toolbar buttons. This is an appearance
   property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}. @br{}
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-short-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-short-label 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-short-label object) => short-label}
   @syntax[]{(setf (gtk-action-short-label object) short-label)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[short-label]{the label text of type @code{:string} to set}
+  @argument[short-label]{a string with the label text to set}
   @begin{short}
     Accessor of the @slot[gtk-action]{short-label} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-short-label} slot access function
-  gets the short label text of the action.
+  The slot access function @sym{gtk-action-short-label} gets the short label
+  text of the action. The slot access function
+  @sym{(setf gtk-action-short-label)} sets a shorter label text.
 
-  The @sym{(setf gtk-action-short-label)} slot access function
-  sets a shorter label text on the action.
+  A shorter label that may be used on toolbar buttons. This is an appearance
+  property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-short-label} has been deprecated since version
     3.10 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-stock-id ----------------------------------------------------
 
@@ -601,33 +628,36 @@
  "The @code{stock-id} property of type @code{:string} (Read / Write) @br{}
   The stock icon displayed in widgets representing this action. This is an
   appearance property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @arg{true}. @br{}
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-stock-id 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-stock-id object) => stock-id}
   @syntax[]{(setf (gtk-action-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[stock-id]{the stock ID of type @code{:string}}
+  @argument[stock-id]{a string with the stock ID}
   @begin{short}
-    Accessor of the @slot[gtk-action]{stock-id} slot of the
-    @class{gtk-action} class.
+    Accessor of the @slot[gtk-action]{stock-id} slot of the @class{gtk-action}
+    class.
   @end{short}
 
-  The @sym{gtk-action-stock-id} slot access function
-  gets the stock ID of the action.
+  The slot access function @sym{gtk-action-stock-id} gets the stock ID of the
+  action. The slot access function @sym{(setf gtk-action-stock-id)} sets the
+  stock ID.
 
-  The @sym{(setf gtk-action-stock-id)} slot access function
-  sets the stock ID on the action.
+  The stock icon displayed in widgets representing this action. This is an
+  appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-stock-id} has been deprecated since version
     3.10 and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-tooltip -----------------------------------------------------
 
@@ -641,21 +671,19 @@
 (setf (gethash 'gtk-action-tooltip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-tooltip 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-tooltip object) => tooltip}
   @syntax[]{(setf (gtk-action-tooltip object) tooltip)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[tooltip]{the tooltip text of type @code{:string}}
+  @argument[tooltip]{a string with the tooltip text}
   @begin{short}
-    Accessor of the @slot[gtk-action]{tooltip} slot of the
-    @class{gtk-action} class.
+    Accessor of the @slot[gtk-action]{tooltip} slot of the @class{gtk-action}
+    class.
   @end{short}
 
-  The @sym{gtk-action-tooltip} slot access function
-  gets the tooltip text of the action.
-
-  The @sym{(setf gtk-action-tooltip)} slot access function
-  sets the tooltip text on the action.
+  The slot access function @sym{gtk-action-tooltip} gets the tooltip text of
+  the action. The slot access function @sym{(setf gtk-action-tooltip)} sets the
+  tooltip text.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-tooltip} has been deprecated since version
     3.10 and should not be used in newly-written code.
@@ -668,29 +696,28 @@
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action) 't)
  "The @code{visible} property of type  @code{:boolean} (Read / Write) @br{}
   Whether the action is visible. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-visible object) => visible}
   @syntax[]{(setf (gtk-action-visible object) visible)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[visible]{@arg{true} to make the action visible}
+  @argument[visible]{@em{true} to make the action visible}
   @begin{short}
     Accessor of the @slot[gtk-action]{visible} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-visible} slot access function
-  returns whether the action itself is visible. Note that this does not
-  necessarily mean effective visibility. See the @fun{gtk-action-is-visible}
-  function for that.
+  The slot access function @sym{gtk-action-visible} returns whether the action
+  itself is visible. The slot access function @sym{(setf gtk-action-visible)}
+  sets the visibility.
 
-  The @sym{(setf gtk-action-visible)} slot access function
-  sets the @slot[gtk-action]{visible} property of the action to @arg{visible}.
+  Note that this does not necessarily mean effective visibility. See the
+  function @fun{gtk-action-is-visible} for that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible} has been deprecated since version
     3.10 and should not be used in newly-written code.
@@ -707,27 +734,25 @@
   (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a horizontal
   orientation. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-horizontal 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-visible-horizontal object) => visible}
   @syntax[]{(setf (gtk-action-visible-horizontal object) visible)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[visible]{@arg{true} to make the action visible horizontally}
+  @argument[visible]{@em{true} to make the action visible horizontally}
   @begin{short}
     Accessor of the @slot[gtk-action]{visible-horizontal} slot of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-visible-horizontal} slot access function
-  checks whether the action is visible when horizontal.
-
-  The @sym{(setf gtk-action-visible-horizontal)} slot access function
-  sets whether the action is visible when horizontal.
+  The slot access function @sym{gtk-action-visible-horizontal} checks whether
+  the action is visible when horizontal. The slot access function
+  @sym{(setf gtk-action-visible-horizontal)} sets the visibility.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-horizontal} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -739,21 +764,28 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-overflown"
                                                'gtk-action) 't)
- "The @code{visible-overflown} property of type @code{:boolean}
-  (Read / Write) @br{}
-  When @arg{true}, toolitem proxies for this action are represented in the
+ "The @code{visible-overflown} property of type @code{:boolean} (Read / Write)
+  @br{}
+  When @em{true}, toolitem proxies for this action are represented in the
   toolbar overflow menu. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-overflown atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-overflown 'function)
- "@version{2020-1-12}
+ "@version{2021-3-29}
+  @syntax[]{(gtk-action-visible-overflow object) => visible}
+  @syntax[]{(setf (gtk-action-visible-overflow object) visible)}
+  @argument[object]{a @class{gtk-action} object}
+  @argument[visible]{a boolean wether a toolbar overflow menu is shown}
   @begin{short}
     Accessor of the @slot[gtk-action]{visible-overflown} slot of the
     @class{gtk-action} class.
   @end{short}
+
+  When @em{true}, toolitem proxies for this action are represented in the
+  toolbar overflow menu.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-overflown} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -765,31 +797,29 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-vertical"
                                                'gtk-action) 't)
- "The @code{visible-vertical} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{visible-vertical} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether the toolbar item is visible when the toolbar is in a vertical
   orientation. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-vertical 'function)
- "@version{2013-12-10}
+ "@version{2021-3-29}
   @syntax[]{(gtk-action-visible-vertical object) => visible}
   @syntax[]{(setf (gtk-action-visible-vertical object) visible)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[visible]{@arg{true} to make the action visible vertically}
+  @argument[visible]{@em{true} to make the action visible vertically}
   @begin{short}
     Accessor of the @slot[gtk-action]{visible-vertical} of the
     @class{gtk-action} class.
   @end{short}
 
-  The @sym{gtk-action-visible-vertical} slot access function
-  checks whether the action is visible when vertical.
-
-  The @sym{(setf gtk-action-visible-vertical)} slot access function
-  sets whether the action is visible when vertical.
+  The slot access function @sym{gtk-action-visible-vertical} checks whether
+  the action is visible when vertical. The slot access function
+  @sym{(setf gtk-action-visible-vertical)} sets the visibility.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-vertical} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -845,7 +875,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-12}
   @argument[action]{a @class{gtk-action} object}
-  @return{@arg{True} if the action and its associated action group are both
+  @return{@em{True} if the action and its associated action group are both
     sensitive.}
   @short{Returns whether the action is effectively sensitive.}
   @begin[Warning]{dictionary}
@@ -869,7 +899,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-1-12}
   @argument[action]{a @class{gtk-action} object}
-  @return{@arg{True} if the action and its associated action group are
+  @return{@em{True} if the action and its associated action group are
     both visible.}
   @short{Returns whether the action is effectively visible.}
   @begin[Warning]{dictionary}
