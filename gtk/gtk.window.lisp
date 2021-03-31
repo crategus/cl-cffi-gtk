@@ -34,8 +34,8 @@
 ;;; Types and Values
 ;;;
 ;;;     GtkWindow
-;;;     GtkWindowType                                  --> gtk.enumerations.lisp
-;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
+;;;     GtkWindowType
+;;;     GtkWindowPosition
 ;;;
 ;;; Functions
 ;;;
@@ -229,6 +229,97 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkWindowType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkWindowType" gtk-window-type
+  (:export t
+   :type-initializer "gtk_window_type_get_type")
+  (:toplevel 0)
+  (:popup 1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gtk-window-type atdoc:*external-symbols*)
+ "@version{2021-3-21}
+  @begin{short}
+    An enumeration for the possible types of a @class{gtk-window} widget.
+  @end{short}
+  A @class{gtk-window} widget can be one of the types @code{:toplevel} or
+  @code{:popup}. Most things you would consider a \"window\" should have type
+  @code{:toplevel}. Windows with this type are managed by the window manager
+  and have a frame by default. Call the function @fun{gtk-window-decorated} to
+  toggle the frame. Windows with type @code{:popup} are ignored by the window
+  manager. Window manager keybindings will not work on them, the window manager
+  will not decorate the window with a frame, many GTK features that rely on
+  the window manager will not work (e.g. resize grips and
+  maximization/minimization). The type @code{:popup} is used to implement
+  widgets such as @class{gtk-menu} widgets or tooltips that you normally do not
+  think of as windows per se. Nearly all windows should be of type
+  @code{:toplevel}. In particular, do not use the type @code{:popup} just to
+  turn off the window borders. Use the function @fun{gtk-window-decorated} for
+  that.
+  @begin{pre}
+(define-g-enum \"GtkWindowType\" gtk-window-type
+  (:export t
+   :type-initializer \"gtk_window_type_get_type\")
+  (:toplevel 0)
+  (:popup 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:toplevel]{A regular window, such as a dialog.}
+    @entry[:popup]{A special window such as a tooltip.}
+  @end{table}
+  @see-class{gtk-window}
+  @see-class{gtk-menu}
+  @see-function{gtk-window-decorated}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkWindowPosition
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkWindowPosition" gtk-window-position
+  (:export t
+   :type-initializer "gtk_window_position_get_type")
+  (:none 0)
+  (:center 1)
+  (:mouse 2)
+  (:center-always 3)
+  (:center-on-parent 4))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-window-position atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gtk-window-position atdoc:*external-symbols*)
+ "@version{2021-3-21}
+  @begin{short}
+    Window placement can be influenced using this enumeration. Note that using
+    @code{:center-always} is almost always a bad idea. It will not necessarily
+    work well with all window managers or on all windowing systems.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkWindowPosition\" gtk-window-position
+  (:export t
+   :type-initializer \"gtk_window_position_get_type\")
+  (:none 0)
+  (:center 1)
+  (:mouse 2)
+  (:center-always 3)
+  (:center-on-parent 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No influence is made on placement.}
+    @entry[:center]{Windows should be placed in the center of the screen.}
+    @entry[:mouse]{Windows should be placed at the current mouse position.}
+    @entry[:center-always]{Keep window centered as it changes size, etc.}
+    @entry[:center-on-parent]{Center the window on its transient parent.
+      See the function @fun{gtk-window-transient-for}.}
+  @end{table}
+  @see-class{gtk-window}
+  @see-function{gtk-window-transient-for}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWindow
