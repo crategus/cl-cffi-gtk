@@ -27,15 +27,15 @@
   (defun create-view-and-model-drag-and-drop ()
     (let* ((model (create-and-fill-model-simple))
            (view (gtk-tree-view-new-with-model model))
-           (targets (list (make-gtk-target-entry :target "STRING"
-                                                 :flags 0
-                                                 :info target-string)
-                          (make-gtk-target-entry :target "text/plain"
-                                                 :flags 0
-                                                 :info target-string)
-                          (make-gtk-target-entry :target "text/uri-list"
-                                                 :flags 0
-                                                 :info target-url))))
+           (targets (list (gtk-target-entry-new :target "STRING"
+                                                :flags 0
+                                                :info target-string)
+                          (gtk-target-entry-new :target "text/plain"
+                                                :flags 0
+                                                :info target-string)
+                          (gtk-target-entry-new :target "text/uri-list"
+                                                :flags 0
+                                                :info target-url))))
 
       ;; Create renderer for first column
       (let* ((renderer (gtk-cell-renderer-text-new))
