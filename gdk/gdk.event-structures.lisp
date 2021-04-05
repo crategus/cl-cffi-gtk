@@ -1479,7 +1479,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-key 'type)
- "@version{2014-1-22}
+ "@version{2021-4-3}
   @short{Describes a key press or key release event.}
   Possible event types are @code{:key-press} or @code{:key-release}.
   @begin{pre}
@@ -1502,36 +1502,33 @@
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The @symbol{gdk-event-type} of the event (@code{:key-press},
-      @code{:key-release}).}
-    @entry[window]{The window of type @class{gdk-window} which received the
-      event.}
+    @entry[type]{The @symbol{gdk-event-type} value of the event
+    (@code{:key-press}, @code{:key-release}).}
+    @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
-    @entry[state]{The state of type @symbol{gdk-modifier-type} of the modifier
-      keys, e.g. Control, Shift and Alt, and the pointer buttons.}
+    @entry[state]{The @symbol{gdk-modifier-type} state of the modifier keys,
+      e.g. Control, Shift and Alt, and the pointer buttons.}
     @entry[keyval]{The key that was pressed or released. See the
       <gdk/gdkkeysyms.h> header file for a complete list of GDK key codes.}
     @entry[length]{The length of @code{string}.}
     @entry[string]{A string containing an approximation of the text that would
       result from this keypress. The only correct way to handle text input of
-      text is using input methods, see @class{gtk-im-context}, so this field is
-      deprecated and should never be used. The function
+      text is using input methods, see the @class{gtk-im-context} API, so this
+      field is deprecated and should never be used. The function
       @fun{gdk-unicode-to-keyval} provides a non-deprecated way of getting an
-      approximate translation for a key. The @code{string} is encoded in the
-      encoding of the current locale. Note this for backwards compatibility:
-      strings in GTK+ and GDK are typically in UTF-8 and @code{NUL}-terminated.
-      In some cases, the translation of the key code will be a single @code{NUL}
-      byte, in which case looking at length is necessary to distinguish it from
-      an empty translation.}
+      approximate translation for a key. The argument @code{string} is encoded
+      in the encoding of the current locale. Note this for backwards
+      compatibility: strings in GTK+ and GDK are typically in UTF-8 and
+      @code{NUL}-terminated. In some cases, the translation of the key code will
+      be a single @code{NUL} byte, in which case looking at length is necessary
+      to distinguish it from an empty translation.}
     @entry[hardware-keycode]{The raw code of the key that was pressed or
       released.}
     @entry[group]{The keyboard group.}
     @entry[is-modifier]{A flag that indicates if @code{hardware-keycode} is
       mapped to a modifier.}
   @end{table}
-  @see-constructor{copy-gdk-event-key}
-  @see-constructor{make-gdk-event-key}
   @see-slot{gdk-event-key-type}
   @see-slot{gdk-event-key-window}
   @see-slot{gdk-event-key-send-event}
@@ -1542,9 +1539,26 @@
   @see-slot{gdk-event-key-string}
   @see-slot{gdk-event-key-hardware-keycode}
   @see-slot{gdk-event-key-group}
-  @see-slot{gdk-event-key-is-modifier}")
+  @see-slot{gdk-event-key-is-modifier}
+  @see-class{gdk-window}
+  @see-symbol{gdk-event-type}
+  @see-symbol{gdk-modifier-type}")
+
+;;; --- make-gdk-event-key -----------------------------------------------------
+
+;; not exported, see gdk-event-new
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-key-new 'function)
+ "@version{2021-4-3}
+  Creates a @class{gdk-event-key} structure.
+  @see-class{gdk-event-key}")
+
+(unexport 'make-gdk-event-key)
 
 ;;; --- copy-gdk-event-key -----------------------------------------------------
+
+;; not exported, see gdk-event-copy
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-key 'function)
@@ -1553,13 +1567,7 @@
   Copy constructor of a @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
 
-;;; --- make-gdk-event-key -----------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gdk-event-key 'function)
- "@version{2014-1-22}
-  Creates a @class{gdk-event-key} structure.
-  @see-class{gdk-event-key}")
+(unexport 'copy-gdk-event-key)
 
 ;;; --- gdk-event-key-type -----------------------------------------------------
 
@@ -1567,9 +1575,16 @@
 (setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-type 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{type} of the @class{gdk-event-key} structure.
-  @see-class{gdk-event-key}")
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-type instance) => type}
+  @syntax[]{(setf (gdk-event-key-type instance) type)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[type]{a @symbol{gdk-event-type} value}
+  @begin{short}
+    Accessor of the @code{type} slot of the @class{gdk-event-key} structure.
+  @end{short}
+  @see-class{gdk-event-key}
+  @see-symbol{gdk-event-type}")
 
 ;;; --- gdk-event-key-window ---------------------------------------------------
 
@@ -1577,9 +1592,16 @@
 (setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-window 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{window} of the @class{gdk-event-key} structure.
-  @see-class{gdk-event-key}")
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-window instance) => window}
+  @syntax[]{(setf (gdk-event-key-window instance) window)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[window]{a @class{gdk-window} object which received the event}
+  @begin{short}
+    Accessor of the @code{window} slot of the @class{gdk-event-key} structure.
+  @end{short}
+  @see-class{gdk-event-key}
+  @see-class{gdk-window}")
 
 ;;; --- gdk-event-key-send-event -----------------------------------------------
 
@@ -1587,9 +1609,15 @@
 (setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-send-event 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{send-event} of the @class{gdk-event-key}
-  structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-send-event instance) => send-event}
+  @syntax[]{(setf (gdk-event-key-send-event instance) send-event)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[send-event]{a boolean wether the event was sent explicitly}
+  @begin{short}
+    Accessor of the @code{send-event} slot of the @class{gdk-event-key}
+    structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-time -----------------------------------------------------
@@ -1598,8 +1626,14 @@
 (setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-time 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{time} of the @class{gdk-event-key} structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-time instance) => time}
+  @syntax[]{(setf (gdk-event-key-time instance) time)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[time]{an unsigned integer with the time in milliseconds}
+  @begin{short}
+    Accessor of the @code{time} slot of the @class{gdk-event-key} structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-state ----------------------------------------------------
@@ -1608,9 +1642,16 @@
 (setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-state 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{state} of the @class{gdk-event-key} structure.
-  @see-class{gdk-event-key}")
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-state instance) => state}
+  @syntax[]{(setf (gdk-event-key-state instance) state)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[state]{a @symbol{gdk-modifier-state} value}
+  @begin{short}
+    Accessor of the @code{state} slot of the @class{gdk-event-key} structure.
+  @end{short}
+  @see-class{gdk-event-key}
+  @see-symbol{gdk-modifier-type}")
 
 ;;; --- gdk-event-key-keyval ---------------------------------------------------
 
@@ -1618,9 +1659,16 @@
 (setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-keyval 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{keyval} of the @class{gdk-event-key} structure.
-  @see-slot{gdk-event-key}")
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-keyval instance) => keyval}
+  @syntax[]{(setf (gdk-event-key-keyval instance) keyval)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[keyval]{an unsigned integer with the key that was pressed or
+    released}
+  @begin{short}
+    Accessor of the @code{keyval} slot of the @class{gdk-event-key} structure.
+  @end{short}
+  @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-length ---------------------------------------------------
 
@@ -1628,8 +1676,14 @@
 (setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-length 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{length} of the @class{gdk-event-key} structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-length instance) => length}
+  @syntax[]{(setf (gdk-event-key-length instance) length)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[length]{an integer with the length of the @code{string} slot}
+  @begin{short}
+    Accessor of the @code{length} slot of the @class{gdk-event-key} structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-string ---------------------------------------------------
@@ -1638,8 +1692,15 @@
 (setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-string 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{string} of the @class{gdk-event-key} structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-string instance) => string}
+  @syntax[]{(setf (gdk-event-key-string instance) string)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[string]{a string containing an approximation of the text that
+    would result from the keypress}
+  @begin{short}
+    Accessor of the @code{string} slot of the @class{gdk-event-key} structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-hardware-keycode -----------------------------------------
@@ -1648,9 +1709,16 @@
 (setf (gethash 'gdk-event-key-hardware-keycode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-hardware-keycode 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{keycode} of the @class{gdk-event-key}
-  structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-hardware-keycode instance) => keycode}
+  @syntax[]{(setf (gdk-event-key-hardware-keycode instance) keycode)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[keycode]{an unsigned integer with the raw code of the key that was
+    pressed or released}
+  @begin{short}
+    Accessor of the @code{keycode} slot of the @class{gdk-event-key}
+    structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-group ----------------------------------------------------
@@ -1659,8 +1727,14 @@
 (setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-group 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{group} of the @class{gdk-event-key} structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-group instance) => group}
+  @syntax[]{(setf (gdk-event-key-group instance) group)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[group]{an unsigned integer with keyboard group}
+  @begin{short}
+    Accessor of the @code{group} slot of the @class{gdk-event-key} structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; --- gdk-event-key-is-modifier ----------------------------------------------
@@ -1669,9 +1743,16 @@
 (setf (gethash 'gdk-event-key-is-modifier atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-is-modifier 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{is-modifier} of the @class{gdk-event-key}
-  structure.
+ "@version{2021-4-3}
+  @syntax[]{(gdk-event-key-is-modifier instance) => is-modifier}
+  @syntax[]{(setf (gdk-event-key-is-modifier instance) is-modifier)}
+  @argument[instance]{a @class{gdk-event-key} instance}
+  @argument[is-modifier]{a flag that indicates if the @code{hardware-keycode}
+    slot is mapped to a modifier}
+  @begin{short}
+    Accessor of the @code{is-modifier} slot of the @class{gdk-event-key}
+    structure.
+  @end{short}
   @see-class{gdk-event-key}")
 
 ;;; ----------------------------------------------------------------------------
