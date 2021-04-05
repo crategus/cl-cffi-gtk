@@ -1,54 +1,172 @@
 (def-suite gdk-key-values :in gdk-suite)
 (in-suite gdk-key-values)
 
+(defparameter *verbose-gdk-key-values* nil)
+
 ;;;     GdkKeymap
+
+(test gdk-keymap-class
+  ;; Type check
+  (is (g-type-is-object "GdkKeymap"))
+  ;; Check the registered name
+  (is (eq 'gdk-keymap
+          (registered-object-type-by-name "GdkKeymap")))
+  ;; Check the type initializer
+  (is (eq (gtype "GdkKeymap")
+          (gtype (foreign-funcall "gdk_keymap_get_type" g-size))))
+  ;; Check the parent
+  (is (eq (gtype "GObject") (g-type-parent "GdkKeymap")))
+  ;; Check the children
+  (is (equal '("GdkX11Keymap")
+             (mapcar #'g-type-name (g-type-children "GdkKeymap"))))
+  ;; Check the interfaces
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-interfaces "GdkKeymap"))))
+  ;; Check the class properties
+  (is (equal '()
+             (stable-sort (mapcar #'g-param-spec-name
+                                  (g-object-class-list-properties "GdkKeymap"))
+                          #'string-lessp)))
+  ;; Check the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GdkKeymap" GDK-KEYMAP
+                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                        :TYPE-INITIALIZER "gdk_keymap_get_type")
+                       NIL)
+             (get-g-type-definition "GdkKeymap"))))
+
 ;;;     GdkKeymapKey
 
 ;;;   gdk_keymap_get_default
 
 (test gdk-keymap-default
-  (is (eq 'gdk-keymap (type-of (gdk-keymap-default)))))
+  (is (typep (gdk-keymap-default) 'gdk-keymap)))
 
 ;;;   gdk_keymap_get_for_display
 
 (test gdk-keymap-for-display
   (let ((display (gdk-display-default)))
-    (is (eq 'gdk-keymap (type-of (gdk-keymap-for-display display))))))
+    (is (typep (gdk-keymap-for-display display) 'gdk-keymap))))
 
 ;;;   gdk_keymap_lookup_key
 
-; FIXME: This test generates a warning
-;
-;   bare references to struct types are deprecated.
-;   Please use (:POINTER (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT)) or
-;   (:STRUCT GDK::GDK-KEYMAP-KEY-CSTRUCT) instead.
-
-#+nil
 (test gdk-keymap-lookup-key
-  (let ((keymap (gdk-keymap-default))
-        (key (make-gdk-keymap-key :keycode 67 :group 0 :level 0)))
-    (is (= 65470 (gdk-keymap-lookup-key keymap key)))))
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    (with-foreign-object (key '(:struct gdk::gdk-keymap-key))
+      (setf (foreign-slot-value key
+                                '(:struct gdk::gdk-keymap-key)
+                                'gdk::keycode) 35)
+      (setf (foreign-slot-value key
+                                '(:struct gdk::gdk-keymap-key)
+                                'gdk::group) 0)
+      (setf (foreign-slot-value key
+                                '(:struct gdk::gdk-keymap-key)
+                                'gdk::level) 0)
+      (is (= 43 (gdk::%gdk-keymap-lookup-key keymap key))))
+    (with-foreign-object (key '(:struct gdk::gdk-keymap-key))
+      (setf (gdk::gdk-keymap-key-keycode key) 35)
+      (setf (gdk::gdk-keymap-key-group key) 0)
+      (setf (gdk::gdk-keymap-key-level key) 1)
+      (is (= 42 (gdk::%gdk-keymap-lookup-key keymap key))))
+    (is (=  43 (gdk-keymap-lookup-key keymap 35 0 0)))
+    (is (=  42 (gdk-keymap-lookup-key keymap 35 0 1)))
+    (is (= 126 (gdk-keymap-lookup-key keymap 35 0 2)))
+    (is (= 175 (gdk-keymap-lookup-key keymap 35 0 3)))))
 
 ;;;     gdk_keymap_translate_keyboard_state
 
+(test gdk-keymap-translate-keyboard-state
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    ;; The key "+" with the name "plus"
+    (is (equal '(43 0 0 (:shift-mask :lock-mask :mod5-mask))
+               (multiple-value-list
+                   (gdk-keymap-translate-keyboard-state keymap
+                                                        35
+                                                        0
+                                                        0))))
+    ;; The key "-" with the name "minus"
+    (is (equal '(42 0 1 (:shift-mask :lock-mask :mod5-mask))
+               (multiple-value-list
+                   (gdk-keymap-translate-keyboard-state keymap
+                                                        35
+                                                        :shift-mask
+                                                        0))))
+    ;; The key "~" with the name "asciitilde"
+    (is (equal '(126 0 2 (:shift-mask :lock-mask :mod5-mask))
+               (multiple-value-list
+                   (gdk-keymap-translate-keyboard-state keymap
+                                                        35
+                                                        :mod5-mask
+                                                        0))))))
+
 ;;;     gdk_keymap_get_entries_for_keyval
 
-(test gdk-keymap-get-entries-for-keyvals
-  (let ((keymap (gdk-keymap-default)))
-    (is (eq 'gdk-keymap-key
-            (type-of (first (gdk-keymap-get-entries-for-keyval keymap 65470)))))))
+(test gdk-keymap-entries-for-keyval
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default)))
+        (keyval 126))
+    (with-foreign-objects ((keys :pointer) (n-keys :int))
+      (when (gdk::%gdk-keymap-entries-for-keyval keymap keyval keys n-keys)
+        (when *verbose-gdk-key-values*
+          (format t "~%GDK-KEYMAP-ENTRIES-FOR-KEYVAL~%")
+          (format t " keyval : ~a~%" keyval)
+          (format t "   keys : ~a~%" keys)
+          (format t " n-keys : ~a~%" (mem-ref n-keys :int)))
+        (let ((keys (mem-ref keys :pointer))
+              (n-keys (mem-ref n-keys :int)))
+          (loop for i from 0 below n-keys
+                for key = (mem-aptr keys '(:struct gdk::gdk-keymap-key) i)
+                collect (list (gdk::gdk-keymap-key-keycode key)
+                              (gdk::gdk-keymap-key-group key)
+                              (gdk::gdk-keymap-key-level key))
+                finally (g-free keys)
+                do (when *verbose-gdk-key-values*
+                     (format t "keycode : ~a~%" (gdk::gdk-keymap-key-keycode key))
+                     (format t "  group : ~a~%" (gdk::gdk-keymap-key-group key))
+                     (format t "  level : ~a~%" (gdk::gdk-keymap-key-level key)))))))
+    (is (equal '((35 0 0)) (gdk-keymap-entries-for-keyval keymap 43)))
+    (is (equal '((35 0 1)) (gdk-keymap-entries-for-keyval keymap 42)))
+    (is (equal '((35 0 2)) (gdk-keymap-entries-for-keyval keymap 126)))
+    (is (equal '((35 0 3)) (gdk-keymap-entries-for-keyval keymap 175)))))
 
 ;;;     gdk_keymap_get_entries_for_keycode
 
-(test gdk-keymap-get-entries-for-keycode
-  (let ((keymap (gdk-keymap-default)))
-    (is (eq 'gdk-keymap-key
-            (type-of (first (gdk-keymap-get-entries-for-keycode keymap 67)))))))
+(test gdk-keymap-entries-for-keycode
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    (with-foreign-objects ((keys :pointer) (keyvals :pointer) (n-keys :int))
+      (when (gdk::%gdk-keymap-entries-for-keycode keymap
+                                                  35
+                                                  keys
+                                                  keyvals
+                                                  n-keys)
+        (when *verbose-gdk-key-values*
+          (format t "~%GDK-KEYMAP-ENTRIES-FOR-KEYCODE~%")
+          (format t "   keys : ~a~%" keys)
+          (format t "keyvals : ~a~%" keyvals)
+          (format t " n-keys : ~a~%" (mem-ref n-keys :int)))
+        (let ((keys (mem-ref keys :pointer))
+              (keyvals (mem-ref keyvals :pointer))
+              (n-keys (mem-ref n-keys :int)))
+          (loop for i from 0 below n-keys
+                for keyval = (mem-aref keyvals :uint i)
+                for key = (mem-aptr keys '(:struct gdk::gdk-keymap-key) i)
+                collect (list keyval
+                              (list (gdk::gdk-keymap-key-keycode key)
+                                    (gdk::gdk-keymap-key-group key)
+                                    (gdk::gdk-keymap-key-level key)))
+                finally (g-free keys)
+                        (g-free keyvals)
+                do (when *verbose-gdk-key-values*
+                     (format t " keyval : ~a~%" keyval)
+                     (format t "    key : ~a~%" key)
+                     (format t "keycode : ~a~%" (gdk::gdk-keymap-key-keycode key))
+                     (format t "  group : ~a~%" (gdk::gdk-keymap-key-group key))
+                     (format t "  level : ~a~%" (gdk::gdk-keymap-key-level key)))))))
+    (is (equal '((43 35 0 0) (42 35 0 1) (126 35 0 2) (175 35 0 3))
+               (gdk-keymap-entries-for-keycode keymap 35)))))
 
 ;;;     gdk_keymap_get_direction
 
-(test gdk-keymap-get-direction
-  (is (eq :ltr (gdk-keymap-get-direction (gdk-keymap-default)))))
+(test gdk-keymap-direction
+  (is (eq :ltr (gdk-keymap-direction (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_have_bidi_layouts
 
@@ -77,8 +195,39 @@
              (gdk-keymap-modifier-state (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers
+
+(test gdk-keymap-add-virtual-modifiers
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    (is (equal '(:MOD4-MASK :SUPER-MASK :HYPER-MASK)
+               (gdk-keymap-add-virtual-modifiers keymap '(:mod4-mask))))))
+
 ;;;     gdk_keymap_map_virtual_modifiers
+
+(test gdk-keymap-map-virtual-modifiers
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    (is (equal '((:MOD4-MASK :SUPER-MASK) T)
+               (multiple-value-list
+                 (gdk-keymap-map-virtual-modifiers keymap '(:super-mask)))))))
+
 ;;;     gdk_keymap_get_modifier_mask
+
+(test gdk-keymap-modifier-mask
+  (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    (is (equal '(:control-mask)
+               (gdk-keymap-modifier-mask keymap :primary-accelerator)))
+    (is (equal '()
+               (gdk-keymap-modifier-mask keymap :context-menu)))
+    (is (equal '(:SHIFT-MASK)
+               (gdk-keymap-modifier-mask keymap :extend-selection)))
+    (is (equal '(:CONTROL-MASK)
+               (gdk-keymap-modifier-mask keymap :modify-selection)))
+    (is (equal '(:CONTROL-MASK :MOD1-MASK)
+               (gdk-keymap-modifier-mask keymap :no-text-input)))
+    (is (equal '()
+               (gdk-keymap-modifier-mask keymap :shift-group)))
+    (is (equal '(:SHIFT-MASK :CONTROL-MASK :MOD1-MASK :SUPER-MASK
+                 :HYPER-MASK :META-MASK)
+               (gdk-keymap-modifier-mask keymap :default-mod-mask)))))
 
 ;;;     gdk_keyval_name
 
@@ -129,3 +278,4 @@
 (test gdk-unicode-to-keyval
   (is (eq 65 (gdk-unicode-to-keyval #\A))))
 
+;;; 2021-4-2

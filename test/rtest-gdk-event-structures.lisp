@@ -772,25 +772,8 @@
 ;;     (group :uint8 :initform 0)
 ;;     (is-modifier :uint :initform 0))
 
-(test gdk-event-key.1
+(test gdk-event-key
   (let ((event (gdk-event-new :key-press)))
-    (is (typep event 'gdk-event-key))
-    ;; Common slots
-    (is (eq :key-press (gdk-event-type event)))
-    (is-false (gdk-event-window event))
-    (is-false (gdk-event-send-event event))
-    ;; Slots for gdk-event-key
-    (is (= 0 (gdk-event-key-time event)))
-    (is (= 0 (gdk-event-key-state event)))
-    (is (= 0 (gdk-event-key-keyval event)))
-    (is (= 0 (gdk-event-key-length event)))
-    (is (string= "" (gdk-event-key-string event)))
-    (is (= 0 (gdk-event-key-hardware-keycode event)))
-    (is (= 0 (gdk-event-key-group event)))
-    (is (= 0 (gdk-event-key-is-modifier event)))))
-
-(test gdk-event-key.2
-  (let ((event (make-gdk-event-key :type :key-press)))
     (is (typep event 'gdk-event-key))
     ;; Common slots
     (is (eq :key-press (gdk-event-type event)))
