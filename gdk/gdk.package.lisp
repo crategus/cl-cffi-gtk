@@ -918,21 +918,14 @@
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes.
 
-    @about-symbol{gdk-modifier-intent}
     @about-class{gdk-keymap}
-    @about-struct{gdk-keymap-key}
-    @about-function{gdk-keymap-key-new}
-    @about-function{gdk-keymap-key-copy}
-    @about-function{gdk-keymap-key-keycode}
-    @about-function{gdk-keymap-key-group}
-    @about-function{gdk-keymap-key-level}
     @about-function{gdk-keymap-default}
     @about-function{gdk-keymap-for-display}
     @about-function{gdk-keymap-lookup-key}
     @about-function{gdk-keymap-translate-keyboard-state}
-    @about-function{gdk-keymap-get-entries-for-keyval}
-    @about-function{gdk-keymap-get-entries-for-keycode}
-    @about-function{gdk-keymap-get-direction}
+    @about-function{gdk-keymap-entries-for-keyval}
+    @about-function{gdk-keymap-entries-for-keycode}
+    @about-function{gdk-keymap-direction}
     @about-function{gdk-keymap-have-bidi-layouts}
     @about-function{gdk-keymap-caps-lock-state}
     @about-function{gdk-keymap-num-lock-state}

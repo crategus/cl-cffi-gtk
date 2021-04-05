@@ -124,89 +124,9 @@
     @end{subsection}
   @end{section}
   @begin[The Main Event Loop]{section}
-    The main event loop manages all the available sources of events for GLib
-    and GTK+ applications. These events can come from any number of different
-    types of sources such as file descriptors (plain files, pipes or sockets)
-    and timeouts. New types of event sources can also be added using the
-    function @fun{g-source-attach}.
-
-    To allow multiple independent sets of sources to be handled in different
-    threads, each source is associated with a @type{g-main-context}. A
-    @type{g-main-context} can only be running in a single thread, but sources
-    can be added to it and removed from it from other threads.
-
-    Each event source is assigned a priority. The default priority,
-    @var{+g-priority-default+}, is 0. Values less than 0 denote higher
-    priorities. Values greater than 0 denote lower priorities. Events from high
-    priority sources are always processed before events from lower priority
-    sources.
-
-    Idle functions can also be added, and assigned a priority. These will be
-    run whenever no events with a higher priority are ready to be processed.
-
-    The @type{g-main-loop} data type represents a main event loop. A
-    @type{g-main-loop} is created with the function @fun{g-main-loop-new}.
-    After adding the initial event sources, the function @fun{g-main-loop-run}
-    is called. This continuously checks for new events from each of the event
-    sources and dispatches them. Finally, the processing of an event from one
-    of the sources leads to a call to the function @fun{g-main-loop-quit} to
-    exit the main loop, and the function @fun{g-main-loop-run} returns.
-
-    It is possible to create new instances of @type{g-main-loop} recursively.
-    This is often used in GTK+ applications when showing modal dialog boxes.
-    Note that event sources are associated with a particular
-    @type{g-main-context}, and will be checked and dispatched for all main
-    loops associated with that @type{g-main-context}.
-
-    GTK+ contains wrappers of some of these functions, e.g. the functions
-    @fun{gtk-main}, @fun{gtk-main-quit} and @fun{gtk-events-pending}.
-
-    @subheading{Creating new source types}
-    One of the unusual features of the @type{g-main-loop} functionality is that
-    new types of event source can be created and used in addition to the builtin
-    type of event source. A new event source type is used for handling GDK
-    events. A new source type is created by deriving from the  @type{g-source}
-    structure. The derived type of source is represented by a structure that has
-    the @type{g-source} structure as a first element, and other elements
-    specific to the new source type. To create an instance of the new source
-    type, call the function @fun{g-source-new} passing in the size of the
-    derived structure and a table of functions. These @type{g-source-funcs}
-    determine the behavior of the new source type.
-
-    New source types basically interact with the main context in two ways. Their
-    prepare function in @type{g-source-funcs} can set a timeout to determine the
-    maximum amount of time that the main loop will sleep before checking the
-    source again. In addition, or as well, the source can add file descriptors
-    to the set that the main context checks using the function
-    @fun{g-source-add-poll}.
-
-    @subheading{Customizing the main loop iteration}
-    Single iterations of a @type{g-main-context} can be run with the function
-    @fun{g-main-context-iteration}. In some cases, more detailed control of
-    exactly how the details of the main loop work is desired, for instance, when
-    integrating the @type{g-main-loop} with an external main loop. In such
-    cases, you can call the component functions of the function
-    @fun{g-main-context-iteration} directly. These functions are
-    @fun{g-main-context-prepare}, @fun{g-main-context-query},
-    @fun{g-main-context-check} and @fun{g-main-context-dispatch}.
-
-    On Unix, the GLib mainloop is incompatible with @code{fork()}. Any program
-    using the mainloop must either @code{exec()} or @code{exit()} from the
-    child without returning to the mainloop.
+    The Main Event Loop manages all available sources of events.
 
     @about-type{g-main-loop}
-    @about-function{g-main-loop-new}
-    @about-function{g-main-loop-ref}
-    @about-function{g-main-loop-unref}
-    @about-function{g-main-loop-run}
-    @about-function{g-main-loop-quit}
-    @about-function{g-main-loop-is-running}
-    @about-function{g-main-loop-get-context}
-    @about-function{g-main-new}
-    @about-function{g-main-destroy}
-    @about-function{g-main-run}
-    @about-function{g-main-quit}
-    @about-function{g-main-is-running}
     @about-variable{+g-priority-high+}
     @about-variable{+g-priority-default+}
     @about-variable{+g-priority-high-idle+}
@@ -215,6 +135,27 @@
     @about-variable{+g-source-continue+}
     @about-variable{+g-source-remove+}
     @about-type{g-main-context}
+    @about-type{g-main-context-pusher}
+    @about-type{g-pid}
+    @about-type{g-poll-fd}
+    @about-type{g-source}
+    @about-type{g-source-funcs}
+    @about-type{g-source-callback-funcs}
+
+    @about-function{g-main-loop-new}
+    @about-function{g-main-loop-ref}
+    @about-function{g-main-loop-unref}
+    @about-function{g-main-loop-run}
+    @about-function{g-main-loop-quit}
+    @about-function{g-main-loop-is-running}
+    @about-function{g-main-loop-get-context}
+
+    @about-function{g-main-new}
+    @about-function{g-main-destroy}
+    @about-function{g-main-run}
+    @about-function{g-main-quit}
+    @about-function{g-main-is-running}
+
     @about-function{g-main-context-new}
     @about-function{g-main-context-ref}
     @about-function{g-main-context-unref}
@@ -258,16 +199,13 @@
     @about-function{g-idle-add}
     @about-function{g-idle-add-full}
     @about-function{g-idle-remove-by-data}
-    @about-function{GPid}
+
     @about-function{g-child-watch-source-new}
     @about-function{g-child-watch-add}
     @about-function{g-child-watch-add-full}
-    @about-type{g-poll-fd}
+
     @about-function{g-poll}
-    @about-function{G_POLLFD_FORMAT}
-    @about-type{g-source}
-    @about-type{g-source-funcs}
-    @about-type{g-source-callback-funcs}
+
     @about-function{g-source-new}
     @about-function{g-source-ref}
     @about-function{g-source-unref}
@@ -285,6 +223,7 @@
     @about-function{g-source-set-name-by-id}
     @about-function{g-source-get-context}
     @about-function{g-source-set-callback}
+    @about-symbol{g-source-func}
     @about-function{g-source-set-callback-indirect}
     @about-function{g-source-set-ready-time}
     @about-function{g-source-get-ready-time}

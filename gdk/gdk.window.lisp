@@ -1129,18 +1129,19 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   (:default-mod-mask 6))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-modifier-intent atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-modifier-intent atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'gdk-modifier-intent atdoc:*external-symbols*)
- "@version{2020-9-6}
+ "@version{2021-4-1}
   @begin{short}
-    This enum is used with the function @fun{gdk-keymap-get-modifier-mask} in
-    order to determine what modifiers the currently used windowing system
-    backend uses for particular purposes.
+    This enum is used with the function @fun{gdk-keymap-modifier-mask} in order
+    to determine what modifiers the currently used windowing system backend
+    uses for particular purposes.
   @end{short}
   For example, on X11/Windows, the Control key is used for invoking menu
-  shortcuts (accelerators), whereas on Apple computers it’s the Command key
-  (which correspond to @code{GDK_CONTROL_MASK} and @code{GDK_MOD2_MASK},
-  respectively).
+  shortcuts (accelerators), whereas on Apple computers it is the Command key,
+  which correspond to the @code{:control-mask} and @code{:mod2-mask} values of
+  the @symbol{gdk-modifier-type} flags, respectively.
   @begin{pre}
 (define-g-enum \"GdkModifierIntent\" gdk-modifier-intent
   (:export t
@@ -1157,24 +1158,24 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     @entry[:primary-accelerator]{The primary modifier used to invoke menu
       accelerators.}
     @entry[:context-menu]{The modifier used to invoke context menus. Note that
-      mouse button 3 always triggers context menus. When this modifier is not 0,
-      it additionally triggers context menus when used with mouse button 1.}
+      mouse button 3 always triggers context menus. When this modifier is not
+      0, it additionally triggers context menus when used with mouse button 1.}
     @entry[:extend-selextion]{The modifier used to extend selections using
-      modifier-click or modifier-cursor-key.}
+      <modifier>-click or <modifier>-cursor-key.}
     @entry[:modify-selection]{The modifier used to modify selections, which in
       most cases means toggling the clicked item into or out of the selection.}
-    @entry[:no-text-input]{When any of these modifiers is pressed, the key event
-      cannot produce a symbol directly. This is meant to be used for input
-      methods, and for use cases like typeahead search.}
-    @entry[:shift-group]{The modifier that switches between keyboard groups
-    (AltGr on X11/Windows and Option/Alt on OS X).}
-    @entry[:default-mod-mask]{The set of modifier masks accepted as modifiers in
-      accelerators. Needed because Command is mapped to MOD2 on OSX, which is
-      widely used, but on X11 MOD2 is NumLock and using that for a mod key is
-      problematic at best. See reference
-      @url[https://bugzilla.gnome.org/show_bug.cgi?id=736125]{Bug 736125}.}
+    @entry[:no-text-input]{When any of these modifiers is pressed, the key
+      event cannot produce a symbol directly. This is meant to be used for
+      input methods, and for use cases like typeahead search.}
+    @entry[:shift-group]{The modifier that switches between keyboard groups.
+      AltGr on X11/Windows and Option/Alt on OS X.}
+    @entry[:default-mod-mask]{The set of modifier masks accepted as modifiers
+      in accelerators. Needed because Command is mapped to MOD2 on OSX, which
+      is widely used, but on X11 MOD2 is NumLock and using that for a mod key
+      is problematic at best.}
   @end{table}
-  @see-class{gdk-window}")
+  @see-symbol{gdk-modifier-type}
+  @see-function{gdk-keymap-modifier-mask}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWMDecoration
