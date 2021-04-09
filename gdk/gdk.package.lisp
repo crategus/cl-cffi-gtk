@@ -604,6 +604,7 @@
     @about-function{gdk-event-root-coords}
     @about-function{gdk-event-get-scroll-direction}
     @about-function{gdk-event-scroll-deltas}
+    @about-function{gdk-event-is-scroll-stop-event}
     @about-function{gdk-event-state}
     @about-function{gdk-event-time}
     @about-function{gdk-event-get-window}
@@ -1130,7 +1131,9 @@ got_value (gpointer user_data)
     the function @fun{pango-cairo-show-layout-line}.
 
     @b{Example:} Draw transformed text with Pango and Cairo
+
     @image[pango-cairo]{}
+
     @begin{pre}
 (defun demo-pango ()
   (within-main-loop
@@ -1201,8 +1204,8 @@ got_value (gpointer user_data)
            t)))
       (gtk-widget-show-all window))))
     @end{pre}
-    @about-function{gdk-pango-layout-get-clip-region}
-    @about-function{gdk-pango-layout-line-get-clip-region}
+    @about-function{gdk-pango-layout-clip-region}
+    @about-function{gdk-pango-layout-line-clip-region}
     @about-function{gdk-pango-context-get}
     @about-function{gdk-pango-context-for-screen}
     @about-function{gdk-pango-context-for-display}
@@ -1277,7 +1280,7 @@ got_value (gpointer user_data)
       @about-generic{gdk-device-manager-display}
       @about-function{gdk-disable-multidevice}
       @about-function{gdk-device-manager-list-devices}
-      @about-function{gdk-device-manager-get-client-pointer}
+      @about-function{gdk-device-manager-client-pointer}
     @end{subsection}
   @end{section}")
 

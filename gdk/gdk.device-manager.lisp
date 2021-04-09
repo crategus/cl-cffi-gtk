@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -74,25 +74,26 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-device-manager 'type)
- "@version{2013-6-18}
+ "@version{2021-4-5}
   @begin{short}
     In addition to a single pointer and keyboard for user interface input, GDK
     contains support for a variety of input devices, including graphics tablets,
-    touchscreens and multiple pointers/keyboards interacting simultaneously with
-    the user interface. Such input devices often have additional features, such
-    as sub-pixel positioning information and additional device-dependent
+    touchscreens and multiple pointers/keyboards interacting simultaneously
+    with the user interface. Such input devices often have additional features,
+    such as sub-pixel positioning information and additional device-dependent
     information.
-
-    In order to query the device hierarchy and be aware of changes in the device
-    hierarchy (such as virtual devices being created or removed, or physical
-    devices being plugged or unplugged), GDK provides @sym{gdk-device-manager}.
   @end{short}
+
+  In order to query the device hierarchy and be aware of changes in the device
+  hierarchy (such as virtual devices being created or removed, or physical
+  devices being plugged or unplugged), GDK provides the @sym{gdk-device-manager}
+  object.
 
   By default, and if the platform supports it, GDK is aware of multiple
   keyboard/pointer pairs and multitouch devices. This behavior can be changed
   by calling the function @fun{gdk-disable-multidevice} before the function
-  @fun{gdk-display-open}. There should rarely be a need to do that though, since
-  GDK defaults to a compatibility mode in which it will emit just one
+  @fun{gdk-display-open}. There should rarely be a need to do that though,
+  since GDK defaults to a compatibility mode in which it will emit just one
   enter/leave event pair for all devices on a window. To enable per-device
   enter/leave events and other multi-pointer interaction features, the function
   @fun{gdk-window-support-multidevice} must be called on @class{gdk-window}
@@ -109,7 +110,7 @@
   devices, the so-called client pointer provides a reasonable approximation to
   a simple setup with a single pointer and keyboard. The device that has been
   set as the client pointer can be accessed via the function
-  @fun{gdk-device-manager-get-client-pointer}.
+  @fun{gdk-device-manager-client-pointer}.
 
   Conceptually, in multidevice mode there are 2 device types. Virtual devices
   (or master devices) are represented by the pointer cursors and keyboard foci
@@ -119,7 +120,7 @@
 
   Virtual devices are always paired, so there is a keyboard device for every
   pointer device. Associations between devices may be inspected through the
-  function @fun{gdk-device-get-associated-device}.
+  function @fun{gdk-device-associated-device}.
 
   There may be several virtual devices, and several physical devices could be
   controlling each of these virtual devices. Physical devices may also be
@@ -164,68 +165,61 @@
   Input devices may also provide additional information besides x/y. For
   example, graphics tablets may also provide pressure and x/y tilt
   information. This information is device-dependent, and may be queried
-  through the function @fun{gdk-device-get-axis}. In multidevice mode, virtual
-  devices will change axes in order to always represent the physical device that
-  is routing events through it. Whenever the physical device changes, the
+  through the function @fun{gdk-device-axis}. In multidevice mode, virtual
+  devices will change axes in order to always represent the physical device
+  that is routing events through it. Whenever the physical device changes, the
   \"n-axes\" property will be notified, and the function
   @fun{gdk-device-list-axes} will return the new device axes.
 
   Devices may also have associated keys or macro buttons. Such keys can be
   globally set to map into normal X keyboard events. The mapping is set using
-  the function @fun{gdk-device-set-key}.
+  the function @fun{gdk-device-key}.
+
+  In GTK+ 3.20, a new @class{gdk-seat} object has been introduced that
+  supersedes @sym{gdk-device-manager} and should be preferred in newly written
+  code.
   @begin[Signal Details]{dictionary}
     @subheading{The \"device-added\" signal}
       @begin{pre}
- lambda (device-manager device)   : Run Last
+ lambda (manager device)    :run-last
       @end{pre}
-      The \"device-added\" signal is emitted either when a new master pointer
-      is created, or when a slave (Hardware) input device is plugged in.
+      The signal is emitted either when a new master pointer is created, or
+      when a slave (Hardware) input device is plugged in.
       @begin[code]{table}
-        @entry[device-manager]{The object on which the signal is emitted.}
+        @entry[manager]{The @sym{gdk-device-manager} object on which the signal
+          is emitted.}
         @entry[device]{The newly added @class{gdk-device} object.}
       @end{table}
     @subheading{The \"device-changed\" signal}
       @begin{pre}
- lambda (device-manager device)   : Run Last
+ lambda (manager device)    :run-last
       @end{pre}
-      The \"device-changed\" signal is emitted whenever a device has changed in
-      the hierarchy, either slave devices being disconnected from their master
-      device or connected to another one, or master devices being added or
-      removed a slave device.
-      If a slave device is detached from all master devices (the function
-      @fun{gdk-device-get-associated-device} returns @code{nil}), its
-      @symbol{gdk-device-type} will change to @code{:floating}, if it is
-      attached, it will change to @code{:slave}.
+      The signal is emitted whenever a device has changed in the hierarchy,
+      either slave devices being disconnected from their master device or
+      connected to another one, or master devices being added or removed a
+      slave device. If a slave device is detached from all master devices its
+      @symbol{gdk-device-type} value will change to @code{:floating}, if it is
+      attached, it will change to the value @code{:slave}.
       @begin[code]{table}
-        @entry[device-manager]{The object on which the signal is emitted.}
+        @entry[manager]{The @sym{gdk-device-manager} object on which the signal
+          is emitted.}
         @entry[device]{The @class{gdk-device} object that changed.}
       @end{table}
     @subheading{The \"device-removed\" signal}
       @begin{pre}
- lambda (device-manager device)   : Run Last
+ lambda (manager device)    :run-last
       @end{pre}
-      The \"device-removed\" signal is emitted either when a master pointer is
-      removed, or when a slave (Hardware) input device is unplugged.
+      The signal is emitted either when a master pointer is removed, or when a
+      slave (Hardware) input device is unplugged.
       @begin[code]{table}
-        @entry[device-manager]{The object on which the signal is emitted.}
+        @entry[manager]{The @sym{gdk-device-manager} object on which the signal
+          is emitted.}
         @entry[device]{The just removed @class{gdk-device} object.}
       @end{table}
   @end{dictionary}
   @see-slot{gdk-device-manager-display}
   @see-class{gdk-device}
-  @see-class{gdk-event}
-  @see-function{gdk-disable-multidevice}
-  @see-function{gdk-display-open}
-  @see-function{gdk-window-support-multidevice}
-  @see-function{gtk-widget-support-multidevice}
-  @see-function{gdk-disable-multidevice}
-  @see-function{gdk-device-manager-get-client-pointer}
-  @see-function{gdk-device-get-associated-device}
-  @see-function{gdk-event-source-device}
-  @see-function{gdk-window-device-events}
-  @see-function{gdk-device-get-axis}
-  @see-function{gdk-device-list-axes}
-  @see-function{gdk-device-set-key}")
+  @see-class{gdk-seat}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -242,18 +236,16 @@
 (setf (gethash 'gdk-device-manager-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-manager-display 'function)
- "@version{2013-4-7}
-  @argument[device-manager]{a @class{gdk-device-manager} object}
+ "@version{2021-4-5}
+  @argument[object]{a @class{gdk-device-manager} object}
   @syntax[]{(gdk-device-manager-display object) => display}
   @begin{short}
     Accessor of the @slot[gdk-device-manager]{display} slot of the
     @class{gdk-device-manager} class.
   @end{short}
 
-  The @sym{gdk-device-manager-display} slot access function returns the
-  @class{gdk-display} object to which @arg{device-manager} is associated to,
-  or @code{nil}. This memory is owned by GDK and must not be freed or
-  unreferenced.
+  The slot access function @sym{gdk-device-manager-display} returns the
+  display to which the device manager is associated to.
   @see-class{gdk-device-manager}
   @see-class{gdk-display}")
 
@@ -281,7 +273,7 @@
 
 (defcfun ("gdk_disable_multidevice" gdk-disable-multidevice) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2021-4-5}
   @begin{short}
     Disables multidevice support in GDK.
   @end{short}
@@ -305,13 +297,12 @@
 (defcfun ("gdk_device_manager_list_devices" gdk-device-manager-list-devices)
     (g-list (g-object gdk-device) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-7}
-  @argument[device-manager]{a @class{gdk-device-manager} object}
-  @argument[device-type]{device type to get}
+ "@version{2021-4-5}
+  @argument[manager]{a @class{gdk-device-manager} object}
+  @argument[type]{a @symbol{gdk-device-type} device type to get}
   @return{A list of @class{gdk-device} objects.}
   @begin{short}
-    Returns the list of devices of type @arg{device-type} currently attached to
-    @arg{device-manager}.
+    Returns the list of devices currently attached to the device manager.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-device-manager-list-devices} has been deprecated since
@@ -323,39 +314,41 @@
   @see-function{gdk-seat-pointer}
   @see-function{gdk-seat-keyboard}
   @see-function{gdk-seat-slaves}"
-  (device-manager (g-object gdk-device-manager))
-  (device-type gdk-device-type))
+  (manager (g-object gdk-device-manager))
+  (type gdk-device-type))
 
 (export 'gdk-device-manager-list-devices)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_manager_get_client_pointer ()
+;;; -> gdk-device-manager-client-pointer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_manager_get_client_pointer"
-           gdk-device-manager-get-client-pointer) (g-object gdk-device)
+           gdk-device-manager-client-pointer) (g-object gdk-device)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[device-manager]{a @class{gdk-device-manager} object}
-  @return{The client pointer.}
+ "@version{2021-4-5}
+  @argument[manager]{a @class{gdk-device-manager} object}
+  @return{The @class{gdk-device} client pointer.}
   @begin{short}
     Returns the client pointer, that is, the master pointer that acts as the
-    core pointer for this application. In X11, window managers may change this
-    depending on the interaction pattern under the presence of several pointers.
+    core pointer for this application.
   @end{short}
+  In X11, window managers may change this depending on the interaction pattern
+  under the presence of several pointers.
 
   You should use this function sheldomly, only in code that is not triggered by
   a @class{gdk-event} event and there are not other means to get a meaningful
   @class{gdk-device} object to operate on.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-device-manager-get-client-pointer} has been deprecated
+    The function @sym{gdk-device-manager-client-pointer} has been deprecated
     since version 3.20 and should not be used in newly-written code. Use the
     function @fun{gdk-seat-pointer} instead.
   @end{dictionary}
   @see-class{gdk-device-manager}
   @see-function{gdk-seat-pointer}"
-  (device-manager (g-object gdk-device-manager)))
+  (manager (g-object gdk-device-manager)))
 
-(export 'gdk-device-manager-get-client-pointer)
+(export 'gdk-device-manager-client-pointer)
 
 ;;; --- End of file gdk.device-manager.lisp ------------------------------------

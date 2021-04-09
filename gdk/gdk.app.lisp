@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,7 +47,7 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GdkDisplay *  display    Read / Write / Construct Only
+;;;     GdkDisplay*    display    Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -73,11 +73,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-app-launch-context 'type)
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @begin{short}
-    @sym{gdk-app-launch-context} is an implementation of
-    @class{g-app-launch-context} that handles launching an application in a
-    graphical context.
+    The @sym{gdk-app-launch-context} object is an implementation of the
+    @class{g-app-launch-context} object that handles launching an application
+    in a graphical context.
   @end{short}
   It provides startup notification and allows to launch applications on a
   specific screen or workspace.
@@ -118,13 +118,13 @@
 (setf (gethash 'gdk-app-launch-context-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-app-launch-context-display 'function)
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @syntax[]{(gdk-app-launch-context-display object) => display}
   @syntax[]{(setf (gdk-app-launch-context-display object) display)}
   @argument[object]{a @class{gdk-app-launch-context} object}
   @argument[display]{a @class{gdk-display} object}
   @begin{short}
-    Accessor of the slot @code{display} of the @class{gdk-app-launch-context}
+    Accessor of the @code{display} slot of the @class{gdk-app-launch-context}
     class.
   @end{short}
 
@@ -132,8 +132,8 @@
   sets the display on which applications will be launched when using this
   context. See also the function @fun{gdk-app-launch-context-set-screen}.
   @begin[Warning]{dictionary}
-    @sym{gdk-app-launch-context-display} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
+    The function @sym{gdk-app-launch-context-display} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use the function
     @fun{gdk-display-app-launch-context} instead.
   @end{dictionary}
   @see-class{gdk-app-launch-context}
@@ -147,15 +147,15 @@
 (defcfun ("gdk_app_launch_context_new" gdk-app-launch-context-new)
          (g-object gdk-app-launch-context)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @return{A new @class{gdk-app-launch-context} object.}
   @begin{short}
     Creates a new @class{gdk-app-launch-context} object.
   @end{short}
   @begin[Warning]{dictionary}
-    @sym{gdk-app-launch-context-new} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-    Use the function @fun{gdk-display-app-launch-context} instead.
+    The function @sym{gdk-app-launch-context-new} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use the function
+    @fun{gdk-display-app-launch-context} instead.
   @end{dictionary}
   @see-class{gdk-app-launch-context}
   @see-function{gdk-display-app-launch-context}")
@@ -169,7 +169,7 @@
 (defcfun ("gdk_app_launch_context_set_screen" gdk-app-launch-context-set-screen)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @argument[context]{a @class{gdk-app-launch-context} object}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
@@ -181,6 +181,7 @@
   If both screen and display are set, the screen takes priority. If neither
   screen or display are set, the default screen and display are used.
   @see-class{gdk-app-launch-context}
+  @see-class{gdk-screen}
   @see-function{gdk-app-launch-context-display}"
   (context (g-object gdk-app-launch-context))
   (screen (g-object gdk-screen)))
@@ -194,9 +195,9 @@
 (defcfun ("gdk_app_launch_context_set_desktop"
            gdk-app-launch-context-set-desktop) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @argument[context]{a @class{gdk-app-launch-context} object}
-  @argument[desktop]{the number of a workspace, or -1}
+  @argument[desktop]{an integer with the number of a workspace, or -1}
   @begin{short}
     Sets the workspace on which applications will be launched when using this
     context when running under a window manager that supports multiple
@@ -218,13 +219,14 @@
 (defcfun ("gdk_app_launch_context_set_timestamp"
            gdk-app-launch-context-set-timestamp) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @argument[context]{a @class{gdk-app-launch-context} object}
-  @argument[timestamp]{a timestamp}
+  @argument[timestamp]{an unsigned integer with a timestamp}
   @begin{short}
-    Sets the @arg{timestamp} of @arg{context}. The @arg{timestamp} should
-    ideally be taken from the event that triggered the launch.
+    Sets the timestamp of @arg{context}.
   @end{short}
+  The timestamp should ideally be taken from the event that triggered the
+  launch.
 
   Window managers can use this information to avoid moving the focus to the
   newly launched application when the user is busy typing in another window.
@@ -242,7 +244,7 @@
 (defcfun ("gdk_app_launch_context_set_icon" gdk-app-launch-context-set-icon)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @argument[context]{a @class{gdk-app-launch-context} object}
   @argument[icon]{a @class{g-icon} object, or @code{nil}}
   @begin{short}
@@ -254,9 +256,10 @@
 
   See also the function @fun{gdk-app-launch-context-set-icon-name}.
   @see-class{gdk-app-launch-context}
+  @see-class{g-icon}
   @see-function{gdk-app-launch-context-set-icon-name}"
   (context (g-object gdk-app-launch-context))
-  (icon :pointer)) ; TODO: Implement GIcon
+  (icon (g-object g-icon)))
 
 (export 'gdk-app-launch-context-set-icon)
 
@@ -267,19 +270,19 @@
 (defcfun ("gdk_app_launch_context_set_icon_name"
            gdk-app-launch-context-set-icon-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-6}
+ "@version{2021-4-5}
   @argument[context]{a @class{gdk-app-launch-context} object}
-  @argument[icon-name]{an icon name, or @code{nil}}
+  @argument[icon-name]{a string with an icon name, or @code{nil}}
   @begin{short}
-    Sets the icon for applications that are launched with this context. The
-    @arg{icon-name} will be interpreted in the same way as the Icon field in
-    desktop files. See also @fun{gdk-app-launch-context-set-icon}.
+    Sets the icon for applications that are launched with this context.
   @end{short}
+  The icon name will be interpreted in the same way as the Icon field in
+  desktop files. See also the function @fun{gdk-app-launch-context-set-icon}.
 
-  If both icon and @arg{icon-name} are set, the @arg{icon-name} takes priority.
-  If neither icon or @arg{icon-name} is set, the icon is taken from either the
-  file that is passed to launched application or from the @code{GAppInfo} for
-  the launched application itself.
+  If both an icon and an icon name are set, @arg{icon-name} takes priority.
+  If neither an icon or an icon name is set, the icon is taken from either the
+  file that is passed to launched application or from the @class{g-app-info}
+  object for the launched application itself.
   @see-class{gdk-app-launch-context}
   @see-function{gdk-app-launch-context-set-icon}"
   (context (g-object gdk-app-launch-context))

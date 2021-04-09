@@ -34,7 +34,7 @@ List of files for the GDK Library
   gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.24
   gdk.properties.lisp       - Properties and Atoms   - GDK 3.24 &
   gdk.threads.lisp          - Threads                - GDK 3.24
-  gdk.pango.lisp            - Pango Interaction      - GDK 3.24 &
+  gdk.pango.lisp            - Pango Interaction      - GDK 3.24
   gdk.cairo.lisp            - Cairo Interaction      - GDK 3.24 &
 
   not implemented           - X Window System Interaction

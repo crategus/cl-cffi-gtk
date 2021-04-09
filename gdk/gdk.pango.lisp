@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,35 +43,35 @@
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pango_layout_get_clip_region ()
+;;; gdk_pango_layout_get_clip_region () -> gdk-pango-layout-clip-region
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_layout_get_clip_region" %gdk-pango-layout-get-clip-region)
+(defcfun ("gdk_pango_layout_get_clip_region" %gdk-pango-layout-clip-region)
     (:pointer (:struct cairo-region-t))
   (layout (g-object pango-layout))
   (x-origin :int)
   (y-origin :int)
-  (index-ranges (:pointer :int))
+  (ranges (:pointer :int))
   (n-ranges :int))
 
-(defun gdk-pango-layout-get-clip-region (layout x-origin y-origin index-ranges)
+(defun gdk-pango-layout-clip-region (layout x-origin y-origin ranges)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
+ "@version{2021-4-5}
   @argument[layout]{a @class{pango-layout} object}
-  @argument[x-origin]{x pixel where you intend to draw the layout with this
-    clip}
-  @argument[y-origin]{y pixel where you intend to draw the layout with this
-    clip}
-  @argument[index-ranges]{array of byte indexes into the layout, where even
-    members of array are start indexes and odd elements are end indexes}
-  @return{A clip region containing the given ranges.}
+  @argument[x-origin]{an integer with the x pixel where you intend to draw the
+    layout with this clip}
+  @argument[y-origin]{an integer with the y pixel where you intend to draw the
+    layout with this clip}
+  @argument[ranges]{a list of byte indexes into the layout, where even members
+    of the list are start indexes and odd elements are end indexes}
+  @return{A @symbol{cairo-region-t} clip region containing the given ranges.}
   @begin{short}
     Obtains a clip region which contains the areas where the given ranges of
     text would be drawn.
   @end{short}
-  @arg{x-origin} and @arg{y-origin} are the top left point to center the
-  layout. @arg{index-ranges} should contain ranges of bytes in the layout's
-  text.
+  The argumentes @arg{x-origin} and @arg{y-origin} are the top left point to
+  center the layout. The @arg{ranges} list should contain ranges of bytes in
+  the layout's text.
 
   Note that the regions returned correspond to logical extents of the text
   ranges, not ink extents. So the drawn layout may in fact touch areas out of
@@ -79,59 +79,60 @@
   text, such as when text is selected.
   @see-class{pango-layout}
   @see-symbol{cairo-region-t}"
-  (let ((n (length index-ranges)))
+  (let ((n (length ranges)))
     (assert (zerop (mod n 2)))
     (let ((n-ranges (/ n 2)))
-      (with-foreign-object (ranges :int n)
+      (with-foreign-object (ranges-ar :int n)
         (let ((i 0))
           (map nil
                (lambda (x)
-                 (setf (mem-aref ranges :int i) x)
+                 (setf (mem-aref ranges-ar :int i) x)
                  (incf i))
-               index-ranges))
-        (%gdk-pango-layout-get-clip-region layout
-                                           x-origin
-                                           y-origin
-                                           index-ranges
-                                           n-ranges)))))
+               ranges))
+        (%gdk-pango-layout-clip-region layout
+                                       x-origin
+                                       y-origin
+                                       ranges-ar
+                                       n-ranges)))))
 
-(export 'gdk-pango-layout-get-clip-region)
+(export 'gdk-pango-layout-clip-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_layout_line_get_clip_region ()
+;;; -> gdk-pango-layout-line-clip-region
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_layout_line_get_clip_region"
-          %gdk-pango-layout-line-get-clip-region)
+          %gdk-pango-layout-line-clip-region)
     (:pointer (:struct cairo-region-t))
   (layout-line (g-boxed-foreign pango-layout-line))
   (x-origin :int)
   (y-origin :int)
-  (index-ranges (:pointer :int))
+  (ranges (:pointer :int))
   (n-ranges :int))
 
-(defun gdk-pango-layout-line-get-clip-region (line
-                                              x-origin y-origin index-ranges)
+(defun gdk-pango-layout-line-clip-region (line x-origin y-origin ranges)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[line]{a @class{pango-layout-line} structure}
-  @argument[x-origin]{x pixel where you intend to draw the layout line with this
-    clip}
-  @argument[y-origin]{baseline pixel where you intend to draw the layout line
-    with this clip}
-  @argument[index-ranges]{list of byte indexes into the layout, where even
-    members of list are start indexes and odd elements are end indexes}
-  @return{A clip region containing the given ranges.}
+ "@version{2021-4-5}
+  @argument[line]{a @class{pango-layout-line} instance}
+  @argument[x-origin]{an integer with the x pixel where you intend to draw the
+    layout line with this clip}
+  @argument[y-origin]{an integer with the baseline pixel where you intend to
+    draw the layout line with this clip}
+  @argument[ranges]{list of byte indexes into the layout, where even members of
+    list are start indexes and odd elements are end indexes}
+  @return{A @symbol{cairo-region-t} clip region containing the given ranges.}
   @begin{short}
     Obtains a clip region which contains the areas where the given ranges of
     text would be drawn.
   @end{short}
-  @arg{x-origin} and @arg{y-origin} are the top left position of the layout.
-  @arg{index-ranges} should contain ranges of bytes in the layout's text. The
-  clip region will include space to the left or right of the line, to the layout
-  bounding box, if you have indexes above or below the indexes contained inside
-  the line. This is to draw the selection all the way to the side of the layout.
-  However, the clip region is in line coordinates, not layout coordinates.
+  The arguments @arg{x-origin} and @arg{y-origin} are the top left position of
+  the layout. The @arg{ranges} list should contain ranges of bytes in the
+  layout's text. The clip region will include space to the left or right of the
+  line, to the layout bounding box, if you have indexes above or below the
+  indexes contained inside the line. This is to draw the selection all the way
+  to the side of the layout. However, the clip region is in line coordinates,
+  not layout coordinates.
 
   Note that the regions returned correspond to logical extents of the text
   ranges, not ink extents. So the drawn line may in fact touch areas out of
@@ -139,23 +140,23 @@
   text, such as when text is selected.
   @see-class{pango-layout-line}
   @see-symbol{cairo-region-t}"
-  (let ((n (length index-ranges)))
+  (let ((n (length ranges)))
     (assert (zerop (mod n 2)))
     (let ((n-ranges (/ n 2)))
-      (with-foreign-object (ranges :int n)
+      (with-foreign-object (ranges-ar :int n)
         (let ((i 0))
           (map nil
                (lambda (x)
-                 (setf (mem-aref ranges :int i) x)
+                 (setf (mem-aref ranges-ar :int i) x)
                  (incf i))
-               index-ranges))
-        (%gdk-pango-layout-line-get-clip-region line
-                                                x-origin
-                                                y-origin
-                                                index-ranges
-                                                n-ranges)))))
+               ranges))
+        (%gdk-pango-layout-line-clip-region line
+                                            x-origin
+                                            y-origin
+                                            ranges-ar
+                                            n-ranges)))))
 
-(export 'gdk-pango-layout-line-get-clip-region)
+(export 'gdk-pango-layout-line-clip-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_context_get ()
@@ -164,23 +165,21 @@
 (defcfun ("gdk_pango_context_get" gdk-pango-context-get)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @return{A new @class{pango-context} for the default display.}
+ "@version{2021-4-5}
+  @return{A new @class{pango-context} instance for the default display.}
   @begin{short}
-    Creates a @class{pango-context} object for the default GDK screen.
+    Creates a @class{pango-context} instance for the default GDK screen.
   @end{short}
-
-  The context must be freed when you are finished with it.
 
   When using GTK+, normally you should use the function
   @fun{gtk-widget-pango-context} instead of this function, to get the
   appropriate context for the widget you intend to render text onto.
 
-  The newly created context will have the default font options, see
-  @symbol{cairo-font-options-t}, for the default screen; if these options change
-  it will not be updated. Using the function @fun{gtk-widget-pango-context}
-  is more convenient if you want to keep a context around and track changes to
-  the screen's font rendering settings.
+  The newly created context will have the default font options, see the
+  @symbol{cairo-font-options-t} API, for the default screen. If these options
+  change it will not be updated. Using the function
+  @fun{gtk-widget-pango-context} is more convenient if you want to keep a
+  context around and track changes to the screen's font rendering settings.
   @see-class{pango-context}
   @see-symbol{cairo-font-options-t}
   @see-function{gtk-widget-pango-context}")
@@ -188,31 +187,30 @@
 (export 'gdk-pango-context-get)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pango_context_get_for_screen ()
+;;; gdk_pango_context_get_for_screen () -> gdk-pango-context-for-screen
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_context_get_for_screen" gdk-pango-context-for-screen)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
-  @argument[screen]{the @class{gdk-screen} for which the context is to be
-    created}
-  @return{A new @class{pango-context} object for @arg{screen}.}
+ "@version{2021-4-5}
+  @argument[screen]{the @class{gdk-screen} object for which the context is to
+    be created}
+  @return{A new @class{pango-context} instance for @arg{screen}.}
   @begin{short}
     Creates a Pango context for the screen.
   @end{short}
-
-  The context must be freed when you are finished with it.
 
   When using GTK+, normally you should use the function
   @fun{gtk-widget-pango-context} instead of this function, to get the
   appropriate context for the widget you intend to render text onto.
 
-  The newly created context will have the default font options, see
-  @symbol{cairo-font-options-t}, for the @arg{screen}; if these options change
-  it will not be updated. Using the function @fun{gtk-widget-pango-context}
-  is more convenient if you want to keep a context around and track changes to
-  the @arg{screen}'s font rendering settings.
+  The newly created context will have the default font options, see the
+  @symbol{cairo-font-options-t} API, for the screen. If these options change
+  it will not be updated. Using the function @fun{gtk-widget-pango-context} is
+  more convenient if you want to keep a context around and track changes to the
+  screens font rendering
+  settings.
   @see-class{pango-context}
   @see-class{gdk-screen}
   @see-symbol{cairo-font-options-t}
@@ -222,32 +220,39 @@
 (export 'gdk-pango-context-for-screen)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pango_context_get_for_display ()
-;;;
-;;; PangoContext *
-;;; gdk_pango_context_get_for_display (GdkDisplay *display);
-;;;
-;;; Creates a PangoContext for display .
-;;;
-;;; The context must be freed when you’re finished with it.
-;;;
-;;; When using GTK+, normally you should use gtk_widget_get_pango_context()
-;;; instead of this function, to get the appropriate context for the widget you
-;;; intend to render text onto.
-;;;
-;;; The newly created context will have the default font options (see
-;;; cairo_font_options_t) for the display; if these options change it will not
-;;; be updated. Using gtk_widget_get_pango_context() is more convenient if you
-;;; want to keep a context around and track changes to the font rendering
-;;; settings.
-;;;
-;;; display :
-;;;     the GdkDisplay for which the context is to be created
-;;;
-;;; Returns :
-;;;     a new PangoContext for display .
-;;;
-;;; Since 3.22
+;;; gdk_pango_context_get_for_display () -> gdk-pango-context-for-display
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(defcfun ("gdk_pango_context_get_for_display" gdk-pango-context-for-display)
+    (g-object pango-context :already-referenced)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-5}
+  @argument[display]{the @class{gdk-display} object for which the context is to
+    be created}
+  @return{A new @class{pango-context} instance for @arg{display}.}
+  @begin{short}
+    Creates a Pango context for the display.
+  @end{short}
+
+  When using GTK+, normally you should use the function
+  @fun{gtk-widget-pango-context} instead of this function, to get the
+  appropriate context for the widget you intend to render text onto.
+
+  The newly created context will have the default font options, see the
+  @symbol{cairo-font-options-t} API, for the display. If these options change
+  it will not be updated. Using the function @fun{gtk-widget-pango-context} is
+  more convenient if you want to keep a context around and track changes to the
+  font rendering settings.
+
+  Since 3.22
+  @see-class{gdk-display}
+  @see-class{pango-context}
+  @see-symbol{cairo-font-options-t}
+  @see-function{gtk-widget-pango-context}"
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-pango-context-for-display)
 
 ;;; --- End of file gdk.pango.lisp ---------------------------------------------

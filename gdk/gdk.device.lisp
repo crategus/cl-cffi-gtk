@@ -1504,7 +1504,7 @@ get_device_settings (GdkDevice *device)
             (mem-ref x :int)
             (mem-ref y :int))))
 
-(export 'gdk-device-get-position)
+(export 'gdk-device-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_position_double () -> gdk-device-position-double

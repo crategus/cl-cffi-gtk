@@ -671,9 +671,9 @@
 #+gdk-3-20
 (defcfun ("gdk_event_is_scroll_stop_event" gdk-event-is-scroll-stop-event)
     :boolean
- "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
-  @return{A @code{:boolean} wether a scroll event is a stop scroll event.}
+ "@version{2021-4-5}
+  @argument[event]{a @class{gdk-event} instance}
+  @return{A boolean wether a scroll event is a stop scroll event.}
   @begin{short}
     Check whether a scroll event is a stop scroll event.
   @end{short}
