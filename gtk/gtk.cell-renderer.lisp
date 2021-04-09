@@ -1302,7 +1302,7 @@
 (export 'gtk-cell-renderer-preferred-height-for-width)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_renderer_get_preferred_size ()
+;;; gtk_cell_renderer_get_preferred_size () -> gtk-cell-renderer-preferred-size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_get_preferred_size"
@@ -1314,14 +1314,14 @@
 
 (defun gtk-cell-renderer-preferred-size (cell widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{2021-4-5}
   @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[widget]{the @class{gtk-widget} object this cell renderer will be
     rendering to}
   @begin{return}
-    @code{minimum-size} -- a @symbol{gtk-requisition} instance with the minimum
+    @arg{minimum-size} -- a @class{gtk-requisition} instance with the minimum
     size @br{}
-    @code{natural-size} -- a @symbol{gtk-requisition} instance with the natural
+    @arg{natural-size} -- a @class{gtk-requisition} instance with the natural
     size
   @end{return}
   @begin{short}
@@ -1329,7 +1329,8 @@
     account the widget's preference for height-for-width management.
   @end{short}
   @see-class{gtk-cell-renderer}
-  @see-class{gtk-widget}"
+  @see-class{gtk-widget}
+  @see-class{gtk-requisition}"
   (let ((minimum-size (make-gtk-requisition))
         (natural-size (make-gtk-requisition)))
     (%gtk-cell-renderer-preferred-size cell widget minimum-size natural-size)

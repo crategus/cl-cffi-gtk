@@ -111,13 +111,15 @@
   :alloc (error "CairoSurface cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-surface atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'cairo-surface atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'cairo-surface 'type)
- "@version{2020-4-16}
+ "@version{2021-4-5}
   @begin{short}
-    @sym{cairo-surface} represents the type @symbol{cairo-surface-t} in GTK+.
+    The @sym{cairo-surface} structure represents a Cairo surface in GTK+.
   @end{short}
-  See the documentation of @symbol{cairo-surface-t} for more information.
+  See the documentation of the @symbol{cairo-surface-t} structure for more
+  information.
   @begin{pre}
 (define-g-boxed-opaque cairo-surface \"CairoSurface\"
   :alloc (error \"CairoSurface cannot be created from the Lisp side.\"))

@@ -787,6 +787,7 @@
     @begin[GtkImage]{subsection}
       A widget displaying an image.
 
+      @about-class{cairo-surface}
       @about-symbol{gtk-image-type}
       @about-class{gtk-image}
       @about-generic{gtk-image-file}
@@ -3822,6 +3823,7 @@ setup_tree (void)
     @begin[GtkWidget]{subsection}
       Base class for all widgets.
 
+      @about-class{cairo-context}
       @about-struct{gtk-requisition}
       @about-function{gtk-requisition-width}
       @about-function{gtk-requisition-height}
@@ -4040,6 +4042,18 @@ setup_tree (void)
       @about-function{gtk-widget-set-vexpand-set}
       @about-function{gtk-widget-queue-compute-expand}
       @about-function{gtk-widget-compute-expand}
+      @about-function{gtk-widget-init-template}
+      @about-function{gtk-widget-class-set-template}
+      @about-function{gtk-widget-class-set-template-from-resource}
+      @about-function{gtk-widget-get-template-child}
+      @about-function{gtk-widget-class-bind-template-child}
+      @about-function{gtk-widget-class-bind-template-child-internal}
+      @about-function{gtk-widget-class-bind-template-child-private}
+      @about-function{gtk-widget-class-bind-template-child-internal-private}
+      @about-function{gtk-widget-class-bind-template-child-full}
+      @about-function{gtk-widget-class-bind-template-callback}
+      @about-function{gtk-widget-class-bind-template-callback-full}
+      @about-function{gtk-widget-class-set-connect-func}
     @end{subsection}
     @begin[GtkContainer]{subsection}
       Base class for widgets which contain other widgets.

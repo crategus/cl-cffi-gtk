@@ -313,13 +313,14 @@
   :alloc (error "CairoContext cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-context atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'cairo-context atdoc:*class-name-alias*)
+      "CStruct"
       (documentation 'cairo-context 'type)
- "@version{2020-9-16}
+ "@version{2021-4-5}
   @begin{short}
-    @sym{cairo-context} represents the type @symbol{cairo-t} in GTK+.
+    The @sym{cairo-context} structure represents a Cairo context in GTK+.
   @end{short}
-  See the documentation of @symbol{cairo-t} for more information.
+  See the documentation of the @symbol{cairo-t} structure for more information.
   @begin{pre}
 (define-g-boxed-opaque cairo-context \"CairoContext\"
   :alloc (error \"CairoContext cannot be created from the Lisp side.\"))
@@ -371,10 +372,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-height 'function)
- "@version{2021-2-3}
+ "@version{2021-4-5}
   @syntax[]{(gtk-requisition-height instance) => height}
   @syntax[]{(setf (gtk-requisition-height instance) height)}
-  @argument[instance]{a @class{gtk-requisition} structure}
+  @argument[instance]{a @class{gtk-requisition} instance}
   @argument[height]{an integer with the height}
   @begin{short}
     Accessor of the @arg{height} slot of the @class{gtk-requisition} structure.
@@ -400,10 +401,10 @@
 (setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2021-3-2}
+ "@version{2021-4-5}
   @syntax[]{(gtk-requisition-width instance) => width}
   @syntax[]{(setf (gtk-requisition-width instance) width)}
-  @argument[instance]{a @class{gtk-requisition} structure}
+  @argument[instance]{a @class{gtk-requisition} instance}
   @argument[width]{an integer with the width}
   @begin{short}
     Accessor of the @arg{width} slot of the @class{gtk-requisition} structure.
@@ -8668,23 +8669,23 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-preferred-size (widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-4}
+ "@version{2021-4-5}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{return}
-    @code{minimum-size} -- a @class{gtk-requisition} with the minimum size,
-                           or @code{nil} @br{}
-    @code{natural-size} -- a @class{gtk-requisition} with the the natural size,
-                           or @code{nil}
+    @arg{minimum-size} -- a @class{gtk-requisition} instance with the minimum
+    size, or @code{nil} @br{}
+    @arg{natural-size} -- a @class{gtk-requisition} instance with the the
+    natural size, or @code{nil}
   @end{return}
   @begin{short}
-    Retrieves the minimum and natural size of a widget, taking into
-    account the widget's preference for height-for-width management.
+    Retrieves the minimum and natural size of a widget, taking into account the
+    widget's preference for height-for-width management.
   @end{short}
 
   This is used to retrieve a suitable size by container widgets which do not
   impose any restrictions on the child placement. It can be used to deduce
   toplevel window and menu sizes as well as child widgets in free-form
-  containers such as @class{gtk-layout}.
+  containers such as @class{gtk-layout} widget.
   @begin[Note]{dictionary}
     Handle with care. Note that the natural height of a height-for-width widget
     will generally be a smaller size than the minimum height, since the required
