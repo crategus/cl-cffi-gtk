@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -3442,9 +3442,9 @@
 ;;; void g_value_take_object (GValue *value, gpointer v_object);
 ;;;
 ;;; Sets the contents of a G_TYPE_OBJECT derived GValue to v_object and takes
-;;; over the ownership of the callers reference to v_object; the caller does not
-;;; have to unref it any more (i.e. the reference count of the object is not
-;;; increased).
+;;; over the ownership of the callers reference to v_object; the caller does
+;;; not have to unref it any more (i.e. the reference count of the object is
+;;; not increased).
 ;;;
 ;;; If you want the GValue to hold its own reference to v_object, use
 ;;; g_value_set_object() instead.
@@ -3849,22 +3849,21 @@
 ;;; struct GParamSpecGType
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: The name is changed to g-param-spec-g-type !?
-
-(defcstruct g-param-spec-g-type
+(defcstruct g-param-spec-gtype
   (:parent-instance (:pointer (:struct g-param-spec)))
   (:is-a-type g-type))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-param-spec-g-type atdoc:*symbol-name-alias*) "CStruct"
-      (gethash 'g-param-spec-g-type atdoc:*external-symbols*)
- "@version{2020-8-27}
+(setf (gethash 'g-param-spec-gtype atdoc:*symbol-name-alias*)
+      "CStruct"
+      (gethash 'g-param-spec-gtype atdoc:*external-symbols*)
+ "@version{2021-4-8}
   @begin{short}
     A @symbol{g-param-spec} derived structure that contains the meta data for
     @class{g-type} properties.
   @end{short}
   @begin{pre}
-(defcstruct g-param-spec-g-type
+(defcstruct g-param-spec-gtype
   (:parent-instance (:pointer (:struct g-param-spec)))
   (:is-a-type g-type))
   @end{pre}
@@ -3874,84 +3873,72 @@
   @end{table}
   @see-symbol{g-param-spec}")
 
-(export 'g-param-spec-g-type)
+(export 'g-param-spec-gtype)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_gtype ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: The name is changed to g-param-spec-g-type !?
-
-(defcfun ("g_param_spec_gtype" g-param-spec-g-type)
-    (:pointer (:struct g-param-spec-g-type))
+(defcfun ("g_param_spec_gtype" g-param-spec-gtype)
+    (:pointer (:struct g-param-spec-gtype))
  #+cl-cffi-gtk-documentation
- "@version{2020-8-27}
-  @argument[name]{a @code{:string} with the canonical name of the property
-    specified}
-  @argument[nick]{a @code{:string} with the nick name for the property
-    specified}
-  @argument[blurb]{a @code{:string} with the description of the property
-    specified}
+ "@version{2021-4-8}
+  @argument[name]{a string with the canonical name of the property specified}
+  @argument[nick]{a string with the nick name for the property specified}
+  @argument[blurb]{a string with the description of the property specified}
   @argument[is-a-type]{a @class{g-type} whose subtypes are allowed as values of
-    the property (use @var{+g-type-none+} for any type)}
+    the property (use the \"void\" type for any type)}
   @argument[flags]{flags of type @symbol{g-param-flags} for the property
     specified}
-  @return{A newly created @symbol{g-param-spec-g-type} parameter specification.}
+  @return{A newly created @symbol{g-param-spec-gtype} parameter specification.}
   @begin{short}
-    Creates a new parameter specification instance specifying a property of
-    type @var{G_TYPE_GTYPE} property.
+    Creates a new parameter specification instance specifying a \"GType\"
+    property.
   @end{short}
 
   See the function @fun{g-param-spec-internal} for details on property names.
-  @see-symbol{g-param-spec-g-type}
+  @see-class{g-type}
+  @see-symbol{g-param-spec-gtype}
   @see-symbol{g-param-flags}
   @see-function{g-param-spec-internal}"
   (name :string)
   (nick :string)
   (blurb :string)
-  (types-root g-type)
+  (is-a-type g-type)
   (flags g-param-flags))
 
-(export 'g-param-spec-g-type)
+(export 'g-param-spec-gtype)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_get_gtype ()
+;;; g_value_set_gtype () -> g-value-gtype
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: The name is changed to g-value-get-g-type !?
+(defun (setf g-value-gtype) (value gvalue)
+  (foreign-funcall "g_value_set_gtype"
+                   (:pointer (:struct g-value)) gvalue
+                   g-type value
+                   :void)
+  value)
 
-(defcfun ("g_value_get_gtype" g-value-get-g-type) g-type
+(defcfun ("g_value_get_gtype" g-value-gtype) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
-  @argument[gvalue]{a valid @symbol{g-value} of type @code{G_TYPE_GTYPE}}
+ "@version{2021-4-8}
+  @syntax[]{(g-value-gtype gvalue) => value}
+  @syntax[]{(setf (g-value-gtype gvalue) value)}
+  @argument[gvalue]{a valid @symbol{g-value} instance of type \"GType\"}
+  @argument[value]{a @class{g-type} value}
   @return{The @class{g-type} stored in @arg{gvalue}.}
-  @short{Get the contents of a @code{G_TYPE_GTYPE} @symbol{g-value}.}
-
-  Since 2.12"
+  @begin{short}
+    The function @sym{g-type-gtype} gets the contents of a \"GType\"
+    @symbol{g-value} instance.
+  @end{short}
+  The function @sym{(setf g-value-gtype)} sets the contents.
+  @see-symbol{g-value}
+  @see-class{g-type}"
   (gvalue (:pointer (:struct g-value))))
 
-(export 'g-value-get-g-type)
-
-;;; ----------------------------------------------------------------------------
-;;; g_value_set_gtype ()
-;;; ----------------------------------------------------------------------------
-
-;; TODO: The name is changed to g-value-set-g-type !?
-
-(defcfun ("g_value_set_gtype" g-value-set-g-type) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
-  @argument[gvalue]{a valid @symbol{g-value} of type @code{G_TYPE_GTYPE}}
-  @argument[value]{@class{g-type} to be set}
-  @begin{short}
-    Set the contents of a @code{G_TYPE_GTYPE} @symbol{g-value} to @arg{value}.
-  @end{short}
-
-  Since 2.12"
-  (gvalue (:pointer (:struct g-value)))
-  (value g-type))
-
-(export 'g-value-set-g-type)
+(export 'g-value-gtype)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_PARAM_SPEC_VARIANT()

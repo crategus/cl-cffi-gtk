@@ -783,9 +783,9 @@
 
 (defgeneric boxed-set-g-value (gvalue-ptr info proxy))
 
-(defmethod set-gvalue-for-type (gvalue-ptr
-                                (type-numeric (eql (gtype "GBoxed")))
-                                value)
+(defmethod set-g-value-for-type (gvalue-ptr
+                                 (type-numeric (eql (gtype "GBoxed")))
+                                 value)
   (if (g-type= (g-value-type gvalue-ptr) (g-type-strv))
       (setf (g-value-boxed gvalue-ptr)
             (convert-to-foreign value '(g-strv :free-from-foreign nil)))

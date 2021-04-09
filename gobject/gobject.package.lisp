@@ -367,13 +367,10 @@
   @begin[Enumeration and Flag Types]{section}
     The GLib type system provides fundamental types for enumeration and flags
     types. Flags types are like enumerations, but allow their values to be
-    combined by bitwise or. A registered enumeration or flags type associates a
-    name and a nickname with each allowed value, and the methods
-    @fun{g-enum-get-value-by-name}, @fun{g-enum-get-value-by-nick},
-    @fun{g-flags-get-value-by-name} and @fun{g-flags-get-value-by-nick} can look
-    up values by their name or nickname. When an enumeration or flags type is
-    registered with the GLib type system, it can be used as value type for
-    object properties, using @fun{g-param-spec-enum} or
+    combined by bitwise OR. A registered enumeration or flags type associates a
+    name and a nickname with each allowed value. When an enumeration or flags
+    type is registered with the GLib type system, it can be used as value type
+    for object properties, using the functions @fun{g-param-spec-enum} or
     @fun{g-param-spec-flags}.
 
     @about-symbol{g-enum-value}
@@ -569,9 +566,9 @@
     @about-function{g-param-spec-value-array}
     @about-symbol{g-param-spec-override}
     @about-function{g-param-spec-override}
-    @about-symbol{g-param-spec-g-type}
-    @about-function{g-param-spec-g-type}
-    @about-function{g-value-g-type}
+    @about-symbol{g-param-spec-gtype}
+    @about-function{g-param-spec-gtype}
+    @about-function{g-value-gtype}
     @about-symbol{g-param-spec-variant}
     @about-function{g-param-spec-variant}
     @about-function{g-value-variant}
