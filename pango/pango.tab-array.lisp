@@ -72,19 +72,20 @@
   :alloc (%pango-tab-array-new 0 nil))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-tab-array atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-tab-array atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'pango-tab-array 'type)
- "@version{2013-8-10}
+ "@version{2021-4-15}
   @begin{short}
-    A @sym{pango-tab-array} structure contains an array of tab stops. Each tab
-    stop has an alignment and a position.
+    A @sym{pango-tab-array} structure contains an array of tab stops.
   @end{short}
+  Each tab stop has an alignment and a position.
   @begin{pre}
 (define-g-boxed-opaque pango-tab-array \"PangoTabArray\"
   :alloc (%pango-tab-array-new))
   @end{pre}")
 
-(export (boxed-related-symbols 'pango-tab-array))
+(export 'pango-tab-array)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoTabAlign

@@ -132,15 +132,16 @@
 
 (defconstant +pango-scale+ 1024
  #+cl-cffi-gtk-documentation
- "@version{2013-8-27}
+ "@version{2021-4-15}
   @variable-value{1024}
   @begin{short}
     The @sym{+pange-scale+} constant represents the scale between dimensions
     used for Pango distances and device units.
   @end{short}
-  The definition of device units is dependent on the output device; it will
+  The definition of device units is dependent on the output device. It will
   typically be pixels for a screen, and points for a printer.
-  @sym{+pango-scale+} is currently 1024, but this may be changed in the future.
+  The @sym{+pango-scale+} value is currently 1024, but this may be changed in
+  the future.
 
   When setting font sizes, device units are always considered to be points as
   in \"12 point font\", rather than pixels.
@@ -415,9 +416,10 @@
   :alloc (%pango-glyph-string-new))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-glyph-string atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'pango-glyph-string atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'pango-glyph-string 'type)
- "@version{2013-6-29}
+ "@version{2021-4-15}
   @begin{short}
     The @sym{pango-glyph-string} structure is used to store strings of glyphs
     with geometry and visual attribute information.
@@ -427,7 +429,8 @@
   @begin{pre}
 (define-g-boxed-opaque pango-glyph-string \"PangoGlyphString\"
   :alloc (%pango-glyph-string-new))
-  @end{pre}")
+  @end{pre}
+  @see-class{pango-glyph-item}")
 
 (export (boxed-related-symbols 'pango-glyph-string))
 
@@ -440,6 +443,8 @@
 ;;; };
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: PangoGlyphItem is not a Gboxed type
+
 (define-g-boxed-opaque pango-glyph-item "PangoGlyphitem"
   :alloc (error "PangoGlyphItem cannot be created from the Lisp side."))
 
@@ -447,7 +452,7 @@
 (setf (gethash 'pango-glyph-item atdoc:*class-name-alias*)
       "CStruct"
       (documentation 'pango-glyph-item 'type)
- "@version{2013-6-29}
+ "@version{2021-4-15}
   @begin{short}
     A @sym{pango-glyph-item} structure is a pair of a @class{pango-item}
     structure and the glyphs resulting from shaping the text corresponding to
@@ -461,7 +466,7 @@
   @see-class{pango-layout}
   @see-class{pango-layout-line}")
 
-(export (boxed-related-symbols 'pango-glyph-item))
+(export 'pango-glyph-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoGlyphItemIter

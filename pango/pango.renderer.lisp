@@ -100,16 +100,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-renderer 'type)
- "@version{2013-6-29}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{pango-renderer} is a base class that contains the necessary logic for
-    rendering a @class{pango-layout} or @class{pango-layout-line}.
+    A @sym{pango-renderer} class is a base class that contains the necessary
+    logic for rendering @class{pango-layout} or a @class{pango-layout-line}
+     objects.
   @end{short}
-  By subclassing @sym{pango-renderer} and overriding operations such as
-  @code{draw_glyphs} and @code{draw_rectangle}, renderers for particular font
-  backends and destinations can be created.
-
-  Since 1.8")
+  By subclassing the @sym{pango-renderer} class and overriding operations such
+  as @code{draw_glyphs} and @code{draw_rectangle}, renderers for particular
+  font backends and destinations can be created.
+  @see-class{pango-layout}
+  @see-class{pango-layout-line}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoRenderPart
@@ -124,12 +125,13 @@
   (:strikethrough 3))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-render-part atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'pango-render-part atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'pango-render-part atdoc:*external-symbols*)
- "@version{2013-6-29}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{pango-render-part} defines different items to render for such purposes
-    as setting colors.
+    The @sym{pango-render-part} enumeration defines different items to render
+    for such purposes as setting colors.
   @end{short}
   @begin{pre}
 (define-g-enum \"PangoRenderPart\" pango-render-part
@@ -146,7 +148,7 @@
     @entry[:underline]{Underlines.}
     @entry[:strikethrough]{Strikethrough lines.}
   @end{table}
-  Since 1.8")
+  @see-class{pango-renderer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_RENDER_PART
