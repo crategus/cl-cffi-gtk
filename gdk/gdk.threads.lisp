@@ -41,11 +41,11 @@
 ;;;     gdk_threads_leave
 ;;;     gdk_threads_set_lock_functions
 ;;;     gdk_threads_add_idle
-;;;     gdk_threads_add_idle_full
+;;;     gdk_threads_add_idle_full                          not exported
 ;;;     gdk_threads_add_timeout
 ;;;     gdk_threads_add_timeout_full
 ;;;     gdk_threads_add_timeout_seconds
-;;;     gdk_threads_add_timeout_seconds_full
+;;;     gdk_threads_add_timeout_seconds_full               not exported
 ;;;
 ;;; Description
 ;;;
@@ -163,10 +163,8 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_init ()
+;;; gdk_threads_init ()                                    not exported
 ;;; ----------------------------------------------------------------------------
-
-;; not exported
 
 (defcfun ("gdk_threads_init" gdk-threads-init) :void
  #+cl-cffi-gtk-documentation
@@ -187,10 +185,8 @@
   @see-function{gdk-threads-leave}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_enter ()
+;;; gdk_threads_enter ()                                   not exported
 ;;; ----------------------------------------------------------------------------
-
-;; not exported
 
 (defcfun ("gdk_threads_enter" gdk-threads-enter) :void
  #+cl-cffi-gtk-documentation
@@ -207,10 +203,8 @@
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_leave ()
+;;; gdk_threads_leave ()                                   not exported
 ;;; ----------------------------------------------------------------------------
-
-;; not exported
 
 (defcfun ("gdk_threads_leave" gdk-threads-leave) :void
  #+cl-cffi-gtk-documentation
@@ -270,19 +264,27 @@
 ;;; gdk_threads_add_idle ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gdk-threads-add-idle (func)
+(defun gdk-threads-add-idle (func &key (priority +g-priority-default-idle+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-3}
+ "@version{2021-4-9}
   @argument[func]{a @symbol{g-source-func} callback function to call}
+  @argument[priority]{an integer with the priority of the idle source,
+    typically this will be in the range between @var{+g-priority-default-idle+}
+    and @var{+g-priority-high-idle+}}
   @return{An unsigned integer ID, greater than 0, of the event source.}
   @begin{short}
-    A wrapper for the common usage of the function
-    @fun{gdk-threads-add-idle-full} assigning the default priority,
-    @var{+g-priority-default-idle+}.
+    Adds a function to be called whenever there are no higher priority events
+    pending.
   @end{short}
+  If the function returns @em{false} it is automatically removed from the list
+  of event sources and will not be called again. The default for @arg{priority}
+  is @var{+g-priority-default-idle+}.
+
+  This variant of the function @fun{g-idle-add} calls the function with
+  the GDK lock held. It can be thought of a MT-safe version for GTK+ widgets.
   @see-symbol{g-source-func}
-  @see-function{gdk-threads-add-idle-full}"
-  (%gdk-threads-add-idle-full +g-priority-default-idle+
+  @see-function{g-idle-add}"
+  (%gdk-threads-add-idle-full priority
                               (callback g-source-func)
                               (allocate-stable-pointer func)
                               (callback stable-pointer-destroy-notify-cb)))
@@ -290,7 +292,7 @@
 (export 'gdk-threads-add-idle)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_add_idle_full ()
+;;; gdk_threads_add_idle_full ()                           not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_idle_full" %gdk-threads-add-idle-full) :uint
@@ -298,12 +300,6 @@
   (func :pointer)
   (data :pointer)
   (notify :pointer))
-
-;; The Lisp implementation does not support the arguments data and notify.
-;; The argument data is used in %gdk-threads-idle-full to pass the Lisp
-;; function func and the argument notify is used to pass the function
-;; stable-pointer-destroy-notify-cb which frees the allocated pointer
-;; to the Lisp function func.
 
 (defun gdk-threads-add-idle-full (priority func)
  #+cl-cffi-gtk-documentation
@@ -364,29 +360,40 @@ some_widget_finalize (GObject *object)
                               (allocate-stable-pointer func)
                               (callback stable-pointer-destroy-notify-cb)))
 
-(export 'gdk-threads-add-idle-full)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout ()
 ;;; ----------------------------------------------------------------------------
 
-;; The Lisp implementation does not support the argument data.
-
-(defun gdk-threads-add-timeout (interval func)
+(defun gdk-threads-add-timeout (interval func
+                                &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-3}
+ "@version{2021-4-9}
   @argument[interval]{an unsigned integer with the time between calls to the
     function, in milliseconds (1/1000ths of a second)}
   @argument[func]{a @symbol{g-source-func} callback function to call}
+  @argument[priority]{an integer with the priority of the timeout source,
+    typically this will be in the range between @var{+g-priority-default-idle+}
+    and @var{+g-priority-high-idle+}}
   @return{An unsigned integer ID, greater than 0, of the event source.}
   @begin{short}
-    A wrapper for the common usage of the function
-    @fun{gdk-threads-add-timeout-full} assigning the default priority,
-    @var{+g-priority-default+}.
+    Sets a function to be called at regular intervals holding the GDK lock,
+    with the given priority.
   @end{short}
+  The default priority is @var{+g-priority-default+}. The function is called
+  repeatedly until it returns @em{false}, at which point the timeout is
+  automatically destroyed and the function will not be called again.
+
+  Note that timeout functions may be delayed, due to the processing of other
+  event sources. Thus they should not be relied on for precise timing. After
+  each call to the timeout function, the time of the next timeout is
+  recalculated based on the current time and the given interval It does not
+  try to 'catch up' time lost in delays.
+
+  This variant of the function @fun{g-timeout-add} can be thought of a MT-safe
+  version for GTK+ widgets.
   @see-symbol{g-source-func}
-  @see-function{gdk-threads-add-timeout-full}"
-  (%gdk-threads-add-timeout-full +g-priority-default+
+  @see-function{g-timeout-add}"
+  (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback g-source-func)
                                  (allocate-stable-pointer func)
@@ -395,7 +402,7 @@ some_widget_finalize (GObject *object)
 (export 'gdk-threads-add-timeout)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_add_timeout_full ()
+;;; gdk_threads_add_timeout_full ()                        not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_timeout_full" %gdk-threads-add-timeout-full) :uint
@@ -404,8 +411,6 @@ some_widget_finalize (GObject *object)
   (func :pointer)
   (data :pointer)
   (notify :pointer))
-
-;; The Lisp implementation does not support the arguments data and notify.
 
 (defun gdk-threads-add-timeout-full (priority interval func)
  #+cl-cffi-gtk-documentation
@@ -469,30 +474,32 @@ static void some_widget_finalize (GObject *object)
                                  (allocate-stable-pointer func)
                                  (callback stable-pointer-destroy-notify-cb)))
 
-(export 'gdk-threads-add-timeout-full)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_seconds ()
 ;;; ----------------------------------------------------------------------------
 
-;; The Lisp implementation does not support the argument data.
-
-(defun gdk-threads-add-timeout-seconds (interval func)
+(defun gdk-threads-add-timeout-seconds (interval func
+                                        &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-3}
+ "@version{2021-4-9}
   @argument[interval]{an unsigned integer with the time between calls to the
     function, in seconds}
   @argument[func]{a @symbol{g-source-func} callback function to call}
+  @argument[priority]{an integer with the priority of the timeout source,
+    typically this will be in the range between @var{+g-priority-default-idle+}
+    and @var{+g-priority-high-idle+}}
   @return{An unsigned integer ID, greater than 0, of the event source.}
   @begin{short}
-    A wrapper for the common usage of the function
-    @fun{gdk-threads-add-timeout-seconds-full} assigning the default priority,
-    @var{+g-priority-default+}.
+    A variant of the function @fun{gdk-threads-add-timeout} with second
+    granularity.
   @end{short}
+  The default priority is @var{+g-priority-default+}. See the function
+  @fun{g-timeout-add-seconds} for a discussion of why it is a good idea to use
+  this function if you do not need finer granularity.
   @see-symbol{g-source-func}
-  @see-function{gdk-threads-add-timeout-full}"
+  @see-function{g-timeout-add-seconds}"
   (%gdk-threads-add-timeout-seconds-full
-                                 +g-priority-default+
+                                 priority
                                  interval
                                  (callback g-source-func)
                                  (allocate-stable-pointer func)
@@ -501,7 +508,7 @@ static void some_widget_finalize (GObject *object)
 (export 'gdk-threads-add-timeout-seconds)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_threads_add_timeout_seconds_full ()
+;;; gdk_threads_add_timeout_seconds_full ()                not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_timeout_seconds_full"
@@ -538,7 +545,5 @@ static void some_widget_finalize (GObject *object)
                                  (callback g-source-func)
                                  (allocate-stable-pointer func)
                                  (callback stable-pointer-destroy-notify-cb)))
-
-(export 'gdk-threads-add-timeout-seconds-full)
 
 ;;; --- End of file gdk.threads.lisp -------------------------------------------

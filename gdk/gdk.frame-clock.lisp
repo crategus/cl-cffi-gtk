@@ -159,9 +159,8 @@
   the function @fun{gdk-frame-clock-frame-time}.
 
   The frame time is reported in microseconds and generally in the same
-  timescale as the system monotonic time, however, it is not the same as the
-  time from the function @fun{g-get-monotonic-time}. The frame time does not
-  advance during the time a frame is being painted, and outside of a frame, an
+  timescale as the system monotonic time. The frame time does not advance
+  during the time a frame is being painted, and outside of a frame, an
   attempt is made so that all calls to the function
   @fun{gdk-frame-clock-frame-time} that are called at a \"similar\" time get
   the same value. This means that if different animations are timed by looking
@@ -249,10 +248,9 @@
 
 (defcfun ("gdk_frame_clock_get_frame_time" gdk-frame-clock-frame-time) :int64
  #+cl-cffi-gtk-documentation
- "@version{2020-11-12}
-  @argument[frame-clock]{a @class{gdk-frame-clock} object}
-  @return{An integer with a timestamp in microseconds, in the timescale of
-    the function @fun{g-get-monotonic-time}.}
+ "@version{2021-4-9}
+  @argument[clock]{a @class{gdk-frame-clock} object}
+  @return{An integer with a timestamp in microseconds.}
   @begin{short}
     Gets the time that should currently be used for animations.
   @end{short}
@@ -260,9 +258,8 @@
   position of everything in a frame. Outside of a frame, it is the time of the
   conceptual \"previous frame\", which may be either the actual previous frame
   time, or if that is too old, an updated time.
-  @see-class{gdk-frame-clock}
-  @see-function{g-get-monotonic-time}"
-  (frame-clock (g-object gdk-frame-clock)))
+  @see-class{gdk-frame-clock}"
+  (clock (g-object gdk-frame-clock)))
 
 (export 'gdk-frame-clock-frame-time)
 

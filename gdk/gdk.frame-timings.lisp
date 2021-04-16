@@ -169,11 +169,10 @@
 (defcfun ("gdk_frame_timings_get_frame_time" gdk-frame-timings-frame-time)
     :int64
  #+cl-cffi-gtk-documentation
- "@version{2020-11-12}
-  @argument[timings]{a @class{gdk-frame-timings} structure}
+ "@version{2021-4-9}
+  @argument[timings]{a @class{gdk-frame-timings} instance}
   @begin{return}
-    The frame time for the frame, in the timescale of the function
-    @fun{g-get-monotonic-time}.
+    An integer with the frame time for the frame.
   @end{return}
   @begin{short}
     Returns the frame time for the frame.
@@ -181,7 +180,6 @@
   This is the time value that is typically used to time animations for the
   frame. See the function @fun{gdk-frame-clock-frame-time}.
   @see-class{gdk-frame-timings}
-  @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-clock-frame-time}"
   (timings (g-boxed-foreign gdk-frame-timings)))
 
@@ -194,19 +192,18 @@
 (defcfun ("gdk_frame_timings_get_presentation_time"
            gdk-frame-timings-presentation-time) :int64
  #+cl-cffi-gtk-documentation
- "@version{2020-11-12}
-  @argument[timings]{a @class{gdk-frame-timings} structure}
+ "@version{2021-4-9}
+  @argument[timings]{a @class{gdk-frame-timings} instance}
   @begin{return}
-    The time the frame was displayed to the user, in the timescale of the
-    function @fun{g-get-monotonic-time}, or 0 if no presentation time is
-    available. See the function @fun{gdk-frame-timings-complete}.
+    An integer with the time the frame was displayed to the user, or 0 if no
+    presentation time is available. See the function
+    @fun{gdk-frame-timings-complete}.
   @end{return}
   @begin{short}
     Returns the presentation time.
   @end{short}
   This is the time at which the frame became visible to the user.
   @see-class{gdk-frame-timings}
-  @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-timings-complete}"
   (timings (g-boxed-foreign gdk-frame-timings)))
 
@@ -246,12 +243,11 @@
 (defcfun ("gdk_frame_timings_get_predicted_presentation_time"
            gdk-frame-timings-predicted-presentation-time) :int64
  #+cl-cffi-gtk-documentation
- "@version{2020-11-12}
-  @argument[timings]{a @class{gdk-frame-timings} structure}
+ "@version{2021-4-9}
+  @argument[timings]{a @class{gdk-frame-timings} instance}
   @begin{return}
-    An integer with the predicted time at which the frame will be presented, in
-    the timescale of the function @fun{g-get-monotonic-time}, or 0 if no
-    predicted presentation time is available.
+    An integer with the predicted time at which the frame will be presented,
+    or 0 if no predicted presentation time is available.
   @end{return}
   @begin{short}
     Gets the predicted time at which this frame will be displayed.
@@ -265,7 +261,6 @@
   latency. For example, a movie player may want this information for Audio/Video
   synchronization.
   @see-class{gdk-frame-timings}
-  @see-function{g-get-monotonic-time}
   @see-function{gdk-frame-clock-frame-time}
   @see-function{gdk-frame-timings-presentation-time}"
   (timings (g-boxed-foreign gdk-frame-timings)))
