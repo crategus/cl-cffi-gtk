@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; example-g-value.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -30,8 +30,8 @@
 (in-package :example-g-value)
 
 ;; A transformation from an integer to a string
-(defcallback int2string :void ((src-value (:pointer g-value))
-                               (dest-value (:pointer g-value)))
+(defcallback int2string :void ((src-value (:pointer (:struct g-value)))
+                               (dest-value (:pointer (:struct g-value))))
   (if (eql (g-value-int src-value) 42)
       (setf (g-value-string dest-value) "An important number")
       (setf (g-value-string dest-value) "What is that?")))
@@ -43,7 +43,7 @@
     ;; Initialization, setting and reading a value of type g-value
     (g-value-init value1 +g-type-string+)
     (setf (g-value-string value1) "string")
-    (format t "value1 = ~A~%" (g-value-get-string value1))
+    (format t "value1 = ~A~%" (g-value-string value1))
     (format t "type   = ~A~%" (g-value-type value1))
     (format t "name   = ~A~%~%" (g-value-type-name value1))
 
@@ -81,8 +81,8 @@
     (format t "value2 = ~A~%" (parse-g-value value2))
 
     ;; Register the transformation int2string
-    (g-value-register-transform-func +g-type-int+
-                                     +g-type-string+
+    (g-value-register-transform-func "gint"
+                                     "gchararray"
                                      (callback int2string))
     ;; Try the transformation
     (g-value-transform value1 value2)

@@ -7,6 +7,7 @@
   :depends-on (:cl-cffi-gtk)
   :components ((:file "gdk-example")
                (:file "event-key")
+               (:file "app-launch")
               ))
 
-;;; 2021-4-3
+;;; 2021-4-14

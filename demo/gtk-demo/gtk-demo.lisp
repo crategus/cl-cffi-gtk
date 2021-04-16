@@ -161,25 +161,29 @@
                                 "labels.lisp"
                                 "EXAMPLE-LABELS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "More Labels"
+                                "more-labels.lisp"
+                                "EXAMPLE-MORE-LABELS")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Images"
                                 "image.lisp"
                                 "DEMO-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "More Labels"
-                                "more-labels.lisp"
-                                "EXAMPLE-MORE-LABELS")
+                                "Info Bar"
+                                "info-bar.lisp"
+                                "EXAMPLE-INFO-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Progress Bar Widget"
                                 "progress-bar.lisp"
                                 "EXAMPLE-PROGRESS-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Level Bar"
+                                "../gtk-example/level-bar.lisp"
+                                "EXAMPLE-LEVEL-BAR")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Statusbar"
                                 "statusbar.lisp"
                                 "EXAMPLE-STATUSBAR")
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Info Bar"
-                                "info-bar.lisp"
-                                "EXAMPLE-INFO-BAR")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Button Widgets")))
