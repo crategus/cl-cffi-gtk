@@ -371,45 +371,45 @@ object3:propertyC -> object1:propertyA
 
 (defcfun ("g_object_bind_property" g-object-bind-property) (g-object g-binding)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-18}
-  @argument[source]{the source @class{g-object} instance}
-  @argument[source-property]{a string with the property on @arg{source} to bind}
-  @argument[target]{the target @class{g-object} instance}
-  @argument[target-property]{a string with the property on @arg{target} to bind}
+ "@version{*2021-4-16}
+  @argument[source]{the @class{g-object} source instance}
+  @argument[source-prop]{a string with the property on @arg{source} to bind}
+  @argument[target]{the @class{g-object} target instance}
+  @argument[target-prop]{a string with the property on @arg{target} to bind}
   @argument[flags]{a @symbol{g-binding-flags} value to pass to the binding}
   @begin{return}
     The @class{g-binding} instance representing the binding between the two
     @class{g-object} instances.
   @end{return}
   @begin{short}
-    Creates a binding between @arg{source-property} on @arg{source} and
-    @arg{target-property} on @arg{target}.
+    Creates a binding between @arg{source-prop} on @arg{source} and
+    @arg{target-prop} on @arg{target}.
   @end{short}
-  Whenever the @arg{source-property} is changed the @arg{target-property} is
+  Whenever the @arg{source-prop} is changed the @arg{target-prop} is
   updated using the same value. For instance:
   @begin{pre}
 (g-object-bind-property action \"active\" widget \"sensitive\" :default)
   @end{pre}
-  Will result in the @code{sensitive} property of the widget @class{g-object}
+  will result in the @code{sensitive} property of the widget @class{g-object}
   instance to be updated with the same value of the @code{active} property of
   the action @class{g-object} instance.
 
   If @arg{flags} contains @code{:bidirectional} then the binding will be
-  mutual. If @arg{target-property} on @arg{target} changes then the
-  @arg{source-property} on @arg{source} will be updated as well.
+  mutual. If @arg{target-prop} on @arg{target} changes then the
+  @arg{source-prop} on @arg{source} will be updated as well.
 
   The binding will automatically be removed when either the source or the
   target instances are finalized. To remove the binding without affecting the
   source and the target you can just call @code{g_object_unref()} on the
   returned @class{g-binding} instance.
 
-  A @class{g-object} can have multiple bindings.
+  A @class{g-object} instance can have multiple bindings.
   @see-class{g-binding}
   @see-class{g-object}"
   (source g-object)
-  (source-property :string)
+  (source-prop :string)
   (target g-object)
-  (target-property :string)
+  (target-prop :string)
   (flags g-binding-flags))
 
 (export 'g-object-bind-property)
