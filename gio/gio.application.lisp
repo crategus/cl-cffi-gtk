@@ -2,11 +2,11 @@
 ;;; gio.application.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.66 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -133,11 +133,15 @@
   (:send-enviroment 16)
   (:non-unique 32)
   (:can-override-app-id 64)
+  #+glib-2-60
   (:allow-replacement 128)
-  (:replace 256))
+  #+glib-2-60
+  (:replace 256)
+)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-application-flags atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'g-application-flags atdoc:*symbol-name-alias*)
+      "Flags"
       (gethash 'g-application-flags atdoc:*external-symbols*)
  "@version{2020-12-10}
   @begin{short}
@@ -216,7 +220,6 @@
    (inactivity-timeout
     g-application-inactivity-timeout
     "inactivity-timeout" "guint" t t)
-   #+glib-2-44
    (is-busy
     g-application-is-busy
     "is-busy" "gboolean" t nil)
@@ -226,11 +229,9 @@
    (is-remote
     g-application-is-remote
     "is-remote" "gboolean" t nil)
-   #+glib-2-42
    (resource-base-path
     g-application-resource-base-bath
-    "resource-base-path" "gchararray" t t)
-   ))
+    "resource-base-path" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
@@ -262,8 +263,8 @@
   this is the always the current instance. On Linux, the D-Bus session bus is
   used for communication.
 
-  The use of the @sym{g-application} class differs from some other commonly-used
-  uniqueness libraries, such as @code{libunique}, in important ways. The
+  The use of the @sym{g-application} class differs from some other commonly
+  used uniqueness libraries, such as @code{libunique}, in important ways. The
   application is not expected to manually register itself and check if it is the
   primary instance. Instead, the @code{main()} function of a @sym{g-application}
   instance should do very little more than instantiating the application
@@ -946,16 +947,15 @@
 
 (defun g-application-new (application-id flags)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
-  @argument[application-id]{the application ID}
-  @argument[flags]{the application flags}
+ "@version{2021-4-15}
+  @argument[application-id]{a string with the application ID}
+  @argument[flags]{the @symbol{g-application-flags} application flags}
   @return{A new @class{g-application} object.}
   @begin{short}
     Creates a new @class{g-application} object.
   @end{short}
-
-  The application ID must be valid. See the @fun{g-application-id-is-valid}
-  function.
+  The application ID must be valid. See the function
+  @fun{g-application-id-is-valid}.
   @see-class{g-application}
   @see-function{g-application-id-is-valid}"
   (make-instance 'g-application
@@ -967,8 +967,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_get_dbus_connection ()
 ;;;
-;;; GDBusConnection * g_application_get_dbus_connection
-;;;                                                 (GApplication *application);
+;;; GDBusConnection *
+;;; g_application_get_dbus_connection (GApplication *application);
 ;;;
 ;;; Gets the GDBusConnection being used by the application, or NULL.
 ;;;
@@ -995,8 +995,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_get_dbus_object_path ()
 ;;;
-;;; const gchar * g_application_get_dbus_object_path
-;;;                                                 (GApplication *application);
+;;; const gchar *
+;;; g_application_get_dbus_object_path (GApplication *application);
 ;;;
 ;;; Gets the D-Bus object path being used by the application, or NULL.
 ;;;
@@ -1276,78 +1276,80 @@
 
 (defun g-application-run (application argv)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2021-4-15}
   @argument[application]{a @class{g-application} object}
   @argument[argv]{a list of strings with commandline parameters, or @code{nil}}
   @return{An integer with the exit status.}
   @begin{short}
     Runs the application.
   @end{short}
+  This function is intended to be run from @code{main()} and its return value
+  is intended to be returned by @code{main()}. Although you are expected to
+  pass the @code{argc}, @code{argv} parameters from @code{main()} to this
+  function, it is possible to pass @code{nil} if @code{argv} is not available
+  or commandline handling is not required. Note that on Windows, @code{argc} and
+  @code{argv} are ignored, and the function @code{g_win32_get_command_line()}
+  is called internally, for proper support of Unicode commandline arguments.
 
-  This function is intended to be run from @code{main()} and its return value is
-  intended to be returned by @code{main()}. Although you are expected to pass
-  the @arg{argc}, @arg{argv} parameters from @code{main()} to this function, it
-  is possible to pass @code{nil} if @arg{argv} is not available or commandline
-  handling is not required.
+  The @class{g-application} object will attempt to parse the commandline
+  arguments. You can add commandline flags to the list of recognised options by
+  way of the function @fun{g-application-add-main-option-entries}. After this,
+  the \"handle-local-options\" signal is emitted, from which the application
+  can inspect the values of its GOptionEntrys.
 
-  First, the @code{local_command_line()} virtual function is invoked. This
-  function always runs on the local instance. It gets passed a pointer to a
-  @code{null}-terminated copy of @arg{argv} and is expected to remove the
-  arguments that it handled, shifting up remaining arguments. See Example 18,
-  \"Split commandline handling\" for an example of parsing @arg{argv} manually.
-  Alternatively, you may use the @code{GOptionContext} API.
+  The \"handle-local-options\" signal handler is a good place to handle options
+  such as \"--version\", where an immediate reply from the local process is
+  desired, instead of communicating with an already-running instance. A
+  \"handle-local-options\" signal handler can stop further processing by
+  returning a non-negative value, which then becomes the exit status of the
+  process.
 
-  The last argument to @code{local_command_line()} is a pointer to the status
-  variable which can be used to set the exit status that is returned from the
-  function @sym{g-application-run}.
-
-  If @code{local_command_line()} returns @em{true}, the command line is expected
-  to be completely handled, including possibly registering as the primary
-  instance, calling the functions @fun{g-application-activate} or
-  @fun{g-application-open}, etc.
-
-  If @code{local_command_line()} returns @code{nil} then the application is
-  registered and the \"command-line\" signal is emitted in the primary instance
-  (which may or may not be this instance). The signal handler gets passed a
-  @code{GApplicationCommandLine} object that (among other things) contains the
-  remaining @code{commandline} arguments that have not been handled by
-  @code{local_command_line()}.
-
-  If the application has the @code{:command-line} flag set then the default
-  implementation of @code{local_command_line()} always returns @code{nil}
-  immediately, resulting in the @code{commandline} always being handled in the
-  primary instance.
-
-  Otherwise, the default implementation of @code{local_command_line()} tries to
-  do a couple of things that are probably reasonable for most applications.
-  First, the function @fun{g-application-register} is called to attempt to
-  register the application. If that works, then the command line arguments are
-  inspected. If no @code{commandline} arguments are given, then the function
-  @fun{g-application-activate} is called. If @code{commandline} arguments are
-  given and the @code{:open} flag is set then they are assumed to be filenames
-  and the function @fun{g-application-open} is called.
-
-  If you need to handle commandline arguments that are not filenames, and you
-  do not mind @code{commandline} handling to happen in the primary instance, you
-  should set @code{:command-line} and process the @code{commandline} arguments
-  in your \"command-line\" signal handler, either manually or using the
-  @code{GOptionContext} API.
+  What happens next depends on the @symbol{g-application-flags} flags: if
+  @code{:handles-command-line} was specified then the remaining commandline
+  arguments are sent to the primary instance, where a \"command-line\" signal
+  is emitted. Otherwise, the remaining commandline arguments are assumed to be
+  a list of files. If there are no files listed, the application is activated
+  via the \"activate\" signal. If there are one or more files, and
+  @code{:handles-open} was specified then the files are opened via the \"open\"
+  signal.
 
   If you are interested in doing more complicated local handling of the
-  @code{commandline} then you should implement your own @class{g-application}
-  subclass and override @code{local_command_line()}. In this case, you most
-  likely want to return @em{true} from your @code{local_command_line()}
-  implementation to suppress the default handling. See Example 18,
-  \"Split commandline handling\" for an example.
+  commandline then you should implement your own @class{g-application} subclass
+  and override @code{local_command_line()}. In this case, you most likely want
+  to return @em{true} from your @code{local_command_line()} implementation to
+  suppress the default handling.
 
   If, after the above is done, the use count of the application is zero then
   the exit status is returned immediately. If the use count is non-zero then
   the default main context is iterated until the use count falls to zero, at
   which point 0 is returned.
 
-  If the @code{:is-service} flag is set, then the exiting at use count
-  of zero is delayed for a while (i.e. the instance stays around to provide
-  its service to others).
+  If the @code{:is-service} flag is set, then the service will run for as much
+  as 10 seconds with a use count of zero while waiting for the message that
+  caused the activation to arrive. After that, if the use count falls to zero
+  the application will exit immediately, except in the case that the function
+  @fun{g-application-inactivity-timeout} is in use.
+
+  This function sets the @code{prgname}, @fun{g-prgname}, if not already set,
+  to the basename of @code{argv[0]}.
+
+  Much like the function @fun{g-main-loop-run}, this function will acquire the
+  main context for the duration that the application is running.
+
+  Since 2.40, applications that are not explicitly flagged as services or
+  launchers (i.e. neither @code{:is-service} or @code{:is-launcher} are given
+  as flags) will check (from the default handler for @code{local_command_line})
+  if \"--gapplication-service\" was given in the command line. If this flag is
+  present then normal commandline processing is interrupted and the
+  @code{:is-service} flag is set. This provides a \"compromise\" solution
+  whereby running an application directly from the commandline will invoke it in
+  the normal way (which can be useful for debugging) while still allowing
+  applications to be D-Bus activated in service mode. The D-Bus service file
+  should invoke the executable with \"--gapplication-service\" as the sole
+  commandline argument. This approach is suitable for use by most graphical
+  applications but should not be used from applications like editors that need
+  precise control over when processes invoked via the commandline will exit and
+  what their exit status will be.
   @see-class{g-application}
   @see-function{g-application-activate}
   @see-function{g-application-open}

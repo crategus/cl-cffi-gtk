@@ -2,11 +2,11 @@
 ;;; gio.simple-action-group.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,10 +37,10 @@
 ;;; Functions
 ;;;
 ;;;     g_simple_action_group_new
-;;;     g_simple_action_group_lookup
-;;;     g_simple_action_group_insert
-;;;     g_simple_action_group_remove
-;;;     g_simple_action_group_add_entries
+;;;     g_simple_action_group_lookup                       deprecated
+;;;     g_simple_action_group_insert                       deprecated
+;;;     g_simple_action_group_remove                       deprecated
+;;;     g_simple_action_group_add_entries                  deprecated
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -68,11 +68,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-simple-action-group 'type)
- "@version{2013-8-9}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{g-simple-action-group} is a hash table filled with @class{g-action}
-    objects, implementing the @class{g-action-group} and @class{g-action-map}
-    interfaces.
+    The @sym{g-simple-action-group} class is a hash table filled with
+    @class{g-action} objects, implementing the @class{g-action-group} and
+    @class{g-action-map} interfaces.
   @end{short}
   @see-class{g-action}
   @see-class{g-action-map}
@@ -86,10 +86,10 @@
 
 (defun g-simple-action-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-9}
+ "@version{2021-4-15}
   @return{A new @class{g-simple-action-group} object.}
   @begin{short}
-    Creates a new, empty, @class{g-simple-action-group}.
+    Creates a new, empty, action group.
   @end{short}
   @see-class{g-simple-action-group}"
   (make-instance 'g-simple-action-group))
@@ -97,93 +97,118 @@
 (export 'g-simple-action-group-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_simple_action_group_lookup ()
+;;; g_simple_action_group_lookup ()                        deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_lookup" g-simple-action-group-lookup)
     (g-object g-action)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-9}
-  @argument[simple]{a @class{g-simple-action-group} object}
-  @argument[action-name]{the name of an action}
-  @return{A @class{g-action}, or @code{nil}.}
+ "@version{2021-4-15}
+  @argument[group]{a @class{g-simple-action-group} object}
+  @argument[name]{a string with the name of an action}
+  @return{A @class{g-action} object, or @code{nil}.}
   @begin{short}
-    Looks up the action with the name @arg{action-name} in the group.
+    Looks up the action with the name @arg{name} in the action group.
   @end{short}
 
   If no such action exists, returns @code{nil}.
+  @begin[Warning]{dictionary}
+    The function @sym{g-simple-action-group-lookup} has been deprecated since
+    version 2.38 and should not be used in newly-written code. Use the function
+    @fun{g-action-map-lookup-action}.
+  @end{dictionary}
   @see-class{g-action}
-  @see-class{g-simple-action-group}"
-  (simple (g-object g-simple-action-group))
-  (action-name :string))
+  @see-class{g-simple-action-group}
+  @see-function{g-action-map-lookup-action}"
+  (group (g-object g-simple-action-group))
+  (name :string))
 
 (export 'g-simple-action-group-lookup)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_simple_action_group_insert ()
+;;; g_simple_action_group_insert ()                        deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_insert" g-simple-action-group-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
-  @argument[simple]{a @class{g-simple-action-group} object}
+ "@version{2021-4-15}
+  @argument[group]{a @class{g-simple-action-group} object}
   @argument[action]{a @class{g-action} object}
   @begin{short}
     Adds an action to the action group.
   @end{short}
 
-  If the action group already contains an action with the same name as action
-  then the old action is dropped from the group.
+  If the action group already contains an action with the same name as
+  @arg{action} then the old action is dropped from the action group.
 
-  The action group takes its own reference on action.
-  @see-class{g-simple-action-group}"
-  (simple (g-object g-simple-action-group))
+  The action group takes its own reference on @arg{action}.
+  @begin[Warning]{dictionary}
+    The function @sym{g-simple-action-group-insert} has been deprecated since
+    version 2.38 and should not be used in newly-written code. Use the function
+    @fun{g-action-map-add-action}.
+  @end{dictionary}
+  @see-class{g-simple-action-group}
+  @see-function{g-action-map-add-action}"
+  (group (g-object g-simple-action-group))
   (action (g-object g-action)))
 
 (export 'g-simple-action-group-insert)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_simple_action_group_remove ()
+;;; g_simple_action_group_remove ()                        deprecated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_remove" g-simple-action-group-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
-  @argument[simple]{a @class{g-simple-action-group} object}
-  @argument[action-name]{the name of the action}
+ "@version{2021-4-15}
+  @argument[group]{a @class{g-simple-action-group} object}
+  @argument[name]{a string with the name of the action}
   @begin{short}
     Removes the named action from the action group.
   @end{short}
 
-  If no action of this name is in the group then nothing happens.
-  @see-class{g-simple-action-group}"
-  (simple (g-object g-simple-action-group))
-  (action-name :string))
+  If no action of this name is in the action group then nothing happens.
+  @begin[Warning]{dictionary}
+    The function @sym{g-simple-action-group-remove} has been deprecated since
+    version 2.38 and should not be used in newly-written code. Use the function
+    @fun{g-action-map-remove-action}.
+  @end{dictionary}
+  @see-class{g-simple-action-group}
+  @see-function{g-action-map-remove-action}"
+  (group (g-object g-simple-action-group))
+  (name :string))
 
 (export 'g-simple-action-group-remove)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_simple_action_group_add_entries ()
+;;; g_simple_action_group_add_entries ()                   deprecated
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-simple-action-group-add-entries))
 
-(defun g-simple-action-group-add-entries (simple entries)
+(defun g-simple-action-group-add-entries (group entries)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-3}
-  @argument[simple]{a @class{g-simple-action-group} object}
+ "@version{2021-4-15}
+  @argument[group]{a @class{g-simple-action-group} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
     A convenience function for creating multiple @class{g-simple-action}
     instances and adding them to the action group.
   @end{short}
-
-  This function calls the function @fun{g-action-map-add-action-entries}.
-  See the documentation of @fun{g-action-map-add-action-entries} for more
-  information about the parameters in the list to describe an action.
+  @begin[Note]{dictionary}
+    In the Lisp implementation this function calls the function
+    @fun{g-action-map-add-action-entries}. See the documentation of the
+    function @fun{g-action-map-add-action-entries} for more information about
+    the parameters in the list to describe an action.
+  @end{dictionary}
+  @begin[Warning]{dictionary}
+    The function @sym{g-simple-action-group-add-entries} has been deprecated
+    since version 2.38 and should not be used in newly-written code. Use the
+    function @fun{g-action-map-add-action-entries}.
+  @end{dictionary}
   @see-class{g-simple-action-group}
   @see-function{g-action-map-add-action-entries}"
-  (g-action-map-add-action-entries simple entries))
+  (g-action-map-add-action-entries group entries))
 
 (export 'g-simple-action-group-add-entries)
 

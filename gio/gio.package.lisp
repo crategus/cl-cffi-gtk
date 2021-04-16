@@ -49,7 +49,7 @@
       @about-symbol{g-file-copy-flags}
       @about-symbol{g-file-monitor-flags}
       @about-symbol{g-file-measure-flags}
-      @about-symbol{g-filesystem-preview-type}
+      @about-symbol{g-file-system-preview-type}
       @about-class{g-file}
       @about-function{GFileProgressCallback}
       @about-function{GFileReadMoreCallback}
@@ -234,6 +234,8 @@
         @about-function{g-app-info-supports-files}
         @about-function{g-app-info-supports-uris}
         @about-function{g-app-info-launch-uris}
+        @about-function{g-app-info-launch-uris-async}
+        @about-function{g-app-info-launch-uris-finish}
         @about-function{g-app-info-should-show}
         @about-function{g-app-info-can-delete}
         @about-function{g-app-info-delete}
@@ -252,6 +254,8 @@
         @about-function{g-app-info-get-fallback-for-type}
         @about-function{g-app-info-get-recommended-for-type}
         @about-function{g-app-info-launch-default-for-uri}
+        @about-function{g-app-info-launch-default-for-uri-async}
+        @about-function{g-app-info-launch-default-for-uri-finish}
         @about-function{g-app-launch-context-setenv}
         @about-function{g-app-launch-context-unsetenv}
         @about-function{g-app-launch-context-get-environment}
@@ -281,7 +285,7 @@
       @about-generic{g-themed-icon-use-default-fallbacks}
       @about-function{g-themed-icon-new}
       @about-function{g-themed-icon-new-from-names}
-      @about-function{g-themed-icon-new-witiconh-default-fallbacks}
+      @about-function{g-themed-icon-new-with-default-fallbacks}
       @about-function{g-themed-icon-prepend-name}
       @about-function{g-themed-icon-append-name}
     @end{subsection}
@@ -387,8 +391,7 @@
       @about-function{g-application-command-line-stdin}
       @about-function{g-application-command-line-create-file-for-arg}
       @about-function{g-application-command-line-getenv}
-      @about-function{g-application-command-line-set-exit-status}
-      @about-function{g-application-command-line-get-exit-status}
+      @about-function{g-application-command-line-exit-status}
       @about-function{g-application-command-line-print}
       @about-function{g-application-command-line-printerr}
     @end{subsection}
@@ -399,11 +402,11 @@
       @about-function{g-action-group-list-actions}
       @about-function{g-action-group-query-action}
       @about-function{g-action-group-has-action}
-      @about-function{g-action-group-get-action-enabled}
-      @about-function{g-action-group-get-action-parameter-type}
-      @about-function{g-action-group-get-action-state-type}
-      @about-function{g-action-group-get-action-state-hint}
-      @about-function{g-action-group-get-action-state}
+      @about-function{g-action-group-action-enabled}
+      @about-function{g-action-group-action-parameter-type}
+      @about-function{g-action-group-action-state-type}
+      @about-function{g-action-group-action-state-hint}
+      @about-function{g-action-group-action-state}
       @about-function{g-action-group-change-action-state}
       @about-function{g-action-group-activate-action}
       @about-function{g-action-group-action-added}
@@ -500,6 +503,45 @@
       @about-function{g-menu-link-iter-get-next}
       @about-function{g-menu-link-iter-get-value}
       @about-function{g-menu-link-iter-next}
+    @end{subsection}
+    @begin[GMenu]{subsection}
+      A simple implementation of GMenuModel.
+
+      @about-class{g-menu}
+      @about-class{g-menu-item}
+      @about-function{g-menu-new}
+      @about-function{g-menu-freeze}
+      @about-function{g-menu-insert}
+      @about-function{g-menu-prepend}
+      @about-function{g-menu-append}
+      @about-function{g-menu-insert-item}
+      @about-function{g-menu-append-item}
+      @about-function{g-menu-prepend-item}
+      @about-function{g-menu-insert-section}
+      @about-function{g-menu-prepend-section}
+      @about-function{g-menu-append-section}
+      @about-function{g-menu-append-submenu}
+      @about-function{g-menu-insert-submenu}
+      @about-function{g-menu-prepend-submenu}
+      @about-function{g-menu-remove}
+      @about-function{g-menu-remove-all}
+      @about-function{g-menu-item-new}
+      @about-function{g-menu-item-new-section}
+      @about-function{g-menu-item-new-submenu}
+      @about-function{g-menu-item-new-from-model}
+      @about-function{g-menu-item-set-label}
+      @about-function{g-menu-item-set-icon}
+      @about-function{g-menu-item-set-action-and-target-value}
+      @about-function{g-menu-item-set-action-and-target}
+      @about-function{g-menu-item-set-detailed-action}
+      @about-function{g-menu-item-set-section}
+      @about-function{g-menu-item-set-submenu}
+      @about-function{g-menu-item-get-attribute-value}
+      @about-function{g-menu-item-get-attribute}
+      @about-function{g-menu-item-get-link}
+      @about-function{g-menu-item-set-attribute-value}
+      @about-function{g-menu-item-set-attribute}
+      @about-function{g-menu-item-set-link}
     @end{subsection}
   @end{section}")
 

@@ -424,7 +424,7 @@
 ;;; enum GFilesystemPreviewType
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Type initializer 'g_file_system_preview_type_get_type' is not available
+;; FIXME: This is not a GEnum enumeration.
 
 (define-g-enum "GFileSystemPreviewType" g-file-system-preview-type
   (:export t
@@ -434,12 +434,13 @@
   (:never 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-file-system-preview-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'g-file-system-preview-type atdoc:*symbol-name-alias*)
+      "Enum"
       (gethash 'g-file-system-preview-type atdoc:*external-symbols*)
- "@version{2013-7-12}
+ "@version{2021-4-15}
   @begin{short}
-    Indicates a hint from the file system whether files should be previewed in a
-    file manager. Returned as the value of the key
+    Indicates a hint from the file system whether files should be previewed in
+    a file manager. Returned as the value of the key
     @code{G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW}.
   @end{short}
   @begin{pre}
@@ -455,7 +456,8 @@
     @entry[:if-local]{Preview files if user has requested preview of
       \"local\" files.}
     @entry[:never]{Never preview files.}
-  @end{table}")
+  @end{table}
+  @see-class{g-file}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GFile

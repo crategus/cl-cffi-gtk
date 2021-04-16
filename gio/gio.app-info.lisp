@@ -2,11 +2,11 @@
 ;;; gio.app-info.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,14 +28,16 @@
 ;;;
 ;;; GAppInfo
 ;;;
-;;; Application information and launch contexts
+;;;     Application information and launch contexts
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GAppInfoCreateFlags
 ;;;     GAppInfo
 ;;;     GAppInfoIface
 ;;;     GAppLaunchContext
+;;;
+;;; Functions
 ;;;
 ;;;     g_app_info_create_from_commandline
 ;;;     g_app_info_dup
@@ -51,6 +53,8 @@
 ;;;     g_app_info_supports_files
 ;;;     g_app_info_supports_uris
 ;;;     g_app_info_launch_uris
+;;;     g_app_info_launch_uris_async
+;;;     g_app_info_launch_uris_finish
 ;;;     g_app_info_should_show
 ;;;     g_app_info_can_delete
 ;;;     g_app_info_delete
@@ -69,6 +73,8 @@
 ;;;     g_app_info_get_fallback_for_type
 ;;;     g_app_info_get_recommended_for_type
 ;;;     g_app_info_launch_default_for_uri
+;;;     g_app_info_launch_default_for_uri_async
+;;;     g_app_info_launch_default_for_uri_finish
 ;;;     g_app_launch_context_setenv
 ;;;     g_app_launch_context_unsetenv
 ;;;     g_app_launch_context_get_environment
@@ -77,21 +83,29 @@
 ;;;     g_app_launch_context_launch_failed
 ;;;     g_app_launch_context_new
 ;;;
+;;; Signals
+;;;
+;;;     void    launch-failed    Run Last
+;;;     void    launched         Run Last
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GInterface
-;;;    +----GAppInfo
+;;;     GFlags
+;;;     ╰── GAppInfoCreateFlags
 ;;;
-;;;   GObject
-;;;    +----GAppLaunchContext
+;;;     GInterface
+;;;     ╰── GAppInfo
+;;;
+;;;     GObject
+;;;     ╰── GAppLaunchContext
 ;;;
 ;;; Prerequisites
 ;;;
-;;; GAppInfo requires GObject.
+;;;     GAppInfo requires GObject.
 ;;;
 ;;; Known Implementations
 ;;;
-;;; GAppInfo is implemented by GDesktopAppInfo.
+;;;     GAppInfo is implemented by GDesktopAppInfo.
 ;;;
 ;;; Description
 ;;;
@@ -106,8 +120,8 @@
 ;;; work if a set of suitable GIO extensions (such as gvfs 2.26 compiled with
 ;;; FUSE support), is available and operational; if this is not the case, the
 ;;; URI will be passed unmodified to the application. Some URIs, such as
-;;; mailto:, of course cannot be mapped to a POSIX path (in gvfs there's no FUSE
-;;; mount for it); such URIs will be passed unmodified to the application.
+;;; mailto:, of course cannot be mapped to a POSIX path (in gvfs there's no
+;;; FUSE mount for it); such URIs will be passed unmodified to the application.
 ;;;
 ;;; Specifically for gvfs 2.26 and later, the POSIX URI will be mapped back to
 ;;; the GIO URI in the GFile constructors (since gvfs implements the GVfs
@@ -134,8 +148,8 @@
 ;;;
 ;;; This code will work when both cdda://sr0/Track 1.wav and
 ;;; /home/user/.gvfs/cdda on sr0/Track 1.wav is passed to the application. It
-;;; should be noted that it's generally not safe for applications to rely on the
-;;; format of a particular URIs. Different launcher applications (e.g. file
+;;; should be noted that it's generally not safe for applications to rely on
+;;; the format of a particular URIs. Different launcher applications (e.g. file
 ;;; managers) may have different ideas of what a given URI means.
 ;;; ----------------------------------------------------------------------------
 
@@ -179,11 +193,15 @@
    :type-initializer "g_app_info_get_type"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-app-info atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'g-app-info atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'g-app-info 'type)
- "@version{2013-10-31}
-  Information about an installed application and methods to launch it with
-  file arguments.")
+ "@version{2021-4-13}
+  @begin{short}
+    Information about an installed application and methods to launch it with
+    file arguments.
+  @end{short}
+  @see-class{g-app-launch-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GAppInfoIface
@@ -328,23 +346,45 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-app-launch-context 'type)
- "@version{2014-9-20}
+ "@version{2021-4-13}
   @begin{short}
-    Integrating the launch with the launching application. This is used to
-    handle for instance startup notification and launching the new application
-    on the same screen as the launching window.
+    Integrating the launch with the launching application.
   @end{short}
+  This is used to handle for instance startup notification and launching the
+  new application on the same screen as the launching window.
   @begin[Signal Details]{dictionary}
     @subheading{The \"launch-failed\" signal}
+      The signal is emitted when a @class{g-app-info} launch fails. The startup
+      notification ID is provided, so that the launcher can cancel the startup
+      notification.
       @begin{pre}
- lambda (launch-context arg)   : Run Last
+ lambda (context startup-notify-id)    :run-last
       @end{pre}
-
+      @begin[code]{table}
+        @entry[context]{The @sym{g-app-launch-context} object emitting the
+          signal.}
+        @entry[startup-notify-id]{A string with the startup notification ID
+          for the failed launch.}
+      @end{table}
     @subheading{The \"launched\" signal}
+      The signal is emitted when a @class{g-app-info} object is successfully
+      launched. The argument @arg{platform-data} is an @type{g-variant}
+      dictionary mapping strings to variants, i.e. @code{a{sv@}}, which contains
+      additional, platform-specific data about this launch. On UNIX, at least
+      the \"pid\" and \"startup-notification-id\" keys will be present.
       @begin{pre}
- lambda (launch-context arg1 arg2)
+ lambda (context info platform-data)    :run-last
       @end{pre}
-  @end{dictionary}")
+      @begin[code]{table}
+        @entry[context]{The @sym{g-app-launch-context} object emitting the
+          signal.}
+        @entry[info]{The @class{g-app-info} object that was just launched.}
+        @entry[platform-data]{A @type{g-variant} instance with additional
+          platform-specific data for this launch.}
+      @end{table}
+  @end{dictionary}
+  @see-class{g-app-info}
+  @see-class{gdk-app-launch-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_app_info_create_from_commandline ()
@@ -357,10 +397,10 @@
 ;;; Creates a new GAppInfo from the given information.
 ;;;
 ;;; Note that for commandline, the quoting rules of the Exec key of the
-;;; freedesktop.org Desktop Entry Specification are applied. For example, if the
-;;; commandline contains percent-encoded URIs, the percent-character must be
-;;; doubled in order to prevent it from being swallowed by Exec key unquoting.
-;;; See the specification for exact quoting rules.
+;;; freedesktop.org Desktop Entry Specification are applied. For example, if
+;;; the commandline contains percent-encoded URIs, the percent-character must
+;;; be doubled in order to prevent it from being swallowed by Exec key
+;;; unquoting. See the specification for exact quoting rules.
 ;;;
 ;;; commandline :
 ;;;     the commandline to use
@@ -418,8 +458,8 @@
 ;;; application. The exact format of the id is platform dependent. For instance,
 ;;; on Unix this is the desktop file id from the xdg menu specification.
 ;;;
-;;; Note that the returned ID may be NULL, depending on how the appinfo has been
-;;; constructed.
+;;; Note that the returned ID may be NULL, depending on how the appinfo has
+;;; been constructed.
 ;;;
 ;;; appinfo :
 ;;;     a GAppInfo.
@@ -471,8 +511,8 @@
 ;;;     a GAppInfo.
 ;;;
 ;;; Returns :
-;;;     a string containing a description of the application appinfo, or NULL if
-;;;     none.
+;;;     a string containing a description of the application appinfo, or NULL
+;;;     if none.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -530,14 +570,14 @@
 ;;;
 ;;; Launches the application. Passes files to the launched application as
 ;;; arguments, using the optional launch_context to get information about the
-;;; details of the launcher (like what screen it is on). On error, error will be
-;;; set accordingly.
+;;; details of the launcher (like what screen it is on). On error, error will
+;;; be set accordingly.
 ;;;
 ;;; To launch the application without arguments pass a NULL files list.
 ;;;
-;;; Note that even if the launch is successful the application launched can fail
-;;; to start if it runs into problems during startup. There is no way to detect
-;;; this.
+;;; Note that even if the launch is successful the application launched can
+;;; fail to start if it runs into problems during startup. There is no way to
+;;; detect this.
 ;;;
 ;;; Some URIs can be changed when passed through a GFile (for instance
 ;;; unsupported URIs with strange formats like mailto:), so if you have a
@@ -608,15 +648,15 @@
 ;;;                                  GError **error);
 ;;;
 ;;; Launches the application. This passes the uris to the launched application
-;;; as arguments, using the optional launch_context to get information about the
-;;; details of the launcher (like what screen it is on). On error, error will be
-;;; set accordingly.
+;;; as arguments, using the optional launch_context to get information about
+;;; the details of the launcher (like what screen it is on). On error, error
+;;; will be set accordingly.
 ;;;
 ;;; To launch the application without arguments pass a NULL uris list.
 ;;;
-;;; Note that even if the launch is successful the application launched can fail
-;;; to start if it runs into problems during startup. There is no way to detect
-;;; this.
+;;; Note that even if the launch is successful the application launched can
+;;; fail to start if it runs into problems during startup. There is no way to
+;;; detect this.
 ;;;
 ;;; appinfo :
 ;;;     a GAppInfo
@@ -632,6 +672,70 @@
 ;;;
 ;;; Returns :
 ;;;     TRUE on successful launch, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_app_info_launch_uris_async ()
+;;;
+;;; void
+;;; g_app_info_launch_uris_async (GAppInfo *appinfo,
+;;;                               GList *uris,
+;;;                               GAppLaunchContext *context,
+;;;                               GCancellable *cancellable,
+;;;                               GAsyncReadyCallback callback,
+;;;                               gpointer user_data);
+;;;
+;;; Async version of g_app_info_launch_uris().
+;;;
+;;; The callback is invoked immediately after the application launch, but it
+;;; waits for activation in case of D-Bus–activated applications and also
+;;; provides extended error information for sandboxed applications, see notes
+;;; for g_app_info_launch_default_for_uri_async().
+;;;
+;;; appinfo :
+;;;     a GAppInfo
+;;;
+;;; uris :
+;;;     a GList containing URIs to launch.
+;;;
+;;; context :
+;;;     a GAppLaunchContext or NULL.
+;;;
+;;; cancellable :
+;;;     a GCancellable.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is done.
+;;;
+;;; user_data :
+;;;     data to pass to callback .
+;;;
+;;; Since 2.60
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_app_info_launch_uris_finish ()
+;;;
+;;; gboolean
+;;; g_app_info_launch_uris_finish (GAppInfo *appinfo,
+;;;                                GAsyncResult *result,
+;;;                                GError **error);
+;;;
+;;; Finishes a g_app_info_launch_uris_async() operation.
+;;;
+;;; appinfo :
+;;;     a GAppInfo
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError.
+;;;
+;;; Returns :
+;;;     TRUE on successful launch, FALSE otherwise.
+;;;
+;;; Since 2.60
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -695,8 +799,8 @@
 ;;;
 ;;; Removes all changes to the type associations done by
 ;;; g_app_info_set_as_default_for_type(),
-;;; g_app_info_set_as_default_for_extension(), g_app_info_add_supports_type() or
-;;; g_app_info_remove_supports_type().
+;;; g_app_info_set_as_default_for_extension(), g_app_info_add_supports_type()
+;;; or g_app_info_remove_supports_type().
 ;;;
 ;;; content_type :
 ;;;     a content type
@@ -757,8 +861,8 @@
 ;;;
 ;;; Sets the application as the last used application for a given type. This
 ;;; will make the application appear as first in the list returned by
-;;; g_app_info_get_recommended_for_type(), regardless of the default application
-;;; for that content type.
+;;; g_app_info_get_recommended_for_type(), regardless of the default
+;;; application for that content type.
 ;;;
 ;;; appinfo :
 ;;;     a GAppInfo.
@@ -838,11 +942,11 @@
 ;;;
 ;;; const char ** g_app_info_get_supported_types (GAppInfo *appinfo);
 ;;;
-;;; Retrieves the list of content types that app_info claims to support. If this
-;;; information is not provided by the environment, this function will return
-;;; NULL. This function does not take in consideration associations added with
-;;; g_app_info_add_supports_type(), but only those exported directly by the
-;;; application.
+;;; Retrieves the list of content types that app_info claims to support. If
+;;; this information is not provided by the environment, this function will
+;;; return NULL. This function does not take in consideration associations
+;;; added with g_app_info_add_supports_type(), but only those exported directly
+;;; by the application.
 ;;;
 ;;; appinfo :
 ;;;     a GAppInfo that can handle files
@@ -959,27 +1063,88 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_app_info_launch_default_for_uri ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_app_info_launch_default_for_uri"
+          %g-app-info-launch-default-for-uri) :boolean
+  (uri :string)
+  (context (g-object g-app-launch-context))
+  (err :pointer))
+
+(defun g-app-info-launch-default-for-uri (uri context)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-14}
+  @argument[uri]{a string with the URI to show}
+  @argument[context]{an optional @class{g-app-launch-context} object}
+  @return{@em{True} on sucess, @em{false} on error.}
+  @begin{short}
+    Utility function that launches the default application registered to handle
+    the specified URI.
+  @end{short}
+  Synchronous I/O is done on the URI to detect the type of the file if required.
+  @see-class{g-app-info}"
+  (with-ignore-g-error (err)
+    (%g-app-info-launch-default-for-uri uri context err)))
+
+(export 'g-app-info-launch-default-for-uri)
+
+;;; ----------------------------------------------------------------------------
+;;; g_app_info_launch_default_for_uri_async ()
 ;;;
-;;; gboolean g_app_info_launch_default_for_uri
-;;;                                          (const char *uri,
-;;;                                           GAppLaunchContext *launch_context,
-;;;                                           GError **error);
+;;; void
+;;; g_app_info_launch_default_for_uri_async (const char *uri,
+;;;                                          GAppLaunchContext *context,
+;;;                                          GCancellable *cancellable,
+;;;                                          GAsyncReadyCallback callback,
+;;;                                          gpointer user_data);
 ;;;
-;;; Utility function that launches the default application registered to handle
-;;; the specified uri. Synchronous I/O is done on the uri to detect the type of
-;;; the file if required.
+;;; Async version of g_app_info_launch_default_for_uri().
+;;;
+;;; This version is useful if you are interested in receiving error information
+;;; in the case where the application is sandboxed and the portal may present
+;;; an application chooser dialog to the user.
+;;;
+;;; This is also useful if you want to be sure that the D-Bus–activated
+;;; applications are really started before termination and if you are
+;;; interested in receiving error information from their activation.
 ;;;
 ;;; uri :
 ;;;     the uri to show
 ;;;
-;;; launch_context :
-;;;     an optional GAppLaunchContext
+;;; context :
+;;;     an optional GAppLaunchContext.
+;;;
+;;; cancellable :
+;;;     a GCancellable.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is done.
+;;;
+;;; user_data :
+;;;     data to pass to callback .
+;;;
+;;; Since 2.50
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_app_info_launch_default_for_uri_finish ()
+;;;
+;;; gboolean
+;;; g_app_info_launch_default_for_uri_finish (GAsyncResult *result,
+;;;                                           GError **error);
+;;;
+;;; Finishes an asynchronous launch-default-for-uri operation.
+;;;
+;;; result :
+;;;     a GAsyncResult
 ;;;
 ;;; error :
-;;;     a GError.
+;;;     return location for an error, or NULL.
 ;;;
 ;;; Returns :
-;;;     TRUE on success, FALSE on error.
+;;;     TRUE if the launch was successful, FALSE if error is set
+;;;
+;;; Since 2.50
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1010,8 +1175,8 @@
 ;;; void g_app_launch_context_unsetenv (GAppLaunchContext *context,
 ;;;                                     const char *variable);
 ;;;
-;;; Arranges for variable to be unset in the child's environment when context is
-;;; used to launch an application.
+;;; Arranges for variable to be unset in the child's environment when context
+;;; is used to launch an application.
 ;;;
 ;;; context :
 ;;;     a GAppLaunchContext
@@ -1067,10 +1232,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_app_launch_context_get_startup_notify_id ()
 ;;;
-;;; char * g_app_launch_context_get_startup_notify_id
-;;;                                                 (GAppLaunchContext *context,
-;;;                                                  GAppInfo *info,
-;;;                                                  GList *files);
+;;; char *
+;;; g_app_launch_context_get_startup_notify_id (GAppLaunchContext *context,
+;;;                                             GAppInfo *info,
+;;;                                             GList *files);
 ;;;
 ;;; Initiates startup notification for the application and returns the
 ;;; DESKTOP_STARTUP_ID for the launched operation, if supported.
@@ -1094,8 +1259,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_app_launch_context_launch_failed ()
 ;;;
-;;; void g_app_launch_context_launch_failed (GAppLaunchContext *context,
-;;;                                          const char *startup_notify_id);
+;;; void
+;;; g_app_launch_context_launch_failed (GAppLaunchContext *context,
+;;;                                     const char *startup_notify_id);
 ;;;
 ;;; Called when an application has failed to launch, so that it can cancel the
 ;;; application startup notification started in
@@ -1114,8 +1280,8 @@
 ;;;
 ;;; GAppLaunchContext * g_app_launch_context_new (void);
 ;;;
-;;; Creates a new application launch context. This is not normally used, instead
-;;; you instantiate a subclass of this, such as GdkAppLaunchContext.
+;;; Creates a new application launch context. This is not normally used,
+;;; instead you instantiate a subclass of this, such as GdkAppLaunchContext.
 ;;;
 ;;; Returns :
 ;;;     a GAppLaunchContext.

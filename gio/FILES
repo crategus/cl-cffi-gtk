@@ -1,4 +1,4 @@
-Content from the GIO Reference Manual for Version 2.66
+Content from the GIO Reference Manual for Version 2.68
 
     *   - needs update
     %   - not fully implemented
@@ -17,20 +17,20 @@ File Operations
 
 File types and applications
 
-  gio.content-type.lisp        - Platform-specific content typing  - GIO 2.66 &
-  gio.app-info.lisp            - GAppInfo                          - GIO 2.40%
+  gio.content-type.lisp        - Platform-specific content typing  - GIO 2.66
+  gio.app-info.lisp            - GAppInfo                          - GIO 2.68
 
   not implemented              - GAppInfoMonitor
   not implemented              - GDesktopAppInfo
 
 Icons
 
-  gio.icon.lisp                - GIcon                             - GIO 2.40&
+  gio.icon.lisp                - GIcon                             - GIO 2.68 &
 
   not implemented              - GFileIcon
   not implemented              - GLoadableIcon
 
-  gio.themed-icon.lisp         - GThemedIcon                       - GIO 2.40&
+  gio.themed-icon.lisp         - GThemedIcon                       - GIO 2.68
   gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.40&
   gio.emblem.lisp              - An object for emblems             - GIO 2.40&
 
@@ -40,7 +40,7 @@ Resources
 
 Application support
 
-  gio.application.lisp         - GApplication                      - GIO 2.66 &
+  gio.application.lisp         - GApplication                      - GIO 2.68 &
   gio.appliation-command-line  - GApplicationCommandLine           - GIO 2.62 &
   gio.action-group.lisp        - GActionGroup                      - GIO 2.62 &
   gio.action-map.lisp          - GActionMap                        - GIO 2.62
@@ -62,4 +62,4 @@ Application support
   not implemented              - GDBusMenuModel
   not implemented              - GNotification
 
-;;; 2020-12-9
+;;; 2021-4-15

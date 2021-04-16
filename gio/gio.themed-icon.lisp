@@ -2,11 +2,11 @@
 ;;; gio.themed-icon.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; GThemedIcon
 ;;;
-;;; Icon theming support
+;;;     Icon theming support
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GThemedIcon
+;;;
+;;; Functions
 ;;;
 ;;;     g_themed_icon_new
 ;;;     g_themed_icon_new_from_names
@@ -40,16 +42,27 @@
 ;;;     g_themed_icon_prepend_name
 ;;;     g_themed_icon_append_name
 ;;;     g_themed_icon_get_names
+;;;
+;;; Properties
+;;;
+;;;        char*   name                         Write / Construct Only
+;;;       GStrv    names                        Read / Write / Construct Only
+;;;    gboolean    use-default-fallbacks    	Read / Write / Construct Only
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GThemedIcon
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GThemedIcon implements GIcon.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GThemedIcon
-;;;
-;;; typedef struct _GThemedIcon GThemedIcon;
-;;;
-;;; An implementation of GIcon for themed icons.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GThemedIcon" g-themed-icon
@@ -69,22 +82,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-themed-icon 'type)
- "@version{2013-7-18}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{g-themed-icon} is an implementation of @class{g-icon} that supports
-    icon themes.
+    The @sym{g-themed-icon} class is an implementation of the @class{g-icon}
+    interface that supports icon themes.
   @end{short}
-  @sym{g-themed-icon} contains a list of all of the icons present in an icon
-  theme, so that icons can be looked up quickly. @sym{g-themed-icon} does not
-  provide actual pixmaps for icons, just the icon names. Ideally something like
-  the function @fun{gtk-icon-theme-choose-icon} should be used to resolve the
-  list of names so that fallback icons work nicely with themes that inherit
-  other themes.
+  The @sym{g-themed-icon} class contains a list of all of the icons present in
+  an icon theme, so that icons can be looked up quickly. The @sym{g-themed-icon}
+  class does not provide actual pixmaps for icons, just the icon names. Ideally
+  something like the function @fun{gtk-icon-theme-choose-icon} should be used to
+  resolve the list of names so that fallback icons work nicely with themes that
+  inherit other themes.
   @see-slot{g-themed-icon-name}
   @see-slot{g-themed-icon-names}
   @see-slot{g-themed-icon-use-default-fallbacks}
-  @see-class{g-icon}
-  @see-function{gtk-icon-theme-choose-icon}")
+  @see-class{g-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -96,8 +108,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-themed-icon) 't)
- "The @code{name} property of type @code{:string}
-  (Write / Construct Only) @br{}
+ "The @code{name} property of type @code{:string} (Write / Construct Only) @br{}
   The icon name. @br{}
   Default value: @code{nil}")
 
@@ -105,9 +116,15 @@
 (setf (gethash 'g-themed-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-themed-icon-name 'function)
- "@version{2014-9-22}
-  Accessor of the @slot[g-themed-icon]{name} slot of the @class{g-themed-icon}
-  class.
+ "@version{2021-4-15}
+  @syntax[]{(g-themed-icon-name object) => name}
+  @syntax[]{(setf g-themed-icon-name object) name)}
+  @argument[object]{a @class{g-themed-icon} object}
+  @argument[name]{a string with the icon name}
+  @begin{short}
+    Accessor of the @slot[g-themed-icon]{name} slot of the @class{g-themed-icon}
+    class.
+  @end{short}
   @see-class{g-themed-icon}")
 
 ;;; --- g-themed-icon-names ----------------------------------------------------
@@ -116,14 +133,17 @@
 (setf (documentation (atdoc:get-slot-from-name "names" 'g-themed-icon) 't)
  "The @code{names} property of type @type{g-strv}
   (Read / Write / Construct Only) @br{}
-  A list of icon names.")
+  A list of strings with the icon names.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-themed-icon-names atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-themed-icon-names 'function)
- "@version{2014-9-22}
+ "@version{2021-4-15}
+  @syntax[]{(g-themed-icon-names object) => names}
+  @syntax[]{(setf g-themed-icon-names object) names)}
   @argument[object]{a @class{g-themed-icon} object}
+  @argument[names]{a list of strings with icon names}
   @begin{short}
     Accessor of the @slot[g-themed-icon]{names} slot of the
     @class{g-themed-icon} class.
@@ -140,10 +160,9 @@
  "The @code{use-default-fallbacks} property of type @code{:boolean}
   (Read / Write / Construct Only) @br{}
   Whether to use the default fallbacks found by shortening the icon name at '-'
-  characters. If the @code{\"names\"} list has more than one element, ignores
-  any past the first. @br{}
-  For example, if the icon name was \"gnome-dev-cdrom-audio\", the list would
-  become
+  characters. If the @code{names} list has more than one element, ignores
+  any past the first. For example, if the icon name was
+  \"gnome-dev-cdrom-audio\", the list would become
   @begin{pre}
 '(\"gnome-dev-cdrom-audio\"
   \"gnome-dev-cdrom\"
@@ -157,9 +176,27 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-themed-icon-use-default-fallbacks 'function)
- "@version{2014-9-22}
-  Accessor of the @slot[g-themed-icon]{use-default-fallbacks} slot of the
-  @class{g-themed-icon} class.")
+ "@version{2021-4-15}
+  @syntax[]{(g-themed-icon-use-default-fallbacks object) => setting}
+  @syntax[]{(setf g-themed-icon-use-default-fallbacks object) setting)}
+  @argument[object]{a @class{g-themed-icon} object}
+  @argument[setting]{a boolean wether to use default fallbacks}
+  @begin{short}
+    Accessor of the @slot[g-themed-icon]{use-default-fallbacks} slot of the
+    @class{g-themed-icon} class.
+  @end{short}
+
+  Whether to use the default fallbacks found by shortening the icon name at '-'
+  characters. If the @code{names} list has more than one element, ignores
+  any past the first. For example, if the icon name was
+  \"gnome-dev-cdrom-audio\", the list would become
+  @begin{pre}
+'(\"gnome-dev-cdrom-audio\"
+  \"gnome-dev-cdrom\"
+  \"gnome-dev\"
+  \"gnome\")
+  @end{pre}
+  @see-class{g-themed-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_themed_icon_new ()
@@ -167,16 +204,19 @@
 
 (declaim (inline g-themed-icon-new))
 
-(defun g-themed-icon-new (icon-name)
+(defun g-themed-icon-new (name)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-19}
-  @argument[icon-name]{a string containing an icon name}
-  @return{A new @class{g-themed-icon}.}
-  Creates a new themed icon for iconname.
+ "@version{2021-4-21}
+  @argument[name]{a string containing an icon name}
+  @return{A new @class{g-themed-icon} object.}
+  @begin{short}
+    Creates a new themed icon for the icon name.
+  @end{short}
+  @see-class{g-themed-icon}
   @see-function{g-themed-icon-new-from-names}
   @see-function{g-themed-icon-new-with-default-fallbacks}"
   (make-instance 'g-themed-icon
-                 :name icon-name))
+                 :name name))
 
 (export 'g-themed-icon-new)
 
@@ -186,19 +226,21 @@
 
 (declaim (inline g-themed-icon-new-from-names))
 
-(defun g-themed-icon-new-from-names (&rest icon-names)
+(defun g-themed-icon-new-from-names (&rest names)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-19}
-  @argument[icon-names]{a list of strings containing icon names}
-  @return{A new @class{g-themed-icon}.}
-  Creates a new themed icon for @arg{icon-names}.
+ "@version{2021-4-15}
+  @argument[names]{a list of strings containing icon names}
+  @return{A new @class{g-themed-icon} object.}
+  @begin{short}
+    Creates a new themed icon for @arg{names}.
+  @end{short}
   @see-class{g-themed-icon}
   @see-function{g-themed-icon-new}
   @see-function{g-themed-icon-new-with-default-fallbacks}"
   (make-instance 'g-themed-icon
-                 :names (if (listp (first icon-names))
-                            (first icon-names)
-                            icon-names)))
+                 :names (if (listp (first names))
+                            (first names)
+                            names)))
 
 (export 'g-themed-icon-new-from-names)
 
@@ -206,16 +248,15 @@
 ;;; g_themed_icon_new_with_default_fallbacks ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-themed-icon-new-with-default-fallbacks (icon-name)
+(defun g-themed-icon-new-with-default-fallbacks (name)
  #+cl-cffi-gtk-documentation
- "@version{2014-9-22}
-  @argument[icon-name]{a string containing an icon name}
-  @return{A new @class{g-themed-icon}.}
+ "@version{2021-4-15}
+  @argument[name]{a string containing an icon name}
+  @return{A new @class{g-themed-icon} object.}
   @begin{short}
-    Creates a new themed icon for @arg{icon-name}, and all the names that can be
-    created by shortening iconname at '-' characters.
+    Creates a new themed icon for @arg{name}, and all the names that can
+    be created by shortening iconname at '-' characters.
   @end{short}
-
   @begin[Example]{dictionary}
     In the following example, @code{icon1} and @code{icon2} are equivalent:
     @begin{pre}
@@ -233,7 +274,7 @@
   @see-function{g-themed-icon-new}
   @see-function{g-themed-icon-new-from-names}"
   (make-instance 'g-themed-icon
-                 :name icon-name
+                 :name name
                  :use-default-fallbacks t))
 
 (export 'g-themed-icon-new-with-default-fallbacks)
@@ -244,24 +285,20 @@
 
 (defcfun ("g_themed_icon_prepend_name" g-themed-icon-prepend-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-19}
+ "@version{2021-4-15}
   @argument[icon]{a @class{g-themed-icon} object}
-  @argument[icon-name]{name of icon to prepend to list of icons from within
-    @arg{icon}}
+  @argument[name]{a string with the name of the icon to prepend to list of
+    icons from within @arg{icon}}
   @begin{short}
     Prepend a name to the list of icons from within @arg{icon}.
   @end{short}
-
-  @subheading{Note}
-    Note that doing so invalidates the hash computed by prior calls to
-    @fun{g-icon-hash}.
-
-  Since 2.18
+  Note that doing so invalidates the hash computed by prior calls to the
+  function @fun{g-icon-hash}.
   @see-class{g-themed-icon}
   @see-function{g-icon-hash}
   @see-function{g-themed-icon-append-name}"
   (icon (g-object g-themed-icon))
-  (icon-name :string))
+  (name :string))
 
 (export 'g-themed-icon-prepend-name)
 
@@ -271,22 +308,20 @@
 
 (defcfun ("g_themed_icon_append_name" g-themed-icon-append-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-19}
+ "@version{2021-4-15}
   @argument[icon]{a @class{g-themed-icon} object}
-  @argument[icon-name]{name of icon to append to list of icons from within
-    @arg{icon}}
+  @argument[name]{a string with the name of the icon to append to list of icons
+    from within @arg{icon}}
   @begin{short}
     Append a name to the list of icons from within @arg{icon}.
   @end{short}
-
-  @subheading{Note}
-    Note that doing so invalidates the hash computed by prior calls to
-    @fun{g-icon-hash}.
+  Note that doing so invalidates the hash computed by prior calls to the
+  function @fun{g-icon-hash}.
   @see-class{g-themed-icon}
   @see-function{g-icon-hash}
   @see-function{g-themed-icon-prepend-name}"
   (icon (g-object g-themed-icon))
-  (icon-name :string))
+  (name :string))
 
 (export 'g-themed-icon-append-name)
 

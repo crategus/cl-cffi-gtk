@@ -2,11 +2,11 @@
 ;;; gio.menu.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.38.1 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,9 +28,14 @@
 ;;;
 ;;; GMenu
 ;;;
-;;; A simple implementation of GMenuModel
+;;;     A simple implementation of GMenuModel
+;;;
+;;; Types and Values
 ;;;
 ;;;     GMenu
+;;;     GMenuItem
+;;;
+;;; Functions
 ;;;
 ;;;     g_menu_new
 ;;;     g_menu_freeze
@@ -49,7 +54,6 @@
 ;;;     g_menu_remove
 ;;;     g_menu_remove_all
 ;;;
-;;;     GMenuItem
 ;;;
 ;;;     g_menu_item_new
 ;;;     g_menu_item_new_section
@@ -62,6 +66,7 @@
 ;;;     g_menu_item_set_detailed_action
 ;;;     g_menu_item_set_section
 ;;;     g_menu_item_set_submenu
+;;;
 ;;;     g_menu_item_get_attribute_value
 ;;;     g_menu_item_get_attribute
 ;;;     g_menu_item_get_link
@@ -71,12 +76,10 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GMenuModel
-;;;          +----GMenu
-;;;
-;;;   GObject
-;;;    +----GMenuItem
+;;;     GObject
+;;;     ├── GMenuItem
+;;;     ╰── GMenuModel
+;;;         ╰── GMenu
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -94,19 +97,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu 'type)
- "@version{#2013-10-28}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{g-menu} is a simple implementation of @class{g-menu-model}. You
-    populate a @sym{g-menu} by adding @class{g-menu-item} instances to it.
+    The @sym{g-menu} object is a simple implementation of @class{g-menu-model}.
   @end{short}
+  You populate a @sym{g-menu} object by adding @class{g-menu-item} objects to
+  it.
 
   There are some convenience functions to allow you to directly add items,
-  avoiding @class{g-menu-item}, for the common cases. To add a regular item,
-  use the function @fun{g-menu-insert}. To add a section, use the function
+  avoiding a @class{g-menu-item} object, for the common cases. To add a regular
+  item, use the function @fun{g-menu-insert}. To add a section, use the function
   @fun{g-menu-insert-section}. To add a submenu, use the function
   @fun{g-menu-insert-submenu}.
-
-  Since 2.32
   @see-class{g-menu-model}
   @see-class{g-menu-item}")
 
@@ -118,13 +120,10 @@
 
 (defun g-menu-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-10-28}
+ "@version{2021-4-15}
   @return{A new @class{g-menu} object.}
   @short{Creates a new @class{g-menu} object.}
-
   The new menu has no items.
-
-  Since 2.32
   @see-class{g-menu}"
   (make-instance 'g-menu))
 
@@ -240,8 +239,8 @@
 ;;; You should probably just free item once you're done.
 ;;;
 ;;; There are many convenience functions to take care of common cases. See
-;;; g_menu_insert(), g_menu_insert_section() and g_menu_insert_submenu() as well
-;;; as "prepend" and "append" variants of each of these functions.
+;;; g_menu_insert(), g_menu_insert_section() and g_menu_insert_submenu() as
+;;; well as "prepend" and "append" variants of each of these functions.
 ;;;
 ;;; menu :
 ;;;     a GMenu
@@ -297,18 +296,17 @@
 
 (defcfun ("g_menu_insert_section" g-menu-insert-section) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-5}
+ "@version{2021-4-15}
   @argument[menu]{a @class{g-menu} object}
-  @argument[position]{the position at which to insert the item}
-  @argument[label]{the section label, or @code{nil}}
-  @argument[section]{a @class{g-menu-model} with the items of the section}
+  @argument[position]{an integer with the position at which to insert the item}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[section]{a @class{g-menu-model} object with the items of the
+    section}
   @begin{short}
     Convenience function for inserting a section menu item into menu.
   @end{short}
   Combine the functions @fun{g-menu-item-new-section} and
   @fun{g-menu-insert-item} for a more flexible alternative.
-
-  Since 2.32
   @see-class{g-menu}
   @see-class{g-menu-model}
   @see-function{g-menu-item-new-section}
@@ -318,7 +316,7 @@
   (label :string)
   (section (g-object g-menu-model)))
 
-(export 'g-menu-insert-action)
+(export 'g-menu-insert-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend_section ()
@@ -448,8 +446,8 @@
 ;;;
 ;;; position gives the index of the item to remove.
 ;;;
-;;; It is an error if position is not in range the range from 0 to one less than
-;;; the number of items in the menu.
+;;; It is an error if position is not in range the range from 0 to one less
+;;; than the number of items in the menu.
 ;;;
 ;;; It is not possible to remove items by identity since items are added to the
 ;;; menu simply by copying their links and attributes (ie: identity of the item
@@ -490,13 +488,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu-item 'type)
- "@version{2013-10-28}
+ "@version{2021-4-15}
   @begin{short}
-    @sym{g-menu-item} is an opaque structure type.
+    The @sym{g-menu-item} object is an opaque structure type.
   @end{short}
   You must access it using the functions below.
-
-  Since 2.32
   @see-class{g-menu}")
 
 ;;; ----------------------------------------------------------------------------
@@ -550,9 +546,9 @@
 ;;; followed by "Cut", "Copy" and "Paste".
 ;;;
 ;;; This would be accomplished by creating three GMenu instances. The first
-;;; would be populated with the "Undo" and "Redo" items, and the second with the
-;;; "Cut", "Copy" and "Paste" items. The first and second menus would then be
-;;; added as submenus of the third. In XML format, this would look something
+;;; would be populated with the "Undo" and "Redo" items, and the second with
+;;; the "Cut", "Copy" and "Paste" items. The first and second menus would then
+;;; be added as submenus of the third. In XML format, this would look something
 ;;; like the following:
 ;;;
 ;;; <menu id='edit-menu'>
@@ -569,8 +565,8 @@
 ;;;
 ;;; The following example is exactly equivalent. It is more illustrative of the
 ;;; exact relationship between the menus and items (keeping in mind that the
-;;; 'link' element defines a new menu that is linked to the containing one). The
-;;; style of the second example is more verbose and difficult to read (and
+;;; 'link' element defines a new menu that is linked to the containing one).
+;;; The style of the second example is more verbose and difficult to read (and
 ;;; therefore not recommended except for the purpose of understanding what is
 ;;; really going on).
 ;;;
@@ -679,8 +675,8 @@
 ;;; the value to g_menu_item_set_attribute_value() for G_MENU_ATTRIBUTE_ICON.
 ;;;
 ;;; This API is only intended for use with "noun" menu items; things like
-;;; bookmarks or applications in an "Open With" menu. Don't use it on menu items
-;;; corresponding to verbs (eg: stock icons for 'Save' or 'Quit').
+;;; bookmarks or applications in an "Open With" menu. Don't use it on menu
+;;; items corresponding to verbs (eg: stock icons for 'Save' or 'Quit').
 ;;;
 ;;; If icon is NULL then the icon is unset.
 ;;;
@@ -1024,25 +1020,24 @@
 
 (defcfun ("g_menu_item_set_link" g-menu-item-set-link) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-28}
-  @argument[menu-item]{a @class{g-menu-item} object}
-  @argument[link]{type of link to establish or unset}
-  @argument[model]{the @class{g-menu-model} to link to, or @code{nil} to unset}
+ "@version{2021-4-15}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[link]{a string with the type of link to establish or unset}
+  @argument[model]{the @class{g-menu-model} object to link to, or @code{nil} to
+    unset}
   @begin{short}
-    Creates a link from @arg{menu-item} to @arg{model} if non-@code{nil},
+    Creates a link from @arg{item} to @arg{model} if non-@code{nil},
     or unsets it.
   @end{short}
 
   Links are used to establish a relationship between a particular menu item
-  and another menu. For example, @code{G_MENU_LINK_SUBMENU} is used to associate
-  a submenu with a particular menu item, and @code{G_MENU_LINK_SECTION} is used
-  to create a section. Other types of link can be used, but there is no
-  guarantee that clients will be able to make sense of them. Link types are
-  restricted to lowercase characters, numbers and '-'. Furthermore, the names
-  must begin with a lowercase character, must not end with a '-', and must not
-  contain consecutive dashes.
-
-  Since 2.32
+  and another menu. For example, @var{+g-menu-linke-submenu+} is used to
+  associate a submenu with a particular menu item, and
+  @var{+g-menu-link-section+} is used to create a section. Other types of link
+  can be used, but there is no guarantee that clients will be able to make sense
+  of them. Link types are restricted to lowercase characters, numbers and '-'.
+  Furthermore, the names must begin with a lowercase character, must not end
+  with a '-', and must not contain consecutive dashes.
   @see-class{g-menu-item}
   @see-class{g-menu-model}"
   (menu-item (g-object g-menu-item))
