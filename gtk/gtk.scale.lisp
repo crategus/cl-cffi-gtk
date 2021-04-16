@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;;
 ;;;     A slider widget for selecting a value from a range
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkScale
 ;;;
@@ -111,30 +111,82 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scale 'type)
- "@version{2020-5-31}
+ "@version{*2021-4-16}
   @begin{short}
-    A @sym{gtk-scale} is a slider control used to select a numeric value. To
-    use it, you will probably want to investigate the methods on its base class,
-    @class{gtk-range}, in addition to the methods for @sym{gtk-scale} itself.
-    To set the value of a scale, you would normally use the function
-    @fun{gtk-range-value}. To detect changes to the value, you would
-    normally use the \"value-changed\" signal.
+    A @sym{gtk-scale} widget is a slider control used to select a numeric value.
   @end{short}
+  To use it, you will probably want to investigate the methods on its base
+  @class{gtk-range} class, in addition to the methods for the @sym{gtk-scale}
+  class itself. To set the value of a scale, you would normally use the function
+  @fun{gtk-range-value}. To detect changes to the value, you would normally use
+  the \"value-changed\" signal.
 
   @image[scales]{}
 
-  Note that using the same upper and lower bounds for the @sym{gtk-scale},
-  through the @class{gtk-range} methods, will hide the slider itself. This is
-  useful for applications that want to show an undeterminate value on the scale,
-  without changing the layout of the application, such as movie or music
-  players.
+  Note that using the same upper and lower bounds for the @sym{gtk-scale}
+  widget, through the @class{gtk-range} methods, will hide the slider itself.
+  This is useful for applications that want to show an undeterminate value on
+  the scale, without changing the layout of the application, such as movie or
+  music players.
   @begin[GtkScale as GtkBuildable]{dictionary}
-    @sym{gtk-scale} supports a custom @code{<marks>} element, which can contain
-    multiple @code{<mark>} elements. The \"value\" and \"position\" attributes
-    have the same meaning as @fun{gtk-scale-add-mark} parameters of the same
-    name. If the element is not empty, its content is taken as the markup to
-    show at the mark. It can be translated with the usual \"translatable\" and
-    \"context\" attributes.
+    The @sym{gtk-scale} widget supports a custom @code{<marks>} element, which
+    can contain multiple @code{<mark>} elements. The \"value\" and \"position\"
+    attributes have the same meaning as the parameters of the function
+    @fun{gtk-scale-add-mark} of the same name. If the element is not empty, its
+    content is taken as the markup to show at the mark. It can be translated
+    with the usual \"translatable\" and \"context\" attributes.
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ scale[.fine-tune][.marks-before][.marks-after]
+ ├── marks.top
+ │   ├── mark
+ │   ┊    ├── [label]
+ │   ┊    ╰── indicator
+ ┊   ┊
+ │   ╰── mark
+ ├── [value]
+ ├── contents
+ │   ╰── trough
+ │       ├── slider
+ │       ├── [highlight]
+ │       ╰── [fill]
+ ╰── marks.bottom
+     ├── mark
+     ┊    ├── indicator
+     ┊    ╰── [label]
+     ╰── mark
+    @end{pre}
+    The @sym{gtk-scale} widget has a main CSS node with name @code{scale} and
+    a subnode for its contents, with subnodes named @code{trough} and
+    @code{slider}.
+
+    The main node gets the style class @code{.fine-tune} added when the scale
+    is in 'fine-tuning' mode.
+
+    If the scale has an origin, see the function @fun{gtk-scale-has-origin},
+    there is a subnode with name @code{highlight} below the trough node that
+    is used for rendering the highlighted part of the trough.
+
+    If the scale is showing a fill level, see the function
+    @fun{gtk-range-show-fill-level}, there is a subnode with name @code{fill}
+    below the trough node that is used for rendering the filled in part of the
+    trough.
+
+    If marks are present, there is a marks subnode before or after the contents
+    node, below which each mark gets a node with name @code{mark}. The marks
+    nodes get either the @code{.top} or @code{.bottom} style class.
+
+    The mark node has a subnode named @code{indicator}. If the mark has text,
+    it also has a subnode named @code{label}. When the mark is either above or
+    left of the scale, the label subnode is the first when present. Otherwise,
+    the indicator subnode is the first.
+
+    The main CSS node gets the @code{marks-before} and/or @code{marks-after}
+    style classes added depending on what marks are present.
+
+    If the scale is displaying the value, see the @code{draw-value} property,
+    there is subnode with name @code{value}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -163,32 +215,35 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"format-value\" signal}
       @begin{pre}
- lambda (scale value)    : Run Last
+ lambda (scale value)    :run-last
       @end{pre}
       Signal which allows you to change how the scale value is displayed.
       Connect a signal handler which returns an allocated string representing
-      value. That string will then be used to display the scale's value.
-      Here's an example signal handler which displays a value 1.0 as with
+      @arg{value}. That string will then be used to display the scale's value.
+      If no user provided handlers are installed, the value will be displayed
+      on its own, rounded according to the value of the @code{digits} property.
+      Here is an example signal handler which displays a value 1.0 as with
       \"-->1.0<--\".
       @begin{pre}
- static gchar*
- format_value_callback (GtkScale *scale,
-                        gdouble   value)
- {
-   return g_strdup_printf (\"-->%0.*g<--\",
-                           gtk_scale_get_digits (scale), value);
- @}
+static gchar*
+format_value_callback (GtkScale *scale,
+                       gdouble   value)
+{
+  return g_strdup_printf (\"-->%0.*g<--\",
+                          gtk_scale_get_digits (scale), value);
+@}
       @end{pre}
       @begin[code]{table}
         @entry[scale]{The @sym{gtk-scale} widget which received the signal.}
-        @entry[value]{A @code{:double} with the value to format.}
+        @entry[value]{A double float with the value to format.}
         @entry[Returns]{String representing the value.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-scale-digits}
   @see-slot{gtk-scale-draw-value}
   @see-slot{gtk-scale-has-origin}
-  @see-slot{gtk-scale-value-pos}")
+  @see-slot{gtk-scale-value-pos}
+  @see-class{gtk-range}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details

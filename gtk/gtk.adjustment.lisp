@@ -109,7 +109,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-adjustment 'type)
- "@version{2021-3-19}
+ "@version{*2021-3-19}
   @begin{short}
     The @sym{gtk-adjustment} object represents a value which has an associated
     lower and upper bound, together with step and page increments, and a page

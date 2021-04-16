@@ -365,22 +365,23 @@
 (defcfun ("gtk_get_option_group" gtk-option-group)
     (:pointer (:struct g-option-group))
  #+cl-cffi-gtk-documentation
- "@version{2020-8-21}
-  @argument[open-default-display]{a @code{:boolean} whether to open the default
-    display when parsing the commandline arguments}
+ "@version{2021-4-13}
+  @argument[open-default-display]{a boolean whether to open the default display
+    when parsing the commandline arguments}
   @begin{return}
-    A @type{g-option-group} for the commandline arguments recognized by GTK+.
+    A @type{g-option-group} instance for the commandline arguments recognized
+    by GTK+.
   @end{return}
   @begin{short}
     Returns a option group for the commandline arguments recognized by GTK+ and
     GDK.
   @end{short}
 
-  You should add this group to your @class{g-option-context} with the function
-  @fun{g-option-context-add-group}, if you are using the function
+  You should add this group to your @type{g-option-context} instance with the
+  function @fun{g-option-context-add-group}, if you are using the function
   @fun{g-option-context-parse} to parse your commandline arguments.
   @see-type{g-option-group}
-  @see-class{g-option-context}
+  @see-type{g-option-context}
   @see-function{g-option-context-add-group}
   @see-function{g-option-context-parse}"
   (open-default-display :boolean))
