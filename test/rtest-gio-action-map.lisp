@@ -17,8 +17,8 @@
                      (g-object-interface-list-properties "GActionMap"))))
   ;; Get the interface definition
   (is (equal '(DEFINE-G-INTERFACE "GActionMap"
-    G-ACTION-MAP
-    (:EXPORT T))
+                                  G-ACTION-MAP
+                                  (:EXPORT T))
              (get-g-type-definition "GActionMap"))))
 
 ;;; --- Functions --------------------------------------------------------------
@@ -44,18 +44,20 @@
     (g-action-map-add-action-entries group entries)
     group))
 
-(test g-action-map-add-action-entries.2
+(test g-action-map-add-action-entries
   (let* ((group (create-action-group))
          (action-quit (g-action-map-lookup-action group "quit"))
          (action-print (g-action-map-lookup-action group "print")))
-    (is (eq 'g-simple-action (type-of action-quit)))
+    (is (typep action-quit 'g-simple-action))
     (is (string= "quit" (g-action-name action-quit)))
     ;; Slot parameter-type is not initialized
-    (signals (error) (eq 'g-variant-type (type-of (g-action-parameter-type action-quit))))
-    (is (eq 'g-simple-action (type-of action-print)))
+    (signals (error)
+             (typep (g-action-parameter-type action-quit) 'g-variant-type))
+
+    (is (typep action-print 'g-simple-action))
     (is (string= "print" (g-action-name action-print)))
     ;; Slot parameter-type is initialized with type "s"
-    (is (eq 'g-variant-type (type-of (g-action-parameter-type action-print))))))
+    (is (typep (g-action-parameter-type action-print) 'g-variant-type))))
 
 ;;;     g_action_map_add_action
 ;;;     g_action_map_remove_action
@@ -63,8 +65,12 @@
 (test g-action-map-add-action
   (let ((group (g-simple-action-group-new)))
     (g-action-map-add-action group (g-simple-action-new "quit" nil))
-    (is (string= "quit" (g-action-name (g-action-map-lookup-action group "quit"))))
+    (is (string= "quit"
+                 (g-action-name (g-action-map-lookup-action group "quit"))))
     (g-action-map-add-action group (g-simple-action-new "close" nil))
-    (is (string= "close" (g-action-name (g-action-map-lookup-action group "close"))))
+    (is (string= "close"
+                 (g-action-name (g-action-map-lookup-action group "close"))))
     (g-action-map-remove-action group "quit")
     (is-false (g-action-map-lookup-action group "quit"))))
+
+;;; 2021-4-15

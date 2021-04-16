@@ -73,4 +73,4 @@
     (is (equal ". GThemedIcon gnome-dev-cdrom-audio gnome-dev-cdrom gnome-dev gnome gnome-dev-cdrom-audio-symbolic gnome-dev-cdrom-symbolic gnome-dev-symbolic gnome-symbolic"
                (g-icon-to-string icon3)))))
 
-;;; 2020-11-13
+;;; 2021-4-15

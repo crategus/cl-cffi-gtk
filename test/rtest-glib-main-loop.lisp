@@ -1,12 +1,15 @@
 (def-suite glib-main-loop :in glib-suite)
 (in-suite glib-main-loop)
 
+(defvar *verbose-glib-main-loop* nil)
+
 ;;; A callback function for use as a source function
 
 (let ((counter 0))
   (defun timeout-callback (loop)
     (incf counter)
-;    (format t "timout-callback called ~d times~%" counter)
+    (when *verbose-glib-main-loop*
+      (format t "timout-callback called ~d times~%" counter))
     (if (>= counter 10)
         (progn
           ;; Reset the counter
@@ -14,8 +17,7 @@
           ;; Stop the main loop from running
           (g-main-loop-quit loop)
           ;; Stop the source
-          +g-source-remove+
-        )
+          +g-source-remove+)
         ;; Continue the source
         +g-source-continue+)))
 
@@ -52,7 +54,7 @@
     (g-main-loop-unref *main-loop*)
 
     (is-true (pointer-eq (g-main-context-default)
-                         (g-main-loop-get-context *main-loop*)))
+                         (g-main-loop-context *main-loop*)))
     (is-false (g-main-context-is-owner (g-main-context-default)))
 
     (bt:with-lock-held (*main-thread-lock*)
@@ -95,7 +97,7 @@
     (is-true (pointer-eq loop (g-main-loop-ref loop)))
     (g-main-loop-unref loop)
     (is-true (pointer-eq (g-main-context-default)
-                         (g-main-loop-get-context loop)))
+                         (g-main-loop-context loop)))
     (g-main-loop-quit loop)
     (is-false (g-main-loop-is-running loop))
     (g-main-loop-unref loop)))
@@ -258,17 +260,23 @@
       t
       nil))
 
+#+nil
 (test g-source-new
   (with-foreign-object (sourcefuncs '(:struct g-source-funcs))
-    (setf (foreign-slot-value sourcefuncs '(:struct g-source-funcs) 'glib::prepare)
+    (setf (foreign-slot-value sourcefuncs
+                              '(:struct g-source-funcs) 'glib::prepare)
           (callback prepare)
-          (foreign-slot-value sourcefuncs '(:struct g-source-funcs) 'glib::check)
+          (foreign-slot-value sourcefuncs
+                              '(:struct g-source-funcs) 'glib::check)
           (callback check)
-          (foreign-slot-value sourcefuncs '(:struct g-source-funcs) 'glib::dispatch)
+          (foreign-slot-value sourcefuncs
+                              '(:struct g-source-funcs) 'glib::dispatch)
           (callback dispatch)
-          (foreign-slot-value sourcefuncs '(:struct g-source-funcs) 'glib::finalize)
+          (foreign-slot-value sourcefuncs
+                              '(:struct g-source-funcs) 'glib::finalize)
           (cffi:null-pointer))
-    (let* ((source (g-source-new sourcefuncs (foreign-type-size '(:struct g-source))))
+    (let* ((source (g-source-new sourcefuncs
+                       (foreign-type-size '(:struct g-source))))
            (context (g-main-context-new))
            (id (g-source-attach source context))
            (loop (g-main-loop-new context nil)))
@@ -278,7 +286,7 @@
       (is (= +g-priority-default+ (g-source-get-priority source)))
       (is-false (g-source-get-can-recurse source))
 
-      (is (= id (g-source-get-id source)))
+      (is (= id (g-source-id source)))
       (g-source-set-name source "timeout-callback")
       (is (equal "timeout-callback" (g-source-get-name source)))
       (g-source-set-name-by-id id "name set by id")
@@ -326,3 +334,4 @@
 ;;;     g_source_remove_by_funcs_user_data
 ;;;     g_source_remove_by_user_data
 
+;;; 2021-4-9

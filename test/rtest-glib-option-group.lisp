@@ -1,68 +1,43 @@
-
 (def-suite glib-option-group :in glib-suite)
 (in-suite glib-option-group)
 
+;;; Types and Values
+
 ;;;     GOptionError
-;;;
 ;;;     G_OPTION_ERROR
-;;;
-;;;     GOptionContext
-;;;
-;;;     g_option_context_new
-;;;     g_option_context_set_summary
-;;;     g_option_context_get_summary
-;;;     g_option_context_set_description
-;;;     g_option_context_get_description
-;;;     g_option_context_set_translate_func
-;;;     g_option_context_set_translation_domain
-;;;     g_option_context_free
-;;;     g_option_context_parse
-;;;     g_option_context_set_help_enabled
-;;;     g_option_context_get_help_enabled
-;;;     g_option_context_set_ignore_unknown_options
-;;;     g_option_context_get_ignore_unknown_options
-;;;     g_option_context_get_help
-;;;
 ;;;     GOptionArg
 ;;;     GOptionFlags
-;;;
+;;;     G_OPTION_REMAINING
+;;;     GOptionContext
 
 ;;;     GOptionEntry
 
 (test g-option-entry.1
   (with-foreign-object (entry '(:struct g-option-entry))
-    (setf (foreign-slot-value entry '(:struct g-option-entry) 'glib::long-name)
-          "long-name"
-          (foreign-slot-value entry '(:struct g-option-entry) 'glib::short-name)
-          (char-code #\l))
-    (is (equal "long-name" (foreign-slot-value entry '(:struct g-option-entry) 'glib::long-name)))
-    (is (= 108 (foreign-slot-value entry '(:struct g-option-entry) 'glib::short-name)))))
+    (setf (glib::g-option-entry-long-name entry) "long-name")
+    (setf (glib::g-option-entry-short-name entry) (char-code #\l))
+    (is (string= "long-name" (glib::g-option-entry-long-name entry)))
+    (is (= 108 (glib::g-option-entry-short-name entry)))))
 
 (test g-option-entry.2
   (let ((entry-list '("long-name" #\l)))
     (with-foreign-object (entry '(:struct g-option-entry))
-      (setf (foreign-slot-value entry '(:struct g-option-entry) 'glib::long-name)
-            (pop entry-list)
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::short-name)
-            (char-code (pop entry-list))
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::flags)
-            '(:hidden)
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg)
-            :int
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg-data)
-            (null-pointer)
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::description)
-            ""
-            (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg-description)
-            "")
-      (is (equal "long-name" (foreign-slot-value entry '(:struct g-option-entry) 'glib::long-name)))
-      (is (= 108 (foreign-slot-value entry '(:struct g-option-entry) 'glib::short-name)))
-      (is (equal '(:hidden) (foreign-slot-value entry '(:struct g-option-entry) 'glib::flags)))
-      (is (eq :int (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg)))
-      (is-true (null-pointer-p (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg-data)))
-      (is (equal "" (foreign-slot-value entry '(:struct g-option-entry) 'glib::description)))
-      (is (equal "" (foreign-slot-value entry '(:struct g-option-entry) 'glib::arg-description))))))
+      (setf (glib::g-option-entry-long-name entry) (pop entry-list))
+      (setf (glib::g-option-entry-short-name entry) (char-code (pop entry-list)))
+      (setf (glib::g-option-entry-flags entry) '(:hidden))
+      (setf (glib::g-option-entry-arg entry) :int)
+      (setf (glib::g-option-entry-arg-data entry) (null-pointer))
+      (setf (glib::g-option-entry-description entry) "")
+      (setf (glib::g-option-entry-arg-description entry) "")
+      (is (string= "long-name" (glib::g-option-entry-long-name entry)))
+      (is (= 108 (glib::g-option-entry-short-name entry)))
+      (is (equal '(:hidden) (glib::g-option-entry-flags entry)))
+      (is (eq :int (glib::g-option-entry-arg entry)))
+      (is (null-pointer-p (glib::g-option-entry-arg-data entry)))
+      (is (string= "" (glib::g-option-entry-description entry)))
+      (is (string= "" (glib::g-option-entry-arg-description entry))))))
 
+#+nil
 (test g-option-entry.3
   (let* ((context (g-option-context-new "parameter"))
          (entries '(("long-name" #\l) ("long-name" #\l)))
@@ -72,29 +47,14 @@
         for entry in entries
         for i from 0
         for entry-ptr = (mem-aptr entries-ptr '(:struct g-option-entry) i)
-        do (setf (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::long-name)
-                 (pop entry)
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::short-name)
+        do (setf (glib::g-option-entry-long-name entry-ptr) (pop entry)
+                 (glib::g-option-entry-short-name entry-ptr)
                  (char-code (pop entry))
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::flags)
-                 '(:in-main)
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg)
-                 :int
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg-data)
-                 (null-pointer)
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::description)
-                 ""
-                 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg-description)
-                 "")
-           (is (equal "long-name" (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::long-name)))
-           (is (= 108 (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::short-name)))
-           (is (equal '(:in-main)
-                      (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::flags)))
-           (is (eq :int (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg)))
-           (is-true (null-pointer-p (foreign-slot-value entry-ptr
-                                                        '(:struct g-option-entry) 'glib::arg-data)))
-           (is (equal "" (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::description)))
-           (is (equal "" (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg-description))))
+                 (glib::g-option-entry-flags entry-ptr) '(:in-main)
+                 (glib::g-option-entry-arg entry-ptr) :int
+                 (glib::g-option-entry-arg-data entry-ptr) (null-pointer)
+                 (glib::g-option-entry-description entry-ptr) ""
+                 (glib::g-option-entry-arg-description entry-ptr) ""))
       (let ((entry-ptr (mem-aptr entries-ptr '(:struct g-option-entry) n-entries)))
         (setf (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::long-name) (null-pointer))
         (glib::%g-option-context-add-main-entries context entries-ptr "")))))
@@ -157,7 +117,7 @@
         (glib::%g-option-context-add-main-entries context entries-ptr "")
 ;        (format t "~&~A~%" (g-option-context-get-help context nil))
         )
-   
+
       (g-option-context-set-help-enabled context t)
       (let ((argv (list "prgname" "--long-name-1"
                                   "--long-name-2" "a string"
@@ -193,7 +153,7 @@
 
     (g-option-context-add-main-entries context entries "")
 ;    (format t "~&~A~%" (g-option-context-get-help context nil))
-   
+
     (let ((argv (list "prgname" "--long-name-1"
                                 "--long-name-2" "a string"
                                 "--long-name-3" "999"
@@ -215,18 +175,47 @@
     )))
 |#
 
-;;;     g_option_context_add_main_entries
-;;;
 ;;;     GOptionGroup
+
+;;; Functions
+
+;;;     GOptionArgFunc
 ;;;
+;;;     g_option_context_new
+;;;     g_option_context_set_summary
+;;;     g_option_context_get_summary
+;;;     g_option_context_set_description
+;;;     g_option_context_get_description
+;;;
+;;;     GTranslateFunc
+;;;     g_option_context_set_translate_func
+;;;     g_option_context_set_translation_domain
+;;;     g_option_context_free
+;;;     g_option_context_parse
+;;;     g_option_context_parse_strv
+;;;     g_option_context_set_help_enabled
+;;;     g_option_context_get_help_enabled
+;;;     g_option_context_set_ignore_unknown_options
+;;;     g_option_context_get_ignore_unknown_options
+;;;     g_option_context_get_help
+;;;     g_option_context_get_strict_posix
+;;;     g_option_context_set_strict_posix
+;;;     g_option_context_add_main_entries
 ;;;     g_option_context_add_group
 ;;;     g_option_context_set_main_group
 ;;;     g_option_context_get_main_group
+;;;
 ;;;     g_option_group_new
+;;;     g_option_group_ref
+;;;     g_option_group_unref
 ;;;     g_option_group_free
 ;;;     g_option_group_add_entries
+;;;
+;;;     GOptionParseFunc
 ;;;     g_option_group_set_parse_hooks
+;;;     GOptionErrorFunc
 ;;;     g_option_group_set_error_hook
 ;;;     g_option_group_set_translate_func
 ;;;     g_option_group_set_translation_domain
 
+;;; 2021-4-13

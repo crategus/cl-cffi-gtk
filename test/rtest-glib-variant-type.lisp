@@ -52,7 +52,7 @@
 (test g-variant-type-string-is-valid.3
   (is-true (g-variant-type-string-is-valid "(ui(nq((y)))s)")))
 
-(test g-variant-type-string-is-valed.4
+(test g-variant-type-string-is-valid.4
   (is-true (g-variant-type-string-is-valid "a(aa(ui)(qna{ya(yd)}))")))
 
 ;;;   g_variant_type_string_scan                           not implemented
@@ -229,4 +229,4 @@
     (is (string= "n" (g-variant-type-dup-string (g-variant-type-key dict))))
     (is (string= "b" (g-variant-type-dup-string (g-variant-type-value dict))))))
 
-;;; 2020-11-30
+;;; 2021-4-9

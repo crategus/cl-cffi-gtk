@@ -27,39 +27,6 @@
     (g-free mem)
     (is-true (null-pointer-p (g-malloc 0)))))
 
-;;;   GTimeVal
-
-(test g-time-val
-  (is (equal '(:struct g-time-val)
-             (cffi::canonicalize-foreign-type '(:struct g-time-val))))
-  (with-foreign-object (ptr '(:struct g-time-val))
-    ;; Write values into the slots.
-    ;; The CStruct is exported, but not the slots.
-    (setf (foreign-slot-value ptr '(:struct g-time-val) 'glib::tv-sec) 412776
-          (foreign-slot-value ptr '(:struct g-time-val) 'glib::tv-usec) 132423)
-    ;; Read the slots.
-    (with-foreign-slots ((glib::tv-sec glib::tv-usec) ptr (:struct g-time-val))
-      (is (equal (list 412776 132423)
-                 (list glib::tv-sec glib::tv-usec))))))
-
-;;;   g_get_current_time
-
-(test g-get-current-time
-  (multiple-value-bind (seconds microseconds)
-      (g-get-current-time)
-    (is-true (integerp seconds))
-    (is-true (integerp microseconds))))
-
-;;;   g_get_monotonic_time
-
-(test g-get-monotonic-time
-  (is-true (integerp (g-get-monotonic-time))))
-
-;;;   g_get_real_time
-
-(test g-get-real-time
-  (is-true (integerp (g-get-real-time))))
-
 ;;;   GString
 
 (test g-string
@@ -86,4 +53,4 @@
 (test g-slist
   (is (equal '(a b c) (translate-to-foreign '(a b c) 'g-slist-type))))
 
-
+;;; 2021-4-9

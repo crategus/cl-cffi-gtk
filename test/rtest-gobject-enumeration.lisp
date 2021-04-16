@@ -3,6 +3,55 @@
 
 ;;; --- Types and Values -------------------------------------------------------
 
+(test define-g-enum-macro
+  (is (equal '(PROGN
+                (DEFCENUM (GTK-WINDOW-TYPE :INT)
+                          (:TOPLEVEL 0)
+                          (:POPUP 1))
+                (GOBJECT::REGISTER-ENUM-TYPE "GtkWindowType" 'GTK-WINDOW-TYPE)
+                (EXPORT 'GTK-WINDOW-TYPE (FIND-PACKAGE "GTK"))
+                (GLIB-INIT::AT-INIT NIL
+                  (IF (FOREIGN-SYMBOL-POINTER "gtk_window_type_get_type")
+                      (FOREIGN-FUNCALL-POINTER
+                        (FOREIGN-SYMBOL-POINTER "gtk_window_type_get_type")
+                        NIL
+                        G-SIZE)
+                      (WARN "Type initializer '~A' is not available"
+                            "gtk_window_type_get_type"))))
+              (macroexpand '(define-g-enum "GtkWindowType" gtk-window-type
+                             (:export t
+                              :type-initializer "gtk_window_type_get_type")
+                             (:toplevel 0)
+                             (:popup 1))))))
+
+(test define-g-flags-macro
+  (is (equal '(PROGN
+                (DEFBITFIELD GDK-DRAG-ACTION
+                  (:DEFAULT 1)
+                  (:COPY 2)
+                  (:MOVE 4)
+                  (:LINK 8)
+                  (:PRIVATE 16)
+                  (:ASK 32))
+                (GOBJECT::REGISTER-FLAGS-TYPE "GdkDragAction" 'GDK-DRAG-ACTION)
+                (EXPORT 'GDK-DRAG-ACTION (FIND-PACKAGE "GDK"))
+                (GLIB-INIT::AT-INIT NIL
+                  (IF (FOREIGN-SYMBOL-POINTER "gdk_drag_action_get_type")
+                      (FOREIGN-FUNCALL-POINTER
+                        (FOREIGN-SYMBOL-POINTER "gdk_drag_action_get_type") NIL
+                        G-SIZE)
+                      (WARN "Type initializer '~A' is not available"
+                            "gdk_drag_action_get_type"))))
+             (macroexpand '(define-g-flags "GdkDragAction" gdk-drag-action
+                            (:export t
+                             :type-initializer "gdk_drag_action_get_type")
+                            (:default 1)
+                            (:copy 2)
+                            (:move 4)
+                            (:link 8)
+                            (:private 16)
+                            (:ask 32))))))
+
 ;;;   g-enum-class
 
 (test g-enum-class
@@ -48,13 +97,7 @@
   (is-false (g-type-is-enum "GdkWindow")))
 
 ;;;     G_ENUM_CLASS
-
 ;;;     G_IS_ENUM_CLASS
-
-(test g-is-enum-class
-  (is-false (g-is-enum-class (g-type-class-ref "GtkDialogFlags")))
-  (is-true  (g-is-enum-class (g-type-class-ref "GtkWindowType")))
-  (is-false (g-is-enum-class (g-type-class-ref "GtkWindow"))))
 
 ;;;     G_TYPE_IS_FLAGS
 
@@ -64,14 +107,7 @@
   (is-false (g-type-is-flags "GdkWindow")))
 
 ;;;     G_FLAGS_CLASS
-
 ;;;     G_IS_FLAGS_CLASS
-
-(test g-is-flags-class
-  (is-true  (g-is-flags-class (g-type-class-ref "GtkDialogFlags")))
-  (is-false (g-is-flags-class (g-type-class-ref "GtkWindowType")))
-  (is-false (g-is-flags-class (g-type-class-ref "GtkWindow"))))
-
 ;;;     G_FLAGS_CLASS_TYPE
 
 ;;;     g_enum_get_value
@@ -87,4 +123,4 @@
 ;;;     g_enum_complete_type_info
 ;;;     g_flags_complete_type_info
 
-;;; 2020-10-16
+;;; 2021-4-7
