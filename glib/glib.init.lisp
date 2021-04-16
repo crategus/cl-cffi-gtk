@@ -2,7 +2,7 @@
 ;;; glib.init.lisp
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -174,24 +174,21 @@
 
 (push-library-version-features glib
   +glib-init-major-version+ +glib-init-minor-version+
-  2 32
-  2 34
-  2 36
-  2 38
-  2 40
-  2 42
-  2 44
-  2 46
-  2 48
-  2 50
-  2 52
-  2 54
-  2 56
-  2 58
-  2 60
-  2 62
-  2 64)
+  2 48    ; Since 22.03.2016
+  2 50    ; Since 19.09.2016
+  2 52    ; Since 19.03.2017
+  2 54    ; Since 11.09.2017
+  2 56    ; Since 12.03.2018
+  2 58    ; Since 03.09.2018
+  2 60    ; Since 04.03.2019
+  2 62    ; Since 05.09.2019
+  2 64    ; Since 27.02.2020
+  2 66    ; Since 10.09.2020
+  2 68    ; Since 18.03.2021
+)
 
-(require-library-version "GLib" 2 32 +glib-init-major-version+ +glib-init-minor-version+)
+(require-library-version "GLib" 2 48
+                         +glib-init-major-version+
+                         +glib-init-minor-version+)
 
 ;;; --- End of file glib.init.lisp ---------------------------------------------

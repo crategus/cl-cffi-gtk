@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.misc.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; The documentation of this file is taken from the GLib 2.68 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,7 +35,7 @@
 ;;;
 ;;; Basic Types
 ;;;
-;;; Standard GLib types, defined for ease-of-use and portability
+;;;     Standard GLib types, defined for ease-of-use and portability
 ;;;
 ;;; Only the following types are implemented:
 ;;;
@@ -49,71 +46,50 @@
 ;;;
 ;;; Memory Allocation
 ;;;
-;;; The following functions for the general memory-handling are implemented:
+;;;  The following functions for general memory handling are implemented:
 ;;;
 ;;;     g_malloc
 ;;;     g_free
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Date and Time Functions
+;;; String Utility Functions
 ;;;
-;;; Calendrical calculations and miscellaneous time stuff
-;;;
-;;; Only the following struct and functions are implemented:
-;;;
-;;;     GTimeVal
-;;;
-;;;     g_get_current_time
-;;;     g_get_monotonic_time
-;;;     g_get_real_time
-;;; ----------------------------------------------------------------------------
-;;;
-;;; String Utility Functions - Various string-related functions
+;;;     Various string-related functions
 ;;;
 ;;; Implemented is:
 ;;;
 ;;;     GString
 ;;;     GStrv
 ;;;
-;;;     g_strdup        *not exported*
+;;;     g_strdup                                           not exported
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Doubly-Linked Lists
 ;;;
-;;; Linked lists containing integer values or pointers to data, with the ability
-;;; to iterate over the list in both directions
+;;;     Linked lists containing integer values or pointers to data, with the
+;;;     ability to iterate over the list in both directions
 ;;;
 ;;; Implemented is:
 ;;;
 ;;;     GList
 ;;;
-;;;     g_list_free     *not exported*
-;;;     g_list_next     *not exported*
+;;;     g_list_free                                        not exported
+;;;     g_list_next                                        not exported
+;;;     g_list_append                                      not exported
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Singly-Linked Lists
 ;;;
-;;; Linked lists containing integer values or pointers to data, limited to
-;;; iterating over the list in one direction
+;;;     Linked lists containing integer values or pointers to data, limited to
+;;;     iterating over the list in one direction
 ;;;
 ;;; Implemented is:
 ;;;
 ;;;     GSList
 ;;;
-;;;     g_slist_alloc   *not exported*
-;;;     g_slist_free    *not exported*
-;;;     g_slist_next    *not exported*
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Threads
-;;;
-;;; Portable support for threads, mutexes, locks, conditions and thread private
-;;; data
-;;;
-;;; Implemented is:
-;;;
-;;;     g-mutex
-;;;     g-cond
+;;;     g_slist_alloc                                      not exported
+;;;     g_slist_free                                       not exported
+;;;     g_slist_next                                       not exported
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
@@ -131,11 +107,9 @@
          (error "Can not define 'g-size', unknown CPU architecture ~
                 (known are x86 and x86-64)"))))
 
-(export 'g-size)
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-size 'type)
- "@version{2013-7-22}
+ "@version{2021-4-9}
   @begin{short}
     An unsigned integer type of the result of the sizeof operator,
     corresponding to the @code{size_t} type defined in C99.
@@ -146,24 +120,26 @@
   @see-type{g-ssize}
   @see-type{g-offset}")
 
+(export 'g-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gssize
 ;;; ----------------------------------------------------------------------------
 
 (defctype g-ssize :long)
 
-(export 'g-ssize)
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-ssize 'type)
- "@version{2013-7-22}
+ "@version{2021-4-9}
   @begin{short}
-    A signed variant of @type{g-size}, corresponding to the @code{ssize_t}
-    defined on most platforms.
+    A signed variant of the @type{g-size} type, corresponding to the
+    @code{ssize_t} type defined on most platforms.
   @end{short}
   Values of this type can range from @code{G_MINSSIZE} to @code{G_MAXSSIZE}.
   @see-type{g-size}
   @see-type{g-offset}")
+
+(export 'g-ssize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; goffset
@@ -171,20 +147,18 @@
 
 (defctype g-offset :uint64)
 
-(export 'g-offset)
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-offset 'type)
- "@version{2013-7-22}
+ "@version{2021-4-9}
   @begin{short}
     A signed integer type that is used for file offsets, corresponding to the
-    C99 type @code{off64_t}.
+    C99 @code{off64_t} type.
   @end{short}
   Values of this type can range from @code{G_MINOFFSET} to @code{G_MAXOFFSET}.
-
-  Since 2.14
   @see-type{g-size}
   @see-type{g-ssize}")
+
+(export 'g-offset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_malloc ()
@@ -192,11 +166,14 @@
 
 (defcfun ("g_malloc" g-malloc) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @argument[n-bytes]{the number of bytes to allocate}
+ "@version{2021-4-9}
+  @argument[n-bytes]{a @type{g-size} type with the number of bytes to allocate}
   @return{A foreign pointer to the allocated memory.}
-  Allocates @arg{n-bytes} bytes of memory. If @arg{n-bytes} is 0 @sym{g-malloc}
-  returns a foreign @code{null}-pointer.
+  @begin{short}
+    Allocates @arg{n-bytes} bytes of memory.
+  @end{short}
+  If @arg{n-bytes} is 0 @sym{g-malloc} returns a foreign @code{null}-pointer.
+  @see-type{g-size}
   @see{g-free}"
   (n-bytes g-size))
 
@@ -207,138 +184,16 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_free" g-free) :void
- "@version{2013-7-22}
+ "@version{2021-4-8}
   @argument[mem]{a foreign pointer to the memory to free}
-  Frees the memory pointed to by the foreign pointer @arg{mem}. If @arg{mem}
-  is a @code{null}-pointer @sym{g-free} simply returns.
+  @begin{short}
+    Frees the memory pointed to by the foreign pointer @arg{mem}.
+  @end{short}
+  If @arg{mem} is a @code{null}-pointer @sym{g-free} simply returns.
   @see{g-malloc}"
   (mem :pointer))
 
 (export 'g-free)
-
-;;; ----------------------------------------------------------------------------
-;;; GTimeVal
-;;; ----------------------------------------------------------------------------
-
-(defcstruct g-time-val
-  (tv-sec :long)
-  (tv-usec :long))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-time-val atdoc:*type-name-alias*) "CStruct"
-      (documentation 'g-time-val 'type)
- "@version{2013-7-22}
-  @begin{short}
-    Represents a precise time, with seconds and microseconds.
-  @end{short}
-  Similar to the struct @code{timeval} returned by the @code{gettimeofday()}
-  UNIX call.
-
-  GLib is attempting to unify around the use of 64bit integers to represent
-  microsecond-precision time. As such, this type will be removed from a
-  future version of GLib.
-  @begin{pre}
-(defcstruct g-time-val
-  (tv-sec :long)
-  (tv-usec :long))
-  @end{pre}
-  @begin[code]{table}
-    @entry[tv-sec]{seconds}
-    @entry[tv-usec]{microseconds}
-  @end{table}")
-
-(export 'g-time-val)
-
-;;; ----------------------------------------------------------------------------
-;;; g_get_current_time ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_get_current_time" %g-get-current-time) :void
-  (result (:pointer (:struct g-time-val))))
-
-(defun g-get-current-time ()
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @return{The values seconds and microseconds from the @type{g-time-val}
-    structure.}
-  @begin{short}
-    Equivalent to the UNIX @code{gettimeofday()} function, but portable.
-  @end{short}
-
-  You may find @fun{g-get-real-time} to be more convenient.
-  @begin[Example]{dictionary}
-    @begin{pre}
- (multiple-value-bind (seconds microseconds)
-     (g-get-current-time)
-   (format t \"seconds = ~A, microseconds = ~A~%\"
-             seconds microseconds))
-=> seconds = 1374489588, microseconds = 442027
-    @end{pre}
-  @end{dictionary}
-  @see-type{g-time-val}
-  @see-function{g-get-real-time}
-  @see-function{g-get-monotonic-time}"
-  (with-foreign-object (result '(:struct g-time-val))
-    (%g-get-current-time result)
-    (values (foreign-slot-value result '(:struct g-time-val) 'tv-sec)
-            (foreign-slot-value result '(:struct g-time-val) 'tv-usec))))
-
-(export 'g-get-current-time)
-
-;;; ----------------------------------------------------------------------------
-;;; g_get_monotonic_time ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_get_monotonic_time" g-get-monotonic-time) :int64
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @return{The monotonic time, in microseconds.}
-  @short{Queries the system monotonic time, if available.}
-
-  On POSIX systems with @code{clock_gettime()} and @code{CLOCK_MONOTONIC} this
-  call is a very shallow wrapper for that. Otherwise, we make a best effort that
-  probably involves returning the wall clock time (with at least microsecond
-  accuracy, subject to the limitations of the OS kernel).
-
-  It is important to note that @code{POSIX CLOCK_MONOTONIC} does not count time
-  spent while the machine is suspended.
-
-  On Windows, \"limitations of the OS kernel\" is a rather substantial
-  statement. Depending on the configuration of the system, the wall clock time
-  is updated as infrequently as 64 times a second (which is approximately every
-  16 ms). Also, on XP (but not on Vista or later) the monotonic clock is locally
-  monotonic, but may differ in exact value between processes due to timer wrap
-  handling.
-
-  Since 2.28
-  @see-function{g-get-current-time}
-  @see-function{g-get-real-time}")
-
-(export 'g-get-monotonic-time)
-
-;;; ----------------------------------------------------------------------------
-;;; g_get_real_time ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_get_real_time" g-get-real-time) :int64
- #+cl-cffi-gtk-documentation
- "@version{2013-7-22}
-  @return{The number of microseconds since January 1, 1970 UTC.}
-  @short{Queries the system wall-clock time.}
-
-  This call is functionally equivalent to @fun{g-get-current-time} except that
-  the return value is often more convenient than dealing with a value list
-  of seconds and microseconds.
-
-  You should only use this call if you are actually interested in the real
-  wall-clock time. @fun{g-get-monotonic-time} is probably more useful for
-  measuring intervals.
-
-  Since 2.28
-  @see-function{g-get-current-time}
-  @see-function{g-get-monotonic-time}")
-
-(export 'g-get-real-time)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GString
@@ -371,16 +226,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-string 'type)
- "@version{2013-7-22}
+ "@version{2021-4-8}
   @begin{short}
-    A type that is almost like the foreign CFFI type @code{:string} but uses the
-    GLib functions @fun{g-malloc} and @fun{g-free} to allocate and free memory.
+    A type that is almost like the foreign CFFI type @code{:string} but uses
+    the GLib functions @fun{g-malloc} and @fun{g-free} to allocate and free
+    memory.
   @end{short}
 
   The @sym{g-string} type performs automatic conversion between Lisp and C
   strings. Note that, in the case of functions the converted C string will
-  have dynamic extent (i.e. it will be automatically freed after the foreign
-  function returns).
+  have dynamic extent, i.e. it will be automatically freed after the foreign
+  function returns.
 
   In addition to Lisp strings, this type will accept foreign pointers and pass
   them unmodified.
@@ -436,17 +292,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-strv 'type)
- "@version{2013-7-22}
+ "@version{2021-4-9}
   @begin{short}
     This type represents and performs automatic conversion between a list of
-    Lisp strings and an array of C strings of type @type{g-string}.
+    Lisp strings and an array of C strings of the @type{g-string} type.
   @end{short}
-
   @begin[Example]{dictionary}
     @begin{pre}
- (setq str (convert-to-foreign (list \"Hello\" \"World\") 'g-strv))
+(setq str (convert-to-foreign (list \"Hello\" \"World\") 'g-strv))
 => #.(SB-SYS:INT-SAP #X01541998)
- (convert-from-foreign str 'g-strv)
+(convert-from-foreign str 'g-strv)
 => (\"Hello\" \"World\")
     @end{pre}
   @end{dictionary}
@@ -455,7 +310,7 @@
 (export 'g-strv)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_strdup ()
+;;; g_strdup ()                                            not exported
 ;;; ----------------------------------------------------------------------------
 
 ;; We do not export this function. It is internal for the implementation of
@@ -466,8 +321,8 @@
  "@argument[str]{the string to duplicate}
   @return{a newly-allocated copy of @arg{str}}
   @short{Duplicates a string.}
-  If @arg{str} is @code{NULL} it returns @code{NULL}. The returned string should
-  be freed with @fun{g-free} when no longer needed."
+  If @arg{str} is @code{NULL} it returns @code{NULL}. The returned string
+  should be freed with @fun{g-free} when no longer needed."
   (str (:string :free-to-foreign t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -520,19 +375,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-list 'type)
- "@version{2013-7-22}
+ "@version{2021-4-8}
   @begin{short}
     The @sym{g-list} type represents a C doubly-linked list with elements of
-    the type @code{GList} structure.
+    the @code{GList} structure.
   @end{short}
-  The type @sym{g-list} performs automatic conversion from a C list to a Lisp
+  The @sym{g-list} type performs automatic conversion from a C list to a Lisp
   list. The conversion from a Lisp list to a C reprensentation is implemented
-  only for foreign pointers, but not Lisp objects.")
+  only for foreign pointers, but not Lisp objects.
+  @see-type{g-slist}")
 
 (export 'g-list)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_list_free ()
+;;; g_list_free ()                                         not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_free" %g-list-free) :void
@@ -550,7 +406,7 @@
   (lst (:pointer (:struct %g-list))))
 
 ;;; ----------------------------------------------------------------------------
-;;; g_list_next ()
+;;; g_list_next ()                                         not exported
 ;;; ----------------------------------------------------------------------------
 
 (defun %g-list-next (lst)
@@ -638,7 +494,9 @@
   (prog1
     (iter (for c initially pointer then (%g-slist-next c))
           (until (null-pointer-p c))
-          (collect (convert-from-foreign (foreign-slot-value c '(:struct %g-slist) 'data)
+          (collect (convert-from-foreign (foreign-slot-value c
+                                                             '(:struct %g-slist)
+                                                             'data)
                                          (g-slist-type-type type))))
     (when (g-slist-type-free-from-foreign type)
       (%g-slist-free pointer))))
@@ -660,18 +518,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-slist 'type)
- "@version{2013-7-22}
+ "@version{2021-4-8}
   @begin{short}
     The @sym{g-slist} type represents a C singly-linked list with elements of
-    type @code{GSList} structure.
+    @code{GSList} structure.
   @end{short}
   The type @sym{g-slist} performs automatic conversion from a C list to a Lisp
-  list.")
+  list.
+  @see-type{g-list}")
 
 (export 'g-slist)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_slist_alloc ()
+;;; g_slist_alloc ()                                       not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_alloc" %g-slist-alloc) (:pointer (:struct %g-slist))
@@ -682,7 +541,7 @@
   g_slist_insert_sorted() functions and so is rarely used on its own.")
 
 ;;; ----------------------------------------------------------------------------
-;;; g_slist_free ()
+;;; g_slist_free ()                                        not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_free" %g-slist-free) :void
@@ -697,7 +556,7 @@
   (lst (:pointer (:struct %g-slist))))
 
 ;;; ----------------------------------------------------------------------------
-;;; g_slist_next ()
+;;; g_slist_next ()                                        not exported
 ;;; ----------------------------------------------------------------------------
 
 (defun %g-slist-next (lst)
@@ -708,155 +567,5 @@
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '(:struct %g-slist) 'next)))
-
-;;; ----------------------------------------------------------------------------
-;;; union GMutex
-;;;
-;;; union _GMutex
-;;; {
-;;;   /*< private >*/
-;;;   gpointer p;
-;;;   guint i[2];
-;;; };
-;;;
-;;; The GMutex struct is an opaque data structure to represent a mutex (mutual
-;;; exclusion). It can be used to protect data against shared access. Take for
-;;; example the following function:
-;;;
-;;; Example 2. A function which will not work in a threaded environment
-;;;
-;;;   int
-;;;   give_me_next_number (void)
-;;;   {
-;;;     static int current_number = 0;
-;;;
-;;;     /* now do a very complicated calculation to calculate the new
-;;;      * number, this might for example be a random number generator
-;;;      */
-;;;     current_number = calc_next_number (current_number);
-;;;
-;;;     return current_number;
-;;;   }
-;;;
-;;; It is easy to see that this won't work in a multi-threaded application.
-;;; There current_number must be protected against shared access. A GMutex can
-;;; be used as a solution to this problem:
-;;;
-;;; Example 3. Using GMutex to protected a shared variable
-;;;
-;;;   int
-;;;   give_me_next_number (void)
-;;;   {
-;;;     static GMutex mutex;
-;;;     static int current_number = 0;
-;;;     int ret_val;
-;;;
-;;;     g_mutex_lock (&mutex);
-;;;     ret_val = current_number = calc_next_number (current_number);
-;;;     g_mutex_unlock (&mutex);
-;;;
-;;;     return ret_val;
-;;;   }
-;;;
-;;; Notice that the GMutex is not initialised to any particular value. Its
-;;; placement in static storage ensures that it will be initialised to
-;;; all-zeros, which is appropriate.
-;;;
-;;; If a GMutex is placed in other contexts (eg: embedded in a struct) then it
-;;; must be explicitly initialised using g_mutex_init().
-;;;
-;;; A GMutex should only be accessed via g_mutex_ functions.
-;;; ----------------------------------------------------------------------------
-
-(defcstruct g-mutex)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-mutex atdoc:*type-name-alias*) "CStruct"
-      (documentation 'g-mutex 'type)
- "@version{2013-7-21}
-  The @sym{g-mutex} structure is an opaque data structure to represent a mutex
-  (mutual exclusion).")
-
-(export 'g-mutex)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GCond
-;;;
-;;; struct GCond {
-;;; };
-;;;
-;;; The GCond struct is an opaque data structure that represents a condition.
-;;; Threads can block on a GCond if they find a certain condition to be false.
-;;; If other threads change the state of this condition they signal the GCond,
-;;; and that causes the waiting threads to be woken up.
-;;;
-;;; Consider the following example of a shared variable. One or more threads can
-;;; wait for data to be published to the variable and when another thread
-;;; publishes the data, it can signal one of the waiting threads to wake up to
-;;; collect the data.
-;;;
-;;; Example 6.  Using GCond to block a thread until a condition is satisfied
-;;;
-;;;   gpointer current_data = NULL;
-;;;   GMutex data_mutex;
-;;;   GCond data_cond;
-;;;
-;;;   void
-;;;   push_data (gpointer data)
-;;;   {
-;;;     g_mutex_lock (&data_mutex);
-;;;     current_data = data;
-;;;     g_cond_signal (&data_cond);
-;;;     g_mutex_unlock (&data_mutex);
-;;;   }
-;;;
-;;;   gpointer
-;;;   pop_data (void)
-;;;   {
-;;;     gpointer data;
-;;;
-;;;     g_mutex_lock (&data_mutex);
-;;;     while (!current_data)
-;;;       g_cond_wait (&data_cond, &data_mutex);
-;;;     data = current_data;
-;;;     current_data = NULL;
-;;;     g_mutex_unlock (&data_mutex);
-;;;
-;;;     return data;
-;;;   }
-;;;
-;;; Whenever a thread calls pop_data() now, it will wait until current_data is
-;;; non-NULL, i.e. until some other thread has called push_data().
-;;;
-;;; The example shows that use of a condition variable must always be paired
-;;; with a mutex. Without the use of a mutex, there would be a race between the
-;;; check of current_data by the while loop in pop_data and waiting.
-;;; Specifically, another thread could set pop_data after the check, and signal
-;;; the cond (with nobody waiting on it) before the first thread goes to sleep.
-;;; GCond is specifically useful for its ability to release the mutex and go to
-;;; sleep atomically.
-;;;
-;;; It is also important to use the g_cond_wait() and g_cond_wait_until()
-;;; functions only inside a loop which checks for the condition to be true. See
-;;; g_cond_wait() for an explanation of why the condition may not be true even
-;;; after it returns.
-;;;
-;;; If a GCond is allocated in static storage then it can be used without
-;;; initialisation. Otherwise, you should call g_cond_init() on it and
-;;; g_cond_clear() when done.
-;;;
-;;; A GCond should only be accessed via the g_cond_ functions.
-;;; ----------------------------------------------------------------------------
-
-(defcstruct g-cond)
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-cond atdoc:*type-name-alias*) "CStruct"
-      (documentation 'g-cond 'type)
- "@version{2013-7-21}
-  The @sym{g-cond} structure is an opaque data structure that represents a
-  condition.")
-
-(export 'g-cond)
 
 ;;; --- End of file glib.misc.lisp ---------------------------------------------

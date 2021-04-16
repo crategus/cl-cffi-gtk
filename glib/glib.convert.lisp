@@ -28,17 +28,19 @@
 ;;;
 ;;; Character Set Conversion
 ;;;
-;;; Convert strings between different character sets
+;;;     Convert strings between different character sets
 ;;;
-;;; Synopsis
+;;; Types and Values
+;;;
+;;;     GIConv
+;;;     G_CONVERT_ERROR
+;;;     GConvertError
+;;;
+;;; Functions
 ;;;
 ;;;     g_convert
 ;;;     g_convert_with_fallback
-;;;
-;;;     GIConv
-;;;
 ;;;     g_convert_with_iconv
-;;;     G_CONVERT_ERROR
 ;;;     g_iconv_open
 ;;;     g_iconv
 ;;;     g_iconv_close
@@ -49,11 +51,9 @@
 ;;;     g_filename_display_name
 ;;;     g_filename_display_basename
 ;;;     g_locale_from_utf8
-;;;
-;;;     GConvertError
-;;;
 ;;;     g_get_charset
 ;;;     g_get_codeset
+;;;     g_get_console_charset
 ;;;
 ;;; Description
 ;;;
@@ -67,8 +67,8 @@
 ;;; name is valid as long as it does not have path separators in it ("/").
 ;;; However, displaying file names may require conversion: from the character
 ;;; set in which they were created, to the character set in which the
-;;; application operates. Consider the Spanish file name "Presentación.sxi". If
-;;; the application which created it uses ISO-8859-1 for its encoding,
+;;; application operates. Consider the Spanish file name "Presentación.sxi".
+;;; If the application which created it uses ISO-8859-1 for its encoding,
 ;;;
 ;;; Character:  P  r  e  s  e  n  t  a  c  i  ó  n  .  s  x  i
 ;;; Hex code:   50 72 65 73 65 6e 74 61 63 69 f3 6e 2e 73 78 69
@@ -79,8 +79,8 @@
 ;;; Character:  P  r  e  s  e  n  t  a  c  i  ó     n  .  s  x  i
 ;;; Hex code:   50 72 65 73 65 6e 74 61 63 69 c3 b3 6e 2e 73 78 69
 ;;;
-;;; Glib uses UTF-8 for its strings, and GUI toolkits like GTK+ that use Glib do
-;;; the same thing. If you get a file name from the file system, for example,
+;;; Glib uses UTF-8 for its strings, and GUI toolkits like GTK+ that use Glib
+;;; do the same thing. If you get a file name from the file system, for example,
 ;;; from readdir(3) or from g_dir_read_name(), and you wish to display the file
 ;;; name to the user, you will need to convert it into UTF-8. The opposite case
 ;;; is when the user types the name of a file he wishes to save: the toolkit
@@ -88,8 +88,8 @@
 ;;; it to the character set used for file names before you can create the file
 ;;; with open(2) or fopen(3).
 ;;;
-;;; By default, Glib assumes that file names on disk are in UTF-8 encoding. This
-;;; is a valid assumption for file systems which were created relatively
+;;; By default, Glib assumes that file names on disk are in UTF-8 encoding.
+;;; This is a valid assumption for file systems which were created relatively
 ;;; recently: most applications use UTF-8 encoding for their strings, and that
 ;;; is also what they use for the file names they create. However, older file
 ;;; systems may still contain file names created in "older" encodings, such as
@@ -119,10 +119,10 @@
 ;;; process file name encodings correctly.
 ;;;
 ;;;     If you get a file name from the file system from a function such as
-;;;     readdir(3) or gtk_file_chooser_get_filename(), you do not need to do any
-;;;     conversion to pass that file name to functions like open(2), rename(2),
-;;;     or fopen(3) — those are "raw" file names which the file system
-;;;     understands.
+;;;     readdir(3) or gtk_file_chooser_get_filename(), you do not need to do
+;;;     any conversion to pass that file name to functions like open(2),
+;;;     rename(2), or fopen(3) — those are "raw" file names which the file
+;;;     system understands.
 ;;;
 ;;;     If you need to display a file name, convert it to UTF-8 first by using
 ;;;     g_filename_to_utf8(). If conversion fails, display a string like
@@ -144,6 +144,55 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
+
+;;; ----------------------------------------------------------------------------
+;;; GIConv
+;;;
+;;; typedef struct _GIConv GIConv;
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GConvertError
+;;;
+;;; typedef enum {
+;;;   G_CONVERT_ERROR_NO_CONVERSION,
+;;;   G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+;;;   G_CONVERT_ERROR_FAILED,
+;;;   G_CONVERT_ERROR_PARTIAL_INPUT,
+;;;   G_CONVERT_ERROR_BAD_URI,
+;;;   G_CONVERT_ERROR_NOT_ABSOLUTE_PATH
+;;; } GConvertError;
+;;;
+;;; Error codes returned by character set conversion routines.
+;;;
+;;; G_CONVERT_ERROR_NO_CONVERSION
+;;;     Conversion between the requested character sets is not supported.
+;;;
+;;; G_CONVERT_ERROR_ILLEGAL_SEQUENCE
+;;;     Invalid byte sequence in conversion input.
+;;;
+;;; G_CONVERT_ERROR_FAILED
+;;;     Conversion failed for some reason.
+;;;
+;;; G_CONVERT_ERROR_PARTIAL_INPUT
+;;;     Partial character sequence at end of input.
+;;;
+;;; G_CONVERT_ERROR_BAD_URI
+;;;     URI is invalid.
+;;;
+;;; G_CONVERT_ERROR_NOT_ABSOLUTE_PATH
+;;;     Pathname is not an absolute path.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; G_CONVERT_ERROR
+;;;
+;;; #define G_CONVERT_ERROR g_convert_error_quark()
+;;;
+;;; Error domain for character set conversions. Errors in this domain will be
+;;; from the GConvertError enumeration. See GError for information on error
+;;; domains.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_convert ()
@@ -175,8 +224,8 @@
 ;;; bytes_read :
 ;;;     location to store the number of bytes in the input string that were
 ;;;     successfully converted, or NULL. Even if the conversion was successful,
-;;;     this may be less than len if there were partial characters at the end of
-;;;     the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
+;;;     this may be less than len if there were partial characters at the end
+;;;     of the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
 ;;;     value stored will the byte offset after the last valid input sequence.
 ;;;
 ;;; bytes_written :
@@ -189,8 +238,8 @@
 ;;;
 ;;; Returns :
 ;;;     If the conversion was successful, a newly allocated nul-terminated
-;;;     string, which must be freed with g_free(). Otherwise NULL and error will
-;;;     be set.
+;;;     string, which must be freed with g_free(). Otherwise NULL and error
+;;;     will be set.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -206,11 +255,11 @@
 ;;;                                  GError **error);
 ;;;
 ;;; Converts a string from one character set to another, possibly including
-;;; fallback sequences for characters not representable in the output. Note that
-;;; it is not guaranteed that the specification for the fallback sequences in
-;;; fallback will be honored. Some systems may do an approximate conversion from
-;;; from_codeset to to_codeset in their iconv() functions, in which case GLib
-;;; will simply return that approximate conversion.
+;;; fallback sequences for characters not representable in the output. Note
+;;; that it is not guaranteed that the specification for the fallback sequences
+;;; in fallback will be honored. Some systems may do an approximate conversion
+;;; from from_codeset to to_codeset in their iconv() functions, in which case
+;;; GLib will simply return that approximate conversion.
 ;;;
 ;;; Note that you should use g_iconv() for streaming conversions[3].
 ;;;
@@ -228,15 +277,15 @@
 ;;;
 ;;; fallback :
 ;;;     UTF-8 string to use in place of character not present in the target
-;;;     encoding. (The string must be representable in the target encoding). If
-;;;     NULL, characters not in the target encoding will be represented as
+;;;     encoding. (The string must be representable in the target encoding).
+;;;     If NULL, characters not in the target encoding will be represented as
 ;;;     Unicode escapes \uxxxx or \Uxxxxyyyy.
 ;;;
 ;;; bytes_read :
 ;;;     location to store the number of bytes in the input string that were
 ;;;     successfully converted, or NULL. Even if the conversion was successful,
-;;;     this may be less than len if there were partial characters at the end of
-;;;     the input.
+;;;     this may be less than len if there were partial characters at the end
+;;;     of the input.
 ;;;
 ;;; bytes_written :
 ;;;     the number of bytes stored in the output buffer (not including the
@@ -248,14 +297,8 @@
 ;;;
 ;;; Returns :
 ;;;     If the conversion was successful, a newly allocated nul-terminated
-;;;     string, which must be freed with g_free(). Otherwise NULL and error will
-;;;     be set.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GIConv
-;;;
-;;; typedef struct _GIConv GIConv;
+;;;     string, which must be freed with g_free(). Otherwise NULL and error
+;;;     will be set.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -284,8 +327,8 @@
 ;;; bytes_read :
 ;;;     location to store the number of bytes in the input string that were
 ;;;     successfully converted, or NULL. Even if the conversion was successful,
-;;;     this may be less than len if there were partial characters at the end of
-;;;     the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
+;;;     this may be less than len if there were partial characters at the end
+;;;     of the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
 ;;;     value stored will the byte offset after the last valid input sequence.
 ;;;
 ;;; bytes_written :
@@ -298,18 +341,8 @@
 ;;;
 ;;; Returns :
 ;;;     If the conversion was successful, a newly allocated nul-terminated
-;;;     string, which must be freed with g_free(). Otherwise NULL and error will
-;;;     be set.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_CONVERT_ERROR
-;;;
-;;; #define G_CONVERT_ERROR g_convert_error_quark()
-;;;
-;;; Error domain for character set conversions. Errors in this domain will be
-;;; from the GConvertError enumeration. See GError for information on error
-;;; domains.
+;;;     string, which must be freed with g_free(). Otherwise NULL and error
+;;;     will be set.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -411,8 +444,8 @@
 ;;; bytes_read :
 ;;;     location to store the number of bytes in the input string that were
 ;;;     successfully converted, or NULL. Even if the conversion was successful,
-;;;     this may be less than len if there were partial characters at the end of
-;;;     the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
+;;;     this may be less than len if there were partial characters at the end
+;;;     of the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
 ;;;     value stored will the byte offset after the last valid input sequence.
 ;;;
 ;;; bytes_written :
@@ -436,16 +469,16 @@
   (len :int)
   (bytes-read (:pointer g-size))
   (bytes-written (:pointer g-size))
-  (error :pointer))
+  (err :pointer))
 
 (defun g-filename-to-utf8 (opsysstring)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2021-4-13}
   @argument[opsysstring]{a string in the encoding for filenames}
   @return{The converted string, or @code{nil} on an error.}
   @begin{short}
-    Converts a string which is in the encoding used by GLib for filenames into a
-    UTF-8 string.
+    Converts a string which is in the encoding used by GLib for filenames into
+    a UTF-8 string.
   @end{short}
   Note that on Windows GLib uses UTF-8 for filenames; on other platforms, this
   function indirectly depends on the current locale.
@@ -469,7 +502,7 @@
 
 (defun g-filename-from-utf8 (utf8string)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2021-4-13}
   @argument[utf8string]{a UTF-8 encoded string}
   @return{The converted string, or @code{nil} on an error.}
   @begin{short}
@@ -547,8 +580,8 @@
 ;;;     a pathname hopefully in the GLib file name encoding
 ;;;
 ;;; Returns :
-;;;     a newly allocated string containing a rendition of the filename in valid
-;;;     UTF-8
+;;;     a newly allocated string containing a rendition of the filename in
+;;;     valid UTF-8
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -565,9 +598,9 @@
 ;;;
 ;;; If GLib cannot make sense of the encoding of filename, as a last resort it
 ;;; replaces unknown characters with U+FFFD, the Unicode replacement character.
-;;; You can search the result for the UTF-8 encoding of this character (which is
-;;; "\357\277\275" in octal notation) to find out if filename was in an invalid
-;;; encoding.
+;;; You can search the result for the UTF-8 encoding of this character (which
+;;; is "\357\277\275" in octal notation) to find out if filename was in an
+;;; invalid encoding.
 ;;;
 ;;; You must pass the whole absolute pathname to this functions so that
 ;;; translation of well known locations can be done.
@@ -607,8 +640,8 @@
 ;;; bytes_read :
 ;;;     location to store the number of bytes in the input string that were
 ;;;     successfully converted, or NULL. Even if the conversion was successful,
-;;;     this may be less than len if there were partial characters at the end of
-;;;     the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
+;;;     this may be less than len if there were partial characters at the end
+;;;     of the input. If the error G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the
 ;;;     value stored will the byte offset after the last valid input sequence.
 ;;;
 ;;; bytes_written :
@@ -624,56 +657,23 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GConvertError
-;;;
-;;; typedef enum {
-;;;   G_CONVERT_ERROR_NO_CONVERSION,
-;;;   G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
-;;;   G_CONVERT_ERROR_FAILED,
-;;;   G_CONVERT_ERROR_PARTIAL_INPUT,
-;;;   G_CONVERT_ERROR_BAD_URI,
-;;;   G_CONVERT_ERROR_NOT_ABSOLUTE_PATH
-;;; } GConvertError;
-;;;
-;;; Error codes returned by character set conversion routines.
-;;;
-;;; G_CONVERT_ERROR_NO_CONVERSION
-;;;     Conversion between the requested character sets is not supported.
-;;;
-;;; G_CONVERT_ERROR_ILLEGAL_SEQUENCE
-;;;     Invalid byte sequence in conversion input.
-;;;
-;;; G_CONVERT_ERROR_FAILED
-;;;     Conversion failed for some reason.
-;;;
-;;; G_CONVERT_ERROR_PARTIAL_INPUT
-;;;     Partial character sequence at end of input.
-;;;
-;;; G_CONVERT_ERROR_BAD_URI
-;;;     URI is invalid.
-;;;
-;;; G_CONVERT_ERROR_NOT_ABSOLUTE_PATH
-;;;     Pathname is not an absolute path.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; g_get_charset ()
 ;;;
 ;;; gboolean g_get_charset (const char **charset);
 ;;;
 ;;; Obtains the character set for the current locale; you might use this
 ;;; character set as an argument to g_convert(), to convert from the current
-;;; locale's encoding to some other encoding. (Frequently g_locale_to_utf8() and
-;;; g_locale_from_utf8() are nice shortcuts, though.)
+;;; locale's encoding to some other encoding. (Frequently g_locale_to_utf8()
+;;; and g_locale_from_utf8() are nice shortcuts, though.)
 ;;;
 ;;; On Windows the character set returned by this function is the so-called
 ;;; system default ANSI code-page. That is the character set used by the
 ;;; "narrow" versions of C library and Win32 functions that handle file names.
-;;; It might be different from the character set used by the C library's current
-;;; locale.
+;;; It might be different from the character set used by the C library's
+;;; current locale.
 ;;;
-;;; The return value is TRUE if the locale's encoding is UTF-8, in that case you
-;;; can perhaps avoid calling g_convert().
+;;; The return value is TRUE if the locale's encoding is UTF-8, in that case
+;;; you can perhaps avoid calling g_convert().
 ;;;
 ;;; The string returned in charset is not allocated, and should not be freed.
 ;;;
@@ -692,8 +692,40 @@
 ;;; Gets the character set for the current locale.
 ;;;
 ;;; Returns :
-;;;     A newly allocated string containing the name of the character set. This
-;;;     string must be freed with g_free().
+;;;     A newly allocated string containing the name of the character set.
+;;;     This string must be freed with g_free().
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_get_console_charset ()
+;;;
+;;; gboolean
+;;; g_get_console_charset (const char **charset);
+;;;
+;;; Obtains the character set used by the console attached to the process,
+;;; which is suitable for printing output to the terminal.
+;;;
+;;; Usually this matches the result returned by g_get_charset(), but in
+;;; environments where the locale's character set does not match the encoding
+;;; of the console this function tries to guess a more suitable value instead.
+;;;
+;;; On Windows the character set returned by this function is the output code
+;;; page used by the console associated with the calling process. If the
+;;; codepage can't be determined (for example because there is no console
+;;; attached) UTF-8 is assumed.
+;;;
+;;; The return value is TRUE if the locale's encoding is UTF-8, in that case
+;;; you can perhaps avoid calling g_convert().
+;;;
+;;; The string returned in charset is not allocated, and should not be freed.
+;;;
+;;; charset :
+;;;     return location for character set name, or NULL.
+;;;
+;;; Returns :
+;;;     TRUE if the returned charset is UTF-8
+;;;
+;;; Since 2.62
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file glib.convert.lisp ------------------------------------------

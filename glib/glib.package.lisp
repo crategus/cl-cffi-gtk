@@ -82,51 +82,75 @@
       @about-function{g-malloc}
       @about-function{g-free}
     @end{subsection}
-    @begin[Date and Time Functions]{subsection}
-      Calendrical calculations and miscellaneous time stuff.
-      Only the following struct is implemented:
-
-      @about-type{g-time-val}
-      @about-function{g-get-current-time}
-      @about-function{g-get-monotonic-time}
-      @about-function{g-get-real-time}
-    @end{subsection}
     @begin[String Utility Functions]{subsection}
-      Implemented is:
+      String Utility Functions. The following types are implemented:
 
       @about-type{g-string}
       @about-type{g-strv}
     @end{subsection}
     @begin[Doubly-Linked Lists]{subsection}
-      Linked lists containing integer values or pointers to data, with the ability
-      to iterate over the list in both directions
-
-      Implemented is:
+      Linked lists containing integer values or pointers to data, with the
+      ability to iterate over the list in both directions. Implemented is the
+      type:
 
       @about-type{g-list}
     @end{subsection}
     @begin[Singly-Linked Lists]{subsection}
       Linked lists containing integer values or pointers to data, limited to
-      iterating over the list in one direction
-
-      Implemented is:
+      iterating over the list in one direction. Implemented is the type:
 
       @about-type{g-slist}
     @end{subsection}
-    @begin[Threads]{subsection}
-      Portable support for threads, mutexes, locks, conditions and thread private
-      data.
+  @end{section}
+  @begin[Character Set Conversion]{section}
+    Convert strings between different character sets.
 
-      Implemented is:
+    @about-symbol{GIConv}
+    @about-symbol{G_CONVERT_ERROR}
+    @about-symbol{GConvertError}
+    @about-function{g-convert}
+    @about-function{g-convert-with-fallback}
+    @about-function{g-convert-with-iconv}
+    @about-function{g-iconv-open}
+    @about-function{g-iconv}
+    @about-function{g-iconv-close}
+    @about-function{g-locale-to-utf8}
+    @about-function{g-filename-to-utf8}
+    @about-function{g-filename-from-utf8}
+    @about-function{g-filename-charsets}
+    @about-function{g-filename-display-name}
+    @about-function{g-filename-display-basename}
+    @about-function{g-locale-from-utf8}
+    @about-function{g-get-charset}
+    @about-function{g-get-codeset}
+    @about-function{g-get-console-charset}
+  @end{section}
+  @begin[Random Numbers]{section}
+    Pseudo-random number generator.
 
-      @about-type{g-mutex}
-      @about-type{g-cond}
-    @end{subsection}
+    @about-symbol{GRand}
+    @about-function{g-rand-new-with-seed}
+    @about-function{g-rand-new-with-seed-array}
+    @about-function{g-rand-new}
+    @about-function{g-rand-copy}
+    @about-function{g-rand-free}
+    @about-function{g-rand-set-seed}
+    @about-function{g-rand-set-seed-array}
+    @about-function{g-rand-boolean}
+    @about-function{g-rand-int}
+    @about-function{g-rand-int-range}
+    @about-function{g-rand-double}
+    @about-function{g-rand-double-range}
+    @about-function{g-random-set-seed}
+    @about-function{g-random-boolean}
+    @about-function{g-random-int}
+    @about-function{g-random-int-range}
+    @about-function{g-random-double}
+    @about-function{g-random-double-range}
   @end{section}
   @begin[The Main Event Loop]{section}
     The Main Event Loop manages all available sources of events.
 
-    @about-type{g-main-loop}
     @about-variable{+g-priority-high+}
     @about-variable{+g-priority-default+}
     @about-variable{+g-priority-high-idle+}
@@ -134,28 +158,18 @@
     @about-variable{+g-priority-low+}
     @about-variable{+g-source-continue+}
     @about-variable{+g-source-remove+}
-    @about-type{g-main-context}
-    @about-type{g-main-context-pusher}
-    @about-type{g-pid}
-    @about-type{g-poll-fd}
-    @about-type{g-source}
-    @about-type{g-source-funcs}
-    @about-type{g-source-callback-funcs}
-
+    @about-type{g-main-loop}
     @about-function{g-main-loop-new}
     @about-function{g-main-loop-ref}
     @about-function{g-main-loop-unref}
     @about-function{g-main-loop-run}
     @about-function{g-main-loop-quit}
     @about-function{g-main-loop-is-running}
-    @about-function{g-main-loop-get-context}
-
-    @about-function{g-main-new}
-    @about-function{g-main-destroy}
-    @about-function{g-main-run}
-    @about-function{g-main-quit}
-    @about-function{g-main-is-running}
-
+    @about-function{g-main-loop-context}
+    @about-type{g-main-context}
+    @about-type{g-main-context-pusher}
+    @about-type{g-pid}
+    @about-type{g-poll-fd}
     @about-function{g-main-context-new}
     @about-function{g-main-context-ref}
     @about-function{g-main-context-unref}
@@ -185,10 +199,15 @@
     @about-function{g-main-set-poll-func}
     @about-function{g-main-context-invoke}
     @about-function{g-main-context-invoke-full}
-    @about-function{g-main-context-get-thread-default}
+    @about-function{g-main-context-pusher-new}
+    @about-function{g-main-context-pusher-free}
+    @about-function{g-main-context-thread-default}
     @about-function{g-main-context-ref-thread-default}
     @about-function{g-main-context-push-thread-default}
     @about-function{g-main-context-pop-thread-default}
+    @about-type{g-source}
+    @about-type{g-source-funcs}
+    @about-type{g-source-callback-funcs}
     @about-function{g-timeout-source-new}
     @about-function{g-timeout-source-new-seconds}
     @about-function{g-timeout-add}
@@ -199,13 +218,10 @@
     @about-function{g-idle-add}
     @about-function{g-idle-add-full}
     @about-function{g-idle-remove-by-data}
-
     @about-function{g-child-watch-source-new}
     @about-function{g-child-watch-add}
     @about-function{g-child-watch-add-full}
-
     @about-function{g-poll}
-
     @about-function{g-source-new}
     @about-function{g-source-ref}
     @about-function{g-source-unref}
@@ -213,15 +229,12 @@
     @about-function{g-source-attach}
     @about-function{g-source-destroy}
     @about-function{g-source-is-destroyed}
-    @about-function{g-source-set-priority}
-    @about-function{g-source-get-priority}
-    @about-function{g-source-set-can-recurse}
-    @about-function{g-source-get-can-recurse}
-    @about-function{g-source-get-id}
-    @about-function{g-source-get-name}
-    @about-function{g-source-set-name}
+    @about-function{g-source-priority}
+    @about-function{g-source-can-recurse}
+    @about-function{g-source-id}
+    @about-function{g-source-name}
     @about-function{g-source-set-name-by-id}
-    @about-function{g-source-get-context}
+    @about-function{g-source-context}
     @about-function{g-source-set-callback}
     @about-symbol{g-source-func}
     @about-function{g-source-set-callback-indirect}
@@ -235,7 +248,7 @@
     @about-function{g-source-remove-poll}
     @about-function{g-source-add-child-source}
     @about-function{g-source-remove-child-source}
-    @about-function{g-source-get-time}
+    @about-function{g-source-time}
     @about-function{g-source-get-current-time}
     @about-function{g-source-remove}
     @about-function{g-source-remove-by-funcs-user-data}
@@ -332,34 +345,36 @@
 
     @about-symbol{g-option-error}
     @about-symbol{G_OPTION_ERROR}
+    @about-symbol{g-option-arg}
+    @about-symbol{g-option-flags}
+    @about-symbol{G_OPTION_REMAINING}
     @about-type{g-option-context}
+    @about-type{g-option-entry}
+    @about-type{g-option-group}
     @about-function{g-option-context-new}
-    @about-function{g-option-context-set-summary}
-    @about-function{g-option-context-get-summary}
-    @about-function{g-option-context-set-description}
-    @about-function{g-option-context-get-description}
+    @about-function{g-option-context-summary}
+    @about-function{g-option-context-description}
+    @about-symbol{GTranslateFunc}
     @about-function{g-option-context-set-translate-func}
     @about-function{g-option-context-set-translation-domain}
     @about-function{g-option-context-free}
     @about-function{g-option-context-parse}
-    @about-function{g-option-context-set-help-enabled}
-    @about-function{g-option-context-get-help-enabled}
-    @about-function{g-option-context-set-ignore-unknown-options}
-    @about-function{g-option-context-get-ignore-unknown-options}
-    @about-function{g-option-context-get-help}
-    @about-symbol{g-option-arg}
-    @about-symbol{g-option-flags}
-    @about-symbol{G_OPTION_REMAINING}
-    @about-type{g-option-entry}
+    @about-function{g-option-context-parse-strv}
+    @about-function{g-option-context-help-enabled}
+    @about-function{g-option-context-ignore-unknown-options}
+    @about-function{g-option-context-help}
+    @about-function{g-option-context-strict-posix}
     @about-function{g-option-context-add-main-entries}
-    @about-type{g-option-group}
     @about-function{g-option-context-add-group}
-    @about-function{g-option-context-set-main-group}
-    @about-function{g-option-context-get-main-group}
+    @about-function{g-option-context-main-group}
     @about-function{g-option-group-new}
+    @about-function{g-option-group-ref}
+    @about-function{g-option-group-unref}
     @about-function{g-option-group-free}
     @about-function{g-option-group-add-entries}
+    @about-symbol{GOptionParseFunc}
     @about-function{g-option-group-set-parse-hooks}
+    @about-symbol{GOptionErrorFunc}
     @about-function{g-option-group-set-error-hook}
     @about-function{g-option-group-set-translate-func}
     @about-function{g-option-group-set-translation-domain}
@@ -520,7 +535,7 @@
     @about-function{g-variant-new-string}
     @about-function{g-variant-new-take-string}
     @about-function{g-variant-new-printf}
-    @about-function{g-variant-new_object-path}
+    @about-function{g-variant-new-object-path}
     @about-function{g-variant-is-object-path}
     @about-function{g-variant-new-signature}
     @about-function{g-variant-is-signature}
@@ -537,6 +552,7 @@
     @about-function{g-variant-uint32}
     @about-function{g-variant-int64}
     @about-function{g-variant-int64}
+    @about-function{g-variant-uint64}
     @about-function{g-variant-handle}
     @about-function{g-variant-double}
     @about-function{g-variant-string}

@@ -1,4 +1,4 @@
-Content from the Glib Reference Manual for Version 2.36.3
+Content from the Glib Reference Manual for Version 2.68
 
     *   - needs update
     %   - not fully implemented
@@ -7,47 +7,40 @@ Content from the Glib Reference Manual for Version 2.36.3
 
 GLib Fundamentals
 
-  glib.version.lisp            - Version Information              - Glib 2.36.3%
-  glib.misc.lisp               - Basic Types                      - Glib 2.36.3%
+  glib.version.lisp            - Version Information               - Glib 2.68 %
+  glib.misc.lisp               - Basic Types                       - Glib 2.68 %
 
     Standard Macros            - commonly-used macros
     Type Conversion Macros     - portably storing integers in pointer variables
-    Byte Order Macros          - a portable way to convert between different
-                                 byte orders
-    Numerical Definitions      - mathematical constants, and floating point
-                                 decomposition
+    Byte Order Macros          - a portable way to convert byte orders
+    Integer Arithmetic         - checked integer arithmetic
+    Numerical Definitions      - mathematical constants
     Miscellaneous Macros       - specialized macros which are not used often
     Atomic Operations          - basic atomic integer and pointer operations
 
 GLib Core Application Support
 
-  glib.main-loop.lisp          - The Main Event Loop              - Glib 2.36.3%
-  glib.misc.lisp               - Threads                          - Glib 2.36.3%
+  glib.main-loop.lisp          - The Main Event Loop               - Glib 2.68 %
 
+    Threads                    - portable support for threads, mutexes, etc.
     Thread Pools               - pools of threads to execute work concurrently
     Asynchronous Queues        - asynchronous communication between threads
-    Dynamic Loading of Modules - portable method for dynamically loading
-                                 'plug-ins'
+    Dynamic Loading of Modules - method for dynamically loading plug-ins
 
-  glib.misc.lisp               - Memory Allocation                - Glib 2.36.3%
+  glib.misc.lisp               - Memory Allocation                 - Glib 2.68 %
 
-    Memory Slices              - efficient way to allocate groups of equal-sized
-                                 chunks of memory
-    IO Channels                - portable support for using files, pipes and
-                                 sockets
+    Memory Slices              - efficient way to allocate chunks of memory
+    IO Channels                - support for using files, pipes and sockets
 
-  glib.error.lisp              - Error Reporting                  - Glib 2.36.3%
+  glib.error.lisp              - Error Reporting                   - Glib 2.36 %
 
-    Message Output and
-    Debugging Functions        - functions to output messages and
-                                 help debug applications
-    Message Logging            - versatile support for logging messages with
-                                 different levels of importance
+    Warnings and Assertions    - warnings and assertions to use in runtime code
+    Message Output, Debugging  - functions to output messages
 
 GLib Utilities
 
-  glib.misc.lisp               - String Utility Functions         - Glib 2.36.3%
-  glib.convert.lisp            - Character Set Conversion         - Glib 2.36.3%
+  glib.misc.lisp               - String Utility Functions          - Glib 2.68 %
+  glib.convert.lisp            - Character Set Conversion          - Glib 2.68 %
 
     Unicode Manipulation       - functions operating on Unicode characters and
                                  UTF-8 strings
@@ -55,16 +48,14 @@ GLib Utilities
     Data Checksums             - computes the checksum for data
     Secure HMAC Digests        - computes the HMAC for data
     Internationalization       - gettext support macros
-
-  glib.misc.lisp               - Date and Time Functions          - Glib 2.36.3%
-
+    Date and time Functions    - Date and Time Functions
     GTimeZone                  - a structure representing a time zone
     GDateTime                  - a structure representing Date and Time
-    Random Numbers             - pseudo-random number generator
+  glib.random.lisp             - pseudo-random number generator    - Glib 2.68 &
     Hook Functions             - support for manipulating lists of hook
                                  functions
 
-  glib.utils.lisp              - Miscellaneous Utility Functions  - Glib 2.66
+  glib.utils.lisp              - Miscellaneous Utility Functions   - Glib 2.66
 
     Lexical Scanner            - a general purpose lexical scanner
     Timers                     - keep track of elapsed time
@@ -74,7 +65,7 @@ GLib Utilities
     Hostname Utilities         - Internet hostname utilities
     Shell-related Utilities    - shell-like commandline handling
 
-  glib.option-group.lisp       - parses commandline options       - Glib 2.36.3%
+  glib.option-group.lisp       - parses commandline options        - Glib 2.68 &
 
     Glob-style pattern
     matching                   - matches strings against patterns containing
@@ -86,7 +77,7 @@ GLib Utilities
                                  supported by GRegex
     Simple XML Subset Parser   - parses a subset of XML
 
-  glib.key-value.lisp          - parses .ini-like config files    - Glib 2.64 &
+  glib.key-value.lisp          - parses .ini-like config files     - Glib 2.64 &
 
     Bookmark file parser       - parses files containing bookmarks
     Testing                    - a test framework
@@ -97,8 +88,8 @@ GLib Utilities
 
 GLib Data Types
 
-  glib.misc.lisp               - Doubly-Linked Lists              - Glib 2.36.3%
-  glib.misc.lisp               - Singly-Linked Lists              - Glib 2.36.3%
+  glib.misc.lisp               - Doubly-Linked Lists               - Glib 2.68 %
+  glib.misc.lisp               - Singly-Linked Lists               - Glib 2.68 %
 
     Double-ended Queues        - double-ended queue data structure
     Sequences                  - scalable lists
@@ -125,9 +116,10 @@ GLib Data Types
     Datasets                   - associate groups of data elements with
                                  particular memory locations
 
-  glib.variant-type.lisp       - GVariantType                     - Glib 2.36.3
-  glib.variant.lisp            - GVariant                         - Glib 2.64 &
+  glib.variant-type.lisp       - GVariantType                      - Glib 2.36
+  glib.variant.lisp            - GVariant                          - Glib 2.64 &
 
     GVariant Format Strings    - varargs conversion of GVariants
     GVariant Text Format       - textual representation of GVariants
 
+2021-4-9

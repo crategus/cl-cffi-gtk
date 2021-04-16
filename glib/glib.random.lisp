@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.random.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation of this file is taken from the GLib 2.38.2 Reference
+;;; The documentation of this file is taken from the GLib 2.68 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,10 +25,16 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-
-;;; Random Numbers - pseudo-random number generator
-;;;     
-;;; Synopsis
+;;;
+;;; Random Numbers
+;;;
+;;;     Pseudo-random number generator
+;;;
+;;; Types and Values
+;;;
+;;;     GRand
+;;;
+;;; Function
 ;;; 
 ;;;     g_rand_new_with_seed
 ;;;     g_rand_new_with_seed_array
@@ -300,10 +303,13 @@
 
 (defcfun ("g_random_set_seed" g-random-set-seed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-13}
-  @argument[seed]{a value to reinitialize the global random number generator}
-  Sets the seed for the global random number generator, which is used by the
-  @code{g-random-*} functions, to seed.
+ "@version{2021-4-13}
+  @argument[seed]{an unsigned integer to reinitialize the global random number
+    generator}
+  @begin{short}
+    Sets the seed for the global random number generator, which is used by the
+    @code{g-random-*} functions, to seed.
+  @end{short}
   @see-function{g-random-int}
   @see-function{g-random-int-range}"
   (seed :uint32))
@@ -327,10 +333,11 @@
 
 (defcfun ("g_random_int" g-random-int) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2014-1-29}
-  @return{A random number.}
-  Return a random @code{:uint32} equally distributed over the range
-  [0 ... 2^32-1].
+ "@version{2021-4-13}
+  @return{An unsigned integer random number.}
+  @begin{short}
+    Return a random number equally distributed over the range [0 ... 2^32-1].
+  @end{short}
   @see-function{g-random-int-range}")
 
 ;;; ----------------------------------------------------------------------------
@@ -339,12 +346,14 @@
 
 (defcfun ("g_random_int_range" g-random-int-range) :int32
  #+cl-cffi-gtk-documentation
- "@version{2013-12-13}
-  @argument[begin]{lower closed bound of the interval}
-  @argument[end]{upper open bound of the interval}
-  @return{A random number.}
-  Returns a random integer equally distributed over the range [@arg{begin} ..
-  @arg{end} -1 ].
+ "@version{2021-4-13}
+  @argument[begin]{an integer with the lower closed bound of the interval}
+  @argument[end]{an integer with the upper open bound of the interval}
+  @return{An integer with the random number.}
+  @begin{short}
+    Returns a random integer equally distributed over the range [@arg{begin} ...
+    @arg{end} -1 ].
+  @end{short}
   @see-function{g-random-int}"
   (begin :int32)
   (end :int32))
