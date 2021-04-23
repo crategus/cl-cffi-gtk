@@ -124,7 +124,7 @@
   @syntax[]{(gtk-cell-renderer-progress-inverted object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-progress-inverted object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-progress} object}
-  @argument[setting]{a boolean wether to invert the direction in which the
+  @argument[setting]{a boolean whether to invert the direction in which the
     progress bar grows}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-progress]{inverted} slot of the

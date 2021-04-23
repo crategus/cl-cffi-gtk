@@ -292,7 +292,7 @@
   @syntax[]{(gtk-file-chooser-widget object) => search-mode}
   @syntax[]{(setf (gtk-file-chooser-widget object) search-mode)}
   @argument[object]{a @class{gtk-file-chooser-widget} widget}
-  @argument[search-mode]{a boolean wether in search mode}
+  @argument[search-mode]{a boolean whether in search mode}
   @begin{short}
     Accessor of the @slot[gtk-file-chooser-widget]{search-mode} slot of the
     @class{gtk-file-chooser-widget} class.

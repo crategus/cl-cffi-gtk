@@ -446,7 +446,7 @@
   @syntax[]{(gtk-cell-renderer-cell-background-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-cell-background-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[setting]{a boolean wether this tag affects the cell background
+  @argument[setting]{a boolean whether this tag affects the cell background
     color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{cell-background-set} slot of the
@@ -473,7 +473,7 @@
  "@version{2021-3-2}
   @syntax[]{(gtk-cell-renderer-editing object) => setting}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[setting]{a boolean wether the cell renderer is in editing mode}
+  @argument[setting]{a boolean whether the cell renderer is in editing mode}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{editing} slot of the
     @class{gtk-cell-renderer} class.
@@ -526,7 +526,7 @@
   @syntax[]{(gtk-cell-renderer-is-expanded object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-is-expanded object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[setting]{a boolean wether the row is expanded}
+  @argument[setting]{a boolean whether the row is expanded}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{is-expanded} slot of the
     @class{gtk-cell-renderer} class.
@@ -552,7 +552,7 @@
   @syntax[]{(gtk-cell-renderer-is-expander object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-is-expander object) setting)}
   @argument[object]{a @class{gtk-cell-renderer} object}
-  @argument[setting]{a boolean wether the row has children}
+  @argument[setting]{a boolean whether the row has children}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer]{is-expander} slot of the
     @class{gtk-cell-renderer} class.

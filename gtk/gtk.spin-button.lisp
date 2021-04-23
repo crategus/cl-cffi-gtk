@@ -568,7 +568,7 @@ spinbutton.vertical
     @class{gtk-spin-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-spin-button-snap-to-ticks} returns wether
+  The slot access function @sym{gtk-spin-button-snap-to-ticks} returns whether
   the values are corrected to the nearest step. The slot access function
   @sym{(setf gtk-spin-button-snap-to-ticks)} sets the policy as to whether
   values are corrected to the nearest step increment when a spin button is
@@ -604,7 +604,7 @@ spinbutton.vertical
   The slot access function @sym{gtk-spin-button-update-policy} gets the update
   behavior of a spin button. The slot access function
   @sym{(setf gtk-spin-button-update-policy)} sets the update behavior. This
-  determines wether the spin button is always updated or only when a valid
+  determines whether the spin button is always updated or only when a valid
   value is set.
   @see-class{gtk-spin-button}
   @see-symbol{gtk-spin-button-update-policy}")

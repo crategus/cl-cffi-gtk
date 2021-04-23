@@ -673,7 +673,7 @@
     :boolean
  "@version{2021-4-5}
   @argument[event]{a @class{gdk-event} instance}
-  @return{A boolean wether a scroll event is a stop scroll event.}
+  @return{A boolean whether a scroll event is a stop scroll event.}
   @begin{short}
     Check whether a scroll event is a stop scroll event.
   @end{short}
@@ -1084,7 +1084,7 @@
   @syntax[]{(setf (gdk-show-events) show-events)}
   @argument[show-events]{@em{True} to output event debugging information.}
   @begin{short}
-    Wether event debugging output is enabled.
+    Whether event debugging output is enabled.
   @end{short}
 
   The function @sym{gdk-show-events} gets whether event debugging output is
@@ -1186,10 +1186,10 @@
 (defcfun ("gdk_event_get_source_device" gdk-event-source-device)
     (g-object gdk-device)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{2021-4-19}
   @syntax[]{(gdk-event-source-device event) => device}
   @syntax[]{(setf (gdk-event-source-device event) device)}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @argument[device]{a @class{gdk-device} object}
   @begin{short}
     Accessor of the slave device for the event.
@@ -1199,8 +1199,7 @@
   device that has triggered the event, falling back to the virtual (master)
   device, as in the function @fun{gdk-event-device}, if the event was not
   caused by interaction with a hardware device. The function
-  @sym{(setf gdk-event-source-device)} sets the slave device for the event to
-  @arg{device}.
+  @sym{(setf gdk-event-source-device)} sets the slave device for the event.
 
   This may happen for example in synthesized crossing events after a
   @class{gdk-window} object updates its geometry or a grab is acquired/released.
@@ -1208,7 +1207,7 @@
   If the event does not contain a device field, this function will return
   @code{nil}.
 
-  The event must have been allocated by GTK+, for instance by the function
+  The event must have been allocated by GTK, for instance by the function
   @fun{gdk-event-copy}.
   @see-class{gdk-event}
   @see-class{gdk-device}

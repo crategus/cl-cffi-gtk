@@ -208,8 +208,8 @@
   @syntax[]{(gtk-check-menu-item-draw-as-radio object) => setting}
   @syntax[]{(setf (gtk-checkk-menu-item-draw-as-radio object) setting)}
   @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
-  @argument[setting]{a @code{:boolean} whether @arg{check-menu-item} is drawn
-    like a @class{gtk-radio-menu-item}}
+  @argument[setting]{a boolean whether @arg{check-menu-item} is drawn like a
+    @class{gtk-radio-menu-item}}
   @begin{short}
     Accessor of the @slot[gtk-check-menu-item]{draw-as-radio} slot of the
     @class{gtk-check-menu-item} class.

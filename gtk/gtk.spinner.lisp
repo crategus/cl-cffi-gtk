@@ -107,7 +107,7 @@
   @syntax[]{(gtk-spinner-active object) => active}
   @syntax[]{(setf (gtk-spinner-active object) active)}
   @argument[object]{a @class{gtk-spinner} widget}
-  @argument[active]{a boolean wether the spinner is active}
+  @argument[active]{a boolean whether the spinner is active}
   @begin{short}
     Accessor of the @slot[gtk-spinner]{active} slot of the @class{gtk-spinner}
     class.

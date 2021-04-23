@@ -394,7 +394,7 @@
   @syntax[]{(gtk-shortcuts-shortcut-icon-set object) => setting}
   @syntax[]{(setf (gtk-shortcuts-shortcut-icon-set object) setting)}
   @argument[object]{a @class{gtk-shortcuts-shortcut} widget}
-  @argument[setting]{a @code{:boolean} wether an icon has been set}
+  @argument[setting]{a boolean whether an icon has been set}
   @begin{short}
     Accessor of the @slot[gtk-shortcuts-shortcut]{icon-set} slot of the
     @class{gtk-shortcuts-shortcut} class.
@@ -478,7 +478,7 @@
   @syntax[]{(gtk-shortcuts-shortcut-subtitle-set object) => setting}
   @syntax[]{(setf (gtk-shortcuts-shortcut-subtitle-set object) setting)}
   @argument[object]{a @class{gtk-shortcuts-shortcut} widget}
-  @argument[setting]{a @code{:boolean} wether asubtitle has been set}
+  @argument[setting]{a boolean whether a subtitle has been set}
   @begin{short}
     Accessor of the @slot[gtk-shortcuts-shortcut]{subtitle-set} slot of the
     @class{gtk-shortcuts-shortcut} class.

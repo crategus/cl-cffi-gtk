@@ -384,7 +384,7 @@
   @syntax[]{(gtk-toolbar-icon-size-set object) => setting}
   @syntax[]{(setf (gtk-toolbar-icon-size-set object) setting)}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[setting]{a @code{:boolean} wether the icon size  property is set}
+  @argument[setting]{a boolean whether the icon size  property is set}
   @begin{short}
     Accessor of the @slot[gtk-toolbar]{icon-size-set} slot of the
     @class{gtk-toolbar} class.
@@ -408,7 +408,7 @@
   @syntax[]{(gtk-toolbar-show-arrow object) => show-arrow}
   @syntax[]{(setf (gtk-toolbar-show-arrow object) show-arrow)}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[show-arrow]{a @code{:boolean} whether to show an overflow menu}
+  @argument[show-arrow]{a boolean whether to show an overflow menu}
   @begin{short}
     Accessor of the @slot[gtk-toolbar]{show-arrow} slot of the
     @class{gtk-toolbar} class.
@@ -476,8 +476,8 @@
   @syntax[]{(setf (gtk-toolbar-child-expand container child) expand)}
   @argument[container]{a @class{gtk-toolbar} widget}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[expand]{a @code{:boolean} wether the item should receive extra
-    space when the toobar grows}
+  @argument[expand]{a boolean whether the item should receive extra space when
+    the toobar grows}
   @begin{short}
     Accessor of the @code{expand} child property of the @class{gtk-toolbar}
     class.
@@ -499,8 +499,8 @@
   @syntax[]{(setf (gtk-toolbar-child-homogeneous container child) expand)}
   @argument[container]{a @class{gtk-toolbar} widget}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[homogeneous]{a @code{:boolean} wether the item should be the same
-    size as other homogeneous items}
+  @argument[homogeneous]{a boolean whether the item should be the same size as
+    other homogeneous items}
   @begin{short}
     Accessor of the @code{homogeneous} child property of the
     @class{gtk-toolbar} class.

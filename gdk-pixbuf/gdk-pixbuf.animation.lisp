@@ -140,7 +140,7 @@
   @syntax[]{(gdk-pixbuf-animation-loop object) => loop}
   @syntax[]{(setf (gdk-pixbuf-animation-loop object) loop)}
   @argument[object]{a @class{gdk-pixbuf-animation} structure}
-  @argument[loop]{a boolean wether the animation should loop}
+  @argument[loop]{a boolean whether the animation should loop}
   @begin{short}
     Accessor of the @slot[gdk-pixbuf-animation]{loop} of the
     @class{gdk-pixbuf-animation} class.

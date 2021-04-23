@@ -302,7 +302,7 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
   @syntax[]{(gtk-tool-palette-icon-size.set object) => setting}
   @syntax[]{(setf (gtk-tool-palette-icon-size-set object) setting)}
   @argument[palette]{a @class{gtk-tool-palette} widget}
-  @argument[setting]{a boolean wether the @slot[gtk-tool-palette]{icon-size}
+  @argument[setting]{a boolean whether the @slot[gtk-tool-palette]{icon-size}
     property has been set}
   @begin{short}
     Accessor of the @slot[gtk-tool-palette]{icon-size-set} slot of the

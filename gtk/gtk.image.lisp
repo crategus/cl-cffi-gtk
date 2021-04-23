@@ -698,8 +698,7 @@
   @syntax[]{(gtk-image-use-fallback object) => use-fallback}
   @syntax[]{(setf (gtk-image-use-fallback object) use-fallback)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[use-fallback]{a @code{:boolean} wether to use standard icon names
-    fallback}
+  @argument[use-fallback]{a boolean whether to use standard icon names fallback}
   @begin{short}
     Accessor of the @slot[gtk-image]{use-fallback} slot of the @class{gtk-image}
     class.

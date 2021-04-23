@@ -215,7 +215,7 @@
   @syntax[]{(gtk-tool-item-group-collapsed object) => collapsed}
   @syntax[]{(setf (gtk-tool-item-group-collapsed object) collapsed)}
   @argument[object]{a @class{gtk-tool-item-group} widget}
-  @argument[collapsed]{a @code{:boolean} whether the group should be collapsed
+  @argument[collapsed]{a boolean whether the group should be collapsed
     or expanded}
   @begin{short}
     Accessor of the @slot[gtk-tool-item-group]{collapsed} slot of the
@@ -377,8 +377,8 @@
   @syntax[]{(setf (gtk-tool-item-group-child-expand container child) expand)}
   @argument[container]{a @class{gtk-tool-item-group} widget}
   @argument[child]{a @class{gtk-widget} child object}
-  @argument[expand]{a @code{:boolean} wether the item should receive extra
-    space when the group grows}
+  @argument[expand]{a boolean whether the item should receive extra space when
+    the group grows}
   @begin{short}
     Accessor of the @code{expand} child property of the
     @class{gtk-tool-item-group} class.
@@ -400,7 +400,7 @@
   @syntax[]{(setf (gtk-tool-item-group-child-fill container child) fill)}
   @argument[container]{a @class{gtk-tool-item-group} widget}
   @argument[child]{a @class{gtk-widget} child object}
-  @argument[fill]{a @code{:boolean} wether the item should fill the available
+  @argument[fill]{a boolean whether the item should fill the available
     space}
   @begin{short}
     Accessor of the @code{fill} child property of the
@@ -424,7 +424,7 @@
   @syntax[]{(setf (gtk-tool-item-group-child-homogeneous container child) homogeneous)}
   @argument[container]{a @class{gtk-tool-item-group} widget}
   @argument[child]{a @class{gtk-widget} child object}
-  @argument[fill]{a @code{:boolean} wether the item should be the same size
+  @argument[fill]{a boolean whether the item should be the same size
     as other homogeneous items}
   @begin{short}
     Accessor of the @code{homogeneous} child property of the
@@ -447,7 +447,7 @@
   @syntax[]{(setf (gtk-tool-item-group-child-new-row container child) new-row)}
   @argument[container]{a @class{gtk-tool-item-group} widget}
   @argument[child]{a @class{gtk-widget} child object}
-  @argument[new-row]{a @code{:boolean} wether the item should start a new row}
+  @argument[new-row]{a boolean whether the item should start a new row}
   @begin{short}
     Accessor of the @code{new-row} child property of the
     @class{gtk-tool-item-group} class.

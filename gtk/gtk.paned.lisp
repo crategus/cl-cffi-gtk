@@ -401,16 +401,16 @@
   @syntax[]{(gtk-paned-position-set object) => position-set}
   @syntax[]{(setf (gtk-paned-position-set position) position-set)}
   @argument[object]{a @class{gtk-paned} widget}
-  @argument[position-set]{a boolean wether the @code{postion} property should
+  @argument[position-set]{a boolean whether the @code{postion} property should
     be used}
   @begin{short}
     Accessor of the @slot[gtk-paned]{position-set} slot of the
     @class{gtk-paned} class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-position-set} gets wether the
+  The slot access function @sym{gtk-paned-position-set} gets whether the
   @code{position} property should be used. The slot access function
-  @sym{(setf gtk-paned-position-set)} sets wether the @code{position} property
+  @sym{(setf gtk-paned-position-set)} sets whether the @code{position} property
   should be used.
   @see-class{gtk-paned}
   @see-function{gtk-paned-position}")
@@ -463,14 +463,14 @@
   @syntax[]{(setf (gtk-paned-child-resize container child) resize)}
   @argument[container]{a @class{gtk-paned} widget}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[resize]{a boolean wether the child expands and shrinks along with
+  @argument[resize]{a boolean whether the child expands and shrinks along with
     the paned widget}
   @begin{short}
     Accessor of the @code{resize} child property of the @class{gtk-paned}
     class.
   @end{short}
 
-  The function @sym{gtk-paned-child-resize} gets wether the child expands and
+  The function @sym{gtk-paned-child-resize} gets whether the child expands and
   shrinks along with the paned widget. The function
   @sym{(setf gtk-paned-child-resize)} sets the @code{resize} child property.
   @see-class{gtk-paned}
@@ -490,7 +490,7 @@
   @syntax[]{(setf (gtk-paned-child-shrink container child) resize)}
   @argument[container]{a @class{gtk-paned} widget}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[shrink]{a boolean wether the child can be made smaller than its
+  @argument[shrink]{a boolean whether the child can be made smaller than its
     requisition}
   @begin{short}
     Accessor of the @code{shrink} child property of the @class{gtk-paned}
@@ -581,9 +581,9 @@
  "@version{2020-4-12}
   @argument[paned]{a @class{gtk-paned} widget}
   @argument[child]{the @class{gtk-widget} child to add}
-  @argument[resize]{a boolean wether the child should expand when the paned
+  @argument[resize]{a boolean whether the child should expand when the paned
     widget is resized}
-  @argument[shrink]{a boolean wether the child can be made smaller than its
+  @argument[shrink]{a boolean whether the child can be made smaller than its
     requisition}
   @begin{short}
     Adds a child to the top or left pane.
@@ -613,9 +613,9 @@
  "@version{2020-4-12}
   @argument[paned]{a @class{gtk-paned} widget}
   @argument[child]{the @class{gtk-widget} child to add}
-  @argument[resize]{a boolean wether the child should expand when the paned
+  @argument[resize]{a boolean whether the child should expand when the paned
     widget is resized}
-  @argument[shrink]{a boolean wether the child can be made smaller than its
+  @argument[shrink]{a boolean whether the child can be made smaller than its
     requisition}
   @begin{short}
     Adds a child to the bottom or right pane.

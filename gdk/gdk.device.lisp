@@ -798,7 +798,7 @@
   @syntax[]{(gdk-device-has-cursor object) => has-cursor}
   @syntax[]{(setf (gdk-device-has-cursor object) has-cursor)}
   @argument[object]{a @class{gdk-device} object}
-  @argument[has-cursor]{a boolean wether the device is represented by a cursor
+  @argument[has-cursor]{a boolean whether the device is represented by a cursor
     on the screen}
   @begin{short}
     Accessor of the @slot[gdk-device]{has-cursor} slot of the

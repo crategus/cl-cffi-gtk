@@ -392,8 +392,8 @@
   @syntax[]{(gtk-tool-button-use-underline object) => use-underline}
   @syntax[]{(setf (gtk-tool-button-use-underline) use-underline)}
   @argument[button]{a @class{gtk-tool-button} widget}
-  @argument[use-underline]{a @code{:boolean} whether the button label has the
-    form \"_Open\"}
+  @argument[use-underline]{a boolean whether the button label has the form
+    \"_Open\"}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{use-underline} slot of the
     @class{gtk-tool-button} class.

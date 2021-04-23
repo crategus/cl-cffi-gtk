@@ -128,13 +128,13 @@
   @syntax[]{(gtk-aspect-frame-obey-child object) => obey-child}
   @syntax[]{(setf (gtk-aspect-frame-obey-child object) obey-child)}
   @argument[object]{a @class{gtk-aspect-frame} container}
-  @argument[obey-child]{a boolean wether to force the aspect ratio}
+  @argument[obey-child]{a boolean whether to force the aspect ratio}
   @begin{short}
     Accessor of the @slot[gtk-aspect-frame]{obey-child} slot of the
     @class{gtk-aspect-frame} class.
   @end{short}
 
-  Wether to force the aspect ratio to match that of the frame's child.
+  WHether to force the aspect ratio to match that of the frame's child.
   @see-class{gtk-aspect-frame}")
 
 ;;; --- gtk-aspect-frame-ratio -------------------------------------------------

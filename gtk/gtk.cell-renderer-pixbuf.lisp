@@ -158,7 +158,7 @@
   @syntax[]{(gtk-cell-renderer-pixbuf-follow-state object) => state}
   @syntax[]{(setf (gtk-cell-renderer-pixbuf-follow-state object) state)}
   @argument[object]{a @class{gtk-cell-renderer-pixbuf} object}
-  @argument[state]{a boolean wether the rendered pixbuf should be colorized}
+  @argument[state]{a boolean whether the rendered pixbuf should be colorized}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-pixbuf]{follow-state} slot of the
     @class{gtk-cell-renderer-pixbuf} class.

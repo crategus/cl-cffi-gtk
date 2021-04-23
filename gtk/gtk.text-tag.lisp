@@ -503,7 +503,7 @@
   @syntax[]{(gtk-text-tag-accumulative-margin object) => setting}
   @syntax[]{(setf (gtk-text-tag-accumulative-margin object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether the margins accumulate}
+  @argument[setting]{a boolean whether the margins accumulate}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{accumulative-margin} slot of the
     @class{gtk-text-tag} class.
@@ -561,7 +561,7 @@
   @syntax[]{(gtk-text-tag-background-full-height object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-full-height object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether the background fills the entire line
+  @argument[setting]{a boolean whether the background fills the entire line
     height}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-full-height} slot of the
@@ -592,7 +592,7 @@
   @syntax[]{(gtk-text-tag-background-full-height-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-full-height-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects background height}
+  @argument[setting]{a boolean whether this tag affects background height}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-full-height-set} slot of the
     @class{gtk-text-tag} class.
@@ -685,7 +685,7 @@
   @syntax[]{(gtk-text-tag-background-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the background color}
+  @argument[setting]{a boolean whether this tag affects the background color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{background-set} slot of the
     @class{gtk-text-tag} class.
@@ -739,7 +739,7 @@
   @syntax[]{(gtk-text-tag-editable object) => editable}
   @syntax[]{(setf (gtk-text-tag-editable object) editable)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[editable]{a boolean wether the text can be modified}
+  @argument[editable]{a boolean whether the text can be modified}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{editable} slot of the
     @class{gtk-text-tag} class.
@@ -765,7 +765,7 @@
   @syntax[]{(gtk-text-tag-editable-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-editable-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects text editability}
+  @argument[setting]{a boolean whether this tag affects text editability}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{editable-set} slot of the
     @class{gtk-text-tag} class.
@@ -792,7 +792,7 @@
   @syntax[]{(gtk-text-tag-fallback object) => fallback}
   @syntax[]{(setf (gtk-text-tag-fallback object) fallback)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[fallback]{a boolean wether font fallback is enabled}
+  @argument[fallback]{a boolean whether font fallback is enabled}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{fallback} slot of the
     @class{gtk-text-tag} class.
@@ -819,7 +819,7 @@
   @syntax[]{(gtk-text-tag-fallback-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-fallback-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this affects font fallback}
+  @argument[setting]{a boolean whether this affects font fallback}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{fallback-set} slot of the
     @class{gtk-text-tag} class.
@@ -869,7 +869,7 @@
   @syntax[]{(gtk-text-tag-family-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-family-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the font family}
+  @argument[setting]{a boolean whether this tag affects the font family}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{family-set} slot of the
     @class{gtk-text-tag} class.
@@ -983,7 +983,7 @@
   @syntax[]{(gtk-text-tag-font-features-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-font-features-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects font features}
+  @argument[setting]{a boolean whether this tag affects font features}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{font-features-set} slot of the
     @class{gtk-text-tag} class.
@@ -1158,7 +1158,7 @@
   @syntax[]{(gtk-text-tag-indent-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-indent-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects indentation}
+  @argument[setting]{a boolean whether this tag affects indentation}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{indent-set} slot of the
     @class{gtk-text-tag} class.
@@ -1186,7 +1186,7 @@
   @syntax[]{(gtk-text-tag-invisible object) => invisible}
   @syntax[]{(setf (gtk-text-tag-invisible object) invisible)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[invisible]{a boolean wether this text is hidden}
+  @argument[invisible]{a boolean whether this text is hidden}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{invisible} slot of the
     @class{gtk-text-tag} class.
@@ -1215,7 +1215,7 @@
   @syntax[]{(gtk-text-tag-invisible-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-invisible-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects visibility}
+  @argument[setting]{a boolean whether this tag affects visibility}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{invisible-set} slot of the
     @class{gtk-text-tag} class.
@@ -1272,7 +1272,7 @@
   @syntax[]{(gtk-text-tag-justification-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-justification-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects paragraph justification}
+  @argument[setting]{a boolean whether this tag affects paragraph justification}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{justification-set} slot of the
     @class{gtk-text-tag} class.
@@ -1331,7 +1331,7 @@
   @syntax[]{(gtk-text-tag-language-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-language-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the language}
+  @argument[setting]{a boolean whether this tag affects the language}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{language-set} slot of the
     @class{gtk-text-tag} class.
@@ -1386,7 +1386,7 @@
   @syntax[]{(gtk-text-tag-left-margin-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-left-margin-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the left margin}
+  @argument[setting]{a boolean whether this tag affects the left margin}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{left-margin-set} slot of the
     @class{gtk-text-tag} class.
@@ -1443,7 +1443,7 @@
   @syntax[]{(gtk-text-tag-letter-spacing-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-letter-spacing-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects letter spacing}
+  @argument[setting]{a boolean whether this tag affects letter spacing}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{letter-spacing-set} slot of the
     @class{gtk-text-tag} class.
@@ -1593,7 +1593,7 @@
   @syntax[]{(gtk-text-tag-paragraph-background-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-paragraph-background-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this affects the paragraph background
+  @argument[setting]{a boolean whether this affects the paragraph background
     color}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{paragraph-background-set} slot of the
@@ -1652,7 +1652,7 @@
   @syntax[]{(gtk-text-tag-pixels-above-lines-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-above-lines-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the number of pixels
+  @argument[setting]{a boolean whether this tag affects the number of pixels
     above lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-above-lines-set} slot of the
@@ -1710,7 +1710,7 @@
   @syntax[]{(gtk-text-tag-pixels-below-lines-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-below-lines-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the number of pixels
+  @argument[setting]{a boolean whether this tag affects the number of pixels
     below lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-below-lines-set} slot of the
@@ -1769,7 +1769,7 @@
   @syntax[]{(gtk-text-tag-pixels-inside-wrap-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-inside-wrap-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the number of pixels
+  @argument[setting]{a boolean whether this tag affects the number of pixels
     between wrapped lines}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{pixels-inside-wrap-set} slot of the
@@ -1825,7 +1825,7 @@
   @syntax[]{(gtk-text-tag-right-margin-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-right-margin-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the right margin}
+  @argument[setting]{a boolean whether this tag affects the right margin}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{right-margin-set} slot of the
     @class{gtk-text-tag} class.
@@ -1880,7 +1880,7 @@
   @syntax[]{(gtk-text-tag-rise-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-rise-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the rise}
+  @argument[setting]{a boolean whether this tag affects the rise}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{rise-set} slot of the
     @class{gtk-text-tag} class.
@@ -1937,7 +1937,7 @@
   @syntax[]{(gtk-text-tag-scale-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-scale-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag scales the font size}
+  @argument[setting]{a boolean whether this tag scales the font size}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{scale-set} slot of the
     @class{gtk-text-tag} class.
@@ -2019,7 +2019,7 @@
   @syntax[]{(gtk-text-tag-size-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-size-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the font size}
+  @argument[setting]{a boolean whether this tag affects the font size}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{size-set} slot of the
     @class{gtk-text-tag} class.
@@ -2076,7 +2076,7 @@
   @syntax[]{(gtk-text-tag-stretch-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-stretch-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag afects the font stretch}
+  @argument[setting]{a boolean whether this tag afects the font stretch}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{stretch-set} slot of the
     @class{gtk-text-tag} class.
@@ -2103,7 +2103,7 @@
   @syntax[]{(gtk-text-tag-strikethrough object) => strikethrough}
   @syntax[]{(setf (gtk-text-tag-strikethrough object) strikethrough)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[strikethrough]{a boolean wether to strike through the text}
+  @argument[strikethrough]{a boolean whether to strike through the text}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough} slot of the
     @class{gtk-text-tag} class.
@@ -2162,7 +2162,7 @@
   @syntax[]{(gtk-text-tag-strikethrough-rgba-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-strikethrough-rgba-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether a @slot[gtk-text-tag]{strikethrough-rgba}
+  @argument[setting]{a boolean whether a @slot[gtk-text-tag]{strikethrough-rgba}
     property has been set}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough-rgba-set} slot of the
@@ -2191,7 +2191,7 @@
   @syntax[]{(gtk-text-tag-strikethrough-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-strikethrough-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects strikethrough}
+  @argument[setting]{a boolean whether this tag affects strikethrough}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{strikethrough-set} slot of the
     @class{gtk-text-tag} class.
@@ -2246,7 +2246,7 @@
   @syntax[]{(gtk-text-tag-style-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-style-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the font style}
+  @argument[setting]{a boolean whether this tag affects the font style}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{style-set} slot of the
     @class{gtk-text-tag} class.
@@ -2298,7 +2298,7 @@
   @syntax[]{(gtk-text-tag-tabs-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-tabs-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this affects tabs}
+  @argument[setting]{a boolean whether this affects tabs}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{tabs-set} slot of the
     @class{gtk-text-tag} class.
@@ -2393,7 +2393,7 @@
   @syntax[]{(gtk-text-tag-underline-rgba-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-underline-rgba-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether the @slot[gtk-text-tag]{underline-rgba}
+  @argument[setting]{a boolean whether the @slot[gtk-text-tag]{underline-rgba}
     property has been set}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline-rgba-set} slot of the
@@ -2421,7 +2421,7 @@
   @syntax[]{(gtk-text-tag-underline-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-underline-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects underlining}
+  @argument[setting]{a boolean whether this tag affects underlining}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{underline-set} slot of the
     @class{gtk-text-tag} class.
@@ -2478,7 +2478,7 @@
   @syntax[]{(gtk-text-tag-variant-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-variant-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this affects the font variant}
+  @argument[setting]{a boolean whether this affects the font variant}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{variant-set} slot of the
     @class{gtk-text-tag} class.
@@ -2534,13 +2534,13 @@
   @syntax[]{(gtk-text-tag-weight-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-weight-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects the font weight}
+  @argument[setting]{a boolean whether this tag affects the font weight}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{weight-set} slot of the
     @class{gtk-text-tag} class.
   @end{short}
 
-  Wether this tag affects the font weight.
+  Whether this tag affects the font weight.
   @see-class{gtk-text-tag}
   @see-function{gtk-text-tag-weight}")
 
@@ -2590,7 +2590,7 @@
   @syntax[]{(gtk-text-tag-wrap-mode-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-wrap-mode-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
-  @argument[setting]{a boolean wether this tag affects line wrap mode}
+  @argument[setting]{a boolean whether this tag affects line wrap mode}
   @begin{short}
     Accessor of the @slot[gtk-text-tag]{wrap-mode-set} slot of the
     @class{gtk-text-tag} class.
@@ -2679,7 +2679,7 @@
   @argument[event]{the @class{gdk-event} event}
   @argument[iter]{a @class{gtk-text-iter} iterator with the location where the
     event was received}
-  @return{A boolean wether the event was handled.}
+  @return{A boolean whether the event was handled.}
   @begin{short}
     Emits the \"event\" signal on the tag object.
   @end{short}
@@ -2702,7 +2702,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-2-22}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[size-changed]{a boolean wether the change affects the
+  @argument[size-changed]{a boolean whether the change affects the
     @class{gtk-text-view} layout}
   @begin{short}
     Emits the \"tag-changed\" signal on the @class{gtk-text-tag-table} object

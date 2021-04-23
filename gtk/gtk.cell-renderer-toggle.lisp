@@ -129,7 +129,7 @@
 (setf (documentation (atdoc:get-slot-from-name "activatable"
                                                'gtk-cell-renderer-toggle) 't)
  "The @code{activatable} property of type @code{:boolean} (Read / Write) @br{}
-  Wether the toggle button can be activated. @br{}
+  Whether the toggle button can be activated. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation

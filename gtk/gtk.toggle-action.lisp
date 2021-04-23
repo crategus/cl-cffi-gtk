@@ -165,8 +165,8 @@
   @syntax[]{(gtk-toggle-action-draw-as-radio object) => draw-as-radio}
   @syntax[]{(setf (gtk-toggle-action-draw-as-radio object) draw-as-radio)}
   @argument[object]{the @class{gtk-toggle-action} object}
-  @argument[draw-as-radio]{a @code{:boolean} whether the action should have
-    proxies like a radio action}
+  @argument[draw-as-radio]{a boolean whether the action should have proxies
+    like a radio action}
   @begin{short}
     Accessor of the @slot[gtk-toggle-action]{draw-as-radio} slot of the
     @class{gtk-toggle-action} class.

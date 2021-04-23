@@ -3246,7 +3246,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @see-class{gdk-window}
   @see-class{gdk-drawing-context}
   @see-symbol{cairo-region-t}
-  @see-function{gdk-window-end-frame}"
+  @see-function{gdk-window-end-draw-frame}"
   (window (g-object gdk-window))
   (region (:pointer (:struct cairo-region-t))))
 

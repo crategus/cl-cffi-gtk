@@ -432,7 +432,7 @@
   @syntax[]{(gtk-popover-transitions-enabled object) => enabled}
   @syntax[]{(setf (gtk-popover-transitions-enabled object) enabled)}
   @argument[object]{a @class{gtk-popover} widget}
-  @argument[enabled]{a @code{:boolean} wether transitions are enabled}
+  @argument[enabled]{a boolean whether transitions are enabled}
   @begin{short}
     Accessor of the @slot[gtk-popover]{transitions-enabled} slot of the
     @class{gtk-popover} class.

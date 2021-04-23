@@ -219,7 +219,7 @@
  "@version{2020-8-23}
   @syntax[]{(gtk-accel-group-is-locked object) => is-locked}
   @argument[object]{a @class{gtk-accel-group} object}
-  @argument[is-locked]{a @code{:boolean} wether the accel group is locked}
+  @argument[is-locked]{a boolean whether the accel group is locked}
   @begin{short}
     Accessor of the @slot[gtk-accel-group]{is-locked} slot of the
     @class{gtk-accel-group} class.

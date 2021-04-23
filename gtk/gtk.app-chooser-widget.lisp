@@ -237,7 +237,7 @@
   @syntax[]{(gtk-app-chooser-widget-show-all object) => setting}
   @syntax[]{(setf (gtk-app-chooser-widget-show-all object) setting)}
   @argument[object]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{a boolean wether the application chooser presents all
+  @argument[setting]{a boolean whether the application chooser presents all
     applications in a single list}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-widget]{show-all} slot of the
@@ -271,7 +271,7 @@
   @syntax[]{(gtk-app-chooser-widget-show-default object) => setting}
   @syntax[]{(setf (gtk-app-chooser-widget-show-default object) setting)}
   @argument[object]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{a boolean wether the application chooser should show the
+  @argument[setting]{a boolean whether the application chooser should show the
     default handler}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-widget]{show-default} slot of the
@@ -279,7 +279,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-widget-show-default} returns
-  wether the application chooser should the default handler for the content
+  whether the application chooser should the default handler for the content
   type in a separate section. The slott access function
   @sym{(setf gtk-app-chooser-widget-show-default)} sets whether the application
   chooser should show the default handler.
@@ -306,7 +306,7 @@
   @syntax[]{(gtk-app-chooser-widget-show-fallback object) => setting}
   @syntax[]{(setf (gtk-app-chooser-widget-show-fallback object) setting)}
   @argument[object]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{a boolean wether the application chooser should show a
+  @argument[setting]{a boolean whether the application chooser should show a
     section for fallback applications}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-widget]{show-fallback} slot of the
@@ -314,7 +314,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-widget-show-fallback} returns
-  wether the application chooser should show a section for fallback
+  whether the application chooser should show a section for fallback
   applications. The slot access function
   @sym{(setf gtk-app-chooser-widget-show-fallback)} sets whether the application
   chooser should show related applications for the content type in a separate
@@ -340,7 +340,7 @@
   @syntax[]{(gtk-app-chooser-widget-show-other object) => setting}
   @syntax[]{(setf (gtk-app-chooser-widget-show-other object) setting)}
   @argument[object]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{a boolean wether the application chooser should show a
+  @argument[setting]{a boolean whether the application chooser should show a
     section for other applications}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-widget]{show-other} slot of the
@@ -348,7 +348,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-widget-show-other} returns
-  wether the application chooser should show a section for other applications.
+  whether the application chooser should show a section for other applications.
   The slot access function @sym{(gtk-app-chooser-widget-show-other)} sets
   whether the app chooser should show applications which are unrelated to
   the content type.
@@ -375,7 +375,7 @@
   @syntax[]{(gtk-app-chooser-widget-show-recommended object) => setting}
   @syntax[]{(setf (gtk-app-chooser-widget-show-recommended object) setting)}
   @argument[object]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{a boolean wether the application chooser shuld show a
+  @argument[setting]{a boolean whether the application chooser shuld show a
     section for recommended applications}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-widget]{show-recommended} slot of
@@ -383,7 +383,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-widget-show-recommended}
-  returns wether the application chooser should recommended applications. The
+  returns whether the application chooser should recommended applications. The
   slot access function @sym{(setf gtk-app-chooser-widget-show-recommended)}
   sets whether the app chooser should show recommended applications for the
   content type in a separate section.

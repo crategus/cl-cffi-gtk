@@ -210,7 +210,7 @@
  "@version{2020-4-27}
   @syntax[]{(g-property-action-invert-boolean object) => invert}
   @argument[object]{a @class{g-property-action} object}
-  @argument[invert]{a boolean wether the state of the action will be the
+  @argument[invert]{a boolean whether the state of the action will be the
     negation}
   @begin{short}
     If @em{true}, the state of the action will be the negation of the property

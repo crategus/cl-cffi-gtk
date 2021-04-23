@@ -795,7 +795,7 @@
                                                'gtk-text-view) 't)
  "The @code{cursor-visible} property of type @code{:boolean} (Read / Write)
   @br{}
-  Wether the insertion cursor is shown. @br{}
+  WHether the insertion cursor is shown. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -1219,7 +1219,7 @@
   @syntax[]{(gtk-text-view-populate-all object) => populate-all}
   @syntax[]{(setf (gtk-text-view-populate-all object) populate-all)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[populate-all]{a boolean wether the \"populate-all\" signal is also
+  @argument[populate-all]{a boolean whether the \"populate-all\" signal is also
     emitted for touch popups}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{populate-all} slot of the

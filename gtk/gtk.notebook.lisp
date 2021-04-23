@@ -740,7 +740,7 @@
   @syntax[]{(setf (gtk-notebook-child-detachable container child) detachable)}
   @argument[container]{a @class{notebook} container}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[detachable]{a boolean wether the tab is detachable}
+  @argument[detachable]{a boolean whether the tab is detachable}
   @begin{short}
     Accessor of the @code{detachable} child property of the
     @class{gtk-notebook} class.
@@ -836,7 +836,7 @@
   @syntax[]{(setf (gtk-notebook-child-tab-expand container child) tab-expand)}
   @argument[container]{a @class{notebook} container}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[tab-expand]{a boolean wether to expand the child's tab}
+  @argument[tab-expand]{a boolean whether to expand the child's tab}
   @begin{short}
     Accessor of the @code{tab-expand} child property of the
     @class{gtk-notebook} class.
@@ -860,7 +860,7 @@
   @syntax[]{(setf (gtk-notebook-child-tab-fill container child) tab-fill)}
   @argument[container]{a @class{notebook} container}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[tab-fill]{a boolean wether the child's tab should fill the
+  @argument[tab-fill]{a boolean whether the child's tab should fill the
     allocated area}
   @begin{short}
     Accessor of the @code{tab-fill} child property of the

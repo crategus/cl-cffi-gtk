@@ -372,7 +372,7 @@
  "@version{2020-11-20}
   @syntax[]{(gdk-pixbuf-has-alpha object) => has-alpha}
   @argument[object]{a @class{gdk-pixbuf} object}
-  @argument[has-alpha]{a boolean wether the pixbuf has an alpha channel}
+  @argument[has-alpha]{a boolean whether the pixbuf has an alpha channel}
   @begin{short}
     Accessor of the @slot[gdk-pixbuf]{has-alpha} slot of the @class{gdk-pixbuf}
     class.

@@ -180,7 +180,7 @@
   @syntax[]{(g-themed-icon-use-default-fallbacks object) => setting}
   @syntax[]{(setf g-themed-icon-use-default-fallbacks object) setting)}
   @argument[object]{a @class{g-themed-icon} object}
-  @argument[setting]{a boolean wether to use default fallbacks}
+  @argument[setting]{a boolean whether to use default fallbacks}
   @begin{short}
     Accessor of the @slot[g-themed-icon]{use-default-fallbacks} slot of the
     @class{g-themed-icon} class.

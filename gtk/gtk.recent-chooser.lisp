@@ -451,8 +451,7 @@
   @syntax[]{(gtk-recent-chooser-show-icons objet) => show-icons}
   @syntax[]{(setf (gtk-recent-chooser-show-icons object) show-icons)}
   @argument[chooser]{a @class{gtk-recent-chooser} object}
-  @argument[show-icons]{a @code{:boolean} whether to show an icon near the
-    resource}
+  @argument[show-icons]{a boolean whether to show an icon near the resource}
   @begin{short}
     Accessor of the slot @slot[gtk-recent-chooser]{show-icons} of the
     @class{gtk-recent-chooser} class.
@@ -485,8 +484,8 @@
   @syntax[]{(gtk-recent-chooser-show-not-found objet) => show-not-found}
   @syntax[]{(setf (gtk-recent-chooser-show-not-found object) show-not-found)}
   @argument[chooser]{a @class{gtk-recent-chooser} object}
-  @argument[show-not-found]{a @code{:boolean} whether to show the local items
-    we did not find}
+  @argument[show-not-found]{a boolean whether to show the local items we did
+    not find}
   @begin{short}
     Accessor of the @slot[gtk-recent-chooser]{show-not-found} slot of the
     @class{gtk-recent-chooser} class.

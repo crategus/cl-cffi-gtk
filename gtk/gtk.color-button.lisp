@@ -308,7 +308,7 @@
   @syntax[]{(gtk-color-button-show-editor object) => show-editor)}
   @syntax[]{(setf (gtk-color-button-show-editor object) show-editor)}
   @argument[object]{a @class{gtk-color-button} widget}
-  @argument[show-editor]{a boolean wether to skip the palette in the dialog}
+  @argument[show-editor]{a boolean whether to skip the palette in the dialog}
   @begin{short}
     Accessor of the @slot[gtk-color-button]{show-editor} slot of the
     @class{gtk-color-button} class.

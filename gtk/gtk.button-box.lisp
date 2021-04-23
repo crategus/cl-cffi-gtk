@@ -291,7 +291,7 @@
   @syntax[]{((setf (gtk-button-box-child-non-homogeneous container child) non-homogeneous)}
   @argument[container]{a @class{gtk-button-box} container}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[non-homogeneous]{a boolean wether the child is not subject to
+  @argument[non-homogeneous]{a boolean whether the child is not subject to
     homogeneous sizing}
   @begin{short}
     Accessor of the @code{non-homogeneous} child property of the button box.

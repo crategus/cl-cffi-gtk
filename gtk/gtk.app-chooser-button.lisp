@@ -199,7 +199,7 @@
   @syntax[]{(gtk-app-chooser-button-show-default-item object) => setting}
   @syntax[]{(setf (gtk-app-chooser-button-show-default-item object) setting)}
   @argument[object]{a @class{gtk-app-chooser-button} widget}
-  @argument[setting]{a boolean wether the dropdown menu should show the default
+  @argument[setting]{a boolean whether the dropdown menu should show the default
     application}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-button]{show-default-item} slot of
@@ -207,7 +207,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-button-show-default-item}
-  returns wether the dropdown menu of the button should show the default
+  returns whether the dropdown menu of the button should show the default
   application. The slot access function
   @sym{(setf gtk-app-chooser-button-show-default-item)} sets whether the
   dropdown menu of the button should show the default application for the given
@@ -234,7 +234,7 @@
   @syntax[]{(gtk-app-chooser-button-show-dialog-item object) => setting}
   @syntax[]{(setf (gtk-app-chooser-button-show-dialog-item object) setting)}
   @argument[object]{a @class{gtk-app-chooser-button} widget}
-  @argument[setting]{a boolean wether the dropdown menu shoult show a
+  @argument[setting]{a boolean whether the dropdown menu shoult show a
     @class{gtk-app-chooser-dialog} widget}
   @begin{short}
     Accessor of the @slot[gtk-app-chooser-button]{show-dialog-item} slot of
@@ -242,7 +242,7 @@
   @end{short}
 
   The slot access function @sym{gtk-app-chooser-button-show-dialog-item} returns
-  wether the dropdown menu of the button should show an entry to trigger a
+  whether the dropdown menu of the button should show an entry to trigger a
   @class{gtk-app-chooser-dialog} widget. The slot access function
   @sym{(setf gtk-app-chooser-button-show-dialog-item)} sets the property.
   @see-class{gtk-app-chooser-button}")

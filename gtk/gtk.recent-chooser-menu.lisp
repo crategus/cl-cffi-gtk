@@ -133,16 +133,16 @@
   @syntax[]{(gtk-recent-chooser-menu-show-numbers object) => show-numbers}
   @syntax[]{(setf (gtk-recent-chooser-menu-show-numbers object) show-numbers)}
   @argument[obect]{a @class{gtk-recent-chooser-menu} widget}
-  @argument[show-numbers]{a @code{:boolean} whether to show numbers}
+  @argument[show-numbers]{a boolean whether to show numbers}
   @begin{short}
     Accessor of the @slot[gtk-recent-chooser-menu-show-numbers]{show-numbers}
     slot of the @class{gtk-recent-chooser-menu} class.
   @end{short}
 
   The slot access function @sym{gtk-recent-chooser-menu-show-numbers} returns
-  wether a number should be added to the items of menu. The slot access function
-  @sym{(setf gtk-recent-chooser-menu-show-numbers)} sets whether a number should
-  be added to the items of menu.
+  whether a number should be added to the items of menu. The slot access
+  function @sym{(setf gtk-recent-chooser-menu-show-numbers)} sets whether a
+  number should be added to the items of menu.
 
   The numbers are shown to provide a unique character for a mnemonic to be used
   inside ten menu item's label. Only the first the items get a number to avoid

@@ -386,7 +386,7 @@
   @syntax[]{(gtk-action-hide-if-empty object) => hide-if-empty}
   @syntax[]{(setf (gtk-action-hide-if-empty object) hide-if-empty)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[hide-if-empty]{a boolean wether empty menu proxies are hidden}
+  @argument[hide-if-empty]{a boolean whether empty menu proxies are hidden}
   @begin{short}
     Accessor of the @slot[gtk-action]{hide-if-empty} slot of the
     @class{gtk-action} class.
@@ -778,7 +778,7 @@
   @syntax[]{(gtk-action-visible-overflow object) => visible}
   @syntax[]{(setf (gtk-action-visible-overflow object) visible)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[visible]{a boolean wether a toolbar overflow menu is shown}
+  @argument[visible]{a boolean whether a toolbar overflow menu is shown}
   @begin{short}
     Accessor of the @slot[gtk-action]{visible-overflown} slot of the
     @class{gtk-action} class.

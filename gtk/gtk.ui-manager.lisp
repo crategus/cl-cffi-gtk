@@ -637,8 +637,7 @@
   @syntax[]{(gtk-ui-manager-add-tearoffs object) => add-tearoffs}
   @syntax[]{(setf (gtk-ui-manager-add-tearoffs object) add-tearoffs)}
   @argument[object]{a @class{gtk-ui-manager}}
-  @argument[add-tearoffs]{a @code{:boolean} whether tearoff menu items are
-    added}
+  @argument[add-tearoffs]{a boolean whether tearoff menu items are added}
   @begin{short}
     Accessor of the @slot[gtk-ui-manager]{add-tearoffs} slot of the
     @class{gtk-ui-manager} class.

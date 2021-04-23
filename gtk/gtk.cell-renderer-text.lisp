@@ -360,7 +360,7 @@
   @syntax[]{(gtk-cell-renderer-text-align-set object) => align-set}
   @syntax[]{(setf (gtk-cell-renderer-text-align-set object) align-set)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[align-set]{a boolean wether this tag affects the alignment mode}
+  @argument[align-set]{a boolean whether this tag affects the alignment mode}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{align-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -530,7 +530,7 @@
   @syntax[]{(gtk-cell-renderer-text-background-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-background-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the background color}
+  @argument[setting]{a boolean whether this tag affects the background color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{background-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -555,7 +555,7 @@
   @syntax[]{(gtk-cell-renderer-text-editable object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-editable object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether the text can be modified by the user}
+  @argument[setting]{a boolean whether the text can be modified by the user}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{editable} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -581,7 +581,7 @@
   @syntax[]{(gtk-cell-renderer-text-editable-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-editable-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects text editability}
+  @argument[setting]{a boolean whether this tag affects text editability}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{editable-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -641,7 +641,7 @@
   @syntax[]{(gtk-cell-renderer-text-ellipsize-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-ellipsize-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the ellipsize mode}
+  @argument[setting]{a boolean whether this tag affects the ellipsize mode}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{ellipsize-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -693,7 +693,7 @@
   @syntax[]{(gtk-cell-renderer-text-family-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-family-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the font family}
+  @argument[setting]{a boolean whether this tag affects the font family}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{family-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -858,7 +858,7 @@
   @syntax[]{(gtk-cell-renderer-text-foreground-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-foreground-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the foreground color}
+  @argument[setting]{a boolean whether this tag affects the foreground color}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{foreground-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -914,7 +914,7 @@
   @syntax[]{(gtk-cell-renderer-text-language-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-language-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the language}
+  @argument[setting]{a boolean whether this tag affects the language}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{language-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1063,7 +1063,7 @@
   @syntax[]{(gtk-cell-renderer-text-rise-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-rise-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the rise}
+  @argument[setting]{a boolean whether this tag affects the rise}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{rise-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1116,7 +1116,8 @@
   @syntax[]{(gtk-cell-renderer-text-scale-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-scale-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag scales the font size by a factor}
+  @argument[setting]{a boolean whether this tag scales the font size by a
+   factor}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{scale-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1144,7 +1145,7 @@
   @syntax[]{(gtk-cell-renderer-text-single-paragraph-mode object) => mode}
   @syntax[]{(setf (gtk-cell-renderer-text-single-paragraph-mode object) mode)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[mode]{a boolean wether to keep all text in a single paragraph}
+  @argument[mode]{a boolean whether to keep all text in a single paragraph}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{single-paragraph-mode} slot
     of the @class{gtk-cell-renderer-text} class.
@@ -1224,7 +1225,7 @@
   @syntax[]{(gtk-cell-renderer-text-size-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-size-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the font size}
+  @argument[setting]{a boolean whether this tag affects the font size}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{size-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1277,7 +1278,7 @@
   @syntax[]{(gtk-cell-renderer-text-stretch-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-stretch-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the font stretch}
+  @argument[setting]{a boolean whether this tag affects the font stretch}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{stretch-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1303,7 +1304,7 @@
   @syntax[]{(gtk-cell-renderer-text-strikethrough object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-strikethrough object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether to strike through the text}
+  @argument[setting]{a boolean whether to strike through the text}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{strikethrough} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1331,7 +1332,7 @@
   @syntax[]{(gtk-cell-renderer-text-strikethrough-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-strikethrough-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects strikethrough}
+  @argument[setting]{a boolean whether this tag affects strikethrough}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{strikethrough-set} slot of
     the @class{gtk-cell-renderer-text} class.
@@ -1463,7 +1464,7 @@
   @syntax[]{(gtk-cell-renderer-text-underline-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-underline-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects underlining}
+  @argument[setting]{a boolean whether this tag affects underlining}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{underline-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1516,7 +1517,7 @@
   @syntax[]{(gtk-cell-renderer-text-variant-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-variant-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the font variant}
+  @argument[setting]{a boolean whether this tag affects the font variant}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{variant-set} slot of the
     @class{gtk-cell-renderer-text} class.
@@ -1569,7 +1570,7 @@
   @syntax[]{(gtk-cell-renderer-text-weight-set object) => setting}
   @syntax[]{(setf (gtk-cell-renderer-text-weight-set object) setting)}
   @argument[object]{a @class{gtk-cell-renderer-text} object}
-  @argument[setting]{a boolean wether this tag affects the font weight}
+  @argument[setting]{a boolean whether this tag affects the font weight}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-text]{weight-set} slot of the
     @class{gtk-cell-renderer-text} class.

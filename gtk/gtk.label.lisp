@@ -1108,7 +1108,7 @@
   @syntax[]{(gtk-label-wrap object) => wrap}
   @syntax[]{(setf (gtk-label-wrap object) wrap)}
   @argument[object]{a @class{gtk-label} widget}
-  @argument[wrap]{a boolean wether lines are wrapped}
+  @argument[wrap]{a boolean whether lines are wrapped}
   @begin{short}
     Accessor of the @slot[gtk-label]{wrap} slot of the @class{gtk-label} class.
   @end{short}
@@ -1332,7 +1332,7 @@
   @syntax[]{(gtk-label-line-wrap label) => wrap}
   @syntax[]{(setf (gtk-label-line-wrap label) wrap)}
   @argument[label]{a @class{gtk-label} widget}
-  @argument[wrap]{a boolean wether the lines of the label are automatically
+  @argument[wrap]{a boolean whether the lines of the label are automatically
     wrapped}
   @begin{short}
     Accessor of the line wrap setting of the label.

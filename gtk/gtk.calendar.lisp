@@ -470,7 +470,7 @@
   @syntax[]{(gtk-calendar-no-month-change object) => no-change}
   @syntax[]{(setf (gtk-calendar-no-month-change object) no-change)}
   @argument[object]{a @class{gtk-calendar} widget}
-  @argument[no-change]{a boolean wether the selected month can be changed}
+  @argument[no-change]{a boolean whether the selected month can be changed}
   @begin{short}
     Accessor of the @slot[gtk-calendar]{no-month-change} slot of the
     @class{gtk-calendar} class.
@@ -497,7 +497,7 @@
   @syntax[]{(gtk-calendar-show-day-names object) => show-day-names}
   @syntax[]{(setf (gtk-calendar-show-day-names object) show-day-names)}
   @argument[object]{a @class{gtk-calendar} widget}
-  @argument[show-day-names]{a boolean wether day names are displayed}
+  @argument[show-day-names]{a boolean whether day names are displayed}
   @begin{short}
     Accessor of the @slot[gtk-calendar]{show-day-names} slot of the
     @class{gtk-calendar} class.
@@ -525,7 +525,7 @@
   @syntax[]{(gtk-calendar-show-details object) => show-details}
   @syntax[]{(setf (gtk-calendar-show-details object) show-details)}
   @argument[object]{a @class{gtk-calendar} widget}
-  @argument[show-details]{a boolean wether details are shown}
+  @argument[show-details]{a boolean whether details are shown}
   @begin{short}
     Accessor of the @slot[gtk-calendar]{show-details} slot of the
     @class{gtk-calendar} class.
@@ -553,7 +553,7 @@
   @syntax[]{(gtk-calendar-show-heading object) => show-heading}
   @syntax[]{(setf (gtk-calendar-show-heading object) show-heading)}
   @argument[object]{a @class{gtk-calendar} widget}
-  @argument[show-heading]{a boolean wether a heading is displayed}
+  @argument[show-heading]{a boolean whether a heading is displayed}
   @begin{short}
     Accessor of the @slot[gtk-calendar]{show-heading} slot of the
     @class{gtk-calendar} class.
@@ -580,7 +580,7 @@
   @syntax[]{(gtk-calendar-show-week-numbers object) => show-week-numbers}
   @syntax[]{(setf (gtk-calendar-show-week-numbers object) show-week-numbers)}
   @argument[object]{a @class{gtk-calendar} widget}
-  @argument[show-week-numbers]{a boolean wether week numbers are displayed}
+  @argument[show-week-numbers]{a boolean whether week numbers are displayed}
   @begin{short}
     Accessor of the @slot[gtk-calendar]{show-week-numbers} slot of the
     @class{gtk-calendar} class.

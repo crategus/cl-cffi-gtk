@@ -649,7 +649,7 @@
   @syntax[]{(gtk-menu-item-reserve-indicator menu-item) => reserve-indicator}
   @syntax[]{(setf (gtk-menu-item-reserve-indicator menu-item) reserve-indicator)}
   @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @argument[reserve]{a boolean wether the menu item always reserves space for
+  @argument[reserve]{a boolean whether the menu item always reserves space for
     the submenu indicator}
   @begin{short}
     Accessor of the reserve indicator of the menu item.

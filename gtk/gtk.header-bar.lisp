@@ -275,7 +275,7 @@
   @syntax[]{(gtk-header-bar-decoration-layout object) => layout-set}
   @syntax[]{(setf (gtk-header-bar-decoration-layout object) layout-set)}
   @argument[object]{a @class{gtk-header-bar} container}
-  @argument[layout-set]{a boolean wether a decoration layout is set}
+  @argument[layout-set]{a boolean whether a decoration layout is set}
   @begin{short}
     Accessor of the @slot[gtk-header-bar]{decoration-layout-set} slot of the
     @class{gtk-header-bar} class.

@@ -111,7 +111,7 @@
   @syntax[]{(gtk-volume-button-use-symbolic object) => use-symbolic}
   @syntax[]{(setf (gtk-volume-button-use-symbolic object) use-symbolic)}
   @argument[object]{a @class{gtk-volume-button} widget}
-  @argument[use-symbolic]{a boolean wether to use symbolic icons}
+  @argument[use-symbolic]{a boolean whether to use symbolic icons}
   @begin{short}
     Accessor of the @slot[gtk-volume-button]{use-symbolic} slot of the
     @class{gtk-volume-button} class.

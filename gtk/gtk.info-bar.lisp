@@ -322,7 +322,7 @@
   @syntax[]{(gtk-info-bar-revealed object) => revealed}
   @syntax[]{(setf (gtk-info-bar-revealed object) revealed)}
   @argument[object]{a @class{gtk-info-bar} widget}
-  @argument[revealed]{a boolean wether the action bar shows its contents}
+  @argument[revealed]{a boolean whether the action bar shows its contents}
   @begin{short}
     Accessor of the @slot[gtk-info-bar]{revealed} slot of the
     @class{gtk-info-bar} class.

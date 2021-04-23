@@ -384,7 +384,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-3-26}
   @argument[context]{a @class{gdk-drag-context} object}
-  @argument[sucess]{a boolean wether the drag was ultimatively succesful}
+  @argument[sucess]{a boolean whether the drag was ultimatively succesful}
   @begin{short}
     Inform GDK if the drop ended successfully.
   @end{short}

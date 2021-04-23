@@ -1031,7 +1031,7 @@
   @syntax[]{(gtk-print-settings-use-color settings) => use-color}
   @syntax[]{(setf (gtk-print-settings-use-color settings) use-color)}
   @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[use-color]{a @code{:boolean} whether to use color}
+  @argument[use-color]{a boolean whether to use color}
   @begin{short}
     Accessor of \"use-color\" of a print setting.
   @end{short}
@@ -1064,7 +1064,7 @@
   @syntax[]{(gtk-print-settings-collate settings) => collate}
   @syntax[]{(setf (gtk-print-settings-collate settings) collate)}
   @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[collate]{a @code{:boolean} whether to collate the output}
+  @argument[collate]{a boolean whether to collate the output}
   @begin{short}
     Accessor of \"collate\" of a print setting.
   @end{short}
@@ -1097,7 +1097,7 @@
   @syntax[]{(gtk-print-settings-reverse settings) => reverse}
   @syntax[]{(setf (gtk-print-settings-reverse settings) reverse)}
   @argument[settings]{a @class{gtk-print-settings} object}
-  @argument[reverse]{a @code{:boolean} whether to reverse the output}
+  @argument[reverse]{a boolean whether to reverse the output}
   @return{Whether to reverse the order of the printed pages.}
   @begin{short}
     Accessor of \"reverse\" of a print setting.

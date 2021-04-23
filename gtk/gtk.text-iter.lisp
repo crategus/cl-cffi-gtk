@@ -740,8 +740,8 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether the iterator is the start of a range tagged
-    with @arg{tag}.}
+  @return{A boolean whether the iterator is the start of a range tagged with
+    @arg{tag}.}
   @begin{short}
     Returns @em{true} if the tag is toggled on at exactly this point.
   @end{short}
@@ -775,8 +775,8 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether the iterator is the start of a range tagged
-    with @arg{tag}.}
+  @return{A boolean whether the iterator is the start of a range tagged with
+    @arg{tag}.}
   @begin{short}
     Returns @em{true} if @arg{tag} is toggled on at exactly this point.
   @end{short}
@@ -809,8 +809,8 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether the iterator is the end of a range tagged
-    with @arg{tag}.}
+  @return{A boolean whether the iterator is the end of a range tagged with
+    @arg{tag}.}
   @begin{short}
     Returns @em{true} if @arg{tag} is toggled off at exactly this point.
   @end{short}
@@ -837,8 +837,7 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether @arg{tag} is toggled on or off at
-    the iterator.}
+  @return{A boolean whether @arg{tag} is toggled on or off at the iterator.}
   @begin{short}
     Tells you whether a range with @arg{tag} applied to it begins or ends at
     the iterator.
@@ -867,7 +866,7 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @return{A @code{:boolean} whether the iterator is tagged with @arg{tag}.}
+  @return{A boolean whether the iterator is tagged with @arg{tag}.}
   @begin{short}
     Returns @em{true} if the iterator is within a range tagged with @arg{tag}.
   @end{short}
@@ -907,7 +906,7 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[default-setting]{@em{true} if text is editable by default}
-  @return{A @code{:boolean} whether the iterator is inside an editable range.}
+  @return{A boolean whether the iterator is inside an editable range.}
   @begin{short}
     Returns whether the character at the iterator is within an editable region
     of text.
@@ -940,8 +939,7 @@
  "@version{2020-8-17}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[editabe]{@em{true} if text is editable by default}
-  @return{A @code{:boolean} whether text inserted at the iterator would be
-    editable.}
+  @return{A boolean whether text inserted at the iterator would be editable.}
   @begin{short}
     Considering the default editability of the buffer, and tags that affect
     editability, determines whether text inserted at the iterator would be
@@ -1028,7 +1026,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator begins a line.}
+  @return{A boolean whether the iterator begins a line.}
   @begin{short}
     Returns @em{true} if the iterator begins a paragraph, i.e. if the function
     @fun{gtk-text-iter-line-offset} would return 0.
@@ -1051,7 +1049,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator is at the end of a line.}
+  @return{A boolean whether the iterator is at the end of a line.}
   @begin{short}
     Returns @em{true} if the iterator points to the start of the paragraph
     delimiter characters for a line.
@@ -1257,7 +1255,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator is the end iterator.}
+  @return{A boolean whether the iterator is the end iterator.}
   @begin{short}
     Returns @em{true} if the iterator is the end iterator, i.e. one past the
     last dereferenceable iterator in the buffer.
@@ -1279,7 +1277,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator is the first in the buffer.}
+  @return{A boolean whether the iterator is the first in the buffer.}
   @begin{short}
     Returns @em{true} if the iterator is the first iterator in the buffer, that
     is if the iterator has a character offset of 0.
@@ -1362,7 +1360,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves the iterator forward by one character offset.
   @end{short}
@@ -1387,7 +1385,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether movement was possible.}
+  @return{A boolean whether movement was possible.}
   @begin{short}
     Moves backward by one character offset.
   @end{short}
@@ -1438,7 +1436,7 @@
  "@version{2020-3-13}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[count]{a @code{:int} with a number of characters to move}
-  @return{A @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves count characters backward if possible.
   @end{short}
@@ -1464,7 +1462,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator can be dereferenced.}
+  @return{A boolean whether the iterator can be dereferenced.}
   @begin{short}
     Moves the iterator to the start of the next line.
   @end{short}
@@ -1487,7 +1485,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator moved.}
+  @return{A boolean whether the iterator moved.}
   @begin{short}
     Moves the iterator to the start of the previous line.
   @end{short}
@@ -1513,7 +1511,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[count]{a @code{:int} with the number of lines to move forward}
-  @return{A @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves @arg{count} lines forward, if possible.
   @end{short}
@@ -1541,7 +1539,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[count]{a @code{:int} with the number of lines to move backward}
-  @return{A @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves @arg{count} lines backward, if possible.
   @end{short}
@@ -2031,7 +2029,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator can be dereferenced.}
+  @return{A boolean whether the iterator can be dereferenced.}
   @begin{short}
     Moves the iterator to the start of the next visible line.
   @end{short}
@@ -2053,7 +2051,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @return{A @code{:boolean} whether the iterator moved.}
+  @return{A boolean whether the iterator moved.}
   @begin{short}
     Moves the iterator to the start of the previous visible line.
   @end{short}
@@ -2080,7 +2078,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[count]{a @code{:int} with the number of lines to move forward}
-  @return{A @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves @arg{count} visible lines forward, if possible.
   @end{short}
@@ -2109,7 +2107,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[count]{a @code{:int} with the number of lines to move backward}
-  @return{a @code{:boolean} whether the iterator moved and is dereferenceable.}
+  @return{A boolean whether the iterator moved and is dereferenceable.}
   @begin{short}
     Moves @arg{count} visible lines backward, if possible.
   @end{short}
@@ -2183,7 +2181,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether we found a tag toggle after the iterator.}
+  @return{A boolean whether we found a tag toggle after the iterator.}
   @begin{short}
     Moves forward to the next toggle (on or off) of @arg{tag}, or to the next
     toggle of any tag if @arg{tag} is @code{nil}.
@@ -2209,7 +2207,7 @@
  "@version{2020-3-14}
   @argument[iter]{a @class{gtk-text-iter} iterator}
   @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
-  @return{A @code{:boolean} whether we found a tag toggle before the iterator.}
+  @return{A boolean whether we found a tag toggle before the iterator.}
   @begin{short}
     Moves backward to the next toggle (on or off) of the @arg{tag}, or to the
     next toggle of any tag if @arg{tag} is @code{nil}.
@@ -2252,7 +2250,7 @@
   @argument[pred]{a function to be called on each character}
   @argument[limit]{a @class{gtk-text-iter} with the search limit, or @code{nil}
     for none}
-  @return{A @code{:boolean} Whether a match was found.}
+  @return{A boolean whether a match was found.}
   @begin{short}
     Advances the iterator, calling the function @arg{pred} on each character.
   @end{short}
@@ -2284,7 +2282,7 @@
   @argument[pred]{function to be called on each character}
   @argument[limit]{a @class{gtk-text-iter} with a search limit, or @code{nil}
     for none}
-  @return{A @code{:boolean} whether a match was found.}
+  @return{A boolean whether a match was found.}
   @begin{short}
     Same as the function @fun{gtk-text-iter-forward-find-char}, but goes
     backward from the iterator.
@@ -2308,7 +2306,7 @@
     for none}
   @argument[direction]{the value @code{:forward} indicates forward search and
     the value @code{:backward} backward search}
-  @return{A @code{:boolean} whether a match was found.}
+  @return{A boolean whether a match was found.}
   @begin{short}
     This is a convenience function of the Lisp implementation which combines
     the functions @fun{gtk-text-iter-forward-find-char} and
@@ -2361,7 +2359,7 @@
   @argument[limit]{a @class{gtk-text-iter} which is the bound for the search,
     or @code{nil} for the end of the buffer}
   @begin{return}
-    @code{search-p} -- a @code{:boolean} whether a match was found. @br{}
+    @code{search-p} -- a boolean whether a match was found @br{}
     @code{match-start} -- a @class{gtk-text-iter} with the start of match, or
       @code{nil} @br{}
     @code{match-end} -- a @class{gtk-text-iter} with the end of match, or
@@ -2415,7 +2413,7 @@
   @argument[limit]{a @class{gtk-text-iter} with the location of last possible
     @arg{match-start}, or @code{nil} for start of buffer}
   @begin{return}
-    @code{search-p} -- a @code{:boolean} whether a match was found. @br{}
+    @code{search-p} -- a boolean whether a match was found @br{}
     @code{match-start} -- a @class{gtk-text-iter} with the start of match, or
       @code{nil} @br{}
     @code{match-end} -- a @class{gtk-text-iter} with the end of match, or
@@ -2450,7 +2448,7 @@
   @argument[direction]{the value @code{:forward} indicates forward search and
     the value @code{:backward} backward search}
   @begin{return}
-    @code{search-p} -- a @code{:boolean} whether a match was found. @br{}
+    @code{search-p} -- a boolean whether a match was found @br{}
     @code{match-start} -- a @class{gtk-text-iter} with the start of match, or
       @code{nil} @br{}
     @code{match-end} -- a @class{gtk-text-iter} with the end of match, or

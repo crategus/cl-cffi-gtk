@@ -2457,7 +2457,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
   @argument[source]{a @type{g-source} instance}
   @return{@em{True} if @arg{source} has been destroyed.}
   @begin{short}
-    Returns wether the source has been destroyed.
+    Returns whether the source has been destroyed.
   @end{short}
 
   This is important when you operate upon your objects from within idle

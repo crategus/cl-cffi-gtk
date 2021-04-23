@@ -192,8 +192,7 @@
  "@version{2019-4-9}
   @syntax[]{(gtk-printer-accepting-jobs object) => accepting-jobs)}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[accepting-jobs]{a @code{:boolean} wether the printer is accepting
-    jobs.}
+  @argument[accepting-jobs]{a boolean whether the printer is accepting jobs}
   @begin{short}
     Accessor of the @slot[gtk-printer]{accepting-jobs} slot of the
     @class{gtk-printer} class.
@@ -217,7 +216,7 @@
  "@version{2020-4-9}
   @syntax[]{(gtk-printer-accepts-pdf object) => accepts-pdf)}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[accepts-pdf]{a boolean wether the printer can accept PDF}
+  @argument[accepts-pdf]{a boolean whether the printer can accept PDF}
   @begin{short}
     Accessor of the @slot[gtk-printer]{accepts-pdf} slot of the
     @class{gtk-printer} class.
@@ -241,7 +240,7 @@
  "@version{2020-4-9}
   @syntax[]{(gtk-printer-accepts-ps object) => accepts-ps)}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[accepts-ps]{a boolean wether the printer can accept PostScript}
+  @argument[accepts-ps]{a boolean whether the printer can accept PostScript}
   @begin{short}
     Accessor of the @slot[gtk-printer]{accepts-ps} slot of the
     @class{gtk-printer} class.
@@ -312,7 +311,7 @@
  "@version{2020-4-9}
   @syntax[]{(gtk-printer-is-virtual object) => is-virtual}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[is-virtual]{a boolean wether the printer is real hardware printer}
+  @argument[is-virtual]{a boolean whether the printer is real hardware printer}
   @begin{short}
     Accessor of the @slot[gtk-printer]{is-virtual} slot of the
     @class{gtk-printer} class.
@@ -409,7 +408,7 @@
  "@version{2020-4-9}
   @syntax[]{(gtk-printer-paused object) => paused}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[paused]{a boolean wether the printer is paused}
+  @argument[paused]{a boolean whether the printer is paused}
   @begin{short}
     Accessor of the @slot[gtk-printer]{paused} slot of the
     @class{gtk-printer} class.

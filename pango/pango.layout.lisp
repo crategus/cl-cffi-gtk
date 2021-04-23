@@ -1234,7 +1234,7 @@ baseline2 = baseline1 + factor * height2
   @syntax[]{(pango-layout-tabs layout) => tabs}
   @syntax[]{(setf (pango-layout-tabs layout) tabs)}
   @argument[layout]{a @class{pango-layout} object}
-  @argument[setting]{wether the layout does not break paragraphs at paragraph
+  @argument[setting]{whether the layout does not break paragraphs at paragraph
     separator characters}
   @begin{short}
     Accessor of the single paragraph mode of the Pango Layout.
@@ -2535,7 +2535,7 @@ baseline2 = baseline1 + factor * height2
  #+cl-cffi-gtk-documentation
  "@version{2021-1-16}
   @argument[iter]{a @class{pango-layout-iter} instance}
-  @argument[x-pos]{an integer weth the x offset (in Pango units) from the left
+  @argument[x-pos]{an integer with the x offset (in Pango units) from the left
     edge of the line}
   @begin{return}
     @code{index} -- an integer with the calculated byte index for the grapheme

@@ -518,7 +518,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-3-17}
   @argument[size]{a @class{gtk-paper-size} instance}
-  @return{A boolean wether the paper size is an IPP paper size.}
+  @return{A boolean whether the paper size is an IPP paper size.}
   @begin{short}
     Returns @em{true} if the paper size is an IPP standard paper size.
   @end{short}

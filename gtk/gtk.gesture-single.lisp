@@ -192,8 +192,7 @@
   @syntax[]{(gtk-gesture-single-touch-only object) => touch-only)}
   @syntax[]{(setf (gtk-gesture-single-touch-only object) touch-only)}
   @argument[object]{a @class{gtk-gesture-single} object}
-  @argument[touch-only]{a @code{:boolean} whether gesture handles only touch
-    events}
+  @argument[touch-only]{a boolean whether gesture handles only touch events}
   @begin{short}
     Accessor of the @slot[gtk-gesture-single]{touch-only} slot of the
     @class{gtk-gesture-single} class.
@@ -201,7 +200,7 @@
 
   The slot access function @sym{gtk-gesture-single-touch-only} returns
   @em{true} if the gesture is only triggered by touch events. The slot access
-  function @sym{(setf gtk-gesture-single-touch-only)} sets wether the gesture
+  function @sym{(setf gtk-gesture-single-touch-only)} sets whether the gesture
   is only triggered by touch events. If @arg{touch-only} is @em{true}, gesture
   will only handle events of type @code{:touch-begin}, @code{:touch-update} or
   @code{:touch-end}. If @em{false}, mouse events will be handled too.

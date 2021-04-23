@@ -459,7 +459,7 @@
   @syntax[]{(gtk-message-dialog-secondary-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-message-dialog-secondary-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-message-dialog} widget}
-  @argument[use-markup]{a boolean wether to use Pango markup}
+  @argument[use-markup]{a boolean whether to use Pango markup}
   @begin{short}
     Accessor of the @slot[gtk-message-dialog]{secondary-use-markup} slot of the
     @class{gtk-message-dialog} class.
@@ -513,7 +513,7 @@
   @syntax[]{(gtk-message-dialog-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-message-dialog-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-message-dialog} widget}
-  @argument[use-markup]{a boolean wether to use Pango markup}
+  @argument[use-markup]{a boolean whether to use Pango markup}
   @begin{short}
     Accessor of the @slot[gtk-message-dialog]{use-markup} slot of the
     @class{gtk-message-dialog} class.

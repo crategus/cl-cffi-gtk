@@ -799,7 +799,7 @@
   @syntax[]{(gtk-about-dialog-wrap-license object) => wrap-license}
   @syntax[]{(setf (gtk-about-dialog-wrap-license object) wrap-license)}
   @argument[object]{a @class{gtk-about-dialog} widget}
-  @argument[wrap-license]{a boolean wether to wrap the text in the license
+  @argument[wrap-license]{a boolean whether to wrap the text in the license
     dialog}
   @begin{short}
     Accessor of the @slot[gtk-about-dialog]{wrap-license} slot of the

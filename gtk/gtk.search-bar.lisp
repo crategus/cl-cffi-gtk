@@ -221,7 +221,7 @@ main (gint argc,
   @syntax[]{(gtk-search-bar-show-close-button object) => visible}
   @syntax[]{(setf (gtk-search-bar-show-close-button object) visible)}
   @argument[object]{a @class{gtk-search-bar} widget}
-  @argument[visible]{a boolean wether the close button will be shown or not}
+  @argument[visible]{a boolean whether the close button will be shown or not}
   @begin{short}
     Accessor of the @slot[gtk-search-bar]{show-close-button} slot of the
     @class{gtk-search-bar} class.

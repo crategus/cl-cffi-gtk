@@ -202,7 +202,7 @@
   @syntax[]{(setf (gtk-overlay-child-index container child) pass-through)}
   @argument[container]{a @class{gtk-overlay} container}
   @argument[child]{a @class{gtk-widget} child widget}
-  @argument[pass-through]{a boolean wether to pass through input}
+  @argument[pass-through]{a boolean whether to pass through input}
   @begin{short}
     Accessor of the @code{pass-through} child property of the
     @class{gtk-overlay} class.

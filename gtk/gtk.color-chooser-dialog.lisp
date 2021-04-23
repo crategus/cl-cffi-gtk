@@ -193,7 +193,7 @@
   @syntax[]{(gtk-color-chooser-dialog-show-editor object) => show-editor}
   @syntax[]{(setf (gtk-color-chooser-dialog-show-editor object) show-editor)}
   @argument[object]{a @class{gtk-color-chooser-dialog} widget}
-  @argument[show-editor]{a boolean wether to show the single-color editor}
+  @argument[show-editor]{a boolean whether to show the single-color editor}
   @begin{short}
     Accessor of the @slot[gtk-color-chooser-dialog]{show-editor} slot of the
     @class{gtk-color-chooser-dialog} class.

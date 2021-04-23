@@ -752,7 +752,7 @@
   @syntax[]{(gtk-tree-view-enable-grid-lines object) => setting}
   @syntax[]{(setf (gtk-tree-view-enable-grid-lines object) setting)}
   @argument[object]{a @class{gtk-tree-view} widget}
-  @argument[setting]{a boolean wether grid lines should be drawn}
+  @argument[setting]{a boolean whether grid lines should be drawn}
   @begin{short}
     Accessor of the @slot[gtk-tree-view]{enable-grid-lines} slot of the
     @class{gtk-tree-view} class.
@@ -3479,8 +3479,7 @@
                     coordinates) @br{}
     @code{y}     -- a @code{:int} with the y coordinate (relative to widget
                     coordinates) @br{}
-    @code{tip}   -- a @code{:boolean} whether this is a keyboard tooltip or not
-                    @br{}
+    @code{tip}   -- a boolean whether this is a keyboard tooltip or not @br{}
     @code{model} -- a @class{gtk-tree-model} or @code{nil} @br{}
     @code{path}  -- a @class{gtk-tree-path} or @code{nil} @br{}
     @code{iter}  -- a @class{gtk-tree-iter} or @code{nil}

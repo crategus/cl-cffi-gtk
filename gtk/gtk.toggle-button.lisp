@@ -227,7 +227,7 @@
   @syntax[]{(gtk-toggle-button-draw-indicator object) => indicator}
   @syntax[]{(setf (gtk-toggle-button-draw-indicator object) indicator)}
   @argument[object]{a @class{gtk-toggle-button} widget}
-  @argument[indicator]{a boolean wether the toggle part of the button is
+  @argument[indicator]{a boolean whether the toggle part of the button is
     displayed}
   @begin{short}
     Accessor of the @slot[gtk-toggle-button]{draw-indicator} slot of the

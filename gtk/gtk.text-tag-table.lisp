@@ -115,8 +115,7 @@
         @entry[table]{The @sym{gtk-text-tag-table} object which received the
           signal.}
         @entry[tag]{The changed @class{gtk-text-tag} object.}
-        @entry[size-changed]{A @code{:boolean} whether the size has been
-          changed.}
+        @entry[size-changed]{A boolean whether the size has been changed.}
       @end{table}
     @subheading{The \"tag-removed\" signal}
       @begin{pre}

@@ -131,7 +131,7 @@
   @syntax[]{(gtk-cell-editable-editing-canceled object) => canceled}
   @syntax[]{(setf (gtk-cell-editable-editing-canceled object) canceled)}
   @argument[object]{a @class{gtk-cell-editable} object}
-  @argument[canceled]{a boolean wether editing on the cell has been canceled}
+  @argument[canceled]{a boolean whether editing on the cell has been canceled}
   @begin{short}
     Accessor of the @slot[gtk-cell-editable]{editing-canceled} slot of the
     @class{gtk-cell-editable} class.

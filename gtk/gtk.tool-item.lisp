@@ -206,8 +206,8 @@
   @syntax[]{gtk-tool-item-is-important object) => is-important}
   @syntax[]{(setf (gtk-tool-item-is-important object) is-important)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[is-important]{a @code{:boolean} whether the tool item should be
-    considered important}
+  @argument[is-important]{a boolean whether the tool item should be considered
+    important}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{is-important} slot of the
     @class{gtk-tool-item} class.
@@ -243,8 +243,8 @@
   @syntax[]{gtk-tool-item-visible-horizontal object) => visible}
   @syntax[]{(setf (gtk-tool-item-visible-horizontal object) visible)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible]{a @code{:boolean} whether @arg{tool-item} is visible when
-    in horizontal mode}
+  @argument[visible]{a boolean whether @arg{tool-item} is visible when in
+    horizontal mode}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{visible-horizontal} slot of the
     @class{gtk-tool-item} class.
@@ -275,8 +275,8 @@
   @syntax[]{gtk-tool-item-visible-vertical object) => visible}
   @syntax[]{(setf (gtk-tool-item-visible-vertical object) visible)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible]{a @code{:boolean} whether @arg{tool-item} is visible when
-    the toolbar is in vertical mode}
+  @argument[visible]{a boolean whether @arg{tool-item} is visible when the
+    toolbar is in vertical mode}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{visible-vertical} slot of the
     @class{gtk-tool-item} class.
@@ -326,8 +326,8 @@
   @syntax[]{(gtk-tool-item-homogeneous tool-item) => homogeneous}
   @syntax[]{(setf (gtk-tool-item-homogeneous tool-item) homogeneous)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[homogeneous]{a @code{:boolean} whether @arg{tool-item} is the same
-    size as other homogeneous items}
+  @argument[homogeneous]{a boolean whether @arg{tool-item} is the same size as
+    other homogeneous items}
   @begin{short}
     Accessor of the homogeneous property of the tool item.
   @end{short}
@@ -362,8 +362,7 @@
   @syntax[]{(gtk-tool-item-expand tool-item) => expand}
   @syntax[]{(setf (gtk-tool-item-expand tool-item) expand)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[expand]{a @code{:boolean} whether @arg{tool-item} is allocated
-    extra space}
+  @argument[expand]{a boolean whether @arg{tool-item} is allocated extra space}
   @begin{short}
     Accessor of the expand property of the tool item.
   @end{short}
@@ -442,8 +441,8 @@
   @syntax[]{(gtk-tool-item-use-drag-window tool-item) => use-drag-window}
   @syntax[]{(setf (gtk-tool-item-use-drag-window tool-item) use-drag-window)}
   @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[use-drag-window]{a @code{:boolean} whether @arg{tool-item} has a
-    drag window}
+  @argument[use-drag-window]{a boolean whether @arg{tool-item} has a drag
+    window}
   @begin{short}
     Accessor of the use drag window property of the tool item.
   @end{short}

@@ -649,7 +649,7 @@
     @code{:cursor}}
   @argument[interative]{a @code{:boolean} or the default @em{false}}
   @argument[editable]{a @code{:boolean} or the default @em{true}}
-  @return{A @code{:boolean} whether the text was actually inserted.}
+  @return{A boolean whether the text was actually inserted.}
   @begin{short}
     Inserts text in the text buffer.
   @end{short}
@@ -733,7 +733,7 @@
     buffer}
   @argument[text]{a string with some UTF-8 text}
   @argument[editable]{default editability of the text buffer}
-  @return{A @code{:boolean} whether the text was actually inserted.}
+  @return{A boolean whether the text was actually inserted.}
   @begin{short}
     Like the function @fun{gtk-text-buffer-insert}, but the insertion will not
     occur if the iterator is at a non-editable location in the text buffer.
@@ -767,7 +767,7 @@
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[text]{a string with the text in UTF-8 format}
   @argument[editable]{default editability of @arg{buffer}}
-  @return{A @code{:boolean} whether the text was actually inserted.}
+  @return{A boolean whether the text was actually inserted.}
   @begin{short}
     Calls the function @fun{gtk-text-buffer-insert-interactive} at the cursor
     position.
@@ -845,7 +845,7 @@
     buffer as @arg{start}}
   @argument[editable]{a @code{:boolean} with the default editability of the
     text buffer}
-  @return{A @code{:boolean} whether an insertion was possible at the iterator.}
+  @return{A boolean whether an insertion was possible at the iterator.}
   @begin{short}
     Same as the function @fun{gtk-text-buffer-insert-range}, but does nothing
     if the insertion point is not editable.

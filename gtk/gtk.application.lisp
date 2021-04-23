@@ -456,7 +456,7 @@
   @syntax[]{(gtk-application-register-session object) => register-session}
   @syntax[]{(setf (gtk-application-register-session object) register-session)}
   @argument[object]{a @class{gtk-application} object}
-  @argument[register-session]{a boolean wether to register with the session
+  @argument[register-session]{a boolean whether to register with the session
     manager}
   @begin{short}
     Accessor of the @slot[gtk-application]{register-session} slot of the
@@ -486,7 +486,7 @@
  "@version{*2020-5-11}
   @syntax[]{(gtk-application-screensaver-active object) => screensaver-active}
   @argument[object]{a @class{gtk-application} object}
-  @argument[screensaver-active]{a boolean wether the screensaver is active}
+  @argument[screensaver-active]{a boolean whether the screensaver is active}
   @begin{short}
     Accessor of the @slot[gtk-application]{screensaver-active} slot of the
     @class{gtk-application} class.

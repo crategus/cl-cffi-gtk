@@ -301,7 +301,7 @@
   @syntax[]{(gtk-model-button-centered object) => centered}
   @syntax[]{(setf (gtk-model-button-centered object) centered)}
   @argument[object]{a @class{gtk-model-button} widget}
-  @argument[active]{a boolean wether to render the button contents centered
+  @argument[active]{a boolean whether to render the button contents centered
     instead of left-aligned}
   @begin{short}
     Accessor of the @slot[gtk-model-button]{centered} slot of the
@@ -358,7 +358,7 @@
   @syntax[]{(gtk-model-button-iconic object) => iconic}
   @syntax[]{(setf (gtk-model-button-iconic object) iconic)}
   @argument[object]{a @class{gtk-model-button} widget}
-  @argument[iconic]{a boolean wether the button will show an icon}
+  @argument[iconic]{a boolean whether the button will show an icon}
   @begin{short}
     Accessor of the @slot[gtk-model-button]{iconic} slot of the
     @class{gtk-model-button} class.
@@ -388,7 +388,7 @@
   @syntax[]{(gtk-model-button-inverted object) => inverted}
   @syntax[]{(setf (gtk-model-button-inverted object) inverted)}
   @argument[object]{a @class{gtk-model-button} widget}
-  @argument[inverted]{a boolean wether to show the submenu indicator at the
+  @argument[inverted]{a boolean whether to show the submenu indicator at the
     opposite side than normal}
   @begin{short}
     Accessor of the @slot[gtk-model-button]{inverted} slot of the
@@ -503,7 +503,7 @@
   @syntax[]{(gtk-model-button-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-model-button-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-model-button} widget}
-  @argument[use-markup]{a boolean wether to use Pango markup}
+  @argument[use-markup]{a boolean whether to use Pango markup}
   @begin{short}
     Accessor of the @slot[gtk-model-button]{use-markup} slot of the
     @class{gtk-model-button} class.

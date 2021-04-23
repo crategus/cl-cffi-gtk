@@ -116,7 +116,7 @@
   @syntax[]{(gtk-cell-renderer-spinner-active object) => active}
   @syntax[]{(setf (gtk-cell-renderer-spinner-active object) active)}
   @argument[object]{a @class{gtk-cell-renderer-spinner} object}
-  @argument[active]{a boolean wether the spinner is active}
+  @argument[active]{a boolean whether the spinner is active}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-spinner]{active} slot of the
     @class{gtk-cell-renderer-spinner} class.

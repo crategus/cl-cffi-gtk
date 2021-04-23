@@ -526,7 +526,7 @@
   @syntax[]{(gtk-places-sidebar-local-only object) => local-only}
   @syntax[]{(setf (gtk-places-sidebar-local-only object) local-only)}
   @argument[object]{a @class{gtk-places-sidebar} widget}
-  @argument[local-only]{a boolean wether to show only local files}
+  @argument[local-only]{a boolean whether to show only local files}
   @begin{short}
     Accessor of the @slot[gtk-places-sidebar]{local-only} slot of the
     @class{gtk-places-sidebar} class.
@@ -638,7 +638,7 @@
   @syntax[]{(gtk-places-sidebar-populate-all object) => populate-all}
   @syntax[]{(setf (gtk-places-sidebar-populate-all object) populate-all)}
   @argument[object]{a @class{gtk-places-sidebar} widget}
-  @argument[populate-all]{a boolean wether the \"populate-all\" signal is also
+  @argument[populate-all]{a boolean whether the \"populate-all\" signal is also
     emitted for popovers}
   @begin{short}
     Accessor of the @slot[gtk-places-sidebar]{populate-all} slot of the
@@ -845,8 +845,8 @@
   @syntax[]{(gtk-places-sidebar-show-starred-location object) => show-starred-location}
   @syntax[]{(setf (gtk-places-sidebar-show-starred-location object) show-starred-location)}
   @argument[object]{a @class{gtk-places-sidebar} widget}
-  @argument[show-starred-location]{a boolean wether the sidebar includes an item
-    to show starred files}
+  @argument[show-starred-location]{a boolean whether the sidebar includes an
+    item to show starred files}
   @begin{short}
     Accessor of the @slot[gtk-places-sidebar]{show-starred-location} slot of
     the @class{gtk-places-sidebar} class.

@@ -196,7 +196,7 @@
   @syntax[]{(setf (gtk-cell-area-box-child-align container child) align)}
   @argument[container]{a @class{gtk-cell-area-box} object}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[align]{a boolean wether the cell renderer should be aligned in
+  @argument[align]{a boolean whether the cell renderer should be aligned in
     admacent rows}
   @begin{short}
     Accessor of the @code{align} child property of the
@@ -221,7 +221,7 @@
   @syntax[]{(setf (gtk-cell-area-box-child-expand container child) expand)}
   @argument[container]{a @class{gtk-cell-area-box} object}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[expand]{a boolean wether the cell renderer should receive extra
+  @argument[expand]{a boolean whether the cell renderer should receive extra
     space}
   @begin{short}
     Accessor of the @code{expand} child property of the
@@ -247,7 +247,7 @@
   @syntax[]{(setf (gtk-cell-area-box-child-fixed-size container child) fixed-size)}
   @argument[container]{a @class{gtk-cell-area-box} object}
   @argument[child]{a @class{gtk-widget} child}
-  @argument[fixed-size]{a boolean wether the cell renderer should require the
+  @argument[fixed-size]{a boolean whether the cell renderer should require the
     same size for all rows}
   @begin{short}
     Accessor of the @code{fixed-size} child property of the

@@ -956,7 +956,7 @@
   @syntax[]{(gtk-window-focus-visible object) => setting}
   @syntax[]{(setf (gtk-window-focus-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[setting]{a boolean wether \"focus-rectangles\" are currently visible
+  @argument[setting]{a boolean whether \"focus-rectangles\" are currently visible
     in the window}
   @begin{short}
     Accessor of the @slot[gtk-window]{focus-visible} slot of the
@@ -1211,7 +1211,7 @@
   @syntax[]{(gtk-window-is-active object) => is-active}
   @syntax[]{(setf (gtk-window-is-active object) is-active)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[is-active]{a boolean wether the window is part of the current
+  @argument[is-active]{a boolean whether the window is part of the current
     active window}
   @begin{short}
     Accessor of the @slot[gtk-window]{is-active} slot of the @class{gtk-window}
@@ -1243,7 +1243,7 @@
   @syntax[]{(gtk-window-is-maximized object) => is-maximized}
   @syntax[]{(setf (gtk-window-is-maximized object) is-maximized)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[is-maximized]{a boolean wether the window has a maximized state}
+  @argument[is-maximized]{a boolean whether the window has a maximized state}
   @begin{short}
     Accessor of the @slot[gtk-window]{is-maximized} slot of the
     @class{gtk-window} class.
@@ -1278,7 +1278,7 @@
   @syntax[]{(gtk-window-mnemonics-visible object) => setting}
   @syntax[]{(setf (gtk-window-mnemonics-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[setting]{a boolean wether mnemonics are currently visible in the
+  @argument[setting]{a boolean whether mnemonics are currently visible in the
     window}
   @begin{short}
     Accessor of the @slot[gtk-window]{mnemonics-visible} slot of the
@@ -1416,7 +1416,7 @@
   @syntax[]{(gtk-window-resize-grip-visible object) => setting}
   @syntax[]{(setf (gtk-window-resize-grip-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[setting]{a boolean wether a corner resize grip is shown}
+  @argument[setting]{a boolean whether a corner resize grip is shown}
   @begin{short}
     Accessor of the @slot[gtk-window]{resize-grip-visible} slot of the
     @class{gtk-window} class.

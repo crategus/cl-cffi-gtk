@@ -119,8 +119,7 @@
   @syntax[]{(gtk-separator-tool-item-draw object) => draw)}
   @syntax[]{(setf (gtk-separator-tool-item-draw object) draw)}
   @argument[object]{a @class{gtk-separator-tool-item} widget}
-  @argument[draw]{a @code{:boolean} whether @arg{object} is drawn as a vertical
-    line}
+  @argument[draw]{a boolean whether @arg{object} is drawn as a vertical line}
   @begin{short}
     Accessor of the @slot[gtk-separator-tool-item]{draw} slot of the
     @class{gtk-separator-tool-item} class.

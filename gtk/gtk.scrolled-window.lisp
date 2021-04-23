@@ -722,7 +722,7 @@
   @syntax[]{(gtk-scrolled-window-overlay-scrolling object) => scrolling}
   @syntax[]{(setf (gtk-scrolled-window-overlay-scrolling object) scrolling)}
   @argument[object]{a @class{gtk-scrolled-window} widget}
-  @argument[scrolling]{a boolean wether to enable overly scrolling}
+  @argument[scrolling]{a boolean whether to enable overly scrolling}
   @begin{short}
     Accessor of the @slot[gtk-scrolled-window]{overlay-scrolling} slot of the
     @class{gtk-scrolled-window} class.
@@ -794,7 +794,7 @@
   @syntax[]{(gtk-scrolled-window-propagate-natural-width object) => propagate}
   @syntax[]{(setf (gtk-scrolled-window-propagate-natural-width object) propagate)}
   @argument[object]{a @class{gtk-scrolled-window} widget}
-  @argument[propagate]{a boolean wether to propagate natural width}
+  @argument[propagate]{a boolean whether to propagate natural width}
   @begin{short}
     Accessor of the @slot[gtk-scrolled-window]{propagate-natural-width} slot
     of the @class{gtk-scrolled-window} class.
@@ -956,7 +956,7 @@
   @syntax[]{(gtk-scrolled-window-window-placement-set object) => placement-set}
   @syntax[]{(setf (gtk-scrolled-window-window-placement-set object) placement-set)}
   @argument[object]{a @class{gtk-scrolled-window} widget}
-  @argument[placement]{a boolean wether @code{window-placement} should be used}
+  @argument[placement]{a boolean whether @code{window-placement} should be used}
   @begin{short}
     Accessor of the @slot[gtk-scrolled-window]{window-placement-set} slot of
     the @class{gtk-scrolled-window} class.
@@ -1230,10 +1230,10 @@
   @argument[window]{a @class{gtk-scrolled-window} widget}
   @argument[capture]{@em{true} to capture button presses}
   @begin{short}
-    Wether button presses are captured during kinetic scrolling.
+    Whether button presses are captured during kinetic scrolling.
   @end{short}
 
-  The function @sym{gtk-scrolled-window-capture-button-press} returns wether
+  The function @sym{gtk-scrolled-window-capture-button-press} returns whether
   button presses are captured during kinetic scrolling. The function
   @sym{(setf gtk-scrolled-window-capture-button-press)} changes the behaviour
   of the scrolled window with respect to the initial event that possibly starts

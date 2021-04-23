@@ -701,7 +701,7 @@
  "@version{2021-3-12}
   @syntax[]{(gtk-combo-box-has-entry object) => has-entry}
   @argument[object]{a @class{gtk-combo-box} widget}
-  @argument[has-entry]{a boolean wether the combo box has an entry}
+  @argument[has-entry]{a boolean whether the combo box has an entry}
   @begin{short}
     Accessor of the @slot[gtk-combo-box]{has-entry} slot of the
     @class{gtk-combo-box} class.
@@ -727,7 +727,7 @@
   @syntax[]{(gtk-combo-box-has-frame object) => has-frame}
   @syntax[]{(setf (gtk-combo-box-has-frame object) has-frame)}
   @argument[object]{a @class{gtk-combo-box} widget}
-  @argument[has-frame]{a boolean wether a frame is drawn around the entry}
+  @argument[has-frame]{a boolean whether a frame is drawn around the entry}
   @begin{short}
     Accessor of the @slot[gtk-combo-box]{has-frame} slot of the
     @class{gtk-combo-box} class.

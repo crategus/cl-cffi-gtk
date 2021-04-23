@@ -145,7 +145,7 @@
 
   The number of touches that a @sym{gtk-gesture} need to be recognized is
   controlled by the @code{n-points} property, if a gesture is keeping track of
-  less or more than that number of sequences, it won't check wether the gesture
+  less or more than that number of sequences, it won't check whether the gesture
   is recognized.
 
   As soon as the gesture has the expected number of touches, the gesture will

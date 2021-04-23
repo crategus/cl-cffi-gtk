@@ -395,7 +395,7 @@
   @syntax[]{(gtk-list-box-acivate-on-click object) => single}
   @syntax[]{(setf (gtk-list-box-activate-on-click object) single)}
   @argument[object]{a @class{gtk-list-box} container}
-  @argument[single]{a boolean wether to activate the row on a single click}
+  @argument[single]{a boolean whether to activate the row on a single click}
   @begin{short}
     Accessor of the @slot[gtk-list-box]{activate-on-single-click} slot of the
     @class{gtk-list-box} class.
@@ -403,7 +403,7 @@
 
   The slot access function @sym{gtk-list-box-activate-on-single-click} returns
   whether rows activate on single clicks. The slot access function
-  @sym{(setf gtk-list-box-activate-on-single-click)} sets wether rows activate
+  @sym{(setf gtk-list-box-activate-on-single-click)} sets whether rows activate
   on single clicks.
 
   If @arg{single} is @em{true}, rows will be activated when you click on them,

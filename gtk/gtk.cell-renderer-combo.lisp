@@ -149,7 +149,7 @@
   @syntax[]{(gtk-cell-renderer-combo-has-entry object) => has-entry}
   @syntax[]{(setf (gtk-cell-renderer-combo-has-entry object) has-entry)}
   @argument[object]{a @class{gtk-cell-renderer-combo} object}
-  @argument[has-entry]{a boolean wether the cell renderer will incluce an entry}
+  @argument[has-entry]{a boolean wheter the cell renderer will incluce an entry}
   @begin{short}
     Accessor of the @slot[gtk-cell-renderer-combo]{has-entry} slot of the
     @class{gtk-cell-renderer-combo} class.

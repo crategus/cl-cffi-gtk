@@ -908,7 +908,7 @@
     @class{gtk-entry} class.
   @end{short}
 
-  The slot access function @sym{gtk-entry-activates-default} retrieves wether
+  The slot access function @sym{gtk-entry-activates-default} retrieves whether
   to activate the default widget, when Enter is pressed.
 
   If @arg{setting} is @em{true}, pressing Enter in the entry will activate the
@@ -999,7 +999,7 @@
   @syntax[]{(gtk-entry-caps-lock-warning object) => caps-lock-warning}
   @syntax[]{(setf (gtk-entry-caps-lock-warning object) caps-lock-warning)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[caps-lock-warning]{a boolean wether password entries will show a
+  @argument[caps-lock-warning]{a boolean whether password entries will show a
     warning when Caps Lock is on}
   @begin{short}
     Accessor of the @slot[gtk-entry]{caps-lock-warning} slot of the
@@ -1087,7 +1087,7 @@
   @syntax[]{(gtk-entry-editable object) => editable}
   @syntax[]{(setf (gtk-entry-editable object) editable)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[editable]{a boolean wether the entry contents can be edited}
+  @argument[editable]{a boolean whether the entry contents can be edited}
   @begin{short}
     Accessor of the @slot[gtk-entry]{editable} slot of the @class{gtk-entry}
     class.
@@ -1114,7 +1114,7 @@
   @syntax[]{(gtk-entry-enable-emoji-completion object) => enable}
   @syntax[]{(setf (gtk-entry-enable-emoji-completion object) enable)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[enable]{a boolean wether to suggest Emoji replacements}
+  @argument[enable]{a boolean whether to suggest Emoji replacements}
   @begin{short}
     Accessor of the @slot[gtk-entry]{enable-emoji-completion} slot of the
     @class{gtk-entry} class.
@@ -1141,7 +1141,7 @@
   @syntax[]{(gtk-entry-has-frame object) => setting}
   @syntax[]{(setf (gtk-entry-has-frame object) setting)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[setting]{a boolean wether to remove bevel from the entry}
+  @argument[setting]{a boolean whether to remove bevel from the entry}
   @begin{short}
     Accessor of the @slot[gtk-entry]{has-frame} slot of the @class{gtk-entry}
     class.
@@ -1357,7 +1357,7 @@
   @syntax[]{(gtk-entry-invisible-char-set object) => setting}
   @syntax[]{(setf (gtk-entry-invisible-char-set object) setting)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[setting]{a boolean wether the invisible char has been set for the
+  @argument[setting]{a boolean whether the invisible char has been set for the
     entry}
   @begin{short}
     Accessor of the @slot[gtk-entry]{invisible-char-set} slot of the
@@ -1453,7 +1453,7 @@
   @syntax[]{(gtk-entry-overwrite-mode object) => overwrite}
   @syntax[]{(setf (gtk-entry-overwrite-mode object) overwrite)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[overwrite]{a boolean wether the text is overwritten when typing}
+  @argument[overwrite]{a boolean whether the text is overwritten when typing}
   @begin{short}
     Accessor of the @slot[gtk-entry]{overwrite-mode} slot of the
     @class{gtk-entry} class.
@@ -1520,8 +1520,8 @@
   @syntax[]{(gtk-entry-populate-all object) => setting}
   @syntax[]{(setf (gtk-entry-populate-all object) setting)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[setting]{a boolean wether the \"populate\" signal is also emitted for
-    touch popups}
+  @argument[setting]{a boolean whether the \"populate\" signal is also emitted
+   for touch popups}
   @begin{short}
     Accessor of the @slot[gtk-entry]{populate-all} slot of the
     @class{gtk-entry} class.
@@ -1551,7 +1551,7 @@
   @syntax[]{(gtk-entry-primary-icon-activatable object) => activatable}
   @syntax[]{(setf (gtk-entry-primary-icon-activatable object) activatable)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[activatable]{a boolean wether the primary icon is activatable}
+  @argument[activatable]{a boolean whether the primary icon is activatable}
   @begin{short}
     Accessor of the @slot[gtk-entry]{primary-icon-activatable} slot of the
     @class{gtk-entry} class.
@@ -1665,7 +1665,7 @@
   @syntax[]{(gtk-entry-primary-icon-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-entry-primary-icon-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[sensitive]{a boolean wether the primary icon is sensitive}
+  @argument[sensitive]{a boolean whether the primary icon is sensitive}
   @begin{short}
     Accessor of the @slot[gtk-entry]{primary-icon-sensitive} slot of the
     @class{gtk-entry} class.
@@ -1919,7 +1919,7 @@
   @syntax[]{(gtk-entry-secondary-icon-activatable object) => activatable}
   @syntax[]{(setf (gtk-entry-secondary-icon-activatable object) activatable)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[activatable]{a boolean wether the secondary icon is activatable}
+  @argument[activatable]{a boolean whether the secondary icon is activatable}
   @begin{short}
     Accessor of the @slot[gtk-entry]{secondary-icon-activatable} slot of the
     @class{gtk-entry} class.
@@ -2035,7 +2035,7 @@
   @syntax[]{(gtk-entry-secondary-icon-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-entry-secondary-icon-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[sensitive]{a boolean wether the icon is sensitive}
+  @argument[sensitive]{a boolean whether the icon is sensitive}
   @begin{short}
     Accessor of the @slot[gtk-entry]{secondary-icon-sensitive} slot of the
     @class{gtk-entry} class.
@@ -2260,7 +2260,7 @@
   @syntax[]{(gtk-entry-show-emoji-icon object) => show-emoji-icon}
   @syntax[]{(setf (gtk-entry-show-emoji-icon object) show-emoji-icon)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[show-emoji-icon]{a boolean wether to show an icon for Emoji}
+  @argument[show-emoji-icon]{a boolean whether to show an icon for Emoji}
   @begin{short}
     Accessor of the @slot[gtk-entry]{show-emoji-icon} slot of the
     @class{gtk-entry} class.
@@ -2383,7 +2383,7 @@
   @syntax[]{(gtk-entry-truncate-multiline object) => truncate}
   @syntax[]{(setf (gtk-entry-truncate-multiline object) truncate)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[truncate]{a boolean wether multi-line text is truncated}
+  @argument[truncate]{a boolean whether multi-line text is truncated}
   @begin{short}
     Accessor of the @slot[gtk-entry]{truncate-multiline} slot of the
     @class{gtk-entry} class.

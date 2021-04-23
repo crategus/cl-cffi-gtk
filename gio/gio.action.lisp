@@ -160,7 +160,7 @@
  "@version{2020-2-8}
   @syntax[]{(g-action-enabled object) => enabled}
   @argument[object]{a @class{g-action} object}
-  @argument[enabled]{a @code{:boolean} whether the @arg{action} is enabled}
+  @argument[enabled]{a boolean whether the @arg{action} is enabled}
   @begin{short}
     Accessor of the @slot[g-action]{enabled} slot of the @class{g-action} class.
   @end{short}

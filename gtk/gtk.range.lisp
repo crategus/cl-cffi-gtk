@@ -450,7 +450,7 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-range-inverted} gets wheter the range is
+  The slot access function @sym{gtk-range-inverted} gets whether the range is
   inverted.
 
   Ranges normally move from lower to higher values as the slider moves from
@@ -852,7 +852,7 @@
   @argument[range]{a @class{gtk-range} widget}
   @argument[size-fixed]{@em{true} to make the slider size constant}
   @begin{short}
-    Wether the range's slider has a fixed size.
+    Whether the range's slider has a fixed size.
   @end{short}
 
   Sets whether the range's slider has a fixed size, or a size that depends on

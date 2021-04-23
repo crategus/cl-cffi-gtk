@@ -799,7 +799,7 @@
 
   The slot access function @sym{gtk-icon-view-reorderable} retrieves whether
   the user can reorder the list via drag-and-drop. The slot access function
-  @sym{(setf gtk-icon-view-reorderable)} sets wether the user can reorder the
+  @sym{(setf gtk-icon-view-reorderable)} sets whether the user can reorder the
   list. This function is a convenience function to allow you to reorder models
   that support the @class{gtk-tree-drag-source} and the
   @class{gtk-tree-drag-dest} interfaces.

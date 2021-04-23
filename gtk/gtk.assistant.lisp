@@ -368,7 +368,7 @@
   @syntax[]{(setf (gtk-assistant-child-complete container child) complete)}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} page of the assistant}
-  @argument[complete]{a boolean wether the page is complete}
+  @argument[complete]{a boolean whether the page is complete}
   @begin{short}
     Accessor of the @code{complete} child property of the
     @class{gtk-assistant} class.
@@ -395,7 +395,7 @@
   @syntax[]{(setf (gtk-assistant-child-complete container child) has-padding)}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} page of the assistant}
-  @argument[has-padding]{a boolean wether the assistant adds padding around
+  @argument[has-padding]{a boolean whether the assistant adds padding around
     the page}
   @begin{short}
     Accessor of the @code{has-padding} child property of the
@@ -971,7 +971,7 @@
   @syntax[]{(setf (gtk-assistant-page-has-padding assistant page) has-padding)}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
-  @argument[has-padding]{a boolean wether the page has padding}
+  @argument[has-padding]{a boolean whether the page has padding}
   @begin{short}
     Accessor of the has padding status of the page in the assistant.
   @end{short}

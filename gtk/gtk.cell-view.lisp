@@ -315,7 +315,8 @@
   @syntax[]{(gtk-cell-view-draw-sensitive object) => draw-sensitive}
   @syntax[]{(setf (gtk-cell-view-draw-sensitive object) draw-sensitive)}
   @argument[object]{a @class{gtk-cell-view} object}
-  @argument[draw-sensitive]{wether to draw all cells in a sensitive state}
+  @argument[draw-sensitive]{a boolean whether to draw all cells in a sensitive
+    state}
   @begin{short}
     Accessor of the @slot[gtk-tree-view]{draw-sensitive} slot of the
     @class{gtk-cell-view} class.

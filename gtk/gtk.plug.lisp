@@ -142,7 +142,7 @@
  "@version{2020-9-15}
   @syntax[]{(gtk-plug-embedded object) => embedded}
   @argument[object]{a @class{gtk-plug} widget}
-  @argument[embedded]{a @code{:boolean} wether the plug is embedded in a socket}
+  @argument[embedded]{a boolean whether the plug is embedded in a socket}
   @begin{short}
     Accessor of the @slot[gtk-plug]{embedded} slot of the @class{gtk-plug}
     class.

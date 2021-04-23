@@ -389,7 +389,7 @@
     @class{gtk-stack} class.
   @end{short}
 
-  The slot access function @sym{gtk-stack-interpolate-size} returns wether the
+  The slot access function @sym{gtk-stack-interpolate-size} returns whether the
   stack is set up to interpolate between the sizes of children on page switch.
   The slot access function @sym{(setf gtk-stack-interpolate-size)} sets whether
   or not stack will interpolate its size when changing the visible child.
