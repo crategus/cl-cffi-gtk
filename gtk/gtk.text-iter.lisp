@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-iter.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -210,21 +210,24 @@
   :alloc (%gtk-text-iter-alloc))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-iter atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-text-iter atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'gtk-text-iter 'type)
- "@version{2016-1-30}
+ "@version{2021-4-27}
   @begin{short}
     Most text manipulation is accomplished with iterators, represented by a
-    @sym{gtk-text-iter}. An iterator represents a position between two
-    characters in the text buffer.
+    @sym{gtk-text-iter} strucuture.
   @end{short}
-  @sym{gtk-text-iter} is a structure designed to be allocated on the stack; it
-  is guaranteed to be copiable by value and never contain any heap-allocated
-  data. Iterators are not valid indefinitely; whenever the buffer is modified
+  An iterator represents a position between two characters in the text buffer.
+
+  The @sym{gtk-text-iter} structure is designed to be allocated on the stack.
+  It is guaranteed to be copiable by value and never contain any heap-allocated
+  data. Iterators are not valid indefinitely. Whenever the buffer is modified
   in a way that affects the number of characters in the buffer, all outstanding
   iterators become invalid. Note that deleting 5 characters and then reinserting
   5 still invalidates iterators, though you end up with the same number of
-  characters you pass through a state with a different number.")
+  characters you pass through a state with a different number.
+  @see-class{gtk-text-buffer}")
 
 (export (boxed-related-symbols 'gtk-text-iter))
 
@@ -1057,10 +1060,10 @@
   Delimiters will be either a newline, a carriage return, a carriage return
   followed by a newline, or a Unicode paragraph separator character.
 
-  Note that an iterator pointing to the @code{\\n} of a @code{\\r\\n} pair will not
-  be counted as the end of a line, the line ends before the @code{\\r}. The end
-  iterator is considered to be at the end of a line, even though there are no
-  paragraph delimiter chars there.
+  Note that an iterator pointing to the @code{\\n} of a @code{\\r\\n} pair will
+  not be counted as the end of a line, the line ends before the @code{\\r}. The
+  end iterator is considered to be at the end of a line, even though there are
+  no paragraph delimiter chars there.
   @see-class{gtk-text-iter}"
   (iter (g-boxed-foreign gtk-text-iter)))
 
