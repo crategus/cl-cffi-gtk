@@ -470,6 +470,7 @@
       @about-function{gtk-list-box-select-all}
       @about-function{gtk-list-box-unselect-all}
       @about-function{gtk-list-box-selected-row}
+      @about-symbol{gtk-list-box-foreach-func}
       @about-function{gtk-list-box-selected-foreach}
       @about-function{gtk-list-box-selected-rows}
       @about-function{gtk-list-box-adjustment}
@@ -479,14 +480,15 @@
       @about-function{gtk-list-box-invalidate-filter}
       @about-function{gtk-list-box-invalidate-headers}
       @about-function{gtk-list-box-invalidate-sort}
+      @about-symbol{gtk-list-box-filter-func}
       @about-function{gtk-list-box-set-filter-func}
+      @about-symbol{gtk-list-box-update-header-func}
       @about-function{gtk-list-box-set-header-func}
       @about-symbol{gtk-list-box-sort-func}
       @about-function{gtk-list-box-set-sort-func}
       @about-function{gtk-list-box-drag-highlight-row}
       @about-function{gtk-list-box-drag-unhighlight-row}
       @about-function{gtk-list-box-bind-model}
-
       @about-class{gtk-list-box-row}
       @about-generic{gtk-list-box-row-activatable}
       @about-generic{gtk-list-box-row-selectable}
@@ -4736,6 +4738,7 @@ setup_tree (void)
       @about-generic{gtk-settings-gtk-can-change-accels}
       @about-generic{gtk-settings-gtk-color-palette}
       @about-generic{gtk-settings-gtk-color-scheme}
+      @about-generic{gtk-settings-gtk-cursor-aspect-ratio}
       @about-generic{gtk-settings-gtk-cursor-blink}
       @about-generic{gtk-settings-gtk-cursor-blink-time}
       @about-generic{gtk-settings-gtk-cursor-blink-timeout}
@@ -4777,6 +4780,7 @@ setup_tree (void)
       @about-generic{gtk-settings-gtk-menu-popdown-delay}
       @about-generic{gtk-settings-gtk-menu-popup-delay}
       @about-generic{gtk-settings-gtk-modules}
+      @about-generic{gtk-settings-gtk-overlay-scrolling}
       @about-generic{gtk-settings-gtk-primary-button-warps-slider}
       @about-generic{gtk-settings-gtk-print-backends}
       @about-generic{gtk-settings-gtk-print-preview-command}
