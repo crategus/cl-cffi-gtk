@@ -457,9 +457,9 @@
 
 (defcfun ("gtk_grid_attach" gtk-grid-attach) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-23}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[child]{the @class{gtk-widget} to add}
+ "@version{*2021-4-27}
+  @argument[grid]{a @class{gtk-grid} widget}
+  @argument[child]{the @class{gtk-widget} object to add}
   @argument[left]{an integer with the column number to attach the left side of
     @arg{child} to}
   @argument[top]{an integer with the row number to attach the top side of

@@ -437,28 +437,29 @@
 
 (defun gtk-alignment-get-padding (alignment)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-17}
-  @argument[alignment]{a @class{gtk-alignment} container}
+ "@version{2021-4-20}
+  @argument[alignment]{a @class{gtk-alignment} widget}
   @begin{return}
-    @code{padding-top} -- the padding for the top of the widget,
-      or @code{nil} @br{}
-    @code{padding-bottom} -- the padding for the bottom of the widget,
-      or @code{nil} @br{}
-    @code{padding-left} -- the padding for the left of the widget,
-      or @code{nil} @br{}
-    @code{padding-right} -- the padding for the right of the widget,
-      or @code{nil} @br{}
+    @arg{top} -- an unsigned integer with the padding for the top of the
+    widget @br{}
+    @arg{bottom} -- an unsigned integer with the padding for the bottom of the
+    widget @br{}
+    @arg{left} -- an unsigned integer with the padding for the left of the
+    widget @br{}
+    @arg{right} -- an unsigned integer with the padding for the right of the
+    widget
   @end{return}
   @begin{short}
     Gets the padding on the different sides of the widget.
   @end{short}
-  See the @fun{gtk-alignment-set-padding} function.
+  See the function @fun{gtk-alignment-set-padding}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-alignment-get-padding} has been deprecated since
     version 3.14 and should not be used in newly-written code.
     Use @class{gtk-widget} alignment and margin properties.
   @end{dictionary}
   @see-class{gtk-alignment}
+  @see-class{gtk-widget}
   @see-function{gtk-alignment-set-padding}"
   (values (gtk-alignment-top-padding alignment)
           (gtk-alignment-bottom-padding alignment)
@@ -475,12 +476,15 @@
 
 (defun gtk-alignment-set-padding (alignment top bottom left right)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-17}
-  @argument[alignment]{a @class{gtk-alignment} container}
-  @argument[padding-top]{the padding at the top of the widget}
-  @argument[padding-bottom]{the padding at the bottom of the widget}
-  @argument[padding-left]{the padding at the left of the widget}
-  @argument[padding-right]{the padding at the right of the widget}
+ "@version{2021-4-20}
+  @argument[alignment]{a @class{gtk-alignment} widget}
+  @argument[top]{an unsigned integer with the padding at the top of the widget}
+  @argument[bottom]{an unsigned integer with the padding at the bottom of the
+    widget}
+  @argument[left]{an unsigned integer with the padding at the left of the
+    widget}
+  @argument[right]{an unsigned integer with the padding at the right of the
+    widget}
   @begin{short}
     Sets the padding on the different sides of the widget.
   @end{short}
@@ -493,6 +497,7 @@
     Use @class{gtk-widget} alignment and margin properties.
   @end{dictionary}
   @see-class{gtk-alignment}
+  @see-class{gtk-widget}
   @see-function{gtk-alignment-get-padding}"
   (setf (gtk-alignment-top-padding alignment) top
         (gtk-alignment-bottom-padding alignment) bottom

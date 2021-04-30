@@ -902,7 +902,7 @@
       (let ((event (gtk-current-event)))
         (when (eq :button-press (gdk-event-type event))
           (multiple-value-bind (x y)
-              (gdk-window-coords-to-parent (gdk-event-button-window event)
+              (gdk-window-coords-to-parent (gdk-event-window event)
                                            (gdk-event-button-x event)
                                            (gdk-event-button-y event))
             (let ((rect (gtk-widget-allocation calendar)))
