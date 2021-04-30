@@ -2,11 +2,11 @@
 ;;; gio.emblem.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2014 Dieter Kaiser
+;;; Copyright (C) 2014 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,15 +30,29 @@
 ;;;
 ;;;     An object for emblems
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GEmblem
 ;;;     GEmblemOrigin
+;;;
+;;; Functions
 ;;;
 ;;;     g_emblem_new
 ;;;     g_emblem_new_with_origin
 ;;;     g_emblem_get_icon
 ;;;     g_emblem_get_origin
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GEnum
+;;;     ╰── GEmblemOrigin
+;;;
+;;;     GObject
+;;;     ╰── GEmblem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GEmblem implements GIcon.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -56,12 +70,13 @@
   :tag)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-emblem-origin atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'g-emblem-origin atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'g-emblem-origin atdoc:*external-symbols*)
- "@version{2014-9-22}
+ "@version{2021-4-25}
   @begin{short}
-    @sym{g-emblem-origin} is used to add information about the origin of the
-    emblem to @class{g-emblem}.
+    The @sym{g-emblem-origin} enumeration is used to add information about the
+    origin of the emblem to a @class{g-emblem} object.
   @end{short}
   @begin{pre}
 (define-g-enum \"GEmblemOrigin\" g-emblem-origin
@@ -79,15 +94,10 @@
     @entry[:tag]{Emblem comes from a user-defined tag, e.g. set by nautilus
       (in the future).}
   @end{table}
-  Since 2.18
   @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GEmblem
-;;;
-;;; typedef struct _GEmblem GEmblem;
-;;;
-;;; An object for Emblems
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GEmblem" g-emblem
@@ -104,12 +114,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-emblem 'type)
- "@version{2014-1-5}
+ "@version{*2021-4-27}
   @begin{short}
-    @sym{g-emblem} is an implementation of @class{g-icon} that supports having
-    an emblem, which is an icon with additional properties.
+    The @sym{g-emblem} class is an implementation of the @class{g-icon} class
+    that supports having an emblem, which is an icon with additional properties.
   @end{short}
-  It can than be added to a @class{g-emblemed-icon}.
+  It can than be added to a @class{g-emblemed-icon} object.
 
   Currently, only metainformation about the emblem's origin is supported. More
   may be added in the future.
@@ -122,7 +132,7 @@
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-emblem-icon --------------------------------------------------------
+;;; --- g-emblem-icon ----------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon" 'g-emblem) 't)
@@ -134,19 +144,18 @@
 (setf (gethash 'g-emblem-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-emblem-icon 'function)
- "@version{2014-9-22}
-  @argument[object]{a @class{g-emblem} from which the icon should be extracted}
+ "@version{*2021-4-27}
+  @argument[object]{a @class{g-emblem} object from which the icon should be
+    extracted}
   @begin{short}
     Accessor of the @slot[g-emblem]{icon} slot of the @class{g-emblem} class.
   @end{short}
 
-  The @sym{g-emblem-icon} slot access function gives back the icon from the
+  The slot access function @sym{g-emblem-icon} gives back the icon from the
   emblem.
-
-  Since 2.18
   @see-class{g-emblem}")
 
-;;; --- gtk-emblem-origin ------------------------------------------------------
+;;; --- g-emblem-origin --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "origin" 'g-emblem) 't)
@@ -159,50 +168,51 @@
 (setf (gethash 'g-emblem-origin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-emblem-origin 'function)
- "@version{2014-9-22}
-  @argument[object]{a @class{g-emblem}}
+ "@version{2021-4-25}
+  @argument[object]{a @class{g-emblem} object}
   @begin{short}
     Accessor of the @slot[g-emblem]{origin} slot of the @class{g-emblem} class.
   @end{short}
 
-  The @sym{g-emblem-origin} slot access function gets the origin of the emblem.
-
-  Since 2.18
+  The slot access function @sym{g-emblem-origin} gets the origin of the emblem.
   @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblem_new ()
-;;;
-;;; GEmblem * g_emblem_new (GIcon *icon);
-;;;
-;;; Creates a new emblem for icon.
-;;;
-;;; icon :
-;;;     a GIcon containing the icon.
-;;;
-;;; Returns :
-;;;     a new GEmblem.
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_emblem_new" g-emblem-new) (g-object g-emblem)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-25}
+  @argument[icon]{a @class{g-icon} object containing the icon}
+  @return{A new @class{g-emblem} object.}
+  @begin{short}
+    Creates a new emblem for icon.
+  @end{short}
+  @see-class{g-emblem}"
+  (icon (g-object g-icon)))
+
+(export 'g-emblem-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblem_new_with_origin ()
-;;;
-;;; GEmblem * g_emblem_new_with_origin (GIcon *icon, GEmblemOrigin origin);
-;;;
-;;; Creates a new emblem for icon.
-;;;
-;;; icon :
-;;;     a GIcon containing the icon.
-;;;
-;;; origin :
-;;;     a GEmblemOrigin enum defining the emblem's origin
-;;;
-;;; Returns :
-;;;     a new GEmblem.
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_emblem_new_with_origin" g-emblem-new-with-origin)
+    (g-object g-emblem)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-25}
+  @argument[icon]{a @class{g-icon} object containing the icon}
+  @argument[origin]{a @symbol{g-emblem-origin} value defining the emblem's
+    origin}
+  @return{A new @class{g-emblem} object.}
+  @begin{short}
+    Creates a new emblem for icon.
+  @end{short}
+  @see-class{g-emblem}"
+  (icon (g-object g-icon))
+  (origin g-emblem-origin))
+
+(export 'g-emblem-new-with-origin)
 
 ;;; --- End of file gio.emblem.lisp --------------------------------------------

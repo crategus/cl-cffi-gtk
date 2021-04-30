@@ -82,7 +82,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-themed-icon 'type)
- "@version{2021-4-15}
+ "@version{*2021-4-27}
   @begin{short}
     The @sym{g-themed-icon} class is an implementation of the @class{g-icon}
     interface that supports icon themes.

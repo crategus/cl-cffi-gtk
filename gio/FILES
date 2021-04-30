@@ -31,8 +31,8 @@ Icons
   not implemented              - GLoadableIcon
 
   gio.themed-icon.lisp         - GThemedIcon                       - GIO 2.68
-  gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.40&
-  gio.emblem.lisp              - An object for emblems             - GIO 2.40&
+  gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.68
+  gio.emblem.lisp              - An object for emblems             - GIO 2.68
 
 Resources
 

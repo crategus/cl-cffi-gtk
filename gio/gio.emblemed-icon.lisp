@@ -2,11 +2,11 @@
 ;;; gio.emblemed-icon.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2014 Dieter Kaiser
+;;; Copyright (C) 2014 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,17 +28,27 @@
 ;;;
 ;;; GEmblemedIcon
 ;;;
-;;; Icon with emblems
+;;;     Icon with emblems
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GEmblemedIcon
+;;;
+;;; Functions
 ;;;
 ;;;     g_emblemed_icon_new
 ;;;     g_emblemed_icon_get_icon
 ;;;     g_emblemed_icon_get_emblems
 ;;;     g_emblemed_icon_add_emblem
 ;;;     g_emblemed_icon_clear_emblems
+;;;
+;;; Properties
+;;;
+;;;     GIcon*   gicon    Read / Write / Construct Only
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GEmblemedIcon implements GIcon.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -58,16 +68,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-emblemed-icon 'type)
- "@version{2014-1-5}
+ "@version{*2021-4-27}
   @begin{short}
-    @sym{g-emblemed-icon} is an implementation of @class{g-icon} that supports
-    adding an emblem to an icon. Adding multiple emblems to an icon is ensured
-    via the function @fun{g-emblemed-icon-add-emblem}.
+    The @sym{g-emblemed-icon} class is an implementation of the @class{g-icon}
+    interface that supports adding an emblem to an icon.
   @end{short}
+  Adding multiple emblems to an icon is ensured via the function
+  @fun{g-emblemed-icon-add-emblem}.
 
-  Note that @sym{g-emblemed-icon} allows no control over the position of the
-  emblems. See also @class{g-emblem} for more information.
+  Note that the @sym{g-emblemed-icon} class allows no control over the position
+  of the emblems. See also the @class{g-emblem} class for more information.
   @see-slot{g-emblemed-icon-gicon}
+  @see-class{g-icon}
   @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
@@ -78,72 +90,78 @@
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'g-emblemed-icon) 't)
  "The @code{gicon} property of type @class{g-icon}
   (Read / Write / Construct Only) @br{}
-  The @class{g-icon} to attach emblems to.")
+  The icon to attach emblems to.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-emblemed-icon-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-emblemed-icon-gicon 'function)
- "@version{2014-9-22}
-  Accessor of the @slot[g-emblemed-icon]{gicon} slot of the
-  @class{g-emblemed-icon} class.
+ "@version{2021-4-25}
+  @syntax[]{(g-emblemed-icon-gicon object) => gicon}
+  @syntax[]{(setf (g-emblemend-icon-gicon object) gicon)}
+  @argument[object]{a @class{g-emblemed-icon} object}
+  @argument[gicon]{a @class{g-icon} object to attach emblems to}
+  @begin{short}
+    Accessor of the @slot[g-emblemed-icon]{gicon} slot of the
+    @class{g-emblemed-icon} class.
+  @end{short}
   @see-class{g-emblemed-icon}
-  @see-function{g-emblemed-icon-get-icon}")
+  @see-function{g-emblemed-icon-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_new ()
-;;;
-;;; GIcon * g_emblemed_icon_new (GIcon *icon, GEmblem *emblem);
-;;;
-;;; Creates a new emblemed icon for icon with the emblem emblem.
-;;;
-;;; icon :
-;;;     a GIcon
-;;;
-;;; emblem :
-;;;     a GEmblem, or NULL
-;;;
-;;; Returns :
-;;;     a new GIcon
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_emblemed_icon_get_icon ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline g-emblemed-icon-get-icon))
-
-(defun g-emblemed-icon-get-icon (emblemed)
+(defcfun ("g_emblemed_icon_new" g-emblemed-icon-new) (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-2}
-  @argument[emblemed]{a @class{g-emblemed-icon}}
-  @return{A @class{g-icon} that is owned by @arg{emblemed}.}
-  @short{Gets the main icon for @arg{emblemed}.}
+ "@version{2021-4-25}
+  @argument[icon]{a @class{g-icon} object}
+  @argument[emblem]{a @class{g-emblem} object, or @code{nil}}
+  @begin{short}
+    Creates a new emblemed icon for @arg{icon} with the emblem @arg{emblem}.
+  @end{short}
+  @see-class{g-emblemed-icon}"
+  (icon (g-object g-icon))
+  (emblem (g-object g-emblem)))
 
-  Since 2.18
+(export 'g-emblemed-icon-new)
+
+;;; ----------------------------------------------------------------------------
+;;; g_emblemed_icon_get_icon () -> g-emblemed-icon-icon
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline g-emblemed-icon-icon))
+
+(defun g-emblemed-icon.icon (emblemed)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-25}
+  @argument[emblemed]{a @class{g-emblemed-icon} object}
+  @return{A @class{g-icon} object that is owned by @arg{emblemed}.}
+  @short{Gets the main icon for @arg{emblemed}.}
   @see-class{g-emblemed-icon}
   @see-class{g-icon}"
   (g-emblemed-icon-gicon emblemed))
 
-(export 'g-emblemed-icon-get-icon)
+(export 'g-emblemed-icon-icon)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_emblemed_icon_get_emblems ()
-;;;
-;;; GList * g_emblemed_icon_get_emblems (GEmblemedIcon *emblemed);
-;;;
-;;; Gets the list of emblems for the icon.
-;;;
-;;; emblemed :
-;;;     a GEmblemedIcon
-;;;
-;;; Returns :
-;;;     a GList of GEmblem's that is owned by emblemed.
-;;;
-;;; Since 2.18
+;;; g_emblemed_icon_get_emblems () -> g-emblemed-icon-emblems
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_emblemed_icon_get_emblems" g-emblemed-icon-emblems)
+    (g-list (g-object g-emblem) :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-25}
+  @argument[emblemed]{a @class{g-emblemed-icon} object}
+  @return{A list of @class{g-emblem} objects that is owned by @arg{emblemed}.}
+  @begin{short}
+    Gets the list of emblems for the icon.
+  @end{short}
+  @see-class{g-emblemed-icon}
+  @see-class{g-emblem}"
+  (emblemed (g-object g-emblemed-icon)))
+
+(export 'g-emblemed-icon-emblems)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_add_emblem ()
@@ -151,12 +169,10 @@
 
 (defcfun ("g_emblemed_icon_add_emblem" g-emblemed-icon-add-emblem) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-2-2}
-  @argument[emblemed]{a @class{g-emblemed-icon}}
-  @argument[emblem]{a @class{g-emblem}}
-  @short{Adds @arg{emblem} to the list of @class{g-emblem}'s.}
-
-  Since 2.18
+ "@version{*2021-4-27}
+  @argument[emblemed]{a @class{g-emblemed-icon} object}
+  @argument[emblem]{a @class{g-emblem} object}
+  @short{Adds @arg{emblem} to the list of @class{g-emblem} objects.}
   @see-class{g-emblemed-icon}
   @see-class{g-embleme}"
   (emblemed (g-object g-emblemed-icon))
@@ -166,15 +182,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_clear_emblems ()
-;;;
-;;; void g_emblemed_icon_clear_emblems (GEmblemedIcon *emblemed);
-;;;
-;;; Removes all the emblems from icon.
-;;;
-;;; emblemed :
-;;;     a GEmblemedIcon
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_emblemed_icon_clear_emblems" g-emblemed-icon-clear-emblems) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-4-25}
+  @argument[emblemed]{a @class{g-emblemed-icon} object}
+  @begin{short}
+    Removes all the emblems from icon.
+  @end{short}
+  @see-class{g-emblemed-icon}"
+  (emblemed (g-object g-emblemed-icon)))
+
+(export 'g-emblemed-icon-clear-emblems)
 
 ;;; --- End of file gio.emblemed-icon.lisp -------------------------------------

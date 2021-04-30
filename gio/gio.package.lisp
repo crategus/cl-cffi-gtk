@@ -292,18 +292,18 @@
     @begin[GEmblemedIcon]{subsection}
       An implementation of GIcon for icons with emblems.
 
-      @about-class{g-emblemed-icon}gboolean	g_content_type_is_mime_type ()
+      @about-class{g-emblemed-icon}
       @about-function{g-emblemed-icon-new}
-      @about-function{g-emblemed-icon-get-icon}
-      @about-function{g-emblemed-icon-get-emblems}
+      @about-function{g-emblemed-icon-icon}
+      @about-function{g-emblemed-icon-emblems}
       @about-function{g-emblemed-icon-add-emblem}
       @about-function{g-emblemed-icon-clear-emblems}
     @end{subsection}
     @begin[GEmblem]{subsection}
       An object for emblems.
 
-      @about-class{g-emblem}
       @about-symbol{g-emblem-origin}
+      @about-class{g-emblem}
       @about-generic{g-emblem-icon}
       @about-generic{g-emblem-origin}
       @about-function{g-emblem-new}
