@@ -1804,9 +1804,9 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 
 (defun g-timeout-add (interval func &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-10}
+ "@version{*2021-4-10}
   @argument[interval]{an integer with the time between calls to the function,
-    in milliseconds (1/1000ths of asecond)}
+    in milliseconds}
   @argument[function]{a @symbol{g-source-func} callback function to call}
   @argument[priority]{an integer with the priority of the timeout source.
     Typically this will be in the range between @var{+g-priority-default+} and
@@ -3063,7 +3063,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 
 (defcfun ("g_source_remove" g-source-remove) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-4-13}
+ "@version{*2021-4-13}
   @argument[source-id]{the unsigned integer ID of the source to remove}
   @return{@em{True} if the source was found and removed.}
   @begin{short}
