@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.list-store.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -89,7 +89,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-store 'type)
- "@version{2021-3-3}
+ "@version{*2021-4-21}
   @begin{short}
     The @sym{gtk-list-store} object is a list model for use with a
     @class{gtk-tree-view} widget.
@@ -111,13 +111,13 @@
 
   @subheading{Performance Considerations}
     Internally, the @sym{gtk-list-store} object was implemented with a linked
-    list with a tail pointer prior to GTK+ 2.6. As a result, it was fast at
+    list with a tail pointer prior to GTK 2.6. As a result, it was fast at
     data insertion and deletion, and not fast at random data access. The
     @sym{gtk-list-store} object sets the @code{:iters-persist} flag of the
     @symbol{gtk-tree-model-flags} flags, which means that @class{gtk-tree-iter}
     iterators can be cached while the row exists. Thus, if access to a
     particular row is needed often and your code is expected to run on older
-    versions of GTK+, it is worth keeping the iterator around.
+    versions of GTK, it is worth keeping the iterator around.
 
   @subheading{Atomic Operations}
     It is important to note that only the method
@@ -168,7 +168,7 @@
     The @sym{gtk-list-store} implementation of the @class{gtk-buildable}
     interface allows to specify the model columns with a @code{<columns>}
     element that may contain multiple @code{<column>} elements, each specifying
-    one model column. The \"type\" attribute specifies the data type for the
+    one model column. The @code{type} attribute specifies the data type for the
     column.
 
     Additionally, it is possible to specify content for the list store in the
@@ -221,26 +221,14 @@
 ;;; gtk_list_store_new ()
 ;;; ----------------------------------------------------------------------------
 
-;; See also the function gtk-list-store-set-column-types
-;; which duplicates this code. Consider to rewrite both functions.
-
-(defun call-list-store-set-column-types (store column-types)
-  (let ((n (length column-types)))
-    (with-foreign-object (types-ar 'g-type n)
-      (iter (for i from 0 below n)
-            (for gtype in column-types)
-            (setf (mem-aref types-ar 'g-type i) gtype))
-      (%gtk-list-store-set-column-types store n types-ar))))
-
-(defmethod initialize-instance :after ((list-store gtk-list-store)
-                                       &rest initargs
-                                       &key (column-types
-                                             nil
-                                             column-types-p)
-                                       &allow-other-keys)
+(defmethod initialize-instance :after
+    ((store gtk-list-store)
+     &rest initargs
+     &key (column-types nil column-types-p)
+     &allow-other-keys)
   (declare (ignore initargs))
   (when column-types-p
-    (call-list-store-set-column-types list-store column-types)))
+    (apply #'gtk-list-store-set-column-types store column-types)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -248,7 +236,7 @@
 
 (defun gtk-list-store-new (&rest column-types)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-3}
+ "@version{*2021-4-21}
   @argument[column-types]{all @class{g-type} types for the columns, from first
     to last}
   @return{A new @class{gtk-list-store} object.}
@@ -258,8 +246,8 @@
   Note that only types derived from standard GType fundamental types are
   supported.
   @begin[Example]{dictionary}
-    The following example creates a new @sym{gtk-list-store} object with three
-    columnes, of type \"gint\", \"gchararray\" and \"GdkPixbuf\".
+    The following example creates a new @class{gtk-list-store} object with
+    three columnes, of type \"gint\", \"gchararray\" and \"GdkPixbuf\".
     @begin{pre}
 (gtk-list-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")
     @end{pre}
@@ -307,9 +295,9 @@
 
 (defun gtk-list-store-set-column-types (store &rest column-types)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-11}
+ "@version{2021-4-21}
   @argument[store]{a @class{gtk-list-store} object}
-  @argument[column-types]{the @class{g-type}s of the columns}
+  @argument[column-types]{the @class{g-type} types of the columns}
   @begin{short}
     This function is meant primarily for GObjects that inherit from the
     @class{gtk-list-store} class, and should only be used when constructing a
@@ -317,14 +305,28 @@
   @end{short}
   It will not function after a row has been added, or a method on a
   @class{gtk-tree-model} object is called.
+  @begin[Example]{dictionary}
+    Create a list store and set the column types:
+    @begin{pre}
+(let ((store (gtk-list-store-new)))
+  (gtk-list-store-set-column-types store \"gint\" \"gchararray\" \"GdkPixbuf\")
+  ... )
+    @end{pre}
+    This is equivalent to:
+    @begin{pre}
+(let ((store (gtk-list-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")))
+   ... )
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-list-store}
   @see-class{g-type}
-  @see-class{gtk-tree-model}"
+  @see-class{gtk-tree-model}
+  @see-function{gtk-list-store-new}"
   (let ((n (length column-types)))
     (with-foreign-object (types-ar 'g-type n)
-      (iter (for i from 0 below n)
-            (for gtype in column-types)
-            (setf (mem-aref types-ar 'g-type i) gtype))
+      (loop for i from 0 below n
+            for gtype in column-types
+         do (setf (mem-aref types-ar 'g-type i) gtype))
       (%gtk-list-store-set-column-types store n types-ar))))
 
 (export 'gtk-list-store-set-column-types)
@@ -338,7 +340,7 @@
 
 (defun gtk-list-store-set (store iter &rest values)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-3}
+ "@version{2021-4-21}
   @argument[store]{a @class{gtk-list-store} object}
   @argument[iter]{a @class{gtk-tree-iter} row iterator}
   @argument[values]{the values to set}
@@ -359,9 +361,9 @@
   @end{dictionary}
   @begin[Note]{dictionary}
     The Lisp implemenation does not support pairs of a column index and a
-    value, but a list of values. Therefore, it is not possible to set individual
-    columns. See the function @fun{gtk-list-store-set-value} for setting the
-    value of single columns.
+    value, but a list of values. Therefore, it is not possible to set the values
+    of individual columns. See the function @fun{gtk-list-store-set-value} for
+    setting the value of single columns.
   @end{dictionary}
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}
@@ -369,17 +371,17 @@
   (let ((n (length values)))
     (with-foreign-objects ((value-ar '(:struct g-value) n)
                            (columns-ar :int n))
-      (iter (for i from 0 below n)
-            (for value in values)
-            (for gtype = (gtk-tree-model-column-type store i))
-            (setf (mem-aref columns-ar :int i) i)
+      (loop for i from 0 below n
+            for value in values
+            for gtype = (gtk-tree-model-column-type store i)
+         do (setf (mem-aref columns-ar :int i) i)
             (set-g-value (mem-aptr value-ar '(:struct g-value) i)
                          value
                          gtype
                          :zero-g-value t))
       (%gtk-list-store-set-valuesv store iter columns-ar value-ar n)
-      (iter (for i from 0 below n)
-            (g-value-unset (mem-aptr value-ar '(:struct g-value) i)))
+      (loop for i from 0 below n
+         do (g-value-unset (mem-aptr value-ar '(:struct g-value) i)))
       iter)))
 
 (export 'gtk-list-store-set)
@@ -749,7 +751,7 @@
 
 (defun gtk-list-store-append (store)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-3}
+ "@version{*2021-4-21}
   @argument[store]{a @class{gtk-list-store} object}
   @return{A @class{gtk-tree-iter} iterator to the appended row.}
   @begin{short}
