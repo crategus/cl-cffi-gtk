@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 - 2019 Dieter Kaiser
+;;; Copyright (C) 2016 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -57,9 +57,9 @@
 ;;;
 ;;; Properties
 ;;;
-;;;       GdkDisplay* display           Read / Write / Construct Only
-;;;     GdkGLContext* shared-context    Read / Write / Construct Only
-;;;        GdkWindow* window            Read / Write / Construct Only
+;;;       GdkDisplay*   display           Read / Write / Construct Only
+;;;     GdkGLContext*   shared-context    Read / Write / Construct Only
+;;;        GdkWindow*   window            Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -68,6 +68,25 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkGLError
+;;;
+;;; Error enumeration for GdkGLContext.
+;;;
+;;; Members
+;;;
+;;; GDK_GL_ERROR_NOT_AVAILABLE
+;;;     OpenGL support is not available
+;;;
+;;; GDK_GL_ERROR_UNSUPPORTED_FORMAT
+;;;     The requested visual format is not supported
+;;;
+;;; GDK_GL_ERROR_UNSUPPORTED_PROFILE
+;;;     The requested profile is not supported
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkGLContext
@@ -90,61 +109,63 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-gl-context 'type)
- "@version{2016-1-3}
+ "@version{2021-4-28}
   @begin{short}
-    @sym{gdk-gl-context} is an object representing the platform-specific OpenGL
+    The @sym{gdk-gl-context} is representing the platform-specific OpenGL
     drawing context.
   @end{short}
 
-  @sym{gdk-gl-context} objects are created for a @class{gdk-window} using the
-  function @fun{gdk-window-create-gl-context}, and the context will match the
-  @class{gdk-visual} of the window.
+  The @sym{gdk-gl-context} object is created for a @class{gdk-window} object
+  using the function @fun{gdk-window-create-gl-context}, and the context will
+  match the @class{gdk-visual} object of the window.
 
-  A @sym{gdk-gl-context} is not tied to any particular normal framebuffer. For
-  instance, it cannot draw to the @class{gdk-window} back buffer. The GDK
-  repaint system is in full control of the painting to that. Instead, you can
-  create render buffers or textures and use @fun{gdk-cairo-draw-from-gl} in the
-  draw function of your widget to draw them. Then GDK will handle the
-  integration of your rendering with that of other widgets.
+  A @sym{gdk-gl-context} object is not tied to any particular normal
+  framebuffer. For instance, it cannot draw to the @class{gdk-window} back
+  buffer. The GDK repaint system is in full control of the painting to that.
+  Instead, you can create render buffers or textures and use the function
+  @fun{gdk-cairo-draw-from-gl} in the draw function of your widget to draw them.
+  Then GDK will handle the integration of your rendering with that of other
+  widgets.
 
-  Support for @sym{gdk-gl-context} is platform-specific, context creation can
-  fail, returning @code{nil} context.
+  Support for the @sym{gdk-gl-context} object is platform-specific, context
+  creation can fail, returning a @code{NULL} context.
 
-  A @sym{gdk-gl-context} has to be made \"current\" in order to start using it,
-  otherwise any OpenGL call will be ignored.
+  A @sym{gdk-gl-context} object has to be made \"current\" in order to start
+  using it, otherwise any OpenGL call will be ignored.
 
   @subheading{Creating a new OpenGL context}
-    In order to create a new @sym{gdk-gl-context} instance you need a
-    @class{gdk-window}, which you typically get during the realize call of a
-    widget.
+  In order to create a new @sym{gdk-gl-context} instance you need a
+  @class{gdk-window} object, which you typically get during the realize call
+  of a widget.
 
-    A @sym{gdk-gl-context} is not realized until either
-    @fun{gdk-gl-context-make-current}, or until it is realized using
-    @fun{gdk-gl-context-realize}. It is possible to specify details of the GL
-    context like the OpenGL version to be used, or whether the GL context should
-    have extra state validation enabled after calling
-    @fun{gdk-window-create-gl-context} by calling @fun{gdk-gl-context-realize}.
-    If the realization fails you have the option to change the settings of the
-    @sym{gdk-gl-context} and try again.
+  A @sym{gdk-gl-context} object is not realized until either the function
+  @fun{gdk-gl-context-make-current}, or until it is realized using the function
+  @fun{gdk-gl-context-realize}. It is possible to specify details of the GL
+  context like the OpenGL version to be used, or whether the GL context should
+  have extra state validation enabled after calling the function
+  @fun{gdk-window-create-gl-context} by calling the function
+  @fun{gdk-gl-context-realize}. If the realization fails you have the option to
+  change the settings of the @sym{gdk-gl-context} object and try again.
 
-  @subheading{Using a @sym{gdk-gl-context}}
-    You will need to make the GdkGLContext the current context before issuing
-    OpenGL calls; the system sends OpenGL commands to whichever context is
-    current. It is possible to have multiple contexts, so you always need to
-    ensure that the one which you want to draw with is the current one before
-    issuing commands:
+  @subheading{Using a OpenGl context}
+  You will need to make the @sym{gdk-gl-context} object the current context
+  before issuing OpenGL calls. The system sends OpenGL commands to whichever
+  context is current. It is possible to have multiple contexts, so you always
+  need to ensure that the one which you want to draw with is the current one
+  before issuing commands:
     @begin{pre}
- gdk_gl_context_make_current (context);
+gdk_gl_context_make_current (context);
     @end{pre}
     You can now perform your drawing using OpenGL commands.
 
-    You can check which @sym{gdk-gl-context} is the current one by using
-    @fun{gdk-gl-context-get-current}; you can also unset any
-    @sym{gdk-gl-context} that is currently set by calling
+    You can check which @sym{gdk-gl-context} object is the current one by using
+    the function @fun{gdk-gl-context-get-current}. You can also unset any
+    @sym{gdk-gl-context} object that is currently set by calling the function
     @fun{gdk-gl-context-clear-current}.
   @see-slot{gdk-gl-context-display}
   @see-slot{gdk-gl-context-shared-context}
-  @see-slot{gdk-gl-context-window}")
+  @see-slot{gdk-gl-context-window}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -158,23 +179,25 @@
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-gl-context) 't)
  "The @code{display} property of type @class{gdk-display}
   (Read / Write / Construct) @br{}
-  The @class{gdk-display} used to create the @sym{gdk-gl-context}.")
+  The display used to create the OpenGL drawing context.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-display 'function)
- "@version{2016-1-3}
-  @argument[object]{a @class{gdk-gl-context} object}
+ "@version{2021-4-28}
   @syntax[]{(gdk-gl-context-display object) => display}
+  @argument[object]{a @class{gdk-gl-context} object}
+  @argument[display]{a @class{gdk-display} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-gl-context]{display} of the
+    Accessor of the @slot[gdk-gl-context]{display} slot of the
     @class{gdk-gl-context} class.
   @end{short}
 
-  The generic function @sym{gdk-gl-context-display} retrieves the
-  @class{gdk-display} the context is created for.
-  @see-class{gdk-gl-context}")
+  The slot acess function @sym{gdk-gl-context-display} retrieves the display
+  the OpenGL drawing context is created for.
+  @see-class{gdk-gl-context}
+  @see-class{gdk-display}")
 
 ;;; --- gdk-gl-context-shared-context ------------------------------------------
 
@@ -183,67 +206,51 @@
                                                'gdk-gl-context) 't)
  "The @code{shared-context} property of type @sym{gdk-gl-context}
   (Read / Write / Construct) @br{}
-  The @sym{gdk-gl-context} that this context is sharing data with,
-  or @code{nil}.")
+  The OpenGL drawing context that this context is sharing data with, or
+  @code{nil}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-shared-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-shared-context 'function)
- "@version{2016-1-3}
-  @argument[object]{a @class{gdk-gl-context} object}
+ "@version{2021-4-28}
   @syntax[]{(gdk-gl-context-shared-context object) => shared-context}
+  @argument[object]{a @class{gdk-gl-context} object}
+  @argument[shared-context]{a @class{gdk-gl-context} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-gl-context]{shared-context} of the
+    Accessor of the @slot[gdk-gl-context]{shared-context} slot of the
     @class{gdk-gl-context} class.
   @end{short}
 
-  The generic function @sym{gdk-gl-context-shared-context} retrieves the
-  @class{gdk-gl-context} that this context share data with.
+  The slot access function @sym{gdk-gl-context-shared-context} retrieves the
+  OpenGL drawing context that this context share data with.
   @see-class{gdk-gl-context}")
 
 ;;; --- gdk-gl-context-window --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gdk-gl-context) 't)
- "The @code{window} property of type GdkWindow @class{gdk-window}
+ "The @code{window} property of type @class{gdk-window}
   (Read / Write / Construct) @br{}
-  The @class{gdk-window} the gl context is bound to.")
+  The window the OpenGL drawing context is bound to.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-window 'function)
- "@version{2016-1-3}
-  @argument[object]{a @class{gdk-gl-context} object}
+ "@version{2021-4-28}
   @syntax[]{(gdk-gl-context-window object) => window}
+  @argument[object]{a @class{gdk-gl-context} object}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-gl-context]{window} of the
+    Accessor of the @slot[gdk-gl-context]{window} slot of the
     @class{gdk-gl-context} class.
   @end{short}
 
-  The generic function @sym{gdk-gl-context-window} retrieves the
-  @class{gdk-window} used by the context.
-  @see-class{gdk-gl-context}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GdkGLError
-;;;
-;;; Error enumeration for GdkGLContext.
-;;;
-;;; Members
-;;;
-;;; GDK_GL_ERROR_NOT_AVAILABLE
-;;;     OpenGL support is not available
-;;;
-;;; GDK_GL_ERROR_UNSUPPORTED_FORMAT
-;;;     The requested visual format is not supported
-;;;
-;;; GDK_GL_ERROR_UNSUPPORTED_PROFILE
-;;;     The requested profile is not supported
-;;;
-;;; Since 3.16
-;;; ----------------------------------------------------------------------------
+  The slot access function @sym{gdk-gl-context-window} retrieves the window
+  used by the OpenGL drawing context.
+  @see-class{gdk-gl-context}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gl_context_get_version ()

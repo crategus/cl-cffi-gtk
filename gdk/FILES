@@ -24,7 +24,7 @@ List of files for the GDK Library
 
   gdk.frame-clock.lisp      - Frame clock            - GDK 3.24
   gdk.frame-timings.lisp    - Frame timings          - GDK 3.24
-* gdk.drawing-context.lisp  - GdkDrawingContext      - Gdk 3.24
+  gdk.drawing-context.lisp  - GdkDrawingContext      - Gdk 3.24
 
   gdk.gl-context.lisp       - OpenGL context         - GDK 3.24 &
   gdk.events.lisp           - Events                 - GDK 3.24 &

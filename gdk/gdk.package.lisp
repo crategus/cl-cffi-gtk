@@ -546,11 +546,11 @@
     @about-function{gdk-drawing-context-is-valid}
   @end{section}
   @begin[OpenGL context]{section}
-    @sym{gdk-gl-context} is an object representing the platform-specific OpenGL
-    drawing context.
+    The @class{gdk-gl-context} object is representing the platform-specific
+    OpenGL drawing context.
 
-    @about-class{gdk-gl-context}
     @about-symbol{gdk-gl-error}
+    @about-class{gdk-gl-context}
     @about-generic{gdk-gl-context-display}
     @about-generic{gdk-gl-context-shared-context}
     @about-generic{gdk-gl-context-window}
