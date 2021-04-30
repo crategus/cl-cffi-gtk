@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.widget.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -66,8 +66,8 @@
 ;;;     gtk_widget_scale_factor
 ;;;     gtk_widget_add_tick_callback
 ;;;     gtk_widget_remove_tick_callback
-;;;     gtk_widget_size_request                            * deprecated *
-;;;     gtk_widget_get_child_requisition                   * deprecated *
+;;;     gtk_widget_size_request                            deprecated
+;;;     gtk_widget_get_child_requisition                   deprecated
 ;;;     gtk_widget_size_allocate
 ;;;     gtk_widget_size_allocate_with_baseline
 ;;;     gtk_widget_add_accelerator
@@ -77,20 +77,20 @@
 ;;;     gtk_widget_can_activate_accel
 ;;;     gtk_widget_event
 ;;;     gtk_widget_activate
-;;;     gtk_widget_reparent                                * deprecated *
+;;;     gtk_widget_reparent                                deprecated
 ;;;     gtk_widget_intersect
-;;;     gtk_widget_is_focus
+;;;     gtk_widget_is_focus                                Accessor
 ;;;     gtk_widget_grab_focus
 ;;;     gtk_widget_grab_default
 ;;;     gtk_widget_set_name
 ;;;     gtk_widget_get_name
-;;;     gtk_widget_set_state                               * deprecated *
-;;;     gtk_widget_set_sensitive
+;;;     gtk_widget_set_state                               deprecated
+;;;     gtk_widget_set_sensitive                           Accessor
 ;;;     gtk_widget_set_parent
 ;;;     gtk_widget_set_parent_window
 ;;;     gtk_widget_get_parent_window
-;;;     gtk_widget_set_events                              -> Accessor
-;;;     gtk_widget_get_events                              -> Accessor
+;;;     gtk_widget_set_events                              Accessor
+;;;     gtk_widget_get_events                              Accessor
 ;;;     gtk_widget_add_events
 ;;;     gtk_widget_set_device_events
 ;;;     gtk_widget_get_device_events
@@ -101,62 +101,62 @@
 ;;;     gtk_widget_get_ancestor
 ;;;     gtk_widget_get_visual
 ;;;     gtk_widget_set_visual
-;;;     gtk_widget_get_pointer                             * deprecated *
+;;;     gtk_widget_get_pointer                             deprecated
 ;;;     gtk_widget_is_ancestor
 ;;;     gtk_widget_translate_coordinates
 ;;;     gtk_widget_hide_on_delete
-;;;     gtk_widget_set_style                               * deprecated *
-;;;     gtk_widget_ensure_style                            * deprecated *
-;;;     gtk_widget_get_style                               * deprecated *
-;;;     gtk_widget_reset_rc_styles                         * deprecated *
-;;;     gtk_widget_get_default_style                       * deprecated *
+;;;     gtk_widget_set_style                               deprecated
+;;;     gtk_widget_ensure_style                            deprecated
+;;;     gtk_widget_get_style                               deprecated
+;;;     gtk_widget_reset_rc_styles                         deprecated
+;;;     gtk_widget_get_default_style                       deprecated
 ;;;     gtk_widget_set_direction
 ;;;     gtk_widget_get_direction
 ;;;     gtk_widget_set_default_direction
 ;;;     gtk_widget_get_default_direction
 ;;;     gtk_widget_shape_combine_region
 ;;;     gtk_widget_input_shape_combine_region
-;;;     gtk_widget_path                                    * deprecated *
-;;;     gtk_widget_class_path                              * deprecated *
-;;;     gtk_widget_get_composite_name                      * deprecated *
-;;;     gtk_widget_override_background_color               * deprecated *
-;;;     gtk_widget_override_color                          * deprecated *
-;;;     gtk_widget_override_font                           * deprecated *
-;;;     gtk_widget_override_symbolic_color                 * deprecated *
-;;;     gtk_widget_override_cursor                         * deprecated *
-;;;     gtk_widget_modify_style                            * deprecated *
-;;;     gtk_widget_get_modifier_style                      * deprecated *
-;;;     gtk_widget_modify_fg                               * deprecated *
-;;;     gtk_widget_modify_bg                               * deprecated *
-;;;     gtk_widget_modify_text                             * deprecated *
-;;;     gtk_widget_modify_base                             * deprecated *
-;;;     gtk_widget_modify_font                             * deprecated *
-;;;     gtk_widget_modify_cursor                           * deprecated *
+;;;     gtk_widget_path                                    deprecated
+;;;     gtk_widget_class_path                              deprecated
+;;;     gtk_widget_get_composite_name                      deprecated
+;;;     gtk_widget_override_background_color               deprecated
+;;;     gtk_widget_override_color                          deprecated
+;;;     gtk_widget_override_font                           deprecated
+;;;     gtk_widget_override_symbolic_color                 deprecated
+;;;     gtk_widget_override_cursor                         deprecated
+;;;     gtk_widget_modify_style                            deprecated
+;;;     gtk_widget_get_modifier_style                      deprecated
+;;;     gtk_widget_modify_fg                               deprecated
+;;;     gtk_widget_modify_bg                               deprecated
+;;;     gtk_widget_modify_text                             deprecated
+;;;     gtk_widget_modify_base                             deprecated
+;;;     gtk_widget_modify_font                             deprecated
+;;;     gtk_widget_modify_cursor                           deprecated
 ;;;     gtk_widget_create_pango_context
 ;;;     gtk_widget_get_pango_context
 ;;;     gtk_widget_create_pango_layout
-;;;     gtk_widget_render_icon                             * deprecated *
-;;;     gtk_widget_render_icon_pixbuf                      * deprecated *
-;;;     gtk_widget_pop_composite_child                     * deprecated *
-;;;     gtk_widget_push_composite_child                    * deprecated *
+;;;     gtk_widget_render_icon                             deprecated
+;;;     gtk_widget_render_icon_pixbuf                      deprecated
+;;;     gtk_widget_pop_composite_child                     deprecated
+;;;     gtk_widget_push_composite_child                    deprecated
 ;;;     gtk_widget_queue_draw_area
 ;;;     gtk_widget_queue_draw_region
 ;;;     gtk_widget_set_app_paintable                       Accessor
-;;;     gtk_widget_set_double_buffered                     -> Accessor
+;;;     gtk_widget_set_double_buffered                     Accessor
 ;;;     gtk_widget_set_redraw_on_allocate
-;;;     gtk_widget_set_composite_name
+;;;     gtk_widget_set_composite_name                      deprecated
 ;;;     gtk_widget_mnemonic_activate
 ;;;     gtk_widget_class_install_style_property
 ;;;     gtk_widget_class_install_style_property_parser
 ;;;     gtk_widget_class_find_style_property
 ;;;     gtk_widget_class_list_style_properties
-;;;     gtk_widget_region_intersect                        * deprecated *
+;;;     gtk_widget_region_intersect                        deprecated
 ;;;     gtk_widget_send_expose
 ;;;     gtk_widget_send_focus_change
 ;;;     gtk_widget_style_get
 ;;;     gtk_widget_style_get_property
 ;;;     gtk_widget_style_get_valist
-;;;     gtk_widget_style_attach                            * deprecated *
+;;;     gtk_widget_style_attach                            deprecated
 ;;;     gtk_widget_class_set_accessible_type
 ;;;     gtk_widget_class_set_accessible_role
 ;;;     gtk_widget_get_accessible
@@ -168,7 +168,7 @@
 ;;;     gtk_widget_get_settings
 ;;;     gtk_widget_get_clipboard
 ;;;     gtk_widget_get_display
-;;;     gtk_widget_get_root_window                         * deprecated *
+;;;     gtk_widget_get_root_window                         deprecated
 ;;;     gtk_widget_get_screen
 ;;;     gtk_widget_has_screen
 ;;;     gtk_widget_get_size_request
@@ -183,16 +183,16 @@
 ;;;     gtk_widget_is_composited
 ;;;     gtk_widget_error_bell
 ;;;     gtk_widget_keynav_failed
-;;;     gtk_widget_get_tooltip_markup
-;;;     gtk_widget_set_tooltip_markup
-;;;     gtk_widget_get_tooltip_text
-;;;     gtk_widget_set_tooltip_text
+;;;     gtk_widget_get_tooltip_markup                      Accessor
+;;;     gtk_widget_set_tooltip_markup                      Accessor
+;;;     gtk_widget_get_tooltip_text                        Accessor
+;;;     gtk_widget_set_tooltip_text                        Accessor
 ;;;     gtk_widget_get_tooltip_window
 ;;;     gtk_widget_set_tooltip_window
-;;;     gtk_widget_get_has_tooltip
-;;;     gtk_widget_set_has_tooltip
+;;;     gtk_widget_get_has_tooltip                         Accessor
+;;;     gtk_widget_set_has_tooltip                         Accessor
 ;;;     gtk_widget_trigger_tooltip_query
-;;;     gtk_widget_get_window                              -> Accessor
+;;;     gtk_widget_get_window                              Accessor
 ;;;     gtk_widget_register_window
 ;;;     gtk_widget_unregister_window
 ;;;     gtk_cairo_should_draw_window
@@ -209,26 +209,26 @@
 ;;;     gtk_widget_set_can_default                         Accessor
 ;;;     gtk_widget_get_can_focus                           Accessor
 ;;;     gtk_widget_set_can_focus                           Accessor
-;;;     gtk_widget_get_double_buffered                     -> Accessor
+;;;     gtk_widget_get_double_buffered                     Accessor
 ;;;     gtk_widget_get_has_window
 ;;;     gtk_widget_set_has_window
-;;;     gtk_widget_get_sensitive
+;;;     gtk_widget_get_sensitive                           Accessor
 ;;;     gtk_widget_is_sensitive
-;;;     gtk_widget_get_state                               * deprecated *
+;;;     gtk_widget_get_state                               deprecated
 ;;;     gtk_widget_get_visible
 ;;;     gtk_widget_is_visible
 ;;;     gtk_widget_set_visible
 ;;;     gtk_widget_set_state_flags
 ;;;     gtk_widget_unset_state_flags
 ;;;     gtk_widget_get_state_flags
-;;;     gtk_widget_has_default
-;;;     gtk_widget_has_focus
+;;;     gtk_widget_has_default                             Accessor
+;;;     gtk_widget_has_focus                               Accessor
 ;;;     gtk_widget_has_visible_focus
 ;;;     gtk_widget_has_grab
-;;;     gtk_widget_has_rc_style                            * deprecated *
+;;;     gtk_widget_has_rc_style                            deprecated
 ;;;     gtk_widget_is_drawable
 ;;;     gtk_widget_is_toplevel
-;;;     gtk_widget_set_window                              -> Accessor
+;;;     gtk_widget_set_window                              Accessor
 ;;;     gtk_widget_set_receives_default
 ;;;     gtk_widget_get_receives_default
 ;;;     gtk_widget_set_support_multidevice
@@ -237,12 +237,12 @@
 ;;;     gtk_widget_get_realized
 ;;;     gtk_widget_set_mapped
 ;;;     gtk_widget_get_mapped
-;;;     gtk_widget_get_requisition                         * deprecated *
+;;;     gtk_widget_get_requisition                         deprecated
 ;;;     gtk_widget_device_is_shadowed
 ;;;     gtk_widget_get_modifier_mask
 ;;;     gtk_widget_insert_action_group
-;;;     gtk_widget_get_opacity                             -> Accessor
-;;;     gtk_widget_set_opacity                             -> Accessor
+;;;     gtk_widget_get_opacity                             Accessor
+;;;     gtk_widget_set_opacity                             Accessor
 ;;;     gtk_widget_list_action_prefixes
 ;;;     gtk_widget_get_action_group
 ;;;     gtk_widget_get_path
@@ -261,31 +261,31 @@
 ;;;     gtk_widget_get_request_mode
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
-;;;     gtk_widget_get_halign                              -> Accessor
-;;;     gtk_widget_set_halign                              -> Accessor
-;;;     gtk_widget_get_valign                              -> Accessor
+;;;     gtk_widget_get_halign                              Accessor
+;;;     gtk_widget_set_halign                              Accessor
+;;;     gtk_widget_get_valign                              Accessor
 ;;;     gtk_widget_get_valign_with_baseline
-;;;     gtk_widget_set_valign                              -> Accessor
-;;;     gtk_widget_get_margin_left                         -> Accessor
-;;;     gtk_widget_set_margin_left                         -> Accessor
-;;;     gtk_widget_get_margin_right                        -> Accessor
-;;;     gtk_widget_set_margin_right                        -> Accessor
-;;;     gtk_widget_get_margin_start                        -> Accessor
-;;;     gtk_widget_set_margin_start                        -> Accessor
-;;;     gtk_widget_get_margin_end                          -> Accessor
-;;;     gtk_widget_set_margin_end                          -> Accessor
-;;;     gtk_widget_get_margin_top                          -> Accessor
-;;;     gtk_widget_set_margin_top                          -> Accessor
-;;;     gtk_widget_get_margin_bottom                       -> Accessor
-;;;     gtk_widget_set_margin_bottom                       -> Accessor
-;;;     gtk_widget_get_hexpand                             -> Accessor
-;;;     gtk_widget_set_hexpand                             -> Accessor
-;;;     gtk_widget_get_hexpand_set                         -> Accessor
-;;;     gtk_widget_set_hexpand_set                         -> Accessor
-;;;     gtk_widget_get_vexpand                             -> Accessor
-;;;     gtk_widget_set_vexpand                             -> Accessor
-;;;     gtk_widget_get_vexpand_set                         -> Accessor
-;;;     gtk_widget_set_vexpand_set                         -> Accessor
+;;;     gtk_widget_set_valign                              Accessor
+;;;     gtk_widget_get_margin_left                         Accessor
+;;;     gtk_widget_set_margin_left                         Accessor
+;;;     gtk_widget_get_margin_right                        Accessor
+;;;     gtk_widget_set_margin_right                        Accessor
+;;;     gtk_widget_get_margin_start                        Accessor
+;;;     gtk_widget_set_margin_start                        Accessor
+;;;     gtk_widget_get_margin_end                          Accessor
+;;;     gtk_widget_set_margin_end                          Accessor
+;;;     gtk_widget_get_margin_top                          Accessor
+;;;     gtk_widget_set_margin_top                          Accessor
+;;;     gtk_widget_get_margin_bottom                       Accessor
+;;;     gtk_widget_set_margin_bottom                       Accessor
+;;;     gtk_widget_get_hexpand                             Accessor
+;;;     gtk_widget_set_hexpand                             Accessor
+;;;     gtk_widget_get_hexpand_set                         Accessor
+;;;     gtk_widget_set_hexpand_set                         Accessor
+;;;     gtk_widget_get_vexpand                             Accessor
+;;;     gtk_widget_set_vexpand                             Accessor
+;;;     gtk_widget_get_vexpand_set                         Accessor
+;;;     gtk_widget_set_vexpand_set                         Accessor
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
 ;;;     gtk_widget_init_template
@@ -307,18 +307,18 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;;; CairoContext represents a cairo-t, but we need a boxed type in GTK+.
+;;; CairoContext represents a cairo-t, but we need a boxed type in GTK.
 
 (define-g-boxed-opaque cairo-context "CairoContext"
   :alloc (error "CairoContext cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-context atdoc:*class-name-alias*)
-      "CStruct"
+      "GBoxed"
       (documentation 'cairo-context 'type)
- "@version{2021-4-5}
+ "@version{2021-4-27}
   @begin{short}
-    The @sym{cairo-context} structure represents a Cairo context in GTK+.
+    The @sym{cairo-context} structure represents a Cairo context in GTK.
   @end{short}
   See the documentation of the @symbol{cairo-t} structure for more information.
   @begin{pre}
@@ -339,9 +339,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gtk-requisition 'type)
- "@version{2021-3-2}
+ "@version{2021-4-27}
   @begin{short}
     A @sym{gtk-requisition} structure represents the desired size of a widget.
   @end{short}
@@ -370,9 +370,10 @@
 ;;; --- gtk-requisition-height -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-requisition-height 'function)
- "@version{2021-4-5}
+ "@version{2021-4-27}
   @syntax[]{(gtk-requisition-height instance) => height}
   @syntax[]{(setf (gtk-requisition-height instance) height)}
   @argument[instance]{a @class{gtk-requisition} instance}
@@ -401,7 +402,7 @@
 (setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2021-4-5}
+ "@version{2021-4-27}
   @syntax[]{(gtk-requisition-width instance) => width}
   @syntax[]{(setf (gtk-requisition-width instance) width)}
   @argument[instance]{a @class{gtk-requisition} instance}
@@ -442,9 +443,10 @@
   (:whats-this 1))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-widget-help-type atdoc:*external-symbols*)
- "@version{2020-9-16}
+ "@version{2021-4-27}
   @short{Used in the \"show-help\" signal handler.}
   @begin{pre}
 (define-g-enum \"GtkWidgetHelpType\" gtk-widget-help-type
@@ -474,9 +476,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-request-mode atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-size-request-mode atdoc:*external-symbols*)
- "@version{2021-3-19}
+ "@version{2021-4-27}
   @begin{short}
     Specifies a preference for height-for-width or width-for-height geometry
     management.
@@ -510,9 +512,10 @@
   (natural-size :int))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requested-size atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'gtk-requested-size atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'gtk-requested-size atdoc:*external-symbols*)
- "@version{2020-10-25}
+ "@version{2021-4-27}
   @begin{short}
     Represents a request of a screen object in a given orientation.
   @end{short}
@@ -548,26 +551,27 @@
   (:baseline 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-align atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2020-9-27}
+ "@version{2021-4-27}
   @begin{short}
     Controls how a widget deals with extra space in a single (x or y) dimension.
   @end{short}
 
   Alignment only matters if the widget receives a \"too large\" allocation, for
   example if you packed the widget with the \"expand\" flag inside a
-  @class{gtk-box}, then the widget might get extra space. If you have for
-  example a 16 x 16 icon inside a 32 x 32 space, the icon could be scaled and
-  stretched, it could be centered, or it could be positioned to one side of the
-  space.
+  @class{gtk-box} widget, then the widget might get extra space. If you have
+  for example a 16 x 16 icon inside a 32 x 32 space, the icon could be scaled
+  and stretched, it could be centered, or it could be positioned to one side of
+  the space.
 
-  Note that in horizontal context @code{:start} and @code{:end} are
+  Note that in horizontal context the values @code{:start} and @code{:end} are
   interpreted relative to text direction.
 
-  @code{:baseline} support is optional for containers and widgets, and it is
-  only supported for vertical alignment. When its not supported by a child or
-  a container it is treated as @code{:fill}.
+  The @code{:baseline} support is optional for containers and widgets, and it
+  is only supported for vertical alignment. When its not supported by a child
+  or a container it is treated as @code{:fill}.
   @begin{pre}
 (define-g-enum \"GtkAlign\" gtk-align
   (:export t
@@ -723,18 +727,18 @@
 (setf (documentation 'gtk-widget 'type)
  "@version{2020-12-3}
   @begin{short}
-    @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
+    @sym{gtk-widget} is the base class all widgets in GTK derive from. It
     manages the widget lifecycle, states and style.
   @end{short}
 
   @subheading{Height-for-width Geometry Management}
-    GTK+ uses a height-for-width and width-for-height geometry management
+    GTK uses a height-for-width and width-for-height geometry management
     system. Height-for-width means that a widget can change how much vertical
     space it needs, depending on the amount of horizontal space that it is given
     and similar for width-for-height. The most common example is a label that
     reflows to fill up the available width, wraps to fewer lines, and therefore
     needs less height. Height-for-width geometry management is implemented in
-    GTK+ by way of six virtual methods:
+    GTK by way of six virtual methods:
     @begin{pre}
 GtkWidgetClass.get_request_mode()
 GtkWidgetClass.get_preferred_width()
@@ -860,14 +864,14 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
     implementation. These return a request adjusted by @class{gtk-size-group}
     and by the @code{GtkWidgetClass.adjust_size_request()} virtual method. If a
     widget used the wrappers inside its virtual method implementations, then the
-    adjustments such as widget margins would be applied twice. GTK+ therefore
+    adjustments such as widget margins would be applied twice. GTK therefore
     does not allow this and will warn if you try to do it.
 
     Of course if you are getting the size request for another widget, such as a
     child of a container, you must use the wrapper APIs. Otherwise, you would
     not properly consider widget margins, @class{gtk-size-group}, and so forth.
 
-    Since 3.10 GTK+ also supports baseline vertical alignment of widgets. This
+    Since 3.10 GTK also supports baseline vertical alignment of widgets. This
     means that widgets are positioned such that the typographical baseline of
     widgets in the same row are aligned. This happens if a widget supports
     baselines, has a vertical alignment of @code{:baseline}, and is inside a
@@ -1635,7 +1639,7 @@ drag_data_received (GtkWidget        *widget,
       @begin{pre}
  lambda (widget event)    :run-last
       @end{pre}
-      The GTK+ main loop will emit three signals for each GDK event delivered
+      The GTK main loop will emit three signals for each GDK event delivered
       to a widget: one generic \"event\" signal, another, more specific, signal
       that matches the type of event delivered, e.g. the \"key-press-event\"
       signal, and finally a generic \"event-after\" signal.
@@ -1724,7 +1728,7 @@ drag_data_received (GtkWidget        *widget,
       @begin{pre}
  lambda (widget was-grabbed)    :run-first
       @end{pre}
-      Emitted when a widget becomes shadowed by a GTK+ grab, not a pointer or
+      Emitted when a widget becomes shadowed by a GTK grab, not a pointer or
       keyboard grab, on another widget, or when it becomes unshadowed due to a
       grab being removed. A widget is shadowed by a the function
       @fun{gtk-grab-add} when the topmost grab widget in the grab stack of its
@@ -2334,36 +2338,34 @@ drag_data_received (GtkWidget        *widget,
 (setf (documentation (atdoc:get-slot-from-name "app-paintable" 'gtk-widget) 't)
  "The @code{app-paintable} property of type @code{:boolean} (Read / Write) @br{}
   Whether the application will paint directly on the widget. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-app-paintable atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-app-paintable atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-app-paintable 'function)
- "@version{2014-2-7}
-  @syntax[]{(gtk-widget-app-paintable object) => app-paintable}
-  @syntax[]{(setf (gtk-widget-app-paintable object) app-paintable)}
+ "@version{2021-4-17}
+  @syntax[]{(gtk-widget-app-paintable object) => paintable}
+  @syntax[]{(setf (gtk-widget-app-paintable object) paintable)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[app-paintable]{a boolean that is @em{true} if the application will
+  @argument[paintable]{a boolean that is @em{true} if the application will
     paint on the widget}
   @begin{short}
     Accessor of the @slot[gtk-widget]{app-paintable} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The @sym{gtk-widget-app-paintable} slot access function
-  returns @em{true} if the widget will paint on the widget. It determines
-  whether the application intends to draw on the widget in an \"draw\" handler.
+  The slot access function @sym{gtk-widget-app-paintable} returns @em{true} if
+  the widget will paint on the widget in a \"draw\" handler. The slot access
+  function @sym{(setf gtk-widget-app-paintable)} sets whether the application
+  intends to draw on the widget.
 
-  The @sym{(setf gtk-widget-app-paintable)} slot access function
-  sets whether the application intends to draw on the widget in a \"draw\"
-  handler.
-
-  This is a hint to the widget and does not affect the behavior of the GTK+
-  core; many widgets ignore this flag entirely. For widgets that do pay
-  attention to the flag, such as @class{gtk-event-box} and @class{gtk-window},
-  the effect is to suppress default themed drawing of the widget's background.
-  Children of the widget will still be drawn. The application is then entirely
-  responsible for drawing the widget background.
+  This is a hint to the widget and does not affect the behavior of the GTK
+  core. Many widgets ignore this flag entirely. For widgets that do pay
+  attention to the flag, such as @class{gtk-event-box} and @class{gtk-window}
+  widgets, the effect is to suppress default themed drawing of the widget's
+  background. Children of the widget will still be drawn. The application is
+  then entirely responsible for drawing the widget background.
 
   Note that the background is still drawn when the widget is mapped.
   @see-class{gtk-widget}
@@ -2406,31 +2408,32 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-focus" 'gtk-widget) 't)
- "The @code{can-focus} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{can-focus} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget can accept the input focus. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-can-focus atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-can-focus atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-can-focus 'function)
- "@version{2014-2-7}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-can-focus object) => can-focus}
   @syntax[]{(setf (gtk-widget-can-focus object) can-focus)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[can-focus]{whether or not widget can own the input focus}
+  @argument[can-focus]{a boolean whether or not @arg{widget} can own the input
+    focus}
   @begin{short}
     Accessor of the @slot[gtk-widget]{can-focus} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The @sym{gtk-widget-can-focus} slot access function returns @em{true} if the
-  widget can own the input focus, @code{nil} otherwise. It determines whether
-  the widget can own the input focus.
+  The slot access function @sym{gtk-widget-can-focus} returns @em{true} if the
+  widget can own the input focus, @em{false} otherwise. The slot access
+  function @sym{(setf gtk-widget-can-focus)} sets whether the widget can own
+  the input focus.
 
-  The @sym{(setf gtk-widget-can-focus)} slot access function specifies whether
-  the widget can own the input focus. See the @fun{gtk-widget-grab-focus}
-  function for actually setting the input focus on a widget.
+  See the function @fun{gtk-widget-grab-focus} for actually setting the input
+  focus on a widget.
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-focus}")
 
@@ -2441,32 +2444,33 @@ drag_data_received (GtkWidget        *widget,
                                                'gtk-widget) 't)
  "The @code{composite-child} property of type @code{:boolean} (Read) @br{}
   Whether the widget is part of a composite widget. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-composite-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-composite-child 'function)
- "@version{2014-2-7}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-composite-child object) => composite-child}
+  @syntax[]{(setf (gtk-widget-composite-child object) composite-child)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[composite-child]{a boolean whether the widget is part of a
+    composite widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{composite-child} of the
+    Accessor of the @slot[gtk-widget]{composite-child} slot of the
     @class{gtk-widget} class.
   @end{short}
-  See the slot description for @slot[gtk-widget]{composite-child} for more
-  information.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-pop-composite-child}
-  @see-function{gtk-widget-push-composite-child}")
+
+  Whether the widget is part of a composite widget.
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-widget-double-buffered ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "double-buffered"
                                                'gtk-widget) 't)
- "The @code{double-buffered} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{double-buffered} property of type @code{:boolean} (Read / Write)
+  @br{}
   Whether the widget is double buffered. @br{}
   @em{Warning:} The @code{double-buffered} property has been deprecated since
   version 3.14 and should not be used in newly-written code. Widgets should
@@ -2477,28 +2481,29 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-double-buffered 'function)
- "@version{2014-2-7}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-double-buffered object) => double-buffered}
   @syntax[]{(setf (gtk-widget-double-buffered object) double-buffered)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[double-buffered]{a boolean whether the widget is double buffered}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{double-buffered} of the
+    Accessor of the @slot[gtk-widget]{double-buffered} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-double-buffered} returns @em{true} if
-  the widget is double buffered.
-
-  Widgets are double buffered by default; you can use the generic function
-  @sym{(setf gtk-widget-double-buffered)} to turn off the buffering.
+  The slot access function @sym{gtk-widget-double-buffered} returns @em{true}
+  if the widget is double buffered. You can use the slot access function
+  @sym{(setf gtk-widget-double-buffered)} to turn off the buffering. Widgets
+  are double buffered by default.
 
   \"Double buffered\" simply means that the functions
-  @fun{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} are called
-  automatically around expose events sent to the widget. The function
-  @fun{gdk-window-begin-paint-region} diverts all drawing to a widget's window
-  to an offscreen buffer, and the function @fun{gdk-window-end-paint} draws the
-  buffer to the screen. The result is that users see the window update in one
-  smooth step, and do not see individual graphics primitives being rendered.
+  @fun{gdk-window-begin-draw-frame} and @fun{gdk-window-end-draw-frame} are
+  called automatically around expose events sent to the widget. The function
+  @fun{gdk-window-begin-draw-frame} diverts all drawing to a widget's window
+  to an offscreen buffer, and the function @fun{gdk-window-end-draw-frame}
+  draws the buffer to the screen. The result is that users see the window
+  update in one smooth step, and do not see individual graphics primitives
+  being rendered.
 
   In very simple terms, double buffered widgets do not flicker, so you would
   only use this function to turn off double buffering if you had special needs
@@ -2506,11 +2511,11 @@ drag_data_received (GtkWidget        *widget,
 
   Note: If you turn off double-buffering, you have to handle expose events,
   since even the clearing to the background color or pixmap will not happen
-  automatically as it is done in in the functions
-  @fun{gdk-window-begin-paint-region} function.
+  automatically as it is done in in the function
+  @fun{gdk-window-begin-draw-frame}.
 
-  In 3.10 GTK and GDK have been restructured for translucent drawing. Since then
-  expose events for @code{double-buffered} widgets are culled into a single
+  In version 3.10 GTK and GDK have been restructured for translucent drawing.
+  Since then expose events for double-buffered widgets are culled into a single
   event to the toplevel GDK window. If you now unset double buffering, you will
   cause a separate rendering pass for every widget. This will likely cause
   rendering problems - in particular related to stacking - and usually
@@ -2522,8 +2527,8 @@ drag_data_received (GtkWidget        *widget,
     this property.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gdk-window-begin-paint-region}
-  @see-function{gdk-window-end-paint}")
+  @see-function{gdk-window-begin-draw-frame}
+  @see-function{gdk-window-end-draw-frame}")
 
 ;;; --- gtk-widget-events ------------------------------------------------------
 
@@ -2589,7 +2594,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-expand object) => expand}
   @syntax[]{(setf (gtk-widget-expand object) expand)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[expand]{a boolean wether to expand in both directions}
+  @argument[expand]{a boolean whether to expand in both directions}
   @begin{short}
     Accessor of the @slot[gtk-widget]{expand} slot of the @class{gtk-widget}
     class.
@@ -2621,7 +2626,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-focus-on-click object) => focus-on-click}
   @syntax[]{(setf (gtk-widget-focus-on-click object) focus-on-click)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[focus-on-click]{a boolean wether the widget should grab focus}
+  @argument[focus-on-click]{a boolean whether the widget should grab focus}
   @begin{short}
     Accessor of the @slot[gtk-widget]{focus-on-click} slot of the
     @class{gtk-widget} class.
@@ -2670,26 +2675,28 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-default" 'gtk-widget) 't)
- "The @code{has-default} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{has-default} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is the default widget. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-default atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-has-default atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-has-default 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-has-default object) => has-default}
   @syntax[]{(setf (gtk-widget-has-default object) has-default)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[has-default]{a boolean whether the widget is the default widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{has-default} of the
+    Accessor of the @slot[gtk-widget]{has-default} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-has-default} returns @em{true} if
-  @arg{widget} is the current default widget within its toplevel, @code{nil}
-  otherwise.
+  The slot access function @sym{gtk-widget-has-default} returns @em{true} if
+  the widget is the current default widget within its toplevel, @em{false}
+  otherwise. The slot access function @sym{(setf gtk-widget-has-default)} sets
+  whether the widget is the default widget.
 
   See the function @fun{gtk-widget-can-default}.
   @see-class{gtk-widget}
@@ -2701,22 +2708,25 @@ drag_data_received (GtkWidget        *widget,
 (setf (documentation (atdoc:get-slot-from-name "has-focus" 'gtk-widget) 't)
  "The @code{has-focus} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget has the input focus. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-focus atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-has-focus atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-has-focus 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-has-focus object) => has-focus}
   @syntax[]{(setf (gtk-widget-has-focus object) has-focus)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[has-focus]{a boolean whether the widget has the input focus}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{has-focus} of the
+    Accessor of the @slot[gtk-widget]{has-focus} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-has-focus} returns @em{true} if the
-  @arg{widget} has the global input focus.
+  The slot access function @sym{gtk-widget-has-focus} returns @em{true} if the
+  widget has the global input focus. The slot access function
+  @sym{(setf gtk-widget-has-focus)} sets whether the widget has the input focus.
 
   See the function @fun{gtk-widget-is-focus} for the difference between having
   the global input focus, and only having the focus within a toplevel.
@@ -2727,38 +2737,46 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip" 'gtk-widget) 't)
- "The @code{has-tooltip} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Enables or disables the emission of the \"query-tooltip\" signal on a widget.
-  A value of @em{true} indicates that the widget can have a tooltip, in this
-  case the widget will be queried using the \"query-tooltip\" signal to
-  determine whether it will provide a tooltip or not.
-  Note that setting this property to @em{true} for the first time will change
-  the event masks of the @class{gdk-window} instances of this widget to include
-  \"leave-notify\" and \"motion-notify\" events. This cannot and
-  will not be undone when the property is set to @code{nil} again. @br{}
-  Default value: @code{nil}")
+ "The @code{has-tooltip} property of type @code{:boolean} (Read / Write) @br{}
+  Enables or disables the emission of the \"query-tooltip\" signal on the
+  widget. A value of @em{true} indicates that the widget can have a tooltip, in
+  this case the widget will be queried using the \"query-tooltip\" signal to
+  determine whether it will provide a tooltip or not. Note that setting this
+  property to @em{true} for the first time will change the event masks of the
+  @class{gdk-window} objects of this widget to include \"leave-notify\" and
+  \"motion-notify\" events. This cannot and will not be undone when the property
+  is set to @em{false} again. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-tooltip atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-has-tooltip atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-has-tooltip 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-has-tooltip object) => has-tooltip}
   @syntax[]{(setf (gtk-widget-has-tooltip object) has-tooltip)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[has-tooltip]{a boolean whether the emission of the \"query-toolip\"
+    signal is enabled or disabled}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{has-tooltip} of the
+    Accessor of the @slot[gtk-widget]{has-tooltip} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-has-tooltip} returns the current value
-  of the @slot[gtk-widget]{has-tooltip} property on @arg{widget}.
+  The slot access function @sym{gtk-widget-has-tooltip} returns the current
+  value of the @slot[gtk-widget]{has-tooltip} property. The slot access function
+  @sym{(setf gtk-widget-has-tooltip)} sets the property.
 
-  The generic function @sym{(setf gtk-widget-has-tooltip)} sets the
-  @slot[gtk-widget]{has-tooltip} property on widget to @arg{has-tooltip}.
-
-  See the @slot[gtk-widget]{has-tooltip} property for more information.
-  @see-class{gtk-widget}")
+  Enables or disables the emission of the \"query-tooltip\" signal on the
+  widget. A value of @em{true} indicates that the widget can have a tooltip, in
+  this case the widget will be queried using the \"query-tooltip\" signal to
+  determine whether it will provide a tooltip or not. Note that setting this
+  property to @em{true} for the first time will change the event masks of the
+  @class{gdk-window} objects of this widget to include \"leave-notify\" and
+  \"motion-notify\" events. This cannot and will not be undone when the property
+  is set to @em{false} again.
+  @see-class{gtk-widget}
+  @see-class{gdk-window}")
 
 ;;; --- gtk-widget-height-request ----------------------------------------------
 
@@ -2766,7 +2784,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
  "The @code{height-request} property of type @code{:int} (Read / Write) @br{}
   Override for height request of the widget, or -1 if natural request
-  should be used.@br{}
+  should be used. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -2774,10 +2792,13 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-height-request 'function)
- "@version{2014-2-8}
+ "@version{2021-4-17}
+  @syntax[]{(gtk-widget-height-request object) => height}
+  @syntax[]{(setf (gtk-widget-height-request object) height)}
   @argument[object]{a @class{gtk-widget} object}
+  @argument[height]{an integer with the height request}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{height-request} of the
+    Accessor of the @slot[gtk-widget]{height-request} slot of the
     @class{gtk-widget} class.
   @end{short}
   See the function @fun{gtk-widget-size-request} for details.
@@ -2800,7 +2821,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-hexpand object) => expand}
   @syntax[]{(setf (gtk-widget-hexpand object) expand)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[expand]{a boolean wether to expand horizontally}
+  @argument[expand]{a boolean whether to expand horizontally}
   @begin{short}
     Accessor of the @slot[gtk-widget]{hexpand} slot of the @class{gtk-widget}
     class.
@@ -2851,7 +2872,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-hexpand-set object) => setting}
   @syntax[]{(setf (gtk-widget-hexpand-set object) setting)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[set]{a boolean wether to use the @code{hexpand} property}
+  @argument[set]{a boolean whether to use the @code{hexpand} property}
   @begin{short}
     Accessor of the @slot[gtk-widget]{hexpand-set} slot of the
     @class{gtk-widget} class.
@@ -2880,20 +2901,28 @@ drag_data_received (GtkWidget        *widget,
 (setf (documentation (atdoc:get-slot-from-name "is-focus" 'gtk-widget) 't)
  "The @code{is-focus} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is the focus widget within the toplevel. @br{}
-  Default value: @code{nil}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-is-focus atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-is-focus 'function)
- "@version{2014-2-8}
+ "@version{2021-4-17}
+  @syntax[]{(gtk-widget-is-focus object) => is-focus}
+  @syntax[]{(setf (gtk-widget-is-focus object) is-focus)}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is the focus widget.}
+  @argument[is-focus]{a boolean whether the widget is the focus widget}
   @begin{short}
-    Determines if the @arg{widget} is the focus widget within its toplevel.
+    Accessor of the @slot[gtk-widget]{is-focus} slot of the @class{gtk-widget}
+    class.
   @end{short}
-  This does not mean that the @slot[gtk-widget]{has-focus} flag is necessarily
-  set; @slot[gtk-widget]{has-focus} will only be set if the toplevel widget
-  additionally has the global input focus.
+
+  The slot access function @sym{gtk-widget-is-focus} determines if the widget
+  is the focus widget within its toplevel. The slot access function
+  @sym{(setf gtk-widget-is-focus)} sets the property.
+
+  This does not mean that the @slot[gtk-widget]{has-focus} property is
+  necessarily set. The @slot[gtk-widget]{has-focus} property will only be set
+  if the toplevel widget additionally has the global input focus.
   @see-class{gtk-widget}
   @see-function{gtk-widget-has-focus}")
 
@@ -2908,14 +2937,21 @@ drag_data_received (GtkWidget        *widget,
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin 'function)
- "@version{2016-1-12}
+ "@version{2021-4-27}
+  @syntax[]{(gtk-widget-margin object) => margin}
+  @syntax[]{(setf (gtk-widget-margin object) margin)}
   @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{margin} slot of the @class{gtk-widget}
     class.
   @end{short}
+
+  Sets all four sides' margin at once. If read, returns max margin on any
+  side.
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin-start}
   @see-function{gtk-widget-margin-end}
@@ -2927,31 +2963,37 @@ drag_data_received (GtkWidget        *widget,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-bottom" 'gtk-widget) 't)
  "The @code{margin-bottom} property of type @code{:int} (Read / Write) @br{}
-  Margin on bottom side of widget. This property adds margin outside of the
-  widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example. @br{}
+  Margin on bottom side of the widget. This property adds margin outside of the
+  widget's normal size request, the margin will be added in addition to the
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-bottom 'function)
- "@version{2016-1-12}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-bottom object) => margin}
   @syntax[]{(setf (gtk-widget-margin-bottom object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on bottom side of the widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-bottom} of the
+    Accessor of the @slot[gtk-widget]{margin-bottom} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-bottom} gets the bottom maring
-  of the widget.
+  The slot access function @sym{gtk-widget-margin-bottom} gets the bottom
+  marging of the widget. The slot access function
+  @sym{(setf gtk-widget-margin-bottom)} sets the bottom
+  margin.
 
-  The generic function @sym{(setf gtk-widget-margin-bottom)} sets the bottom
-  margin of the widget. See the @slot[gtk-widget]{margin-bottom} property.
+  This property adds margin outside of the widget's normal size request, the
+  margin will be added in addition to the size from the function
+  @fun{gtk-widget-size-request} for example.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin}")
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-margin-end --------------------------------------------------
 
@@ -2960,30 +3002,37 @@ drag_data_received (GtkWidget        *widget,
  "The @code{margin-end} property of type @code{:int} (Read / Write) @br{}
   Margin on end of the widget, horizontally. This property supports
   left-to-right text directions. This property adds margin outside of the
-  widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example. @br{}
+  widget's normal size request, the margin will be added in addition to the
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-end atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-end atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-end 'function)
- "@version{2016-1-11}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-end object) => margin}
   @syntax[]{(setf (gtk-widget-margin-end object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on end of the widget,
+    horizontally}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-end} of the
+    Accessor of the @slot[gtk-widget]{margin-end} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-end} gets the value of the
-  @slot[gtk-widget]{margin-end} property.
+  The slot access function @sym{gtk-widget-margin-end} gets the value of the
+  end margin of the widget. The slot access function
+  @sym{(setf gtk-widget-margin-end)} sets the end margin.
 
-  The generic function @sym{(setf gtk-widget-margin-end)} sets the end margin
-  of the widget.
+  This property supports left-to-right text directions. This property adds
+  margin outside of the widget's normal size request, the margin will be added
+  in addition to the size from the function @fun{gtk-widget-size-request} for
+  example.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin}")
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-margin-left -------------------------------------------------
 
@@ -2991,8 +3040,8 @@ drag_data_received (GtkWidget        *widget,
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
  "The @code{margin-left} property of type @code{:int} (Read / Write) @br{}
   Margin on left side of the widget. This property adds margin outside of the
-  widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example. @br{}
+  widget's normal size request, the margin will be added in addition to the
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
   @em{Warning:} The @code{margin-left} property has been deprecated since
   version 3.12 and should not be used in newly-written code. Use the
   @code{margin-start} property instead. @br{}
@@ -3000,22 +3049,26 @@ drag_data_received (GtkWidget        *widget,
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-left 'function)
- "@version{2016-1-12}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-left object) => margin}
   @syntax[]{(setf (gtk-widget-margin-left object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on left side of the widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-left} of the
+    Accessor of the @slot[gtk-widget]{margin-left} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-left} returns the left margin of
-  the widget.
+  The slot access function @sym{gtk-widget-margin-left} returns the left margin
+  of the widget. The slot access function @sym{(setf gtk-widget-margin-left)}
+  sets the left margin.
 
-  The generic function @sym{(setf gtk-widget-margin-left)} sets the left margin
-  of the widget. See the @slot[gtk-widget]{margin-left} property.
+  This property adds margin outside of the widget's normal size request, the
+  margin will be added in addition to the size from the function
+  @fun{gtk-widget-size-request} for example.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-margin-left} has been deprecated since version
     3.12 and should not be used in newly-written code. Use the function
@@ -3023,7 +3076,8 @@ drag_data_received (GtkWidget        *widget,
   @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}
-  @see-function{gtk-widget-margin-start}")
+  @see-function{gtk-widget-margin-start}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-margin-right ------------------------------------------------
 
@@ -3040,30 +3094,35 @@ drag_data_received (GtkWidget        *widget,
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-right 'function)
- "@version{2016-1-12}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-right object) => margin}
   @syntax[]{(setf (gtk-widget-margin-right object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on right side of the widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-right} of the
+    Accessor of the @slot[gtk-widget]{margin-right} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-right} returns the right margin
-  of the widget.
+  The slot access function @sym{gtk-widget-margin-right} returns the right
+  margin of the widget. The slot access function
+  @sym{(setf gtk-widget-margin-right)} sets the right margin.
 
-  The generic function @sym{(setf gtk-widget-margin-right)} sets the right
-  margin of the widget. See the @slot[gtk-widget]{margin-right} property.
+  This property adds margin outside of the widget's normal size request, the
+  margin will be added in addition to the size from the function
+  @fun{gtk-widget-size-request} for example.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-margin-right} has been deprecated since version
-    3.12 and should not be used in newly-written code. Use the function
+    The function @sym{gtk-widget-margin-right} has been deprecated since
+    version 3.12 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-margin-end} instead.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}
-  @see-function{gtk-widget-margin-end}")
+  @see-function{gtk-widget-margin-end}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-margin-start ------------------------------------------------
 
@@ -3079,24 +3138,31 @@ drag_data_received (GtkWidget        *widget,
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-start atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-start atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-start 'function)
- "@version{2016-1-12}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-start object) => margin}
   @syntax[]{(setf (gtk-widget-margin-start object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on start of the widget,
+    horizontally}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-start} of the
+    Accessor of the @slot[gtk-widget]{margin-start} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-start} returns the start margin
-  of the widget.
+  The slot access function @sym{gtk-widget-margin-start} returns the start
+  margin of the widget. The slot access function
+  @sym{(setf gtk-widget-margin-start)} sets the start margin.
 
-  The generic function @sym{(setf gtk-widget-margin-start)} sets the start
-  margin of the widget. See the @slot[gtk-widget]{margin-start} property.
+  This property supports left-to-right and right-to-left text directions. This
+  property adds margin outside of the widget's normal size request, the margin
+  will be added in addition to the size from the function
+  @fun{gtk-widget-size-request} for example.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin}")
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-margin-top --------------------------------------------------
 
@@ -3110,24 +3176,29 @@ drag_data_received (GtkWidget        *widget,
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-top atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-margin-top atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-margin-top 'function)
- "@version{2014-2-8}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-27}
   @syntax[]{(gtk-widget-margin-top object) => margin}
   @syntax[]{(setf (gtk-widget-margin-top object) margin)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[margin]{an integer with the margin on top side of the widget}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{margin-top} of the @class{gtk-widget}
-    class.
+    Accessor of the @slot[gtk-widget]{margin-top} slot of the
+    @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-margin-top} returns the top margin of
-  widget.
+  The slot access function @sym{gtk-widget-margin-top} returns the top margin
+  of widget. The slot access function @sym{(setf gtk-widget-margin-top)} sets
+  the top margin.
 
-  The generic function @sym{(setf gtk-widget-margin-top)} sets the top margin
-  of widget. See the @slot[gtk-widget]{margin-top} property.
+  This property adds margin outside of the widget's normal size request, the
+  margin will be added in addition to the size from the function
+  @fun{gtk-widget-size-request} for example.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin}")
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-size-request}")
 
 ;;; --- gtk-widget-name --------------------------------------------------------
 
@@ -3182,7 +3253,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-no-show-all object) => no-show-all}
   @syntax[]{(setf (gtk-widget-no-show-all object) no-show-all)}
   @argument[object]{a @class{gtk-widget} object}
-  @argurment[no-show-all]{a boolean wether the function
+  @argurment[no-show-all]{a boolean whether the function
     @fun{gtk-widget-show-all} should not affect this widget}
   @begin{short}
     Accessor of the @slot[gtk-widget]{no-show-all} slot of the
@@ -3300,7 +3371,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-receives-default object) => receives-default}
   @syntax[]{(setf (gtk-widget-receives-default object) receives-default)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[receives-default]{a boolean wether the widget will receive the
+  @argument[receives-default]{a boolean whether the widget will receive the
     default action}
   @begin{short}
     Accessor of the @slot[gtk-widget]{receives-default} slot of the
@@ -3355,29 +3426,31 @@ drag_data_received (GtkWidget        *widget,
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-sensitive atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-sensitive atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-sensitive 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-widget-sensitive object) sensitive)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[sensitive]{a boolean whether the widget responds to input}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{sensitive} of the @class{gtk-widget}
+    Accessor of the @slot[gtk-widget]{sensitive} slot of the @class{gtk-widget}
     class.
   @end{short}
 
-  The generic function @sym{gtk-widget-sensitive} returns the widget's
-  sensitivity, in the sense of returning the value that has been set using the
-  generic function @sym{(setf gtk-widget-sensitive)}.
-
-  The effective sensitivity of a widget is however determined by both its own
-  and its parent widget's sensitivity. See the function
-  @fun{gtk-widget-is-sensitive}.
+  The slot access function @sym{gtk-widget-sensitive} returns the widget's
+  sensitivity. The slot access function @sym{(setf gtk-widget-sensitive)}
+  sets the sensitivity.
 
   A widget is sensitive if the user can interact with it. Insensitive widgets
   are \"grayed out\" and the user cannot interact with them. Insensitive widgets
   are known as \"inactive\", \"disabled\", or \"ghosted\" in some other
   toolkits.
+
+  The effective sensitivity of a widget is however determined by both its own
+  and its parent widget's sensitivity. See the function
+  @fun{gtk-widget-is-sensitive}.
   @see-class{gtk-widget}
   @see-function{gtk-widget-is-sensitive}")
 
@@ -3406,7 +3479,7 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
 
   Used to access the deprecated @code{GtkStyle} object for a widget. Since
-  GTK+ 3.0 this function does nothing, the passed in style is ignored.
+  GTK 3.0 this function does nothing, the passed in style is ignored.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-style} has been deprecated since version 3.0 and should not
     be used in newly-written code. Use @class{gtk-style-context} instead.
@@ -3418,82 +3491,86 @@ drag_data_received (GtkWidget        *widget,
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup" 'gtk-widget) 't)
- "The @code{tooltip-markup} property of type @code{:string}
-  (Read / Write) @br{}
-  Sets the text of tooltip to be the given string, which is marked up with the
-  Pango text markup language. Also see the function
+ "The @code{tooltip-markup} property of type @code{:string} (Read / Write) @br{}
+  Sets the text of the tooltip to be the given string, which is marked up with
+  the Pango text markup language. Also see the function
   @fun{gtk-tooltip-set-markup}. This is a convenience property which will take
   care of getting the tooltip shown if the given string is not @code{nil}.
   The @code{has-tooltip} property will automatically be set to
   @em{true} and there will be taken care of the \"query-tooltip\" signal in the
-  default signal handler. @br{}
+  default signal handler. Note that if both the @code{tooltip-text} and
+  @code{tooltip-markup} properties are set, the last one wins. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-tooltip-markup 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-tooltip-markup object) => markup}
   @syntax[]{(setf (gtk-widget-tooltip-markup object) markup)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[markup]{a string with the text of the tooltip}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{tooltip-markup} of the
+    Accessor of the @slot[gtk-widget]{tooltip-markup} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-tooltip-markup} gets the contents of the
-  tooltip for @arg{widget}.
+  The slot access function @sym{gtk-widget-tooltip-markup} gets the contents of
+  the tooltip. The slot access function @sym{(setf gtk-widget-tooltip-markup}
+  sets @arg{markup} as the contents of the tooltip, which is marked up with the
+  Pango text markup language.
 
-  The generic function @sym{(setf gtk-widget-tooltip-markup} sets @arg{markup}
-  as the contents of the tooltip, which is marked up with the Pango text markup
-  language.
-
-  This function will take care of setting @slot[gtk-widget]{has-tooltip} to
-  @em{true} and of the default handler for the \"query-tooltip\" signal.
+  This function will take care of setting the @slot[gtk-widget]{has-tooltip}
+  property to @em{true} and of the default handler for the \"query-tooltip\"
+  signal.
 
   See also the @slot[gtk-widget]{tooltip-markup} property and the function
   @fun{gtk-tooltip-set-markup}.
   @see-class{gtk-widget}
+  @see-function{gtk-widget-has-toolip}
   @see-function{gtk-tooltip-set-markup}")
 
 ;;; --- gtk-widget-tooltip-text ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text" 'gtk-widget) 't)
- "The @code{tooltip-text} property of type @code{:string}
-  (Read / Write) @br{}
-  Sets the text of tooltip to be the given string. Also see the function
+ "The @code{tooltip-text} property of type @code{:string} (Read / Write) @br{}
+  Sets the text of the tooltip to be the given string. Also see the function
   @fun{gtk-tooltip-set-text}. This is a convenience property which will take
   care of getting the tooltip shown if the given string is not @code{nil}.
   The @code{has-tooltip} property will automatically be set to @em{true} and
   there will be taken care of the \"query-tooltip\" signal in the default
-  signal handler. @br{}
+  signal handler. Note that if both the @code{tooltip-text} and
+  @code{tooltip-markup} properties are set, the last one wins. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-tooltip-text atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-tooltip-text atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-tooltip-text 'function)
- "@version{2014-2-9}
-  @argument[object]{a @class{gtk-widget} object}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-tooltip-text object) => text}
   @syntax[]{(setf (gtk-widget-tooltip-text object) text)}
+  @argument[object]{a @class{gtk-widget} object}
+  @argument[text]{a string with the text of the tooltip}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{tooltip-text} of the
+    Accessor of the @slot[gtk-widget]{tooltip-text} slot of the
     @class{gtk-widget} class.
   @end{short}
 
-  The generic function @sym{gtk-widget-tooltip-text} gets the contents of the
-  tooltip for @arg{widget}.
+  The slot access function @sym{gtk-widget-tooltip-text} gets the contents of
+  the tooltip. The slot access function @sym{(sef gtk-widget-tooltip-text)}
+  sets @arg{text} as the contents of the tooltip.
 
-  The generic function @sym{(sef gtk-widget-tooltip-text)} sets @arg{text} as
-  the contents of the tooltip. This function will take care of setting
-  @slot[gtk-widget]{has-tooltip} to @em{true} and of the default handler for
-  the \"query-tooltip\" signal.
+  This function will take care of setting the @slot[gtk-widget]{has-tooltip}
+  property to @em{true} and of the default handler for the \"query-tooltip\"
+  signal.
 
   See also the @slot[gtk-widget]{tooltip-text} property and the function
   @fun{gtk-tooltip-set-text}.
   @see-class{gtk-widget}
+  @see-function{gtk-widget-has-tooltip}
   @see-function{gtk-tooltip-set-text}")
 
 ;;; --- gtk-widget-valign ------------------------------------------------------
@@ -3539,7 +3616,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-vexpand object) => expand}
   @syntax[]{(setf (gtk-widget-vexpand object) expand)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[expand]{a boolean wether to expand vertically}
+  @argument[expand]{a boolean whether to expand vertically}
   @begin{short}
     Accessor of the @slot[gtk-widget]{vexpand} slot of the
     @class{gtk-widget} class.
@@ -3571,7 +3648,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-vexpand-set object) => setting}
   @syntax[]{(setf (gtk-widget-vexpand-set object) setting)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[setting]{a boolean wether to use the @code{vexpand} property}
+  @argument[setting]{a boolean whether to use the @code{vexpand} property}
   @begin{short}
     Accessor of the @slot[gtk-widget]{vexpand-set} slot of the
     @class{gtk-widget} class.
@@ -3603,7 +3680,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-visible object) => visible}
   @syntax[]{(setf (gtk-widget-visible object) visible)}
   @argument[object]{a @class{gtk-widget} object}
-  @argument[visible]{a boolean wether the widget is visible}
+  @argument[visible]{a boolean whether the widget is visible}
   @begin{short}
     Accessor of the @slot[gtk-widget]{visible} slot of the @class{gtk-widget}
     class.
@@ -3626,18 +3703,22 @@ drag_data_received (GtkWidget        *widget,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-request" 'gtk-widget) 't)
  "The @code{width-request} property of type @code{:int} (Read / Write) @br{}
-  Override for width request of the widget, or -1 if natural request
-  should be used. @br{}
+  Override for width request of the widget, or -1 if natural request should be
+  used. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-width-request 'function)
- "@version{2014-2-8}
+ "@version{2021-4-17}
+  @syntax[]{(gtk-widget-width-request object) => width}
+  @syntax[]{(setf (gtk-widget-width-request object) width)}
   @argument[object]{a @class{gtk-widget} object}
+  @argument[width]{an integer with the width request}
   @begin{short}
-    Accessor of the slot @slot[gtk-widget]{width-request} of the
+    Accessor of the @slot[gtk-widget]{width-request} slot of the
     @class{gtk-widget} class.
   @end{short}
   See the function @fun{gtk-widget-size-request} for details.
@@ -3725,7 +3806,7 @@ drag_data_received (GtkWidget        *widget,
   objects. If the widget is inside a container, the widget will be removed from
   the container. If the widget is a toplevel, derived from the
   @class{gtk-window} class, it will be removed from the list of toplevels, and
-  the reference GTK+ holds to it will be removed. Removing a widget from its
+  the reference GTK holds to it will be removed. Removing a widget from its
   container or the list of toplevels results in the widget being finalized.
 
   In most cases, only toplevel windows require explicit destruction,
@@ -3779,11 +3860,14 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_unparent" gtk-widget-unparent) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-3-7}
+ "@version{2021-4-17}
   @argument[widget]{a @class{gtk-widget} object}
-  @short{This function is only for use in widget implementations.}
-  Should be called by implementations of the remove method on
-  @class{gtk-container}, to dissociate a child from the container.
+  @begin{short}
+    Should be called by implementations of the @code{remove} method on
+    a @class{gtk-container} implementation, to dissociate a child from the
+    container.
+  @end{short}
+  This function is only for use in widget implementations.
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-function{gtk-widget-reparent}
@@ -4569,12 +4653,12 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_reparent" gtk-widget-reparent) :void
  #+cl-cffi-gtk-documentation
- "@version{2016-1-12}
+ "@version{2021-4-27}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[new-parent]{a @class{gtk-container} to move the widget into}
+  @argument[new-parent]{a @class{gtk-container} widget to move the widget into}
   @begin{short}
-    Moves a widget from one @class{gtk-container} to another, handling reference
-    count issues to avoid destroying the widget.
+    Moves a widget from one @class{gtk-container} widget to another, handling
+    reference count issues to avoid destroying the widget.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-reparent} has been deprecated since version
@@ -4583,7 +4667,8 @@ drag_data_received (GtkWidget        *widget,
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-container}
-  @see-function{gtk-widget-unparent}"
+  @see-function{gtk-container-add}
+  @see-function{gtk-container-remove}"
   (widget (g-object gtk-widget))
   (new-parent (g-object gtk-widget)))
 
@@ -4623,24 +4708,23 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_grab_focus" gtk-widget-grab-focus) :void
  #+cl-cffi-gtk-documentation
- "@version{2014-2-7}
+ "@version{2021-4-17}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Causes @arg{widget} to have the keyboard focus for the @class{gtk-window}
-    instance it is inside. @arg{widget} must be a focusable widget, such as a
-    @class{gtk-entry}; something like @class{gtk-frame} will not work.
+    Causes the widget to have the keyboard focus for the @class{gtk-window}
+    widget it is inside.
   @end{short}
+  The widget must be a focusable widget, such as a @class{gtk-entry} widget.
+  Something like the @class{gtk-frame} widget will not work.
 
   More precisely, it must have the @slot[gtk-widget]{can-focus} property set.
-  Use the function @fun{gtk-widget-can-focus} to modify that flag.
+  Use the function @fun{gtk-widget-can-focus} to modify that property.
 
   The widget also needs to be realized and mapped. This is indicated by the
   related signals. Grabbing the focus immediately after creating the widget
   will likely fail and cause critical warnings.
   @see-class{gtk-widget}
   @see-class{gtk-window}
-  @see-class{gtk-entry}
-  @see-class{gtk-frame}
   @see-function{gtk-widget-can-focus}"
   (widget (g-object gtk-widget)))
 
@@ -4765,14 +4849,14 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-add-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-7}
+ "@version{2021-4-17}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[events]{an event mask of type @symbol{gdk-event-mask}}
+  @argument[events]{a @symbol{gdk-event-mask} event mask}
   @begin{short}
-    Adds the events in the bitfield @arg{events} to the event mask for
-    @arg{widget}.
+    Adds the events in the @arg{events} bitfield to the event mask for the
+    widget.
   @end{short}
-  See @fun{gtk-widget-events} for details.
+  See the function @fun{gtk-widget-events} for details.
   @see-class{gtk-widget}
   @see-symbol{gdk-event-mask}
   @see-function{gtk-widget-events}"
@@ -5135,7 +5219,7 @@ drag_data_received (GtkWidget        *widget,
   The function calls the function @fun{gtk-widget-hide} on its argument, then
   returns @em{true}. If connected to the \"delete-event\" signal, the result is
   that clicking the close button for a window will hide but not destroy the
-  window. By default, GTK+ destroys windows when the \"delete-event\" signal is
+  window. By default, GTK destroys windows when the \"delete-event\" signal is
   received.
   @see-class{gtk-widget}
   @see-class{gtk-window}
@@ -5442,7 +5526,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_composite_name" gtk-widget-composite-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{2021-4-17}
   @syntax[]{(gtk-widget-composite-name widget) => name}
   @syntax[]{(setf gtk-widget-composite-name widget) name)}
   @argument[widget]{a @class{gtk-widget} object}
@@ -5453,15 +5537,14 @@ drag_data_received (GtkWidget        *widget,
 
   The function @sym{gtk-widget-composite-name} obtains the composite name of a
   widget. The function @sym{(setf gtk-widget-composite-name)} sets a widgets
-  composite name. The widget must be a composite child of its parent. See the
-  function @fun{gtk-widget-push-composite-child}.
+  composite name. The widget must be a composite child of its parent.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-composite-name} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-push-composite-child}"
+  @see-function{gtk-widget-class-set-template}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-composite-name)
@@ -6115,7 +6198,7 @@ drag_data_received (GtkWidget        *widget,
   @argument[widget]{a @class{gtk-widget} object}
   @argument[id]{a string with a stock ID}
   @argument[size]{a @symbol{gtk-icon-size} stock size, if there are multiple
-    source sizes, GTK+ picks one of the available sizes}
+    source sizes, GTK picks one of the available sizes}
   @argument[detail]{a string with render detail to pass to theme engine}
   @return{A new @see-class{gdk-pixbuf} object, or @code{nil} if the stock ID
     was not known.}
@@ -6158,7 +6241,7 @@ drag_data_received (GtkWidget        *widget,
   @argument[widget]{a @class{gtk-widget} object}
   @argument[id]{a string with a stock ID}
   @argument[size]{a @symbol{gtk-icon-size} stock size, if there are multiple
-    source sizes, GTK+ picks one of the available sizes}
+    source sizes, GTK picks one of the available sizes}
   @return{A new @class{gdk-pixbuf} object, or @code{nil} if the stock ID was
     not known.}
   @begin{short}
@@ -6193,7 +6276,7 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_pop_composite_child" gtk-widget-pop-composite-child)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-20}
+ "@version{2021-4-17}
   @begin{short}
     Cancels the effect of a previous call to the function
     @fun{gtk-widget-push-composite-child}.
@@ -6204,8 +6287,8 @@ drag_data_received (GtkWidget        *widget,
     @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-class-set-template}
-  @see-function{gtk-widget-push-composite-child}")
+  @see-function{gtk-widget-push-composite-child}
+  @see-function{gtk-widget-class-set-template}")
 
 (export 'gtk-widget-pop-composite-child)
 
@@ -6216,7 +6299,7 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_push_composite_child" gtk-widget-push-composite-child)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-20}
+ "@version{2021-4-17}
   @begin{short}
     Makes all newly-created widgets as composite children until the
     corresponding function @fun{gtk-widget-pop-composite-child} call.
@@ -7396,7 +7479,7 @@ drag_data_received (GtkWidget        *widget,
   the default, usually yellow, window used for displaying tooltips with the
   custom window.
 
-  GTK+ will take care of showing and hiding the custom window at the right
+  GTK will take care of showing and hiding the custom window at the right
   moment, to behave likewise as the default tooltip window. If the custom
   window is @code{nil}, the default tooltip window will be used.
 
@@ -7516,10 +7599,10 @@ drag_data_received (GtkWidget        *widget,
   If the widget's window is not an ancestor of @arg{window}, no modification
   will be applied.
 
-  This is the inverse to the transformation GTK+ applies when preparing an
+  This is the inverse to the transformation GTK applies when preparing an
   expose event to be emitted with the \"draw\" signal. It is intended to help
-  porting multiwindow widgets from GTK+ 2 to the rendering architecture of
-  GTK+ 3.
+  porting multiwindow widgets from GTK 2 to the rendering architecture of
+  GTK 3.
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-symbol{cairo-t}"
@@ -7641,7 +7724,7 @@ drag_data_received (GtkWidget        *widget,
   allocation inside the function @fun{gtk-widget-size-allocate} to create an
   adjusted allocation.
   @begin[Note]{dictionary}
-    In the Lisp binding to GTK+ this function does not return an allocation
+    In the Lisp binding to GTK this function does not return an allocation
     of type @code{GtkAllocation}, but the type is @class{gdk-rectangle}. In the
     C implementation the type @code{GtkAllocation} is a synonym for the type
     @class{gdk-rectangle}.
@@ -7693,7 +7776,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; The clip area is the area in which all of widget 's drawing will happen.
 ;;; Other toolkits call it the bounding box.
 ;;;
-;;; Historically, in GTK+ the clip area has been equal to the allocation
+;;; Historically, in GTK the clip area has been equal to the allocation
 ;;; retrieved via gtk_widget_get_allocation().
 ;;;
 ;;; Parameters
@@ -8054,7 +8137,7 @@ drag_data_received (GtkWidget        *widget,
   @argument[widget]{a @class{gtk-widget} object}
   @argument[realized]{@em{true} to mark the widget as realized}
   @begin{short}
-    The function @sym{gtk-widget-realized} determines wether the widget is
+    The function @sym{gtk-widget-realized} determines whether the widget is
     realized.
   @end{short}
   The function @sym{(setf gtk-widget-realized)} marks the widget as being
@@ -8081,7 +8164,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_mapped" gtk-widget-mapped) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-18}
+ "@version{*2021-4-29}
   @syntax[]{(gtk-widget-mapped widget) => mapped}
   @syntax[]{(setf (gtk-widget-mapped widget) mapped)}
   @argument[widget]{a @class{gtk-widget} object}
@@ -8136,7 +8219,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; gboolean gtk_widget_device_is_shadowed (GtkWidget *widget,
 ;;;                                         GdkDevice *device);
 ;;;
-;;; Returns TRUE if device has been shadowed by a GTK+ device grab on another
+;;; Returns TRUE if device has been shadowed by a GTK device grab on another
 ;;; widget, so it would stop sending events to widget. This may be used in the
 ;;; "grab-notify" signal to check for specific devices.
 ;;; See gtk_device_grab_add().
@@ -8756,17 +8839,15 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_queue_compute_expand" gtk-widget-queue-compute-expand)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2014-2-8}
+ "@version{2021-4-17}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Mark @arg{widget} as needing to recompute its expand flags.
+    Mark the widget as needing to recompute its expand flags.
   @end{short}
   Call this function when setting legacy expand child properties on the child
-  of a container.
-
-  See the function @fun{gtk-widget-compute-expand}.
+  of a container. See the function @fun{gtk-widget-compute-expand}.
   @see-class{gtk-widget}
-  @see-function{gtk-widget-comput-expand}"
+  @see-function{gtk-widget-compute-expand}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-compute-expand)
@@ -8777,16 +8858,17 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_compute_expand" gtk-widget-compute-expand) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2014-2-8}
+ "@version{2021-4-17}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[orientation]{expand direction of type @symbol{gtk-orientation}}
-  @return{Whether @arg{widget} tree rooted here should be expanded.}
+  @argument[orientation]{a @symbol{gtk-orientation} value for the expand
+    direction}
+  @return{A boolean whether @arg{widget} tree rooted here should be expanded.}
   @begin{short}
     Computes whether a container should give this widget extra space when
     possible.
   @end{short}
-  Containers should check this, rather than looking at the functions
-  @fun{gtk-widget-hexpand} or @fun{gtk-widget-vexpand}.
+  Containers should check this, rather than looking at the
+  @slot[gtk-widget]{hexpand} or @slot[gkt-widget]{vexpand} properties.
 
   This function already checks whether the widget is visible, so visibility
   does not need to be checked separately. Non-visible widgets are not
