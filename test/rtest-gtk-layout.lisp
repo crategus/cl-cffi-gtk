@@ -24,23 +24,25 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkLayout"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "hadjustment" "halign" "has-default" "has-focus" "has-tooltip" "height"
-               "height-request" "hexpand" "hexpand-set" "hscroll-policy" "is-focus" "margin"
-               "margin-bottom" "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "name" "no-show-all" "opacity" "parent" "receives-default"
-               "resize-mode" "scale-factor" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "vadjustment" "valign" "vexpand" "vexpand-set" "visible"
-               "vscroll-policy" "width" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkLayout"))
-                          #'string-lessp)))
+               "composite-child" "double-buffered" "events" "expand"
+               "focus-on-click" "hadjustment" "halign" "has-default" "has-focus"
+               "has-tooltip" "height" "height-request" "hexpand" "hexpand-set"
+               "hscroll-policy" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "parent" "receives-default" "resize-mode"
+               "scale-factor" "sensitive" "style" "tooltip-markup"
+               "tooltip-text" "vadjustment" "valign" "vexpand" "vexpand-set"
+               "visible" "vscroll-policy" "width" "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkLayout"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkLayout"))))
   ;; Get the names of the child properties
@@ -74,7 +76,6 @@
 (test gtk-layout-child-properties
   (let ((layout (make-instance 'gtk-layout))
         (child (make-instance 'gtk-frame)))
-
     (is-false (gtk-container-add layout child))
     ;; x
     (is (=  0 (gtk-layout-child-x layout child)))
@@ -123,7 +124,7 @@
 (test gtk-layout-move
   (let ((layout (make-instance 'gtk-layout))
         (button (make-instance 'gtk-button)))
-    ;; Add a button the layout
+    ;; Add a button to the layout
     (is-false (gtk-container-add layout button))
     (is (=  0 (gtk-layout-child-x layout button)))
     (is (=  0 (gtk-layout-child-y layout button)))
@@ -136,14 +137,18 @@
 
 (test gtk-layout-size
   (let ((layout (make-instance 'gtk-layout)))
-    (is (equal '(100 100) (multiple-value-list (gtk-layout-size layout))))
-    (is (equal '(200 200) (multiple-value-list (setf (gtk-layout-size layout) '(200 200)))))
+    (is (equal '(100 100)
+               (multiple-value-list (gtk-layout-size layout))))
+    (is (equal '(200 200)
+               (multiple-value-list (setf (gtk-layout-size layout)
+                                          '(200 200)))))
     (is (equal '(200 200) (multiple-value-list (gtk-layout-size layout))))))
 
 ;;;     gtk_layout_get_hadjustment                         deprecated
 ;;;     gtk_layout_get_vadjustment                         deprecated
 ;;;     gtk_layout_set_hadjustment                         deprecated
 ;;;     gtk_layout_set_vadjustment                         deprecated
+
 ;;;     gtk_layout_get_bin_window
 
-;;; 2020-10-24
+;;; 2021-4-26
