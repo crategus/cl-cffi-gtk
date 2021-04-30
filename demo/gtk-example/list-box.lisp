@@ -3,15 +3,19 @@
 ;;;; GtkListBox allows lists with complicated layouts, using
 ;;;; regular widgets supporting sorting and filtering.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun do-listbox ()
+(defun example-list-box ()
   (within-main-loop
-    (let ((avatar-pixbuf-other (gdk-pixbuf-new-from-file (rel-path "apple-red.png")))
+    (let ((avatar-pixbuf-other (gdk-pixbuf-new-from-file
+                                 (sys-path "apple-red.png")))
           (window (gtk-window-new :toplevel))
           (vbox (make-instance 'gtk-box :orientation :vertical))
-          (label (make-instance  'gtk-label :label "Messages from Gtk+ and friends"))
-          (scrolled (make-instance 'gtk-scrolled-window :hscrollbar-policy :never :vscrollbar-policy :automatic))
+          (label (make-instance  'gtk-label
+                                 :label "Messages from Gtk and friends"))
+          (scrolled (make-instance 'gtk-scrolled-window
+                                   :hscrollbar-policy :never
+                                   :vscrollbar-policy :automatic))
           (listbox (make-instance 'gtk-list-box))
          )
 
@@ -31,7 +35,6 @@
       (gtk-container-add scrolled listbox)
 
       (setf (gtk-list-box-activate-on-single-click listbox) nil)
-
 
       (g-signal-connect listbox "row-activated"
                         (lambda (listbox row)

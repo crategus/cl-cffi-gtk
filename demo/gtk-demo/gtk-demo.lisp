@@ -371,6 +371,15 @@
                                 "grid-packing.lisp"
                                 "EXAMPLE-GRID-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Revealer"
+                                "../gtk-example/revealer.lisp"
+                                "EXAMPLE-REVEALER")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Revealer Icon"
+                                "../gtk-example/revealer-icon.lisp"
+                                "EXAMPLE-REVEALER-ICON"
+                                "../gtk-example/revealer-icon.ui")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Button Boxes"
                                 "button-box.lisp"
                                 "EXAMPLE-BUTTON-BOX")

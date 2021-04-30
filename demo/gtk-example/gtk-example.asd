@@ -23,7 +23,9 @@
                (:file "image-button-press")
                (:file "image-menu-item")
                (:file "info-bar")
+               (:file "layout")
                (:file "level-bar")
+               (:file "list-box")
 ;               (:file "list-store")
                (:file "menu-builder")
                (:file "message-dialog-new")
@@ -31,11 +33,15 @@
                (:file "pointer-device")
                (:file "print-dialog")
                (:file "print-operation")
+               (:file "query-settings")
                (:file "radio-button")
+               (:file "revealer")
+               (:file "revealer-icon")
+               (:file "scale-button")
                (:file "scrolled-window")
                (:file "show-about-dialog")
                (:file "tool-palette")
                (:file "widget-pointer")
               ))
 
-;;; 2021-4-16
+;;; 2021-4-30

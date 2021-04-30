@@ -24,7 +24,9 @@
            #:example-image-button-press
            #:example-image-menu-item
            #:example-info-bar
+           #:example-layout
            #:example-level-bar
+           #:example-list-box
            #:example-menu-builder
            #:example-message-dialog-get-message-area
            #:example-message-dialog-new
@@ -37,7 +39,11 @@
            #:example-print-operation
            #:example-print-run-page-setup-dialog
            #:example-print-run-page-setup-dialog-async
+           #:example-query-settings
            #:example-radio-button
+           #:example-revealer
+           #:example-revealer-icon
+           #:example-scale-button
            #:example-scrolled-window
            #:example-show-about-dialog
            #:example-simple-list-store
@@ -52,6 +58,11 @@
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
 
+;; Rename rel-path to sys-path
+(defun sys-path (filename)
+  (let ((system-path (asdf:system-source-directory :gtk-example)))
+    (princ-to-string (merge-pathnames filename system-path))))
+
 (defun read-file (filename)
   (with-open-file (instream filename :direction :input :if-does-not-exist nil)
     (when instream
@@ -59,4 +70,4 @@
         (read-sequence string instream)
         string))))
 
-;;; 2021-4-16
+;;; 2021-4-30

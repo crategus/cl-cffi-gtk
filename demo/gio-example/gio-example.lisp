@@ -2,8 +2,8 @@
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :common-lisp)
   (:export #:application-open)
-  (:export #:application-action))
+  (:export #:application-action)
+  (:export #:example-emblemed-icon)
+)
 
-(in-package :gio-example)
-
-;;; 2020-12-10
+;;; 2021-4-27
