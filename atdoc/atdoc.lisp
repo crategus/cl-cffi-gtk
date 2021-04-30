@@ -41,9 +41,12 @@
 (unexport 'glib:allocate-stable-pointer :glib)
 (unexport 'glib:stable-pointer-destroy-notify-cb :glib)
 (unexport 'glib:get-stable-pointer-value :glib)
+(unexport 'glib:free-stable-pointer :glib)
+(unexport 'glib:set-stable-pointer-value :glib)
 (unexport 'glib:with-stable-pointer :glib)
 (unexport 'glib:with-catching-to-g-error :glib)
 (unexport 'glib:with-g-error :glib)
+(unexport 'glib:with-ignore-g-error :glib)
 
 (unexport 'gobject:*debug-gc* :gobject)
 (unexport 'gobject:*debug-subclass* :gobject)
@@ -103,6 +106,8 @@
 
 (unexport 'gdk:make-gdk-rgba :gdk)
 (unexport 'gdk:copy-gdk-rgba :gdk)
+
+(unexport 'with-gdk-threads-lock :gdk)
 
 #-windows
 (progn
