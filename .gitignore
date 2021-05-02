@@ -17,6 +17,8 @@ TODO
 /atdoc/index.css
 /atdoc/index.html
 /atdoc/lambda.ico
+/atdoc/make.lisp
+/atdoc/make-single.lisp
 /atdoc/pages/*
 /cairo/atdoc/.atdoc.xml
 /cairo/atdoc/header.gif
@@ -92,3 +94,7 @@ TODO
 /demo/cairo-example/*.pdf
 /demo/cairo-example/*.svg
 /demo/cairo-example/*.gresource
+/demo/gtk-example/*.ini
+/demo/gtk-example/print-dialog.ini
+/demo/gtk-example/application/application-2/application.gresource
+
