@@ -4,6 +4,7 @@
   (:export #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
+           #:example-button-box
            #:example-clipboard
            #:example-custom-window
            #:example-combo-box

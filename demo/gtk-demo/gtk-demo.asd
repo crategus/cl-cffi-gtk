@@ -18,7 +18,6 @@
                (:file "box-packing")
                (:file "box-simple")
                (:file "button")
-               (:file "button-box")
                (:file "buttons")
                (:file "calendar")
                (:file "clipboard")

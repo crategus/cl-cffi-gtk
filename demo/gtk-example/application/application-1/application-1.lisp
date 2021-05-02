@@ -6,7 +6,7 @@
 (in-package :application-1)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (setf *debug-subclass* t))
+  (setf *debug-subclass* nil))
 
 ;;; --- example-app-window -----------------------------------------------------
 

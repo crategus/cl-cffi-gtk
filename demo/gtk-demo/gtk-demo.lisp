@@ -381,7 +381,7 @@
                                 "../gtk-example/revealer-icon.ui")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Button Boxes"
-                                "button-box.lisp"
+                                "../gtk-example/button-box.lisp"
                                 "EXAMPLE-BUTTON-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Alignment"

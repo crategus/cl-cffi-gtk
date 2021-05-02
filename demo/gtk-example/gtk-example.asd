@@ -9,6 +9,7 @@
                (:file "application-inhibit")
                (:file "application-simple")
                (:file "bloat-pad")
+               (:file "button-box")
                (:file "clipboard")
                (:file "combo-box")
                (:file "combo-box-text")
