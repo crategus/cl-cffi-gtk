@@ -23,26 +23,28 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkProgressBar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
-               "ellipsize" "events" "expand" "focus-on-click" "fraction" "halign"
-               "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "inverted" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name" "no-show-all"
+  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
+               "double-buffered" "ellipsize" "events" "expand" "focus-on-click"
+               "fraction" "halign" "has-default" "has-focus" "has-tooltip"
+               "height-request" "hexpand" "hexpand-set" "inverted" "is-focus"
+               "margin" "margin-bottom" "margin-end" "margin-left"
+               "margin-right" "margin-start" "margin-top" "name" "no-show-all"
                "opacity" "orientation" "parent" "pulse-step" "receives-default"
-               "scale-factor" "sensitive" "show-text" "style" "text" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkProgressBar"))
-                          #'string-lessp)))
+               "scale-factor" "sensitive" "show-text" "style" "text"
+               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
+               "visible" "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkProgressBar"))
+                   #'string-lessp)))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging"
-               "min-horizontal-bar-height" "min-horizontal-bar-width"
-               "min-vertical-bar-height" "min-vertical-bar-width" "xspacing" "yspacing")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "min-horizontal-bar-height"
+               "min-horizontal-bar-width" "min-vertical-bar-height"
+               "min-vertical-bar-width" "xspacing" "yspacing")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkProgressBar"))))
   ;; Check the class definition
@@ -95,20 +97,21 @@
 ;;; --- Style Properties -------------------------------------------------------
 
 (test gtk-progress-bar-style-properties
-  (let ((progress-bar (make-instance 'gtk-progress-bar)))
-    (is (=   6 (gtk-widget-style-property progress-bar "min-horizontal-bar-height")))
-    (is (= 150 (gtk-widget-style-property progress-bar "min-horizontal-bar-width")))
-    (is (=  80 (gtk-widget-style-property progress-bar "min-vertical-bar-height")))
-    (is (=   7 (gtk-widget-style-property progress-bar "min-vertical-bar-width")))
-    (is (=   2 (gtk-widget-style-property progress-bar "xspacing")))
-    (is (=   2 (gtk-widget-style-property progress-bar "yspacing")))))
+  (let ((bar (make-instance 'gtk-progress-bar)))
+    (is (=   6 (gtk-widget-style-property bar "min-horizontal-bar-height")))
+    (is (= 150 (gtk-widget-style-property bar "min-horizontal-bar-width")))
+    (is (=  80 (gtk-widget-style-property bar "min-vertical-bar-height")))
+    (is (=   7 (gtk-widget-style-property bar "min-vertical-bar-width")))
+    (is (=   2 (gtk-widget-style-property bar "xspacing")))
+    (is (=   2 (gtk-widget-style-property bar "yspacing")))))
 
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_progress_bar_new
 
 (test gtk-progress-bar-new
-  (is (eq 'gtk-progress-bar (type-of (gtk-progress-bar-new)))))
+  (is (typep (gtk-progress-bar-new) 'gtk-progress-bar)))
 
 ;;;     gtk_progress_bar_pulse
 
+;;; 2021-5-2
