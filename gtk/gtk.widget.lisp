@@ -7185,7 +7185,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-size-request (widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-25}
+ "@version{2021-5-2}
   @syntax[]{(gtk-widget-size-request object) => width, height}
   @syntax[]{(setf (gtk-widget-size-request object) (list width height))}
   @argument[object]{a @class{gtk-widget} object}
@@ -7232,7 +7232,8 @@ drag_data_received (GtkWidget        *widget,
   @class{gtk-widget} properties @slot[gtk-widget]{margin-left},
   @slot[gtk-widget]{margin-right}, @slot[gtk-widget]{margin-top}, and
   @slot[gtk-widget]{margin-bottom}, but it does include pretty much all other
-  padding or border properties set by any subclass of @class{gtk-widget}.
+  padding or border properties set by any subclass of the @class{gtk-widget}
+  class.
   @see-class{gtk-widget}
   @see-function{gtk-widget-preferred-size}
   @see-function{gtk-window-default-size}

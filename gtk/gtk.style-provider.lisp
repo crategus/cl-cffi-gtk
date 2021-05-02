@@ -175,7 +175,7 @@
 (setf (gethash '+gtk-style-provider-priority-user+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-user+ 'variable)
- "@version{2020-10-16}
+ "@version{2021-5-2}
   @variable-value{800}
   @begin{short}
     The priority used for the style information from @file{~/.gtk-3.0.css}.

@@ -283,7 +283,7 @@
 
 (defconstant +g-source-continue+ t
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
+ "@version{*2021-4-9}
   @variable-value{t}
   @begin{short}
     Use this constant as the return value of a @symbol{g-source-func} callback

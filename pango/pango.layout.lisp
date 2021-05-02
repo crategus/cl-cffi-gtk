@@ -212,9 +212,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'pango-ellipsize-mode atdoc:*external-symbols*)
- "@version{2021-1-5}
+ "@version{2021-5-2}
   @begin{short}
     The @sym{pango-ellipsize-mode} enumeration describes what sort of (if any)
     ellipsization should be applied to a line of text. In the ellipsization
