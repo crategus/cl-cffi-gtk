@@ -40,6 +40,7 @@
            #:example-print-operation
            #:example-print-run-page-setup-dialog
            #:example-print-run-page-setup-dialog-async
+           #:example-progress-bar
            #:example-query-settings
            #:example-radio-button
            #:example-revealer

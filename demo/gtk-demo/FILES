@@ -70,7 +70,6 @@ notebook.lisp
 paned-window.lisp
 pixbuf-scale.lisp
 pixbufs.lisp
-progress-bar.lisp
 save.png
 scale-widgets.lisp
 scrolled-window.lisp

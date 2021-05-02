@@ -57,7 +57,6 @@
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")
-               (:file "progress-bar")
                (:file "scale-widgets")
                (:file "search-entry")
                (:file "selections-1")

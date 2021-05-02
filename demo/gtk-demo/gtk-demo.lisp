@@ -173,8 +173,8 @@
                                 "info-bar.lisp"
                                 "EXAMPLE-INFO-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Progress Bar Widget"
-                                "progress-bar.lisp"
+                                "Progress Bar"
+                                "../gtk-example/progress-bar.lisp"
                                 "EXAMPLE-PROGRESS-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Level Bar"
