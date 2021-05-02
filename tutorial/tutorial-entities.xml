@@ -288,9 +288,25 @@
                  url='&api;gtk_fun_gtk-button-new-from-icon-name.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-button-new-from-icon-name</code></ulink>">
 
-<!ENTITY gtk-button-box                      "&api;gtk_class_gtk-button-box.html">
-<!ENTITY gtk-button-box-new                  "&api;gtk_fun_gtk-button-box-new.html">
-<!ENTITY gtk-button-box-layout               "&api;gtk_fun_gtk-button-box-layout.html">
+<!--     GKT-BUTTON-BOX     -->
+
+<!ENTITY gtk-button-box
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-button-box.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-box</code></ulink>">
+<!ENTITY gtk-button-box-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-box-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-box-new</code></ulink>">
+<!ENTITY gtk-button-box-child-non-homogeneous
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-box-child-non-homogeneous.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-box-child-non-homogeneous</code></ulink>">
+<!ENTITY gtk-button-box-layout-style
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-button-box-layout-style.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-button-box-layout-style</code></ulink>">
+
 
 <!ENTITY gtk-buttons-type                    "&api;gtk_sym_gtk-buttons-type.html">
 
@@ -772,10 +788,23 @@
                  url='&api;gtk_class_gtk-layout.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-layout</code></ulink>">
 
-<!ENTITY gtk-layout-new                      "&api;gtk_fun_gtk-layout-new.html">
-<!ENTITY gtk-layout-move                     "&api;gtk_fun_gtk-layout-move.html">
-<!ENTITY gtk-layout-put                      "&api;gtk_fun_gtk-layout-put.html">
-<!ENTITY gtk-layout-size                     "&api;gtk_fun_gtk-layout-size.html">
+<!ENTITY gtk-layout-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-layout-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-layout-new</code></ulink>">
+<!ENTITY gtk-layout-move
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-layout-move.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-layout-move</code></ulink>">
+<!ENTITY gtk-layout-put
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-layout-put.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-layout-put</code></ulink>">
+<!ENTITY gtk-layout-size
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-layout-size.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-layout-size</code></ulink>">
+
 
 <!-- ... GTK-LINK-BUTTON ................................................................................. -->
 
@@ -2060,14 +2089,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-end'>
           <code xmlns='http://docbook.org/ns/docbook'>margin-end</code></ulink>">
-<!ENTITY gtk_widget_margin-left
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-left'>
-          <code xmlns='http://docbook.org/ns/docbook'>margin-left</code></ulink>">
-<!ENTITY gtk_widget_margin-right
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-right'>
-          <code xmlns='http://docbook.org/ns/docbook'>margin-right</code></ulink>">
 <!ENTITY gtk_widget_margin-start
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-start'>

@@ -4346,8 +4346,7 @@ int main( int argc, char *argv[] )
    </example>
   </section>
 
-  <section id="Fixed_Container">
-  <!-- 2021-2-9 -->
+  <section id="Fixed_Container" revision="2021-2-9">
    <title>Fixed Container</title>
    <figure id="figure-fixed">
     <title>Fixed Container</title>
@@ -4443,64 +4442,85 @@ int main( int argc, char *argv[] )
    </example>
   </section>
 
-  <section id="Layout_Container">
-   <title>Layout Container</title>
+  <section id="Button_Boxes" revision="2021-4-30">
+   <title>Button Boxes</title>
+
+   <figure id="figure-button-box">
+    <title>Button Boxes</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/button-box.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
    <para>
-    The layout container &gtk-layout; is similar to the fixed
-    container &gtk-fixed; except that it implements an infinite
-    (where infinity is less than 2^32) scrolling area.  The X window system has a limitation where windows
-    can be at most 32767 pixels wide or tall.  The layout container gets around this limitation by doing some
-    exotic stuff using window and bit gravities, so that you can have smooth scrolling even when you have
-    many child widgets in your scrolling area.
+    A &gtk-button-box; widget should be used to provide a consistent layout of buttons throughout your
+    application. The layout/spacing can be altered by the programmer, or if desired, by the user to alter the
+    'feel' of a program to a small degree.
    </para>
    <para>
-    A layout container is created using <ulink url="&gtk-layout-new;"><code>gtk-layout-new</code></ulink>
-    which accepts the optional arguments <code>hadjustment</code> and <code>vadjustment</code> to specify
-    adjustment objects that the layout widget will use for its scrolling.
+    The main purpose of &gtk-button-box; widget is to make sure the children have all the same size. The
+    &gtk-button-box; widget gives all children the same size, but it does allow 'outliers' to keep their own
+    larger size. The function &gtk-button-box-layout-style; retrieves and alters the method used to spread
+    the buttons in a button box across the container. To excempt individual children from homogeneous sizing
+    regardless of their 'outlier' status, you can set the <code>non-homogeneous</code> child property with
+    the function &gtk-button-box-child-non-homogeneous;.
    </para>
    <para>
-    Widgets can be added and moved in the Layout container using the functions <ulink url="&gtk-layout-put;">
-    <code>gtk-layout-put</code></ulink> and <ulink url="&gtk-layout-move;">
-    <code>gtk-layout-move</code></ulink>.  The size of the layout container can be set using the function
-    <ulink url="&gtk-layout-size;"><code>gtk-layout-size</code></ulink>.
+    You can create a new button box with the function &gtk-button-box-new;, which creates a horizontal or
+    vertical button box depending on the argument <code>orientation</code> which takes the values
+    <code>:horizontal</code> or <code>:vertical</code>, respectively. Buttons are added to a button box using
+    the usual function &gtk-container-add;. The code in <xref linkend="example-button-box"/> shows an example
+    that illustrates different layout settings for button boxes.
+   </para>
+
+   <example id="example-button-box">
+    <title>Button Boxes</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/button-box.lisp" parse="text"/>
+    </programlisting>
+   </example>
+  </section>
+
+  <section id="Layout_Widget" revision="2021-4-27">
+   <title>Layout Widget</title>
+
+   <para>
+    The &gtk-layout; widget is similar to the &gtk-fixed; widget except that it implements an infinite
+    scrolling area. A layout widget is created using the function &gtk-layout-new; which accepts the
+    optional arguments <code>hadjustment</code> and <code>vadjustment</code> to specify adjustment objects
+    that the layout widget will use for its scrolling.
+   </para>
+
+   <figure id="figure-layout">
+    <title>Layout Widget</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/layout.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    Widgets can be added and moved in the layout widget using the functions &gtk-layout-put; and
+    &gtk-layout-move;. The size of the layout widget can be set using the function &gtk-layout-size;.
    </para>
    <para>
-    &gtk-layout; implements the interface
-    &gtk-scrollable;.  Therefore, for manipulating the
-    horizontal and vertical adjustment widgets the functions &gtk-scrollable-hadjustment;
+    The &gtk-layout; class implements the &gtk-scrollable; interface. Therefore, for manipulating the
+    horizontal and vertical adjustment objects the functions &gtk-scrollable-hadjustment;
     and &gtk-scrollable-vadjustment; are available.
    </para>
+
+   <example id="example-layout">
+    <title>Layout Widget</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/layout.lisp" parse="text"/>
+    </programlisting>
+   </example>
   </section>
 
   <section id="Frames">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Frames">
-      <primary>GtkFrame</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>frame, gtk-frame</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>frame-new, gtk-frame-new</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>frame-label, gtk-frame-label</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>frame-set-label-align, gtk-frame-set-label-align</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>GtkShadowType</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>shadow-type, gtk-shadow-type</primary>
-     </indexterm>
-     <indexterm zone="Frames">
-      <primary>frame-shadow-type, gtk-frame-shadow-type</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Frames</title>
    <figure id="figure-frame">
     <title>Frame Widget</title>
@@ -4642,34 +4662,6 @@ int main( int argc, char *argv[] )
   </section>
 
   <section id="Paned_Window_Widgets">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>GtkPaned</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned, gtk-paned</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-new, gtk-paned-new</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-pack1, gtk-paned-pack1</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-pack2, gtk-paned-pack2</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-add1, gtk-paned-add1</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-add2, gtk-paned-add2</primary>
-     </indexterm>
-     <indexterm zone="Paned_Window_Widgets">
-      <primary>paned-set-position, gtk-paned-set-position</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
    <title>Paned Window Widgets</title>
    <figure id="figure-paned-window">
     <title>Paned Window Widgets</title>
@@ -4912,182 +4904,6 @@ int main( int argc, char *argv[] )
     <title>Scrolled Window</title>
     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
 <xi:include href="../demo/gtk-example/scrolled-window.lisp" parse="text"/>
-    </programlisting>
-   </example>
-  </section>
-
-  <section id="Button_Boxes">
-   <title>Button Boxes</title>
-   <figure id="figure-button-box">
-    <title>Button Boxes</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/button-box576x603.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    A button box should be used to provide a consistent layout of buttons throughout your application.  The
-    layout/spacing can be altered by the programmer, or if desired, by the user to alter the 'feel' of a
-    program to a small degree.
-   </para>
-   <para>
-    <ulink url="&gtk-button-box-layout;"><code>gtk-button-box-layout</code></ulink> retrieve and alter the
-    method used to spread the buttons in a button box across the container, respectively.
-   </para>
-   <para>
-    The main purpose of <ulink url="&gtk-button-box;"><code>gtk-button-box</code></ulink> is to make sure the
-    children have all the same size.  <ulink url="&gtk-button-box;"><code>gtk-button-box</code></ulink> gives
-    all children the same size, but it does allow 'outliers' to keep their own larger size.  To force all
-    children to be strictly the same size without exceptions, you can set the "homogeneous" property to
-    <code>T</code>.
-   </para>
-   <para>
-    To excempt individual children from homogeneous sizing regardless of their 'outlier' status, you can set
-    the "non-homogeneous" child property.
-   </para>
-   <para>
-    You can create a new button box with the function <ulink url="&gtk-button-box-new;">
-    <code>gtk-button-box-new</code></ulink>, which creates a horizontal or vertical box depending on the
-    argument <code>orientation</code> which takes the values <code>:horizontal</code> or
-    <code>:vertical</code>, respectively.
-   </para>
-   <para>
-    Buttons are added to a Button Box using the usual function &gtk-container-add;.
-   </para>
-   <para>
-    <link linkend="example-button-box">Button Box</link> is an example that illustrates all the different 
-    layout settings for button boxes.
-   </para>
-   <example id="example-button-box">
-    <title>Button Boxes</title>
-    <programlisting>
-(defun create-bbox (orientation title spacing layout)
-  (let ((frame (make-instance 'gtk-frame
-                              :label title))
-        (bbox (make-instance 'gtk-button-box
-                             :orientation orientation
-                             :border-width 6
-                             :layout-style layout
-                             :spacing spacing)))
-    (gtk-container-add bbox
-                       (make-instance 'gtk-button
-                                      :label "OK"
-                                      :always-show-image t
-                                      :image
-                                      (make-instance 'gtk-image
-                                                     :icon-name "gtk-ok")))
-  (gtk-container-add bbox
-                     (make-instance 'gtk-button
-                                    :label "Cancel"
-                                    :always-show-image t
-                                    :image
-                                    (make-instance 'gtk-image
-                                                   :icon-name "gtk-cancel")))
-  (gtk-container-add bbox
-                     (make-instance 'gtk-button
-                                    :label "Help"
-                                    :always-show-image t
-                                    :image
-                                    (make-instance 'gtk-image
-                                                   :icon-name "gtk-help")))
-  (gtk-container-add frame bbox)
-  frame))
-
-(defun example-button-box ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Button Box"
-                                 :border-width 12))
-          (vbox1 (make-instance 'gtk-box
-                                :orientation :vertical
-                                :homogeneous nil
-                                :spacing 12))
-          (vbox2 (make-instance 'gtk-box
-                                :orientation :vertical
-                                :homogeneous nil
-                                :spacing 12))
-          (hbox (make-instance 'gtk-box
-                               :orientation :horizontal
-                               :homogeneous nil
-                               :spacing 12)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Create Horizontal Button Boxes
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :ypad 6
-                                         :xalign 0
-                                         :use-markup t
-                                         :label
-                                         "&#x3c;b>Horizontal Button Boxes&#x3c;/b>")
-                          :expand nil
-                          :fill nil)
-      ;; Create the first Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox :horizontal
-                                       "Spread (spacing 12)"
-                                       12
-                                       :spread))
-      ;; Create the second Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox :horizontal
-                                       "Edge (spacing 12)"
-                                       12
-                                       :edge))
-      ;; Create the third Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox :horizontal
-                                       "Start (spacing 6)"
-                                       6
-                                       :start))
-      ;; Create the fourth Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox :horizontal
-                                       "End (spacing 6)"
-                                       6
-                                       :end))
-      (gtk-box-pack-start vbox1 vbox2)
-      ;; Create Vertical Button Boxes
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :ypad 12
-                                         :xalign 0
-                                         :use-markup t
-                                         :label
-                                         "&#x3c;b>Vertical Button Boxes&#x3c;/b>")
-                          :expand nil
-                          :fill nil)
-      ;; Create the first Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox :vertical
-                                       "Spread (spacing 12)"
-                                       12
-                                       :spread))
-      ;; Create the second Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox :vertical
-                                       "Edge (spacing 12)"
-                                       12
-                                       :edge))
-      ;; Create the third Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox :vertical
-                                       "Start (spacing 6)"
-                                       6
-                                       :start))
-      ;; Create the fourth Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox :vertical
-                                       "End (spacing 6)"
-                                       6
-                                       :end))
-      (gtk-box-pack-start vbox1 hbox)
-      (gtk-container-add window vbox1)
-      (gtk-widget-show-all window))))
     </programlisting>
    </example>
   </section>
@@ -5546,7 +5362,7 @@ int main( int argc, char *argv[] )
     <para>
      The functions &gtk-text-iter-forward-search; and &gtk-text-iter-backward-search; can be used to search
      for a given text within a text buffer. Both functions return as the first value a boolean to indicate
-     wether the search was sucessful. If this is the case the second and third values contain the
+     whether the search was sucessful. If this is the case the second and third values contain the
      <code>match-start</code> and <code>match-end</code> iterators.
     </para>
 
@@ -7498,8 +7314,8 @@ lambda (buffer location text len)
       </programlisting>
     </section>
 
-    <section id="Checking_Wether_a_Row_is_Selected" revision="2021-2-28">
-     <title>Checking Wether a Row is Selected</title>
+    <section id="Checking_Whether_a_Row_is_Selected" revision="2021-2-28">
+     <title>Checking Whether a Row is Selected</title>
      <para>
       You can check whether a given row is selected or not using the functions the functions
       &gtk-tree-selection-iter-is-selected;. or &gtk-tree-selection-path-is-selected;. If you want to know all
@@ -7937,7 +7753,7 @@ lambda (buffer location text len)
     Alternatively to the function <ulink url="&gtk-dialog-add-button;">
     <code>gtk-dialog-add-button</code></ulink> buttons can be added with the functions
     &gtk-box-pack-start; or &gtk-box-pack-end; to the action area.  The action
-    area is of type <ulink url="&gtk-button-box;"><code>gtk-button-box</code></ulink> with a
+    area is of type &gtk-button-box; with a
     <code>:horizontal</code> orientation and can be get with the function
     <ulink url="&gtk-dialog-action-area;"><code>gtk-dialog-action-area</code></ulink>.
    </para>
@@ -12997,6 +12813,9 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
+
 
 
 
