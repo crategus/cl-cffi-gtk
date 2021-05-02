@@ -3287,153 +3287,141 @@ int main( int argc, char *argv[] )
    </example>
   </section>
 
-  <section id="Progress_Bars">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Progress_Bars"><primary>GtkProgressBar</primary></indexterm>
-     <indexterm zone="Progress_Bars"><primary>progress-bar, gtk-progress-bar</primary></indexterm>
-     <indexterm zone="Progress_Bars"><primary>progress-bar-new, gtk-progress-bar-new</primary></indexterm>
-     <indexterm zone="Progress_Bars"><primary>progress-bar-bar-fraction, gtk-progress-bar-fraction</primary></indexterm>
-    </itermset>
-   </sectioninfo>
-   <title>Progress Bars</title>
-   <figure id="figure-progress-bar">
-    <title>Progress Bar</title>
+  <section id="Info_Bars">
+   <title>Info Bars</title>
+   <figure id="figure-info-bar">
+    <title>Info Bar</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/progress-bar302x196.png" format="png"></imagedata>
+      <imagedata fileref="figures/info-bar385x165.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
    <para>
-    Progress bars are implemented as the class <ulink url="&gtk-progress-bar;">
-    <code>gtk-progress-bar</code></ulink> and are used to show the status of an operation.  They are pretty
-    easy to use, as you will see with the code below.  But first lets start out with the function
-    <ulink url="&gtk-progress-bar-new;"><code>gtk-progress-bar-new</code></ulink> to create a new progress
-    bar.  Now that the progress bar has been created we can use it and set the fraction with the function
-    <ulink url="&gtk-progress-bar-fraction;"><code>gtk-progress-bar-fraction</code></ulink>, which has two
-    arguments.  The first argument is the progress bar you wish to operate on, and the second argument is
-    the amount "completed", meaning the amount the progress bar has been filled from 0 - 100%.  This is
-    passed to the function as a real number ranging from 0 to 1.
+    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is a widget that can be used to show
+    messages to the user without showing a dialog.  It is often temporarily shown at the top or bottom of
+    a document.  In contrast to &gtk-dialog;, which has a
+    horizontal action area at the bottom, <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink>
+    has a vertical action area at the side.
    </para>
    <para>
-    A progress bar may be set to one of a number of orientations using the function
-    &gtk-orientable-orientation;.  The second
-    argument is the orientation and may take one of the values of <code>:horizontal</code> or
-    <code>:vertical</code> of the &gtk-orientation;
-    enumeration.  Progress bars normally grow from top to bottom or left to right. With the function
-    <ulink url="&gtk-progress-bar-inverted;"><code>gtk-progress-bar-inverted</code></ulink> can be set to
-    grow in the opposite direction.
+    The API of <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is very similar to
+    &gtk-dialog;, allowing you to add buttons to the action
+    area with <ulink url="&gtk-info-bar-add-button;"><code>gtk-info-bar-add-button</code></ulink> or
+    <ulink url="&gtk-info-bar-new-with-buttons;"><code>gtk-info-bar-new-with-buttons</code></ulink>.  The
+    sensitivity of action widgets can be controlled with <ulink url="&gtk-info-bar-set-response-sensitive;">
+    <code>gtk-info-bar-set-response-sensitive</code></ulink>.  To add widgets to the main content area of a
+    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink>, use the function
+    <ulink url="&gtk-info-bar-content-area;"><code>gtk-info-bar-content-area</code></ulink> and add your
+    widgets to the container.
    </para>
    <para>
-    As well as indicating the amount of progress that has occurred, the progress bar may be set to just
-    indicate that there is some activity.  This can be useful in situations where progress cannot be
-    measured against a value range.  The function <ulink url="&gtk-progress-bar-pulse;">
-    <code>gtk-progress-bar-pulse</code></ulink> indicates that some progress has been made.  The step size
-    of the activity indicator is set using the function <ulink url="&gtk-progress-bar-pulse-step;">
-    <code>gtk-progress-bar-pulse-step</code></ulink>.
+    Similar to <ulink url="&gtk-message-dialog;"><code>gtk-message-dialog</code></ulink>, the contents of a
+    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> can by classified as error message,
+    warning, informational message, etc, by using <ulink url="&gtk-info-bar-message-type;">
+    <code>gtk-info-bar-message-type</code></ulink>.  GTK+ uses the message type to determine the background
+    color of the message area.
    </para>
-   <para>
-    The progress bar can also display a configurable text string within its trough, using the function
-    <ulink url="&gtk-progress-bar-text;"><code>gtk-progress-bar-text</code></ulink>.  You can turn off the
-    display of the string by calling <ulink url="&gtk-progress-bar-text;">
-    <code>gtk-progress-bar-text</code></ulink> again with <code>NIL</code> as second argument.  The current
-    text setting of a progress bar can be retrieved with the function
-    <ulink url="&gtk-progress-bar-text;"><code>gtk-progress-bar-text</code></ulink>.
-   </para>
-   <para>
-    Progress Bars are usually used with timeouts or other such functions (see section on Timeouts, I/O and
-    Idle Functions) to give the illusion of multitasking.  All will employ the
-    <ulink url="&gtk-progress-bar-fraction;"><code>gtk-progress-bar-fraction</code></ulink> or
-    <ulink url="&gtk-progress-bar-pulse;"><code>gtk-progress-bar-pulse</code></ulink> functions in the same
-    manner.
-   </para>
-   <para>
-    The example <link linkend="example-progress-bar">Progress Bar</link> shows an example of the progress
-    bar, updated using timeouts.  This code also shows you how to reset the Progress Bar.  The output
-    of this example is in the figure <link linkend="figure-progress-bar">Progress bar</link>.
-   </para>
-   <example id="example-progress-bar">
-    <title>Progress Bar</title>
+   <example id="example-info-bar">
+    <title>Info Bar</title>
     <programlisting>
-(defstruct pbar-data
-  pbar
-  timer
-  mode)
-
-(defun progress-bar-timeout (pdata)
-  (if (pbar-data-mode pdata)
-      (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-      (let ((val (+ (gtk-progress-bar-fraction (pbar-data-pbar pdata))
-                    0.01)))
-        (when (> val 1.0) (setq val 0.0))
-        (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata)) val)))
-  t)
-
-(defun example-progress-bar ()
+(defun example-info-bar ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "GTK+ 3.4 Example Progress Bar"
-                                 :default-width 300))
-          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)))
-          (vbox (make-instance 'gtk-box
-                               :orientation :vertical
-                               :border-width 12
-                               :spacing 12))
-          (align (gtk-alignment-new 0.1 0.9 1.0 0.0))
-          (table (gtk-table-new 2 3 t)))
-      (setf (pbar-data-timer pdata)
-            (g-timeout-add 100
-                           (lambda ()
-                             (progress-bar-timeout pdata))))
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Info bar"
+                                  :border-width 12
+                                  :default-width 250))
+           (grid (make-instance 'gtk-grid))
+           (info-bar (make-instance 'gtk-info-bar
+                                    :no-show-all t))
+           (message (make-instance 'gtk-label
+                                   :label ""))
+           (content (gtk-info-bar-content-area info-bar)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (g-source-remove (pbar-data-timer pdata))
-                          (setf (pbar-data-timer pdata) 0)
                           (leave-gtk-main)))
-      (gtk-box-pack-start vbox align)
-      (gtk-container-add align (pbar-data-pbar pdata))
-      (gtk-box-pack-start vbox table)
-      (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (let ((text (gtk-progress-bar-text (pbar-data-pbar pdata))))
-               (if (or (null text) (zerop (length text)))
-                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata))
-                         "Some text")
-                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
-               (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
-                     (gtk-toggle-button-active check)))))
-        (gtk-table-attach table check 0 1 0 1))
-      (let ((check (gtk-check-button-new-with-label "Activity mode")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (setf (pbar-data-mode pdata)
-                   (not (pbar-data-mode pdata)))
-             (if (pbar-data-mode pdata)
-                 (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-                 (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata))
-                       0.0))))
-        (gtk-table-attach table check 0 1 1 2))
-      (let ((check (gtk-check-button-new-with-label "Inverted")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (setf (gtk-progress-bar-set-inverted (pbar-data-pbar pdata))
-                   (gtk-toggle-button-active check))))
-        (gtk-table-attach table check 0 1 2 3))
-      (let ((button (gtk-button-new-with-label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
-      (gtk-container-add window vbox)
+      (gtk-widget-show message)
+      ;; Add a label to the content area of the info bar
+      (gtk-container-add content message)
+      ;; Add a button OK to the action area
+      (gtk-info-bar-add-button info-bar "gtk-ok" 1)
+      ;; Add two more buttons to the action area
+      (gtk-info-bar-add-buttons info-bar "gtk-cancel" 2
+                                         "gtk-no" 3)
+      ;; Connect a handler for the "response" signal of the info bar
+      (g-signal-connect info-bar "response"
+         (lambda (widget response-id)
+           (declare (ignore widget))
+           (format t "response-id is ~A~%" response-id)
+           (gtk-widget-hide info-bar)))
+      (gtk-grid-attach grid info-bar 0 2 1 1)
+      ;; Show the info bar
+      (setf (gtk-label-text message) "An Info Message in the content area.")
+      (setf (gtk-info-bar-message-type info-bar) :info)
+      (gtk-widget-show info-bar)
+      ;; Add the container grid to the window and show all
+      (gtk-container-add window grid)
       (gtk-widget-show-all window))))
+    </programlisting>
+   </example>
+  </section>
+
+  <section id="Progress_Bars" revision="2021-5-2">
+   <title>Progress Bars</title>
+
+   <figure id="figure-progress-bar">
+    <title>Progress Bar</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/progress-bar.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    Progress bars are implemented as the &gtk-progress-bar; class and are used to show the status of an
+    operation. They are pretty easy to use, as you will see with the code below. But first lets start out
+    with the function &gtk-progress-bar-new; to create a new progress bar. Now that the progress bar has been
+    created we can use it and set the fraction with the function &gtk-progress-bar-fraction;, which has two
+    arguments. The first argument is the progress bar you wish to operate on, and the second argument is
+    the amount "completed", meaning the amount the progress bar has been filled from 0 - 100%. This is passed
+    to the function as a real number ranging from 0.0 to 1.0.
+   </para>
+   <para>
+    A progress bar may be set to one of a number of orientations using the function
+    &gtk-orientable-orientation;. The second argument is the orientation and may take one of the values of
+    <code>:horizontal</code> or <code>:vertical</code> of the &gtk-orientation; enumeration. Progress bars
+    normally grow from top to bottom or left to right. With the function &gtk-progress-bar-inverted; can be
+    set to grow in the opposite direction.
+   </para>
+   <para>
+    As well as indicating the amount of progress that has occurred, the progress bar may be set to just
+    indicate that there is some activity. This can be useful in situations where progress cannot be measured
+    against a value range. The function &gtk-progress-bar-pulse; indicates that some progress has been made.
+    The step size of the activity indicator is set using the function &gtk-progress-bar-pulse-step;.
+   </para>
+   <para>
+    The progress bar can also display a configurable text string within its trough, using the function
+    &gtk-progress-bar-text;. You can turn off the display of the string by calling the function
+    &gtk-progress-bar-text; again with <code>nil</code> as second argument. The current text setting of a
+    progress bar can be retrieved with the function &gtk-progress-bar-text;.
+   </para>
+   <para>
+    Progress bars are usually used with timeouts or other such functions to give the illusion of multitasking.
+    All will employ the functions &gtk-progress-bar-fraction; or &gtk-progress-bar-pulse; in the same manner.
+   </para>
+   <para>
+    <xref linkend="example-progress-bar"/> shows an example of the progress bar, updated using timeouts. This
+    code also shows how to reset the progress bar. The output of this example is shown in
+    <xref linkend="figure-progress-bar"/>.
+   </para>
+
+   <example id="example-progress-bar">
+    <title>Progress Bar</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/progress-bar.lisp" parse="text"/>
     </programlisting>
    </example>
   </section>
@@ -3523,93 +3511,6 @@ int main( int argc, char *argv[] )
         (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
       (gtk-container-add window vbox)
       (gtk-widget-show window))))
-    </programlisting>
-   </example>
-  </section>
-
-  <section id="Info_Bars">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Info_Bars"><primary>GtkInfoBars</primary></indexterm>
-     <indexterm zone="Info_Bars"><primary>info-bar, gtk-info-bar</primary></indexterm>
-    </itermset>
-   </sectioninfo>
-   <title>Info Bars</title>
-   <figure id="figure-info-bar">
-    <title>Info Bar</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/info-bar385x165.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is a widget that can be used to show
-    messages to the user without showing a dialog.  It is often temporarily shown at the top or bottom of
-    a document.  In contrast to &gtk-dialog;, which has a
-    horizontal action area at the bottom, <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink>
-    has a vertical action area at the side.
-   </para>
-   <para>
-    The API of <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> is very similar to
-    &gtk-dialog;, allowing you to add buttons to the action
-    area with <ulink url="&gtk-info-bar-add-button;"><code>gtk-info-bar-add-button</code></ulink> or
-    <ulink url="&gtk-info-bar-new-with-buttons;"><code>gtk-info-bar-new-with-buttons</code></ulink>.  The
-    sensitivity of action widgets can be controlled with <ulink url="&gtk-info-bar-set-response-sensitive;">
-    <code>gtk-info-bar-set-response-sensitive</code></ulink>.  To add widgets to the main content area of a
-    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink>, use the function
-    <ulink url="&gtk-info-bar-content-area;"><code>gtk-info-bar-content-area</code></ulink> and add your
-    widgets to the container.
-   </para>
-   <para>
-    Similar to <ulink url="&gtk-message-dialog;"><code>gtk-message-dialog</code></ulink>, the contents of a
-    <ulink url="&gtk-info-bar;"><code>gtk-info-bar</code></ulink> can by classified as error message,
-    warning, informational message, etc, by using <ulink url="&gtk-info-bar-message-type;">
-    <code>gtk-info-bar-message-type</code></ulink>.  GTK+ uses the message type to determine the background
-    color of the message area.
-   </para>
-   <example id="example-info-bar">
-    <title>Info Bar</title>
-    <programlisting>
-(defun example-info-bar ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Example Info bar"
-                                  :border-width 12
-                                  :default-width 250))
-           (grid (make-instance 'gtk-grid))
-           (info-bar (make-instance 'gtk-info-bar
-                                    :no-show-all t))
-           (message (make-instance 'gtk-label
-                                   :label ""))
-           (content (gtk-info-bar-content-area info-bar)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-widget-show message)
-      ;; Add a label to the content area of the info bar
-      (gtk-container-add content message)
-      ;; Add a button OK to the action area
-      (gtk-info-bar-add-button info-bar "gtk-ok" 1)
-      ;; Add two more buttons to the action area
-      (gtk-info-bar-add-buttons info-bar "gtk-cancel" 2
-                                         "gtk-no" 3)
-      ;; Connect a handler for the "response" signal of the info bar
-      (g-signal-connect info-bar "response"
-         (lambda (widget response-id)
-           (declare (ignore widget))
-           (format t "response-id is ~A~%" response-id)
-           (gtk-widget-hide info-bar)))
-      (gtk-grid-attach grid info-bar 0 2 1 1)
-      ;; Show the info bar
-      (setf (gtk-label-text message) "An Info Message in the content area.")
-      (setf (gtk-info-bar-message-type info-bar) :info)
-      (gtk-widget-show info-bar)
-      ;; Add the container grid to the window and show all
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window))))
     </programlisting>
    </example>
   </section>
@@ -12813,6 +12714,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
 
 
 

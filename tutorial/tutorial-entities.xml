@@ -1061,13 +1061,37 @@
 
 <!-- ... GTK-PROGRESS-BAR ................................................................................ -->
 
-<!ENTITY gtk-progress-bar                    "&api;gtk_class_gtk-progress-bar.html">
-<!ENTITY gtk-progress-bar-fraction           "&api;gtk_fun_gtk-progress-bar-fraction.html">
-<!ENTITY gtk-progress-bar-inverted           "&api;gtk_fun_gtk-progress-bar-inverted.html">
-<!ENTITY gtk-progress-bar-new                "&api;gtk_fun_gtk-progress-bar-new.html">
-<!ENTITY gtk-progress-bar-pulse              "&api;gtk_fun_gtk-progress-bar-pulse.html">
-<!ENTITY gtk-progress-bar-pulse-step         "&api;gtk_fun_gtk-progress-bar-pulse-step.html">
-<!ENTITY gtk-progress-bar-text               "&api;gtk_fun_gtk-progress-bar-text.html">
+<!ENTITY gtk-progress-bar
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-progress-bar.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar</code></ulink>">
+
+<!ENTITY gtk-progress-bar-fraction
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-fraction.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-fraction</code></ulink>">
+<!ENTITY gtk-progress-bar-inverted
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-inverted.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-inverted</code></ulink>">
+<!ENTITY gtk-progress-bar-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-new</code></ulink>">
+<!ENTITY gtk-progress-bar-pulse
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-pulse.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-pulse</code></ulink>">
+<!ENTITY gtk-progress-bar-pulse-step
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-pulse-step.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-pulse-step</code></ulink>">
+<!ENTITY gtk-progress-bar-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-progress-bar-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-progress-bar-text</code></ulink>">
+
+<!-- ... GTK-RADIO-ACTION ................................................................................ -->
 
 <!ENTITY gtk-radio-action
          "<ulink xmlns='http://docbook.org/ns/docbook'
