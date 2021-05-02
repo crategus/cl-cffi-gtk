@@ -341,13 +341,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pack-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-pack-type atdoc:*external-symbols*)
- "@version{2020-4-21}
+ "@version{2021-4-30}
   @begin{short}
-    Represents the packing location of a @class{gtk-box} child.
+    Represents the packing location of a @class{gtk-box} child widget.
   @end{short}
-  See also @class{gtk-button-box}.
+  See also the @class{gtk-button-box} widget.
   @begin{pre}
 (define-g-enum \"GtkPackType\" gtk-pack-type
   (:export t
