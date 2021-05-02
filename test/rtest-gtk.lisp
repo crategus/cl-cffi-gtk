@@ -38,7 +38,7 @@
 ;    gtk.action-bar.lisp
 ;    gtk.header-bar.lisp
 ;    gtk.overlay.lisp
-;    gtk.button-box.lisp
+(load "rtest-gtk-button-box.lisp")
 (load "rtest-gtk-paned.lisp")
 (load "rtest-gtk-layout.lisp")
 (load "rtest-gtk-notebook.lisp")
@@ -285,4 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2021-3-25
+;;; 2021-4-30
