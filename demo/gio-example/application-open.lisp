@@ -1,8 +1,8 @@
-;;;; Example Application Open
+;;;; Example Application Open (2021-5-5)
 
 (in-package :gio-example)
 
-(defun example-application-open (&optional (argv nil))
+(defun application-open (&optional (argv nil))
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id "com.crategus.application-open"
@@ -35,7 +35,7 @@
                           ;; GFile objects. We list the pathnames of the files.
                           (dotimes (i n-files)
                             (let ((file (mem-aref files '(g-object g-file) i)))
-                              (format t " ~a~%" (g-file-get-path file))))))
+                              (format t " ~a~%" (g-file-path file))))))
       ;; Signal handler "shutdown"
       (g-signal-connect app "shutdown"
                         (lambda (application)
@@ -45,5 +45,3 @@
                           (leave-gtk-main)))
       ;; Start the application
       (g-application-run app argv))))
-
-;;; 2020-12-10

@@ -1,6 +1,7 @@
 (defpackage :gtk-demo
   (:use :gtk-example
         :gtk-tutorial
+        :gio-example
         :gtk :gdk :gdk-pixbuf :gobject
         :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
   (:export #:gtk-demo))
@@ -11,4 +12,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-demo)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-3-13
+;;; 2021-5-7

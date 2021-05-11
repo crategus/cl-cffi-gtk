@@ -1,4 +1,11 @@
 ;;;; Example Emblemed Icon (2021-4-27)
+;;;;
+;;;; The g-emblemed-icon class is an implementation of the g-icon interface that
+;;;; supports adding an emblem to an icon. Adding multiple emblems to an icon is
+;;;; ensured via the function g-emblemed-icon-add-emblem.
+;;;;
+;;;; Note that the g-emblemed-icon class allows no control over the position of
+;;;; the emblems. See also the g-emblem class for more information.
 
 (in-package :gio-example)
 
@@ -11,9 +18,8 @@
                                   :default-width 300
                                   :default-height 200))
            (grid (make-instance 'gtk-grid
-                                :row-homogeneous t
                                 :column-spacing 24
-                                :row-spacing 6))
+                                :row-spacing 24))
            (icon (make-instance 'g-themed-icon
                                 :name "desktop"))
            (emblemed-icon (make-instance 'g-emblemed-icon
@@ -34,35 +40,30 @@
                                            :use-markup t
                                            :xalign 0.0
                                            :valign :center
-                                           :label "<big><b>Icon</b></big>")
-                            1 1 1 2)
+                                           :label "<b>Icon</b>")
+                            1 0 1 2)
       (gtk-grid-attach grid (make-instance 'gtk-image
                                            :icon-size 6
                                            :gicon icon)
-                            3 2 1 1)
+                            3 1 1 1)
       (gtk-grid-attach grid (make-instance 'gtk-label
                                            :use-markup t
                                            :xalign 0.0
-                                           :label "<big><b>Emblem</b></big>")
-                            1 3 1 2)
+                                           :label "<b>Emblem</b>")
+                            1 2 1 2)
       (gtk-grid-attach grid (make-instance 'gtk-image
                                            :icon-size 6
                                            :gicon (g-emblem-icon emblem))
-                            3 4 1 1)
-      (gtk-grid-attach grid (make-instance 'gtk-label
-                                           :use-markup t
-                                           :xalign 0.0
-                                           :label "<big><b>Emblem</b></big>")
-                            1 3 1 2)
+                            3 3 1 1)
       (gtk-grid-attach grid (make-instance 'gtk-label
                                            :use-markup t
                                            :xalign 0.0
                                            :label
-                                           "<big><b>Emblemed Icon</b></big>")
-                            1 5 1 2)
+                                           "<b>Emblemed Icon</b>")
+                            1 4 1 2)
       (gtk-grid-attach grid (make-instance 'gtk-image
                                            :icon-size 6
                                            :gicon emblemed-icon)
-                            3 6 1 1)
+                            3 5 1 1)
       (gtk-container-add window grid)
       (gtk-widget-show-all window))))

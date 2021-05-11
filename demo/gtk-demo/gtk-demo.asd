@@ -6,6 +6,7 @@
   :serial t
   :depends-on (:gtk-example
                :gtk-tutorial
+               :gio-example
                :cl-cffi-gtk :split-sequence)
   :components ((:file "package")
                (:file "alignment")
@@ -74,4 +75,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-4-30
+;;; 2021-5-7

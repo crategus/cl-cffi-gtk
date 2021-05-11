@@ -503,6 +503,10 @@
                                 "Demo Pixbufs"
                                 "pixbufs.lisp"
                                 "DEMO-PIXBUFS")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Emblemed Icons"
+                                "../gio-example/emblemed-icon.lisp"
+                                "EXAMPLE-EMBLEMED-ICON")
     )
     model))
 

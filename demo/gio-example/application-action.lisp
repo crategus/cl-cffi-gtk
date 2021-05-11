@@ -1,11 +1,11 @@
-;;;; Example Application Action
+;;;; Example Application Action (2021-5-5)
 
 (in-package :gio-example)
 
 (defun activate-action (app name)
-  (let ((param-type (g-action-group-get-action-parameter-type app name))
-        (state (g-action-group-get-action-state app name))
-        (enabled (g-action-group-get-action-enabled app name)))
+  (let ((param-type (g-action-group-action-parameter-type app name))
+        (state (g-action-group-action-state app name))
+        (enabled (g-action-group-action-enabled app name)))
     ;; Print information about the action
     (format t "     action name : ~A~%" name)
     (format t "  parameter type : ~A~%" param-type)
@@ -16,7 +16,7 @@
     ;; Activate the action
     (g-action-group-activate-action app name state)))
 
-(defun example-application-action (&optional (argv nil))
+(defun application-action (&optional (argv nil))
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id "com.crategus.application-action"
@@ -72,5 +72,3 @@
 
       ;; Start the application
       (g-application-run app argv))))
-
-;;; 2020-12-10
