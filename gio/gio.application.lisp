@@ -141,9 +141,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-flags atdoc:*symbol-name-alias*)
-      "Flags"
+      "GFlags"
       (gethash 'g-application-flags atdoc:*external-symbols*)
- "@version{2020-12-10}
+ "@version{*2021-5-5}
   @begin{short}
     Flags used to define the behaviour of a @class{g-application} instance.
   @end{short}
@@ -181,9 +181,9 @@
       the primary instance. Set this flag if your application is expected to
       behave differently depending on certain environment variables. For
       instance, an editor might be expected to use the @code{GIT_COMMITTER_NAME}
-      environment variable when editing a git commit message. The environment
+      environment variable when editing a GIT commit message. The environment
       is available to the \"command-line\" signal handler, via the function
-      @fun{g-application-command-line-getenv}.}
+      @code{g_application_command_line_getenv()}.}
     @entry[:non-unique]{Make no attempts to do any of the typical
       single-instance application negotiation. The application neither attempts
       to become the owner of the application ID nor does it check if an
@@ -235,14 +235,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
- "@version{2020-12-10}
+ "@version{*2021-5-5}
   @begin{short}
     The @sym{g-application} class is the foundation of an application.
   @end{short}
   The @sym{g-application} class wraps some low-level platform-specific services
   and is intended to act as the foundation for higher-level application classes
-  such as @class{gtk-application} or @code{MxApplication}. In general, you
-  should not use this class outside of a higher level framework.
+  such as the @class{gtk-application} class. In general, you should not use this
+  class outside of a higher level framework.
 
   The @sym{g-application} class provides convenient life cycle management by
   maintaining a \"use count\" for the primary application instance. The use
@@ -323,9 +323,9 @@
   @code{before_emit} or @code{after_emit} virtual functions in your
   @sym{g-application} subclass. When dealing with
   @class{g-application-command-line} instances, the platform data is directly
-  available via the functions @fun{g-application-command-line-cwd},
-  @fun{g-application-command-line-environ} and
-  @fun{g-application-command-line-platform-data}.
+  available via the functions @code{g_application_command_line_get_cwd()},
+  @code{g_application_command_line_get_environ()} and
+  @code{g_application_command_line_get_platform_data()}.
 
   As the name indicates, the platform data may vary depending on the operating
   system, but it always includes the current directory (key \"cwd\"), and
@@ -375,7 +375,7 @@
                           ;; GFile objects. We list the pathnames of the files.
                           (dotimes (i n-files)
                             (let ((file (mem-aref files '(g-object g-file) i)))
-                              (format t \" ~a~%\" (g-file-get-path file))))))
+                              (format t \" ~a~%\" (g-file-path file))))))
       ;; Signal handler \"shutdown\"
       (g-signal-connect app \"shutdown\"
                         (lambda (application)
@@ -389,8 +389,8 @@
     An example to show the implementation of actions for an application.
     @begin{pre}
 (defun activate-action (app name)
-  (let ((param-type (g-action-group-get-action-parameter-type app name))
-        (state (g-action-group-get-action-state app name))
+  (let ((param-type (g-action-group-action-parameter-type app name))
+        (state (g-action-group-action-state app name))
         (enabled (g-action-group-get-action-enabled app name)))
     ;; Print information about the action
     (format t \"     action name : ~A~%\" name)
@@ -463,35 +463,33 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (application)    : Run Last
+ lambda (application)    :run-last
       @end{pre}
-      The \"activate\" signal is emitted on the primary instance when an
-      activation occurs. See the function @fun{g-application-activate}.
+      The signal is emitted on the primary instance when an activation occurs.
+      See the function @fun{g-application-activate}.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
       @end{table}
     @subheading{The \"command-line\" signal}
       @begin{pre}
- lambda (application command-line)    : Run Last
+ lambda (application commandline)    :run-last
       @end{pre}
-      The \"command-line\" signal is emitted on the primary instance when a
-      commandline is not handled locally. See the function
-      @fun{g-application-run} and the @class{g-application-command-line}
-      documentation for more information.
+      The signal is emitted on the primary instance when a commandline is not
+      handled locally. See the function @fun{g-application-run} and the
+      @class{g-application-command-line} documentation for more information.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
-        @entry[command-line]{A @class{g-application-command-line} instance
+        @entry[commandline]{A @class{g-application-command-line} instance
           representing the passed commandline.}
         @entry[Returns]{An integer that is set as the exit status for the
-          calling process. See the function
-          @fun{g-application-command-line-exit-status}.}
+          calling process.}
       @end{table}
     @subheading{The \"handle-local-options\" signal}
       @begin{pre}
- lambda (application options)    : Run Last
+ lambda (application options)    :run-last
       @end{pre}
-      The \"handle-local-options\" signal is emitted on the local instance after
-      the parsing of the commandline options has occurred.
+      The signal is emitted on the local instance after the parsing of the
+      commandline options has occurred.
 
       You can add options to be recognised during commandline option parsing
       using the functions @fun{g-application-add-main-option-entries} and
@@ -505,9 +503,9 @@
       In the event that the application is marked @code{:handles-command-line}
       the \"normal processing\" will send the options dictionary to the primary
       instance where it can be read with the function
-      @fun{g-application-command-line-options-dict}. The signal handler can
-      modify the dictionary before returning, and the modified dictionary will
-      be sent.
+      @code{g_application_command_line_get_options_dict()}. The signal handler
+      can modify the dictionary before returning, and the modified dictionary
+      will be sent.
 
       In the event that @code{:handles-command-line} is not set,
       \"normal processing\" will treat the remaining uncollected command line
@@ -541,13 +539,13 @@
       @end{table}
     @subheading{The \"name-lost\" signal}
       @begin{pre}
- lambda (application)    : Run Last
+ lambda (application)    :run-last
       @end{pre}
-      The \"name-lost\" signal is emitted only on the registered primary
-      instance when a new instance has taken over. This can only happen if the
-      application is using the @code{:allow-replacement} flag of
-      @symbol{g-application-flags}. The default handler for this signal calls
-      the function @fun{g-application-quit}. Since 2.60.
+      The signal is emitted only on the registered primary instance when a new
+      instance has taken over. This can only happen if the application is using
+      the @code{:allow-replacement} flag of @symbol{g-application-flags}. The
+      default handler for this signal calls the function
+      @fun{g-application-quit}. Since 2.60.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
         @entry[options]{The options dictionary of type @type{g-variant-dict}.}
@@ -555,32 +553,31 @@
       @end{table}
     @subheading{The \"open\" signal}
       @begin{pre}
- lambda (application files n-files hint)    : Run Last
+ lambda (application files n-files hint)    :run-last
       @end{pre}
-      The \"open\" signal is emitted on the primary instance when there are
-      files to open. See the function @fun{g-application-open} for more
-      information.
+      The signal is emitted on the primary instance when there are files to
+      open. See the function @fun{g-application-open} for more information.
       @begin[code]{table}
-        @entry[application]{The @sym{g-applicatoin} instance.}
-        @entry[files]{An array of @class{g-file} objects.}
+        @entry[application]{The @sym{g-application} instance.}
+        @entry[files]{A C array of @class{g-file} objects.}
         @entry[n-files]{An integer with the length of files.}
         @entry[hint]{A string with a hint provided by the calling instance.}
       @end{table}
     @subheading{The \"shutdown\" signal}
       @begin{pre}
- lambda (application)    : Run Last
+ lambda (application)    :run-last
       @end{pre}
-      The \"shutdown\" signal is emitted only on the registered primary instance
-      immediately after the main loop terminates.
+      The signal is emitted only on the registered primary instance immediately
+      after the main loop terminates.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
       @end{table}
     @subheading{The \"startup\" signal}
       @begin{pre}
- lambda (application)    : Run First
+ lambda (application)    :run-first
       @end{pre}
-      The \"startup\" signal is emitted on the primary instance immediately
-      after registration. See the function @fun{g-application-register}.
+      The signal is emitted on the primary instance immediately after
+      registration. See the function @fun{g-application-register}.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
       @end{table}
@@ -747,14 +744,13 @@
 
 ;;; --- g-application-is-busy --------------------------------------------------
 
-#+(and glib-2-44 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-busy" 'g-application) 't)
  "The @code{is-busy} property of type @code{:boolean} (Read) @br{}
-  Whether the application is currently marked as busy through the functions
-  @fun{g-application-mark-busy} or @fun{g-application-bind-busy-property}. @br{}
+  Whether the application is currently marked as busy. @br{}
   Default value: @em{false}")
 
-#+(and glib-2-44 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-is-busy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-busy 'function)
@@ -769,8 +765,6 @@
 
   Gets the application's current busy state, as set through the functions
   @fun{g-application-mark-busy} or @fun{g-application-bind-busy-property}.
-
-  Since 2.44
   @see-class{g-application}
   @see-function{g-application-mark-busy}
   @see-function{g-application-bind-busy-property}")
@@ -781,7 +775,7 @@
 (setf (documentation (atdoc:get-slot-from-name "is-registered"
                                                'g-application) 't)
  "The @code{is-registered} property of type @code{:boolean} (Read) @br{}
-  If the function @fun{g-application-register} has been called. @br{}
+  Whether the application is registered. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -807,7 +801,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-remote" 'g-application) 't)
  "The @code{is-remote} property of type @code{:boolean} (Read) @br{}
-  If this application instance is remote. @br{}
+  Whether the application is remote. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -836,7 +830,7 @@
 
 ;;; --- g-application-resource-base-path ---------------------------------------
 
-#+(and glib-2-42 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resource-base-path"
                                                'g-application) 't)
  "The @code{resource-base-path} property of type @code{:string} (Read / Write)
@@ -844,11 +838,11 @@
   The base resource path for the application. @br{}
   Default value: @code{nil}")
 
-#+(and glib-2-42 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-resource-base-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-resource-base-path 'function)
- "@version{#2020-2-2}
+ "@version{2020-2-2}
   @syntax[]{(g-application-is-remote object) => resource-path}
   @syntax[]{(setf (g-application-is-remote object) resource-path)}
   @argument[object]{a @class{g-application} object}
@@ -892,8 +886,6 @@
   initialization. Alternatively, you can call this function in the
   @code{GApplicationClass.startup} virtual function, before chaining up to the
   parent implementation.
-
-  Since 2.42
   @see-class{g-application}")
 
 ;;; ----------------------------------------------------------------------------
@@ -902,7 +894,7 @@
 
 (defcfun ("g_application_id_is_valid" g-application-id-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{#2020-2-2}
+ "@version{2020-2-2}
   @argument[application-id]{a potential application identifier}
   @return{@em{True} if @arg{application-id} is valid.}
   @begin{short}
@@ -1276,7 +1268,7 @@
 
 (defun g-application-run (application argv)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{*2021-4-15}
   @argument[application]{a @class{g-application} object}
   @argument[argv]{a list of strings with commandline parameters, or @code{nil}}
   @return{An integer with the exit status.}
@@ -1602,7 +1594,7 @@
 (defcfun ("g_application_get_default" g-application-default)
     (g-object g-application)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(g-application-default) => application}
   @syntax[]{(setf (g-application-default) application)}
   @argument[application]{the @class{g-application} object to set as default,

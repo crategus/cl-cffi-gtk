@@ -2,11 +2,11 @@
 ;;; gio.simple-action.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -239,11 +239,11 @@
 (setf (gethash 'g-simple-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-simple-action-state 'function)
- "@version{2020-2-7}
+ "@version{*2021-5-11}
   @syntax[]{(g-simple-action-state object) => value}
   @syntax[]{(setf (g-simple-action-state object) value)}
   @argument[object]{a @class{g-simple-action} object}
-  @argument[value]{the new @type{g-variant} for the state}
+  @argument[value]{the @type{g-variant} value for the state}
   @begin{short}
     Accessor of the @slot[g-simple-action]{state} slot of the
     @class{g-simple-action} class.
@@ -256,7 +256,9 @@
   action should not attempt to directly modify the @code{state} property.
   Instead, they should call the function @fun{g-action-change-state} to request
   the change.
-  @see-class{g-simple-action}")
+  @see-class{g-simple-action}
+  @see-type{g-variant}
+  @see-function{g-action-change-state}")
 
 ;;; ---g-simple-action-state-type ----------------------------------------------
 
@@ -282,11 +284,12 @@
 ;;; g_simple_action_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-simple-action-new (name parameter-type)
+(defun g-simple-action-new (name ptype)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-7}
-  @argument[name]{the name of the action}
-  @argument[parameter-type]{the type of parameter to the activate function}
+ "@version{*2021-5-11}
+  @argument[name]{a string with the name of the action}
+  @argument[ptype]{the @class{g-variant-type} type of the parameter to the
+    activate function}
   @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new action.
@@ -294,10 +297,11 @@
   The created action is stateless. See the function
   @fun{g-simple-action-new-stateful}.
   @see-class{g-simple-action}
+  @see-class{g-variant-type}
   @see-function{g-simple-action-new-stateful}"
   (make-instance 'g-simple-action
                  :name name
-                 :parameter-type parameter-type))
+                 :parameter-type ptype))
 
 (export 'g-simple-action-new)
 
@@ -305,27 +309,26 @@
 ;;; g_simple_action_new_stateful ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-simple-action-new-stateful (name parameter-type state)
+(defun g-simple-action-new-stateful (name ptype state)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-7}
-  @argument[name]{the name of the action}
-  @argument[parameter-type]{the type of the parameter to the activate function}
-  @argument[state]{the initial state of the action}
+ "@version{*2021-5-11}
+  @argument[name]{a string with the name of the action}
+  @argument[ptype]{the @class{g-variant-type} type of the parameter to the
+    activate function}
+  @argument[state]{the initial @symbol{g-variant} state of the action}
   @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new stateful action.
   @end{short}
   @arg{state} is the initial state of the action. All future state values must
-  have the same @class{g-variant-type} as the initial state.
-
-  If the state @type{g-variant} is floating, it is consumed.
+  have the same @class{g-variant-type} type as the initial state.
   @see-class{g-simple-action}
   @see-function{g-simple-action-new}
   @see-type{g-variant}
   @see-class{g-variant-type}"
   (make-instance 'g-simple-action
                  :name name
-                 :parameter-type parameter-type
+                 :parameter-type ptype
                  :state state))
 
 (export 'g-simple-action-new-stateful)

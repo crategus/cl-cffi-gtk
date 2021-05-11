@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2020 Dieter Kaiser
+;;; Copyright (C) 2020 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -872,12 +872,12 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_file_get_path ()
+;;; g_file_get_path () -> g-file-path
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_file_get_path" g-file-get-path) (:string :free-from-foreign t)
+(defcfun ("g_file_get_path" g-file-path) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{*2021-5-8}
   @argument[file]{input @class{g-file} object}
   @begin{return}
     A string containing the @class{g-file} path, or @code{nil} if no such path
@@ -887,13 +887,11 @@
     Gets the local pathname for @arg{file}, if one exists.
   @end{short}
   If non-@code{nil}, this is guaranteed to be an absolute, canonical path. It
-  might contain symlinks.
-
-  This call does no blocking I/O.
+  might contain symlinks. This call does no blocking I/O.
   @see-class{g-file}"
   (file g-object))
 
-(export 'g-file-get-path)
+(export 'g-file-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_peek_path ()
@@ -2130,209 +2128,182 @@
 ;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_measure_disk_usage_async ()
-;;;void
-;;;g_file_measure_disk_usage_async (GFile *file,
-;;;                                 GFileMeasureFlags flags,
-;;;                                 gint io_priority,
-;;;                                 GCancellable *cancellable,
-;;;                                 GFileMeasureProgressCallback progress_callback,
-;;;                                 gpointer progress_data,
-;;;                                 GAsyncReadyCallback callback,
-;;;                                 gpointer user_data);
-;;;Recursively measures the disk usage of file .
-
-;;;This is the asynchronous version of g_file_measure_disk_usage(). See there for more information.
-
-;;;Parameters
-;;;file
-
-;;;a GFile
-
-
-;;;flags
-
-;;;GFileMeasureFlags
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable.
-
-;;;[nullable]
-;;;progress_callback
-
-;;;a GFileMeasureProgressCallback.
-
-;;;[nullable]
-;;;progress_data
-
-;;;user_data for progress_callback
-
-
-;;;callback
-
-;;;a GAsyncReadyCallback to call when complete.
-
-;;;[nullable]
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
-
-;;;g_file_measure_disk_usage_finish ()
-;;;gboolean
-;;;g_file_measure_disk_usage_finish (GFile *file,
-;;;                                  GAsyncResult *result,
-;;;                                  guint64 *disk_usage,
-;;;                                  guint64 *num_dirs,
-;;;                                  guint64 *num_files,
-;;;                                  GError **error);
-;;;Collects the results from an earlier call to g_file_measure_disk_usage_async(). See g_file_measure_disk_usage() for more information.
-
-;;;Parameters
-;;;file
-
-;;;a GFile
-
-
-;;;result
-
-;;;the GAsyncResult passed to your GAsyncReadyCallback
-
-
-;;;disk_usage
-
-;;;the number of bytes of disk space used.
-
-;;;[out][optional]
-;;;num_dirs
-
-;;;the number of directories encountered.
-
-;;;[out][optional]
-;;;num_files
-
-;;;the number of non-directories encountered.
-
-;;;[out][optional]
-;;;error
-
-;;;NULL, or a pointer to a NULL GError pointer.
-
-;;;[nullable]
-;;;Returns
-;;;TRUE if successful, with the out parameters set. FALSE otherwise, with error set.
-
-;;; Since 2.38
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_find_enclosing_mount ()
-;;;GMount *
-;;;g_file_find_enclosing_mount (GFile *file,
+;;; g_file_measure_disk_usage_async ()
+;;;
+;;; void
+;;; g_file_measure_disk_usage_async (
+;;;                             GFile *file,
+;;;                             GFileMeasureFlags flags,
+;;;                             gint io_priority,
 ;;;                             GCancellable *cancellable,
-;;;                             GError **error);
-;;;Gets a GMount for the GFile.
+;;;                             GFileMeasureProgressCallback progress _callback,
+;;;                             gpointer progress_data,
+;;;                             GAsyncReadyCallback callback,
+;;;                             gpointer user_data);
+;;;
+;;; Recursively measures the disk usage of file .
+;;;
+;;; This is the asynchronous version of g_file_measure_disk_usage(). See there
+;;; for more information.
+;;;
+;;; file :
+;;;     a GFile
+;;;
+;;; flags :
+;;;     GFileMeasureFlags
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable.
+;;;
+;;; progress_callback :
+;;;     a GFileMeasureProgressCallback.
+;;;
+;;; progress_data :
+;;;     user_data for progress_callback
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when complete.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
 
-;;;GMount is returned only for user interesting locations, see GVolumeMonitor. If the GFileIface for file does not have a mount, error will be set to G_IO_ERROR_NOT_FOUND and NULL will be returned.
+;;; ----------------------------------------------------------------------------
+;;; g_file_measure_disk_usage_finish ()
+;;;
+;;; gboolean
+;;; g_file_measure_disk_usage_finish (GFile *file,
+;;;                                   GAsyncResult *result,
+;;;                                   guint64 *disk_usage,
+;;;                                   guint64 *num_dirs,
+;;;                                   guint64 *num_files,
+;;;                                   GError **error);
+;;;
+;;; Collects the results from an earlier call to
+;;; g_file_measure_disk_usage_async(). See g_file_measure_disk_usage() for more
+;;; information.
+;;;
+;;; file :
+;;;     a GFile
+;;;
+;;; result :
+;;;     the GAsyncResult passed to your GAsyncReadyCallback
+;;;
+;;; disk_usage :
+;;;     the number of bytes of disk space used.
+;;;
+;;; num_dirs :
+;;;    the number of directories encountered.
+;;;
+;;; num_files :
+;;;     the number of non-directories encountered.
+;;;
+;;; error :
+;;;     NULL, or a pointer to a NULL GError pointer.
+;;;
+;;; Returns :
+;;;     TRUE if successful, with the out parameters set. FALSE otherwise, with
+;;;     error set.
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
 
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;; ----------------------------------------------------------------------------
+;;; g_file_find_enclosing_mount ()
+;;;
+;;; GMount *
+;;; g_file_find_enclosing_mount (GFile *file,
+;;;                              GCancellable *cancellable,
+;;;                              GError **error);
+;;;
+;;; Gets a GMount for the GFile.
+;;;
+;;; GMount is returned only for user interesting locations, see GVolumeMonitor.
+;;; If the GFileIface for file does not have a mount, error will be set to
+;;; G_IO_ERROR_NOT_FOUND and NULL will be returned.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError
+;;;
+;;; Returns :
+;;;     a GMount where the file is located or NULL on error. Free the returned
+;;;     object with g_object_unref().
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
+;;; ----------------------------------------------------------------------------
+;;; g_file_find_enclosing_mount_async ()
+;;;
+;;; void
+;;; g_file_find_enclosing_mount_async (GFile *file,
+;;;                                    int io_priority,
+;;;                                    GCancellable *cancellable,
+;;;                                    GAsyncReadyCallback callback,
+;;;                                    gpointer user_data);
+;;;
+;;; Asynchronously gets the mount for the file.
+;;;
+;;; For more details, see g_file_find_enclosing_mount() which is the synchronous
+;;; version of this call.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_find_enclosing_mount_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     a GFile
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
 
-;;;input GFile
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError
-
-
-;;;Returns
-;;;a GMount where the file is located or NULL on error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_find_enclosing_mount_async ()
-;;;void
-;;;g_file_find_enclosing_mount_async (GFile *file,
-;;;                                   int io_priority,
-;;;                                   GCancellable *cancellable,
-;;;                                   GAsyncReadyCallback callback,
-;;;                                   gpointer user_data);
-;;;Asynchronously gets the mount for the file.
-
-;;;For more details, see g_file_find_enclosing_mount() which is the synchronous version of this call.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_find_enclosing_mount_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;a GFile
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied.
-
-;;;[scope async]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
-;;;g_file_find_enclosing_mount_finish ()
-;;;GMount *
-;;;g_file_find_enclosing_mount_finish (GFile *file,
-;;;                                    GAsyncResult *res,
-;;;                                    GError **error);
-;;;Finishes an asynchronous find mount request. See g_file_find_enclosing_mount_async().
-
-;;;Parameters
-;;;file
-
-;;;a GFile
-
-
-;;;res
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError
-
-
-;;;Returns
-;;;GMount for given file or NULL on error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
+;;; ----------------------------------------------------------------------------
+;;; g_file_find_enclosing_mount_finish ()
+;;;
+;;; GMount *
+;;; g_file_find_enclosing_mount_finish (GFile *file,
+;;;                                     GAsyncResult *res,
+;;;                                     GError **error);
+;;;
+;;; Finishes an asynchronous find mount request. See
+;;; g_file_find_enclosing_mount_async().
+;;;
+;;; file :
+;;;     a GFile
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError
+;;;
+;;; Returns :
+;;;     GMount for given file or NULL on error. Free the returned object with
+;;;     g_object_unref().
+;;; ----------------------------------------------------------------------------
 
 ;;;g_file_enumerate_children ()
 ;;;GFileEnumerator *

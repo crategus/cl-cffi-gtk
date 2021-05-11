@@ -41,9 +41,9 @@ Resources
 Application support
 
   gio.application.lisp         - GApplication                      - GIO 2.68 &
-  gio.appliation-command-line  - GApplicationCommandLine           - GIO 2.62 &
+  gio.appliation-command-line  - GApplicationCommandLine           - GIO 2.68 &
   gio.action-group.lisp        - GActionGroup                      - GIO 2.62 &
-  gio.action-map.lisp          - GActionMap                        - GIO 2.62
+  gio.action-map.lisp          - GActionMap                        - GIO 2.68
   gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.62
   gio.action.lisp              - GAction                           - GIO 2.62
   gio.simple-action.lisp       - GSimpleAction                     - GIO 2.62
@@ -62,4 +62,4 @@ Application support
   not implemented              - GDBusMenuModel
   not implemented              - GNotification
 
-;;; 2021-4-15
+;;; 2021-5-7

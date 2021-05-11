@@ -132,7 +132,7 @@
 
 (declaim (inline g-emblemed-icon-icon))
 
-(defun g-emblemed-icon.icon (emblemed)
+(defun g-emblemed-icon-icon (emblemed)
  #+cl-cffi-gtk-documentation
  "@version{2021-4-25}
   @argument[emblemed]{a @class{g-emblemed-icon} object}

@@ -175,21 +175,20 @@
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-action) 't)
  "The @code{name} property of type @code{:string} (Read) @br{}
   The name of the action. This is mostly meaningful for identifying the action
-  once it has been added to a @class{g-action-group}. @br{}
+  once it has been added to a @class{g-action-group} object. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-name 'function)
- "@version{2020-2-8}
+ "@version{*2021-5-11}
   @syntax[]{(g-action-name object) => name}
   @argument[action]{a @class{g-action} object}
-  @argument[name]{a @code{:string} with the name of the action}
+  @argument[name]{a string with the name of the action}
   @begin{short}
     Accessor of the @slot[g-action]{name} slot of the @class{g-action} class.
   @end{short}
-
   Queries the name of the action.
   @see-class{g-action}")
 
@@ -239,10 +238,10 @@
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
- "@version{2020-2-8}
+ "@version{*2021-5-11}
   @syntax[]{(g-action-state object) => state}
-  @argument[action]{a @class{g-action} object}
-  @argument[state]{the current state of the action}
+  @argument[object]{a @class{g-action} object}
+  @argument[state]{the current @type{g-variant} state of the action}
   @begin{short}
     Accessor of the @slot[g-action]{state} slot of the @class{g-action} class.
   @end{short}
@@ -252,7 +251,8 @@
   If the action is not stateful then @code{nil} will be returned. If the
   action is stateful then the type of the return value is the type given
   by the function @fun{g-action-state-type}.
-  @see-class{g-action}")
+  @see-class{g-action}
+  @see-function{g-action-state-type}")
 
 ;;; --- g-action-state-type ----------------------------------------------------
 

@@ -297,7 +297,7 @@
 (defcfun ("g_action_group_get_action_enabled" g-action-group-action-enabled)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{*2021-4-15}
   @argument[group]{a @class{g-action-group} object}
   @argument[name]{a string with the name of the action to query}
   @return{A boolean whether or not the action is currently enabled.}
@@ -322,7 +322,7 @@
            g-action-group-action-parameter-type)
     (g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{*2021-4-15}
   @argument[group]{a @class{g-action-group} object}
   @argument[name]{a string with the name of the action to query}
   @return{The @class{g-variant-type} parameter type.}
@@ -432,7 +432,7 @@
 (defcfun ("g_action_group_get_action_state" g-action-group-action-state)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{*2021-4-15}
   @argument[group]{a @class{g-action-group} object}
   @argument[name]{a string with the name of the action to query}
   @return{The current @type{g-variant} state of the action.}
@@ -495,7 +495,7 @@
 
 (defcfun ("g_action_group_activate_action" g-action-group-activate-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{*2021-4-15}
   @argument[group]{a @class{g-action-group} object}
   @argument[name]{a string with the name of the action to activate}
   @argument[parameter]{the @type{g-variant} parameters to the activation}

@@ -65,7 +65,7 @@
       @about-function{g-file-hash}
       @about-function{g-file-equal}
       @about-function{g-file-get-basename}
-      @about-function{g-file-get-path}
+      @about-function{g-file-path}
       @about-function{g-file-peek-path}
       @about-function{g-file-get-uri}
       @about-function{g-file-get-parse-name}
@@ -377,7 +377,7 @@
       @about-function{g-application-unbind-busy-property}
     @end{subsection}
     @begin[GApplicationCommandLine]{subsection}
-      A command-line invocation of an application.
+      A command line invocation of an application.
 
       @about-class{g-application-command-line}
       @about-generic{g-application-command-line-arguments}

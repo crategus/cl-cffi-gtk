@@ -2,11 +2,11 @@
 ;;; gio.application-command-line.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2020 Dieter Kaiser
+;;; Copyright (C) 2020 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,7 +36,7 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     g_application_command_line_get_arguments           Accessor
+;;;     g_application_command_line_get_arguments
 ;;;     g_application_command_line_get_cwd
 ;;;     g_application_command_line_get_environ
 ;;;     g_application_command_line_get_options_dict
@@ -44,7 +44,7 @@
 ;;;     g_application_command_line_create_file_for_arg
 ;;;     g_application_command_line_getenv
 ;;;     g_application_command_line_get_is_remote           Accessor
-;;;     g_application_command_line_get_platform_data       Accessor
+;;;     g_application_command_line_get_platform_data
 ;;;     g_application_command_line_set_exit_status
 ;;;     g_application_command_line_get_exit_status
 ;;;     g_application_command_line_print
@@ -89,155 +89,77 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application-command-line 'type)
- "@version{2020-2-18}
+ "@version{2021-5-7}
   @begin{short}
-    @sym{g-application-command-line} represents a command-line invocation of an
-    application.
+    The @sym{g-application-command-line} class represents a command-line
+    invocation of an application.
   @end{short}
-  It is created by @class{g-application} and emitted in the \"command-line\"
-  signal and virtual function.
+  It is created by the @class{g-application} object and emitted in the
+  \"command-line\" signal and virtual function.
 
   The class contains the list of arguments that the program was invoked with.
   It is also possible to query if the commandline invocation was local (i.e.
   the current process is running in direct response to the invocation) or
-  remote (i.e.: some other process forwarded the commandline to this process).
+  remote (i.e. some other process forwarded the commandline to this process).
 
   The @sym{g-application-command-line} object can provide the @code{argc} and
   @code{argv} parameters for use with the @code{GOptionContext} command-line
-  parsing API, with the @fun{g-application-command-line-get-arguments} function.
-  See gapplication-example-cmdline3.c for an example.
+  parsing API, with the function @fun{g-application-command-line-get-arguments}.
 
   The exit status of the originally-invoked process may be set and messages can
   be printed to stdout or stderr of that process. The lifecycle of the
-  originally-invoked process is tied to the lifecycle of this object (i.e.:
-  the process exits when the last reference is dropped).
+  originally-invoked process is tied to the lifecycle of this object (i.e. the
+  process exits when the last reference is dropped).
 
-  The main use for @sym{g-application-command-line} (and the \"command-line\"
-  signal) is 'Emacs server' like use cases: You can set the EDITOR environment
-  variable to have e.g. git use your favourite editor to edit commit messages,
-  and if you already have an instance of the editor running, the editing will
-  happen in the running instance, instead of opening a new one. An important
-  aspect of this use case is that the process that gets started by git does not
-  return until the editing is done.
+  The main use for the @sym{g-application-command-line} object (and the
+  \"command-line\" signal) is 'Emacs server' like use cases: You can set the
+  EDITOR environment variable to have e.g. GIT use your favourite editor to edit
+  commit messages, and if you already have an instance of the editor running,
+  the editing will happen in the running instance, instead of opening a new one.
+  An important aspect of this use case is that the process that gets started by
+  GIT does not return until the editing is done.
+  @begin[Example]{dictionary}
+    Normally, the command line is completely handled in the \"command-line\"
+    handler. The launching instance exits once the signal handler in the
+    primary instance has returned, and the return value of the signal handler
+    becomes the exit status of the launching instance.
+    @begin{pre}
+(defun application-commandline (&optional (argv nil))
+  (within-main-loop
+    (let ((app (make-instance 'g-application
+                              :application-id
+                              \"com.crategus.application-commandline\"
+                              :inactivity-timeout 10000
+                              :flags :handles-command-line)))
 
-  Normally, the commandline is completely handled in the \"command-line\"
-  handler. The launching instance exits once the signal handler in the primary
-  instance has returned, and the return value of the signal handler becomes the
-  exit status of the launching instance.
-  @begin{pre}
-static int
-command_line (GApplication            *application,
-              GApplicationCommandLine *cmdline)
-{
-  gchar **argv;
-  gint argc;
-  gint i;
+      ;; Signal handler \"startup\"
+      (g-signal-connect app \"startup\"
+                        (lambda (application)
+                          (declare (ignore application))
+                          (format t \"Signal handler 'startup'~%\")))
 
-  argv = g_application_command_line_get_arguments (cmdline, &argc);
+      ;; Signal handler \"command-line\"
+      (g-signal-connect app \"command-line\"
+          (lambda (application cmdline)
+            (declare (ignore application))
+            (let ((args (g-application-command-line-get-arguments cmdline)))
+              (format t \"Signal handler 'command-line'~%\")
+              (format t \"  arguments : ~a~%\" args)
+              ;; Return the exit status
+              0)))
 
-  g_application_command_line_print (cmdline,
-                                    \"This text is written back\n\"
-                                    \"to stdout of the caller\n\");
+      ;; Signal handler \"shutdown\"
+      (g-signal-connect app \"shutdown\"
+                        (lambda (application)
+                          (declare (ignore application))
+                          (format t \"Signal handler 'shutdown'~%\")
+                          ;; Stop the main loop
+                          (leave-gtk-main)))
 
-  for (i = 0; i < argc; i++)
-    g_print (\"argument %d: %s\n\", i, argv[i]);
-
-  g_strfreev (argv);
-
-  return 0;
-@}
-  @end{pre}
-  The complete example can be found here: gapplication-example-cmdline.c
-
-  In more complicated cases, the handling of the comandline can be split
-  between the launcher and the primary instance.
-  @begin{pre}
-static gboolean
- test_local_cmdline (GApplication   *application,
-                     gchar        ***arguments,
-                     gint           *exit_status)
-{
-  gint i, j;
-  gchar **argv;
-
-  argv = *arguments;
-
-  i = 1;
-  while (argv[i])
-    {
-      if (g_str_has_prefix (argv[i], \"--local-\"))
-        {
-          g_print (\"handling argument %s locally\n\", argv[i]);
-          g_free (argv[i]);
-          for (j = i; argv[j]; j++)
-            argv[j] = argv[j + 1];
-        @}
-      else
-        {
-          g_print (\"not handling argument %s locally\n\", argv[i]);
-          i++;
-        @}
-    @}
-
-  *exit_status = 0;
-
-  return FALSE;
-@}
-
-static void
-test_application_class_init (TestApplicationClass *class)
-{
-  G_APPLICATION_CLASS (class)->local_command_line = test_local_cmdline;
-
-  ...
-@}
-  @end{pre}
-  In this example of split commandline handling, options that start with
-  --local- are handled locally, all other options are passed to the
-  \"command-line\" handler which runs in the primary instance.
-
-  The complete example can be found here: gapplication-example-cmdline2.c
-
-  If handling the commandline requires a lot of work, it may be better to defer
-  it.
-  @begin{pre}
-static gboolean
-my_cmdline_handler (gpointer data)
-{
-  GApplicationCommandLine *cmdline = data;
-
-  // do the heavy lifting in an idle
-
-  g_application_command_line_set_exit_status (cmdline, 0);
-  g_object_unref (cmdline); // this releases the application
-
-  return G_SOURCE_REMOVE;
-@}
-
-static int
-command_line (GApplication            *application,
-              GApplicationCommandLine *cmdline)
-{
-  // keep the application running until we are done with this commandline
-  g_application_hold (application);
-
-  g_object_set_data_full (G_OBJECT (cmdline),
-                          \"application\", application,
-                          (GDestroyNotify)g_application_release);
-
-  g_object_ref (cmdline);
-  g_idle_add (my_cmdline_handler, cmdline);
-
-  return 0;
-@}
-  @end{pre}
-  In this example the commandline is not completely handled before the
-  \"command-line\" handler returns. Instead, we keep a reference to the
-  @sym{g-application-command-line} object and handle it later (in this example,
-  in an idle). Note that it is necessary to hold the application until you are
-  done with the commandline.
-
-  The complete example can be found here: gapplication-example-cmdline3.c
+      ;; Start the application
+      (g-application-run app argv))))
+    @end{pre}
+  @end{dictionary}
   @see-slot{g-application-command-line-arguments}
   @see-slot{g-application-command-line-is-remote}
   @see-slot{g-application-command-line-options}
@@ -255,9 +177,27 @@ command_line (GApplication            *application,
                                                'g-application-command-line) 't)
  "The @code{arguments} property of type @type{g-variant}
   (Write / Construct only) @br{}
-  The commandline that caused this \"command-line\" signal emission. @br{}
+  The command line that caused this \"command-line\" signal emission. @br{}
   Allowed values: @code{GVariant<aay>} @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-application-command-line-arguments
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-application-command-line-arguments 'function)
+ "@version{2021-5-7}
+  @argument[object]{a @class{g-application-command-line} instance}
+  @begin{short}
+    The command line that caused this \"command-line\" signal emission.
+  @end{short}
+  The @slot[g-application-command-line]{arguments} property is not readable and
+  set when constructing the instance.
+
+  The function @fun{g-application-command-line-get-arguments} gets the list of
+  arguments that was passed on the command line.
+  @see-class{g-application-command-line}
+  @see-function{g-application-command-line-get-arguments}")
 
 ;;; --- g-application-command-line-is-remote -----------------------------------
 
@@ -267,6 +207,19 @@ command_line (GApplication            *application,
  "The @code{is-remote} property of type @code{:boolean} (Read) @br{}
   @em{True} if this is a remote commandline. @br{}
   Default value: @em{false}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-application-command-line-is-remote
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-application-command-line-is-remote 'function)
+ "@version{2021-5-7}
+  @argument[object]{a @class{g-application-command-line} instance}
+  @return{@em{True} if the invocation was remote.}
+  @begin{short}
+    Determines if the command line represents a remote invocation.
+  @end{short}
+  @see-class{g-application-command-line}")
 
 ;;; --- g-application-command-line-options -------------------------------------
 
@@ -279,6 +232,20 @@ command_line (GApplication            *application,
   Allowed values: @code{GVariant<a{sv@}>} @br{}
   Default value: @code{nil}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-application-command-line-options
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-application-command-line-options 'function)
+ "@version{2021-5-7}
+  @argument[object]{a @class{g-application-command-line} instance}
+  @begin{short}
+    The options sent along with the commandline.
+  @end{short}
+  The @slot[g-application-command-line]{options} property is not readable and
+  set when constructing the instance.
+  @see-class{g-application-command-line}")
+
 ;;; --- g-application-command-line-platform-data -------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -289,6 +256,20 @@ command_line (GApplication            *application,
   Platform-specific data for the commandline. @br{}
   Allowed values: @code{GVariant<a{sv@}>} @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-application-command-line-platform-data
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-application-command-line-platform-data 'function)
+ "@version{2021-5-7}
+  @argument[object]{a @class{g-application-command-line} instance}
+  @begin{short}
+    Platform-specific data for the commandline.
+  @end{short}
+  The @slot[g-application-command-line]{platform-data} property is not readable
+  and set when constructing the instance.
+  @see-class{g-application-command-line}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_arguments ()
@@ -301,8 +282,8 @@ command_line (GApplication            *application,
 
 (defun g-application-command-line-get-arguments (cmdline)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-20}
-  @argument[cmdline]{a @class{g-application-command-line} object}
+ "@version{*2021-5-7}
+  @argument[cmdline]{a @class{g-application-command-line} instance}
   @return{The list of strings containing the command line arguments.}
   @begin{short}
     Gets the list of arguments that was passed on the command line.
@@ -321,7 +302,7 @@ command_line (GApplication            *application,
 (export 'g-application-command-line-get-arguments)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_cwd ()
+;;; g_application_command_line_get_cwd ()                  not exported
 ;;;
 ;;; const gchar *
 ;;; g_application_command_line_get_cwd (GApplicationCommandLine *cmdline);
@@ -348,10 +329,8 @@ command_line (GApplication            *application,
     :string
   (cmdline (g-object g-application-command-line)))
 
-(export 'g-application-command-line-cwd)
-
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_environ ()
+;;; g_application_command_line_get_environ ()              not exported
 ;;;
 ;;; const gchar * const *
 ;;; g_application_command_line_get_environ
@@ -385,10 +364,8 @@ command_line (GApplication            *application,
            g-application-command-line-environ) g-strv
   (cmdline (g-object g-application-command-line)))
 
-(export 'g-application-command-line-environ)
-
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_options_dict ()
+;;; g_application_command_line_get_options_dict ()         not exported
 ;;;
 ;;; GVariantDict *
 ;;; g_application_command_line_get_options_dict
@@ -427,8 +404,6 @@ command_line (GApplication            *application,
   @see-class{g-application-command-line}
   @see-function{g-application-add-main-option-entries}"
   (cmdline (g-object g-application-command-line)))
-
-(export 'g-application-command-line-options-dict)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_stdin ()
@@ -483,7 +458,7 @@ command_line (GApplication            *application,
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_getenv ()
+;;; g_application_command_line_getenv ()                   not exported
 ;;;
 ;;; const gchar *
 ;;; g_application_command_line_getenv (GApplicationCommandLine *cmdline,
@@ -518,26 +493,6 @@ command_line (GApplication            *application,
   (cmdline (g-object g-application-command-line-getenv))
   (name :string))
 
-(export 'g-application-command-line-getenv)
-
-;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_is_remote ()
-;;;
-;;; gboolean
-;;; g_application_command_line_get_is_remote
-;;;                                (GApplicationCommandLine *cmdline);
-;;;
-;;; Determines if cmdline represents a remote invocation.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     TRUE if the invocation was remote
-;;;
-;;; Since 2.28
-;;; ----------------------------------------------------------------------------
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_platform_data ()
 ;;;
@@ -563,7 +518,7 @@ command_line (GApplication            *application,
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_exit_status ()
+;;; g_application_command_line_get_exit_status ()          not exported
 ;;; g_application_command_line_set_exit_status ()
 ;;; -> g-application-command-line-exit-status
 ;;; ----------------------------------------------------------------------------
@@ -611,8 +566,6 @@ command_line (GApplication            *application,
   @class{g-application-command-line} instance is used.
   @see-class{g-application-command-line}"
   (cmdline (g-object g-application-command-line)))
-
-(export 'g-application-command-line-exit-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_print ()
