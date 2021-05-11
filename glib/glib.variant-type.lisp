@@ -802,8 +802,8 @@
 (defcfun ("g_variant_type_new" g-variant-type-new)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-29}
-  @argument[type-string]{a valid @class{g-variant-type} type string}
+ "@version{*2021-5-11}
+  @argument[string]{a valid @class{g-variant-type} type string}
   @return{A new @class{g-variant-type} instance.}
   @begin{short}
     Creates a new @class{g-variant-type} instance corresponding to the type
@@ -817,7 +817,7 @@
   @see-class{g-variant-type}
   @see-function{g-variant-type-free}
   @see-function{g-variant-type-string-is-valid}"
-  (type-string :string))
+  (string :string))
 
 (export 'g-variant-type-new)
 
@@ -876,7 +876,8 @@
 ;; not implemented, is equivalent to g-variant-type-string-is-valid
 
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_type_get_string_length () -> g-variant-type-string-length
+;;; g_variant_type_get_string_length ()
+;;; -> g-variant-type-string-length                        not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_get_string_length" g-variant-type-string-length)
@@ -894,10 +895,8 @@
   @see-function{g-variant-type-peek-string}"
   (variant-type (gobject:g-boxed-foreign g-variant-type)))
 
-(export 'g-variant-type-string-length)
-
 ;;; ----------------------------------------------------------------------------
-;;; g_variant_type_peek_string ()
+;;; g_variant_type_peek_string ()                          not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_peek_string" g-variant-type-peek-string) :string
@@ -915,8 +914,6 @@
   @fun{g-variant-type-dup-string}.
   @see-class{g-variant-type}"
   (variant-type (gobject:g-boxed-foreign g-variant-type)))
-
-(export 'g-variant-type-peek-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_dup_string ()

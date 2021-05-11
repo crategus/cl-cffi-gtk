@@ -873,20 +873,22 @@ add_to_count (GVariant  *orig,
 ;;; g_variant_get_type_string () -> g-variant-type-string
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_type_string" g-variant-type-string) :string
+(defcfun ("g_variant_get_type_string" g-variant-type-string)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-30}
+ "@version{*2021-5-11}
   @argument[value]{a @type{g-variant} instance}
   @return{The type string for the type of @arg{value}.}
   @begin{short}
     Returns the type string of @arg{value}.
   @end{short}
-  Unlike the result of calling the function @fun{g-variant-type-peek-string},
-  this string is nul-terminated. This string belongs to the @type{g-variant}
-  instance and must not be freed.
-
-  @see-type{g-variant}
-  @see-function{g-variant-type-peek-string}"
+  @begin[Example]{dictionary}
+    @begin{pre}
+(g-variant-type-string (g-variant-new-double 10.0d0)) => \"d\"
+(g-variant-type-string (g-variant-new-string \"test\")) => \"s\"
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-variant}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-type-string)
@@ -1179,8 +1181,8 @@ add_to_count (GVariant  *orig,
 (defcfun ("g_variant_new_boolean" g-variant-new-boolean)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
-  @argument[value]{a @code{gboolean} value}
+ "@version{*2021-11-5}
+  @argument[value]{a boolean value}
   @return{A floating reference to a new boolean @type{g-variant} instance.}
   @begin{short}
     Creates a new boolean @type{g-variant} instance -- either @em{true} or
@@ -1624,7 +1626,7 @@ add_to_count (GVariant  *orig,
 
 (defcfun ("g_variant_get_boolean" g-variant-boolean) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
+ "@version{*2021-5-11}
   @argument[value]{a boolean @type{g-variant} instance}
   @return{The boolean values @em{true} or @em{false}.}
   @short{Returns the boolean value of @arg{value}.}
@@ -1632,10 +1634,8 @@ add_to_count (GVariant  *orig,
   a @class{g-variant-type} with the type string \"b\".
   @begin[Example]{dictionary}
     @begin{pre}
-(g-variant-boolean (g-variant-new-boolean nil))
-=> NIL
-(g-variant-boolean (g-variant-new-boolean t))
-=> T
+(g-variant-boolean (g-variant-new-boolean nil)) => NIL
+(g-variant-boolean (g-variant-new-boolean t)) => T
     @end{pre}
   @end{dictionary}
   @see-type{g-variant}
