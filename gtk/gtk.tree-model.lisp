@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-model.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -149,7 +149,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gtk-tree-iter 'type)
  "@version{2021-3-3}
   @begin{short}
@@ -214,7 +214,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-path atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gtk-tree-path 'type)
  "@version{2021-3-4}
   @short{}
@@ -239,7 +239,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-row-reference atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gtk-tree-row-reference 'type)
  "@version{2021-3-4}
   @begin{short}
@@ -712,7 +712,7 @@
 ;;;
 ;;; These functions must be called exactly once per proxy when the corresponding
 ;;; signal on the model is emitted. This single call updates all row references
-;;; for that proxy. Since built-in GTK+ objects like GtkTreeView already use
+;;; for that proxy. Since built-in GTK objects like GtkTreeView already use
 ;;; this mechanism internally, using them as the proxy object will produce
 ;;; unpredictable results. Further more, passing the same object as model and
 ;;; proxy does not work for reasons of internal implementation.

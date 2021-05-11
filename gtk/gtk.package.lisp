@@ -2049,7 +2049,7 @@ setup_tree (void)
 @}
       @end{pre}
     @begin[GtkTreeModel]{subsection}
-      The tree interface used by @class{gtk-tree-view}.
+      The tree interface used by the @class{gtk-tree-view} widget.
 
       @about-class{gtk-tree-path}
       @about-function{gtk-tree-path-new}
@@ -2300,7 +2300,7 @@ setup_tree (void)
       @about-function{gtk-tree-get-row-drag-data}
     @end{subsection}
     @begin[GtkCellView]{subsection}
-      A widget displaying a single row of a @class{gtk-tree-model}.
+      A widget displaying a single row of a @class{gtk-tree-model} object.
 
       @about-class{gtk-cell-view}
       @about-generic{gtk-cell-view-background}
@@ -2317,11 +2317,9 @@ setup_tree (void)
       @about-function{gtk-cell-view-new-with-text}
       @about-function{gtk-cell-view-new-with-markup}
       @about-function{gtk-cell-view-new-with-pixbuf}
-      @about-function{gtk-cell-view-set-displayed-row}
-      @about-function{gtk-cell-view-get-displayed-row}
+      @about-function{gtk-cell-view-displayed-row}
       @about-function{gtk-cell-view-size-of-row}
       @about-function{gtk-cell-view-set-background-color}
-      @about-function{gtk-cell-view-set-background-rgba}
     @end{subsection}
     @begin[GtkIconView]{subsection}
       A widget which displays a list of icons in a grid.
@@ -3605,6 +3603,7 @@ setup_tree (void)
       @about-function{gtk-printer-capabilities}
       @about-function{gtk-printer-default-page-size}
       @about-function{gtk-printer-hard-margins}
+      @about-symbol{gtk-printer-func}
       @about-function{gtk-enumerate-printers}
     @end{subsection}
     @begin[GtkPrintJob]{subsection}
@@ -3668,7 +3667,7 @@ setup_tree (void)
       @about-generic{gtk-shortcuts-window-view-name}
     @end{subsection}
     @begin[GtkShortcutsSection]{subsection}
-      Represents an application mode in a GtkShortcutsWindow
+      Represents an application mode in a @class{gtk-shortcuts-window} widget.
 
       @about-class{gtk-shortcuts-section}
       @about-generic{gtk-shortcuts-section-max-height}
@@ -3677,7 +3676,7 @@ setup_tree (void)
       @about-generic{gtk-shortcuts-section-view-name}
     @end{subsection}
     @begin[GtkShortcutsGroup]{subsection}
-      Represents a group of shortcuts in a GtkShortcutsWindow
+      Represents a group of shortcuts in a @class{gtk-shortcuts-window} widget.
 
       @about-class{gtk-shortcuts-group}
       @about-generic{gtk-shortcuts-group-accel-size-group}
@@ -3687,7 +3686,7 @@ setup_tree (void)
       @about-generic{gtk-shortcuts-group-view}
     @end{subsection}
     @begin[GtkShortcutsShortcut]{subsection}
-      Represents a keyboard shortcut in a GtkShortcutsWindow
+      Represents a keyboard shortcut in a @class{gtk-shortcuts-window} widget.
 
       @about-symbol{gtk-shortcut-type}
       @about-class{gtk-shortcuts-shortcut}

@@ -104,7 +104,7 @@ GTK+ Widgets and Objects
     gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24
     gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.24
     gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24
-    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24 &
+    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24
     gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.24
     gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24
     gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.24

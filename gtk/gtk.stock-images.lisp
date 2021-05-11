@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.stock-images.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -147,7 +147,7 @@
   simple string identifying the icon. Each @class{gtk-style} object has a list
   of @sym{gtk-icon-factory} objects derived from the current theme; those icon
   factories are consulted first when searching for an icon. If the theme
-  does not set a particular icon, GTK+ looks for the icon in a list of default
+  does not set a particular icon, GTK looks for the icon in a list of default
   icon factories, maintained by the functions @fun{gtk-icon-factory-add-default}
   and @fun{gtk-icon-factory-remove-default}. Applications with icons should add
   a default icon factory with their icons, which will allow themes to override
@@ -232,9 +232,10 @@
   (:dialog 6))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-size atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-icon-size atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-icon-size atdoc:*external-symbols*)
- "@version{2020-12-4}
+ "@version{*2021-5-8}
   @short{Built-in stock icon sizes.}
   @begin{pre}
 (define-g-enum \"GtkIconSize\" gtk-icon-size
@@ -248,7 +249,16 @@
   (:dnd 5)
   (:dialog 6))
   @end{pre}
-  @see-class{gtk-icon-factory}")
+  @begin[code]{table}
+    @entry[:invalid]{Invalid size.}
+    @entry[:menu]{Size appropriate for menus (16px).}
+    @entry[:small-toolbar]{Size appropriate for small toolbars (16px).}
+    @entry[:large-toolbar]{Size appropriate for large toolbars (24px).}
+    @entry[:button]{Size appropriate for buttons (16px).}
+    @entry[:dnd]{Size appropriate for drag and drop (32px).}
+    @entry[:dialog]{Size appropriate for dialogs (48px).}
+  @end{table}
+  @see-class{gtk-icon-theme}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_copy ()
@@ -416,7 +426,7 @@
 ;;; Icons in an icon factory are named by a stock ID, which is a simple string
 ;;; identifying the icon. Each GtkStyle has a list of GtkIconFactorys derived
 ;;; from the current theme; those icon factories are consulted first when
-;;; searching for an icon. If the theme does not set a particular icon, GTK+
+;;; searching for an icon. If the theme does not set a particular icon, GTK
 ;;; looks for the icon in a list of default icon factories, maintained by
 ;;; gtk_icon_factory_add_default() and gtk_icon_factory_remove_default().
 ;;; Applications with icons should add a default icon factory with their icons,

@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.window.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -242,9 +242,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-window-type atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{*2021-5-8}
   @begin{short}
     An enumeration for the possible types of a @class{gtk-window} widget.
   @end{short}
@@ -255,13 +255,12 @@
   toggle the frame. Windows with type @code{:popup} are ignored by the window
   manager. Window manager keybindings will not work on them, the window manager
   will not decorate the window with a frame, many GTK features that rely on
-  the window manager will not work (e.g. resize grips and
-  maximization/minimization). The type @code{:popup} is used to implement
-  widgets such as @class{gtk-menu} widgets or tooltips that you normally do not
-  think of as windows per se. Nearly all windows should be of type
-  @code{:toplevel}. In particular, do not use the type @code{:popup} just to
-  turn off the window borders. Use the function @fun{gtk-window-decorated} for
-  that.
+  the window manager will not work, e.g. resize grips and
+  maximization/minimization. The type @code{:popup} is used to implement widgets
+  such as @class{gtk-menu} widgets or tooltips that you normally do not think of
+  as windows per se. Nearly all windows should be of type @code{:toplevel}. In
+  particular, do not use the type @code{:popup} just to turn off the window
+  borders. Use the function @fun{gtk-window-decorated} for that.
   @begin{pre}
 (define-g-enum \"GtkWindowType\" gtk-window-type
   (:export t
@@ -722,7 +721,7 @@
   the window is attached, or @code{nil} if the window is not attached to any
   widget. The slot access function @sym{(setf gtk-window-attached-to)} marks the
   window as attached to @arg{attach-widget}. This creates a logical binding
-  between the window and the widget it belongs to, which is used by GTK+ to
+  between the window and the widget it belongs to, which is used by GTK to
   propagate information such as styling or accessibility to the window as if it
   was a children of @arg{attach-widget}.
 
@@ -766,9 +765,9 @@
   has been set to have decorations such as a title bar.
 
   By default, windows are decorated with a title bar, resize controls, etc.
-  Some window managers allow GTK+ to disable these decorations, creating a
+  Some window managers allow GTK to disable these decorations, creating a
   borderless window. If you set the @slot[gtk-window]{decorated} property to
-  @em{false} using this function, GTK+ will do its best to convince the window
+  @em{false} using this function, GTK will do its best to convince the window
   manager not to decorate the window. Depending on the system, this function may
   not have any effect when called on a window that is already visible, so you
   should call it before calling the function @fun{gtk-widget-show}.
@@ -861,8 +860,8 @@
   has been set to have a close button.
 
   By default, windows have a close button in the window frame. Some window
-  managers allow GTK+ to disable this button. If you set the
-  @slot[gtk-window]{deletable} property to @em{false} using this function, GTK+
+  managers allow GTK to disable this button. If you set the
+  @slot[gtk-window]{deletable} property to @em{false} using this function, GTK
   will do its best to convince the window manager not to show a close button.
 
   Depending on the system, this function may not have any effect when called on
@@ -943,7 +942,7 @@
 (setf (documentation (atdoc:get-slot-from-name "focus-visible" 'gtk-window) 't)
  "The @code{focus-visible} property of type @code{:boolean} (Read / Write) @br{}
   Whether \"focus rectangles\" are currently visible in this window. This
-  property is maintained by GTK+ based on the
+  property is maintained by GTK based on the
   @slot[gtk-settings]{gtk-visible-focus} setting and user input and should not
   be set by applications. @br{}
   Default value: @em{true}")
@@ -964,7 +963,7 @@
   @end{short}
 
   Whether \"focus rectangles\" are currently visible in the window. This
-  property is maintained by GTK+ based on the
+  property is maintained by GTK based on the
   @slot[gtk-settings]{gtk-visible-focus} setting and user input and should not
   be set by applications.
   @see-class{gtk-window}")
@@ -1148,7 +1147,7 @@
   contexts.
 
   The icon should be provided in whatever size it was naturally drawn. That is,
-  do not scale the image before passing it to GTK+. Scaling is postponed until
+  do not scale the image before passing it to GTK. Scaling is postponed until
   the last minute, when the desired final size is known, to allow best quality.
 
   If you have your icon hand drawn in multiple sizes, use the function
@@ -1266,7 +1265,7 @@
  "The @code{mnemonics-visible} property of type @code{:boolean} (Read / Write)
   @br{}
   Whether mnemonics are currently visible in the window. This property is
-  maintained by GTK+ based on the @slot[gtk-settings]{gtk-auto-mnemonics}
+  maintained by GTK based on the @slot[gtk-settings]{gtk-auto-mnemonics}
   setting and user input, and should not be set by applications. @br{}
   Default value: @em{true}")
 
@@ -1286,7 +1285,7 @@
   @end{short}
 
   Whether mnemonics are currently visible in the window. This property is
-  maintained by GTK+ based on the @slot[gtk-settings]{gtk-auto-mnemonics}
+  maintained by GTK based on the @slot[gtk-settings]{gtk-auto-mnemonics}
   setting and user input, and should not be set by applications.
   @see-class{gtk-window}")
 
@@ -1457,7 +1456,7 @@
   The slot access function @sym{gtk-window-role} returns the role of the window
   if set, or @code{nil}. The slot access function @sym{(setf gtk-window-role)}
   sets an unique identifier for the window to be used when restoring a session.
-  This function is only useful on X11, not with other GTK+ targets.
+  This function is only useful on X11, not with other GTK targets.
 
   In combination with the window title, the window role allows a window
   manager to identify \"the same\" window when an application is restarted. So
@@ -1593,7 +1592,7 @@
   calling the function @fun{gtk-window-present} or any equivalent function
   generating a window map event.
 
-  This function is only useful on X11, not with other GTK+ targets.
+  This function is only useful on X11, not with other GTK targets.
   @see-class{gtk-window}
   @see-function{gtk-window-present}")
 
@@ -1663,7 +1662,7 @@
   were spawned from. This allows window managers to e.g. keep the dialog on
   top of the main window, or center the dialog over the main window. The
   function @fun{gtk-dialog-new-with-buttons} and other convenience functions
-  in GTK+ will sometimes call the function @sym{gtk-window-transient-for} on
+  in GTK will sometimes call the function @sym{gtk-window-transient-for} on
   your behalf.
 
   Passing @code{nil} for the argument @arg{parent} unsets the current transient
@@ -1733,7 +1732,7 @@
   This function should be called before the window becomes visible.
 
   The function @fun{gtk-dialog-new-with-buttons} and other convenience functions
-  in GTK+ will sometimes call this function on your behalf.
+  in GTK will sometimes call this function on your behalf.
   @see-class{gtk-window}
   @see-function{gtk-dialog-new-with-button}")
 
@@ -1813,7 +1812,7 @@
   implementing something like a popup menu from scratch, which is a bad idea,
   just use the @class{gtk-menu} class, you might use the type @code{:popup}. The
   type @code{:popup} is not for dialogs, though in some other toolkits dialogs
-  are called \"popups\". In GTK+, the type @code{:popup} means a pop-up menu or
+  are called \"popups\". In GTK, the type @code{:popup} means a pop-up menu or
   pop-up tooltip. On X11, popup windows are not controlled by the window
   manager.
 
@@ -1835,7 +1834,7 @@
 ;;;
 ;;; Don't use this function. It sets the X Window System "class" and "name"
 ;;; hints for a window. According to the ICCCM, you should always set these to
-;;; the same value for all windows in an application, and GTK+ sets them to that
+;;; the same value for all windows in an application, and GTK sets them to that
 ;;; value by default, so calling this function is sort of pointless. However,
 ;;; you may want to call gtk_window_set_role() on each window in your
 ;;; application, for the benefit of the session manager. Setting the role allows
@@ -2871,7 +2870,7 @@
   The function @sym{(setf gtk-window-icon-list)} allows you to pass in the same
   icon in several hand-drawn. The list should contain the natural sizes your
   icon is available in. That is, do not scale the image before passing it to
-  GTK+. Scaling is postponed until the last minute, when the desired final size
+  GTK. Scaling is postponed until the last minute, when the desired final size
   is known, to allow best quality.
 
   By passing several sizes, you may improve the final image quality of the
@@ -2930,7 +2929,7 @@
 
   The function @sym{gtk-window-position} is not 100 % reliable because the
   X Window System does not specify a way to obtain the geometry of the
-  decorations placed on a window by the window manager. Thus GTK+ is using a
+  decorations placed on a window by the window manager. Thus GTK is using a
   \"best guess\" that works with most window managers.
 
   Moreover, nearly all window managers are historically broken with respect to
@@ -2983,15 +2982,15 @@
   @begin{short}
     Obtains the current size of window.
   @end{short}
-  If the window is not onscreen, it returns the size GTK+ will suggest to the
+  If the window is not onscreen, it returns the size GTK will suggest to the
   window manager for the initial window size, but this is not reliably the same
   as the size the window manager will actually select. The size obtained by the
   function @sym{gtk-window size} is the last size received in a
-  @class{gdk-event-configure} event, that is, GTK+ uses its locally stored size,
+  @class{gdk-event-configure} event, that is, GTK uses its locally stored size,
   rather than querying the X server for the size. As a result, if you call the
   function @fun{gtk-window-resize} then immediately call the function
   @sym{gtk-window-size}, the size will not have taken effect yet. After the
-  window manager processes the resize request, GTK+ receives notification that
+  window manager processes the resize request, GTK receives notification that
   the size has changed via a configure event, and the size of the window gets
   updated.
   @begin[Note]{dictionary}
@@ -3006,8 +3005,8 @@
       @end{item}
       @begin{item}
         The returned size does not include the size of the window manager
-        decorations, aka the window frame or border. Those are not drawn by GTK+
-        and GTK+ has no reliable method of determining their size.
+        decorations, aka the window frame or border. Those are not drawn by GTK
+        and GTK has no reliable method of determining their size.
       @end{item}
       @begin{item}
         If you are getting a window size in order to position the window
@@ -3145,7 +3144,7 @@
     Parses a standard X Window System geometry string - see the manual page for
     X (type 'man X') for details on this.
   @end{short}
-  The function @sym{gtk-window-parse-geometry} does work on all GTK+ ports
+  The function @sym{gtk-window-parse-geometry} does work on all GTK ports
   including Win32 but is primarily intended for an X environment.
 
   If either a size or a position can be extracted from the geometry string,
@@ -3210,7 +3209,7 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-window-parse-geometry} has been deprecated since
     version 3.20 and should not be used in newly-written code. Geometry handling
-    in GTK+ is deprecated.
+    in GTK is deprecated.
   @end{dictionary}
   @see-class{gtk-window}"
   (window (g-object gtk-window))
@@ -3394,7 +3393,7 @@
   @begin{short}
     Call this function to disable the automatic startup notification.
   @end{short}
-  By default, after showing the first window, GTK+ calls the function
+  By default, after showing the first window, GTK calls the function
   @fun{gdk-notify-startup-complete}.
 
   You might do this if your first window is a splash screen, and you want to
@@ -3470,7 +3469,7 @@
 ;;;
 ;;; void gtk_window_set_has_user_ref_count (GtkWindow *window, gboolean setting)
 ;;;
-;;; Tells GTK+ whether to drop its extra reference to the window when
+;;; Tells GTK whether to drop its extra reference to the window when
 ;;; gtk_window_destroy() is called.
 ;;;
 ;;; This function is only exported for the benefit of language bindings which
@@ -3514,7 +3513,7 @@
   function @sym{(setf gtk-window-titlebar)} sets a custom titlebar for the
   window.
 
-  If you set a custom titlebar, GTK+ will do its best to convince the window
+  If you set a custom titlebar, GTK will do its best to convince the window
   manager not to put its own titlebar on the window. Depending on the system,
   this function may not work for a window that is already visible, so you set
   the titlebar before calling the function @fun{gtk-widget-show}.

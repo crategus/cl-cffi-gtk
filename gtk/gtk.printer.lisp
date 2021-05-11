@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.printer.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,6 +59,7 @@
 ;;;     gtk_printer_get_capabilities
 ;;;     gtk_printer_get_default_page_size
 ;;;     gtk_printer_get_hard_margins
+;;;     GtkPrinterFunc
 ;;;     gtk_enumerate_printers
 ;;;
 ;;; Properties
@@ -147,7 +148,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"details-acquired\" signal}
       @begin{pre}
- lambda (printer success)    : Run Last
+ lambda (printer success)    :run-last
       @end{pre}
       Gets emitted in response to a request for detailed information about a
       printer from the print backend. The success parameter indicates if the
@@ -189,8 +190,8 @@
 (setf (gethash 'gtk-printer-accepting-jobs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepting-jobs 'function)
- "@version{2019-4-9}
-  @syntax[]{(gtk-printer-accepting-jobs object) => accepting-jobs)}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-accepting-jobs object) => accepting-jobs}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepting-jobs]{a boolean whether the printer is accepting jobs}
   @begin{short}
@@ -213,8 +214,8 @@
 (setf (gethash 'gtk-printer-accepts-pdf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepts-pdf 'function)
- "@version{2020-4-9}
-  @syntax[]{(gtk-printer-accepts-pdf object) => accepts-pdf)}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-accepts-pdf object) => accepts-pdf}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepts-pdf]{a boolean whether the printer can accept PDF}
   @begin{short}
@@ -237,8 +238,8 @@
 (setf (gethash 'gtk-printer-accepts-ps atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepts-ps 'function)
- "@version{2020-4-9}
-  @syntax[]{(gtk-printer-accepts-ps object) => accepts-ps)}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-accepts-ps object) => accepts-ps}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepts-ps]{a boolean whether the printer can accept PostScript}
   @begin{short}
@@ -333,10 +334,10 @@
 (setf (gethash 'gtk-printer-job-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-job-count 'function)
- "@version{2020-4-9}
+ "@version{2021-5-4}
   @syntax[]{(gtk-printer-job-count object) => job-count}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[job-count]{the number of jobs queued on the printer}
+  @argument[job-count]{an integer with he number of jobs queued on the printer}
   @begin{short}
     Accessor of the @slot[gtk-printer]{job-count} slot of the
     @class{gtk-printer} class.
@@ -356,8 +357,8 @@
 (setf (gethash 'gtk-printer-location atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-location 'function)
- "@version{2020-4-9}
-  @syntax{]{(gtk-printer-location object) => location}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-location object) => location}
   @argument[object]{a @class{gtk-printer} object}
   @argument[location]{a string with the location of the printer}
   @begin{short}
@@ -380,8 +381,8 @@
 (setf (gethash 'gtk-printer-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-name 'function)
- "@version{2020-4-9}
-  @syntax{]{(gtk-printer-name object) => name}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-name object) => name}
   @argument[object]{a @class{gtk-printer} object}
   @argument[name]{a string with the name of the printer}
   @begin{short}
@@ -389,8 +390,7 @@
     @class{gtk-printer} class.
   @end{short}
   Returns the name of the printer.
-  @see-class{gtk-printer}
-  @see-function{gtk-printer-get-name}")
+  @see-class{gtk-printer}")
 
 ;;; --- gtk-printer-paused -----------------------------------------------------
 
@@ -428,10 +428,10 @@
 (setf (gethash 'gtk-printer-state-message atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-state-message 'function)
- "@version{2020-4-9}
-  @syntax[]{(gtk-printer-state-message object) => state-message}
+ "@version{2021-5-4}
+  @syntax[]{(gtk-printer-state-message object) => message}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[state-message]{a string with the current state of the printer}
+  @argument[message]{a string with the current state of the printer}
   @begin{short}
     Accessor of the @slot[gtk-printer]{state-message} slot of the
     @class{gtk-printer} class.
@@ -745,29 +745,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPrinterFunc ()
-;;;
-;;; gboolean (*GtkPrinterFunc) (GtkPrinter *printer, gpointer data);
-;;;
-;;; The type of function passed to gtk_enumerate_printers(). Note that you need
-;;; to ref printer, if you want to keep a reference to it after the function has
-;;; returned.
-;;;
-;;; printer :
-;;;     a GtkPrinter
-;;;
-;;; data :
-;;;     user data passed to gtk_enumerate_printers(). [closure]
-;;;
-;;; Returns :
-;;;     TRUE to stop the enumeration, FALSE to continue
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-printer-func-cb :boolean
+(defcallback gtk-printer-func :boolean
     ((printer (g-object gtk-printer))
      (data :pointer))
-  (funcall (glib::get-stable-pointer-value data) printer))
+  (funcall (get-stable-pointer-value data) printer))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-printer-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-printer-func atdoc:*external-symbols*)
+ "@version{2021-5-4}
+  @begin{short}
+    The type of function passed to the function @fun{gtk-enumerate-printers}.
+  @end{short}
+  @begin{pre}
+ lambda (printer)
+  @end{pre}
+  @begin[code]{table}
+    @entry[widget]{A @class{gtk-printer} object.}
+    @entry[Returns]{@em{True} to stop the enumeration, @em{false} to continue.}
+  @end{table}
+  @see-class{gtk-printer}
+  @see-function{gtk-enumerate-printers}")
+
+(export 'gtk-printer-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_enumerate_printers ()
@@ -790,9 +793,9 @@
   @end{short}
   If @arg{func} returns @em{true}, the enumeration is stopped.
   @see-class{gtk-printer}"
-  (%gtk-enumerate-printers (callback gtk-printer-func-cb)
-                           (glib:allocate-stable-pointer func)
-                           (callback glib:stable-pointer-destroy-notify-cb)
+  (%gtk-enumerate-printers (callback gtk-printer-func)
+                           (allocate-stable-pointer func)
+                           (callback stable-pointer-destroy-notify-cb)
                            wait))
 
 (export 'gtk-enumerate-printers)

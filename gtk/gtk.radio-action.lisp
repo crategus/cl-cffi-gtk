@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.radio-action.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -89,34 +89,36 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-action 'type)
- "@version{2020-2-8}
+ "@version{2021-5-4}
   @begin{short}
-    A @sym{gtk-radio-action} is similar to @class{gtk-radio-menu-item}.
+    The @sym{gtk-radio-action} object is similar to the
+    @class{gtk-radio-menu-item} widget.
   @end{short}
   A number of radio actions can be linked together so that only one may be
   active at any one time.
   @begin[Warning]{dictionary}
-    @sym{gtk-radio-action} has been deprecated since version 3.10 and should
-    not be used in newly-written code.
+    The @sym{gtk-radio-action} object has been deprecated since version 3.10
+    and should not be used in newly-written code.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (action current)    : No Recursion
+ lambda (action current)    :no-recurse
       @end{pre}
-      The \"changed\" signal is emitted on every member of a radio group when
-      the active member is changed. The signal gets emitted after the
-      \"activate\" signals for the previous and current active members.
+      The signal is emitted on every member of a radio group when the active
+      member is changed. The signal gets emitted after the \"activate\" signals
+      for the previous and current active members.
       @begin[code]{table}
-        @entry[action]{The @class{gtk-radio-action} object on which the signal
+        @entry[action]{The @sym{gtk-radio-action} object on which the signal
           is emitted.}
-        @entry[current]{The member of actions group which has just been
-          activated.}
+        @entry[current]{The @sym{gtk-radio-object} member of the action group
+          which has just been activated.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-radio-action-current-value}
   @see-slot{gtk-radio-action-group}
   @see-slot{gtk-radio-action-value}
+  @see-class{gtk-action}
   @see-class{gtk-radio-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -137,23 +139,21 @@
 (setf (gethash 'gtk-radio-action-current-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-current-value 'function)
- "@version{2019-5-27}
+ "@version{2021-5-4}
   @syntax[]{(gtk-radio-action-current-value object) => current-value}
   @syntax[]{(setf (gtk-radio-action-current-value object) current-value)}
   @argument[object]{a @class{gtk-radio-action} object}
-  @argument[current-value]{the new value}
+  @argument[current-value]{an integer with the value}
   @begin{short}
     Accessor of the @slot[gtk-radio-acton]{current-value} slot of the
     @class{gtk-radio-action} class.
   @end{short}
 
-  The @sym{(gtk-radio-action-current-value} slot access function
-  obtains the value property of the currently active member of the group to
-  which @arg{action} belongs.
-
-  The @sym{(setf gtk-radio-action-current-value)} slot access function
-  sets the currently active group member to the member with value property
-  @arg{current-value}.
+  The slot access function @sym{gtk-radio-action-current-value} obtains the
+  value property of the currently active member of the group to which the radio
+  action belongs. The slot access function
+  @sym{(setf gtk-radio-action-current-value)} sets the currently active group
+  member to the member with value property @arg{current-value}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-radio-action-current-value} has been deprecated since
     version 3.10 and should not be used in newly-written code.
@@ -171,11 +171,12 @@
 (setf (gethash 'gtk-radio-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-group 'function)
- "@version{2020-2-8}
+ "@version{2021-5-4}
   @syntax[]{(gtk-radio-action-group object) => group}
   @syntax[]{(setf (gtk-radio-action-group object) group)}
   @argument[object]{a @class{gtk-radio-action} object}
-  @argument[group]{a list representing a radio group}
+  @argument[group]{a list of @class{gtk-radion-action} objects representing a
+    radio group}
   @begin{short}
     Accessor of the @slot[gtk-radio-action]{group} slot of the
     @class{gtk-radio-action} class.
@@ -183,8 +184,7 @@
 
   The slot access function @sym{gtk-radio-action-group} returns the list
   representing the radio group for this object. The slot access function
-  @sym{(setf gtk-radio-action-group)} sets the radio group for the radio action
-  object.
+  @sym{(setf gtk-radio-action-group)} sets the radio group.
 
   Note that the returned list is only valid until the next change to the group.
   A common way to set up a group of radio group is the following:
@@ -212,17 +212,15 @@
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-radio-action) 't)
  "The @code{value} property of type @code{:int} (Read / Write) @br{}
   The value is an arbitrary integer which can be used as a convenient way to
-  determine which action in the group is currently active in an \"activate\" or
-  \"changed\" signal handler. See the  @fun{gtk-radio-action-current-value}
-  function and @symbol{gtk-radio-action-entry} for convenient ways to get and
-  set this property. @br{}
+  determine which action in the group is currently active in an \"activate\"
+  or \"changed\" signal handler. @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-value 'function)
- "@version{2020-2-8}
+ "@version{2021-5-4}
   @begin{short}
     Accessor of the @slot[gtk-radio-action]{value} slot of the
     @class{gtk-radio-action} class.
@@ -240,22 +238,22 @@
 (defcfun ("gtk_radio_action_new" gtk-radio-action-new)
     (g-object gtk-radio-action)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-22}
-  @argument[name]{a unique name for the action}
-  @argument[label]{the label displayed in menu items and on buttons,
-    or @code{nil}}
-  @argument[tooltip]{a tooltip for this action, or @code{nil}}
-  @argument[stock-id]{the stock icon to display in widgets representing this
-    action, or @code{nil}}
-  @argument[value]{the value of type @code{:int} which the function
+ "@version{2021-5-4}
+  @argument[name]{a string with the unique name for the action}
+  @argument[label]{a string with the label displayed in menu items and on
+    buttons, or @code{nil}}
+  @argument[tooltip]{a string with the tooltip for this action, or @code{nil}}
+  @argument[stock-id]{a string with the stock icon to display in widgets
+    representing this action, or @code{nil}}
+  @argument[value]{an integer with the value which the function
     @fun{gtk-radio-action-current-value} should return if this action is
     selected}
-  @return{A new @class{gtk-radio-action} object}
+  @return{A new @class{gtk-radio-action} object.}
   @begin{short}
-    Creates a new @class{gtk-radio-action} object.
+    Creates a new radio action.
   @end{short}
-  To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the function @fun{gtk-action-group-add-action}.
+  To add the action to a @class{gtk-action-group} object and set the accelerator
+  for the action, call the function @fun{gtk-action-group-add-action}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-radio-action-new} has been deprecated since version
     3.10 and should not be used in newly-written code.
@@ -278,10 +276,10 @@
 
 (defcfun ("gtk_radio_action_join_group" gtk-radio-action-join-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-22}
+ "@version{2021-5-4}
   @argument[action]{a @class{gtk-radio-action} object}
-  @argument[group-source]{a radio action object whos group we are joining, or
-    @code{nil} to remove the radio action from its group}
+  @argument[group-source]{a @class{gtk-radio-action} object whose group we are
+    joining, or @code{nil} to remove the radio action from its group}
   @begin{short}
     Joins a radio action object to the group of another radio action object.
   @end{short}
