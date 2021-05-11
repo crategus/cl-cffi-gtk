@@ -78,7 +78,7 @@
     (is (eq 'g-simple-action (type-of action)))
     (is (equal "simple" (g-action-name action)))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-peek-string (g-action-parameter-type action))))))
+    (is (equal "b" (g-variant-type-dup-string (g-action-parameter-type action))))))
 
 ;;;   g_simple_action_new_stateful
 
@@ -89,7 +89,7 @@
     (is (eq 'g-simple-action (type-of action)))
     (is (equal "simple" (g-action-name action)))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-peek-string (g-action-parameter-type action))))
+    (is (equal "b" (g-variant-type-dup-string (g-action-parameter-type action))))
     (is-true (g-variant-boolean (g-action-state action)))))
 
 ;;; --- Functions from the interface -------------------------------------------

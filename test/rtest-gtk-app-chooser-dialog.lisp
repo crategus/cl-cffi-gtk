@@ -92,7 +92,7 @@
 
     (is (eq 'g-object (type-of (gtk-app-chooser-dialog-gfile chooser))))
     (is (string= "/home/dieter/Lisp/lisp-projects/cl-gtk/test/gio.file.lisp"
-                 (g-file-get-path (gtk-app-chooser-dialog-gfile chooser))))))
+                 (g-file-path (gtk-app-chooser-dialog-gfile chooser))))))
 
 ;;;     gtk_app_chooser_dialog_new_for_content_type
 

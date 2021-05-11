@@ -56,16 +56,8 @@
   (is-true (g-variant-type-string-is-valid "a(aa(ui)(qna{ya(yd)}))")))
 
 ;;;   g_variant_type_string_scan                           not implemented
-
-;;;   g_variant_type_get_string_length
-
-(test g-variant-type-string-length
-  (is (= 1 (g-variant-type-string-length (g-variant-type-checked "b")))))
-
-;;;   g_variant_type_peek_string
-
-(test g-variant-type-peek-string
-  (is (string= "b" (g-variant-type-peek-string (g-variant-type-new "b")))))
+;;;   g_variant_type_get_string_length                     not exported
+;;;   g_variant_type_peek_string                           not exported
 
 ;;;   g_variant_type_dup_string
 

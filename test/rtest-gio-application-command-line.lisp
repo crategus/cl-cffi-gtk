@@ -23,11 +23,12 @@
              (mapcar #'g-type-name (g-type-interfaces "GApplicationCommandLine"))))
   ;; Check the class properties
   (is (equal '("arguments" "is-remote" "options" "platform-data")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GApplicationCommandLine"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GApplicationCommandLine"))
+                   #'string-lessp)))
   ;; Check the class definition
-  (is (equal '(DEFINE-G-OBJECT-CLASS "GApplicationCommandLine" G-APPLICATION-COMMAND-LINE
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GApplicationCommandLine"
+                                      G-APPLICATION-COMMAND-LINE
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL)
                        ((ARGUMENTS G-APPLICATION-COMMAND-LINE-ARGUMENTS
                          "arguments" "GVariant" NIL NIL)
@@ -60,30 +61,25 @@
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     g_application_command_line_get_arguments
-;;;     g_application_command_line_get_cwd
-;;;     g_application_command_line_get_environ
 
 (test g-application-command-line-functions
   (let ((app (make-instance 'g-application :flags :handles-command-line
-                                           :inactivity-timeout 2000)))
-
+                                           :inactivity-timeout 1000)))
     ;; Signal handler "command-line"
     (g-signal-connect app "command-line"
-                      (lambda (application cmdline)
-                        (g-application-hold application)
-                        (when *g-application-command-line-verbose*
-                          (format t "~%The application is in command-line.~%")
-                          (format t "~A~%" (g-application-command-line-get-arguments cmdline)))
-                        (is (equal '("file1" "file2" "file3")
-                                   (g-application-command-line-get-arguments cmdline)))
-                        (is (string= "/home/dieter/Lisp/lisp-projects/cl-gtk/test"
-                                     (g-application-command-line-cwd cmdline)))
-                        (is-true (listp (g-application-command-line-environ cmdline)))
-                        (g-application-release application)
-                        0))
-
+        (lambda (application cmdline)
+          (g-application-hold application)
+          (when *g-application-command-line-verbose*
+            (format t "~%The application is in command-line.~%")
+            (format t "~A~%" (g-application-command-line-get-arguments cmdline)))
+          (is (equal '("file1" "file2" "file3")
+                     (g-application-command-line-get-arguments cmdline)))
+          (g-application-release application)
+          0))
     (g-application-run app '("file1" "file2" "file3"))))
 
+;;;     g_application_command_line_get_cwd
+;;;     g_application_command_line_get_environ
 ;;;     g_application_command_line_get_options_dict
 ;;;     g_application_command_line_get_stdin
 ;;;     g_application_command_line_create_file_for_arg
@@ -95,4 +91,4 @@
 ;;;     g_application_command_line_print
 ;;;     g_application_command_line_printerr
 
-;;; 2020-12-12
+;;; 2021-5-7
