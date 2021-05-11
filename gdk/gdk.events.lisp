@@ -1272,9 +1272,9 @@
 
 (defun gdk-setting-get (name gtype)
  #+cl-cffi-gtk-documentation
- "@version{2019-4-7}
-  @argument[name]{a @code{:string} with the name of the setting}
-  @argument[gtype]{a @code{:string} with the GType of the setting}
+ "@version{2021-5-4}
+  @argument[name]{a string with the name of the setting}
+  @argument[gtype]{a string with the GType of the setting}
   @begin{return}
     The value of the setting.
   @end{return}
@@ -1282,11 +1282,10 @@
     Obtains a desktop-wide setting, such as the double-click time, for the
     default screen.
   @end{short}
-  See the function @fun{gdk-screen-setting}
+  See the function @fun{gdk-screen-setting}.
   @begin[Example]{dictionary}
     @begin{pre}
-  (gdk-setting-get \"gtk-double-click-time\" \"gint\")
-=> 400
+(gdk-setting-get \"gtk-double-click-time\" \"gint\") => 400
     @end{pre}
   @end{dictionary}
   @see-function{gdk-screen-setting}"

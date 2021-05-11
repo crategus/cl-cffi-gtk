@@ -4359,33 +4359,31 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defcfun ("gdk_window_set_geometry_hints" gdk-window-set-geometry-hints) :void
  #+cl-cffi-gtk-documentation
- "@version{2019-4-26}
+ "@version{2021-5-4}
   @argument[window]{a toplevel @class{gdk-window} object}
   @argument[geometry]{geometry hints of type @symbol{gdk-geometry}}
-  @argument[geometry-mask]{bitmask of type @symbol{gdk-window-hints} indicating
-    fields of geometry to pay attention to}
+  @argument[geometry-mask]{a @symbol{gdk-window-hints} bitmask indicating fields
+    of geometry to pay attention to}
   @begin{short}
     Sets the geometry hints for the window.
   @end{short}
-  Hints flagged in @arg{geometry-mask} are set, hints not flagged in
-  @arg{geometry-mask} are unset.
+  Hints flagged in @arg{geometry-mask} are set, hints not flagged  are unset.
 
   This function provides hints to the windowing system about acceptable sizes
   for a toplevel window. The purpose of this is to constrain user resizing,
   but the windowing system will typically, but is not required to, also
   constrain the current size of the window to the provided values and
-  constrain programatic resizing via the @fun{gdk-window-resize} or
-  @fun{gdk-window-move-resize} functions.
+  constrain programatic resizing via the functions @fun{gdk-window-resize} or
+  @fun{gdk-window-move-resize}.
 
   Note that on X11, this effect has no effect on windows of type @code{:temp}
-  or windows where override redirect has been turned on via the
-  @fun{gdk-window-set-override-redirect} function since these windows are not
-  resizable by the user.
+  or windows where override redirect has been turned on via the function
+  @fun{gdk-window-set-override-redirect} since these windows are not resizable
+  by the user.
 
   Since you cannot count on the windowing system doing the constraints for
-  programmatic resizes, you should generally call the
-  @fun{gdk-window-constrain-size} function yourself to determine appropriate
-  sizes.
+  programmatic resizes, you should generally call the function
+  @fun{gdk-window-constrain-size} yourself to determine appropriate sizes.
   @see-class{gdk-window}
   @see-function{gdk-window-resize}
   @see-function{gdk-window-move-resize}
