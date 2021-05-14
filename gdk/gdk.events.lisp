@@ -151,7 +151,7 @@
 
 (defconstant +gdk-event-propagate+ nil
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{*2021-5-13}
   @begin{short}
     Use this value as the return value for continuing the propagation of an
     event handler.
@@ -169,11 +169,21 @@
 
 (defconstant +gdk-event-stop+ t
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{*2021-5-13}
   @begin{short}
-    Use this value as the return value for stopping the propagation of an
-    event handler.
+    Use this value as the return value for stopping the propagation of an event
+    handler.
   @end{short}
+  @begin[Example]{dictionary}
+    This event handler for the \"delete-event\" signal of a window stops the
+    propagation of the event and the window is not closed.
+    @begin{pre}
+(g-signal-connect window \"delete-event\"
+                  (lambda (widget event)
+                    (declare (ignore widget event))
+                    +gdk-event-stop+))
+    @end{pre}
+  @end{dictionary}
   @see-variable{+gdk-event-propagate+}")
 
 #+cl-cffi-gtk-documentation

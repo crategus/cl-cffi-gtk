@@ -731,7 +731,7 @@
 (setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.
@@ -846,11 +846,11 @@
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-event-mask atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @begin{short}
-    A set of bit-flags to indicate which events a window is to receive. Most
-    of these masks map onto one or more of the @symbol{gdk-event-type} types.
+    A set of bit-flags to indicate which events a window is to receive.
   @end{short}
+  Most of these masks map onto one or more of the @symbol{gdk-event-type} types.
 
   The @code{:pointer-motion-hint-mask} mask is a special mask which is used to
   reduce the number of @code{:motion-notifiy} events received. Normally a
@@ -1847,7 +1847,7 @@
 (setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-button-x instance) => x}
   @syntax[]{(setf (gdk-event-button-x instance) x)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1866,7 +1866,7 @@
 (setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-button-y instance) => y}
   @syntax[]{(setf (gdk-event-button-y instance) y)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1925,7 +1925,7 @@
 (setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-button 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-button-button instance) => button}
   @syntax[]{(setf (gdk-event-button-button instance) button)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -2691,7 +2691,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-x 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-motion-x instance) => x}
   @syntax[]{(setf (gdk-event-motion-x instance) x)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2710,7 +2710,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-y 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-motion-y instance) => y}
   @syntax[]{(setf (gdk-event-motion-y instance) y)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2748,7 +2748,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-state 'function)
- "@version{2021-4-25}
+ "@version{*2021-5-13}
   @syntax[]{(gdk-event-motion-state instance) => state}
   @syntax[]{(setf (gdk-event-motion-state instance) state)}
   @argument[instance]{a @class{gdk-event-motion} instance}

@@ -68,7 +68,7 @@
 (defcfun ("gdk_window_create_similar_surface" gdk-window-create-similar-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-29}
+ "@version{*2021-5-13}
   @argument[window]{a @class{gdk-window} object to make the new surface similar
     to}
   @argument[content]{a value of the @symbol{cairo-content-t} enumeration for
@@ -82,7 +82,7 @@
     a \"nil\" surface if the surface is in an error state.
   @end{return}
   @begin{short}
-    Create a new surface that is as compatible as possible with the given
+    Creates a new surface that is as compatible as possible with the given
     @arg{window}.
   @end{short}
   For example the new surface will have the same fallback resolution and font
