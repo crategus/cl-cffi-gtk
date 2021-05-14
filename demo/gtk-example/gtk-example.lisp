@@ -1,7 +1,8 @@
 (defpackage :gtk-example
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
-  (:export #:create-page-setup-dialog
+  (:export #:application-simple
+           #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
            #:example-button-box
@@ -16,12 +17,17 @@
            #:example-drag-and-drop
            #:example-drag-and-drop-simple
            #:example-drawing-area
+           #:example-drawing-area-input                ; Getting started
            #:example-file-chooser-custom-filter
            #:example-file-chooser-dialog
            #:example-file-chooser-preview
            #:example-file-chooser-widget
+           #:example-getting-started                   ; Getting started
            #:example-grab
            #:example-grid-packing
+           #:example-hello-world                       ; Getting started
+           #:example-hello-world-upgraded              ; Getting started
+           #:example-hello-world-upgraded-2            ; Getting started
            #:example-image-button-press
            #:example-image-menu-item
            #:example-info-bar
@@ -51,7 +57,7 @@
            #:example-simple-list-store
            #:example-tool-palette
            #:example-widget-pointer
-           #:simple-application
+           #:example-window-simple                     ; Getting started
            ))
 
 (in-package :gtk-example)
@@ -72,4 +78,4 @@
         (read-sequence string instream)
         string))))
 
-;;; 2021-4-30
+;;; 2021-5-13

@@ -1,3 +1,5 @@
+;;;; Example Drawing area (2021-5-13)
+
 (in-package :gtk-example)
 
 (defun example-drawing-area ()
@@ -37,5 +39,3 @@
       ;; Show the window
       (gtk-container-add window area)
       (gtk-widget-show-all window))))
-
-;;; 2021-1-26

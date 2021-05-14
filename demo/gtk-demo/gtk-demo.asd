@@ -33,7 +33,6 @@
                (:file "dialog-alternative-order")
                (:file "dialog-toplevel")
                (:file "dialogs")
-               (:file "drawing")
                (:file "entry-completion")
                (:file "entry-buffer")
                (:file "event-box")
@@ -64,7 +63,6 @@
                (:file "size-management")
                (:file "simple-application-window")
                (:file "simple-message")
-               (:file "simple-window")
                (:file "spin-button")
                (:file "statusbar")
                (:file "switch")
@@ -75,4 +73,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-5-7
+;;; 2021-5-13

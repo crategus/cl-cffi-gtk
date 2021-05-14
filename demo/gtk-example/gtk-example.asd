@@ -6,7 +6,6 @@
   :serial t
   :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-example")
-               (:file "application-inhibit")
                (:file "application-simple")
                (:file "bloat-pad")
                (:file "button-box")
@@ -18,9 +17,14 @@
                (:file "drag-and-drop")
                (:file "drag-and-drop-simple")
                (:file "drawing-area")
+               (:file "drawing-area-input")            ; Getting started
                (:file "event-handler")
+               (:file "getting-started")               ; Getting started
                (:file "grab")
                (:file "grid-packing")
+               (:file "hello-world")                   ; Getting started
+               (:file "hello-world-upgraded")          ; Getting started
+               (:file "hello-world-upgraded-2")        ; Getting started
                (:file "image-button-press")
                (:file "image-menu-item")
                (:file "info-bar")
@@ -44,6 +48,7 @@
                (:file "show-about-dialog")
                (:file "tool-palette")
                (:file "widget-pointer")
+               (:file "window-simple")                 ; Getting started
               ))
 
-;;; 2021-4-30
+;;; 2021-5-13

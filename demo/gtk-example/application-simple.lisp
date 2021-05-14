@@ -1,12 +1,12 @@
-;;;; Simple Application
+;;;; Simple Application (2021-5-11)
 
 (in-package #:gtk-example)
 
-(defun simple-application (&optional (argv nil))
+(defun application-simple (&optional (argv nil))
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application
-                              :application-id "com.crategus.simple-application"
+                              :application-id "com.crategus.application-sinple"
                               :flags :none)))
 
       ;; Connect signal "activate" to the applicaton

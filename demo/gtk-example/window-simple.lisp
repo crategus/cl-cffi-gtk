@@ -1,24 +1,12 @@
-;;;; Simple Window
+;;;; Example Simple Window (2021-5-12)
 ;;;;
 ;;;; This example shows a very simple window. The program creates a 200 x 200
 ;;;; pixel window. In this case the window has the default title "sbcl". The
 ;;;; window can be sized and moved.
-;;;;
-;;;; Classes
-;;;;
-;;;;     gtk-window
-;;;;
-;;;; Functions
-;;;;
-;;;;     gtk-window-new
-;;;;     gtk-widget-show-all
-;;;;     g-signal-connect
-;;;;     leave-gtk-main
-;;;;     within-main-loop
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun example-simple-window ()
+(defun example-window-simple ()
   (within-main-loop
     (let (;; Create a toplevel window.
           (window (gtk-window-new :toplevel)))
@@ -29,4 +17,3 @@
                           (leave-gtk-main)))
       ;; Show the window.
       (gtk-widget-show-all window))))
-

@@ -135,8 +135,8 @@
                                             "Windows")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Window"
-                                "simple-window.lisp"
-                                "EXAMPLE-SIMPLE-WINDOW")
+                                "../gtk-example/window-simple.lisp"
+                                "EXAMPLE-WINDOW-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Message"
                                 "simple-message.lisp"
@@ -481,8 +481,8 @@
                                             "Miscellaneous")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Drawing in response to input"
-                                "drawing.lisp"
-                                "EXAMPLE-DRAWING")
+                                "../gtk-example/drawing-area-input.lisp"
+                                "EXAMPLE-DRAWING-AREA-INPUT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Arrows"
                                 "arrows.lisp"
