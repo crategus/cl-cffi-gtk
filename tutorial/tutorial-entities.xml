@@ -64,8 +64,14 @@
 
 <!ENTITY gdk-display                         "&api;gdk_class_gdk-display.html">
 
-<!ENTITY gdk-event-propagate                 "&api;gdk_var_+gdk-event-propagate+.html">
-<!ENTITY gdk-event-stop                      "&api;gdk_var_+gdk-event-stop+.html">
+<!ENTITY gdk-event-propagate
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_var_+gdk-event-propagate+.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>+gdk-event-propagate+</code></ulink>">
+<!ENTITY gdk-event-stop
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_var_+gdk-event-stop+.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>+gdk-event-stop+</code></ulink>">
 
 <!--     gdk-pixbuf     -->
 
@@ -2139,9 +2145,11 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-allocated-width.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-allocated-width</code></ulink>">
+<!ENTITY gtk-widget-destroy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-destroy.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-destroy</code></ulink>">
 
-
-<!ENTITY gtk-widget-destroy                  "&api;gtk_fun_gtk-widget-destroy.html">
 <!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
 <!ENTITY gtk-widget-allocation               "&api;gtk_fun_gtk-widget-allocation.html">
 <!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">

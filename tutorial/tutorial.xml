@@ -8,7 +8,7 @@
 <book xmlns="http://docbook.org/ns/docbook" version ="5.0"
       xmlns:xi="http://docbook.sourceforge.net/release/xsl/current/xhtml5/docbook.xsl">
 
- <title>GTK+ 3 Tutorial for Lisp</title>
+ <title>GTK 3 Tutorial for Lisp</title>
  <subtitle>
    Using the <ulink url="http://crategus.com/books/cl-cffi-gtk">
    cl-cffi-gtk</ulink> library for writing Lisp programs
@@ -25,80 +25,80 @@
   </author>
  </bookinfo>
 
- <preface>
+ <preface revision="2021-5-12"> 
   <title>Introduction</title>
   <para>
-   The <code>cl-cffi-gtk</code> library is a Lisp binding to GTK+ (GIMP Toolkit) which is a library for
-   creating graphical user interfaces. GTK+ is licensed using the LGPL which has been adopted for the
+   The <code>cl-cffi-gtk</code> library is a Lisp binding to GTK (GIMP Toolkit) which is a library for
+   creating graphical user interfaces. GTK is licensed using the LGPL which has been adopted for the
    <code>cl-cffi-gtk</code> library with a preamble that clarifies the terms for use with Lisp programs and
    is referred as the LLGPL.
   </para>
   <para>
    This work is based on the <code>cl-gtk2</code> library which has been developed by Kalyanov Dmitry and
-   already is a fairly complete Lisp binding to GTK+. The focus of the <code>cl-cffi-gtk</code> library is
+   already is a fairly complete Lisp binding to GTK. The focus of the <code>cl-cffi-gtk</code> library is
    to document the Lisp library much more complete and to do the implementation as consistent as possible.
-   Most informations about GTK+ can be gained by reading the C documentation. Therefore, the C documentation
-   from <ulink url="https://developer.gnome.org/gtk3/stable/">GTK+ 3 Reference Manual</ulink> is included
-   into the Lisp files as an API documentation to document the Lisp binding to the GTK+ library. This way the
+   Most informations about GTK can be gained by reading the C documentation. Therefore, the C documentation
+   from <ulink url="https://developer.gnome.org/gtk3/stable/">GTK 3 Reference Manual</ulink> is included
+   into the Lisp files as an API documentation to document the Lisp binding to the GTK library. This way the
    calling conventions are easier to determine and missing functionality is easier to detect. The Lisp API
    documentation is available online at <ulink url="http://crategus.com/books/cl-cffi-gtk">
    cl-cffi-gtk API documentation</ulink>.
   </para>
   <para>
-   The GTK+ library is called the GIMP toolkit because GTK+ was originally written for developing the GNU
-   Image Manipulation Program (GIMP), but GTK+ has now been used in a large number of software projects,
-   including the GNU Network Object Model Environment (GNOME) project. GTK+ is built on top of GDK (GIMP
+   The GTK library is called the GIMP toolkit because GTK was originally written for developing the GNU
+   Image Manipulation Program (GIMP), but GTK has now been used in a large number of software projects,
+   including the GNU Network Object Model Environment (GNOME) project. GTK is built on top of GDK (GIMP
    Drawing Kit) which is basically a wrapper around the low-level functions for accessing the underlying
    windowing functions (Xlib in the case of the X windows system), and GdkPixbuf, a library for client-side
    image manipulation.
   </para>
   <para>
-   GTK+ is essentially an object oriented application programmers interface (API). Although written
-   completely in C, GTK+ is implemented using the idea of classes and callback functions (pointers to
+   GTK is essentially an object oriented application programmers interface (API). Although written
+   completely in C, GTK is implemented using the idea of classes and callback functions (pointers to
    functions).
   </para>
   <para>
    A third component is called GLib which contains replacements for standard calls, as well as additional
    functions for handling linked lists, etc. The replacement functions are used to increase the portability
-   of GTK+, as some of the functions implemented here are not available or are non standard on other Unixes
+   of GTK, as some of the functions implemented here are not available or are non standard on other Unixes
    such as <code>g_strerror()</code>. Some also contain enhancements to the libc versions, such as
    <code>g_malloc()</code> that has enhanced debugging utilities.
   </para>
   <para>
    In version 2.0, GLib has picked up the type system which forms the foundation for the class hierarchy of
-   GTK+, the signal system which is used throughout GTK+, a thread API which abstracts the different native
+   GTK, the signal system which is used throughout GTK, a thread API which abstracts the different native
    thread APIs of the various platforms and a facility for loading modules.
   </para>
   <para>
-   As the last components, GTK+ uses the Pango library for internationalized text output, the Cario library,
+   As the last components, GTK uses the Pango library for internationalized text output, the Cario library,
    which is a 2D graphics library with support for multiple output devices, and the GIO library, which is a
    modern easy-to-use VFS API including abstractions for files, drives, volumes, stream IO, as well as
    network programming and DBus communication.
   </para>
   <para>
-   This tutorial describes the Lisp interface to GTK+. It includes a lot of material and code from different
+   This tutorial describes the Lisp interface to GTK. It includes a lot of material and code from different
    sources. See <link linkend="Licenses">Licences</link> for more information.
   </para>
  </preface>
 
- <chapter id="Getting_started">
+ <chapter id="Getting_started" revision="2021-5-12">
   <title>Getting started</title>
-  <section id="Installation">
+  <section id="Installation" revision="2021⁻5-12">
    <title>Installation</title>
    <para>
     The first thing to do is to download the <code>cl-cffi-gtk</code> source and to install it. The latest
     version is available from the repository at <ulink url="http://github.com/crategus/cl-cffi-gtk">
     github.com/crategus/cl-cffi-gtk</ulink>. The <code>cl-cffi-gtk</code> library is ASDF installable and can
     be loaded with the command <code>(asdf:load-system :cl-cffi-gtk)</code> from the Lisp prompt. The library
-    is developed with the Lisp SBCL 2.0 on a Linux system and GTK+ 3.24. Furthermore, the library runs
+    is developed with the Lisp SBCL 2.0 on a Linux system and GTK 3.24. Furthermore, the library runs
     successfully with Clozure Common Lisp and CLISP on Linux. The library compiles and the demos run with
     Windows 10.
    </para>
    <para>
-    The minimum version requirements are GTK+ 3.16 and GLIB 2.32.
+    The minimum version requirements are GTK 3.16 and GLIB 2.48.
    </para>
    <para>
-    GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and Cairo. These libraries
+    GTK depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and Cairo. These libraries
     can be loaded separately with the following commands:
    </para>
    <programlisting>
@@ -182,55 +182,57 @@
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 21:3 9/28/2020
-GTK+ version: 3.24.20
-GLIB version: 2.64.3
+cl-cffi-gtk build date: 21:37 5/12/2021
+GTK version: 3.24.23
+GLIB version: 2.66.1
 GDK-Pixbuf version: 2.40.0
-Pango version: 1.44.7
+Pango version: 1.46.2
 Cairo version: 1.16.0
 Machine type: X86-64
 Machine version: Intel(R) Core(TM) i5-4210U CPU @ 1.70GHz
 Software type: Linux
-Software version: 5.4.0-48-generic
+Software version: 5.8.0-50-generic
 Lisp implementation type: SBCL
-Lisp implementation version: 2.0.1.debian
+Lisp implementation version: 2.0.6.debian
    </programlisting>
   </section>
 
-  <section id="Simple_Window">
+  <section id="Simple_Window" revision="2021-5-12">
    <title>Simple Window</title>
-   <figure id="figure-simple-window">
+   <para>
+    The <code>cl-cffi-gtk</code> source distribution contains the complete source to all of the examples used
+    in this tutorial. To begin the introduction to GTK, the output of the simplest program possible is shown
+    in <xref linkend="figure-window-simple"/>.
+   </para>
+
+   <figure id="figure-window-simple">
     <title>Simple Window</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/simple-window202x229.png" format="png"></imagedata>
+      <imagedata fileref="figures/window-simple.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    The <code>cl-cffi-gtk</code> source distribution contains the complete source to all of the examples
-    used in this tutorial. To begin the introduction to GTK+, the output of the simplest program possible
-    is shown in figure <link linkend="figure-simple-window">Simple Window</link>.
+    The program creates a 200 x 200 pixel window. In this case the window has the default title "sbcl". The
+    window can be sized and moved. First in <xref linkend="example-window-simple-c"/> the C program of the
+    <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html#id-1.2.3.3"> GTK 3 Reference
+    Manual (Version 3.14)</ulink> is presented to show the close connection between the C library and the
+    implementation of the Lisp binding. The code of the Lisp program is shown in
+    <xref linkend="example-window-simple"/>.
    </para>
-   <para>
-    The program creates a 200 x 200 pixel window. In this case the window has the default title "sbcl".
-    The window can be sized and moved. First in example <link linkend="example-simple-window-c">
-    Simple Window in C</link> the C program of the
-    <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html#id-1.2.3.3">
-    GTK+ 3 Reference Manual (Version 3.14)</ulink> is presented to show the close connection between the
-    C library and the implementation of the Lisp binding. The code of the Lisp program is shown in example
-    <link linkend="example-simple-window">Simple Window</link>.
-   </para>
-   <example id="example-simple-window-c">
-    <title>Simple window in the programming language C</title>
+
+   <example id="example-window-simple-c">
+    <title>Simple window in C</title>
     <programlisting>
-#include &#x3C;gtk/gtk.h>
+#include &lt;gtk/gtk.h>
 
 int main (int argc, char *argv[])
 {
   GtkWidget *window;
 
-  gtk_init (&#x26;argc, &#x26;argv);
+  gtk_init (&amp;argc, &amp;argv);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -244,133 +246,112 @@ int main (int argc, char *argv[])
 }
     </programlisting>
    </example>
-   <example id="example-simple-window">
-    <title>Simple Window in the programming language Lisp</title>
-    <programlisting>
-(asdf:load-system :cl-cffi-gtk)
-
-(defpackage :gtk-tutorial
-  (:use :gtk :gdk :gdk-pixbuf :gobject
-   :glib :gio :pango :cairo :common-lisp))
-
-(in-package :gtk-tutorial)
-
-(defun example-simple-window ()
-  (within-main-loop
-    (let (;; Create a toplevel window.
-          (window (gtk-window-new :toplevel)))
-      ;; Signal handler for the window to handle the signal "destroy".
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Show the window.
-      (gtk-widget-show-all window))))
+   <example id="example-window-simple">
+    <title>Simple Window in Lisp</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/window-simple.lisp" parse="text"/>
     </programlisting>
    </example>
+
    <para>
-    The first four lines of code load the <code>cl-cffi-gtk</code> library and define an own package
-    <code>:gtk-tutorial</code> for the example program. The package <code>:gtk-tutorial</code> includes the
-    symbols from the packages <code>:gtk</code> for GTK, <code>:gdk</code> for GDK, <code>:gdk-pixbuf</code>
-    for GDK-Pixbuf, <code>:gobject</code> for GObject, <code>:glib</code> for GLib, <code>:gio</code> for
-    GIO, <code>:pango</code> for Pango, and <code>:cairo</code> for Cairo. Most of the symbols of the
-    included packages are not needed for the first simple examples, but we include all packages so later no
-    symbol is missing. In further examples of this tutorial these first lines of code are omitted.
+    The examples of this tutorial are defined in the package <code>:gtk-example</code>. The package
+    <code>:gtk-example</code> includes the symbols from the packages <code>:gtk</code> for GTK,
+    <code>:gdk</code> for GDK, <code>:gdk-pixbuf</code> for GDK-Pixbuf, <code>:gobject</code> for GObject,
+    <code>:glib</code> for GLib, <code>:gio</code> for GIO, <code>:pango</code> for Pango, and
+    <code>:cairo</code> for Cairo. Most of the symbols of the included packages are not needed for the first
+    simple examples, but we include all packages so later no symbol is missing.
    </para>
    <para>
-    The macro &within-main-loop; is a wrapper around a GTK+ program. The functionality of the macro
-    corresponds to the C functions <code>gtk_init()</code> and <code>gtk_main()</code> which initialize and
-    start a GTK+ program. Both functions have corresponding Lisp functions. The function
-    <code>gtk_main()</code> is exported as the Lisp function &gtk-main;. The corresponding Lisp function to
-    <code>gtk_init()</code> is called internally when loading the library, but is not exported.
+    You can load this package on the Lisp prompt and execute the examples of this tutorial. You can start the
+    first example the following way:
+   </para>
+   <programlisting>
+* (asdf:load-system :gtk-example)
+T
+* (gtk-example:example-window-simple)
+#&lt;SB-THREAD:THREAD "cl-cffi-gtk main thread" RUNNING {10040EEB83}&gt;
+1
+*
+   </programlisting>
+   <para>
+    The macro &within-main-loop; is a wrapper around a GTK program. The functionality of the macro corresponds
+    to the C functions <code>gtk_init()</code> and <code>gtk_main()</code> which initialize and start a GTK
+    program. Both functions have corresponding Lisp functions. The function <code>gtk_main()</code> is
+    exported as the Lisp function &gtk-main;. The corresponding Lisp function to <code>gtk_init()</code> is
+    called internally when loading the library, but is not exported.
    </para>
    <para>
-    Already in this simple example we have connected a signal to the created window. More about signals and
-    callback functions follows in section <link linkend="Introduction_to_Signals_and_Callbacks">
-    Introduction to Signals and Callbacks</link>. The signal "destroy" is emitted when the user quits the
-    window. The function &g-signal-connect; connects a Lisp lambda function to this signal, which calls the
-    function &leave-gtk-main; to destroy the GTK+ main loop. Like the macro &within-main-loop; the function
-    &leave-gtk-main; is special for the Lisp binding. It calls internally the C function
-    <code>gtk_main_quit()</code>, but does some extra work to finish the Lisp program. The C function
-    <code>gtk_main_quit()</code> is available in the Lisp binding as &gtk-main-quit;, but do not call this
-    function in your code.
+    Already in this simple example, a signal is connected to the created window. More about signals and
+    callback functions follows in <xref linkend="Introduction_to_Signals_and_Callbacks"/>. The  "destroy"
+    signal is emitted when the user quits the window. The function &g-signal-connect; connects a Lisp
+    lambda function to this signal, which calls the function &leave-gtk-main; to destroy the GTK main loop.
+    Like the macro &within-main-loop; the function &leave-gtk-main; is special for the Lisp binding. It calls
+    internally the C function <code>gtk_main_quit()</code>, but does some extra work to finish the Lisp
+    program.
    </para>
    <para>
     Only two further functions are needed in this simple example. The window is created with the function
-    &gtk-window-new;. The keyword <code>:toplevel</code> tells GTK+ to create a toplevel window. The second
+    &gtk-window-new;. The keyword <code>:toplevel</code> tells GTK to create a toplevel window. The second
     function &gtk-widget-show-all; displays the new window.
    </para>
    <para>
     In addition to the function &gtk-widget-show-all; the function &gtk-widget-show; is available. It only
     displays the widget, which is the argument to the function. The function &gtk-widget-show-all; displays
-    the window and all including child widgets. For the first simple window this makes no difference, because
-    the window has no child widgets.
+    the window and all the child widgets it contains. For the first simple window, this makes no difference,
+    because the window has no child widgets.
    </para>
   </section>
 
-  <section id="More_about_the_Lisp_binding_to_GTK+">
-   <title>More about the Lisp binding to GTK+</title>
+  <section id="More_about_the_Lisp_binding_to_GTK" revision="2021-5-13">
+   <title>More about the Lisp binding to GTK</title>
+   <para>
+    <xref linkend="figure-getting-started"/> and <xref linkend="example-getting-started"/> show a second
+    implementation of the simple program discussed in section <xref linkend="Simple_Window"/>. The second
+    implementation uses the fact, that all GTK widgets are internally represented in the Lisp binding through
+    a Lisp class. The Lisp class &gtk-window; represents the required window, which corresponds to the C
+    class <code>GtkWindow</code>. An instance of the Lisp class &gtk-window; can be created with the function
+    <code>make-instance</code>. Furthermore, the slots of the window class can be given new values to
+    overwrite the default values. These slots represent the properties of the C classes. In addition an
+    instance has all properties of the inherited classes. The object hierarchy in the
+    <ulink url="http://crategus.com/books/cl-cffi-gtk">cl-cffi-gtk API documentation</ulink> shows, that the
+    &gtk-window; class inherits all properties of the &gtk-widget;, &gtk-container;, and &gtk-bin; classes.
+   </para>
+
    <figure id="figure-getting-started">
     <title>Getting started</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/getting-started252x229.png" format="png"></imagedata>
+      <imagedata fileref="figures/getting-started.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    The figure <link linkend="figure-getting-started">Getting Started</link> and example
-    <link linkend="example-getting-started">Getting Started</link> show a second implementation of the
-    simple program discussed in section <link linkend="Simple_Window">Simple Window</link>. The second
-    implementation uses the fact, that all GTK+ widgets are internally represented in the Lisp binding
-    through a Lisp class. The Lisp class &gtk-window; represents the required window, which corresponds to
-    the C class <code>GtkWindow</code>. An instance of the Lisp class &gtk-window; can be created with the
-    function <code>make-instance</code>. Furthermore, the slots of the window class can be given new values
-    to overwrite the default values. These slots represent the properties of the C classes. In addition an
-    instance has all properties of the inherited classes. The object hierarchy in the
-    <ulink url="http://crategus.com/books/cl-cffi-gtk">cl-cffi-gtk API documentation</ulink> shows, that the
-    class &gtk-window; inherits all properties of the classes &gtk-widget;, &gtk-container;, and &gtk-bin;.
+    In <xref linkend="example-getting-started"/> the &gtk_window_type; property with the keyword
+    <code>:toplevel</code> creates again a toplevel window. In addition a title is set assigning the string
+    "Getting started" to the &gtk_window_title; property and the width of the window is a little enlarged
+    assigning the value 250 to the &gtk_window_default-width; property. The result of the example program is
+    shown in figure <xref linkend="figure-getting-started"/>.
    </para>
    <para>
-    In example <link linkend="example-getting-started">Getting Started</link> the property &gtk_window_type;
-    with the keyword <code>:toplevel</code> creates again a toplevel window. In addition a title is set
-    assigning the string <code>"Getting started"</code> to the property &gtk_window_title; and the width of
-    the window is a little enlarged assigning the value 250 to the property &gtk_window_default-width;.
-    The result of the example program is shown in figure
-    <link linkend="figure-getting-started">Getting Started</link>.
+    The keyword <code>:toplevel</code> is one of the values of the <code>GtkWindowType</code> enumeration in
+    C. In the Lisp binding this enumeration is implemented as the &gtk-window-type; enumeration with the two
+    possible keywords <code>:toplevel</code> for <code>GTK_WINDOW_TOPLEVEL</code> and <code>:popup</code> for
+    <code>GTK_WINDOW_POPUP</code>. Most windows are of the type <code>:toplevel</code>. Windows with this
+    type are managed by the window manager and have a frame by default. Windows with type <code>:popup</code>
+    are ignored by the window manager and are used to implement widgets such as menus or tooltips.
    </para>
-   <para>
-    The keyword <code>:toplevel</code> is one of the values of the enumeration type
-    <code>GtkWindowType</code> in C. In the Lisp binding this enumeration is implemented as &gtk-window-type;
-    with the two possible keywords <code>:toplevel</code> for <code>GTK_WINDOW_TOPLEVEL</code> and
-    <code>:popup</code> for <code>GTK_WINDOW_POPUP</code>. Most windows are of the type
-    <code>:toplevel</code>. Windows with this type are managed by the window manager and have a frame by
-    default. Windows with type <code>:popup</code> are ignored by the window manager and are used to
-    implement widgets such as menus or tooltips.
-   </para>
+
    <example id="example-getting-started">
     <title>Getting started</title>
-    <programlisting>
-(defun example-getting-started ()
-  (within-main-loop
-    (let (;; Create a toplevel window with a title and a default width.
-          (window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Getting started"
-                                 :default-width 250)))
-      ;; Signal handler for the window to handle the signal "destroy".
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Show the window.
-      (gtk-widget-show-all window))))
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/getting-started.lisp" parse="text"/>
     </programlisting>
    </example>
+
    <para>
-    The example <link linkend="example-getting-started">Getting Started</link> shows, that the Lisp function
-    &gtk-window-new; is not really needed. The function &gtk-window-new; is internally implemented in the
-    Lisp binding simply as:
+    <xref linkend="example-getting-started"/> shows, that the Lisp function &gtk-window-new; is not needed.
+    The function &gtk-window-new; is internally implemented in the Lisp binding simply as:
    </para>
    <programlisting>
 (defun gtk-window-new (type)
@@ -382,14 +363,15 @@ int main (int argc, char *argv[])
     <code>gtk_window_set_title()</code>. The corresponding Lisp function is &gtk-window-title;. Accordingly,
     the default width of the window can be set in C with the function
     <code>gtk_window_set_default_size()</code>, which sets both the default width and the default height. In
-    Lisp this function is named &gtk-window-default-size;.
+    Lisp this function is implemented as &gtk-window-default-size;.
    </para>
    <para>
     At last, in Lisp it is possible to use the accessors of the slots to get or set the value of a widget
-    property. The properties &gtk_window_default-width; and &gtk_window_default-height; of the Lisp class
-    &gtk-window; have the Lisp accessor functions &gtk-window-default-width; and &gtk-window-default-height;.
-    With these accessor functions the C function <code>gtk_window_set_default_size()</code> is implemented
-    the following way in the Lisp library as the function <code>(setf gtk-window-default-size)</code>:
+    property. The &gtk_window_default-width; and &gtk_window_default-height; properties of the Lisp
+    &gtk-window; class have the Lisp slot access functions &gtk-window-default-width; and
+    &gtk-window-default-height;. With these slot access functions the C function
+    <code>gtk_window_set_default_size()</code> is implemented the following way in the Lisp library as the
+    function <code>(setf gtk-window-default-size)</code>:
    </para>
    <programlisting>
 (defun (setf gtk-window-default-size) (size window)
@@ -419,35 +401,27 @@ void gtk_window_get_default_size (GtkWindow *window,
     returns the values.
    </para>
    <para>
-    Note the naming conventions for the translation of C accessor functions to Lisp generic functions.
+    Note the naming conventions for the translation of C accessor functions to Lisp slot access functions.
     C reader functions with the name <code>gtk_&#x3c;class>_get_&#x3c;property></code> get the Lisp name
     <code>gtk-&#x3c;class>-&#x3c;property></code> and the C writer functions
     <code>gtk_&#x3c;class>_set_&#x3c;property></code> are replaced by the corresponding
-    <code>(setf gtk-&#x3c;class>-&#x3c;property>)</code> functions. That is, for example, to get the property
-    &gtk_window_title; of a &gtk-window; use the generic function &gtk-window-title; and to set the title use
-    the generic function <code>(setf gtk-window-title)</code>.
+    <code>(setf gtk-&#x3c;class>-&#x3c;property>)</code> functions. That is, for example, to get the
+    &gtk_window_title; property of a &gtk-window; class use the slot access function &gtk-window-title; and
+    to set the title use the slot access function <code>(setf gtk-window-title)</code>.
    </para>
   </section>
 
-  <section id="Hello_World_in_GTK+">
-   <title>Hello World in GTK+</title>
-   <figure id="figure-hello-world">
-    <title>Hello World</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/hello-world252x80.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
+  <section id="Hello_World_in_GTK" revision="2021-5-13">
+   <title>Hello World in GTK</title>
    <para>
-    Now a program with a button is presented. The output is shown in figure
-    <link linkend="figure-hello-world">Hello World</link>. Again the C program from the
-    <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html">
-    GTK+ 3 Reference Manual</ulink> is shown first in <link linkend="example-hello-world-c">
-    Example Hello World in C</link> to learn more about the differences between a C and a Lisp implementation.
+    Now a program with a button is presented. The output is shown in <xref linkend="figure-hello-world"/>.
+    Again the C program from the <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html">
+    GTK 3 Reference Manual</ulink> is shown first in <xref linkend="example-hello-world-c"/> to illustrate
+    the differences between a C and a Lisp implementation.
    </para>
+
    <example id="example-hello-world-c">
-    <title>Hello World in the programming language C</title>
+    <title>Hello World in C</title>
     <programlisting>
 #include &#x3c;gtk/gtk.h>
 
@@ -546,107 +520,85 @@ int main( int argc, char *argv[] )
 }
     </programlisting>
    </example>
+
    <para>
-    Now, the Lisp implementation is presented in example <link linkend="example-hello-world">
-    Hello World</link>. One difference is, that the function <code>make-instance</code> is used to create
-    the window and the button. Another point is, that the definition of separate callback functions is
-    avoided. The callback functions are short, implemented through Lisp <code>lambda</code> functions and
-    are passed as the third argument to the function &g-signal-connect;.
-    More about signals and callback functions follows in
-    <link linkend="Introduction_to_Signals_and_Callbacks">Indroduction to Signals and Callbacks</link>.
+    Now, the Lisp implementation is presented in <xref linkend="example-hello-world"/>. One difference is,
+    that the function <code>make-instance</code> is used to create the window and the button. Another point
+    is, that the definition of separate callback functions is avoided. The callback functions are short,
+    implemented through Lisp <code>lambda</code> functions and are passed as the third argument to the
+    function &g-signal-connect;. More about signals and callback functions follows in
+    <xref linkend="Introduction_to_Signals_and_Callbacks"/>.
    </para>
+
+   <figure id="figure-hello-world">
+    <title>Hello World</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/hello-world.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
    <para>
-    In example <link linkend="example-hello-world">Hello World</link> a border with a width of 12 is added
-    to the window setting the property &gtk_container_border-width; when creating the window with the
-    function <code>make-instance</code>. The C implementation uses the function
-    <code>gtk_container_set_border_width()</code> which is available in Lisp as the accessor
-    &gtk-container-border-width;. The property &gtk_container_border-width; is inherited from the C class
+    In <xref linkend="example-hello-world"/> a border with a width of 12 is added to the window setting the
+    &gtk_container_border-width; property when creating the window with the function
+    <code>make-instance</code>. The C implementation uses the function
+    <code>gtk_container_set_border_width()</code> which is available in Lisp as the slot access function
+    &gtk-container-border-width;. The &gtk_container_border-width; property is inherited from the C class
     <code>GtkContainer</code>, which in the Lisp library is represented through the Lisp class
-    &gtk-container;. Therefore, the accessor function has the prefix <code>gtk_container</code> in C and
+    &gtk-container;. Therefore, the slot access function has the prefix <code>gtk_container</code> in C and
     <code>gtk-container</code> in Lisp. A full list of properties of <code>GtkContainer</code> is available
     in the &gtk-container; documentation.
    </para>
+
    <example id="example-hello-world">
-    <title>Hello World in the programming language Lisp</title>
-    <programlisting>
-(defun example-hello-world ()
-  (within-main-loop
-    (let (;; Create a toplevel window, set a border width.
-          (window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Hello World"
-                                 :default-width 250
-                                 :border-width 12))
-          ;; Create a button with a label.
-          (button (make-instance 'gtk-button :label "Hello World")))
-      ;; Signal handler for the button to handle the signal "clicked".
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "Hello world.~%")
-                          (gtk-widget-destroy window)))
-      ;; Signal handler for the window to handle the signal "destroy".
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Signal handler for the window to handle the signal "delete-event".
-      (g-signal-connect window "delete-event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
-                          (format t "Delete Event Occured.~%")
-                          +gdk-event-stop+))
-      ;; Put the button into the window.
-      (gtk-container-add window button)
-      ;; Show the window and the button.
-      (gtk-widget-show-all window))))
+    <title>Hello World in Lisp</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/hello-world.lisp" parse="text"/>
     </programlisting>
    </example>
+
    <para>
     An attentive reader notes that in distinction to the C implementation the function &gtk-widget-show; is
-    not called for every single widget, which are in example <link linkend="example-hello-world">
-    Hello World</link> the window and the button. Instead the function &gtk-widget-show-all; is used to
-    display the window with all including widgets.
+    not called for every single widget, which are in <xref linkend="example-hello-world"/> the window and the
+    button. Instead the function &gtk-widget-show-all; is used to display the window with all including
+    widgets.
    </para>
    <para>
-    Three more functions are introduced in example <link linkend="example-hello-world">Hello World</link>.
-    The function <ulink url="&gtk-widget-destroy;"><code>gtk-widget-destroy</code></ulink> takes as an
-    argument any widget and destroys it. In the above example this function is called by the signal handler
-    of the button. When the button is clicked by the user, the signal "clicked" is catched by the signal
-    handler, which causes a call of the function <ulink url="&gtk-widget-destroy;">
-    <code>gtk-widget-destroy</code></ulink> for the toplevel window. Now the toplevel window receives the
-    signal "destroy", which is handled by a signal handler of the toplevel window. This signal handler
-    calls the function &leave-gtk-main;, which stops the event loop and finishes the application.
+    The function &gtk-widget-destroy; takes as an argument any widget and destroys it. In the above example
+    this function is called by the signal handler for the button. When the button is clicked by the user, the
+    "clicked" signal is catched by the signal handler, which causes a call of the function
+    &gtk-widget-destroy; for the toplevel window. Now the toplevel window receives the "destroy" signal,
+    which is handled by a signal handler of the toplevel window. This signal handler calls the function
+    &leave-gtk-main;, which stops the event loop and finishes the application.
    </para>
    <para>
-    A second signal handler is connected to the toplevel window to catch the signal "delete-event". The
-    signal "delete-event" occurs, when the user or the window manager tries to close the window. In this
+    A second signal handler is connected to the toplevel window to catch the "delete-event" signal. The
+    "delete-event" signal occurs, when the user or the window manager tries to close the window. In this
     case, the signal handler prints a message on the console. Because the value of the constant
-    <ulink url="&gdk-event-stop;"><code>+gdk-event-stop+</code></ulink> is <emphasis>true</emphasis> the
-    signal handler stops the handling of the signal and the window is not closed, but the execution of the
-    application is continued. To close the window, the user has to press the button in this example. There
-    is a second constant <ulink url="&gdk-event-propagate;"><code>+gdk-event-propagate+</code></ulink> which
-    is used to make sure that the propagation of the event is continued. At last, the function
-    &gtk-container-add; is used to put the button into the toplevel window. The section
-    <link linkend="Packing_Widgets"> Packing Widgets</link> shows how it is possible to put more than one
-    widget into a window.
+    &gdk-event-stop; is <emphasis>true</emphasis> the signal handler stops the handling of the signal and the
+    window is not closed, but the execution of the application is continued. To close the window, the user
+    has to press the button in this example. There is a second constant &gdk-event-propagate; which is used
+    to make sure that the propagation of the event is continued. At last, the function &gtk-container-add; is
+    used to put the button into the toplevel window. <xref linkend="Packing_Widgets"/> shows how it is
+    possible to put more than one widget into a window.
    </para>
   </section>
 
-  <section id="Introduction_to_Signals_and_Callbacks">
+  <section id="Introduction_to_Signals_and_Callbacks" revision="2021-5-13"> 
    <title>Introduction to Signals and Callbacks</title>
    <para>
-    GTK+ is an event driven toolkit, which means GTK+ will sleep until an event occurs and control is passed
-    to the appropriate function. This passing of control is done using the idea of "signals". (Note that
-    these signals are not the same as the Unix system signals, and are not implemented using them, although
-    the terminology is almost identical.) When an event occurs, such as the press of a mouse button, the
-    appropriate signal will be "emitted" by the widget that was pressed. This is how GTK+ does most of its
-    useful work. There are signals that all widgets inherit, such as "destroy", and there are signals that
-    are widget specific, such as "toggled" on a toggle button.
+    GTK is an event driven toolkit, which means GTK will sleep until an event occurs and control is passed to
+    the appropriate function. This passing of control is done using the idea of "signals". Note that these
+    signals are not the same as the Unix system signals, and are not implemented using them, although the
+    terminology is almost identical. When an event occurs, such as the press of a mouse button, the
+    appropriate signal will be "emitted" by the widget that was pressed. This is how GTK does most of its
+    useful work. There are signals that all widgets inherit, such as the "destroy" signal, and there are
+    signals that are widget specific, such as the "toggled" signal on a toggle button.
    </para>
    <para>
     To make a button perform an action, a signal handler is set up to catch these signals and to call the
-    appropriate function. This is done in the C GTK+ library by using a function such as
+    appropriate function. This is done in the C GTK library by using a function such as
    </para>
    <programlisting>
 gulong g_signal_connect( gpointer      *object,
@@ -688,7 +640,7 @@ void callback_func( GtkWidget *widget,
 g_signal_connect (window, "destroy", G_CALLBACK (destroy), NULL);
    </programlisting>
    <para>
-    This is the corresponding callback function which is called when the event "destroy" occurs.
+    This is the corresponding callback function which is called when the "destroy" event occurs.
    </para>
    <programlisting>
 static void destroy (GtkWidget *widget, gpointer data)
@@ -727,25 +679,25 @@ static void destroy (GtkWidget *widget, gpointer data)
    </programlisting>
   </section>
 
-  <section id="Upgraded_Hello_World">
+  <section id="Upgraded_Hello_World" revision="2021-5-13">
    <title>Upgraded Hello World</title>
+   <para>
+    <xref linkend="figure-upgraded-hello-world"/> and <xref linkend="example-upgraded-hello-world"/> show a
+    slightly improved Hello World with better examples of callbacks. This will also introduce the next topic,
+    packing widgets. First, the C program is shown in <xref linkend="example-upgraded-hello-world-c"/>.
+   </para>
+
    <figure id="figure-upgraded-hello-world">
     <title>Upgraded Hello World</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/upgraded-hello-world252x104.png" format="png"></imagedata>
+      <imagedata fileref="figures/hello-world-upgraded.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
-   <para>
-    Figure <link linkend="figure-upgraded-hello-world">Upgraded Hello World</link> and example
-    <link linkend="example-upgraded-hello-world">Upraded Hello World</link> show a slightly improved Hello
-    World with better examples of callbacks. This will also introduce the next topic, packing widgets.
-    First, the C program is shown in example <link linkend="example-upgraded-hello-world-c">
-    Upgraded Hello World in C</link>.
-   </para>
+
    <example id="example-upgraded-hello-world-c">
-    <title>An upgraded Hello World in the programming language C</title>
+    <title>An upgraded Hello World in C</title>
     <programlisting>
 #include &#x3c;gtk/gtk.h>
 
@@ -840,123 +792,72 @@ int main( int argc, char *argv[] )
 }
     </programlisting>
    </example>
+
    <para>
-    The Lisp implementation in example <link linkend="example-upgraded-hello-world">
-    Upgraded Hello World</link> tries to be close to the C program. Therefore, the window and the box are
-    created with the functions &gtk-window-new; and &gtk-box-new;. Various properties like the title of the
-    window, the default size or the border width are set with the functions &gtk-window-title;,
-    &gtk-window-default-size; and &gtk-container-border-width;. As described for the example
-    <link linkend="example-hello-world">Hello World</link> the function &gtk-widget-show-all; is used to
-    display the window including all child widgets.
+    The Lisp implementation in <xref linkend="example-upgraded-hello-world"/> tries to be close to the C
+    program. Therefore, the window and the box are created with the functions &gtk-window-new; and
+    &gtk-box-new;. Various properties like the title of the window, the default size or the border width are
+    set with the functions &gtk-window-title;, &gtk-window-default-size; and &gtk-container-border-width;. As
+    described for <xref linkend="example-hello-world"/> the function &gtk-widget-show-all; is used to display
+    the window including all child widgets.
    </para>
    <para>
     One main difference of the Lisp implementation is the use of the function &gtk-box-new; with an argument
     <code>:horizontal</code> to create a horizontal box. The <code>GtkHBox</code> widget which is used in the
-    <ulink url="http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html">
-    GTK+ 3 Reference Manual</ulink> is deprecated and is replaced by <code>GtkBox</code> with the property
-    &gtk_orientable_orientation;. More about boxes and their usages follows in section
-    <link linkend="Packing_Widgets"> Packing Widgets</link>.
+    C implementation is deprecated and is replaced by the <code>GtkBox</code> widget with the
+    &gtk_orientable_orientation; property. The argument <code>:horizontal</code> is one of the values of
+    the &gtk-orientation; enumeration. More about boxes and their usages follows in
+    <xref linkend="Packing_Widgets"/>.
    </para>
+
    <example id="example-upgraded-hello-world">
-    <title>Upgraded Hello World in the programming language C</title>
-    <programlisting>
-(defun example-upgraded-hello-world ()
-  (within-main-loop
-    (let ((window (gtk-window-new :toplevel))
-          (box (gtk-box-new :horizontal 6))
-          (button  nil))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (setf (gtk-window-title window) "Hello Buttons")
-      (setf (gtk-window-default-size window) '(250 75))
-      (setf (gtk-container-border-width window) 12)
-      (setf button (gtk-button-new-with-label "Button 1"))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "Button 1 was pressed.~%")))
-      (gtk-box-pack-start box button :expand t :fill t :padding 0)
-      (setf button (gtk-button-new-with-label "Button 2"))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "Button 2 was pressed.~%")))
-      (gtk-box-pack-start box button :expand t :fill t :padding 0)
-      (gtk-container-add window box)
-      (gtk-widget-show-all window))))
+    <title>Upgraded Hello World in Lisp</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/hello-world-upgraded.lisp" parse="text"/>
     </programlisting>
    </example>
+
    <para>
-    The second implementation in example <link linkend="example-upgraded-hello-world-2">
-    Upgraded Hello World</link> makes more use of a Lisp style. The window is created with the Lisp function
-    <code>make-instance</code>. All desired properties of the window are initialized by assigning values to
-    the slots of the classes &gtk-window; and &gtk-box;. The Lisp implementation uses a lot keywords
-    arguments with default values for long lists of arguments. In example
-    <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> the keyword arguments
-    <code>expand</code>, <code>fill</code>, and <code>padding</code> of the function "&gtk-box-pack-start;
-    take their default values. In future examples of this tutorial the style shown in example
-    <link linkend="example-upgraded-hello-world-2">Upgraded Hello World</link> is preferred. Furthermore,
-    the C code is no longer presented for comparison.
+    The second implementation in <xref linkend="example-upgraded-hello-world-2"/> makes more use of a Lisp
+    style. The window is created with the Lisp function <code>make-instance</code>. All desired properties of
+    the window are initialized by assigning values to the slots of the &gtk-window; and &gtk-box; classes.
+    The Lisp implementation uses a lot keywords arguments with default values for long lists of arguments. In
+    this example the keyword arguments <code>expand</code>, <code>fill</code>, and <code>padding</code> of
+    the function "&gtk-box-pack-start; take default values. In future examples of this tutorial the style
+    shown in this example is preferred. Furthermore, the C code is no longer presented for comparison.
    </para>
+
    <example id="example-upgraded-hello-world-2">
-    <title>Second implementation of Upgraded Hello World</title>
-    <programlisting>
-(defun example-upgraded-hello-world-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Hello Buttons"
-                                 :default-width 250
-                                 :default-height 75
-                                 :border-width 12))
-          (box (make-instance 'gtk-box
-                              :orientation :horizontal
-                              :spacing 6)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (let ((button (gtk-button-new-with-label "Button 1")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (format t "Button 1 was pressed.~%")))
-        (gtk-box-pack-start box button))
-      (let ((button (gtk-button-new-with-label "Button 2")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (format t "Button 2 was pressed.~%")))
-        (gtk-box-pack-start box button))
-      (gtk-container-add window box)
-      (gtk-widget-show-all window))))
+    <title>Second Upgraded Hello World</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/hello-world-upgraded-2.lisp" parse="text"/>
     </programlisting>
    </example>
   </section>
 
-  <section id="Drawing_in_response_to_input">
+  <section id="Drawing_in_response_to_input" revision="2021-5-13">
    <title>Drawing in response to input</title>
+   <para>
+    Many widgets, like buttons, do all their drawing themselves. You just tell them the label you want to
+    see, and they figure out what font to use, draw the button outline and focus rectangle, etc. Sometimes,
+    it is necessary to do some custom drawing. In that case, a &gtk-drawing-area; widget might be the right
+    widget to use. It offers a canvas on which you can draw by connecting to the "draw" signal.
+   </para>
+
    <figure id="figure-drawing">
     <title>Drawing in response to input</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/drawing278x255.png" format="png"></imagedata>
+      <imagedata fileref="figures/drawing-area-input.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
-   <para>
-    Many widgets, like buttons, do all their drawing themselves. You just tell them the label you want to
-    see, and they figure out what font to use, draw the button outline and focus rectangle, etc. Sometimes,
-    it is necessary to do some custom drawing. In that case, a &gtk-drawing-area; might be the right widget
-    to use. It offers a canvas on which you can draw by connecting to the "draw" signal.
-   </para>
+
    <para>
     The contents of a widget often need to be partially or fully redrawn, e.g. when another window is moved
     and uncovers part of the widget, or when the window containing it is resized. It is also possible to
     explicitly cause part or all of the widget to be redrawn, by calling the function &gtk-widget-queue-draw;
-    or its variants. GTK+ takes care of most of the details by providing a ready-to-use Cairo context to the
+    or its variants. GTK takes care of most of the details by providing a ready-to-use Cairo context to the
     "draw" signal handler.
    </para>
    <para>
@@ -965,95 +866,11 @@ int main( int argc, char *argv[] )
    </para>
    <example id="example-drawing">
     <title>Drawing in response to input</title>
-    <programlisting>
-(let ((surface nil))
-  (defun example-drawing ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :type :toplevel
-                                   :title "Example Drawing"))
-            (frame (make-instance 'gtk-frame
-                                  :shadow-type :in))
-            (area (make-instance 'gtk-drawing-area
-                                 :width-request 250
-                                 :height-request 200)))
-        (g-signal-connect window "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        ;; Signals used to handle the backing surface
-        (g-signal-connect area "draw"
-           (lambda (widget cr)
-             (declare (ignore widget))
-             (let ((cr (pointer cr)))
-               (cairo-set-source-surface cr surface 0.0 0.0)
-               (cairo-paint cr)
-               (cairo-destroy cr)
-               +gdk-event-propagate+)))
-        (g-signal-connect area "configure-event"
-           (lambda (widget event)
-             (declare (ignore event))
-             (when surface
-               (cairo-surface-destroy surface))
-             (setf surface
-                   (gdk-window-create-similar-surface
-                                   (gtk-widget-window widget)
-                                   :color
-                                   (gtk-widget-allocated-width widget)
-                                   (gtk-widget-allocated-height widget)))
-             ;; Clear surface
-             (let ((cr (cairo-create surface)))
-               (cairo-set-source-rgb cr 1.0 1.0 1.0)
-               (cairo-paint cr)
-               (cairo-destroy cr))
-             (format t "leave event 'configure-event'~%")
-             +gdk-event-stop+))
-        ;; Event signals
-        (g-signal-connect area "motion-notify-event"
-           (lambda (widget event)
-             (format t "MOTION-NOTIFY-EVENT ~A~%" event)
-             (when (member :button1-mask (gdk-event-motion-state event))
-               (let ((cr (cairo-create surface))
-                     (x (gdk-event-motion-x event))
-                     (y (gdk-event-motion-y event)))
-                 (cairo-rectangle cr (- x 3.0) (- y 3.0) 6.0 6.0)
-                 (cairo-fill cr)
-                 (cairo-destroy cr)
-                 (gtk-widget-queue-draw-area widget
-                                             (truncate (- x 3.0))
-                                             (truncate (- y 3.0))
-                                             6
-                                             6)))
-             ;; We have handled the event, stop processing
-             +gdk-event-stop+))
-        (g-signal-connect area "button-press-event"
-           (lambda (widget event)
-             (format t "BUTTON-PRESS-EVENT ~A~%" event)
-             (if (eql 1 (gdk-event-button-button event))
-                 (let ((cr (cairo-create surface))
-                       (x (gdk-event-button-x event))
-                       (y (gdk-event-button-y event)))
-                   (cairo-rectangle cr (- x 3.0) (- y 3.0) 6.0 6.0)
-                   (cairo-fill cr)
-                   (cairo-destroy cr)
-                   (gtk-widget-queue-draw-area widget
-                                               (truncate (- x 3.0))
-                                               (truncate (- y 3.0))
-                                               6
-                                               6))
-                 ;; Clear surface
-                 (let ((cr (cairo-create surface)))
-                   (cairo-set-source-rgb cr 1.0 1.0 1.0)
-                   (cairo-paint cr)
-                   (cairo-destroy cr)
-                   (gtk-widget-queue-draw widget)))))
-        (gtk-widget-add-events area
-                               '(:button-press-mask
-                                 :pointer-motion-mask))
-        (gtk-container-add frame area)
-        (gtk-container-add window frame)
-        (gtk-widget-show-all window)))))
+
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/drawing-area-input.lisp" parse="text"/>
     </programlisting>
+
    </example>
   </section>
  </chapter>
@@ -12714,6 +12531,8 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
 
 
 
