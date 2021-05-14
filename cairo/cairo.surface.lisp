@@ -318,9 +318,10 @@
   (:color-alpha #x3000))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-content-t atdoc:*symbol-name-alias*) "CEnum"
+(setf (gethash 'cairo-content-t atdoc:*symbol-name-alias*)
+      "CEnum"
       (gethash 'cairo-content-t atdoc:*external-symbols*)
- "@version{2020-12-16}
+ "@version{*2021-5-13}
   @begin{short}
     The @sym{cairo-content-t} enumeration is used to describe the content that
     a surface will contain, whether color information, alpha information
@@ -700,7 +701,7 @@
 
 (defcfun ("cairo_surface_destroy" cairo-surface-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-16}
+ "@version{*2021-5-13}
   @argument[surface]{a @symbol{cairo-surface-t} instance}
   @begin{short}
     Decreases the reference count on @arg{surface} by one.

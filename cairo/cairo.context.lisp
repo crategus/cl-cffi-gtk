@@ -553,7 +553,7 @@
 
 (defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-23}
+ "@version{*2021-5-13}
   @argument[target]{a @symbol{cairo-surface-t} target surface for the context}
   @begin{return}
     A newly allocated @symbol{cairo-t} context with a reference count of 1.
@@ -1063,7 +1063,7 @@
 
 (defun cairo-set-source-surface (cr surface x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-23}
+ "@version{*2021-5-13}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[surface]{a @symbol{cairo-surface-t} instance to be used to set
     the source pattern}
@@ -1881,7 +1881,7 @@
 
 (defcfun ("cairo_fill" cairo-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-23}
+ "@version{*2021-5-13}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     A drawing operator that fills the current path according to the current

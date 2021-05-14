@@ -785,7 +785,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-rectangle (cr x y width height)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{*2021-5-13}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the top left corner of the
     rectangle}
