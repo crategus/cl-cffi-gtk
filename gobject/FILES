@@ -5,7 +5,7 @@ Content from the GObject 2.66 Reference Manual
   * not implemented *      - GTypePlugin
   * not implemented *      - GTypeModule
 
-  gobject.base.lisp        - GObject                           - GObject 2.66
+  gobject.base.lisp        - GObject                           - GObject 2.68
   gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.66
   gobject.boxed.lisp       - Boxed Types                       - GObject 2.66
   gobject.g-value.lisp     - Generic values                    - GObject 2.66

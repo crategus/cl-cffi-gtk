@@ -2,12 +2,12 @@
 ;;; gobject.base.lisp
 ;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
-;;; Version 2.66 and modified to document the Lisp binding to the GObject
+;;; Version 2.68 and modified to document the Lisp binding to the GObject
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -332,11 +332,11 @@
 (setf (gethash 'pointer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'pointer 'function)
- "@version{2020-11-15}
+ "@version{*2021-5-13}
   @short{Accessor of the @code{pointer} slot of the @class{g-object} class.}
 
-  The accessor @sym{pointer} gets the foreign C pointer of an instance which is
-  stored in a slot of the Lisp @class{g-object} class.
+  The slot access function @sym{pointer} gets the foreign C pointer of an
+  instance which is stored in a slot of the Lisp @class{g-object} class.
   @begin[Examples]{dictionary}
     @begin{pre}
 (setq label (make-instance 'gtk-label)) => #<GTK-LABEL {E2DB181@}>
