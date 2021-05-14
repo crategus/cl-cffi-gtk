@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.enumerations.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,7 +29,7 @@
 ;;;
 ;;; Standard Enumerations
 ;;;
-;;;     Public enumerated types used throughout GTK+
+;;;     Public enumerated types used throughout GTK
 ;;;
 ;;; Types and Values
 ;;;
@@ -308,12 +308,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-orientation atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{*2021-5-13}
   @begin{short}
     Represents the orientation of widgets which can be switched between
-    horizontal and vertical orientation on the fly, like @class{gtk-toolbar}.
+    horizontal and vertical orientation on the fly, like the @class{gtk-toolbar}
+    widget.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkOrientation\" gtk-orientation

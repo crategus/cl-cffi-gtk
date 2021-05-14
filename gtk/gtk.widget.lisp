@@ -3731,12 +3731,12 @@ drag_data_received (GtkWidget        *widget,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-widget) 't)
  "The @code{window} property of type @class{gdk-window} (Read) @br{}
-  The widget's window if it is realized, @code{nil} otherwise.")
+  The GDK window of the widget if it is realized, @code{nil} otherwise.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-window 'function)
- "@version{2020-4-22}
+ "@version{*2021-5-13}
   @syntax[]{(gtk-widget-window object) => window}
   @argument[object]{a @class{gtk-widget} object}
   @argument[window]{a @class{gdk-window} object}
@@ -3745,24 +3745,16 @@ drag_data_received (GtkWidget        *widget,
     class.
   @end{short}
 
-  The slot access function @sym{gtk-widget-window} returns the widget's window
-  of type @class{gdk-window} if it is realized, @code{nil} otherwise.
-
-  This function should only be used in a widget's \"realize\" implementation.
-  The window passed is usually either a new window created with the function
-  @fun{gdk-window-new}, or the window of its parent widget as returned by the
-  function @fun{gtk-widget-parent-window}.
-
-  Widgets must indicate whether they will create their own @class{gdk-window}
-  by calling the function @fun{gtk-widget-has-window}. This is usually done
-  in the widget's @code{init()} function.
-  @begin[Note]{dictionary}
-    This function does not add any reference to window.
+  The slot access function @sym{gtk-widget-window} returns the GDK window
+  of the widget if it is realized, @code{nil} otherwise.
+  @begin[Lisp implementation]{dictionary}
+    The @slot[gtk-widget]{window} slot is only readable. The C library has the
+    function @code{gtk_widget_set_window()} to set a GDK window. This funcion
+    is only used in a \"realize\" implementation of a widget and not
+    implemented in the Lisp library.
   @end{dictionary}
   @see-class{gtk-widget}
-  @see-class{gdk-window}
-  @see-function{gtk-widget-parent-window}
-  @see-function{gtk-widget-has-window}")
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_new ()
@@ -4099,7 +4091,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
 #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
+ "@version{*2021-5-13}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Equivalent to calling the function @fun{gtk-widget-queue-draw-area} for the
@@ -4849,7 +4841,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-add-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-17}
+ "@version{*2021-5-13}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[events]{a @symbol{gdk-event-mask} event mask}
   @begin{short}
@@ -6328,7 +6320,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_queue_draw_area" gtk-widget-queue-draw-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-20}
+ "@version{*2021-5-13}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[x]{an integer with the x coordinate of upper-left corner of
     rectangle to redraw}

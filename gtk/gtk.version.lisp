@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.version.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,7 +29,7 @@
 ;;;
 ;;; Version Information
 ;;;
-;;;     Variables and functions to check the GTK+ version
+;;;     Variables and functions to check the GTK version
 ;;;
 ;;; Synopsis
 ;;;
@@ -57,12 +57,12 @@
 (defcfun ("gtk_get_major_version" gtk-major-version) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-8-23}
-  @return{The major version number of the GTK+ library.}
+  @return{The major version number of the GTK library.}
   @begin{short}
-    Returns the major version number of the GTK+ library.
+    Returns the major version number of the GTK library.
   @end{short}
 
-  This function is in the library, so it represents the GTK+ library your code
+  This function is in the library, so it represents the GTK library your code
   is running against.
   @see-function{gtk-check-version}")
 
@@ -75,12 +75,12 @@
 (defcfun ("gtk_get_minor_version" gtk-minor-version) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-8-23}
-  @return{The minor version number of the GTK+ library.}
+  @return{The minor version number of the GTK library.}
   @begin{short}
-    Returns the minor version number of the GTK+ library.
+    Returns the minor version number of the GTK library.
   @end{short}
 
-  This function is in the library, so it represents the GTK+ library your code
+  This function is in the library, so it represents the GTK library your code
   is are running against.
   @see-function{gtk-check-version}")
 
@@ -93,12 +93,12 @@
 (defcfun ("gtk_get_micro_version" gtk-micro-version) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-8-23}
-  @return{The micro version number of the GTK+ library.}
+  @return{The micro version number of the GTK library.}
   @begin{short}
-    Returns the micro version number of the GTK+ library.
+    Returns the micro version number of the GTK library.
   @end{short}
 
-  This function is in the library, so it represents the GTK+ library your code
+  This function is in the library, so it represents the GTK library your code
   is are running against.
   @see-function{gtk-check-version}")
 
@@ -111,9 +111,9 @@
 (defcfun ("gtk_get_binary_age" gtk-binary-age) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-8-23}
-  @return{The binary age of the GTK+ library.}
+  @return{The binary age of the GTK library.}
   @begin{short}
-    Returns the binary age as passed to @code{libtool} when building the GTK+
+    Returns the binary age as passed to @code{libtool} when building the GTK
     library the process is running against.
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
@@ -128,10 +128,10 @@
 (defcfun ("gtk_get_interface_age" gtk-interface-age) :int
  #+cl-cffi-gtk-documentation
  "@version{2020-8-23}
-  @return{The interface age of the GTK+ library.}
+  @return{The interface age of the GTK library.}
   @begin{short}
     Returns the interface age as passed to @code{libtool} when building the
-    GTK+ library the process is running against.
+    GTK library the process is running against.
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
   @see-function{gtk-binary-age}")
@@ -150,11 +150,11 @@
   @argument[minor]{the required minor version}
   @argument[micro]{the required micro version}
   @begin{return}
-    @code{Nil} if the GTK+ library is compatible with the given version,
+    @code{Nil} if the GTK library is compatible with the given version,
     or a string describing the version mismatch.
   @end{return}
   @begin{short}
-    Checks that the GTK+ library in use is compatible with the given version.
+    Checks that the GTK library in use is compatible with the given version.
   @end{short}
 
   Compatibility is defined by two things: first the version of the running
@@ -205,7 +205,7 @@
 ;;;     micro version (e.g. 5 for version 1.2.5)
 ;;;
 ;;; Returns :
-;;;     TRUE if the version of the GTK+ header files is the same as or newer
+;;;     TRUE if the version of the GTK header files is the same as or newer
 ;;;     than the passed-in version.
 ;;; ----------------------------------------------------------------------------
 
@@ -215,7 +215,7 @@
 
 (defun cl-cffi-gtk-build-info ()
  #+cl-cffi-gtk-documentation
- "@version{2020-8-23}
+ "@version{*2021-5-13}
   @begin{short}
     Provides informations about the installation and the versions of the
     loaded libraries.
@@ -225,18 +225,18 @@
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 16:2 8/23/2020
-GTK+ version: 3.24.20
-GLIB version: 2.64.3
+cl-cffi-gtk build date: 21:14 5/12/2021
+GTK version: 3.24.23
+GLIB version: 2.66.1
 GDK-Pixbuf version: 2.40.0
-Pango version: 1.44.7
+Pango version: 1.46.2
 Cairo version: 1.16.0
 Machine type: X86-64
 Machine version: Intel(R) Core(TM) i5-4210U CPU @@ 1.70GHz
 Software type: Linux
-Software version: 5.4.0-42-generic
+Software version: 5.8.0-50-generic
 Lisp implementation type: SBCL
-Lisp implementation version: 2.0.1.debian
+Lisp implementation version: 2.0.6.debian
 
 NIL
     @end{pre}
@@ -257,7 +257,7 @@ NIL
           (fifth cl-user:*cl-cffi-gtk-build-time*)
           (fourth cl-user:*cl-cffi-gtk-build-time*)
           (sixth cl-user:*cl-cffi-gtk-build-time*))
-  (format t "GTK+ version: ~a.~a.~a~%"
+  (format t "GTK version: ~a.~a.~a~%"
           (gtk-major-version)
           (gtk-minor-version)
           (gtk-micro-version))

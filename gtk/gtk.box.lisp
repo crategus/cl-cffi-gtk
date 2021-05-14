@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.box.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -491,11 +491,11 @@
 
 (defun gtk-box-new (orientation &optional (spacing 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-27}
-  @argument[orientation]{the box's orientation of type @symbol{gtk-orientation}}
+ "@version{*2021-5-13}
+  @argument[orientation]{the orientation of type @symbol{gtk-orientation}}
   @argument[spacing]{an optional integer with the number of pixels to place by
     default between children}
-  @return{A new @class{gtk-box} container widget.}
+  @return{A new @class{gtk-box} widget.}
   @begin{short}
     Creates a new box with the given @arg{orientation} and an optional value
     for the @slot[gtk-box]{spacing} property.

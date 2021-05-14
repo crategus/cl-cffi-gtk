@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.container.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -193,7 +193,7 @@
  "@version{2021-3-21}
   @short{Base class for widgets which contain other widgets.}
 
-  A GTK+ user interface is constructed by nesting widgets inside widgets.
+  A GTK user interface is constructed by nesting widgets inside widgets.
   Container widgets are the inner nodes in the resulting tree of widgets: they
   contain other widgets. So, for example, you might have a @class{gtk-window}
   widget containing a @class{gtk-frame} widget containing a @class{gtk-label}
@@ -201,7 +201,7 @@
   you might replace the @class{gtk-label} widget with a @class{gtk-image}
   widget.
 
-  There are two major kinds of container widgets in GTK+. Both are subclasses
+  There are two major kinds of container widgets in GTK. Both are subclasses
   of the abstract @sym{gtk-container} base class.
 
   The first type of container widget has a single child widget and derives
@@ -217,13 +217,13 @@
   it contains in a two-dimensional grid.
 
   @subheading{Height for width geometry management}
-  GTK+ uses a height-for-width and width-for-height geometry management system.
+  GTK uses a height-for-width and width-for-height geometry management system.
   Height-for-width means that a widget can change how much vertical space it
   needs, depending on the amount of horizontal space that it is given and
   similar for width-for-height.
 
   There are some things to keep in mind when implementing container widgets
-  that make use of GTK+'s height for width geometry management system. First,
+  that make use of the height for width geometry management system. First,
   it is important to note that a container must prioritize one of its
   dimensions, that is to say that a widget or container can only have a
   @symbol{gtk-size-request-mode} mode that is @code{:height-for-width} or
@@ -425,11 +425,11 @@
 (setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-container-border-width 'function)
- "@version{2020-5-4}
-  @syntax[]{(gtk-container-border-width object) => border-width}
-  @syntax[]{(setf gtk-container-border-width object) border-width)}
+ "@version{*2021-5-13}
+  @syntax[]{(gtk-container-border-width object) => width}
+  @syntax[]{(setf gtk-container-border-width object) width)}
   @argument[object]{a @class{gtk-container} widget}
-  @argument[border-width]{an unsigned integer with the border width}
+  @argument[width]{an unsigned integer with the border width}
   @begin{short}
     Accessor of the @slot[gtk-container]{border-width} slot of the
     @class{gtk-container} class.
@@ -437,17 +437,16 @@
 
   The slot access function @sym{gtk-container-border-width} retrieves the
   border width of the container. The slot acces function
-  @sym{(setf gtk-container-border-width)} sets the border width of the
-  container.
+  @sym{(setf gtk-container-border-width)} sets the border width.
 
   The border width of a container is the amount of space to leave around the
   outside of the container. Valid values are in the range [0, 65535] pixels.
-  The only exception to this is @class{gtk-window}; because toplevel windows
-  cannot leave space outside, they leave the space inside. The border is added
-  on all sides of the container. To add space to only one side, one approach
-  is to create a @class{gtk-alignment} widget, call the function
-  @fun{gtk-widget-size-request} to give it a size, and place it on the side
-  of the container as a spacer.
+  The only exception to this is the @class{gtk-window} widget. Because toplevel
+  windows cannot leave space outside, they leave the space inside. The border
+  is added on all sides of the container. To add space to only one side, one
+  approach is to create a @class{gtk-alignment} widget, call the function
+  @fun{gtk-widget-size-request} to give it a size, and place it on the side of
+  the container as a spacer.
   @see-class{gtk-widget}
   @see-class{gtk-window}
   @see-class{gtk-alignment}
@@ -1238,10 +1237,10 @@
 
   The function @sym{gtk-container-focus-chain} retrieves the focus chain of the
   container, if one has been set explicitly. If no focus chain has been
-  explicitly set, GTK+ computes the focus chain based on the positions of the
-  children. In that case, GTK+ returns @em{false}. The function
+  explicitly set, GTK computes the focus chain based on the positions of the
+  children. In that case, GTK returns @em{false}. The function
   @sym{(setf gtk-container-focus-chain)} sets a focus chain, overriding the one
-  computed automatically by GTK+.
+  computed automatically by GTK.
 
   In principle each widget in the chain should be a descendant of the container,
   but this is not enforced by this method, since it is allowed to set the focus

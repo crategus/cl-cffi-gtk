@@ -1608,7 +1608,7 @@
 (setf (gethash 'gtk-window-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-title 'function)
- "@version{2020-5-25}
+ "@version{*2021-5-13}
   @syntax[]{(gtk-window-title object) => title}
   @syntax[]{(setf (gtk-window-title object) title)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1619,13 +1619,12 @@
   @end{short}
 
   The slot access function @sym{gtk-window-title} retrieves the title of the
-  window. The slot access function @sym{(setf gtk-window-title)} sets the title
-  of the window.
+  window. The slot access function @sym{(setf gtk-window-title)} sets the title.
 
-  The title of a window will be displayed in its title bar. On the X11 Window
+  The title of a window will be displayed in the title bar. On the X11 Window
   System, the title bar is rendered by the window manager, so exactly how the
-  title appears to users may vary according to a user's exact configuration.
-  The title should help a user distinguish this window from other windows they
+  title appears to users may vary according to the exact configuration. The
+  title should help a user distinguish this window from other windows they
   may have open. A good title might include the application name and current
   document filename, for example.
   @see-class{gtk-window}")
@@ -1800,8 +1799,8 @@
 
 (defun gtk-window-new (type)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
-  @argument[type]{type of the window, a value of the @symbol{gtk-window-type}
+ "@version{*2021-5-13}
+  @argument[type]{type of the window as a value of the @symbol{gtk-window-type}
     enumeration}
   @return{A new @class{gtk-window} widget.}
   @begin{short}
@@ -1946,7 +1945,7 @@
 
 (defun gtk-window-default-size (window)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
+ "@version{*2021-5-13}
   @syntax[]{(gtk-window-default-size window) => width, height}
   @syntax[]{(setf (gtk-window-default-size window) (list width height))}
   @argument[window]{a @class{gtk-window} widget}
@@ -1958,11 +1957,11 @@
 
   The function @sym{gtk-window-default-size} gets the default size of the
   window. The function @sym{(setf gtk-window-default-size)} sets the default
-  size of the window. A value of -1 for the width or height indicates that a
-  default size has not been explicitly set for that dimension, so the
-  \"natural\" size of the window will be used.
+  size. A value of -1 for the width or height indicates that a default size has
+  not been explicitly set for that dimension, so the \"natural\" size of the
+  window will be used.
 
-  If the window's \"natural\" size, its size request, is larger than the
+  If the \"natural\" size of the window, its size request, is larger than the
   default, the default will be ignored. More generally, if the default size
   does not obey the geometry hints for the window, the function
   @fun{gtk-window-set-geometry-hints} can be used to set these explicitly, the
@@ -1975,7 +1974,7 @@
   would. Setting a default size of -1 means to use the \"natural\" default
   size, the size request of the window.
 
-  For more control over a window's initial size and how resizing works,
+  For more control over the initial size of the window and how resizing works,
   investigate the function @fun{gtk-window-set-geometry-hints}.
 
   For some uses, the function @fun{gtk-window-resize} is a more appropriate
