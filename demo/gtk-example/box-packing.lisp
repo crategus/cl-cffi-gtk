@@ -1,8 +1,6 @@
-;;;; Box packing
-;;;;
-;;;; Packing Demonstration Program
+;;;; Example Box Packing (2021-5-14)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun make-box (homogeneous spacing expand fill padding)
   (let ((box (make-instance 'gtk-box
@@ -20,7 +18,7 @@
                         :fill fill
                         :padding padding)
     (gtk-box-pack-start box
-                        (gtk-button-new-with-label "button")
+                        (gtk-button-new-with-label "child")
                         :expand expand
                         :fill fill
                         :padding padding)
@@ -38,14 +36,9 @@
                         :expand expand
                         :fill fill
                         :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label (format nil "~A" padding))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
     box))
 
-(defun example-box-packing (&optional (spacing 0))
+(defun example-box-packing (&optional (spacing 6) (padding 0))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Box Packing"
@@ -53,64 +46,39 @@
                                  :border-width 12))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical
-                               :spacing 6))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (quitbox (make-instance 'gtk-box
-                                  :orientation :horizontal)))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
+                               :spacing 12)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
+      ;; Non-homogenous boxes
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                          "GtkBox   ~
-                                           :orientation :horizontal   ~
-                                           :homogeneous nil   ~
-                                           :spacing ~A"
-                                          spacing)
+                                         :use-markup t
+                                         :label "<b>Non-homogeneous boxes</b>"
                                          :xalign 0)
                           :expand nil)
       (gtk-box-pack-start vbox
-                          (make-box nil spacing nil nil 0)
+                          (make-box nil spacing nil nil padding)
                           :expand nil)
       (gtk-box-pack-start vbox
-                          (make-box nil spacing t nil 0)
+                          (make-box nil spacing t nil padding)
                           :expand nil)
       (gtk-box-pack-start vbox
-                          (make-box nil spacing t t 0)
+                          (make-box nil spacing t t padding)
                           :expand nil)
+      ;; Homogeneous boxes
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                            "GtkBox   ~
-                                             :orientation :horizontal   ~
-                                             :homogeneous t   ~
-                                             :spacing ~A"
-                                            spacing)
+                                         :use-markup t
+                                         :label "<b>Homogeneous boxes</b>"
                                          :xalign 0)
-                          :expand nil
-                          :padding 6)
-      (gtk-box-pack-start vbox
-                          (make-box t spacing t nil 0)
                           :expand nil)
       (gtk-box-pack-start vbox
-                          (make-box t spacing t t 0)
+                          (make-box t spacing t nil padding)
                           :expand nil)
       (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil
-                          :padding 6)
-      ;; Align the quit-button on the right side
-      (gtk-box-pack-end quitbox button :expand nil)
-      (gtk-box-pack-start vbox quitbox :expand nil)
+                          (make-box t spacing t t padding)
+                          :expand nil)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-

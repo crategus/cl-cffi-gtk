@@ -356,11 +356,11 @@
                                             "Layout Containers")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Box"
-                                "box-simple.lisp"
-                                "DEMO-BOX-SIMPLE")
+                                "../gtk-example/box-simple.lisp"
+                                "EXAMPLE-BOX-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Box packing"
-                                "box-packing.lisp"
+                                "../gtk-example/box-packing.lisp"
                                 "EXAMPLE-BOX-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Table packing"
@@ -368,7 +368,7 @@
                                 "EXAMPLE-TABLE-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Grid packing"
-                                "grid-packing.lisp"
+                                "../gtk-example/grid-packing.lisp"
                                 "EXAMPLE-GRID-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Revealer"
@@ -507,6 +507,63 @@
                                 "Emblemed Icons"
                                 "../gio-example/emblemed-icon.lisp"
                                 "EXAMPLE-EMBLEMED-ICON")
+    )
+    ;; Examples from the tutorial
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "GTK 3 Tutorial for Lisp")))
+      ;; Chapter: Getting started
+      (let ((chapter (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Chapter: Getting started")))
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Simple Window"
+                                  "../gtk-example/window-simple.lisp"
+                                  "EXAMPLE-WINDOW-SIMPLE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Getting started"
+                                  "../gtk-example/getting-started.lisp"
+                                  "EXAMPLE-GETTING-STARTED")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Hello World"
+                                  "../gtk-example/hello-world.lisp"
+                                  "EXAMPLE-HELLO-WORLD")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Hello World Upgraded"
+                                  "../gtk-example/hello-world-upgraded.lisp"
+                                  "EXAMPLE-HELLO-WORLD-UPGRADED")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Hello World Upgraded (more Lisp like)"
+                                  "../gtk-example/hello-world-upgraded-2.lisp"
+                                  "EXAMPLE-HELLO-WORLD-UPGRADED-2")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Drawing in response to input"
+                                  "../gtk-example/drawing-area-input.lisp"
+                                  "EXAMPLE-DRAWING-AREA-INPUT"))
+      ;; Chapter: Packing Widgets
+      (let ((chapter (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Chapter: Packing Widgets")))
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Simple Box"
+                                  "../gtk-example/box-simple.lisp"
+                                  "EXAMPLE-BOX-SIMPLE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Box Packing"
+                                  "../gtk-example/box-packing.lisp"
+                                  "EXAMPLE-BOX-PACKING")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Simple Grid"
+                                  "../gtk-example/grid-simple.lisp"
+                                  "EXAMPLE-GRID-SIMPLE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Simple Grid more Spacing"
+                                  "../gtk-example/grid-spacing.lisp"
+                                  "EXAMPLE-GRID-SPACING")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Packing using GtkGrid"
+                                  "../gtk-example/grid-packing.lisp"
+                                  "EXAMPLE-GRID-PACKING"))
+
     )
     model))
 

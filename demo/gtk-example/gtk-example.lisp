@@ -5,6 +5,8 @@
            #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
+           #:example-box-packing                       ; Packing widgets
+           #:example-box-simple                        ; Packing widgets
            #:example-button-box
            #:example-clipboard
            #:example-custom-window
@@ -25,6 +27,8 @@
            #:example-getting-started                   ; Getting started
            #:example-grab
            #:example-grid-packing
+           #:example-grid-simple                       ; Packing widgets
+           #:example-grid-spacing                      ; Packing widgets
            #:example-hello-world                       ; Getting started
            #:example-hello-world-upgraded              ; Getting started
            #:example-hello-world-upgraded-2            ; Getting started
@@ -78,4 +82,4 @@
         (read-sequence string instream)
         string))))
 
-;;; 2021-5-13
+;;; 2021-5-14

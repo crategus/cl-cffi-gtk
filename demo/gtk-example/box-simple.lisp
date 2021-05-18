@@ -1,43 +1,40 @@
-;;;; A demo for GtkBox
+;;;; Example Simple Box (2021-5-15)
 ;;;;
-;;;; This demo shows three buttons with colored labels. The green button
-;;;; shows the start position in the box, the red button the end position,
+;;;; The example shows three buttons with colored labels. The red button
+;;;; shows the start position in the box, the green button the end position,
 ;;;; and the yellow button is a center widget.
 ;;;;
-;;;; In addition this demo demonstrate how to use CSS style information to
+;;;; In addition, this example demonstrate how to use CSS style information to
 ;;;; change the appearance of a widget.
 
-(in-package :gtk-demo)
+(in-package :gtk-example)
 
 (defparameter +css-button+
-"button label {
-  color: black;
-  background-color: yellow;
-}
+"button {
+   padding: 3px; }
+ button > label {
+   color: black;
+   background-color: yellow; }
+ button:first-child > label {
+   background-color: red; }
+ button:last-child > label {
+   background-color : green; }")
 
-button:first-child label {
-    background-color: red;
-}
-
-button:last-child label {
-    background-color : green;
-}")
-
-(defun apply-css-to-widget (widget provider)
+(defun apply-css-to-widget (provider widget)
   (gtk-style-context-add-provider (gtk-widget-style-context widget)
                                   provider
-                                  +gtk-style-provider-priority-user+)
+                                  +gtk-style-provider-priority-application+)
   (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
     (gtk-container-forall widget
                           (lambda (widget)
-                            (apply-css-to-widget widget provider)))))
+                            (apply-css-to-widget provider widget)))))
 
-(defun demo-box-simple ()
+(defun example-box-simple ()
   (within-main-loop
     (let (;; Create a toplevel window
           (window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Demo GtkBox"
+                                 :title "Example Simple Box"
                                  :border-width 12))
           ;; Create a box
           (box (make-instance 'gtk-box
@@ -58,8 +55,8 @@ button:last-child label {
       ;; Add Start button
       (let ((button (make-instance 'gtk-button
                                    :label "START")))
-        (setf (gtk-widget-width-request (gtk-bin-child button)) 80)
-        (setf (gtk-widget-height-request (gtk-bin-child button)) 80)
+        (setf (gtk-widget-width-request (gtk-bin-child button)) 120)
+        (setf (gtk-widget-height-request (gtk-bin-child button)) 120)
         (gtk-box-pack-start box button :expand nil))
       ;; Add Center button
       (let ((button (make-instance 'gtk-button
@@ -69,8 +66,7 @@ button:last-child label {
       ;; Add End button
       (let ((button (make-instance 'gtk-button
                                    :label "END")))
-        (setf (gtk-widget-width-request (gtk-bin-child button)) 120)
-        (setf (gtk-widget-height-request (gtk-bin-child button)) 120)
+        (setf (gtk-widget-width-request (gtk-bin-child button)) 60)
         (gtk-box-pack-end box button :expand nil))
 
       ;; Add the box to the window.
@@ -78,8 +74,6 @@ button:last-child label {
       ;; Load CSS from data into the provider
       (gtk-css-provider-load-from-data provider +css-button+)
       ;; Apply CSS to the widgets
-      (apply-css-to-widget box provider)
+      (apply-css-to-widget provider box)
       ;; Show the window.
       (gtk-widget-show-all window))))
-
-;;; 2020-9-28

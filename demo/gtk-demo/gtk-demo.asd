@@ -16,8 +16,6 @@
                (:file "aspect-frame")
                (:file "application-window")
                (:file "assistant")
-               (:file "box-packing")
-               (:file "box-simple")
                (:file "button")
                (:file "buttons")
                (:file "calendar")
@@ -44,7 +42,6 @@
                (:file "font-button")
                (:file "frame")
                (:file "grid")
-               (:file "grid-packing")
                (:file "image")
                (:file "info-bar")
                (:file "labels")
@@ -73,4 +70,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-5-13
+;;; 2021-5-14

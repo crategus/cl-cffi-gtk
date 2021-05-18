@@ -1,29 +1,86 @@
+;;;; Example Grid Packing (2021-5-18)
+
 (in-package :gtk-example)
 
-(defun create-grid-with-buttons ()
-  (let ((grid (make-instance 'gtk-grid :row-spacing 6 :column-spacing 6))
-        (button1 (make-instance 'gtk-button :label "Button 1"))
-        (button2 (make-instance 'gtk-button :label "Button 2"))
-        (button3 (make-instance 'gtk-button :label "Button 3"))
-        (button4 (make-instance 'gtk-button :label "Button 4")))
-
-    (gtk-grid-attach grid button1 0 0 2 1)
-    (gtk-grid-attach grid button2 1 1 1 2)
-
-    (gtk-grid-attach-next-to grid button3 button1 :right 1 1)
-    (gtk-grid-attach-next-to grid button4 button2 :left 1 1)
+(defun make-grid (homogeneous spacing expand align margin)
+  (let ((grid (make-instance 'gtk-grid
+                             :orientation :horizontal
+                             :column-homogeneous homogeneous
+                             :column-spacing spacing)))
+    (gtk-container-add grid
+                       (make-instance 'gtk-button
+                                      :label "gtk-container-add"
+                                      :hexpand expand
+                                      :halgin align
+                                      :margin margin))
+    (gtk-container-add grid
+                       (make-instance 'gtk-button
+                                      :label "grid"
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add grid
+                       (make-instance 'gtk-button
+                                      :label "child"
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add grid
+                       (make-instance 'gtk-button
+                                      :label (if expand "T" "NIL")
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add grid
+                       (make-instance 'gtk-button
+                                      :label (format nil "~A" align)
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
     grid))
 
-(defun example-grid-packing ()
+(defun example-grid-packing (&optional (spacing 6) (margin 0))
   (within-main-loop
-    (let ((window (gtk-window-new :toplevel)))
-      ;; Signal handler for the window to handle the signal "destroy".
-      (g-signal-connect window "destroy"
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Grid Packing"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-height 200
+                                 :default-width 300))
+          (grid (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 12)))
+
+      (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Create an add event box with an image to the window
-      (gtk-container-add window (create-grid-with-buttons))
-      ;; Show the window.
-      (gtk-widget-show-all window))))
+                          (gtk-widget-destroy window)))
 
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label "<b>Non-homogeneus grids</b>"
+                                        :xalign 0
+                                        :yalign 0
+                                        :vexpand nil
+                                        :valign :start))
+
+      (gtk-container-add grid (make-grid nil spacing nil :center margin))
+      (gtk-container-add grid (make-grid nil spacing t :center margin))
+      (gtk-container-add grid (make-grid nil spacing t :fill margin))
+
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label "<b>Homogeneous grids</b>"
+                                         :xalign 0
+                                         :yalign 0
+                                         :vexpand nil
+                                         :valign :start
+                                         :margin 6))
+
+      (gtk-container-add grid (make-grid t spacing t :center margin))
+      (gtk-container-add grid (make-grid t spacing t :fill margin))
+
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))

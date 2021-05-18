@@ -8,6 +8,8 @@
   :components ((:file "gtk-example")
                (:file "application-simple")
                (:file "bloat-pad")
+               (:file "box-packing")                   ; Packing Widgets
+               (:file "box-simple")                    ; Packing Widgets
                (:file "button-box")
                (:file "clipboard")
                (:file "combo-box")
@@ -21,7 +23,9 @@
                (:file "event-handler")
                (:file "getting-started")               ; Getting started
                (:file "grab")
-               (:file "grid-packing")
+               (:file "grid-packing")                  ; Packing Widgets
+               (:file "grid-simple")                   ; Packing Widgets
+               (:file "grid-spacing")                  ; Packing Widgets
                (:file "hello-world")                   ; Getting started
                (:file "hello-world-upgraded")          ; Getting started
                (:file "hello-world-upgraded-2")        ; Getting started
@@ -51,4 +55,4 @@
                (:file "window-simple")                 ; Getting started
               ))
 
-;;; 2021-5-13
+;;; 2021-5-14
