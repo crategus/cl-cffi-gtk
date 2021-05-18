@@ -16,8 +16,8 @@
 
  <bookinfo>
   <legalnotice>
-    <para>Copyright (C) 2012 - 2021 Dieter Kaiser</para
-  ></legalnotice>
+    <para>Copyright (C) 2012 - 2021 Dieter Kaiser</para>
+  </legalnotice>
   <author>
    <personname>
     <firstname>Dieter</firstname><surname>Kaiser</surname>
@@ -37,7 +37,7 @@
    This work is based on the <code>cl-gtk2</code> library which has been developed by Kalyanov Dmitry and
    already is a fairly complete Lisp binding to GTK. The focus of the <code>cl-cffi-gtk</code> library is
    to document the Lisp library much more complete and to do the implementation as consistent as possible.
-   Most informations about GTK can be gained by reading the C documentation. Therefore, the C documentation
+   Most information about GTK can be gained by reading the C documentation. Therefore, the C documentation
    from <ulink url="https://developer.gnome.org/gtk3/stable/">GTK 3 Reference Manual</ulink> is included
    into the Lisp files as an API documentation to document the Lisp binding to the GTK library. This way the
    calling conventions are easier to determine and missing functionality is easier to detect. The Lisp API
@@ -864,26 +864,25 @@ int main( int argc, char *argv[] )
     The following example shows a "draw" signal handler. It is a more complicated than the previous examples,
     since it also demonstrates input event handling by means of "button-press" and "motion-notify" handlers.
    </para>
+
    <example id="example-drawing">
     <title>Drawing in response to input</title>
-
     <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
 <xi:include href="../demo/gtk-example/drawing-area-input.lisp" parse="text"/>
     </programlisting>
-
    </example>
   </section>
  </chapter>
 
- <chapter id="Packing_Widgets">
+ <chapter id="Packing_Widgets" revision="2021-5-14">
   <title>Packing Widgets</title>
-  <section id="Packing_Boxes">
+  <section id="Packing_Boxes" revision="2021-5-15">
    <title>Packing Boxes</title>
    <para>
     When creating an application, it is necessary to put more than one widget inside a window. The first
-    Hello world example only used one button so it could simply use the function &gtk-container-add; to
-    "pack" the button into the window. But when more than one widget must be put into a window packing comes
-    in.
+    example in <xref linkend="figure-hello-world"/> only used one button so it could simply use the function
+    &gtk-container-add; to "pack" the button into the window. But when more than one widget must be put into
+    a window packing comes in.
    </para>
    <para>
     Packing is done by creating boxes or grids. Grids are more general and powerful than boxes. Grids are
@@ -894,12 +893,13 @@ int main( int argc, char *argv[] )
     combination of boxes inside or beside other boxes to create the desired effect.
    </para>
    <para>
-    To create a new box of the type &gtk-box;, the function &gtk-box-new; or the call
+    To create a new &gtk-box; widget, the function &gtk-box-new; or the call
     <code>(make-instance 'gtk-box)</code> is used. The first argument of the function &gtk-box-new; takes a
-    keyword of the enumeration type <code>GtkOrientation</code>, which, in the Lisp binding, is implemented
-    as the &gtk-orientation; enumeration with the values <code>:horizontal</code> or <code>:vertical</code>
-    to determine a horizontal or a vertical box. Because &gtk-box; implements the interface &gtk-orientable;
-    an instance of &gtk-box; has the property &gtk_orientable_orientation; of type &gtk-orientation;.
+    keyword with a value of the <code>GtkOrientation</code> enumeration, which, in the Lisp binding, is
+    implemented as the &gtk-orientation; enumeration with the values <code>:horizontal</code> or
+    <code>:vertical</code> to determine a horizontal or a vertical box. Because the &gtk-box; widget
+    implements the &gtk-orientable; interface an instance of the &gtk-box; widget has the
+    &gtk_orientable_orientation; property.
    </para>
 
    <table id="table-gtk-box">
@@ -915,25 +915,74 @@ int main( int argc, char *argv[] )
     <tr>
      <td colspan="2" style="border-top:2px solid #ff9900;"></td>
     </tr>
-    <tr valign="top">
-     <td><code>gtk-box-new</code></td>
-     <td>Creates a new <code>gtk-box</code> container.</td>
+    <tr>
+     <td colspan="2">Slot access functions</td>
     </tr>
     <tr valign="top">
-     <td><code>gtk-box-homogeneous</code></td>
+     <td>&gtk-box-baseline-position;</td>
+     <td>Accessor of the <code>baseline-position</code> property.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-homogeneous;</td>
      <td>Accessor of the <code>homogeneous</code> property.</td>
     </tr>
     <tr valign="top">
-     <td><code>gtk-box-spacing</code></td>
+     <td>&gtk-box-spacing;</td>
      <td>Accessor of the <code>spacing</code> property.</td>
     </tr>
+    <tr>
+     <td colspan="2">Child access functions</td>
+    </tr>
     <tr valign="top">
-     <td><code>gtk-box-pack-start</code></td>
+     <td>&gtk-box-child-expand;</td>
+     <td>Accessor of the <code>expand</code> child property.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-child-fill;</td>
+     <td>Accessor of the <code>fill</code> child property.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-child-pack-type;</td>
+     <td>Accessor of the <code>pack-type</code> child property.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-child-padding;</td>
+     <td>Accessor of the <code>padding</code> child property.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-child-position;</td>
+     <td>Accessor of the <code>position</code> child property.</td>
+    </tr>
+    <tr>
+     <td colspan="2">More functions</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-new;</td>
+     <td>Creates a new <code>gtk-box</code> widget.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-pack-start;</td>
      <td>Adds a child to the box, packed with reference to the start of the box.</td>
     </tr>
     <tr valign="top">
-     <td><code>gtk-box-pack-end</code></td>
+     <td>&gtk-box-pack-end;</td>
      <td>Adds a child to the box, packed with reference to the end of the box.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-reorder-child;</td>
+     <td>Move the child widget to a new position in the list of the box children.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-query-child-packing;</td>
+     <td>Obtains information about how the child widget is packed into the box.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-child-packing;</td>
+     <td>Sets the way the child widget is packed into the box.</td>
+    </tr>
+    <tr valign="top">
+     <td>&gtk-box-center-widget;</td>
+     <td>Sets a child widget that will be centered with respect to the full width of the box.</td>
     </tr>
     <tr>
      <td colspan="2" style="border-top:1px solid #ff9900;"></td>
@@ -941,10 +990,10 @@ int main( int argc, char *argv[] )
    </table>
 
    <para>
-    The following examples show two equivalent ways to create an instance of a horizontal box. The first
-    argument of the function &gtk-box-new; takes the value of the property &gtk_orientable_orientation;. The
-    second argument is the value of the property &gtk_box_spacing;, which is described in section
-    <link linkend="Details_of_Boxes">Details of Boxes</link>
+    The following code fragments show two equivalent ways to create an instance of a horizontal box. The first
+    argument of the function &gtk-box-new; takes the value of the &gtk_orientable_orientation; property. The
+    second argument is the value of the &gtk_box_spacing; property, which is described in
+    <xref linkend="Details_of_Boxes"/>:
    </para>
    <programlisting>
 (let ((box (gtk-box-new :horizontal 3)))
@@ -964,9 +1013,9 @@ int main( int argc, char *argv[] )
     top in a vertical box, and right to left in a horizontal box. The widgets, which are packed into a box,
     can be containers, which are composed of other widgets. Using the functions for packing widgets in boxes
     allows to right justify or left justify the widgets. The functions can be mixed in any way to achieve the
-    desired effect. Most of the examples in this tutorial use the function &gtk-box-pack-start;>. In the
+    desired effect. Most of the examples in this tutorial use the function &gtk-box-pack-start;. In the
     following example a vertical box is created. Then two label widgets are packed into the box with the
-    function &gtk-box-pack-start;.
+    function &gtk-box-pack-start;:
    </para>
    <programlisting>
 (let ((box (gtk-box-new :vertical 3)))
@@ -975,33 +1024,60 @@ int main( int argc, char *argv[] )
   ... )
    </programlisting>
    <para>
-    By using boxes, GTK+ knows where to place the widgets so GTK+ can do automatic resizing and other nifty
+    By using boxes, GTK knows where to place the widgets so GTK can do automatic resizing and other nifty
     things. A number of options control as to how the widgets should be packed into boxes. This method of
     packing boxes gives the user quite a bit of flexibility when placing widgets.
    </para>
+
+   <figure id="figure-box-simple">
+    <title>Simple Box</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/box-simple.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    <xref linkend="figure-box-simple"/> shows a horizontal box with three colored buttons. The red button is
+    put at the start position into the box and the green button and the end position. The yellow button is
+    centered within the box. The size of the labels within the buttons is enlarged with the slot access
+    functions &gtk-widget-width-request; and &gtk-widget-height-request;. The label widget is extracted with
+    the function &gtk-bin-child; from the button widget. In this example CSS data is applied to the buttons
+    to color the buttons.
+   </para>
+
+   <example id="example-box-simple">
+    <title>Simple Box</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/box-simple.lisp" parse="text"/>
+    </programlisting>
+   </example>
+
    <note>
     <para>
-     The classes GtkHBox for horizontal and GtkVBox for vertical boxes are deprecated, but still present in
-     GTK+ 3. In this tutorial these classes are not used. In addition a single-row or single-column &gtk-grid;
-     provides exactly the same functionality as &gtk-box;. See section <link linkend="Packing_Using_Grids">
-     Packing Using Grids</link> for examples to replace &gtk-box; with &gtk-grid;.
+     The <code>GtkHBox</code> for horizontal and <code>GtkVBox</code> widgets for vertical boxes are
+     deprecated, but still present in GTK 3. In this tutorial these classes are not used. In addition a
+     single-row or single-column &gtk-grid; widget provides exactly the same functionality as the &gtk-box;
+     widget. See <xref linkend="Packing_Using_Grids"/> for examples to replace the &gtk-box; widget with the
+     &gtk-grid; widget.
     </para>
    </note>
   </section>
 
-  <section id="Details_of_Boxes">
+  <section id="Details_of_Boxes" revision="2021-5-14">
    <title>Details of Boxes</title>
    <para>
-    Because of the flexibility, packing boxes in GTK+ can be confusing at first. A lot of options control
-    the packing of boxes, and it is not immediately obvious how the options all fit together. In the end,
-    however, basically five different styles are available.
+    Because of the flexibility, packing boxes in GTK can be confusing at first. A lot of options control the
+    packing of boxes, and it is not immediately obvious how the options all fit together. In the end, however,
+    basically five different styles are available.
    </para>
    <para>
-    Boxes have the properties &gtk_box_homogeneous; and &gtk_box_spacing;. The functions &gtk-box-homogeneous;
-    and &gtk-box-spacing; are used to write and read the properties. The property &gtk_box_homogeneous;
+    Boxes have the &gtk_box_homogeneous; and &gtk_box_spacing; properties. The functions &gtk-box-homogeneous;
+    and &gtk-box-spacing; are used to write and read the properties. The &gtk_box_homogeneous; property
     controls whether each widget in the box has the same width in a horizontal box or the same height in a
-    vertical box. The property &gtk_box_spacing; controls the amount of space between children in the box. A
-    complete example for creating a box is therefore
+    vertical box. The &gtk_box_spacing; property controls the amount of space between children in the box. A
+    complete example for creating a box is therefore:
    </para>
    <programlisting>
 (let ((box (make-instance 'gtk-box
@@ -1010,31 +1086,32 @@ int main( int argc, char *argv[] )
                           :homogeneous t)))
   ... )
    </programlisting>
+   <para>
+    <xref linkend="figure-box-packing"/> shows an example of packing buttons into horizontal boxes. Each line
+    of the example contains one horizontal box with several buttons. The first button represents the call of
+    the function &gtk-box-pack-start; and the following buttons represent the arguments of the function. The
+    first two arguments are <code>box</code> for the box and <code>child</code> for the child widgets to put
+    into the box, which are in our example buttons. The further arguments of the function &gtk-box-pack-start;
+    are in the C implementation <code>expand</code>, <code>fill</code> and <code>padding</code>. In the Lisp
+    binding to GTK these arguments are defined as the keyword arguments <code>:expand</code> and
+    <code>:fill</code>, which both have a default value of <emphasis>true</emphasis>, and
+    <code>:padding</code> with a default value of <code>0</code>. The keyword arguments can be omitted, in
+    which case the default values will be used.
+   </para>
+
    <figure id="figure-box-packing">
-    <title>Box Packing with a spacing of 3</title>
+    <title>Box Packing</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/box-packing629x323.png" format="png"></imagedata>
+      <imagedata fileref="figures/box-packing.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
-   <para>
-    Figure <link linkend="figure-box-packing">Box Packing</link> shows an example of packing buttons into
-    horizontal boxes. The buttons have a small spacing of 3. Each line of the example contains one
-    horizontal box with several buttons. The first button represents the call of the function
-    &gtk-box-pack-start; and the following buttons represent the arguments of the function. The first two
-    arguments are <code>box</code> for the box and <code>child</code> for the child widgets to put into the
-    box, which are in our example buttons. The further arguments of &gtk-box-pack-start; are in the C
-    implementation <code>expand</code>, <code>fill</code> and <code>padding</code>. In the Lisp binding to
-    GTK+ these arguments are defined as the keyword arguments <code>:expand</code> and <code>:fill</code>,
-    which both have a default value of <emphasis>true</emphasis>, and <code>:padding</code> with a default
-    value of <code>0</code>. The keyword arguments can be omitted, in which case the default values will
-    be used.
-   </para>
+
    <para>
     The keyword argument <code>:expand</code> with a value <emphasis>true</emphasis> to the functions
     &gtk-box-pack-start; and &gtk-box-pack-end; controls whether the widgets are laid out in the box to fill
-    in all the extra space in the box so the box is expanded to fill the area allotted to it; or with a value
+    in all the extra space in the box so the box is expanded to fill the area allotted to it, or with a value
     <code>nil</code> the box is shrunk to just fit the widgets. Setting expand to <code>nil</code> allows to
     do right and left justification of the widgets. Otherwise, the widgets expand to fit into the box. The
     same effect can be achieved by using only one of the functions &gtk-box-pack-start; or &gtk-box-pack-end;.
@@ -1047,451 +1124,135 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     The difference between spacing, set when the box is created, and padding, set when elements are packed,
-    is, that spacing is added between objects, and padding is added on either side of a child widget.
+    is, that spacing is added between objects, and padding is added on either side of a child widget. In
+    <xref linkend="figure-box-packing"/> the spacing is set to 6 and padding is 0 for all buttons.
    </para>
    <para>
-    The code for figure <link linkend="figure-box-packing">Box Packing</link> is shown in example
-    <link linkend="example-box-packing">Box Packing</link>. The function <code>example-box-packing</code>
-    takes an optional argument <code>spacing</code>, which has the default value <code>0</code> and controls
-    the spacing of the buttons in the boxes.
+    The code for <xref linkend="figure-box-packing"/> is shown in <xref linkend="example-box-packing"/>. The
+    function <code>example-box-packing</code> takes the optional arguments <code>spacing</code> and
+    <code>padding</code>, which have default values 6 and 0, respectively.
    </para>
-   <para>
-    The example uses two widgets which are not introduced up to now. The first one is the &gtk-label; widget,
-    which is described in <link linkend="Labels">Labels</link> and is used to display text. The second one is
-    the &gtk-separator; widget, which draws a horizontal or vertical line. The orientation of the line depends
-    on the only argument to the function &gtk-separator-new;, which is of the enumeration type
-    &gtk-orientation; with the values <code>:horizontal</code> for a horizontal line and
-    <code>:vertical</code> for a vertical line.
-   </para>
+
    <example id="example-box-packing">
-    <title>Packing Boxes</title>
-    <programlisting>
-(defun make-box (homogeneous spacing expand fill padding)
-  (let ((box (make-instance 'gtk-box
-                            :orientation :horizontal
-                            :homogeneous homogeneous
-                            :spacing spacing)))
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "gtk-box-pack")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "box")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "button")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (if expand
-                            (gtk-button-new-with-label "T")
-                            (gtk-button-new-with-label "NIL"))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (if fill
-                            (gtk-button-new-with-label "T")
-                            (gtk-button-new-with-label "NIL"))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label (format nil "&#x7e;A" padding))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    box))
-
-(defun example-box-packing (&#x26;optional (spacing 0))
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Box Packing"
-                                 :type :toplevel
-                                 :border-width 12))
-          (vbox (make-instance 'gtk-box
-                               :orientation :vertical
-                               :spacing 6))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (quitbox (make-instance 'gtk-box
-                                  :orientation :horizontal)))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                          "GtkBox   ~
-                                           :orientation :horizontal   ~
-                                           :homogeneous nil   ~
-                                           :spacing ~A"
-                                          spacing)
-                                         :xalign 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing nil nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing t nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing t t 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                            "GtkBox   ~
-                                             :orientation :horizontal   ~
-                                             :homogeneous t   ~
-                                             :spacing ~A"
-                                            spacing)
-                                         :xalign 0)
-                          :expand nil
-                          :padding 6)
-      (gtk-box-pack-start vbox
-                          (make-box t spacing t nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box t spacing t t 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil
-                          :padding 6)
-      ;; Align the quit-button on the right side
-      (gtk-box-pack-end quitbox button :expand nil)
-      (gtk-box-pack-start vbox quitbox :expand nil)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
+    <title>Box Packing</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/box-packing.lisp" parse="text"/>
     </programlisting>
    </example>
   </section>
 
-  <section id="Packing_Using_Tables">
-   <title>Packing Using Tables</title>
-   <para>
-    Tables are another way of packing widgets and can be extremely useful in certain situations. Using tables
-    a grid is created that widgets can placed in. The widgets may take up as many spaces as specified. Tables
-    can be created with the function &gtk-table-new;. The function takes three arguments which set the
-    properties of a table. Alternatively, the table is created with the function <code>make-instance</code>.
-   </para>
-   <para>
-    The first argument of &gtk-table-new; is the number of rows to make in the table, while the second is the
-    number of columns. The last argument <code>homogeneous</code> has to do with how the boxes of the table
-    are sized. If <code>homogeneous</code> is <code>T</code>, the table boxes are resized to the size of the
-    largest widget in the table. If <code>homogeneous</code> is <code>NIL</code>, the size of a table boxes is
-    dictated by the tallest widget in its same row, and the widest widget in its column. The rows and columns
-    are laid out from <code>0</code> to <code>n</code>, where <code>n</code> is the number specified in the
-    call to the function &gtk-table-new;. For <code>rows = 2</code> and <code>columns = 2</code>, the layout
-    is shown in figure <link linkend="figure-table-layout"> Layout of a 2 x 2 Table</link>. Note that the
-    coordinate system starts in the upper left hand corner.
-   </para>
-   <figure id="figure-table-layout">
-    <title>Layout of a 2 x 2 Table</title>
-    <programlisting>
- 0          1          2
-0+----------+----------+
- |          |          |
-1+----------+----------+
- |          |          |
-2+----------+----------+
-    </programlisting>
-   </figure>
-   <para>
-    To place a widget into a table, the function &gtk-table-attach; can be used. The arguments are listed in
-    the table <link linkend="table-gtk-table-attach">Table Attach</link>. The first argument
-    <code>table</code> is the table you have created and the second <code>child</code> the widget you wish to
-    place into the table. The left and right attach arguments specify where to place the widget, and how many
-    boxes to use. If you want a button in the lower right table entry of a 2 x 2 table, and want it to fill
-    that entry only, <code>left-attach</code> is <code>= 1</code>, <code>right-attach = 2</code>,
-    <code>top-attach = 1</code>, <code>bottom-attach = 2</code>. Now, if you wanted a widget to take up the
-    whole top row of a 2 x 2 table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
-    <code>top-attach = 0</code>, <code>bottom-attach = 1</code>.
-   </para>
-
-   <table id="table-gtk-table-attach">
-    <caption>Arguments of the function <code>gtk-table-attach</code></caption>
-    <colgroup>
-     <col style="width:30%"/>
-     <col style="width:70%"/>
-    </colgroup>
-    <tr>
-     <th align="left">Argument</th>
-     <th align="left">Description</th>
-    </tr>
-    <tr>
-     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
-    </tr>
-    <tr valign="top">
-     <td><code>table</code></td>
-     <td>The GtkTable to add a new widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>child</code></td>
-     <td>The widet to add.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>left-attach</code></td>
-     <td>The column number to attach the left side of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>right-attach</code></td>
-     <td>The column number to attach the right side of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>top-attach</code></td>
-     <td>The row number to attach the top of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>bottom-attach</code></td>
-     <td>The row number to attach the bottom of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:xoptions</code></td>
-     <td>Used to specify the properties of the child widget when the table is resized.
-        The default value is <code>'(:expand :fill)</code>.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:yoptions</code></td>
-     <td>The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
-        The default value is <code>'(:expand :fill)</code>.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:xpadding</code></td>
-     <td>An integer value specifying the padding on the left and right of the widget being added to the table.
-        The default value is <code>0</code>.</td>
-    </tr>
-    <tr>
-     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
-    </tr>
-   </table>
-
-   <para>
-    The arguments <code>:xoptions</code> and <code>:yoptions</code> are of the enumeration type
-    &gtk-attach-options; and used to specify packing options. The packing options can be OR'ed together to
-    allow multiple options. In the Lisp binding a list of options is used to combine multiple options.
-    Possible values of the enumeration type &gtk-attach-options; are listed in the table
-    <link linkend="table-gtk-attach-options">GtkAttachOptions</link>.
-   </para>
-   <para>
-    Padding is just like in boxes, creating a clear area around the widget specified in pixels and is
-    controlled with the arguments <code>:xpadding</code> and <code>:ypadding</code>.
-   </para>
-   <table id="table-gtk-attach-options" frame='all'>
-    <title>Values of the type GtkAttachOptions</title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Value</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>:fill</code></entry>
-       <entry valign="top">
-        If the table box is larger than the widget, and <code>:fill</code> is specified, the widget will
-        expand to use all the room available.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:shrink</code></entry>
-       <entry valign="top">
-        If the table widget was allocated less space then was requested (usually by the user resizing the
-        window), then the widgets would normally just be pushed off the bottom of the window and disappear.
-        If <code>:shrink</code> is specified, the widgets will shrink with the table.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:expand</code></entry>
-       <entry valign="top">
-         This will cause the table to expand to use up any remaining space in the window.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </table>
-   <para>
-    In the Lisp binding the arguments <code>:xoptions</code>, <code>:yoptions</code>, <code>:xpadding</code>,
-    and <code>:ypadding</code> of the function &gtk-table-attach; are defined as keyword arguments with
-    default values as shown in table <link linkend="table-gtk-table-attach">GtkTableAttach</link>. In the C
-    library this is realized with a second function <code>gtk_table_attach_defaults()</code>. In the Lisp
-    binding the function &gtk-table-attach-defaults; is a second equivalent implementation of
-    &gtk-table-attach;, when using the default values of the keyword arguments.
-   </para>
-   <para>
-    The functions &gtk-table-set-row-spacing; and &gtk-table-set-col-spacing; places spacing between the rows
-    at the specified row or column. The first argument of the functions is a &gtk-table;, the second argument
-    a row or a column and the third argument the spacing. Note that for columns, the space goes to the right
-    of the column, and for rows, the space goes below the row.
-   </para>
-   <para>
-    You can also set a consistent spacing of all rows and columns with the functions
-    &gtk-table-set-row-spacings; and &gtk-table-set-col-spacings;. Both functions take a &gtk-table; as the
-    first argument and the desired spacing <code>spacing</code> as the second argument. Note that with these
-    calls, the last row and last column do not get any spacing.
-   </para>
-   <note>
-    <para>
-     &gtk-table; has been deprecated since GTK+ 3.4. It is recommended to use &gtk-grid; instead. &gtk-grid;
-     provides the same capabilities as &gtk-table; for arranging widgets in a rectangular grid, but does
-     support height-for-width geometry management, which is newly introduced for widgets in GTK+ 3. This
-     chapter will vanish in the near future.
-    </para>
-   </note>
-  </section>
-
-  <section id="Table_Packing_Example">
-   <title>Table Packing Example</title>
-   <para>
-    The figure <link linkend="figure-table-packing">Table Packing</link> is a window with three buttons in a
-    2 x 2 table. The first two buttons are placed in the upper row. A third, quit button, is placed in the
-    lower row, spanning both columns. The code of this example is shown in the example
-    <link linkend="example-table-packing">Table Packing</link>.
-   </para>
-   <figure id="figure-table-packing">
-    <title>Table Packing</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/table-packing306x108.gif" format="gif"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-table-packing">
-    <title>Table Packing</title>
-    <programlisting>
-(defun example-table-packing ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Table Packing"
-                                 :border-width 12
-                                 :default-width 300))
-          (table (make-instance 'gtk-table
-                                :n-columns 2
-                                :n-rows 2
-                                :homogeneous t))
-          (button1 (make-instance 'gtk-button
-                                  :label "Button 1"))
-          (button2 (make-instance 'gtk-button
-                                  :label "Button 2"))
-          (quit (make-instance 'gtk-button
-                               :label "Quit")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect quit "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-table-attach table button1 0 1 0 1)
-      (gtk-table-attach table button2 1 2 0 1)
-      (gtk-table-attach table quit    0 2 1 2)
-      (gtk-container-add window table)
-      (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
-   <para>
-    Figure <link linkend="figure-table-packing-2">Table Packing</link> is an extended example to show the
-    possibility to increase the spacing of the rows and columns. This is implemented through two toggle
-    buttons which increase and decrease the spacings. Toggle buttons are described in
-    <link linkend="Toggle_Buttons">Toggle Buttons</link> later in this tutorial. The code of
-    <link linkend="figure-table-packing-2">Table Packing</link> is shown in example
-    <link linkend="example-table-packing-2">Table Packing</link>.
-   </para>
-   <figure id="figure-table-packing-2">
-    <title>Table Packing with more spacing</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/table-packing-2-306x120.png" format="png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-table-packing-2">
-    <title>Table Packing with more spacing</title>
-    <programlisting>
-(defun example-table-packing-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Table Packing"
-                                 :border-width 12
-                                 :default-width 300))
-          (table (make-instance 'gtk-table
-                                :n-columns 2
-                                :n-rows 2
-                                :homogeneous t))
-          (button1 (make-instance 'gtk-toggle-button
-                                  :label "More Row Spacing"))
-          (button2 (make-instance 'gtk-toggle-button
-                                  :label "More Col Spacing"))
-          (quit (make-instance 'gtk-button
-                               :label "Quit")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect button1 "toggled"
-         (lambda (widget)
-           (if (gtk-toggle-button-active widget)
-               (progn
-                 (gtk-table-set-row-spacings table 12)
-                 (setf (gtk-button-label widget) "Less Row Spacing"))
-               (progn
-                 (gtk-table-set-row-spacings table 0)
-                 (setf (gtk-button-label widget) "More Row Spacing")))))
-      (g-signal-connect button2 "toggled"
-         (lambda (widget)
-           (if (gtk-toggle-button-active widget)
-               (progn
-                 (gtk-table-set-col-spacings table 12)
-                 (setf (gtk-button-label widget) "Less Col Spacing"))
-               (progn
-                 (gtk-table-set-col-spacings table 0)
-                 (setf (gtk-button-label widget) "More Col Spacing")))))
-      (g-signal-connect quit "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-table-attach table button1 0 1 0 1)
-      (gtk-table-attach table button2 1 2 0 1)
-      (gtk-table-attach table quit    0 2 1 2)
-      (gtk-container-add window table)
-      (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
-  </section>
-
-  <section id="Packing_Using_Grids">
+  <section id="Packing_Using_Grids" revision="2021-5-18">
    <title>Packing Using Grids</title>
    <para>
-    &gtk-grid; is an attempt to write a comprehensive, legacy-free, box-layout container that is flexible
-    enough to replace &gtk-box;, &gtk-table; and the like.
+    The &gtk-grid; widget is an attempt to write a comprehensive box-layout container that is flexible enough
+    to replace &gtk-box;, &gtk-table; widgets and the like. The layout model of the &gtk-grid; widget is to
+    arrange its children in rows and columns. This is done by assigning positions on a two-dimensions grid
+    that stretches arbitrarily far in all directions. Children can span multiple rows or columns.
    </para>
    <para>
-    The layout model of &gtk-grid; is to arrange its children in rows and columns. This is done by assigning
-    positions on a two-dimensions grid that stretches arbitrarily far in all directions. Children can span
-    multiple rows or columns.
+    Grids can be created with the function &gtk-grid-new;. The function has no arguments. Alternatively, the
+    grid is created with the function <code>make-instance</code>.
+   </para>
+   <para>
+    The &gtk-grid; class has the &gtk_grid_column-homogeneous; and &gtk_grid_row-homogeneous; properties. If
+    <emphasis>true</emphasis> the columns or the rows have all the same size, respectively. The
+    &gtk_grid_column-spacing; and &gtk_grid_row-spacing; properties add space in pixels between two
+    consecutive columns or rows.
+   </para>
+   <para>
+    To place a widget into a grid, the function &gtk-grid-attach; can be used. The function takes six
+    parameters:
    </para>
 
-   <section id="GtkBox_versus_GtkGrid_packing">
+   <variablelist>
+    <varlistentry>
+     <term><code>grid</code></term>
+     <listitem>the &gtk-grid; widget</listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>child</code></term>
+     <listitem>the child widget to add to the grid</listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>left</code></term>
+     <listitem>the column number to attach the left side of the child widget to</listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>top</code></term>
+     <listitem>the row number to attach the top side of the child widget to</listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><code>width, height</code></term>
+     <listitem>the number of columns and the number of the rows that the child widget will span</listitem>
+    </varlistentry>
+   </variablelist>
+
+   <para>
+    It is also possible to add a child widget next to an existing child widget, using the function
+    &gtk-grid-attach-next-to;. Finally, the &gtk-grid; widget can be used like the &gtk-box; widget by just
+    using the function &gtk-container-add;, which will place children next to each other in the direction
+    determined by the &gtk_orientable_orientation; property of the &gtk-grid; widget. The property is
+    inherited from the implemented &gtk-orientable; interface. The default value is <code>:horizontal</code>.
+   </para>
+  </section>
+
+  <section id="Grid_Packing_Example" revision="2021-5-18">
+   <title>Grid Packing Example</title>
+   <para>
+    <xref linkend="figure-grid-simple"/> shows a window with three buttons in a grid. The first two buttons
+    are placed in the upper row. A third button is placed in the lower row, spanning both columns. The code
+    of this example is shown in <xref linkend="example-grid-simple"/>.
+   </para>
+
+  <figure id="figure-grid-simple">
+    <title>Simple Grid</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/grid-simple.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <example id="example-grid-simple">
+    <title>Simple Grid</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/grid-simple.lisp" parse="text"/>
+    </programlisting>
+   </example>
+
+   <para>
+    <xref linkend="figure-grid-spacing"/> is an extended example to show the possibility to increase the
+    spacing of the rows and columns. This is implemented through two toggle buttons which increase and
+    decrease the spacings. Toggle buttons are described in <xref linkend="Toggle_Buttons"/> later in this
+    tutorial. The code of this example is shown in <xref linkend="example-grid-spacing"/>.
+   </para>
+
+   <figure id="figure-grid-spacing">
+    <title>Grid Packing with more spacing</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/grid-spacing.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <example id="example-grid-spacing">
+    <title>Grid Packing with more spacing</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/grid-spacing.lisp" parse="text"/>
+    </programlisting>
+   </example>
+  </section>
+
+  <section id="GtkBox_versus_GtkGrid" revision="2021-5-18">
+   <title>GtkBox versus GtkGrid</title>
+
+   <section id="GtkBox_versus_GtkGrid_packing" revision="2021-5-18">
     <title>GtkBox versus GtkGrid - packing</title>
     <para>
-     &gtk-box; works by arranging child widgets in a single line, either horizontally or vertically. It
-     allows packing children from the beginning or end, using &gtk-box-pack-start; and &gtk-box-pack-end;.
+     The &gtk-box; widget works by arranging child widgets in a single line, either horizontally or
+     vertically. It allows packing children from the beginning or end, using the functions
+     &gtk-box-pack-start; and &gtk-box-pack-end;.
     </para>
     <para>
      The following code creates a simple box with two labels:
@@ -1503,7 +1264,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with &gtk-grid; as follows:
+     This can be done with the &gtk-grid; widget as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -1514,57 +1275,58 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     And similarly for &gtk-box-pack-end;. In that case, you would use <code>:left</code> to place the grid
-     children from left to right.
+     And similarly for the function &gtk-box-pack-end;. In that case, you would use <code>:left</code> to
+     place the grid children from left to right.
     </para>
     <para>
      If you only need to pack children from the start, using the function &gtk-container-add; is an even
-     simpler alternative. &gtk-grid; places children added with &gtk-container-add; in a single row or column
-     according to its "orientation".
+     simpler alternative. The &gtk-grid; widget places children added with the function &gtk-container-add;
+     in a single row or column according to its orientation.
     </para>
     <para>
-     One difference to keep in mind is that the &gtk-box-pack-start; and &gtk-box-pack-end; functions allow
+     One difference to keep in mind is that the functions &gtk-box-pack-start; and &gtk-box-pack-end; allow
      you to place an arbitrary number of children from either end without ever 'colliding in the middle'.
-     With &gtk-grid;, you have to leave enough space between the two ends, if you want to combine packing
-     from both ends towards the middle. In practice, this should be easy to avoid; and &gtk-grid; simply
-     ignores entirely empty rows or columns for layout and spacing.
+     With the &gtk-grid; widget, you have to leave enough space between the two ends, if you want to combine
+     packing from both ends towards the middle. In practice, this should be easy to avoid; and the &gtk-grid;
+     widget simply ignores entirely empty rows or columns for layout and spacing.
     </para>
     <para>
-     On the other hand, &gtk-grid; is more flexible in that its grid extends indefinitively in both directions
-     - there is no problem with using negative numbers for the grid positions. So, if you discover that you
-     need to place a widget before your existing arrangement, you always can.
+     On the other hand, the &gtk-grid; widget is more flexible in that its grid extends indefinitively in both
+     directions - there is no problem with using negative numbers for the grid positions. So, if you discover
+     that you need to place a widget before your existing arrangement, you always can.
     </para>
    </section>
 
    <section id="GtkBox_versus_GtkGrid_sizing">
     <title>GtkBox versus GtkGrid - sizing</title>
     <para>
-     When adding a child to a &gtk-box;, there are two hard-to-remember parameters (child properties, more
-     exactly) named <code>expand</code> and <code>fill</code> that determine how the child size behaves in
-     the main direction of the box. If <code>expand</code> is set, the box allows the position occupied by
+     When adding a child to a &gtk-box; widget, there are two hard-to-remember parameters (child properties,
+     more exactly) named <code>expand</code> and <code>fill</code> that determine how the child size behaves
+     in the main direction of the box. If <code>expand</code> is set, the box allows the position occupied by
      the child to grow when extra space is available. If <code>fill</code> is also set, the extra space is
      allocated to the child widget itself. Otherwise it is left 'free'. There is no control about the 'minor'
-     direction; children are always given the full size in the minor direction.
+     direction. Children are always given the full size in the minor direction.
     </para>
     <para>
-     &gtk-grid; does not have any custom child properties for controlling size allocation to children.
-     Instead, it fully supports the newly introduced &gtk_widget_hexpand;, &gtk_widget_vexpand;,
+     The &gtk-grid; widget does not have any custom child properties for controlling size allocation to
+     children. Instead, it fully supports the newly introduced &gtk_widget_hexpand;, &gtk_widget_vexpand;,
      &gtk_widget_halign;, and &gtk_widget_valign; properties for widgets.
     </para>
     <para>
      The &gtk_widget_hexpand; and &gtk_widget_vexpand; properties operate in a similar way to the expand child
-     properties of &gtk-box;. As soon as a column contains a hexpanding child, &gtk-grid; allows the column to
-     grow when extra space is available (similar for rows and &gtk_widget_vexpand;). In contrast to &gtk-box;,
-     all the extra space is always allocated to the child widget, there are no 'free' areas.
+     properties of the &gtk-box; widget. As soon as a column contains a horizontally expanding child,
+     the &gtk-grid; widget allows the column to grow when extra space is available (similar for rows and the
+     &gtk_widget_vexpand; property). In contrast to the &gtk-box; widget, all the extra space is always
+     allocated to the child widget, there are no 'free' areas.
     </para>
     <para>
-     To replace the functionality of the <code>fill</code> child properties, you can set the
-     &gtk_widget_halign; and &gtk_widget_valign; properties. An align value of <code>:fill</code> has the
-     same effect as setting <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code>
-     has the same effect as setting <code>fill</code> to <code>nil</code>.
+     To replace the functionality of the <code>fill</code> child property, you can set the &gtk_widget_halign;
+     and &gtk_widget_valign; properties. An align value of <code>:fill</code> has the same effect as setting
+     <code>fill</code> to <emphasis>true</emphasis>, a value of <code>:center</code> has the same effect as
+     setting <code>fill</code> to <code>nil</code>.
     </para>
     <para>
-     Expansion and alignment with &gtk-box;:
+     Expansion and alignment with the &gtk-box; widget:
     </para>
     <programlisting>
 (let ((box (gtk-box-new :horizontal 0)))
@@ -1573,7 +1335,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with &gtk-grid; as follows:
+     This can be done with the &gtk-grid; widget as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -1598,15 +1360,15 @@ int main( int argc, char *argv[] )
      automatism can be overridden at any point by setting the expand flags on a container explicitly.
     </para>
     <para>
-     Another difference between &gtk-box; and &gtk-grid; with respect to expandability is when there are no
-     expanding children at all. In this case, &gtk-box; will forcibly expand all children whereas &gtk-grid;
-     will not. In practice, the effect of this is typically that a grid will 'stick to the corner' when the
-     toplevel containing it is grown, instead of spreading out its children over the entire area. The problem
-     can be fixed by setting some or all of the children to expand.
+     Another difference between the &gtk-box; and &gtk-grid; widget with respect to expandability is when
+     there are no expanding children at all. In this case, the &gtk-box; widget will forcibly expand all
+     children whereas the &gtk-grid; widget will not. In practice, the effect of this is typically that a grid
+     will 'stick to the corner' when the toplevel containing it is grown, instead of spreading out its
+     children over the entire area. The problem can be fixed by setting some or all of the children to expand.
     </para>
     <para>
-     When you set the &gtk_box_homogeneous; property on a &gtk-box;, it reserves the same space for all its
-     children. &gtk-grid; does this in a very similar way, with &gtk_grid_row-homogeneous; and
+     When you set the &gtk_box_homogeneous; property on a &gtk-box; widget, it reserves the same space for all
+     its children. The &gtk-grid; widget does this in a very similar way, with &gtk_grid_row-homogeneous; and
      &gtk_grid_column-homogeneous; properties which control whether all rows have the same height and whether
      all columns have the same width.
     </para>
@@ -1615,19 +1377,20 @@ int main( int argc, char *argv[] )
    <section id="GtkBox_versus_GtkGrid_spacing">
     <title>GtkBox versus GtkGrid - spacing</title>
     <para>
-     With &gtk-box;, you have to specify the "spacing" when you construct it. This property specifies the
-     space that separates the children from each other. Additionally, you can specify extra space to put
-     around each child individually, using the <code>padding</code> child property.
+     With the &gtk-box; widget, you have to specify the "spacing" when you construct it. This property
+     specifies the space that separates the children from each other. Additionally, you can specify extra
+     space to put around each child individually, using the <code>padding</code> child property.
     </para>
     <para>
-     &gtk-grid; is very similar when it comes to spacing between the children, except that it has two separate
-     properties, &gtk_grid_row-spacing; and &gtk_grid_column-spacing;, for the space to leave between rows and
-     columns. Note that &gtk_grid_row-spacing; is the space between rows, not inside a row. So, if you doing
-     a horizontal layout, you need to set &gtk_grid_column-spacing;.
+     The &gtk-grid; widget is very similar when it comes to spacing between the children, except that it has
+     two separate properties, &gtk_grid_row-spacing; and &gtk_grid_column-spacing;, for the space to leave
+     between rows and columns. Note that the &gtk_grid_row-spacing; property is the space between rows, not
+     inside a row. So, if you doing a horizontal layout, you need to set the &gtk_grid_column-spacing;
+     property.
     </para>
     <para>
-     &gtk-grid; does not have any custom child properties to specify per-child padding; instead you can use
-     the &gtk_widget_margin; property. You can also set different padding on each side with the
+     The &gtk-grid; widget does not have any custom child properties to specify per-child padding; instead you
+     can use the &gtk_widget_margin; property. You can also set different padding on each side with the
      &gtk_widget_margin-start;, &gtk_widget_margin-end;, &gtk_widget_margin-top; and
      &gtk_widget_margin-bottom; properties.
     </para>
@@ -1641,7 +1404,7 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
     <para>
-     This can be done with &gtk-grid; as follows:
+     This can be done with the &gtk-grid; widget as follows:
     </para>
     <programlisting>
 (let ((grid (gtk-grid-new))
@@ -1652,158 +1415,32 @@ int main( int argc, char *argv[] )
   ... )
     </programlisting>
    </section>
-  </section>
 
-  <section id="Grid_Packing_Examples">
-   <title>Grid Packing Examples</title>
-   <para>
-    We repeat the implementation of the example <link linkend="example-box-packing">Box Packing</link> and
-    the example <link linkend="example-table-packing">Table Packing</link> using <code>GtkGrid</code>. The
-    first example <link linkend="example-grid-packing">Grid Packing</link> shows how to replace
-    &gtk-box; with &gtk-grid; to create vertical and horizontal boxes. In the second example
-    <link linkend="example-grid-packing-2">Grid Packing</link> &gtk-table; is replaced with &gtk-grid;.
-    See the figures <link linkend="figure-box-packing">Box Packing</link> and
-    <link linkend="figure-table-packing">Table Packing</link> for the output of the example programs.
-   </para>
+   <section id="GtkBox_versus_GtkGrid_packing_example" revision="2021-5-18">
+    <title>GtkBox versus GtkGrid - packing example</title>
+    <para>
+     <xref linkend="example-grid-packing"/> shows how to replace the &gtk-box; widget with the &gtk-grid;
+     widget to create horizontal boxes. The layout corresponds to the layout of the previous example in
+     <xref linkend="figure-box-packing"/>.
+    </para>
+
+   <figure id="figure-grid-packing">
+    <title>Packing using GtkGrid</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/grid-packing.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
    <example id="example-grid-packing">
-    <title>Box Packing using GtkGrid</title>
-    <programlisting>
-(defun make-grid (homogeneous spacing expand align margin)
-  (let ((box (make-instance 'gtk-grid
-                            :orientation :horizontal
-                            :column-homogeneous homogeneous
-                            :column-spacing spacing)))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "gtk-container-add"
-                                      :hexpand expand
-                                      :halgin align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "box"
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "button"
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (if expand "T" "NIL")
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (format nil "&#x7e;A" align)
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (format nil "&#x7e;A" margin)
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    box))
+    <title>Packing using GtkGrid</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/grid-packing.lisp" parse="text"/>
+    </programlisting>
+    </example>
 
-(defun example-grid-packing (&#x26;optional (spacing 0))
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Grid Packing"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-height 200
-                                 :default-width 300))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical
-                               :row-spacing 6))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (quitbox (make-instance 'gtk-box
-                                  :orientation :horizontal)))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add vbox
-                         (make-instance 'gtk-label
-                                        :label
-                                        (format nil
-                                         "GtkGrid homogeneous nil spacing ~A"
-                                         spacing)
-                                        :xalign 0
-                                        :yalign 0
-                                        :vexpand nil
-                                        :valign :start))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox (make-grid nil spacing nil :center 0))
-      (gtk-container-add vbox (make-grid nil spacing t :center 0))
-      (gtk-container-add vbox (make-grid nil spacing t :fill 0))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox
-                         (make-instance 'gtk-label
-                                        :label
-                                        (format nil
-                                           "GtkGrid homogeneous t spacing ~A"
-                                           spacing)
-                                         :xalign 0
-                                         :yalign 0
-                                         :vexpand nil
-                                         :valign :start
-                                         :margin 6))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox (make-grid t spacing t :center 0))
-      (gtk-container-add vbox (make-grid t spacing t :fill 0))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add quitbox button)
-      (gtk-container-add vbox quitbox)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
-   <example id="example-grid-packing-2">
-    <title>Table Packing using GtkGrid</title>
-    <programlisting>
-(defun example-grid-packing-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Grid Packing"
-                                 :border-width 12
-                                 :default-width 300))
-          (grid (make-instance 'gtk-grid
-                                :column-homogeneous t
-                                :row-homogeneous t))
-          (button1 (make-instance 'gtk-button
-                                  :label "Button 1"))
-          (button2 (make-instance 'gtk-button
-                                  :label "Button 2"))
-          (quit (make-instance 'gtk-button
-                               :label "Quit")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect quit "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-grid-attach grid button1 0 1 1 1)
-      (gtk-grid-attach grid button2 1 1 1 1)
-      (gtk-grid-attach grid quit    0 2 2 1)
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
+   </section>
   </section>
  </chapter>
 
@@ -12473,6 +12110,306 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
   </section>
  </chapter>
 
+ <chapter id="Deprecated" revidion="2021-5-18">
+  <title>Deprecated</title>
+
+  <section id="Packing_Using_Tables">
+   <title>Packing Using Tables</title>
+   <para>
+    Tables are another way of packing widgets and can be extremely useful in certain situations. Using tables
+    a grid is created that widgets can placed in. The widgets may take up as many spaces as specified. Tables
+    can be created with the function &gtk-table-new;. The function takes three arguments which set the
+    properties of a table. Alternatively, the table is created with the function <code>make-instance</code>.
+   </para>
+   <para>
+    The first argument of &gtk-table-new; is the number of rows to make in the table, while the second is the
+    number of columns. The last argument <code>homogeneous</code> has to do with how the boxes of the table
+    are sized. If <code>homogeneous</code> is <code>T</code>, the table boxes are resized to the size of the
+    largest widget in the table. If <code>homogeneous</code> is <code>NIL</code>, the size of a table boxes is
+    dictated by the tallest widget in its same row, and the widest widget in its column. The rows and columns
+    are laid out from <code>0</code> to <code>n</code>, where <code>n</code> is the number specified in the
+    call to the function &gtk-table-new;. For <code>rows = 2</code> and <code>columns = 2</code>, the layout
+    is shown in figure <link linkend="figure-table-layout"> Layout of a 2 x 2 Table</link>. Note that the
+    coordinate system starts in the upper left hand corner.
+   </para>
+   <figure id="figure-table-layout">
+    <title>Layout of a 2 x 2 Table</title>
+    <programlisting>
+ 0          1          2
+0+----------+----------+
+ |          |          |
+1+----------+----------+
+ |          |          |
+2+----------+----------+
+    </programlisting>
+   </figure>
+   <para>
+    To place a widget into a table, the function &gtk-table-attach; can be used. The arguments are listed in
+    the table <link linkend="table-gtk-table-attach">Table Attach</link>. The first argument
+    <code>table</code> is the table you have created and the second <code>child</code> the widget you wish to
+    place into the table. The left and right attach arguments specify where to place the widget, and how many
+    boxes to use. If you want a button in the lower right table entry of a 2 x 2 table, and want it to fill
+    that entry only, <code>left-attach</code> is <code>= 1</code>, <code>right-attach = 2</code>,
+    <code>top-attach = 1</code>, <code>bottom-attach = 2</code>. Now, if you wanted a widget to take up the
+    whole top row of a 2 x 2 table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
+    <code>top-attach = 0</code>, <code>bottom-attach = 1</code>.
+   </para>
+
+   <table id="table-gtk-table-attach">
+    <caption>Arguments of the function <code>gtk-table-attach</code></caption>
+    <colgroup>
+     <col style="width:30%"/>
+     <col style="width:70%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Argument</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>table</code></td>
+     <td>The GtkTable to add a new widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>child</code></td>
+     <td>The widet to add.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>left-attach</code></td>
+     <td>The column number to attach the left side of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>right-attach</code></td>
+     <td>The column number to attach the right side of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>top-attach</code></td>
+     <td>The row number to attach the top of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>bottom-attach</code></td>
+     <td>The row number to attach the bottom of a child widget to.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:xoptions</code></td>
+     <td>Used to specify the properties of the child widget when the table is resized.
+        The default value is <code>'(:expand :fill)</code>.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:yoptions</code></td>
+     <td>The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
+        The default value is <code>'(:expand :fill)</code>.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:xpadding</code></td>
+     <td>An integer value specifying the padding on the left and right of the widget being added to the table.
+        The default value is <code>0</code>.</td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
+   </table>
+
+   <para>
+    The arguments <code>:xoptions</code> and <code>:yoptions</code> are of the enumeration type
+    &gtk-attach-options; and used to specify packing options. The packing options can be OR'ed together to
+    allow multiple options. In the Lisp binding a list of options is used to combine multiple options.
+    Possible values of the enumeration type &gtk-attach-options; are listed in the table
+    <link linkend="table-gtk-attach-options">GtkAttachOptions</link>.
+   </para>
+   <para>
+    Padding is just like in boxes, creating a clear area around the widget specified in pixels and is
+    controlled with the arguments <code>:xpadding</code> and <code>:ypadding</code>.
+   </para>
+   <table id="table-gtk-attach-options" frame='all'>
+    <title>Values of the type GtkAttachOptions</title>
+    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
+     <thead>
+      <row>
+       <entry>Value</entry>
+       <entry>Description</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry valign="top"><code>:fill</code></entry>
+       <entry valign="top">
+        If the table box is larger than the widget, and <code>:fill</code> is specified, the widget will
+        expand to use all the room available.
+       </entry>
+      </row>
+      <row>
+       <entry valign="top"><code>:shrink</code></entry>
+       <entry valign="top">
+        If the table widget was allocated less space then was requested (usually by the user resizing the
+        window), then the widgets would normally just be pushed off the bottom of the window and disappear.
+        If <code>:shrink</code> is specified, the widgets will shrink with the table.
+       </entry>
+      </row>
+      <row>
+       <entry valign="top"><code>:expand</code></entry>
+       <entry valign="top">
+         This will cause the table to expand to use up any remaining space in the window.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    In the Lisp binding the arguments <code>:xoptions</code>, <code>:yoptions</code>, <code>:xpadding</code>,
+    and <code>:ypadding</code> of the function &gtk-table-attach; are defined as keyword arguments with
+    default values as shown in table <link linkend="table-gtk-table-attach">GtkTableAttach</link>. In the C
+    library this is realized with a second function <code>gtk_table_attach_defaults()</code>. In the Lisp
+    binding the function &gtk-table-attach-defaults; is a second equivalent implementation of
+    &gtk-table-attach;, when using the default values of the keyword arguments.
+   </para>
+   <para>
+    The functions &gtk-table-set-row-spacing; and &gtk-table-set-col-spacing; places spacing between the rows
+    at the specified row or column. The first argument of the functions is a &gtk-table;, the second argument
+    a row or a column and the third argument the spacing. Note that for columns, the space goes to the right
+    of the column, and for rows, the space goes below the row.
+   </para>
+   <para>
+    You can also set a consistent spacing of all rows and columns with the functions
+    &gtk-table-set-row-spacings; and &gtk-table-set-col-spacings;. Both functions take a &gtk-table; as the
+    first argument and the desired spacing <code>spacing</code> as the second argument. Note that with these
+    calls, the last row and last column do not get any spacing.
+   </para>
+   <note>
+    <para>
+     &gtk-table; has been deprecated since GTK+ 3.4. It is recommended to use &gtk-grid; instead. &gtk-grid;
+     provides the same capabilities as &gtk-table; for arranging widgets in a rectangular grid, but does
+     support height-for-width geometry management, which is newly introduced for widgets in GTK+ 3. This
+     chapter will vanish in the near future.
+    </para>
+   </note>
+  </section>
+
+  <section id="Table_Packing_Example">
+   <title>Table Packing Example</title>
+   <para>
+    The figure <link linkend="figure-table-packing">Table Packing</link> is a window with three buttons in a
+    2 x 2 table. The first two buttons are placed in the upper row. A third, quit button, is placed in the
+    lower row, spanning both columns. The code of this example is shown in the example
+    <link linkend="example-table-packing">Table Packing</link>.
+   </para>
+   <figure id="figure-table-packing">
+    <title>Table Packing</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/table-packing306x108.gif" format="gif"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+   <example id="example-table-packing">
+    <title>Table Packing</title>
+    <programlisting>
+(defun example-table-packing ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Table Packing"
+                                 :border-width 12
+                                 :default-width 300))
+          (table (make-instance 'gtk-table
+                                :n-columns 2
+                                :n-rows 2
+                                :homogeneous t))
+          (button1 (make-instance 'gtk-button
+                                  :label "Button 1"))
+          (button2 (make-instance 'gtk-button
+                                  :label "Button 2"))
+          (quit (make-instance 'gtk-button
+                               :label "Quit")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (g-signal-connect quit "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
+      (gtk-container-add window table)
+      (gtk-widget-show-all window))))
+    </programlisting>
+   </example>
+   <para>
+    Figure <link linkend="figure-table-packing-2">Table Packing</link> is an extended example to show the
+    possibility to increase the spacing of the rows and columns. This is implemented through two toggle
+    buttons which increase and decrease the spacings. Toggle buttons are described in
+    <link linkend="Toggle_Buttons">Toggle Buttons</link> later in this tutorial. The code of
+    <link linkend="figure-table-packing-2">Table Packing</link> is shown in example
+    <link linkend="example-table-packing-2">Table Packing</link>.
+   </para>
+   <figure id="figure-table-packing-2">
+    <title>Table Packing with more spacing</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/table-packing-2-306x120.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+   <example id="example-table-packing-2">
+    <title>Table Packing with more spacing</title>
+    <programlisting>
+(defun example-table-packing-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Table Packing"
+                                 :border-width 12
+                                 :default-width 300))
+          (table (make-instance 'gtk-table
+                                :n-columns 2
+                                :n-rows 2
+                                :homogeneous t))
+          (button1 (make-instance 'gtk-toggle-button
+                                  :label "More Row Spacing"))
+          (button2 (make-instance 'gtk-toggle-button
+                                  :label "More Col Spacing"))
+          (quit (make-instance 'gtk-button
+                               :label "Quit")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (g-signal-connect button1 "toggled"
+         (lambda (widget)
+           (if (gtk-toggle-button-active widget)
+               (progn
+                 (gtk-table-set-row-spacings table 12)
+                 (setf (gtk-button-label widget) "Less Row Spacing"))
+               (progn
+                 (gtk-table-set-row-spacings table 0)
+                 (setf (gtk-button-label widget) "More Row Spacing")))))
+      (g-signal-connect button2 "toggled"
+         (lambda (widget)
+           (if (gtk-toggle-button-active widget)
+               (progn
+                 (gtk-table-set-col-spacings table 12)
+                 (setf (gtk-button-label widget) "Less Col Spacing"))
+               (progn
+                 (gtk-table-set-col-spacings table 0)
+                 (setf (gtk-button-label widget) "More Col Spacing")))))
+      (g-signal-connect quit "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
+      (gtk-container-add window table)
+      (gtk-widget-show-all window))))
+    </programlisting>
+   </example>
+  </section>
+ </chapter>
+
  <appendix id="Licenses">
   <title>Licenses</title>
   <para>
@@ -12531,6 +12468,10 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
  </appendix>
 
 </book>
+
+
+
+
 
 
 

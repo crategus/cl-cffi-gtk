@@ -33,7 +33,7 @@
       (gtk-container-add event-box label)
       (gtk-container-add win event-box)
       ;; Apply CSS to the label
-      (apply-css-to-widget label provider)
+      (apply-css-to-widget provider label)
       win))
 
   (defun check-for-tooltip (window textview location)
@@ -114,6 +114,6 @@
         (gtk-container-add window scrolled)
         ;; Load CSS from data into the provider
         (gtk-css-provider-load-from-data provider css-tooltip)
-        (apply-css-to-widget textview provider)
+        (apply-css-to-widget provider textview)
         ;; show the window and child widgets
         (gtk-widget-show-all window)))))

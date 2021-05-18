@@ -112,14 +112,14 @@ sem venenatis, vitae ultricies arcu laoreet."))
 
 ;; Recursivly apply CSS to a widget an all child widgets
 
-(defun apply-css-to-widget (widget provider)
+(defun apply-css-to-widget (provider widget)
   (gtk-style-context-add-provider (gtk-widget-style-context widget)
                                   provider
                                   +gtk-style-provider-priority-user+)
   (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
     (gtk-container-forall widget
                           (lambda (widget)
-                            (apply-css-to-widget widget provider)))))
+                            (apply-css-to-widget provider widget)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -178,115 +178,6 @@ sem venenatis, vitae ultricies arcu laoreet."))
 
 ;;; Packing Demonstrations Program
 
-(defun make-box (homogeneous spacing expand fill padding)
-  (let ((box (make-instance 'gtk-box
-                            :orientation :horizontal
-                            :homogeneous homogeneous
-                            :spacing spacing)))
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "gtk-box-pack")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "box")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label "button")
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (if expand
-                            (gtk-button-new-with-label "T")
-                            (gtk-button-new-with-label "NIL"))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (if fill
-                            (gtk-button-new-with-label "T")
-                            (gtk-button-new-with-label "NIL"))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    (gtk-box-pack-start box
-                        (gtk-button-new-with-label (format nil "~A" padding))
-                        :expand expand
-                        :fill fill
-                        :padding padding)
-    box))
-
-(defun example-box-packing (&optional (spacing 0))
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Box Packing"
-                                 :type :toplevel
-                                 :border-width 12))
-          (vbox (make-instance 'gtk-box
-                               :orientation :vertical
-                               :spacing 6))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (quitbox (make-instance 'gtk-box
-                                  :orientation :horizontal)))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                          "GtkBox   ~
-                                           :orientation :horizontal   ~
-                                           :homogeneous nil   ~
-                                           :spacing ~A"
-                                          spacing)
-                                         :xalign 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing nil nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing t nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box nil spacing t t 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         (format nil
-                                            "GtkBox   ~
-                                             :orientation :horizontal   ~
-                                             :homogeneous t   ~
-                                             :spacing ~A"
-                                            spacing)
-                                         :xalign 0)
-                          :expand nil
-                          :padding 6)
-      (gtk-box-pack-start vbox
-                          (make-box t spacing t nil 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (make-box t spacing t t 0)
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil
-                          :padding 6)
-      ;; Align the quit-button on the right side
-      (gtk-box-pack-end quitbox button :expand nil)
-      (gtk-box-pack-start vbox quitbox :expand nil)
-      (gtk-container-add window vbox)
-      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -370,111 +261,6 @@ sem venenatis, vitae ultricies arcu laoreet."))
       (gtk-table-attach table button2 1 2 0 1)
       (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Grid Packing Example
-
-(defun make-grid (homogeneous spacing expand align margin)
-  (let ((box (make-instance 'gtk-grid
-                            :orientation :horizontal
-                            :column-homogeneous homogeneous
-                            :column-spacing spacing)))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "gtk-container-add"
-                                      :hexpand expand
-                                      :halgin align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "box"
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label "button"
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (if expand "T" "NIL")
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (format nil "~A" align)
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    (gtk-container-add box
-                       (make-instance 'gtk-button
-                                      :label (format nil "~A" margin)
-                                      :hexpand expand
-                                      :halign align
-                                      :margin margin))
-    box))
-
-(defun example-grid-packing (&optional (spacing 0))
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Grid Packing"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-height 200
-                                 :default-width 300))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical
-                               :row-spacing 6))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (quitbox (make-instance 'gtk-box
-                                  :orientation :horizontal)))
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add vbox
-                         (make-instance 'gtk-label
-                                        :label
-                                        (format nil
-                                         "GtkGrid homogeneous nil spacing ~A"
-                                         spacing)
-                                        :xalign 0
-                                        :yalign 0
-                                        :vexpand nil
-                                        :valign :start))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox (make-grid nil spacing nil :center 0))
-      (gtk-container-add vbox (make-grid nil spacing t :center 0))
-      (gtk-container-add vbox (make-grid nil spacing t :fill 0))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox
-                         (make-instance 'gtk-label
-                                        :label
-                                        (format nil
-                                           "GtkGrid homogeneous t spacing ~A"
-                                           spacing)
-                                         :xalign 0
-                                         :yalign 0
-                                         :vexpand nil
-                                         :valign :start
-                                         :margin 6))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add vbox (make-grid t spacing t :center 0))
-      (gtk-container-add vbox (make-grid t spacing t :fill 0))
-      (gtk-container-add vbox (gtk-separator-new :horizontal))
-      (gtk-container-add quitbox button)
-      (gtk-container-add vbox quitbox)
-      (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
