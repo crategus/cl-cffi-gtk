@@ -1840,7 +1840,7 @@
 
 (defun g-type-from-instance (instance)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-28}
+ "@version{*2021-5-15}
   @argument[instance]{a valid @symbol{g-type-instance} structure}
   @return{The @class{g-type} ID of @arg{instance}.}
   @short{Get the type identifier from a given instance structure.}

@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -505,18 +505,18 @@
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-button) 't)
  "The @code{label} property of type @code{:string} (Read / Write / Construct)
   @br{}
-  Text of the label widget inside the button, if the button contains a
-  label widget. @br{}
+  Text of the label widget inside the button, if the button contains a label
+  widget. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-label atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-label 'function)
- "@version{2020-5-9}
+ "@version{*2021-5-18}
   @syntax[]{(gtk-button-label object) => label}
   @syntax[]{(setf (gtk-button-label object) label)}
   @argument[object]{a @class{gtk-button} widget}
-  @argument[label]{a string with the label widget inside the button}
+  @argument[label]{a string with the text of the label widget}
   @begin{short}
     Accessor of the @slot[gtk-button]{label} slot of the @class{gtk-button}
     class.
@@ -524,14 +524,14 @@
 
   The slot access function @sym{gtk-button-label} fetches the text from the
   label of the button. The slot access function @sym{(setf gtk-button-label)}
-  sets the text of the label of the button.
+  sets the text.
 
   If the label text has not been set the return value will be @code{nil}. This
   will be the case if you create an empty button with the function
   @fun{gtk-button-new} to use as a container.
 
-  This text is also used to select the stock item if the slot access function
-  @fun{gtk-button-use-stock} is used.
+  This text is also used to select the stock item if the
+  @slot[gtk-button]{use-stock} property is used.
   @see-class{gtk-button}
   @see-function{gtk-button-new}
   @see-function{gtk-button-use-stock}")

@@ -554,7 +554,7 @@
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2021-4-27}
+ "@version{*2021-4-27}
   @begin{short}
     Controls how a widget deals with extra space in a single (x or y) dimension.
   @end{short}
@@ -2792,7 +2792,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-height-request 'function)
- "@version{2021-4-17}
+ "@version{*2021-5-15}
   @syntax[]{(gtk-widget-height-request object) => height}
   @syntax[]{(setf (gtk-widget-height-request object) height)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3712,7 +3712,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-width-request 'function)
- "@version{2021-4-17}
+ "@version{*2021-5-15}
   @syntax[]{(gtk-widget-width-request object) => width}
   @syntax[]{(setf (gtk-widget-width-request object) width)}
   @argument[object]{a @class{gtk-widget} object}

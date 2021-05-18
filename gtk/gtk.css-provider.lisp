@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.css-provider.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -98,33 +98,33 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-css-provider 'type)
- "@version{2021-3-28}
+ "@version{*2021-5-15}
   @begin{short}
     The @sym{gtk-css-provider} object is an object implementing the
     @class{gtk-style-provider} interface.
   @end{short}
   It is able to parse CSS-like input in order to style widgets.
 
-  An application can make GTK+ parse a specific CSS style sheet by calling
+  An application can make GTK parse a specific CSS style sheet by calling
   the functions @fun{gtk-css-provider-load-from-file} or
   @fun{gtk-css-provider-load-from-resource} and adding the provider with
   the functions @fun{gtk-style-context-add-provider} or
   @fun{gtk-style-context-add-provider-for-screen}.
 
-  In addition, certain files will be read when GTK+ is initialized. First, the
+  In addition, certain files will be read when GTK is initialized. First, the
   file @file{$XDG_CONFIG_HOME/gtk-3.0/gtk.css} is loaded if it exists. Then,
-  GTK+ loads the first existing file among
+  GTK loads the first existing file among
   @file{XDG_DATA_HOME/themes/THEME/gtk-VERSION/gtk.css},
   @file{$HOME/.themes/THEME/gtk-VERSION/gtk.css},
   @file{$XDG_DATA_DIRS/themes/THEME/gtk-VERSION/gtk.css} and
   @file{DATADIR/share/themes/THEME/gtk-VERSION/gtk.css}, where  @file{THEME} is
   the name of the current theme, see the @slot[gtk-settings]{gtk-theme-name}
-  setting, @file{DATADIR} is the prefix configured when GTK+ was compiled
+  setting, @file{DATADIR} is the prefix configured when GTK was compiled
   (unless overridden by the @code{GTK_DATA_PREFIX} environment variable), and
-  @file{VERSION} is the GTK+ version number. If no file is found for the
-  current version, GTK+ tries older versions all the way back to 3.0.
+  @file{VERSION} is the GTK version number. If no file is found for the
+  current version, GTK tries older versions all the way back to 3.0.
 
-  In the same way, GTK+ tries to load a @file{gtk-keys.css} file for the
+  In the same way, GTK tries to load a @file{gtk-keys.css} file for the
   current key theme, as defined by the @slot[gtk-settings]{gtk-key-theme-name}
   setting.
   @begin[Signal Details]{dictionary}

@@ -579,7 +579,7 @@
 
 (defun gtk-box-pack-end (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-27}
+ "@version{*2021-5-15}
   @argument[box]{a @class{gtk-box} container widget}
   @argument[child]{the @class{gtk-widget} child widget to be added to @arg{box}}
   @argument[expand]{@em{true} if @arg{child} is to be given extra space
@@ -748,7 +748,7 @@
 (defcfun ("gtk_box_get_center_widget" gtk-box-center-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-27}
+ "@version{*2021-5-15}
   @syntax[]{(gtk-box-center-widget box) => widget}
   @syntax[]{(setf (gtk-box-center-widget box) widget)}
   @argument[box]{a @class{gtk-box} container widget}

@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -102,67 +102,93 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-button 'type)
- "@version{2020-6-7}
+ "@version{*2021-5-18}
   @begin{short}
-    A @sym{gtk-toggle-button} is a @class{gtk-button} which will remain
-    \"pressed-in\" when clicked. Clicking again will cause the toggle button to
-    return to its normal state.
+    A @sym{gtk-toggle-button} widget is a @class{gtk-button} widget which will
+    remain \"pressed-in\" when clicked.
   @end{short}
+  Clicking again will cause the toggle button to return to its normal state.
 
   @image[toggle-button]{}
 
   A toggle button is created by calling either the functions
   @fun{gtk-toggle-button-new} or @fun{gtk-toggle-button-new-with-label}. If
   using the former, it is advisable to pack a widget, such as a
-  @class{gtk-label} or a @class{gtk-image}, into the toggle button's container.
-  See @class{gtk-button} for more information.
+  @class{gtk-label} or a @class{gtk-image} widget, into the container of the
+  toggle button. See the @class{gtk-button} widget for more information.
 
-  The state of a @sym{gtk-toggle-button} can be set and retrieved using the
-  function @fun{gtk-toggle-button-active}.
+  The state of a @sym{gtk-toggle-button} widget can be set and retrieved using
+  the function @fun{gtk-toggle-button-active}.
 
   To simply switch the state of a toggle button, use the function
   @fun{gtk-toggle-button-toggled}.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-toggle-button} has a single CSS node with name @code{button}. To
-    differentiate it from a plain @class{gtk-button}, it gets the @code{.toggle}
-    style class.
+    The @sym{gtk-toggle-button} widget has a single CSS node with name
+    @code{button}. To differentiate it from a plain @class{gtk-button}, it gets
+    the @code{.toggle} style class.
   @end{dictionary}
   @begin[Example]{dictionary}
-    Creating two @sym{gtk-toggle-button} widgets.
+    This example from the GTK tutorial has two toggle buttons. The toggle
+    buttons are used to switch the column and row spacing of a grid.
     @begin{pre}
- void make_toggles (void) {
-    GtkWidget *dialog, *toggle1, *toggle2;
+(defun example-grid-spacing ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title \"Example Grid Spacing\"
+                                 :border-width 12
+                                 :default-width 320))
+          (grid (make-instance 'gtk-grid
+                               :column-homogeneous t
+                               :column-spacing 6
+                               :row-homogeneous t
+                               :row-spacing 6))
+          (button1 (make-instance 'gtk-toggle-button
+                                  :label \"More Row Spacing\"))
+          (button2 (make-instance 'gtk-toggle-button
+                                  :label \"More Col Spacing\"))
+          (button3 (make-instance 'gtk-button
+                                  :label \"Button 3\")))
 
-    dialog = gtk_dialog_new ();
-    toggle1 = gtk_toggle_button_new_with_label (\"Hi, i'm a toggle button.\");
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
 
-    // Makes this toggle button invisible
-    gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle1), TRUE);
+      (g-signal-connect button1 \"toggled\"
+         (lambda (widget)
+           (if (gtk-toggle-button-active widget)
+               (progn
+                 (setf (gtk-grid-row-spacing grid) 24)
+                 (setf (gtk-button-label widget) \"Less Row Spacing\"))
+               (progn
+                 (setf (gtk-grid-row-spacing grid) 6)
+                 (setf (gtk-button-label widget) \"More Row Spacing\")))))
+      (g-signal-connect button2 \"toggled\"
+         (lambda (widget)
+           (if (gtk-toggle-button-active widget)
+               (progn
+                 (setf (gtk-grid-column-spacing grid) 24)
+                 (setf (gtk-button-label widget) \"Less Col Spacing\"))
+               (progn
+                 (setf (gtk-grid-column-spacing grid) 6)
+                 (setf (gtk-button-label widget) \"More Col Spacing\")))))
 
-    g_signal_connect (toggle1, \"toggled\",
-                      G_CALLBACK (output_state), NULL);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-                        toggle1, FALSE, FALSE, 2);
+      (gtk-grid-attach grid button1 0 0 1 1)
+      (gtk-grid-attach grid button2 1 0 1 1)
+      (gtk-grid-attach grid button3 0 1 2 1)
 
-    toggle2 = gtk_toggle_button_new_with_label
-                                          (\"Hi, i'm another toggle button.\");
-    gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle2), FALSE);
-    g_signal_connect (toggle2, \"toggled\",
-                      G_CALLBACK (output_state), NULL);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-                        toggle2, FALSE, FALSE, 2);
-
-    gtk_widget_show_all (dialog);
- @}
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (togglebutton)    : Run First
+ lambda (togglebutton)    :run-first
       @end{pre}
       Should be connected if you wish to perform an action whenever the
-      @sym{gtk-toggle-button}'s state is changed.
+      state of the toggle button is changed.
       @begin[code]{table}
         @entry[togglebutton]{The @sym{gtk-toggle-button} widget which received
           the signal.}
@@ -341,15 +367,15 @@
 ;;; gtk_toggle_button_set_mode () -> gtk-toggle-button-mode
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-toggle-button-mode) (draw-indicator toggle-button)
-  (setf (gtk-toggle-button-draw-indicator toggle-button) draw-indicator))
+(defun (setf gtk-toggle-button-mode) (draw-indicator button)
+  (setf (gtk-toggle-button-draw-indicator button) draw-indicator))
 
-(defun gtk-toggle-button-mode (toggle-button)
+(defun gtk-toggle-button-mode (button)
  #+cl-cffi-gtk-documentation
  "@version{2020-5-10}
-  @syntax[]{(gtk-toggle-button-mode toggle-button) => draw-indicator}
-  @syntax[]{(setf (gtk-toggle-button-mode toggle-button) draw-indicator)}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
+  @syntax[]{(gtk-toggle-button-mode button) => draw-indicator}
+  @syntax[]{(setf (gtk-toggle-button-mode button) draw-indicator)}
+  @argument[button]{a @class{gtk-toggle-button} widget}
   @argument[draw-indicator]{if @arg{true}, draw the button as a separate
     indicator and label, if @em{false}, draw the button like a normal button}
   @begin{short}
@@ -374,7 +400,7 @@
   @end{dictionary}
   @see-class{gtk-toggle-button}
   @see-function{gtk-toggle-button-draw-indicator}"
-  (gtk-toggle-button-draw-indicator toggle-button))
+  (gtk-toggle-button-draw-indicator button))
 
 (export 'gtk-toggle-button-mode)
 
@@ -385,13 +411,13 @@
 (defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-6-7}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
+  @argument[button]{a @class{gtk-toggle-button} widget}
   @begin{short}
     Emits the \"toggled\" signal on the toggle button.
   @end{short}
   There is no good reason for an application ever to call this function.
   @see-class{gtk-toggle-button}"
-  (toggle-button (g-object gtk-toggle-button)))
+  (button (g-object gtk-toggle-button)))
 
 (export 'gtk-toggle-button-toggled)
 

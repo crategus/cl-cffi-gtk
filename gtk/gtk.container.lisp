@@ -657,7 +657,7 @@
     ((widget (g-object gtk-widget))
      (data :pointer))
   (restart-case
-      (funcall (glib:get-stable-pointer-value data) widget)
+    (funcall (glib:get-stable-pointer-value data) widget)
     (return () :report "Error in GtkCallback function." nil)))
 
 ;;; ----------------------------------------------------------------------------
@@ -1150,7 +1150,7 @@
 
 (defun gtk-container-forall (container func)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-5}
+ "@version{*2021-5-15}
   @argument[container]{a @class{gtk-container} widget}
   @argument[func]{a Lisp function which is passed as a callback}
   @begin{short}
