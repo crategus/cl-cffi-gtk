@@ -51,10 +51,10 @@
                                :orientation :vertical
                                :row-spacing 12)))
 
-      (g-signal-connect button "clicked"
+      (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-widget-destroy window)))
+                          (leave-gtk-main)))
 
       (gtk-container-add grid
                          (make-instance 'gtk-label
