@@ -158,16 +158,16 @@
                                             "Display Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Labels"
-                                "labels.lisp"
-                                "EXAMPLE-LABELS")
+                                "../gtk-example/label.lisp"
+                                "EXAMPLE-LABEL")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "More Labels"
-                                "more-labels.lisp"
-                                "EXAMPLE-MORE-LABELS")
+                                "../gtk-example/label-more.lisp"
+                                "EXAMPLE-LABEL-MORE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Images"
-                                "image.lisp"
-                                "DEMO-IMAGE")
+                                "../gtk-example/image.lisp"
+                                "EXAMPLE-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Info Bar"
                                 "info-bar.lisp"
@@ -188,25 +188,29 @@
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Button Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Button"
-                                "button.lisp"
-                                "EXAMPLE-BUTTON")
+                                "Simple Button"
+                                "../gtk-example/button-image.lisp"
+                                "EXAMPLE-BUTTON-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "More Buttons"
-                                "buttons.lisp"
-                                "EXAMPLE-MORE-BUTTONS")
+                                "../gtk-example/button-more.lisp"
+                                "EXAMPLE-BUTTON-MORE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Toggle Buttons"
-                                "toggle-buttons.lisp"
+                                "../gtk-example/toggle-buttons.lisp"
                                 "EXAMPLE-TOGGLE-BUTTONS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Link Button"
-                                "link-button.lisp"
+                                "../gtk-example/link-button.lisp"
                                 "EXAMPLE-LINK-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Switch"
-                                "switch.lisp"
+                                "../gtk-example/switch.lisp"
                                 "EXAMPLE-SWITCH")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Scale Button"
+                                "../gtk-example/scale-button.lisp"
+                                "EXAMPLE-SCALE-BUTTON")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Numeric/Text Data Entry")))
@@ -563,8 +567,51 @@
                                   "Packing using GtkGrid"
                                   "../gtk-example/grid-packing.lisp"
                                   "EXAMPLE-GRID-PACKING"))
-
-    )
+      ;; Chapter: Button Widgets
+      (let ((chapter (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Chapter: Button Widgets")))
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Simple Button"
+                                  "../gtk-example/button-image.lisp"
+                                  "EXAMPLE-BUTTON-IMAGE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "More Buttons"
+                                  "../gtk-example/button-more.lisp"
+                                  "EXAMPLE-BUTTON-MORE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Radio Button"
+                                  "../gtk-example/radio-button.lisp"
+                                  "EXAMPLE-RADIO-BUTTON")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Toggle Buttons"
+                                  "../gtk-example/toggle-buttons.lisp"
+                                  "EXAMPLE-TOGGLE-BUTTONS")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Link Button"
+                                  "../gtk-example/link-button.lisp"
+                                  "EXAMPLE-LINK-BUTTON")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Switch"
+                                  "../gtk-example/switch.lisp"
+                                  "EXAMPLE-SWITCH")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Scale Button"
+                                  "../gtk-example/scale-button.lisp"
+                                  "EXAMPLE-SCALE-BUTTON"))
+      ;; Chapter: Display Widgets
+      (let ((chapter (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Chapter: Display Widgets")))
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Labels"
+                                  "../gtk-example/label.lisp"
+                                  "EXAMPLE-LABEL")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "More Labels"
+                                  "../gtk-example/label-more.lisp"
+                                  "EXAMPLE-LABEL-MORE")
+        ))
     model))
 
 (defun create-view-and-model ()

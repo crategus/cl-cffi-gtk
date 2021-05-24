@@ -8,6 +8,8 @@
            #:example-box-packing                       ; Packing widgets
            #:example-box-simple                        ; Packing widgets
            #:example-button-box
+           #:example-button-image                      ; Button Widgets
+           #:example-button-more                       ; Button Widgets
            #:example-clipboard
            #:example-custom-window
            #:example-combo-box
@@ -32,11 +34,15 @@
            #:example-hello-world                       ; Getting started
            #:example-hello-world-upgraded              ; Getting started
            #:example-hello-world-upgraded-2            ; Getting started
+           #:example-image                             ; Display Widgets
            #:example-image-button-press
            #:example-image-menu-item
            #:example-info-bar
+           #:example-label                             ; Display Widgets
+           #:example-label-more                        ; Display Widgets
            #:example-layout
            #:example-level-bar
+           #:example-link-button                       ; Button Widgets
            #:example-list-box
            #:example-menu-builder
            #:example-message-dialog-get-message-area
@@ -52,13 +58,15 @@
            #:example-print-run-page-setup-dialog-async
            #:example-progress-bar
            #:example-query-settings
-           #:example-radio-button
+           #:example-radio-button                      ; Button Widgets
            #:example-revealer
            #:example-revealer-icon
            #:example-scale-button
            #:example-scrolled-window
            #:example-show-about-dialog
            #:example-simple-list-store
+           #:example-switch                            ; Button Widgets
+           #:example-toggle-buttons                    ; Button Widgets
            #:example-tool-palette
            #:example-widget-pointer
            #:example-window-simple                     ; Getting started
@@ -66,11 +74,6 @@
 
 (in-package :gtk-example)
 
-(defun rel-path (filename)
-  (let ((system-path (asdf:system-source-directory :gtk-example)))
-    (princ-to-string (merge-pathnames filename system-path))))
-
-;; Rename rel-path to sys-path
 (defun sys-path (filename)
   (let ((system-path (asdf:system-source-directory :gtk-example)))
     (princ-to-string (merge-pathnames filename system-path))))
@@ -82,4 +85,4 @@
         (read-sequence string instream)
         string))))
 
-;;; 2021-5-14
+;;; 2021-5-22

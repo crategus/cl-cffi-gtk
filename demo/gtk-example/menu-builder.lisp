@@ -8,7 +8,7 @@
             nil)
     (let ((builder (make-instance 'gtk-builder)))
 
-      (gtk-builder-add-from-file builder (rel-path "menu-builder.ui"))
+      (gtk-builder-add-from-file builder (sys-path "menu-builder.ui"))
       (let ((window (gtk-builder-object builder "window")))
         (g-signal-connect window "destroy"
                           (lambda (widget)

@@ -132,7 +132,7 @@
 (defun example-dialog-ui ()
   (within-main-loop
     (let ((builder (make-instance 'gtk-builder)))
-      (gtk-builder-add-from-file builder (rel-path "dialog.ui"))
+      (gtk-builder-add-from-file builder (sys-path "dialog.ui"))
       (let ((dialog (gtk-builder-object builder "dialog")))
         (g-signal-connect dialog "destroy"
                           (lambda (widget)

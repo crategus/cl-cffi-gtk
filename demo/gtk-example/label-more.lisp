@@ -1,14 +1,14 @@
-;;;; More Labels
+;;;; Example More Labels (2021-5-21)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun example-more-labels ()
+(defun example-label-more ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "GTK+ 3.4 Example More Labels"
+                                 :title "Example More Labels"
                                  :default-width 300
-                                 :border-width 6))
+                                 :border-width 12))
           (vbox1 (make-instance 'gtk-box
                                 :orientation :vertical
                                 :homogeneous nil

@@ -11,6 +11,8 @@
                (:file "box-packing")                   ; Packing Widgets
                (:file "box-simple")                    ; Packing Widgets
                (:file "button-box")
+               (:file "button-image")                  ; Button Widgets
+               (:file "button-more")                   ; Button Widgets
                (:file "clipboard")
                (:file "combo-box")
                (:file "combo-box-text")
@@ -29,11 +31,15 @@
                (:file "hello-world")                   ; Getting started
                (:file "hello-world-upgraded")          ; Getting started
                (:file "hello-world-upgraded-2")        ; Getting started
+               (:file "image")                         ; Display Widgets
                (:file "image-button-press")
                (:file "image-menu-item")
                (:file "info-bar")
+               (:file "label")                         ; Display Widgets
+               (:file "label-more")                    ; Display Widgets
                (:file "layout")
                (:file "level-bar")
+               (:file "link-button")                   ; Button Widgets
 ;               (:file "list-box")
 ;               (:file "list-store")
                (:file "menu-builder")
@@ -50,9 +56,11 @@
                (:file "scale-button")
                (:file "scrolled-window")
                (:file "show-about-dialog")
+               (:file "switch")                        ; Button widgets
+               (:file "toggle-buttons")                ; Button Widgets
                (:file "tool-palette")
                (:file "widget-pointer")
                (:file "window-simple")                 ; Getting started
               ))
 
-;;; 2021-5-14
+;;; 2021-5-21

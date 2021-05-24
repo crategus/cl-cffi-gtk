@@ -1,7 +1,7 @@
 (in-package :gtk-example)
 
 (defun create-image ()
-  (let ((image (gtk-image-new-from-file (rel-path "ducky.png")))
+  (let ((image (gtk-image-new-from-file (sys-path "ducky.png")))
         (event-box (make-instance 'gtk-event-box)))
     ;; Set the event mask for the event box
     (setf (gtk-widget-events event-box) :button-press-mask)

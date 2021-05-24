@@ -1,4 +1,4 @@
-;;;; Scrolled Window - 2021-3-19
+;;;; Scrolled Window (2021-3-19)
 
 (in-package #:gtk-example)
 
@@ -12,7 +12,7 @@
           (scrolled (make-instance 'gtk-scrolled-window
                                    :hscrollbar-policy :automatic
                                    :vscrollbar-policy :always))
-          (image (gtk-image-new-from-file (rel-path "ducky.png"))))
+          (image (gtk-image-new-from-file (sys-path "ducky.png"))))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

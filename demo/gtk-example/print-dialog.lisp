@@ -1,9 +1,9 @@
-;;;; Create Print Dialog - 2021-3-17
+;;;; Create Print Dialog (2021-3-17)
 
 (in-package :gtk-example)
 
 (defun create-print-dialog ()
-  (let* ((filename (rel-path "print-dialog.ini"))
+  (let* ((filename (sys-path "print-dialog.ini"))
          (settings (gtk-print-settings-new-from-file filename))
          (dialog (gtk-print-unix-dialog-new "Print Dialog" nil)))
     ;; Signal handler to print the selected printer
@@ -17,8 +17,8 @@
     (setf (gtk-print-unix-dialog-print-settings dialog) settings)
     ;; Run the dialog
     (when (eq :ok (gtk-dialog-run dialog))
-      (format t "~&Save print settings to ~A~%" (rel-path "print-dialog.ini"))
+      (format t "~&Save print settings to ~A~%" (sys-path "print-dialog.ini"))
       (setf settings (gtk-print-unix-dialog-print-settings dialog))
-      (gtk-print-settings-to-file settings (rel-path "print-dialog.ini")))
+      (gtk-print-settings-to-file settings (sys-path "print-dialog.ini")))
     ;; Destroy the dialog
     (gtk-widget-destroy dialog)))

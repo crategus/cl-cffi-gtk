@@ -16,7 +16,7 @@
   number-lines
   number-pages)
 
-(defvar *data* (make-print-data :filename (rel-path "print-operation.lisp")
+(defvar *data* (make-print-data :filename (sys-path "print-operation.lisp")
                                 :font-size 10
                                 :header-font-size 11
                                 :header-height 22
@@ -111,7 +111,7 @@
 
 (defun do-print-operation ()
   (let* ((response nil)
-         (filename (rel-path "print-dialog.ini"))
+         (filename (sys-path "print-dialog.ini"))
          (settings (gtk-print-settings-new-from-file filename))
          (print (gtk-print-operation-new)))
     ;; Connect signal handlers for the print operation
@@ -124,6 +124,6 @@
     (setf response (gtk-print-operation-run print :print-dialog nil))
     ;; Check the response and save the print settings
     (when (eq :apply response)
-      (format t "~&Save print settings to ~A~%" (rel-path "print-dialog.ini"))
+      (format t "~&Save print settings to ~A~%" (sys-path "print-dialog.ini"))
       (setf settings (gtk-print-operation-print-settings print))
-      (gtk-print-settings-to-file settings (rel-path "print-dialog.ini")))))
+      (gtk-print-settings-to-file settings (sys-path "print-dialog.ini")))))
