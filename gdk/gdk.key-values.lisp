@@ -985,9 +985,9 @@ if (keyval == GDK_PLUS &&
 
 (defcfun ("gdk_keyval_to_unicode" gdk-keyval-to-unicode) unichar
  #+cl-cffi-gtk-documentation
- "@version{2021-4-2}
+ "@version{2021-5-19}
   @argument[keyval]{an unsigned integer with a GDK key symbol}
-  @return{The corresponding unicode character, or @code{#\Nul} if there is no
+  @return{The corresponding unicode character, or @code{#\\Nul} if there is no
     corresponding character.}
   @begin{short}
     Convert from a GDK key symbol to the corresponding ISO10646 (Unicode)
@@ -995,8 +995,8 @@ if (keyval == GDK_PLUS &&
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (mapcar 'gdk-keyval-to-unicode '(65 66 67 68 69 70 71))
-=> (#\A #\B #\C #\D #\E #\F #\G)
+(mapcar 'gdk-keyval-to-unicode '(65 66 67 68 69 70 71))
+=> (#\\A #\\B #\\C #\\D #\\E #\\F #\\G)
     @end{pre}
   @end{dictionary}
   @see-class{gdk-keymap}
@@ -1011,7 +1011,7 @@ if (keyval == GDK_PLUS &&
 
 (defcfun ("gdk_unicode_to_keyval" gdk-unicode-to-keyval) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-4-2}
+ "@version{2021-5-19}
   @argument[unichar]{a ISO10646 encoded character}
   @return{An unsigned integer with the corresponding GDK key symbol, if one
     exists, or, if there is no corresponding symbol, @code{@arg{unichar} |
@@ -1019,10 +1019,12 @@ if (keyval == GDK_PLUS &&
   @short{Convert from a ISO10646 character to a key symbol.}
   @begin[Examples]{dictionary}
     @begin{pre}
- (mapcar 'gdk-unicode-to-keyval '(#\a #\b #\c))
+(mapcar 'gdk-unicode-to-keyval '(#\\a #\\b #\\c))
 => (97 98 99)
     @end{pre}
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gdk-keymap}
+  @see-function{gdk-keyval-to-unicode}"
   (unichar unichar))
 
 (export 'gdk-unicode-to-keyval)

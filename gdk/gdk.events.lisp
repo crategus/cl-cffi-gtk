@@ -151,7 +151,8 @@
 
 (defconstant +gdk-event-propagate+ nil
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-13}
+ "@version{*2021-5-23}
+  @variable-value{@em{false}}
   @begin{short}
     Use this value as the return value for continuing the propagation of an
     event handler.
@@ -169,7 +170,8 @@
 
 (defconstant +gdk-event-stop+ t
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-13}
+ "@version{*2021-5-23}
+  @variable-value{@em{true}}
   @begin{short}
     Use this value as the return value for stopping the propagation of an event
     handler.
